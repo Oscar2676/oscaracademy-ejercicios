@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s production/qa -p 'test_workflow.py' -v
-      - run: cp production/data/tasks.example.json production/data/tasks.json
+      - run: test -f production/data/tasks.json || cp production/data/tasks.example.json production/data/tasks.json
       - run: python production/tools/workflow.py validate
   template-browser-tests:
     runs-on: ubuntu-latest

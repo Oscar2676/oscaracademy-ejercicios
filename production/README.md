@@ -2,11 +2,11 @@
 
 Código reutilizable para reservar tareas, entregar candidatas, registrar revisiones y comprobar que las evidencias corresponden a los mismos bytes. No publica ejercicios ni modifica sitios web.
 
-Este paquete público contiene un registro de ejemplo vacío. Los registros operativos, las conversaciones, las aprobaciones reales, los informes privados y las candidatas quedan fuera de esta rama.
+El propietario autorizó explícitamente compartir el registro operativo de 63 tareas, incluidos estados, huellas y citas de APR. El registro está en `data/tasks.json`; la autorización queda documentada dentro del propio archivo. No se incluyen conversaciones completas, archivos HTML candidatos ni informes de revisión. Los estados que remiten a esos archivos se basan en evidencias locales y no certifican que los archivos estén disponibles en esta rama.
 
 ## Uso local
 
-Copiar `data/tasks.example.json` a `data/tasks.json` y registrar las tareas en la copia local, ignorada por Git. Consultar `docs/OPERACION.md` para el esquema y los comandos.
+El registro compartido se conserva en `data/tasks.json`. Para una instalación nueva sin registro, copiar `data/tasks.example.json` como punto de partida. Las candidatas, los informes y el diario local permanecen ignorados por Git. Consultar `docs/OPERACION.md` para el esquema y los comandos.
 
 `python -m unittest discover -s production/qa -p 'test_workflow.py'`
 
