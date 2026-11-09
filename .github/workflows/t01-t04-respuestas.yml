@@ -1,0 +1,19 @@
+name: T01-T04 respuestas
+on:
+  push:
+    branches: [correccion/t01-t04-respuestas-rev01]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save @playwright/test@1.61.0
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --config qa/t01-t04/playwright.config.cjs
