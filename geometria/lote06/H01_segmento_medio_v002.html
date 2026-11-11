@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teorema del punto medio o del segmento medio | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="segmento-medio">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Geometría</li>
+      <li>Segmentos proporcionales</li>
+      <li><b>Teorema del punto medio o del segmento medio</b></li>
+    </ol>
+    <h1>Teorema del punto medio o del segmento medio</h1>
+    <p class="lede">El segmento que une los puntos medios de dos lados de un triángulo es paralelo al tercer lado y mide exactamente la mitad. Un triángulo tiene tres de estos segmentos, uno por cada par de lados.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Míralo moverse</h2>
+  <p>En el triángulo \(ABC\), \(M\) es el punto medio del lado \(AC\), \(N\) es el punto medio del lado \(BC\) y \(O\) es el punto medio del lado \(AB\). Primero se unen los puntos medios uno tras otro: de \(M\) a \(N\), de \(N\) a \(O\) y de \(O\) a \(M\). Después el vértice \(C\) se mueve y el triángulo cambia de forma. Cada segmento medio se mantiene paralelo al lado que no toca, y siempre mide la mitad.</p>
+  <div class="stage" data-scene="segmento-medio"></div>
+  <ul class="keys">
+    <li><b>Puntos \(M\), \(N\) y \(O\):</b> los puntos medios de los lados \(AC\), \(BC\) y \(AB\).</li>
+    <li><b>Marcas de uno, dos y tres trazos:</b> indican los tramos iguales. \(AM=MC\), \(BN=NC\) y \(AO=OB\).</li>
+    <li><b>Segmento naranja \(MN\) y lado naranja \(AB\):</b> son paralelos, y \(MN\) mide la mitad de \(AB\).</li>
+    <li><b>Segmento azul \(NO\) y lado azul \(AC\):</b> son paralelos, y \(NO\) mide la mitad de \(AC\).</li>
+    <li><b>Segmento verde \(OM\) y lado verde \(BC\):</b> son paralelos, y \(OM\) mide la mitad de \(BC\).</li>
+    <li><b>Arcos en \(A\) y en \(M\):</b> los ángulos \(\angle CAB\) y \(\angle CMN\). Miden lo mismo, y por eso \(MN\) es paralelo a \(AB\).</li>
+    <li><b>Deslizador «trazado»:</b> dibuja los tres segmentos medios, uno a continuación del otro.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Demostración paso a paso</h2>
+  <ol class="steps">
+    <li>Se comparan los triángulos \(CMN\) y \(CAB\). Los dos tienen el mismo ángulo en el vértice \(C\).</li>
+    <li>\(M\) es el punto medio de \(AC\), así que \(CM\) es la mitad de \(CA\):
+      \[\frac{CM}{CA}=\frac{1}{2}\]</li>
+    <li>\(N\) es el punto medio de \(BC\), así que \(CN\) es la mitad de \(CB\):
+      \[\frac{CN}{CB}=\frac{1}{2}\]</li>
+    <li>Los dos triángulos tienen un ángulo igual, el de \(C\), y los lados que lo forman están en la misma proporción. Por el criterio lado, ángulo, lado de semejanza, los triángulos \(CMN\) y \(CAB\) son semejantes: uno es una copia reducida del otro.</li>
+    <li>En triángulos semejantes todos los lados correspondientes guardan la misma proporción. El tercer par de lados es \(MN\) y \(AB\):
+      \[\frac{MN}{AB}=\frac{1}{2}\]</li>
+    <li>Se multiplican ambos lados por \(AB\):
+      \[MN=\frac{AB}{2}\]</li>
+    <li>En triángulos semejantes los ángulos correspondientes son iguales:
+      \[\angle CMN=\angle CAB\]</li>
+    <li>Esos dos ángulos son correspondientes respecto de la recta \(AC\), que corta a \(MN\) y a \(AB\). Cuando los ángulos correspondientes son iguales, las rectas son paralelas:
+      \[MN\parallel AB\]</li>
+    <li>El mismo razonamiento se repite con los otros dos pares de puntos medios. Con \(N\) y \(O\) se comparan los triángulos \(BNO\) y \(BCA\), que comparten el ángulo en \(B\). Con \(O\) y \(M\) se comparan los triángulos \(AOM\) y \(ABC\), que comparten el ángulo en \(A\):
+      \[NO\parallel AC,\quad NO=\frac{AC}{2}\qquad\qquad OM\parallel BC,\quad OM=\frac{BC}{2}\]</li>
+  </ol>
+  <div class="def">
+    <h3>Teorema del punto medio o del segmento medio</h3>
+    \[MN\parallel AB,\quad MN=\frac{AB}{2}\qquad NO\parallel AC,\quad NO=\frac{AC}{2}\qquad OM\parallel BC,\quad OM=\frac{BC}{2}\]
+    <p>\(M\), \(N\) y \(O\) son los puntos medios de los lados \(AC\), \(BC\) y \(AB\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>En el triángulo \(ABC\), \(M\) y \(N\) son los puntos medios de \(AC\) y \(BC\). Si \(AB=14\ \text{cm}\), ¿cuánto mide \(MN\)?</p>
+    <details><summary>Pista</summary><div><p>El segmento medio mide la mitad del tercer lado.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+    <li>Teorema del segmento medio:
+          \[MN=\frac{AB}{2}\]</li>
+    <li>Se reemplaza:
+          \[MN=\frac{14\ \text{cm}}{2}=7\ \text{cm}\]</li>
+  </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>El segmento que une los puntos medios de dos lados de un triángulo mide \(4{,}5\ \text{cm}\). ¿Cuánto mide el tercer lado?</p>
+    <details><summary>Pista</summary><div><p>Despeja \(AB\) de \(MN=\dfrac{AB}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+    <li>Teorema del segmento medio:
+          \[MN=\frac{AB}{2}\]</li>
+    <li>Se multiplican ambos lados por \(2\):
+          \[AB=2\cdot MN\]</li>
+    <li>Se reemplaza:
+          \[AB=2\cdot 4{,}5\ \text{cm}=9\ \text{cm}\]</li>
+  </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Un terreno triangular tiene lados de \(10\ \text{m}\), \(12\ \text{m}\) y \(16\ \text{m}\). Se unen con cercas los puntos medios de sus tres lados. ¿Cuántos metros de cerca se necesitan?</p>
+    <details><summary>Pista</summary><div><p>Cada cerca es un segmento medio: mide la mitad del lado al que es paralela.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+    <li>Cada cerca une dos puntos medios, así que mide la mitad del lado que no toca:
+          \[\frac{10\ \text{m}}{2}=5\ \text{m}\qquad\frac{12\ \text{m}}{2}=6\ \text{m}\qquad\frac{16\ \text{m}}{2}=8\ \text{m}\]</li>
+    <li>Se suman las tres cercas:
+          \[5\ \text{m}+6\ \text{m}+8\ \text{m}=19\ \text{m}\]</li>
+    <li>Comprobación: el perímetro del terreno es \(10+12+16=38\ \text{m}\), y la mitad es \(19\ \text{m}\).</li>
+  </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">GE-L06-H01 · v002 · APR de Óscar, 10-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption) I.cap.textContent = def.caption(I.v);
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('segmento-medio', (function(){
+  var num = OA.num;
+  function D(a, b){ return Math.sqrt((a[0]-b[0])*(a[0]-b[0]) + (a[1]-b[1])*(a[1]-b[1])); }
+  function ang(a, b){ return Math.atan2(b[1]-a[1], b[0]-a[0]); }
+  function mid(a, b){ return [(a[0]+b[0])/2, (a[1]+b[1])/2]; }
+  function L(S, id, p, dx, dy, ax, ay, on){ S.lab(id, S.X(p[0]) + dx, S.Y(p[1]) + dy, ax, ay, on !== false); }
+  function seg(S, a, b, o){ S.line(a[0], a[1], b[0], b[1], o); }
+  function sq(S, c, u, w, s){ var C = S.C, o = {color:C.ink, width:1.2}; S.line(c[0]+u[0]*s, c[1]+u[1]*s, c[0]+u[0]*s+w[0]*s, c[1]+u[1]*s+w[1]*s, o); S.line(c[0]+w[0]*s, c[1]+w[1]*s, c[0]+u[0]*s+w[0]*s, c[1]+u[1]*s+w[1]*s, o); }
+  function unit(a, b){ var d = D(a, b) || 1; return [(b[0]-a[0])/d, (b[1]-a[1])/d]; }
+  function cut(P, a, R){ var u = [Math.cos(a), Math.sin(a)], b = P[0]*u[0] + P[1]*u[1], c = P[0]*P[0] + P[1]*P[1] - R*R, q = Math.sqrt(Math.max(0, b*b - c)), t1 = -b - q, t2 = -b + q; return [[P[0]+t1*u[0], P[1]+t1*u[1]], [P[0]+t2*u[0], P[1]+t2*u[1]], Math.abs(t1), Math.abs(t2)]; }
+
+  var A = [0.7, 0.7], B = [6.5, 0.7];
+  function Cof(v){ return [1.3 + 4.6*v.c, 4.6 - 1.6*(v.c - 0.5)*(v.c - 0.5)]; }
+  return {
+    world:{x0:-0.3, x1:7.5, y0:-0.4, y1:5.3}, aspect:5.7/7.8,
+    aria:'Triángulo ABC con M, N y O puntos medios de AC, BC y AB. Los tres segmentos medios se trazan uno tras otro: MN, NO y OM. Luego el vértice C se mueve y cada segmento medio se mantiene paralelo al lado opuesto y mide su mitad.',
+    labels:[['A','A','A','pt'], ['B','B','B','pt'], ['C','C','C','pt'], ['M','M','M','pt'], ['N','N','N','pt'], ['O','O','O','pt'], ['mn','MN','MN','diff'], ['no','NO','NO','c-sec pt'], ['om','OM','OM','c-alt pt']],
+    sliders:[{id:'k', tex:'\\text{trazado}', min:0, max:3, step:0.01, value:0}, {id:'c', tex:'C', min:0, max:1, step:0.005, value:0.2}],
+    legend:'<span><i class="sw rise"></i> \\(MN\\parallel AB\\)</span><span><i class="sw sec"></i> \\(NO\\parallel AC\\)</span><span><i class="sw alt"></i> \\(OM\\parallel BC\\)</span>',
+    anim:{run:16000, hold:1500, still:0, apply:function(p, v){
+      if (p < 0.45){ v.k = 3*OA.smooth(p/0.45); v.c = 0.2; }
+      else { v.k = 3; v.c = 0.5 - 0.3*Math.cos(2*Math.PI*(p - 0.45)/0.55); }
+    }},
+    draw:function(S, v){
+      var C0 = Cof(v), M = mid(A, C0), N = mid(B, C0), O = mid(A, B), Cc = S.C, k = v.k;
+      S.poly([A, B, C0], {fill:Cc.sec, alpha:0.05});
+      seg(S, A, B, {color:Cc.rise, width:2.5}); seg(S, A, C0, {color:Cc.sec, width:2.5}); seg(S, B, C0, {color:Cc.alt, width:2.5});
+      function part(p, q, f, col){ if (f <= 0) return; f = Math.min(1, f); seg(S, p, [p[0] + (q[0]-p[0])*f, p[1] + (q[1]-p[1])*f], {color:col, width:5}); }
+      part(M, N, k, Cc.rise); part(N, O, k - 1, Cc.sec); part(O, M, k - 2, Cc.alt);
+      var a = ang(A, C0);
+      S.arc(A[0], A[1], 30, 0, a, {color:Cc.ink, width:1.5}); if (k >= 1) S.arc(M[0], M[1], 30, 0, a, {color:Cc.ink, width:1.5});
+      function tick(p, q, n){ var m = mid(p, q), u = unit(p, q), w = [-u[1], u[0]], i; for (i = 0; i < n; i++){ var o = (i - (n-1)/2)*0.09; S.line(m[0]+u[0]*o-w[0]*0.1, m[1]+u[1]*o-w[1]*0.1, m[0]+u[0]*o+w[0]*0.1, m[1]+u[1]*o+w[1]*0.1, {color:Cc.ink, width:1.5}); } }
+      tick(A, M, 1); tick(M, C0, 1); tick(B, N, 2); tick(N, C0, 2); tick(A, O, 3); tick(O, B, 3);
+      [A, B, C0].forEach(function(p){ S.dot(p[0], p[1], Cc.ink); }); [M, N, O].forEach(function(p){ S.dot(p[0], p[1], Cc.tan); });
+      L(S,'A',A,-8,8,-100,0); L(S,'B',B,8,8,0,0); L(S,'C',C0,0,-10,-50,-100); L(S,'M',M,-10,-4,-100,-50); L(S,'N',N,10,-4,0,-50); L(S,'O',O,0,10,-50,0);
+      L(S,'mn',mid(M,N),0,-8,-50,-100, k >= 1);
+      var u1 = unit(N, O), u2 = unit(O, M);
+      L(S,'no',mid(N,O),12,6,0,-50, k >= 2); L(S,'om',mid(O,M),-12,6,-100,-50, k >= 3);
+    },
+    caption:function(v){
+      if (v.k < 1) return 'Se une M con N: el primer segmento medio';
+      if (v.k < 2) return 'Se une N con O: el segundo segmento medio';
+      if (v.k < 3) return 'Se une O con M: el tercer segmento medio';
+      return 'El triángulo cambia, pero cada segmento medio sigue paralelo a su lado y mide la mitad';
+    },
+    readout:function(v){
+      var C0 = Cof(v), M = mid(A, C0), N = mid(B, C0), O = mid(A, B);
+      return [
+        ['d', 'MN=' + num(D(M,N),2) + '\\qquad AB=' + num(D(A,B),2) + '\\qquad\\dfrac{MN}{AB}=' + num(D(M,N)/D(A,B),2)],
+        ['', 'NO=' + num(D(N,O),2) + '\\qquad AC=' + num(D(A,C0),2) + '\\qquad\\dfrac{NO}{AC}=' + num(D(N,O)/D(A,C0),2)],
+        ['', 'OM=' + num(D(O,M),2) + '\\qquad BC=' + num(D(B,C0),2) + '\\qquad\\dfrac{OM}{BC}=' + num(D(O,M)/D(B,C0),2)],
+        ['', '\\angle CAB=' + num(ang(A,C0)*180/Math.PI,1) + '^\\circ\\qquad\\angle CMN=' + num(ang(M,C0)*180/Math.PI,1) + '^\\circ']
+      ];
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
