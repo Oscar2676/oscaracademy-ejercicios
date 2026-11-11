@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teorema del resto | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="resto">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra</li>
+      <li>Polinomios</li>
+      <li><b>Teorema del resto</b></li>
+    </ol>
+    <h1>Teorema del resto</h1>
+    <p class="lede">Para saber cuánto sobra al dividir un polinomio \(P(x)\) por \((x-a)\) no hace falta hacer la división: basta evaluar el polinomio en \(a\). El resto es \(P(a)\). Este teorema también se llama teorema del residuo.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Míralo moverse</h2>
+  <p>La curva negra es el polinomio \(P(x)=x^3-2x+1\). El número \(a\) se mueve sobre el eje horizontal. En cada posición se divide \(P(x)\) por \((x-a)\): sale un cociente \(Q(x)\) y un resto \(r\). El trazo naranja es la altura de la curva en \(x=a\), es decir, \(P(a)\). Mira en los valores de abajo que esa altura y el resto \(r\) son siempre el mismo número. El punto avanza despacio y se detiene en varias posiciones, para que puedas observar el trazo vertical \(r=P(a)\) y comparar su altura con el resto.</p>
+  <div class="stage" data-scene="resto"></div>
+  <ul class="keys">
+    <li><b>Curva negra \(y=P(x)\):</b> el polinomio que se divide, el dividendo.</li>
+    <li><b>Marca \(a\) en el eje:</b> el número que define al divisor \((x-a)\).</li>
+    <li><b>Punto \((a,\,P(a))\):</b> el punto de la curva que está sobre \(a\).</li>
+    <li><b>Trazo naranja \(r=P(a)\):</b> la altura del punto. Es el resto de la división. Si el punto queda bajo el eje, el resto es negativo.</li>
+    <li><b>Recta naranja discontinua \(y=r\):</b> la altura constante del resto.</li>
+    <li><b>Curva azul \(y=(x-a)\,Q(x)\):</b> el divisor por el cociente. Es la curva negra bajada en \(r\), y por eso pasa siempre por el punto \((a,0)\): en \(x=a\) el factor \((x-a)\) vale cero.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Demostración paso a paso</h2>
+  <ol class="steps">
+    <li>Dividir \(P(x)\) por \((x-a)\) significa encontrar un cociente \(Q(x)\) y un resto \(R(x)\) que cumplan lo mismo que en la división de números: dividendo igual a divisor por cociente más resto.
+      \[P(x)=(x-a)\,Q(x)+R(x)\]</li>
+    <li>El resto debe tener grado menor que el divisor; si no, se podría seguir dividiendo. El divisor \((x-a)\) tiene grado \(1\), así que el resto tiene grado \(0\) o es cero. En los dos casos es un número, sin \(x\). Se le llama \(r\):
+      \[P(x)=(x-a)\,Q(x)+r\]</li>
+    <li>Esa igualdad vale para cualquier valor de \(x\). En particular, vale para \(x=a\). Se reemplaza:
+      \[P(a)=(a-a)\,Q(a)+r\]</li>
+    <li>El factor \(a-a\) es cero, y cero por cualquier número es cero. No importa cuánto valga \(Q(a)\):
+      \[P(a)=0\cdot Q(a)+r=0+r\]</li>
+    <li>Resultado:
+      \[r=P(a)\]</li>
+  </ol>
+  <div class="def">
+    <h3>Teorema del resto</h3>
+    \[P(x)=(x-a)\,Q(x)+r\quad\Longrightarrow\quad r=P(a)\]
+    <p>El resto de dividir un polinomio \(P(x)\) por \((x-a)\) es el valor del polinomio en \(x=a\).</p>
+  </div>
+  <div class="why">
+    <h3>Por qué importa cuando el resto es cero</h3>
+    <p>Si \(P(a)=0\), el resto es cero y la división es exacta:</p>
+    \[P(x)=(x-a)\,Q(x)\]
+    <p>Entonces \((x-a)\) es un factor de \(P(x)\) y \(a\) es una raíz. En la animación ocurre cuando la curva negra corta al eje horizontal: el trazo naranja desaparece y las dos curvas coinciden. Este caso se conoce como teorema del factor.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Comprobación con una división completa</h2>
+  <p>Se divide \(P(x)=x^3-2x+1\) por \((x-2)\), es decir, \(a=2\), con la regla de Ruffini. En la primera fila van los coeficientes de \(P(x)\), sin olvidar el \(0\) del término \(x^2\), que no aparece.</p>
+  <div class="tblwrap">
+    <table class="tbl">
+      <tr><th></th><th>\(x^3\)</th><th>\(x^2\)</th><th>\(x\)</th><th>término libre</th></tr>
+      <tr><td>Coeficientes de \(P(x)\)</td><td>\(1\)</td><td>\(0\)</td><td>\(-2\)</td><td>\(1\)</td></tr>
+      <tr><td>Se multiplica por \(a=2\)</td><td></td><td>\(1\cdot 2=2\)</td><td>\(2\cdot 2=4\)</td><td>\(2\cdot 2=4\)</td></tr>
+      <tr><td>Se suma la columna</td><td>\(1\)</td><td>\(0+2=2\)</td><td>\(-2+4=2\)</td><td>\(1+4=5\)</td></tr>
+    </table>
+  </div>
+  <ol class="steps">
+    <li>Los tres primeros números de la última fila son los coeficientes del cociente, que tiene un grado menos que \(P(x)\):
+      \[Q(x)=x^2+2x+2\]</li>
+    <li>El último número es el resto:
+      \[r=5\]</li>
+    <li>Ahora se evalúa el polinomio en \(a=2\), sin dividir:
+      \[P(2)=2^3-2\cdot 2+1=8-4+1=5\]</li>
+    <li>Los dos caminos dan lo mismo:
+      \[r=P(2)=5\]</li>
+    <li>Comprobación de la división, multiplicando divisor por cociente:
+      \[(x-2)(x^2+2x+2)=x^3+2x^2+2x-2x^2-4x-4=x^3-2x-4\]</li>
+    <li>Se suma el resto y se recupera el dividendo:
+      \[x^3-2x-4+5=x^3-2x+1=P(x)\]</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Sin hacer la división, calcula el resto de dividir \(P(x)=2x^3-3x^2+x-5\) por \((x-2)\).</p>
+    <details><summary>Pista</summary><div><p>El divisor es \((x-a)\) con \(a=2\). El resto es \(P(2)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Teorema del resto, con \(a=2\):
+          \[r=P(2)\]</li>
+        <li>Se reemplaza \(x\) por \(2\):
+          \[P(2)=2\cdot 2^3-3\cdot 2^2+2-5\]</li>
+        <li>Potencias:
+          \[P(2)=2\cdot 8-3\cdot 4+2-5\]</li>
+        <li>Productos:
+          \[P(2)=16-12+2-5\]</li>
+        <li>Resultado:
+          \[r=1\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el resto de dividir \(P(x)=x^3+2x^2-5x+1\) por \((x+3)\).</p>
+    <details><summary>Pista</summary><div><p>Escribe el divisor en la forma \((x-a)\): \(x+3=x-(-3)\). Entonces \(a=-3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se escribe el divisor como \((x-a)\):
+          \[x+3=x-(-3)\quad\Longrightarrow\quad a=-3\]</li>
+        <li>Teorema del resto:
+          \[r=P(-3)=(-3)^3+2\cdot(-3)^2-5\cdot(-3)+1\]</li>
+        <li>Potencias: \((-3)^3=-27\) y \((-3)^2=9\):
+          \[r=-27+2\cdot 9-5\cdot(-3)+1\]</li>
+        <li>Productos; \(-5\cdot(-3)=+15\):
+          \[r=-27+18+15+1\]</li>
+        <li>Resultado:
+          \[r=7\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>¿Qué valor debe tener \(k\) para que \(P(x)=x^3+kx-6\) sea divisible exactamente por \((x-2)\)?</p>
+    <details><summary>Pista</summary><div><p>Divisible exactamente significa resto cero. Plantea \(P(2)=0\) y despeja \(k\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>La división es exacta si el resto es cero. Por el teorema del resto, con \(a=2\):
+          \[P(2)=0\]</li>
+        <li>Se reemplaza \(x\) por \(2\):
+          \[2^3+k\cdot 2-6=0\]</li>
+        <li>Se calcula:
+          \[8+2k-6=0\quad\Longrightarrow\quad 2+2k=0\]</li>
+        <li>Se resta \(2\) en ambos lados y se divide por \(2\):
+          \[2k=-2\quad\Longrightarrow\quad k=-1\]</li>
+        <li>Comprobación con \(P(x)=x^3-x-6\):
+          \[P(2)=8-2-6=0\]</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">RH-L07-H03 · v003 · APR de Óscar, 11-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('resto', (function(){
+  var num = OA.num;
+  function P(x){ return x*x*x - 2*x + 1; }
+  function sg(v, d){ return (v < 0 ? '-' : '+') + num(Math.abs(v), d); }
+  return {
+    world:{x0:-2.8, x1:2.8, y0:-4.8, y1:6.8}, aspect:0.9,
+    aria:'Gráfica del polinomio P de x igual a x al cubo menos 2 x más 1. Un punto a se mueve en el eje horizontal; la altura de la curva en a es igual al resto de dividir P de x por x menos a.',
+    labels:[['a','a','a','pt'], ['pt','(a,\\,P(a))','(a, P(a))','pt'], ['r','r=P(a)','r = P(a)','diff'], ['yr','y=r','y = r','diff'], ['p','y=P(x)','y = P(x)','pt'], ['q','y=(x-a)\\,Q(x)','y = (x − a)·Q(x)','c-sec pt']],
+    sliders:[{id:'a', tex:'a', min:-2, max:2, step:0.05, value:1.5}],
+    legend:'<span><i class="sw"></i> \\(y=P(x)\\)</span><span><i class="sw sec"></i> \\(y=(x-a)\\,Q(x)\\)</span><span><i class="sw rise"></i> resto \\(r=P(a)\\)</span>',
+    anim:{run:40000, hold:1500, still:0.36, apply:function(p, v){ var q = p < 0.5 ? 2*p : 2 - 2*p; v.a = -1.9 + OA.level(q, 6)*(3.8/6); }},
+    draw:function(S, v){
+      var a = v.a, r = P(a), C = S.C, W = S.W, up = r >= 0 ? 1 : -1;
+      S.axes({full:true, gx:[-2,-1,1,2], gy:[-4,-2,2,4,6]});
+      S.curve(function(x){ return P(x) - r; }, W.x0, W.x1, {color:C.sec, width:1.8});
+      S.curve(P, W.x0, W.x1, {color:C.ink, width:2.2});
+      S.line(W.x0, r, W.x1, r, {color:C.rise, width:1.2, dash:[6,5]});
+      S.line(a, 0, a, r, {color:C.rise, width:4});
+      S.ring(a, 0, C.sec); S.dot(a, r, C.ink);
+      S.lab('a', S.X(a), S.Y(0) + up*10, -50, up > 0 ? 0 : -100, true);
+      S.out('pt', S.X(a), S.Y(r), a < 0.9 ? -1 : 1, up, true, 9);
+      S.lab('r', S.X(a) + (a < 0.9 ? 9 : -9), S.Y(r/2), a < 0.9 ? 0 : -100, -50, Math.abs(r) > 0.7);
+      S.lab('yr', a < 0 ? S.w - 6 : 6, S.Y(r) - 4, a < 0 ? -100 : 0, -100, Math.abs(r) > 0.5);
+      var xp = r > 0 ? 1.7 : 1.5;
+      S.lab('p', S.X(xp) + (r > 0 ? -9 : 9), S.Y(P(xp)), r > 0 ? -100 : 0, -50, true);
+      var xq = r > 0 ? 1.6 : -1.7, yq = P(xq) - r;
+      S.out('q', S.X(xq), S.Y(yq) + 9, r > 0 ? 1 : -1, 1, Math.abs(r) > 0.9 && yq < W.y1 - 0.6 && yq > W.y0 + 0.6, 9);
+    },
+    caption:function(v){ return Math.abs(P(v.a)) < 0.04 ? ['La curva corta al eje: el resto es cero y la división es exacta, ', 'P(x)=(x-a)\\,Q(x)', 'P(x) = (x − a)·Q(x)'] : ['La altura de la curva en a es el resto de la división: ', 'r=P(a)', 'r = P(a)']; },
+    readout:function(v){
+      var a = v.a, r = P(a);
+      return [
+        ['', 'P(x)=x^3-2x+1\\qquad a=' + num(a,2)],
+        ['', 'Q(x)=x^2' + sg(a,2) + '\\,x' + sg(a*a - 2,2)],
+        ['d', 'P(a)=(' + num(a,2) + ')^3-2\\cdot(' + num(a,2) + ')+1=' + num(r,2)],
+        ['d', 'r=' + num(r,2)]
+      ];
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
