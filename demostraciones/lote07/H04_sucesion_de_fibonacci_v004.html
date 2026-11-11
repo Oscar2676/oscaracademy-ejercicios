@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La sucesión de Fibonacci | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="fibonacci">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Precálculo</li>
+      <li>Sucesiones</li>
+      <li><b>Sucesión de Fibonacci</b></li>
+    </ol>
+    <h1>La sucesión de Fibonacci</h1>
+    <p class="lede">Cada término es la suma de los dos anteriores: \(1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ \dots\) Con cuadrados que tienen esos lados se arma un rectángulo que crece en espiral.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Definición</h2>
+  <div class="def">
+    <h3>Sucesión de Fibonacci</h3>
+    \[F_1=1\qquad F_2=1\]
+    \[F_3=F_{3-1}+F_{3-2}=F_2+F_1=1+1=2\]
+    \[F_4=F_{4-1}+F_{4-2}=F_3+F_2=2+1=3\]
+    \[F_n=F_{n-1}+F_{n-2}\quad\text{para } n\ge 3\]
+    <p>\(F_n\) es el término que ocupa el lugar \(n\). Los dos primeros, \(F_1\) y \(F_2\), se dan como valores iniciales. Desde \(F_3\) en adelante, cada término se calcula sumando los dos anteriores.</p>
+  </div>
+  <div class="tblwrap">
+    <table class="tbl">
+      <tr><th>\(n\)</th><td>\(1\)</td><td>\(2\)</td><td>\(3\)</td><td>\(4\)</td><td>\(5\)</td><td>\(6\)</td><td>\(7\)</td><td>\(8\)</td><td>\(9\)</td></tr>
+      <tr><th>\(F_n\)</th><td>\(1\)</td><td>\(1\)</td><td>\(2\)</td><td>\(3\)</td><td>\(5\)</td><td>\(8\)</td><td>\(13\)</td><td>\(21\)</td><td>\(34\)</td></tr>
+    </table>
+  </div>
+  <p>Por ejemplo, con \(n=5\) y con \(n=6\):</p>
+  \[F_5=F_{5-1}+F_{5-2}=F_4+F_3=3+2=5\]
+  \[F_6=F_{6-1}+F_{6-2}=F_5+F_4=5+3=8\]
+</section>
+
+<section>
+  <h2>Míralo moverse</h2>
+  <p>Se parte con un cuadrado de lado \(1\). A su lado se pone otro cuadrado de lado \(1\). Después, sobre el lado largo del rectángulo que se va formando, se agrega cada vez un cuadrado nuevo: de lado \(2\), de lado \(3\), de lado \(5\), y así. El número escrito junto a cada radio es su longitud, que es también la medida del lado del cuadrado. En cada cuadrado se traza un cuarto de circunferencia, y los arcos se unen formando la espiral de Fibonacci.</p>
+  <div class="stage" data-scene="fibonacci"></div>
+  <ul class="keys">
+    <li><b>Cuadrado naranja:</b> el cuadrado que se está agregando. Su lado es la suma de los lados de los dos cuadrados anteriores.</li>
+    <li><b>Cuadrados azules:</b> los que ya están puestos. Juntos forman siempre un rectángulo.</li>
+    <li><b>Número junto a cada radio:</b> la longitud del radio, igual al lado del cuadrado. Es un término de la sucesión.</li>
+    <li><b>Arco rojo:</b> un cuarto de circunferencia cuyo radio es el lado del cuadrado.</li>
+    <li><b>Punto negro:</b> el punto de pivoteo, que es el centro del arco y un vértice del cuadrado.</li>
+    <li><b>Trazo negro:</b> el radio. Gira alrededor del punto de pivoteo y dibuja el arco como un compás. Al terminar queda dibujado, con su longitud al lado.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Por qué el cuadrado nuevo siempre calza</h2>
+  <ol class="steps">
+    <li>Con los dos primeros cuadrados, de lados \(F_1=1\) y \(F_2=1\), se forma un rectángulo de lados \(1\) y \(2\). Es decir, de lados \(F_2\) y \(F_3\).</li>
+    <li>Se supone que, después de poner \(n\) cuadrados, el rectángulo tiene lados \(F_n\) y \(F_{n+1}\). El lado largo mide \(F_{n+1}\).</li>
+    <li>El cuadrado siguiente tiene lado \(F_{n+1}\): exactamente lo que mide el lado largo. Por eso calza justo, sin que sobre ni falte.</li>
+    <li>Al agregarlo, un lado del rectángulo sigue midiendo \(F_{n+1}\) y el otro crece en \(F_{n+1}\):
+      \[F_n+F_{n+1}=F_{n+2}\]</li>
+    <li>El rectángulo nuevo tiene lados \(F_{n+1}\) y \(F_{n+2}\): la misma regla, un lugar más adelante. Como vale al inicio y se conserva en cada paso, vale siempre.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Demostración: la suma de los cuadrados</h2>
+  <p>El rectángulo de la animación permite demostrar una fórmula. Su área se puede calcular de dos maneras, y las dos deben dar lo mismo.</p>
+  <ol class="steps">
+    <li>Primera manera: el rectángulo está formado por \(n\) cuadrados de lados \(F_1, F_2, \dots, F_n\), que no se superponen. Su área es la suma de las áreas de los cuadrados:
+      \[\text{Área}=F_1^2+F_2^2+\cdots+F_n^2\]</li>
+    <li>Segunda manera: por lo demostrado arriba, el rectángulo tiene lados \(F_n\) y \(F_{n+1}\). Su área es lado por lado:
+      \[\text{Área}=F_n\cdot F_{n+1}\]</li>
+    <li>Es la misma área, así que las dos expresiones son iguales:
+      \[F_1^2+F_2^2+\cdots+F_n^2=F_n\cdot F_{n+1}\]</li>
+    <li>Con notación de sumatoria:
+      \[\sum_{k=1}^{n}F_k^2=F_n\cdot F_{n+1}\]</li>
+  </ol>
+  <div class="def">
+    <h3>Suma de los cuadrados de los términos de Fibonacci</h3>
+    \[\sum_{k=1}^{n}F_k^2=F_n\cdot F_{n+1}\]
+    <p>Compruébalo en la animación: los dos últimos valores que aparecen bajo la figura son siempre iguales.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(F_{10}\), \(F_{11}\) y \(F_{12}\), sabiendo que \(F_8=21\) y \(F_9=34\).</p>
+    <details><summary>Pista</summary><div><p>Cada término es la suma de los dos anteriores. Avanza de a uno.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Regla de la sucesión:
+          \[F_n=F_{n-1}+F_{n-2}\]</li>
+        <li>Con \(n=10\):
+          \[F_{10}=F_{10-1}+F_{10-2}=F_9+F_8=34+21=55\]</li>
+        <li>Con \(n=11\):
+          \[F_{11}=F_{11-1}+F_{11-2}=F_{10}+F_9=55+34=89\]</li>
+        <li>Con \(n=12\):
+          \[F_{12}=F_{12-1}+F_{12-2}=F_{11}+F_{10}=89+55=144\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Comprueba la fórmula \(\displaystyle\sum_{k=1}^{n}F_k^2=F_n\cdot F_{n+1}\) para \(n=6\).</p>
+    <details><summary>Pista</summary><div><p>Los seis primeros términos son \(1, 1, 2, 3, 5, 8\), y \(F_7=13\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Lado izquierdo: se elevan al cuadrado los seis primeros términos:
+          \[1^2+1^2+2^2+3^2+5^2+8^2=1+1+4+9+25+64\]</li>
+        <li>Se suma:
+          \[1+1+4+9+25+64=104\]</li>
+        <li>Lado derecho, con \(F_6=8\) y \(F_7=13\):
+          \[F_6\cdot F_7=8\cdot 13=104\]</li>
+        <li>Los dos lados coinciden:
+          \[104=104\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Una escalera tiene \(6\) peldaños. En cada paso se puede subir \(1\) peldaño o \(2\) peldaños. ¿De cuántas maneras distintas se puede subir la escalera completa?</p>
+    <details><summary>Pista</summary><div><p>Para llegar al peldaño \(n\), el último paso fue de \(1\) peldaño, desde el \(n-1\), o de \(2\) peldaños, desde el \(n-2\). Cuenta primero las maneras para \(1\) y \(2\) peldaños.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se llama \(M_n\) al número de maneras de llegar al peldaño \(n\). Con \(1\) peldaño hay una sola manera. Con \(2\) peldaños hay dos: \(1+1\) o \(2\).
+          \[M_1=1\qquad M_2=2\]</li>
+        <li>Para llegar al peldaño \(n\), el último paso viene del peldaño \(n-1\) o del peldaño \(n-2\). Las maneras se suman, porque son casos distintos:
+          \[M_n=M_{n-1}+M_{n-2}\]</li>
+        <li>Es la regla de Fibonacci. Se avanza de a uno:
+          \[M_3=2+1=3\qquad M_4=3+2=5\]</li>
+        <li>Se continúa:
+          \[M_5=5+3=8\qquad M_6=8+5=13\]</li>
+        <li>Resultado: hay \(13\) maneras. Es el término \(F_7\) de la sucesión:
+          \[M_6=F_7=13\]</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">RH-L07-H04 · v004 · APR de Óscar, 11-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('fibonacci', (function(){
+  var PI = Math.PI, F = [1,1,2,3,5,8,13,21,34], N = 8, sq = [], box = [];
+  (function(){
+    var x0 = 0, x1 = 1, y0 = 0, y1 = 1, k, s, d, q;
+    sq.push({x:0, y:0, s:1, cx:1, cy:1, a0:PI}); box.push([0,1,0,1]);
+    for (k = 2; k <= N; k++){
+      s = F[k-1]; d = (k - 2) % 4;
+      if (d === 0){ q = {x:x1, y:y0, s:s, cx:x1, cy:y0 + s, a0:1.5*PI}; x1 += s; }
+      else if (d === 1){ q = {x:x0, y:y1, s:s, cx:x0, cy:y1, a0:0}; y1 += s; }
+      else if (d === 2){ q = {x:x0 - s, y:y0, s:s, cx:x0, cy:y0, a0:0.5*PI}; x0 -= s; }
+      else { q = {x:x0, y:y0 - s, s:s, cx:x0 + s, cy:y0, a0:PI}; y0 -= s; }
+      sq.push(q); box.push([x0, x1, y0, y1]);
+    }
+  })();
+  function clamp(t){ return t < 0 ? 0 : t > 1 ? 1 : t; }
+  function parts(L){ var j = Math.min(N, Math.floor(L + 1e-9)), fr = j >= N ? 0 : L - j; return {j:j, fr:fr, zoom:OA.smooth(clamp(fr/0.4)), app:clamp((fr - 0.25)/0.3), arc:OA.smooth(clamp((fr - 0.5)/0.5))}; }
+  function count(L){ var P = parts(L); return Math.max(1, Math.min(N, P.j + (P.fr > 0.25 ? 1 : 0))); }
+  var labels = []; for (var i = 1; i <= N; i++) labels.push(['q' + i, String(F[i-1]), String(F[i-1]), 'pt']);
+  return {
+    world:{x0:0, x1:1, y0:0, y1:1}, aspect:0.68,
+    aria:'Cuadrados de lados 1, 1, 2, 3, 5, 8, 13 y 21 que se agregan uno a uno formando un rectángulo. En cada cuadrado se traza un cuarto de circunferencia; los arcos forman la espiral de Fibonacci.',
+    labels:labels,
+    sliders:[{id:'k', tex:'\\text{cuadrados}', min:1, max:8, step:0.01, value:1}],
+    legend:'<span><i class="sw rise"></i> cuadrado nuevo</span><span><i class="sw sec"></i> cuadrados ya puestos</span><span><i class="sw tan"></i> espiral, hecha de cuartos de circunferencia</span>',
+    anim:{run:26000, hold:3500, still:1, apply:function(p, v){ v.k = 1 + OA.level(p, N - 1); }},
+    draw:function(S, v){
+      var c = S.ctx, C = S.C, P = parts(v.k), w = S.w, h = S.h, k, q;
+      var bA = box[Math.max(0, P.j - 1)], bB = box[Math.min(N - 1, P.j)], z = P.zoom, b = [0,1,2,3].map(function(i){ return bA[i] + (bB[i] - bA[i])*z; });
+      var bw = b[1] - b[0], bh = b[3] - b[2], sc = Math.min(w*0.9/bw, h*0.84/bh), mx = (b[0] + b[1])/2, my = (b[2] + b[3])/2;
+      function X(x){ return w/2 + (x - mx)*sc; } function Y(y){ return h/2 - (y - my)*sc; }
+      for (k = 1; k <= N; k++){
+        q = sq[k-1]; var al = k <= P.j ? 1 : k === P.j + 1 ? P.app : 0, isNew = k === P.j + 1, ar = k <= P.j ? 1 : isNew ? P.arc : 0;
+        if (al > 0){
+          c.globalAlpha = al*(isNew ? 0.34 : 0.13); c.fillStyle = isNew ? C.rise : C.sec; c.fillRect(X(q.x), Y(q.y + q.s), q.s*sc, q.s*sc);
+          c.globalAlpha = al; c.setLineDash([]); c.strokeStyle = isNew ? C.rise : C.sec; c.lineWidth = isNew ? 2 : 1.2; c.strokeRect(X(q.x), Y(q.y + q.s), q.s*sc, q.s*sc); c.globalAlpha = 1;
+        }
+        if (ar > 0){
+          c.setLineDash([]); c.strokeStyle = C.tan; c.lineWidth = 2.6; c.beginPath(); c.arc(X(q.cx), Y(q.cy), q.s*sc, -q.a0, -(q.a0 + ar*PI/2), true); c.stroke();
+        }
+        /* radio y punto de pivoteo: el radio gira mientras se traza el arco y queda dibujado al terminar */
+        var a = q.a0 + ar*PI/2, ex = q.cx + q.s*Math.cos(a), ey = q.cy + q.s*Math.sin(a), live = isNew && ar < 1;
+        if (al > 0.6){
+          c.globalAlpha = live ? 1 : 0.75; S.pline(X(q.cx), Y(q.cy), X(ex), Y(ey), {color:C.ink, width:live ? 1.8 : 1.2}); c.globalAlpha = 1;
+          c.beginPath(); c.arc(X(q.cx), Y(q.cy), live ? 4.5 : 3.2, 0, 2*PI); c.fillStyle = C.ink; c.fill();
+        }
+        /* la longitud se rotula junto al radio, en su punto medio, siempre hacia el interior del cuadrado */
+        var side = 1 - 2*ar, nx = -Math.sin(a)*side, ny = Math.cos(a)*side, off = Math.min(13, q.s*sc*0.22);
+        S.lab('q' + k, X((q.cx + ex)/2) + nx*off, Y((q.cy + ey)/2) - ny*off, -50, -50, al > 0.6 && q.s*sc > 26);
+      }
+    },
+    caption:function(v){ var n = count(v.k); return n <= 2 ? 'Los dos primeros cuadrados tienen lado 1: son los valores iniciales' : n >= N && v.k >= N ? 'Ocho cuadrados forman un rectángulo de 21 por 34, y los arcos forman la espiral' : 'El cuadrado nuevo tiene por lado la suma de los dos lados anteriores'; },
+    readout:function(v){
+      var n = count(v.k), i, sum = 0, t = [];
+      for (i = 1; i <= n; i++){ sum += F[i-1]*F[i-1]; t.push(F[i-1] + '^2'); }
+      return [
+        ['', 'n=' + n + '\\qquad F_{' + n + '}=' + F[n-1]],
+        ['d', n >= 3 ? 'F_{' + n + '}=F_{' + (n-1) + '}+F_{' + (n-2) + '}=' + F[n-2] + '+' + F[n-3] + '=' + F[n-1] : 'F_{' + n + '}=1\\quad\\text{(valor inicial)}'],
+        ['', (n > 5 ? t.slice(0,2).join('+') + '+\\cdots+' + t[n-1] : t.join('+')) + '=' + sum],
+        ['', 'F_{' + n + '}\\cdot F_{' + (n+1) + '}=' + F[n-1] + '\\cdot ' + F[n] + '=' + (F[n-1]*F[n])]
+      ];
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
