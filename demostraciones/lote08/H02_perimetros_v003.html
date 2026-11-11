@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perímetro de polígonos y de la circunferencia | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="perimetros">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Geometría</li>
+      <li>Áreas y perímetros</li>
+      <li><b>Perímetros</b></li>
+    </ol>
+    <h1>Perímetro de polígonos y de la circunferencia</h1>
+    <p class="lede">El perímetro es la longitud del contorno de una figura. Si la figura rueda una vuelta completa sobre una recta, avanza exactamente su perímetro.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Míralo moverse: el rectángulo</h2>
+  <p>El rectángulo \(ABCD\) tiene lados \(a\) y \(b\). Está apoyado sobre una recta y rueda sin resbalar, girando cada vez sobre un vértice. Cada lado que se apoya deja marcado su largo en la recta. Cuando los cuatro lados se han apoyado, el largo total marcado es el perímetro.</p>
+  <div class="stage" data-scene="perimetro-rectangulo"></div>
+  <ul class="keys">
+    <li><b>Lados azules \(a\):</b> \(AB\) y \(CD\). Son lados opuestos y miden lo mismo.</li>
+    <li><b>Lados verdes \(b\):</b> \(BC\) y \(DA\). Son lados opuestos y miden lo mismo.</li>
+    <li><b>Vértices \(A\), \(B\), \(C\), \(D\):</b> las esquinas. El rectángulo gira sobre el vértice que toca la recta.</li>
+    <li><b>Trazos sobre la recta:</b> el largo que dejó cada lado al apoyarse, en el mismo color del lado.</li>
+    <li><b>Medida \(P\):</b> el largo total, de punta a punta, cuando se completó la vuelta.</li>
+  </ul>
+  <ol class="steps">
+    <li>El perímetro es la suma de los cuatro lados, en el orden en que se apoyan:
+      \[P=a+b+a+b\]</li>
+    <li>Se juntan los términos iguales: hay dos lados \(a\) y dos lados \(b\):
+      \[P=2a+2b\]</li>
+    <li>Se saca factor común \(2\):
+      \[P=2\,(a+b)\]</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Perímetro de cualquier polígono</h2>
+  <div class="def">
+    <h3>Perímetro de un polígono</h3>
+    \[P=l_1+l_2+l_3+\cdots+l_n\]
+    <p>\(l_1, l_2, \dots, l_n\) son las longitudes de los \(n\) lados, todas en la misma unidad.</p>
+  </div>
+  <div class="tblwrap">
+    <table class="tbl">
+      <tr><th>Figura</th><th>Lados</th><th>Perímetro</th><th>Por qué</th></tr>
+      <tr><td>Triángulo</td><td>\(a,\ b,\ c\)</td><td>\(P=a+b+c\)</td><td>Se suman sus tres lados.</td></tr>
+      <tr><td>Rectángulo</td><td>\(a,\ b,\ a,\ b\)</td><td>\(P=2a+2b\)</td><td>Los lados opuestos son iguales.</td></tr>
+      <tr><td>Cuadrado</td><td>\(a,\ a,\ a,\ a\)</td><td>\(P=4a\)</td><td>Los cuatro lados son iguales.</td></tr>
+      <tr><td>Polígono regular de \(n\) lados</td><td>\(l\), repetido \(n\) veces</td><td>\(P=n\cdot l\)</td><td>Sumar \(n\) veces \(l\) es multiplicar por \(n\).</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Míralo moverse: la circunferencia</h2>
+  <p>Una rueda de centro \(O\) y radio \(r\) da una vuelta completa sobre una recta, sin resbalar. El borde naranja de la rueda se va traspasando a la recta. Las marcas \(d\), \(2d\) y \(3d\) miden el recorrido usando el diámetro \(d=2r\) como unidad. La rueda siempre pasa las tres marcas y avanza un poco más: llega a \(\pi\cdot d\).</p>
+  <div class="stage" data-scene="perimetro-circulo"></div>
+  <ul class="keys">
+    <li><b>Centro \(O\):</b> el centro de la rueda.</li>
+    <li><b>Radio \(r\):</b> el trazo azul, desde \(O\) hasta el punto del borde que partió tocando la recta.</li>
+    <li><b>Borde naranja:</b> la parte de la circunferencia que todavía no ha tocado la recta.</li>
+    <li><b>Trazo naranja sobre la recta:</b> lo recorrido. Mide lo mismo que el borde que ya se apoyó.</li>
+    <li><b>Marcas \(d\), \(2d\), \(3d\):</b> una, dos y tres veces el diámetro.</li>
+    <li><b>Marca \(\pi d\):</b> el punto donde termina la vuelta completa. Es el perímetro de la circunferencia.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>De dónde sale \(P=2\pi r\), paso a paso</h2>
+  <ol class="steps">
+    <li>Todas las circunferencias tienen la misma forma: una es una ampliación o una reducción de otra. Al ampliar una figura, todas sus longitudes se multiplican por el mismo número. Por eso, si el diámetro se duplica, el perímetro también se duplica.</li>
+    <li>Entonces el cociente entre el perímetro y el diámetro es el mismo en todas las circunferencias, grandes o chicas. Compruébalo cambiando \(r\) en la animación: el recorrido cambia, pero el cociente no.</li>
+    <li>A ese número fijo se le dio un nombre, la letra griega \(\pi\):
+      \[\pi=\frac{P}{d}\approx 3{,}1416\]</li>
+    <li>Se multiplican ambos lados por \(d\) para despejar el perímetro:
+      \[P=\pi\cdot d\]</li>
+    <li>El diámetro son dos radios, \(d=2r\). Se reemplaza:
+      \[P=\pi\cdot 2r=2\pi r\]</li>
+  </ol>
+  <div class="def">
+    <h3>Perímetro de la circunferencia</h3>
+    \[P=\pi\,d=2\pi r\]
+    <p>\(r\) es el radio y \(d=2r\) es el diámetro. El perímetro queda en la misma unidad que el radio.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Segunda demostración: con la fórmula de longitud de arco</h2>
+  <p>La misma fórmula \(P=2\pi r\) se puede demostrar con cálculo integral. Esta segunda demostración usa derivadas e integrales: mide la circunferencia sumando trazos rectos muy pequeños apoyados sobre ella.</p>
+
+  <div class="why">
+    <h3>De dónde sale la fórmula de longitud de arco</h3>
+    <ol class="steps">
+      <li>Se quiere medir el largo de una curva \(y=f(x)\) entre \(x=a\) y \(x=b\). El intervalo se divide en \(n\) partes iguales de ancho \(\Delta x\), y los puntos de la curva se unen con trazos rectos.</li>
+      <li>Cada trazo es la hipotenusa de un triángulo rectángulo de catetos \(\Delta x\) y \(\Delta y_i\). Por el teorema de Pitágoras, su largo es:
+        \[\Delta s_i=\sqrt{(\Delta x)^2+(\Delta y_i)^2}\]</li>
+      <li>Dentro de la raíz se saca factor común \((\Delta x)^2\):
+        \[\Delta s_i=\sqrt{(\Delta x)^2\left[1+\left(\frac{\Delta y_i}{\Delta x}\right)^2\right]}\]</li>
+      <li>La raíz de \((\Delta x)^2\) es \(\Delta x\), porque \(\Delta x&gt;0\):
+        \[\Delta s_i=\sqrt{1+\left(\frac{\Delta y_i}{\Delta x}\right)^2}\;\Delta x\]</li>
+      <li>El largo de la curva es aproximadamente la suma de los \(n\) trazos:
+        \[L\approx\sum_{i=1}^{n}\sqrt{1+\left(\frac{\Delta y_i}{\Delta x}\right)^2}\;\Delta x\]</li>
+      <li>Cuando \(n\) crece, \(\Delta x\) se hace muy pequeño, los trazos se pegan a la curva y el cociente \(\dfrac{\Delta y_i}{\Delta x}\) se acerca a la derivada \(f'(x)\). El límite de la suma es una integral definida:
+        \[L=\int_a^b\sqrt{1+\bigl[f'(x)\bigr]^2}\,dx\]</li>
+    </ol>
+  </div>
+  <div class="def">
+    <h3>Longitud de arco</h3>
+    \[L=\int_a^b\sqrt{1+\bigl[f'(x)\bigr]^2}\,dx\]
+    <p>\(f'(x)\) es la derivada de la función cuya gráfica es la curva, entre \(x=a\) y \(x=b\).</p>
+  </div>
+
+  <h3>Míralo moverse: trazos rectos sobre un cuarto de circunferencia</h3>
+  <p>La figura muestra el cuarto de circunferencia de radio \(r\) que está en el primer cuadrante, desde el punto \((0,r)\) hasta el punto \((r,0)\). Se divide el tramo de \(0\) a \(r\) del eje \(x\) en \(n\) partes iguales y se unen los puntos con trazos rectos. Al crecer \(n\), la suma de los trazos se acerca al largo del cuarto de circunferencia, y cuatro veces esa suma se acerca a \(2\pi r\).</p>
+  <div class="stage" data-scene="longitud-arco"></div>
+  <ul class="keys">
+    <li><b>Centro \(O\) y marcas \(r\):</b> el centro de la circunferencia y su radio, marcado sobre los dos ejes.</li>
+    <li><b>Arco negro:</b> el cuarto de circunferencia, gráfica de \(y=\sqrt{r^2-x^2}\).</li>
+    <li><b>Trazos rojos:</b> los \(n\) trazos rectos que aproximan el arco.</li>
+    <li><b>Trazo naranja \(\Delta s\):</b> uno de los trazos, destacado.</li>
+    <li><b>Cateto azul \(\Delta x\):</b> el avance horizontal de ese trazo. Es igual para todos: \(\Delta x=\dfrac{r}{n}\).</li>
+    <li><b>Cateto verde \(\Delta y\):</b> el cambio vertical de ese trazo.</li>
+  </ul>
+
+  <h3>Demostración paso a paso</h3>
+  <ol class="steps">
+    <li>La circunferencia de centro \(O\) y radio \(r\) tiene ecuación \(x^2+y^2=r^2\). Se despeja \(y\) para la mitad superior:
+      \[y=f(x)=\sqrt{r^2-x^2}\]</li>
+    <li>La circunferencia es simétrica respecto de los dos ejes, así que sus cuatro cuartos miden lo mismo. Se llama \(L\) al largo del cuarto que va de \(x=0\) a \(x=r\):
+      \[P=4L\]</li>
+    <li>Se deriva \(f(x)=(r^2-x^2)^{1/2}\) con la regla de la cadena. La derivada de lo de adentro, \(r^2-x^2\), es \(-2x\):
+      \[f'(x)=\frac{1}{2}\,(r^2-x^2)^{-1/2}\cdot(-2x)=\frac{-x}{\sqrt{r^2-x^2}}\]</li>
+    <li>Se eleva al cuadrado. El signo menos desaparece y la raíz se cancela con el cuadrado:
+      \[\bigl[f'(x)\bigr]^2=\frac{x^2}{r^2-x^2}\]</li>
+    <li>Se suma \(1\), escrito con el mismo denominador:
+      \[1+\bigl[f'(x)\bigr]^2=\frac{r^2-x^2}{r^2-x^2}+\frac{x^2}{r^2-x^2}=\frac{r^2}{r^2-x^2}\]</li>
+    <li>Se saca raíz cuadrada. Como \(r&gt;0\), la raíz de \(r^2\) es \(r\):
+      \[\sqrt{1+\bigl[f'(x)\bigr]^2}=\frac{r}{\sqrt{r^2-x^2}}\]</li>
+    <li>Se reemplaza en la fórmula de longitud de arco, con \(a=0\) y \(b=r\):
+      \[L=\int_0^r\frac{r}{\sqrt{r^2-x^2}}\,dx\]</li>
+    <li>Una primitiva es \(r\cdot\arcsin\!\left(\dfrac{x}{r}\right)\). Se comprueba derivando: la derivada de \(\arcsin(u)\) es \(\dfrac{1}{\sqrt{1-u^2}}\), y con \(u=\dfrac{x}{r}\) la regla de la cadena agrega el factor \(\dfrac{1}{r}\):
+      \[\frac{d}{dx}\left[r\cdot\arcsin\!\left(\frac{x}{r}\right)\right]=r\cdot\frac{1}{\sqrt{1-\dfrac{x^2}{r^2}}}\cdot\frac{1}{r}=\frac{1}{\sqrt{\dfrac{r^2-x^2}{r^2}}}=\frac{r}{\sqrt{r^2-x^2}}\]</li>
+    <li>En \(x=r\) el denominador \(\sqrt{r^2-x^2}\) vale cero: ahí la tangente a la circunferencia es vertical y la derivada no existe. Por eso se integra hasta un valor \(c\) menor que \(r\), y después se hace que \(c\) se acerque a \(r\):
+      \[L=\lim_{c\to r^-}\left[r\cdot\arcsin\!\left(\frac{x}{r}\right)\right]_0^c=\lim_{c\to r^-}\left[r\cdot\arcsin\!\left(\frac{c}{r}\right)-r\cdot\arcsin(0)\right]\]</li>
+    <li>Cuando \(c\) se acerca a \(r\), el cociente \(\dfrac{c}{r}\) se acerca a \(1\). Además \(\arcsin(1)=\dfrac{\pi}{2}\), porque \(\operatorname{sen}\dfrac{\pi}{2}=1\), y \(\arcsin(0)=0\), porque \(\operatorname{sen}0=0\):
+      \[L=r\cdot\frac{\pi}{2}-r\cdot 0=\frac{\pi r}{2}\]</li>
+    <li>La circunferencia completa son cuatro cuartos:
+      \[P=4L=4\cdot\frac{\pi r}{2}=2\pi r\]</li>
+  </ol>
+  <div class="def">
+    <h3>El mismo resultado por los dos caminos</h3>
+    \[P=4\int_0^r\frac{r}{\sqrt{r^2-x^2}}\,dx=2\pi r\]
+    <p>La longitud de arco confirma la fórmula obtenida con la rueda: el perímetro de la circunferencia es \(2\pi r\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Un rectángulo tiene lados de \(8\ \text{cm}\) y \(5\ \text{cm}\). Calcula su perímetro.</p>
+    <details><summary>Pista</summary><div><p>Hay dos lados de \(8\ \text{cm}\) y dos de \(5\ \text{cm}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Datos:
+          \[a=8\ \text{cm}\qquad b=5\ \text{cm}\]</li>
+        <li>Fórmula:
+          \[P=2a+2b\]</li>
+        <li>Se reemplaza:
+          \[P=2\cdot 8\ \text{cm}+2\cdot 5\ \text{cm}\]</li>
+        <li>Productos:
+          \[P=16\ \text{cm}+10\ \text{cm}\]</li>
+        <li>Resultado:
+          \[P=26\ \text{cm}\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el perímetro de una circunferencia de radio \(7\ \text{cm}\).</p>
+    <details><summary>Pista</summary><div><p>Usa \(P=2\pi r\). Deja primero el resultado con \(\pi\) y después aproxima.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fórmula:
+          \[P=2\pi r\]</li>
+        <li>Se reemplaza \(r=7\ \text{cm}\):
+          \[P=2\cdot\pi\cdot 7\ \text{cm}=14\pi\ \text{cm}\]</li>
+        <li>Con \(\pi\approx 3{,}1416\):
+          \[P\approx 14\cdot 3{,}1416\ \text{cm}\approx 43{,}98\ \text{cm}\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>La rueda de una bicicleta tiene \(0{,}7\ \text{m}\) de diámetro. ¿Cuántas vueltas completas da para recorrer \(1\ \text{km}\)?</p>
+    <details><summary>Pista</summary><div><p>En cada vuelta la rueda avanza su perímetro, \(\pi d\). Divide la distancia total por ese avance. Recuerda que \(1\ \text{km}=1000\ \text{m}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Avance en una vuelta, el perímetro de la rueda:
+          \[P=\pi\,d=\pi\cdot 0{,}7\ \text{m}\]</li>
+        <li>Con \(\pi\approx 3{,}1416\):
+          \[P\approx 3{,}1416\cdot 0{,}7\ \text{m}\approx 2{,}199\ \text{m}\]</li>
+        <li>La distancia en metros:
+          \[1\ \text{km}=1000\ \text{m}\]</li>
+        <li>Número de vueltas, distancia dividida por el avance de una vuelta:
+          \[\frac{1000\ \text{m}}{2{,}199\ \text{m}}\approx 454{,}7\]</li>
+        <li>Respuesta: da \(454\) vueltas completas y está terminando la vuelta número \(455\) cuando llega al kilómetro.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">NV-L08-H02 · v003 · APR de Óscar, 11-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('perimetro-rectangulo', (function(){
+  var num = OA.num, NM = ['A','B','C','D'];
+  function state(a, b, u){
+    var V = [[0,0],[a,0],[a,b],[0,b]], j = Math.min(3, Math.floor(u + 1e-9)), fr = u >= 3 ? 0 : u - j, k;
+    function rot(p, an){ var cs = Math.cos(an), sn = Math.sin(an); V = V.map(function(q){ var dx = q[0] - p[0], dy = q[1] - p[1]; return [p[0] + dx*cs - dy*sn, p[1] + dx*sn + dy*cs]; }); }
+    for (k = 0; k < j; k++) rot(V[(k + 1) % 4], -Math.PI/2);
+    if (fr > 0) rot(V[(j + 1) % 4], -Math.PI/2*OA.smooth(fr));
+    return {V:V, j:j, fr:fr};
+  }
+  return {
+    world:{x0:-0.7, x1:10.7, y0:-2.2, y1:4.0}, aspect:6.2/11.4,
+    aria:'Rectángulo A B C D de lados a y b que rueda sobre una recta. Cada lado deja marcado su largo; al completar la vuelta, el largo total es el perímetro, 2 a más 2 b.',
+    labels:[['A','A','A','pt'], ['B','B','B','pt'], ['C','C','C','pt'], ['D','D','D','pt'], ['s0','a','a','c-sec pt'], ['s1','b','b','c-alt pt'], ['s2','a','a','c-sec pt'], ['s3','b','b','c-alt pt'], ['t0','a','a','c-sec pt'], ['t1','b','b','c-alt pt'], ['t2','a','a','c-sec pt'], ['t3','b','b','c-alt pt'], ['P','P=2a+2b','P = 2a + 2b','diff']],
+    sliders:[{id:'a', tex:'a', min:1.2, max:3, step:0.05, value:2.6}, {id:'b', tex:'b', min:1, max:2, step:0.05, value:1.6}, {id:'u', tex:'\\text{giro}', min:0, max:3, step:0.01, value:0}],
+    legend:'<span><i class="sw sec"></i> lados \\(a\\)</span><span><i class="sw alt"></i> lados \\(b\\)</span><span><i class="sw rise"></i> perímetro \\(P\\)</span>',
+    anim:{run:13000, hold:3200, still:1, apply:function(p, v){ v.u = OA.level(p, 3); }},
+    draw:function(S, v){
+      var a = v.a, b = v.b, st = state(a, b, v.u), V = st.V, C = S.C, W = S.W, len = [a, b, a, b], col = [C.sec, C.alt, C.sec, C.alt], i, x = 0;
+      S.line(W.x0, 0, W.x1, 0, {color:C.muted, width:1.2});
+      var cx = (V[0][0] + V[2][0])/2, cy = (V[0][1] + V[2][1])/2;
+      S.poly(V, {fill:C.sec, alpha:0.07});
+      for (i = 0; i < 4; i++){
+        var p = V[i], q = V[(i + 1) % 4], mx = (p[0] + q[0])/2, my = (p[1] + q[1])/2, d = Math.sqrt((mx - cx)*(mx - cx) + (my - cy)*(my - cy)) || 1, nx = (mx - cx)/d, ny = (my - cy)/d;
+        S.line(p[0], p[1], q[0], q[1], {color:col[i], width:3});
+        S.lab('s' + i, S.X(mx) + nx*13, S.Y(my) - ny*13, -50, -50, !(i === st.j && st.fr < 0.12));
+      }
+      for (i = 0; i < 4; i++){
+        var landed = i <= st.j, o = {color:C.ink, width:1.3};
+        if (landed){ S.line(x, 0, x + len[i], 0, {color:col[i], width:5}); S.pline(S.X(x), S.Y(0) - 6, S.X(x), S.Y(0) + 6, o); S.pline(S.X(x + len[i]), S.Y(0) - 6, S.X(x + len[i]), S.Y(0) + 6, o); }
+        S.lab('t' + i, S.X(x + len[i]/2), S.Y(0) + 9, -50, 0, landed);
+        x += len[i];
+      }
+      for (i = 0; i < 4; i++){
+        var vx = V[i][0] - cx, vy = V[i][1] - cy, dd = Math.sqrt(vx*vx + vy*vy) || 1, low = V[i][1] < 0.12;
+        S.dot(V[i][0], V[i][1], C.ink);
+        S.lab(NM[i], S.X(V[i][0]) + vx/dd*15, S.Y(V[i][1]) + (low ? 17 : -vy/dd*15), -50, -50, true);
+      }
+      var done = v.u >= 2.999, by = S.Y(0) + 38, oo = {color:C.rise, width:1.6};
+      if (done){ S.pline(S.X(0), by, S.X(x), by, oo); S.pline(S.X(0), by - 5, S.X(0), by + 1, oo); S.pline(S.X(x), by - 5, S.X(x), by + 1, oo); }
+      S.lab('P', S.X(x/2), by + 3, -50, 0, done);
+    },
+    caption:function(v){ var j = Math.min(3, Math.floor(v.u + 1e-9)); return v.u >= 2.999 ? ['Los cuatro lados se apoyaron: el largo total es el perímetro, ', 'P=2a+2b', 'P = 2a + 2b'] : ['Lados ya apoyados en la recta: ', ['a','a+b','a+b+a','a+b+a+b'][j], ['a','a + b','a + b + a','a + b + a + b'][j]]; },
+    readout:function(v){
+      var a = v.a, b = v.b, j = Math.min(3, Math.floor(v.u + 1e-9)), len = [a, b, a, b], t = [], s = 0, i;
+      for (i = 0; i <= j; i++){ t.push(num(len[i],2)); s += len[i]; }
+      return [
+        ['', 'a=' + num(a,2) + '\\qquad b=' + num(b,2)],
+        ['d', '\\text{apoyado: }' + t.join('+') + (j ? '=' + num(s,2) : '')],
+        ['', 'P=2a+2b=2\\cdot ' + num(a,2) + '+2\\cdot ' + num(b,2) + '=' + num(2*a + 2*b,2)]
+      ];
+    }
+  };
+})());
+
+OA.scene('perimetro-circulo', (function(){
+  var num = OA.num, PI = Math.PI;
+  return {
+    world:{x0:-1.5, x1:9.1, y0:-1.7, y1:2.9}, aspect:4.6/10.6,
+    aria:'Rueda de radio r que da una vuelta completa sobre una recta sin resbalar. El recorrido de una vuelta es pi por el diámetro, un poco más de tres diámetros.',
+    labels:[['O','O','O','pt'], ['r','r','r','c-sec pt'], ['d1','d','d','pt'], ['d2','2d','2d','pt'], ['d3','3d','3d','pt'], ['pd','\\pi d','πd','diff'], ['z','0','0','pt']],
+    sliders:[{id:'r', tex:'r', min:0.5, max:1.2, step:0.01, value:1.0}, {id:'u', tex:'\\text{vuelta}', min:0, max:1, step:0.005, value:0}],
+    legend:'<span><i class="sw rise"></i> borde que se traspasa a la recta</span><span><i class="sw sec"></i> radio \\(r\\)</span>',
+    anim:{run:11000, hold:3200, still:1, apply:function(p, v){ v.u = OA.smooth(Math.min(1, p/0.97)); }},
+    draw:function(S, v){
+      var r = v.r, u = v.u, C = S.C, W = S.W, ph = 2*PI*u, L = 2*PI*r, x = L*u, rp = S.X(r) - S.X(0), i, ids = ['d1','d2','d3'];
+      S.line(W.x0, 0, W.x1, 0, {color:C.muted, width:1.2});
+      S.line(0, 0, x, 0, {color:C.rise, width:5});
+      var o = {color:C.ink, width:1.3};
+      S.pline(S.X(0), S.Y(0) - 6, S.X(0), S.Y(0) + 6, o); S.lab('z', S.X(0), S.Y(0) + 9, -50, 0, true);
+      for (i = 1; i <= 3; i++){ var xd = 2*r*i; S.pline(S.X(xd), S.Y(0) - 6, S.X(xd), S.Y(0) + 6, o); S.lab(ids[i-1], S.X(xd), S.Y(0) + 9, -50, 0, true); }
+      S.pline(S.X(L), S.Y(0) - 8, S.X(L), S.Y(0) + 8, {color:C.rise, width:2}); S.lab('pd', S.X(L), S.Y(0) + 30, -50, 0, true);
+      S.arc(x, r, rp, 0, 2*PI, {color:C.ink, width:1.4});
+      if (u < 0.999) S.arc(x, r, rp, -PI/2, -PI/2 + (2*PI - ph), {color:C.rise, width:4});
+      var mx = x - r*Math.sin(ph), my = r - r*Math.cos(ph);
+      S.line(x, r, mx, my, {color:C.sec, width:2.2});
+      S.dot(x, r, C.ink); S.dot(mx, my, C.rise);
+      S.lab('O', S.X(x) + 7, S.Y(r) - 7, 0, -100, true);
+      var ux = -Math.cos(ph), uy = Math.sin(ph);
+      S.lab('r', S.X((x + mx)/2) + ux*12, S.Y((r + my)/2) + uy*12, -50, -50, true);
+    },
+    caption:function(v){ return v.u >= 0.999 ? ['Una vuelta completa: el recorrido es el perímetro, ', 'P=\\pi\\,d=2\\pi r', 'P = πd = 2πr'] : ['La rueda avanza lo mismo que mide el borde que ya se apoyó; el diámetro es ', 'd=2r', 'd = 2r']; },
+    readout:function(v){
+      var r = v.r, d = 2*r, x = 2*PI*r*v.u;
+      return [
+        ['', 'r=' + num(r,2) + '\\qquad d=2r=' + num(d,2)],
+        ['d', '\\text{recorrido}=' + num(x,2) + '\\qquad\\dfrac{\\text{recorrido}}{d}=' + num(x/d,2)],
+        ['', 'P=2\\pi r=2\\cdot 3{,}1416\\cdot ' + num(r,2) + '=' + num(2*PI*r,2)],
+        ['', '\\dfrac{P}{d}=\\dfrac{' + num(2*PI*r,2) + '}{' + num(d,2) + '}=\\pi\\approx 3{,}14']
+      ];
+    }
+  };
+})());
+
+OA.scene('longitud-arco', (function(){
+  var num = OA.num, PI = Math.PI, NS = [1, 2, 3, 4, 6, 8, 12, 16, 24, 40];
+  function geo(r, n){
+    var pts = [], i, s = 0;
+    for (i = 0; i <= n; i++){ var x = r*i/n; pts.push([x, Math.sqrt(Math.max(0, r*r - x*x))]); }
+    for (i = 1; i <= n; i++) s += Math.sqrt(Math.pow(pts[i][0] - pts[i-1][0], 2) + Math.pow(pts[i][1] - pts[i-1][1], 2));
+    return {pts:pts, sum:s};
+  }
+  return {
+    world:{x0:-0.55, x1:3.05, y0:-0.55, y1:2.95}, aspect:3.5/3.6,
+    aria:'Cuarto de circunferencia de radio r aproximado por n trazos rectos. Un trazo destacado muestra sus catetos delta x y delta y. La suma de los trazos se acerca a pi por r dividido en 2, y cuatro veces la suma se acerca a 2 pi r.',
+    labels:[['O','O','O','pt'], ['rx','r','r','pt'], ['ry','r','r','pt'], ['dx','\\Delta x','Δx','c-sec pt'], ['dy','\\Delta y','Δy','c-alt pt'], ['ds','\\Delta s','Δs','diff'], ['x','x','x',''], ['y','y','y',''], ['f','y=\\sqrt{r^2-x^2}','y = √(r² − x²)','pt']],
+    sliders:[{id:'r', tex:'r', min:1, max:2.5, step:0.05, value:1.65}, {id:'n', tex:'n', min:1, max:40, step:1, value:4}],
+    legend:'<span><i class="sw"></i> cuarto de circunferencia</span><span><i class="sw tan"></i> trazos rectos</span><span><i class="sw rise"></i> trazo destacado \\(\\Delta s\\)</span><span><i class="sw sec"></i> \\(\\Delta x\\)</span><span><i class="sw alt"></i> \\(\\Delta y\\)</span>',
+    anim:{run:24000, hold:3500, still:0.35, apply:function(p, v){ var k = Math.min(NS.length - 1, Math.floor(p*NS.length)); v.n = NS[k]; }},
+    draw:function(S, v){
+      var r = v.r, n = Math.round(v.n), g = geo(r, n), C = S.C, W = S.W, i, h = Math.max(1, Math.ceil(n/2));
+      S.line(W.x0, 0, W.x1, 0, {color:C.muted, width:1.3}); S.line(0, W.y0, 0, W.y1, {color:C.muted, width:1.3});
+      S.curve(function(x){ return Math.sqrt(Math.max(0, r*r - x*x)); }, 0, r, {color:C.ink, width:1.6, n:200});
+      for (i = 1; i <= n; i++) S.line(g.pts[i-1][0], g.pts[i-1][1], g.pts[i][0], g.pts[i][1], {color:C.tan, width:2.4});
+      if (n <= 16) for (i = 0; i <= n; i++) S.dot(g.pts[i][0], g.pts[i][1], C.tan);
+      var a = g.pts[h-1], b = g.pts[h], px = Math.abs(S.X(b[0]) - S.X(a[0])), big = px > 34;
+      S.poly([a, [b[0], a[1]], b], {fill:C.rise, alpha:0.10});
+      S.line(a[0], a[1], b[0], a[1], {color:C.sec, width:3}); S.line(b[0], a[1], b[0], b[1], {color:C.alt, width:3}); S.line(a[0], a[1], b[0], b[1], {color:C.rise, width:4});
+      S.dot(a[0], a[1], C.rise); S.dot(b[0], b[1], C.rise);
+      S.dot(0, 0, C.ink); S.dot(r, 0, C.ink); S.dot(0, r, C.ink);
+      S.lab('O', S.X(0) - 7, S.Y(0) + 6, -100, 0, true);
+      S.lab('rx', S.X(r), S.Y(0) + 8, -50, 0, true); S.lab('ry', S.X(0) - 8, S.Y(r), -100, -50, true);
+      S.lab('dx', S.X((a[0] + b[0])/2), S.Y(a[1]) - 7, -50, -100, big);
+      S.lab('dy', S.X(b[0]) + 8, S.Y((a[1] + b[1])/2), 0, -50, big && Math.abs(S.Y(b[1]) - S.Y(a[1])) > 22);
+      S.lab('ds', S.X((a[0] + b[0])/2) - 9, S.Y((a[1] + b[1])/2) + 9, -100, 0, big);
+      S.lab('x', S.w - 6, S.Y(0) + 6, -100, 0, true); S.lab('y', S.X(0) + 7, 4, 0, 0, true);
+      S.lab('f', S.X(r*0.34), S.Y(r*0.17), -50, -50, true);
+    },
+    caption:function(v){ var n = Math.round(v.n); return n === 1 ? 'Con un solo trazo recto la aproximación es mala: el trazo corta camino por dentro del arco' : ['Con ' + n + ' trazos rectos; cada uno mide ', '\\Delta s=\\sqrt{(\\Delta x)^2+(\\Delta y)^2}', 'Δs = √(Δx² + Δy²)']; },
+    readout:function(v){
+      var r = v.r, n = Math.round(v.n), g = geo(r, n);
+      return [
+        ['', 'r=' + num(r,2) + '\\qquad n=' + n + '\\qquad\\Delta x=\\dfrac{r}{n}=' + num(r/n,3)],
+        ['d', '\\displaystyle\\sum_{i=1}^{' + n + '}\\Delta s_i=' + num(g.sum,3) + '\\qquad\\dfrac{\\pi r}{2}=' + num(PI*r/2,3)],
+        ['d', '4\\displaystyle\\sum_{i=1}^{' + n + '}\\Delta s_i=' + num(4*g.sum,3)],
+        ['', 'P=2\\pi r=2\\cdot 3{,}1416\\cdot ' + num(r,2) + '=' + num(2*PI*r,3)]
+      ];
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
