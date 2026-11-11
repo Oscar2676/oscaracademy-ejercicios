@@ -131,10 +131,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
 <section>
   <h2>Míralo moverse</h2>
-  <p>En el triángulo \(ABC\), la bisectriz del ángulo en \(A\) corta al lado \(BC\) en el punto \(D\). El vértice \(A\) se mueve. Los segmentos \(BD\) y \(DC\) cambian, pero su razón es siempre igual a la razón entre los lados \(AB\) y \(AC\).</p>
+  <p>En el triángulo \(ABC\), la bisectriz del ángulo en \(A\) corta al lado \(BC\) en el punto \(D\). La bisectriz se llama \(b_A\), que significa bisectriz del ángulo en \(A\). Divide ese ángulo en dos ángulos iguales, marcados \(\alpha\) y \(\alpha\). La animación primero traza \(b_A\): parte en el vértice \(A\) y avanza hasta terminar en \(D\). Después el vértice \(A\) se mueve. Los segmentos \(BD\) y \(DC\) cambian, pero su razón es siempre igual a la razón entre los lados \(AB\) y \(AC\).</p>
   <div class="stage" data-scene="bisectriz"></div>
   <ul class="keys">
-    <li><b>Segmento naranja \(AD\):</b> la bisectriz. Divide el ángulo en \(A\) en dos ángulos iguales, marcados con dos arcos.</li>
+    <li><b>Trazo naranja \(b_A\):</b> la bisectriz del ángulo en \(A\). Parte en el vértice \(A\) y termina en el punto \(D\) del lado \(BC\).</li>
+    <li><b>Ángulos \(\alpha\) y \(\alpha\):</b> las dos mitades del ángulo en \(A\), una a cada lado de la bisectriz. Están marcadas con un arco cada una y miden lo mismo.</li>
     <li><b>Segmento azul \(BD\) y segmento verde \(DC\):</b> las dos partes en que \(D\) divide al lado \(BC\).</li>
     <li><b>Trazos punteados \(d\):</b> las distancias desde \(D\) a los lados \(AB\) y \(AC\). Son perpendiculares a esos lados y miden lo mismo, porque todo punto de una bisectriz está a igual distancia de los dos lados del ángulo.</li>
   </ul>
@@ -230,7 +231,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">GE-L06-H02 · v001 · APR de Óscar, 10-nov-2026</span>
+  <span class="status">GE-L06-H02 · v002 · APR de Óscar, 11-nov-2026</span>
 </footer>
 </article>
 </div>
@@ -374,7 +375,14 @@ window.MathJax = {
       c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
       def.draw(S, I.v);
       var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
-      if (def.caption) I.cap.textContent = def.caption(I.v);
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
       var rows = def.readout ? def.readout(I.v) : [];
       I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
     };
@@ -450,25 +458,31 @@ OA.scene('bisectriz', (function(){
   return {
     world:{x0:-0.5, x1:8, y0:-0.5, y1:5.5}, aspect:6/8.5,
     aria:'Triángulo ABC con la bisectriz del ángulo en A cortando a BC en D. El vértice A se mueve; la razón entre BD y DC es siempre igual a la razón entre AB y AC.',
-    labels:[['A','A','A','pt'], ['B','B','B','pt'], ['C','C','C','pt'], ['D','D','D','pt'], ['bd','BD','BD','c-sec pt'], ['dc','DC','DC','c-alt pt'], ['d1','d','d',''], ['d2','d','d','']],
-    sliders:[{id:'c', tex:'A', min:0, max:1, step:0.005, value:0.1}],
-    legend:'<span><i class="sw rise"></i> bisectriz \\(AD\\)</span><span><i class="sw sec"></i> \\(BD\\)</span><span><i class="sw alt"></i> \\(DC\\)</span>',
-    anim:{run:10000, hold:1500, still:0.3, apply:function(p, v){ v.c = 0.5 - 0.45*Math.cos(2*Math.PI*p); }},
+    labels:[['A','A','A','pt'], ['B','B','B','pt'], ['C','C','C','pt'], ['D','D','D','pt'], ['b','b_A','b_A','diff'], ['al1','\\alpha','α','pt'], ['al2','\\alpha','α','pt'], ['bd','BD','BD','c-sec pt'], ['dc','DC','DC','c-alt pt'], ['d1','d','d',''], ['d2','d','d','']],
+    sliders:[{id:'c', tex:'A', min:0, max:1, step:0.005, value:0.1}, {id:'t', tex:'\\text{trazo } b_A', min:0, max:1, step:0.01, value:1}],
+    legend:'<span><i class="sw rise"></i> bisectriz \\(b_A\\) del ángulo en \\(A\\), de \\(A\\) a \\(D\\)</span><span><i class="sw sec"></i> \\(BD\\)</span><span><i class="sw alt"></i> \\(DC\\)</span>',
+    anim:{run:14000, hold:1500, still:0.45, apply:function(p, v){ if (p < 0.26){ v.t = OA.smooth(Math.min(1, p/0.22)); v.c = 0.05; } else { v.t = 1; v.c = 0.5 - 0.45*Math.cos(2*Math.PI*(p - 0.26)/0.74); } }},
     draw:function(S, v){
       var g = geo(v), A = g.A, Dp = g.D, Cc = S.C;
       S.poly([A, B, C], {fill:Cc.sec, alpha:0.06, color:Cc.ink, width:2});
-      seg(S, B, Dp, {color:Cc.sec, width:5}); seg(S, Dp, C, {color:Cc.alt, width:5});
-      seg(S, A, Dp, {color:Cc.rise, width:3});
-      var dd = {color:Cc.muted, width:1.5, dash:[4,3]}; seg(S, Dp, g.E, dd); seg(S, Dp, g.F, dd);
-      sq(S, g.E, unit(g.E, A), unit(g.E, Dp), 0.16); sq(S, g.F, unit(g.F, A), unit(g.F, Dp), 0.16);
+      var t = v.t == null ? 1 : v.t, done = t > 0.985, tip = [A[0] + (Dp[0]-A[0])*t, A[1] + (Dp[1]-A[1])*t];
+      if (done){ seg(S, B, Dp, {color:Cc.sec, width:5}); seg(S, Dp, C, {color:Cc.alt, width:5}); }
+      /* la bisectriz b es un trazo que parte en A y termina en D */
+      if (t > 0.01) seg(S, A, tip, {color:Cc.rise, width:3.5});
+      if (!done && t > 0.01) S.dot(tip[0], tip[1], Cc.rise);
+      if (done){ var dd = {color:Cc.muted, width:1.5, dash:[4,3]}; seg(S, Dp, g.E, dd); seg(S, Dp, g.F, dd);
+        sq(S, g.E, unit(g.E, A), unit(g.E, Dp), 0.16); sq(S, g.F, unit(g.F, A), unit(g.F, Dp), 0.16); }
       var aB = ang(A, B), aD = ang(A, Dp), aC = ang(A, C);
       S.arc(A[0], A[1], 34, aB, aD, {color:Cc.ink, width:1.5}); S.arc(A[0], A[1], 42, aD, aC, {color:Cc.ink, width:1.5});
-      [A, B, C].forEach(function(p){ S.dot(p[0], p[1], Cc.ink); }); S.dot(Dp[0], Dp[1], Cc.rise);
-      L(S,'A',A,0,-10,-50,-100); L(S,'B',B,-8,8,-100,0); L(S,'C',C,8,8,0,0); L(S,'D',Dp,0,10,-50,0);
-      L(S,'bd',mid(B,Dp),0,28,-50,0, D(B,Dp) > 0.9); L(S,'dc',mid(Dp,C),0,28,-50,0, D(Dp,C) > 0.9);
-      L(S,'d1',mid(Dp,g.E),-7,-7,-100,-100); L(S,'d2',mid(Dp,g.F),7,-7,0,-100);
+      var m1 = (aB + aD)/2, m2 = (aD + aC)/2, ra = 58;
+      S.lab('al1', S.X(A[0]) + ra*Math.cos(m1), S.Y(A[1]) - ra*Math.sin(m1), -50, -50, true); S.lab('al2', S.X(A[0]) + (ra + 8)*Math.cos(m2), S.Y(A[1]) - (ra + 8)*Math.sin(m2), -50, -50, true);
+      [A, B, C].forEach(function(p){ S.dot(p[0], p[1], Cc.ink); }); if (done) S.dot(Dp[0], Dp[1], Cc.rise);
+      L(S,'A',A,0,-10,-50,-100); L(S,'B',B,-8,8,-100,0); L(S,'C',C,8,8,0,0); L(S,'D',Dp,0,10,-50,0, done);
+      var ub = unit(A, Dp), mb = [A[0] + (tip[0]-A[0])*0.68, A[1] + (tip[1]-A[1])*0.68], sgn = Dp[0] >= A[0] ? 1 : -1; S.lab('b', S.X(mb[0]) - sgn*ub[1]*15, S.Y(mb[1]) - sgn*ub[0]*15 - 2, -50, -50, t > 0.55);
+      L(S,'bd',mid(B,Dp),0,28,-50,0, done && D(B,Dp) > 0.9); L(S,'dc',mid(Dp,C),0,28,-50,0, done && D(Dp,C) > 0.9);
+      L(S,'d1',mid(Dp,g.E),-7,-7,-100,-100, done); L(S,'d2',mid(Dp,g.F),7,-7,0,-100, done);
     },
-    caption:function(){ return 'D reparte el lado BC en la misma proporción que guardan los lados AB y AC'; },
+    caption:function(v){ return v.t != null && v.t < 0.985 ? ['La bisectriz del ángulo en A parte en el vértice A y avanza hasta cortar el lado BC en D: ', 'b_A', 'b_A'] : 'D reparte el lado BC en la misma proporción que guardan los lados AB y AC'; },
     readout:function(v){
       var g = geo(v), bd = D(B,g.D), dc = D(g.D,C);
       return [
