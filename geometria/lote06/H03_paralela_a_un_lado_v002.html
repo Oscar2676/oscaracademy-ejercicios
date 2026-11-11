@@ -162,7 +162,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     \[PQ\parallel AB\;\Longrightarrow\;\frac{CP}{CA}=\frac{CQ}{CB}=\frac{PQ}{AB}\]
   </div>
   <div class="why">
-    <h3>También vale para los trozos que quedan abajo</h3>
+    <h3>También vale para los trazos que quedan abajo</h3>
     <ol class="steps">
     <li>De la primera igualdad se multiplica en cruz:
         \[CP\cdot CB=CQ\cdot CA\]</li>
@@ -373,7 +373,14 @@ window.MathJax = {
       c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
       def.draw(S, I.v);
       var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
-      if (def.caption) I.cap.textContent = def.caption(I.v);
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
       var rows = def.readout ? def.readout(I.v) : [];
       I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
     };
