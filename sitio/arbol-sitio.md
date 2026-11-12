@@ -1,8 +1,8 @@
 # Árbol del sitio oscaracademy.org
 
-Generado: 2026-11-12T22:15:27.979Z · revisión de Wix 6866
+Generado: 2026-11-12T23:36:11.656Z · revisión de Wix 6872
 
-Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, 'cajas': 1024, 'titulosEnCajas': 8035, 'titulosConEnlace': 204}
+Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, 'cajas': 1024, 'titulosEnCajas': 8034, 'titulosConEnlace': 211}
 
 ## 1º Básico  (https://www.oscaracademy.org/1º-básico)  [no aparece en el menú del sitio]
   * MENÚ: Contar números enteros
@@ -156,9 +156,9 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
   * MENÚ: Números racionales
       - CAJA: Números racionales
           · Operatoria en los Racionales → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H01_operatoria_en_los_racionales_v005.html
-          · Propiedades de la adición de números racionales
+          · Propiedades de la adición de números racionales → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H04_propiedades_de_la_adicion_v001.html
           · Operaciones combinadas → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H03_operaciones_combinadas_v001.html
-          · Propiedades de la multiplicación de números racionales
+          · Propiedades de la multiplicación de números racionales → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H05_propiedades_de_la_multiplicacion_v006.html
           · Números Mixtos → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H02_numeros_mixtos_v004.html
   * MENÚ: Potencias
       - CAJA: Potencias
@@ -8553,21 +8553,20 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Introducción a las Fracciones
           · Operaciones con números mixtos
           · Definición de Fracción como número racional
-          · Suma y resta de fracciones
-          · Multiplicación de fracciones
+          · Suma y resta de fracciones → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H01_operatoria_en_los_racionales_v005.html
+          · Multiplicación de fracciones → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H01_operatoria_en_los_racionales_v005.html
           · Fracciones equivalentes
           · Multiplicación de números mixtos
-          · Operatoria con Fracciones
-          · Multiplicación de fracciones
+          · Operatoria con Fracciones → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H01_operatoria_en_los_racionales_v005.html
+          · División de fracciones → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H01_operatoria_en_los_racionales_v005.html
           · Comparación de Fracciones
-          · División de fracciones
-          · Numerador y Denominador
           · Amplificación de fracciones
-          · Denominador común
+          · Numerador y Denominador
           · Fracciones de igual denominador
-          · Composición de fracciones
+          · Denominador común
           · Fracciones de distinto denominador
-          · Números mixtos
+          · Composición de fracciones
+          · Números mixtos → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H02_numeros_mixtos_v004.html
   * MENÚ: Decimales
       - CAJA: Decimales
           · Decimal periódico y semiperiódico
