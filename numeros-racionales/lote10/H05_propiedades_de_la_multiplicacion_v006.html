@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propiedades de la multiplicación de números racionales | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="propiedades-multiplicacion" data-hoja="L10 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>1º Educación Media</li>
+      <li>Números racionales</li>
+      <li><b>Propiedades de la multiplicación de números racionales</b></li>
+    </ol>
+    <h1>Propiedades de la multiplicación de números racionales</h1>
+    <p class="lede">La multiplicación de números racionales cumple seis propiedades: clausura, conmutativa, asociativa, elemento neutro, inverso multiplicativo y distributiva respecto de la adición. Sirven para calcular más corto: al sacar un porcentaje, al multiplicar una receta o al repartir una cuenta. En lo que sigue, \(\dfrac{a}{b}\), \(\dfrac{c}{d}\) y \(\dfrac{e}{f}\) son números racionales, con \(a,b,c,d,e,f\in\mathbb{Z}\) y \(b,d,f\neq 0\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La propiedad distributiva se ve como un área. Primero aparece, de un solo color, el rectángulo entero de lados \(k\) y \(x+y\): su área es \(k\cdot(x+y)\). Después queda en blanco y un corte lo separa en dos: el rectángulo de lados \(x\) y \(k\) y, a continuación de él, el rectángulo de lados \(y\) y \(k\). Entonces se pinta el primero, de área \(k\cdot x\), y luego el segundo, de área \(k\cdot y\). El área total es la misma antes y después del corte: esa es la propiedad distributiva. Después de una pausa, el rectángulo vuelve a quedar en blanco y se pinta al revés, de derecha a izquierda: primero \(k\cdot y\) y después \(k\cdot x\). El área es la misma, así que \(k\cdot y+k\cdot x=k\cdot x+k\cdot y\): esa es la propiedad conmutativa de la adición.</p>
+  <div class="stage" data-scene="rac-distributiva"></div>
+  <ul class="keys">
+    <li><b>Alto \(k\):</b> el factor que multiplica a la suma. Es el mismo para los dos rectángulos.</li>
+    <li><b>Anchos \(x\) e \(y\):</b> los dos sumandos. Juntos forman el ancho total, \(x+y\).</li>
+    <li><b>Rectángulo azul:</b> su área es \(k\cdot x\).</li>
+    <li><b>Rectángulo naranjo:</b> su área es \(k\cdot y\).</li>
+    <li><b>Rectángulo verde.</b> Rectángulo completo: su área es \(k\cdot(x+y)\), y también es la suma de las dos áreas, \(k\cdot x+k\cdot y\).</li>
+    <li><b>De derecha a izquierda:</b> las mismas dos áreas sumadas en el otro orden, \(k\cdot y+k\cdot x\). El total no se altera.</li>
+    <li><b>De izquierda a derecha:</b> las mismas dos áreas sumadas en el otro orden, \(k\cdot x+k\cdot y\). El total no se altera.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>De dónde sale cada propiedad, paso a paso</h2>
+  <ol class="steps">
+    <li><b>Clausura.</b> El producto de dos números racionales es otro número racional. La razón: \(a\cdot c\) es un entero y \(b\cdot d\) es un entero distinto de \(0\):
+      \[\frac{a}{b}\cdot\frac{c}{d}=\frac{a\cdot c}{b\cdot d}\in\mathbb{Q}\]</li>
+    <li><b>Conmutativa.</b> El orden de los factores no cambia el producto. La razón: en los enteros \(a\cdot c=c\cdot a\) y \(b\cdot d=d\cdot b\):
+      \[\frac{a}{b}\cdot\frac{c}{d}=\frac{a\cdot c}{b\cdot d}=\frac{c\cdot a}{d\cdot b}=\frac{c}{d}\cdot\frac{a}{b}\]</li>
+    <li><b>Asociativa.</b> Con tres factores da lo mismo cuáles dos se multiplican primero:
+      \[\left(\frac{a}{b}\cdot\frac{c}{d}\right)\cdot\frac{e}{f}=\frac{a}{b}\cdot\left(\frac{c}{d}\cdot\frac{e}{f}\right)=\frac{a\cdot c\cdot e}{b\cdot d\cdot f}\]</li>
+    <li><b>Elemento neutro.</b> Multiplicar por \(1\) no cambia el número. El \(1\) es racional porque \(1=\dfrac{1}{1}\):
+      \[\frac{a}{b}\cdot 1=\frac{a}{b}\cdot\frac{1}{1}=\frac{a\cdot 1}{b\cdot 1}=\frac{a}{b}\]</li>
+    <li><b>Inverso multiplicativo.</b> Cada número racional distinto de \(0\) tiene un recíproco: la fracción con el numerador y el denominador intercambiados. El producto de los dos es \(1\). Hace falta \(a\neq 0\) para que \(\dfrac{b}{a}\) exista:
+      \[\frac{a}{b}\cdot\frac{b}{a}=\frac{a\cdot b}{b\cdot a}=1\]</li>
+    <li><b>Distributiva respecto de la adición.</b> Multiplicar un número por una suma es lo mismo que multiplicarlo por cada sumando y después sumar. Es lo que muestra la animación:
+      \[\frac{a}{b}\cdot\left(\frac{c}{d}+\frac{e}{f}\right)=\frac{a}{b}\cdot\frac{c}{d}+\frac{a}{b}\cdot\frac{e}{f}\]
+      Por ejemplo:
+      \[\frac{1}{2}\cdot\left(\frac{2}{3}+\frac{4}{3}\right)=\frac{1}{2}\cdot 2=1\qquad\qquad \frac{1}{2}\cdot\frac{2}{3}+\frac{1}{2}\cdot\frac{4}{3}=\frac{1}{3}+\frac{2}{3}=1\]</li>
+  </ol>
+  <div class="def">
+    <h3>Las seis propiedades de la multiplicación en \(\mathbb{Q}\)</h3>
+    \[\frac{a}{b}\cdot\frac{c}{d}\in\mathbb{Q}\qquad\qquad \frac{a}{b}\cdot\frac{c}{d}=\frac{c}{d}\cdot\frac{a}{b}\qquad\qquad \left(\frac{a}{b}\cdot\frac{c}{d}\right)\cdot\frac{e}{f}=\frac{a}{b}\cdot\left(\frac{c}{d}\cdot\frac{e}{f}\right)\]
+    \[\frac{a}{b}\cdot 1=\frac{a}{b}\qquad\qquad \frac{a}{b}\cdot\frac{b}{a}=1\ \ (a\neq 0)\qquad\qquad \frac{a}{b}\cdot\left(\frac{c}{d}+\frac{e}{f}\right)=\frac{a}{b}\cdot\frac{c}{d}+\frac{a}{b}\cdot\frac{e}{f}\]
+    <p>En orden: clausura, conmutativa, asociativa, elemento neutro, inverso multiplicativo y distributiva.</p>
+  </div>
+  <div class="why">
+    <h3>Por qué el cero no tiene inverso multiplicativo</h3>
+    <p>El inverso multiplicativo de \(0\) tendría que ser un número que multiplicado por \(0\) diera \(1\). Pero cualquier número multiplicado por \(0\) da \(0\), nunca \(1\). Por eso no se puede dividir por \(0\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de la vida cotidiana</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>En una panadería, Rosa compra la mitad de un pan de \(\dfrac{3}{4}\ \text{kg}\). Pedro compra \(\dfrac{3}{4}\) de un pan de \(\dfrac{1}{2}\ \text{kg}\). ¿Quién lleva más pan?</p>
+    <details><summary>Pista</summary><div><p>La palabra «de» indica multiplicación. Escribe los dos productos y compáralos. ¿Qué propiedad aparece?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Rosa:
+          \[\frac{1}{2}\cdot\frac{3}{4}=\frac{1\cdot 3}{2\cdot 4}=\frac{3}{8}\ \text{kg}\]</li>
+        <li>Pedro:
+          \[\frac{3}{4}\cdot\frac{1}{2}=\frac{3\cdot 1}{4\cdot 2}=\frac{3}{8}\ \text{kg}\]</li>
+        <li>Los productos son iguales por la propiedad conmutativa:
+          \[\frac{1}{2}\cdot\frac{3}{4}=\frac{3}{4}\cdot\frac{1}{2}\]</li>
+        <li>Respuesta: llevan lo mismo, \(\dfrac{3}{8}\ \text{kg}\) cada uno, es decir, \(375\ \text{g}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Para un cumpleaños se arman \(6\) bolsas de sorpresa. Cada bolsa lleva \(\dfrac{1}{4}\ \text{kg}\) de dulces y \(\dfrac{1}{2}\ \text{kg}\) de galletas. ¿Cuántos kilogramos hay que comprar en total? Calcúlalo de dos maneras.</p>
+    <details><summary>Pista</summary><div><p>Una manera: lo que pesa una bolsa, por \(6\). Otra manera: todos los dulces más todas las galletas. La propiedad distributiva dice que dan lo mismo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Primera manera, el peso de una bolsa multiplicado por \(6\):
+          \[6\cdot\left(\frac{1}{4}+\frac{1}{2}\right)=6\cdot\left(\frac{1}{4}+\frac{2}{4}\right)=6\cdot\frac{3}{4}=\frac{18}{4}=\frac{9}{2}\]</li>
+        <li>Segunda manera, los dulces de las \(6\) bolsas más las galletas de las \(6\) bolsas:
+          \[6\cdot\frac{1}{4}+6\cdot\frac{1}{2}=\frac{6}{4}+\frac{6}{2}=\frac{3}{2}+3=\frac{3}{2}+\frac{6}{2}=\frac{9}{2}\]</li>
+        <li>Las dos maneras coinciden por la propiedad distributiva:
+          \[6\cdot\left(\frac{1}{4}+\frac{1}{2}\right)=6\cdot\frac{1}{4}+6\cdot\frac{1}{2}=\frac{9}{2}=4\frac{1}{2}\]</li>
+        <li>Respuesta: hay que comprar \(4\dfrac{1}{2}\ \text{kg}\) en total: \(1\dfrac{1}{2}\ \text{kg}\) de dulces y \(3\ \text{kg}\) de galletas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Un vaso se llena con \(\dfrac{2}{5}\) de litro de jugo. ¿Cuántos vasos se pueden servir con \(1\) litro?</p>
+    <details><summary>Pista</summary><div><p>Hay que encontrar el número que multiplicado por \(\dfrac{2}{5}\) da \(1\). Ese número es el inverso multiplicativo de \(\dfrac{2}{5}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se busca el número de vasos \(n\) que cumple:
+          \[n\cdot\frac{2}{5}=1\]</li>
+        <li>Ese número es el inverso multiplicativo de \(\dfrac{2}{5}\), que se obtiene intercambiando el numerador y el denominador:
+          \[n=\frac{5}{2}\]</li>
+        <li>Comprobación:
+          \[\frac{5}{2}\cdot\frac{2}{5}=\frac{5\cdot 2}{2\cdot 5}=\frac{10}{10}=1\]</li>
+        <li>Como número mixto:
+          \[\frac{5}{2}=2\frac{1}{2}\]</li>
+        <li>Respuesta: se pueden servir \(2\) vasos completos y medio vaso más.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L10-H05 · v006 · APR de Óscar, 12-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('rac-distributiva', (function(){
+  function gcd(a, b){ return b ? gcd(b, a % b) : a; }
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function fq(n, d){ var g = gcd(Math.abs(n), d); n /= g; d /= g; return d === 1 ? String(n) : '\\dfrac{' + n + '}{' + d + '}'; }
+  function f4(v){ return fq(Math.round(v*4), 4); }
+  return {
+    world:{x0:-0.55, x1:3.25, y0:-0.5, y1:1.8}, aspect:2.3/3.8,
+    aria:'Rectángulo de alto k y ancho x más y, cortado en dos rectángulos: uno azul de área k por x y uno naranjo de área k por y. El área total es k por la suma de x e y.',
+    labels:[['k','k','k','pt'], ['x','x','x','c-sec pt'], ['y','y','y','diff'], ['kx','k\\cdot x','k·x','c-sec pt'], ['ky','k\\cdot y','k·y','diff'], ['xy','x+y','x+y','pt'], ['kxy','k\\cdot(x+y)','k·(x+y)','c-alt pt']],
+    sliders:[{id:'k', tex:'k', min:0.5, max:1.5, step:0.25, value:0.75}, {id:'x', tex:'x', min:0.5, max:1.5, step:0.25, value:1.5}, {id:'y', tex:'y', min:0.5, max:1.5, step:0.25, value:1}],
+    legend:'<span><i class="sw alt"></i> área \\(k\\cdot(x+y)\\)</span><span><i class="sw sec"></i> área \\(k\\cdot x\\)</span><span><i class="sw rise"></i> área \\(k\\cdot y\\)</span>',
+    anim:{run:24000, hold:4000, still:1, apply:function(p, v){ v.t = p; }},
+    onInput:function(v){ v.t = 1; },
+    draw:function(S, v){
+      var k = v.k, x = v.x, y = v.y, t = v.t == null ? 1 : v.t, C = S.C;
+      function ph(a, b){ return OA.smooth(cl((t - a)/(b - a))); }
+      var kA = ph(0, 0.08), kF = ph(0.15, 0.20), kC = ph(0.21, 0.27), k3 = ph(0.30, 0.40), k4 = ph(0.42, 0.52), kB = ph(0.58, 0.62), r1 = ph(0.64, 0.76), r2 = ph(0.78, 0.90);
+      var g = {color:C.muted, width:1}, o = {color:C.ink, width:1.5}, W = x + y;
+      /* 1º: el rectángulo entero, de lados k y x+y, de un solo color. */
+      if (kF < 1) S.poly([[0,0],[W*kA,0],[W*kA,k],[0,k]], {fill:C.alt, alpha:0.34*(1 - kF) + 0.001});
+      /* 3º y 4º: ya en blanco, se pinta primero k·x y después k·y. */
+      if (k3 > 0 && kB < 1) S.poly([[0,0],[x*k3,0],[x*k3,k],[0,k]], {fill:C.sec, alpha:0.36*(1 - kB) + 0.001});
+      if (k4 > 0 && kB < 1) S.poly([[x,0],[x+y*k4,0],[x+y*k4,k],[x,k]], {fill:C.rise, alpha:0.40*(1 - kB) + 0.001});
+      /* 5º y 6º: después de una pausa, al revés, de derecha a izquierda: primero k·y y después k·x. */
+      if (r1 > 0) S.poly([[W - y*r1,0],[W,0],[W,k],[W - y*r1,k]], {fill:C.rise, alpha:0.40});
+      if (r2 > 0) S.poly([[x - x*r2,0],[x,0],[x,k],[x - x*r2,k]], {fill:C.sec, alpha:0.36});
+      S.poly([[0,0],[W*kA,0],[W*kA,k],[0,k]], o);
+      /* 2º: el corte que lo separa en el rectángulo de lados x y k y el de lados y y k. */
+      if (kC > 0){ S.line(x, 0, x, k*kC, o); S.line(0, -0.12, x*kC, -0.12, {color:C.sec, width:2.5}); S.line(x, -0.12, x + y*kC, -0.12, {color:C.rise, width:2.5}); }
+      S.line(-0.14, 0, -0.14, k, g); S.line(-0.2, 0, -0.08, 0, g); S.line(-0.2, k, -0.08, k, g);
+      if (kA > 0.98){ S.line(0, k + 0.14, W, k + 0.14, g); S.line(0, k + 0.08, 0, k + 0.2, g); S.line(W, k + 0.08, W, k + 0.2, g); }
+      S.lab('k', S.X(-0.14) - 5, S.Y(k/2), -100, -50, true);
+      S.lab('xy', S.X(W/2), S.Y(k + 0.14) - 3, -50, -100, kA > 0.98);
+      S.lab('kxy', S.X(W/2), S.Y(k/2), -50, -50, kA > 0.9 && kF < 0.3);
+      S.lab('x', S.X(x/2), S.Y(-0.12) + 4, -50, 0, kC > 0.9);
+      S.lab('y', S.X(x + y/2), S.Y(-0.12) + 4, -50, 0, kC > 0.9);
+      S.lab('kx', S.X(x/2), S.Y(k/2), -50, -50, (k3 > 0.95 && kB < 0.3) || r2 > 0.95);
+      S.lab('ky', S.X(x + y/2), S.Y(k/2), -50, -50, (k4 > 0.95 && kB < 0.3) || r1 > 0.95);
+    },
+    caption:function(v){
+      var t = v.t == null ? 1 : v.t;
+      return t < 0.2 ? 'Un rectángulo entero de lados k y x + y: su área es k · (x + y)' : t < 0.29 ? 'Queda en blanco y un corte lo separa en dos rectángulos: uno de lados x y k, y otro de lados y y k' : t < 0.41 ? 'Se pinta el primero: su área es k · x' : t < 0.52 ? 'Se pinta el segundo: su área es k · y' : t < 0.6 ? 'Distributiva: k · (x + y) = k · x + k · y' : t < 0.77 ? 'Ahora al revés, de derecha a izquierda: primero k · y' : t < 0.9 ? 'Y después k · x' : 'Conmutativa: k · y + k · x = k · x + k · y = k · (x + y)';
+    },
+    readout:function(v){
+      var k = v.k, x = v.x, y = v.y, K = Math.round(k*4), X = Math.round(x*4), Y = Math.round(y*4);
+      return [
+        ['', 'k=' + f4(k) + '\\qquad x=' + f4(x) + '\\qquad y=' + f4(y)],
+        ['', 'k\\cdot(x+y)=' + f4(k) + '\\cdot\\left(' + f4(x) + '+' + f4(y) + '\\right)=' + f4(k) + '\\cdot ' + f4(x + y) + '=' + fq(K*(X + Y), 16)],
+        ['d', 'k\\cdot x+k\\cdot y=' + f4(k) + '\\cdot ' + f4(x) + '+' + f4(k) + '\\cdot ' + f4(y) + '=' + fq(K*X, 16) + '+' + fq(K*Y, 16) + '=' + fq(K*(X + Y), 16)],
+        ['d', 'k\\cdot y+k\\cdot x=' + fq(K*Y, 16) + '+' + fq(K*X, 16) + '=' + fq(K*(X + Y), 16)]
+      ];
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
