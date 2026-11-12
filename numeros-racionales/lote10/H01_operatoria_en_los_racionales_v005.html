@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operatoria en los números racionales | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="operatoria-racionales" data-hoja="L10 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>1º Educación Media</li>
+      <li>Números racionales</li>
+      <li><b>Operatoria en los Racionales</b></li>
+    </ol>
+    <h1>Operatoria en los números racionales</h1>
+    <p class="lede">Un número racional es todo número que se escribe de la forma \(\dfrac{a}{b}\), con \(a,b\in\mathbb{Z}\) y \(b\neq 0\). Con ellos se suma, se resta, se multiplica y se divide todos los días: al seguir una receta, al repartir una cuenta, al repartir una pizza o al medir una tabla.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La barra azul muestra la fracción \(\dfrac{a}{b}\) y la barra naranja muestra \(\dfrac{c}{d}\). Las partes de cada una son de distinto tamaño, así que no se pueden contar juntos. Primero las dos barras se cortan en partes iguales, de tamaño \(\dfrac{1}{b\cdot d}\). Después las partes azules y las naranjas se ponen una a continuación de la otra y se cuentan.</p>
+  <div class="stage" data-scene="rac-suma"></div>
+  <ul class="keys">
+    <li><b>Barra azul:</b> la fracción \(\dfrac{a}{b}\). La unidad está dividida en \(b\) partes iguales y se toman \(a\), porque \(\dfrac{a}{b}=\dfrac{1}{b}\cdot a\).</li>
+    <li><b>Barra naranja:</b> la fracción \(\dfrac{c}{d}\). La unidad está dividida en \(d\) partes iguales y se toman \(c\), porque \(\dfrac{c}{d}=\dfrac{1}{d}\cdot c\).</li>
+    <li><b>Cortes finos:</b> cada unidad queda dividida en \(b\cdot d\) partes iguales. Ahora las dos fracciones tienen el mismo denominador.</li>
+    <li><b>Barra de abajo:</b> la suma. Tiene \(a\cdot d\) partes azules y \(c\cdot b\) partes naranjas, todas de tamaño \(\dfrac{1}{b\cdot d}\), porque se suma \(\dfrac{a\cdot d}{b\cdot d}+\dfrac{c\cdot b}{b\cdot d}\), que es igual a:
+      \[\frac{a\cdot d}{b\cdot d}+\frac{c\cdot b}{b\cdot d}=\frac{a\cdot d+c\cdot b}{b\cdot d}=(a\cdot d+c\cdot b)\cdot\frac{1}{b\cdot d}\]</li>
+  </ul>
+</section>
+
+<section>
+  <h2>De dónde sale cada regla, paso a paso</h2>
+  <h3>Adición y sustracción</h3>
+  <ol class="steps">
+    <li>Si las dos fracciones tienen el mismo denominador, las partes son del mismo tamaño y basta contar cuántas hay:
+      \[\frac{a}{b}+\frac{c}{b}=\frac{a+c}{b}\qquad\qquad \frac{a}{b}-\frac{c}{b}=\frac{a-c}{b}\]</li>
+    <li>Si los denominadores son distintos, primero se igualan. Una fracción no cambia de valor cuando el numerador y el denominador se multiplican por el mismo número, porque eso es multiplicar por \(1\). A esto se le llama amplificar:
+      \[\frac{a}{b}=\frac{a\cdot d}{b\cdot d}\qquad\qquad \frac{c}{d}=\frac{c\cdot b}{d\cdot b}\]</li>
+    <li>Ahora las dos tienen denominador \(b\cdot d\) y se suman o se restan los numeradores:
+      \[\frac{a}{b}+\frac{c}{d}=\frac{a\cdot d+c\cdot b}{b\cdot d}\qquad\qquad \frac{a}{b}-\frac{c}{d}=\frac{a\cdot d-c\cdot b}{b\cdot d}\]</li>
+    <li>Cualquier múltiplo común de \(b\) y \(d\) sirve como denominador. El más cómodo es el mínimo común múltiplo, porque deja los números más chicos. Por ejemplo, con \(\text{mcm}(4,6)=12\):
+      \[\frac{3}{4}+\frac{5}{6}=\frac{3\cdot 3}{4\cdot 3}+\frac{5\cdot 2}{6\cdot 2}=\frac{9}{12}+\frac{10}{12}=\frac{19}{12}\]</li>
+    <li>Al final se simplifica, si se puede: se dividen el numerador y el denominador por su máximo común divisor.</li>
+  </ol>
+
+  <h3>Multiplicación</h3>
+  <p>Multiplicar \(\dfrac{a}{b}\) por \(\dfrac{c}{d}\) es tomar \(\dfrac{a}{b}\) de \(\dfrac{c}{d}\). En el cuadrado de lado \(1\), las columnas azules marcan \(\dfrac{a}{b}\) del ancho y las filas naranjas marcan \(\dfrac{c}{d}\) del alto. El rectángulo donde se cruzan es el producto.</p>
+  <div class="stage" data-scene="rac-producto"></div>
+  <ol class="steps">
+    <li>El cuadrado de lado \(1\) queda dividido en \(b\) columnas y \(d\) filas, es decir, en \(b\cdot d\) casillas iguales. Cada casilla es \(\dfrac{1}{b\cdot d}\) del cuadrado.</li>
+    <li>El rectángulo del cruce tiene \(a\) columnas y \(c\) filas: son \(a\cdot c\) casillas.</li>
+    <li>Entonces el producto se obtiene multiplicando numerador por numerador y denominador por denominador:
+      \[\frac{a}{b}\cdot\frac{c}{d}=\frac{a\cdot c}{b\cdot d}\]</li>
+  </ol>
+
+  <h3>División</h3>
+  <ol class="steps">
+    <li>Dividir por un número es preguntar cuántas veces cabe en otro número. Por ejemplo, \(\dfrac{1}{4}\) cabe \(4\) veces en \(1\), porque
+      \[\frac{4}{4}=\frac{1}{4}\cdot 4=1\]
+      Por eso dividir por \(\dfrac{1}{4}\) es lo mismo que multiplicar por \(4\), es decir:
+      \[\frac{1}{\ \dfrac{1}{4}\ }=\frac{4}{1}=4\]</li>
+    <li>En general, el inverso multiplicativo de \(\dfrac{c}{d}\) es \(\dfrac{d}{c}\), porque su producto es \(1\):
+      \[\frac{c}{d}\cdot\frac{d}{c}=\frac{c\cdot d}{d\cdot c}=1\]</li>
+    <li>Dividir por \(\dfrac{c}{d}\) es multiplicar por su inverso multiplicativo, con \(c\neq 0\):
+      \[\frac{a}{b}\div\frac{c}{d}=\frac{a}{b}\cdot\frac{d}{c}=\frac{a\cdot d}{b\cdot c}\]</li>
+  </ol>
+
+  <div class="def">
+    <h3>Las cuatro operaciones con números racionales</h3>
+    \[\frac{a}{b}\pm\frac{c}{d}=\frac{a\cdot d\pm c\cdot b}{b\cdot d}\qquad \frac{a}{b}\cdot\frac{c}{d}=\frac{a\cdot c}{b\cdot d}\qquad \frac{a}{b}\div\frac{c}{d}=\frac{a\cdot d}{b\cdot c}\]
+    <p>Los denominadores \(b\) y \(d\) son distintos de \(0\). En la división, además, \(c\neq 0\).</p>
+  </div>
+  <div class="why">
+    <h3>Por qué no se suman los denominadores</h3>
+    <p>Media pizza más media pizza es una pizza entera: \(\dfrac{1}{2}+\dfrac{1}{2}=\dfrac{2}{2}=1\). Si se sumaran también los denominadores resultaría \(\dfrac{2}{4}\), que es otra vez media pizza. El denominador dice de qué tamaño es cada parte, y ese tamaño no cambia al juntar partes.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de la vida cotidiana</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Para hacer sopaipillas, Marta pone \(\dfrac{3}{4}\) de taza de harina. La masa le queda muy blanda y agrega \(\dfrac{2}{3}\) de taza más. ¿Cuánta harina usó en total?</p>
+    <details><summary>Pista</summary><div><p>Los cuartos y los tercios no se pueden contar juntos. Busca un denominador común: \(\text{mcm}(4,3)=12\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se plantea la suma:
+          \[\frac{3}{4}+\frac{2}{3}\]</li>
+        <li>Se amplifica cada fracción para llegar al denominador \(12\):
+          \[\frac{3}{4}=\frac{3\cdot 3}{4\cdot 3}=\frac{9}{12}\qquad\qquad \frac{2}{3}=\frac{2\cdot 4}{3\cdot 4}=\frac{8}{12}\]</li>
+        <li>Se suman los numeradores:
+          \[\frac{9}{12}+\frac{8}{12}=\frac{9+8}{12}=\frac{17}{12}\]</li>
+        <li>Como \(17=12+5\), el resultado es \(1\) taza completa y \(\dfrac{5}{12}\) de taza:
+          \[\frac{17}{12}=1\frac{5}{12}\]</li>
+        <li>Respuesta: Marta usó \(\dfrac{17}{12}\) de taza de harina, es decir, casi una taza y media.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>En el patio de una casa, \(\dfrac{2}{3}\) del terreno es huerta. De la huerta, \(\dfrac{3}{5}\) está plantado con tomates. ¿Qué fracción del patio tiene tomates?</p>
+    <details><summary>Pista</summary><div><p>Se pide \(\dfrac{3}{5}\) <b>de</b> \(\dfrac{2}{3}\). La palabra «de» entre dos fracciones indica una multiplicación.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se plantea el producto:
+          \[\frac{3}{5}\cdot\frac{2}{3}\]</li>
+        <li>Se multiplica numerador por numerador y denominador por denominador:
+          \[\frac{3}{5}\cdot\frac{2}{3}=\frac{3\cdot 2}{5\cdot 3}=\frac{6}{15}\]</li>
+        <li>Se simplifica por \(3\), que es el máximo común divisor de \(6\) y \(15\):
+          \[\frac{6}{15}=\frac{6\div 3}{15\div 3}=\frac{2}{5}\]</li>
+        <li>Respuesta: \(\dfrac{2}{5}\) del patio tiene tomates.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>En un almacén quedan \(\dfrac{3}{4}\ \text{kg}\) de queso. Se quiere vender en porciones de \(\dfrac{1}{8}\ \text{kg}\). ¿Cuántas porciones salen?</p>
+    <details><summary>Pista</summary><div><p>Hay que averiguar cuántas veces cabe \(\dfrac{1}{8}\) en \(\dfrac{3}{4}\). Eso es una división.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se plantea la división:
+          \[\frac{3}{4}\div\frac{1}{8}\]</li>
+        <li>Dividir por \(\dfrac{1}{8}\) es multiplicar por su inverso multiplicativo, que es \(\dfrac{8}{1}\):
+          \[\frac{3}{4}\div\frac{1}{8}=\frac{3}{4}\cdot\frac{8}{1}=\frac{3\cdot 8}{4\cdot 1}=\frac{24}{4}\]</li>
+        <li>Se simplifica:
+          \[\frac{24}{4}=6\]</li>
+        <li>Comprobación: \(6\) porciones de \(\dfrac{1}{8}\ \text{kg}\) son
+          \[6\cdot\frac{1}{8}=\frac{6}{8}=\frac{3}{4}\ \text{kg}\]</li>
+        <li>Respuesta: salen \(6\) porciones.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L10-H01 · v005 · APR de Óscar, 12-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('rac-suma', (function(){
+  function gcd(a, b){ return b ? gcd(b, a % b) : a; }
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function fr(n, d){ return '\\dfrac{' + n + '}{' + d + '}'; }
+  return {
+    world:{x0:-0.55, x1:2.15, y0:0, y1:1.62}, aspect:1.62/2.7,
+    aria:'Dos barras muestran las fracciones a sobre b y c sobre d. Ambas se cortan en partes iguales de tamaño uno sobre b por d y luego sus partes se juntan en una tercera barra, que muestra la suma.',
+    labels:[['f1','\\dfrac{a}{b}','a/b','c-sec pt'], ['f2','\\dfrac{c}{d}','c/d','diff'], ['fs','\\dfrac{a\\cdot d+c\\cdot b}{b\\cdot d}','(ad+cb)/(bd)','pt']],
+    sliders:[{id:'a', tex:'a', min:1, max:5, step:1, value:1}, {id:'b', tex:'b', min:2, max:5, step:1, value:2}, {id:'c', tex:'c', min:1, max:5, step:1, value:2}, {id:'d', tex:'d', min:2, max:5, step:1, value:3}],
+    legend:'<span><i class="sw sec"></i> \\(\\dfrac{a}{b}\\)</span><span><i class="sw rise"></i> \\(\\dfrac{c}{d}\\)</span>',
+    anim:{run:12000, hold:3500, still:1, apply:function(p, v){ v.t = p; }},
+    onInput:function(v){ if (v.a > v.b) v.a = v.b; if (v.c > v.d) v.c = v.d; v.t = 1; },
+    draw:function(S, v){
+      var a = v.a, b = v.b, c = v.c, d = v.d, B = b*d, t = v.t == null ? 1 : v.t, C = S.C, ctx = S.ctx, i;
+      var k1 = OA.smooth(cl((t - 0.12)/0.25)), k2 = OA.smooth(cl((t - 0.42)/0.24)), k3 = OA.smooth(cl((t - 0.70)/0.24));
+      var H = 0.26, y1 = 1.24, y2 = 0.74, y3 = 0.16;
+      function rect(x0, y, x1, col, al){ if (x1 > x0) S.poly([[x0,y],[x1,y],[x1,y+H],[x0,y+H]], {fill:col, alpha:al}); }
+      function bar(y, units, parts){
+        var u, j;
+        ctx.globalAlpha = k1;
+        for (u = 0; u < units; u++) for (j = 1; j < B; j++) S.line(u + j/B, y, u + j/B, y + H, {color:C.muted, width:0.6});
+        ctx.globalAlpha = 1;
+        if (parts) for (j = 1; j < parts; j++) S.line(j/parts, y, j/parts, y + H, {color:C.ink, width:1.1});
+        S.poly([[0,y],[units,y],[units,y+H],[0,y+H]], {color:C.ink, width:1.4});
+        if (units > 1) S.line(1, y - 0.03, 1, y + H + 0.03, {color:C.ink, width:1.6});
+      }
+      rect(0, y1, a/b, C.sec, 0.40); bar(y1, 1, b);
+      rect(0, y2, c/d, C.rise, 0.42); bar(y2, 1, d);
+      rect(0, y3, a/b*k2, C.sec, 0.40); rect(a/b, y3, a/b + c/d*k3, C.rise, 0.42); bar(y3, 2, 0);
+      ctx.fillStyle = C.muted; ctx.font = '11px "Source Sans 3", system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      [0, 1, 2].forEach(function(n){ ctx.fillText(String(n), S.X(n), S.Y(y3) + 3); });
+      [0, 1].forEach(function(n){ ctx.fillText(String(n), S.X(n), S.Y(y1) + 3); ctx.fillText(String(n), S.X(n), S.Y(y2) + 3); });
+      S.lab('f1', S.X(-0.08), S.Y(y1 + H/2), -100, -50, true);
+      S.lab('f2', S.X(-0.08), S.Y(y2 + H/2), -100, -50, true);
+      S.lab('fs', S.X(1), S.Y(y3 + H) - 4, -50, -100, k3 > 0.98);
+    },
+    caption:function(v){
+      var t = v.t == null ? 1 : v.t;
+      return t < 0.12 ? 'Las partes azules y las naranjas son de distinto tamaño' : t < 0.42 ? 'Cada unidad se corta en ' + (v.b*v.d) + ' partes iguales' : t < 0.94 ? 'Ahora las partes son iguales y se ponen una a continuación de la otra' : 'La suma: ' + (v.a*v.d + v.c*v.b) + ' partes de tamaño 1/' + (v.b*v.d);
+    },
+    readout:function(v){
+      var a = v.a, b = v.b, c = v.c, d = v.d, n = a*d + c*b, B = b*d, g = gcd(n, B), rows = [
+        ['', fr(a,b) + '+' + fr(c,d) + '=' + fr(a + '\\cdot ' + d, b + '\\cdot ' + d) + '+' + fr(c + '\\cdot ' + b, d + '\\cdot ' + b)],
+        ['d', '=' + fr(a*d, B) + '+' + fr(c*b, B) + '=' + fr(a*d + '+' + c*b, B) + '=' + fr(n, B)]
+      ];
+      if (g > 1) rows.push(['', '\\text{Se simplifica por }' + g + ':\\quad ' + fr(n, B) + '=' + (B/g === 1 ? String(n/g) : fr(n/g, B/g))]);
+      return rows;
+    }
+  };
+})());
+
+OA.scene('rac-producto', (function(){
+  function gcd(a, b){ return b ? gcd(b, a % b) : a; }
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function fr(n, d){ return '\\dfrac{' + n + '}{' + d + '}'; }
+  return {
+    world:{x0:-0.42, x1:1.18, y0:-0.3, y1:1.2}, aspect:1.5/1.6,
+    aria:'Cuadrado de lado uno dividido en b columnas y d filas. Se pintan a columnas y c filas; el rectángulo donde se cruzan tiene a por c casillas de las b por d del cuadrado.',
+    labels:[['fa','\\dfrac{a}{b}','a/b','c-sec pt'], ['fc','\\dfrac{c}{d}','c/d','diff'], ['p','\\dfrac{a\\cdot c}{b\\cdot d}','ac/bd','pt'], ['u1','1','1',''], ['u2','1','1','']],
+    sliders:[{id:'a', tex:'a', min:1, max:6, step:1, value:2}, {id:'b', tex:'b', min:2, max:6, step:1, value:3}, {id:'c', tex:'c', min:1, max:6, step:1, value:3}, {id:'d', tex:'d', min:2, max:6, step:1, value:4}],
+    legend:'<span><i class="sw sec"></i> \\(\\dfrac{a}{b}\\) del ancho</span><span><i class="sw rise"></i> \\(\\dfrac{c}{d}\\) del alto</span><span><i class="sw tan"></i> el producto</span>',
+    anim:{run:9000, hold:3200, still:1, apply:function(p, v){ v.t = p; }},
+    onInput:function(v){ if (v.a > v.b) v.a = v.b; if (v.c > v.d) v.c = v.d; v.t = 1; },
+    draw:function(S, v){
+      var a = v.a, b = v.b, c = v.c, d = v.d, t = v.t == null ? 1 : v.t, C = S.C, i;
+      var k1 = OA.smooth(cl(t/0.3)), k2 = OA.smooth(cl((t - 0.35)/0.3)), k3 = OA.smooth(cl((t - 0.72)/0.2));
+      var xa = a/b, yc = c/d;
+      S.poly([[0,0],[xa*k1,0],[xa*k1,1],[0,1]], {fill:C.sec, alpha:0.22});
+      S.poly([[0,0],[1,0],[1,yc*k2],[0,yc*k2]], {fill:C.rise, alpha:0.24});
+      if (k3 > 0) S.poly([[0,0],[xa,0],[xa,yc],[0,yc]], {fill:C.tan, alpha:0.38*k3, color:C.tan, width:2*k3});
+      for (i = 1; i < b; i++) S.line(i/b, 0, i/b, 1, {color:C.muted, width:0.8});
+      for (i = 1; i < d; i++) S.line(0, i/d, 1, i/d, {color:C.muted, width:0.8});
+      S.poly([[0,0],[1,0],[1,1],[0,1]], {color:C.ink, width:1.5});
+      var g = {color:C.sec, width:2.5}, h = {color:C.rise, width:2.5};
+      S.line(0, -0.08, xa, -0.08, g); S.line(-0.08, 0, -0.08, yc, h);
+      S.lab('fa', S.X(xa/2), S.Y(-0.08) + 4, -50, 0, true);
+      S.lab('fc', S.X(-0.08) - 5, S.Y(yc/2), -100, -50, true);
+      S.lab('u1', S.X(1) + 5, S.Y(0.5), 0, -50, true);
+      S.lab('u2', S.X(0.5), S.Y(1) - 3, -50, -100, true);
+      S.lab('p', S.X(xa/2), S.Y(yc/2), -50, -50, k3 > 0.9 && a*c >= 2);
+    },
+    caption:function(v){
+      var t = v.t == null ? 1 : v.t;
+      return t < 0.33 ? 'Columnas azules: ' + v.a + ' de ' + v.b : t < 0.7 ? 'Filas naranjas: ' + v.c + ' de ' + v.d : 'El cruce tiene ' + (v.a*v.c) + ' casillas de las ' + (v.b*v.d) + ' del cuadrado';
+    },
+    readout:function(v){
+      var a = v.a, b = v.b, c = v.c, d = v.d, n = a*c, m = b*d, g = gcd(n, m), rows = [
+        ['', fr(a,b) + '\\cdot' + fr(c,d) + '=' + fr(a + '\\cdot ' + c, b + '\\cdot ' + d) + '=' + fr(n, m)]
+      ];
+      if (g > 1) rows.push(['d', '\\text{Se simplifica por }' + g + ':\\quad ' + fr(n, m) + '=' + (m/g === 1 ? String(n/g) : fr(n/g, m/g))]);
+      return rows;
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
