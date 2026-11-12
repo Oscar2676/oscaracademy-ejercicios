@@ -1,8 +1,8 @@
 # Árbol del sitio oscaracademy.org
 
-Generado: 2026-11-12T11:10:13.608Z · revisión de Wix 6858
+Generado: 2026-11-12T22:15:27.979Z · revisión de Wix 6866
 
-Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, 'cajas': 1024, 'titulosEnCajas': 8051, 'titulosConEnlace': 198}
+Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, 'cajas': 1024, 'titulosEnCajas': 8035, 'titulosConEnlace': 204}
 
 ## 1º Básico  (https://www.oscaracademy.org/1º-básico)  [no aparece en el menú del sitio]
   * MENÚ: Contar números enteros
@@ -155,20 +155,11 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
   * MENÚ: 1º EM  [oculta en el menú]
   * MENÚ: Números racionales
       - CAJA: Números racionales
-          · Multiplicación de números racionales
-          · Operatoria en los Racionales
-          · División de números racionales
-          · Adición de números racionales
+          · Operatoria en los Racionales → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H01_operatoria_en_los_racionales_v005.html
           · Propiedades de la adición de números racionales
-          · Sustracción de números racionales
+          · Operaciones combinadas → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H03_operaciones_combinadas_v001.html
           · Propiedades de la multiplicación de números racionales
-          · Operaciones combinadas
-          · Números Decimales
-          · Números Mixtos
-          · Decimales periódicos
-          · Sistema métrico decimal
-          · Multiplicación con Números Decimales
-          · Decimales semiperiódicos
+          · Números Mixtos → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H02_numeros_mixtos_v004.html
   * MENÚ: Potencias
       - CAJA: Potencias
           · Potencias de base y exponente entero
@@ -191,18 +182,9 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Factorizaciones especiales
   * MENÚ: Sistemas de ecuaciones con dos incógnitas
       - CAJA: Sistemas de ecuaciones con dos incógnitas
-          · Ecuación lineal de dos incógnitas
-          · Método de reducción
           · Sistemas de Ecuaciones lineales de dos incógnitas
-          · Método de sustitución
           · Métodos de resolución de sistemas de ecuaciones
-          · Método de Cramer
-          · Método de igualación
           · Método Gráfico
-  * MENÚ: Relación entre dos variables
-      - CAJA: Relación entre dos variables
-          · Relaciones lineales de la forma f(x,y)=ax+by
-          · Variación de parámetros
   * MENÚ: Comparación de muestras
       - CAJA: Comparación de muestras
           · Relación entre dos variables cuantitativas
@@ -228,22 +210,21 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
   * MENÚ: Sectores y segmentos circulares
       - CAJA: Sectores y segmentos circulares
           · Elementos de la circunsferencia y el circulo
-          · Perímetro de un segmento circular
+          · Área y perímetro de una corona circular
           · Área de un Cono → https://oscar2676.github.io/oscaracademy-ejercicios/cuerpos-redondos/lote05/H03_area_del_cono_v002.html
-          · Perímetro de un segmento circular
+          · Área y perímetro de un sector circular
           · Perímetro de un sector circular
-          · Área de un segmento circular
+          · Área y perímetro de un segmento circular
   * MENÚ: Homotecia y teorema de Tales
       - CAJA: Homotecia y Teorema de Tales
-          · Homotecia
+          · Homotecia de forma vectorial
           · Teorema de Tales → https://oscar2676.github.io/oscaracademy-ejercicios/demostraciones/lote08/H04_teorema_de_thales_v001.html
-          · Homotecia de forma vecrtorial
-          · División proporcional de segmentos
+          · Tipos de homotecia
+          · Tipos de homotecia según la razón (k)
   * MENÚ: Semejanza
       - CAJA: Semejanza
           · Semejanza de figuras
           · Criterios de semejanza
-          · Homotecia de forma vecrtorial
           · Teoremas de Euclides → https://oscar2676.github.io/oscaracademy-ejercicios/geometria/lote06/H04_teorema_de_la_altura_v002.html
 
 ## 2º Básico  (https://www.oscaracademy.org/2º-básico)  [no aparece en el menú del sitio]
@@ -2165,19 +2146,18 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Aplicación de la integral al cambio neto
           · Interpretación de integral definida
           · Integral definida y cambio neto
-          · Aplicación de la integral definida
           · Cambio neto a partir de una tasa de cambio
   * MENÚ: Determinar el área entre curvas f(y)
       - CAJA: Área entre curvas como funciones de y → página «Fundamentos de álgebra» ancla «Fundamentos de álgbra 2»
-          · Área entre curvas y el eje y
+          · Área entre curvas y el Eje Y
           · Área horizontal entre curvas → página «Fundamentos de álgebra» ancla «Fundamentos de álgbra 2»
   * MENÚ: Área entre curvas como funciones de x
       - CAJA: Área entre curvas como funciones de x → página «Fundamentos de álgebra» ancla «Fundamentos de álgbra 2»
-          · Área entre curvas y el eje x
+          · Área entre curvas y el Eje X
           · Área vertical entre curvas → página «Fundamentos de álgebra» ancla «Fundamentos de álgbra 2»
-          · Área negativa entre curvas y el eje x
+          · Área negativa entre curvas y el Eje X
           · Área entre una parábola y una recta
-          · Área de una región bajo y sobre el eje x
+          · Área de una región bajo y sobre el Eje X
           · Área entre curvas integrando respecto a y
           · Área compuesta entre curvas
           · Área entre curvas de la forma x = f(y)
@@ -3360,7 +3340,7 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Aproximar áreas con suma de Riemann → https://oscar2676.github.io/oscaracademy-ejercicios/calculo-integral/lote03/H01_riemann_v002.html
   * MENÚ: Teorema Fundamental del Cálculo
       - CAJA: Teorema Fundamental del Cálculo
-          · Teorema fundamental del cálculo e integrales definidas.
+          · Teorema fundamental del cálculo e integrales definidas. → https://oscar2676.github.io/oscaracademy-ejercicios/calculo-integral/lote03/H02_teorema_fundamental_del_calculo_v003.html
           · Integrales indefinidas de funciones comunes
           · Integrales indefinidas comunes
           · Reglas básicas y notación de integrales definidas
@@ -4631,6 +4611,10 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Polígonos de frecuencia
           · Diagramas de cajón y nube de puntos
           · Distribuciones binomial y normal
+  * MENÚ: Relación entre dos variables
+      - CAJA: Relación entre dos variables
+          · Relaciones lineales de la forma f(x,y)=ax+by
+          · Variación de parámetros
 
 ## Estructuras algebraicas  (https://www.oscaracademy.org/estructuras-algebraicas)  [no aparece en el menú del sitio]
   * MENÚ: Estructuras algebraicas  [oculta en el menú]
@@ -5253,7 +5237,7 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
   * MENÚ: Rectas y puntos notables analíticamente
       - CAJA: Rectas y puntos notables analíticamente
           · Mediana. Definición y propiedades
-          · Baricentro o gravicentro o centroide
+          · Baricentro o gravicentro o centroide → https://oscar2676.github.io/oscaracademy-ejercicios/geometria-analitica/lote02/H06_baricentro_v003.html
           · Circuncentro
           · Mediatriz. Definición y propiedades
           · Ortocentro
@@ -5268,7 +5252,7 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Área de un triángulo en coordenadas polares
           · Simetrías
           · Lugar geométrico en coordenadas polares
-          · Relación coordenadas cartesianas y polares
+          · Relación coordenadas cartesianas y polares → https://oscar2676.github.io/oscaracademy-ejercicios/geometria-analitica/lote02/H05_coordenadas_polares_v003.html
           · Trébol de tres hojas en coordenadas polares
           · Distancia entre dos puntos en polares
           · Espiral de Arquímides en polares
