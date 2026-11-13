@@ -4,7 +4,7 @@ import re, sys, pathlib, html
 ROOT = pathlib.Path(__file__).parent
 NUM = sys.argv[1] if len(sys.argv) > 1 else '10'
 NOMBRE = sys.argv[2] if len(sys.argv) > 2 else 'Números racionales'
-MOLD = pathlib.Path(__file__).resolve().parent.parent / pathlib.Path('cuerpos-redondos/lote05/H02_volumen_del_cilindro_v002.html').read_text(encoding='utf-8')
+MOLD = (pathlib.Path(__file__).resolve().parent.parent / 'cuerpos-redondos/lote05/H02_volumen_del_cilindro_v002.html').read_text(encoding='utf-8')
 head = MOLD[:MOLD.index('<article')]
 tail_start = MOLD.index('<script>\nwindow.MathJax')
 engine = MOLD[tail_start:MOLD.index("OA.scene('")]
