@@ -149,7 +149,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L15-H01 · v002 · APR de Óscar, 13-nov-2026</span>
+  <span class="status">MA-L15-H01 · v003 · APR de Óscar, 13-nov-2026</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -188,7 +188,8 @@ OA.scene('fexp', (function(){
       if (kP > 0.9) S.dot(x, y, C.rise);
       S.lab('ex', S.X(5.3) - 2, S.Y(0) - 4, -100, -100, true);
       S.lab('ey', S.X(0) + 6, S.Y(33.8), 0, 0, true);
-      S.lab('f', S.X(a < 1 ? 2.6 : -2.6), S.Y(22), -50, -50, kC > 0.95);
+      var xc = a === 1 ? 2.5 : a > 1 ? Math.min(Math.log(22)/Math.log(a), 4.2) : Math.max(Math.log(22)/Math.log(a), -4.2), yc = Math.pow(a, xc);
+      S.lab('f', S.X(xc) + (a < 1 ? 8 : -8), S.Y(yc) - 4, a < 1 ? 0 : -100, a === 1 ? -100 : -50, kC > 0.95);
       S.lab('u', S.X(0) + (x > 0 ? -8 : 8), S.Y(1) - 4, x > 0 ? -100 : 0, -100, kU > 0.9 && !(x === 0 && kP > 0.5));
       S.lab('P', S.X(x) + (x >= 1 ? -8 : 8), S.Y(y) - 5, x >= 1 ? -100 : 0, -100, kP > 0.9);
     },
