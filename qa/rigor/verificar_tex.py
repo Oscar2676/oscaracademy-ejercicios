@@ -18,12 +18,13 @@ def raiz(x, n=2):
         for c in (k - 1, k, k + 1):
             if c >= 0 and c ** n == v: return c
         raise ValueError('raíz no exacta')
-    return s * F(r(x.numerator), r(x.denominator))
+    try: return s * F(r(x.numerator), r(x.denominator))
+    except ValueError: return s * (float(x) ** (1.0 / n))      # no exacta: valor decimal, se compara con tolerancia
 
 class Q:
     """Racional exacto con potencia de exponente fraccionario por raíz exacta (si no es exacta, error)."""
-    def __init__(self, v): self.v = v.v if isinstance(v, Q) else F(v)
-    def _o(self, o): return o.v if isinstance(o, Q) else F(o)
+    def __init__(self, v): self.v = v.v if isinstance(v, Q) else (v if isinstance(v, float) else F(v))
+    def _o(self, o): return o.v if isinstance(o, Q) else (o if isinstance(o, float) else F(o))
     def __add__(self, o): return Q(self.v + self._o(o))
     def __sub__(self, o): return Q(self.v - self._o(o))
     def __mul__(self, o): return Q(self.v * self._o(o))
@@ -32,9 +33,16 @@ class Q:
     def __pos__(self): return self
     def __pow__(self, o):
         e = self._o(o)
+        if isinstance(e, float) or isinstance(self.v, float): return Q(float(self.v) ** float(e))
         if e.denominator == 1: return Q(self.v ** e.numerator)
         return Q(raiz(self.v ** e.numerator, e.denominator))
-    def __eq__(self, o): return self.v == self._o(o)
+    def __eq__(self, o):
+        a, b = self.v, self._o(o)
+        if isinstance(a, float) or isinstance(b, float):
+            import math
+            return math.isclose(float(a), float(b), rel_tol=1e-12, abs_tol=1e-12)
+        return a == b
+    def __abs__(self): return Q(abs(self.v))
     def __str__(self): return str(self.v)
 
 def llaves(s, i):
@@ -76,7 +84,7 @@ def limpiar(t):
     t = re.sub(r'\\underbrace\{', '{', t)
     t = re.sub(r'_\{[^{}]*(\{[^{}]*\}[^{}]*)*\}', '', t)
     t = re.sub(r'\\text\{mcm\}\((\d+),\s*(\d+)\)', lambda m: str(__import__('math').lcm(int(m.group(1)), int(m.group(2)))), t)
-    t = re.sub(r'\\(?:text|mathrm)\{[^{}]*\}', ' ', t)
+    t = re.sub(r'\\(?:text|mathrm)\{[^{}]*\}(?:\^\{[^{}]*\}|\^\d)?', ' ', t)   # unidades, con su exponente (cm^2)
     t = re.sub(r'\\frac\{\s*\}\{\s*\}', ' ', t)             # restos de unidades tipo min/h
     t = t.replace('\\left', '').replace('\\right', '').replace('\\big', '').replace('\\,', '').replace('\\ ', ' ').replace('\\!', '')
     t = re.sub(r'(?<![\d.,}])(\d{1,3})((?:\.\d{3})+)(?![\d{])', lambda m: m.group(1) + m.group(2).replace('.', ''), t)   # 16.000 -> 16000; los decimales usan {,}
@@ -86,7 +94,8 @@ def limpiar(t):
 def evaluar(lado):
     e = conv(lado)
     e = re.sub(r'\s+', '', e)
-    if not e or re.search(r'[A-Za-z\\]', e.replace('Q(raiz', '').replace('.v,', ',')): raise ValueError('no numérico')
+    e = re.sub(r'\|([^|]+)\|', r'abs(\1)', e)                       # valor absoluto
+    if not e or re.search(r'[A-Za-z\\]', e.replace('Q(raiz', '').replace('.v,', ',').replace('abs(', '(')): raise ValueError('no numérico')
     e = re.sub(r'(?<![\w.@])\d+(?:\.\d+)?(?![\w@])', lambda m: "Q(F('%s'))" % m.group(0), e)
     e = e.replace('@', '').replace(')(', ')*(')
     return eval(e, {'F': F, 'Q': Q, 'raiz': raiz})
@@ -106,7 +115,7 @@ def main():
         src = pathlib.Path(f).read_text(encoding='utf-8')
         nombre = pathlib.Path(f).name
         for tex in formulas(src):
-            for parte in re.split(r'\\qquad|\\quad|\\Longrightarrow|\\Rightarrow|\\\\(?:\[[^\]]*\])?|&(?!lt;|gt;|amp;)|,\s+(?=\d)|\\to\b', tex):
+            for parte in re.split(r'\\qquad|\\quad|\\Longrightarrow|\\Rightarrow|\\\\(?:\[[^\]]*\])?|&(?!lt;|gt;|amp;)|,\s+(?=\d)|\\to\b|\\text\{\s*porque\s*\}', tex):
                 p = limpiar(parte).strip().rstrip('.,;')
                 if '\\approx' in p and not re.search(r'[A-Za-z]', re.sub(r'\\(?:sqrt|dfrac|frac|tfrac|approx)', '', p)) and p.count('\\approx') == 1 and '=' not in p:
                     iz, de = p.split('\\approx'); tot += 1
