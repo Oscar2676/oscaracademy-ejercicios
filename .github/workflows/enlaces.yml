@@ -1,0 +1,34 @@
+name: Enlaces del sitio (hoja -> títulos que la abren)
+# Recorre oscaracademy.org y actualiza sitio/enlaces.html y sitio/enlaces.json.
+# Corre solo todos los días y cada vez que cambia algo en sitio/. No necesita el editor de Wix.
+on:
+  schedule:
+    - cron: '23 9 * * *'   # 06:23 de Chile
+  push:
+    branches: [main]
+    paths: ['sitio/**', '.github/workflows/enlaces.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: enlaces
+  cancel-in-progress: false
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 sitio/enlaces.py
+      - name: Guardar si cambió
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitio/enlaces.html sitio/enlaces.json
+          if git diff --cached --quiet; then echo "sin cambios"; exit 0; fi
+          git commit -m "sitio: vista de enlaces actualizada automáticamente"
+          git pull --rebase origin main
+          git push origin HEAD:main
