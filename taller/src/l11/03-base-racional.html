@@ -21,7 +21,7 @@
 
 <section>
   <h2>Disfruta la animación</h2>
-  <p>La primera barra mide \(1\). Cada barra nueva mide \(\dfrac{a}{b}\) de la anterior, como la altura de una pelota en cada bote. Después de \(n\) pasos, la barra mide \(\left(\dfrac{a}{b}\right)^{n}\).</p>
+  <p>La primera barra mide \(1\). Cada barra nueva mide \(\dfrac{a}{b}\) de la anterior, como la altura de una pelota en cada bote. Después de \(n\) pasos, la barra mide \(\left(\dfrac{a}{b}\right)^{n}\). Sobre cada barra está escrito su valor, como fracción y como decimal, para comparar una barra con otra y con el punto de partida.</p>
   <div class="stage" data-scene="pot-racional"></div>
   <ul class="keys">
     <li><b>Base \(\dfrac{a}{b}\):</b> la fracción por la que se multiplica en cada paso. Como \(a&lt;b\), cada barra es más baja que la anterior.</li>
@@ -40,6 +40,16 @@
       \[\frac{a}{b}\cdot\frac{a}{b}\cdot\frac{a}{b}=\frac{a\cdot a\cdot a}{b\cdot b\cdot b}=\frac{a^{3}}{b^{3}}\]</li>
     <li>Lo mismo ocurre con cualquier exponente \(n\in\mathbb{N}\):
       \[\left(\frac{a}{b}\right)^{n}=\frac{a^{n}}{b^{n}}\]</li>
+    <li><b>Los valores, uno por uno, con \(\dfrac{a}{b}=\dfrac{2}{3}\).</b> Cada valor es \(\dfrac{2}{3}\) del anterior:
+      \[\begin{array}{lll}
+      \left(\dfrac{2}{3}\right)^{0}=1 & & \\[10pt]
+      \left(\dfrac{2}{3}\right)^{1}=\dfrac{2}{3} & \approx 0{,}667 & \\[10pt]
+      \left(\dfrac{2}{3}\right)^{2}=\dfrac{2^{2}}{3^{2}}=\dfrac{4}{9} & \approx 0{,}444 & \\[10pt]
+      \left(\dfrac{2}{3}\right)^{3}=\dfrac{2^{3}}{3^{3}}=\dfrac{8}{27} & \approx 0{,}296 & \\[10pt]
+      \left(\dfrac{2}{3}\right)^{4}=\dfrac{2^{4}}{3^{4}}=\dfrac{16}{81} & \approx 0{,}198 & \\[10pt]
+      \left(\dfrac{2}{3}\right)^{5}=\dfrac{2^{5}}{3^{5}}=\dfrac{32}{243} & \approx 0{,}132 &
+      \end{array}\]
+      Al comparar se ve cuánto queda del punto de partida: después de \(4\) pasos queda \(\dfrac{16}{81}\), cerca de la quinta parte, y después de \(5\) pasos queda \(\dfrac{32}{243}\), cerca del \(13\,\%\).</li>
     <li>Con exponente \(0\) no se ha multiplicado ninguna vez. Queda el punto de partida:
       \[\left(\frac{a}{b}\right)^{0}=1\quad(a\neq 0)\]</li>
     <li>Un exponente negativo indica el inverso multiplicativo. El inverso multiplicativo de una fracción se obtiene intercambiando el numerador y el denominador:
@@ -50,7 +60,7 @@
       \[\left(\frac{2}{3}\right)^{-2}=\left(\frac{3}{2}\right)^{2}=\frac{3^{2}}{2^{2}}=\frac{9}{4}\]</li>
     <li><b>La regla del paso 3 vale entonces para todo \(n\in\mathbb{Z}\), con \(a\neq 0\) y \(b\neq 0\).</b> Con exponente \(0\), los dos lados valen \(1\): \(\dfrac{a^{0}}{b^{0}}=\dfrac{1}{1}=1\). Con exponente negativo \(-n\), con \(n\in\mathbb{N}\), se usa \(a^{-n}=\dfrac{1}{a^{n}}\) y \(b^{-n}=\dfrac{1}{b^{n}}\), y dividir por una fracción es multiplicar por su inverso multiplicativo:
       \[\frac{a^{-n}}{b^{-n}}=\frac{\frac{1}{a^{n}}}{\frac{1}{b^{n}}}=\frac{1}{a^{n}}\cdot\frac{b^{n}}{1}=\frac{b^{n}}{a^{n}}\]
-      Es el mismo resultado del paso 6. Por lo tanto:
+      Es el mismo resultado del paso 7. Por lo tanto:
       \[\left(\frac{a}{b}\right)^{-n}=\frac{a^{-n}}{b^{-n}}\qquad\qquad \left(\frac{2}{3}\right)^{-2}=\frac{2^{-2}}{3^{-2}}=\frac{\frac{1}{4}}{\frac{1}{9}}=\frac{1}{4}\cdot\frac{9}{1}=\frac{9}{4}\]</li>
   </ol>
   <div class="def">
@@ -117,7 +127,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L11-H03 · candidata v002 · sin APR</span>
+  <span class="status">MA-L11-H03 · candidata v003 · sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -127,7 +137,7 @@ OA.scene('pot-racional', (function(){
   for (k = 0; k <= 5; k++) labs.push(['p' + k, '\\left(\\frac{a}{b}\\right)^{' + k + '}', '(a/b)^' + k, k === 0 ? 'c-alt pt' : 'pt']);
   labs.push(['u', '1', '1', 'pt']);
   return {
-    world:{x0:-0.55, x1:6.15, y0:-0.42, y1:1.18}, aspect:1.6/6.7*2.2,
+    world:{x0:-0.55, x1:6.15, y0:-0.42, y1:1.42}, aspect:1.84/6.7*2.2,
     aria:'Seis barras. La primera mide uno y cada una de las siguientes mide a sobre b de la anterior. La barra del paso n mide a sobre b elevado a n.',
     labels:labs,
     sliders:[{id:'a', tex:'a', min:1, max:4, step:1, value:2}, {id:'b', tex:'b', min:2, max:5, step:1, value:3}, {id:'n', tex:'n', min:0, max:5, step:1, value:0}],
@@ -142,6 +152,11 @@ OA.scene('pot-racional', (function(){
       for (k = 0; k <= n; k++){
         var h = Math.pow(q, k), x0 = k + 0.15, x1 = k + 0.85, col = k === 0 ? C.alt : k === n ? C.rise : C.sec;
         S.poly([[x0,0],[x1,0],[x1,h],[x0,h]], {fill:col, alpha:0.42, color:col, width:1.6});
+        var A = Math.pow(a, k), B = Math.pow(b, k), gg = gcd(A, B), nu = A/gg, de = B/gg, d2 = de, c = S.ctx;
+        while (d2 % 2 === 0) d2 /= 2; while (d2 % 5 === 0) d2 /= 5;
+        c.fillStyle = C.ink; c.font = '11px "Source Sans 3", system-ui, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+        if (de === 1) c.fillText(String(nu), S.X(k + 0.5), S.Y(h) - 5);
+        else { c.fillText(nu + '/' + de, S.X(k + 0.5), S.Y(h) - 18); c.fillText((d2 === 1 ? '= ' : '≈ ') + (d2 === 1 ? String(Math.round(nu/de*1e6)/1e6) : (nu/de).toFixed(3)).replace('.', ','), S.X(k + 0.5), S.Y(h) - 5); }
       }
       for (k = 0; k <= 5; k++) S.lab('p' + k, S.X(k + 0.5), S.Y(0) + 4, -50, 0, k <= n);
       S.lab('u', S.X(-0.22) - 4, S.Y(0.5), -100, -50, true);
