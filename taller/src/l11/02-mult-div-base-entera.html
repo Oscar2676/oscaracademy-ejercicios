@@ -28,6 +28,16 @@
     <li><b>Bloques naranjos:</b> los demás bloques, todos iguales al azul. Contando el azul, son \(b^{2}\) bloques.</li>
     <li><b>Área total:</b> \(b^{2}\) bloques de área \(a^{2}\) cada uno, es decir, \(a^{2}\cdot b^{2}\).</li>
   </ul>
+  <h3>Un ejemplo con números: 4 bloques de lado 3</h3>
+  <p>Ahora con números. El lado del cuadrado grande tiene \(4\) bloques de lado \(3\), así que mide \(4\cdot 3=12\) y el área del cuadrado es \(12^{2}=144\). Cada bloque tiene área \(3^{2}=9\). Hay \(4\) filas de \(4\) bloques, es decir, \(4^{2}=16\) bloques. El área total es \(16\) veces \(9\):
+  \[(3\cdot 4)^{2}=12^{2}=144\qquad\qquad 3^{2}\cdot 4^{2}=9\cdot 16=144\]</p>
+  <div class="stage" data-scene="pot-producto-ej"></div>
+  <ul class="keys">
+    <li><b>Cuadrado verde.</b> Cuadrado completo: su lado mide \(12\) y su área es \(12^{2}=144\).</li>
+    <li><b>Bloque azul:</b> un cuadrado de lado \(3\). Su área es \(3^{2}=9\).</li>
+    <li><b>Bloques naranjos:</b> los demás bloques, todos iguales al azul. Contando el azul, son \(4^{2}=16\) bloques.</li>
+    <li><b>Lado superior:</b> \(4\) bloques de lado \(3\). El \(3\) es una longitud y el \(4\) es una cantidad de bloques.</li>
+  </ul>
 </section>
 
 <section>
@@ -120,7 +130,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L11-H02 · candidata v002 · sin APR</span>
+  <span class="status">MA-L11-H02 · candidata v003 · sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -172,6 +182,56 @@ OA.scene('pot-producto', (function(){
         ['', 'a=' + a + '\\qquad b=' + b + '\\qquad a\\cdot b=' + (a*b)],
         ['', '(a\\cdot b)^{2}=(' + a + '\\cdot ' + b + ')^{2}=' + (a*b) + '^{2}=' + (a*b*a*b)],
         ['d', 'a^{2}\\cdot b^{2}=' + a + '^{2}\\cdot ' + b + '^{2}=' + (a*a) + '\\cdot ' + (b*b) + '=' + (a*a*b*b)]
+      ];
+    }
+  };
+})());
+
+OA.scene('pot-producto-ej', (function(){
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  return {
+    world:{x0:-0.3, x1:1.12, y0:-0.22, y1:1.34}, aspect:1.1,
+    aria:'Cuadrado de lado 12 formado por 4 filas de 4 bloques cuadrados de lado 3. Primero se ve entero; después se corta en 16 bloques de área 9, que se pintan uno por uno. El área total es 144.',
+    labels:[['ab','4\\cdot 3=12','4·3 = 12','pt'], ['ab2','12','12','pt'], ['tot','12^{2}=144','12² = 144','c-alt pt'], ['a2','3^{2}=9','3² = 9','c-sec pt'],
+      ['l0','3','3','c-sec pt'], ['l1','3','3','c-sec pt'], ['l2','3','3','c-sec pt'], ['l3','3','3','c-sec pt'], ['nb','4\\text{ bloques de lado }3','4 bloques de lado 3','diff']],
+    sliders:[],
+    legend:'<span><i class="sw alt"></i> área \\(12^{2}\\)</span><span><i class="sw sec"></i> un bloque, de área \\(3^{2}\\)</span><span><i class="sw rise"></i> los demás bloques</span>',
+    anim:{run:24000, hold:4000, still:1, apply:function(p, v){ v.t = p; }},
+    onInput:function(v){ v.t = 1; },
+    draw:function(S, v){
+      var b = 4, N = 12, t = v.t == null ? 1 : v.t, s = t*24, C = S.C, i, j, q, u = 1/b, g = {color:C.muted, width:1};
+      var kA = OA.smooth(cl(s/2)), kF = OA.smooth(cl((s - 4)/1)), kC = OA.smooth(cl((s - 5)/1)), k1 = OA.smooth(cl((s - 9)/1)), done = s < 12.5 ? 0 : Math.floor(cl((s - 12.5)/7.5)*15 + 1e-9);
+      if (kF < 1) S.poly([[0,0],[kA,0],[kA,1],[0,1]], {fill:C.alt, alpha:0.34*(1 - kF) + 0.001});
+      if (k1 > 0) S.poly([[0,1 - u],[u*k1,1 - u],[u*k1,1],[0,1]], {fill:C.sec, alpha:0.40});
+      for (q = 1; q <= done; q++){ i = q % b; j = Math.floor(q/b); S.poly([[i*u,1 - (j + 1)*u],[(i + 1)*u,1 - (j + 1)*u],[(i + 1)*u,1 - j*u],[i*u,1 - j*u]], {fill:C.rise, alpha:0.38}); }
+      if (kC > 0){
+        S.ctx.globalAlpha = kC;
+        for (i = 1; i < N; i++){ S.line(i/N, 0, i/N, 1, {color:C.grid, width:0.6}); S.line(0, i/N, 1, i/N, {color:C.grid, width:0.6}); }
+        for (i = 1; i < b; i++){ S.line(i*u, 0, i*u, 1, {color:C.ink, width:1.3}); S.line(0, i*u, 1, i*u, {color:C.ink, width:1.3}); }
+        S.ctx.globalAlpha = 1;
+      }
+      S.poly([[0,0],[kA,0],[kA,1],[0,1]], {color:C.ink, width:1.6});
+      S.line(0, -0.08, 1, -0.08, g); S.line(0, -0.12, 0, -0.04, g); S.line(1, -0.12, 1, -0.04, g);
+      S.line(-0.08, 0, -0.08, 1, g); S.line(-0.12, 0, -0.04, 0, g); S.line(-0.12, 1, -0.04, 1, g);
+      for (i = 0; i < b; i++){
+        var on = s >= 5.5 + i*0.6;
+        if (on){ S.line(i*u, 1.07, (i + 1)*u, 1.07, {color:C.sec, width:2.5}); S.line(i*u, 1.04, i*u, 1.10, {color:C.ink, width:1}); S.line((i + 1)*u, 1.04, (i + 1)*u, 1.10, {color:C.ink, width:1}); }
+        S.lab('l' + i, S.X(i*u + u/2), S.Y(1.07) - 3, -50, -100, on);
+      }
+      S.lab('nb', S.X(0.5), S.Y(1.22), -50, -100, s >= 8);
+      S.lab('ab', S.X(0.5), S.Y(-0.08) + 4, -50, 0, kA > 0.95);
+      S.lab('ab2', S.X(-0.08) - 5, S.Y(0.5), -100, -50, kA > 0.95);
+      S.lab('tot', S.X(0.5), S.Y(0.5), -50, -50, kA > 0.9 && kF < 0.3);
+      S.lab('a2', S.X(u/2), S.Y(1 - u/2), -50, -50, k1 > 0.95);
+    },
+    caption:function(v){
+      var t = v.t == null ? 1 : v.t, s = t*24, done = s < 12.5 ? 0 : Math.floor(cl((s - 12.5)/7.5)*15 + 1e-9);
+      return s < 4 ? 'Un cuadrado entero de lado 12: su área es 12² = 144' : s < 9 ? 'Queda en blanco y se corta en bloques de lado 3: caben 4 bloques por lado' : s < 12.5 ? 'Se pinta el primer bloque: su área es 3² = 9' : s < 20.5 ? 'Bloques pintados: ' + (done + 1) + ' de 16' : 'Son 4² = 16 bloques de área 3² = 9: en total 16 · 9 = 144';
+    },
+    readout:function(v){
+      return [
+        ['', '(3\\cdot 4)^{2}=12^{2}=144'],
+        ['d', '3^{2}\\cdot 4^{2}=9\\cdot 16=144']
       ];
     }
   };
