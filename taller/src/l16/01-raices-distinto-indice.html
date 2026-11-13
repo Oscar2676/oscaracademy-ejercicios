@@ -159,7 +159,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L16-H01 · v001 · en revisión, sin APR</span>
+  <span class="status">MA-L16-H01 · v002 · en revisión, sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -171,12 +171,13 @@ OA.scene('raiz-indices', (function(){
     labels:[['ra','\\sqrt{a}','√a','c-alt pt'], ['rb','\\sqrt[3]{a}','∛a','c-sec pt'], ['rc','\\sqrt[6]{a}','⁶√a','diff'], ['ea','\\sqrt{a}=\\sqrt[6]{a^{3}}','√a = ⁶√(a³)','c-alt pt'], ['eb','\\sqrt[3]{a}=\\sqrt[6]{a^{2}}','∛a = ⁶√(a²)','c-sec pt'], ['fin','\\sqrt{a}\\cdot\\sqrt[3]{a}=\\sqrt[6]{a^{5}}','√a·∛a = ⁶√(a⁵)','diff']],
     sliders:[{id:'c', tex:'\\sqrt[6]{a}', min:2, max:3, step:1, value:2}],
     legend:'<span><i class="sw alt"></i> factor \\(\\sqrt{a}\\)</span><span><i class="sw sec"></i> factor \\(\\sqrt[3]{a}\\)</span><span><i class="sw rise"></i> factor \\(\\sqrt[6]{a}\\)</span>',
-    anim:{run:24000, hold:4000, still:1, apply:function(p, v){ v.t = p; }},
+    anim:{run:52000, hold:5000, still:1, apply:function(p, v){ v.t = p; }},
     onInput:function(v){ v.t = 1; },
     draw:function(S, v){
       var c = Math.round(v.c), t = v.t == null ? 1 : v.t, C = S.C, x = S.ctx, i, H = 0.7;
-      function ph(a, b){ return OA.smooth(cl((t - a)/(b - a))); }
-      var kA = ph(0, 0.09), kB = ph(0.14, 0.23), kC = ph(0.28, 0.38), kH1 = ph(0.45, 0.52), kH2 = ph(0.61, 0.68), kR = ph(0.76, 0.86);
+      var s = t*52;
+      function ph(a, b){ return OA.smooth(cl((s - a)/(b - a))); }
+      var kA = ph(0, 2.5), kB = ph(5, 7.5), kC = ph(10, 12.5), kH1 = ph(15, 17.5), kH2 = ph(27, 29.5), kR = ph(39, 42);
       function cell(x0, y0, w, col, al, txt){
         S.poly([[x0,y0],[x0 + w,y0],[x0 + w,y0 + H],[x0,y0 + H]], {fill:col, alpha:al});
         S.poly([[x0,y0],[x0 + w,y0],[x0 + w,y0 + H],[x0,y0 + H]], {color:C.ink, width:1});
@@ -215,13 +216,21 @@ OA.scene('raiz-indices', (function(){
       S.lab('ra', S.X(1.5), S.Y(3.3 + H) - 3, -50, -100, kA >= 1);
       S.lab('rb', S.X(1), S.Y(1.9 + H) - 3, -50, -100, kB >= 1);
       S.lab('rc', S.X(0.5), S.Y(0.5 + H) - 3, -50, -100, kC >= 1);
-      S.lab('ea', S.X(1.5), S.Y(-1.6 + H) - 3, -50, -100, kH1 >= 1);
-      S.lab('eb', S.X(4), S.Y(-1.6 + H) - 3, -50, -100, kH2 >= 1);
-      S.lab('fin', S.X(2.5), S.Y(-1.98) + 4, -50, 0, kR >= 1);
+      S.lab('ea', S.X(1.5), S.Y(-1.6 + H) - 3, -50, -100, s >= 21.5);
+      S.lab('eb', S.X(4), S.Y(-1.6 + H) - 3, -50, -100, s >= 33.5);
+      S.lab('fin', S.X(2.5), S.Y(-1.98) + 4, -50, 0, s >= 46);
     },
     caption:function(v){
-      var t = v.t == null ? 1 : v.t;
-      return t < 0.14 ? ['De 1 hasta a en 2 factores iguales: cada uno es ', '\\sqrt{a}', '√a'] : t < 0.28 ? ['De 1 hasta a en 3 factores iguales: cada uno es ', '\\sqrt[3]{a}', '∛a'] : t < 0.44 ? ['De 1 hasta a en 6 factores iguales: cada uno es ', '\\sqrt[6]{a}', '⁶√a'] : t < 0.60 ? ['Un factor √a ocupa 3 de los pequeños: ', '\\sqrt{a}=\\sqrt[6]{a^{3}}', '√a = ⁶√(a³)'] : t < 0.75 ? ['Un factor ∛a ocupa 2 de los pequeños: ', '\\sqrt[3]{a}=\\sqrt[6]{a^{2}}', '∛a = ⁶√(a²)'] : ['Se juntan 3 + 2 = 5 factores pequeños: ', '\\sqrt{a}\\cdot\\sqrt[3]{a}=\\sqrt[6]{a^{5}}', '√a·∛a = ⁶√(a⁵)'];
+      var s = (v.t == null ? 1 : v.t)*52;
+      return s < 5 ? ['De 1 hasta a en 2 factores iguales. Cada uno es √a, porque ', '\\sqrt{a}\\cdot\\sqrt{a}=a', '√a·√a = a']
+        : s < 10 ? ['De 1 hasta a en 3 factores iguales. Cada uno es ∛a, porque ', '\\sqrt[3]{a}\\cdot\\sqrt[3]{a}\\cdot\\sqrt[3]{a}=a', '∛a·∛a·∛a = a']
+        : s < 15 ? ['De 1 hasta a en 6 factores iguales. Cada uno es ', '\\sqrt[6]{a}', '⁶√a']
+        : s < 21.5 ? ['Un factor √a ocupa lo mismo que 3 factores pequeños: ', '\\sqrt{a}=\\sqrt[6]{a}\\cdot\\sqrt[6]{a}\\cdot\\sqrt[6]{a}=\\left(\\sqrt[6]{a}\\right)^{3}', '√a = ⁶√a·⁶√a·⁶√a = (⁶√a)³']
+        : s < 27 ? ['Potencia de una raíz: ', '\\left(\\sqrt[6]{a}\\right)^{3}=\\sqrt[6]{a^{3}}\\quad\\Longrightarrow\\quad\\sqrt{a}=\\sqrt[6]{a^{3}}', '(⁶√a)³ = ⁶√(a³), entonces √a = ⁶√(a³)']
+        : s < 33.5 ? ['Un factor ∛a ocupa lo mismo que 2 factores pequeños: ', '\\sqrt[3]{a}=\\sqrt[6]{a}\\cdot\\sqrt[6]{a}=\\left(\\sqrt[6]{a}\\right)^{2}', '∛a = ⁶√a·⁶√a = (⁶√a)²']
+        : s < 39 ? ['Potencia de una raíz: ', '\\left(\\sqrt[6]{a}\\right)^{2}=\\sqrt[6]{a^{2}}\\quad\\Longrightarrow\\quad\\sqrt[3]{a}=\\sqrt[6]{a^{2}}', '(⁶√a)² = ⁶√(a²), entonces ∛a = ⁶√(a²)']
+        : s < 46 ? ['Se multiplican: se juntan 3 + 2 = 5 factores pequeños. ', '\\sqrt{a}\\cdot\\sqrt[3]{a}=\\left(\\sqrt[6]{a}\\right)^{3}\\cdot\\left(\\sqrt[6]{a}\\right)^{2}=\\left(\\sqrt[6]{a}\\right)^{5}', '√a·∛a = (⁶√a)³·(⁶√a)² = (⁶√a)⁵']
+        : ['Potencia de una raíz: ', '\\left(\\sqrt[6]{a}\\right)^{5}=\\sqrt[6]{a^{5}}\\quad\\Longrightarrow\\quad\\sqrt{a}\\cdot\\sqrt[3]{a}=\\sqrt[6]{a^{5}}', '(⁶√a)⁵ = ⁶√(a⁵), entonces √a·∛a = ⁶√(a⁵)'];
     },
     readout:function(v){
       var c = Math.round(v.c), a = Math.pow(c, 6);
