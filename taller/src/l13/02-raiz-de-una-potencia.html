@@ -135,7 +135,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L13-H02 · candidata v005 · sin APR</span>
+  <span class="status">MA-L13-H02 · candidata v006 · sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -144,7 +144,7 @@ OA.scene('raiz-abs', (function(){
   return {
     world:{x0:-5.8, x1:5.8, y0:-1.5, y1:5.6}, aspect:7.1/11.6,
     aria:'Recta numérica con un punto a. Sobre el trazo de cero hasta a hay un cuadrado de lado valor absoluto de a y área a al cuadrado. El cuadrado es el mismo para a y para menos a.',
-    labels:[['a','a','a','diff'], ['ar','a^{2}','a²','c-alt pt'], ['l','|a|=\\sqrt{a^{2}}','|a| = √(a²)','c-sec pt'], ['o','0','0','pt']],
+    labels:[['a','a','a','diff'], ['ar','a^{2}','a²','c-alt pt'], ['l','|a|=\\sqrt{a^{2}}','|a| = √(a²)','c-sec pt'], ['o','0','0','pt'], ['top','|a|','|a|','c-sec pt']],
     sliders:[{id:'a', tex:'a', min:-5, max:5, step:1, value:-3}],
     legend:'<span><i class="sw rise"></i> el número \\(a\\)</span><span><i class="sw alt"></i> área \\(a^{2}\\)</span><span><i class="sw sec"></i> lado \\(|a|\\)</span>',
     anim:{run:18000, hold:4000, still:1, apply:function(p, v){ v.t = p; }},
@@ -162,6 +162,7 @@ OA.scene('raiz-abs', (function(){
       S.lab('a', S.X(a), S.Y(0) - 9, sg < 0 ? -110 : 10, -100, kP > 0.9);
       S.lab('ar', S.X(a/2), S.Y(L/2), -50, -50, L > 0 && kA > 0.9);
       S.lab('l', S.X(a/2), S.Y(-0.55) + 4, -50, 0, L > 0 && kS > 0.9);
+      S.lab('top', S.X(a/2), S.Y(L) - 4, -50, -100, L > 0 && kS > 0.9);
     },
     caption:function(v){
       var a = Math.round(v.a), t = v.t == null ? 1 : v.t, tx = String(a).replace('-', '−');
