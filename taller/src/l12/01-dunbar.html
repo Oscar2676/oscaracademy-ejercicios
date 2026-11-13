@@ -1,0 +1,196 @@
+<!--file:H01_numero_de_dunbar_crecimiento_y_decrecimiento_v001.html-->
+<!--title:El número de Dunbar: un contexto para crecimiento y decrecimiento-->
+<!--id:numero-de-dunbar-->
+<!--tab:H01 Número de Dunbar-->
+<article class="sheet" id="numero-de-dunbar" data-hoja="L12 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Crecimiento y decrecimiento</li>
+      <li><b>El número de Dunbar</b></li>
+    </ol>
+    <h1>El número de Dunbar: un contexto para crecimiento y decrecimiento</h1>
+    <p class="lede">El antropólogo Robin Dunbar propuso que una persona puede mantener relaciones sociales estables con alrededor de \(150\) individuos. Es una hipótesis aproximada y discutida, no un máximo universal. Aquí sirve como contexto para mirar dos funciones: cuando un grupo crece, la cantidad de relaciones posibles crece mucho más rápido que la cantidad de personas, y el tiempo disponible para cada relación decrece.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Cada punto es una persona y cada trazo es una relación entre dos personas. Las personas entran al grupo de a una. La que llega se relaciona con todas las que ya estaban: si con ella el grupo queda en \(n\) personas, aparecen \(n-1\) trazos nuevos, en naranjo. El total de relaciones posibles es \(R(n)=\dfrac{n(n-1)}{2}\).</p>
+  <div class="stage" data-scene="dunbar-red"></div>
+  <ul class="keys">
+    <li><b>Puntos, \(n\):</b> el número de personas del grupo.</li>
+    <li><b>Punto naranjo:</b> la última persona que llegó.</li>
+    <li><b>Trazos naranjos, \(n-1\):</b> las relaciones nuevas, una con cada persona que ya estaba.</li>
+    <li><b>Todos los trazos, \(R(n)\):</b> las relaciones posibles entre dos personas del grupo.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>De dónde sale la fórmula, paso a paso</h2>
+  <ol class="steps">
+    <li>En un grupo de \(n\) personas, cada una puede relacionarse con las otras \(n-1\). Si se cuenta así, persona por persona, resultan \(n\cdot(n-1)\) relaciones.</li>
+    <li>Pero cada relación quedó contada dos veces: la de Ana con Luis es la misma que la de Luis con Ana. Por eso se divide por \(2\):
+      \[R(n)=\frac{n(n-1)}{2}\]</li>
+    <li>Se desarrolla el producto. Aparece \(n^{2}\): la función es cuadrática.
+      \[R(n)=\frac{n^{2}-n}{2}=\frac{1}{2}n^{2}-\frac{1}{2}n\]</li>
+    <li>Es una función creciente: al pasar de \(n\) a \(n+1\) personas se agregan \(n\) relaciones.
+      \[R(n+1)-R(n)=\frac{(n+1)\,n}{2}-\frac{n(n-1)}{2}=\frac{n\,[(n+1)-(n-1)]}{2}=\frac{2n}{2}=n\]</li>
+    <li>Y crece cada vez más rápido, porque lo que se agrega, \(n\), también aumenta. Algunos valores:
+      \[R(5)=\frac{5\cdot 4}{2}=10\qquad R(15)=\frac{15\cdot 14}{2}=105\qquad R(50)=\frac{50\cdot 49}{2}=1225\qquad R(150)=\frac{150\cdot 149}{2}=11\,175\]</li>
+    <li>De \(5\) a \(150\) personas el grupo se multiplica por \(30\). Las relaciones posibles, en cambio, pasan de \(10\) a \(11\,175\): se multiplican por más de \(1000\).
+      \[\frac{150}{5}=30\qquad\qquad \frac{11\,175}{10}=1117{,}5\]</li>
+  </ol>
+  <div class="def">
+    <h3>Relaciones posibles en un grupo de \(n\) personas</h3>
+    \[R(n)=\frac{n(n-1)}{2}\qquad\qquad R(n+1)-R(n)=n\]
+    <p>\(R\) es una función cuadrática y creciente para \(n\ge 1\). Cada persona nueva agrega tantas relaciones como personas había antes de que llegara.</p>
+  </div>
+</section>
+
+<section>
+  <h2>El otro lado: una función decreciente</h2>
+  <p>El tiempo es limitado. Si una persona tiene \(120\) minutos a la semana para conversar y los reparte por igual entre las otras \(n-1\) personas de su grupo, a cada relación le toca \(t(n)=\dfrac{120}{n-1}\) minutos. Mientras más grande es el grupo, menos tiempo hay para cada uno.</p>
+  <div class="stage" data-scene="dunbar-tiempo"></div>
+  <ul class="keys">
+    <li><b>Eje horizontal, \(n\):</b> el número de personas del grupo.</li>
+    <li><b>Eje vertical, \(t(n)\):</b> los minutos semanales para cada relación.</li>
+    <li><b>Punto \(P\):</b> sus coordenadas son \(\big(n,\ t(n)\big)\). Al aumentar \(n\), el punto baja.</li>
+  </ul>
+  <ol class="steps">
+    <li>El tiempo total se reparte en partes iguales entre las otras \(n-1\) personas:
+      \[t(n)=\frac{120}{n-1}\quad(n\ge 2)\]</li>
+    <li>Es una función decreciente: si el denominador aumenta y el numerador no cambia, el cociente disminuye.
+      \[t(6)=\frac{120}{5}=24\qquad t(16)=\frac{120}{15}=8\qquad t(51)=\frac{120}{50}=2{,}4\qquad t(151)=\frac{120}{150}=0{,}8\]</li>
+    <li>Decrece rápido al principio y cada vez más lento después. Nunca llega a \(0\), pero se acerca a \(0\) tanto como se quiera.</li>
+  </ol>
+  <div class="why">
+    <h3>Qué dice y qué no dice el número de Dunbar</h3>
+    <p>Dunbar describió círculos de relación de tamaño aproximado \(5\), \(15\), \(50\) y \(150\): cada uno es cerca del triple del anterior y en cada uno la cercanía es menor. La cifra de \(150\) es una estimación y su interpretación como límite se discute entre los investigadores. Tampoco significa que una organización no pueda coordinar a más de \(150\) personas: con equipos, niveles y tecnología se coordinan miles. Las dos funciones de esta hoja muestran por qué hace falta esa organización cuando el grupo crece.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de la vida cotidiana</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>En un curso de \(30\) estudiantes, el primer día todos se saludan con todos. ¿Cuántos saludos hay? Una semana después llega una compañera nueva y saluda a cada uno. ¿Cuántos saludos se agregan y cuál es el nuevo total?</p>
+    <details><summary>Pista</summary><div><p>Cada saludo es una relación entre dos personas: usa \(R(n)=\dfrac{n(n-1)}{2}\). La persona nueva saluda a las \(30\) que ya estaban.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Saludos entre \(30\) estudiantes:
+          \[R(30)=\frac{30\cdot 29}{2}=\frac{870}{2}=435\]</li>
+        <li>La compañera nueva saluda a los \(30\) que ya estaban. Se agregan \(30\) saludos:
+          \[R(31)-R(30)=30\]</li>
+        <li>Nuevo total:
+          \[435+30=465\]</li>
+        <li>Comprobación con la fórmula:
+          \[R(31)=\frac{31\cdot 30}{2}=\frac{930}{2}=465\]</li>
+        <li>Respuesta: el primer día hay \(435\) saludos. Con la compañera nueva se agregan \(30\) y el total es \(465\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Tomás tiene \(120\) minutos a la semana para hablar por teléfono con sus amigos y los reparte por igual. ¿Cuántos minutos le toca a cada amigo si su grupo, contándolo a él, es de \(6\) personas? ¿Y si es de \(16\)? ¿De qué tamaño tendría que ser el grupo para que a cada amigo le tocaran solo \(2\) minutos?</p>
+    <details><summary>Pista</summary><div><p>Usa \(t(n)=\dfrac{120}{n-1}\). Para la última pregunta, iguala \(t(n)\) a \(2\) y despeja \(n\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Grupo de \(6\) personas: Tomás tiene \(5\) amigos.
+          \[t(6)=\frac{120}{6-1}=\frac{120}{5}=24\ \text{min}\]</li>
+        <li>Grupo de \(16\) personas: tiene \(15\) amigos.
+          \[t(16)=\frac{120}{16-1}=\frac{120}{15}=8\ \text{min}\]</li>
+        <li>Para que a cada uno le toquen \(2\) minutos:
+          \[\frac{120}{n-1}=2\]</li>
+        <li>Se multiplican ambos lados por \(n-1\) y se divide por \(2\):
+          \[120=2\,(n-1)\quad\Longrightarrow\quad n-1=60\quad\Longrightarrow\quad n=61\]</li>
+        <li>Respuesta: \(24\) minutos con un grupo de \(6\), \(8\) minutos con un grupo de \(16\), y solo \(2\) minutos si el grupo llega a \(61\) personas. El grupo crece y el tiempo por amigo decrece.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Un club deportivo se organiza en equipos de \(5\) personas, cada uno con un encargado. Cada \(5\) encargados responden a un coordinador, y así hacia arriba. Con \(L\) niveles de este tipo se coordinan \(5^{L}\) personas. ¿Cuántas personas se coordinan con \(3\) niveles? ¿Cuántos niveles hacen falta para superar las \(150\) personas?</p>
+    <details><summary>Pista</summary><div><p>Calcula \(5^{1}\), \(5^{2}\), \(5^{3}\), \(5^{4}\) y compara con \(150\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cada nivel multiplica por \(5\). Es un crecimiento exponencial:
+          \[5^{1}=5\qquad 5^{2}=25\qquad 5^{3}=125\qquad 5^{4}=625\]</li>
+        <li>Con \(3\) niveles:
+          \[5^{3}=125\ \text{personas}\]</li>
+        <li>Se compara con \(150\):
+          \[5^{3}=125&lt;150&lt;625=5^{4}\]</li>
+        <li>Respuesta: con \(3\) niveles se coordinan \(125\) personas y con \(4\) niveles ya se superan las \(150\): se llega a \(625\). En esta organización nadie coordina directamente a más de \(5\) personas. Así un grupo grande funciona sin que cada persona tenga que relacionarse con todas las demás.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L12-H01 · candidata v002 · sin APR</span>
+</footer>
+</article>
+<!--SCENE-->
+OA.scene('dunbar-red', (function(){
+  return {
+    world:{x0:-1.5, x1:1.5, y0:-1.5, y1:1.5}, aspect:1,
+    aria:'Personas representadas como puntos sobre una circunferencia. Cada par de personas está unido por un trazo. La última persona que llega agrega n menos uno trazos nuevos.',
+    labels:[['n','n\\text{ personas}','n personas','pt'], ['nw','n-1\\text{ relaciones nuevas}','n−1 relaciones nuevas','diff'], ['r','R(n)=\\dfrac{n(n-1)}{2}','R(n) = n(n−1)/2','c-sec pt']],
+    sliders:[{id:'n', tex:'n', min:2, max:16, step:1, value:2}],
+    legend:'<span><i class="sw sec"></i> relaciones que ya había</span><span><i class="sw rise"></i> relaciones nuevas, \\(n-1\\)</span>',
+    anim:{run:15000, hold:4000, still:1, apply:function(p, v){ v.n = Math.min(16, 2 + Math.floor(p*15)); }},
+    draw:function(S, v){
+      var n = Math.round(v.n), C = S.C, c = S.ctx, i, j, P = [];
+      for (i = 0; i < n; i++){ var a = Math.PI/2 - i*2*Math.PI/n; P.push([Math.cos(a), Math.sin(a)]); }
+      for (i = 0; i < n - 1; i++) for (j = i + 1; j < n - 1; j++) S.line(P[i][0], P[i][1], P[j][0], P[j][1], {color:C.sec, width:0.8});
+      for (i = 0; i < n - 1; i++) S.line(P[i][0], P[i][1], P[n - 1][0], P[n - 1][1], {color:C.rise, width:1.6});
+      for (i = 0; i < n; i++){ c.beginPath(); c.arc(S.X(P[i][0]), S.Y(P[i][1]), 4.5, 0, Math.PI*2); c.fillStyle = i === n - 1 ? C.rise : C.sec; c.fill(); }
+      S.lab('n', S.X(-1.45), S.Y(1.45), 0, 0, true);
+      S.lab('nw', S.X(1.45), S.Y(1.45), -100, 0, true);
+      S.lab('r', S.X(0), S.Y(-1.45), -50, -100, true);
+    },
+    caption:function(v){ var n = Math.round(v.n); return n + ' personas: ' + (n*(n - 1)/2) + (n === 2 ? ' relación posible' : ' relaciones posibles') + '; la última persona agregó ' + (n - 1); },
+    readout:function(v){
+      var n = Math.round(v.n), r = n*(n - 1)/2;
+      return [
+        ['', 'n=' + n + '\\qquad n-1=' + (n - 1)],
+        ['d', 'R(' + n + ')=\\dfrac{' + n + '\\cdot ' + (n - 1) + '}{2}=\\dfrac{' + (n*(n - 1)) + '}{2}=' + r],
+        ['', 'R(' + n + ')-R(' + (n - 1) + ')=' + r + '-' + ((n - 1)*(n - 2)/2) + '=' + (n - 1)]
+      ];
+    }
+  };
+})());
+
+OA.scene('dunbar-tiempo', (function(){
+  var num = OA.num;
+  function t(x){ return 120/(x - 1); }
+  return {
+    world:{x0:-2.2, x1:22, y0:-20, y1:134}, aspect:0.7,
+    aria:'Gráfico de la función t de n igual a ciento veinte dividido por n menos uno. Es decreciente: el punto P baja a medida que n aumenta.',
+    labels:[['P','P\\big(n,\\ t(n)\\big)','P(n, t(n))','diff'], ['f','t(n)=\\dfrac{120}{n-1}','t(n) = 120/(n−1)','c-sec pt'], ['ex','n','n','pt'], ['ey','t(n)','t(n)','pt']],
+    sliders:[{id:'n', tex:'n', min:2, max:21, step:1, value:2}],
+    legend:'<span><i class="sw sec"></i> \\(t(n)=\\dfrac{120}{n-1}\\), minutos por relación</span>',
+    anim:{run:12000, hold:3500, still:0.3, apply:function(p, v){ v.n = Math.min(21, 2 + Math.floor(p*20)); }},
+    draw:function(S, v){
+      var n = Math.round(v.n), C = S.C, k;
+      S.axes({gx:[5, 10, 15, 20], gy:[30, 60, 90, 120]});
+      S.curve(t, 1.9, 21.5, {color:C.sec, width:2});
+      for (k = 2; k <= 21; k++){ S.ctx.beginPath(); S.ctx.arc(S.X(k), S.Y(t(k)), 2.2, 0, Math.PI*2); S.ctx.fillStyle = C.sec; S.ctx.fill(); }
+      S.guide(n, t(n));
+      S.dot(n, t(n), C.rise);
+      S.lab('P', S.X(n) + (n > 13 ? -8 : 8), S.Y(t(n)) - 6, n > 13 ? -100 : 0, -100, true);
+      S.lab('f', S.X(12), S.Y(100), -50, -50, true);
+      S.lab('ex', S.X(21.6), S.Y(0) - 4, -100, -100, true);
+      S.lab('ey', S.X(0) + 6, S.Y(130), 0, 0, true);
+    },
+    caption:function(v){ var n = Math.round(v.n); return 'Grupo de ' + n + ' personas: ' + ((1200 % (n - 1)) === 0 ? '' : 'cerca de ') + String(Math.round(t(n)*10)/10).replace('.', ',') + ' minutos semanales para cada relación'; },
+    readout:function(v){
+      var n = Math.round(v.n);
+      return [
+        ['', 'n=' + n + '\\qquad n-1=' + (n - 1)],
+        ['d', 't(' + n + ')=\\dfrac{120}{' + n + '-1}=\\dfrac{120}{' + (n - 1) + '}' + ((1200 % (n - 1)) === 0 ? '=' : '\\approx ') + num(t(n), 1)]
+      ];
+    }
+  };
+})());
