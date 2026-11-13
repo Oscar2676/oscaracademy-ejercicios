@@ -7,7 +7,7 @@ async def main():
         pg = await b.new_page(viewport={'width':820,'height':900}); errs=[]
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.route('**/*', lambda r: r.abort() if r.request.url.startswith('http') else r.continue_())
-        await pg.goto('file:///home/claude/taller/out/'+card); await pg.wait_for_timeout(800)
+        await pg.goto('file:///home/claude/oscaracademy-ejercicios/taller/out/'+card); await pg.wait_for_timeout(800)
         for h in hs:
             await pg.evaluate("location.hash='%s'"%h); await pg.wait_for_timeout(400)
             await pg.evaluate("OA.insts.forEach(function(i){i.pause(); i.apply(%s); i.resize();})" % t); await pg.wait_for_timeout(300)
