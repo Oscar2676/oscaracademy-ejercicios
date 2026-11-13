@@ -19,13 +19,13 @@
 
 <section>
   <h2>Disfruta la animación</h2>
-  <p>La barra representa la multiplicación que lleva desde \(1\) hasta \(a\). Si se corta en \(2\) factores iguales, cada factor es \(\sqrt{a}\), porque \(\sqrt{a}\cdot\sqrt{a}=a\). Si se corta en \(3\) factores iguales, cada factor es \(\sqrt[3]{a}\). Si se corta en \(6\) factores iguales, cada factor es \(\sqrt[6]{a}\). Un factor \(\sqrt{a}\) ocupa lo mismo que \(3\) factores \(\sqrt[6]{a}\), y un factor \(\sqrt[3]{a}\) ocupa lo mismo que \(2\) factores \(\sqrt[6]{a}\). Al multiplicar \(\sqrt{a}\cdot\sqrt[3]{a}\) se juntan \(3+2=5\) factores \(\sqrt[6]{a}\). En cada casilla está escrito el valor del factor, y bajo la tercera barra, el producto acumulado.</p>
+  <p>Cada barra representa la multiplicación que lleva desde \(1\) (extremo izquierdo) hasta \(a\) (extremo derecho). Si se corta en \(2\) factores iguales, cada factor es \(\sqrt{a}\), porque \(\sqrt{a}\cdot\sqrt{a}=a\). Si se corta en \(3\) factores iguales, cada factor es \(\sqrt[3]{a}\). Si se corta en \(6\) factores iguales, cada factor es \(\sqrt[6]{a}\). Un factor \(\sqrt{a}\) ocupa lo mismo que \(3\) factores \(\sqrt[6]{a}\), y un factor \(\sqrt[3]{a}\) ocupa lo mismo que \(2\) factores \(\sqrt[6]{a}\). Al multiplicar \(\sqrt{a}\cdot\sqrt[3]{a}\) se juntan \(3+2=5\) factores \(\sqrt[6]{a}\). En cada casilla está escrito el valor del factor, y bajo la tercera barra, el producto acumulado.</p>
   <div class="stage" data-scene="raiz-indices"></div>
   <ul class="keys">
     <li><b>Barra verde:</b> de \(1\) hasta \(a\) en \(2\) factores iguales. Cada factor es \(\sqrt{a}\).</li>
     <li><b>Barra azul:</b> de \(1\) hasta \(a\) en \(3\) factores iguales. Cada factor es \(\sqrt[3]{a}\).</li>
     <li><b>Barra naranja:</b> de \(1\) hasta \(a\) en \(6\) factores iguales. Cada factor es \(\sqrt[6]{a}\).</li>
-    <li><b>Barra de abajo:</b> \(3\) factores \(\sqrt[6]{a}\) (que son \(\sqrt{a}\)) seguidos de \(2\) factores \(\sqrt[6]{a}\) (que son \(\sqrt[3]{a}\)). En total, \(5\) factores \(\sqrt[6]{a}\): \(\sqrt{a}\cdot\sqrt[3]{a}=\sqrt[6]{a^{5}}\).</li>
+    <li><b>Barra de abajo:</b> el producto \(\sqrt{a}\cdot\sqrt[3]{a}\). Los \(3\) factores \(\sqrt[6]{a}\) verdes son \(\sqrt{a}\) y los \(2\) factores \(\sqrt[6]{a}\) azules son \(\sqrt[3]{a}\). Se cuentan \(5\) factores \(\sqrt[6]{a}\): \(\sqrt{a}\cdot\sqrt[3]{a}=\left(\sqrt[6]{a}\right)^{5}=\sqrt[6]{a^{5}}\).</li>
   </ul>
 </section>
 
@@ -159,16 +159,16 @@
 </section>
 
 <footer>
-  <span class="status">MA-L16-H01 · v002 · en revisión, sin APR</span>
+  <span class="status">MA-L16-H01 · v003 · en revisión, sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
 OA.scene('raiz-indices', (function(){
   function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
   return {
-    world:{x0:-0.7, x1:6.7, y0:-2.7, y1:4.7}, aspect:1,
+    world:{x0:-0.8, x1:7.4, y0:-3.5, y1:4.7}, aspect:1,
     aria:'Tres barras que van de 1 hasta a. La primera se corta en 2 factores iguales, raíz cuadrada de a. La segunda en 3 factores iguales, raíz cúbica de a. La tercera en 6 factores iguales, raíz sexta de a. Una raíz cuadrada de a ocupa 3 factores raíz sexta de a y una raíz cúbica de a ocupa 2. Juntas son 5 factores: raíz sexta de a elevado a 5.',
-    labels:[['ra','\\sqrt{a}','√a','c-alt pt'], ['rb','\\sqrt[3]{a}','∛a','c-sec pt'], ['rc','\\sqrt[6]{a}','⁶√a','diff'], ['ea','\\sqrt{a}=\\sqrt[6]{a^{3}}','√a = ⁶√(a³)','c-alt pt'], ['eb','\\sqrt[3]{a}=\\sqrt[6]{a^{2}}','∛a = ⁶√(a²)','c-sec pt'], ['fin','\\sqrt{a}\\cdot\\sqrt[3]{a}=\\sqrt[6]{a^{5}}','√a·∛a = ⁶√(a⁵)','diff']],
+    labels:[['ra0','\\sqrt{a}','√a','c-alt pt'], ['ra1','\\sqrt{a}','√a','c-alt pt'], ['rb0','\\sqrt[3]{a}','∛a','c-sec pt'], ['rb1','\\sqrt[3]{a}','∛a','c-sec pt'], ['rb2','\\sqrt[3]{a}','∛a','c-sec pt'], ['rc0','\\sqrt[6]{a}','⁶√a','diff'], ['rc1','\\sqrt[6]{a}','⁶√a','diff'], ['rc2','\\sqrt[6]{a}','⁶√a','diff'], ['rc3','\\sqrt[6]{a}','⁶√a','diff'], ['rc4','\\sqrt[6]{a}','⁶√a','diff'], ['rc5','\\sqrt[6]{a}','⁶√a','diff'], ['rd0','\\sqrt[6]{a}','⁶√a','diff'], ['rd1','\\sqrt[6]{a}','⁶√a','diff'], ['rd2','\\sqrt[6]{a}','⁶√a','diff'], ['rd3','\\sqrt[6]{a}','⁶√a','diff'], ['rd4','\\sqrt[6]{a}','⁶√a','diff'], ['ea','\\sqrt{a}=\\left(\\sqrt[6]{a}\\right)^{3}','√a = (⁶√a)³','c-alt pt'], ['eb','\\sqrt[3]{a}=\\left(\\sqrt[6]{a}\\right)^{2}','∛a = (⁶√a)²','c-sec pt'], ['fin','\\sqrt{a}\\cdot\\sqrt[3]{a}=\\left(\\sqrt[6]{a}\\right)^{5}=\\sqrt[6]{a^{5}}','√a·∛a = (⁶√a)⁵ = ⁶√(a⁵)','diff']],
     sliders:[{id:'c', tex:'\\sqrt[6]{a}', min:2, max:3, step:1, value:2}],
     legend:'<span><i class="sw alt"></i> factor \\(\\sqrt{a}\\)</span><span><i class="sw sec"></i> factor \\(\\sqrt[3]{a}\\)</span><span><i class="sw rise"></i> factor \\(\\sqrt[6]{a}\\)</span>',
     anim:{run:52000, hold:5000, still:1, apply:function(p, v){ v.t = p; }},
@@ -187,6 +187,10 @@ OA.scene('raiz-indices', (function(){
         var w = 6/parts, n = k*parts;
         for (i = 0; i < parts; i++) if (n > i) cell(i*w, y0, w, col, 0.34*cl(n - i) + 0.001, cl(n - i) >= 1 ? '× ' + val : '');
       }
+      function ends(y0, k){ if (k < 1) return; x.fillStyle = C.ink; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textBaseline = 'middle';
+        x.textAlign = 'right'; x.fillText('1', S.X(0) - 6, S.Y(y0 + H/2)); x.textAlign = 'left'; x.fillText('a = ' + Math.pow(c, 6), S.X(6) + 6, S.Y(y0 + H/2)); }
+      function brace(x0, x1, y, col){ S.line(x0 + 0.06, y, x1 - 0.06, y, {color:col, width:2}); S.line(x0 + 0.06, y - 0.1, x0 + 0.06, y + 0.001, {color:col, width:2}); S.line(x1 - 0.06, y - 0.1, x1 - 0.06, y + 0.001, {color:col, width:2}); }
+      ends(3.3, kA); ends(1.9, kB); ends(0.5, kC);
       row(3.3, 2, C.alt, kA, c*c*c);
       row(1.9, 3, C.sec, kB, c*c);
       row(0.5, 6, C.rise, kC, c);
@@ -196,29 +200,32 @@ OA.scene('raiz-indices', (function(){
       }
       if (kH1 > 0){
         S.poly([[0,3.3],[3,3.3],[3,3.3 + H],[0,3.3 + H]], {color:C.alt, width:3});
-        [[3.3,2.6],[1.9,1.2],[0.15,-0.9]].forEach(function(g){ S.line(0, g[0], 0, g[1], {color:C.muted, width:1, dash:[3,4]}); S.line(3, g[0], 3, g[1], {color:C.muted, width:1, dash:[3,4]}); });
+        [[3.3,2.6],[1.9,1.2],[0.15,-0.1]].forEach(function(g){ S.line(0, g[0], 0, g[1], {color:C.muted, width:1, dash:[3,4]}); S.line(3, g[0], 3, g[1], {color:C.muted, width:1, dash:[3,4]}); });
+        if (kH1 >= 1) brace(0, 3, -0.72, C.alt);
         for (i = 0; i < 3; i++) if (kH1*3 > i) cell(i, -1.6, 1, C.alt, 0.34*cl(kH1*3 - i) + 0.001, cl(kH1*3 - i) >= 1 ? '× ' + c : '');
       }
       if (kH2 > 0){
         S.poly([[0,1.9],[2,1.9],[2,1.9 + H],[0,1.9 + H]], {color:C.sec, width:3});
+        if (kH2 >= 1) brace(3, 5, -0.72, C.sec);
         for (i = 0; i < 2; i++) if (kH2*2 > i) cell(3 + i, -1.6, 1, C.sec, 0.34*cl(kH2*2 - i) + 0.001, cl(kH2*2 - i) >= 1 ? '× ' + c : '');
       }
       if (kR > 0){
-        S.line(0, -1.85, 5*kR, -1.85, {color:C.rise, width:3});
-        S.line(0, -1.98, 0, -1.72, {color:C.ink, width:1});
+        S.line(0, -2.45, 5*kR, -2.45, {color:C.rise, width:3});
+        S.line(0, -2.58, 0, -2.32, {color:C.ink, width:1});
         if (kR >= 1){
-          S.line(5, -1.98, 5, -1.72, {color:C.ink, width:1});
+          S.line(5, -2.58, 5, -2.32, {color:C.ink, width:1});
           x.fillStyle = C.muted; x.font = '11px "Source Sans 3", system-ui, sans-serif'; x.textBaseline = 'middle';
-          x.textAlign = 'right'; x.fillText('1', S.X(0) - 5, S.Y(-1.85));
-          x.textAlign = 'left'; x.fillText(String(Math.pow(c, 5)), S.X(5) + 5, S.Y(-1.85));
+          x.textAlign = 'right'; x.fillText('1', S.X(0) - 5, S.Y(-2.45));
+          x.textAlign = 'left'; x.fillText(String(Math.pow(c, 5)), S.X(5) + 5, S.Y(-2.45));
         }
       }
-      S.lab('ra', S.X(1.5), S.Y(3.3 + H) - 3, -50, -100, kA >= 1);
-      S.lab('rb', S.X(1), S.Y(1.9 + H) - 3, -50, -100, kB >= 1);
-      S.lab('rc', S.X(0.5), S.Y(0.5 + H) - 3, -50, -100, kC >= 1);
-      S.lab('ea', S.X(1.5), S.Y(-1.6 + H) - 3, -50, -100, s >= 21.5);
-      S.lab('eb', S.X(4), S.Y(-1.6 + H) - 3, -50, -100, s >= 33.5);
-      S.lab('fin', S.X(2.5), S.Y(-1.98) + 4, -50, 0, s >= 46);
+      for (i = 0; i < 2; i++) S.lab('ra' + i, S.X(1.5 + 3*i), S.Y(3.3 + H) - 3, -50, -100, kA >= 1);
+      for (i = 0; i < 3; i++) S.lab('rb' + i, S.X(1 + 2*i), S.Y(1.9 + H) - 3, -50, -100, kB >= 1);
+      for (i = 0; i < 6; i++) S.lab('rc' + i, S.X(0.5 + i), S.Y(0.5 + H) - 3, -50, -100, kC >= 1);
+      for (i = 0; i < 5; i++) S.lab('rd' + i, S.X(0.5 + i), S.Y(-1.6) + 2, -50, 0, i < 3 ? kH1 >= 1 : kH2 >= 1);
+      S.lab('ea', S.X(1.5), S.Y(-0.72) - 3, -50, -100, kH1 >= 1);
+      S.lab('eb', S.X(4), S.Y(-0.72) - 3, -50, -100, kH2 >= 1);
+      S.lab('fin', S.X(2.5), S.Y(-2.58) + 4, -50, 0, s >= 46);
     },
     caption:function(v){
       var s = (v.t == null ? 1 : v.t)*52;
