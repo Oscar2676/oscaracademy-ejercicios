@@ -13,7 +13,7 @@
     <h1>Potencia de una potencia</h1>
     <p class="lede">Con \(a\in\mathbb{R}\) y \(m,n\in\mathbb{N}\), elevar una potencia a otro exponente es lo mismo que elevar la base al producto de los exponentes:
     \[\left(a^{m}\right)^{n}=a^{m\cdot n}\]
-    Se lee «\(a\) elevado a \(m\), todo elevado a \(n\)». La regla también vale con \(m,n\in\mathbb{Z}\) si \(a\neq 0\), y con exponentes racionales si \(a&gt;0\).</p>
+    Se lee «\(a\) elevado a \(m\), todo elevado a \(n\)». La regla también vale con \(m,n\in\mathbb{Z}\) si \(a\neq 0\), y con exponentes reales, racionales o irracionales, si \(a&gt;0\).</p>
   </section>
 </header>
 
@@ -52,12 +52,43 @@
     <li><b>Potencia de una potencia de una potencia.</b> Con \(m,n,p\in\mathbb{N}\), se aplica la regla dos veces y se multiplican los tres exponentes:
       \[\left(\left(a^{m}\right)^{n}\right)^{p}=\left(a^{m\cdot n}\right)^{p}=a^{m\cdot n\cdot p}\qquad\qquad \left(\left(2^{2}\right)^{3}\right)^{2}=\left(4^{3}\right)^{2}=64^{2}=4096=2^{12}\]</li>
   </ol>
+  <h3>Exponentes irracionales</h3>
+  <p>Si el exponente es irracional, como \(\sqrt{2}\) o \(\sqrt{21}\), ya no hay factores que contar: no se puede multiplicar \(a\) por sí misma \(\sqrt{2}\) veces. La potencia se define de otra manera, y con esa definición la regla se conserva siempre que \(a&gt;0\). Aquí se usan la función exponencial \(e^{t}\) y el logaritmo natural \(\ln\), que se estudian en la materia de función exponencial.</p>
+  <ol class="steps">
+    <li><b>Qué significa una potencia de exponente irracional, con \(a&gt;0\).</b> Se toman exponentes racionales cada vez más cercanos al exponente irracional. Las potencias se acercan a un único número, y ese número es la potencia. Por ejemplo, \(\sqrt{21}\approx 4{,}58257\ldots\) y:
+      \[\begin{array}{c|ccccc}
+      x & 4{,}5 & 4{,}58 & 4{,}582 & 4{,}5825 & 4{,}58257\\ \hline
+      3^{x}\approx & 140{,}296 & 153{,}185 & 153{,}522 & 153{,}606 & 153{,}618
+      \end{array}\qquad\qquad 3^{\sqrt{21}}\approx 153{,}6188\]</li>
+    <li><b>La definición, con \(a&gt;0\) y \(x\in\mathbb{R}\).</b> Ese número se escribe con la función exponencial y el logaritmo natural:
+      \[a^{x}=e^{x\cdot\ln a}\]
+      Se usan dos propiedades: \(e^{t}&gt;0\) para todo \(t\in\mathbb{R}\), y \(\ln\left(e^{t}\right)=t\) para todo \(t\in\mathbb{R}\), porque \(\ln\) es la función inversa de la exponencial.</li>
+    <li><b>La potencia \(a^{x}\) es positiva.</b> Por la definición, \(a^{x}=e^{x\cdot\ln a}\), y \(e^{t}&gt;0\) para todo \(t\in\mathbb{R}\):
+      \[a^{x}&gt;0\]
+      Por eso \(a^{x}\) puede ser, a su vez, la base de otra potencia.</li>
+    <li><b>Se aplica la definición a la base \(a^{x}\), con \(y\in\mathbb{R}\).</b>
+      \[\left(a^{x}\right)^{y}=e^{y\cdot\ln\left(a^{x}\right)}\]</li>
+    <li><b>Se calcula el logaritmo de \(a^{x}\).</b> Primero la definición y después \(\ln\left(e^{t}\right)=t\):
+      \[\ln\left(a^{x}\right)=\ln\left(e^{x\cdot\ln a}\right)=x\cdot\ln a\]</li>
+    <li><b>Se reemplaza y se reordena el producto.</b> La multiplicación es asociativa y conmutativa:
+      \[\left(a^{x}\right)^{y}=e^{y\cdot\left(x\cdot\ln a\right)}=e^{\left(x\cdot y\right)\cdot\ln a}\]</li>
+    <li><b>Se lee la definición de derecha a izquierda.</b> Con base \(a&gt;0\) y exponente \(x\cdot y\):
+      \[e^{\left(x\cdot y\right)\cdot\ln a}=a^{x\cdot y}\qquad\text{y por lo tanto}\qquad \left(a^{x}\right)^{y}=a^{x\cdot y}\quad(a&gt;0,\ x,y\in\mathbb{R})\]</li>
+    <li><b>Ejemplo en que el resultado es exacto.</b> Con \(a&gt;0\), el producto de los exponentes es racional, porque \(\sqrt{2}\cdot\sqrt{2}=2\):
+      \[\left(a^{\sqrt{2}}\right)^{\sqrt{2}}=a^{\sqrt{2}\cdot\sqrt{2}}=a^{2}\qquad\qquad \left(2^{\sqrt{2}}\right)^{\sqrt{2}}=2^{\sqrt{2}\cdot\sqrt{2}}=2^{2}=4\]</li>
+    <li><b>Ejemplo en que el resultado solo se puede aproximar.</b> El producto de raíces de igual índice es la raíz del producto: \(\sqrt{7}\cdot\sqrt{3}=\sqrt{7\cdot 3}=\sqrt{21}\). Como \(21\) no es un cuadrado perfecto, \(\sqrt{21}\) es irracional y el exponente sigue siendo irracional:
+      \[\left(3^{\sqrt{7}}\right)^{\sqrt{3}}=3^{\sqrt{7}\cdot\sqrt{3}}=3^{\sqrt{21}}\approx 153{,}6188\]
+      La forma exacta es \(3^{\sqrt{21}}\). Comprobación por pasos: \(3^{\sqrt{7}}\approx 18{,}2955\), y ese número elevado a \(\sqrt{3}\) da aproximadamente \(153{,}6188\).</li>
+    <li><b>Los exponentes también se pueden intercambiar.</b> Porque \(\sqrt{7}\cdot\sqrt{3}=\sqrt{3}\cdot\sqrt{7}\):
+      \[\left(3^{\sqrt{7}}\right)^{\sqrt{3}}=\left(3^{\sqrt{3}}\right)^{\sqrt{7}}=3^{\sqrt{21}}\]</li>
+  </ol>
   <div class="def">
     <h3>Potencia de una potencia: qué se exige en cada caso</h3>
     \[\begin{array}{ll}
     \left(a^{m}\right)^{n}=a^{m\cdot n} & m,n\in\mathbb{N},\ a\in\mathbb{R}\\[8pt]
     \left(a^{m}\right)^{n}=a^{m\cdot n} & m,n\in\mathbb{Z},\ a\in\mathbb{R},\ a\neq 0\\[8pt]
-    \left(a^{m}\right)^{n}=a^{m\cdot n} & m,n\in\mathbb{Q},\ a\in\mathbb{R},\ a&gt;0
+    \left(a^{m}\right)^{n}=a^{m\cdot n} & m,n\in\mathbb{Q},\ a\in\mathbb{R},\ a&gt;0\\[8pt]
+    \left(a^{x}\right)^{y}=a^{x\cdot y} & x,y\in\mathbb{R},\ a\in\mathbb{R},\ a&gt;0
     \end{array}\]
   </div>
   <div class="why">
@@ -124,7 +155,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L14-H01 · candidata v001 · sin APR</span>
+  <span class="status">MA-L14-H01 · candidata v002 · sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
