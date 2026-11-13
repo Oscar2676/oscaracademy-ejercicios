@@ -1,8 +1,8 @@
 # Árbol del sitio oscaracademy.org
 
-Generado: 2026-11-12T23:36:11.656Z · revisión de Wix 6872
+Generado: 2026-11-13T04:46:56.144Z · revisión de Wix 6879
 
-Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, 'cajas': 1024, 'titulosEnCajas': 8034, 'titulosConEnlace': 211}
+Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, 'cajas': 1024, 'titulosEnCajas': 8034, 'titulosConEnlace': 213}
 
 ## 1º Básico  (https://www.oscaracademy.org/1º-básico)  [no aparece en el menú del sitio]
   * MENÚ: Contar números enteros
@@ -162,7 +162,7 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Números Mixtos → https://oscar2676.github.io/oscaracademy-ejercicios/numeros-racionales/lote10/H02_numeros_mixtos_v004.html
   * MENÚ: Potencias
       - CAJA: Potencias
-          · Potencias de base y exponente entero
+          · Potencias de base y exponente entero → https://oscar2676.github.io/oscaracademy-ejercicios/potencias/lote11/H01_potencias_de_base_y_exponente_entero.html
           · Multiplicación y división de potencias de base entera
           · Potencias de base racional y exponente entero
           · Multiplicación y división de potencias de base racional
@@ -7420,7 +7420,7 @@ Totales: {'paginas': 118, 'paginasConMenuInterno': 79, 'entradasDeMenu': 1089, '
           · Propiedades de los exponentes enteros
           · Exponentes negativos en fracciones
           · Introducción a la notación científica
-          · Introducción a los potencias
+          · Introducción a los potencias → https://oscar2676.github.io/oscaracademy-ejercicios/potencias/lote11/H01_potencias_de_base_y_exponente_entero.html
           · Planteos verbales de notación científica
           · Entero negativo levado a exponente par
           · Fracción con exponente negativo
