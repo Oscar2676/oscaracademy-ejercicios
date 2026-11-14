@@ -21,6 +21,8 @@
 
 <section>
   <h2>Disfruta la animación</h2>
+  <p>Vamos a ver una forma de obtener la gráfica de la función exponencial y de su función inversa, la función logarítmica.</p>
+  <h3>Primera interpretación: se intercambian las coordenadas</h3>
   <p>Primero se dibuja la función exponencial \(y=a^{x}\) y se marca en ella un punto \(Q\). Después se intercambian las dos coordenadas de \(Q\) y resulta el punto \(P\). Los puntos \(Q\) y \(P\) dicen lo mismo: \(Q\) lo dice como potencia y \(P\) lo dice como logaritmo. Todos los puntos que se obtienen así forman la curva \(y=\log_{a}x\), que es el reflejo de \(y=a^{x}\) en la recta \(y=x\).</p>
   <div class="stage" data-scene="flog"></div>
   <ul class="keys">
@@ -31,6 +33,43 @@
     <li><b>Curva naranja:</b> el gráfico de la función logarítmica, \(y=\log_{a}x\).</li>
     <li><b>Punto azul:</b> el punto \((1,\ 0)\), común a todas las bases.</li>
   </ul>
+
+  <h3>Segunda interpretación: la recta \(y=x\) es el eje de simetría</h3>
+  <p>Se traza la recta \(y=x\). Esa recta es el eje de simetría entre las dos curvas: si la curva \(y=a^{x}\) se gira media vuelta alrededor de la recta \(y=x\), como cuando se dobla el papel por esa recta, cae exactamente sobre la curva \(y=\log_{a}x\). Es otra forma de encontrar la segunda curva, y se ve en la misma animación. La razón, paso a paso:</p>
+  <ol class="steps">
+    <li><b>Un punto y su intercambiado.</b> Sea \(Q(u,\ v)\) un punto de \(y=a^{x}\) y \(P(v,\ u)\) el punto con las coordenadas intercambiadas, con \(u\neq v\).</li>
+    <li><b>El punto medio del trazo \(QP\).</b> Se promedian las abscisas y se promedian las ordenadas:
+      \[M\left(\frac{u+v}{2},\ \frac{v+u}{2}\right)\]</li>
+    <li><b>El punto medio está en la recta \(y=x\).</b> La suma es conmutativa, \(u+v=v+u\), así que las dos coordenadas de \(M\) son iguales:
+      \[\frac{u+v}{2}=\frac{v+u}{2}\]</li>
+    <li><b>La pendiente del trazo \(QP\).</b> Diferencia de ordenadas partida por diferencia de abscisas. Como \(u-v=-(v-u)\) y \(v-u\neq 0\):
+      \[m_{QP}=\frac{u-v}{v-u}=\frac{-(v-u)}{v-u}=-1\]</li>
+    <li><b>El trazo \(QP\) es perpendicular a la recta \(y=x\).</b> La recta \(y=x\) tiene pendiente \(1\). Dos rectas son perpendiculares cuando el producto de sus pendientes es \(-1\):
+      \[m_{QP}\cdot 1=(-1)\cdot 1=-1\]</li>
+    <li><b>Conclusión.</b> La recta \(y=x\) corta al trazo \(QP\) en su punto medio y en ángulo recto. Entonces \(P\) es el reflejo de \(Q\) en la recta \(y=x\). Como eso vale para cada punto de la curva \(y=a^{x}\), la curva \(y=\log_{a}x\) completa es el reflejo de la curva \(y=a^{x}\).</li>
+    <li>Si \(u=v\), los puntos \(Q\) y \(P\) son el mismo punto, que está en la recta \(y=x\) y es su propio reflejo.</li>
+  </ol>
+
+  <h3>Tercera interpretación: analítica, con pares ordenados</h3>
+  <p>Las dos gráficas también se obtienen calculando pares ordenados. Primero se eligen valores de \(x\) y se calcula \(y=a^{x}\). Después, cada par \((x,\ y)\) de la exponencial se lee al revés y da un par \((y,\ x)\) de la logarítmica, porque \(y=a^{x}\iff x=\log_{a}y\). Los tres pares más importantes, para cualquier base \(a\):</p>
+  \[\begin{array}{lll}
+  \text{Porque} & \text{Par de }y=a^{x} & \text{Par de }y=\log_{a}x\\[6pt]
+  a^{-1}=\dfrac{1}{a} & \left(-1,\ \dfrac{1}{a}\right) & \left(\dfrac{1}{a},\ -1\right)\\[10pt]
+  a^{0}=1 & (0,\ 1) & (1,\ 0)\\[6pt]
+  a^{1}=a & (1,\ a) & (a,\ 1)
+  \end{array}\]
+  <p>Ejemplo con \(a=2\). Se calculan cinco potencias:</p>
+  \[2^{-2}=\frac{1}{2^{2}}=\frac{1}{4}\qquad 2^{-1}=\frac{1}{2}\qquad 2^{0}=1\qquad 2^{1}=2\qquad 2^{2}=4\]
+  <p>Cada potencia da un par de \(y=2^{x}\), y ese par leído al revés da un par de \(y=\log_{2}x\):</p>
+  \[\begin{array}{lll}
+  \text{Par de }y=2^{x} & \text{Par de }y=\log_{2}x & \text{Porque}\\[6pt]
+  \left(-2,\ \dfrac{1}{4}\right) & \left(\dfrac{1}{4},\ -2\right) & \log_{2}\dfrac{1}{4}=-2\\[10pt]
+  \left(-1,\ \dfrac{1}{2}\right) & \left(\dfrac{1}{2},\ -1\right) & \log_{2}\dfrac{1}{2}=-1\\[10pt]
+  (0,\ 1) & (1,\ 0) & \log_{2}1=0\\[6pt]
+  (1,\ 2) & (2,\ 1) & \log_{2}2=1\\[6pt]
+  (2,\ 4) & (4,\ 2) & \log_{2}4=2
+  \end{array}\]
+  <p>Se ubican los cinco puntos de cada columna en el plano y se unen con una curva suave: la primera columna da la gráfica de \(y=2^{x}\) y la segunda, la de \(y=\log_{2}x\). En la animación, con \(a=2\), al mover el exponente de \(-2\) a \(2\) aparecen estos mismos pares como \(Q\) y \(P\).</p>
 </section>
 
 <section>
@@ -174,7 +213,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L17-H01 · v001 · en revisión, sin APR</span>
+  <span class="status">MA-L17-H01 · v002 · en revisión, sin APR</span>
 </footer>
 </article>
 <!--SCENE-->
