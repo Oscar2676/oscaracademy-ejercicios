@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propiedades de los logaritmos | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="propiedades-logaritmos" data-hoja="L17 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li><b>Propiedades de los logaritmos</b></li>
+    </ol>
+    <h1>Propiedades de los logaritmos</h1>
+    <p class="lede">En toda la hoja, \(a\in\mathbb{R}\), \(a&gt;0\), \(a\neq 1\), y \(x,y\in\mathbb{R}\), \(x&gt;0\), \(y&gt;0\). Todas las propiedades salen de la definición de logaritmo:
+    \[\log_{a}x=p\iff a^{p}=x\]
+</p>
+    <div class="props">
+      <h3>Las nueve propiedades</h3>
+      <p>Cada una se demuestra paso a paso más abajo, en su propio recuadro.</p>
+    \[\begin{array}{lll}
+    \textbf{1.} & \log_{a}1=0 & \text{logaritmo de }1\\[6pt]
+    \textbf{2.} & \log_{a}a=1 & \text{logaritmo de la base}\\[6pt]
+    \textbf{3.} & \log_{a}\left(a^{t}\right)=t & \text{logaritmo de una potencia de la base},\ t\in\mathbb{R}\\[6pt]
+    \textbf{4.} & a^{\log_{a}x}=x & \text{la base elevada al logaritmo}\\[6pt]
+    \textbf{5.} & \log_{a}(x\cdot y)=\log_{a}x+\log_{a}y & \text{logaritmo de un producto}\\[6pt]
+    \textbf{6.} & \log_{a}\dfrac{x}{y}=\log_{a}x-\log_{a}y & \text{logaritmo de un cociente}\\[10pt]
+    \textbf{7.} & \log_{a}\left(x^{r}\right)=r\cdot\log_{a}x & \text{logaritmo de una potencia},\ r\in\mathbb{R}\\[6pt]
+    \textbf{8.} & \log_{a}\sqrt[n]{x}=\dfrac{1}{n}\cdot\log_{a}x & \text{logaritmo de una raíz},\ n\in\mathbb{N},\ n\ge 2\\[10pt]
+    \textbf{9.} & \log_{a}x=\dfrac{\log_{b}x}{\log_{b}a} & \text{cambio de base},\ b&gt;0,\ b\neq 1
+    \end{array}\]
+    </div>
+  </section>
+</header>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La animación muestra la propiedad 5, el logaritmo de un producto, con base \(2\). En la regla, sobre cada marca está escrito un número y debajo su logaritmo en base \(2\): la marca del número \(8\) está a distancia \(3\) del inicio, porque \(\log_{2}8=3\). El trazo verde va desde \(1\) hasta \(x\) y su largo es \(\log_{2}x\). El trazo azul va desde \(1\) hasta \(y\) y su largo es \(\log_{2}y\). Al poner el trazo azul a continuación del verde, los largos se suman y el extremo cae justo en la marca del producto \(x\cdot y\). Sumar logaritmos es multiplicar números.</p>
+  <div class="stage" data-scene="logprod"></div>
+  <ul class="keys">
+    <li><b>Regla:</b> sobre cada marca, un número; debajo, su logaritmo en base \(2\).</li>
+    <li><b>Trazo verde:</b> desde la marca \(1\) hasta la marca \(x\). Su largo es \(\log_{2}x\).</li>
+    <li><b>Trazo azul:</b> desde la marca \(1\) hasta la marca \(y\). Su largo es \(\log_{2}y\). Después se traslada a continuación del verde.</li>
+    <li><b>Trazo naranja:</b> desde la marca \(1\) hasta la marca \(x\cdot y\). Su largo es \(\log_{2}(x\cdot y)=\log_{2}x+\log_{2}y\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Demostración de cada propiedad, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Propiedad 1: \(\log_{a}1=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Toda potencia de exponente \(0\) y base distinta de \(0\) es \(1\). Como \(a&gt;0\):
+      \[a^{0}=1\]</li>
+    <li>Se aplica la definición, \(a^{p}=x\iff\log_{a}x=p\), con \(p=0\) y \(x=1\):
+      \[a^{0}=1\iff\log_{a}1=0\]</li>
+    <li>Ejemplo: \(\log_{7}1=0\), porque \(7^{0}=1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Propiedad 2: \(\log_{a}a=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Toda potencia de exponente \(1\) es igual a su base:
+      \[a^{1}=a\]</li>
+    <li>Se aplica la definición, con \(p=1\) y \(x=a\):
+      \[a^{1}=a\iff\log_{a}a=1\]</li>
+    <li>Ejemplo: \(\log_{7}7=1\), porque \(7^{1}=7\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Propiedad 3: \(\log_{a}\left(a^{t}\right)=t\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea \(t\in\mathbb{R}\). El número \(a^{t}\) es positivo, así que su logaritmo existe. Se le pone nombre: \(p=\log_{a}\left(a^{t}\right)\).</li>
+    <li>Se aplica la definición, con \(x=a^{t}\):
+      \[\log_{a}\left(a^{t}\right)=p\iff a^{p}=a^{t}\]</li>
+    <li>La función exponencial de base \(a\) es creciente si \(a&gt;1\) y decreciente si \(0&lt;a&lt;1\), así que no repite valores. Si dos potencias de igual base son iguales, sus exponentes son iguales:
+      \[a^{p}=a^{t}\quad\Longrightarrow\quad p=t\]</li>
+    <li>Se reemplaza \(p=\log_{a}\left(a^{t}\right)\):
+      \[\log_{a}\left(a^{t}\right)=t\]</li>
+    <li>Ejemplo: \(\log_{2}\left(2^{5}\right)=5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Propiedad 4: \(a^{\log_{a}x}=x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se le pone nombre al logaritmo: \(p=\log_{a}x\).</li>
+    <li>Se aplica la definición:
+      \[\log_{a}x=p\iff a^{p}=x\]</li>
+    <li>En \(a^{p}=x\) se reemplaza \(p=\log_{a}x\):
+      \[a^{\log_{a}x}=x\]</li>
+    <li>Ejemplo: \(2^{\log_{2}8}=2^{3}=8\), porque \(\log_{2}8=3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p5">
+  <h3>Propiedad 5: \(\log_{a}(x\cdot y)=\log_{a}x+\log_{a}y\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se les pone nombre a los dos logaritmos: \(p=\log_{a}x\) y \(q=\log_{a}y\).</li>
+    <li>Se aplica la definición a cada uno:
+      \[a^{p}=x\qquad\qquad a^{q}=y\]</li>
+    <li>Se multiplican las dos igualdades, miembro a miembro:
+      \[a^{p}\cdot a^{q}=x\cdot y\]</li>
+    <li>El lado izquierdo es un producto de potencias de igual base: se suman los exponentes.
+      \[a^{p}\cdot a^{q}=a^{p+q}\]</li>
+    <li>Se reemplaza en el paso 3:
+      \[a^{p+q}=x\cdot y\]</li>
+    <li>Como \(x&gt;0\) e \(y&gt;0\), el producto \(x\cdot y\) es positivo y su logaritmo existe. Se aplica la definición, con exponente \(p+q\):
+      \[a^{p+q}=x\cdot y\iff\log_{a}(x\cdot y)=p+q\]</li>
+    <li>Se reemplazan \(p=\log_{a}x\) y \(q=\log_{a}y\):
+      \[\log_{a}(x\cdot y)=\log_{a}x+\log_{a}y\]</li>
+    <li>Ejemplo:
+      \[\log_{2}(4\cdot 8)=\log_{2}4+\log_{2}8=2+3=5\]
+      Comprobación: \(4\cdot 8=32\) y \(2^{5}=32\), así que \(\log_{2}32=5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p6">
+  <h3>Propiedad 6: \(\log_{a}\dfrac{x}{y}=\log_{a}x-\log_{a}y\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Con los mismos nombres, \(p=\log_{a}x\) y \(q=\log_{a}y\), por la definición:
+      \[a^{p}=x\qquad\qquad a^{q}=y\]</li>
+    <li>Como \(y&gt;0\), \(y\neq 0\) y se puede dividir. Se dividen las dos igualdades, miembro a miembro:
+      \[\frac{a^{p}}{a^{q}}=\frac{x}{y}\]</li>
+    <li>El lado izquierdo es un cociente de potencias de igual base: se restan los exponentes.
+      \[\frac{a^{p}}{a^{q}}=a^{p-q}\]</li>
+    <li>Se reemplaza en el paso 2:
+      \[a^{p-q}=\frac{x}{y}\]</li>
+    <li>Como \(x&gt;0\) e \(y&gt;0\), el cociente \(\dfrac{x}{y}\) es positivo y su logaritmo existe. Se aplica la definición, con exponente \(p-q\):
+      \[a^{p-q}=\frac{x}{y}\iff\log_{a}\frac{x}{y}=p-q\]</li>
+    <li>Se reemplazan \(p=\log_{a}x\) y \(q=\log_{a}y\):
+      \[\log_{a}\frac{x}{y}=\log_{a}x-\log_{a}y\]</li>
+    <li>Ejemplo:
+      \[\log_{3}\frac{81}{3}=\log_{3}81-\log_{3}3=4-1=3\]
+      Comprobación: \(\dfrac{81}{3}=27\) y \(3^{3}=27\), así que \(\log_{3}27=3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p7">
+  <h3>Propiedad 7: \(\log_{a}\left(x^{r}\right)=r\cdot\log_{a}x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea \(r\in\mathbb{R}\) y \(p=\log_{a}x\). Por la definición:
+      \[a^{p}=x\]</li>
+    <li>Se elevan los dos miembros a \(r\). Los dos son positivos, así que las potencias existen:
+      \[\left(a^{p}\right)^{r}=x^{r}\]</li>
+    <li>El lado izquierdo es la potencia de una potencia, con \(a&gt;0\): se multiplican los exponentes.
+      \[\left(a^{p}\right)^{r}=a^{p\cdot r}\]</li>
+    <li>Se reemplaza en el paso 2:
+      \[a^{p\cdot r}=x^{r}\]</li>
+    <li>Como \(x&gt;0\), \(x^{r}\) es positivo y su logaritmo existe. Se aplica la definición, con exponente \(p\cdot r\):
+      \[a^{p\cdot r}=x^{r}\iff\log_{a}\left(x^{r}\right)=p\cdot r\]</li>
+    <li>La multiplicación es conmutativa, \(p\cdot r=r\cdot p\). Se reemplaza \(p=\log_{a}x\):
+      \[\log_{a}\left(x^{r}\right)=r\cdot\log_{a}x\]</li>
+    <li>Ejemplo:
+      \[\log_{2}\left(4^{3}\right)=3\cdot\log_{2}4=3\cdot 2=6\]
+      Comprobación: \(4^{3}=64\) y \(2^{6}=64\), así que \(\log_{2}64=6\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p8">
+  <h3>Propiedad 8: \(\log_{a}\sqrt[n]{x}=\dfrac{1}{n}\cdot\log_{a}x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Con \(x&gt;0\), la raíz enésima es una potencia de exponente racional:
+      \[\sqrt[n]{x}=x^{\frac{1}{n}}\]</li>
+    <li>Se aplica la propiedad 7, con \(r=\dfrac{1}{n}\):
+      \[\log_{a}\sqrt[n]{x}=\log_{a}\left(x^{\frac{1}{n}}\right)=\frac{1}{n}\cdot\log_{a}x\]</li>
+    <li>Ejemplo:
+      \[\log_{2}\sqrt[3]{64}=\frac{1}{3}\cdot\log_{2}64=\frac{1}{3}\cdot 6=2\]
+      Comprobación: \(\sqrt[3]{64}=4\) y \(2^{2}=4\), así que \(\log_{2}4=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p9">
+  <h3>Propiedad 9, cambio de base: \(\log_{a}x=\dfrac{\log_{b}x}{\log_{b}a}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea \(b&gt;0\), \(b\neq 1\), la base nueva, y \(p=\log_{a}x\). Por la definición:
+      \[a^{p}=x\]</li>
+    <li>Los dos miembros son positivos e iguales, así que sus logaritmos en base \(b\) son iguales:
+      \[\log_{b}\left(a^{p}\right)=\log_{b}x\]</li>
+    <li>En el lado izquierdo se aplica la propiedad 7, en base \(b\), con \(r=p\):
+      \[\log_{b}\left(a^{p}\right)=p\cdot\log_{b}a\]</li>
+    <li>Se reemplaza en el paso 2:
+      \[p\cdot\log_{b}a=\log_{b}x\]</li>
+    <li>El número \(\log_{b}a\) no es \(0\). Si lo fuera, por la definición sería \(a=b^{0}=1\), y \(a\neq 1\):
+      \[a\neq 1\quad\Longrightarrow\quad\log_{b}a\neq 0\]</li>
+    <li>Se dividen los dos miembros del paso 4 por \(\log_{b}a\):
+      \[p=\frac{\log_{b}x}{\log_{b}a}\]</li>
+    <li>Se reemplaza \(p=\log_{a}x\):
+      \[\log_{a}x=\frac{\log_{b}x}{\log_{b}a}\]</li>
+    <li>Ejemplo, de base \(8\) a base \(2\):
+      \[\log_{8}32=\frac{\log_{2}32}{\log_{2}8}=\frac{5}{3}\]
+      Comprobación: \(8^{\frac{5}{3}}=\left(\sqrt[3]{8}\right)^{5}=2^{5}=32\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <h3>Para tener en cuenta: no hay propiedad para el logaritmo de una suma</h3>
+    <p>El logaritmo de una suma no es la suma de los logaritmos. Con \(4\) y \(4\), en base \(2\):</p>
+    \[\log_{2}(4+4)=\log_{2}8=3\qquad\qquad \log_{2}4+\log_{2}4=2+2=4\]
+    <p>La suma de logaritmos corresponde al producto: \(\log_{2}4+\log_{2}4=\log_{2}(4\cdot 4)=\log_{2}16=4\).</p>
+  </div>
+  <div class="why">
+    <h3>Para tener en cuenta: se necesita \(x&gt;0\) e \(y&gt;0\)</h3>
+    <p>Con \(x=-4\) e \(y=-8\), el producto es positivo y su logaritmo existe: \(\log_{2}\left[(-4)\cdot(-8)\right]=\log_{2}32=5\). Pero \(\log_{2}(-4)\) y \(\log_{2}(-8)\) no existen en \(\mathbb{R}\), así que no se puede escribir \(\log_{2}(-4)+\log_{2}(-8)\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de la vida cotidiana</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>El nivel de un sonido, en decibeles, es \(L=10\cdot\log_{10}r\), donde \(r&gt;0\) mide su intensidad. Si la intensidad se multiplica por \(100\), ¿cuántos decibeles sube el nivel?</p>
+    <details><summary>Pista</summary><div><p>El nivel nuevo es \(10\cdot\log_{10}(100\cdot r)\). Se usa el logaritmo de un producto.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Nivel nuevo, con intensidad \(100\cdot r\):
+          \[L_{2}=10\cdot\log_{10}(100\cdot r)\]</li>
+        <li>Propiedad 5, logaritmo de un producto:
+          \[\log_{10}(100\cdot r)=\log_{10}100+\log_{10}r\]</li>
+        <li>Como \(100=10^{2}\), por la propiedad 3:
+          \[\log_{10}100=\log_{10}\left(10^{2}\right)=2\]</li>
+        <li>Se reemplazan los pasos 2 y 3 en el paso 1:
+          \[L_{2}=10\cdot\left(2+\log_{10}r\right)\]</li>
+        <li>Propiedad distributiva:
+          \[L_{2}=10\cdot 2+10\cdot\log_{10}r=20+10\cdot\log_{10}r\]</li>
+        <li>El segundo término es el nivel anterior, \(L=10\cdot\log_{10}r\):
+          \[L_{2}=20+L\]</li>
+        <li>Respuesta: el nivel sube \(20\) decibeles.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>El pH de un líquido es \(\text{pH}=-\log_{10}h\), donde \(h&gt;0\) es su concentración de iones de hidrógeno. Si un líquido se diluye hasta que \(h\) queda dividida por \(10\), ¿cuánto cambia su pH?</p>
+    <details><summary>Pista</summary><div><p>El pH nuevo es \(-\log_{10}\dfrac{h}{10}\). Se usa el logaritmo de un cociente.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>pH nuevo, con concentración \(\dfrac{h}{10}\):
+          \[\text{pH}_{2}=-\log_{10}\frac{h}{10}\]</li>
+        <li>Propiedad 6, logaritmo de un cociente:
+          \[\log_{10}\frac{h}{10}=\log_{10}h-\log_{10}10\]</li>
+        <li>Propiedad 2, logaritmo de la base:
+          \[\log_{10}10=1\]</li>
+        <li>Se reemplazan los pasos 2 y 3 en el paso 1:
+          \[\text{pH}_{2}=-\left(\log_{10}h-1\right)\]</li>
+        <li>Se quita el paréntesis cambiando el signo de cada término:
+          \[\text{pH}_{2}=-\log_{10}h+1\]</li>
+        <li>El primer término es el pH anterior, \(\text{pH}=-\log_{10}h\):
+          \[\text{pH}_{2}=\text{pH}+1\]</li>
+        <li>Respuesta: el pH sube \(1\) unidad.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Un ahorro crece un \(2\,\%\) cada mes: cada mes se multiplica por \(1{,}02\). ¿En cuántos meses se duplica?</p>
+    <details><summary>Pista</summary><div><p>Después de \(t\) meses el ahorro queda multiplicado por \(1{,}02^{t}\). Se busca \(t\) con \(1{,}02^{t}=2\) y se cambia a base \(10\), que es la de la calculadora.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se plantea la igualdad:
+          \[1{,}02^{t}=2\]</li>
+        <li>Por la definición de logaritmo, con base \(1{,}02\):
+          \[1{,}02^{t}=2\iff t=\log_{1{,}02}2\]</li>
+        <li>Propiedad 9, cambio a base \(10\):
+          \[t=\log_{1{,}02}2=\frac{\log_{10}2}{\log_{10}1{,}02}\]</li>
+        <li>Con calculadora: \(\log_{10}2\approx 0{,}30103\) y \(\log_{10}1{,}02\approx 0{,}00860\). Se dividen:
+          \[t\approx 35{,}0\]</li>
+        <li>Respuesta: el ahorro se duplica en aproximadamente \(35\) meses.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">D</span><b>Ejercicio especial: exponentes irracionales.</b> Calcular \(\log_{2}\left[\left(4^{\sqrt{3}}\right)^{\sqrt{12}}\right]\).</p>
+    <details><summary>Pista</summary><div><p>La propiedad 7 vale para todo exponente real, también irracional. Se aplica dos veces.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El número \(4^{\sqrt{3}}\) es positivo, porque toda potencia de base positiva es positiva. Se aplica la propiedad 7, con \(x=4^{\sqrt{3}}\) y \(r=\sqrt{12}\):
+          \[\log_{2}\left[\left(4^{\sqrt{3}}\right)^{\sqrt{12}}\right]=\sqrt{12}\cdot\log_{2}\left(4^{\sqrt{3}}\right)\]</li>
+        <li>Se aplica otra vez la propiedad 7, con \(x=4\) y \(r=\sqrt{3}\):
+          \[\log_{2}\left(4^{\sqrt{3}}\right)=\sqrt{3}\cdot\log_{2}4\]</li>
+        <li>Como \(4=2^{2}\), por la propiedad 3:
+          \[\log_{2}4=\log_{2}\left(2^{2}\right)=2\]</li>
+        <li>Se reemplazan los pasos 2 y 3 en el paso 1:
+          \[\log_{2}\left[\left(4^{\sqrt{3}}\right)^{\sqrt{12}}\right]=\sqrt{12}\cdot\sqrt{3}\cdot 2\]</li>
+        <li>Producto de raíces de igual índice:
+          \[\sqrt{12}\cdot\sqrt{3}=\sqrt{12\cdot 3}=\sqrt{36}=6\]</li>
+        <li>Se reemplaza y se multiplica:
+          \[\log_{2}\left[\left(4^{\sqrt{3}}\right)^{\sqrt{12}}\right]=6\cdot 2=12\]</li>
+        <li>Comprobación por otro camino. Potencia de una potencia: \(\left(4^{\sqrt{3}}\right)^{\sqrt{12}}=4^{\sqrt{3}\cdot\sqrt{12}}=4^{6}\). Y:
+          \[4^{6}=4096\qquad\qquad 2^{12}=4096\]</li>
+        <li>Respuesta: \(\log_{2}\left[\left(4^{\sqrt{3}}\right)^{\sqrt{12}}\right]=12\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L17-H02 · v002 · APR de Óscar, 15-nov-2026</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('logprod', (function(){
+  var RUN = 44;
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  return {
+    world:{x0:-1.5, x1:6.6, y0:-2.5, y1:3.6}, aspect:6.1/8.1,
+    aria:'Regla con las marcas 1, 2, 4, 8, 16, 32 y 64, y debajo de cada una su logaritmo en base 2: 0, 1, 2, 3, 4, 5 y 6. Un trazo verde de largo logaritmo de x y un trazo azul de largo logaritmo de y se ponen uno a continuación del otro y llegan a la marca del producto x por y.',
+    labels:[['lx','\\log_{2}x','log₂ x','c-alt pt'], ['ly','\\log_{2}y','log₂ y','c-sec pt'], ['lt','\\log_{2}(x\\cdot y)=\\log_{2}x+\\log_{2}y','log₂(x·y) = log₂ x + log₂ y','diff']],
+    sliders:[{id:'p', tex:'\\log_{2}x', min:1, max:3, step:1, value:2}, {id:'q', tex:'\\log_{2}y', min:1, max:3, step:1, value:3}],
+    legend:'<span><i class="sw alt"></i> largo \\(\\log_{2}x\\)</span><span><i class="sw sec"></i> largo \\(\\log_{2}y\\)</span><span><i class="sw rise"></i> largo \\(\\log_{2}(x\\cdot y)\\)</span>',
+    anim:{run:RUN*1000, hold:5000, still:1, apply:function(p, v){ v.t = p; }},
+    onInput:function(v){ v.t = 1; },
+    draw:function(S, v){
+      var p = Math.round(v.p), q = Math.round(v.q), s = (v.t == null ? 1 : v.t)*RUN, C = S.C, c = S.ctx, i;
+      function ph(a, b){ return OA.smooth(cl((s - a)/(b - a))); }
+      var kR = ph(0, 2.5), kG = ph(6, 8.5), kB = ph(12, 14.5), kM = ph(18, 21.5), kD = ph(25, 26.5), kT = ph(32, 35);
+      function seg(x0, x1, y, col){ S.line(x0, y, x1, y, {color:col, width:5}); S.line(x0, y - 0.13, x0, y + 0.13, {color:C.ink, width:1.2}); S.line(x1, y - 0.13, x1, y + 0.13, {color:C.ink, width:1.2}); }
+      function txt(t, x, y, dy, al, bold, col){ c.fillStyle = col || C.ink; c.font = (bold ? '600 ' : '') + '11px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(x), S.Y(y) + dy); }
+      S.line(0, 0, 6*kR, 0, {color:C.ink, width:1.6});
+      for (i = 0; i <= 6; i++) if (kR*6 >= i){ S.line(i, -0.12, i, 0.12, {color:C.ink, width:1.2}); txt(String(Math.pow(2, i)), i, 0, -13, 'center', true); txt(String(i), i, 0, 14, 'center', false, C.muted); }
+      if (kR >= 1){ txt('número', -0.3, 0, -13, 'right', false, C.muted); txt('logaritmo', -0.3, 0, 14, 'right', false, C.muted); }
+      if (kG > 0){ seg(0, p*kG, 1.3, C.alt); if (kG >= 1){ S.line(p, 1.17, p, 0.45, {color:C.muted, width:1, dash:[3,3]}); txt('largo ' + p, p/2, 1.3, 13); } }
+      var bx = p*kM, by = 2.6 - 1.3*kM;
+      if (kB > 0){ seg(bx, bx + q*kB, by, C.sec); if (kB >= 1){ if (kM <= 0) S.line(q, 2.47, q, 1.55, {color:C.muted, width:1, dash:[3,3]}); txt('largo ' + q, bx + q/2, by, 13); } }
+      if (kD > 0) S.line(p + q, 1.17, p + q, 1.17 - 0.72*kD, {color:C.rise, width:1.6, dash:[3,3]});
+      if (kT > 0){ seg(0, (p + q)*kT, -1.2, C.rise); if (kT >= 1) txt('largo ' + p + ' + ' + q + ' = ' + (p + q), (p + q)/2, -1.2, -13); }
+      S.lab('lx', S.X(p/2), S.Y(1.3) - 6, -50, -100, kG >= 1);
+      S.lab('ly', S.X(bx + q/2), S.Y(by) - 6, -50, -100, kB >= 1);
+      S.lab('lt', S.X(Math.max((p + q)/2, 1.6)), S.Y(-1.2) + 8, -50, 0, kT >= 1);
+    },
+    caption:function(v){
+      var p = Math.round(v.p), q = Math.round(v.q), x = Math.pow(2, p), y = Math.pow(2, q), s = (v.t == null ? 1 : v.t)*RUN;
+      return s < 6 ? 'Regla: sobre cada marca hay un número y debajo, su logaritmo en base 2'
+        : s < 12 ? ['Trazo verde, desde 1 hasta x = ' + x + '. Su largo es ', '\\log_{2}' + x + '=' + p, 'log₂ ' + x + ' = ' + p]
+        : s < 18 ? ['Trazo azul, desde 1 hasta y = ' + y + '. Su largo es ', '\\log_{2}' + y + '=' + q, 'log₂ ' + y + ' = ' + q]
+        : s < 25 ? ['El trazo azul se pone a continuación del verde. Los largos se suman: ', p + '+' + q + '=' + (p + q), p + ' + ' + q + ' = ' + (p + q)]
+        : s < 32 ? ['El extremo cae en la marca del número ' + (x*y) + ', que es el producto: ', x + '\\cdot ' + y + '=' + (x*y), x + ' · ' + y + ' = ' + (x*y)]
+        : s < 38 ? ['Trazo naranja, desde 1 hasta ' + (x*y) + '. Su largo es el logaritmo del producto: ', '\\log_{2}' + (x*y) + '=' + (p + q), 'log₂ ' + (x*y) + ' = ' + (p + q)]
+        : ['Sumar largos es multiplicar números: ', '\\log_{2}(' + x + '\\cdot ' + y + ')=\\log_{2}' + x + '+\\log_{2}' + y, 'log₂(' + x + ' · ' + y + ') = log₂ ' + x + ' + log₂ ' + y];
+    },
+    readout:function(v){
+      var p = Math.round(v.p), q = Math.round(v.q), x = Math.pow(2, p), y = Math.pow(2, q);
+      return [
+        ['', 'x=' + x + '\\qquad y=' + y + '\\qquad x\\cdot y=' + (x*y)],
+        ['', '\\log_{2}' + x + '+\\log_{2}' + y + '=' + p + '+' + q + '=' + (p + q)],
+        ['d', '\\log_{2}(' + x + '\\cdot ' + y + ')=\\log_{2}' + (x*y) + '=' + (p + q)]
+      ];
+    }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
