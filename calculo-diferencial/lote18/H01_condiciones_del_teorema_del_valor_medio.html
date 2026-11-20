@@ -280,24 +280,24 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="prop p2">
   <h3>Falla la continuidad en un extremo: una función definida por tramos en \([0,\;1]\)</h3>
   <div class="body">
-  <p><b>Disfruta la animación.</b> El punto \(P\) recorre la gráfica de \(g\) hacia la derecha. Mientras \(x\) se acerca a \(1\), \(g(x)\) se acerca a \(1\). Pero justo en \(x=1\) la función vale \(0\): la gráfica da un salto. Eso es la discontinuidad.</p>
+  <p>Sea
+    \[g(x)=\begin{cases}x^{2} & \text{si }0\le x&lt;1\\ 0 & \text{si }x=1\end{cases}\]</p>
+  <p><b>Disfruta la animación.</b> El punto \(P\) recorre la curva hacia la derecha. Mientras \(x\) se acerca a \(1\), \(g(x)\) se acerca a \(1\). Pero justo en \(x=1\) la función vale \(0\): la gráfica da un salto. Eso es la discontinuidad. Después \(P\) vuelve a recorrer la curva con su tangente.</p>
   <div class="stage" data-scene="tvm-discontinua"></div>
   <ul class="keys">
-    <li><b>Trazo negro:</b> la gráfica de \(g(x)=x\) para \(0\le x&lt;1\). El círculo blanco en \((1,\;1)\) indica que ese punto no pertenece a la gráfica.</li>
+    <li><b>Curva negra:</b> la gráfica de \(g(x)=x^{2}\) para \(0\le x&lt;1\). El círculo blanco en \((1,\;1)\) indica que ese punto no pertenece a la gráfica.</li>
     <li><b>Punto \(B(1,\;0)\):</b> el valor de la función en el extremo, \(g(1)=0\).</li>
     <li><b>Trazo naranja:</b> el salto, entre el valor al que se acerca \(g(x)\), que es \(1\), y el valor \(g(1)=0\).</li>
-    <li><b>Recta azul:</b> la secante por \(A(0,\;0)\) y \(B(1,\;0)\), de pendiente \(0\). <b>Recta roja:</b> la tangente en cualquier punto del trazo, de pendiente \(1\). Nunca son paralelas.</li>
+    <li><b>Recta azul:</b> la secante por \(A(0,\;0)\) y \(B(1,\;0)\), de pendiente \(0\). <b>Recta roja:</b> la tangente en \(P\), de pendiente \(g'(x)=2x\), que es positiva en todo \((0,\;1)\). Nunca son paralelas.</li>
   </ul>
   <ol class="steps">
-    <li>Sea
-      \[g(x)=\begin{cases}x & \text{si }0\le x&lt;1\\ 0 & \text{si }x=1\end{cases}\]</li>
-    <li>Condición 2: en \((0,\;1)\), \(g(x)=x\), que es derivable, con \(g'(x)=1\). Se cumple.</li>
-    <li>Condición 1, en el extremo \(b=1\). Para \(x&lt;1\) cercano a \(1\), \(g(x)=x\):
-      \[\lim_{x\to 1^{-}}g(x)=\lim_{x\to 1^{-}}x=1\]</li>
+    <li>Condición 2: en \((0,\;1)\), \(g(x)=x^{2}\), que es derivable, con \(g'(x)=2x\). Se cumple.</li>
+    <li>Condición 1, en el extremo \(b=1\). Para \(x&lt;1\) cercano a \(1\), \(g(x)=x^{2}\):
+      \[\lim_{x\to 1^{-}}g(x)=\lim_{x\to 1^{-}}x^{2}=1^{2}=1\]</li>
     <li>Pero \(g(1)=0\). Como \(1\neq 0\), \(\displaystyle\lim_{x\to 1^{-}}g(x)\neq g(1)\): \(g\) no es continua en \([0,\;1]\). La condición 1 no se cumple.</li>
-    <li>Pendiente de la secante, con \(g(0)=0\) y \(g(1)=0\):
+    <li>Pendiente de la secante, con \(g(0)=0^{2}=0\) y \(g(1)=0\):
       \[\frac{g(1)-g(0)}{1-0}=\frac{0-0}{1}=0\]</li>
-    <li>Para todo \(c\in(0,\;1)\), \(g'(c)=1\), y \(1\neq 0\). No existe ningún \(c\in(0,\;1)\) con \(g'(c)=0\).</li>
+    <li>Para todo \(c\in(0,\;1)\), \(c&gt;0\), así que \(g'(c)=2c&gt;0\). Entonces \(g'(c)\neq 0\): no existe ningún \(c\in(0,\;1)\) con \(g'(c)=0\).</li>
     <li>Conclusión: no basta con que \(f\) sea continua en \((a,\;b)\). La continuidad se exige en el intervalo cerrado, con los dos extremos.</li>
   </ol>
   </div>
@@ -414,7 +414,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CD1-L18-H01 · v003 · APR de Óscar, 20-nov-2026</span>
+  <span class="status">CD1-L18-H01 · v004 · APR de Óscar, 20-nov-2026</span>
 </footer>
 </article>
 </div>
@@ -798,51 +798,53 @@ OA.scene('tvm-derivable', (function(){
   };
 })());
 OA.scene('tvm-discontinua', (function(){
-  var RUN = 27, num = OA.num;
+  var RUN = 30, num = OA.num;
   function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
   function dec(x, d){ return x.toFixed(d).replace('.', ','); }
-  function g(x){ return x < 1 ? x : 0; }
-  function xs(s){ return s < 3 ? 0.1 : s < 12 ? 0.1 + 0.89*OA.smooth(cl((s - 3)/8)) : s < 16 ? 0.99 : 1; }
+  function g(x){ return x < 1 ? x*x : 0; }
+  function xs(s){ return s < 3 ? 0.1 : s < 12 ? 0.1 + 0.89*OA.smooth(cl((s - 3)/8)) : s < 16 ? 0.99 : s < 20 ? 1 : 0.12 + 0.8*OA.smooth(cl((s - 21)/7)); }
   return {
     world:{x0:-0.62, x1:1.75, y0:-0.38, y1:1.5}, aspect:1.88/2.37,
-    aria:'Gráfica de g: un trazo recto desde (0, 0) hasta (1, 1), con círculo abierto en (1, 1), y un punto lleno en (1, 0). Un punto P se acerca a x = 1 y su altura se acerca a 1, pero en x = 1 la función vale 0. La secante por A(0, 0) y B(1, 0) tiene pendiente 0 y la tangente tiene pendiente 1.',
+    aria:'Gráfica de g: la curva y = x² desde (0, 0) hasta (1, 1), con círculo abierto en (1, 1), y un punto lleno en (1, 0). Un punto P se acerca a x = 1 y su altura se acerca a 1, pero en x = 1 la función vale 0. La secante por A(0, 0) y B(1, 0) tiene pendiente 0 y la tangente en P tiene pendiente 2x, siempre positiva.',
     labels:[['A', 'A\\,(0,\;0)', 'A (0, 0)', 'pt'], ['B', 'B\\,(1,\;0):\\ g(1)=0', 'B (1, 0): g(1) = 0', 'pt'],
             ['L', '\\displaystyle\\lim_{x\\to 1^{-}}g(x)=1', 'lím g(x) = 1 por la izquierda', 'pt c-tan'], ['J', '\\text{salto}', 'salto', 'diff'],
-            ['S', '\\text{secante: pendiente }0', 'secante: pendiente 0', 'c-sec'], ['T', '\\text{tangente: pendiente }1', 'tangente: pendiente 1', 'c-tan']],
+            ['S', '\\text{secante: pendiente }0', 'secante: pendiente 0', 'c-sec']],
     sliders:[{id:'x', tex:'x', min:0, max:1, step:0.005, value:0.1}],
-    legend:'<span><i class="sw sec"></i> secante \\(AB\\)</span><span><i class="sw tan"></i> tangente</span><span><i class="sw rise"></i> salto</span>',
+    legend:'<span><i class="sw sec"></i> secante \\(AB\\)</span><span><i class="sw tan"></i> tangente en \\(P\\)</span><span><i class="sw rise"></i> salto</span>',
     anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.x = xs(p*RUN); }},
     onInput:function(v){ v.t = null; },
     draw:function(S, v){
       var s = v.t == null ? RUN : v.t*RUN, x = v.x, y = g(x), C = S.C, W = S.W, c = S.ctx;
       function txt(t, px, py, al, cc){ c.fillStyle = cc || C.ink; c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
       S.axes({gx:[0.5, 1, 1.5], gy:[0.5, 1], full:true});
-      if (s >= 20){ S.line(W.x0, 0, W.x1, 0, {color:C.sec, width:3}); S.line(-0.3, -0.3, 1.38, 1.38, {color:C.tan, width:1.6, dash:[6,4]}); }
-      S.line(0, 0, cl(s/2.5), cl(s/2.5), {color:C.ink, width:3.5});
+      if (s >= 20) S.line(W.x0, 0, W.x1, 0, {color:C.sec, width:3});
+      S.curve(function(u){ return u*u; }, 0, cl(s/2.5), {color:C.ink, width:3.5});
       if (s >= 16) S.line(1, 0.04, 1, 0.96, {color:C.rise, width:4});
       if (s >= 2.5){ S.ring(1, 1, C.ink); S.dot(1, 0, C.sec); S.dot(0, 0, C.sec); }
       if (s >= 3){
+        if (x < 1 && s >= 20 && x > 0.001){ var m = 2*x, sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0), ux = sx, uy = -m*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.2*S.w; ux /= n; uy /= n;
+          S.pline(S.X(x) - L*ux, S.Y(y) - L*uy, S.X(x) + L*ux, S.Y(y) + L*uy, {color:C.tan, width:3});
+          txt('pendiente 2x = ' + dec(m, 2), S.X(x) - 12, S.Y(y) - 18, 'right', C.tan); }
         S.line(x, y, x, 0, {color:C.muted, width:1, dash:[3,4]}); S.line(x, y, 0, y, {color:C.muted, width:1, dash:[3,4]});
         S.dot(x, y, C.tan);
-        if (x < 1){ txt('x = ' + dec(x, 2), S.X(x), S.Y(0) + 26, 'center', C.tan); txt('g(x) = ' + dec(y, 2), S.X(0) - 6, S.Y(y), 'right', C.tan); }
+        if (x < 1){ txt('x = ' + dec(x, 2), S.X(x), S.Y(0) + 26, 'center', C.tan); if (s < 20) txt('g(x) = ' + dec(y, 2), S.X(0) - 6, S.Y(y), 'right', C.tan); }
       }
-      S.out('A', S.X(0), S.Y(0), -1, -1, s >= 2.5 && s >= 20);
+      S.out('A', S.X(0), S.Y(0), -1, -1, s >= 20);
       S.out('B', S.X(1), S.Y(0), 1, -1, s >= 16);
       S.out('L', S.X(1), S.Y(1), 1, 1, s >= 12);
       S.lab('J', S.X(1) + 10, S.Y(0.5), 0, -50, s >= 16);
       S.out('S', S.X(1.72), S.Y(0), -1, 1, s >= 20);
-      S.out('T', S.X(0.62), S.Y(0.62), -1, 1, s >= 22);
     },
     caption:function(v){
       var x = v.x, s = v.t == null ? null : v.t*RUN;
-      if (s == null) return x < 1 ? ['Para x < 1 la función vale g(x) = x: ', 'g(' + num(x, 2) + ')=' + num(x, 2), 'g(' + dec(x, 2) + ') = ' + dec(x, 2)] : 'En x = 1 la función vale g(1) = 0: la gráfica salta desde la altura 1 hasta la altura 0';
-      if (s < 3) return 'Trazo negro: la gráfica de g(x) = x para 0 ≤ x < 1. El círculo blanco indica que (1, 1) no pertenece a la gráfica';
-      if (s < 12) return ['El punto P se acerca a x = 1 por la izquierda y su altura se acerca a 1: ', 'g(' + num(x, 2) + ')=' + num(x, 2), 'g(' + dec(x, 2) + ') = ' + dec(x, 2)];
+      if (s == null) return x < 1 ? ['Para x < 1 la función vale g(x) = x² y la tangente tiene pendiente ', "g'(x)=2x=" + num(2*x, 2), "g'(x) = 2x = " + dec(2*x, 2)] : 'En x = 1 la función vale g(1) = 0: la gráfica salta desde la altura 1 hasta la altura 0';
+      if (s < 3) return 'Curva negra: la gráfica de g(x) = x² para 0 ≤ x < 1. El círculo blanco indica que (1, 1) no pertenece a la gráfica';
+      if (s < 12) return ['El punto P se acerca a x = 1 por la izquierda y su altura se acerca a 1: ', 'g(' + num(x, 2) + ')=' + num(x*x, 2), 'g(' + dec(x, 2) + ') = ' + dec(x*x, 2)];
       if (s < 16) return 'Cuando x tiende a 1 por la izquierda, g(x) tiende a 1';
       if (s < 20) return 'Pero en x = 1 la función vale g(1) = 0. El límite, 1, no es igual al valor, 0: hay un salto y g no es continua en 1';
-      return 'Recta azul: la secante por A y B, de pendiente 0. Recta roja: la tangente, de pendiente 1. Ninguna tangente es paralela a la secante';
+      return ['Recta azul: la secante AB, de pendiente 0. Recta roja: la tangente en P, de pendiente positiva. Nunca son paralelas: ', "g'(x)=" + num(2*x, 2), "g'(x) = " + dec(2*x, 2)];
     },
-    readout:function(v){ return [['d', 'x=' + num(v.x, 2) + '\\qquad g(x)=' + num(g(v.x), 2)]]; }
+    readout:function(v){ var x = v.x; return x < 1 ? [['d', 'x=' + num(x, 2) + '\\qquad g(x)=' + num(x*x, 2) + "\\qquad g'(x)=" + num(2*x, 2)]] : [['d', 'x=1{,}00\\qquad g(1)=0']]; }
   };
 })());
 OA.boot();
