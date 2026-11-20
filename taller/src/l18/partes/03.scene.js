@@ -1,6 +1,6 @@
 OA.scene('tvm-polinomial', oaTVM({
-  f:function(x){ return x*x - 4*x + 5; }, df:function(x){ return 2*x - 4; }, a:1, b:4, d0:0.2, d1:4.6,
-  world:{x0:-0.9, x1:5.6, y0:-1.2, y1:7.2}, aspect:8.4/6.5, gx:[1,2,3,4,5], gy:[1,2,3,4,5,6,7],
+  f:function(x){ return x*x - 4*x + 5; }, df:function(x){ return 2*x - 4; }, a:1, b:4, d0:-0.55, d1:4.6,
+  world:{x0:-1.6, x1:5.6, y0:-1.2, y1:8.2}, aspect:9.4/7.2, gx:[1,2,3,4,5], gy:[1,2,3,4,5,6,7],
   aria:'Gráfica de f(x) = x² − 4x + 5 en el intervalo [1, 4], con la secante por A(1, 2) y B(4, 5) y un punto C con su tangente que recorre la curva hasta c = 5/2, donde la tangente es paralela a la secante.',
   ATex:'A\\,(1,\;2)', AFb:'A (1, 2)', BTex:'B\\,(4,\;5)', BFb:'B (4, 5)', CTex:'C\\,\\big(c,\;f(c)\\big)', CFb:'C (c, f(c))',
   mTex:'\\text{secante: pendiente }1', mFb:'secante: pendiente 1',
