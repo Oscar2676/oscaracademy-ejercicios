@@ -1,12 +1,12 @@
-# Pedido de producción de Óscar · 20-nov-2026 (184 hojas)
+# Pedido de producción de Óscar · 20-nov-2026 (284 hojas)
 
-Texto completo del pedido (última versión, 184 hojas): `taller/pedidos/pedido-2026-11-20-184-hojas.txt` en el repositorio. Creció durante el día: 44 → 63 → 124 → 184 (la última suma series y sucesiones, ecuaciones paramétricas, polares y vectoriales, y más aplicaciones de la integral). Si el archivo se pierde, se regenera con el selector.
+Texto completo del pedido (última versión, 20:07, **284 hojas** + 2 solo por enlazar): `taller/pedidos/pedido-2026-11-20-284-hojas.txt` en el repositorio. Creció durante el día: 44 → 63 → 124 → 184 → 284. Los 101 títulos nuevos de la última versión son casi todos de la página «Cálculo superior» [x238t] (propiedades de la integral definida, sumas de Riemann, cambio de variable, integrales de funciones comunes, por partes, sustitución trigonométrica, impropias…) y algunos de «Cálculo integral» [qtf2i]. Cada pedido nuevo **reemplaza** al anterior (lo contiene); es la cola de producción. Si el archivo se pierde, se regenera con el selector.
 
 Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, tolerancia cero, no inventar nada, preguntar lo que no se sepa; comparar resultados con sus fuentes de consulta; los títulos «Ejemplo N…» son hojas de ejercicio; borrar tarjetas repetidas dentro de una caja y reordenarla; títulos equivalentes a hojas ya aprobadas se enlazan a ellas; diagramación atractiva con recuadros en los cuatro colores institucionales (verdoso, azulino, caqui/naranjo, burdeo).
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 20-nov 20:05: 17 hojas con APR, enlazadas y publicadas
+## Avance al 20-nov 20:15: 17 hojas con APR, enlazadas y publicadas; 2 en cola de revisión
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -18,8 +18,10 @@ Además: 3 títulos resueltos por enlace (Riemann L09 H01, TFC L03 H02, por part
 ### L20 H02, cómo quedó (siete versiones el 20-nov)
 Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D con degradado, r, capa dr, centro (0, 0); bajo ella solo la cadena ecuación → reemplazo de r → despeje), `rr-cuatro-formulas` (circunferencia, círculo, superficie y volumen de la esfera, con flechas integrar/derivar) y `rr-area-volumen` (seis pasos: dA → A = ∫dA → bloque dA·dr → capa dV = 4πr² dr → V = ∫₀ʳ 4πρ² dρ → V = (4/3)πr³, con deslizador de paso). Sección «Del área al volumen, paso a paso» con un recuadro por tramo de la cadena. El área 4πr² va deducida con integral doble en coordenadas esféricas (se avisa que es de cursos posteriores).
 
-## Por producir en el lote 20 (9)
-«Derivadas para razones relacionadas» (ft30u comp-lcno0t8d · qudgj comp-lcit01bi) · «La Regla de L´Hopital» (ft30u comp-lcno0t8l · qudgj comp-lcit01ai) · «Aplicación de la regla de L´Hopital…» (li9mn comp-lck53ins · ft30u comp-lcno0t8m2 · qudgj comp-lcit01bl1) · «Aplicaciones de las derivadas aplicadas al movimiento» (ft30u comp-lcno0t8b1 · qudgj comp-lcit01be) · «Derivada de funciones parametrizadas» (ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9) · «Derivada de funciones parametrizadas 2» (ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14) · «Derivada de funciones vectoriales» (ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19) · «Razones relacionadas: llenado de un tanque cónico» (qudgj comp-lcit6l3f) · «Razones relacionadas: sombra de una persona que camina» (qudgj comp-lcit6zcg)
+**En cola de revisión (pendientes de APR, commit ca68d15):** L20 H05 «Razones relacionadas: llenado de un tanque cónico» (`H05_razones_relacionadas_llenado_de_un_tanque_conico.html`; enlazar en qudgj comp-lcit6l3f) y L20 H06 «Razones relacionadas: sombra de una persona que camina» (`H06_razones_relacionadas_sombra_de_una_persona_que_camina.html`; qudgj comp-lcit6zcg). Fuentes `05.*` y `06.*`. «Solo enlazar» del pedido de 284: TFC → L03 H02 enlazado también en x238t comp-kajpp62e y bb5wq comp-mvuxjfce9 (publicado).
+
+## Por producir en el lote 20 (7)
+«Derivadas para razones relacionadas» (ft30u comp-lcno0t8d · qudgj comp-lcit01bi) · «La Regla de L´Hopital» (ft30u comp-lcno0t8l · qudgj comp-lcit01ai) · «Aplicación de la regla de L´Hopital…» (li9mn comp-lck53ins · ft30u comp-lcno0t8m2 · qudgj comp-lcit01bl1) · «Aplicaciones de las derivadas aplicadas al movimiento» (ft30u comp-lcno0t8b1 · qudgj comp-lcit01be) · «Derivada de funciones parametrizadas» (ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9) · «Derivada de funciones parametrizadas 2» (ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14) · «Derivada de funciones vectoriales» (ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19)
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
@@ -36,20 +38,21 @@ Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D
   - La animación debe **apoyar lo que se quiere demostrar**, no ser «un simple dibujo bonito».
   - Una fórmula usada en la hoja (p. ej. el volumen de la esfera) se muestra **de dónde sale**.
   - Si Óscar manda una imagen de referencia, **no se usa esa imagen**: se redibuja con los colores institucionales y se hace útil (animada y con su desarrollo).
-- Tras resolver notas, subir `taller/src/lNN/ronda.txt` para que la lista de la tarjeta parta en 0 (l20 va en 7).
+- Tras resolver notas, subir `taller/src/lNN/ronda.txt` para que la lista de la tarjeta parta en 0 (l20 va en 8).
 
 ## Taller
 Fuentes en `taller/src/lNN/partes/` (`NN.art.html`, `NN.scene.js`; escenas comunes `_tvm.js` en l18; `_an.js` y `_tri.js` en l19; escenas propias en l20). Se arman con `cat` a `taller/src/lNN/NN-*.html`, luego `python3 taller/build.py NN "Nombre"` y se copian de `taller/out/hojas/loteNN/` a `calculo-diferencial/loteNN/`. Verificadores: `qa/rigor/verificar_lote_18.py`, `_19.py`, `_20.py` (0 errores), `derivadas_escenas.js`, `verificar_tex.py` (no sabe evaluar π ni e: marca como «FALSA» aproximaciones correctas; se comprueban en el verificador del lote), `rotulos_animaciones.js`.
 
 Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `__save()`, `__chk(pg, ids)`, `__sleep` definidos en la pestaña del editor (`seed`; se pierden si se recarga; están en el historial del 20-nov). Navegar a la página, enlazar, guardar antes de salir, verificar y publicar. Una página por llamada (límite de 45 s).
 
-## Orden para lo que falta (unas 164 hojas)
-1. Lote 20, resto (9): ver lista arriba
+## Orden para lo que falta (unas 262 hojas)
+1. Lote 20, resto (7): ver lista arriba
 2. Integración y acumulación de cambio (12)
 3. Aplicaciones de la integral
 4. Binomio de Newton (19)
 5. Cálculo diferencial 1ª parte: límites y variantes del TVM (61; varias equivalen entre sí o a hojas existentes: L01 H01, H02, H04 y L18; proponer a Óscar cuáles se enlazan y cuáles son hoja nueva)
 6. Series y sucesiones; ecuaciones paramétricas, polares y vectoriales
+7. Cálculo superior [x238t]: los 101 títulos de integración agregados a las 20:07 (muchos equivalen a los del punto 2 o a hojas existentes: proponer enlaces)
 
 ## Preguntas abiertas a Óscar
 - **Su lista de fuentes de consulta**: no está guardada en el proyecto, el repositorio ni la memoria. El 20-nov se usaron OpenStax, LibreTexts y GeoGebra; él mandó una búsqueda de Google como referencia. Pedírsela y anotarla aquí.
