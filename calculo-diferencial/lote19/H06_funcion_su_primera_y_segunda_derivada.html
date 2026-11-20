@@ -201,6 +201,30 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li><b>En \(x=\dfrac{1}{2}\):</b> \(f''\) corta al eje \(x\) y cambia de signo. En el panel 1, \(f\) tiene un punto de inflexión. En el panel 2, \(f'\) tiene su mínimo.</li>
     <li><b>En \(x=2\):</b> \(f'\) corta al eje \(x\), \(f'(2)=0\), y \(f''(2)=18&gt;0\). En el panel 1, \(f\) tiene un mínimo local, \(f(2)=-20\).</li>
   </ul>
+  <div class="card k2">
+    <h3>Qué quiere decir cada una de las tres curvas</h3>
+    \[\begin{array}{lll}
+    \textbf{Panel 1} & f(x)=2x^{3}-3x^{2}-12x & \text{la función: su altura en cada }x\\[6pt]
+    \textbf{Panel 2} & f'(x)=6x^{2}-6x-12 & \text{la pendiente de la recta tangente a }f\text{ en cada }x\\[6pt]
+    \textbf{Panel 3} & f''(x)=12x-6 & \text{la pendiente de la recta tangente a }f'\text{ en cada }x
+    \end{array}\]
+    <p>Cada curva es la derivada de la que está sobre ella. Por eso la altura de la curva verde en un \(x\) es la pendiente de la tangente roja de la curva negra en ese mismo \(x\), y la altura de la recta azul es la pendiente de la tangente roja de la curva verde.</p>
+  </div>
+  <div class="card k3">
+    <h3>Qué son los puntos donde las rectas punteadas cortan a las curvas</h3>
+    <p>Cada recta vertical punteada une, en un mismo \(x\), un punto de cada panel. En los paneles 1 y 2 se dibuja la tangente roja en ese punto.</p>
+    \[\begin{array}{c|l|l|l}
+    x & \textbf{Panel 1: }f & \textbf{Panel 2: }f' & \textbf{Panel 3: }f''\\ \hline
+    -1 & (-1,\;7)\text{: máximo local, tangente horizontal} & f'(-1)=0\text{: corta al eje }x & f''(-1)=-18&lt;0\\[4pt]
+    \dfrac{1}{2} & \left(\dfrac{1}{2},\;-\dfrac{13}{2}\right)\text{: punto de inflexión} & f'\!\left(\dfrac{1}{2}\right)=-\dfrac{27}{2}\text{: mínimo de }f'\text{, tangente horizontal} & f''\!\left(\dfrac{1}{2}\right)=0\text{: corta al eje }x\\[8pt]
+    2 & (2,\;-20)\text{: mínimo local, tangente horizontal} & f'(2)=0\text{: corta al eje }x & f''(2)=18&gt;0
+    \end{array}\]
+    <ol class="steps">
+      <li>Valor de \(f'\) en \(x=\dfrac{1}{2}\), que es la pendiente de la tangente a \(f\) en el punto de inflexión:
+        \[f'\!\left(\frac{1}{2}\right)=6\cdot\frac{1}{4}-6\cdot\frac{1}{2}-12=\frac{3}{2}-3-12=\frac{3}{2}-\frac{30}{2}=-\frac{27}{2}\]</li>
+      <li>Es el menor valor de \(f'\): \(f'\) decrece si \(x&lt;\dfrac{1}{2}\), porque ahí \(f''(x)&lt;0\), y crece si \(x&gt;\dfrac{1}{2}\), porque ahí \(f''(x)&gt;0\). En el punto de inflexión la curva \(f\) baja con su mayor inclinación.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -390,7 +414,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CD1-L19-H06 · v001 · Pendiente de APR</span>
+  <span class="status">CD1-L19-H06 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 </div>
@@ -603,22 +627,22 @@ window.MathJax = {
 /* Escena de paneles apilados: f, f' y (si se da) f'' con el mismo eje x. Una recta vertical recorre los paneles y marca los valores. */
 function oaTri(o){
   var num = OA.num, d0 = o.d0, d1 = o.d1, P = o.panels, n = P.length, marks = o.marks || [];
-  var T0 = 2 + 2.5*n, SW = o.sweep || 20, T1 = T0 + SW, MK = 4, RUN = T1 + MK*Math.max(marks.length, 1);
+  var T0 = 2 + 2.5*n, SW = o.sweep || 20, T1 = T0 + SW, MK = o.mk || 4, RUN = T1 + MK*Math.max(marks.length, 1);
   function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
   function dec(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', ',').replace('-', '−'); }
   var def = {
-    world:{x0:0, x1:1, y0:0, y1:1}, aspect:o.aspect || (n === 3 ? 1.25 : 0.95), aria:o.aria, labels:[],
+    world:{x0:0, x1:1, y0:0, y1:1}, aspect:o.aspect || (n === 3 ? 1.85 : 1.25), aria:o.aria, labels:[],
     sliders:[{id:'x', tex:'x', min:d0, max:d1, step:(d1 - d0)/400, value:d0}],
     legend:P.map(function(p){ return '<span><i class="sw ' + p.sw + '"></i> \\(' + p.tex + '\\)</span>'; }).join(''),
     anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; var s = p*RUN; v.x = s < T0 ? d0 : s < T1 ? d0 + (d1 - d0)*(s - T0)/SW : d1; }},
     onInput:function(v){ v.t = null; },
     draw:function(S, v){
-      var s = v.t == null ? RUN : v.t*RUN, x = v.x, C = S.C, c = S.ctx, w = S.w, h = S.h, padL = 34, padR = 10, gap = 14, ph = (h - gap*(n - 1) - 8)/n;
+      var s = v.t == null ? RUN : v.t*RUN, x = v.x, C = S.C, c = S.ctx, w = S.w, h = S.h, padL = 34, padR = 10, gap = 38, ph = (h - gap*n - 6)/n;
       function X(u){ return padL + (u - o.x0)/(o.x1 - o.x0)*(w - padL - padR); }
       function txt(t, px, py, al, cc, b){ c.fillStyle = cc || C.ink; c.font = (b === false ? '' : '600 ') + '12px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
       var live = v.t == null || (s >= T0 && s < T1), hasta = v.t == null ? d1 : x;
       P.forEach(function(p, k){
-        var top = 4 + k*(ph + gap), col = C[p.col];
+        var top = gap + k*(ph + gap), col = C[p.col];
         function Y(y){ return top + ph - (y - p.y0)/(p.y1 - p.y0)*ph; }
         c.save(); c.beginPath(); c.rect(0, top, w, ph); c.clip();
         c.fillStyle = C.bg; c.fillRect(0, top, w, ph);
@@ -632,10 +656,14 @@ function oaTri(o){
         c.restore();
         c.fillStyle = C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif'; c.textAlign = 'right'; c.textBaseline = 'middle';
         (p.gy || []).forEach(function(g){ c.fillText(String(g).replace('-', '−'), padL - 4, Y(g)); });
-        if (kk >= 1) txt(p.name + (live ? ' = ' + dec(p.f(x), 2) : ''), w - padR - 4, top + 11, 'right', col);
+        if (kk >= 1){ txt(p.title || p.name, padL, top - 24, 'left', col); if (p.sub) txt(p.sub, padL, top - 9, 'left', C.muted, false); if (live) txt(p.name + ' = ' + dec(p.f(x), 2), w - padR, top - 24, 'right', col); }
         if (k === n - 1){ c.fillStyle = C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'bottom'; (o.gx || []).forEach(function(g){ c.fillText(String(g).replace('-', '−'), X(g), top + ph - 1); }); }
-        marks.forEach(function(mk, j){ if (mk.panel === k && (v.t == null || s >= T1 + MK*j)){ c.setLineDash([]); c.beginPath(); c.arc(X(mk.x), Y(p.f(mk.x)), 5.5, 0, Math.PI*2); c.fillStyle = C[mk.col || 'rise']; c.fill(); c.lineWidth = 2; c.strokeStyle = C.bg; c.stroke();
-          var al = mk.al || 'left'; txt(mk.txt, X(mk.x) + (al === 'left' ? 9 : -9), Y(p.f(mk.x)) + (mk.dy || -12), al, C[mk.col || 'rise']); } });
+        marks.forEach(function(mk, j){ if (!(v.t == null || s >= T1 + MK*j)) return; (mk.pts || []).forEach(function(q){ if (q.panel !== k) return;
+          var px = X(mk.x), py = Y(p.f(mk.x)), cq = C[q.col || mk.col || 'rise'];
+          if (p.df && q.tan !== false){ var m = p.df(mk.x), ux = (w - padL - padR)/(o.x1 - o.x0), uy = -m*ph/(p.y1 - p.y0), nn = Math.sqrt(ux*ux + uy*uy), L = 30; ux /= nn; uy /= nn;
+            c.save(); c.beginPath(); c.rect(0, top, w, ph); c.clip(); S.pline(px - L*ux, py - L*uy, px + L*ux, py + L*uy, {color:C.tan, width:2}); c.restore(); }
+          c.setLineDash([]); c.beginPath(); c.arc(px, py, 5.5, 0, Math.PI*2); c.fillStyle = cq; c.fill(); c.lineWidth = 2; c.strokeStyle = C.bg; c.stroke();
+          var al = q.al || 'left'; txt(q.txt, px + (al === 'left' ? 9 : -9), py + (q.dy || -12), al, cq); }); });
       });
     },
     caption:function(v){
@@ -653,15 +681,19 @@ function oaTri(o){
 OA.scene('tres-funciones', oaTri({
   d0:-2.3, d1:3.3, x0:-2.7, x1:3.7, gx:[-2,-1,1,2,3], sweep:22,
   panels:[
-    {f:function(x){ return 2*x*x*x - 3*x*x - 12*x; }, y0:-27, y1:14, gy:[-20,-10,10], col:'ink', sw:'ink', name:'f(x)', tex:'f(x)=2x^{3}-3x^{2}-12x', capTex:'f(x)=2x^{3}-3x^{2}-12x', capFb:'f(x) = 2x³ − 3x² − 12x'},
-    {f:function(x){ return 6*x*x - 6*x - 12; }, y0:-20, y1:38, gy:[-10,10,20,30], col:'alt', sw:'alt', name:'f′(x)', tex:"f'(x)=6x^{2}-6x-12", capTex:"f'(x)=6x^{2}-6x-12", capFb:'f′(x) = 6x² − 6x − 12'},
-    {f:function(x){ return 12*x - 6; }, y0:-40, y1:40, gy:[-30,-15,15,30], col:'sec', sw:'sec', name:'f″(x)', tex:"f''(x)=12x-6", capTex:"f''(x)=12x-6", capFb:'f″(x) = 12x − 6'}],
+    {f:function(x){ return 2*x*x*x - 3*x*x - 12*x; }, y0:-27, y1:14, gy:[-20,-10,10], col:'ink', sw:'ink', name:'f(x)', title:'f(x) = 2x³ − 3x² − 12x', sub:'la función', df:function(x){ return 6*x*x - 6*x - 12; }, tex:'f(x)=2x^{3}-3x^{2}-12x', capTex:'f(x)=2x^{3}-3x^{2}-12x', capFb:'f(x) = 2x³ − 3x² − 12x'},
+    {f:function(x){ return 6*x*x - 6*x - 12; }, y0:-20, y1:38, gy:[-10,10,20,30], col:'alt', sw:'alt', name:'f′(x)', title:'f′(x) = 6x² − 6x − 12', sub:'pendiente de la tangente de f', df:function(x){ return 12*x - 6; }, tex:"f'(x)=6x^{2}-6x-12", capTex:"f'(x)=6x^{2}-6x-12", capFb:'f′(x) = 6x² − 6x − 12'},
+    {f:function(x){ return 12*x - 6; }, y0:-40, y1:40, gy:[-30,-15,15,30], col:'sec', sw:'sec', name:'f″(x)', title:'f″(x) = 12x − 6', sub:'pendiente de la tangente de f′', df:function(x){ return 12; }, tex:"f''(x)=12x-6", capTex:"f''(x)=12x-6", capFb:'f″(x) = 12x − 6'}],
   aria:'Tres paneles con el mismo eje x: f(x) = 2x³ − 3x² − 12x, su derivada f′(x) = 6x² − 6x − 12 y su segunda derivada f″(x) = 12x − 6. Una recta vertical los recorre. En x = −1 hay máximo local de f; en x = 1/2, punto de inflexión; en x = 2, mínimo local.',
   live:function(x, dec){ var a = 6*x*x - 6*x - 12, b = 12*x - 6;
     return 'f′(x) = ' + dec(a, 2) + (Math.abs(a) < 0.3 ? ': tangente horizontal' : a > 0 ? ' > 0: f crece' : ' < 0: f decrece') + '. f″(x) = ' + dec(b, 2) + (Math.abs(b) < 0.3 ? ': cambia la concavidad' : b > 0 ? ' > 0: cóncava hacia arriba' : ' < 0: cóncava hacia abajo'); },
-  marks:[{x:-1, panel:0, col:'rise', txt:'(−1, 7) máximo local', al:'left', dy:-12, cap:'En x = −1: f′(−1) = 0 y f″(−1) = −18 < 0. La función tiene un máximo local, f(−1) = 7'},
-         {x:0.5, panel:0, col:'tan', txt:'(1/2, −13/2) inflexión', al:'left', dy:-10, cap:'En x = 1/2: f″ vale 0 y cambia de signo. Punto de inflexión de f; ahí f′ tiene su mínimo'},
-         {x:2, panel:0, col:'rise', txt:'(2, −20) mínimo local', al:'right', dy:13, cap:'En x = 2: f′(2) = 0 y f″(2) = 18 > 0. La función tiene un mínimo local, f(2) = −20'}]
+  mk:6.5,
+  marks:[{x:-1, col:'rise', cap:'En x = −1: f′(−1) = 0, tangente horizontal en f, y f″(−1) = −18 < 0. La función tiene un máximo local, f(−1) = 7',
+            pts:[{panel:0, txt:'(−1, 7) máximo local', al:'left', dy:-13}, {panel:1, txt:'f′(−1) = 0', al:'right', dy:13}, {panel:2, tan:false, txt:'f″(−1) = −18 < 0', al:'left', dy:13}]},
+         {x:0.5, col:'tan', cap:'En x = 1/2: f″ vale 0 y cambia de signo. Punto de inflexión de f, donde su tangente es la más inclinada; ahí f′ tiene su mínimo, con tangente horizontal',
+            pts:[{panel:0, txt:'(1/2, −13/2) inflexión', al:'left', dy:-11}, {panel:1, txt:'mínimo de f′: −27/2', al:'left', dy:14}, {panel:2, tan:false, txt:'f″(1/2) = 0', al:'left', dy:13}]},
+         {x:2, col:'rise', cap:'En x = 2: f′(2) = 0, tangente horizontal en f, y f″(2) = 18 > 0. La función tiene un mínimo local, f(2) = −20',
+            pts:[{panel:0, txt:'(2, −20) mínimo local', al:'right', dy:14}, {panel:1, txt:'f′(2) = 0', al:'left', dy:13}, {panel:2, tan:false, txt:'f″(2) = 18 > 0', al:'right', dy:-13}]}]
 }));
 OA.boot();
 </script>
