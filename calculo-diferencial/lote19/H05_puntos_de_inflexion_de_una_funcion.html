@@ -194,7 +194,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <ul class="keys">
     <li><b>Tramo azul:</b> \(f''(x)&gt;0\), cóncava hacia arriba. Ocurre en \((-\infty,\;-1)\) y en \((1,\;+\infty)\).</li>
     <li><b>Tramo naranja:</b> \(f''(x)&lt;0\), cóncava hacia abajo. Ocurre en \((-1,\;1)\).</li>
-    <li><b>Puntos \((-1,\;-5)\) y \((1,\;-5)\):</b> los dos puntos de inflexión. En cada uno la concavidad cambia y la tangente cruza la curva.</li>
+    <li><b>Flechas curvas:</b> indican la curvatura de cada tramo, hacia arriba o hacia abajo.</li>
+    <li><b>Puntos \(I_{1}(-1,\;-5)\) e \(I_{2}(1,\;-5)\):</b> los dos puntos de inflexión. En cada uno la concavidad cambia y la tangente cruza la curva.</li>
   </ul>
 </section>
 
@@ -588,6 +589,16 @@ function oaAn(o){
         if (hasta >= cuts[i + 1]) txt((conc ? 'f″' : 'f′') + (sg > 0 ? ' > 0' : ' < 0'), (S.X(cuts[i]) + S.X(cuts[i + 1]))/2, by - 13, 'center', cc, true, 13);
       }
       for (i = 1; i < cuts.length - 1; i++) if (hasta >= cuts[i]){ S.pline(S.X(cuts[i]), by - 7, S.X(cuts[i]), by + 7, {color:C.ink, width:1.5}); S.line(cuts[i], f(cuts[i]), cuts[i], 0, {color:C.muted, width:1, dash:[3,4]}); }
+      /* Flechas leves de curvatura (modo 'conc'): ∩ con punta hacia abajo o ∪ con punta hacia arriba, una por tramo. */
+      (o.curv || []).forEach(function(k){
+        if (hasta < cuts[k.seg + 1]) return;
+        var up = g((cuts[k.seg] + cuts[k.seg + 1])/2) > 0, cc = col(up ? 1 : -1), px = S.X(k.x), py = S.Y(k.y), r = 15, a0 = up ? 0.85*Math.PI : 1.15*Math.PI, a1 = up ? 0.15*Math.PI : 1.85*Math.PI;
+        c.save(); c.globalAlpha = 0.8; c.setLineDash([]); c.strokeStyle = cc; c.lineWidth = 2; c.lineCap = 'round';
+        c.beginPath(); c.arc(px, py, r, a0, a1, up); c.stroke();
+        var ex = px + r*Math.cos(a1), ey = py + r*Math.sin(a1), tx = up ? Math.sin(a1) : -Math.sin(a1), ty = up ? -Math.cos(a1) : Math.cos(a1), an = Math.atan2(ty, tx);
+        c.beginPath(); c.moveTo(ex - 7*Math.cos(an - 0.5), ey - 7*Math.sin(an - 0.5)); c.lineTo(ex, ey); c.lineTo(ex - 7*Math.cos(an + 0.5), ey - 7*Math.sin(an + 0.5)); c.stroke(); c.restore();
+        if (k.txt) txt(k.txt, S.X(k.tx), S.Y(k.ty), k.al || 'center', cc);
+      });
       if (o.ends) o.ends.forEach(function(e){ S.dot(e, f(e), C.ink); });
       var live = v.t == null || (s >= T0 && s < T1);
       if (live){
@@ -622,11 +633,12 @@ function oaAn(o){
 }
 OA.scene('puntos-inflexion', oaAn({
   mode:'conc', f:function(x){ return x*x*x*x - 6*x*x; }, df:function(x){ return 4*x*x*x - 12*x; }, d2f:function(x){ return 12*x*x - 12; },
-  d0:-2.62, d1:2.62, cuts:[-1, 1], world:{x0:-3.3, x1:3.3, y0:-14.5, y1:8}, aspect:0.86, gx:[-3,-2,-1,1,2,3], gy:[-10,-5,5], full:true, sweep:22,
+  d0:-2.62, d1:2.62, cuts:[-1, 1], world:{x0:-3.3, x1:3.3, y0:-17.5, y1:8}, aspect:0.86, gx:[-3,-2,-1,1,2,3], gy:[-15,-10,-5,5], full:true, sweep:22,
   fTex:'f(x)=x^{4}-6x^{2}', fFb:'f(x) = x⁴ − 6x²', txtUp:function(x){ return Math.abs(x) < 1; }, eps:0.25,
   aria:'Gráfica de f(x) = x⁴ − 6x². Es azul, cóncava hacia arriba, hasta x = −1; naranja, cóncava hacia abajo, entre −1 y 1; y azul desde x = 1. Los puntos (−1, −5) y (1, −5) son los puntos de inflexión.',
-  marks:[{x:-1, tex:"(-1,\;-5):\\ \\text{punto de inflexión}", fb:'(−1, −5): punto de inflexión', pos:[-1,1], cap:'En (−1, −5) la concavidad cambia de hacia arriba a hacia abajo: punto de inflexión'},
-         {x:1, tex:"(1,\;-5):\\ \\text{punto de inflexión}", fb:'(1, −5): punto de inflexión', pos:[1,1], cap:'En (1, −5) la concavidad cambia de hacia abajo a hacia arriba: punto de inflexión'}]
+  curv:[{seg:0, x:-1.73, y:-7.1, txt:'hacia arriba', tx:-1.73, ty:-10.7}, {seg:1, x:0.5, y:1.9, txt:'hacia abajo', tx:0.85, ty:2.0, al:'left'}, {seg:2, x:1.73, y:-7.1, txt:'hacia arriba', tx:1.73, ty:-10.7}],
+  marks:[{x:-1, tex:"I_{1}\\,(-1,\;-5):\\ \\text{punto de inflexión}", fb:'I₁ (−1, −5): punto de inflexión', pos:[-1,1], cap:'En (−1, −5) la concavidad cambia de hacia arriba a hacia abajo: punto de inflexión'},
+         {x:1, tex:"I_{2}\\,(1,\;-5):\\ \\text{punto de inflexión}", fb:'I₂ (1, −5): punto de inflexión', pos:[1,1], cap:'En (1, −5) la concavidad cambia de hacia abajo a hacia arriba: punto de inflexión'}]
 }));
 OA.boot();
 </script>

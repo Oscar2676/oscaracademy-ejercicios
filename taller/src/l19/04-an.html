@@ -52,7 +52,8 @@
     <li><b>Punto rojo \(P\big(x,\;f(x)\big)\) y recta roja:</b> un punto de la curva y su recta tangente.</li>
     <li><b>Tramo naranja:</b> \(f''(x)&lt;0\), cóncava hacia abajo. Ocurre en \((-\infty,\;1)\).</li>
     <li><b>Tramo azul:</b> \(f''(x)&gt;0\), cóncava hacia arriba. Ocurre en \((1,\;+\infty)\).</li>
-    <li><b>Punto \((1,\;0)\):</b> \(f''(1)=0\) y la concavidad cambia. Es el punto de inflexión. Ahí la tangente cruza la curva.</li>
+    <li><b>Flechas curvas:</b> indican la curvatura. La flecha naranja, con forma de arco hacia abajo, marca el tramo de curvatura hacia abajo. La flecha azul, con forma de arco hacia arriba, marca el tramo de curvatura hacia arriba.</li>
+    <li><b>Punto \(I(1,\;0)\):</b> \(f''(1)=0\) y la concavidad cambia. Es el punto de inflexión. Ahí la tangente cruza la curva.</li>
   </ul>
 </section>
 
@@ -240,7 +241,7 @@
 </section>
 
 <footer>
-  <span class="status">CD1-L19-H04 · v001 · Pendiente de APR</span>
+  <span class="status">CD1-L19-H04 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -281,6 +282,16 @@ function oaAn(o){
         if (hasta >= cuts[i + 1]) txt((conc ? 'f″' : 'f′') + (sg > 0 ? ' > 0' : ' < 0'), (S.X(cuts[i]) + S.X(cuts[i + 1]))/2, by - 13, 'center', cc, true, 13);
       }
       for (i = 1; i < cuts.length - 1; i++) if (hasta >= cuts[i]){ S.pline(S.X(cuts[i]), by - 7, S.X(cuts[i]), by + 7, {color:C.ink, width:1.5}); S.line(cuts[i], f(cuts[i]), cuts[i], 0, {color:C.muted, width:1, dash:[3,4]}); }
+      /* Flechas leves de curvatura (modo 'conc'): ∩ con punta hacia abajo o ∪ con punta hacia arriba, una por tramo. */
+      (o.curv || []).forEach(function(k){
+        if (hasta < cuts[k.seg + 1]) return;
+        var up = g((cuts[k.seg] + cuts[k.seg + 1])/2) > 0, cc = col(up ? 1 : -1), px = S.X(k.x), py = S.Y(k.y), r = 15, a0 = up ? 0.85*Math.PI : 1.15*Math.PI, a1 = up ? 0.15*Math.PI : 1.85*Math.PI;
+        c.save(); c.globalAlpha = 0.8; c.setLineDash([]); c.strokeStyle = cc; c.lineWidth = 2; c.lineCap = 'round';
+        c.beginPath(); c.arc(px, py, r, a0, a1, up); c.stroke();
+        var ex = px + r*Math.cos(a1), ey = py + r*Math.sin(a1), tx = up ? Math.sin(a1) : -Math.sin(a1), ty = up ? -Math.cos(a1) : Math.cos(a1), an = Math.atan2(ty, tx);
+        c.beginPath(); c.moveTo(ex - 7*Math.cos(an - 0.5), ey - 7*Math.sin(an - 0.5)); c.lineTo(ex, ey); c.lineTo(ex - 7*Math.cos(an + 0.5), ey - 7*Math.sin(an + 0.5)); c.stroke(); c.restore();
+        if (k.txt) txt(k.txt, S.X(k.tx), S.Y(k.ty), k.al || 'center', cc);
+      });
       if (o.ends) o.ends.forEach(function(e){ S.dot(e, f(e), C.ink); });
       var live = v.t == null || (s >= T0 && s < T1);
       if (live){
@@ -318,5 +329,6 @@ OA.scene('concavidad', oaAn({
   d0:-1.15, d1:3.15, cuts:[1], world:{x0:-1.9, x1:3.9, y0:-4.6, y1:4.4}, aspect:0.86, gx:[-1,1,2,3], gy:[-4,-3,-2,-1,1,2,3,4], full:true, sweep:20,
   fTex:'f(x)=x^{3}-3x^{2}+2', fFb:'f(x) = x³ − 3x² + 2', txtUp:function(x){ return x < 1; }, eps:0.12,
   aria:'Gráfica de f(x) = x³ − 3x² + 2. Un punto P la recorre con su tangente. Hasta x = 1 la curva es naranja, cóncava hacia abajo, y queda bajo la tangente. Desde x = 1 es azul, cóncava hacia arriba, y queda sobre la tangente. El punto (1, 0) es el punto de inflexión.',
-  marks:[{x:1, tex:"(1,\;0):\\ f''(1)=0,\\ \\text{punto de inflexión}", fb:"(1, 0): f''(1) = 0, punto de inflexión", pos:[1,1], cap:'En (1, 0) la concavidad cambia de hacia abajo a hacia arriba: es el punto de inflexión'}]
+  curv:[{seg:0, x:-0.8, y:3.0, txt:'curvatura hacia abajo', tx:-0.48, ty:3.05, al:'left'}, {seg:1, x:2, y:-1.15, txt:'curvatura hacia arriba', tx:2, ty:-2.75}],
+  marks:[{x:1, tex:"I\\,(1,\;0):\\ f''(1)=0,\\ \\text{punto de inflexión}", fb:"I (1, 0): f''(1) = 0, punto de inflexión", pos:[1,1], cap:'En el punto I (1, 0) la concavidad cambia de hacia abajo a hacia arriba: es el punto de inflexión'}]
 }));
