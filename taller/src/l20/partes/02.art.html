@@ -36,9 +36,10 @@
   <ul class="keys">
     <li><b>Esfera verde:</b> el globo. Su centro es el punto \((0,\;0)\), destacado en rojo.</li>
     <li><b>Trazo rojo \(r\):</b> el radio, en centímetros, desde el centro \((0,\;0)\) hasta la superficie.</li>
-    <li><b>Sector esférico:</b> el cono con vértice en el centro \((0,\;0)\) y tapa sobre la superficie. Es un corte del globo para mirar la capa de cerca.</li>
-    <li><b>Tapa naranja \(dr\):</b> el trozo de capa que queda sobre el sector. Su espesor \(dr\) es lo que el radio crecería en \(1\) segundo, a la razón de ese instante. Mientras más grande es el globo, más delgada es la capa.</li>
-    <li><b>Capa completa, naranja tenue:</b> rodea todo el globo. Su volumen es el área por el espesor, \(4\pi\,r^{2}\cdot dr=100\) centímetros cúbicos: el aire que entra en \(1\) segundo.</li>
+    <li><b>Sector esférico:</b> la pirámide con vértice en el centro \((0,\;0)\) y base sobre la superficie. Su base es un trozo pequeño de superficie, de área \(dA\). Su altura es el radio \(r\).</li>
+    <li><b>Bloque naranja:</b> está puesto sobre el trozo \(dA\), hacia afuera. Su base es \(dA\) y su espesor es \(dr\). Su volumen es base por espesor: \(dA\cdot dr\).</li>
+    <li><b>Espesor \(dr\):</b> lo que el radio crecería en \(1\) segundo, a la razón de ese instante. Mientras más grande es el globo, más delgado es el bloque.</li>
+    <li><b>Capa completa, naranja tenue:</b> la forman todos los bloques que cubren el globo. Su volumen es el área por el espesor, \(4\pi\,r^{2}\cdot dr=100\) centímetros cúbicos: el aire que entra en \(1\) segundo.</li>
     <li><b>Área \(A\):</b> el área de la superficie del globo, \(A=4\pi\,r^{2}\), en centímetros cuadrados.</li>
     <li><b>Dato:</b> \(\dfrac{dV}{dt}=100\) centímetros cúbicos por segundo, constante.</li>
     <li><b>Resultado:</b> cuando \(r=5\), \(\dfrac{dr}{dt}=\dfrac{1}{\pi}\approx 0{,}32\) centímetros por segundo.</li>
@@ -47,16 +48,16 @@
 
 <section>
   <h2>Del área al volumen</h2>
-  <p>La fórmula del volumen de la esfera sale de la fórmula del área de su superficie. El sector esférico de la animación muestra cómo, de dos maneras.</p>
+  <p>La fórmula del volumen de la esfera sale de la fórmula del área de su superficie. El sector esférico y el bloque naranja de la animación muestran cómo, de dos maneras: con el radio \(r\) y con el espesor \(dr\).</p>
   <div class="prop p1">
-  <h3>La esfera, sector por sector</h3>
+  <h3>Con \(r\): la esfera, sector por sector</h3>
   <div class="body">
   <ol class="steps">
-    <li>Área de la superficie de una esfera de radio \(r\), fórmula conocida de la geometría:
+    <li>Área de la superficie de una esfera de radio \(r\):
       \[A=4\pi\,r^{2}\]</li>
-    <li>La esfera se corta en sectores esféricos muy delgados, como el de la animación: vértice en el centro \((0,\;0)\) y tapa sobre la superficie. Cada sector se parece a una pirámide de altura \(r\) y base de área pequeña \(S\). Su volumen es, aproximadamente, un tercio de la base por la altura:
-      \[V_{\text{sector}}\approx\frac{1}{3}\cdot S\cdot r\]</li>
-    <li>Se suman todos los sectores. \(\dfrac{1}{3}\cdot r\) es factor común y la suma de todas las bases \(S\) es el área completa \(A\):
+    <li>El sector esférico de la animación se parece a una pirámide de base \(dA\) y altura \(r\). Su volumen es, aproximadamente, un tercio de la base por la altura:
+      \[V_{\text{sector}}\approx\frac{1}{3}\cdot dA\cdot r\]</li>
+    <li>La esfera completa se llena con sectores como ese. Se suman todos. \(\dfrac{1}{3}\cdot r\) es factor común y la suma de todas las bases \(dA\) es el área completa \(A\):
       \[V=\frac{1}{3}\cdot r\cdot A\]</li>
     <li>Se reemplaza \(A=4\pi\,r^{2}\):
       \[V=\frac{1}{3}\cdot r\cdot 4\pi\,r^{2}=\frac{4}{3}\,\pi\,r^{3}\]</li>
@@ -65,10 +66,12 @@
   </div>
 
   <div class="prop p2">
-  <h3>La esfera, capa por capa</h3>
+  <h3>Con \(dr\): la esfera, capa por capa</h3>
   <div class="body">
   <ol class="steps">
-    <li>En el sector de la animación, la tapa naranja tiene espesor \(dr\). Esa tapa es un trozo de una capa delgada que rodea toda la esfera. El volumen de la capa completa es el área por el espesor:
+    <li>El bloque naranja tiene base \(dA\) y espesor \(dr\). Su volumen es base por espesor:
+      \[V_{\text{bloque}}=dA\cdot dr\]</li>
+    <li>Se cubre toda la superficie con bloques del mismo espesor \(dr\). Juntos forman una capa delgada. \(dr\) es factor común y la suma de todas las bases \(dA\) es el área completa \(A\):
       \[dV=A\cdot dr=4\pi\,r^{2}\cdot dr\]</li>
     <li>Se dividen los dos miembros por \(dr\). El área es la derivada del volumen respecto del radio:
       \[\frac{dV}{dr}=4\pi\,r^{2}\]</li>
@@ -81,11 +84,17 @@
   </div>
 
   <div class="prop p3">
-  <h3>La misma idea con una integral</h3>
+  <h3>Lo mismo con integrales</h3>
   <div class="body">
   <ol class="steps">
     <li>La esfera completa es la suma de todas sus capas, desde el centro hasta la superficie. Se llama \(\rho\) al radio de cada capa, que va de \(0\) a \(r\). Esa suma es una integral, tema del Cálculo integral:
       \[V=\int_{0}^{r}4\pi\,\rho^{2}\,d\rho=4\pi\cdot\frac{r^{3}}{3}=\frac{4}{3}\,\pi\,r^{3}\]</li>
+    <li>El área \(4\pi\,r^{2}\) también sale de una suma, la de todos los trozos \(dA\). En coordenadas esféricas, tema de cursos posteriores, con \(\theta\) el ángulo medido desde el eje vertical y \(\varphi\) el ángulo de giro alrededor de ese eje, los lados del trozo miden \(r\,d\theta\) y \(r\,\operatorname{sen}\theta\,d\varphi\):
+      \[dA=r\,d\theta\cdot r\,\operatorname{sen}\theta\,d\varphi=r^{2}\,\operatorname{sen}\theta\,d\theta\,d\varphi\]</li>
+    <li>Se suman todos los trozos, con \(\theta\) de \(0\) a \(\pi\) y \(\varphi\) de \(0\) a \(2\pi\):
+      \[A=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}r^{2}\,\operatorname{sen}\theta\,d\theta\,d\varphi=r^{2}\cdot 2\cdot 2\pi=4\pi\,r^{2}\]</li>
+    <li>El bloque naranja es el elemento de volumen de esas coordenadas:
+      \[dA\cdot dr=r^{2}\,\operatorname{sen}\theta\,dr\,d\theta\,d\varphi\]</li>
   </ol>
   </div>
   </div>
@@ -110,7 +119,7 @@
       <li>El volumen exacto de una capa de espesor \(dr\) es la diferencia entre dos esferas:
         \[\frac{4}{3}\,\pi\,(r+dr)^{3}-\frac{4}{3}\,\pi\,r^{3}=4\pi\,r^{2}\,dr+4\pi\,r\,(dr)^{2}+\frac{4}{3}\,\pi\,(dr)^{3}\]</li>
       <li>El primer término es «área por espesor». Los otros dos llevan \((dr)^{2}\) y \((dr)^{3}\): mientras más delgada es la capa, menos pesan. En el límite, cuando \(dr\) tiende a \(0\), queda exactamente \(\dfrac{dV}{dr}=4\pi\,r^{2}\).</li>
-      <li>Con los sectores pasa lo mismo: un sector no es exactamente una pirámide, porque su tapa es curva. Mientras más delgados son los sectores, más plana es cada tapa y menor es el error. En el límite, la suma da exactamente \(V=\dfrac{1}{3}\cdot r\cdot A\).</li>
+      <li>Con los sectores pasa lo mismo: un sector no es exactamente una pirámide, porque su base \(dA\) es curva. Mientras más pequeños son los trozos \(dA\), más plana es cada base y menor es el error. En el límite, la suma da exactamente \(V=\dfrac{1}{3}\cdot r\cdot A\).</li>
     </ol>
   </div>
 </section>
@@ -235,6 +244,6 @@
 </section>
 
 <footer>
-  <span class="status">CD1-L20-H02 · v004 · Pendiente de APR</span>
+  <span class="status">CD1-L20-H02 · v005 · Pendiente de APR</span>
 </footer>
 </article>
