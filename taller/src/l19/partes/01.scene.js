@@ -1,5 +1,5 @@
 OA.scene('crecimiento', oaAn({
-  mode:'crec', f:function(x){ return x*x*x - 6*x*x + 9*x + 1; }, df:function(x){ return 3*x*x - 12*x + 9; }, d2f:function(x){ return 6*x - 12; },
+  mode:'crec', stops:[{x:1, up:true}, {x:3, up:false}], f:function(x){ return x*x*x - 6*x*x + 9*x + 1; }, df:function(x){ return 3*x*x - 12*x + 9; }, d2f:function(x){ return 6*x - 12; },
   d0:-0.25, d1:4.25, cuts:[1, 3], world:{x0:-0.9, x1:4.9, y0:-2.6, y1:7.4}, aspect:0.86, gx:[1,2,3,4], gy:[1,2,3,4,5,6,7],
   fTex:'f(x)=x^{3}-6x^{2}+9x+1', fFb:'f(x) = x³ − 6x² + 9x + 1', txtUp:function(x){ return x < 2; },
   aria:'Gráfica de f(x) = x³ − 6x² + 9x + 1. Un punto P la recorre con su tangente. La curva es verde, creciente, hasta x = 1; naranja, decreciente, entre x = 1 y x = 3; y verde, creciente, desde x = 3.',
