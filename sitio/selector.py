@@ -140,9 +140,12 @@ function pedido(){ var keys = Object.keys(sel).sort(), prod = [], enl = [];
   var t = 'PEDIDO DE PRODUCCIÓN · Oscar Academy · ' + f + '\n' + prod.length + ' hojas por producir · ' + enl.length + ' solo por enlazar · ' + prod.concat(enl).reduce(function(s, x){ return s + x.a.length; }, 0) + ' lugares\n';
   function bloque(tit, arr){ if (!arr.length) return; t += '\n' + tit + '\n'; arr.forEach(function(x, i){ t += (i + 1) + '. «' + x.a[0].k[1] + '»' + (x.a[0].k[2] === 3 ? '  → hoja: ' + x.a[0].k[3] : '') + '\n'; x.a.forEach(function(y){ t += '   - ' + y.p.t + ' › ' + y.c.t + '  [' + y.p.i + ' · ' + y.k[0] + ']\n'; }); }); }
   bloque('PRODUCIR (hoja nueva):', prod); bloque('SOLO ENLAZAR (la hoja ya existe):', enl); return t; }
-function copiar(){ var t = pedido(); $('txt').value = t; function ok(){ $('est').textContent = 'Pedido copiado ✓ Pégalo en el chat de Claude.'; }
-  function mano(){ $('dlg').showModal(); $('txt').select(); }
-  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, mano); else mano(); }
+function copiar(){ var t = pedido(), hecho = false; $('txt').value = t;
+  function ok(){ $('est').textContent = 'Pedido copiado ✓ Pégalo en el chat de Claude.'; }
+  function mano(){ $('dlg').showModal(); $('txt').focus(); $('txt').select(); }
+  try { var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0'; document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, t.length); hecho = document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+  if (hecho){ ok(); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText){ try { navigator.clipboard.writeText(t).then(ok, mano); } catch (e) { mano(); } } else mano(); }
 $('pags').addEventListener('click', function(e){ var b = e.target.closest('button[data-p]'); if (!b) return; actual = +b.dataset.p; q = ''; try { history.replaceState(null, '', '#' + encodeURIComponent(P[actual].t)); } catch (er) {} pintarPags(); pintar(); });
 $('bp').addEventListener('input', pintarPags);
 $('main').addEventListener('change', function(e){ var t = e.target; if (t.id === 'sp'){ soloPend = t.checked; pintar(); return; }
