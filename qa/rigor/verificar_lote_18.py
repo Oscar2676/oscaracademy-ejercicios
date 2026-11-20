@@ -104,5 +104,12 @@ ok('H02 s creciente en [0,2]: s\'(t)=90t(2−t) ≥ 0', all(d(F(k, 20)) == 90 * 
 ok('H02 aplicación 4: f(5) ≤ 16; 3x+1 lo alcanza', 4 * 3 + 4 == 16 and 3 * 1 + 1 == 4 and 3 * 5 + 1 == 16)
 ok('H02-A cámaras: 10/(1/12)=120', F(10) / F(5, 60) == 120 and F(5, 60) == F(1, 12))
 ok('H02-C 9 ≤ f(6) ≤ 21', 4 * 2 + 1 == 9 and 4 * 5 + 1 == 21)
+
+# H01 · animación de la condición 2: f(x) = 1 + x²/4 (x ≤ 2), 3 − x/2 (x > 2)
+def fa(x): x = F(x); return 1 + x * x / 4 if x <= 2 else 3 - x / 2
+hs = [F(k, 50) for k in range(-50, 51) if k]
+ok('H01 anim: en x0=1 el cociente es 1/2 + h/4 (100 valores de h)', all((fa(1 + h) - fa(1)) / h == F(1, 2) + h / 4 for h in hs))
+ok('H01 anim: en x0=2, h>0: −1/2; h<0: 1 + h/4', all((fa(2 + h) - fa(2)) / h == (F(-1, 2) if h > 0 else 1 + h / 4) for h in hs))
+ok('H01 anim: f(2)=2 por los dos tramos (continua)', fa(2) == 2 and 3 - F(2, 2) == 2)
 print('\nERRORES:', err)
 raise SystemExit(1 if err else 0)

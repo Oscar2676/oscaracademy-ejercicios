@@ -34,6 +34,39 @@
     <p>Significa que en cada \(x_{0}\in(a,\;b)\) existe, como número real, el límite</p>
     \[f'(x_{0})=\lim_{h\to 0}\frac{f(x_{0}+h)-f(x_{0})}{h}\]
     <p>La curva tiene recta tangente no vertical en cada punto entre los extremos: no tiene puntas ni quiebres. En los extremos \(a\) y \(b\) no se exige derivabilidad, porque \(a\notin(a,\;b)\) y \(b\notin(a,\;b)\).</p>
+    <h3>Disfruta la animación</h3>
+    <p>El cociente \(\dfrac{f(x_{0}+h)-f(x_{0})}{h}\) es la pendiente de la recta secante que pasa por \(P\big(x_{0},\;f(x_{0})\big)\) y por \(\big(x_{0}+h,\;f(x_{0}+h)\big)\). La animación acerca el segundo punto a \(P\), primero por la derecha, con \(h&gt;0\), y después por la izquierda, con \(h&lt;0\). La curva es
+    \[f(x)=\begin{cases}1+\dfrac{x^{2}}{4} & \text{si }x\le 2\\[8pt] 3-\dfrac{x}{2} & \text{si }x&gt;2\end{cases}\]
+    Primero se prueba en \(x_{0}=1\), donde la curva es suave, y después en \(x_{0}=2\), donde la curva tiene una punta.</p>
+    <div class="stage" data-scene="tvm-derivable"></div>
+    <ul class="keys">
+      <li><b>Punto \(P\big(x_{0},\;f(x_{0})\big)\):</b> el punto donde se estudia la derivabilidad.</li>
+      <li><b>Recta azul:</b> la secante por \(P\) y un punto a su derecha, con \(h&gt;0\).</li>
+      <li><b>Recta verde:</b> la secante por \(P\) y un punto a su izquierda, con \(h&lt;0\).</li>
+      <li><b>En \(x_{0}=1\):</b> las dos pendientes tienden al mismo número, \(\dfrac{1}{2}\). El límite existe, \(f'(1)=\dfrac{1}{2}\), y la recta roja es la tangente. \(f\) es derivable en \(1\).</li>
+      <li><b>En \(x_{0}=2\):</b> por la derecha la pendiente vale \(-\dfrac{1}{2}\) y por la izquierda tiende a \(1\). Como \(1\neq-\dfrac{1}{2}\), el límite no existe: en la punta no hay tangente y \(f\) no es derivable en \(2\).</li>
+    </ul>
+    <details><summary>El cálculo de la animación, paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x_{0}=1\), con \(h\neq 0\) y \(1+h\le 2\), se usa el primer tramo. Diferencia de las imágenes:
+          \[f(1+h)-f(1)=1+\frac{(1+h)^{2}}{4}-\left(1+\frac{1^{2}}{4}\right)=\frac{(1+h)^{2}-1}{4}\]</li>
+        <li>Cuadrado de un binomio, \((1+h)^{2}=1+2h+h^{2}\):
+          \[f(1+h)-f(1)=\frac{1+2h+h^{2}-1}{4}=\frac{2h+h^{2}}{4}\]</li>
+        <li>Se divide por \(h\), con \(h\neq 0\). Se factoriza \(2h+h^{2}=h\,(2+h)\) y se simplifica \(h\):
+          \[\frac{f(1+h)-f(1)}{h}=\frac{h\,(2+h)}{4h}=\frac{2+h}{4}=\frac{1}{2}+\frac{h}{4}\]</li>
+        <li>Cuando \(h\to 0\), por la derecha o por la izquierda, \(\dfrac{h}{4}\to 0\):
+          \[f'(1)=\lim_{h\to 0}\left(\frac{1}{2}+\frac{h}{4}\right)=\frac{1}{2}\]</li>
+        <li>En \(x_{0}=2\), \(f(2)=1+\dfrac{2^{2}}{4}=1+1=2\). Por la derecha, con \(h&gt;0\), \(2+h&gt;2\) y se usa el segundo tramo:
+          \[f(2+h)-f(2)=3-\frac{2+h}{2}-2=3-1-\frac{h}{2}-2=-\frac{h}{2}\]</li>
+        <li>Se divide por \(h\):
+          \[\frac{f(2+h)-f(2)}{h}=\frac{-\frac{h}{2}}{h}=-\frac{1}{2}\qquad\Longrightarrow\qquad\lim_{h\to 0^{+}}\frac{f(2+h)-f(2)}{h}=-\frac{1}{2}\]</li>
+        <li>Por la izquierda, con \(h&lt;0\), \(2+h&lt;2\) y se usa el primer tramo:
+          \[f(2+h)-f(2)=1+\frac{(2+h)^{2}}{4}-2=\frac{4+4h+h^{2}}{4}-1=\frac{4h+h^{2}}{4}\]</li>
+        <li>Se divide por \(h\). Se factoriza \(4h+h^{2}=h\,(4+h)\) y se simplifica \(h\):
+          \[\frac{f(2+h)-f(2)}{h}=\frac{h\,(4+h)}{4h}=\frac{4+h}{4}=1+\frac{h}{4}\qquad\Longrightarrow\qquad\lim_{h\to 0^{-}}\frac{f(2+h)-f(2)}{h}=1\]</li>
+        <li>Los límites laterales son distintos, \(1\neq-\dfrac{1}{2}\). El límite del cociente no existe: \(f\) no es derivable en \(x_{0}=2\).</li>
+      </ol>
+    </div></details>
   </div>
   <div class="card k2">
     <h3>Funciones conocidas: dónde son continuas y dónde son derivables</h3>
