@@ -35,14 +35,18 @@ function oaAn(o){
         if (hasta >= cuts[i + 1]) txt((conc ? 'f″' : 'f′') + (sg > 0 ? ' > 0' : ' < 0'), (S.X(cuts[i]) + S.X(cuts[i + 1]))/2, by - 13, 'center', cc, true, 13);
       }
       for (i = 1; i < cuts.length - 1; i++) if (hasta >= cuts[i]){ S.pline(S.X(cuts[i]), by - 7, S.X(cuts[i]), by + 7, {color:C.ink, width:1.5}); S.line(cuts[i], f(cuts[i]), cuts[i], 0, {color:C.muted, width:1, dash:[3,4]}); }
-      /* Flechas leves de curvatura (modo 'conc'): ∩ con punta hacia abajo o ∪ con punta hacia arriba, una por tramo. */
+      /* Flechas de curvatura (modo 'conc'): dos flechas delgadas por tramo, normales a la curva, que salen de ella hacia el lado al que se curva. */
       (o.curv || []).forEach(function(k){
         if (hasta < cuts[k.seg + 1]) return;
-        var up = g((cuts[k.seg] + cuts[k.seg + 1])/2) > 0, cc = col(up ? 1 : -1), px = S.X(k.x), py = S.Y(k.y), r = 15, a0 = up ? 0.85*Math.PI : 1.15*Math.PI, a1 = up ? 0.15*Math.PI : 1.85*Math.PI;
-        c.save(); c.globalAlpha = 0.8; c.setLineDash([]); c.strokeStyle = cc; c.lineWidth = 2; c.lineCap = 'round';
-        c.beginPath(); c.arc(px, py, r, a0, a1, up); c.stroke();
-        var ex = px + r*Math.cos(a1), ey = py + r*Math.sin(a1), tx = up ? Math.sin(a1) : -Math.sin(a1), ty = up ? -Math.cos(a1) : Math.cos(a1), an = Math.atan2(ty, tx);
-        c.beginPath(); c.moveTo(ex - 7*Math.cos(an - 0.5), ey - 7*Math.sin(an - 0.5)); c.lineTo(ex, ey); c.lineTo(ex - 7*Math.cos(an + 0.5), ey - 7*Math.sin(an + 0.5)); c.stroke(); c.restore();
+        var up = g((cuts[k.seg] + cuts[k.seg + 1])/2) > 0, cc = col(up ? 1 : -1);
+        (k.xs || []).forEach(function(u){
+          var m = o.df(u), nx = m*sy, ny = sx, n = Math.sqrt(nx*nx + ny*ny), L = k.len || 30; nx /= n; ny /= n;
+          if ((ny < 0) !== up){ nx = -nx; ny = -ny; }
+          var x0 = S.X(u) + 5*nx, y0 = S.Y(f(u)) + 5*ny, x1 = S.X(u) + L*nx, y1 = S.Y(f(u)) + L*ny, an = Math.atan2(ny, nx);
+          c.save(); c.setLineDash([]); c.strokeStyle = cc; c.lineWidth = 1.4; c.lineCap = 'round';
+          c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke();
+          c.beginPath(); c.moveTo(x1 - 7*Math.cos(an - 0.42), y1 - 7*Math.sin(an - 0.42)); c.lineTo(x1, y1); c.lineTo(x1 - 7*Math.cos(an + 0.42), y1 - 7*Math.sin(an + 0.42)); c.stroke(); c.restore();
+        });
         if (k.txt) txt(k.txt, S.X(k.tx), S.Y(k.ty), k.al || 'center', cc);
       });
       if (o.ends) o.ends.forEach(function(e){ S.dot(e, f(e), C.ink); });
