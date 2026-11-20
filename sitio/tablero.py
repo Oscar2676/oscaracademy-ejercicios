@@ -138,6 +138,11 @@ details{{margin-top:8px}} summary{{cursor:pointer;font-weight:600;padding:6px 0}
 <p class="pie">Se arma solo con <code>sitio/tablero.py</code> a partir del repositorio, de la <a href="enlaces.html">vista de enlaces</a>, del <a href="index.html">árbol del sitio</a> y de <code>sitio/plan.json</code> (lo anotado a mano: «en curso» y «lo que sigue»).</p>
 </main></body></html>'''
     (AQUI / 'tablero.html').write_text(doc, encoding='utf-8')
+    # copia para guardar en el computador: enlaces completos y aviso de dónde está la versión al día
+    W = BASE + 'sitio/'
+    local = doc.replace('href="enlaces.html"', f'href="{W}enlaces.html"').replace('href="index.html"', f'href="{W}index.html"')
+    local = local.replace('<p class="sub">De dónde vengo', f'<p class="sub"><b>Copia guardada el {ahora}.</b> La versión al día está en <a href="{W}tablero.html">{W}tablero.html</a>.</p>\n<p class="sub">De dónde vengo', 1)
+    (AQUI / 'Tablero_OA_copia_local.html').write_text(local, encoding='utf-8')
     print(f'tablero: {n} hojas, {con_apr} con APR, {enlaz} enlazadas, {len(sin)} sin enlazar, {tit_con}/{tot_tit} títulos')
 
 if __name__ == '__main__': main()
