@@ -1,0 +1,162 @@
+<article class="sheet" id="sandwich">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo Diferencial 1ª parte</li>
+      <li>Teorema del sándwich</li>
+      <li><b>Introducción al teorema de comparación (o del sándwich)</b></li>
+    </ol>
+    <h1>Teorema del sándwich</h1>
+    <p class="lede">Si una función queda atrapada entre otras dos, y esas dos llegan al mismo valor, la función del medio no tiene otra opción que llegar a ese mismo valor.</p>
+  </section>
+</header>
+
+<section>
+  <h2>Para qué sirve</h2>
+  <p>Hay funciones cuyo límite no se puede calcular reemplazando ni factorizando. Por ejemplo \(\text{sen}\!\left(\dfrac{1}{x}\right)\) cerca de \(x=0\): mientras más cerca de \(0\) está \(x\), más grande es \(\dfrac{1}{x}\) y el seno sube y baja cada vez más rápido, sin acercarse a ningún número.</p>
+  <p>El teorema del sándwich resuelve estos casos sin estudiar la función directamente. En su lugar se buscan dos funciones más simples que encierran a la función \(f\) en una desigualdad, \(g(x)\le f(x)\le h(x)\): una que queda siempre por su lado izquierdo, \(g\), y la otra siempre por su lado derecho, \(h\). En el gráfico, la del lado izquierdo queda por debajo de \(f\) y la del lado derecho queda por encima. Esas dos se llaman cotas.</p>
+</section>
+
+<section>
+  <h2>El teorema</h2>
+  <div class="def">
+    <h3>Teorema del sándwich</h3>
+    <p>Si \(g(x)\le f(x)\le h(x)\) para todo \(x\) cercano a \(a\), con \(x\neq a\), y además</p>
+    \[\lim_{x\to a}g(x)=L\qquad\text{y}\qquad\lim_{x\to a}h(x)=L\]
+    <p>entonces</p>
+    \[\lim_{x\to a}f(x)=L\]
+  </div>
+  <ul class="keys">
+    <li>\(g\) es la cota inferior: siempre está por debajo de \(f\), o la toca.</li>
+    <li>\(h\) es la cota superior: siempre está por encima de \(f\), o la toca.</li>
+    <li>\(L\) es el valor común al que llegan las dos cotas.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Por qué se cumple, paso a paso</h2>
+  <ol class="steps">
+    <li>Se parte de la hipótesis:
+      \[g(x)\le f(x)\le h(x)\]</li>
+    <li>Se resta \(L\) en las tres partes. Restar el mismo número en todas las partes no cambia el sentido de una desigualdad:
+      \[g(x)-L\le f(x)-L\le h(x)-L\]</li>
+    <li>Como \(g(x)\) se acerca a \(L\), la diferencia \(g(x)-L\) se acerca a \(0\):
+      \[\lim_{x\to a}\big(g(x)-L\big)=0\]</li>
+    <li>Como \(h(x)\) se acerca a \(L\), la diferencia \(h(x)-L\) también se acerca a \(0\):
+      \[\lim_{x\to a}\big(h(x)-L\big)=0\]</li>
+    <li>Entonces \(f(x)-L\) está atrapada entre dos cantidades que se hacen tan pequeñas como se quiera, una por abajo y otra por arriba. No le queda espacio: también se acerca a \(0\):
+      \[\lim_{x\to a}\big(f(x)-L\big)=0\]</li>
+    <li>Que \(f(x)-L\) se acerque a \(0\) es lo mismo que decir que \(f(x)\) se acerca a \(L\):
+      \[\lim_{x\to a}f(x)=L\]</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La función del medio es \(f(x)=2+(x-2)\,\text{sen}\!\left(\dfrac{5}{x-2}\right)\), que oscila cada vez más rápido cerca de \(x=2\). Cada elemento de la figura es:</p>
+  <ul class="keys">
+    <li><b>Curva negra \(f(x)\):</b> la función cuyo límite se busca.</li>
+    <li><b>Recta azul \(h(x)=2+|x-2|\):</b> la cota superior.</li>
+    <li><b>Recta verde \(g(x)=2-|x-2|\):</b> la cota inferior.</li>
+    <li><b>Las tres curvas se trazan en movimiento:</b> un tramo avanza hacia \(2\) desde la izquierda, \(x\to 2^-\), y el otro avanza hacia \(2\) desde la derecha, \(x\to 2^+\), los dos al mismo tiempo.</li>
+    <li><b>Rectas verticales, una por lado:</b> sobre cada una están marcados los tres valores \(g(x)\), \(f(x)\) y \(h(x)\), siempre en ese orden de abajo hacia arriba.</li>
+    <li><b>Tramos naranjas \(|x-2|\):</b> la distancia que le falta a cada lado para llegar a \(2\).</li>
+    <li><b>Círculo abierto en \((2,2)\):</b> el punto al que se acercan las tres curvas por ambos lados.</li>
+    <li><b>Trazo naranja \(h(x)-g(x)\):</b> la separación entre las dos cotas, que es el espacio que le queda a \(f\).</li>
+    <li><b>Línea punteada \(L=2\):</b> el valor al que llegan las dos cotas.</li>
+  </ul>
+  <div class="stage" data-scene="sandwich"></div>
+</section>
+
+<section>
+  <h2>Ejemplo completo: el límite de la animación</h2>
+  <ol class="steps">
+    <li>El seno de cualquier número está entre \(-1\) y \(1\). Por eso su valor absoluto nunca supera \(1\):
+      \[\left|\text{sen}\!\left(\frac{5}{x-2}\right)\right|\le 1\]</li>
+    <li>Se multiplican los dos lados por \(|x-2|\). Como \(|x-2|\) no es negativo, la desigualdad conserva su sentido:
+      \[|x-2|\cdot\left|\text{sen}\!\left(\frac{5}{x-2}\right)\right|\le |x-2|\]</li>
+    <li>El producto de dos valores absolutos es el valor absoluto del producto:
+      \[\left|(x-2)\,\text{sen}\!\left(\frac{5}{x-2}\right)\right|\le |x-2|\]</li>
+    <li>Si el valor absoluto de una cantidad no supera \(|x-2|\), esa cantidad está entre \(-|x-2|\) y \(|x-2|\):
+      \[-|x-2|\le (x-2)\,\text{sen}\!\left(\frac{5}{x-2}\right)\le |x-2|\]</li>
+    <li>Se suma \(2\) en las tres partes. En el medio queda \(f(x)\):
+      \[2-|x-2|\le f(x)\le 2+|x-2|\]</li>
+    <li>Se identifican las cotas:
+      \[g(x)=2-|x-2|\qquad h(x)=2+|x-2|\]</li>
+    <li>Límite de la cota inferior. Cuando \(x\to 2\), \(|x-2|\to 0\):
+      \[\lim_{x\to 2}\big(2-|x-2|\big)=2-0=2\]</li>
+    <li>Límite de la cota superior:
+      \[\lim_{x\to 2}\big(2+|x-2|\big)=2+0=2\]</li>
+    <li>Las dos cotas llegan a \(2\). Por el teorema del sándwich:
+      \[\lim_{x\to 2}f(x)=2\]</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\lim_{x\to 0}x^2\cos\!\left(\frac{1}{x}\right)\).</p>
+    <details><summary>Pista</summary><div><p>Parte de que el coseno de cualquier número está entre \(-1\) y \(1\), y multiplica por \(x^2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>No sirve reemplazar \(x=0\), porque \(\dfrac{1}{0}\) no existe. Se buscan dos cotas.</li>
+        <li>El coseno de cualquier número está entre \(-1\) y \(1\):
+          \[-1\le\cos\!\left(\frac{1}{x}\right)\le 1\]</li>
+        <li>Se multiplican las tres partes por \(x^2\). Como \(x^2\) nunca es negativo, las desigualdades conservan su sentido:
+          \[-x^2\le x^2\cos\!\left(\frac{1}{x}\right)\le x^2\]</li>
+        <li>Se identifican las cotas:
+          \[g(x)=-x^2\qquad h(x)=x^2\]</li>
+        <li>Límite de la cota inferior, reemplazando:
+          \[\lim_{x\to 0}(-x^2)=-0^2=0\]</li>
+        <li>Límite de la cota superior, reemplazando:
+          \[\lim_{x\to 0}x^2=0^2=0\]</li>
+        <li>Las dos cotas llegan a \(0\). Por el teorema del sándwich:
+          \[\lim_{x\to 0}x^2\cos\!\left(\frac{1}{x}\right)=0\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\lim_{x\to\infty}\frac{\text{sen}(x)}{x}\).</p>
+    <details><summary>Pista</summary><div><p>Parte de \(-1\le\text{sen}(x)\le 1\) y divide por \(x\). Como \(x\) va hacia infinito, se puede tomar \(x&gt;0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cuando \(x\) crece, \(\text{sen}(x)\) sigue oscilando y no se acerca a ningún número. Se buscan dos cotas.</li>
+        <li>El seno de cualquier número está entre \(-1\) y \(1\):
+          \[-1\le\text{sen}(x)\le 1\]</li>
+        <li>Se dividen las tres partes por \(x\). Como \(x\to\infty\), se toma \(x&gt;0\), y dividir por un número positivo conserva el sentido de las desigualdades:
+          \[-\frac{1}{x}\le\frac{\text{sen}(x)}{x}\le\frac{1}{x}\]</li>
+        <li>Límite de la cota superior. El numerador queda fijo en \(1\) y el denominador crece sin tope:
+          \[\lim_{x\to\infty}\frac{1}{x}=0\]</li>
+        <li>Límite de la cota inferior, por la misma razón:
+          \[\lim_{x\to\infty}\left(-\frac{1}{x}\right)=0\]</li>
+        <li>Las dos cotas llegan a \(0\). Por el teorema del sándwich:
+          \[\lim_{x\to\infty}\frac{\text{sen}(x)}{x}=0\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Una función \(f\) cumple \(4x-9\le f(x)\le x^2-4x+7\) para todo \(x\ge 0\). Calcula \(\displaystyle\lim_{x\to 4}f(x)\).</p>
+    <details><summary>Pista</summary><div><p>No se conoce la fórmula de \(f\), pero sí sus dos cotas. Calcula el límite de cada una.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se identifican las cotas:
+          \[g(x)=4x-9\qquad h(x)=x^2-4x+7\]</li>
+        <li>Límite de la cota inferior, reemplazando \(x=4\):
+          \[\lim_{x\to 4}(4x-9)=4\cdot 4-9=16-9=7\]</li>
+        <li>Límite de la cota superior, reemplazando \(x=4\):
+          \[\lim_{x\to 4}(x^2-4x+7)=4^2-4\cdot 4+7=16-16+7=7\]</li>
+        <li>Las dos cotas llegan a \(7\) y \(f\) está entre ellas. Por el teorema del sándwich:
+          \[\lim_{x\to 4}f(x)=7\]</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L01-H02 · v003 · APR de Óscar, 13-nov-2026</span>
+</footer>
+</article>
