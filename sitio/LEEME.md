@@ -17,3 +17,8 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 - `enlaces.html` (y `enlaces.json`): cada hoja publicada con la lista de páginas y títulos del sitio que la enlazan. Se ve en https://oscar2676.github.io/oscaracademy-ejercicios/sitio/enlaces.html
 - `enlaces.py` la genera recorriendo las páginas públicas de oscaracademy.org; no necesita el editor de Wix. GitHub la ejecuta solo todos los días (`.github/workflows/enlaces.yml`) y cada vez que cambia algo en `sitio/`.
 - `python3 sitio/enlaces.py --desde-datos` la arma sin red, a partir de `datos-wix.json`.
+
+## Tablero «de dónde vengo, dónde estoy, adónde voy»
+- `tablero.html`: se ve en https://oscar2676.github.io/oscaracademy-ejercicios/sitio/tablero.html
+- `tablero.py` lo arma a partir de las hojas del repositorio, de `enlaces.json`, de `arbol-sitio.json` y de `plan.json`. GitHub lo ejecuta junto con `enlaces.py` (todos los días y cuando cambia `sitio/` o una carpeta de lote).
+- `plan.json`: lo que no se puede leer de los archivos («en curso», «lo que sigue» y las APR que no están escritas en la hoja). Se edita a mano.
