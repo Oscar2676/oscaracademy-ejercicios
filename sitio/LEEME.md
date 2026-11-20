@@ -22,3 +22,8 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 - `tablero.html`: se ve en https://oscar2676.github.io/oscaracademy-ejercicios/sitio/tablero.html
 - `tablero.py` lo arma a partir de las hojas del repositorio, de `enlaces.json`, de `arbol-sitio.json` y de `plan.json`. GitHub lo ejecuta junto con `enlaces.py` (todos los días y cuando cambia `sitio/` o una carpeta de lote).
 - `plan.json`: lo que no se puede leer de los archivos («en curso», «lo que sigue» y las APR que no están escritas en la hoja). Se edita a mano.
+
+## Selector de producción
+- `selector.html`: https://oscar2676.github.io/oscaracademy-ejercicios/sitio/selector.html — página por página, caja por caja, se marca con un clic qué títulos producir; «Copiar pedido» deja el texto listo para pegar en el chat (con los identificadores de página y de título).
+- Estados: pendiente · ya tiene hoja · índice (lleva a otra página) · ya existe la hoja y falta enlazar. Un mismo título repetido en varias páginas se marca una vez y vale para todos sus lugares.
+- `selector.py` lo arma con `arbol-sitio.json`, `datos-wix.json` y `enlaces.json`; GitHub lo ejecuta junto con `enlaces.py` y `tablero.py`.

@@ -114,6 +114,7 @@ table{{border-collapse:collapse;width:100%;font-size:.9rem}} th,td{{text-align:l
 details{{margin-top:8px}} summary{{cursor:pointer;font-weight:600;padding:6px 0}} .scroll{{overflow-x:auto}} .pie{{color:var(--muted);font-size:.82rem;margin-top:26px}}
 </style></head><body><main>
 <h1>Tablero de Oscar Academy</h1>
+<p class="sub"><a href="selector.html"><b>Elegir qué producir →</b></a></p>
 <p class="sub">De dónde vengo · dónde estoy · adónde voy. Actualizado el {ahora} (hora de Chile). Enlaces del sitio leídos el {e(en.get('actualizado', '—'))}.</p>
 <div class="tiles">
 {tile(n, 'Hojas publicadas', 'versión vigente de cada una')}
@@ -140,7 +141,7 @@ details{{margin-top:8px}} summary{{cursor:pointer;font-weight:600;padding:6px 0}
     (AQUI / 'tablero.html').write_text(doc, encoding='utf-8')
     # copia para guardar en el computador: enlaces completos y aviso de dónde está la versión al día
     W = BASE + 'sitio/'
-    local = doc.replace('href="enlaces.html"', f'href="{W}enlaces.html"').replace('href="index.html"', f'href="{W}index.html"')
+    local = doc.replace('href="enlaces.html"', f'href="{W}enlaces.html"').replace('href="selector.html"', f'href="{W}selector.html"').replace('href="index.html"', f'href="{W}index.html"')
     local = local.replace('<p class="sub">De dónde vengo', f'<p class="sub"><b>Copia guardada el {ahora}.</b> La versión al día está en <a href="{W}tablero.html">{W}tablero.html</a>.</p>\n<p class="sub">De dónde vengo', 1)
     (AQUI / 'Tablero_OA_copia_local.html').write_text(local, encoding='utf-8')
     print(f'tablero: {n} hojas, {con_apr} con APR, {enlaz} enlazadas, {len(sin)} sin enlazar, {tit_con}/{tot_tit} títulos')

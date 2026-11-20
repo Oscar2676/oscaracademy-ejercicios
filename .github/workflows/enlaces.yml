@@ -24,11 +24,12 @@ jobs:
           python-version: '3.12'
       - run: python3 sitio/enlaces.py
       - run: python3 sitio/tablero.py
+      - run: python3 sitio/selector.py
       - name: Guardar si cambió
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitio/enlaces.html sitio/enlaces.json sitio/tablero.html
+          git add sitio/enlaces.html sitio/enlaces.json sitio/tablero.html sitio/selector.html
           if git diff --cached --quiet; then echo "sin cambios"; exit 0; fi
           git commit -m "sitio: vista de enlaces actualizada automáticamente"
           git pull --rebase origin main
