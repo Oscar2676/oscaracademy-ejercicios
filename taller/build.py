@@ -55,6 +55,9 @@ for meta, art, js in sheets:
     (out/meta['file']).write_text(page(meta['title'], art, js), encoding='utf-8')
 nav = '<nav class="lote" aria-label="Hojas del lote"><b>Lote ' + NUM + ' · ' + NOMBRE + '</b>' + ''.join('<a href="#%s">%s</a>' % (m['id'], m['tab']) for m, _, _ in sheets) + '</nav>\n'
 rev = (ROOT/'src'/'revision.js').read_text(encoding='utf-8').replace('lote10', 'lote' + NUM).replace('Lote 10', 'Lote ' + NUM)
+# Ronda de corrección: si existe src/lNN/ronda.txt, las notas guardadas de rondas anteriores (ya resueltas) no vuelven a aparecer.
+_r = ROOT/'src'/LOTE/'ronda.txt'
+if _r.exists(): rev = rev.replace('oa-correcciones-lote' + NUM, 'oa-correcciones-lote' + NUM + '-r' + _r.read_text().strip())
 card = page('Lote ' + NUM + ' · ' + NOMBRE + ' · tarjeta de revisión', nav + '\n'.join(a for _, a, _ in sheets), '\n'.join(j for _, _, j in sheets), '<script>\n' + rev + '\n</script>\n')
 (ROOT/'out'/('lote' + NUM + '.html')).write_text(card, encoding='utf-8')
 print('ok', [m['file'] for m, _, _ in sheets], len(card))
