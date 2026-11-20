@@ -36,10 +36,66 @@
   <ul class="keys">
     <li><b>Esfera verde:</b> el globo. Su centro es el punto \((0,\;0)\), destacado en rojo.</li>
     <li><b>Trazo rojo \(r\):</b> el radio, en centímetros, desde el centro \((0,\;0)\) hasta la superficie.</li>
-    <li><b>Capa naranja \(dr\):</b> lo que el radio crece en el segundo siguiente. Es la capa delgada que agregan los \(100\) centímetros cúbicos de aire que entran en ese segundo. Mientras más grande es el globo, más delgada es la capa.</li>
+    <li><b>Capa naranja \(dr\):</b> una capa delgada sobre toda la superficie. Su espesor \(dr\) es lo que el radio crecería en \(1\) segundo, a la razón de ese instante. Su volumen es el área por el espesor, \(4\pi\,r^{2}\cdot dr=100\) centímetros cúbicos: el aire que entra en \(1\) segundo. Mientras más grande es el globo, más delgada es la capa.</li>
+    <li><b>Área \(A\):</b> el área de la superficie del globo, \(A=4\pi\,r^{2}\), en centímetros cuadrados.</li>
     <li><b>Dato:</b> \(\dfrac{dV}{dt}=100\) centímetros cúbicos por segundo, constante.</li>
     <li><b>Resultado:</b> cuando \(r=5\), \(\dfrac{dr}{dt}=\dfrac{1}{\pi}\approx 0{,}32\) centímetros por segundo.</li>
   </ul>
+</section>
+
+<section>
+  <h2>Del área al volumen</h2>
+  <p>La fórmula del volumen de la esfera sale de la fórmula del área de su superficie. La capa naranja de la animación muestra cómo.</p>
+  <div class="prop p2">
+  <h3>La esfera, capa por capa</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Área de la superficie de una esfera de radio \(r\), fórmula conocida de la geometría:
+      \[A=4\pi\,r^{2}\]</li>
+    <li>Una capa delgada, de espesor \(dr\), puesta sobre esa superficie. Su volumen es el área por el espesor:
+      \[dV=A\cdot dr=4\pi\,r^{2}\cdot dr\]</li>
+    <li>Se dividen los dos miembros por \(dr\). El área es la derivada del volumen respecto del radio:
+      \[\frac{dV}{dr}=4\pi\,r^{2}\]</li>
+    <li>El volumen es entonces la función cuya derivada es \(4\pi\,r^{2}\) y que vale \(0\) cuando \(r=0\):
+      \[V=\frac{4}{3}\,\pi\,r^{3}\]</li>
+    <li>Comprobación, se deriva respecto de \(r\):
+      \[\frac{d}{dr}\left(\frac{4}{3}\,\pi\,r^{3}\right)=\frac{4}{3}\,\pi\cdot 3r^{2}=4\pi\,r^{2}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>La misma idea con una integral</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La esfera completa es la suma de todas sus capas, desde el centro hasta la superficie. Se llama \(\rho\) al radio de cada capa, que va de \(0\) a \(r\). Esa suma es una integral, tema del Cálculo integral:
+      \[V=\int_{0}^{r}4\pi\,\rho^{2}\,d\rho=4\pi\cdot\frac{r^{3}}{3}=\frac{4}{3}\,\pi\,r^{3}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>En el ejercicio, con \(r=5\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Área de la superficie:
+      \[A=4\pi\cdot 5^{2}=100\pi\approx 314{,}16\]</li>
+    <li>Espesor de la capa, con el resultado \(\dfrac{dr}{dt}=\dfrac{1}{\pi}\) aplicado durante \(1\) segundo:
+      \[dr=\frac{1}{\pi}\approx 0{,}32\]</li>
+    <li>Volumen de la capa. Coincide con el aire que entra en \(1\) segundo:
+      \[dV=A\cdot dr=100\pi\cdot\frac{1}{\pi}=100\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <h3>Para tener en cuenta: «área por espesor» es una aproximación</h3>
+    <ol class="steps">
+      <li>El volumen exacto de una capa de espesor \(dr\) es la diferencia entre dos esferas:
+        \[\frac{4}{3}\,\pi\,(r+dr)^{3}-\frac{4}{3}\,\pi\,r^{3}=4\pi\,r^{2}\,dr+4\pi\,r\,(dr)^{2}+\frac{4}{3}\,\pi\,(dr)^{3}\]</li>
+      <li>El primer término es «área por espesor». Los otros dos llevan \((dr)^{2}\) y \((dr)^{3}\): mientras más delgada es la capa, menos pesan. En el límite, cuando \(dr\) tiende a \(0\), queda exactamente \(\dfrac{dV}{dr}=4\pi\,r^{2}\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -162,6 +218,6 @@
 </section>
 
 <footer>
-  <span class="status">CD1-L20-H02 · v002 · Pendiente de APR</span>
+  <span class="status">CD1-L20-H02 · v003 · Pendiente de APR</span>
 </footer>
 </article>

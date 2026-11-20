@@ -9,7 +9,7 @@ OA.scene('rr-globo', (function(){
     aria:'Un globo esférico verde, con su centro (0, 0) destacado, su radio r y una capa naranja de espesor dr, crece. Su volumen aumenta 100 centímetros cúbicos por segundo y su radio crece cada vez más lento. Cuando el radio mide 5 centímetros crece a 1/π, aproximadamente 0,32 centímetros por segundo.',
     labels:[['F', '\\dfrac{dr}{dt}=\\dfrac{1}{\\pi}\\approx 0{,}32', 'dr/dt = 1/π ≈ 0,32', 'diff']],
     sliders:[{id:'r', tex:'r', min:2, max:10, step:0.05, value:2}],
-    legend:'<span><i class="sw alt"></i> globo</span><span><i class="sw tan"></i> radio \\(r\\)</span><span><i class="sw rise"></i> \\(dr\\): lo que crece el radio en \\(1\\) segundo</span>',
+    legend:'<span><i class="sw alt"></i> globo</span><span><i class="sw tan"></i> radio \\(r\\)</span><span><i class="sw rise"></i> capa de espesor \\(dr\\) y volumen \\(4\\pi r^{2}\\cdot dr\\)</span>',
     anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.r = rs(p*RUN); }},
     onInput:function(v){ v.t = null; },
     draw:function(S, v){
@@ -39,14 +39,16 @@ OA.scene('rr-globo', (function(){
       caja('(0, 0)', cx - 12, cy + 16, 'right', C.tan);
       caja('r = ' + dec(r, 2) + ' cm', cx + 0.5*R*Math.cos(a) - 6, cy - 0.5*R*Math.sin(a) - 13, 'center', C.tan);
       caja('dr ≈ ' + dec(dr, 2) + ' cm', fx + 8, fy - 2, 'left', C.rise);
-      txt('V = ' + dec(4/3*PI*r*r*r, 0) + ' cm³', S.X(0), S.Y(-11.6), 'center', C.alt);
+      caja('Área: A = 4π r² ≈ ' + dec(4*PI*r*r, 0) + ' cm²', S.X(-10.3), S.Y(11.3), 'left', C.alt);
+      caja('Capa: A · dr = 100 cm³', S.X(-10.3), S.Y(9.5), 'left', C.rise);
+      caja('Volumen: V = (4/3) π r³ ≈ ' + dec(4/3*PI*r*r*r, 0) + ' cm³', S.X(11.6), S.Y(-10.4), 'right', C.alt);
       S.lab('F', S.X(1.2), S.Y(11.6), 0, 0, v.t != null && s >= 21.5);
     },
     caption:function(v){
       var r = v.r, s = v.t == null ? null : v.t*RUN, q = 25/(PI*r*r);
-      if (s != null && s < 3) return 'Esfera verde: el globo, de centro (0, 0). Trazo rojo: su radio r. Capa naranja: dr, lo que el radio crece en el segundo siguiente';
+      if (s != null && s < 3) return 'Esfera verde: el globo, de centro (0, 0). Trazo rojo: su radio r. Capa naranja: su volumen es el área 4π r² por el espesor dr';
       return ['El radio crece a razón de ', '\\dfrac{dr}{dt}=\\dfrac{25}{\\pi r^{2}}\\approx ' + num(q, 2), 'dr/dt = 25/(π r²) ≈ ' + dec(q, 2), ' cm por segundo'];
     },
-    readout:function(v){ var r = v.r; return [['d', 'r=' + num(r, 2) + '\\qquad V=\\tfrac{4}{3}\\pi r^{3}\\approx ' + num(4/3*PI*r*r*r, 0)], ['', '\\dfrac{dr}{dt}=\\dfrac{100}{4\\pi r^{2}}\\approx ' + num(25/(PI*r*r), 2)]]; }
+    readout:function(v){ var r = v.r; return [['d', 'A=4\\pi r^{2}\\approx ' + num(4*PI*r*r, 0) + '\\qquad r=' + num(r, 2) + '\\qquad V=\\tfrac{4}{3}\\pi r^{3}\\approx ' + num(4/3*PI*r*r*r, 0)], ['', '\\dfrac{dr}{dt}=\\dfrac{100}{4\\pi r^{2}}\\approx ' + num(25/(PI*r*r), 2)]]; }
   };
 })());
