@@ -36,90 +36,98 @@
   <ul class="keys">
     <li><b>Esfera verde:</b> el globo. Su centro es el punto \((0,\;0)\), destacado en rojo.</li>
     <li><b>Trazo rojo \(r\):</b> el radio, en centímetros, desde el centro \((0,\;0)\) hasta la superficie.</li>
-    <li><b>Sector esférico:</b> la pirámide con vértice en el centro \((0,\;0)\) y base sobre la superficie. Su base es un trozo pequeño de superficie, de área \(dA\). Su altura es el radio \(r\).</li>
-    <li><b>Bloque naranja:</b> está puesto sobre el trozo \(dA\), hacia afuera. Su base es \(dA\) y su espesor es \(dr\). Su volumen es base por espesor: \(dA\cdot dr\).</li>
-    <li><b>Espesor \(dr\):</b> lo que el radio crecería en \(1\) segundo, a la razón de ese instante. Mientras más grande es el globo, más delgado es el bloque.</li>
-    <li><b>Capa completa, naranja tenue:</b> la forman todos los bloques que cubren el globo. Su volumen es el área por el espesor, \(4\pi\,r^{2}\cdot dr=100\) centímetros cúbicos: el aire que entra en \(1\) segundo.</li>
-    <li><b>Área \(A\):</b> el área de la superficie del globo, \(A=4\pi\,r^{2}\), en centímetros cuadrados.</li>
+    <li><b>Capa naranja \(dr\):</b> el aire que entra se reparte sobre toda la superficie como una capa delgada, de espesor \(dr\). Mientras más grande es el globo, más delgada es la capa.</li>
+    <li><b>Bajo la animación:</b> la ecuación del paso 3, con el valor de \(r\) de cada instante reemplazado, y el despeje de \(\dfrac{dr}{dt}\).</li>
     <li><b>Dato:</b> \(\dfrac{dV}{dt}=100\) centímetros cúbicos por segundo, constante.</li>
     <li><b>Resultado:</b> cuando \(r=5\), \(\dfrac{dr}{dt}=\dfrac{1}{\pi}\approx 0{,}32\) centímetros por segundo.</li>
   </ul>
 </section>
 
 <section>
-  <h2>Del área al volumen</h2>
-  <p>La fórmula del volumen de la esfera sale de la fórmula del área de su superficie. El sector esférico y el bloque naranja de la animación muestran cómo, de dos maneras: con el radio \(r\) y con el espesor \(dr\).</p>
+  <h2>Del área al volumen, paso a paso</h2>
+  <p>La fórmula \(V=\dfrac{4}{3}\,\pi\,r^{3}\) que usa el ejercicio no cae del cielo. Sale del área de la superficie, con un diferencial de área \(dA\), un diferencial de radio \(dr\) y una integral. La animación muestra los seis pasos. Los recuadros los desarrollan, uno a uno.</p>
+  <h3>Disfruta la animación</h3>
+  <div class="stage" data-scene="rr-area-volumen"></div>
+  <ul class="keys">
+    <li><b>Esfera verde:</b> de centro \((0,\;0)\) y radio \(r\).</li>
+    <li><b>Trozo \(dA\):</b> un trozo pequeño de la superficie. Es el diferencial de área.</li>
+    <li><b>Bloque naranja:</b> está puesto sobre el trozo \(dA\), hacia afuera. Su espesor es \(dr\), el diferencial de radio. Está dibujado más grueso de lo real, para que se vea.</li>
+    <li><b>Capa naranja:</b> todos los bloques juntos, alrededor de la esfera.</li>
+    <li><b>Paso 5:</b> una esfera de radio \(\rho\) crece desde el centro, capa por capa, hasta llegar al radio \(r\).</li>
+    <li><b>Deslizador:</b> permite ir a cada paso y detenerse en él.</li>
+  </ul>
+
   <div class="prop p1">
-  <h3>Con \(r\): la esfera, sector por sector</h3>
+  <h3>Pasos 1 y 2: del diferencial de área \(dA\) al área \(A\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Área de la superficie de una esfera de radio \(r\):
+    <li>Cada punto de la superficie se ubica con dos ángulos: \(\theta\), medido desde el eje vertical, de \(0\) a \(\pi\); y \(\varphi\), el giro alrededor de ese eje, de \(0\) a \(2\pi\). Son las coordenadas esféricas, tema de cursos posteriores.</li>
+    <li>El trozo \(dA\) es casi un rectángulo. Sus lados miden \(r\,d\theta\) y \(r\,\operatorname{sen}\theta\,d\varphi\). Su área es el producto de los lados:
+      \[dA=r\,d\theta\cdot r\,\operatorname{sen}\theta\,d\varphi=r^{2}\,\operatorname{sen}\theta\,d\theta\,d\varphi\]</li>
+    <li>El área de la superficie es la suma de todos los trozos. Esa suma es una integral:
+      \[A=\int dA=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}r^{2}\,\operatorname{sen}\theta\,d\theta\,d\varphi\]</li>
+    <li>Integral de adentro, en \(\theta\). Una primitiva de \(\operatorname{sen}\theta\) es \(-\cos\theta\):
+      \[\int_{0}^{\pi}\operatorname{sen}\theta\,d\theta=\Big[-\cos\theta\Big]_{0}^{\pi}=-\cos\pi-(-\cos 0)=1+1=2\]</li>
+    <li>Integral de afuera, en \(\varphi\). \(r^{2}\) y \(2\) son constantes:
+      \[A=\int_{0}^{2\pi}r^{2}\cdot 2\,d\varphi=2r^{2}\cdot\Big[\varphi\Big]_{0}^{2\pi}=2r^{2}\cdot 2\pi\]</li>
+    <li>Resultado, el área de la superficie de la esfera:
       \[A=4\pi\,r^{2}\]</li>
-    <li>El sector esférico de la animación se parece a una pirámide de base \(dA\) y altura \(r\). Su volumen es, aproximadamente, un tercio de la base por la altura:
-      \[V_{\text{sector}}\approx\frac{1}{3}\cdot dA\cdot r\]</li>
-    <li>La esfera completa se llena con sectores como ese. Se suman todos. \(\dfrac{1}{3}\cdot r\) es factor común y la suma de todas las bases \(dA\) es el área completa \(A\):
-      \[V=\frac{1}{3}\cdot r\cdot A\]</li>
-    <li>Se reemplaza \(A=4\pi\,r^{2}\):
-      \[V=\frac{1}{3}\cdot r\cdot 4\pi\,r^{2}=\frac{4}{3}\,\pi\,r^{3}\]</li>
   </ol>
   </div>
   </div>
 
   <div class="prop p2">
-  <h3>Con \(dr\): la esfera, capa por capa</h3>
+  <h3>Pasos 3 y 4: del área \(A\) al diferencial de volumen \(dV\)</h3>
   <div class="body">
   <ol class="steps">
     <li>El bloque naranja tiene base \(dA\) y espesor \(dr\). Su volumen es base por espesor:
-      \[V_{\text{bloque}}=dA\cdot dr\]</li>
-    <li>Se cubre toda la superficie con bloques del mismo espesor \(dr\). Juntos forman una capa delgada. \(dr\) es factor común y la suma de todas las bases \(dA\) es el área completa \(A\):
-      \[dV=A\cdot dr=4\pi\,r^{2}\cdot dr\]</li>
-    <li>Se dividen los dos miembros por \(dr\). El área es la derivada del volumen respecto del radio:
+      \[dA\cdot dr\]</li>
+    <li>Se cubre toda la superficie con bloques del mismo espesor \(dr\). Juntos forman una capa. Su volumen \(dV\) es la suma de los volúmenes de los bloques. \(dr\) es factor común:
+      \[dV=\left(\int dA\right)\cdot dr=A\cdot dr\]</li>
+    <li>Se reemplaza \(A=4\pi\,r^{2}\), del recuadro anterior:
+      \[dV=4\pi\,r^{2}\,dr\]</li>
+    <li>Se dividen los dos miembros por \(dr\). La derivada del volumen respecto del radio es el área:
       \[\frac{dV}{dr}=4\pi\,r^{2}\]</li>
-    <li>El volumen es entonces la función cuya derivada es \(4\pi\,r^{2}\) y que vale \(0\) cuando \(r=0\):
-      \[V=\frac{4}{3}\,\pi\,r^{3}\]</li>
-    <li>Comprobación, se deriva respecto de \(r\):
-      \[\frac{d}{dr}\left(\frac{4}{3}\,\pi\,r^{3}\right)=\frac{4}{3}\,\pi\cdot 3r^{2}=4\pi\,r^{2}\]</li>
   </ol>
   </div>
   </div>
 
   <div class="prop p3">
-  <h3>Lo mismo con integrales</h3>
+  <h3>Pasos 5 y 6: de la derivada a la integral, el volumen \(V\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>La esfera completa es la suma de todas sus capas, desde el centro hasta la superficie. Se llama \(\rho\) al radio de cada capa, que va de \(0\) a \(r\). Esa suma es una integral, tema del Cálculo integral:
-      \[V=\int_{0}^{r}4\pi\,\rho^{2}\,d\rho=4\pi\cdot\frac{r^{3}}{3}=\frac{4}{3}\,\pi\,r^{3}\]</li>
-    <li>El área \(4\pi\,r^{2}\) también sale de una suma, la de todos los trozos \(dA\). En coordenadas esféricas, tema de cursos posteriores, con \(\theta\) el ángulo medido desde el eje vertical y \(\varphi\) el ángulo de giro alrededor de ese eje, los lados del trozo miden \(r\,d\theta\) y \(r\,\operatorname{sen}\theta\,d\varphi\):
-      \[dA=r\,d\theta\cdot r\,\operatorname{sen}\theta\,d\varphi=r^{2}\,\operatorname{sen}\theta\,d\theta\,d\varphi\]</li>
-    <li>Se suman todos los trozos, con \(\theta\) de \(0\) a \(\pi\) y \(\varphi\) de \(0\) a \(2\pi\):
-      \[A=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}r^{2}\,\operatorname{sen}\theta\,d\theta\,d\varphi=r^{2}\cdot 2\cdot 2\pi=4\pi\,r^{2}\]</li>
-    <li>El bloque naranja es el elemento de volumen de esas coordenadas:
-      \[dA\cdot dr=r^{2}\,\operatorname{sen}\theta\,dr\,d\theta\,d\varphi\]</li>
+    <li>La esfera completa es la suma de todas sus capas, desde el centro hasta la superficie. Se llama \(\rho\) al radio de cada capa, que va de \(0\) a \(r\). La capa de radio \(\rho\) tiene volumen \(4\pi\,\rho^{2}\,d\rho\). La suma es una integral:
+      \[V=\int_{0}^{r}4\pi\,\rho^{2}\,d\rho\]</li>
+    <li>\(4\pi\) es constante y sale de la integral:
+      \[V=4\pi\int_{0}^{r}\rho^{2}\,d\rho\]</li>
+    <li>Una primitiva de \(\rho^{2}\) es \(\dfrac{\rho^{3}}{3}\):
+      \[V=4\pi\cdot\left[\frac{\rho^{3}}{3}\right]_{0}^{r}=4\pi\cdot\left(\frac{r^{3}}{3}-\frac{0^{3}}{3}\right)=4\pi\cdot\frac{r^{3}}{3}\]</li>
+    <li>Resultado, el volumen de la esfera:
+      \[V=\frac{4}{3}\,\pi\,r^{3}\]</li>
   </ol>
   </div>
   </div>
 
   <div class="prop p4">
-  <h3>En el ejercicio, con \(r=5\)</h3>
+  <h3>De vuelta, de la integral a la derivada: el enlace con el ejercicio</h3>
   <div class="body">
   <ol class="steps">
-    <li>Área de la superficie:
-      \[A=4\pi\cdot 5^{2}=100\pi\approx 314{,}16\]</li>
-    <li>Espesor de la capa, con el resultado \(\dfrac{dr}{dt}=\dfrac{1}{\pi}\) aplicado durante \(1\) segundo:
-      \[dr=\frac{1}{\pi}\approx 0{,}32\]</li>
-    <li>Volumen de la capa. Coincide con el aire que entra en \(1\) segundo:
-      \[dV=A\cdot dr=100\pi\cdot\frac{1}{\pi}=100\]</li>
+    <li>Se deriva el volumen respecto de \(r\). Se recupera el área:
+      \[\frac{dV}{dr}=\frac{d}{dr}\left(\frac{4}{3}\,\pi\,r^{3}\right)=\frac{4}{3}\,\pi\cdot 3r^{2}=4\pi\,r^{2}\]</li>
+    <li>En el globo, \(r\) cambia con el tiempo \(t\). Regla de la cadena:
+      \[\frac{dV}{dt}=\frac{dV}{dr}\cdot\frac{dr}{dt}\]</li>
+    <li>Se reemplaza \(\dfrac{dV}{dr}=4\pi\,r^{2}\). Es la ecuación que resuelve el ejercicio:
+      \[\frac{dV}{dt}=4\pi\,r^{2}\cdot\frac{dr}{dt}\]</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <h3>Para tener en cuenta: las dos ideas son aproximaciones que el límite vuelve exactas</h3>
+    <h3>Para tener en cuenta: «área por espesor» es una aproximación que el límite vuelve exacta</h3>
     <ol class="steps">
       <li>El volumen exacto de una capa de espesor \(dr\) es la diferencia entre dos esferas:
         \[\frac{4}{3}\,\pi\,(r+dr)^{3}-\frac{4}{3}\,\pi\,r^{3}=4\pi\,r^{2}\,dr+4\pi\,r\,(dr)^{2}+\frac{4}{3}\,\pi\,(dr)^{3}\]</li>
       <li>El primer término es «área por espesor». Los otros dos llevan \((dr)^{2}\) y \((dr)^{3}\): mientras más delgada es la capa, menos pesan. En el límite, cuando \(dr\) tiende a \(0\), queda exactamente \(\dfrac{dV}{dr}=4\pi\,r^{2}\).</li>
-      <li>Con los sectores pasa lo mismo: un sector no es exactamente una pirámide, porque su base \(dA\) es curva. Mientras más pequeños son los trozos \(dA\), más plana es cada base y menor es el error. En el límite, la suma da exactamente \(V=\dfrac{1}{3}\cdot r\cdot A\).</li>
     </ol>
   </div>
 </section>
@@ -244,6 +252,6 @@
 </section>
 
 <footer>
-  <span class="status">CD1-L20-H02 · v005 · Pendiente de APR</span>
+  <span class="status">CD1-L20-H02 · v006 · Pendiente de APR</span>
 </footer>
 </article>
