@@ -1,0 +1,271 @@
+<!--file:H08_derivadas_y_funciones_implicitas.html-->
+<!--title:Derivadas y funciones implícitas-->
+<!--id:implicitas-->
+<!--tab:H08 Derivación implícita-->
+<article class="sheet" id="implicitas" data-hoja="L19 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Derivadas y funciones implícitas</b></li>
+    </ol>
+    <h1>Derivadas y funciones implícitas</h1>
+    <p class="lede">Muchas curvas se describen con una ecuación en \(x\) e \(y\) en la que \(y\) no está despejada, como \(x^{2}+y^{2}=25\). Para hallar la pendiente de su tangente no hace falta despejar \(y\): se derivan los dos miembros respecto de \(x\), tratando a \(y\) como una función de \(x\), y se despeja \(y'\). La regla que se usa en cada término con \(y\) es la regla de la cadena:
+    \[\big(y^{n}\big)'=n\cdot y^{\,n-1}\cdot y'\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>Función explícita y función implícita</h2>
+  <div class="card k1">
+    <h3>Explícita</h3>
+    <p>La variable \(y\) está despejada: \(y=f(x)\). Ejemplo:</p>
+    \[y=\sqrt{25-x^{2}}\]
+  </div>
+  <div class="card k2">
+    <h3>Implícita</h3>
+    <p>\(x\) e \(y\) están ligadas por una ecuación, sin despejar. Si una función derivable \(y=y(x)\) cumple la ecuación en un intervalo, se dice que la ecuación la define implícitamente. Ejemplo:</p>
+    \[x^{2}+y^{2}=25\]
+    <p>La función \(y=\sqrt{25-x^{2}}\) la cumple en \([-5,\;5]\), porque \(x^{2}+\left(\sqrt{25-x^{2}}\right)^{2}=x^{2}+25-x^{2}=25\). También la cumple \(y=-\sqrt{25-x^{2}}\).</p>
+  </div>
+  <div class="card k3">
+    <h3>El método: derivación implícita</h3>
+    <ol class="steps">
+      <li>Se derivan los dos miembros de la ecuación respecto de \(x\).</li>
+      <li>En cada término con \(y\) se usa la regla de la cadena, porque \(y\) es una función de \(x\): aparece el factor \(y'\).</li>
+      <li>Se dejan en un miembro los términos con \(y'\) y en el otro los demás.</li>
+      <li>Se factoriza por \(y'\) y se despeja, indicando la condición para poder dividir.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva es la circunferencia \(x^{2}+y^{2}=25\), de centro \(O(0,\;0)\) y radio \(5\). El punto \(P(x,\;y)\) la recorre con su recta tangente. La derivación implícita da la pendiente de la tangente en cada punto: \(y'=-\dfrac{x}{y}\). Al final \(P\) se detiene en \((3,\;4)\), donde \(y'=-\dfrac{3}{4}\).</p>
+  <div class="stage" data-scene="implicitas"></div>
+  <ul class="keys">
+    <li><b>Circunferencia negra:</b> los puntos \((x,\;y)\) que cumplen \(x^{2}+y^{2}=25\).</li>
+    <li><b>Punto rojo \(P(x,\;y)\) y recta roja:</b> un punto de la curva y su recta tangente, de pendiente \(y'=-\dfrac{x}{y}\).</li>
+    <li><b>Trazo azul \(OP\):</b> el radio, de pendiente \(\dfrac{y}{x}\). La tangente es perpendicular al radio.</li>
+    <li><b>Puntos \((5,\;0)\) y \((-5,\;0)\):</b> ahí \(y=0\), la tangente es vertical y \(y'\) no existe.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ejemplos, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(x^{2}+y^{2}=25\). Hallar \(y'\) y la tangente en \((3,\;4)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El punto está en la curva:
+      \[3^{2}+4^{2}=9+16=25\]</li>
+    <li>Se derivan los dos miembros respecto de \(x\). La derivada de una suma es la suma de las derivadas, y la derivada de la constante \(25\) es \(0\):
+      \[\left(x^{2}\right)'+\left(y^{2}\right)'=0\]</li>
+    <li>Regla de la potencia en el primer término:
+      \[\left(x^{2}\right)'=2x\]</li>
+    <li>Regla de la cadena en el segundo, porque \(y\) es función de \(x\):
+      \[\left(y^{2}\right)'=2y\cdot y'\]</li>
+    <li>Se reemplaza en el paso 2:
+      \[2x+2y\cdot y'=0\]</li>
+    <li>Se resta \(2x\) en los dos miembros:
+      \[2y\cdot y'=-2x\]</li>
+    <li>Si \(y\neq 0\), se dividen los dos miembros por \(2y\):
+      \[y'=-\frac{x}{y},\qquad y\neq 0\]</li>
+    <li>Se reemplaza el punto \((3,\;4)\):
+      \[y'=-\frac{3}{4}\]</li>
+    <li>Recta tangente: pasa por \((3,\;4)\) con pendiente \(-\dfrac{3}{4}\).
+      \[y-4=-\frac{3}{4}\,(x-3)\]</li>
+    <li>Se distribuye y se suma \(4\) en los dos miembros:
+      \[y=-\frac{3}{4}\,x+\frac{9}{4}+4=-\frac{3}{4}\,x+\frac{9}{4}+\frac{16}{4}=-\frac{3}{4}\,x+\frac{25}{4}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Comprobación con la función explícita</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El punto \((3,\;4)\) tiene \(y&gt;0\): pertenece a la mitad superior, \(y=\sqrt{25-x^{2}}\).</li>
+    <li>Regla de la cadena, con \(u=25-x^{2}\) y \(u'=-2x\):
+      \[y'=\frac{1}{2\sqrt{25-x^{2}}}\cdot(-2x)=\frac{-x}{\sqrt{25-x^{2}}}\]</li>
+    <li>Como \(\sqrt{25-x^{2}}=y\), es el mismo resultado de la derivación implícita:
+      \[y'=-\frac{x}{y}\]</li>
+    <li>En \(x=3\):
+      \[y'=\frac{-3}{\sqrt{25-3^{2}}}=\frac{-3}{\sqrt{16}}=-\frac{3}{4}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 2: \(x^{3}+y^{3}=6xy\). Hallar \(y'\) y su valor en \((3,\;3)\)</h3>
+  <div class="body">
+  <p>Esta curva se llama folium de Descartes. Aquí despejar \(y\) no es práctico: la derivación implícita es el camino.</p>
+  <ol class="steps">
+    <li>El punto está en la curva:
+      \[3^{3}+3^{3}=27+27=54\qquad 6\cdot 3\cdot 3=54\]</li>
+    <li>Se derivan los dos miembros respecto de \(x\):
+      \[\left(x^{3}\right)'+\left(y^{3}\right)'=\left(6xy\right)'\]</li>
+    <li>Miembro izquierdo: regla de la potencia y regla de la cadena.
+      \[\left(x^{3}\right)'=3x^{2}\qquad\left(y^{3}\right)'=3y^{2}\cdot y'\]</li>
+    <li>Miembro derecho: regla del producto, \((u\,v)'=u'\,v+u\,v'\), con \(u=6x\), \(u'=6\), \(v=y\), \(v'=y'\).
+      \[\left(6xy\right)'=6\cdot y+6x\cdot y'\]</li>
+    <li>Se reemplaza en el paso 2:
+      \[3x^{2}+3y^{2}\cdot y'=6y+6x\cdot y'\]</li>
+    <li>Se dividen los dos miembros por \(3\):
+      \[x^{2}+y^{2}\cdot y'=2y+2x\cdot y'\]</li>
+    <li>Se resta \(2x\cdot y'\) y se resta \(x^{2}\) en los dos miembros:
+      \[y^{2}\cdot y'-2x\cdot y'=2y-x^{2}\]</li>
+    <li>Se factoriza por \(y'\):
+      \[y'\left(y^{2}-2x\right)=2y-x^{2}\]</li>
+    <li>Si \(y^{2}-2x\neq 0\), se dividen los dos miembros por \(\left(y^{2}-2x\right)\):
+      \[y'=\frac{2y-x^{2}}{y^{2}-2x},\qquad y^{2}\neq 2x\]</li>
+    <li>Se reemplaza el punto \((3,\;3)\):
+      \[y'=\frac{2\cdot 3-3^{2}}{3^{2}-2\cdot 3}=\frac{6-9}{9-6}=\frac{-3}{3}=-1\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <h3>Para tener en cuenta: la derivación implícita también sirve para deducir derivadas</h3>
+    <p>Ejemplo: la derivada de \(y=\sqrt{x}\), con \(x&gt;0\).</p>
+    <ol class="steps">
+      <li>Se elevan al cuadrado los dos miembros de \(y=\sqrt{x}\):
+        \[y^{2}=x\]</li>
+      <li>Se derivan los dos miembros respecto de \(x\), con la regla de la cadena a la izquierda:
+        \[2y\cdot y'=1\]</li>
+      <li>Como \(x&gt;0\), \(y=\sqrt{x}&gt;0\) y se puede dividir por \(2y\):
+        \[y'=\frac{1}{2y}\]</li>
+      <li>Se reemplaza \(y=\sqrt{x}\):
+        \[\left(\sqrt{x}\right)'=\frac{1}{2\sqrt{x}}\]</li>
+    </ol>
+    <p>Este razonamiento supone que \(y=\sqrt{x}\) es derivable para \(x&gt;0\), y con ese supuesto encuentra cuánto vale su derivada.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Halla \(y'\) para la curva \(x^{2}+xy+y^{2}=7\) y calcula su valor en el punto \((1,\;2)\).</p>
+    <details><summary>Pista</summary><div><p>El término \(xy\) se deriva con la regla del producto: \((xy)'=y+x\cdot y'\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El punto está en la curva:
+          \[1^{2}+1\cdot 2+2^{2}=1+2+4=7\]</li>
+        <li>Se derivan los dos miembros respecto de \(x\):
+          \[\left(x^{2}\right)'+\left(xy\right)'+\left(y^{2}\right)'=0\]</li>
+        <li>Cada derivada: regla de la potencia, regla del producto y regla de la cadena.
+          \[\left(x^{2}\right)'=2x\qquad\left(xy\right)'=1\cdot y+x\cdot y'\qquad\left(y^{2}\right)'=2y\cdot y'\]</li>
+        <li>Se reemplaza:
+          \[2x+y+x\cdot y'+2y\cdot y'=0\]</li>
+        <li>Se restan \(2x\) e \(y\) en los dos miembros:
+          \[x\cdot y'+2y\cdot y'=-2x-y\]</li>
+        <li>Se factoriza por \(y'\):
+          \[y'\,(x+2y)=-(2x+y)\]</li>
+        <li>Si \(x+2y\neq 0\), se dividen los dos miembros por \((x+2y)\):
+          \[y'=-\frac{2x+y}{x+2y}\]</li>
+        <li>En \((1,\;2)\):
+          \[y'=-\frac{2\cdot 1+2}{1+2\cdot 2}=-\frac{4}{5}\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Halla la ecuación de la recta tangente a la elipse \(4x^{2}+9y^{2}=72\) en el punto \((3,\;2)\).</p>
+    <details><summary>Pista</summary><div><p>Deriva implícitamente, despeja \(y'\) y evalúa en \((3,\;2)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El punto está en la curva:
+          \[4\cdot 3^{2}+9\cdot 2^{2}=36+36=72\]</li>
+        <li>Se derivan los dos miembros respecto de \(x\), con la regla de la cadena en el término con \(y\):
+          \[8x+18y\cdot y'=0\]</li>
+        <li>Se resta \(8x\) en los dos miembros:
+          \[18y\cdot y'=-8x\]</li>
+        <li>Si \(y\neq 0\), se dividen los dos miembros por \(18y\) y se simplifica por \(2\):
+          \[y'=-\frac{8x}{18y}=-\frac{4x}{9y}\]</li>
+        <li>En \((3,\;2)\):
+          \[y'=-\frac{4\cdot 3}{9\cdot 2}=-\frac{12}{18}=-\frac{2}{3}\]</li>
+        <li>Recta tangente por \((3,\;2)\) con pendiente \(-\dfrac{2}{3}\):
+          \[y-2=-\frac{2}{3}\,(x-3)\]</li>
+        <li>Se distribuye y se suma \(2\) en los dos miembros:
+          \[y=-\frac{2}{3}\,x+2+2=-\frac{2}{3}\,x+4\]</li>
+        <li>Respuesta: la recta tangente es \(y=-\dfrac{2}{3}\,x+4\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En un inflador cerrado, a temperatura constante, la presión \(P\) del aire, en kilopascales, y su volumen \(V\), en litros, cumplen la ley de Boyle: \(P\cdot V=120\). Halla, sin despejar \(P\), la razón de cambio de la presión respecto del volumen, \(P'\), cuando \(V=4\).</p>
+    <details><summary>Pista</summary><div><p>\(P\) es función de \(V\). Deriva los dos miembros respecto de \(V\) con la regla del producto.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Presión cuando \(V=4\):
+          \[P\cdot 4=120\iff P=\frac{120}{4}=30\]</li>
+        <li>Se derivan los dos miembros de \(P\cdot V=120\) respecto de \(V\). A la izquierda, regla del producto, con \((V)'=1\). A la derecha, la derivada de una constante es \(0\):
+          \[P'\cdot V+P\cdot 1=0\]</li>
+        <li>Se resta \(P\) en los dos miembros:
+          \[P'\cdot V=-P\]</li>
+        <li>Como \(V&gt;0\), se dividen los dos miembros por \(V\):
+          \[P'=-\frac{P}{V}\]</li>
+        <li>Con \(V=4\) y \(P=30\):
+          \[P'=-\frac{30}{4}=-\frac{15}{2}=-7{,}5\]</li>
+        <li>Comprobación con la función explícita \(P=\dfrac{120}{V}=120\,V^{-1}\):
+          \[P'=-120\,V^{-2}=-\frac{120}{V^{2}}\qquad\text{y con }V=4:\quad-\frac{120}{16}=-\frac{15}{2}\]</li>
+        <li>Respuesta: cuando el volumen es de \(4\) litros, la presión disminuye a razón de \(7{,}5\) kilopascales por cada litro que aumenta el volumen.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L19-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+OA.scene('implicitas', (function(){
+  var RUN = 30, num = OA.num, R = 5, AF = Math.atan2(4, 3);
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', ',').replace('-', '−'); }
+  /* ángulo en grados: recorre de 150° a −150° pasando por 0°... y termina en el punto (3, 4) */
+  function ang(s){ var a0 = 160, a1 = 20; if (s < 4) return a0; if (s < 18) return a0 + (a1 - a0)*(s - 4)/14; return a1 + (AF*180/Math.PI - a1)*OA.smooth(cl((s - 18)/4)); }
+  return {
+    world:{x0:-7.4, x1:7.4, y0:-6.4, y1:7.0}, aspect:13.4/14.8,
+    aria:'Circunferencia x² + y² = 25. Un punto P la recorre por su mitad superior con su tangente, de pendiente −x/y, perpendicular al radio OP. Al final se detiene en (3, 4), donde la pendiente es −3/4.',
+    labels:[['P', 'P\\,(x,\;y)', 'P (x, y)', 'pt c-tan'], ['F', "P\\,(3,\;4):\\ y'=-\\dfrac{3}{4}", "P (3, 4): y' = −3/4", 'diff'], ['E', 'x^{2}+y^{2}=25', 'x² + y² = 25', 'pt']],
+    sliders:[{id:'a', tex:'\\text{ángulo de }OP', min:10, max:170, step:1, value:160}],
+    legend:'<span><i class="sw tan"></i> tangente en \\(P\\)</span><span><i class="sw sec"></i> radio \\(OP\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.a = ang(p*RUN); }},
+    onInput:function(v){ v.t = null; },
+    draw:function(S, v){
+      var s = v.t == null ? RUN : v.t*RUN, a = v.a*Math.PI/180, x = R*Math.cos(a), y = R*Math.sin(a), C = S.C, c = S.ctx, i, pts = [], k = cl(s/3.5);
+      function txt(t, px, py, al, cc){ c.fillStyle = cc || C.ink; c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.axes({gx:[-6,-4,-2,2,4,6], gy:[-6,-4,-2,2,4,6], full:true});
+      for (i = 0; i <= 200*k; i++) pts.push([R*Math.cos(2*Math.PI*i/200), R*Math.sin(2*Math.PI*i/200)]);
+      if (pts.length > 1) S.poly(pts, {color:C.ink, width:2.6, open:true});
+      S.dot(0, 0, C.ink); txt('O', S.X(0) - 10, S.Y(0) + 12);
+      if (s >= 4){
+        S.line(0, 0, x, y, {color:C.sec, width:2.5});
+        var m = -x/y, L = 3.6, n = Math.sqrt(1 + m*m);
+        S.line(x - L/n, y - L*m/n, x + L/n, y + L*m/n, {color:C.tan, width:3});
+        S.line(x, y, x, 0, {color:C.muted, width:1, dash:[3,4]}); S.line(x, y, 0, y, {color:C.muted, width:1, dash:[3,4]});
+        S.dot(x, y, C.tan);
+        var fin = v.t != null && s >= 22;
+        if (!fin) txt('y′ = −x/y = ' + dec(m, 2), S.X(x) + (x >= 0 ? 14 : -14), S.Y(y) - 22, x >= 0 ? 'left' : 'right', C.tan);
+        if (Math.abs(x) > 1.3) txt('x = ' + dec(x, 2), S.X(x), S.Y(0) + 14, 'center', C.muted); if (Math.abs(x) > 2.2) txt('y = ' + dec(y, 2), S.X(0) + (x >= 0 ? -8 : 8), S.Y(y), x >= 0 ? 'right' : 'left', C.muted);
+      }
+      S.lab('E', S.X(-3.7), S.Y(-4.4), -100, 0, s >= 3.5);
+      S.lab('P', 0, 0, 0, 0, false);
+      S.out('F', S.X(3), S.Y(4), 1, 1, v.t != null && s >= 22, 12);
+    },
+    caption:function(v){
+      var a = v.a*Math.PI/180, x = R*Math.cos(a), y = R*Math.sin(a), m = -x/y, s = v.t == null ? null : v.t*RUN;
+      if (s != null && s < 4) return ['Circunferencia negra: los puntos que cumplen ', 'x^{2}+y^{2}=25', 'x² + y² = 25'];
+      if (s != null && s >= 22) return ['En el punto (3, 4) la pendiente de la tangente es ', "y'=-\\dfrac{3}{4}", "y' = −3/4"];
+      return ['Recta roja: la tangente en P, perpendicular al radio azul. Su pendiente es ', "y'=-\\dfrac{x}{y}=" + num(m, 2), "y' = −x/y = " + dec(m, 2)];
+    },
+    readout:function(v){ var a = v.a*Math.PI/180, x = R*Math.cos(a), y = R*Math.sin(a); return [['d', 'x=' + num(x, 2) + '\\qquad y=' + num(y, 2)], ['', "y'=-\\dfrac{x}{y}=" + num(-x/y, 2)]]; }
+  };
+})());

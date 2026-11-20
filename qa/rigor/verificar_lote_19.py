@@ -98,4 +98,34 @@ ok("H06-B x⁴+1: f'=4x³, f''=12x², f(0)=1", D([1, 0, 0, 0, 1]) == [4, 0, 0, 0
 c0 = lambda x: F(x) + 100 / F(x); c1 = lambda x: 1 - 100 / F(x) ** 2; c2 = lambda x: 200 / F(x) ** 3
 xs = [F(k, 3) for k in range(3, 90)]
 ok("H06-C C'=1−100/x², C''=200/x³ (cociente incremental); C'(10)=0, C''(10)=1/5, C(10)=20; C ≥ 20 para x>0", all(abs((c0(x + h) - c0(x - h)) / (2 * h) - c1(x)) < F(1, 10 ** 8) and abs((c1(x + h) - c1(x - h)) / (2 * h) - c2(x)) < F(1, 10 ** 6) for x in xs) and c1(10) == 0 and c2(10) == F(1, 5) and c0(10) == 20 and all(c0(x) >= 20 for x in xs))
+
+# H07
+f = [F(1, 3), 0, -1, 0]
+ok("H07 f=x³/3−x: f'=x²−1=(x−1)(x+1), f''=2x; signos + − +; f(−1)=2/3, f(1)=−2/3, f'(0)=−1", D(f) == [1, 0, -1] and igual(P(D(f)), lambda x: (x - 1) * (x + 1)) and D(D(f)) == [2, 0] and (signo(P(D(f)), -INF, F(-1)), signo(P(D(f)), F(-1), F(1)), signo(P(D(f)), F(1), INF)) == (1, -1, 1) and P(f)(-1) == F(2, 3) and P(f)(1) == F(-2, 3) and P(D(f))(0) == -1)
+f = [F(1, 3), -2, 3, 1]
+ok("H07 f=x³/3−2x²+3x+1: f'=x²−4x+3=(x−1)(x−3), f''=2x−4; f(0)=1, f(1)=7/3, f(2)=5/3, f(3)=1, f'(2)=−1", D(f) == [1, -4, 3] and igual(P(D(f)), lambda x: (x - 1) * (x - 3)) and D(D(f)) == [2, -4] and [P(f)(x) for x in (0, 1, 2, 3)] == [1, F(7, 3), F(5, 3), 1] and P(D(f))(2) == -1 and (signo(P(D(f)), -INF, F(1)), signo(P(D(f)), F(1), F(3)), signo(P(D(f)), F(3), INF)) == (1, -1, 1))
+ok("H07-A f'=2x−4: − si x<2, + si x>2", signo(P([2, -4]), -INF, F(2)) == -1 and signo(P([2, -4]), F(2), INF) == 1)
+g = [-1, 0, 4]
+ok("H07-B f'=4−x²=(2−x)(2+x): signos − + −; f'(−3)=−5, f'(0)=4, f'(3)=−5; (f')'=−2x", igual(P(g), lambda x: (2 - x) * (2 + x)) and (signo(P(g), -INF, F(-2)), signo(P(g), F(-2), F(2)), signo(P(g), F(2), INF)) == (-1, 1, -1) and [P(g)(x) for x in (-3, 0, 3)] == [-5, 4, -5] and D(g) == [-2, 0])
+sC = [F(-1, 3), 3, 0, 0]
+ok("H07-C s=3t²−t³/3: s'=6t−t²=t(6−t), v'=6−2t; v(3)=9, s(3)=18, s(6)=36; v>0 en (0,6)", D(sC) == [-1, 6, 0] and igual(P(D(sC)), lambda t: t * (6 - t)) and D(D(sC)) == [-2, 6] and P(D(sC))(3) == 9 and P(sC)(3) == 18 and P(sC)(6) == 36 and signo(P(D(sC)), F(0), F(6)) == 1)
+
+# H08 · derivación implícita: y' = −Fx/Fy, comprobado además resolviendo la curva cerca del punto (Newton) y con diferencias centrales
+def pend(Fxy, x0, y0, e=1e-6):
+    def yde(x, y):
+        for _ in range(60):
+            d = (Fxy(x, y + 1e-7) - Fxy(x, y - 1e-7)) / 2e-7; y -= Fxy(x, y) / d
+        return y
+    return (yde(x0 + e, y0) - yde(x0 - e, y0)) / (2 * e)
+C1 = lambda x, y: x * x + y * y - 25
+ok("H08 ej.1: (3,4) en la curva; y'=−x/y=−3/4 (numérico); tangente y=−3x/4+25/4 pasa por (3,4)", C1(3, 4) == 0 and abs(pend(C1, 3.0, 4.0) + 0.75) < 1e-6 and F(-3, 4) * 3 + F(25, 4) == 4 and F(9, 4) + 4 == F(25, 4))
+C2 = lambda x, y: x ** 3 + y ** 3 - 6 * x * y
+ok("H08 ej.2: (3,3) en el folium; y'=(2y−x²)/(y²−2x)=−1 (numérico y exacto)", C2(3, 3) == 0 and abs(pend(C2, 3.0, 3.0) + 1) < 1e-6 and F(2 * 3 - 9, 9 - 2 * 3) == -1)
+ok("H08 ej.2: fórmula general coincide con −Fx/Fy en 200 puntos", all(F(2 * y - x * x, y * y - 2 * x) == -F(3 * x * x - 6 * y, 3 * y * y - 6 * x) for x in range(-7, 8) for y in range(-7, 8) if y * y != 2 * x))
+C3 = lambda x, y: x * x + x * y + y * y - 7
+ok("H08-A: (1,2) en la curva; y'=−(2x+y)/(x+2y)=−4/5", C3(1, 2) == 0 and abs(pend(C3, 1.0, 2.0) + 0.8) < 1e-6 and -F(2 * 1 + 2, 1 + 2 * 2) == F(-4, 5))
+C4 = lambda x, y: 4 * x * x + 9 * y * y - 72
+ok("H08-B: (3,2) en la elipse; y'=−4x/(9y)=−2/3; tangente y=−2x/3+4 pasa por (3,2)", C4(3, 2) == 0 and abs(pend(C4, 3.0, 2.0) + 2 / 3) < 1e-6 and -F(4 * 3, 9 * 2) == F(-2, 3) and F(-2, 3) * 3 + 4 == 2)
+ok("H08-C Boyle: P=30 con V=4; P'=−P/V=−15/2; explícita −120/V²=−15/2", F(120, 4) == 30 and -F(30, 4) == F(-15, 2) and -F(120, 16) == F(-15, 2))
+ok("H08 √x: y²=x ⇒ y'=1/(2y) (diferencias centrales en 50 puntos)", all(abs(((x + 1e-6) ** 0.5 - (x - 1e-6) ** 0.5) / 2e-6 - 1 / (2 * x ** 0.5)) < 1e-6 for x in [k / 5 for k in range(1, 51)]))
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)
