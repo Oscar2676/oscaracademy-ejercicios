@@ -6,7 +6,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 20-nov 20:15: 17 hojas con APR, enlazadas y publicadas; 2 en cola de revisión
+## Avance al 20-nov 20:20: 19 hojas con APR, enlazadas y publicadas
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -18,7 +18,7 @@ Además: 3 títulos resueltos por enlace (Riemann L09 H01, TFC L03 H02, por part
 ### L20 H02, cómo quedó (siete versiones el 20-nov)
 Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D con degradado, r, capa dr, centro (0, 0); bajo ella solo la cadena ecuación → reemplazo de r → despeje), `rr-cuatro-formulas` (circunferencia, círculo, superficie y volumen de la esfera, con flechas integrar/derivar) y `rr-area-volumen` (seis pasos: dA → A = ∫dA → bloque dA·dr → capa dV = 4πr² dr → V = ∫₀ʳ 4πρ² dρ → V = (4/3)πr³, con deslizador de paso). Sección «Del área al volumen, paso a paso» con un recuadro por tramo de la cadena. El área 4πr² va deducida con integral doble en coordenadas esféricas (se avisa que es de cursos posteriores).
 
-**En cola de revisión (pendientes de APR, commit ca68d15):** L20 H05 «Razones relacionadas: llenado de un tanque cónico» (`H05_razones_relacionadas_llenado_de_un_tanque_conico.html`; enlazar en qudgj comp-lcit6l3f) y L20 H06 «Razones relacionadas: sombra de una persona que camina» (`H06_razones_relacionadas_sombra_de_una_persona_que_camina.html`; qudgj comp-lcit6zcg). Fuentes `05.*` y `06.*`. «Solo enlazar» del pedido de 284: TFC → L03 H02 enlazado también en x238t comp-kajpp62e y bb5wq comp-mvuxjfce9 (publicado).
+**Con APR del 20-nov, enlazadas en Cálculo II y publicadas:** L20 H05 «Razones relacionadas: llenado de un tanque cónico» (`H05_razones_relacionadas_llenado_de_un_tanque_conico.html`; qudgj comp-lcit6l3f) y L20 H06 «Razones relacionadas: sombra de una persona que camina» (`H06_razones_relacionadas_sombra_de_una_persona_que_camina.html`; qudgj comp-lcit6zcg). Fuentes `05.*` y `06.*`. «Solo enlazar» del pedido de 284: TFC → L03 H02 enlazado también en x238t comp-kajpp62e y bb5wq comp-mvuxjfce9 (publicado).
 
 ## Por producir en el lote 20 (7)
 «Derivadas para razones relacionadas» (ft30u comp-lcno0t8d · qudgj comp-lcit01bi) · «La Regla de L´Hopital» (ft30u comp-lcno0t8l · qudgj comp-lcit01ai) · «Aplicación de la regla de L´Hopital…» (li9mn comp-lck53ins · ft30u comp-lcno0t8m2 · qudgj comp-lcit01bl1) · «Aplicaciones de las derivadas aplicadas al movimiento» (ft30u comp-lcno0t8b1 · qudgj comp-lcit01be) · «Derivada de funciones parametrizadas» (ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9) · «Derivada de funciones parametrizadas 2» (ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14) · «Derivada de funciones vectoriales» (ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19)
