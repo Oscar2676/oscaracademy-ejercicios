@@ -1,0 +1,348 @@
+<!--file:H05_ejemplo_3_tvm_funcion_radical.html-->
+<!--title:Ejemplo 3 del teorema del valor medio: función radical-->
+<!--id:tvm-radical-2-->
+<!--tab:H05 Ejemplo 3: radical-->
+<article class="sheet" id="tvm-radical-2" data-hoja="L18 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Ejemplo 3 del Teorema del Valor Medio con función radical</b></li>
+    </ol>
+    <h1>Ejemplo 3 del teorema del valor medio: función radical</h1>
+    <p class="lede">Ejercicio resuelto. Hallar todos los valores de \(c\) que garantiza el teorema del valor medio para
+    \[f(x)=\sqrt{25-x^{2}}\qquad\text{en el intervalo}\qquad[-3,\;4]\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="def">
+    <h3>Teorema del valor medio</h3>
+    <p>Si \(f\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), existe al menos un \(c\in(a,\;b)\) tal que</p>
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}\]
+  </div>
+  <div class="card k1">
+    <h3>Lo nuevo respecto del ejemplo 2</h3>
+    <p>La cantidad subradical es de segundo grado y la ecuación \(f'(c)=\dfrac{f(b)-f(a)}{b-a}\) obliga a elevar al cuadrado una igualdad que tiene a \(c\) en los dos miembros. Al elevar al cuadrado pueden aparecer soluciones que no lo son de la ecuación original. Hay que fijar antes el signo de \(c\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva es \(f(x)=\sqrt{25-x^{2}}\), la mitad superior de la circunferencia de centro \((0,\;0)\) y radio \(5\). El intervalo es \([-3,\;4]\). El punto \(C\) recorre la curva con su recta tangente y después va al lugar donde la tangente queda paralela a la secante.</p>
+  <div class="stage" data-scene="tvm-radical-2"></div>
+  <ul class="keys">
+    <li><b>Puntos \(A(-3,\;4)\) y \(B(4,\;3)\):</b> los extremos del intervalo sobre la curva.</li>
+    <li><b>Recta azul:</b> la secante por \(A\) y \(B\). Su pendiente es \(\dfrac{f(4)-f(-3)}{4-(-3)}=-\dfrac{1}{7}\).</li>
+    <li><b>Punto rojo \(C\big(c,\;f(c)\big)\) y recta roja:</b> un punto de la curva y su recta tangente, de pendiente \(f'(c)\).</li>
+    <li><b>Resultado:</b> en \(c=\dfrac{\sqrt{2}}{2}\approx 0{,}71\) la tangente es paralela a la secante, porque \(f'\!\left(\dfrac{\sqrt{2}}{2}\right)=-\dfrac{1}{7}\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Desarrollo, paso a paso</h2>
+  <div class="prop p1">
+  <h3>Paso 1: las condiciones</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Dominio. La raíz cuadrada existe en \(\mathbb{R}\) solo si la cantidad subradical es mayor o igual que \(0\):
+      \[25-x^{2}\ge 0\iff x^{2}\le 25\iff -5\le x\le 5\]</li>
+    <li>El dominio de \(f\) es \([-5,\;5]\). Como \(-5&lt;-3\) y \(4&lt;5\), se tiene \([-3,\;4]\subset[-5,\;5]\).</li>
+    <li>Continuidad. \(f\) es la composición de \(u(x)=25-x^{2}\), continua en \(\mathbb{R}\), con la raíz cuadrada, continua en \([0,\;+\infty)\). Entonces \(f\) es continua en todo su dominio y, en particular, en \([-3,\;4]\).</li>
+    <li>Derivabilidad. La raíz cuadrada \(\sqrt{u}\) es derivable solo si \(u&gt;0\):
+      \[25-x^{2}&gt;0\iff x^{2}&lt;25\iff -5&lt;x&lt;5\]</li>
+    <li>\(f\) es derivable en \((-5,\;5)\). Como \((-3,\;4)\subset(-5,\;5)\), \(f\) es derivable en \((-3,\;4)\).</li>
+    <li>Se cumplen las dos condiciones: el teorema se puede aplicar, con \(a=-3\) y \(b=4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Paso 2: la pendiente de la secante</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Valor de \(f\) en \(a=-3\):
+      \[f(-3)=\sqrt{25-(-3)^{2}}=\sqrt{25-9}=\sqrt{16}=4\]</li>
+    <li>Valor de \(f\) en \(b=4\):
+      \[f(4)=\sqrt{25-4^{2}}=\sqrt{25-16}=\sqrt{9}=3\]</li>
+    <li>Diferencia de las imágenes:
+      \[f(4)-f(-3)=3-4=-1\]</li>
+    <li>Diferencia de los extremos:
+      \[4-(-3)=4+3=7\]</li>
+    <li>Pendiente de la secante:
+      \[\frac{f(4)-f(-3)}{4-(-3)}=\frac{-1}{7}=-\frac{1}{7}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Paso 3: la derivada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f\) es una función compuesta: \(f(x)=\sqrt{u}\), con \(u=25-x^{2}\). Regla de la cadena:
+      \[f'(x)=\left(\sqrt{u}\right)'\cdot u'\]</li>
+    <li>Derivada de la raíz cuadrada, con \(u&gt;0\):
+      \[\left(\sqrt{u}\right)'=\frac{1}{2\sqrt{u}}\]</li>
+    <li>Derivada de \(u=25-x^{2}\):
+      \[u'=0-2x=-2x\]</li>
+    <li>Se reemplaza en el paso 1, con \(u=25-x^{2}\):
+      \[f'(x)=\frac{1}{2\sqrt{25-x^{2}}}\cdot(-2x)\]</li>
+    <li>Se simplifica el factor \(2\):
+      \[f'(x)=\frac{-x}{\sqrt{25-x^{2}}},\qquad -5&lt;x&lt;5\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Paso 4: la ecuación</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+      \[\frac{-c}{\sqrt{25-c^{2}}}=-\frac{1}{7}\]</li>
+    <li>Se multiplican los dos miembros por \(-1\):
+      \[\frac{c}{\sqrt{25-c^{2}}}=\frac{1}{7}\]</li>
+    <li>Se multiplican los dos miembros por \(7\sqrt{25-c^{2}}\), que es positivo porque \(c\in(-3,\;4)\subset(-5,\;5)\):
+      \[7c=\sqrt{25-c^{2}}\]</li>
+    <li>Signo de \(c\). El miembro derecho es una raíz cuadrada positiva. Entonces el miembro izquierdo también es positivo:
+      \[7c&gt;0\quad\Longrightarrow\quad c&gt;0\]</li>
+    <li>Se elevan los dos miembros al cuadrado:
+      \[49c^{2}=25-c^{2}\]</li>
+    <li>Se suma \(c^{2}\) en los dos miembros:
+      \[50c^{2}=25\]</li>
+    <li>Se dividen los dos miembros por \(50\):
+      \[c^{2}=\frac{25}{50}=\frac{1}{2}\]</li>
+    <li>Hay dos números reales cuyo cuadrado es \(\dfrac{1}{2}\):
+      \[c=\sqrt{\frac{1}{2}}\qquad\text{o}\qquad c=-\sqrt{\frac{1}{2}}\]</li>
+    <li>Por el paso 4, \(c&gt;0\). Se descarta el valor negativo, que apareció al elevar al cuadrado:
+      \[c=\sqrt{\frac{1}{2}}\]</li>
+    <li>Se racionaliza:
+      \[\sqrt{\frac{1}{2}}=\frac{1}{\sqrt{2}}=\frac{1}{\sqrt{2}}\cdot\frac{\sqrt{2}}{\sqrt{2}}=\frac{\sqrt{2}}{2}\approx 0{,}71\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p5">
+  <h3>Paso 5: ¿está \(c\) en el intervalo abierto?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(-3&lt;0{,}71&lt;4\). Entonces \(c=\dfrac{\sqrt{2}}{2}\in(-3,\;4)\).</li>
+    <li>Comprobación. Primero la cantidad subradical, con \(c^{2}=\dfrac{1}{2}\):
+      \[25-c^{2}=25-\frac{1}{2}=\frac{50}{2}-\frac{1}{2}=\frac{49}{2}\]</li>
+    <li>Su raíz cuadrada:
+      \[\sqrt{\frac{49}{2}}=\frac{\sqrt{49}}{\sqrt{2}}=\frac{7}{\sqrt{2}}\]</li>
+    <li>Se reemplaza en la derivada, con \(c=\dfrac{1}{\sqrt{2}}\):
+      \[f'\!\left(\frac{\sqrt{2}}{2}\right)=\frac{-\frac{1}{\sqrt{2}}}{\frac{7}{\sqrt{2}}}=-\frac{1}{\sqrt{2}}\cdot\frac{\sqrt{2}}{7}=-\frac{1}{7}\]</li>
+    <li>Respuesta: el único valor es \(c=\dfrac{\sqrt{2}}{2}\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: la geometría confirma el resultado</h3>
+    <p>La gráfica de \(f\) es una semicircunferencia de centro \(O(0,\;0)\). En una circunferencia, la tangente en un punto es perpendicular al radio que llega a ese punto, y dos rectas no verticales son perpendiculares si el producto de sus pendientes es \(-1\).</p>
+    <ol class="steps">
+      <li>Ordenada del punto \(C\), calculada en el paso 5:
+        \[f(c)=\sqrt{\frac{49}{2}}=\frac{7}{\sqrt{2}}\]</li>
+      <li>Pendiente del radio \(OC\), con \(c=\dfrac{1}{\sqrt{2}}\):
+        \[\frac{f(c)-0}{c-0}=\frac{\frac{7}{\sqrt{2}}}{\frac{1}{\sqrt{2}}}=\frac{7}{\sqrt{2}}\cdot\frac{\sqrt{2}}{1}=7\]</li>
+      <li>Producto de la pendiente del radio por la pendiente de la tangente:
+        \[7\cdot\left(-\frac{1}{7}\right)=-1\]</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Halla todos los valores de \(c\) que garantiza el teorema del valor medio para \(f(x)=\sqrt[3]{x}\) en \([0,\;8]\).</p>
+    <details><summary>Pista</summary><div><p>Para \(x\neq 0\), \(f'(x)=\dfrac{1}{3\sqrt[3]{x^{2}}}\). En \(x=0\) la función no es derivable.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio y continuidad: la raíz cúbica existe para todo número real y es continua en \(\mathbb{R}\). Entonces \(f\) es continua en \([0,\;8]\).</li>
+        <li>Derivabilidad: \(f\) es derivable en todo \(x\neq 0\). En \(x=0\) no es derivable, pero \(0\notin(0,\;8)\). Entonces \(f\) es derivable en \((0,\;8)\) y el teorema se puede aplicar.</li>
+        <li>Valores en los extremos:
+          \[f(0)=\sqrt[3]{0}=0\qquad f(8)=\sqrt[3]{8}=2\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(8)-f(0)}{8-0}=\frac{2-0}{8}=\frac{2}{8}=\frac{1}{4}\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[\frac{1}{3\sqrt[3]{c^{2}}}=\frac{1}{4}\]</li>
+        <li>Dos fracciones iguales de numerador \(1\) tienen denominadores iguales:
+          \[3\sqrt[3]{c^{2}}=4\]</li>
+        <li>Se dividen los dos miembros por \(3\):
+          \[\sqrt[3]{c^{2}}=\frac{4}{3}\]</li>
+        <li>Se elevan los dos miembros al cubo:
+          \[c^{2}=\left(\frac{4}{3}\right)^{3}=\frac{64}{27}\]</li>
+        <li>Hay dos números reales cuyo cuadrado es \(\dfrac{64}{27}\). Como \(c\in(0,\;8)\), \(c&gt;0\) y se toma el positivo:
+          \[c=\sqrt{\frac{64}{27}}=\frac{\sqrt{64}}{\sqrt{27}}=\frac{8}{\sqrt{9\cdot 3}}=\frac{8}{3\sqrt{3}}\]</li>
+        <li>Se racionaliza:
+          \[\frac{8}{3\sqrt{3}}\cdot\frac{\sqrt{3}}{\sqrt{3}}=\frac{8\sqrt{3}}{3\cdot 3}=\frac{8\sqrt{3}}{9}\approx 1{,}54\]</li>
+        <li>\(0&lt;1{,}54&lt;8\), así que \(c\in(0,\;8)\). Respuesta: el único valor es \(c=\dfrac{8\sqrt{3}}{9}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Halla todos los valores de \(c\) que garantiza el teorema del valor medio para \(f(x)=x-4\sqrt{x}\) en \([1,\;9]\).</p>
+    <details><summary>Pista</summary><div><p>Calcula primero \(f(1)\) y \(f(9)\). La secante es horizontal.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio y continuidad: \(\sqrt{x}\) existe y es continua para \(x\ge 0\). Entonces \(f\) es continua en \([0,\;+\infty)\), que contiene a \([1,\;9]\).</li>
+        <li>Derivabilidad: \(\sqrt{x}\) es derivable para \(x&gt;0\). Entonces \(f\) es derivable en \((0,\;+\infty)\), que contiene a \((1,\;9)\). El teorema se puede aplicar.</li>
+        <li>Valor en \(a=1\):
+          \[f(1)=1-4\sqrt{1}=1-4\cdot 1=-3\]</li>
+        <li>Valor en \(b=9\):
+          \[f(9)=9-4\sqrt{9}=9-4\cdot 3=9-12=-3\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(9)-f(1)}{9-1}=\frac{-3-(-3)}{8}=\frac{0}{8}=0\]</li>
+        <li>Derivada, con \(\left(\sqrt{x}\right)'=\dfrac{1}{2\sqrt{x}}\):
+          \[f'(x)=1-4\cdot\frac{1}{2\sqrt{x}}=1-\frac{2}{\sqrt{x}},\qquad x&gt;0\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[1-\frac{2}{\sqrt{c}}=0\]</li>
+        <li>Se suma \(\dfrac{2}{\sqrt{c}}\) en los dos miembros:
+          \[1=\frac{2}{\sqrt{c}}\]</li>
+        <li>Se multiplican los dos miembros por \(\sqrt{c}\), que es positivo:
+          \[\sqrt{c}=2\]</li>
+        <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+          \[c=4\]</li>
+        <li>\(1&lt;4&lt;9\), así que \(c=4\in(1,\;9)\). Respuesta: el único valor es \(c=4\). Como \(f(1)=f(9)\), este es el caso particular del teorema que se conoce como teorema de Rolle: la tangente en \(C\) es horizontal.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una escalera de \(5\) metros está apoyada en un muro vertical. Si su pie está a \(x\) metros del muro, su extremo superior está a una altura \(y(x)=\sqrt{25-x^{2}}\) metros, por el teorema de Pitágoras. El pie se aleja del muro desde \(x=3\) hasta \(x=4\). ¿Para qué valor de \(x\) la razón de cambio instantánea de la altura es igual a su razón de cambio media en ese recorrido?</p>
+    <details><summary>Pista</summary><div><p>La razón de cambio media es \(\dfrac{y(4)-y(3)}{4-3}\). En la ecuación, \(c\) es positivo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Condiciones: como en el ejemplo resuelto, \(y\) es continua en \([-5,\;5]\) y derivable en \((-5,\;5)\). Como \([3,\;4]\subset(-5,\;5)\), \(y\) es continua en \([3,\;4]\) y derivable en \((3,\;4)\). El teorema se puede aplicar.</li>
+        <li>Alturas en los extremos:
+          \[y(3)=\sqrt{25-3^{2}}=\sqrt{25-9}=\sqrt{16}=4\qquad y(4)=\sqrt{25-4^{2}}=\sqrt{25-16}=\sqrt{9}=3\]</li>
+        <li>Razón de cambio media:
+          \[\frac{y(4)-y(3)}{4-3}=\frac{3-4}{1}=-1\]</li>
+        <li>Derivada, la misma del ejemplo resuelto:
+          \[y'(x)=\frac{-x}{\sqrt{25-x^{2}}},\qquad -5&lt;x&lt;5\]</li>
+        <li>Se iguala la derivada en \(c\) a la razón de cambio media:
+          \[\frac{-c}{\sqrt{25-c^{2}}}=-1\]</li>
+        <li>Se multiplican los dos miembros por \(-\sqrt{25-c^{2}}\), que es distinto de \(0\) porque \(c\in(3,\;4)\):
+          \[c=\sqrt{25-c^{2}}\]</li>
+        <li>Como \(c\in(3,\;4)\), \(c&gt;0\): los dos miembros son positivos. Se elevan al cuadrado:
+          \[c^{2}=25-c^{2}\]</li>
+        <li>Se suma \(c^{2}\) en los dos miembros:
+          \[2c^{2}=25\]</li>
+        <li>Se dividen los dos miembros por \(2\):
+          \[c^{2}=\frac{25}{2}\]</li>
+        <li>Como \(c&gt;0\), se toma la raíz positiva y se racionaliza:
+          \[c=\sqrt{\frac{25}{2}}=\frac{5}{\sqrt{2}}=\frac{5}{\sqrt{2}}\cdot\frac{\sqrt{2}}{\sqrt{2}}=\frac{5\sqrt{2}}{2}\approx 3{,}54\]</li>
+        <li>\(3&lt;3{,}54&lt;4\), así que \(c\in(3,\;4)\).</li>
+        <li>Respuesta: cuando el pie está a \(\dfrac{5\sqrt{2}}{2}\approx 3{,}54\) metros del muro, la altura disminuye a razón de \(1\) metro por cada metro que se aleja el pie, igual que la razón media del recorrido.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L18-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* Escena común del teorema del valor medio: curva, secante AB y tangente en C que recorre el intervalo. */
+function oaTVM(o){
+  var num = OA.num, a = o.a, b = o.b, f = o.f, df = o.df, cs = o.cs || [], fa = f(a), fb = f(b), m = (fb - fa)/(b - a);
+  var T0 = 3, T1 = 8, T2 = 14, T3 = 26, STAR = 8, RUN = T3 + STAR*Math.max(cs.length, 1);
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', ',').replace('-', '−'); }
+  function sinTan(c){ return o.noTan ? o.noTan(c) : false; }
+  function cAt(s){
+    if (s < T2) return a;
+    if (s < T3) return a + (b - a)*(s - T2)/(T3 - T2);
+    if (!cs.length) return b;
+    var i = Math.min(Math.floor((s - T3)/STAR), cs.length - 1), u = (s - T3) - i*STAR, desde = i ? cs[i - 1].x : b;
+    return desde + (cs[i].x - desde)*OA.smooth(cl(u/3));
+  }
+  function cerca(c){ for (var i = 0; i < cs.length; i++) if (Math.abs(c - cs[i].x) <= (b - a)/300) return i; return -1; }
+  var labels = [['A', o.ATex, o.AFb, 'pt'], ['B', o.BTex, o.BFb, 'pt'], ['C', o.CTex, o.CFb, 'pt c-tan'], ['ms', o.mTex, o.mFb, 'c-sec']];
+  cs.forEach(function(k, i){ labels.push(['k' + i, k.tex, k.fb, 'diff']); });
+  return {
+    world:o.world, aspect:o.aspect || 1, aria:o.aria, labels:labels,
+    sliders:[{id:'c', tex:o.cName || 'c', min:a, max:b, step:(b - a)/400, value:a}],
+    legend:'<span><i class="sw sec"></i> secante \\(AB\\)</span><span><i class="sw tan"></i> tangente en \\(C\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.c = cAt(p*RUN); }},
+    onInput:function(v){ v.t = null; },
+    draw:function(S, v){
+      var s = v.t == null ? RUN : v.t*RUN, c = v.c, fc = f(c), C = S.C, W = S.W, x = S.ctx;
+      var sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0);
+      S.axes({gx:o.gx, gy:o.gy, full:!!o.full});
+      S.curve(f, o.d0, o.d1, {color:C.muted, width:1.2});
+      S.curve(f, a, a + (b - a)*cl(s/(T0 - 0.5)), {color:C.ink, width:3});
+      if (s >= T0){ S.guide(a, fa); S.guide(b, fb); }
+      if (s >= T1){
+        var g = cl((s - T1)/2);
+        if (g < 1) S.line(a, fa, a + (b - a)*g, fa + m*(b - a)*g, {color:C.sec, width:2.5});
+        else S.line(W.x0, fa + m*(W.x0 - a), W.x1, fa + m*(W.x1 - a), {color:C.sec, width:2.5});
+      }
+      if (s >= T2){
+        S.line(c, fc, c, 0, {color:C.tan, width:1, dash:[3,4]});
+        if (!sinTan(c)){
+          var mc = df(c), ux = sx, uy = -mc*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.27*S.w; ux /= n; uy /= n;
+          S.pline(S.X(c) - L*ux, S.Y(fc) - L*uy, S.X(c) + L*ux, S.Y(fc) + L*uy, {color:C.tan, width:3});
+          if (cerca(c) < 0 || (v.t != null && s < T3)){
+            x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textBaseline = 'middle';
+            var txt = 'pendiente ' + dec(mc, 2), tw = x.measureText(txt).width, e1 = [S.X(c) + L*ux, S.Y(fc) + L*uy], e0 = [S.X(c) - L*ux, S.Y(fc) - L*uy];
+            var lejos = function(e){ return Math.min(Math.hypot(e[0] - S.X(a), e[1] - S.Y(fa)), Math.hypot(e[0] - S.X(b), e[1] - S.Y(fb))) - (e[0] < 0 || e[0] > S.w || e[1] < 0 || e[1] > S.h ? 1e4 : 0); };
+            var der = lejos(e1) >= lejos(e0), e = der ? e1 : e0;
+            x.textAlign = 'left'; var tx = Math.max(4, Math.min(der ? e[0] + 6 : e[0] - tw - 6, S.w - tw - 4)), ty = Math.max(10, Math.min(S.h - 22, e[1] + ((der ? uy : -uy) < 0 ? -9 : 11)));
+            x.fillText(txt, tx, ty);
+          }
+        }
+        x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'top';
+        x.fillText((o.cFb || 'c') + ' = ' + dec(c, 2), S.X(c), S.Y(0) + (fc >= 0 ? 5 : -18));
+      }
+      if (s >= T0){ S.dot(a, fa, C.sec); S.dot(b, fb, C.sec); }
+      if (s >= T2) S.dot(c, fc, C.tan);
+      var q = o.pos || {};
+      S.out('A', S.X(a), S.Y(fa), (q.A || [-1, -1])[0], (q.A || [-1, -1])[1], s >= T0);
+      S.out('B', S.X(b), S.Y(fb), (q.B || [1, -1])[0], (q.B || [1, -1])[1], s >= T0);
+      var ms = q.ms || [(a + b)/2, (fa + fb)/2, -1, 1];
+      S.out('ms', S.X(ms[0]), S.Y(ms[1]), ms[2], ms[3], s >= T1 + 2);
+      var k = s >= T3 || v.t == null ? cerca(c) : -1;
+      var pc = typeof q.C === 'function' ? q.C(c) : (q.C || [1, -1]);
+      S.out('C', S.X(c), S.Y(fc), pc[0], pc[1], s >= T2 && k < 0 && Math.abs(c - a) > (b - a)*0.12 && Math.abs(c - b) > (b - a)*0.12);
+      cs.forEach(function(kk, i){ var p = kk.pos || [1, -1]; S.out('k' + i, S.X(kk.x), S.Y(f(kk.x)), p[0], p[1], k === i, 10); });
+    },
+    caption:function(v){
+      var c = v.c, k = cerca(c);
+      if (v.t == null) return sinTan(c) ? o.noTanCap : k >= 0 ? ['La tangente en C es paralela a la secante: ', cs[k].capTex, cs[k].capFb] : 'La tangente en C no es paralela a la secante';
+      var s = v.t*RUN;
+      if (s < T0) return ['Curva negra gruesa: la función en el intervalo ', o.intTex, o.intFb];
+      if (s < T1) return 'Puntos A y B: los extremos del intervalo, con sus coordenadas';
+      if (s < T2) return ['Recta azul: la secante por A y B. Su pendiente es ', o.mCapTex, o.mCapFb];
+      if (s < T3) return sinTan(c) ? o.noTanCap : ['Punto rojo C y recta roja: la tangente en C. Su pendiente es ', (o.dName || "f'(c)") + '=' + num(df(c), 2), (o.dFb || "f'(c)") + ' = ' + dec(df(c), 2)];
+      if (!cs.length) return o.endCap;
+      return k >= 0 ? ['La tangente en C es paralela a la secante: ', cs[k].capTex, cs[k].capFb] : 'El punto C va al lugar donde la tangente queda paralela a la secante';
+    },
+    readout:function(v){
+      var c = v.c, rows = [['d', o.mRoTex]];
+      if (sinTan(c)) rows.push(['', (o.cName || 'c') + '=' + num(c, 2) + '\\qquad ' + (o.dName || "f'(c)") + '\\ \\text{no existe}']);
+      else { rows.push(['', (o.cName || 'c') + '=' + num(c, 2) + '\\qquad ' + (o.dName || "f'(c)") + '=' + num(df(c), 2)]); }
+      return rows;
+    }
+  };
+}
+OA.scene('tvm-radical-2', oaTVM({
+  f:function(x){ return Math.sqrt(Math.max(0, 25 - x*x)); }, df:function(x){ return -x/Math.sqrt(25 - x*x); }, a:-3, b:4, d0:-5, d1:5,
+  world:{x0:-6.4, x1:6.4, y0:-1.6, y1:7}, aspect:8.6/12.8, gx:[-4,-2,2,4], gy:[2,4,6], full:true,
+  aria:'Semicircunferencia f(x) = raíz cuadrada de 25 − x² en el intervalo [−3, 4], con la secante por A(−3, 4) y B(4, 3) y un punto C con su tangente que recorre la curva hasta c = raíz de 2 partido por 2, donde la tangente es paralela a la secante.',
+  ATex:'A\\,(-3,\;4)', AFb:'A (−3, 4)', BTex:'B\\,(4,\;3)', BFb:'B (4, 3)', CTex:'C\\,\\big(c,\;f(c)\\big)', CFb:'C (c, f(c))',
+  mTex:'\\text{secante: pendiente }-\\tfrac{1}{7}', mFb:'secante: pendiente −1/7',
+  intTex:'[-3,\;4]', intFb:'[−3, 4]',
+  mCapTex:'\\dfrac{3-4}{4-(-3)}=-\\dfrac{1}{7}', mCapFb:'(3 − 4)/(4 − (−3)) = −1/7',
+  mRoTex:'\\dfrac{f(4)-f(-3)}{4-(-3)}=\\dfrac{3-4}{4-(-3)}=-\\dfrac{1}{7}',
+  pos:{A:[-1,1], B:[1,1], C:[1,1], ms:[-0.5, 3.64, -1, -1]},
+  cs:[{x:Math.SQRT1_2, tex:"C\\left(\\dfrac{\\sqrt{2}}{2},\;\\dfrac{7\\sqrt{2}}{2}\\right):\\ f'\\!\\left(\\dfrac{\\sqrt{2}}{2}\\right)=-\\dfrac{1}{7}", fb:"C (√2/2, 7√2/2): f'(√2/2) = −1/7", pos:[1,1],
+       capTex:"f'\\!\\left(\\dfrac{\\sqrt{2}}{2}\\right)=-\\dfrac{1}{7}", capFb:"f'(√2/2) = −1/7"}]
+}));

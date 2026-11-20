@@ -1,0 +1,226 @@
+<!--file:H04_ejemplo_2_tvm_funcion_radical.html-->
+<!--title:Ejemplo 2 del teorema del valor medio: función radical-->
+<!--id:tvm-radical-->
+<!--tab:H04 Ejemplo 2: radical-->
+<article class="sheet" id="tvm-radical" data-hoja="L18 H04">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Ejemplo 2 del Teorema del Valor Medio con función radical</b></li>
+    </ol>
+    <h1>Ejemplo 2 del teorema del valor medio: función radical</h1>
+    <p class="lede">Ejercicio resuelto. Hallar todos los valores de \(c\) que garantiza el teorema del valor medio para
+    \[f(x)=\sqrt{2x+1}\qquad\text{en el intervalo}\qquad[0,\;4]\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="def">
+    <h3>Teorema del valor medio</h3>
+    <p>Si \(f\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), existe al menos un \(c\in(a,\;b)\) tal que</p>
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}\]
+  </div>
+  <div class="card k1">
+    <h3>Lo nuevo respecto de una función polinomial</h3>
+    <p>Una función con raíz cuadrada no está definida en todo \(\mathbb{R}\), y puede no ser derivable donde la cantidad subradical vale \(0\). Por eso el primer paso, comprobar las condiciones, exige más cuidado: hay que hallar el dominio de \(f\) y el conjunto donde \(f\) es derivable.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva es \(f(x)=\sqrt{2x+1}\) en el intervalo \([0,\;4]\). El punto \(C\) recorre la curva con su recta tangente y después va al lugar donde la tangente queda paralela a la secante.</p>
+  <div class="stage" data-scene="tvm-radical"></div>
+  <ul class="keys">
+    <li><b>Puntos \(A(0,\;1)\) y \(B(4,\;3)\):</b> los extremos del intervalo sobre la curva.</li>
+    <li><b>Recta azul:</b> la secante por \(A\) y \(B\). Su pendiente es \(\dfrac{f(4)-f(0)}{4-0}=\dfrac{1}{2}\).</li>
+    <li><b>Punto rojo \(C\big(c,\;f(c)\big)\) y recta roja:</b> un punto de la curva y su recta tangente, de pendiente \(f'(c)\).</li>
+    <li><b>Resultado:</b> en \(c=\dfrac{3}{2}\) la tangente es paralela a la secante, porque \(f'\!\left(\dfrac{3}{2}\right)=\dfrac{1}{2}\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Desarrollo, paso a paso</h2>
+  <div class="prop p1">
+  <h3>Paso 1: las condiciones</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Dominio. La raíz cuadrada existe en \(\mathbb{R}\) solo si la cantidad subradical es mayor o igual que \(0\):
+      \[2x+1\ge 0\iff 2x\ge -1\iff x\ge -\frac{1}{2}\]</li>
+    <li>El dominio de \(f\) es \(\left[-\dfrac{1}{2},\;+\infty\right)\). Como \(0&gt;-\dfrac{1}{2}\), se tiene \([0,\;4]\subset\left[-\dfrac{1}{2},\;+\infty\right)\).</li>
+    <li>Continuidad. \(f\) es la composición de \(u(x)=2x+1\), continua en \(\mathbb{R}\), con la raíz cuadrada, continua en \([0,\;+\infty)\). Entonces \(f\) es continua en todo su dominio y, en particular, en \([0,\;4]\).</li>
+    <li>Derivabilidad. La raíz cuadrada \(\sqrt{u}\) es derivable solo si \(u&gt;0\):
+      \[2x+1&gt;0\iff x&gt;-\frac{1}{2}\]</li>
+    <li>\(f\) es derivable en \(\left(-\dfrac{1}{2},\;+\infty\right)\). Como \(0&gt;-\dfrac{1}{2}\), se tiene \((0,\;4)\subset\left(-\dfrac{1}{2},\;+\infty\right)\), y \(f\) es derivable en \((0,\;4)\).</li>
+    <li>Se cumplen las dos condiciones: el teorema se puede aplicar, con \(a=0\) y \(b=4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Paso 2: la pendiente de la secante</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Valor de \(f\) en \(a=0\):
+      \[f(0)=\sqrt{2\cdot 0+1}=\sqrt{1}=1\]</li>
+    <li>Valor de \(f\) en \(b=4\):
+      \[f(4)=\sqrt{2\cdot 4+1}=\sqrt{9}=3\]</li>
+    <li>Diferencia de las imágenes:
+      \[f(4)-f(0)=3-1=2\]</li>
+    <li>Diferencia de los extremos:
+      \[4-0=4\]</li>
+    <li>Pendiente de la secante:
+      \[\frac{f(4)-f(0)}{4-0}=\frac{2}{4}=\frac{1}{2}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Paso 3: la derivada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f\) es una función compuesta: \(f(x)=\sqrt{u}\), con \(u=2x+1\). Regla de la cadena:
+      \[f'(x)=\left(\sqrt{u}\right)'\cdot u'\]</li>
+    <li>Derivada de la raíz cuadrada, con \(u&gt;0\):
+      \[\left(\sqrt{u}\right)'=\frac{1}{2\sqrt{u}}\]</li>
+    <li>Derivada de \(u=2x+1\):
+      \[u'=2\]</li>
+    <li>Se reemplaza en el paso 1, con \(u=2x+1\):
+      \[f'(x)=\frac{1}{2\sqrt{2x+1}}\cdot 2\]</li>
+    <li>Se simplifica el factor \(2\):
+      \[f'(x)=\frac{1}{\sqrt{2x+1}},\qquad x&gt;-\frac{1}{2}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Paso 4: la ecuación</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+      \[\frac{1}{\sqrt{2c+1}}=\frac{1}{2}\]</li>
+    <li>Los dos miembros son positivos. Dos fracciones iguales de numerador \(1\) tienen denominadores iguales:
+      \[\sqrt{2c+1}=2\]</li>
+    <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+      \[2c+1=4\]</li>
+    <li>Se resta \(1\) en los dos miembros:
+      \[2c=3\]</li>
+    <li>Se dividen los dos miembros por \(2\):
+      \[c=\frac{3}{2}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p5">
+  <h3>Paso 5: ¿está \(c\) en el intervalo abierto?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{3}{2}=1{,}5\) y \(0&lt;1{,}5&lt;4\). Entonces \(c=\dfrac{3}{2}\in(0,\;4)\).</li>
+    <li>Comprobación: se reemplaza \(c=\dfrac{3}{2}\) en la derivada.
+      \[f'\!\left(\frac{3}{2}\right)=\frac{1}{\sqrt{2\cdot\frac{3}{2}+1}}=\frac{1}{\sqrt{3+1}}=\frac{1}{\sqrt{4}}=\frac{1}{2}\]</li>
+    <li>Respuesta: el único valor es \(c=\dfrac{3}{2}\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Halla todos los valores de \(c\) que garantiza el teorema del valor medio para \(f(x)=\sqrt{x-1}\) en \([1,\;5]\).</p>
+    <details><summary>Pista</summary><div><p>\(f\) no es derivable en \(x=1\). Revisa si eso impide aplicar el teorema.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio: \(x-1\ge 0\iff x\ge 1\). El dominio es \([1,\;+\infty)\) y contiene a \([1,\;5]\).</li>
+        <li>Continuidad: \(f\) es composición de funciones continuas, así que es continua en su dominio y, en particular, en \([1,\;5]\).</li>
+        <li>Derivabilidad: \(f\) es derivable donde \(x-1&gt;0\), es decir, en \((1,\;+\infty)\). Ese conjunto contiene a \((1,\;5)\). En \(x=1\) no es derivable, pero el teorema pide derivabilidad solo en el intervalo abierto \((1,\;5)\), y \(1\notin(1,\;5)\). El teorema se puede aplicar.</li>
+        <li>Valores en los extremos:
+          \[f(1)=\sqrt{1-1}=\sqrt{0}=0\qquad f(5)=\sqrt{5-1}=\sqrt{4}=2\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(5)-f(1)}{5-1}=\frac{2-0}{4}=\frac{2}{4}=\frac{1}{2}\]</li>
+        <li>Derivada, por la regla de la cadena con \(u=x-1\) y \(u'=1\):
+          \[f'(x)=\frac{1}{2\sqrt{x-1}}\cdot 1=\frac{1}{2\sqrt{x-1}},\qquad x&gt;1\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[\frac{1}{2\sqrt{c-1}}=\frac{1}{2}\]</li>
+        <li>Dos fracciones iguales de numerador \(1\) tienen denominadores iguales:
+          \[2\sqrt{c-1}=2\]</li>
+        <li>Se dividen los dos miembros por \(2\):
+          \[\sqrt{c-1}=1\]</li>
+        <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+          \[c-1=1\]</li>
+        <li>Se suma \(1\) en los dos miembros:
+          \[c=2\]</li>
+        <li>\(1&lt;2&lt;5\), así que \(c=2\in(1,\;5)\). Respuesta: el único valor es \(c=2\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Halla todos los valores de \(c\) que garantiza el teorema del valor medio para \(f(x)=\sqrt{3x+4}\) en \([0,\;7]\).</p>
+    <details><summary>Pista</summary><div><p>La pendiente de la secante es \(\dfrac{3}{7}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio: \(3x+4\ge 0\iff x\ge -\dfrac{4}{3}\). El dominio es \(\left[-\dfrac{4}{3},\;+\infty\right)\) y contiene a \([0,\;7]\).</li>
+        <li>Continuidad: \(f\) es composición de funciones continuas, así que es continua en \([0,\;7]\).</li>
+        <li>Derivabilidad: \(f\) es derivable donde \(3x+4&gt;0\), es decir, en \(\left(-\dfrac{4}{3},\;+\infty\right)\), que contiene a \((0,\;7)\). El teorema se puede aplicar.</li>
+        <li>Valores en los extremos:
+          \[f(0)=\sqrt{3\cdot 0+4}=\sqrt{4}=2\qquad f(7)=\sqrt{3\cdot 7+4}=\sqrt{25}=5\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(7)-f(0)}{7-0}=\frac{5-2}{7}=\frac{3}{7}\]</li>
+        <li>Derivada, por la regla de la cadena con \(u=3x+4\) y \(u'=3\):
+          \[f'(x)=\frac{1}{2\sqrt{3x+4}}\cdot 3=\frac{3}{2\sqrt{3x+4}},\qquad x&gt;-\frac{4}{3}\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[\frac{3}{2\sqrt{3c+4}}=\frac{3}{7}\]</li>
+        <li>Dos fracciones iguales de numerador \(3\) tienen denominadores iguales:
+          \[2\sqrt{3c+4}=7\]</li>
+        <li>Se dividen los dos miembros por \(2\):
+          \[\sqrt{3c+4}=\frac{7}{2}\]</li>
+        <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+          \[3c+4=\frac{49}{4}\]</li>
+        <li>Se resta \(4=\dfrac{16}{4}\) en los dos miembros:
+          \[3c=\frac{49}{4}-\frac{16}{4}=\frac{33}{4}\]</li>
+        <li>Se dividen los dos miembros por \(3\):
+          \[c=\frac{33}{4\cdot 3}=\frac{33}{12}=\frac{11}{4}\]</li>
+        <li>\(\dfrac{11}{4}=2{,}75\) y \(0&lt;2{,}75&lt;7\), así que \(c\in(0,\;7)\). Respuesta: el único valor es \(c=\dfrac{11}{4}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un objeto que se deja caer, sin considerar el roce del aire y con \(g=10\) metros por segundo al cuadrado, tiene rapidez \(v(d)=\sqrt{20\,d}\), en metros por segundo, cuando ha caído \(d\) metros. Entre \(d=0\) y \(d=5\), ¿a qué distancia de caída la razón de cambio instantánea de la rapidez es igual a su razón de cambio media?</p>
+    <details><summary>Pista</summary><div><p>La razón de cambio media es \(\dfrac{v(5)-v(0)}{5-0}\) y la instantánea es \(v'(d)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio: \(20\,d\ge 0\iff d\ge 0\). El dominio es \([0,\;+\infty)\) y contiene a \([0,\;5]\).</li>
+        <li>Continuidad: \(v\) es composición de funciones continuas, así que es continua en \([0,\;5]\).</li>
+        <li>Derivabilidad: \(v\) es derivable donde \(20\,d&gt;0\), es decir, en \((0,\;+\infty)\), que contiene a \((0,\;5)\). En \(d=0\) no es derivable, pero \(0\notin(0,\;5)\). El teorema se puede aplicar.</li>
+        <li>Valores en los extremos:
+          \[v(0)=\sqrt{20\cdot 0}=\sqrt{0}=0\qquad v(5)=\sqrt{20\cdot 5}=\sqrt{100}=10\]</li>
+        <li>Razón de cambio media:
+          \[\frac{v(5)-v(0)}{5-0}=\frac{10-0}{5}=\frac{10}{5}=2\]</li>
+        <li>Derivada, por la regla de la cadena con \(u=20\,d\) y \(u'=20\):
+          \[v'(d)=\frac{1}{2\sqrt{20\,d}}\cdot 20=\frac{10}{\sqrt{20\,d}},\qquad d&gt;0\]</li>
+        <li>Se iguala la derivada en \(c\) a la razón de cambio media:
+          \[\frac{10}{\sqrt{20\,c}}=2\]</li>
+        <li>Se multiplican los dos miembros por \(\sqrt{20\,c}\), que es positivo:
+          \[10=2\sqrt{20\,c}\]</li>
+        <li>Se dividen los dos miembros por \(2\):
+          \[\sqrt{20\,c}=5\]</li>
+        <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+          \[20\,c=25\]</li>
+        <li>Se dividen los dos miembros por \(20\):
+          \[c=\frac{25}{20}=\frac{5}{4}\]</li>
+        <li>\(\dfrac{5}{4}=1{,}25\) y \(0&lt;1{,}25&lt;5\), así que \(c\in(0,\;5)\).</li>
+        <li>Respuesta: cuando el objeto ha caído \(1{,}25\) metros, su rapidez aumenta a razón de \(2\) metros por segundo por cada metro de caída, igual que la razón media en los \(5\) metros.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L18-H04 · v001 · Pendiente de APR</span>
+</footer>
+</article>

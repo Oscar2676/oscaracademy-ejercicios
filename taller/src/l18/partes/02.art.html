@@ -1,0 +1,207 @@
+<!--file:H02_aplicacion_del_teorema_del_valor_medio.html-->
+<!--title:Aplicación del teorema del valor medio-->
+<!--id:tvm-aplicacion-->
+<!--tab:H02 Aplicación-->
+<article class="sheet" id="tvm-aplicacion" data-hoja="L18 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Aplicación del Teorema del Valor Medio</b></li>
+    </ol>
+    <h1>Aplicación del teorema del valor medio</h1>
+    <p class="lede">Sean \(a,b\in\mathbb{R}\), con \(a&lt;b\). Si \(f\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), existe al menos un \(c\in(a,\;b)\) tal que
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}\]
+    El teorema une dos cosas: lo que \(f\) cambia en todo el intervalo, \(f(b)-f(a)\), y lo que vale su derivada en un punto. Por eso sirve para sacar conclusiones sobre \(f\) a partir de \(f'\).</p>
+  </section>
+</header>
+
+<section>
+  <div class="def">
+    <h3>La forma que más se usa</h3>
+    <p>Como \(a&lt;b\), \(b-a&gt;0\). Se multiplican los dos miembros de la igualdad del teorema por \((b-a)\):</p>
+    \[f(b)-f(a)=f'(c)\cdot(b-a)\]
+  </div>
+  <div class="props">
+    <h3>Cuatro aplicaciones</h3>
+    \[\begin{array}{ll}
+    \textbf{1.} & \text{En algún instante, la velocidad instantánea es igual a la velocidad media.}\\[6pt]
+    \textbf{2.} & \text{Si }f'(x)=0\text{ para todo }x\in(a,\;b)\text{, entonces }f\text{ es constante en }[a,\;b].\\[6pt]
+    \textbf{3.} & \text{Si }f'(x)&gt;0\text{ para todo }x\in(a,\;b)\text{, entonces }f\text{ es estrictamente creciente en }[a,\;b].\\[6pt]
+    \textbf{4.} & \text{Una cota para }f'\text{ da una cota para }f(b).
+    \end{array}\]
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Un auto recorre \(120\) kilómetros en \(2\) horas. Su posición, en kilómetros, a las \(t\) horas de viaje es \(s(t)=90t^{2}-30t^{3}\), con \(0\le t\le 2\). La recta azul es la secante: su pendiente es la velocidad media, \(60\) kilómetros por hora. La recta roja es la tangente en \(C\): su pendiente es la velocidad instantánea, \(s'(t)\). El punto \(C\) recorre la curva y después va a los dos instantes en que la velocidad instantánea es igual a la velocidad media.</p>
+  <div class="stage" data-scene="tvm-aplicacion"></div>
+  <ul class="keys">
+    <li><b>Eje horizontal:</b> el tiempo \(t\), en horas. <b>Eje vertical:</b> la posición \(s\), en kilómetros.</li>
+    <li><b>Puntos \(A(0,\;0)\) y \(B(2,\;120)\):</b> la partida y la llegada.</li>
+    <li><b>Recta azul:</b> la secante por \(A\) y \(B\). Su pendiente es la velocidad media, \(\dfrac{s(2)-s(0)}{2-0}=60\).</li>
+    <li><b>Punto rojo \(C\big(t,\;s(t)\big)\) y recta roja:</b> la tangente en \(C\). Su pendiente es la velocidad instantánea, \(s'(t)\).</li>
+    <li><b>Resultado:</b> en \(t_{1}=1-\dfrac{\sqrt{3}}{3}\approx 0{,}42\) y en \(t_{2}=1+\dfrac{\sqrt{3}}{3}\approx 1{,}58\) la tangente es paralela a la secante: \(s'(t_{1})=s'(t_{2})=60\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Las cuatro aplicaciones, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Aplicación 1: velocidad media y velocidad instantánea</h3>
+  <div class="body">
+  <p>Si \(s(t)\) es la posición de un móvil en el instante \(t\), su velocidad media entre \(t=a\) y \(t=b\) es \(\dfrac{s(b)-s(a)}{b-a}\) y su velocidad instantánea es \(s'(t)\). Si \(s\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), el teorema asegura que en algún instante \(c\in(a,\;b)\) las dos son iguales. Con el auto de la animación:</p>
+  <ol class="steps">
+    <li>Condiciones: \(s(t)=90t^{2}-30t^{3}\) es una función polinomial, así que es continua en \([0,\;2]\) y derivable en \((0,\;2)\).</li>
+    <li>Posición en \(t=0\):
+      \[s(0)=90\cdot 0^{2}-30\cdot 0^{3}=0\]</li>
+    <li>Posición en \(t=2\):
+      \[s(2)=90\cdot 2^{2}-30\cdot 2^{3}=90\cdot 4-30\cdot 8=360-240=120\]</li>
+    <li>Velocidad media, en kilómetros por hora:
+      \[\frac{s(2)-s(0)}{2-0}=\frac{120-0}{2}=\frac{120}{2}=60\]</li>
+    <li>Velocidad instantánea:
+      \[s'(t)=180t-90t^{2}\]</li>
+    <li>Se iguala la velocidad instantánea en \(c\) a la velocidad media:
+      \[180c-90c^{2}=60\]</li>
+    <li>Se dividen los dos miembros por \(30\):
+      \[6c-3c^{2}=2\]</li>
+    <li>Se suma \(3c^{2}\) y se resta \(6c\) en los dos miembros:
+      \[0=3c^{2}-6c+2\]</li>
+    <li>Fórmula de la ecuación de segundo grado, con coeficientes \(3\), \(-6\) y \(2\). Primero el discriminante:
+      \[(-6)^{2}-4\cdot 3\cdot 2=36-24=12\]</li>
+    <li>Se simplifica la raíz del discriminante:
+      \[\sqrt{12}=\sqrt{4\cdot 3}=\sqrt{4}\cdot\sqrt{3}=2\sqrt{3}\]</li>
+    <li>Las dos soluciones:
+      \[c=\frac{6\pm 2\sqrt{3}}{2\cdot 3}=\frac{6\pm 2\sqrt{3}}{6}=1\pm\frac{\sqrt{3}}{3}\]</li>
+    <li>Valores aproximados, con \(\dfrac{\sqrt{3}}{3}\approx 0{,}58\):
+      \[c_{1}=1-\frac{\sqrt{3}}{3}\approx 0{,}42\qquad c_{2}=1+\frac{\sqrt{3}}{3}\approx 1{,}58\]</li>
+    <li>\(0&lt;0{,}42&lt;2\) y \(0&lt;1{,}58&lt;2\): los dos instantes están en \((0,\;2)\).</li>
+    <li>Respuesta: a las \(0{,}42\) horas y a las \(1{,}58\) horas de viaje, aproximadamente, el velocímetro marca \(60\) kilómetros por hora, que es la velocidad media del viaje.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Aplicación 2: si la derivada es \(0\), la función es constante</h3>
+  <div class="body">
+  <p>Sea \(f\) continua en \([a,\;b]\) y derivable en \((a,\;b)\), con \(f'(x)=0\) para todo \(x\in(a,\;b)\). Entonces \(f\) es constante en \([a,\;b]\).</p>
+  <ol class="steps">
+    <li>Se eligen dos números cualesquiera \(x_{1},x_{2}\in[a,\;b]\), con \(x_{1}&lt;x_{2}\).</li>
+    <li>Como \([x_{1},\;x_{2}]\subset[a,\;b]\), \(f\) es continua en \([x_{1},\;x_{2}]\). Como \((x_{1},\;x_{2})\subset(a,\;b)\), \(f\) es derivable en \((x_{1},\;x_{2})\).</li>
+    <li>Se aplica el teorema del valor medio en \([x_{1},\;x_{2}]\): existe \(c\in(x_{1},\;x_{2})\) tal que
+      \[f(x_{2})-f(x_{1})=f'(c)\cdot(x_{2}-x_{1})\]</li>
+    <li>Como \(c\in(x_{1},\;x_{2})\subset(a,\;b)\), por hipótesis \(f'(c)=0\). Se reemplaza:
+      \[f(x_{2})-f(x_{1})=0\cdot(x_{2}-x_{1})=0\]</li>
+    <li>Se suma \(f(x_{1})\) en los dos miembros:
+      \[f(x_{2})=f(x_{1})\]</li>
+    <li>Como \(x_{1}\) y \(x_{2}\) son cualesquiera, \(f\) toma el mismo valor en todos los puntos de \([a,\;b]\): es constante.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Aplicación 3: si la derivada es positiva, la función es estrictamente creciente</h3>
+  <div class="body">
+  <p>Sea \(f\) continua en \([a,\;b]\) y derivable en \((a,\;b)\), con \(f'(x)&gt;0\) para todo \(x\in(a,\;b)\). Entonces, para \(x_{1},x_{2}\in[a,\;b]\): \(x_{1}&lt;x_{2}\Longrightarrow f(x_{1})&lt;f(x_{2})\).</p>
+  <ol class="steps">
+    <li>Se eligen dos números cualesquiera \(x_{1},x_{2}\in[a,\;b]\), con \(x_{1}&lt;x_{2}\).</li>
+    <li>Como en la aplicación 2, \(f\) es continua en \([x_{1},\;x_{2}]\) y derivable en \((x_{1},\;x_{2})\). Por el teorema del valor medio, existe \(c\in(x_{1},\;x_{2})\) tal que
+      \[f(x_{2})-f(x_{1})=f'(c)\cdot(x_{2}-x_{1})\]</li>
+    <li>Signo de cada factor. Por hipótesis, \(f'(c)&gt;0\). Como \(x_{1}&lt;x_{2}\), \(x_{2}-x_{1}&gt;0\).</li>
+    <li>El producto de dos números positivos es positivo:
+      \[f(x_{2})-f(x_{1})&gt;0\]</li>
+    <li>Se suma \(f(x_{1})\) en los dos miembros:
+      \[f(x_{2})&gt;f(x_{1})\]</li>
+    <li>Con \(f'(x)&lt;0\) el razonamiento es el mismo y el producto es negativo: \(f(x_{2})&lt;f(x_{1})\), y \(f\) es estrictamente decreciente en \([a,\;b]\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Aplicación 4: acotar el valor de una función</h3>
+  <div class="body">
+  <p>Sea \(f\) continua en \([1,\;5]\) y derivable en \((1,\;5)\), con \(f(1)=4\) y \(f'(x)\le 3\) para todo \(x\in(1,\;5)\). ¿Cuál es el mayor valor que puede tener \(f(5)\)?</p>
+  <ol class="steps">
+    <li>Se aplica el teorema del valor medio en \([1,\;5]\): existe \(c\in(1,\;5)\) tal que
+      \[f(5)-f(1)=f'(c)\cdot(5-1)=4\cdot f'(c)\]</li>
+    <li>Por hipótesis, \(f'(c)\le 3\). Se multiplican los dos miembros por \(4\), que es positivo, y la desigualdad se mantiene:
+      \[4\cdot f'(c)\le 4\cdot 3=12\]</li>
+    <li>Se reemplaza el paso 1:
+      \[f(5)-f(1)\le 12\]</li>
+    <li>Se suma \(f(1)=4\) en los dos miembros:
+      \[f(5)\le 12+4=16\]</li>
+    <li>Respuesta: \(f(5)\le 16\). El valor \(16\) se alcanza, por ejemplo, con \(f(x)=3x+1\): \(f(1)=3\cdot 1+1=4\), \(f'(x)=3\) y \(f(5)=3\cdot 5+1=16\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span><b>De la vida cotidiana.</b> En una carretera con límite de \(100\) kilómetros por hora hay dos cámaras separadas por \(10\) kilómetros. Un auto pasa por la primera a las 10:00 y por la segunda a las 10:05. Demuestra que en algún instante el auto superó el límite, suponiendo que su posición es una función continua y derivable del tiempo.</p>
+    <details><summary>Pista</summary><div><p>Calcula la velocidad media en horas: \(5\) minutos son \(\dfrac{5}{60}\) de hora.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sea \(s(t)\) la posición del auto, en kilómetros, a las \(t\) horas de pasar por la primera cámara. Entonces \(s(0)=0\).</li>
+        <li>Tiempo entre las dos cámaras. Una hora tiene \(60\) minutos, así que \(5\) minutos son esta fracción de hora:
+          \[\frac{5}{60}=\frac{1}{12}\]</li>
+        <li>En ese instante el auto está en la segunda cámara:
+          \[s\!\left(\frac{1}{12}\right)=10\]</li>
+        <li>Velocidad media, en kilómetros por hora:
+          \[\frac{s\!\left(\frac{1}{12}\right)-s(0)}{\frac{1}{12}-0}=\frac{10-0}{\frac{1}{12}}=10\cdot 12=120\]</li>
+        <li>Por hipótesis, \(s\) es continua en \(\left[0,\;\dfrac{1}{12}\right]\) y derivable en \(\left(0,\;\dfrac{1}{12}\right)\). Por el teorema del valor medio, existe un instante \(c\in\left(0,\;\dfrac{1}{12}\right)\) con
+          \[s'(c)=120\]</li>
+        <li>\(120&gt;100\). Respuesta: en el instante \(c\), la velocidad instantánea del auto fue de \(120\) kilómetros por hora, mayor que el límite.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Demuestra que, para todo \(a,b\in\mathbb{R}\) con \(a&lt;b\), se cumple \(|\operatorname{sen}b-\operatorname{sen}a|\le b-a\).</p>
+    <details><summary>Pista</summary><div><p>Aplica el teorema a \(f(x)=\operatorname{sen}x\) en \([a,\;b]\) y usa que \(|\cos c|\le 1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f(x)=\operatorname{sen}x\) es continua y derivable en \(\mathbb{R}\), con \(f'(x)=\cos x\). Entonces es continua en \([a,\;b]\) y derivable en \((a,\;b)\).</li>
+        <li>Por el teorema del valor medio, existe \(c\in(a,\;b)\) tal que
+          \[\operatorname{sen}b-\operatorname{sen}a=\cos c\cdot(b-a)\]</li>
+        <li>Se toma valor absoluto en los dos miembros. El valor absoluto de un producto es el producto de los valores absolutos:
+          \[|\operatorname{sen}b-\operatorname{sen}a|=|\cos c|\cdot|b-a|\]</li>
+        <li>Como \(a&lt;b\), \(b-a&gt;0\) y \(|b-a|=b-a\):
+          \[|\operatorname{sen}b-\operatorname{sen}a|=|\cos c|\cdot(b-a)\]</li>
+        <li>Para todo número real \(c\), \(|\cos c|\le 1\). Se multiplican los dos miembros por \((b-a)\), que es positivo:
+          \[|\cos c|\cdot(b-a)\le 1\cdot(b-a)=b-a\]</li>
+        <li>Se reemplaza el paso 4:
+          \[|\operatorname{sen}b-\operatorname{sen}a|\le b-a\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Sea \(f\) continua en \([2,\;6]\) y derivable en \((2,\;6)\), con \(f(2)=1\) y \(2\le f'(x)\le 5\) para todo \(x\in(2,\;6)\). ¿Entre qué valores está \(f(6)\)?</p>
+    <details><summary>Pista</summary><div><p>\(f(6)-f(2)=f'(c)\cdot(6-2)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se aplica el teorema del valor medio en \([2,\;6]\): existe \(c\in(2,\;6)\) tal que
+          \[f(6)-f(2)=f'(c)\cdot(6-2)=4\cdot f'(c)\]</li>
+        <li>Por hipótesis, \(2\le f'(c)\le 5\). Se multiplican los tres miembros por \(4\), que es positivo:
+          \[8\le 4\cdot f'(c)\le 20\]</li>
+        <li>Se reemplaza el paso 1:
+          \[8\le f(6)-f(2)\le 20\]</li>
+        <li>Se suma \(f(2)=1\) en los tres miembros:
+          \[9\le f(6)\le 21\]</li>
+        <li>Respuesta: \(f(6)\) está entre \(9\) y \(21\), incluidos los dos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L18-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>

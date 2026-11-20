@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Condiciones para aplicar el teorema del valor medio | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="tvm-condiciones" data-hoja="L18 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Condición para aplicación del Teorema del Valor Medio</b></li>
+    </ol>
+    <h1>Condiciones para aplicar el teorema del valor medio</h1>
+    <p class="lede">Sean \(a,b\in\mathbb{R}\), con \(a&lt;b\). El teorema del valor medio se puede aplicar a una función \(f\) en \([a,\;b]\) solo si se cumplen dos condiciones: \(f\) es continua en el intervalo cerrado \([a,\;b]\) y \(f\) es derivable en el intervalo abierto \((a,\;b)\). Si se cumplen, existe al menos un \(c\in(a,\;b)\) tal que
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>Las dos condiciones</h2>
+  <div class="card">
+    <h3>Condición 1: \(f\) es continua en \([a,\;b]\)</h3>
+    <p>Significa tres cosas a la vez:</p>
+    \[\begin{array}{ll}
+    \text{en cada }x_{0}\in(a,\;b): & \displaystyle\lim_{x\to x_{0}}f(x)=f(x_{0})\\[10pt]
+    \text{en el extremo }a\text{, por la derecha}: & \displaystyle\lim_{x\to a^{+}}f(x)=f(a)\\[10pt]
+    \text{en el extremo }b\text{, por la izquierda}: & \displaystyle\lim_{x\to b^{-}}f(x)=f(b)
+    \end{array}\]
+    <p>La curva se dibuja desde \(A\big(a,\;f(a)\big)\) hasta \(B\big(b,\;f(b)\big)\) sin levantar el lápiz, incluyendo los dos extremos.</p>
+  </div>
+  <div class="card k1">
+    <h3>Condición 2: \(f\) es derivable en \((a,\;b)\)</h3>
+    <p>Significa que en cada \(x_{0}\in(a,\;b)\) existe, como número real, el límite</p>
+    \[f'(x_{0})=\lim_{h\to 0}\frac{f(x_{0}+h)-f(x_{0})}{h}\]
+    <p>La curva tiene recta tangente no vertical en cada punto entre los extremos: no tiene puntas ni quiebres. En los extremos \(a\) y \(b\) no se exige derivabilidad, porque \(a\notin(a,\;b)\) y \(b\notin(a,\;b)\).</p>
+  </div>
+  <div class="card k2">
+    <h3>Funciones conocidas: dónde son continuas y dónde son derivables</h3>
+    \[\begin{array}{lll}
+    \textbf{Función} & \textbf{Continua en} & \textbf{Derivable en}\\[6pt]
+    \text{polinomial} & \mathbb{R} & \mathbb{R}\\[6pt]
+    \text{racional }\dfrac{p(x)}{q(x)} & \{x\in\mathbb{R}: q(x)\neq 0\} & \{x\in\mathbb{R}: q(x)\neq 0\}\\[10pt]
+    \sqrt{x} & [0,\;+\infty) & (0,\;+\infty)\\[6pt]
+    \sqrt[3]{x} & \mathbb{R} & \mathbb{R}\setminus\{0\}\\[6pt]
+    |x| & \mathbb{R} & \mathbb{R}\setminus\{0\}
+    \end{array}\]
+  </div>
+  <div class="card k3">
+    <h3>Cómo se comprueban, paso a paso</h3>
+    <ol class="steps">
+      <li>Se halla el dominio de \(f\) y se revisa que \([a,\;b]\) esté contenido en él.</li>
+      <li>Se revisa que \(f\) sea continua en todo \([a,\;b]\), incluyendo \(a\) y \(b\).</li>
+      <li>Se halla el conjunto donde \(f\) es derivable y se revisa que \((a,\;b)\) esté contenido en él.</li>
+      <li>Si las dos condiciones se cumplen, el teorema asegura que \(c\) existe. Si alguna falla, el teorema no se puede aplicar y no asegura nada.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva es \(f(x)=|x|\) en el intervalo \([-1,\;2]\). Es continua, pero en \(x=0\) tiene una punta y ahí no es derivable. El punto \(C\) recorre toda la curva con su recta tangente: la pendiente de la tangente vale \(-1\) a la izquierda de \(0\) y vale \(1\) a la derecha de \(0\). Nunca vale \(\dfrac{1}{3}\), que es la pendiente de la secante.</p>
+  <div class="stage" data-scene="tvm-condiciones"></div>
+  <ul class="keys">
+    <li><b>Puntos \(A(-1,\;1)\) y \(B(2,\;2)\):</b> los extremos del intervalo sobre la curva.</li>
+    <li><b>Recta azul:</b> la secante por \(A\) y \(B\). Su pendiente es \(\dfrac{f(2)-f(-1)}{2-(-1)}=\dfrac{1}{3}\).</li>
+    <li><b>Punto rojo \(C\big(c,\;f(c)\big)\) y recta roja:</b> un punto de la curva y su recta tangente. Si \(c&lt;0\), \(f'(c)=-1\). Si \(c&gt;0\), \(f'(c)=1\). En \(c=0\) no hay tangente.</li>
+    <li><b>Resultado:</b> ninguna tangente es paralela a la secante. Falla la condición 2 y la conclusión del teorema no se cumple.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Qué pasa si falla una condición</h2>
+
+  <div class="prop p1">
+  <h3>Falla la derivabilidad: \(f(x)=|x|\) en \([-1,\;2]\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Definición de valor absoluto:
+      \[|x|=\begin{cases}x & \text{si }x\ge 0\\ -x & \text{si }x&lt;0\end{cases}\]</li>
+    <li>Condición 1: \(f\) es continua en \(\mathbb{R}\), así que es continua en \([-1,\;2]\). Se cumple.</li>
+    <li>Condición 2, en \(x_{0}=0\). Límite del cociente por la derecha: si \(h&gt;0\), \(|h|=h\).
+      \[\lim_{h\to 0^{+}}\frac{|0+h|-|0|}{h}=\lim_{h\to 0^{+}}\frac{h}{h}=\lim_{h\to 0^{+}}1=1\]</li>
+    <li>Límite del cociente por la izquierda: si \(h&lt;0\), \(|h|=-h\).
+      \[\lim_{h\to 0^{-}}\frac{|0+h|-|0|}{h}=\lim_{h\to 0^{-}}\frac{-h}{h}=\lim_{h\to 0^{-}}(-1)=-1\]</li>
+    <li>Los dos límites laterales son distintos, \(1\neq -1\). Entonces el límite no existe y \(f\) no es derivable en \(0\). Como \(0\in(-1,\;2)\), la condición 2 no se cumple.</li>
+    <li>Pendiente de la secante, con \(f(-1)=|-1|=1\) y \(f(2)=|2|=2\):
+      \[\frac{f(2)-f(-1)}{2-(-1)}=\frac{2-1}{2+1}=\frac{1}{3}\]</li>
+    <li>Derivada donde existe. Si \(x&gt;0\), \(f(x)=x\). Si \(x&lt;0\), \(f(x)=-x\).
+      \[f'(x)=\begin{cases}1 & \text{si }x&gt;0\\ -1 & \text{si }x&lt;0\end{cases}\]</li>
+    <li>La derivada solo toma los valores \(1\) y \(-1\), y \(\dfrac{1}{3}\neq 1\), \(\dfrac{1}{3}\neq -1\). No existe ningún \(c\in(-1,\;2)\) con \(f'(c)=\dfrac{1}{3}\).</li>
+    <li>Conclusión: sin la condición 2, la conclusión del teorema puede ser falsa.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Falla la continuidad en un extremo: una función definida por tramos en \([0,\;1]\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea
+      \[g(x)=\begin{cases}x & \text{si }0\le x&lt;1\\ 0 & \text{si }x=1\end{cases}\]</li>
+    <li>Condición 2: en \((0,\;1)\), \(g(x)=x\), que es derivable, con \(g'(x)=1\). Se cumple.</li>
+    <li>Condición 1, en el extremo \(b=1\). Para \(x&lt;1\) cercano a \(1\), \(g(x)=x\):
+      \[\lim_{x\to 1^{-}}g(x)=\lim_{x\to 1^{-}}x=1\]</li>
+    <li>Pero \(g(1)=0\). Como \(1\neq 0\), \(\displaystyle\lim_{x\to 1^{-}}g(x)\neq g(1)\): \(g\) no es continua en \([0,\;1]\). La condición 1 no se cumple.</li>
+    <li>Pendiente de la secante, con \(g(0)=0\) y \(g(1)=0\):
+      \[\frac{g(1)-g(0)}{1-0}=\frac{0-0}{1}=0\]</li>
+    <li>Para todo \(c\in(0,\;1)\), \(g'(c)=1\), y \(1\neq 0\). No existe ningún \(c\in(0,\;1)\) con \(g'(c)=0\).</li>
+    <li>Conclusión: no basta con que \(f\) sea continua en \((a,\;b)\). La continuidad se exige en el intervalo cerrado, con los dos extremos.</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: las condiciones son suficientes, pero no necesarias</h3>
+    <p>Si las condiciones se cumplen, \(c\) existe con seguridad. Si alguna falla, el teorema no dice nada: \(c\) puede no existir, como en los dos casos anteriores, o puede existir. Ejemplo: \(h(x)=\sqrt[3]{x}\) en \([-1,\;1]\).</p>
+    <ol class="steps">
+      <li>\(h\) es continua en \(\mathbb{R}\), así que la condición 1 se cumple.</li>
+      <li>Derivabilidad en \(x_{0}=0\). Para \(t\neq 0\), \(t=\left(\sqrt[3]{t}\right)^{3}\), y el cociente es:
+        \[\frac{h(0+t)-h(0)}{t}=\frac{\sqrt[3]{t}-0}{t}=\frac{\sqrt[3]{t}}{\left(\sqrt[3]{t}\right)^{3}}=\frac{1}{\left(\sqrt[3]{t}\right)^{2}}\]</li>
+      <li>Cuando \(t\to 0\), el denominador \(\left(\sqrt[3]{t}\right)^{2}\) es positivo y tiende a \(0\), así que el cociente crece sin límite:
+        \[\lim_{t\to 0}\frac{1}{\left(\sqrt[3]{t}\right)^{2}}=+\infty\]
+        El límite no es un número real: \(h\) no es derivable en \(0\). Como \(0\in(-1,\;1)\), la condición 2 no se cumple.</li>
+      <li>Pendiente de la secante, con \(h(-1)=\sqrt[3]{-1}=-1\) y \(h(1)=\sqrt[3]{1}=1\):
+        \[\frac{h(1)-h(-1)}{1-(-1)}=\frac{1-(-1)}{1+1}=\frac{2}{2}=1\]</li>
+      <li>Derivada, para \(x\neq 0\):
+        \[h'(x)=\frac{1}{3\sqrt[3]{x^{2}}}\]</li>
+      <li>Se busca \(c\neq 0\) con \(h'(c)=1\):
+        \[\frac{1}{3\sqrt[3]{c^{2}}}=1\]</li>
+      <li>Se multiplican los dos miembros por \(3\sqrt[3]{c^{2}}\), que es positivo porque \(c\neq 0\), y se divide por \(3\):
+        \[\sqrt[3]{c^{2}}=\frac{1}{3}\]</li>
+      <li>Se elevan los dos miembros al cubo:
+        \[c^{2}=\left(\frac{1}{3}\right)^{3}=\frac{1}{27}\]</li>
+      <li>Hay dos números reales cuyo cuadrado es \(\dfrac{1}{27}\):
+        \[c=\sqrt{\frac{1}{27}}=\frac{1}{3\sqrt{3}}=\frac{\sqrt{3}}{9}\approx 0{,}19\qquad\text{o}\qquad c=-\frac{\sqrt{3}}{9}\approx -0{,}19\]</li>
+      <li>Los dos están en \((-1,\;1)\) y son distintos de \(0\). Entonces sí existe \(c\) con \(h'(c)=\dfrac{h(1)-h(-1)}{1-(-1)}\), aunque el teorema no se podía aplicar.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>¿Se puede aplicar el teorema del valor medio a \(f(x)=\sqrt{x}\) en \([0,\;4]\)? Si se puede, halla \(c\).</p>
+    <details><summary>Pista</summary><div><p>\(\sqrt{x}\) no es derivable en \(x=0\). Revisa si \(0\) pertenece al intervalo abierto.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Condición 1: \(\sqrt{x}\) es continua en \([0,\;+\infty)\), que contiene a \([0,\;4]\). Se cumple.</li>
+        <li>Condición 2: \(\sqrt{x}\) es derivable en \((0,\;+\infty)\), que contiene a \((0,\;4)\). Se cumple. En \(x=0\) no es derivable, pero \(0\notin(0,\;4)\).</li>
+        <li>El teorema se puede aplicar. Valores en los extremos:
+          \[f(0)=\sqrt{0}=0\qquad f(4)=\sqrt{4}=2\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(4)-f(0)}{4-0}=\frac{2-0}{4}=\frac{2}{4}=\frac{1}{2}\]</li>
+        <li>Derivada:
+          \[f'(x)=\frac{1}{2\sqrt{x}},\qquad x&gt;0\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[\frac{1}{2\sqrt{c}}=\frac{1}{2}\]</li>
+        <li>Dos fracciones iguales de numerador \(1\) tienen denominadores iguales:
+          \[2\sqrt{c}=2\]</li>
+        <li>Se dividen los dos miembros por \(2\):
+          \[\sqrt{c}=1\]</li>
+        <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+          \[c=1\]</li>
+        <li>\(0&lt;1&lt;4\), así que \(c=1\in(0,\;4)\). Respuesta: sí se puede aplicar, y \(c=1\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(f(x)=\dfrac{1}{x-2}\). ¿Se puede aplicar el teorema del valor medio en \([1,\;3]\)? ¿Y en \([3,\;5]\)? Donde se pueda, halla \(c\).</p>
+    <details><summary>Pista</summary><div><p>\(f\) no está definida en \(x=2\). Revisa en cuál de los dos intervalos está el \(2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f\) es una función racional. Es continua y derivable en todo \(x\) donde el denominador no es \(0\), es decir, en \(x\neq 2\).</li>
+        <li>Intervalo \([1,\;3]\): como \(1&lt;2&lt;3\), \(2\in[1,\;3]\) y \(f\) no está definida en \(2\). \(f\) no es continua en \([1,\;3]\): el teorema no se puede aplicar.</li>
+        <li>Intervalo \([3,\;5]\): como \(2&lt;3\), \(2\notin[3,\;5]\). \(f\) es continua en \([3,\;5]\) y derivable en \((3,\;5)\): el teorema se puede aplicar.</li>
+        <li>Valores en los extremos:
+          \[f(3)=\frac{1}{3-2}=\frac{1}{1}=1\qquad f(5)=\frac{1}{5-2}=\frac{1}{3}\]</li>
+        <li>Diferencia de las imágenes:
+          \[f(5)-f(3)=\frac{1}{3}-1=\frac{1}{3}-\frac{3}{3}=-\frac{2}{3}\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(5)-f(3)}{5-3}=\frac{-\frac{2}{3}}{2}=-\frac{2}{3}\cdot\frac{1}{2}=-\frac{1}{3}\]</li>
+        <li>Derivada. Se escribe \(f(x)=(x-2)^{-1}\) y se usa la regla de la potencia con la regla de la cadena:
+          \[f'(x)=-1\cdot(x-2)^{-2}\cdot 1=-\frac{1}{(x-2)^{2}},\qquad x\neq 2\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[-\frac{1}{(c-2)^{2}}=-\frac{1}{3}\]</li>
+        <li>Se multiplican los dos miembros por \(-1\). Dos fracciones iguales de numerador \(1\) tienen denominadores iguales:
+          \[(c-2)^{2}=3\]</li>
+        <li>Hay dos números reales cuyo cuadrado es \(3\):
+          \[c-2=\sqrt{3}\qquad\text{o}\qquad c-2=-\sqrt{3}\]</li>
+        <li>Se suma \(2\) en los dos miembros de cada igualdad, con \(\sqrt{3}\approx 1{,}73\):
+          \[c=2+\sqrt{3}\approx 3{,}73\qquad\text{o}\qquad c=2-\sqrt{3}\approx 0{,}27\]</li>
+        <li>Se revisa el intervalo: \(3&lt;3{,}73&lt;5\), así que \(2+\sqrt{3}\in(3,\;5)\). En cambio \(0{,}27&lt;3\), así que \(2-\sqrt{3}\notin(3,\;5)\).</li>
+        <li>Respuesta: en \([1,\;3]\) no se puede aplicar. En \([3,\;5]\) sí, y \(c=2+\sqrt{3}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un estacionamiento cobra \(\$800\) por cada hora o fracción. El costo, en pesos, de estacionar \(t\) horas es
+    \[C(t)=\begin{cases}800 & \text{si }0&lt;t\le 1\\ 1600 & \text{si }1&lt;t\le 2\\ 2400 & \text{si }2&lt;t\le 3\end{cases}\]
+    ¿Se puede aplicar el teorema del valor medio a \(C\) en \(\left[\dfrac{1}{2},\;\dfrac{5}{2}\right]\)? ¿Existe un instante \(c\) en que la razón de cambio instantánea del costo sea igual a su razón de cambio media?</p>
+    <details><summary>Pista</summary><div><p>Revisa la continuidad de \(C\) en \(t=1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Continuidad en \(t=1\), que pertenece a \(\left[\dfrac{1}{2},\;\dfrac{5}{2}\right]\). Límite por la izquierda: si \(t\le 1\) cercano a \(1\), \(C(t)=800\).
+          \[\lim_{t\to 1^{-}}C(t)=800\]</li>
+        <li>Límite por la derecha: si \(t&gt;1\) cercano a \(1\), \(C(t)=1600\).
+          \[\lim_{t\to 1^{+}}C(t)=1600\]</li>
+        <li>Los límites laterales son distintos, \(800\neq 1600\). \(C\) no es continua en \(t=1\): la condición 1 no se cumple y el teorema no se puede aplicar.</li>
+        <li>Razón de cambio media, con \(C\!\left(\dfrac{1}{2}\right)=800\) y \(C\!\left(\dfrac{5}{2}\right)=2400\):
+          \[\frac{C\!\left(\frac{5}{2}\right)-C\!\left(\frac{1}{2}\right)}{\frac{5}{2}-\frac{1}{2}}=\frac{2400-800}{2}=\frac{1600}{2}=800\]</li>
+        <li>Razón de cambio instantánea. En cada tramo \(C\) es constante, así que \(C'(t)=0\) para todo \(t\) del intervalo con \(t\neq 1\) y \(t\neq 2\). En \(t=1\) y en \(t=2\) la derivada no existe, porque \(C\) no es continua ahí.</li>
+        <li>\(0\neq 800\). No existe ningún instante \(c\) con \(C'(c)=800\).</li>
+        <li>Respuesta: el teorema no se puede aplicar, porque \(C\) no es continua, y en este caso tampoco existe \(c\). El costo sube \(800\) pesos por hora en promedio, pero nunca sube de a poco: sube de golpe en \(t=1\) y en \(t=2\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L18-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* Escena común del teorema del valor medio: curva, secante AB y tangente en C que recorre el intervalo. */
+function oaTVM(o){
+  var num = OA.num, a = o.a, b = o.b, f = o.f, df = o.df, cs = o.cs || [], fa = f(a), fb = f(b), m = (fb - fa)/(b - a);
+  var T0 = 3, T1 = 8, T2 = 14, T3 = 26, STAR = 8, RUN = T3 + STAR*Math.max(cs.length, 1);
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', ',').replace('-', '−'); }
+  function sinTan(c){ return o.noTan ? o.noTan(c) : false; }
+  function cAt(s){
+    if (s < T2) return a;
+    if (s < T3) return a + (b - a)*(s - T2)/(T3 - T2);
+    if (!cs.length) return b;
+    var i = Math.min(Math.floor((s - T3)/STAR), cs.length - 1), u = (s - T3) - i*STAR, desde = i ? cs[i - 1].x : b;
+    return desde + (cs[i].x - desde)*OA.smooth(cl(u/3));
+  }
+  function cerca(c){ for (var i = 0; i < cs.length; i++) if (Math.abs(c - cs[i].x) <= (b - a)/300) return i; return -1; }
+  var labels = [['A', o.ATex, o.AFb, 'pt'], ['B', o.BTex, o.BFb, 'pt'], ['C', o.CTex, o.CFb, 'pt c-tan'], ['ms', o.mTex, o.mFb, 'c-sec']];
+  cs.forEach(function(k, i){ labels.push(['k' + i, k.tex, k.fb, 'diff']); });
+  return {
+    world:o.world, aspect:o.aspect || 1, aria:o.aria, labels:labels,
+    sliders:[{id:'c', tex:o.cName || 'c', min:a, max:b, step:(b - a)/400, value:a}],
+    legend:'<span><i class="sw sec"></i> secante \\(AB\\)</span><span><i class="sw tan"></i> tangente en \\(C\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.c = cAt(p*RUN); }},
+    onInput:function(v){ v.t = null; },
+    draw:function(S, v){
+      var s = v.t == null ? RUN : v.t*RUN, c = v.c, fc = f(c), C = S.C, W = S.W, x = S.ctx;
+      var sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0);
+      S.axes({gx:o.gx, gy:o.gy, full:!!o.full});
+      S.curve(f, o.d0, o.d1, {color:C.muted, width:1.2});
+      S.curve(f, a, a + (b - a)*cl(s/(T0 - 0.5)), {color:C.ink, width:3});
+      if (s >= T0){ S.guide(a, fa); S.guide(b, fb); }
+      if (s >= T1){
+        var g = cl((s - T1)/2);
+        if (g < 1) S.line(a, fa, a + (b - a)*g, fa + m*(b - a)*g, {color:C.sec, width:2.5});
+        else S.line(W.x0, fa + m*(W.x0 - a), W.x1, fa + m*(W.x1 - a), {color:C.sec, width:2.5});
+      }
+      if (s >= T2){
+        S.line(c, fc, c, 0, {color:C.tan, width:1, dash:[3,4]});
+        if (!sinTan(c)){
+          var mc = df(c), ux = sx, uy = -mc*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.27*S.w; ux /= n; uy /= n;
+          S.pline(S.X(c) - L*ux, S.Y(fc) - L*uy, S.X(c) + L*ux, S.Y(fc) + L*uy, {color:C.tan, width:3});
+          if (cerca(c) < 0 || (v.t != null && s < T3)){
+            x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textBaseline = 'middle';
+            var txt = 'pendiente ' + dec(mc, 2), tw = x.measureText(txt).width, e1 = [S.X(c) + L*ux, S.Y(fc) + L*uy], e0 = [S.X(c) - L*ux, S.Y(fc) - L*uy];
+            var lejos = function(e){ return Math.min(Math.hypot(e[0] - S.X(a), e[1] - S.Y(fa)), Math.hypot(e[0] - S.X(b), e[1] - S.Y(fb))) - (e[0] < 0 || e[0] > S.w || e[1] < 0 || e[1] > S.h ? 1e4 : 0); };
+            var der = lejos(e1) >= lejos(e0), e = der ? e1 : e0;
+            x.textAlign = 'left'; var tx = Math.max(4, Math.min(der ? e[0] + 6 : e[0] - tw - 6, S.w - tw - 4)), ty = Math.max(10, Math.min(S.h - 22, e[1] + ((der ? uy : -uy) < 0 ? -9 : 11)));
+            x.fillText(txt, tx, ty);
+          }
+        }
+        x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'top';
+        x.fillText((o.cFb || 'c') + ' = ' + dec(c, 2), S.X(c), S.Y(0) + (fc >= 0 ? 5 : -18));
+      }
+      if (s >= T0){ S.dot(a, fa, C.sec); S.dot(b, fb, C.sec); }
+      if (s >= T2) S.dot(c, fc, C.tan);
+      var q = o.pos || {};
+      S.out('A', S.X(a), S.Y(fa), (q.A || [-1, -1])[0], (q.A || [-1, -1])[1], s >= T0);
+      S.out('B', S.X(b), S.Y(fb), (q.B || [1, -1])[0], (q.B || [1, -1])[1], s >= T0);
+      var ms = q.ms || [(a + b)/2, (fa + fb)/2, -1, 1];
+      S.out('ms', S.X(ms[0]), S.Y(ms[1]), ms[2], ms[3], s >= T1 + 2);
+      var k = s >= T3 || v.t == null ? cerca(c) : -1;
+      var pc = typeof q.C === 'function' ? q.C(c) : (q.C || [1, -1]);
+      S.out('C', S.X(c), S.Y(fc), pc[0], pc[1], s >= T2 && k < 0 && Math.abs(c - a) > (b - a)*0.12 && Math.abs(c - b) > (b - a)*0.12);
+      cs.forEach(function(kk, i){ var p = kk.pos || [1, -1]; S.out('k' + i, S.X(kk.x), S.Y(f(kk.x)), p[0], p[1], k === i, 10); });
+    },
+    caption:function(v){
+      var c = v.c, k = cerca(c);
+      if (v.t == null) return sinTan(c) ? o.noTanCap : k >= 0 ? ['La tangente en C es paralela a la secante: ', cs[k].capTex, cs[k].capFb] : 'La tangente en C no es paralela a la secante';
+      var s = v.t*RUN;
+      if (s < T0) return ['Curva negra gruesa: la función en el intervalo ', o.intTex, o.intFb];
+      if (s < T1) return 'Puntos A y B: los extremos del intervalo, con sus coordenadas';
+      if (s < T2) return ['Recta azul: la secante por A y B. Su pendiente es ', o.mCapTex, o.mCapFb];
+      if (s < T3) return sinTan(c) ? o.noTanCap : ['Punto rojo C y recta roja: la tangente en C. Su pendiente es ', (o.dName || "f'(c)") + '=' + num(df(c), 2), (o.dFb || "f'(c)") + ' = ' + dec(df(c), 2)];
+      if (!cs.length) return o.endCap;
+      return k >= 0 ? ['La tangente en C es paralela a la secante: ', cs[k].capTex, cs[k].capFb] : 'El punto C va al lugar donde la tangente queda paralela a la secante';
+    },
+    readout:function(v){
+      var c = v.c, rows = [['d', o.mRoTex]];
+      if (sinTan(c)) rows.push(['', (o.cName || 'c') + '=' + num(c, 2) + '\\qquad ' + (o.dName || "f'(c)") + '\\ \\text{no existe}']);
+      else { rows.push(['', (o.cName || 'c') + '=' + num(c, 2) + '\\qquad ' + (o.dName || "f'(c)") + '=' + num(df(c), 2)]); }
+      return rows;
+    }
+  };
+}
+OA.scene('tvm-condiciones', oaTVM({
+  f:function(x){ return Math.abs(x); }, df:function(x){ return x > 0 ? 1 : -1; }, a:-1, b:2, d0:-2.2, d1:3,
+  noTan:function(c){ return Math.abs(c) < 0.02; }, noTanCap:'En c = 0 la curva tiene una punta: ahí no hay recta tangente',
+  world:{x0:-2.6, x1:3.4, y0:-0.9, y1:3.4}, aspect:4.3/6, gx:[-2,-1,1,2,3], gy:[1,2,3], full:true,
+  aria:'Gráfica de f(x) = valor absoluto de x en el intervalo [−1, 2], con la secante por A(−1, 1) y B(2, 2), de pendiente 1/3, y un punto C con su tangente, de pendiente −1 a la izquierda de 0 y 1 a la derecha de 0. Ninguna tangente es paralela a la secante.',
+  ATex:'A\\,(-1,\;1)', AFb:'A (−1, 1)', BTex:'B\\,(2,\;2)', BFb:'B (2, 2)', CTex:'C\\,\\big(c,\;f(c)\\big)', CFb:'C (c, f(c))',
+  mTex:'\\text{secante: pendiente }\\tfrac{1}{3}', mFb:'secante: pendiente 1/3',
+  intTex:'[-1,\;2]', intFb:'[−1, 2]',
+  mCapTex:'\\dfrac{2-1}{2-(-1)}=\\dfrac{1}{3}', mCapFb:'(2 − 1)/(2 − (−1)) = 1/3',
+  mRoTex:'\\dfrac{f(2)-f(-1)}{2-(-1)}=\\dfrac{2-1}{2-(-1)}=\\dfrac{1}{3}',
+  pos:{A:[-1,1], B:[1,-1], C:function(c){ return c < 0 ? [1,1] : [-1,1]; }, ms:[0.5, 1.5, -1, 1]},
+  endCap:'La pendiente de la tangente solo vale −1 o 1. Nunca vale 1/3: ninguna tangente es paralela a la secante'
+}));
+OA.boot();
+</script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!--file:H05_ejemplo_3_tvm_funcion_radical.html-->
+<!--title:Ejemplo 3 del teorema del valor medio: función radical-->
+<!--id:tvm-radical-2-->
+<!--tab:H05 Ejemplo 3: radical-->
+<article class="sheet" id="tvm-radical-2" data-hoja="L18 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Ejemplo 3 del Teorema del Valor Medio con función radical</b></li>
+    </ol>
+    <h1>Ejemplo 3 del teorema del valor medio: función radical</h1>
+    <p class="lede">Ejercicio resuelto. Hallar todos los valores de \(c\) que garantiza el teorema del valor medio para
+    \[f(x)=\sqrt{25-x^{2}}\qquad\text{en el intervalo}\qquad[-3,\;4]\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="def">
+    <h3>Teorema del valor medio</h3>
+    <p>Si \(f\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), existe al menos un \(c\in(a,\;b)\) tal que</p>
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}\]
+  </div>
+  <div class="card k1">
+    <h3>Lo nuevo respecto del ejemplo 2</h3>
+    <p>La cantidad subradical es de segundo grado y la ecuación \(f'(c)=\dfrac{f(b)-f(a)}{b-a}\) obliga a elevar al cuadrado una igualdad que tiene a \(c\) en los dos miembros. Al elevar al cuadrado pueden aparecer soluciones que no lo son de la ecuación original. Hay que fijar antes el signo de \(c\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva es \(f(x)=\sqrt{25-x^{2}}\), la mitad superior de la circunferencia de centro \((0,\;0)\) y radio \(5\). El intervalo es \([-3,\;4]\). El punto \(C\) recorre la curva con su recta tangente y después va al lugar donde la tangente queda paralela a la secante.</p>
+  <div class="stage" data-scene="tvm-radical-2"></div>
+  <ul class="keys">
+    <li><b>Puntos \(A(-3,\;4)\) y \(B(4,\;3)\):</b> los extremos del intervalo sobre la curva.</li>
+    <li><b>Recta azul:</b> la secante por \(A\) y \(B\). Su pendiente es \(\dfrac{f(4)-f(-3)}{4-(-3)}=-\dfrac{1}{7}\).</li>
+    <li><b>Punto rojo \(C\big(c,\;f(c)\big)\) y recta roja:</b> un punto de la curva y su recta tangente, de pendiente \(f'(c)\).</li>
+    <li><b>Resultado:</b> en \(c=\dfrac{\sqrt{2}}{2}\approx 0{,}71\) la tangente es paralela a la secante, porque \(f'\!\left(\dfrac{\sqrt{2}}{2}\right)=-\dfrac{1}{7}\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Desarrollo, paso a paso</h2>
+  <div class="prop p1">
+  <h3>Paso 1: las condiciones</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Dominio. La raíz cuadrada existe en \(\mathbb{R}\) solo si la cantidad subradical es mayor o igual que \(0\):
+      \[25-x^{2}\ge 0\iff x^{2}\le 25\iff -5\le x\le 5\]</li>
+    <li>El dominio de \(f\) es \([-5,\;5]\). Como \(-5&lt;-3\) y \(4&lt;5\), se tiene \([-3,\;4]\subset[-5,\;5]\).</li>
+    <li>Continuidad. \(f\) es la composición de \(u(x)=25-x^{2}\), continua en \(\mathbb{R}\), con la raíz cuadrada, continua en \([0,\;+\infty)\). Entonces \(f\) es continua en todo su dominio y, en particular, en \([-3,\;4]\).</li>
+    <li>Derivabilidad. La raíz cuadrada \(\sqrt{u}\) es derivable solo si \(u&gt;0\):
+      \[25-x^{2}&gt;0\iff x^{2}&lt;25\iff -5&lt;x&lt;5\]</li>
+    <li>\(f\) es derivable en \((-5,\;5)\). Como \((-3,\;4)\subset(-5,\;5)\), \(f\) es derivable en \((-3,\;4)\).</li>
+    <li>Se cumplen las dos condiciones: el teorema se puede aplicar, con \(a=-3\) y \(b=4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Paso 2: la pendiente de la secante</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Valor de \(f\) en \(a=-3\):
+      \[f(-3)=\sqrt{25-(-3)^{2}}=\sqrt{25-9}=\sqrt{16}=4\]</li>
+    <li>Valor de \(f\) en \(b=4\):
+      \[f(4)=\sqrt{25-4^{2}}=\sqrt{25-16}=\sqrt{9}=3\]</li>
+    <li>Diferencia de las imágenes:
+      \[f(4)-f(-3)=3-4=-1\]</li>
+    <li>Diferencia de los extremos:
+      \[4-(-3)=4+3=7\]</li>
+    <li>Pendiente de la secante:
+      \[\frac{f(4)-f(-3)}{4-(-3)}=\frac{-1}{7}=-\frac{1}{7}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Paso 3: la derivada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f\) es una función compuesta: \(f(x)=\sqrt{u}\), con \(u=25-x^{2}\). Regla de la cadena:
+      \[f'(x)=\left(\sqrt{u}\right)'\cdot u'\]</li>
+    <li>Derivada de la raíz cuadrada, con \(u&gt;0\):
+      \[\left(\sqrt{u}\right)'=\frac{1}{2\sqrt{u}}\]</li>
+    <li>Derivada de \(u=25-x^{2}\):
+      \[u'=0-2x=-2x\]</li>
+    <li>Se reemplaza en el paso 1, con \(u=25-x^{2}\):
+      \[f'(x)=\frac{1}{2\sqrt{25-x^{2}}}\cdot(-2x)\]</li>
+    <li>Se simplifica el factor \(2\):
+      \[f'(x)=\frac{-x}{\sqrt{25-x^{2}}},\qquad -5&lt;x&lt;5\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Paso 4: la ecuación</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+      \[\frac{-c}{\sqrt{25-c^{2}}}=-\frac{1}{7}\]</li>
+    <li>Se multiplican los dos miembros por \(-1\):
+      \[\frac{c}{\sqrt{25-c^{2}}}=\frac{1}{7}\]</li>
+    <li>Se multiplican los dos miembros por \(7\sqrt{25-c^{2}}\), que es positivo porque \(c\in(-3,\;4)\subset(-5,\;5)\):
+      \[7c=\sqrt{25-c^{2}}\]</li>
+    <li>Signo de \(c\). El miembro derecho es una raíz cuadrada positiva. Entonces el miembro izquierdo también es positivo:
+      \[7c&gt;0\quad\Longrightarrow\quad c&gt;0\]</li>
+    <li>Se elevan los dos miembros al cuadrado:
+      \[49c^{2}=25-c^{2}\]</li>
+    <li>Se suma \(c^{2}\) en los dos miembros:
+      \[50c^{2}=25\]</li>
+    <li>Se dividen los dos miembros por \(50\):
+      \[c^{2}=\frac{25}{50}=\frac{1}{2}\]</li>
+    <li>Hay dos números reales cuyo cuadrado es \(\dfrac{1}{2}\):
+      \[c=\sqrt{\frac{1}{2}}\qquad\text{o}\qquad c=-\sqrt{\frac{1}{2}}\]</li>
+    <li>Por el paso 4, \(c&gt;0\). Se descarta el valor negativo, que apareció al elevar al cuadrado:
+      \[c=\sqrt{\frac{1}{2}}\]</li>
+    <li>Se racionaliza:
+      \[\sqrt{\frac{1}{2}}=\frac{1}{\sqrt{2}}=\frac{1}{\sqrt{2}}\cdot\frac{\sqrt{2}}{\sqrt{2}}=\frac{\sqrt{2}}{2}\approx 0{,}71\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p5">
+  <h3>Paso 5: ¿está \(c\) en el intervalo abierto?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(-3&lt;0{,}71&lt;4\). Entonces \(c=\dfrac{\sqrt{2}}{2}\in(-3,\;4)\).</li>
+    <li>Comprobación. Primero la cantidad subradical, con \(c^{2}=\dfrac{1}{2}\):
+      \[25-c^{2}=25-\frac{1}{2}=\frac{50}{2}-\frac{1}{2}=\frac{49}{2}\]</li>
+    <li>Su raíz cuadrada:
+      \[\sqrt{\frac{49}{2}}=\frac{\sqrt{49}}{\sqrt{2}}=\frac{7}{\sqrt{2}}\]</li>
+    <li>Se reemplaza en la derivada, con \(c=\dfrac{1}{\sqrt{2}}\):
+      \[f'\!\left(\frac{\sqrt{2}}{2}\right)=\frac{-\frac{1}{\sqrt{2}}}{\frac{7}{\sqrt{2}}}=-\frac{1}{\sqrt{2}}\cdot\frac{\sqrt{2}}{7}=-\frac{1}{7}\]</li>
+    <li>Respuesta: el único valor es \(c=\dfrac{\sqrt{2}}{2}\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: la geometría confirma el resultado</h3>
+    <p>La gráfica de \(f\) es una semicircunferencia de centro \(O(0,\;0)\). En una circunferencia, la tangente en un punto es perpendicular al radio que llega a ese punto, y dos rectas no verticales son perpendiculares si el producto de sus pendientes es \(-1\).</p>
+    <ol class="steps">
+      <li>Ordenada del punto \(C\), calculada en el paso 5:
+        \[f(c)=\sqrt{\frac{49}{2}}=\frac{7}{\sqrt{2}}\]</li>
+      <li>Pendiente del radio \(OC\), con \(c=\dfrac{1}{\sqrt{2}}\):
+        \[\frac{f(c)-0}{c-0}=\frac{\frac{7}{\sqrt{2}}}{\frac{1}{\sqrt{2}}}=\frac{7}{\sqrt{2}}\cdot\frac{\sqrt{2}}{1}=7\]</li>
+      <li>Producto de la pendiente del radio por la pendiente de la tangente:
+        \[7\cdot\left(-\frac{1}{7}\right)=-1\]</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Halla todos los valores de \(c\) que garantiza el teorema del valor medio para \(f(x)=\sqrt[3]{x}\) en \([0,\;8]\).</p>
+    <details><summary>Pista</summary><div><p>Para \(x\neq 0\), \(f'(x)=\dfrac{1}{3\sqrt[3]{x^{2}}}\). En \(x=0\) la función no es derivable.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio y continuidad: la raíz cúbica existe para todo número real y es continua en \(\mathbb{R}\). Entonces \(f\) es continua en \([0,\;8]\).</li>
+        <li>Derivabilidad: \(f\) es derivable en todo \(x\neq 0\). En \(x=0\) no es derivable, pero \(0\notin(0,\;8)\). Entonces \(f\) es derivable en \((0,\;8)\) y el teorema se puede aplicar.</li>
+        <li>Valores en los extremos:
+          \[f(0)=\sqrt[3]{0}=0\qquad f(8)=\sqrt[3]{8}=2\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(8)-f(0)}{8-0}=\frac{2-0}{8}=\frac{2}{8}=\frac{1}{4}\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[\frac{1}{3\sqrt[3]{c^{2}}}=\frac{1}{4}\]</li>
+        <li>Dos fracciones iguales de numerador \(1\) tienen denominadores iguales:
+          \[3\sqrt[3]{c^{2}}=4\]</li>
+        <li>Se dividen los dos miembros por \(3\):
+          \[\sqrt[3]{c^{2}}=\frac{4}{3}\]</li>
+        <li>Se elevan los dos miembros al cubo:
+          \[c^{2}=\left(\frac{4}{3}\right)^{3}=\frac{64}{27}\]</li>
+        <li>Hay dos números reales cuyo cuadrado es \(\dfrac{64}{27}\). Como \(c\in(0,\;8)\), \(c&gt;0\) y se toma el positivo:
+          \[c=\sqrt{\frac{64}{27}}=\frac{\sqrt{64}}{\sqrt{27}}=\frac{8}{\sqrt{9\cdot 3}}=\frac{8}{3\sqrt{3}}\]</li>
+        <li>Se racionaliza:
+          \[\frac{8}{3\sqrt{3}}\cdot\frac{\sqrt{3}}{\sqrt{3}}=\frac{8\sqrt{3}}{3\cdot 3}=\frac{8\sqrt{3}}{9}\approx 1{,}54\]</li>
+        <li>\(0&lt;1{,}54&lt;8\), así que \(c\in(0,\;8)\). Respuesta: el único valor es \(c=\dfrac{8\sqrt{3}}{9}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Halla todos los valores de \(c\) que garantiza el teorema del valor medio para \(f(x)=x-4\sqrt{x}\) en \([1,\;9]\).</p>
+    <details><summary>Pista</summary><div><p>Calcula primero \(f(1)\) y \(f(9)\). La secante es horizontal.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Dominio y continuidad: \(\sqrt{x}\) existe y es continua para \(x\ge 0\). Entonces \(f\) es continua en \([0,\;+\infty)\), que contiene a \([1,\;9]\).</li>
+        <li>Derivabilidad: \(\sqrt{x}\) es derivable para \(x&gt;0\). Entonces \(f\) es derivable en \((0,\;+\infty)\), que contiene a \((1,\;9)\). El teorema se puede aplicar.</li>
+        <li>Valor en \(a=1\):
+          \[f(1)=1-4\sqrt{1}=1-4\cdot 1=-3\]</li>
+        <li>Valor en \(b=9\):
+          \[f(9)=9-4\sqrt{9}=9-4\cdot 3=9-12=-3\]</li>
+        <li>Pendiente de la secante:
+          \[\frac{f(9)-f(1)}{9-1}=\frac{-3-(-3)}{8}=\frac{0}{8}=0\]</li>
+        <li>Derivada, con \(\left(\sqrt{x}\right)'=\dfrac{1}{2\sqrt{x}}\):
+          \[f'(x)=1-4\cdot\frac{1}{2\sqrt{x}}=1-\frac{2}{\sqrt{x}},\qquad x&gt;0\]</li>
+        <li>Se iguala la derivada en \(c\) a la pendiente de la secante:
+          \[1-\frac{2}{\sqrt{c}}=0\]</li>
+        <li>Se suma \(\dfrac{2}{\sqrt{c}}\) en los dos miembros:
+          \[1=\frac{2}{\sqrt{c}}\]</li>
+        <li>Se multiplican los dos miembros por \(\sqrt{c}\), que es positivo:
+          \[\sqrt{c}=2\]</li>
+        <li>Los dos miembros son mayores o iguales que \(0\). Se elevan al cuadrado:
+          \[c=4\]</li>
+        <li>\(1&lt;4&lt;9\), así que \(c=4\in(1,\;9)\). Respuesta: el único valor es \(c=4\). Como \(f(1)=f(9)\), este es el caso particular del teorema que se conoce como teorema de Rolle: la tangente en \(C\) es horizontal.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una escalera de \(5\) metros está apoyada en un muro vertical. Si su pie está a \(x\) metros del muro, su extremo superior está a una altura \(y(x)=\sqrt{25-x^{2}}\) metros, por el teorema de Pitágoras. El pie se aleja del muro desde \(x=3\) hasta \(x=4\). ¿Para qué valor de \(x\) la razón de cambio instantánea de la altura es igual a su razón de cambio media en ese recorrido?</p>
+    <details><summary>Pista</summary><div><p>La razón de cambio media es \(\dfrac{y(4)-y(3)}{4-3}\). En la ecuación, \(c\) es positivo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Condiciones: como en el ejemplo resuelto, \(y\) es continua en \([-5,\;5]\) y derivable en \((-5,\;5)\). Como \([3,\;4]\subset(-5,\;5)\), \(y\) es continua en \([3,\;4]\) y derivable en \((3,\;4)\). El teorema se puede aplicar.</li>
+        <li>Alturas en los extremos:
+          \[y(3)=\sqrt{25-3^{2}}=\sqrt{25-9}=\sqrt{16}=4\qquad y(4)=\sqrt{25-4^{2}}=\sqrt{25-16}=\sqrt{9}=3\]</li>
+        <li>Razón de cambio media:
+          \[\frac{y(4)-y(3)}{4-3}=\frac{3-4}{1}=-1\]</li>
+        <li>Derivada, la misma del ejemplo resuelto:
+          \[y'(x)=\frac{-x}{\sqrt{25-x^{2}}},\qquad -5&lt;x&lt;5\]</li>
+        <li>Se iguala la derivada en \(c\) a la razón de cambio media:
+          \[\frac{-c}{\sqrt{25-c^{2}}}=-1\]</li>
+        <li>Se multiplican los dos miembros por \(-\sqrt{25-c^{2}}\), que es distinto de \(0\) porque \(c\in(3,\;4)\):
+          \[c=\sqrt{25-c^{2}}\]</li>
+        <li>Como \(c\in(3,\;4)\), \(c&gt;0\): los dos miembros son positivos. Se elevan al cuadrado:
+          \[c^{2}=25-c^{2}\]</li>
+        <li>Se suma \(c^{2}\) en los dos miembros:
+          \[2c^{2}=25\]</li>
+        <li>Se dividen los dos miembros por \(2\):
+          \[c^{2}=\frac{25}{2}\]</li>
+        <li>Como \(c&gt;0\), se toma la raíz positiva y se racionaliza:
+          \[c=\sqrt{\frac{25}{2}}=\frac{5}{\sqrt{2}}=\frac{5}{\sqrt{2}}\cdot\frac{\sqrt{2}}{\sqrt{2}}=\frac{5\sqrt{2}}{2}\approx 3{,}54\]</li>
+        <li>\(3&lt;3{,}54&lt;4\), así que \(c\in(3,\;4)\).</li>
+        <li>Respuesta: cuando el pie está a \(\dfrac{5\sqrt{2}}{2}\approx 3{,}54\) metros del muro, la altura disminuye a razón de \(1\) metro por cada metro que se aleja el pie, igual que la razón media del recorrido.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L18-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>

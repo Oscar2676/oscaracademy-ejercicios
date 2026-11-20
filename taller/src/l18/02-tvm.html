@@ -1,0 +1,305 @@
+<!--file:H02_aplicacion_del_teorema_del_valor_medio.html-->
+<!--title:Aplicación del teorema del valor medio-->
+<!--id:tvm-aplicacion-->
+<!--tab:H02 Aplicación-->
+<article class="sheet" id="tvm-aplicacion" data-hoja="L18 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Aplicación del Teorema del Valor Medio</b></li>
+    </ol>
+    <h1>Aplicación del teorema del valor medio</h1>
+    <p class="lede">Sean \(a,b\in\mathbb{R}\), con \(a&lt;b\). Si \(f\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), existe al menos un \(c\in(a,\;b)\) tal que
+    \[f'(c)=\frac{f(b)-f(a)}{b-a}\]
+    El teorema une dos cosas: lo que \(f\) cambia en todo el intervalo, \(f(b)-f(a)\), y lo que vale su derivada en un punto. Por eso sirve para sacar conclusiones sobre \(f\) a partir de \(f'\).</p>
+  </section>
+</header>
+
+<section>
+  <div class="def">
+    <h3>La forma que más se usa</h3>
+    <p>Como \(a&lt;b\), \(b-a&gt;0\). Se multiplican los dos miembros de la igualdad del teorema por \((b-a)\):</p>
+    \[f(b)-f(a)=f'(c)\cdot(b-a)\]
+  </div>
+  <div class="props">
+    <h3>Cuatro aplicaciones</h3>
+    \[\begin{array}{ll}
+    \textbf{1.} & \text{En algún instante, la velocidad instantánea es igual a la velocidad media.}\\[6pt]
+    \textbf{2.} & \text{Si }f'(x)=0\text{ para todo }x\in(a,\;b)\text{, entonces }f\text{ es constante en }[a,\;b].\\[6pt]
+    \textbf{3.} & \text{Si }f'(x)&gt;0\text{ para todo }x\in(a,\;b)\text{, entonces }f\text{ es estrictamente creciente en }[a,\;b].\\[6pt]
+    \textbf{4.} & \text{Una cota para }f'\text{ da una cota para }f(b).
+    \end{array}\]
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Un auto recorre \(120\) kilómetros en \(2\) horas. Su posición, en kilómetros, a las \(t\) horas de viaje es \(s(t)=90t^{2}-30t^{3}\), con \(0\le t\le 2\). La recta azul es la secante: su pendiente es la velocidad media, \(60\) kilómetros por hora. La recta roja es la tangente en \(C\): su pendiente es la velocidad instantánea, \(s'(t)\). El punto \(C\) recorre la curva y después va a los dos instantes en que la velocidad instantánea es igual a la velocidad media.</p>
+  <div class="stage" data-scene="tvm-aplicacion"></div>
+  <ul class="keys">
+    <li><b>Eje horizontal:</b> el tiempo \(t\), en horas. <b>Eje vertical:</b> la posición \(s\), en kilómetros.</li>
+    <li><b>Puntos \(A(0,\;0)\) y \(B(2,\;120)\):</b> la partida y la llegada.</li>
+    <li><b>Recta azul:</b> la secante por \(A\) y \(B\). Su pendiente es la velocidad media, \(\dfrac{s(2)-s(0)}{2-0}=60\).</li>
+    <li><b>Punto rojo \(C\big(t,\;s(t)\big)\) y recta roja:</b> la tangente en \(C\). Su pendiente es la velocidad instantánea, \(s'(t)\).</li>
+    <li><b>Resultado:</b> en \(t_{1}=1-\dfrac{\sqrt{3}}{3}\approx 0{,}42\) y en \(t_{2}=1+\dfrac{\sqrt{3}}{3}\approx 1{,}58\) la tangente es paralela a la secante: \(s'(t_{1})=s'(t_{2})=60\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Las cuatro aplicaciones, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Aplicación 1: velocidad media y velocidad instantánea</h3>
+  <div class="body">
+  <p>Si \(s(t)\) es la posición de un móvil en el instante \(t\), su velocidad media entre \(t=a\) y \(t=b\) es \(\dfrac{s(b)-s(a)}{b-a}\) y su velocidad instantánea es \(s'(t)\). Si \(s\) es continua en \([a,\;b]\) y derivable en \((a,\;b)\), el teorema asegura que en algún instante \(c\in(a,\;b)\) las dos son iguales. Con el auto de la animación:</p>
+  <ol class="steps">
+    <li>Condiciones: \(s(t)=90t^{2}-30t^{3}\) es una función polinomial, así que es continua en \([0,\;2]\) y derivable en \((0,\;2)\).</li>
+    <li>Posición en \(t=0\):
+      \[s(0)=90\cdot 0^{2}-30\cdot 0^{3}=0\]</li>
+    <li>Posición en \(t=2\):
+      \[s(2)=90\cdot 2^{2}-30\cdot 2^{3}=90\cdot 4-30\cdot 8=360-240=120\]</li>
+    <li>Velocidad media, en kilómetros por hora:
+      \[\frac{s(2)-s(0)}{2-0}=\frac{120-0}{2}=\frac{120}{2}=60\]</li>
+    <li>Velocidad instantánea:
+      \[s'(t)=180t-90t^{2}\]</li>
+    <li>Se iguala la velocidad instantánea en \(c\) a la velocidad media:
+      \[180c-90c^{2}=60\]</li>
+    <li>Se dividen los dos miembros por \(30\):
+      \[6c-3c^{2}=2\]</li>
+    <li>Se suma \(3c^{2}\) y se resta \(6c\) en los dos miembros:
+      \[0=3c^{2}-6c+2\]</li>
+    <li>Fórmula de la ecuación de segundo grado, con coeficientes \(3\), \(-6\) y \(2\). Primero el discriminante:
+      \[(-6)^{2}-4\cdot 3\cdot 2=36-24=12\]</li>
+    <li>Se simplifica la raíz del discriminante:
+      \[\sqrt{12}=\sqrt{4\cdot 3}=\sqrt{4}\cdot\sqrt{3}=2\sqrt{3}\]</li>
+    <li>Las dos soluciones:
+      \[c=\frac{6\pm 2\sqrt{3}}{2\cdot 3}=\frac{6\pm 2\sqrt{3}}{6}=1\pm\frac{\sqrt{3}}{3}\]</li>
+    <li>Valores aproximados, con \(\dfrac{\sqrt{3}}{3}\approx 0{,}58\):
+      \[c_{1}=1-\frac{\sqrt{3}}{3}\approx 0{,}42\qquad c_{2}=1+\frac{\sqrt{3}}{3}\approx 1{,}58\]</li>
+    <li>\(0&lt;0{,}42&lt;2\) y \(0&lt;1{,}58&lt;2\): los dos instantes están en \((0,\;2)\).</li>
+    <li>Respuesta: a las \(0{,}42\) horas y a las \(1{,}58\) horas de viaje, aproximadamente, el velocímetro marca \(60\) kilómetros por hora, que es la velocidad media del viaje.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Aplicación 2: si la derivada es \(0\), la función es constante</h3>
+  <div class="body">
+  <p>Sea \(f\) continua en \([a,\;b]\) y derivable en \((a,\;b)\), con \(f'(x)=0\) para todo \(x\in(a,\;b)\). Entonces \(f\) es constante en \([a,\;b]\).</p>
+  <ol class="steps">
+    <li>Se eligen dos números cualesquiera \(x_{1},x_{2}\in[a,\;b]\), con \(x_{1}&lt;x_{2}\).</li>
+    <li>Como \([x_{1},\;x_{2}]\subset[a,\;b]\), \(f\) es continua en \([x_{1},\;x_{2}]\). Como \((x_{1},\;x_{2})\subset(a,\;b)\), \(f\) es derivable en \((x_{1},\;x_{2})\).</li>
+    <li>Se aplica el teorema del valor medio en \([x_{1},\;x_{2}]\): existe \(c\in(x_{1},\;x_{2})\) tal que
+      \[f(x_{2})-f(x_{1})=f'(c)\cdot(x_{2}-x_{1})\]</li>
+    <li>Como \(c\in(x_{1},\;x_{2})\subset(a,\;b)\), por hipótesis \(f'(c)=0\). Se reemplaza:
+      \[f(x_{2})-f(x_{1})=0\cdot(x_{2}-x_{1})=0\]</li>
+    <li>Se suma \(f(x_{1})\) en los dos miembros:
+      \[f(x_{2})=f(x_{1})\]</li>
+    <li>Como \(x_{1}\) y \(x_{2}\) son cualesquiera, \(f\) toma el mismo valor en todos los puntos de \([a,\;b]\): es constante.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Aplicación 3: si la derivada es positiva, la función es estrictamente creciente</h3>
+  <div class="body">
+  <p>Sea \(f\) continua en \([a,\;b]\) y derivable en \((a,\;b)\), con \(f'(x)&gt;0\) para todo \(x\in(a,\;b)\). Entonces, para \(x_{1},x_{2}\in[a,\;b]\): \(x_{1}&lt;x_{2}\Longrightarrow f(x_{1})&lt;f(x_{2})\).</p>
+  <ol class="steps">
+    <li>Se eligen dos números cualesquiera \(x_{1},x_{2}\in[a,\;b]\), con \(x_{1}&lt;x_{2}\).</li>
+    <li>Como en la aplicación 2, \(f\) es continua en \([x_{1},\;x_{2}]\) y derivable en \((x_{1},\;x_{2})\). Por el teorema del valor medio, existe \(c\in(x_{1},\;x_{2})\) tal que
+      \[f(x_{2})-f(x_{1})=f'(c)\cdot(x_{2}-x_{1})\]</li>
+    <li>Signo de cada factor. Por hipótesis, \(f'(c)&gt;0\). Como \(x_{1}&lt;x_{2}\), \(x_{2}-x_{1}&gt;0\).</li>
+    <li>El producto de dos números positivos es positivo:
+      \[f(x_{2})-f(x_{1})&gt;0\]</li>
+    <li>Se suma \(f(x_{1})\) en los dos miembros:
+      \[f(x_{2})&gt;f(x_{1})\]</li>
+    <li>Con \(f'(x)&lt;0\) el razonamiento es el mismo y el producto es negativo: \(f(x_{2})&lt;f(x_{1})\), y \(f\) es estrictamente decreciente en \([a,\;b]\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Aplicación 4: acotar el valor de una función</h3>
+  <div class="body">
+  <p>Sea \(f\) continua en \([1,\;5]\) y derivable en \((1,\;5)\), con \(f(1)=4\) y \(f'(x)\le 3\) para todo \(x\in(1,\;5)\). ¿Cuál es el mayor valor que puede tener \(f(5)\)?</p>
+  <ol class="steps">
+    <li>Se aplica el teorema del valor medio en \([1,\;5]\): existe \(c\in(1,\;5)\) tal que
+      \[f(5)-f(1)=f'(c)\cdot(5-1)=4\cdot f'(c)\]</li>
+    <li>Por hipótesis, \(f'(c)\le 3\). Se multiplican los dos miembros por \(4\), que es positivo, y la desigualdad se mantiene:
+      \[4\cdot f'(c)\le 4\cdot 3=12\]</li>
+    <li>Se reemplaza el paso 1:
+      \[f(5)-f(1)\le 12\]</li>
+    <li>Se suma \(f(1)=4\) en los dos miembros:
+      \[f(5)\le 12+4=16\]</li>
+    <li>Respuesta: \(f(5)\le 16\). El valor \(16\) se alcanza, por ejemplo, con \(f(x)=3x+1\): \(f(1)=3\cdot 1+1=4\), \(f'(x)=3\) y \(f(5)=3\cdot 5+1=16\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span><b>De la vida cotidiana.</b> En una carretera con límite de \(100\) kilómetros por hora hay dos cámaras separadas por \(10\) kilómetros. Un auto pasa por la primera a las 10:00 y por la segunda a las 10:05. Demuestra que en algún instante el auto superó el límite, suponiendo que su posición es una función continua y derivable del tiempo.</p>
+    <details><summary>Pista</summary><div><p>Calcula la velocidad media en horas: \(5\) minutos son \(\dfrac{5}{60}\) de hora.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sea \(s(t)\) la posición del auto, en kilómetros, a las \(t\) horas de pasar por la primera cámara. Entonces \(s(0)=0\).</li>
+        <li>Tiempo entre las dos cámaras. Una hora tiene \(60\) minutos, así que \(5\) minutos son esta fracción de hora:
+          \[\frac{5}{60}=\frac{1}{12}\]</li>
+        <li>En ese instante el auto está en la segunda cámara:
+          \[s\!\left(\frac{1}{12}\right)=10\]</li>
+        <li>Velocidad media, en kilómetros por hora:
+          \[\frac{s\!\left(\frac{1}{12}\right)-s(0)}{\frac{1}{12}-0}=\frac{10-0}{\frac{1}{12}}=10\cdot 12=120\]</li>
+        <li>Por hipótesis, \(s\) es continua en \(\left[0,\;\dfrac{1}{12}\right]\) y derivable en \(\left(0,\;\dfrac{1}{12}\right)\). Por el teorema del valor medio, existe un instante \(c\in\left(0,\;\dfrac{1}{12}\right)\) con
+          \[s'(c)=120\]</li>
+        <li>\(120&gt;100\). Respuesta: en el instante \(c\), la velocidad instantánea del auto fue de \(120\) kilómetros por hora, mayor que el límite.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Demuestra que, para todo \(a,b\in\mathbb{R}\) con \(a&lt;b\), se cumple \(|\operatorname{sen}b-\operatorname{sen}a|\le b-a\).</p>
+    <details><summary>Pista</summary><div><p>Aplica el teorema a \(f(x)=\operatorname{sen}x\) en \([a,\;b]\) y usa que \(|\cos c|\le 1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f(x)=\operatorname{sen}x\) es continua y derivable en \(\mathbb{R}\), con \(f'(x)=\cos x\). Entonces es continua en \([a,\;b]\) y derivable en \((a,\;b)\).</li>
+        <li>Por el teorema del valor medio, existe \(c\in(a,\;b)\) tal que
+          \[\operatorname{sen}b-\operatorname{sen}a=\cos c\cdot(b-a)\]</li>
+        <li>Se toma valor absoluto en los dos miembros. El valor absoluto de un producto es el producto de los valores absolutos:
+          \[|\operatorname{sen}b-\operatorname{sen}a|=|\cos c|\cdot|b-a|\]</li>
+        <li>Como \(a&lt;b\), \(b-a&gt;0\) y \(|b-a|=b-a\):
+          \[|\operatorname{sen}b-\operatorname{sen}a|=|\cos c|\cdot(b-a)\]</li>
+        <li>Para todo número real \(c\), \(|\cos c|\le 1\). Se multiplican los dos miembros por \((b-a)\), que es positivo:
+          \[|\cos c|\cdot(b-a)\le 1\cdot(b-a)=b-a\]</li>
+        <li>Se reemplaza el paso 4:
+          \[|\operatorname{sen}b-\operatorname{sen}a|\le b-a\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Sea \(f\) continua en \([2,\;6]\) y derivable en \((2,\;6)\), con \(f(2)=1\) y \(2\le f'(x)\le 5\) para todo \(x\in(2,\;6)\). ¿Entre qué valores está \(f(6)\)?</p>
+    <details><summary>Pista</summary><div><p>\(f(6)-f(2)=f'(c)\cdot(6-2)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se aplica el teorema del valor medio en \([2,\;6]\): existe \(c\in(2,\;6)\) tal que
+          \[f(6)-f(2)=f'(c)\cdot(6-2)=4\cdot f'(c)\]</li>
+        <li>Por hipótesis, \(2\le f'(c)\le 5\). Se multiplican los tres miembros por \(4\), que es positivo:
+          \[8\le 4\cdot f'(c)\le 20\]</li>
+        <li>Se reemplaza el paso 1:
+          \[8\le f(6)-f(2)\le 20\]</li>
+        <li>Se suma \(f(2)=1\) en los tres miembros:
+          \[9\le f(6)\le 21\]</li>
+        <li>Respuesta: \(f(6)\) está entre \(9\) y \(21\), incluidos los dos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L18-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* Escena común del teorema del valor medio: curva, secante AB y tangente en C que recorre el intervalo. */
+function oaTVM(o){
+  var num = OA.num, a = o.a, b = o.b, f = o.f, df = o.df, cs = o.cs || [], fa = f(a), fb = f(b), m = (fb - fa)/(b - a);
+  var T0 = 3, T1 = 8, T2 = 14, T3 = 26, STAR = 8, RUN = T3 + STAR*Math.max(cs.length, 1);
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', ',').replace('-', '−'); }
+  function sinTan(c){ return o.noTan ? o.noTan(c) : false; }
+  function cAt(s){
+    if (s < T2) return a;
+    if (s < T3) return a + (b - a)*(s - T2)/(T3 - T2);
+    if (!cs.length) return b;
+    var i = Math.min(Math.floor((s - T3)/STAR), cs.length - 1), u = (s - T3) - i*STAR, desde = i ? cs[i - 1].x : b;
+    return desde + (cs[i].x - desde)*OA.smooth(cl(u/3));
+  }
+  function cerca(c){ for (var i = 0; i < cs.length; i++) if (Math.abs(c - cs[i].x) <= (b - a)/300) return i; return -1; }
+  var labels = [['A', o.ATex, o.AFb, 'pt'], ['B', o.BTex, o.BFb, 'pt'], ['C', o.CTex, o.CFb, 'pt c-tan'], ['ms', o.mTex, o.mFb, 'c-sec']];
+  cs.forEach(function(k, i){ labels.push(['k' + i, k.tex, k.fb, 'diff']); });
+  return {
+    world:o.world, aspect:o.aspect || 1, aria:o.aria, labels:labels,
+    sliders:[{id:'c', tex:o.cName || 'c', min:a, max:b, step:(b - a)/400, value:a}],
+    legend:'<span><i class="sw sec"></i> secante \\(AB\\)</span><span><i class="sw tan"></i> tangente en \\(C\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.c = cAt(p*RUN); }},
+    onInput:function(v){ v.t = null; },
+    draw:function(S, v){
+      var s = v.t == null ? RUN : v.t*RUN, c = v.c, fc = f(c), C = S.C, W = S.W, x = S.ctx;
+      var sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0);
+      S.axes({gx:o.gx, gy:o.gy, full:!!o.full});
+      S.curve(f, o.d0, o.d1, {color:C.muted, width:1.2});
+      S.curve(f, a, a + (b - a)*cl(s/(T0 - 0.5)), {color:C.ink, width:3});
+      if (s >= T0){ S.guide(a, fa); S.guide(b, fb); }
+      if (s >= T1){
+        var g = cl((s - T1)/2);
+        if (g < 1) S.line(a, fa, a + (b - a)*g, fa + m*(b - a)*g, {color:C.sec, width:2.5});
+        else S.line(W.x0, fa + m*(W.x0 - a), W.x1, fa + m*(W.x1 - a), {color:C.sec, width:2.5});
+      }
+      if (s >= T2){
+        S.line(c, fc, c, 0, {color:C.tan, width:1, dash:[3,4]});
+        if (!sinTan(c)){
+          var mc = df(c), ux = sx, uy = -mc*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.27*S.w; ux /= n; uy /= n;
+          S.pline(S.X(c) - L*ux, S.Y(fc) - L*uy, S.X(c) + L*ux, S.Y(fc) + L*uy, {color:C.tan, width:3});
+          if (cerca(c) < 0 || (v.t != null && s < T3)){
+            x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textBaseline = 'middle';
+            var txt = 'pendiente ' + dec(mc, 2), tw = x.measureText(txt).width, e1 = [S.X(c) + L*ux, S.Y(fc) + L*uy], e0 = [S.X(c) - L*ux, S.Y(fc) - L*uy];
+            var lejos = function(e){ return Math.min(Math.hypot(e[0] - S.X(a), e[1] - S.Y(fa)), Math.hypot(e[0] - S.X(b), e[1] - S.Y(fb))) - (e[0] < 0 || e[0] > S.w || e[1] < 0 || e[1] > S.h ? 1e4 : 0); };
+            var der = lejos(e1) >= lejos(e0), e = der ? e1 : e0;
+            x.textAlign = 'left'; var tx = Math.max(4, Math.min(der ? e[0] + 6 : e[0] - tw - 6, S.w - tw - 4)), ty = Math.max(10, Math.min(S.h - 22, e[1] + ((der ? uy : -uy) < 0 ? -9 : 11)));
+            x.fillText(txt, tx, ty);
+          }
+        }
+        x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'top';
+        x.fillText((o.cFb || 'c') + ' = ' + dec(c, 2), S.X(c), S.Y(0) + (fc >= 0 ? 5 : -18));
+      }
+      if (s >= T0){ S.dot(a, fa, C.sec); S.dot(b, fb, C.sec); }
+      if (s >= T2) S.dot(c, fc, C.tan);
+      var q = o.pos || {};
+      S.out('A', S.X(a), S.Y(fa), (q.A || [-1, -1])[0], (q.A || [-1, -1])[1], s >= T0);
+      S.out('B', S.X(b), S.Y(fb), (q.B || [1, -1])[0], (q.B || [1, -1])[1], s >= T0);
+      var ms = q.ms || [(a + b)/2, (fa + fb)/2, -1, 1];
+      S.out('ms', S.X(ms[0]), S.Y(ms[1]), ms[2], ms[3], s >= T1 + 2);
+      var k = s >= T3 || v.t == null ? cerca(c) : -1;
+      var pc = typeof q.C === 'function' ? q.C(c) : (q.C || [1, -1]);
+      S.out('C', S.X(c), S.Y(fc), pc[0], pc[1], s >= T2 && k < 0 && Math.abs(c - a) > (b - a)*0.12 && Math.abs(c - b) > (b - a)*0.12);
+      cs.forEach(function(kk, i){ var p = kk.pos || [1, -1]; S.out('k' + i, S.X(kk.x), S.Y(f(kk.x)), p[0], p[1], k === i, 10); });
+    },
+    caption:function(v){
+      var c = v.c, k = cerca(c);
+      if (v.t == null) return sinTan(c) ? o.noTanCap : k >= 0 ? ['La tangente en C es paralela a la secante: ', cs[k].capTex, cs[k].capFb] : 'La tangente en C no es paralela a la secante';
+      var s = v.t*RUN;
+      if (s < T0) return ['Curva negra gruesa: la función en el intervalo ', o.intTex, o.intFb];
+      if (s < T1) return 'Puntos A y B: los extremos del intervalo, con sus coordenadas';
+      if (s < T2) return ['Recta azul: la secante por A y B. Su pendiente es ', o.mCapTex, o.mCapFb];
+      if (s < T3) return sinTan(c) ? o.noTanCap : ['Punto rojo C y recta roja: la tangente en C. Su pendiente es ', (o.dName || "f'(c)") + '=' + num(df(c), 2), (o.dFb || "f'(c)") + ' = ' + dec(df(c), 2)];
+      if (!cs.length) return o.endCap;
+      return k >= 0 ? ['La tangente en C es paralela a la secante: ', cs[k].capTex, cs[k].capFb] : 'El punto C va al lugar donde la tangente queda paralela a la secante';
+    },
+    readout:function(v){
+      var c = v.c, rows = [['d', o.mRoTex]];
+      if (sinTan(c)) rows.push(['', (o.cName || 'c') + '=' + num(c, 2) + '\\qquad ' + (o.dName || "f'(c)") + '\\ \\text{no existe}']);
+      else { rows.push(['', (o.cName || 'c') + '=' + num(c, 2) + '\\qquad ' + (o.dName || "f'(c)") + '=' + num(df(c), 2)]); }
+      return rows;
+    }
+  };
+}
+OA.scene('tvm-aplicacion', oaTVM({
+  f:function(t){ return 90*t*t - 30*t*t*t; }, df:function(t){ return 180*t - 90*t*t; }, a:0, b:2, d0:0, d1:2,
+  world:{x0:-0.42, x1:2.6, y0:-24, y1:146}, aspect:0.8, gx:[0.5,1,1.5,2,2.5], gy:[20,40,60,80,100,120,140],
+  cName:'t', cFb:'t', dName:"s'(t)", dFb:"s'(t)",
+  aria:'Gráfica de la posición s(t) = 90t² − 30t³ de un auto entre t = 0 y t = 2 horas, con la secante por A(0, 0) y B(2, 120), de pendiente 60, y un punto C con su tangente que recorre la curva y se detiene en t ≈ 0,42 y t ≈ 1,58, donde la tangente es paralela a la secante.',
+  ATex:'A\\,(0,\;0)', AFb:'A (0, 0)', BTex:'B\\,(2,\;120)', BFb:'B (2, 120)', CTex:'C\\,\\big(t,\;s(t)\\big)', CFb:'C (t, s(t))',
+  mTex:'\\text{velocidad media: }60', mFb:'velocidad media: 60',
+  intTex:'[0,\;2]', intFb:'[0, 2]',
+  mCapTex:'\\dfrac{120-0}{2-0}=60', mCapFb:'(120 − 0)/(2 − 0) = 60',
+  mRoTex:'\\dfrac{s(2)-s(0)}{2-0}=\\dfrac{120-0}{2-0}=60',
+  pos:{A:[1,-1], B:[-1,1], C:[1,-1], ms:[1.3, 78, -1, 1]},
+  cs:[{x:1 - Math.sqrt(3)/3, tex:"t_{1}\\approx 0{,}42:\\ s'(t_{1})=60", fb:"t₁ ≈ 0,42: s'(t₁) = 60", pos:[1,-1], capTex:"s'(t_{1})=60", capFb:"s'(t₁) = 60"},
+      {x:1 + Math.sqrt(3)/3, tex:"t_{2}\\approx 1{,}58:\\ s'(t_{2})=60", fb:"t₂ ≈ 1,58: s'(t₂) = 60", pos:[-1,1], capTex:"s'(t_{2})=60", capFb:"s'(t₂) = 60"}]
+}));
