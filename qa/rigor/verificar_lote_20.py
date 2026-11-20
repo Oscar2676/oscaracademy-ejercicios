@@ -44,4 +44,26 @@ ok('H04: con x=4, y=3, dy/dt = −(4/3)(1/2) = −2/3 ≈ −0,67', 25 - 16 == 9
 ok('H04-A: y=12; dy/dt = −(5/12)·2 = −5/6 ≈ −0,83; numérico', 169 - 25 == 144 and -F(5, 12) * 2 == F(-5, 6) and round(-5 / 6, 2) == -0.83 and cerca(dnum(lambda t: sqrt(169 - (5 + 2 * t) ** 2), 0), -5 / 6))
 ok('H04-B: dA/dt = (1/2)(2 − 9/8) = 7/16 ≈ 0,44; numérico', F(1, 2) * (F(1, 2) * 4 + 3 * F(-3, 8)) == F(7, 16) and round(7 / 16, 2) == 0.44 and cerca(dnum(lambda t: (3 + t / 2) * sqrt(25 - (3 + t / 2) ** 2) / 2, 0), 7 / 16))
 ok('H04-C: x=4; dx/dt = (3/5)/4 = 3/20 = 0,15; numérico con y=3−t/5', 25 - 9 == 16 and F(3, 5) / 4 == F(3, 20) and cerca(dnum(lambda t: sqrt(25 - (3 - t / 5) ** 2), 0), 0.15))
+# H05 · tanque cónico: H=6, R=3, r=h/2, V=πh³/12, dV/dt=3
+h_de = lambda V: (12 * V / pi) ** (1 / 3)
+Vh = lambda h: pi * h ** 3 / 12
+ok('H05: r/h = 3/6 = 1/2; V = (1/3)π(h/2)²h = πh³/12', F(3, 6) == F(1, 2) and all(cerca(pi * (h / 2) ** 2 * h / 3, Vh(h)) for h in (1.2, 4, 6)))
+ok('H05: dh/dt = 3/(4π) ≈ 0,24 con h=4; numérico con V(t)=V(4)+3t', cerca(dnum(lambda t: h_de(Vh(4) + 3 * t), 0), 3 / (4 * pi)) and round(3 / (4 * pi), 2) == 0.24 and F(1, 4) * 16 == 4)
+ok('H05: fórmula general 12/(πh²); con h=2 da 3/π ≈ 0,95, 4 veces 3/(4π); numérico', cerca(dnum(lambda t: h_de(Vh(2) + 3 * t), 0), 3 / pi) and round(3 / pi, 2) == 0.95 and cerca(3 / pi, 4 * 3 / (4 * pi)) and all(cerca(3 / (pi / 4 * h * h), 12 / (pi * h * h)) for h in (1.2, 2, 4, 6)))
+N = 200000
+ok('H05: ∫₀^h (π/4)y² dy = πh³/12 (suma de Riemann, h=4) y dV/dh = (π/4)h² = πr²', cerca(sum(pi / 4 * ((i + 0.5) * 4 / N) ** 2 * 4 / N for i in range(N)), Vh(4), 1e-8) and cerca(dnum(Vh, 4), pi * 2 ** 2))
+ok('H05: (π/12)·4r²·h = (1/3)πr²h', F(4, 12) == F(1, 3))
+ok('H05-A: r=h/3, V=πh³/27, dV/dt=(π/9)h²·dh/dt; dh/dt = 5/π ≈ 1,59; numérico', F(3, 27) == F(1, 9) and cerca(dnum(lambda t: (27 * (pi * 27 / 27 + 5 * t) / pi) ** (1 / 3), 0), 5 / pi) and round(5 / pi, 2) == 1.59)
+ok('H05-B: dr/dt = (1/2)·3/(4π) = 3/(8π) ≈ 0,12', round(3 / (8 * pi), 2) == 0.12 and cerca(dnum(lambda t: h_de(Vh(4) + 3 * t) / 2, 0), 3 / (8 * pi)))
+ok('H05-C filtro: dh/dt = −2/(4π) = −1/(2π) ≈ −0,16; numérico', cerca(dnum(lambda t: h_de(Vh(4) - 2 * t), 0), -1 / (2 * pi)) and round(-1 / (2 * pi), 2) == -0.16)
+
+# H06 · sombra: farol 6, persona 1,5, dx/dt = 1,2
+def sombra(H, p, x): return p * x / (H - p)
+ok('H06: 6/(x+s) = 1,5/s ⟺ s = x/3 (exacto en varios x)', all(F(6) / (x + sombra(F(6), F(3, 2), x)) == F(3, 2) / sombra(F(6), F(3, 2), x) and sombra(F(6), F(3, 2), x) == x / 3 for x in (F(3, 2), F(33, 10), F(6), F(15, 2))))
+ok('H06: 6−1,5 = 4,5; 1,5/4,5 = 1/3; ds/dt = (1/3)·1,2 = 0,4', F(6) - F(3, 2) == F(9, 2) and F(3, 2) / F(9, 2) == F(1, 3) and F(1, 3) * F(6, 5) == F(2, 5))
+ok('H06 animación: x=3,30 → s=1,10; x=6 → s=2, x+s=8', F(33, 10) / 3 == F(11, 10) and F(6) / 3 == 2 and 6 + 2 == 8)
+ok('H06-A: punta 1,2 + 0,4 = 1,6', F(6, 5) + F(2, 5) == F(8, 5))
+ok('H06-B: 4−1,6 = 2,4; 1,6/2,4 = 2/3; ds/dt = −2/3 ≈ −0,67', F(4) - F(8, 5) == F(12, 5) and F(8, 5) / F(12, 5) == F(2, 3) and sombra(F(4), F(8, 5), F(3)) == 2 and round(-2 / 3, 2) == -0.67)
+ok('H06-C: 3,6−1,2 = 2,4; 1,2/2,4 = 1/2; ds/dt = 1,5; punta 4,5', F(18, 5) - F(6, 5) == F(12, 5) and F(6, 5) / F(12, 5) == F(1, 2) and F(1, 2) * 3 == F(3, 2) and 3 + F(3, 2) == F(9, 2))
+
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)
