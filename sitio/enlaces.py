@@ -85,11 +85,23 @@ def paginas_del_sitio():
 
 def recorrer():
     filas, fallas, urls = [], [], paginas_del_sitio()
+    # lectura anterior: si una página no responde, o responde sin los enlaces que tenía, no se pierden por un fallo pasajero
+    antes = {}
+    try:
+        for h in json.loads((AQUI / 'enlaces.json').read_text(encoding='utf-8'))['hojas']:
+            for t in h.get('titulos', []):
+                antes.setdefault(t.get('url_pagina'), []).append({'pagina': t['pagina'], 'url_pagina': t['url_pagina'], 'titulo': t['titulo'], 'hoja': h['url']})
+    except Exception:
+        pass
+    import time
     for u, tit in sorted(urls.items()):
         try:
             p = Enlaces(); p.feed(traer(u))
+            for _ in range(2):                         # tenía enlaces y ahora ninguno: se vuelve a leer antes de creerlo
+                if p.salida or not antes.get(u): break
+                time.sleep(4); p = Enlaces(); p.feed(traer(u))
         except Exception as e:
-            fallas.append((u, str(e))); continue
+            fallas.append((u, str(e))); filas.extend(antes.get(u, [])); continue
         nombre = re.sub(r'\s*\|\s*Oscar Academy\s*$', '', p.titulo.strip()) or tit or u.rsplit('/', 1)[-1]
         for t, h in p.salida:
             filas.append({'pagina': nombre.strip(), 'url_pagina': u, 'titulo': t, 'hoja': h})
