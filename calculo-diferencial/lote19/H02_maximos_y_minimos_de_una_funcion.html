@@ -624,7 +624,7 @@ function oaAn(o){
       var s = v.t == null ? RUN : v.t*RUN, x = v.x, C = S.C, W = S.W, c = S.ctx, i;
       var sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0), hasta = v.t == null ? d1 : (s < T0 ? d0 : x);
       function col(sg){ return conc ? (sg > 0 ? C.sec : C.rise) : (sg > 0 ? C.alt : C.rise); }
-      function txt(t, px, py, al, cc, b){ c.fillStyle = cc || C.ink; c.font = (b === false ? '' : '600 ') + '12px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function txt(t, px, py, al, cc, b, sz){ c.fillStyle = cc || C.ink; c.font = (b === false ? '' : '600 ') + (sz || 12) + 'px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
       S.axes({gx:o.gx, gy:o.gy, full:!!o.full});
       S.curve(f, d0, d0 + (d1 - d0)*cl(s/(T0 - 0.5)), {color:C.ink, width:1.6});
       var by = S.h - 30;
@@ -633,7 +633,7 @@ function oaAn(o){
         var sg = g((cuts[i] + cuts[i + 1])/2), cc = col(sg);
         S.curve(f, u0, u1, {color:cc, width:3.5});
         S.pline(S.X(u0), by, S.X(u1), by, {color:cc, width:7});
-        if (hasta >= cuts[i + 1]) txt((conc ? 'f″' : 'f′') + (sg > 0 ? ' > 0' : ' < 0'), (S.X(cuts[i]) + S.X(cuts[i + 1]))/2, by - 12, 'center', cc);
+        if (hasta >= cuts[i + 1]) txt((conc ? 'f″' : 'f′') + (sg > 0 ? ' > 0' : ' < 0'), (S.X(cuts[i]) + S.X(cuts[i + 1]))/2, by - 13, 'center', cc, true, 13);
       }
       for (i = 1; i < cuts.length - 1; i++) if (hasta >= cuts[i]){ S.pline(S.X(cuts[i]), by - 7, S.X(cuts[i]), by + 7, {color:C.ink, width:1.5}); S.line(cuts[i], f(cuts[i]), cuts[i], 0, {color:C.muted, width:1, dash:[3,4]}); }
       if (o.ends) o.ends.forEach(function(e){ S.dot(e, f(e), C.ink); });
