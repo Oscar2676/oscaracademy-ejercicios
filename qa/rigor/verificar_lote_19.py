@@ -70,4 +70,32 @@ xs = [F(k, 6) for k in range(-30, 31) if k]
 ok("H04-B (x+1/x)'' = 2/x³: cociente incremental de 1−1/x²; f''(−1)=−2, f''(1)=2", all(abs((d1(x + h) - d1(x - h)) / (2 * h) - d2(x)) < F(1, 10 ** 6) for x in xs) and d2(-1) == -2 and d2(1) == 2)
 V = [-1, 9, 0, 0]
 ok("H04-C V'=−3t²+18t=3t(6−t), V''=−6t+18; + en (0,3), − en (3,6); V(3)=54, V'(3)=27", D(V) == [-3, 18, 0] and igual(P(D(V)), lambda x: 3 * x * (6 - x)) and D(D(V)) == [-6, 18] and signo(P(D(D(V))), F(0), F(3)) == 1 and signo(P(D(D(V))), F(3), F(6)) == -1 and P(V)(3) == 54 and P(D(V))(3) == 27 and signo(P(D(V)), F(0), F(6)) == 1)
+
+# H05
+import math
+f = [1, 0, -6, 0, 0]
+ok("H05 caso 1: f'=4x³−12x, f''=12x²−12=12(x−1)(x+1); signos + − +; f''(−2)=36, f''(0)=−12, f''(2)=36; f(±1)=−5", D(f) == [4, 0, -12, 0] and D(D(f)) == [12, 0, -12] and igual(P(D(D(f))), lambda x: 12 * (x - 1) * (x + 1)) and (signo(P(D(D(f))), -INF, F(-1)), signo(P(D(D(f))), F(-1), F(1)), signo(P(D(D(f))), F(1), INF)) == (1, -1, 1) and [P(D(D(f)))(x) for x in (-2, 0, 2)] == [36, -12, 36] and P(f)(-1) == -5 and P(f)(1) == -5)
+f = [1, -4, 6, 0, 0]
+ok("H05 caso 2: f'=4x³−12x²+12x, f''=12x²−24x+12=12(x−1)²; + a ambos lados; f''(0)=12, f''(2)=12", D(f) == [4, -12, 12, 0] and D(D(f)) == [12, -24, 12] and igual(P(D(D(f))), lambda x: 12 * (x - 1) ** 2) and signo(P(D(D(f))), -INF, F(1)) == 1 and signo(P(D(D(f))), F(1), INF) == 1 and P(D(D(f)))(0) == 12 and P(D(D(f)))(2) == 12)
+# caso 3: ∛x en x = t³: f = t; f' = 1/(3t²); f'' = −2/(9 t⁵)  (regla de la cadena: d/dt[1/(3t²)] = f''·3t²)
+ok("H05 caso 3: f''(t³) = −2/(9t⁵): d/dt[1/(3t²)] = −2/(3t³) = f''·3t² (exacto); f''(−1)=2/9, f''(1)=−2/9", all(F(-2) / (3 * t ** 3) == (F(-2) / (9 * t ** 5)) * 3 * t * t for t in [F(k, 4) for k in range(-12, 13) if k]) and F(-2) / (9 * F(-1) ** 5) == F(2, 9) and F(-2, 9) == F(-2) / 9)
+f = [1, -9, 24, 0]
+ok("H05-A f'=3x²−18x+24, f''=6x−18, f(3)=18", D(f) == [3, -18, 24] and D(D(f)) == [6, -18] and P(f)(3) == 18 and signo(P(D(D(f))), -INF, F(3)) == -1 and signo(P(D(D(f))), F(3), INF) == 1)
+g1 = lambda x: (1 - x) * math.exp(-x); g2 = lambda x: (x - 2) * math.exp(-x); g0 = lambda x: x * math.exp(-x); e = 1e-5
+ok("H05-B (x e^-x)' = (1−x)e^-x y '' = (x−2)e^-x (diferencias centrales); 2/e² ≈ 0,27", all(abs((g0(x + e) - g0(x - e)) / (2 * e) - g1(x)) < 1e-8 and abs((g1(x + e) - g1(x - e)) / (2 * e) - g2(x)) < 1e-8 for x in [k / 7 for k in range(-20, 50)]) and round(2 / math.e ** 2, 2) == 0.27)
+N = [-1, 12, 0, 0]
+ok("H05-C N'=−3t²+24t, N''=−6t+24; N(4)=128, N'(4)=48; + en (0,4), − en (4,8)", D(N) == [-3, 24, 0] and D(D(N)) == [-6, 24] and P(N)(4) == 128 and P(D(N))(4) == 48 and signo(P(D(D(N))), F(0), F(4)) == 1 and signo(P(D(D(N))), F(4), F(8)) == -1)
+
+# H06
+f = [2, -3, -12, 0]
+ok("H06 f'=6x²−6x−12=6(x−2)(x+1), f''=12x−6", D(f) == [6, -6, -12] and igual(P(D(f)), lambda x: 6 * (x - 2) * (x + 1)) and D(D(f)) == [12, -6])
+ok("H06 signos de f' + − +; f'(−2)=24, f'(0)=−12, f'(3)=24", (signo(P(D(f)), -INF, F(-1)), signo(P(D(f)), F(-1), F(2)), signo(P(D(f)), F(2), INF)) == (1, -1, 1) and [P(D(f))(x) for x in (-2, 0, 3)] == [24, -12, 24])
+ok("H06 f''(−1)=−18, f''(2)=18, cero en 1/2; f(−1)=7, f(2)=−20, f(1/2)=−13/2", P(D(D(f)))(-1) == -18 and P(D(D(f)))(2) == 18 and P(D(D(f)))(F(1, 2)) == 0 and P(f)(-1) == 7 and P(f)(2) == -20 and P(f)(F(1, 2)) == F(-13, 2))
+ok("H06 tabla resumen: signos de f' y f'' en los 4 intervalos", [(signo(P(D(f)), a, b), signo(P(D(D(f))), a, b)) for a, b in ((-INF, F(-1)), (F(-1), F(1, 2)), (F(1, 2), F(2)), (F(2), INF))] == [(1, -1), (-1, -1), (-1, 1), (1, 1)])
+f = [1, -3, -9, 5]
+ok("H06-A f'=3x²−6x−9=3(x−3)(x+1), f''=6x−6; f''(−1)=−12, f''(3)=12; f(−1)=10, f(3)=−22", D(f) == [3, -6, -9] and igual(P(D(f)), lambda x: 3 * (x - 3) * (x + 1)) and D(D(f)) == [6, -6] and P(D(D(f)))(-1) == -12 and P(D(D(f)))(3) == 12 and P(f)(-1) == 10 and P(f)(3) == -22)
+ok("H06-B x⁴+1: f'=4x³, f''=12x², f(0)=1", D([1, 0, 0, 0, 1]) == [4, 0, 0, 0] and D(D([1, 0, 0, 0, 1])) == [12, 0, 0])
+c0 = lambda x: F(x) + 100 / F(x); c1 = lambda x: 1 - 100 / F(x) ** 2; c2 = lambda x: 200 / F(x) ** 3
+xs = [F(k, 3) for k in range(3, 90)]
+ok("H06-C C'=1−100/x², C''=200/x³ (cociente incremental); C'(10)=0, C''(10)=1/5, C(10)=20; C ≥ 20 para x>0", all(abs((c0(x + h) - c0(x - h)) / (2 * h) - c1(x)) < F(1, 10 ** 8) and abs((c1(x + h) - c1(x - h)) / (2 * h) - c2(x)) < F(1, 10 ** 6) for x in xs) and c1(10) == 0 and c2(10) == F(1, 5) and c0(10) == 20 and all(c0(x) >= 20 for x in xs))
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)

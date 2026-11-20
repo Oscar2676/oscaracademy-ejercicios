@@ -1,0 +1,245 @@
+<!--file:H06_funcion_su_primera_y_segunda_derivada.html-->
+<!--title:Una función, su primera y su segunda derivada-->
+<!--id:tres-funciones-->
+<!--tab:H06 f, f′ y f″-->
+<article class="sheet" id="tres-funciones" data-hoja="L19 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Función su primera y segunda derivada</b></li>
+    </ol>
+    <h1>Una función, su primera y su segunda derivada</h1>
+    <p class="lede">La primera derivada, \(f'\), informa si \(f\) crece o decrece. La segunda derivada, \(f''\), informa hacia dónde se dobla la gráfica de \(f\). Juntas clasifican los extremos locales:
+    \[f'(c)=0\ \text{ y }\ f''(c)&gt;0\ \Longrightarrow\ \text{mínimo local en }c\qquad\qquad f'(c)=0\ \text{ y }\ f''(c)&lt;0\ \Longrightarrow\ \text{máximo local en }c\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>Qué dice cada derivada</h2>
+  <div class="card k1">
+    <h3>La primera derivada, \(f'\)</h3>
+    \[\begin{array}{ll}
+    f'(x)&gt;0\text{ en un intervalo} & \Longrightarrow\ f\text{ es estrictamente creciente en él}\\[4pt]
+    f'(x)&lt;0\text{ en un intervalo} & \Longrightarrow\ f\text{ es estrictamente decreciente en él}\\[4pt]
+    f\text{ tiene un extremo local en }c\text{ y }f'(c)\text{ existe} & \Longrightarrow\ f'(c)=0
+    \end{array}\]
+  </div>
+  <div class="card k2">
+    <h3>La segunda derivada, \(f''\)</h3>
+    \[\begin{array}{ll}
+    f''(x)&gt;0\text{ en un intervalo abierto} & \Longrightarrow\ f\text{ es cóncava hacia arriba en él}\\[4pt]
+    f''(x)&lt;0\text{ en un intervalo abierto} & \Longrightarrow\ f\text{ es cóncava hacia abajo en él}\\[4pt]
+    \big(c,\;f(c)\big)\text{ es punto de inflexión y }f''(c)\text{ existe} & \Longrightarrow\ f''(c)=0
+    \end{array}\]
+  </div>
+  <div class="card k3">
+    <h3>La relación entre las tres</h3>
+    <p>\(f''\) es la derivada de \(f'\). Por eso \(f''\) es a \(f'\) lo que \(f'\) es a \(f\): donde \(f''(x)&gt;0\), \(f'\) crece, y donde \(f''(x)&lt;0\), \(f'\) decrece. En un punto de inflexión de \(f\), la función \(f'\) tiene un máximo local o un mínimo local.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Los tres paneles muestran, con el mismo eje \(x\), las gráficas de \(f(x)=2x^{3}-3x^{2}-12x\), de \(f'(x)=6x^{2}-6x-12\) y de \(f''(x)=12x-6\). Una recta vertical roja recorre los tres a la vez y muestra el valor de cada función en el mismo \(x\). Después se marcan los tres valores de \(x\) importantes.</p>
+  <div class="stage" data-scene="tres-funciones"></div>
+  <ul class="keys">
+    <li><b>Panel 1, curva negra:</b> \(f\). <b>Panel 2, curva verde:</b> \(f'\). <b>Panel 3, recta azul:</b> \(f''\).</li>
+    <li><b>En \(x=-1\):</b> \(f'\) corta al eje \(x\), \(f'(-1)=0\), y \(f''(-1)=-18&lt;0\). En el panel 1, \(f\) tiene un máximo local, \(f(-1)=7\).</li>
+    <li><b>En \(x=\dfrac{1}{2}\):</b> \(f''\) corta al eje \(x\) y cambia de signo. En el panel 1, \(f\) tiene un punto de inflexión. En el panel 2, \(f'\) tiene su mínimo.</li>
+    <li><b>En \(x=2\):</b> \(f'\) corta al eje \(x\), \(f'(2)=0\), y \(f''(2)=18&gt;0\). En el panel 1, \(f\) tiene un mínimo local, \(f(2)=-20\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Criterio de la segunda derivada, paso a paso</h2>
+  <div class="def">
+    <h3>Criterio de la segunda derivada</h3>
+    <p>Sea \(c\) un número tal que \(f'(c)=0\) y \(f''(c)\) existe.</p>
+    \[\begin{array}{ll}
+    f''(c)&gt;0 & \Longrightarrow\ f\text{ tiene un mínimo local en }c\\[4pt]
+    f''(c)&lt;0 & \Longrightarrow\ f\text{ tiene un máximo local en }c\\[4pt]
+    f''(c)=0 & \Longrightarrow\ \text{el criterio no decide}
+    \end{array}\]
+  </div>
+  <div class="prop p1">
+  <h3>Demostración del caso \(f''(c)&gt;0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f''(c)\) es la derivada de \(f'\) en \(c\). Por la definición de derivada, y como \(f'(c)=0\):
+      \[f''(c)=\lim_{h\to 0}\frac{f'(c+h)-f'(c)}{h}=\lim_{h\to 0}\frac{f'(c+h)}{h}\]</li>
+    <li>Por hipótesis ese límite es positivo. Si un límite es positivo, la función es positiva cerca del punto: existe \(\delta&gt;0\) tal que
+      \[\frac{f'(c+h)}{h}&gt;0\quad\text{para todo }h\text{ con }0&lt;|h|&lt;\delta\]</li>
+    <li>Caso \(-\delta&lt;h&lt;0\). Se multiplican los dos miembros por \(h\), que es negativo, y la desigualdad cambia de sentido:
+      \[f'(c+h)&lt;0\]
+      Es decir, \(f'(x)&lt;0\) para todo \(x\in(c-\delta,\;c)\).</li>
+    <li>Caso \(0&lt;h&lt;\delta\). Se multiplican los dos miembros por \(h\), que es positivo, y la desigualdad se mantiene:
+      \[f'(c+h)&gt;0\]
+      Es decir, \(f'(x)&gt;0\) para todo \(x\in(c,\;c+\delta)\).</li>
+    <li>\(f'(c)\) existe, así que \(f\) es continua en \(c\). Y \(f'\) cambia de \(-\) a \(+\) en \(c\). Por el criterio de la primera derivada, \(f\) tiene un mínimo local en \(c\).</li>
+  </ol>
+  </div>
+  </div>
+  <div class="prop p2">
+  <h3>Demostración del caso \(f''(c)&lt;0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Ahora el límite del paso 1 es negativo. Existe \(\delta&gt;0\) tal que
+      \[\frac{f'(c+h)}{h}&lt;0\quad\text{para todo }h\text{ con }0&lt;|h|&lt;\delta\]</li>
+    <li>Si \(-\delta&lt;h&lt;0\), al multiplicar por \(h&lt;0\) resulta \(f'(c+h)&gt;0\). Si \(0&lt;h&lt;\delta\), al multiplicar por \(h&gt;0\) resulta \(f'(c+h)&lt;0\).</li>
+    <li>\(f'\) cambia de \(+\) a \(-\) en \(c\). Por el criterio de la primera derivada, \(f\) tiene un máximo local en \(c\).</li>
+  </ol>
+  </div>
+  </div>
+  <div class="why">
+    <h3>Para tener en cuenta: si \(f''(c)=0\), puede pasar cualquier cosa</h3>
+    <p>Las tres funciones siguientes cumplen \(f'(0)=0\) y \(f''(0)=0\):</p>
+    \[\begin{array}{llll}
+    f(x)=x^{4} & f'(x)=4x^{3} & f''(x)=12x^{2} & \text{mínimo local en }0\text{: }x^{4}\ge 0=f(0)\\[4pt]
+    f(x)=-x^{4} & f'(x)=-4x^{3} & f''(x)=-12x^{2} & \text{máximo local en }0\text{: }-x^{4}\le 0=f(0)\\[4pt]
+    f(x)=x^{3} & f'(x)=3x^{2} & f''(x)=6x & \text{sin extremo en }0\text{: }x^{3}&lt;0\text{ si }x&lt;0,\ x^{3}&gt;0\text{ si }x&gt;0
+    \end{array}\]
+    <p>En ese caso se usa el criterio de la primera derivada.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejemplo completo: la función de la animación</h2>
+  <p>Estudiar \(f(x)=2x^{3}-3x^{2}-12x\) con sus dos derivadas: crecimiento, extremos, concavidad y puntos de inflexión.</p>
+  <div class="prop p3">
+  <h3>Con la primera derivada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f\) es polinomial: \(f\), \(f'\) y \(f''\) existen y son continuas en \(\mathbb{R}\). Primera derivada:
+      \[f'(x)=6x^{2}-6x-12\]</li>
+    <li>Se factoriza por \(6\). En el trinomio se buscan dos números de producto \(-2\) y suma \(-1\): son \(-2\) y \(1\).
+      \[f'(x)=6\left(x^{2}-x-2\right)=6\,(x-2)(x+1)\]</li>
+    <li>Números críticos:
+      \[f'(x)=0\iff x=2\ \text{ o }\ x=-1\]</li>
+    <li>Signo de \(f'\):
+      \[\begin{array}{c|c|c|c|c}
+      \textbf{Intervalo} & (x-2) & (x+1) & f'(x) & f\\ \hline
+      x&lt;-1 & - & - & + & \text{crece}\\
+      -1&lt;x&lt;2 & - & + & - & \text{decrece}\\
+      x&gt;2 & + & + & + & \text{crece}
+      \end{array}\]</li>
+    <li>Comprobación con un valor de cada intervalo:
+      \[f'(-2)=6\cdot(-2)^{2}-6\cdot(-2)-12=24+12-12=24\qquad f'(0)=-12\qquad f'(3)=6\cdot 3^{2}-6\cdot 3-12=54-18-12=24\]</li>
+  </ol>
+  </div>
+  </div>
+  <div class="prop p4">
+  <h3>Con la segunda derivada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Segunda derivada:
+      \[f''(x)=12x-6\]</li>
+    <li>Criterio de la segunda derivada en \(c=-1\):
+      \[f''(-1)=12\cdot(-1)-6=-12-6=-18&lt;0\quad\Longrightarrow\quad\text{máximo local}\]</li>
+    <li>Criterio de la segunda derivada en \(c=2\):
+      \[f''(2)=12\cdot 2-6=24-6=18&gt;0\quad\Longrightarrow\quad\text{mínimo local}\]</li>
+    <li>Candidato a punto de inflexión:
+      \[12x-6=0\iff 12x=6\iff x=\frac{6}{12}=\frac{1}{2}\]</li>
+    <li>Signo de \(f''\):
+      \[12x-6&gt;0\iff 12x&gt;6\iff x&gt;\frac{1}{2}\]
+      Entonces \(f''(x)&lt;0\) si \(x&lt;\dfrac{1}{2}\), cóncava hacia abajo, y \(f''(x)&gt;0\) si \(x&gt;\dfrac{1}{2}\), cóncava hacia arriba. El signo cambia: hay punto de inflexión.</li>
+  </ol>
+  </div>
+  </div>
+  <div class="prop p1">
+  <h3>Los valores y el resumen</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Máximo local:
+      \[f(-1)=2\cdot(-1)^{3}-3\cdot(-1)^{2}-12\cdot(-1)=-2-3+12=7\]</li>
+    <li>Mínimo local:
+      \[f(2)=2\cdot 2^{3}-3\cdot 2^{2}-12\cdot 2=16-12-24=-20\]</li>
+    <li>Punto de inflexión:
+      \[f\!\left(\frac{1}{2}\right)=2\cdot\frac{1}{8}-3\cdot\frac{1}{4}-12\cdot\frac{1}{2}=\frac{1}{4}-\frac{3}{4}-6=-\frac{1}{2}-\frac{12}{2}=-\frac{13}{2}\]</li>
+  </ol>
+    \[\begin{array}{c|c|c|c|c|c|c|c}
+    x & x&lt;-1 & -1 & -1&lt;x&lt;\frac{1}{2} & \frac{1}{2} & \frac{1}{2}&lt;x&lt;2 & 2 & x&gt;2\\ \hline
+    f'(x) & + & 0 & - & - & - & 0 & +\\
+    f''(x) & - & - & - & 0 & + & + & +\\
+    f & \text{crece} & \text{máx. }7 & \text{decrece} & \text{inflexión} & \text{decrece} & \text{mín. }-20 & \text{crece}
+    \end{array}\]
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Halla y clasifica, con el criterio de la segunda derivada, los extremos locales de \(f(x)=x^{3}-3x^{2}-9x+5\).</p>
+    <details><summary>Pista</summary><div><p>\(f'(x)=3\,(x-3)(x+1)\). Evalúa \(f''\) en cada número crítico.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Primera derivada, factorizada. En el trinomio se buscan dos números de producto \(-3\) y suma \(-2\): son \(-3\) y \(1\).
+          \[f'(x)=3x^{2}-6x-9=3\left(x^{2}-2x-3\right)=3\,(x-3)(x+1)\]</li>
+        <li>Números críticos:
+          \[f'(x)=0\iff x=3\ \text{ o }\ x=-1\]</li>
+        <li>Segunda derivada:
+          \[f''(x)=6x-6\]</li>
+        <li>En \(c=-1\):
+          \[f''(-1)=6\cdot(-1)-6=-12&lt;0\quad\Longrightarrow\quad\text{máximo local}\]</li>
+        <li>En \(c=3\):
+          \[f''(3)=6\cdot 3-6=12&gt;0\quad\Longrightarrow\quad\text{mínimo local}\]</li>
+        <li>Valores:
+          \[f(-1)=(-1)^{3}-3\cdot(-1)^{2}-9\cdot(-1)+5=-1-3+9+5=10\]
+          \[f(3)=3^{3}-3\cdot 3^{2}-9\cdot 3+5=27-27-27+5=-22\]</li>
+        <li>Respuesta: máximo local \(f(-1)=10\) y mínimo local \(f(3)=-22\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Clasifica el número crítico de \(f(x)=x^{4}+1\).</p>
+    <details><summary>Pista</summary><div><p>El criterio de la segunda derivada no decide. Usa el de la primera.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Derivadas:
+          \[f'(x)=4x^{3}\qquad f''(x)=12x^{2}\]</li>
+        <li>Número crítico:
+          \[4x^{3}=0\iff x=0\]</li>
+        <li>Criterio de la segunda derivada:
+          \[f''(0)=12\cdot 0^{2}=0\]
+          El criterio no decide.</li>
+        <li>Criterio de la primera derivada. El signo de \(4x^{3}\) es el signo de \(x\):
+          \[x&lt;0\ \Longrightarrow\ f'(x)&lt;0\qquad\qquad x&gt;0\ \Longrightarrow\ f'(x)&gt;0\]</li>
+        <li>\(f'\) cambia de \(-\) a \(+\) en \(0\): hay un mínimo local. Su valor:
+          \[f(0)=0^{4}+1=1\]</li>
+        <li>Respuesta: mínimo local \(f(0)=1\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En una fábrica, el costo promedio de cada unidad, en miles de pesos, cuando se producen \(x\) cientos de unidades es \(C(x)=x+\dfrac{100}{x}\), con \(x&gt;0\). ¿Qué producción da el menor costo promedio?</p>
+    <details><summary>Pista</summary><div><p>Escribe \(\dfrac{100}{x}=100x^{-1}\). Usa el criterio de la segunda derivada.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Para \(x&gt;0\), \(C\) es derivable. Primera derivada, con \(\dfrac{100}{x}=100x^{-1}\):
+          \[C'(x)=1+100\cdot(-1)\cdot x^{-2}=1-\frac{100}{x^{2}}\]</li>
+        <li>Números críticos:
+          \[1-\frac{100}{x^{2}}=0\iff x^{2}=100\iff x=10\ \text{ o }\ x=-10\]
+          Solo \(x=10\) cumple \(x&gt;0\).</li>
+        <li>Segunda derivada:
+          \[C''(x)=0-100\cdot(-2)\cdot x^{-3}=\frac{200}{x^{3}}\]</li>
+        <li>Criterio de la segunda derivada:
+          \[C''(10)=\frac{200}{10^{3}}=\frac{200}{1000}=\frac{1}{5}&gt;0\quad\Longrightarrow\quad\text{mínimo local}\]</li>
+        <li>Es también el mínimo absoluto en \((0,\;+\infty)\). Si \(0&lt;x&lt;10\), \(x^{2}&lt;100\), así que \(\dfrac{100}{x^{2}}&gt;1\) y \(C'(x)&lt;0\): \(C\) decrece. Si \(x&gt;10\), \(x^{2}&gt;100\), así que \(\dfrac{100}{x^{2}}&lt;1\) y \(C'(x)&gt;0\): \(C\) crece.</li>
+        <li>Valor:
+          \[C(10)=10+\frac{100}{10}=10+10=20\]</li>
+        <li>Respuesta: con \(10\) cientos de unidades, es decir \(1000\) unidades, el costo promedio es el menor: \(20\) mil pesos por unidad.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L19-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>
