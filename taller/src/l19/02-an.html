@@ -1,0 +1,319 @@
+<!--file:H02_maximos_y_minimos_de_una_funcion.html-->
+<!--title:Máximos y mínimos de una función-->
+<!--id:maximos-minimos-->
+<!--tab:H02 Máximos y mínimos-->
+<article class="sheet" id="maximos-minimos" data-hoja="L19 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Derivadas para el análisis de funciones</li>
+      <li><b>Máximos y mínimos de una función</b></li>
+    </ol>
+    <h1>Máximos y mínimos de una función</h1>
+    <p class="lede">Sea \(f\) una función de dominio \(D\subset\mathbb{R}\) y sea \(c\in D\). El número \(f(c)\) es el máximo absoluto de \(f\) si ningún valor de \(f\) lo supera, y es el mínimo absoluto si ningún valor de \(f\) queda bajo él:
+    \[\text{máximo absoluto: }f(c)\ge f(x)\ \text{ para todo }x\in D\qquad\qquad\text{mínimo absoluto: }f(c)\le f(x)\ \text{ para todo }x\in D\]
+    Si \(f\) tiene un máximo o un mínimo local en \(c\) y \(f'(c)\) existe, entonces \(f'(c)=0\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>Las definiciones</h2>
+  <div class="card">
+    <h3>Extremos absolutos</h3>
+    <p>\(f\) tiene un <b>máximo absoluto</b> en \(c\in D\) si \(f(c)\ge f(x)\) para todo \(x\in D\). Tiene un <b>mínimo absoluto</b> en \(c\in D\) si \(f(c)\le f(x)\) para todo \(x\in D\). Se compara \(f(c)\) con todos los valores de la función.</p>
+  </div>
+  <div class="card k1">
+    <h3>Extremos locales o relativos</h3>
+    <p>\(f\) tiene un <b>máximo local</b> en \(c\) si existe \(\delta&gt;0\) tal que \((c-\delta,\;c+\delta)\subset D\) y</p>
+    \[f(c)\ge f(x)\quad\text{para todo }x\in(c-\delta,\;c+\delta)\]
+    <p>Tiene un <b>mínimo local</b> en \(c\) si existe \(\delta&gt;0\) tal que \((c-\delta,\;c+\delta)\subset D\) y</p>
+    \[f(c)\le f(x)\quad\text{para todo }x\in(c-\delta,\;c+\delta)\]
+    <p>Se compara \(f(c)\) solo con los valores de la función cerca de \(c\). Con esta definición, un extremo de un intervalo cerrado no es un extremo local, porque a un lado de él la función no está definida.</p>
+  </div>
+  <div class="card k2">
+    <h3>Número crítico</h3>
+    <p>Un número \(c\in D\) es un <b>número crítico</b> de \(f\) si</p>
+    \[f'(c)=0\qquad\text{o}\qquad f'(c)\text{ no existe}\]
+    <p>El punto \(\big(c,\;f(c)\big)\) de la gráfica se llama punto crítico.</p>
+  </div>
+  <div class="card k3">
+    <h3>Teorema de los valores extremos, de Weierstrass</h3>
+    <p>Si \(f\) es continua en un intervalo cerrado \([a,\;b]\), entonces \(f\) tiene un máximo absoluto y un mínimo absoluto en \([a,\;b]\).</p>
+    <p>Su demostración usa una propiedad de los números reales, el axioma del supremo, y no se desarrolla en esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva es \(f(x)=x^{3}-3x^{2}+1\) en el intervalo cerrado \([-1,\;4]\). El punto \(P\) la recorre con su recta tangente. Después se marcan los cuatro candidatos a extremo absoluto: los dos extremos del intervalo y los dos puntos de tangente horizontal.</p>
+  <div class="stage" data-scene="maximos-minimos"></div>
+  <ul class="keys">
+    <li><b>Tramo verde:</b> \(f'(x)&gt;0\), la función crece. <b>Tramo naranja:</b> \(f'(x)&lt;0\), la función decrece.</li>
+    <li><b>Punto \((0,\;1)\):</b> \(f'(0)=0\). Es un máximo local: cerca de \(0\) ningún valor supera a \(1\).</li>
+    <li><b>Punto \((2,\;-3)\):</b> \(f'(2)=0\). Es un mínimo local, y también mínimo absoluto.</li>
+    <li><b>Punto \((-1,\;-3)\):</b> extremo izquierdo del intervalo. También es mínimo absoluto, porque \(f(-1)=f(2)=-3\).</li>
+    <li><b>Punto \((4,\;17)\):</b> extremo derecho del intervalo. Es el máximo absoluto.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Teorema de Fermat, paso a paso</h2>
+  <div class="def">
+    <h3>Teorema de Fermat</h3>
+    <p>Si \(f\) tiene un máximo local o un mínimo local en \(c\), y \(f'(c)\) existe, entonces</p>
+    \[f'(c)=0\]
+  </div>
+  <div class="prop p1">
+  <h3>Demostración para un máximo local</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Por la definición de máximo local, existe \(\delta&gt;0\) tal que \(f(c)\ge f(x)\) para todo \(x\in(c-\delta,\;c+\delta)\).</li>
+    <li>Sea \(h\neq 0\) con \(-\delta&lt;h&lt;\delta\). Entonces \(c+h\in(c-\delta,\;c+\delta)\) y, por el paso 1, \(f(c+h)\le f(c)\). Se resta \(f(c)\):
+      \[f(c+h)-f(c)\le 0\]</li>
+    <li>Caso \(h&gt;0\). Se dividen los dos miembros por \(h\), que es positivo, y la desigualdad se mantiene:
+      \[\frac{f(c+h)-f(c)}{h}\le 0\]</li>
+    <li>Si todos los cocientes son menores o iguales que \(0\), su límite también lo es:
+      \[\lim_{h\to 0^{+}}\frac{f(c+h)-f(c)}{h}\le 0\]</li>
+    <li>Caso \(h&lt;0\). Se dividen los dos miembros del paso 2 por \(h\), que es negativo, y la desigualdad cambia de sentido:
+      \[\frac{f(c+h)-f(c)}{h}\ge 0\]</li>
+    <li>Si todos los cocientes son mayores o iguales que \(0\), su límite también lo es:
+      \[\lim_{h\to 0^{-}}\frac{f(c+h)-f(c)}{h}\ge 0\]</li>
+    <li>Por hipótesis \(f'(c)\) existe. Entonces los dos límites laterales existen y son iguales a \(f'(c)\). Por los pasos 4 y 6:
+      \[f'(c)\le 0\qquad\text{y}\qquad f'(c)\ge 0\]</li>
+    <li>El único número que es menor o igual que \(0\) y mayor o igual que \(0\) es \(0\):
+      \[f'(c)=0\]</li>
+  </ol>
+  </div>
+  </div>
+  <div class="prop p2">
+  <h3>Demostración para un mínimo local</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Ahora \(f(c)\le f(x)\) para todo \(x\in(c-\delta,\;c+\delta)\). Para \(h\neq 0\) con \(-\delta&lt;h&lt;\delta\):
+      \[f(c+h)-f(c)\ge 0\]</li>
+    <li>Con \(h&gt;0\) el cociente es mayor o igual que \(0\), y con \(h&lt;0\) es menor o igual que \(0\). Con los mismos pasos de antes:
+      \[f'(c)\ge 0\qquad\text{y}\qquad f'(c)\le 0\qquad\Longrightarrow\qquad f'(c)=0\]</li>
+  </ol>
+  </div>
+  </div>
+  <div class="why">
+    <h3>Para tener en cuenta</h3>
+    <ul class="keys">
+      <li><b>Lo que dice el teorema:</b> un extremo local solo puede estar en un número crítico. Si \(f'(c)\) existe y \(f'(c)\neq 0\), en \(c\) no hay extremo local.</li>
+      <li><b>El recíproco no es cierto:</b> \(f'(c)=0\) no asegura un extremo. Ejemplo: \(f(x)=x^{3}\) tiene \(f'(x)=3x^{2}\) y \(f'(0)=0\). Pero si \(x&lt;0\), \(x^{3}&lt;0=f(0)\), y si \(x&gt;0\), \(x^{3}&gt;0=f(0)\). Cerca de \(0\) hay valores menores y valores mayores que \(f(0)\): en \(0\) no hay máximo local ni mínimo local.</li>
+      <li><b>Puede haber un extremo donde \(f'(c)\) no existe:</b> \(f(x)=|x|\) tiene un mínimo en \(0\), porque \(|x|\ge 0=|0|\) para todo \(x\), y \(f'(0)\) no existe.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>El método del intervalo cerrado</h2>
+  <div class="card">
+    <p>Para hallar el máximo absoluto y el mínimo absoluto de una función \(f\) continua en \([a,\;b]\):</p>
+    <ol class="steps">
+      <li>Se hallan los números críticos de \(f\) en \((a,\;b)\).</li>
+      <li>Se calcula \(f\) en cada número crítico.</li>
+      <li>Se calcula \(f(a)\) y \(f(b)\).</li>
+      <li>El mayor de esos valores es el máximo absoluto. El menor es el mínimo absoluto.</li>
+    </ol>
+    <p>Por qué funciona: por el teorema de Weierstrass los dos extremos absolutos existen. Cada uno está en \(a\), en \(b\) o en un punto de \((a,\;b)\). En este último caso es también un extremo local y, por el teorema de Fermat, está en un número crítico.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ejemplo completo: la función de la animación</h2>
+  <p>Hallar el máximo absoluto y el mínimo absoluto de \(f(x)=x^{3}-3x^{2}+1\) en \([-1,\;4]\).</p>
+  <div class="prop p3">
+  <h3>Paso 1: los números críticos</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f\) es polinomial: es continua en \([-1,\;4]\) y derivable en \((-1,\;4)\). \(f'(x)\) existe siempre, así que los números críticos son los ceros de \(f'\).</li>
+    <li>Derivada:
+      \[f'(x)=3x^{2}-6x\]</li>
+    <li>Se factoriza por \(3x\):
+      \[f'(x)=3x\,(x-2)\]</li>
+    <li>Un producto es \(0\) solo si alguno de sus factores es \(0\):
+      \[f'(x)=0\iff 3x=0\ \text{ o }\ x-2=0\iff x=0\ \text{ o }\ x=2\]</li>
+    <li>\(-1&lt;0&lt;4\) y \(-1&lt;2&lt;4\): los dos números críticos están en \((-1,\;4)\).</li>
+  </ol>
+  </div>
+  </div>
+  <div class="prop p4">
+  <h3>Pasos 2 y 3: los valores de \(f\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En el número crítico \(0\):
+      \[f(0)=0^{3}-3\cdot 0^{2}+1=1\]</li>
+    <li>En el número crítico \(2\):
+      \[f(2)=2^{3}-3\cdot 2^{2}+1=8-12+1=-3\]</li>
+    <li>En el extremo \(a=-1\):
+      \[f(-1)=(-1)^{3}-3\cdot(-1)^{2}+1=-1-3+1=-3\]</li>
+    <li>En el extremo \(b=4\):
+      \[f(4)=4^{3}-3\cdot 4^{2}+1=64-48+1=17\]</li>
+  </ol>
+  </div>
+  </div>
+  <div class="prop p1">
+  <h3>Paso 4: la comparación</h3>
+  <div class="body">
+    \[\begin{array}{c|c|c|c|c}
+    x & -1 & 0 & 2 & 4\\ \hline
+    f(x) & -3 & 1 & -3 & 17
+    \end{array}\]
+  <ol class="steps">
+    <li>El mayor valor es \(17\): el máximo absoluto es \(f(4)=17\).</li>
+    <li>El menor valor es \(-3\): el mínimo absoluto es \(-3\), y se alcanza dos veces, en \(x=-1\) y en \(x=2\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Halla el máximo absoluto y el mínimo absoluto de \(f(x)=x^{2}-4x+5\) en \([0,\;3]\).</p>
+    <details><summary>Pista</summary><div><p>Hay un solo número crítico. Compara tres valores.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f\) es polinomial: es continua en \([0,\;3]\) y derivable en \((0,\;3)\).</li>
+        <li>Derivada y número crítico:
+          \[f'(x)=2x-4\qquad 2x-4=0\iff x=2\]</li>
+        <li>\(0&lt;2&lt;3\): el número crítico está en \((0,\;3)\).</li>
+        <li>Valores:
+          \[f(2)=2^{2}-4\cdot 2+5=4-8+5=1\]
+          \[f(0)=0^{2}-4\cdot 0+5=5\]
+          \[f(3)=3^{2}-4\cdot 3+5=9-12+5=2\]</li>
+        <li>Respuesta: el máximo absoluto es \(f(0)=5\) y el mínimo absoluto es \(f(2)=1\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Halla el máximo absoluto y el mínimo absoluto de \(f(x)=x+\dfrac{4}{x}\) en \([1,\;4]\).</p>
+    <details><summary>Pista</summary><div><p>Escribe \(\dfrac{4}{x}=4x^{-1}\) para derivar. De los dos ceros de \(f'\), solo uno está en el intervalo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f\) está definida, es continua y es derivable en todo \(x\neq 0\). Como \(0\notin[1,\;4]\), \(f\) es continua en \([1,\;4]\) y derivable en \((1,\;4)\).</li>
+        <li>Derivada, con \(\dfrac{4}{x}=4x^{-1}\) y la regla de la potencia:
+          \[f'(x)=1+4\cdot(-1)\cdot x^{-2}=1-\frac{4}{x^{2}}\]</li>
+        <li>Ceros de la derivada:
+          \[1-\frac{4}{x^{2}}=0\iff\frac{4}{x^{2}}=1\iff x^{2}=4\iff x=2\ \text{ o }\ x=-2\]</li>
+        <li>\(1&lt;2&lt;4\), así que \(2\in(1,\;4)\). En cambio \(-2&lt;1\), así que \(-2\notin(1,\;4)\). El único número crítico en el intervalo es \(2\).</li>
+        <li>Valores:
+          \[f(2)=2+\frac{4}{2}=2+2=4\]
+          \[f(1)=1+\frac{4}{1}=1+4=5\]
+          \[f(4)=4+\frac{4}{4}=4+1=5\]</li>
+        <li>Respuesta: el mínimo absoluto es \(f(2)=4\). El máximo absoluto es \(5\) y se alcanza dos veces, en \(x=1\) y en \(x=4\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Con \(40\) metros de malla se quiere cercar un huerto rectangular apoyado en un muro, de modo que el muro sea uno de sus lados y la malla cubra los otros tres. ¿Qué medidas dan el huerto de mayor área?</p>
+    <details><summary>Pista</summary><div><p>Si los dos lados perpendiculares al muro miden \(x\) metros cada uno, el lado paralelo al muro mide \(40-2x\) metros.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sea \(x\) la medida, en metros, de cada lado perpendicular al muro. La malla cubre tres lados:
+          \[x+x+\text{lado paralelo}=40\quad\Longrightarrow\quad\text{lado paralelo}=40-2x\]</li>
+        <li>Las medidas no pueden ser negativas:
+          \[x\ge 0\qquad\text{y}\qquad 40-2x\ge 0\iff x\le 20\]
+          Entonces \(x\in[0,\;20]\).</li>
+        <li>Área del rectángulo, en metros cuadrados:
+          \[A(x)=x\,(40-2x)=40x-2x^{2}\]</li>
+        <li>\(A\) es polinomial: es continua en \([0,\;20]\) y derivable en \((0,\;20)\). Derivada y número crítico:
+          \[A'(x)=40-4x\qquad 40-4x=0\iff 4x=40\iff x=10\]</li>
+        <li>\(0&lt;10&lt;20\): el número crítico está en \((0,\;20)\).</li>
+        <li>Valores:
+          \[A(10)=40\cdot 10-2\cdot 10^{2}=400-200=200\]
+          \[A(0)=40\cdot 0-2\cdot 0^{2}=0\]
+          \[A(20)=40\cdot 20-2\cdot 20^{2}=800-800=0\]</li>
+        <li>El mayor valor es \(200\). Lado paralelo al muro con \(x=10\):
+          \[40-2\cdot 10=20\]</li>
+        <li>Respuesta: el huerto de mayor área mide \(10\) metros en los lados perpendiculares al muro y \(20\) metros en el lado paralelo. Su área es de \(200\) metros cuadrados.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L19-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* Escena común de análisis de funciones: un punto P recorre la curva con su tangente y la curva se pinta según el signo de f' (modo 'crec') o de f'' (modo 'conc'). */
+function oaAn(o){
+  var num = OA.num, f = o.f, d0 = o.d0, d1 = o.d1, conc = o.mode === 'conc', g = conc ? o.d2f : o.df, marks = o.marks || [];
+  var T0 = 3, SW = o.sweep || 18, T1 = T0 + SW, MK = 3.5, RUN = T1 + MK*Math.max(marks.length, 1);
+  var cuts = [d0].concat(o.cuts || []).concat([d1]);
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', ',').replace('-', '−'); }
+  var dn = conc ? 'f″(x)' : 'f′(x)', dnTex = conc ? "f''(x)" : "f'(x)";
+  var labels = marks.map(function(m, i){ return ['m' + i, m.tex, m.fb, 'diff']; });
+  labels.push(['P', 'P\\,\\big(x,\;f(x)\\big)', 'P (x, f(x))', 'pt c-tan']);
+  var def = {
+    world:o.world, aspect:o.aspect || 1, aria:o.aria, labels:labels,
+    sliders:[{id:'x', tex:'x', min:d0, max:d1, step:(d1 - d0)/400, value:d0}],
+    legend:conc ? '<span><i class="sw sec"></i> cóncava hacia arriba, \\(f\'\'(x)&gt;0\\)</span><span><i class="sw rise"></i> cóncava hacia abajo, \\(f\'\'(x)&lt;0\\)</span><span><i class="sw tan"></i> tangente en \\(P\\)</span>'
+                : '<span><i class="sw alt"></i> crece, \\(f\'(x)&gt;0\\)</span><span><i class="sw rise"></i> decrece, \\(f\'(x)&lt;0\\)</span><span><i class="sw tan"></i> tangente en \\(P\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; var s = p*RUN; v.x = s < T0 ? d0 : s < T1 ? d0 + (d1 - d0)*(s - T0)/SW : d1; }},
+    onInput:function(v){ v.t = null; },
+    draw:function(S, v){
+      var s = v.t == null ? RUN : v.t*RUN, x = v.x, C = S.C, W = S.W, c = S.ctx, i;
+      var sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0), hasta = v.t == null ? d1 : (s < T0 ? d0 : x);
+      function col(sg){ return conc ? (sg > 0 ? C.sec : C.rise) : (sg > 0 ? C.alt : C.rise); }
+      function txt(t, px, py, al, cc, b){ c.fillStyle = cc || C.ink; c.font = (b === false ? '' : '600 ') + '12px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.axes({gx:o.gx, gy:o.gy, full:!!o.full});
+      S.curve(f, d0, d0 + (d1 - d0)*cl(s/(T0 - 0.5)), {color:C.ink, width:1.6});
+      var by = S.h - 30;
+      for (i = 0; i < cuts.length - 1; i++){
+        var u0 = cuts[i], u1 = Math.min(cuts[i + 1], hasta); if (u1 <= u0) continue;
+        var sg = g((cuts[i] + cuts[i + 1])/2), cc = col(sg);
+        S.curve(f, u0, u1, {color:cc, width:3.5});
+        S.pline(S.X(u0), by, S.X(u1), by, {color:cc, width:7});
+        if (hasta >= cuts[i + 1]) txt((conc ? 'f″' : 'f′') + (sg > 0 ? ' > 0' : ' < 0'), (S.X(cuts[i]) + S.X(cuts[i + 1]))/2, by - 12, 'center', cc);
+      }
+      for (i = 1; i < cuts.length - 1; i++) if (hasta >= cuts[i]){ S.pline(S.X(cuts[i]), by - 7, S.X(cuts[i]), by + 7, {color:C.ink, width:1.5}); S.line(cuts[i], f(cuts[i]), cuts[i], 0, {color:C.muted, width:1, dash:[3,4]}); }
+      if (o.ends) o.ends.forEach(function(e){ S.dot(e, f(e), C.ink); });
+      var live = v.t == null || (s >= T0 && s < T1);
+      if (live){
+        var fx = f(x), m = o.df(x), ux = sx, uy = -m*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.17*S.w; ux /= n; uy /= n;
+        S.pline(S.X(x) - L*ux, S.Y(fx) - L*uy, S.X(x) + L*ux, S.Y(fx) + L*uy, {color:C.tan, width:3});
+        S.dot(x, fx, C.tan);
+        var gv = g(x), t1 = dn + ' = ' + dec(gv, 2), tw = c.measureText(t1).width + 8, up = o.txtUp ? o.txtUp(x) : true, lado = (m <= 0) === up ? 1 : -1, px = Math.max(tw/2 + 4, Math.min(S.X(x) + lado*(tw/2 + 8), S.w - tw/2 - 4));
+        txt(t1, px, Math.max(12, Math.min(by - 30, S.Y(fx) + (up ? -22 : 24))), 'center', C.tan);
+      }
+      marks.forEach(function(mk, k){ var on = v.t == null || s >= T1 + MK*k; if (on) S.dot(mk.x, f(mk.x), mk.col === 'ink' ? C.ink : C.tan); var p = mk.pos || [1, 1]; S.out('m' + k, S.X(mk.x), S.Y(f(mk.x)), p[0], p[1], on, 10); });
+      S.lab('P', 0, 0, 0, 0, false);
+    },
+    caption:function(v){
+      var x = v.x, s = v.t == null ? null : v.t*RUN, gv = g(x), k;
+      if (s != null && s < T0) return ['Curva: la gráfica de ', o.fTex, o.fFb];
+      if (s == null || s < T1){
+        if (Math.abs(gv) < (o.eps || 0.04)) return conc ? ['Aquí la curva cambia la forma en que se dobla: ', "f''(x)=0", 'f″(x) = 0'] : ['Tangente horizontal: ', "f'(x)=0", 'f′(x) = 0'];
+        if (conc) return gv > 0 ? ['La curva se dobla hacia arriba y queda sobre la tangente: ', "f''(x)=" + num(gv, 2) + '>0', 'f″(x) = ' + dec(gv, 2) + ' > 0'] : ['La curva se dobla hacia abajo y queda bajo la tangente: ', "f''(x)=" + num(gv, 2) + '<0', 'f″(x) = ' + dec(gv, 2) + ' < 0'];
+        return gv > 0 ? ['La tangente sube y la función crece: ', "f'(x)=" + num(gv, 2) + '>0', 'f′(x) = ' + dec(gv, 2) + ' > 0'] : ['La tangente baja y la función decrece: ', "f'(x)=" + num(gv, 2) + '<0', 'f′(x) = ' + dec(gv, 2) + ' < 0'];
+      }
+      if (!marks.length) return o.endCap || '';
+      k = Math.min(Math.floor((s - T1)/MK), marks.length - 1); return marks[k].cap;
+    },
+    readout:function(v){
+      var x = v.x, r = [['d', 'x=' + num(x, 2) + '\\qquad f(x)=' + num(f(x), 2)], ['', "f'(x)=" + num(o.df(x), 2) + (o.d2f ? "\\qquad f''(x)=" + num(o.d2f(x), 2) : '')]];
+      return r;
+    }
+  };
+  def._chk = {f:f, df:o.df, d2f:o.d2f, d0:d0, d1:d1};
+  return def;
+}
+OA.scene('maximos-minimos', oaAn({
+  mode:'crec', f:function(x){ return x*x*x - 3*x*x + 1; }, df:function(x){ return 3*x*x - 6*x; }, d2f:function(x){ return 6*x - 6; },
+  d0:-1, d1:4, cuts:[0, 2], ends:[-1, 4], world:{x0:-3.6, x1:5.3, y0:-15, y1:20}, aspect:0.86, gx:[-3,-2,-1,1,2,3,4,5], gy:[-10,-5,5,10,15,20], full:true,
+  fTex:'f(x)=x^{3}-3x^{2}+1\\ \\text{en}\\ [-1,\;4]', fFb:'f(x) = x³ − 3x² + 1 en [−1, 4]', txtUp:function(x){ return true; }, eps:0.12,
+  aria:'Gráfica de f(x) = x³ − 3x² + 1 en el intervalo cerrado [−1, 4]. Crece hasta (0, 1), decrece hasta (2, −3) y crece hasta (4, 17). Se marcan los cuatro candidatos: (−1, −3), (0, 1), (2, −3) y (4, 17).',
+  marks:[{x:0, tex:"(0,\;1):\\ \\text{máximo local}", fb:'(0, 1): máximo local', pos:[1,1], cap:'Número crítico 0: la tangente es horizontal y f(0) = 1 es un máximo local'},
+         {x:2, tex:"(2,\;-3):\\ \\text{mínimo local y absoluto}", fb:'(2, −3): mínimo local y absoluto', pos:[1,-1], cap:'Número crítico 2: la tangente es horizontal y f(2) = −3 es un mínimo local'},
+         {x:-1, col:'ink', tex:"(-1,\;-3):\\ \\text{mínimo absoluto}", fb:'(−1, −3): mínimo absoluto', pos:[-1,-1], cap:'Extremo izquierdo del intervalo: f(−1) = −3, igual que f(2). El mínimo absoluto es −3'},
+         {x:4, col:'ink', tex:"(4,\;17):\\ \\text{máximo absoluto}", fb:'(4, 17): máximo absoluto', pos:[-1,1], cap:'Extremo derecho del intervalo: f(4) = 17 es el mayor de los cuatro valores. El máximo absoluto es 17'}]
+}));
