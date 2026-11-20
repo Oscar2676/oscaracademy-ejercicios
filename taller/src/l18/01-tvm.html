@@ -269,10 +269,9 @@ function oaTVM(o){
           S.pline(S.X(c) - L*ux, S.Y(fc) - L*uy, S.X(c) + L*ux, S.Y(fc) + L*uy, {color:C.tan, width:3});
           if (cerca(c) < 0 || (v.t != null && s < T3)){
             x.fillStyle = C.tan; x.font = '600 12px "Source Sans 3", system-ui, sans-serif'; x.textBaseline = 'middle';
-            var txt = 'pendiente ' + dec(mc, 2), tw = x.measureText(txt).width, e1 = [S.X(c) + L*ux, S.Y(fc) + L*uy], e0 = [S.X(c) - L*ux, S.Y(fc) - L*uy];
-            var lejos = function(e){ return Math.min(Math.hypot(e[0] - S.X(a), e[1] - S.Y(fa)), Math.hypot(e[0] - S.X(b), e[1] - S.Y(fb))) - (e[0] < 0 || e[0] > S.w || e[1] < 0 || e[1] > S.h ? 1e4 : 0); };
-            var der = lejos(e1) >= lejos(e0), e = der ? e1 : e0;
-            x.textAlign = 'left'; var tx = Math.max(4, Math.min(der ? e[0] + 6 : e[0] - tw - 6, S.w - tw - 4)), ty = Math.max(10, Math.min(S.h - 22, e[1] + ((der ? uy : -uy) < 0 ? -9 : 11)));
+            var txt = 'pendiente ' + dec(mc, 2), tw = x.measureText(txt).width, pp = (o.pos || {}).C || [1, -1];
+            var tx = pp[0] >= 0 ? S.X(c) + 10 : S.X(c) - 10 - tw, ty = S.Y(fc) + (pp[1] >= 0 ? -42 : 42);
+            x.textAlign = 'left'; tx = Math.max(4, Math.min(tx, S.w - tw - 4)); ty = Math.max(10, Math.min(S.h - 22, ty));
             x.fillText(txt, tx, ty);
           }
         }
