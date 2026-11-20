@@ -128,27 +128,51 @@
   </div>
 
   <div class="prop p2">
-  <h3>Falla la continuidad en un extremo: una función definida por tramos en \([0,\;1]\)</h3>
+  <h3>Falla la continuidad: una función con un salto en \([0,\;2]\)</h3>
   <div class="body">
   <p>Sea
-    \[g(x)=\begin{cases}x^{2} & \text{si }0\le x&lt;1\\ 0 & \text{si }x=1\end{cases}\]</p>
-  <p><b>Disfruta la animación.</b> El punto \(P\) recorre la curva hacia la derecha. Mientras \(x\) se acerca a \(1\), \(g(x)\) se acerca a \(1\). Pero justo en \(x=1\) la función vale \(0\): la gráfica da un salto. Eso es la discontinuidad. Después \(P\) vuelve a recorrer la curva con su tangente.</p>
+    \[g(x)=\begin{cases}x^{2} & \text{si }0\le x&lt;1\\[6pt] \dfrac{x^{2}}{2}+\dfrac{5}{2} & \text{si }1\le x\le 2\end{cases}\]</p>
+  <p><b>Disfruta la animación.</b> El punto \(P\) recorre la primera curva hacia la derecha. Mientras \(x\) se acerca a \(1\), \(g(x)\) se acerca a \(1\). Pero en \(x=1\) la función vale \(3\): la gráfica da un salto y sigue por otra curva, más arriba. Eso es la discontinuidad. Después \(P\) recorre todo de nuevo con su tangente.</p>
   <div class="stage" data-scene="tvm-discontinua"></div>
   <ul class="keys">
-    <li><b>Curva negra:</b> la gráfica de \(g(x)=x^{2}\) para \(0\le x&lt;1\). El círculo blanco en \((1,\;1)\) indica que ese punto no pertenece a la gráfica.</li>
-    <li><b>Punto \(B(1,\;0)\):</b> el valor de la función en el extremo, \(g(1)=0\).</li>
-    <li><b>Trazo naranja:</b> el salto, entre el valor al que se acerca \(g(x)\), que es \(1\), y el valor \(g(1)=0\).</li>
-    <li><b>Recta azul:</b> la secante por \(A(0,\;0)\) y \(B(1,\;0)\), de pendiente \(0\). <b>Recta roja:</b> la tangente en \(P\), de pendiente \(g'(x)=2x\), que es positiva en todo \((0,\;1)\). Nunca son paralelas.</li>
+    <li><b>Primera curva:</b> \(g(x)=x^{2}\) para \(0\le x&lt;1\). El círculo blanco en \((1,\;1)\) indica que ese punto no pertenece a la gráfica.</li>
+    <li><b>Segunda curva:</b> \(g(x)=\dfrac{x^{2}}{2}+\dfrac{5}{2}\) para \(1\le x\le 2\). Parte en el punto lleno \((1,\;3)\), en el mismo \(x=1\), más arriba.</li>
+    <li><b>Trazo naranja:</b> el salto en \(x=1\), desde la altura \(1\) hasta la altura \(3\).</li>
+    <li><b>Recta azul:</b> la secante por \(A(0,\;0)\) y \(B\!\left(2,\;\dfrac{9}{2}\right)\), de pendiente \(\dfrac{9}{4}=2{,}25\). <b>Recta roja:</b> la tangente en \(P\). Su pendiente es menor que \(2\) en toda la gráfica: nunca es paralela a la secante.</li>
   </ul>
   <ol class="steps">
-    <li>Condición 2: en \((0,\;1)\), \(g(x)=x^{2}\), que es derivable, con \(g'(x)=2x\). Se cumple.</li>
-    <li>Condición 1, en el extremo \(b=1\). Para \(x&lt;1\) cercano a \(1\), \(g(x)=x^{2}\):
+    <li>Condición 1, en \(x_{0}=1\), que pertenece a \([0,\;2]\). Límite por la izquierda: si \(x&lt;1\), \(g(x)=x^{2}\).
       \[\lim_{x\to 1^{-}}g(x)=\lim_{x\to 1^{-}}x^{2}=1^{2}=1\]</li>
-    <li>Pero \(g(1)=0\). Como \(1\neq 0\), \(\displaystyle\lim_{x\to 1^{-}}g(x)\neq g(1)\): \(g\) no es continua en \([0,\;1]\). La condición 1 no se cumple.</li>
-    <li>Pendiente de la secante, con \(g(0)=0^{2}=0\) y \(g(1)=0\):
-      \[\frac{g(1)-g(0)}{1-0}=\frac{0-0}{1}=0\]</li>
-    <li>Para todo \(c\in(0,\;1)\), \(c&gt;0\), así que \(g'(c)=2c&gt;0\). Entonces \(g'(c)\neq 0\): no existe ningún \(c\in(0,\;1)\) con \(g'(c)=0\).</li>
-    <li>Conclusión: no basta con que \(f\) sea continua en \((a,\;b)\). La continuidad se exige en el intervalo cerrado, con los dos extremos.</li>
+    <li>Límite por la derecha: si \(x&gt;1\), \(g(x)=\dfrac{x^{2}}{2}+\dfrac{5}{2}\).
+      \[\lim_{x\to 1^{+}}g(x)=\frac{1^{2}}{2}+\frac{5}{2}=\frac{1}{2}+\frac{5}{2}=\frac{6}{2}=3\]</li>
+    <li>Los límites laterales son distintos, \(1\neq 3\). El límite de \(g\) en \(1\) no existe: \(g\) no es continua en \(1\). La condición 1 no se cumple.</li>
+    <li>Tampoco se cumple la condición 2: una función que no es continua en un punto no es derivable en ese punto, y \(1\in(0,\;2)\).</li>
+    <li>Pendiente de la secante, con \(g(0)=0^{2}=0\) y \(g(2)=\dfrac{2^{2}}{2}+\dfrac{5}{2}=2+\dfrac{5}{2}=\dfrac{9}{2}\):
+      \[\frac{g(2)-g(0)}{2-0}=\frac{\frac{9}{2}-0}{2}=\frac{9}{2}\cdot\frac{1}{2}=\frac{9}{4}\]</li>
+    <li>Derivada donde existe:
+      \[g'(x)=\begin{cases}2x & \text{si }0&lt;x&lt;1\\ x & \text{si }1&lt;x&lt;2\end{cases}\]</li>
+    <li>En \((0,\;1)\): \(g'(c)=\dfrac{9}{4}\) exige \(2c=\dfrac{9}{4}\), es decir, \(c=\dfrac{9}{8}\). Pero \(\dfrac{9}{8}&gt;1\), así que \(\dfrac{9}{8}\notin(0,\;1)\).</li>
+    <li>En \((1,\;2)\): \(g'(c)=\dfrac{9}{4}\) exige \(c=\dfrac{9}{4}\). Pero \(\dfrac{9}{4}&gt;2\), así que \(\dfrac{9}{4}\notin(1,\;2)\).</li>
+    <li>En \(c=1\) la derivada no existe. Entonces no existe ningún \(c\in(0,\;2)\) con \(g'(c)=\dfrac{9}{4}\).</li>
+    <li>Conclusión: sin la condición 1, la conclusión del teorema puede ser falsa.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>La continuidad también se exige en los extremos</h3>
+  <div class="body">
+  <p>No basta con que \(f\) sea continua en el intervalo abierto \((a,\;b)\). Ejemplo, en \([0,\;1]\):
+    \[k(x)=\begin{cases}x^{2} & \text{si }0\le x&lt;1\\ 0 & \text{si }x=1\end{cases}\]</p>
+  <ol class="steps">
+    <li>Condición 2: en \((0,\;1)\), \(k(x)=x^{2}\), que es derivable, con \(k'(x)=2x\). Se cumple. Por eso \(k\) es también continua en \((0,\;1)\).</li>
+    <li>Condición 1, en el extremo \(b=1\). Para \(x&lt;1\) cercano a \(1\), \(k(x)=x^{2}\):
+      \[\lim_{x\to 1^{-}}k(x)=\lim_{x\to 1^{-}}x^{2}=1^{2}=1\]</li>
+    <li>Pero \(k(1)=0\). Como \(1\neq 0\), \(\displaystyle\lim_{x\to 1^{-}}k(x)\neq k(1)\): \(k\) no es continua en \([0,\;1]\). La condición 1 no se cumple.</li>
+    <li>Pendiente de la secante, con \(k(0)=0^{2}=0\) y \(k(1)=0\):
+      \[\frac{k(1)-k(0)}{1-0}=\frac{0-0}{1}=0\]</li>
+    <li>Para todo \(c\in(0,\;1)\), \(c&gt;0\), así que \(k'(c)=2c&gt;0\). Entonces \(k'(c)\neq 0\): no existe ningún \(c\in(0,\;1)\) con \(k'(c)=0\).</li>
+    <li>Conclusión: la continuidad se exige en el intervalo cerrado \([a,\;b]\), con los dos extremos.</li>
   </ol>
   </div>
   </div>
@@ -264,6 +288,6 @@
 </section>
 
 <footer>
-  <span class="status">CD1-L18-H01 · v004 · APR de Óscar, 20-nov-2026</span>
+  <span class="status">CD1-L18-H01 · v005 · APR de Óscar, 20-nov-2026</span>
 </footer>
 </article>

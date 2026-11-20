@@ -111,5 +111,11 @@ hs = [F(k, 50) for k in range(-50, 51) if k]
 ok('H01 anim: en x0=1 el cociente es 1/2 + h/4 (100 valores de h)', all((fa(1 + h) - fa(1)) / h == F(1, 2) + h / 4 for h in hs))
 ok('H01 anim: en x0=2, h>0: −1/2; h<0: 1 + h/4', all((fa(2 + h) - fa(2)) / h == (F(-1, 2) if h > 0 else 1 + h / 4) for h in hs))
 ok('H01 anim: f(2)=2 por los dos tramos (continua)', fa(2) == 2 and 3 - F(2, 2) == 2)
+
+# H01 · función con salto en [0,2]: x² (0≤x<1), x²/2+5/2 (1≤x≤2)
+gs = lambda x: F(x) ** 2 if F(x) < 1 else F(x) ** 2 / 2 + F(5, 2)
+ok('H01 salto: límite izq 1, g(1)=3, g(2)=9/2, secante 9/4', gs(1) == 3 and gs(2) == F(9, 2) and (gs(2) - gs(0)) / 2 == F(9, 4) and F(1, 2) + F(5, 2) == 3)
+ok("H01 salto: 2c=9/4 ⇒ c=9/8>1; c=9/4>2; g' < 2 < 9/4 en ambos tramos", F(9, 8) > 1 and F(9, 4) > 2 and all(2 * F(k, 100) < F(9, 4) for k in range(1, 100)) and all(F(100 + k, 100) < F(9, 4) for k in range(1, 100)))
+ok('H01 extremo: k(x)=x² en [0,1), k(1)=0: secante 0, k\'(c)=2c>0', all(2 * F(k, 100) > 0 for k in range(1, 100)))
 print('\nERRORES:', err)
 raise SystemExit(1 if err else 0)

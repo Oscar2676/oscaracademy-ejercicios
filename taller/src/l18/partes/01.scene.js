@@ -90,52 +90,57 @@ OA.scene('tvm-derivable', (function(){
   };
 })());
 OA.scene('tvm-discontinua', (function(){
-  var RUN = 30, num = OA.num;
+  var RUN = 36, num = OA.num, M = 9/4;
   function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
   function dec(x, d){ return x.toFixed(d).replace('.', ','); }
-  function g(x){ return x < 1 ? x*x : 0; }
-  function xs(s){ return s < 3 ? 0.1 : s < 12 ? 0.1 + 0.89*OA.smooth(cl((s - 3)/8)) : s < 16 ? 0.99 : s < 20 ? 1 : 0.12 + 0.8*OA.smooth(cl((s - 21)/7)); }
+  function g(x){ return x < 1 ? x*x : x*x/2 + 2.5; }
+  function dg(x){ return x < 1 ? 2*x : x; }
+  function xs(s){ return s < 3 ? 0.1 : s < 10 ? 0.1 + 0.89*OA.smooth(cl((s - 3)/6.5)) : s < 13 ? 0.99 : s < 16 ? 1 : s < 21 ? 1 + OA.smooth(cl((s - 16)/4.5)) : s < 24 ? 2 : 0.1 + 1.88*cl((s - 24.5)/10.5); }
   return {
-    world:{x0:-0.62, x1:1.75, y0:-0.38, y1:1.5}, aspect:1.88/2.37,
-    aria:'Gráfica de g: la curva y = x² desde (0, 0) hasta (1, 1), con círculo abierto en (1, 1), y un punto lleno en (1, 0). Un punto P se acerca a x = 1 y su altura se acerca a 1, pero en x = 1 la función vale 0. La secante por A(0, 0) y B(1, 0) tiene pendiente 0 y la tangente en P tiene pendiente 2x, siempre positiva.',
-    labels:[['A', 'A\\,(0,\;0)', 'A (0, 0)', 'pt'], ['B', 'B\\,(1,\;0):\\ g(1)=0', 'B (1, 0): g(1) = 0', 'pt'],
-            ['L', '\\displaystyle\\lim_{x\\to 1^{-}}g(x)=1', 'lím g(x) = 1 por la izquierda', 'pt c-tan'], ['J', '\\text{salto}', 'salto', 'diff'],
-            ['S', '\\text{secante: pendiente }0', 'secante: pendiente 0', 'c-sec']],
-    sliders:[{id:'x', tex:'x', min:0, max:1, step:0.005, value:0.1}],
+    world:{x0:-0.88, x1:2.75, y0:-0.75, y1:5.35}, aspect:6.1/3.63*0.5,
+    aria:'Gráfica de g: la curva y = x² desde (0, 0) hasta el círculo abierto (1, 1), y otra curva más arriba, desde el punto lleno (1, 3) hasta (2, 9/2). En x = 1 hay un salto de la altura 1 a la altura 3. La secante por A(0, 0) y B(2, 9/2) tiene pendiente 9/4; la tangente nunca alcanza esa pendiente.',
+    labels:[['A', 'A\\,(0,\;0)', 'A (0, 0)', 'pt'], ['B', 'B\\left(2,\;\\dfrac{9}{2}\\right)', 'B (2, 9/2)', 'pt'],
+            ['L', '\\displaystyle\\lim_{x\\to 1^{-}}g(x)=1', 'lím g(x) = 1 por la izquierda', 'pt c-tan'], ['V', 'g(1)=3', 'g(1) = 3', 'pt'], ['J', '\\text{salto}', 'salto', 'diff'],
+            ['S', '\\text{secante: pendiente }\\tfrac{9}{4}=2{,}25', 'secante: pendiente 9/4 = 2,25', 'c-sec']],
+    sliders:[{id:'x', tex:'x', min:0, max:2, step:0.01, value:0.1}],
     legend:'<span><i class="sw sec"></i> secante \\(AB\\)</span><span><i class="sw tan"></i> tangente en \\(P\\)</span><span><i class="sw rise"></i> salto</span>',
     anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.t = p; v.x = xs(p*RUN); }},
     onInput:function(v){ v.t = null; },
     draw:function(S, v){
-      var s = v.t == null ? RUN : v.t*RUN, x = v.x, y = g(x), C = S.C, W = S.W, c = S.ctx;
+      var s = v.t == null ? RUN : v.t*RUN, x = v.x, y = g(x), C = S.C, W = S.W, c = S.ctx, k = cl(s/2.5);
       function txt(t, px, py, al, cc){ c.fillStyle = cc || C.ink; c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
-      S.axes({gx:[0.5, 1, 1.5], gy:[0.5, 1], full:true});
-      if (s >= 20) S.line(W.x0, 0, W.x1, 0, {color:C.sec, width:3});
-      S.curve(function(u){ return u*u; }, 0, cl(s/2.5), {color:C.ink, width:3.5});
-      if (s >= 16) S.line(1, 0.04, 1, 0.96, {color:C.rise, width:4});
-      if (s >= 2.5){ S.ring(1, 1, C.ink); S.dot(1, 0, C.sec); S.dot(0, 0, C.sec); }
+      S.axes({gx:[1, 2], gy:[1, 2, 3, 4, 5], full:true});
+      if (s >= 21) S.line(W.x0, M*W.x0, W.x1, M*W.x1, {color:C.sec, width:2.5});
+      S.curve(function(u){ return u*u; }, 0, k, {color:C.ink, width:3.5});
+      S.curve(function(u){ return u*u/2 + 2.5; }, 1, 1 + k, {color:C.ink, width:3.5});
+      if (s >= 13) S.line(1, 1.12, 1, 2.88, {color:C.rise, width:4});
+      if (s >= 2.5){ S.ring(1, 1, C.ink); S.dot(1, 3, C.ink); S.dot(0, 0, C.sec); S.dot(2, 4.5, C.sec); }
       if (s >= 3){
-        if (x < 1 && s >= 20 && x > 0.001){ var m = 2*x, sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0), ux = sx, uy = -m*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.2*S.w; ux /= n; uy /= n;
+        var tan = (v.t == null || s >= 24) && Math.abs(x - 1) > 0.004 && x > 0.001 && x < 1.999;
+        if (tan){ var m = dg(x), sx = S.w/(W.x1 - W.x0), sy = S.h/(W.y1 - W.y0), ux = sx, uy = -m*sy, n = Math.sqrt(ux*ux + uy*uy), L = 0.17*S.w; ux /= n; uy /= n;
           S.pline(S.X(x) - L*ux, S.Y(y) - L*uy, S.X(x) + L*ux, S.Y(y) + L*uy, {color:C.tan, width:3});
-          txt('pendiente 2x = ' + dec(m, 2), S.X(x) - 12, S.Y(y) - 18, 'right', C.tan); }
+          txt('pendiente ' + dec(m, 2), S.X(x) + 12, S.Y(y) + 18, 'left', C.tan); }
         S.line(x, y, x, 0, {color:C.muted, width:1, dash:[3,4]}); S.line(x, y, 0, y, {color:C.muted, width:1, dash:[3,4]});
         S.dot(x, y, C.tan);
-        if (x < 1){ txt('x = ' + dec(x, 2), S.X(x), S.Y(0) + 26, 'center', C.tan); if (s < 20) txt('g(x) = ' + dec(y, 2), S.X(0) - 6, S.Y(y), 'right', C.tan); }
+        txt('x = ' + dec(x, 2), S.X(x), S.Y(0) + 26, 'center', C.tan); if (!tan) txt('g(x) = ' + dec(y, 2), S.X(0) - 6, S.Y(y), 'right', C.tan);
       }
-      S.out('A', S.X(0), S.Y(0), -1, -1, s >= 20);
-      S.out('B', S.X(1), S.Y(0), 1, -1, s >= 16);
-      S.out('L', S.X(1), S.Y(1), 1, 1, s >= 12);
-      S.lab('J', S.X(1) + 10, S.Y(0.5), 0, -50, s >= 16);
-      S.out('S', S.X(1.72), S.Y(0), -1, 1, s >= 20);
+      S.out('A', S.X(0), S.Y(0), -1, -1, s >= 21);
+      S.out('B', S.X(2), S.Y(4.5), 1, -1, s >= 21);
+      S.out('L', S.X(1), S.Y(1), 1, -1, s >= 10);
+      S.out('V', S.X(1), S.Y(3), -1, 1, s >= 13);
+      S.lab('J', S.X(1) + 10, S.Y(2), 0, -50, s >= 13);
+      S.out('S', S.X(1.45), S.Y(M*1.45), -1, 1, s >= 22);
     },
     caption:function(v){
       var x = v.x, s = v.t == null ? null : v.t*RUN;
-      if (s == null) return x < 1 ? ['Para x < 1 la función vale g(x) = x² y la tangente tiene pendiente ', "g'(x)=2x=" + num(2*x, 2), "g'(x) = 2x = " + dec(2*x, 2)] : 'En x = 1 la función vale g(1) = 0: la gráfica salta desde la altura 1 hasta la altura 0';
-      if (s < 3) return 'Curva negra: la gráfica de g(x) = x² para 0 ≤ x < 1. El círculo blanco indica que (1, 1) no pertenece a la gráfica';
-      if (s < 12) return ['El punto P se acerca a x = 1 por la izquierda y su altura se acerca a 1: ', 'g(' + num(x, 2) + ')=' + num(x*x, 2), 'g(' + dec(x, 2) + ') = ' + dec(x*x, 2)];
-      if (s < 16) return 'Cuando x tiende a 1 por la izquierda, g(x) tiende a 1';
-      if (s < 20) return 'Pero en x = 1 la función vale g(1) = 0. El límite, 1, no es igual al valor, 0: hay un salto y g no es continua en 1';
-      return ['Recta azul: la secante AB, de pendiente 0. Recta roja: la tangente en P, de pendiente positiva. Nunca son paralelas: ', "g'(x)=" + num(2*x, 2), "g'(x) = " + dec(2*x, 2)];
+      if (s == null || s >= 24) return Math.abs(x - 1) <= 0.004 ? 'En x = 1 la gráfica salta de la altura 1 a la altura 3: ahí no hay tangente' : ['Recta roja: la tangente en P. Su pendiente es menor que 2 y la de la secante es 2,25. Nunca son paralelas: ', "g'(" + num(x, 2) + ')=' + num(dg(x), 2), "g'(" + dec(x, 2) + ') = ' + dec(dg(x), 2)];
+      if (s < 3) return 'Dos curvas: g(x) = x² hasta el círculo blanco (1, 1), y g(x) = x²/2 + 5/2 desde el punto lleno (1, 3)';
+      if (s < 10) return ['El punto P se acerca a x = 1 por la izquierda y su altura se acerca a 1: ', 'g(' + num(x, 2) + ')=' + num(g(x), 2), 'g(' + dec(x, 2) + ') = ' + dec(g(x), 2)];
+      if (s < 13) return 'Cuando x tiende a 1 por la izquierda, g(x) tiende a 1';
+      if (s < 16) return 'Pero en x = 1 la función vale g(1) = 3: la gráfica salta de la altura 1 a la altura 3. No es continua en 1';
+      if (s < 21) return ['La gráfica sigue por la segunda curva, más arriba: ', 'g(' + num(x, 2) + ')=' + num(g(x), 2), 'g(' + dec(x, 2) + ') = ' + dec(g(x), 2)];
+      return 'Recta azul: la secante por A (0, 0) y B (2, 9/2). Su pendiente es 9/4 = 2,25';
     },
-    readout:function(v){ var x = v.x; return x < 1 ? [['d', 'x=' + num(x, 2) + '\\qquad g(x)=' + num(x*x, 2) + "\\qquad g'(x)=" + num(2*x, 2)]] : [['d', 'x=1{,}00\\qquad g(1)=0']]; }
+    readout:function(v){ var x = v.x; if (Math.abs(x - 1) <= 0.004) return [['d', 'x=1{,}00\\qquad g(1)=3']]; var r = 'x=' + num(x, 2) + '\\qquad g(x)=' + num(g(x), 2); if (x > 0.001 && x < 1.999) r += "\\qquad g'(x)=" + num(dg(x), 2); return [['d', r]]; }
   };
 })());
