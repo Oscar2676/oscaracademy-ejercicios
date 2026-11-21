@@ -48,10 +48,25 @@
   <ul class="keys">
     <li><b>Recta naranja:</b> \(f(x)=x+4\), el borde de arriba.</li>
     <li><b>Curva azul:</b> \(g(x)=x^{2}-2x\), el borde de abajo.</li>
-    <li><b>Tira burdeo:</b> va de la parábola a la recta en la posición \(x\). Su alto es \(f(x)-g(x)\).</li>
+    <li><b>Tira burdeo:</b> un rectángulo parado que va de la parábola a la recta, en la posición \(x\). Su alto es \(f(x)-g(x)\) y su ancho es \(dx\), marcado abajo.</li>
     <li><b>Zona verde:</b> el área acumulada desde \(x=-1\) hasta la tira.</li>
-    <li><b>Bajo la animación:</b> el área de la tira, la integral que la acumula y el valor al que llega.</li>
+    <li><b>Bajo la animación:</b> el área de una tira, la suma de las tiras y el valor al que llega.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>La zona verde va desde \(-1\) hasta la posición de la tira, \(x\). Su área depende de dónde esté la tira: es una función de \(x\). Se llama \(A(x)\).</li>
+      <li>Esa zona es la suma de todas las tiras que quedaron atrás, una por cada posición <b>intermedia</b> entre \(-1\) y \(x\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenida la última tira, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La tira que está en la posición \(t\) mide \(f(t)-g(t)=4+3t-t^{2}\) de alto y \(dt\) de ancho. Su área es
+        \[dA=\left(4+3t-t^{2}\right)dt\]</li>
+      <li>Se suman las tiras desde \(t=-1\) hasta \(t=x\), y se calcula con una antiderivada:
+        \[A(x)=\int_{-1}^{x}\left(4+3t-t^{2}\right)dt=\left[4t+\frac{3t^{2}}{2}-\frac{t^{3}}{3}\right]_{-1}^{x}=\left(4x+\frac{3x^{2}}{2}-\frac{x^{3}}{3}\right)-\left(-4+\frac{3}{2}+\frac{1}{3}\right)=4x+\frac{3x^{2}}{2}-\frac{x^{3}}{3}+\frac{13}{6}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando la tira llega al segundo cruce, \(x=4\), y se obtiene el área completa: \(A(4)=16+24-\dfrac{64}{3}+\dfrac{13}{6}=\dfrac{125}{6}\). Es la integral del ejemplo 1, donde la variable se llama \(x\) porque los límites son números fijos y no hay confusión posible.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -182,7 +197,9 @@ OA.scene('apl-area-x', (function(){
       S.dot(-1, 3, C.ink); S.dot(4, 8, C.ink);
       txt('(−1, 3)', X(-1) - 8, Y(3) - 12, 'right', C.ink); txt('(4, 8)', X(4) + 10, Y(8) + 8, 'left', C.ink);
       txt('f(x) = x + 4', X(0.3), Y(6.1), 'right', C.rise); txt('g(x) = x² − 2x', X(3.25), Y(1.6), 'left', C.sec);
-      S.line(x, g(x), x, f(x), {color:C.tan, width:4}); S.dot(x, g(x), C.sec); S.dot(x, f(x), C.rise);
+      var DX = 0.16, xa = Math.max(-1, x - DX); S.poly([[xa, g(x)], [x, g(x)], [x, f(x)], [xa, f(x)]], {fill:C.tan, alpha:0.85}); S.line(xa, g(x), xa, f(x), {color:C.ink, width:1.2}); S.line(x, g(x), x, f(x), {color:C.ink, width:1.2}); S.line(xa, g(x), x, g(x), {color:C.ink, width:1.2}); S.line(xa, f(x), x, f(x), {color:C.ink, width:1.2});
+      S.dot(x, g(x), C.sec); S.dot(x, f(x), C.rise);
+      if (x > -0.83){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.beginPath(); c.moveTo(X(xa), Y(g(x)) + 10); c.lineTo(X(x), Y(g(x)) + 10); c.moveTo(X(xa), Y(g(x)) + 6); c.lineTo(X(xa), Y(g(x)) + 14); c.moveTo(X(x), Y(g(x)) + 6); c.lineTo(X(x), Y(g(x)) + 14); c.stroke(); txt('dx', X((xa + x)/2), Y(g(x)) + 25, 'center', C.ink); }
       if (x > -0.8 && x < 3.8) txt('alto = f − g = ' + dec(f(x) - g(x), 2), X(x) + 10, Y((f(x) + g(x))/2), 'left', C.tan);
       if (x > 0.05 && x < 1.95) txt('aquí g(x) < 0: la tira cruza el eje x y la cuenta no cambia', X(-2.2), Y(-1.9), 'left', C.muted);
       S.lab('F', X(-2.2), Y(-1.5), 0, 0, v.q != null && s >= 19);
@@ -193,6 +210,6 @@ OA.scene('apl-area-x', (function(){
       if (x >= 3.995) return 'La tira llegó al segundo cruce. El área de la región es 125/6, cerca de 20,83 unidades cuadradas';
       return 'En x = ' + dec(x, 2) + ' la tira va de g = ' + dec(g(x), 2) + ' a f = ' + dec(f(x), 2) + '. Su alto es ' + dec(f(x), 2) + ' − (' + dec(g(x), 2) + ') = ' + dec(f(x) - g(x), 2) + '. Área pintada: cerca de ' + dec(A(x), 2);
     },
-    readout:function(v){ var x = v.x; return [['', 'dA=\\big[f(x)-g(x)\\big]\\,dx=\\left(4+3x-x^{2}\\right)dx'], ['d', '\\displaystyle\\int_{-1}^{x}\\left(4+3t-t^{2}\\right)dt=4x+\\dfrac{3x^{2}}{2}-\\dfrac{x^{3}}{3}+\\dfrac{13}{6}'], ['', 'x=' + num(x, 2) + ':\\quad \\text{área acumulada}\\approx ' + num(A(x), 2) + '\\ \\longrightarrow\\ \\dfrac{125}{6}']]; }
+    readout:function(v){ var x = v.x; return [['', '\\text{tira en la posición }t:\\quad dA=\\big[f(t)-g(t)\\big]\\,dt=\\left(4+3t-t^{2}\\right)dt'], ['d', '\\text{suma de las tiras desde }t=-1\\text{ hasta }t=x:\\quad A(x)=\\displaystyle\\int_{-1}^{x}\\left(4+3t-t^{2}\\right)dt=4x+\\dfrac{3x^{2}}{2}-\\dfrac{x^{3}}{3}+\\dfrac{13}{6}'], ['', 'x=' + num(x, 2) + ':\\quad A(x)\\approx ' + num(A(x), 2) + '\\qquad x=4:\\quad A(4)=\\dfrac{125}{6}']]; }
   };
 })());

@@ -28,10 +28,12 @@ OA.scene('apl-area-y', (function(){
       txt('x = y²', X(2.5), Y(-1.22), 'left', C.sec); txt('x = y + 2', X(1.9) + 10, Y(-0.35), 'left', C.rise);
       txt('c = −1', X(-0.6), Y(-1) - 11, 'left', C.muted); txt('d = 2', X(-0.6), Y(2) + 11, 'left', C.muted);
       /* tira a la altura y */
-      S.line(y*y, y, y + 2, y, {color:C.tan, width:4}); S.dot(y*y, y, C.sec); S.dot(y + 2, y, C.rise);
+      var DY = 0.13, yb = Math.max(-1, y - DY); S.poly([[y*y, yb], [y + 2, yb], [y + 2, y], [y*y, y]], {fill:C.tan, alpha:0.85}); S.line(y*y, yb, y + 2, yb, {color:C.ink, width:1.2}); S.line(y*y, y, y + 2, y, {color:C.ink, width:1.2}); S.line(y*y, yb, y*y, y, {color:C.ink, width:1.2}); S.line(y + 2, yb, y + 2, y, {color:C.ink, width:1.2});
+      S.dot(y*y, y, C.sec); S.dot(y + 2, y, C.rise);
+      if (y > -0.86){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.beginPath(); c.moveTo(X(y + 2) + 10, Y(yb)); c.lineTo(X(y + 2) + 10, Y(y)); c.moveTo(X(y + 2) + 6, Y(yb)); c.lineTo(X(y + 2) + 14, Y(yb)); c.moveTo(X(y + 2) + 6, Y(y)); c.lineTo(X(y + 2) + 14, Y(y)); c.stroke(); txt('dy', X(y + 2) + 27, Y((y + yb)/2), 'center', C.ink); }
       if (y > -0.9 && y < 1.9){
         txt('largo = (y + 2) − y² = ' + dec(y + 2 - y*y, 2), X((y*y + y + 2)/2), Y(y) - 14, 'center', C.tan);
-        txt('y = ' + dec(y, 2), X(y + 2) + 12, Y(y) + 2, 'left', C.ink);
+        txt('altura y = ' + dec(y, 2), X(y + 2) + 42, Y(y) + 1, 'left', C.ink);
       }
       S.lab('F', X(-0.75), Y(2.72), 0, 0, v.q != null && s >= 19);
     },
@@ -41,6 +43,6 @@ OA.scene('apl-area-y', (function(){
       if (y >= 1.995) return 'La tira llegó al cruce de arriba. El área de la región es 9/2, es decir, 4,5 unidades cuadradas';
       return 'A la altura y = ' + dec(y, 2) + ' la tira mide ' + dec(y + 2 - y*y, 2) + ' de largo. El área pintada desde y = −1 es cerca de ' + dec(A(y), 2);
     },
-    readout:function(v){ var y = v.y; return [['', 'dA=\\Big[(y+2)-y^{2}\\Big]\\,dy'], ['d', '\\displaystyle\\int_{-1}^{y}\\left(t+2-t^{2}\\right)dt=\\dfrac{y^{2}}{2}+2y-\\dfrac{y^{3}}{3}+\\dfrac{7}{6}'], ['', 'y=' + num(y, 2) + ':\\quad \\text{área acumulada}\\approx ' + num(A(y), 2) + '\\ \\longrightarrow\\ \\dfrac{9}{2}']]; }
+    readout:function(v){ var y = v.y; return [['', '\\text{tira a la altura }t:\\quad dA=\\Big[(t+2)-t^{2}\\Big]\\,dt'], ['d', '\\text{suma de las tiras desde }t=-1\\text{ hasta }t=y:\\quad A(y)=\\displaystyle\\int_{-1}^{y}\\Big[(t+2)-t^{2}\\Big]dt=\\dfrac{y^{2}}{2}+2y-\\dfrac{y^{3}}{3}+\\dfrac{7}{6}'], ['', 'y=' + num(y, 2) + ':\\quad A(y)\\approx ' + num(A(y), 2) + '\\qquad y=2:\\quad A(2)=\\dfrac{9}{2}']]; }
   };
 })());

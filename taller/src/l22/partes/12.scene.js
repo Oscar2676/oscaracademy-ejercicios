@@ -22,7 +22,9 @@ OA.scene('apl-area-x', (function(){
       S.dot(-1, 3, C.ink); S.dot(4, 8, C.ink);
       txt('(−1, 3)', X(-1) - 8, Y(3) - 12, 'right', C.ink); txt('(4, 8)', X(4) + 10, Y(8) + 8, 'left', C.ink);
       txt('f(x) = x + 4', X(0.3), Y(6.1), 'right', C.rise); txt('g(x) = x² − 2x', X(3.25), Y(1.6), 'left', C.sec);
-      S.line(x, g(x), x, f(x), {color:C.tan, width:4}); S.dot(x, g(x), C.sec); S.dot(x, f(x), C.rise);
+      var DX = 0.16, xa = Math.max(-1, x - DX); S.poly([[xa, g(x)], [x, g(x)], [x, f(x)], [xa, f(x)]], {fill:C.tan, alpha:0.85}); S.line(xa, g(x), xa, f(x), {color:C.ink, width:1.2}); S.line(x, g(x), x, f(x), {color:C.ink, width:1.2}); S.line(xa, g(x), x, g(x), {color:C.ink, width:1.2}); S.line(xa, f(x), x, f(x), {color:C.ink, width:1.2});
+      S.dot(x, g(x), C.sec); S.dot(x, f(x), C.rise);
+      if (x > -0.83){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.beginPath(); c.moveTo(X(xa), Y(g(x)) + 10); c.lineTo(X(x), Y(g(x)) + 10); c.moveTo(X(xa), Y(g(x)) + 6); c.lineTo(X(xa), Y(g(x)) + 14); c.moveTo(X(x), Y(g(x)) + 6); c.lineTo(X(x), Y(g(x)) + 14); c.stroke(); txt('dx', X((xa + x)/2), Y(g(x)) + 25, 'center', C.ink); }
       if (x > -0.8 && x < 3.8) txt('alto = f − g = ' + dec(f(x) - g(x), 2), X(x) + 10, Y((f(x) + g(x))/2), 'left', C.tan);
       if (x > 0.05 && x < 1.95) txt('aquí g(x) < 0: la tira cruza el eje x y la cuenta no cambia', X(-2.2), Y(-1.9), 'left', C.muted);
       S.lab('F', X(-2.2), Y(-1.5), 0, 0, v.q != null && s >= 19);
@@ -33,6 +35,6 @@ OA.scene('apl-area-x', (function(){
       if (x >= 3.995) return 'La tira llegó al segundo cruce. El área de la región es 125/6, cerca de 20,83 unidades cuadradas';
       return 'En x = ' + dec(x, 2) + ' la tira va de g = ' + dec(g(x), 2) + ' a f = ' + dec(f(x), 2) + '. Su alto es ' + dec(f(x), 2) + ' − (' + dec(g(x), 2) + ') = ' + dec(f(x) - g(x), 2) + '. Área pintada: cerca de ' + dec(A(x), 2);
     },
-    readout:function(v){ var x = v.x; return [['', 'dA=\\big[f(x)-g(x)\\big]\\,dx=\\left(4+3x-x^{2}\\right)dx'], ['d', '\\displaystyle\\int_{-1}^{x}\\left(4+3t-t^{2}\\right)dt=4x+\\dfrac{3x^{2}}{2}-\\dfrac{x^{3}}{3}+\\dfrac{13}{6}'], ['', 'x=' + num(x, 2) + ':\\quad \\text{área acumulada}\\approx ' + num(A(x), 2) + '\\ \\longrightarrow\\ \\dfrac{125}{6}']]; }
+    readout:function(v){ var x = v.x; return [['', '\\text{tira en la posición }t:\\quad dA=\\big[f(t)-g(t)\\big]\\,dt=\\left(4+3t-t^{2}\\right)dt'], ['d', '\\text{suma de las tiras desde }t=-1\\text{ hasta }t=x:\\quad A(x)=\\displaystyle\\int_{-1}^{x}\\left(4+3t-t^{2}\\right)dt=4x+\\dfrac{3x^{2}}{2}-\\dfrac{x^{3}}{3}+\\dfrac{13}{6}'], ['', 'x=' + num(x, 2) + ':\\quad A(x)\\approx ' + num(A(x), 2) + '\\qquad x=4:\\quad A(4)=\\dfrac{125}{6}']]; }
   };
 })());
