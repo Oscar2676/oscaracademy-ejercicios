@@ -2,7 +2,7 @@ OA.scene('pol-tangente', (function(){
   var RUN = 24, num = OA.num, dec = oaDec, K = oaCar, TP = 2*Math.PI, PI = Math.PI;
   var HOR = [PI/3, 5*PI/3], VER = [0, 2*PI/3, 4*PI/3];
   return {
-    world:{x0:-1.5, x1:2.9, y0:-2.4, y1:1.75}, aspect:4.15/4.4,
+    world:{x0:-3.3, x1:2.9, y0:-2.4, y1:2.6}, aspect:5/6.2,
     _chk:[{f:K.x, df:K.dx, at:[0.5, 2, 4, 5.5]}, {f:K.y, df:K.dy, at:[0.5, 2, 4, 5.5]}],
     aria:'La cardioide azul r igual a 1 más coseno de theta sobre una rejilla polar. Un punto naranja la recorre y lleva una recta tangente burdeo que va cambiando de inclinación. Quedan marcados en verde los dos puntos donde la tangente es horizontal, en theta igual a pi tercios y 5 pi tercios, y en negro los tres donde es vertical, en theta igual a 0, 2 pi tercios y 4 pi tercios.',
     labels:[['F', '\\dfrac{dy}{dx}=\\dfrac{dy/d\\theta}{dx/d\\theta}=\\dfrac{(2\\cos\\theta-1)(\\cos\\theta+1)}{-\\operatorname{sen}\\theta\\,(1+2\\cos\\theta)}', 'dy/dx = (2cos θ − 1)(cos θ + 1) / [−sen θ (1 + 2cos θ)]', 'diff']],
@@ -18,9 +18,9 @@ OA.scene('pol-tangente', (function(){
       S.line(0, 0, x, y, {color:C.rise, width:1.6, dash:[4, 3]}); c.setLineDash([]);
       if (n > 0.02){ ux = dx/n; uy = dy/n; S.line(x - 0.85*ux, y - 0.85*uy, x + 0.85*ux, y + 0.85*uy, {color:C.tan, width:3}); }
       c.fillStyle = C.rise; c.beginPath(); c.arc(X(x), Y(y), 6.5, 0, 6.2832); c.fill(); c.strokeStyle = C.ink; c.lineWidth = 1; c.stroke();
-      txt('θ = ' + dec(th, 2) + ' rad', X(-1.45), Y(1.55), 'left', C.rise);
-      txt(n <= 0.02 ? 'punta: dx/dθ = dy/dθ = 0' : Math.abs(dx) < 0.03 ? 'tangente vertical' : 'pendiente = ' + dec(dy/dx, 2), X(-1.45), Y(1.55) + 20, 'left', C.tan);
-      S.lab('F', X(-1.45), Y(-1.8), 0, 0, v.q != null && s >= 20);
+      txt('θ = ' + dec(th, 2) + ' rad', X(-3.2), Y(2.35), 'left', C.rise);
+      txt(n <= 0.02 ? 'punta: dx/dθ = dy/dθ = 0' : Math.abs(dx) < 0.03 ? 'tangente vertical' : 'pendiente = ' + dec(dy/dx, 2), X(-3.2), Y(2.35) + 20, 'left', C.tan);
+      S.lab('F', X(-3.2), Y(-1.8), 0, 0, v.q != null && s >= 20);
     },
     caption:function(v){
       var th = v.th == null ? 0.02 : v.th, s = v.q == null ? null : v.q*RUN, dx = K.dx(th), dy = K.dy(th);
