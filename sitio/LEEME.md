@@ -39,3 +39,4 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 <!-- relectura tras publicar L23 H05, 21-nov -->
 <!-- relectura tras publicar L23 H02, 21-nov -->
 <!-- relectura 2 tras publicar L23 H02 -->
+<!-- tablero: L23 H06-H08 enlazadas 21-nov 11:05 -->
