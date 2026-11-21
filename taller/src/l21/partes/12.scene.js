@@ -24,7 +24,7 @@ OA.scene('acu-presentacion', (function(){
       for (i = 0; i <= 80; i++){ a = t*i/80; pts.push([a, vf(a)]); } pts.push([t, 0]);
       if (t > 0.01) S.poly(pts, {fill:C.alt, alpha:0.45});
       S.curve(vf, 0, 4, {color:C.sec, width:2.6});
-      (function(){ var q1 = t, q0 = Math.max(0, q1 - 0.1), yb_ = 0, yt_ = vf(t), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.1)){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(q0), Y(yb_) + 9*sd); c.lineTo(X(q1), Y(yb_) + 9*sd); c.moveTo(X(q0), Y(yb_) + 5*sd); c.lineTo(X(q0), Y(yb_) + 13*sd); c.moveTo(X(q1), Y(yb_) + 5*sd); c.lineTo(X(q1), Y(yb_) + 13*sd); c.stroke(); txt('dt', X((q0 + q1)/2) + -15, Y(yb_) + 23*sd, 'center', C.ink); } })(); S.dot(t, vf(t), C.sec);
+      (function(){ var q1 = t, q0 = Math.max(0, q1 - 0.1), yb_ = 0, yt_ = vf(t), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.1) && Math.abs(Y(yt_) - Y(yb_)) > 16){ var ym_ = (yb_ + yt_)/2, lf_ = q1 > 3, xe_ = X(lf_ ? q0 : q1); c.strokeStyle = C.ink; c.lineWidth = 1.3; c.setLineDash([]); c.beginPath(); c.moveTo(xe_, Y(ym_)); c.lineTo(xe_ + (lf_ ? -12 : 12), Y(ym_)); c.stroke(); txt('ancho de la tira = dt', xe_ + (lf_ ? -14 : 14), Y(ym_), lf_ ? 'right' : 'left', C.ink); } })(); S.dot(t, vf(t), C.sec);
       if (Math.abs(t - 2) >= 0.004) txt('v(t) = ' + dec(vf(t), 2), X(t) + (t > 2.9 ? -10 : 10), Y(vf(t)) - 12, t > 2.9 ? 'right' : 'left', C.sec);
       if (t > 1) txt('área = ' + dec(sf(t), 2), X(Math.min(t, 3)*0.55), Y(1), 'center', C.alt);
       if (Math.abs(t - 2) < 0.004) txt('velocidad máxima: v(2) = 4', X(2), Y(4.5), 'center', C.sec);

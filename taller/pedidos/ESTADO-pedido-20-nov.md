@@ -83,6 +83,7 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 
 ## Respuestas de Óscar del 21-nov 09:24 y lo hecho
 - «4. Sí, corrígelas» (lotes 21 y 23 con el criterio del diferencial marcado y la letra muda explicada). **Hecho, pendientes de APR:**
+  - Corrección de Óscar (09:31, L21 H01): «marca un espesor sin nombre y aparece un dt en el aire» → la tira lleva ahora su rótulo pegado con una línea guía: «ancho de la tira = dt» (así en todas las tiras del lote 21; H01 pasa a v003). **No usar llave + letra suelta bajo el eje.**
   - **Lote 21 v002:** H01, H08, H09, H12 (tira negra con «dt»/«dx»/«du» y recuadro «¿De dónde sale la τ / t?»); H04 y H05 (tira «dx» en la escena común `_acu.js` y su clave; H04 ya explicaba la letra en su recuadro). Sin cambios: H02, H03, H06, H07, H10, H11 (sin tira que avance ni letra muda). Todas ya publicadas: se ven en línea con pie «Pendiente de APR».
   - **Lote 23:** H02 v002 (tramo «ds» y recuadro de la τ), H05 v002 (arco «dθ», recuadro de la u, entradilla «cuñas de ángulo dθ»).
 - **L23 H01 v003** (corrección 09:26): etiquetas por fuera de la elipse con las coordenadas en expresión: naranja «(3 cos t, 2 sen t)» para el punto de la elipse y burdeo «(3 cos t, 3 sen t)» para el punto del círculo grande. Óscar escribió «(3cost, 3sent)» para el punto de la elipse; se le avisó que ese es el del círculo y que el de la elipse lleva 2 sen t.
