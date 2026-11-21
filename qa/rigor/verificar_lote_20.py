@@ -66,4 +66,26 @@ ok('H06-A: punta 1,2 + 0,4 = 1,6', F(6, 5) + F(2, 5) == F(8, 5))
 ok('H06-B: 4−1,6 = 2,4; 1,6/2,4 = 2/3; ds/dt = −2/3 ≈ −0,67', F(4) - F(8, 5) == F(12, 5) and F(8, 5) / F(12, 5) == F(2, 3) and sombra(F(4), F(8, 5), F(3)) == 2 and round(-2 / 3, 2) == -0.67)
 ok('H06-C: 3,6−1,2 = 2,4; 1,2/2,4 = 1/2; ds/dt = 1,5; punta 4,5', F(18, 5) - F(6, 5) == F(12, 5) and F(6, 5) / F(12, 5) == F(1, 2) and F(1, 2) * 3 == F(3, 2) and 3 + F(3, 2) == F(9, 2))
 
+# H07 y H08 · regla de L'Hôpital: cada límite se compara con el valor de la función muy cerca del punto
+from math import log, exp, sin, cos, e
+def lim0(fn, a, L, hs=(1e-3, 1e-4, 1e-5), lado=0, tol=5e-3):
+    pts = [a + h for h in hs] + ([] if lado > 0 else [a - h for h in hs])
+    return all(abs(fn(x) - L) < tol for x in pts) and abs(fn(a + hs[-1]) - L) <= abs(fn(a + hs[0]) - L) + 1e-9
+ok('H07 ej.1: lím (x²−1)/ln x = 2 en x→1; f′(1)=2, g′(1)=1; 2x/(1/x)=2x²', lim0(lambda x: (x * x - 1) / log(x), 1, 2) and cerca(dnum(lambda x: x * x - 1, 1), 2) and cerca(dnum(log, 1), 1) and all(cerca(2 * x / (1 / x), 2 * x * x) for x in (0.5, 1, 3)))
+ok('H07 ej.2: lím ln x / x = 0 en +∞', all(log(x) / x < t for x, t in ((1e3, 1e-2), (1e6, 1e-4), (1e9, 1e-7))))
+ok('H07 ej.3: lím (1−cos x)/x² = 1/2 en 0; sen x/(2x) → 1/2', lim0(lambda x: (1 - cos(x)) / x ** 2, 0, 0.5, hs=(1e-1, 1e-2, 1e-3)) and lim0(lambda x: sin(x) / (2 * x), 0, 0.5))
+ok('H07 cuidado: (x+1)/(x+2) → 1/2 en 0 (no 1)', lim0(lambda x: (x + 1) / (x + 2), 0, 0.5))
+ok('H07: (x+sen x)/x → 1 en +∞ y 1+cos x oscila entre 0 y 2', all(abs((x + sin(x)) / x - 1) < 1e-3 for x in (1e4, 1e5, 1e6)) and cerca(1 + cos(pi), 0) and cerca(1 + cos(2 * pi), 2))
+ok('H07 animación: x=1,66 → 3,46; x=1,05 → 2,10', round((1.66 ** 2 - 1) / log(1.66), 2) == 3.46 and round((1.05 ** 2 - 1) / log(1.05), 2) == 2.10)
+ok('H07-A: (x³−8)/(x²−4) → 3 en 2', lim0(lambda x: (x ** 3 - 8) / (x * x - 4), 2, 3) and F(3 * 4, 2 * 2) == 3)
+ok('H07-B: (e^{2x}−1)/sen x → 2 en 0', lim0(lambda x: (exp(2 * x) - 1) / sin(x), 0, 2))
+ok('H07-C: x²/e^x → 0 en +∞', all(x * x / exp(x) < t for x, t in ((20, 1e-5), (50, 1e-15))))
+ok('H08 ej.1: x·ln x → 0 en 0⁺; (1/x)/(−1/x²) = −x', all(abs(x * log(x)) < t for x, t in ((1e-3, 1e-2), (1e-6, 2e-5), (1e-9, 3e-8))) and all(cerca((1 / x) / (-1 / x ** 2), -x) for x in (0.1, 0.5, 2)))
+ok('H08 ej.2: x^x → 1 en 0⁺', all(abs(x ** x - 1) < t for x, t in ((1e-3, 1e-2), (1e-6, 2e-5))))
+ok('H08 ej.3: (1+2/x)^x → e² ≈ 7,39; exponente → 2', all(abs((1 + 2 / x) ** x - e ** 2) < t for x, t in ((1e4, 1e-2), (1e6, 1e-4))) and round(e ** 2, 2) == 7.39 and cerca(dnum(lambda x: log(1 + 2 / x), 5), (1 / (1 + 2 / 5)) * (-2 / 25)))
+ok('H08 ej.4: 1/x − 1/sen x → 0 en 0⁺; derivadas del denominador', lim0(lambda x: 1 / x - 1 / sin(x), 0, 0, lado=1) and cerca(dnum(lambda x: x * sin(x), 0.7), sin(0.7) + 0.7 * cos(0.7)) and cerca(dnum(lambda x: sin(x) + x * cos(x), 0.7), 2 * cos(0.7) - 0.7 * sin(0.7)))
+ok('H08: (1+k/x)^x → e^k para k = 1, 2, 3; e ≈ 2,72', all(abs((1 + k / 1e7) ** 1e7 - e ** k) < 1e-4 for k in (1, 2, 3)) and round(e, 2) == 2.72)
+ok('H08-A: x·e^{−x} → 0; H08-B: x^{1/x} → 1 en +∞', 50 * exp(-50) < 1e-15 and all(abs(x ** (1 / x) - 1) < t for x, t in ((1e6, 2e-5), (1e9, 3e-8))))
+ok('H08 animación: mínimos en x = 1/e: x·ln x = −1/e ≈ −0,37 y x^x ≈ 0,69', round(-1 / e, 2) == -0.37 and round(exp(-1 / e), 2) == 0.69)
+
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)

@@ -1,0 +1,238 @@
+<!--file:H08_aplicacion_de_la_regla_de_l_hopital_limites_indeterminados.html-->
+<!--title:Aplicación de la regla de L'Hôpital para determinar límites indeterminados-->
+<!--id:lh-aplic-->
+<!--tab:H08 L'Hôpital: aplicación-->
+<article class="sheet" id="lh-aplic" data-hoja="L20 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de las derivadas</li>
+      <li><b>Aplicación de la regla de L'Hôpital para determinar límites indeterminados</b></li>
+    </ol>
+    <h1>Aplicación de la regla de L'Hôpital para determinar límites indeterminados</h1>
+    <p class="lede">La regla de L'Hôpital solo se aplica a las formas \(\dfrac{0}{0}\) e \(\dfrac{\infty}{\infty}\). Las otras formas indeterminadas, \(0\cdot\infty\), \(\infty-\infty\), \(1^{\infty}\), \(0^{0}\) e \(\infty^{0}\), primero se transforman en un cociente y después se aplica la regla.
+    \[\lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k1">
+    <h3>Cómo se transforma cada forma</h3>
+    <ol class="steps">
+      <li><b>Producto \(0\cdot\infty\):</b> uno de los factores se pasa al denominador, invertido.
+        \[f(x)\cdot g(x)=\frac{f(x)}{\dfrac{1}{g(x)}}\]</li>
+      <li><b>Diferencia \(\infty-\infty\):</b> se resta, con denominador común, hasta dejar una sola fracción.</li>
+      <li><b>Potencias \(1^{\infty}\), \(0^{0}\), \(\infty^{0}\):</b> con \(f(x)&gt;0\), se escribe la potencia con base \(e\). El exponente es un producto, que se trata como en el primer caso.
+        \[f(x)^{g(x)}=e^{\,g(x)\cdot\ln f(x)}\]</li>
+      <li>En todos los casos, antes de derivar se comprueba que el cociente obtenido es de la forma \(\dfrac{0}{0}\) o \(\dfrac{\infty}{\infty}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Dos de los ejemplos de esta hoja, vistos en sus gráficas. Cuando \(x\) se acerca a \(0\) por la derecha, \(x\cdot\ln x\) se acerca a \(0\) y \(x^{x}\) se acerca a \(1\).</p>
+  <div class="stage" data-scene="lh-aplic"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(y=x\cdot\ln x\). Es la forma \(0\cdot\infty\) cuando \(x\to 0^{+}\): \(x\) tiende a \(0\) y \(\ln x\) tiende a \(-\infty\).</li>
+    <li><b>Curva verde:</b> \(y=x^{x}\). Es la forma \(0^{0}\) cuando \(x\to 0^{+}\).</li>
+    <li><b>Puntos huecos:</b> los valores a los que se acercan, \((0,\;0)\) y \((0,\;1)\). Las funciones no están definidas en \(x=0\).</li>
+    <li><b>Bajo la animación:</b> la cadena de transformaciones de cada límite.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ejemplos resueltos, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, forma \(0\cdot\infty\): \(\displaystyle\lim_{x\to 0^{+}}x\cdot\ln x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Forma. \(x\to 0\) y \(\ln x\to-\infty\). Es \(0\cdot\infty\): la regla todavía no se puede aplicar.</li>
+    <li>Se pasa el factor \(x\) al denominador, invertido. Para \(x&gt;0\):
+      \[x\cdot\ln x=\frac{\ln x}{\dfrac{1}{x}}\]</li>
+    <li>Forma del cociente. \(\ln x\to-\infty\) y \(\dfrac{1}{x}\to+\infty\). Es \(\dfrac{\infty}{\infty}\): ahora sí.</li>
+    <li>Se deriva cada uno por separado:
+      \[\left(\ln x\right)'=\frac{1}{x}\qquad\qquad\left(\frac{1}{x}\right)'=-\frac{1}{x^{2}}\]</li>
+    <li>Se aplica la regla:
+      \[\lim_{x\to 0^{+}}\frac{\ln x}{\dfrac{1}{x}}=\lim_{x\to 0^{+}}\frac{\dfrac{1}{x}}{-\dfrac{1}{x^{2}}}\]</li>
+    <li>Dividir por \(-\dfrac{1}{x^{2}}\) es multiplicar por \(-x^{2}\):
+      \[\frac{1}{x}\cdot\left(-x^{2}\right)=-x\]</li>
+    <li>Resultado:
+      \[\lim_{x\to 0^{+}}x\cdot\ln x=\lim_{x\to 0^{+}}\left(-x\right)=0\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, forma \(0^{0}\): \(\displaystyle\lim_{x\to 0^{+}}x^{x}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Forma. La base \(x\to 0\) y el exponente \(x\to 0\). Es \(0^{0}\).</li>
+    <li>Para \(x&gt;0\) se escribe la potencia con base \(e\), porque \(x=e^{\ln x}\):
+      \[x^{x}=\left(e^{\ln x}\right)^{x}=e^{\,x\cdot\ln x}\]</li>
+    <li>El exponente es el límite del ejemplo 1:
+      \[\lim_{x\to 0^{+}}x\cdot\ln x=0\]</li>
+    <li>La función exponencial es continua, así que el límite pasa al exponente:
+      \[\lim_{x\to 0^{+}}x^{x}=e^{\,\lim\limits_{x\to 0^{+}}x\cdot\ln x}=e^{0}=1\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, forma \(1^{\infty}\): \(\displaystyle\lim_{x\to+\infty}\left(1+\dfrac{2}{x}\right)^{x}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Forma. La base \(1+\dfrac{2}{x}\to 1\) y el exponente \(x\to+\infty\). Es \(1^{\infty}\).</li>
+    <li>Se escribe con base \(e\). Para \(x&gt;0\) la base es positiva:
+      \[\left(1+\frac{2}{x}\right)^{x}=e^{\,x\cdot\ln\left(1+\frac{2}{x}\right)}\]</li>
+    <li>El exponente es de la forma \(\infty\cdot 0\). Se pasa \(x\) al denominador, invertido:
+      \[x\cdot\ln\left(1+\frac{2}{x}\right)=\frac{\ln\left(1+\dfrac{2}{x}\right)}{\dfrac{1}{x}}\]</li>
+    <li>Forma del cociente. Numerador: \(\ln 1=0\). Denominador: \(\dfrac{1}{x}\to 0\). Es \(\dfrac{0}{0}\).</li>
+    <li>Derivada del numerador, por la regla de la cadena. La derivada de \(\dfrac{2}{x}\) es \(-\dfrac{2}{x^{2}}\):
+      \[\left(\ln\left(1+\frac{2}{x}\right)\right)'=\frac{1}{1+\dfrac{2}{x}}\cdot\left(-\frac{2}{x^{2}}\right)\]</li>
+    <li>Derivada del denominador:
+      \[\left(\frac{1}{x}\right)'=-\frac{1}{x^{2}}\]</li>
+    <li>Se aplica la regla. El factor \(-\dfrac{1}{x^{2}}\) está arriba y abajo y se simplifica:
+      \[\lim_{x\to+\infty}\frac{\dfrac{1}{1+\dfrac{2}{x}}\cdot\left(-\dfrac{2}{x^{2}}\right)}{-\dfrac{1}{x^{2}}}=\lim_{x\to+\infty}\frac{2}{1+\dfrac{2}{x}}\]</li>
+    <li>Como \(\dfrac{2}{x}\to 0\):
+      \[\lim_{x\to+\infty}\frac{2}{1+\dfrac{2}{x}}=\frac{2}{1+0}=2\]</li>
+    <li>El exponente tiende a \(2\). La exponencial es continua:
+      \[\lim_{x\to+\infty}\left(1+\frac{2}{x}\right)^{x}=e^{2}\approx 7{,}39\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, forma \(\infty-\infty\): \(\displaystyle\lim_{x\to 0^{+}}\left(\dfrac{1}{x}-\dfrac{1}{\operatorname{sen}x}\right)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Forma. \(\dfrac{1}{x}\to+\infty\) y \(\dfrac{1}{\operatorname{sen}x}\to+\infty\). Es \(\infty-\infty\).</li>
+    <li>Se resta con denominador común \(x\cdot\operatorname{sen}x\):
+      \[\frac{1}{x}-\frac{1}{\operatorname{sen}x}=\frac{\operatorname{sen}x-x}{x\cdot\operatorname{sen}x}\]</li>
+    <li>Forma del cociente. Numerador: \(\operatorname{sen}0-0=0\). Denominador: \(0\cdot\operatorname{sen}0=0\). Es \(\dfrac{0}{0}\).</li>
+    <li>Se deriva cada uno por separado. En el denominador, regla del producto:
+      \[\left(\operatorname{sen}x-x\right)'=\cos x-1\qquad\qquad\left(x\cdot\operatorname{sen}x\right)'=\operatorname{sen}x+x\cdot\cos x\]</li>
+    <li>Se aplica la regla:
+      \[\lim_{x\to 0^{+}}\frac{\operatorname{sen}x-x}{x\cdot\operatorname{sen}x}=\lim_{x\to 0^{+}}\frac{\cos x-1}{\operatorname{sen}x+x\cdot\cos x}\]</li>
+    <li>Forma otra vez. Numerador: \(\cos 0-1=0\). Denominador: \(\operatorname{sen}0+0\cdot\cos 0=0\). Sigue siendo \(\dfrac{0}{0}\). Se deriva de nuevo:
+      \[\left(\cos x-1\right)'=-\operatorname{sen}x\qquad\qquad\left(\operatorname{sen}x+x\cdot\cos x\right)'=\cos x+\cos x-x\cdot\operatorname{sen}x=2\cos x-x\cdot\operatorname{sen}x\]</li>
+    <li>Se aplica la regla por segunda vez. Ya no hay indeterminación:
+      \[\lim_{x\to 0^{+}}\frac{-\operatorname{sen}x}{2\cos x-x\cdot\operatorname{sen}x}=\frac{-\operatorname{sen}0}{2\cos 0-0\cdot\operatorname{sen}0}=\frac{0}{2}=0\]</li>
+    <li>Resultado:
+      \[\lim_{x\to 0^{+}}\left(\frac{1}{x}-\frac{1}{\operatorname{sen}x}\right)=0\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: «indeterminada» no significa «sin respuesta»</h3>
+    <ol class="steps">
+      <li>Una forma indeterminada avisa que el límite no se puede leer directamente. No dice cuánto vale. La misma forma da resultados distintos según las funciones.</li>
+      <li>Tres límites de la forma \(1^{\infty}\), calculados con los mismos pasos del ejemplo 3, con \(1\), \(2\) y \(3\) en el numerador:
+        \[\lim_{x\to+\infty}\left(1+\frac{1}{x}\right)^{x}=e\qquad\lim_{x\to+\infty}\left(1+\frac{2}{x}\right)^{x}=e^{2}\qquad\lim_{x\to+\infty}\left(1+\frac{3}{x}\right)^{x}=e^{3}\]</li>
+      <li>Por eso \(1^{\infty}\) no es \(1\), y \(0\cdot\infty\) no es \(0\): cada caso se calcula.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\lim_{x\to+\infty}x\cdot e^{-x}\).</p>
+    <details><summary>Pista</summary><div><p>\(e^{-x}=\dfrac{1}{e^{x}}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Forma. \(x\to+\infty\) y \(e^{-x}\to 0\). Es \(\infty\cdot 0\).</li>
+        <li>Se escribe como cociente:
+          \[x\cdot e^{-x}=\frac{x}{e^{x}}\]</li>
+        <li>Forma del cociente. \(x\to+\infty\) y \(e^{x}\to+\infty\). Es \(\dfrac{\infty}{\infty}\).</li>
+        <li>Se deriva cada uno por separado y se aplica la regla:
+          \[\lim_{x\to+\infty}\frac{x}{e^{x}}=\lim_{x\to+\infty}\frac{1}{e^{x}}=0\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\lim_{x\to+\infty}x^{1/x}\).</p>
+    <details><summary>Pista</summary><div><p>Es la forma \(\infty^{0}\). Escribe \(x^{1/x}=e^{\frac{\ln x}{x}}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Forma. La base \(x\to+\infty\) y el exponente \(\dfrac{1}{x}\to 0\). Es \(\infty^{0}\).</li>
+        <li>Para \(x&gt;0\) se escribe con base \(e\):
+          \[x^{1/x}=e^{\,\frac{1}{x}\cdot\ln x}=e^{\,\frac{\ln x}{x}}\]</li>
+        <li>El exponente es de la forma \(\dfrac{\infty}{\infty}\). Se deriva cada uno por separado y se aplica la regla:
+          \[\lim_{x\to+\infty}\frac{\ln x}{x}=\lim_{x\to+\infty}\frac{\dfrac{1}{x}}{1}=0\]</li>
+        <li>La exponencial es continua:
+          \[\lim_{x\to+\infty}x^{1/x}=e^{0}=1\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un capital de \(1\) peso, a una tasa anual del \(100\,\%\), capitalizado \(n\) veces en el año, vale al final del año \(\left(1+\dfrac{1}{n}\right)^{n}\). ¿A cuánto se acerca ese valor si se capitaliza cada vez más seguido, es decir, cuando \(n\to+\infty\)?</p>
+    <details><summary>Pista</summary><div><p>Usa la variable real \(x\) en lugar de \(n\) y repite los pasos del ejemplo 3, con \(1\) en lugar de \(2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se calcula \(\displaystyle\lim_{x\to+\infty}\left(1+\dfrac{1}{x}\right)^{x}\). Forma: \(1^{\infty}\). Con base \(e\):
+          \[\left(1+\frac{1}{x}\right)^{x}=e^{\,x\cdot\ln\left(1+\frac{1}{x}\right)}\]</li>
+        <li>Exponente como cociente, de la forma \(\dfrac{0}{0}\):
+          \[x\cdot\ln\left(1+\frac{1}{x}\right)=\frac{\ln\left(1+\dfrac{1}{x}\right)}{\dfrac{1}{x}}\]</li>
+        <li>Derivadas del numerador y del denominador:
+          \[\left(\ln\left(1+\frac{1}{x}\right)\right)'=\frac{1}{1+\dfrac{1}{x}}\cdot\left(-\frac{1}{x^{2}}\right)\qquad\qquad\left(\frac{1}{x}\right)'=-\frac{1}{x^{2}}\]</li>
+        <li>Se aplica la regla. El factor \(-\dfrac{1}{x^{2}}\) se simplifica:
+          \[\lim_{x\to+\infty}\frac{1}{1+\dfrac{1}{x}}=\frac{1}{1+0}=1\]</li>
+        <li>El exponente tiende a \(1\):
+          \[\lim_{x\to+\infty}\left(1+\frac{1}{x}\right)^{x}=e^{1}=e\approx 2{,}72\]</li>
+        <li>Respuesta: el valor se acerca a \(e\approx 2{,}72\) pesos. Como el límite vale para \(x\) real, vale en particular para \(n\) natural.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L20-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+OA.scene('lh-aplic', (function(){
+  var RUN = 22, num = OA.num;
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+  function p(x){ return x*Math.log(x); } function q(x){ return Math.exp(x*Math.log(x)); }
+  function xs(s){ return s < 3 ? 1.4 : 1.4*Math.pow(0.02/1.4, OA.smooth(cl((s - 3)/15))); }
+  return {
+    world:{x0:-0.22, x1:1.62, y0:-0.62, y1:1.78}, aspect:1,
+    aria:'Dos curvas para x positivo: la azul, y igual a x por logaritmo natural de x, y la verde, y igual a x elevado a x. Un valor de x se acerca a 0 por la derecha. La curva azul se acerca al punto (0, 0) y la verde al punto (0, 1), marcados con puntos huecos.',
+    labels:[['F', '\\displaystyle\\lim_{x\\to 0^{+}}x\\ln x=0\\qquad\\lim_{x\\to 0^{+}}x^{x}=e^{0}=1', 'lím x·ln x = 0; lím xˣ = e⁰ = 1', 'diff']],
+    sliders:[{id:'x', tex:'x', min:0.02, max:1.4, step:0.005, value:1.4}],
+    legend:'<span><i class="sw sec"></i> \\(y=x\\cdot\\ln x\\)</span><span><i class="sw alt"></i> \\(y=x^{x}\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(pp, v){ v.t = pp; v.x = xs(pp*RUN); }},
+    onInput:function(v){ v.t = null; },
+    draw:function(S, v){
+      var s = v.t == null ? RUN : v.t*RUN, x = v.x, C = S.C, c = S.ctx, X = S.X, Y = S.Y;
+      function txt(t, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(t).width + 8, xa = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.85)'; c.fillRect(xa, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.axes({gx:[0.5, 1, 1.5], gy:[-0.5, 0.5, 1, 1.5]});
+      S.curve(p, 0.0005, 1.6, {color:C.sec, width:2.6}); S.curve(q, 0.0005, 1.52, {color:C.alt, width:2.6});
+      S.line(x, p(x), x, q(x), {color:C.muted, width:1, dash:[3, 3]});
+      S.dot(x, p(x), C.sec); S.dot(x, q(x), C.alt);
+      S.ring(0, 0, C.sec); S.ring(0, 1, C.alt);
+      txt('x·ln x = ' + dec(p(x), 2), X(x) + 12, Y(p(x)) + 14, 'left', C.sec);
+      txt('xˣ = ' + dec(q(x), 2), X(x) + 12, Y(q(x)) - 14, 'left', C.alt);
+      txt('(0, 1)', X(0) - 8, Y(1), 'right', C.alt); txt('(0, 0)', X(0) - 8, Y(0) + 14, 'right', C.sec);
+      txt('y = xˣ', X(1.5), Y(1.72), 'right', C.alt); txt('y = x · ln x', X(1.6), Y(0.45), 'right', C.sec);
+      S.lab('F', X(0.3), Y(-0.48), 0, 0, v.t != null && s >= 19);
+    },
+    caption:function(v){
+      var x = v.x, s = v.t == null ? null : v.t*RUN;
+      if (s != null && s < 3) return 'Curva azul: y = x · ln x. Curva verde: y = x elevado a x. El valor de x se acercará a 0 por la derecha';
+      return 'Con x = ' + dec(x, 2) + ': x · ln x = ' + dec(p(x), 2) + ' y x elevado a x = ' + dec(q(x), 2) + '. Mientras x se acerca a 0, se acercan a 0 y a 1';
+    },
+    readout:function(v){ return [['', '\\displaystyle\\lim_{x\\to 0^{+}}x\\ln x=\\lim_{x\\to 0^{+}}\\dfrac{\\ln x}{1/x}=\\lim_{x\\to 0^{+}}\\dfrac{1/x}{-1/x^{2}}=\\lim_{x\\to 0^{+}}(-x)=0'], ['d', '\\displaystyle\\lim_{x\\to 0^{+}}x^{x}=\\lim_{x\\to 0^{+}}e^{\\,x\\ln x}=e^{0}=1']]; }
+  };
+})());

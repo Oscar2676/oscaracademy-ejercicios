@@ -1,0 +1,204 @@
+<!--file:H07_la_regla_de_l_hopital.html-->
+<!--title:La regla de L'Hôpital-->
+<!--id:lh-regla-->
+<!--tab:H07 Regla de L'Hôpital-->
+<article class="sheet" id="lh-regla" data-hoja="L20 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de las derivadas</li>
+      <li><b>La regla de L'Hôpital</b></li>
+    </ol>
+    <h1>La regla de L'Hôpital</h1>
+    <p class="lede">Cuando en un cociente el numerador y el denominador tienden los dos a \(0\), o los dos a infinito, el límite del cociente no se ve a simple vista: es una forma indeterminada. La regla de L'Hôpital permite calcularlo con las derivadas del numerador y del denominador.
+    \[\lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>Enunciado</h3>
+    <ol class="steps">
+      <li>Sean \(f\) y \(g\) dos funciones derivables en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\), con \(g'(x)\neq 0\) para todo \(x\neq a\) de ese intervalo.</li>
+      <li>Forma \(\dfrac{0}{0}\):
+        \[\lim_{x\to a}f(x)=0\qquad\text{y}\qquad\lim_{x\to a}g(x)=0\]</li>
+      <li>O bien forma \(\dfrac{\infty}{\infty}\):
+        \[\lim_{x\to a}f(x)=\pm\infty\qquad\text{y}\qquad\lim_{x\to a}g(x)=\pm\infty\]</li>
+      <li>Si el límite de \(\dfrac{f'(x)}{g'(x)}\) existe, o es \(+\infty\) o \(-\infty\), entonces:
+        \[\lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}\]</li>
+      <li>La regla vale también para límites laterales, \(x\to a^{+}\) y \(x\to a^{-}\), y para \(x\to+\infty\) y \(x\to-\infty\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: tres cuidados</h3>
+    <ol class="steps">
+      <li>Se deriva el numerador y se deriva el denominador, <b>cada uno por separado</b>. No es la derivada del cociente:
+        \[\frac{f'(x)}{g'(x)}\neq\left(\frac{f(x)}{g(x)}\right)'\]</li>
+      <li>Antes de aplicarla hay que comprobar que la forma es \(\dfrac{0}{0}\) o \(\dfrac{\infty}{\infty}\). Si no lo es, la regla da un resultado falso. Ejemplo: en \(\displaystyle\lim_{x\to 0}\dfrac{x+1}{x+2}\) el numerador tiende a \(1\) y el denominador a \(2\); no hay indeterminación y el límite es \(\dfrac{1}{2}\). Derivar arriba y abajo daría \(\dfrac{1}{1}=1\), que es falso.</li>
+      <li>Si el límite de \(\dfrac{f'(x)}{g'(x)}\) no existe, la regla no decide nada: el límite original puede existir igual. Ejemplo al final de la hoja.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Vamos a ver por qué funciona, con \(f(x)=x^{2}-1\) y \(g(x)=\ln x\) en \(a=1\). Las dos valen \(0\) en \(x=1\). Cerca de ese punto cada curva se confunde con su recta tangente, y sobre las tangentes el cociente de las alturas es siempre el cociente de las pendientes.</p>
+  <div class="stage" data-scene="lh-regla"></div>
+  <ul class="keys">
+    <li><b>Curva verde:</b> \(f(x)=x^{2}-1\). Su tangente en \(x=1\), punteada, tiene pendiente \(f'(1)=2\).</li>
+    <li><b>Curva azul:</b> \(g(x)=\ln x\). Su tangente en \(x=1\), punteada, tiene pendiente \(g'(1)=1\).</li>
+    <li><b>Trazos verticales:</b> las alturas \(f(x)\) y \(g(x)\) en el mismo \(x\), que se acerca a \(1\).</li>
+    <li><b>Bajo la animación:</b> el cociente de las alturas en cada instante y el valor al que tiende.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Por qué funciona: demostración de un caso</h2>
+  <p>Se demuestra el caso \(\dfrac{0}{0}\) con hipótesis más fuertes: \(f(a)=g(a)=0\), \(f\) y \(g\) derivables en \(a\) y \(g'(a)\neq 0\). El caso general se demuestra con el teorema del valor medio de Cauchy y no se desarrolla en esta hoja.</p>
+  <div class="prop p1">
+  <h3>Demostración</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Como \(f(a)=0\) y \(g(a)=0\), restar esos valores no cambia nada. Para \(x\neq a\) cercano a \(a\):
+      \[\frac{f(x)}{g(x)}=\frac{f(x)-f(a)}{g(x)-g(a)}\]</li>
+    <li>Se dividen el numerador y el denominador por \(x-a\), que no es \(0\):
+      \[\frac{f(x)}{g(x)}=\frac{\dfrac{f(x)-f(a)}{x-a}}{\dfrac{g(x)-g(a)}{x-a}}\]</li>
+    <li>Definición de derivada en \(a\), aplicada a \(f\) y a \(g\):
+      \[\lim_{x\to a}\frac{f(x)-f(a)}{x-a}=f'(a)\qquad\qquad\lim_{x\to a}\frac{g(x)-g(a)}{x-a}=g'(a)\]</li>
+    <li>El límite de un cociente es el cociente de los límites, porque el límite del denominador, \(g'(a)\), no es \(0\):
+      \[\lim_{x\to a}\frac{f(x)}{g(x)}=\frac{f'(a)}{g'(a)}\]</li>
+    <li>En la animación: \(\dfrac{f'(1)}{g'(1)}=\dfrac{2}{1}=2\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ejemplos resueltos, paso a paso</h2>
+
+  <div class="prop p2">
+  <h3>Ejemplo 1, forma \(\dfrac{0}{0}\): \(\displaystyle\lim_{x\to 1}\dfrac{x^{2}-1}{\ln x}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se comprueba la forma. Numerador y denominador tienden a \(0\):
+      \[\lim_{x\to 1}\left(x^{2}-1\right)=1^{2}-1=0\qquad\qquad\lim_{x\to 1}\ln x=\ln 1=0\]</li>
+    <li>Se deriva cada uno por separado:
+      \[\left(x^{2}-1\right)'=2x\qquad\qquad\left(\ln x\right)'=\frac{1}{x}\]</li>
+    <li>Se aplica la regla:
+      \[\lim_{x\to 1}\frac{x^{2}-1}{\ln x}=\lim_{x\to 1}\frac{2x}{\dfrac{1}{x}}\]</li>
+    <li>Dividir por \(\dfrac{1}{x}\) es multiplicar por \(x\):
+      \[\lim_{x\to 1}\frac{2x}{\dfrac{1}{x}}=\lim_{x\to 1}2x^{2}=2\cdot 1^{2}=2\]</li>
+    <li>Resultado:
+      \[\lim_{x\to 1}\frac{x^{2}-1}{\ln x}=2\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 2, forma \(\dfrac{\infty}{\infty}\): \(\displaystyle\lim_{x\to+\infty}\dfrac{\ln x}{x}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se comprueba la forma. Numerador y denominador tienden a \(+\infty\):
+      \[\lim_{x\to+\infty}\ln x=+\infty\qquad\qquad\lim_{x\to+\infty}x=+\infty\]</li>
+    <li>Se deriva cada uno por separado:
+      \[\left(\ln x\right)'=\frac{1}{x}\qquad\qquad\left(x\right)'=1\]</li>
+    <li>Se aplica la regla:
+      \[\lim_{x\to+\infty}\frac{\ln x}{x}=\lim_{x\to+\infty}\frac{\dfrac{1}{x}}{1}=\lim_{x\to+\infty}\frac{1}{x}=0\]</li>
+    <li>Lectura: \(x\) crece mucho más rápido que \(\ln x\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 3, la regla dos veces: \(\displaystyle\lim_{x\to 0}\dfrac{1-\cos x}{x^{2}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se comprueba la forma. Numerador: \(1-\cos 0=1-1=0\). Denominador: \(0^{2}=0\). Es \(\dfrac{0}{0}\).</li>
+    <li>Se deriva cada uno por separado:
+      \[\left(1-\cos x\right)'=\operatorname{sen}x\qquad\qquad\left(x^{2}\right)'=2x\]</li>
+    <li>Se aplica la regla:
+      \[\lim_{x\to 0}\frac{1-\cos x}{x^{2}}=\lim_{x\to 0}\frac{\operatorname{sen}x}{2x}\]</li>
+    <li>Se comprueba la forma otra vez. Numerador: \(\operatorname{sen}0=0\). Denominador: \(2\cdot 0=0\). Sigue siendo \(\dfrac{0}{0}\). Se deriva de nuevo:
+      \[\left(\operatorname{sen}x\right)'=\cos x\qquad\qquad\left(2x\right)'=2\]</li>
+    <li>Se aplica la regla por segunda vez. Ya no hay indeterminación:
+      \[\lim_{x\to 0}\frac{\operatorname{sen}x}{2x}=\lim_{x\to 0}\frac{\cos x}{2}=\frac{\cos 0}{2}=\frac{1}{2}\]</li>
+    <li>Resultado:
+      \[\lim_{x\to 0}\frac{1-\cos x}{x^{2}}=\frac{1}{2}\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: cuando la regla no decide</h3>
+    <ol class="steps">
+      <li>En \(\displaystyle\lim_{x\to+\infty}\dfrac{x+\operatorname{sen}x}{x}\) la forma es \(\dfrac{\infty}{\infty}\). El cociente de las derivadas es:
+        \[\frac{\left(x+\operatorname{sen}x\right)'}{\left(x\right)'}=\frac{1+\cos x}{1}=1+\cos x\]</li>
+      <li>\(1+\cos x\) oscila entre \(0\) y \(2\) sin acercarse a ningún valor: su límite cuando \(x\to+\infty\) no existe. La regla no se puede aplicar.</li>
+      <li>El límite original sí existe. Se calcula sin la regla, separando la fracción:
+        \[\frac{x+\operatorname{sen}x}{x}=1+\frac{\operatorname{sen}x}{x}\]</li>
+      <li>Como \(-1\le\operatorname{sen}x\le 1\), para \(x&gt;0\) se cumple \(-\dfrac{1}{x}\le\dfrac{\operatorname{sen}x}{x}\le\dfrac{1}{x}\). Las dos cotas tienden a \(0\); por el teorema del sándwich, \(\dfrac{\operatorname{sen}x}{x}\) tiende a \(0\):
+        \[\lim_{x\to+\infty}\frac{x+\operatorname{sen}x}{x}=1+0=1\]</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\lim_{x\to 2}\dfrac{x^{3}-8}{x^{2}-4}\).</p>
+    <details><summary>Pista</summary><div><p>Comprueba primero que numerador y denominador valen \(0\) en \(x=2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Forma. Numerador: \(2^{3}-8=0\). Denominador: \(2^{2}-4=0\). Es \(\dfrac{0}{0}\).</li>
+        <li>Se deriva cada uno por separado:
+          \[\left(x^{3}-8\right)'=3x^{2}\qquad\qquad\left(x^{2}-4\right)'=2x\]</li>
+        <li>Se aplica la regla y se evalúa:
+          \[\lim_{x\to 2}\frac{x^{3}-8}{x^{2}-4}=\lim_{x\to 2}\frac{3x^{2}}{2x}=\frac{3\cdot 2^{2}}{2\cdot 2}=\frac{12}{4}=3\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\lim_{x\to 0}\dfrac{e^{2x}-1}{\operatorname{sen}x}\).</p>
+    <details><summary>Pista</summary><div><p>La derivada de \(e^{2x}\) es \(2e^{2x}\), por la regla de la cadena.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Forma. Numerador: \(e^{0}-1=1-1=0\). Denominador: \(\operatorname{sen}0=0\). Es \(\dfrac{0}{0}\).</li>
+        <li>Se deriva cada uno por separado:
+          \[\left(e^{2x}-1\right)'=2e^{2x}\qquad\qquad\left(\operatorname{sen}x\right)'=\cos x\]</li>
+        <li>Se aplica la regla y se evalúa:
+          \[\lim_{x\to 0}\frac{e^{2x}-1}{\operatorname{sen}x}=\lim_{x\to 0}\frac{2e^{2x}}{\cos x}=\frac{2e^{0}}{\cos 0}=\frac{2\cdot 1}{1}=2\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Calcula \(\displaystyle\lim_{x\to+\infty}\dfrac{x^{2}}{e^{x}}\).</p>
+    <details><summary>Pista</summary><div><p>Hay que aplicar la regla dos veces.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Forma. \(x^{2}\to+\infty\) y \(e^{x}\to+\infty\). Es \(\dfrac{\infty}{\infty}\).</li>
+        <li>Se deriva cada uno por separado y se aplica la regla:
+          \[\lim_{x\to+\infty}\frac{x^{2}}{e^{x}}=\lim_{x\to+\infty}\frac{2x}{e^{x}}\]</li>
+        <li>Forma otra vez. \(2x\to+\infty\) y \(e^{x}\to+\infty\). Sigue siendo \(\dfrac{\infty}{\infty}\). Se aplica la regla por segunda vez:
+          \[\lim_{x\to+\infty}\frac{2x}{e^{x}}=\lim_{x\to+\infty}\frac{2}{e^{x}}\]</li>
+        <li>El numerador es la constante \(2\) y el denominador tiende a \(+\infty\):
+          \[\lim_{x\to+\infty}\frac{2}{e^{x}}=0\]</li>
+        <li>Resultado: \(\displaystyle\lim_{x\to+\infty}\dfrac{x^{2}}{e^{x}}=0\). La exponencial crece más rápido que \(x^{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L20-H07 · v001 · Pendiente de APR</span>
+</footer>
+</article>
