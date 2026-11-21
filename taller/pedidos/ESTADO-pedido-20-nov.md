@@ -20,7 +20,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 02:25: 26 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**
+## Avance al 21-nov 03:10: 28 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**; lote 21: 2 publicadas, 3 en revisión
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -45,8 +45,14 @@ L20 H09 «Derivadas para razones relacionadas» (`H09_derivadas_para_razones_rel
 
 ## Lote 21 · Integración y acumulación de cambio (`calculo-integral/lote21/`, fuentes `taller/src/l21/partes/`, `qa/rigor/verificar_lote_21.py`)
 Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d6b-b293-cedf32eb1797). Código de pie `CI-L21-HNN`. Se arma con `python3 taller/build.py 21 "Integración y acumulación de cambio"`.
-- **Pendientes de APR (21-nov 02:40):** H01 «Exploración de acumulaciones de cambio» (`H01_exploracion_de_acumulaciones_de_cambio.html`; enlazar en ft30u comp-lcno0t9w · qudgj comp-l2qt71ca · qclgl comp-l4skmywg · x238t comp-kagozn2k) y H02 «Aplicar propiedades de las integrales definidas» (`H02_propiedades_de_las_integrales_definidas.html`; ft30u comp-lcno0ta0 · qudgj comp-l2qtbctn · qclgl comp-l4skmywp1).
-- **Por producir (10):** Sumas de Riemann, notación de suma y de integral definida · TFC y funciones de acumulación · Interpretar funciones de acumulación que involucran área · Antiderivadas: reglas básicas e integrales definidas · Antiderivadas: regla de la potencia inversa · Integrales por sustitución · División larga y completar el cuadrado · Fracciones parciales · Integrales impropias · «Integración y acumulación de cambio» (título general). Los identificadores están en el pedido de 378.
+- **Con APR del 21-nov (02:44), enlazadas y publicadas:** H01 «Exploración de acumulaciones de cambio» (`H01_exploracion_de_acumulaciones_de_cambio.html`; ft30u comp-lcno0t9w · qudgj comp-l2qt71ca · qclgl comp-l4skmywg · x238t comp-kagozn2k) y H02 «Aplicar propiedades de las integrales definidas» (`H02_propiedades_de_las_integrales_definidas.html`; ft30u comp-lcno0ta0 · qudgj comp-l2qtbctn · qclgl comp-l4skmywp1).
+- **Pendientes de APR (21-nov 03:10):**
+  - H03 «Sumas de Riemann, notación de suma y notación de integral definida» (`H03_sumas_de_riemann_notacion_de_suma_e_integral_definida.html`): ft30u comp-lcno0ta11 · qudgj comp-l63sxn9u · qclgl comp-l63qfa0g
+  - H04 «El teorema fundamental del cálculo y funciones de acumulación» (`H04_teorema_fundamental_del_calculo_y_funciones_de_acumulacion.html`): ft30u comp-lcno0ta31 · qudgj comp-l2qt9dak · qclgl comp-l4skmywm · qtf2i comp-la922ag4 · x238t comp-kagpi99q
+  - H05 «Interpretar el comportamiento de funciones de acumulación que involucran área» (`H05_interpretar_funciones_de_acumulacion_que_involucran_area.html`): ft30u comp-lcno0ta5 · qudgj comp-l63syhke · qclgl comp-l63qho3e · qtf2i comp-la922ag52
+- Escena común de dos paneles (f arriba con su área, g = ∫f abajo con tangente): `taller/src/l21/partes/_acu.js` (`oaAcu`); H04 y H05 se arman con `cat _acu.js NN.scene.js`.
+- **Por producir (7):** Antiderivadas: reglas básicas e integrales definidas · Antiderivadas: regla de la potencia inversa · Integrales por sustitución · División larga y completar el cuadrado · Fracciones parciales · Integrales impropias · «Integración y acumulación de cambio» (título general). Identificadores en el pedido de 378.
+- **Ritmo acordado (21-nov 02:42):** Óscar pide que se le presenten las hojas para APR **de 5 en 5, y después de 10 en 10**.
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
