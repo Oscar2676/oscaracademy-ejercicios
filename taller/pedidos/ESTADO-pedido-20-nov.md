@@ -101,6 +101,7 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
   - H07 «Introducción a funciones con valores vectoriales» (`vec-intro`) → Wix: qudgj · qtf2i.
   - H08 «Derivada de funciones con valores vectoriales» (`vec-derivada`) → Wix: fr2b0 · qudgj · qtf2i.
 - **L23 H06 v002** (corrección de Óscar 10:46): animación adicional `pol-cardioide-puntos`, que construye la cardioide r = 1 − cos θ punto a punto (θ = kπ/12, k = 0…24: rayo, cuenta de r, punto, tabla θ–r). **Criterio nuevo: puntos chicos y trazos finos, nada tosco.** Pendiente de APR.
+- **L23 H06 v003** (10:50, «¿por qué no resultó una cardioide?»): era error mío, `aspect` iba invertido (**`aspect` = alto/ancho del mundo, no ancho/alto**) y la curva salía estirada. Corregido; al final se rotula la cúspide y se muestra en chico la misma curva de pie (r = 1 − sen θ); recuadro «¿Por qué no parece un corazón?». La animación del área (`pol-area-dos`) sigue en la hoja, más abajo (Óscar creyó que se había borrado). Pendiente de APR.
 - **Faltan 6 hojas del lote 23:** r(t) con componentes trigonométricas · segunda derivada vectorial · vector aceleración · ejercicios de movimiento · definir y diferenciar paramétricas · segundas derivadas paramétricas.
 - **Esperan APR:** L03 H07 v003 · L21 H01 v003, H04, H05, H08, H09, H12 v002 · L23 H01 v003, H03, H04, H06, H07, H08.
 
