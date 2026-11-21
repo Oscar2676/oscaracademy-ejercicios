@@ -36,7 +36,11 @@ function oaSec(o){
       for (i = 0; i <= N; i++){ t = a + (u - a)*i/N; f = cara(t); poli(t, f); m = mez((t - a)/(b - a)); c.fillStyle = m; c.fill(); c.strokeStyle = m; c.lineWidth = 1.2; c.stroke(); }
       for (i = 1; i <= 5; i++){ t = a + (u - a)*i/6; poli(t, cara(t)); c.strokeStyle = 'rgba(255,255,255,0.35)'; c.lineWidth = 1; c.stroke(); }
       /* cara del corte en u */
-      f = cara(u); poli(u, f); c.fillStyle = 'rgba(201,138,147,0.95)'; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 2.6; c.stroke();
+      /* rebanada de espesor dx: un prisma delgado con la cara del corte */
+      var u0 = Math.max(a, u - 0.055*(b - a)), e0, e1; f = cara(u);
+      for (i = 0; i <= 10; i++){ t = u0 + (u - u0)*i/10; poli(t, f); c.fillStyle = '#8a1c2c'; c.fill(); c.strokeStyle = '#6a1826'; c.lineWidth = 1; c.stroke(); }
+      poli(u, f); c.fillStyle = 'rgba(226,170,178,1)'; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 2.6; c.stroke();
+      e0 = P(u0, o.y2(u), 0); e1 = P(u, o.y2(u), 0); c.strokeStyle = C.ink; c.lineWidth = 1.5; c.setLineDash([]); c.beginPath(); c.moveTo(e0[0], e0[1] + 9); c.lineTo(e1[0], e1[1] + 9); c.moveTo(e0[0], e0[1] + 4); c.lineTo(e0[0], e0[1] + 14); c.moveTo(e1[0], e1[1] + 4); c.lineTo(e1[0], e1[1] + 14); c.stroke(); txt('dx', (e0[0] + e1[0])/2, (e0[1] + e1[1])/2 + 25, 'center', C.ink);
       tramo([u, o.y1(u), 0], [u, o.y2(u), 0], C.rise, 3.4);
       txt(o.sTxt(u, dec), X(o.aAt[0]), Y(o.aAt[1]) + 21, 'left', C.rise);
       (o.notes || []).forEach(function(k){ p = P(k.at[0], k.at[1], 0); txt(k.txt, p[0] + (k.dx || 0), p[1] + (k.dy || 0), k.al || 'left', C[k.color || 'rise']); });

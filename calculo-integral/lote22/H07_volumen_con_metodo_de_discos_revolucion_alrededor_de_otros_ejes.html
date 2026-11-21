@@ -193,6 +193,22 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li><b>Rebanada burdeo:</b> el disco en la posición \(x\), con su grosor \(dx\). Se achica hasta ser un punto en \(x=4\).</li>
     <li><b>Mini rectángulo de borde negro:</b> va del eje de giro a la curva; su ancho es \(dx\) y su alto es el radio \(R\). Al girar alrededor del eje, ese rectángulo genera la rebanada: \(dV=\pi R^{2}\,dx\).</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El sólido construido va desde \(0\) hasta la posición del corte, \(x\). Su tamaño depende de dónde esté el corte: es una función de \(x\).</li>
+      <li>Es la suma de todas las rebanadas que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(x\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La rebanada que está en la posición \(t\), de espesor \(dt\), aporta
+        \[\pi\left(2-\sqrt{t}\right)^{2}dt=\pi\left(4-4\sqrt{t}+t\right)dt\]</li>
+      <li>Se suman desde \(t=0\) hasta \(t=x\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{x}\pi\left(4-4t^{1/2}+t\right)dt=\pi\left[4t-\frac{8}{3}t^{3/2}+\frac{t^{2}}{2}\right]_{0}^{x}=\pi\left(4x-\frac{8}{3}x^{3/2}+\frac{x^{2}}{2}\right)\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando el corte llega a \(x=4\) se obtiene el volumen completo: \(\pi\left(16-\dfrac{64}{3}+8\right)=\dfrac{8\pi}{3}\). Es la integral del ejemplo 1.</li>
+      <li>En la segunda animación ocurre lo mismo con \(y\), partiendo de \(-1\): \(\displaystyle\int_{-1}^{y}\pi\left(1-t^{2}\right)^{2}dt=\pi\left(y-\frac{2y^{3}}{3}+\frac{y^{5}}{5}+\frac{8}{15}\right)\), que en \(y=1\) vale \(\dfrac{16\pi}{15}\). El \(\dfrac{8}{15}\) sale de evaluar en el límite de abajo: \(-\left(-1+\dfrac{2}{3}-\dfrac{1}{5}\right)=\dfrac{8}{15}\).</li>
+    </ol>
+  </div>
   <p><b>Giro alrededor de la recta vertical \(x=1\).</b> La región entre la parábola \(x=y^{2}\) y la recta \(x=1\).</p>
   <div class="stage" data-scene="apl-discos-xk"></div>
   <ul class="keys">

@@ -26,7 +26,8 @@ OA.scene('apl-acumulacion-contexto', (function(){
       if (t > 0.01) S.poly([[0, 0], [0, 8], [ta, r(ta)], [ta, 0]], {fill:C.alt, alpha:0.5});
       if (t > 8.01) S.poly([[8, 0], [t, r(t)], [t, 0]], {fill:C.tan, alpha:0.45});
       S.line(0, 8, 12.4, r(12.4), {color:C.rise, width:2.6});
-      S.line(t, 0, t, m, {color:C.ink, width:3}); S.dot(t, m, C.rise);
+      var DT = 0.28, t0 = Math.max(0, t - DT), sd = m >= 0 ? 1 : -1; S.poly([[t0, 0], [t, 0], [t, m], [t0, m]], {fill:C.ink, alpha:0.8}); S.line(t0, 0, t0, m, {color:C.ink, width:1.2}); S.line(t, 0, t, m, {color:C.ink, width:1.2}); S.dot(t, m, C.rise);
+      if (t > 0.4 && t < 11.9){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(t0), Y(0) + 9*sd); c.lineTo(X(t), Y(0) + 9*sd); c.moveTo(X(t0), Y(0) + 5*sd); c.lineTo(X(t0), Y(0) + 13*sd); c.moveTo(X(t), Y(0) + 5*sd); c.lineTo(X(t), Y(0) + 13*sd); c.stroke(); txt('dt', X((t0 + t)/2) - 18, Y(0) + 22*sd, 'center', C.ink); }
       txt('r(t) = 8 − t', X(2.6), Y(7.2), 'left', C.rise);
       txt('r = ' + dec(m, 1) + ' L/min', X(t) + 10, Y(m) + (m >= 0 ? -12 : 13), 'left', C.ink);
       if (t >= 8) txt('+32 L', X(2.6), Y(2.6), 'center', C.alt); if (t >= 11.99) txt('−8 L', X(11.1), Y(-3.5), 'center', C.tan);

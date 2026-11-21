@@ -195,12 +195,27 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <p>Un estanque parte con \(50\) litros. La razón neta, lo que entra menos lo que sale, es \(r(t)=8-t\) litros por minuto. Mira cómo el área bajo la recta se convierte en nivel del estanque.</p>
   <div class="stage" data-scene="apl-acumulacion-contexto"></div>
   <ul class="keys">
-    <li><b>Recta naranja:</b> la razón neta \(r(t)=8-t\).</li>
+    <li><b>Recta naranja:</b> la razón neta \(r(t)=8-t\). <b>Rectángulo negro:</b> la tira del instante \(t\); su alto es la razón neta y su ancho es \(dt\), marcado junto al eje. Su área, \(r\,dt\), son los litros que cambia el contenido en ese instante.</li>
     <li><b>Área verde:</b> minutos en que entra más de lo que sale. Son litros que se suman.</li>
     <li><b>Área burdeo:</b> minutos en que sale más de lo que entra. Son litros que se restan.</li>
     <li><b>Estanque:</b> su nivel es \(Q(t)\), la cantidad inicial más el área acumulada.</li>
     <li><b>Bajo la animación:</b> el cambio neto, la cantidad de agua y la cuenta de unidades.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(\tau\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área pintada va desde \(0\) hasta la posición del corte, \(t\). Su tamaño depende de dónde esté el corte: es una función de \(t\).</li>
+      <li>Es la suma de todas las tiras que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(t\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(t\), porque \(t\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(\tau\).</li>
+      <li>La tira que está en la posición \(\tau\), de espesor \(d\tau\), aporta
+        \[r(\tau)\,d\tau=(8-\tau)\,d\tau\]</li>
+      <li>Se suman desde \(\tau=0\) hasta \(\tau=t\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{t}(8-\tau)\,d\tau=\left[8\tau-\frac{\tau^{2}}{2}\right]_{0}^{t}=8t-\frac{t^{2}}{2}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(\tau\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Ese es el cambio neto hasta el minuto \(t\). En \(t=12\) vale \(96-72=24\) L, y el estanque queda con \(50+24=74\) L. Cada tira son los litros que cambia el contenido en un instante: ritmo por tiempo, \(r(\tau)\,d\tau\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -283,7 +298,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L22-H05 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L22-H05 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 </div>
@@ -521,7 +536,8 @@ OA.scene('apl-acumulacion-contexto', (function(){
       if (t > 0.01) S.poly([[0, 0], [0, 8], [ta, r(ta)], [ta, 0]], {fill:C.alt, alpha:0.5});
       if (t > 8.01) S.poly([[8, 0], [t, r(t)], [t, 0]], {fill:C.tan, alpha:0.45});
       S.line(0, 8, 12.4, r(12.4), {color:C.rise, width:2.6});
-      S.line(t, 0, t, m, {color:C.ink, width:3}); S.dot(t, m, C.rise);
+      var DT = 0.28, t0 = Math.max(0, t - DT), sd = m >= 0 ? 1 : -1; S.poly([[t0, 0], [t, 0], [t, m], [t0, m]], {fill:C.ink, alpha:0.8}); S.line(t0, 0, t0, m, {color:C.ink, width:1.2}); S.line(t, 0, t, m, {color:C.ink, width:1.2}); S.dot(t, m, C.rise);
+      if (t > 0.4 && t < 11.9){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(t0), Y(0) + 9*sd); c.lineTo(X(t), Y(0) + 9*sd); c.moveTo(X(t0), Y(0) + 5*sd); c.lineTo(X(t0), Y(0) + 13*sd); c.moveTo(X(t), Y(0) + 5*sd); c.lineTo(X(t), Y(0) + 13*sd); c.stroke(); txt('dt', X((t0 + t)/2) - 18, Y(0) + 22*sd, 'center', C.ink); }
       txt('r(t) = 8 − t', X(2.6), Y(7.2), 'left', C.rise);
       txt('r = ' + dec(m, 1) + ' L/min', X(t) + 10, Y(m) + (m >= 0 ? -12 : 13), 'left', C.ink);
       if (t >= 8) txt('+32 L', X(2.6), Y(2.6), 'center', C.alt); if (t >= 11.99) txt('−8 L', X(11.1), Y(-3.5), 'center', C.tan);

@@ -12,7 +12,7 @@
       <li><b>Volumen con método de anillos: revolución alrededor de otros ejes</b></li>
     </ol>
     <h1>Volumen con método de anillos: revolución alrededor de otros ejes</h1>
-    <p class="lede">Si la región <b>no toca</b> al eje de giro, el sólido queda hueco. Cada corte perpendicular al eje es un <b>anillo</b> (también llamado arandela): un disco grande al que se le quita un disco chico. Los dos radios se miden desde el eje de giro.
+    <p class="lede">Si la región <b>no toca</b> al eje de giro, el sólido queda hueco. Cada corte perpendicular al eje es un <b>anillo de espesor \(dx\)</b> (también llamado arandela; el espesor es \(dy\) si el eje es vertical): un disco grande al que se le quita un disco chico. Los dos radios se miden desde el eje de giro.
     \[V=\int_{a}^{b}\pi\Big(\big[R(x)\big]^{2}-\big[r(x)\big]^{2}\Big)\,dx\]</p>
   </section>
 </header>
@@ -45,6 +45,22 @@
     <li><b>Rebanada burdeo:</b> el anillo en la posición \(x\), con su grosor \(dx\). La parte oscura del centro es el hueco.</li>
     <li><b>Mini rectángulo de borde negro:</b> va de la curva cercana a la lejana; su ancho es \(dx\) y su largo es \(R-r\). Al girar alrededor del eje genera el anillo: \(dV=\pi\left(R^{2}-r^{2}\right)dx\).</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El sólido construido va desde \(0\) hasta la posición del corte, \(x\). Su tamaño depende de dónde esté el corte: es una función de \(x\).</li>
+      <li>Es la suma de todas las rebanadas que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(x\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La rebanada que está en la posición \(t\), de espesor \(dt\), aporta
+        \[\pi\Big[\left(2-t^{2}\right)^{2}-(2-t)^{2}\Big]dt=\pi\left(t^{4}-5t^{2}+4t\right)dt\]</li>
+      <li>Se suman desde \(t=0\) hasta \(t=x\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{x}\pi\left(t^{4}-5t^{2}+4t\right)dt=\pi\left[\frac{t^{5}}{5}-\frac{5t^{3}}{3}+2t^{2}\right]_{0}^{x}=\pi\left(\frac{x^{5}}{5}-\frac{5x^{3}}{3}+2x^{2}\right)\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando el corte llega a \(x=1\) se obtiene el volumen completo: \(\pi\left(\dfrac{1}{5}-\dfrac{5}{3}+2\right)=\dfrac{8\pi}{15}\). Es la integral del ejemplo 1.</li>
+      <li>En la segunda animación ocurre lo mismo con \(y\): \(\displaystyle\int_{0}^{y}\pi\left(2\sqrt{t}-t-t^{2}\right)dt=\pi\left(\frac{4}{3}y^{3/2}-\frac{y^{2}}{2}-\frac{y^{3}}{3}\right)\), que en \(y=1\) vale \(\dfrac{\pi}{2}\).</li>
+    </ol>
+  </div>
   <p><b>Giro alrededor de la recta vertical \(x=-1\).</b></p>
   <div class="stage" data-scene="apl-anillos-xk"></div>
   <ul class="keys">

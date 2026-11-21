@@ -12,7 +12,7 @@
       <li><b>Volumen con método de discos: revolución alrededor del eje x o y</b></li>
     </ol>
     <h1>Volumen con método de discos: revolución alrededor del eje \(x\) o \(y\)</h1>
-    <p class="lede">Al girar una región plana alrededor de un eje se forma un <b>sólido de revolución</b>: un vaso, una bala, una pelota. Si la región toca al eje, cada corte perpendicular al eje es un <b>disco</b>. El volumen es la suma de todos los discos.
+    <p class="lede">Al girar una región plana alrededor de un eje se forma un <b>sólido de revolución</b>: un vaso, una bala, una pelota. Si la región toca al eje, cada corte perpendicular al eje es un <b>disco de espesor \(dx\)</b> (o \(dy\), si el eje es vertical). El volumen es la suma de todos los discos.
     \[V=\int_{a}^{b}\pi\big[R(x)\big]^{2}\,dx\]</p>
   </section>
 </header>
@@ -45,6 +45,22 @@
     <li><b>Línea burdeo de trazos:</b> el eje de giro.</li>
     <li><b>Bajo la animación:</b> el volumen de una rebanada, la integral que las suma y el valor acumulado.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El sólido construido va desde \(0\) hasta la posición del corte, \(x\). Su tamaño depende de dónde esté el corte: es una función de \(x\).</li>
+      <li>Es la suma de todas las rebanadas que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(x\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La rebanada que está en la posición \(t\), de espesor \(dt\), aporta
+        \[\pi\left(\sqrt{t}\right)^{2}dt=\pi\,t\,dt\]</li>
+      <li>Se suman desde \(t=0\) hasta \(t=x\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{x}\pi\,t\,dt=\pi\left[\frac{t^{2}}{2}\right]_{0}^{x}=\frac{\pi x^{2}}{2}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando el corte llega a \(x=4\) se obtiene el volumen completo: \(\dfrac{\pi\cdot 16}{2}=8\pi\). Es la integral del ejemplo 1, donde la variable se llama \(x\) porque los límites son números fijos.</li>
+      <li>En la segunda animación ocurre lo mismo con \(y\): el volumen construido hasta la altura \(y\) es \(\displaystyle\int_{0}^{y}2\pi\,t\,dt=\pi y^{2}\), que en \(y=2\) vale \(4\pi\).</li>
+    </ol>
+  </div>
   <p><b>Giro alrededor del eje \(y\).</b> La región entre la parábola \(y=\dfrac{x^{2}}{2}\) y el eje \(y\), hasta la altura \(2\). Ahora los discos son horizontales y se apilan.</p>
   <div class="stage" data-scene="apl-discos-y"></div>
   <ul class="keys">

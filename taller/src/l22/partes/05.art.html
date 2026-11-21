@@ -45,12 +45,27 @@
   <p>Un estanque parte con \(50\) litros. La razón neta, lo que entra menos lo que sale, es \(r(t)=8-t\) litros por minuto. Mira cómo el área bajo la recta se convierte en nivel del estanque.</p>
   <div class="stage" data-scene="apl-acumulacion-contexto"></div>
   <ul class="keys">
-    <li><b>Recta naranja:</b> la razón neta \(r(t)=8-t\).</li>
+    <li><b>Recta naranja:</b> la razón neta \(r(t)=8-t\). <b>Rectángulo negro:</b> la tira del instante \(t\); su alto es la razón neta y su ancho es \(dt\), marcado junto al eje. Su área, \(r\,dt\), son los litros que cambia el contenido en ese instante.</li>
     <li><b>Área verde:</b> minutos en que entra más de lo que sale. Son litros que se suman.</li>
     <li><b>Área burdeo:</b> minutos en que sale más de lo que entra. Son litros que se restan.</li>
     <li><b>Estanque:</b> su nivel es \(Q(t)\), la cantidad inicial más el área acumulada.</li>
     <li><b>Bajo la animación:</b> el cambio neto, la cantidad de agua y la cuenta de unidades.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(\tau\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área pintada va desde \(0\) hasta la posición del corte, \(t\). Su tamaño depende de dónde esté el corte: es una función de \(t\).</li>
+      <li>Es la suma de todas las tiras que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(t\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(t\), porque \(t\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(\tau\).</li>
+      <li>La tira que está en la posición \(\tau\), de espesor \(d\tau\), aporta
+        \[r(\tau)\,d\tau=(8-\tau)\,d\tau\]</li>
+      <li>Se suman desde \(\tau=0\) hasta \(\tau=t\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{t}(8-\tau)\,d\tau=\left[8\tau-\frac{\tau^{2}}{2}\right]_{0}^{t}=8t-\frac{t^{2}}{2}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(\tau\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Ese es el cambio neto hasta el minuto \(t\). En \(t=12\) vale \(96-72=24\) L, y el estanque queda con \(50+24=74\) L. Cada tira son los litros que cambia el contenido en un instante: ritmo por tiempo, \(r(\tau)\,d\tau\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -133,6 +148,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H05 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L22-H05 · v002 · Pendiente de APR</span>
 </footer>
 </article>

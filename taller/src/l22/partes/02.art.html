@@ -12,7 +12,7 @@
       <li><b>Calcular el área entre curvas que se intersectan en más de dos puntos</b></li>
     </ol>
     <h1>Calcular el área entre curvas que se intersectan en más de dos puntos</h1>
-    <p class="lede">Cuando dos curvas se cruzan tres veces o más, se turnan: la que iba arriba pasa abajo. El área entre ellas se calcula <b>por tramos</b>: se corta en cada cruce y, en cada tramo, se integra la de arriba menos la de abajo.
+    <p class="lede">Cuando dos curvas se cruzan tres veces o más, se turnan: la que iba arriba pasa abajo. La región se corta en <b>tiras verticales de espesor (ancho) \(dx\)</b> y el área se calcula <b>por tramos</b>: se corta en cada cruce y, en cada tramo, se integra la de arriba menos la de abajo.
     \[A=\int_{a}^{b}\big|f(x)-g(x)\big|\,dx\]</p>
   </section>
 </header>
@@ -47,9 +47,24 @@
   <ul class="keys">
     <li><b>Curva azul:</b> \(f(x)=x^{3}-x\). <b>Recta naranja:</b> \(g(x)=3x\).</li>
     <li><b>Zona verde:</b> tramo donde \(f\) va arriba, de \(-2\) a \(0\). <b>Zona burdeo:</b> tramo donde \(g\) va arriba, de \(0\) a \(2\).</li>
-    <li><b>Trazo vertical:</b> la tira, en la posición \(x\).</li>
+    <li><b>Rectángulo negro:</b> la tira, en la posición \(x\). Va de una curva a la otra y su ancho es \(dx\), marcado abajo.</li>
     <li><b>Bajo la animación:</b> la integral de \(f-g\) sin separar, y el área por tramos.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>La región recorrida va desde \(-2\) hasta la posición del corte, \(x\). Su tamaño depende de dónde esté el corte: es una función de \(x\).</li>
+      <li>Es la suma de todas las tiras que quedaron atrás, una por cada posición <b>intermedia</b> entre \(-2\) y \(x\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La tira que está en la posición \(t\), de espesor \(dt\), aporta
+        \[\big[f(t)-g(t)\big]\,dt=\left(t^{3}-4t\right)dt\]</li>
+      <li>Se suman desde \(t=-2\) hasta \(t=x\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{-2}^{x}\left(t^{3}-4t\right)dt=\left[\frac{t^{4}}{4}-2t^{2}\right]_{-2}^{x}=\left(\frac{x^{4}}{4}-2x^{2}\right)-(4-8)=\frac{x^{4}}{4}-2x^{2}+4\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Esa es la cuenta «sin separar»: cada tira entra con su signo. En \(x=0\) vale \(4\); en \(x=2\) vale \(4-8+4=0\). La cuenta «por tramos» suma el tamaño de cada tira, \(\big|f(t)-g(t)\big|\,dt\), y llega a \(8\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -147,6 +162,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H02 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L22-H02 · v002 · Pendiente de APR</span>
 </footer>
 </article>

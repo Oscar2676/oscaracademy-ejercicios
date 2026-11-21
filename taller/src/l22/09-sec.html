@@ -12,7 +12,7 @@
       <li><b>Volumen con secciones transversales: cuadrados y rectángulos</b></li>
     </ol>
     <h1>Volumen con secciones transversales: cuadrados y rectángulos</h1>
-    <p class="lede">Hay sólidos que no se forman girando nada. Aun así, si se conoce el <b>área de cada corte</b> perpendicular a un eje, el volumen se obtiene integrando esa área. Es como un pan de molde: su volumen es la suma de las rebanadas.
+    <p class="lede">Hay sólidos que no se forman girando nada. Aun así, si se conoce el <b>área de cada corte</b> perpendicular a un eje, el volumen se obtiene integrando esa área. Es como un pan de molde: su volumen es la suma de las rebanadas, cada una de espesor \(dx\).
     \[V=\int_{a}^{b}A(x)\,dx\]</p>
   </section>
 </header>
@@ -48,14 +48,30 @@
   <div class="stage" data-scene="apl-sec-cuadrados"></div>
   <ul class="keys">
     <li><b>Zona naranja clara, en el piso:</b> la base.</li>
-    <li><b>Cuadrado burdeo:</b> el corte en la posición \(x\). Su lado es el ancho de la base, \(\sqrt{x}\).</li>
+    <li><b>Rebanada burdeo:</b> el corte cuadrado en la posición \(x\), con su espesor \(dx\) marcado en el piso. Su lado es el ancho de la base, \(\sqrt{x}\). Es un prisma delgado: área de la cara por espesor, \(dV=A(x)\,dx\).</li>
     <li><b>Cuerpo azul:</b> el sólido construido hasta ese corte.</li>
     <li><b>Bajo la animación:</b> el área del corte, la integral que suma las rebanadas y el volumen acumulado.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El sólido construido va desde \(0\) hasta la posición del corte, \(x\). Su tamaño depende de dónde esté el corte: es una función de \(x\).</li>
+      <li>Es la suma de todas las rebanadas que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(x\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La rebanada que está en la posición \(t\), de espesor \(dt\), aporta
+        \[A(t)\,dt=\left(\sqrt{t}\right)^{2}dt=t\,dt\]</li>
+      <li>Se suman desde \(t=0\) hasta \(t=x\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{x}t\,dt=\left[\frac{t^{2}}{2}\right]_{0}^{x}=\frac{x^{2}}{2}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando el corte llega a \(x=4\) se obtiene el volumen completo: \(\dfrac{16}{2}=8\). Es la integral del ejemplo 1.</li>
+      <li>En la segunda animación ocurre lo mismo, partiendo de \(-2\): \(\displaystyle\int_{-2}^{x}\frac{16-8t^{2}+t^{4}}{2}\,dt=8x-\frac{4x^{3}}{3}+\frac{x^{5}}{10}+\frac{128}{15}\), que en \(x=2\) vale \(\dfrac{256}{15}\). El \(\dfrac{128}{15}\) sale de evaluar en el límite de abajo: \(-\left(-16+\dfrac{32}{3}-\dfrac{32}{10}\right)=\dfrac{128}{15}\).</li>
+    </ol>
+  </div>
   <p><b>Secciones rectangulares.</b> La base es la región entre la parábola \(y=x^{2}\) y la recta \(y=4\). Cada rectángulo tiene de alto la mitad de su ancho.</p>
   <div class="stage" data-scene="apl-sec-rectangulos"></div>
   <ul class="keys">
-    <li><b>Rectángulo burdeo:</b> el corte en \(x\). Ancho \(4-x^{2}\); alto \(\dfrac{4-x^{2}}{2}\).</li>
+    <li><b>Rebanada burdeo:</b> el corte rectangular en \(x\), con su espesor \(dx\). Ancho \(4-x^{2}\); alto \(\dfrac{4-x^{2}}{2}\).</li>
   </ul>
 </section>
 
@@ -148,7 +164,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H09 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L22-H09 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -190,7 +206,11 @@ function oaSec(o){
       for (i = 0; i <= N; i++){ t = a + (u - a)*i/N; f = cara(t); poli(t, f); m = mez((t - a)/(b - a)); c.fillStyle = m; c.fill(); c.strokeStyle = m; c.lineWidth = 1.2; c.stroke(); }
       for (i = 1; i <= 5; i++){ t = a + (u - a)*i/6; poli(t, cara(t)); c.strokeStyle = 'rgba(255,255,255,0.35)'; c.lineWidth = 1; c.stroke(); }
       /* cara del corte en u */
-      f = cara(u); poli(u, f); c.fillStyle = 'rgba(201,138,147,0.95)'; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 2.6; c.stroke();
+      /* rebanada de espesor dx: un prisma delgado con la cara del corte */
+      var u0 = Math.max(a, u - 0.055*(b - a)), e0, e1; f = cara(u);
+      for (i = 0; i <= 10; i++){ t = u0 + (u - u0)*i/10; poli(t, f); c.fillStyle = '#8a1c2c'; c.fill(); c.strokeStyle = '#6a1826'; c.lineWidth = 1; c.stroke(); }
+      poli(u, f); c.fillStyle = 'rgba(226,170,178,1)'; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 2.6; c.stroke();
+      e0 = P(u0, o.y2(u), 0); e1 = P(u, o.y2(u), 0); c.strokeStyle = C.ink; c.lineWidth = 1.5; c.setLineDash([]); c.beginPath(); c.moveTo(e0[0], e0[1] + 9); c.lineTo(e1[0], e1[1] + 9); c.moveTo(e0[0], e0[1] + 4); c.lineTo(e0[0], e0[1] + 14); c.moveTo(e1[0], e1[1] + 4); c.lineTo(e1[0], e1[1] + 14); c.stroke(); txt('dx', (e0[0] + e1[0])/2, (e0[1] + e1[1])/2 + 25, 'center', C.ink);
       tramo([u, o.y1(u), 0], [u, o.y2(u), 0], C.rise, 3.4);
       txt(o.sTxt(u, dec), X(o.aAt[0]), Y(o.aAt[1]) + 21, 'left', C.rise);
       (o.notes || []).forEach(function(k){ p = P(k.at[0], k.at[1], 0); txt(k.txt, p[0] + (k.dx || 0), p[1] + (k.dy || 0), k.al || 'left', C[k.color || 'rise']); });

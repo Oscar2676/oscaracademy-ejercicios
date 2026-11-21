@@ -49,10 +49,25 @@
   <ul class="keys">
     <li><b>Bolita naranja:</b> el móvil, en su posición \(s(t)\).</li>
     <li><b>Flechas de arriba:</b> cada tramo del viaje. Verde cuando avanza; burdeo cuando retrocede.</li>
-    <li><b>Curva azul:</b> la velocidad \(v(t)\).</li>
+    <li><b>Curva azul:</b> la velocidad \(v(t)\). <b>Rectángulo azul de borde negro:</b> la tira del instante \(t\); su alto es la velocidad y su ancho es \(dt\), marcado junto al eje. Su área, \(v\,dt\), es lo que avanza el móvil en ese instante.</li>
     <li><b>Área verde:</b> la velocidad es positiva; el área se suma al desplazamiento. <b>Área burdeo:</b> la velocidad es negativa; el área se resta.</li>
     <li><b>Bajo la animación:</b> la posición, el desplazamiento y la distancia recorrida hasta el instante \(t\).</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(\tau\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área pintada va desde \(0\) hasta la posición del corte, \(t\). Su tamaño depende de dónde esté el corte: es una función de \(t\).</li>
+      <li>Es la suma de todas las tiras que quedaron atrás, una por cada posición <b>intermedia</b> entre \(0\) y \(t\). Para sumarlas hay que darle un nombre a esa posición intermedia.</li>
+      <li>No se la puede llamar \(t\), porque \(t\) ya está ocupada: es donde está detenido el corte, el tope de la suma. Se elige otra letra: \(\tau\).</li>
+      <li>La tira que está en la posición \(\tau\), de espesor \(d\tau\), aporta
+        \[v(\tau)\,d\tau=\left(\tau^{2}-4\tau+3\right)d\tau\]</li>
+      <li>Se suman desde \(\tau=0\) hasta \(\tau=t\), y se calcula con una antiderivada evaluada entre los límites:
+        \[\int_{0}^{t}\left(\tau^{2}-4\tau+3\right)d\tau=\left[\frac{\tau^{3}}{3}-2\tau^{2}+3\tau\right]_{0}^{t}=\frac{t^{3}}{3}-2t^{2}+3t\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(\tau\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Ese es el desplazamiento hasta el instante \(t\). En \(t=4\) vale \(\dfrac{64}{3}-32+12=\dfrac{4}{3}\) m. Cada tira es lo que avanza el móvil en un instante: velocidad por tiempo, \(v(\tau)\,d\tau\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -145,6 +160,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H04 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L22-H04 · v002 · Pendiente de APR</span>
 </footer>
 </article>
