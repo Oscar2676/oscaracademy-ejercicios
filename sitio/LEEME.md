@@ -27,3 +27,5 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 - `selector.html`: https://oscar2676.github.io/oscaracademy-ejercicios/sitio/selector.html — página por página, caja por caja, se marca con un clic qué títulos producir; «Copiar pedido» deja el texto listo para pegar en el chat (con los identificadores de página y de título).
 - Estados: pendiente · ya tiene hoja · índice (lleva a otra página) · ya existe la hoja y falta enlazar. Un mismo título repetido en varias páginas se marca una vez y vale para todos sus lugares.
 - `selector.py` lo arma con `arbol-sitio.json`, `datos-wix.json` y `enlaces.json`; GitHub lo ejecuta junto con `enlaces.py` y `tablero.py`.
+
+<!-- relectura de enlaces pedida el 21-11-2026 01:45 (tras publicar L20 H07 y H08) -->
