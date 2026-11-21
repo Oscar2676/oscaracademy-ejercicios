@@ -1,0 +1,196 @@
+<!--file:H02_area_entre_curvas_que_se_intersectan_en_mas_de_dos_puntos.html-->
+<!--title:Calcular el área entre curvas que se intersectan en más de dos puntos-->
+<!--id:apl-area-cruces-->
+<!--tab:H02 Área, más de dos cruces-->
+<article class="sheet" id="apl-area-cruces" data-hoja="L22 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Calcular el área entre curvas que se intersectan en más de dos puntos</b></li>
+    </ol>
+    <h1>Calcular el área entre curvas que se intersectan en más de dos puntos</h1>
+    <p class="lede">Cuando dos curvas se cruzan tres veces o más, se turnan: la que iba arriba pasa abajo. El área entre ellas se calcula <b>por tramos</b>: se corta en cada cruce y, en cada tramo, se integra la de arriba menos la de abajo.
+    \[A=\int_{a}^{b}\big|f(x)-g(x)\big|\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>Una tira vertical en la posición \(x\), de ancho \(dx\), va de una curva a la otra. Su alto es la distancia entre las dos curvas, que es un número positivo o cero: \(\big|f(x)-g(x)\big|\). Su área es
+        \[dA=\big|f(x)-g(x)\big|\,dx\]</li>
+      <li>Sumando todas las tiras: \(A=\displaystyle\int_{a}^{b}\big|f(x)-g(x)\big|\,dx\).</li>
+      <li>El valor absoluto no se integra directo. Se quita así: donde \(f(x)\ge g(x)\), vale \(f(x)-g(x)\); donde \(f(x)&lt;g(x)\), vale \(g(x)-f(x)\).</li>
+      <li>Si \(f\) y \(g\) son continuas, la diferencia \(f-g\) solo puede cambiar de signo pasando por cero, es decir, en un cruce. Por eso se corta en los cruces: dentro de cada tramo, una misma curva queda arriba.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El método, en cuatro pasos</h3>
+    <ol class="steps">
+      <li><b>Cruces:</b> resolver \(f(x)=g(x)\). Ordenar las soluciones de menor a mayor.</li>
+      <li><b>Quién va arriba:</b> en cada tramo, probar un valor de \(x\) y comparar \(f\) con \(g\).</li>
+      <li><b>Una integral por tramo:</b> la de arriba menos la de abajo.</li>
+      <li><b>Sumar</b> los resultados. Todos son positivos.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Las curvas \(f(x)=x^{3}-x\) y \(g(x)=3x\) se cruzan tres veces. Una tira vertical recorre la región. Mira las dos cuentas de abajo: la que separa por tramos crece siempre; la que no separa sube y después se devuelve a cero.</p>
+  <div class="stage" data-scene="apl-area-cruces"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(f(x)=x^{3}-x\). <b>Recta naranja:</b> \(g(x)=3x\).</li>
+    <li><b>Zona verde:</b> tramo donde \(f\) va arriba, de \(-2\) a \(0\). <b>Zona burdeo:</b> tramo donde \(g\) va arriba, de \(0\) a \(2\).</li>
+    <li><b>Trazo vertical:</b> la tira, en la posición \(x\).</li>
+    <li><b>Bajo la animación:</b> la integral de \(f-g\) sin separar, y el área por tramos.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(f(x)=x^{3}-x\) y \(g(x)=3x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces.</b>
+      \[x^{3}-x=3x\ \Longrightarrow\ x^{3}-4x=0\ \Longrightarrow\ x(x-2)(x+2)=0\ \Longrightarrow\ x=-2,\ \ x=0,\ \ x=2\]</li>
+    <li><b>Quién va arriba.</b> La diferencia es \(f(x)-g(x)=x^{3}-4x\).
+      En \(x=-1\): \((-1)^{3}-4(-1)=3&gt;0\), así que \(f\) va arriba entre \(-2\) y \(0\).
+      En \(x=1\): \(1-4=-3&lt;0\), así que \(g\) va arriba entre \(0\) y \(2\).</li>
+    <li><b>Primer tramo</b>, \(f-g\):
+      \[\int_{-2}^{0}\left(x^{3}-4x\right)dx=\left[\frac{x^{4}}{4}-2x^{2}\right]_{-2}^{0}=0-\left(4-8\right)=4\]</li>
+    <li><b>Segundo tramo</b>, \(g-f\):
+      \[\int_{0}^{2}\left(4x-x^{3}\right)dx=\left[2x^{2}-\frac{x^{4}}{4}\right]_{0}^{2}=\left(8-4\right)-0=4\]</li>
+    <li><b>Suma.</b> \(A=4+4=8\) unidades cuadradas.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error que da cero.</b> Si se integra \(f-g\) de corrido, sin separar:
+    \[\int_{-2}^{2}\left(x^{3}-4x\right)dx=\left[\frac{x^{4}}{4}-2x^{2}\right]_{-2}^{2}=(4-8)-(4-8)=0\]
+    El tramo donde \(f\) va abajo cuenta negativo y cancela al otro. La integral de \(f-g\) es un <b>saldo</b>; el área es la <b>suma de los tamaños</b>. Dos curvas que encierran una región no pueden dar área cero.</p>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(y=\operatorname{sen}x\) e \(y=\cos x\), desde \(x=0\) hasta \(x=2\pi\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces en \([0,\,2\pi]\).</b> \(\operatorname{sen}x=\cos x\) equivale a \(\tan x=1\) (en esos puntos \(\cos x\neq 0\)): \(x=\dfrac{\pi}{4}\) y \(x=\dfrac{5\pi}{4}\).
+      Aquí los extremos \(0\) y \(2\pi\) no son cruces: los da el enunciado. Quedan tres tramos.</li>
+    <li><b>Quién va arriba.</b> En \(x=0\): \(\cos 0=1&gt;\operatorname{sen}0=0\). En \(x=\pi\): \(\operatorname{sen}\pi=0&gt;\cos\pi=-1\). En \(x=2\pi\): \(\cos 2\pi=1&gt;\operatorname{sen}2\pi=0\). El orden es coseno, seno, coseno.</li>
+    <li><b>Primer tramo</b>, \(\cos x-\operatorname{sen}x\):
+      \[\int_{0}^{\pi/4}\left(\cos x-\operatorname{sen}x\right)dx=\Big[\operatorname{sen}x+\cos x\Big]_{0}^{\pi/4}=\left(\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}\right)-(0+1)=\sqrt{2}-1\]</li>
+    <li><b>Segundo tramo</b>, \(\operatorname{sen}x-\cos x\):
+      \[\int_{\pi/4}^{5\pi/4}\left(\operatorname{sen}x-\cos x\right)dx=\Big[-\cos x-\operatorname{sen}x\Big]_{\pi/4}^{5\pi/4}=\left(\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}\right)-\left(-\frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}\right)=2\sqrt{2}\]</li>
+    <li><b>Tercer tramo</b>, \(\cos x-\operatorname{sen}x\):
+      \[\int_{5\pi/4}^{2\pi}\left(\cos x-\operatorname{sen}x\right)dx=\Big[\operatorname{sen}x+\cos x\Big]_{5\pi/4}^{2\pi}=(0+1)-\left(-\frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}\right)=1+\sqrt{2}\]</li>
+    <li><b>Suma.</b> \(A=\left(\sqrt{2}-1\right)+2\sqrt{2}+\left(1+\sqrt{2}\right)=4\sqrt{2}\approx 5{,}66\) unidades cuadradas.</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula el área encerrada entre \(y=x^{3}\) e \(y=x\).</p>
+    <details><summary>Pista</summary><div><p>\(x^{3}-x=x(x-1)(x+1)\). Hay tres cruces y dos tramos.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(x^{3}=x\ \Longrightarrow\ x(x-1)(x+1)=0\ \Longrightarrow\ x=-1,\ 0,\ 1\).</li>
+        <li>En \(x=-\tfrac{1}{2}\): \(x^{3}=-\tfrac{1}{8}\) es mayor que \(x=-\tfrac{1}{2}\); va arriba \(y=x^{3}\). En \(x=\tfrac{1}{2}\): \(x^{3}=\tfrac{1}{8}\) es menor que \(\tfrac{1}{2}\); va arriba \(y=x\).</li>
+        <li>\[\int_{-1}^{0}\left(x^{3}-x\right)dx=\left[\frac{x^{4}}{4}-\frac{x^{2}}{2}\right]_{-1}^{0}=0-\left(\frac{1}{4}-\frac{1}{2}\right)=\frac{1}{4}\]</li>
+        <li>\[\int_{0}^{1}\left(x-x^{3}\right)dx=\left[\frac{x^{2}}{2}-\frac{x^{4}}{4}\right]_{0}^{1}=\frac{1}{2}-\frac{1}{4}=\frac{1}{4}\]</li>
+        <li>\(A=\dfrac{1}{4}+\dfrac{1}{4}=\dfrac{1}{2}\) unidad cuadrada.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el área encerrada entre \(f(x)=x^{3}-6x^{2}+8x\) y \(g(x)=x^{2}-4x\).</p>
+    <details><summary>Pista</summary><div><p>\(f(x)-g(x)=x^{3}-7x^{2}+12x=x(x-3)(x-4)\). Los dos tramos no miden lo mismo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Diferencia: \(f(x)-g(x)=x^{3}-7x^{2}+12x=x(x-3)(x-4)\). Cruces: \(x=0,\ 3,\ 4\).</li>
+        <li>En \(x=1\): \(1-7+12=6&gt;0\), va arriba \(f\). En \(x=3{,}5\): \(3{,}5\cdot 0{,}5\cdot(-0{,}5)&lt;0\), va arriba \(g\).</li>
+        <li>Una antiderivada de la diferencia es \(D(x)=\dfrac{x^{4}}{4}-\dfrac{7x^{3}}{3}+6x^{2}\). Sus valores: \(D(0)=0\), \(D(3)=\dfrac{81}{4}-63+54=\dfrac{45}{4}\), \(D(4)=64-\dfrac{448}{3}+96=\dfrac{32}{3}\).</li>
+        <li>Primer tramo: \(\displaystyle\int_{0}^{3}(f-g)\,dx=D(3)-D(0)=\frac{45}{4}\).</li>
+        <li>Segundo tramo: \(\displaystyle\int_{3}^{4}(g-f)\,dx=-\big[D(4)-D(3)\big]=-\left(\frac{32}{3}-\frac{45}{4}\right)=-\left(\frac{128}{12}-\frac{135}{12}\right)=\frac{7}{12}\).</li>
+        <li>\(A=\dfrac{45}{4}+\dfrac{7}{12}=\dfrac{135}{12}+\dfrac{7}{12}=\dfrac{142}{12}=\dfrac{71}{6}\) unidades cuadradas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Para emparejar un sendero de \(3\) metros de largo se mira su perfil de lado. La altura del terreno sobre el nivel deseado es \(T(x)=x^{3}-5x^{2}+6x\) metros, con \(x\) en metros. Donde el terreno queda sobre el nivel hay que <b>cortar</b> tierra; donde queda bajo el nivel hay que <b>rellenar</b>. ¿Cuántos metros cuadrados de perfil se cortan y cuántos se rellenan?</p>
+    <details><summary>Pista</summary><div><p>El nivel deseado es \(y=0\). Factoriza: \(T(x)=x(x-2)(x-3)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces con el nivel \(y=0\): \(x(x-2)(x-3)=0\ \Longrightarrow\ x=0,\ 2,\ 3\).</li>
+        <li>En \(x=1\): \(T(1)=1-5+6=2&gt;0\), terreno sobre el nivel: se corta. En \(x=2{,}5\): \(2{,}5\cdot 0{,}5\cdot(-0{,}5)&lt;0\), terreno bajo el nivel: se rellena.</li>
+        <li>Antiderivada: \(P(x)=\dfrac{x^{4}}{4}-\dfrac{5x^{3}}{3}+3x^{2}\). Valores: \(P(0)=0\), \(P(2)=4-\dfrac{40}{3}+12=\dfrac{8}{3}\), \(P(3)=\dfrac{81}{4}-45+27=\dfrac{9}{4}\).</li>
+        <li>Corte: \(\displaystyle\int_{0}^{2}T(x)\,dx=P(2)-P(0)=\frac{8}{3}\approx 2{,}67\) metros cuadrados.</li>
+        <li>Relleno: \(\displaystyle\int_{2}^{3}\big[0-T(x)\big]dx=-\big[P(3)-P(2)\big]=-\left(\frac{9}{4}-\frac{8}{3}\right)=\frac{5}{12}\approx 0{,}42\) metros cuadrados.</li>
+        <li>Respuesta: se cortan \(\dfrac{8}{3}\) m² y se rellenan \(\dfrac{5}{12}\) m² de perfil. Si se integrara de corrido se obtendría \(\dfrac{9}{4}\) m², que es el saldo (corte menos relleno), no el trabajo total.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+OA.scene('apl-area-cruces', (function(){
+  var RUN = 24, num = OA.num;
+  function dec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+  function f(x){ return x*x*x - x; } function g(x){ return 3*x; }
+  function Sg(x){ return x*x*x*x/4 - 2*x*x + 4; }            /* ∫ de −2 a x de (f − g), sin separar */
+  function Ar(x){ return x <= 0 ? Sg(x) : 4 + 2*x*x - x*x*x*x/4; } /* área por tramos */
+  function xs(s){ return s < 2 ? -2 : s < 10 ? -2 + 2*OA.smooth((s - 2)/8) : s < 12 ? 0 : s < 20 ? 2*OA.smooth((s - 12)/8) : 2; }
+  return {
+    world:{x0:-2.9, x1:2.9, y0:-8.2, y1:8.2}, aspect:0.78,
+    _chk:[{f:Sg, df:function(x){ return f(x) - g(x); }, at:[-1.5, -0.5, 0.5, 1.5]}],
+    aria:'La curva azul f de x igual a x al cubo menos x y la recta naranja g de x igual a 3x se cruzan en x igual a −2, 0 y 2. Entre −2 y 0 la curva va arriba y la región se pinta verde; entre 0 y 2 la recta va arriba y la región se pinta burdeo. Una tira vertical recorre la región. La integral sin separar sube hasta 4 y vuelve a 0; el área por tramos llega a 8.',
+    labels:[['F', 'A=\\displaystyle\\int_{-2}^{2}|f-g|\\,dx=4+4=8', 'A = ∫ |f − g| dx = 4 + 4 = 8', 'diff']],
+    sliders:[{id:'x', tex:'x', min:-2, max:2, step:0.01, value:-2}],
+    legend:'<span><i class="sw sec"></i> \\(f(x)=x^{3}-x\\)</span><span><i class="sw rise"></i> \\(g(x)=3x\\)</span><span><i class="sw alt"></i> \\(f\\) arriba</span><span><i class="sw tan"></i> \\(g\\) arriba</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.x = xs(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = v.q == null ? RUN : v.q*RUN, x = v.x, C = S.C, c = S.ctx, X = S.X, Y = S.Y, i, u, pa = [], pb = [], xa = Math.min(x, 0);
+      function txt(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.85)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      S.axes({gx:[-2, -1, 1, 2], gy:[-6, -3, 3, 6]});
+      if (xa > -1.995){ for (i = 0; i <= 50; i++){ u = -2 + (xa + 2)*i/50; pa.push([u, f(u)]); } for (i = 50; i >= 0; i--){ u = -2 + (xa + 2)*i/50; pa.push([u, g(u)]); } S.poly(pa, {fill:C.alt, alpha:0.5}); }
+      if (x > 0.005){ for (i = 0; i <= 50; i++){ u = x*i/50; pb.push([u, g(u)]); } for (i = 50; i >= 0; i--){ u = x*i/50; pb.push([u, f(u)]); } S.poly(pb, {fill:C.tan, alpha:0.42}); }
+      S.curve(f, -2.25, 2.25, {color:C.sec, width:2.6}); S.line(-2.6, g(-2.6), 2.6, g(2.6), {color:C.rise, width:2.6});
+      S.dot(-2, -6, C.ink); S.dot(0, 0, C.ink); S.dot(2, 6, C.ink);
+      txt('(−2, −6)', X(-2) + 12, Y(-6) + 10, 'left', C.ink); txt('(2, 6)', X(2) + 10, Y(6) + 4, 'left', C.ink); txt('(0, 0)', X(0) + 10, Y(0) + 14, 'left', C.ink);
+      txt('f(x) = x³ − x', X(-2.75), Y(2.9), 'left', C.sec); txt('g(x) = 3x', X(0.25), Y(5), 'left', C.rise);
+      S.line(x, f(x), x, g(x), {color:C.ink, width:3.2}); S.dot(x, f(x), C.sec); S.dot(x, g(x), C.rise);
+      if (x > -1.9 && x < -0.12) txt('f va arriba: f − g = ' + dec(f(x) - g(x), 2), X(-2.75), Y(4.9), 'left', C.alt);
+      if (x > 0.12 && x < 1.9) txt('g va arriba: g − f = ' + dec(g(x) - f(x), 2), X(0.2), Y(-5.6), 'left', C.tan);
+      if (Math.abs(x) < 0.005 && v.q != null) txt('cruce: aquí cambia la curva de arriba', X(0.2), Y(-5.6), 'left', C.ink);
+      S.lab('F', X(-2.75), Y(7.3), 0, 0, v.q != null && s >= 20);
+    },
+    caption:function(v){
+      var x = v.x, s = v.q == null ? null : v.q*RUN;
+      if (s != null && s < 2) return 'Las curvas se cruzan en x = −2, x = 0 y x = 2. La tira vertical va a recorrer la región de izquierda a derecha';
+      if (Math.abs(x) < 0.005) return 'En x = 0 las curvas se cruzan y cambian de lugar. Hasta aquí las dos cuentas coinciden: 4. Desde aquí, la recta va arriba';
+      if (x < 0) return 'Tramo de −2 a 0: la curva azul va arriba. La tira mide f − g, positivo, y las dos cuentas crecen juntas: ' + dec(Sg(x), 2);
+      if (x >= 1.995) return 'Fin. Sin separar, la integral de f − g volvió a 0. Por tramos, el área es 4 + 4 = 8';
+      return 'Tramo de 0 a 2: la recta va arriba, f − g es negativo. Sin separar, la cuenta baja: ' + dec(Sg(x), 2) + '. Por tramos, el área sigue creciendo: ' + dec(Ar(x), 2);
+    },
+    readout:function(v){ var x = v.x; return [['', '\\text{sin separar:}\\quad\\displaystyle\\int_{-2}^{x}\\big[f(t)-g(t)\\big]dt=\\dfrac{x^{4}}{4}-2x^{2}+4\\approx ' + num(Sg(x), 2)], ['d', '\\text{por tramos:}\\quad\\displaystyle\\int_{-2}^{x}\\big|f(t)-g(t)\\big|\\,dt\\approx ' + num(Ar(x), 2)], ['', 'x=2:\\quad \\text{sin separar}=0,\\qquad \\text{por tramos}=4+4=8']]; }
+  };
+})());

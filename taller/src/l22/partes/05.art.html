@@ -1,0 +1,138 @@
+<!--file:H05_funciones_de_acumulacion_e_integrales_definidas_en_contextos_aplicados.html-->
+<!--title:Utilizar funciones de acumulación e integrales definidas en contextos aplicados-->
+<!--id:apl-acumulacion-contexto-->
+<!--tab:H05 Acumulación en contextos-->
+<article class="sheet" id="apl-acumulacion-contexto" data-hoja="L22 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Utilizar funciones de acumulación e integrales definidas en contextos aplicados</b></li>
+    </ol>
+    <h1>Utilizar funciones de acumulación e integrales definidas en contextos aplicados</h1>
+    <p class="lede">Si se conoce <b>a qué ritmo</b> cambia una cantidad, la integral de ese ritmo dice <b>cuánto</b> cambió. Sirve para litros en un estanque, energía de un panel, personas en un recinto o carga de una batería.
+    \[\int_{a}^{b}r(t)\,dt=Q(b)-Q(a)\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale: el teorema del cambio neto</h3>
+    <ol class="steps">
+      <li>\(Q(t)\) es una cantidad que cambia con el tiempo. Su <b>razón de cambio</b> es su derivada: \(r(t)=Q'(t)\).</li>
+      <li>En un tiempo muy corto \(dt\), la cantidad cambia \(dQ=r(t)\,dt\): ritmo por tiempo.</li>
+      <li>Sumando todos esos cambios entre \(t=a\) y \(t=b\) se obtiene el cambio total. Es el teorema fundamental del cálculo aplicado a \(Q'=r\) (con \(r\) continua):
+        \[\int_{a}^{b}r(t)\,dt=\int_{a}^{b}Q'(t)\,dt=Q(b)-Q(a)\]</li>
+      <li>Despejando, con \(b=t\): la <b>función de acumulación</b> entrega la cantidad en cualquier instante,
+        \[Q(t)=Q(a)+\int_{a}^{t}r(\tau)\,d\tau\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Tres claves para leer el contexto</h3>
+    <ol class="steps">
+      <li><b>Unidades.</b> La integral tiene las unidades del ritmo multiplicadas por las del tiempo. Litros por minuto, por minutos, da litros. Kilowatts por horas da kilowatt-hora. Si las unidades del resultado no tienen sentido, el planteamiento está mal.</li>
+      <li><b>Cambio no es cantidad.</b> La integral da cuánto <b>cambió</b>. Para saber cuánto <b>hay</b> se suma la cantidad inicial.</li>
+      <li><b>Signo del ritmo.</b> Si \(r(t)&gt;0\) la cantidad crece; si \(r(t)&lt;0\), decrece. Donde \(r\) pasa de positivo a negativo, la cantidad alcanza un máximo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Un estanque parte con \(50\) litros. La razón neta, lo que entra menos lo que sale, es \(r(t)=8-t\) litros por minuto. Mira cómo el área bajo la recta se convierte en nivel del estanque.</p>
+  <div class="stage" data-scene="apl-acumulacion-contexto"></div>
+  <ul class="keys">
+    <li><b>Recta naranja:</b> la razón neta \(r(t)=8-t\).</li>
+    <li><b>Área verde:</b> minutos en que entra más de lo que sale. Son litros que se suman.</li>
+    <li><b>Área burdeo:</b> minutos en que sale más de lo que entra. Son litros que se restan.</li>
+    <li><b>Estanque:</b> su nivel es \(Q(t)\), la cantidad inicial más el área acumulada.</li>
+    <li><b>Bajo la animación:</b> el cambio neto, la cantidad de agua y la cuenta de unidades.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: el estanque</h3>
+  <div class="body">
+  <p>A un estanque con \(50\) litros le entra agua a razón de \(e(t)=12-t\) litros por minuto y le sale a razón constante de \(4\) litros por minuto, durante \(12\) minutos.</p>
+  <ol class="steps">
+    <li><b>¿Cuánta agua entró?</b>
+      \[\int_{0}^{12}(12-t)\,dt=\left[12t-\frac{t^{2}}{2}\right]_{0}^{12}=144-72=72\ \text{L}\]</li>
+    <li><b>¿Cuánta salió?</b> \(\displaystyle\int_{0}^{12}4\,dt=4\cdot 12=48\ \text{L}\).</li>
+    <li><b>Razón neta.</b> \(r(t)=e(t)-4=(12-t)-4=8-t\) litros por minuto.</li>
+    <li><b>Cantidad en el instante \(t\).</b>
+      \[Q(t)=50+\int_{0}^{t}(8-\tau)\,d\tau=50+8t-\frac{t^{2}}{2}\]</li>
+    <li><b>¿Cuánta agua hay al final?</b> \(Q(12)=50+96-72=74\) L. Coincide con la otra cuenta: \(50+72-48=74\).</li>
+    <li><b>¿Cuándo hubo más agua?</b> \(r(t)=8-t\) es positiva antes de \(t=8\) y negativa después: el contenido sube hasta \(t=8\) y luego baja. El máximo es \(Q(8)=50+64-32=82\) L.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: la energía de un panel solar</h3>
+  <div class="body">
+  <p>La potencia que entrega un panel durante un día despejado se modela con \(P(t)=\dfrac{t\,(12-t)}{12}\) kilowatts, con \(t\) en horas desde que sale el sol, para \(0\le t\le 12\). La potencia es el ritmo al que se entrega la energía.</p>
+  <ol class="steps">
+    <li><b>Lectura del modelo.</b> \(P(0)=0\) y \(P(12)=0\): no entrega al amanecer ni al anochecer. La máxima potencia es al mediodía solar, \(P(6)=\dfrac{6\cdot 6}{12}=3\) kW.</li>
+    <li><b>Energía del día.</b> Es la integral de la potencia:
+      \[E=\int_{0}^{12}\frac{12t-t^{2}}{12}\,dt=\frac{1}{12}\left[6t^{2}-\frac{t^{3}}{3}\right]_{0}^{12}=\frac{1}{12}\left(864-576\right)=\frac{288}{12}=24\]</li>
+    <li><b>Unidades.</b> Kilowatts por horas: \(E=24\) kWh.</li>
+    <li><b>Energía de la mañana</b>, las primeras \(6\) horas: \(\dfrac{1}{12}\left(216-72\right)=12\) kWh. La mitad del total, como corresponde a un modelo simétrico respecto del mediodía.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Responder con el ritmo en vez de la cantidad. «¿Cuánta agua entró en \(12\) minutos?» no se responde con \(e(12)=0\) L/min ni con \(e(0)=12\) L/min: esos son ritmos en un instante. La cantidad es la integral del ritmo en todo el intervalo, \(72\) L.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Un estanque pierde agua por una filtración a razón de \(r(t)=2+0{,}5\,t\) litros por hora, con \(t\) en horas. ¿Cuántos litros pierde en las primeras \(6\) horas?</p>
+    <details><summary>Pista</summary><div><p>La cantidad perdida es la integral de la razón de pérdida entre \(0\) y \(6\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle\int_{0}^{6}\left(2+0{,}5\,t\right)dt=\left[2t+0{,}25\,t^{2}\right]_{0}^{6}=12+9=21\).</li>
+        <li>Unidades: litros por hora, por horas, da litros.</li>
+        <li>Pierde \(21\) litros.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Un cultivo parte con \(1500\) bacterias y crece a razón de \(r(t)=200\,e^{0{,}1t}\) bacterias por hora. Según este modelo, ¿cuántas bacterias hay a las \(10\) horas?</p>
+    <details><summary>Pista</summary><div><p>Una antiderivada de \(200\,e^{0{,}1t}\) es \(2000\,e^{0{,}1t}\). No olvides sumar las bacterias iniciales.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Antiderivada: la derivada de \(2000\,e^{0{,}1t}\) es \(2000\cdot 0{,}1\,e^{0{,}1t}=200\,e^{0{,}1t}\).</li>
+        <li>Cambio: \(\displaystyle\int_{0}^{10}200\,e^{0{,}1t}\,dt=\Big[2000\,e^{0{,}1t}\Big]_{0}^{10}=2000\,e-2000=2000\,(e-1)\approx 3437\).</li>
+        <li>Cantidad: \(Q(10)=1500+2000\,(e-1)\approx 4937\) bacterias.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un teléfono con \(20\,\%\) de batería se pone a cargar. La carga sube a razón de \(c(t)=1{,}2-0{,}01\,t\) puntos porcentuales por minuto, con \(t\) en minutos. ¿Qué porcentaje de batería tiene a los \(60\) minutos?</p>
+    <details><summary>Pista</summary><div><p>Porcentaje final = porcentaje inicial + integral de \(c(t)\) entre \(0\) y \(60\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cambio: \(\displaystyle\int_{0}^{60}\left(1{,}2-0{,}01\,t\right)dt=\left[1{,}2\,t-0{,}005\,t^{2}\right]_{0}^{60}=72-18=54\) puntos porcentuales.</li>
+        <li>Cantidad: \(20+54=74\).</li>
+        <li>Respuesta: a los \(60\) minutos tiene \(74\,\%\) de batería. (En ese lapso \(c(t)\) sigue siendo positiva: \(c(60)=0{,}6\); la carga no deja de subir.)</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>

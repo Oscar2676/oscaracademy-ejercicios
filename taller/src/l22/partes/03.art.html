@@ -1,0 +1,145 @@
+<!--file:H03_valor_promedio_de_una_funcion_en_un_intervalo.html-->
+<!--title:Determinar el valor promedio de una función en un intervalo-->
+<!--id:apl-valor-promedio-->
+<!--tab:H03 Valor promedio-->
+<article class="sheet" id="apl-valor-promedio" data-hoja="L22 H03">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Determinar el valor promedio de una función en un intervalo</b></li>
+    </ol>
+    <h1>Determinar el valor promedio de una función en un intervalo</h1>
+    <p class="lede">El promedio de una lista de números es su suma dividida por cuántos son. Una función continua toma infinitos valores en un intervalo: su promedio se calcula con una integral, dividida por el largo del intervalo.
+    \[f_{\text{prom}}=\frac{1}{b-a}\int_{a}^{b}f(x)\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>Se parte el intervalo \([a,\,b]\) en \(n\) trozos iguales de ancho \(\Delta x=\dfrac{b-a}{n}\) y se toma un valor de la función en cada trozo: \(f(x_{1}),\,f(x_{2}),\,\dots,\,f(x_{n})\).</li>
+      <li>El promedio de esos \(n\) valores es
+        \[\frac{f(x_{1})+f(x_{2})+\dots+f(x_{n})}{n}\]</li>
+      <li>De \(\Delta x=\dfrac{b-a}{n}\) se despeja \(\dfrac{1}{n}=\dfrac{\Delta x}{b-a}\). Al reemplazar:
+        \[\frac{1}{n}\sum_{i=1}^{n}f(x_{i})=\frac{1}{b-a}\sum_{i=1}^{n}f(x_{i})\,\Delta x\]</li>
+      <li>La suma de la derecha es una suma de Riemann de \(f\). Cuando \(n\) crece sin tope, tiende a la integral definida (para \(f\) continua). El promedio de la función es ese límite:
+        \[f_{\text{prom}}=\lim_{n\to\infty}\frac{1}{b-a}\sum_{i=1}^{n}f(x_{i})\,\Delta x=\frac{1}{b-a}\int_{a}^{b}f(x)\,dx\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Qué significa en el dibujo</h3>
+    <p>Al multiplicar la fórmula por \(b-a\) queda
+    \[f_{\text{prom}}\cdot(b-a)=\int_{a}^{b}f(x)\,dx\]
+    A la izquierda está el área de un rectángulo de base \(b-a\) y alto \(f_{\text{prom}}\). A la derecha, el área bajo la curva (para \(f\ge 0\)). El valor promedio es <b>el alto del rectángulo que tiene la misma base y la misma área</b> que la región bajo la curva.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Bajo \(f(x)=x^{2}\), entre \(0\) y \(3\), el área vale \(9\). La recta naranja es el techo de un rectángulo de base \(3\). Sube y baja hasta encontrar la altura en que lo que sobra de la curva tapa justo lo que falta.</p>
+  <div class="stage" data-scene="apl-valor-promedio"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(f(x)=x^{2}\).</li>
+    <li><b>Recta naranja:</b> el techo del rectángulo, a la altura \(h\).</li>
+    <li><b>Zona burdeo, «sobra»:</b> parte del área bajo la curva que queda sobre la recta.</li>
+    <li><b>Zona verde, «falta»:</b> parte del rectángulo que queda sobre la curva.</li>
+    <li><b>Punto negro:</b> donde la curva corta a la recta, en \(c=\sqrt{h}\).</li>
+    <li><b>Bajo la animación:</b> la diferencia entre lo que sobra y lo que falta, y la altura que la hace cero.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(f(x)=x^{2}\) en \([0,\,3]\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Largo del intervalo: \(b-a=3-0=3\).</li>
+    <li>Integral: \(\displaystyle\int_{0}^{3}x^{2}\,dx=\left[\frac{x^{3}}{3}\right]_{0}^{3}=\frac{27}{3}-0=9\).</li>
+    <li>Valor promedio: \(f_{\text{prom}}=\dfrac{1}{3}\cdot 9=3\).</li>
+    <li>Comprobación de sentido: \(f\) va de \(f(0)=0\) a \(f(3)=9\), y \(3\) está entre los dos. No es el punto medio \(4{,}5\): la función pasa más «tiempo» en valores chicos que en grandes.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(f(x)=\operatorname{sen}x\) en \([0,\,\pi]\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Largo del intervalo: \(\pi-0=\pi\).</li>
+    <li>Integral: \(\displaystyle\int_{0}^{\pi}\operatorname{sen}x\,dx=\Big[-\cos x\Big]_{0}^{\pi}=-\cos\pi-\left(-\cos 0\right)=1+1=2\).</li>
+    <li>Valor promedio: \(f_{\text{prom}}=\dfrac{1}{\pi}\cdot 2=\dfrac{2}{\pi}\approx 0{,}637\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Teorema del valor medio para integrales</h3>
+  <div class="body">
+  <p>Si \(f\) es continua en \([a,\,b]\), existe al menos un número \(c\) en \([a,\,b]\) donde la función vale exactamente su promedio:
+  \[f(c)=\frac{1}{b-a}\int_{a}^{b}f(x)\,dx\]</p>
+  <ol class="steps">
+    <li><b>Por qué.</b> Una función continua en un intervalo cerrado tiene un valor mínimo \(m\) y un valor máximo \(M\) (teorema de los valores extremos, que aquí se usa sin demostrarlo). Entonces \(m\le f(x)\le M\) para todo \(x\) del intervalo.</li>
+    <li>Integrando la desigualdad de \(a\) a \(b\): \(m\,(b-a)\le\displaystyle\int_{a}^{b}f(x)\,dx\le M\,(b-a)\). Dividiendo por \(b-a&gt;0\): \(m\le f_{\text{prom}}\le M\).</li>
+    <li>Una función continua toma todos los valores entre su mínimo y su máximo (teorema del valor intermedio, también sin demostrar aquí). Como \(f_{\text{prom}}\) está entre \(m\) y \(M\), hay un \(c\) con \(f(c)=f_{\text{prom}}\).</li>
+    <li><b>En el ejemplo 1:</b> \(c^{2}=3\ \Longrightarrow\ c=\sqrt{3}\approx 1{,}73\), que está en \([0,\,3]\). (La otra solución, \(-\sqrt{3}\), queda fuera del intervalo.)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Promediar solo los extremos: \(\dfrac{f(a)+f(b)}{2}\). En el ejemplo 1 daría \(\dfrac{0+9}{2}=4{,}5\), y el valor correcto es \(3\). Promediar los extremos solo acierta cuando la gráfica es una recta.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula el valor promedio de \(f(x)=4-x^{2}\) en \([-2,\,2]\) y encuentra los \(c\) donde la función toma ese valor.</p>
+    <details><summary>Pista</summary><div><p>El largo del intervalo es \(4\). Después resuelve \(4-c^{2}=f_{\text{prom}}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle\int_{-2}^{2}\left(4-x^{2}\right)dx=\left[4x-\frac{x^{3}}{3}\right]_{-2}^{2}=\left(8-\frac{8}{3}\right)-\left(-8+\frac{8}{3}\right)=\frac{32}{3}\).</li>
+        <li>\(f_{\text{prom}}=\dfrac{1}{4}\cdot\dfrac{32}{3}=\dfrac{8}{3}\approx 2{,}67\).</li>
+        <li>\(4-c^{2}=\dfrac{8}{3}\ \Longrightarrow\ c^{2}=\dfrac{4}{3}\ \Longrightarrow\ c=\pm\dfrac{2}{\sqrt{3}}\approx\pm 1{,}15\). Los dos están en \([-2,\,2]\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el valor promedio de \(f(x)=e^{x}\) en \([0,\,2]\).</p>
+    <details><summary>Pista</summary><div><p>Una antiderivada de \(e^{x}\) es \(e^{x}\), y \(e^{0}=1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle\int_{0}^{2}e^{x}\,dx=\Big[e^{x}\Big]_{0}^{2}=e^{2}-1\).</li>
+        <li>\(f_{\text{prom}}=\dfrac{1}{2-0}\left(e^{2}-1\right)=\dfrac{e^{2}-1}{2}\approx 3{,}19\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Entre las 8 de la mañana y las 8 de la tarde, la temperatura de un patio sigue el modelo \(T(t)=15+8\operatorname{sen}\!\left(\dfrac{\pi t}{12}\right)\) grados Celsius, con \(t\) en horas desde las 8 de la mañana. ¿Cuál fue la temperatura promedio en esas \(12\) horas?</p>
+    <details><summary>Pista</summary><div><p>Una antiderivada de \(\operatorname{sen}\!\left(\dfrac{\pi t}{12}\right)\) es \(-\dfrac{12}{\pi}\cos\!\left(\dfrac{\pi t}{12}\right)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El intervalo es \([0,\,12]\), de largo \(12\).</li>
+        <li>\(\displaystyle\int_{0}^{12}\operatorname{sen}\!\left(\frac{\pi t}{12}\right)dt=\left[-\frac{12}{\pi}\cos\!\left(\frac{\pi t}{12}\right)\right]_{0}^{12}=-\frac{12}{\pi}\cos\pi+\frac{12}{\pi}\cos 0=\frac{12}{\pi}+\frac{12}{\pi}=\frac{24}{\pi}\).</li>
+        <li>\(\displaystyle\int_{0}^{12}T(t)\,dt=15\cdot 12+8\cdot\frac{24}{\pi}=180+\frac{192}{\pi}\).</li>
+        <li>\(T_{\text{prom}}=\dfrac{1}{12}\left(180+\dfrac{192}{\pi}\right)=15+\dfrac{16}{\pi}\approx 20{,}1\).</li>
+        <li>Respuesta: la temperatura promedio fue de unos \(20{,}1\) grados Celsius.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H03 · v001 · Pendiente de APR</span>
+</footer>
+</article>

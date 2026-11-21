@@ -1,0 +1,150 @@
+<!--file:H04_conectar_con_integrales_posicion_velocidad_y_aceleracion.html-->
+<!--title:Conectar con integrales funciones de posición, velocidad y aceleración-->
+<!--id:apl-movimiento-->
+<!--tab:H04 Posición, velocidad, aceleración-->
+<article class="sheet" id="apl-movimiento" data-hoja="L22 H04">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Conectar con integrales funciones de posición, velocidad y aceleración</b></li>
+    </ol>
+    <h1>Conectar con integrales funciones de posición, velocidad y aceleración</h1>
+    <p class="lede">Derivando se baja: de la posición a la velocidad y de la velocidad a la aceleración. Integrando se sube: de la aceleración a la velocidad y de la velocidad a la posición. Para subir hace falta, además, un dato de partida.
+    \[s(t)=s(0)+\int_{0}^{t}v(\tau)\,d\tau\qquad\qquad v(t)=v(0)+\int_{0}^{t}a(\tau)\,d\tau\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde salen las dos fórmulas</h3>
+    <ol class="steps">
+      <li>Un móvil va por una recta. Su posición en el instante \(t\) es \(s(t)\). Por definición, la velocidad es la derivada de la posición y la aceleración es la derivada de la velocidad:
+        \[v(t)=s'(t)\qquad\qquad a(t)=v'(t)\]</li>
+      <li>El teorema fundamental del cálculo dice que la integral de una derivada continua es el cambio de la función: \(\displaystyle\int_{t_{1}}^{t_{2}}s'(t)\,dt=s(t_{2})-s(t_{1})\). Como \(s'=v\):
+        \[\int_{t_{1}}^{t_{2}}v(t)\,dt=s(t_{2})-s(t_{1})\]</li>
+      <li>Con \(t_{1}=0\) y \(t_{2}=t\), y despejando: \(s(t)=s(0)+\displaystyle\int_{0}^{t}v(\tau)\,d\tau\). (Dentro de la integral se usa la letra \(\tau\) para no confundirla con el límite \(t\).)</li>
+      <li>Lo mismo con \(v'=a\): \(v(t)=v(0)+\displaystyle\int_{0}^{t}a(\tau)\,d\tau\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Desplazamiento y distancia recorrida no son lo mismo</h3>
+    <ol class="steps">
+      <li><b>Desplazamiento:</b> cuánto cambió la posición, con signo. Es la integral de la velocidad:
+        \[\text{desplazamiento}=s(t_{2})-s(t_{1})=\int_{t_{1}}^{t_{2}}v(t)\,dt\]</li>
+      <li><b>Distancia recorrida:</b> todo lo que anduvo, sin importar el sentido. En un tiempo \(dt\) el móvil recorre \(|v(t)|\,dt\), porque la rapidez es \(|v|\). Sumando:
+        \[\text{distancia}=\int_{t_{1}}^{t_{2}}|v(t)|\,dt\]</li>
+      <li>Para calcular la distancia se corta el intervalo en los instantes donde \(v(t)=0\) y se suman los tamaños de cada tramo, igual que con un área entre una curva y el eje.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Un móvil parte en la posición \(2\) metros con velocidad \(v(t)=t^{2}-4t+3\) metros por segundo. Avanza, se devuelve y vuelve a avanzar. Arriba se ve el móvil; abajo, su velocidad y el área que se va juntando.</p>
+  <div class="stage" data-scene="apl-movimiento"></div>
+  <ul class="keys">
+    <li><b>Bolita naranja:</b> el móvil, en su posición \(s(t)\).</li>
+    <li><b>Flechas de arriba:</b> cada tramo del viaje. Verde cuando avanza; burdeo cuando retrocede.</li>
+    <li><b>Curva azul:</b> la velocidad \(v(t)\).</li>
+    <li><b>Área verde:</b> la velocidad es positiva; el área se suma al desplazamiento. <b>Área burdeo:</b> la velocidad es negativa; el área se resta.</li>
+    <li><b>Bajo la animación:</b> la posición, el desplazamiento y la distancia recorrida hasta el instante \(t\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: de la velocidad a la posición. \(v(t)=t^{2}-4t+3\), con \(s(0)=2\), para \(0\le t\le 4\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Posición.</b>
+      \[s(t)=2+\int_{0}^{t}\left(\tau^{2}-4\tau+3\right)d\tau=2+\left[\frac{\tau^{3}}{3}-2\tau^{2}+3\tau\right]_{0}^{t}=2+\frac{t^{3}}{3}-2t^{2}+3t\]</li>
+    <li><b>Desplazamiento en los 4 segundos.</b>
+      \[\int_{0}^{4}v(t)\,dt=\frac{64}{3}-32+12=\frac{4}{3}\ \text{m}\qquad\text{y}\qquad s(4)=2+\frac{4}{3}=\frac{10}{3}\ \text{m}\]</li>
+    <li><b>Dónde cambia de sentido.</b> \(v(t)=0\ \Longrightarrow\ t^{2}-4t+3=(t-1)(t-3)=0\ \Longrightarrow\ t=1\) o \(t=3\).
+      Signo: \(v(0)=3&gt;0\), \(v(2)=-1&lt;0\), \(v(4)=3&gt;0\). Avanza, retrocede, avanza.</li>
+    <li><b>Cada tramo.</b> Con \(F(t)=\dfrac{t^{3}}{3}-2t^{2}+3t\): \(F(0)=0\), \(F(1)=\dfrac{1}{3}-2+3=\dfrac{4}{3}\), \(F(3)=9-18+9=0\), \(F(4)=\dfrac{4}{3}\).
+      \[\int_{0}^{1}v\,dt=\frac{4}{3}\qquad\int_{1}^{3}v\,dt=0-\frac{4}{3}=-\frac{4}{3}\qquad\int_{3}^{4}v\,dt=\frac{4}{3}-0=\frac{4}{3}\]</li>
+    <li><b>Distancia recorrida.</b> Se suman los tamaños:
+      \[\int_{0}^{4}|v(t)|\,dt=\frac{4}{3}+\frac{4}{3}+\frac{4}{3}=4\ \text{m}\]</li>
+    <li>Recorrió \(4\) metros y quedó \(\dfrac{4}{3}\) de metro más adelante que al partir.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: de la aceleración a la posición. Aceleración constante</h3>
+  <div class="body">
+  <p>Un móvil tiene aceleración constante \(a\), velocidad inicial \(v_{0}\) y posición inicial \(s_{0}\). Las fórmulas del movimiento uniformemente acelerado salen de integrar dos veces.</p>
+  <ol class="steps">
+    <li><b>Velocidad.</b> \(v(t)=v_{0}+\displaystyle\int_{0}^{t}a\,d\tau=v_{0}+\Big[a\,\tau\Big]_{0}^{t}=v_{0}+a\,t\).</li>
+    <li><b>Posición.</b> \(s(t)=s_{0}+\displaystyle\int_{0}^{t}\left(v_{0}+a\,\tau\right)d\tau=s_{0}+\left[v_{0}\,\tau+\frac{a\,\tau^{2}}{2}\right]_{0}^{t}=s_{0}+v_{0}\,t+\frac{1}{2}a\,t^{2}\).</li>
+    <li><b>Con números.</b> Una pelota se lanza hacia arriba desde el suelo a \(20\) m/s. Se toma la aceleración de gravedad redondeada, \(a=-10\) m/s² (negativa, porque apunta hacia abajo), y no se considera el roce del aire:
+      \[v(t)=20-10\,t\qquad\qquad s(t)=20\,t-5\,t^{2}\]</li>
+    <li>Sube mientras \(v&gt;0\), hasta \(t=2\) s: altura máxima \(s(2)=40-20=20\) m. Vuelve al suelo cuando \(s(t)=0\): \(5t(4-t)=0\ \Longrightarrow\ t=4\) s.</li>
+    <li>Entre \(t=0\) y \(t=4\): desplazamiento \(s(4)-s(0)=0\) m; distancia recorrida \(20+20=40\) m.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Olvidar el dato de partida. La integral \(\displaystyle\int_{0}^{t}v(\tau)\,d\tau\) entrega cuánto <b>cambió</b> la posición, no dónde está el móvil. Para saber dónde está hay que sumar \(s(0)\). Sin ese dato, la posición no se puede conocer.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Un móvil tiene velocidad \(v(t)=3t^{2}-12\) m/s para \(0\le t\le 3\). Calcula su desplazamiento y la distancia que recorre.</p>
+    <details><summary>Pista</summary><div><p>\(v(t)=0\) en \(t=2\). Una antiderivada es \(G(t)=t^{3}-12t\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(G(t)=t^{3}-12t\): \(G(0)=0\), \(G(2)=8-24=-16\), \(G(3)=27-36=-9\).</li>
+        <li>Desplazamiento: \(\displaystyle\int_{0}^{3}v\,dt=G(3)-G(0)=-9\) m. Quedó \(9\) metros atrás de donde partió.</li>
+        <li>\(3t^{2}-12=0\ \Longrightarrow\ t=2\) (el otro, \(t=-2\), queda fuera). \(v(0)=-12&lt;0\) y \(v(3)=15&gt;0\): retrocede hasta \(t=2\) y después avanza.</li>
+        <li>Tramos: \(\displaystyle\int_{0}^{2}v\,dt=-16\) y \(\displaystyle\int_{2}^{3}v\,dt=-9-(-16)=7\).</li>
+        <li>Distancia: \(16+7=23\) m.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Un móvil tiene aceleración \(a(t)=6t\) m/s², velocidad inicial \(v(0)=-3\) m/s y posición inicial \(s(0)=1\) m. Encuentra \(v(t)\), \(s(t)\), su posición en \(t=2\) y la distancia que recorre entre \(t=0\) y \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>Integra dos veces, sumando cada vez el dato inicial. Después busca dónde \(v(t)=0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(v(t)=-3+\displaystyle\int_{0}^{t}6\tau\,d\tau=-3+3t^{2}\).</li>
+        <li>\(s(t)=1+\displaystyle\int_{0}^{t}\left(3\tau^{2}-3\right)d\tau=1+t^{3}-3t\).</li>
+        <li>\(s(2)=1+8-6=3\) m.</li>
+        <li>\(v(t)=0\ \Longrightarrow\ 3t^{2}=3\ \Longrightarrow\ t=1\). Antes retrocede (\(v(0)=-3\)); después avanza (\(v(2)=9\)).</li>
+        <li>Posiciones: \(s(0)=1\), \(s(1)=1+1-3=-1\), \(s(2)=3\). Retrocede \(|{-1}-1|=2\) m y avanza \(3-(-1)=4\) m.</li>
+        <li>Distancia: \(2+4=6\) m. (El desplazamiento es \(3-1=2\) m.)</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un auto va a \(20\) m/s (\(72\) km/h) y frena con desaceleración constante de \(5\) m/s². ¿Cuánto demora en detenerse y cuántos metros recorre mientras frena?</p>
+    <details><summary>Pista</summary><div><p>\(a=-5\). Calcula \(v(t)\), busca cuándo vale \(0\) e integra la velocidad hasta ese instante.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(v(t)=20+\displaystyle\int_{0}^{t}(-5)\,d\tau=20-5t\).</li>
+        <li>Se detiene cuando \(v(t)=0\): \(20-5t=0\ \Longrightarrow\ t=4\) s.</li>
+        <li>Mientras frena, \(v\ge 0\), así que la distancia es la integral de \(v\):
+          \[\int_{0}^{4}\left(20-5t\right)dt=\left[20t-\frac{5t^{2}}{2}\right]_{0}^{4}=80-40=40\]</li>
+        <li>Respuesta: demora \(4\) segundos y recorre \(40\) metros.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H04 · v001 · Pendiente de APR</span>
+</footer>
+</article>

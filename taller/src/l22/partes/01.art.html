@@ -1,0 +1,145 @@
+<!--file:H01_area_entre_curvas_expresadas_como_funciones_de_y.html-->
+<!--title:Determinar el área entre curvas expresadas como funciones de y-->
+<!--id:apl-area-y-->
+<!--tab:H01 Área, funciones de y-->
+<article class="sheet" id="apl-area-y" data-hoja="L22 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Determinar el área entre curvas expresadas como funciones de y</b></li>
+    </ol>
+    <h1>Determinar el área entre curvas expresadas como funciones de \(y\)</h1>
+    <p class="lede">Hay regiones que quedan mejor descritas con curvas de la forma \(x=f(y)\): para cada altura \(y\), la curva dice en qué \(x\) está. En ese caso la región se corta en <b>tiras horizontales</b> y se integra en \(y\): en cada tira, la curva de la derecha menos la de la izquierda.
+    \[A=\int_{c}^{d}\Big[x_{\text{der}}(y)-x_{\text{izq}}(y)\Big]\,dy\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La región está entre dos curvas, \(x=x_{\text{izq}}(y)\) a la izquierda y \(x=x_{\text{der}}(y)\) a la derecha, desde la altura \(y=c\) hasta \(y=d\), con \(x_{\text{izq}}(y)\le x_{\text{der}}(y)\) y las dos continuas.</li>
+      <li>Se corta en tiras horizontales muy delgadas. Una tira a la altura \(y\) tiene <b>largo</b> \(x_{\text{der}}(y)-x_{\text{izq}}(y)\) y <b>alto</b> \(dy\). Su área es la de un rectángulo:
+        \[dA=\Big[x_{\text{der}}(y)-x_{\text{izq}}(y)\Big]\,dy\]</li>
+      <li>El área total es la suma de todas las tiras, desde \(y=c\) hasta \(y=d\). Esa suma, en el límite de tiras cada vez más delgadas, es la integral definida:
+        \[A=\int_{c}^{d}dA=\int_{c}^{d}\Big[x_{\text{der}}(y)-x_{\text{izq}}(y)\Big]\,dy\]</li>
+      <li>Es la misma idea del área entre curvas como funciones de \(x\) («la de arriba menos la de abajo», con tiras verticales), con los papeles de \(x\) e \(y\) cambiados.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La región entre la parábola \(x=y^{2}\) y la recta \(x=y+2\). Una tira horizontal sube desde el cruce de abajo hasta el de arriba y va pintando el área.</p>
+  <div class="stage" data-scene="apl-area-y"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> la parábola \(x=y^{2}\), borde izquierdo de la región.</li>
+    <li><b>Recta naranja:</b> \(x=y+2\), borde derecho.</li>
+    <li><b>Tira burdeo:</b> va de la parábola a la recta a la altura \(y\). Su largo es \((y+2)-y^{2}\).</li>
+    <li><b>Zona verde:</b> el área acumulada desde \(y=-1\) hasta la altura de la tira.</li>
+    <li><b>Bajo la animación:</b> el área de la tira, la integral que la acumula y el valor al que llega.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la región entre \(x=y^{2}\) y \(x=y+2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces.</b> Se igualan las dos expresiones de \(x\):
+      \[y^{2}=y+2\ \Longrightarrow\ y^{2}-y-2=0\ \Longrightarrow\ (y-2)(y+1)=0\ \Longrightarrow\ y=-1\ \text{ o }\ y=2\]
+      Los puntos son \((1,\,-1)\) y \((4,\,2)\). Los límites de integración son \(c=-1\) y \(d=2\).</li>
+    <li><b>Cuál queda a la derecha.</b> Se prueba una altura intermedia, \(y=0\): la parábola da \(x=0\) y la recta da \(x=2\). La recta está a la derecha en todo el tramo, porque las curvas no se cruzan entre \(-1\) y \(2\).</li>
+    <li><b>Tira.</b> \(dA=\big[(y+2)-y^{2}\big]\,dy\).</li>
+    <li><b>Integral.</b>
+      \[A=\int_{-1}^{2}\left(y+2-y^{2}\right)dy=\left[\frac{y^{2}}{2}+2y-\frac{y^{3}}{3}\right]_{-1}^{2}\]</li>
+    <li><b>Evaluación.</b>
+      \[\left(2+4-\frac{8}{3}\right)-\left(\frac{1}{2}-2+\frac{1}{3}\right)=\frac{10}{3}-\left(-\frac{7}{6}\right)=\frac{20}{6}+\frac{7}{6}=\frac{27}{6}=\frac{9}{2}\]</li>
+    <li>El área es \(\dfrac{9}{2}\) unidades cuadradas.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>La misma área con tiras verticales: sale, pero cuesta el doble</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x\), la parábola \(x=y^{2}\) se parte en dos funciones: \(y=\sqrt{x}\) (rama de arriba) e \(y=-\sqrt{x}\) (rama de abajo). La recta es \(y=x-2\).</li>
+    <li>El borde de abajo cambia en \(x=1\). De \(0\) a \(1\) la tira vertical va de una rama de la parábola a la otra; de \(1\) a \(4\) va de la recta a la rama de arriba. Hay que hacer dos integrales:
+      \[A=\int_{0}^{1}\Big[\sqrt{x}-\left(-\sqrt{x}\right)\Big]dx+\int_{1}^{4}\Big[\sqrt{x}-(x-2)\Big]dx\]</li>
+    <li>Primera: \(\displaystyle\int_{0}^{1}2\sqrt{x}\,dx=\left[\frac{4}{3}x^{3/2}\right]_{0}^{1}=\frac{4}{3}\).</li>
+    <li>Segunda: \(\displaystyle\int_{1}^{4}\left(\sqrt{x}-x+2\right)dx=\left[\frac{2}{3}x^{3/2}-\frac{x^{2}}{2}+2x\right]_{1}^{4}=\left(\frac{16}{3}-8+8\right)-\left(\frac{2}{3}-\frac{1}{2}+2\right)=\frac{16}{3}-\frac{13}{6}=\frac{19}{6}\).</li>
+    <li>Suma: \(\dfrac{4}{3}+\dfrac{19}{6}=\dfrac{8}{6}+\dfrac{19}{6}=\dfrac{27}{6}=\dfrac{9}{2}\). El mismo resultado, con el doble de trabajo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="card k3">
+    <h3>Cómo decidir: ¿tiras verticales u horizontales?</h3>
+    <ol class="steps">
+      <li>Dibuja la región y marca los cruces.</li>
+      <li>Imagina una tira <b>vertical</b> que recorre la región de izquierda a derecha. Si siempre va de la misma curva de abajo a la misma curva de arriba, integra en \(x\).</li>
+      <li>Si la curva de abajo o la de arriba cambia en el camino, imagina una tira <b>horizontal</b> que sube. Si siempre va de la misma curva de la izquierda a la misma de la derecha, integra en \(y\): es una sola integral.</li>
+      <li>Para integrar en \(y\), cada curva debe estar escrita como \(x=\) algo con \(y\). Si viene como \(y=\) algo con \(x\), se despeja \(x\).</li>
+    </ol>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Restar al revés: izquierda menos derecha. El resultado sale negativo, y un área no puede serlo. Siempre es <b>derecha menos izquierda</b>, es decir, el \(x\) mayor menos el \(x\) menor.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula el área de la región entre la parábola \(x=4-y^{2}\) y el eje \(y\).</p>
+    <details><summary>Pista</summary><div><p>El eje \(y\) es la recta \(x=0\). La parábola lo corta donde \(4-y^{2}=0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(4-y^{2}=0\ \Longrightarrow\ y=-2\) o \(y=2\).</li>
+        <li>En \(y=0\) la parábola da \(x=4\) y el eje da \(x=0\): la parábola está a la derecha.</li>
+        <li>\[A=\int_{-2}^{2}\Big[\left(4-y^{2}\right)-0\Big]dy=\left[4y-\frac{y^{3}}{3}\right]_{-2}^{2}=\left(8-\frac{8}{3}\right)-\left(-8+\frac{8}{3}\right)=\frac{16}{3}+\frac{16}{3}=\frac{32}{3}\]</li>
+        <li>El área es \(\dfrac{32}{3}\) unidades cuadradas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el área de la región encerrada entre \(x=y^{2}\) y \(x=8-y^{2}\).</p>
+    <details><summary>Pista</summary><div><p>Iguala: \(y^{2}=8-y^{2}\). En \(y=0\), ¿cuál de las dos da el \(x\) mayor?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(y^{2}=8-y^{2}\ \Longrightarrow\ 2y^{2}=8\ \Longrightarrow\ y=-2\) o \(y=2\).</li>
+        <li>En \(y=0\): \(x=y^{2}\) da \(0\) y \(x=8-y^{2}\) da \(8\). La segunda está a la derecha.</li>
+        <li>\[A=\int_{-2}^{2}\Big[\left(8-y^{2}\right)-y^{2}\Big]dy=\int_{-2}^{2}\left(8-2y^{2}\right)dy=\left[8y-\frac{2y^{3}}{3}\right]_{-2}^{2}\]</li>
+        <li>\[\left(16-\frac{16}{3}\right)-\left(-16+\frac{16}{3}\right)=\frac{32}{3}+\frac{32}{3}=\frac{64}{3}\]</li>
+        <li>El área es \(\dfrac{64}{3}\) unidades cuadradas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un vitral tiene esta forma, con las medidas en decímetros: su borde izquierdo es la curva \(x=\dfrac{y^{2}}{2}\) y su borde derecho es la recta \(x=y+4\). ¿Cuántos decímetros cuadrados de vidrio lleva?</p>
+    <details><summary>Pista</summary><div><p>Iguala \(\dfrac{y^{2}}{2}=y+4\) y multiplica por \(2\) para sacar la fracción.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(\dfrac{y^{2}}{2}=y+4\ \Longrightarrow\ y^{2}-2y-8=0\ \Longrightarrow\ (y-4)(y+2)=0\ \Longrightarrow\ y=-2\) o \(y=4\).</li>
+        <li>En \(y=0\) la curva da \(x=0\) y la recta da \(x=4\): la recta está a la derecha.</li>
+        <li>\[A=\int_{-2}^{4}\left(y+4-\frac{y^{2}}{2}\right)dy=\left[\frac{y^{2}}{2}+4y-\frac{y^{3}}{6}\right]_{-2}^{4}\]</li>
+        <li>\[\left(8+16-\frac{64}{6}\right)-\left(2-8+\frac{8}{6}\right)=\frac{40}{3}-\left(-\frac{14}{3}\right)=\frac{54}{3}=18\]</li>
+        <li>Respuesta: el vitral lleva \(18\) decímetros cuadrados de vidrio.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>
