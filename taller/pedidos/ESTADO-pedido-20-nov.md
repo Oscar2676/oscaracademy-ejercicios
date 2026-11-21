@@ -43,6 +43,11 @@ L20 H09 «Derivadas para razones relacionadas» (`H09_derivadas_para_razones_rel
 - L20 H12 «Derivada de funciones parametrizadas 2» (segunda derivada; `H12_derivada_de_funciones_parametrizadas_2_segunda_derivada.html`): ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14
 - L20 H13 «Derivada de funciones vectoriales» (`H13_derivada_de_funciones_vectoriales.html`): ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19
 
+## Lote 21 · Integración y acumulación de cambio (`calculo-integral/lote21/`, fuentes `taller/src/l21/partes/`, `qa/rigor/verificar_lote_21.py`)
+Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d6b-b293-cedf32eb1797). Código de pie `CI-L21-HNN`. Se arma con `python3 taller/build.py 21 "Integración y acumulación de cambio"`.
+- **Pendientes de APR (21-nov 02:40):** H01 «Exploración de acumulaciones de cambio» (`H01_exploracion_de_acumulaciones_de_cambio.html`; enlazar en ft30u comp-lcno0t9w · qudgj comp-l2qt71ca · qclgl comp-l4skmywg · x238t comp-kagozn2k) y H02 «Aplicar propiedades de las integrales definidas» (`H02_propiedades_de_las_integrales_definidas.html`; ft30u comp-lcno0ta0 · qudgj comp-l2qtbctn · qclgl comp-l4skmywp1).
+- **Por producir (10):** Sumas de Riemann, notación de suma y de integral definida · TFC y funciones de acumulación · Interpretar funciones de acumulación que involucran área · Antiderivadas: reglas básicas e integrales definidas · Antiderivadas: regla de la potencia inversa · Integrales por sustitución · División larga y completar el cuadrado · Fracciones parciales · Integrales impropias · «Integración y acumulación de cambio» (título general). Los identificadores están en el pedido de 378.
+
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
 - Una discontinuidad se dibuja con **curvas**, no con rectas, y la gráfica debe **seguir** después del salto por otra curva más arriba en el mismo x.
