@@ -40,8 +40,24 @@
     <li><b>Círculo verde:</b> la rueda. <b>Punto naranja:</b> el punto del borde que se sigue.</li>
     <li><b>Curva azul:</b> el camino del punto, la cicloide.</li>
     <li><b>Trazo burdeo en el suelo:</b> lo que ha avanzado la rueda, igual al ángulo girado \(t\) (radio \(1\)).</li>
+    <li><b>Tramo burdeo grueso:</b> el pedacito de camino que se agrega en ese instante, \(ds\). Mide rapidez por tiempo: \(ds=\sqrt{x'^{2}+y'^{2}}\,dt\).</li>
     <li><b>Bajo la animación:</b> la rapidez del punto, la integral que la acumula y el largo recorrido.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(\tau\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El camino azul va desde \(0\) hasta el instante en que va la animación, \(t\). Su tamaño depende de ese valor: es una función de \(t\).</li>
+      <li>Es la suma de tramos muy delgadas, una por cada valor <b>intermedio</b> entre \(0\) y \(t\). Para sumarlas hay que darle un nombre a ese valor intermedio.</li>
+      <li>No se lo puede llamar \(t\), porque \(t\) ya está ocupada: es el instante actual, el tope de la suma. Se elige otra letra: \(\tau\).</li>
+      <li>La tramo que corresponde al valor \(\tau\), de espesor \(d\tau\), aporta
+        \[ds=2\operatorname{sen}\frac{\tau}{2}\,d\tau\]</li>
+      <li>Se suman desde \(\tau=0\) hasta \(\tau=t\):
+        \[\int_{0}^{t}2\operatorname{sen}\frac{\tau}{2}\,d\tau=\left[-4\cos\frac{\tau}{2}\right]_{0}^{t}=-4\cos\frac{t}{2}+4\cos 0=4\left(1-\cos\frac{t}{2}\right)\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(\tau\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Ese es el largo recorrido hasta el instante \(t\). En \(t=2\pi\) vale \(4\,(1-\cos\pi)=4\cdot 2=8\). Cada tramo es lo que avanza el punto en un instante: rapidez por tiempo.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -125,7 +141,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L23-H02 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L23-H02 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -153,6 +169,7 @@ OA.scene('par-cicloide', (function(){
       oaPar(S, fx, fy, 0, TP, 'rgba(31,93,134,0.22)', 2); if (t > 0.01) oaPar(S, fx, fy, 0, t, C.sec, 3.4);
       c.strokeStyle = C.alt; c.lineWidth = 2.2; c.beginPath(); c.arc(X(t), Y(1), rp, 0, 6.2832); c.stroke();
       for (k = 0; k < 4; k++){ S.line(t, 1, t - Math.sin(t + k*Math.PI/2), 1 - Math.cos(t + k*Math.PI/2), {color:k ? 'rgba(46,107,62,0.45)' : C.alt, width:k ? 1.2 : 2.4}); }
+      if (t > 0.3 && t < 6.2){ oaPar(S, fx, fy, t - 0.28, t, C.tan, 6); txt('ds = rapidez · dt', X(fx(t - 0.14)) - 12, Y(fy(t - 0.14)) - 12, 'right', C.tan); }
       S.dot(t, 1, C.alt); c.fillStyle = C.rise; c.beginPath(); c.arc(X(x), Y(y), 7, 0, 6.2832); c.fill(); c.strokeStyle = C.ink; c.lineWidth = 1; c.stroke();
       S.line(0, -0.35, t, -0.35, {color:C.tan, width:3}); txt('la rueda avanzó t = ' + dec(t, 2), X(Math.max(t/2, 0.9)), Y(-0.35) + 14, 'center', C.tan);
       txt('largo del camino ≈ ' + dec(L(t), 2), X(-1.3), Y(2.75), 'left', C.sec);

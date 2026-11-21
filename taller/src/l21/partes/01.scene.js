@@ -25,7 +25,7 @@ OA.scene('acu-exploracion', (function(){
       if (t > 0) S.poly([[0, 0], [0, 6], [Math.min(t, 3), r(Math.min(t, 3))], [Math.min(t, 3), 0]], {fill:C.alt, alpha:0.45});
       if (t > 3) S.poly([[3, 0], [t, r(t)], [t, 0]], {fill:C.tan, alpha:0.45});
       S.line(0, 6, 5.3, r(5.3), {color:C.sec, width:2.6});
-      S.line(t, 0, t, r(t), {color:C.ink, width:1.5}); S.dot(t, r(t), C.sec);
+      (function(){ var q1 = t, q0 = Math.max(0, q1 - 0.13), yb_ = 0, yt_ = r(t), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.13)){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(q0), Y(yb_) + 9*sd); c.lineTo(X(q1), Y(yb_) + 9*sd); c.moveTo(X(q0), Y(yb_) + 5*sd); c.lineTo(X(q0), Y(yb_) + 13*sd); c.moveTo(X(q1), Y(yb_) + 5*sd); c.lineTo(X(q1), Y(yb_) + 13*sd); c.stroke(); txt('dt', X((q0 + q1)/2) + -16, Y(yb_) + 23*sd, 'center', C.ink); } })(); S.dot(t, r(t), C.sec);
       if (t >= 1.2) txt(t < 3 ? '+' + dec(ac(t), 2) : '+9', X(Math.min(t, 3)/3), Y(2), 'left', C.alt);
       if (t > 3.6) txt('−' + dec((t - 3)*(t - 3), 2), X(3 + (t - 3)*0.75) + 2, Y(-0.9), 'center', C.tan);
       if (Math.abs(t - 3) < 0.004) txt('r(3) = 0', X(3), Y(0) - 16, 'center', C.sec);

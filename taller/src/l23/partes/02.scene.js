@@ -18,6 +18,7 @@ OA.scene('par-cicloide', (function(){
       oaPar(S, fx, fy, 0, TP, 'rgba(31,93,134,0.22)', 2); if (t > 0.01) oaPar(S, fx, fy, 0, t, C.sec, 3.4);
       c.strokeStyle = C.alt; c.lineWidth = 2.2; c.beginPath(); c.arc(X(t), Y(1), rp, 0, 6.2832); c.stroke();
       for (k = 0; k < 4; k++){ S.line(t, 1, t - Math.sin(t + k*Math.PI/2), 1 - Math.cos(t + k*Math.PI/2), {color:k ? 'rgba(46,107,62,0.45)' : C.alt, width:k ? 1.2 : 2.4}); }
+      if (t > 0.3 && t < 6.2){ oaPar(S, fx, fy, t - 0.28, t, C.tan, 6); txt('ds = rapidez · dt', X(fx(t - 0.14)) - 12, Y(fy(t - 0.14)) - 12, 'right', C.tan); }
       S.dot(t, 1, C.alt); c.fillStyle = C.rise; c.beginPath(); c.arc(X(x), Y(y), 7, 0, 6.2832); c.fill(); c.strokeStyle = C.ink; c.lineWidth = 1; c.stroke();
       S.line(0, -0.35, t, -0.35, {color:C.tan, width:3}); txt('la rueda avanzó t = ' + dec(t, 2), X(Math.max(t/2, 0.9)), Y(-0.35) + 14, 'center', C.tan);
       txt('largo del camino ≈ ' + dec(L(t), 2), X(-1.3), Y(2.75), 'left', C.sec);

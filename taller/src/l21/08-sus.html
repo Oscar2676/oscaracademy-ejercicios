@@ -52,8 +52,24 @@
     <li><b>Arriba, curva azul:</b> \(y=2t\cos\left(t^{2}\right)\), en la variable original. Área verde: de \(0\) a \(x\).</li>
     <li><b>Abajo, curva naranja:</b> \(y=\cos u\), en la variable nueva. Área verde: de \(0\) a \(u=x^{2}\).</li>
     <li><b>Los dos puntos:</b> cuando arriba se llega a \(x\), abajo se llega a \(x^{2}\). El de abajo parte lento y termina rápido.</li>
+    <li><b>Rectángulos negros:</b> la tira que se agrega en cada gráfica. Arriba su ancho es \(dt\); abajo, \(du\). Van marcados con una llave.</li>
     <li><b>Bajo la animación:</b> las dos integrales, iguales, y su valor.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(t\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área pintada en la gráfica de arriba va desde \(0\) hasta la posición de la tira, \(x\). Su tamaño depende de ese valor: es una función de \(x\).</li>
+      <li>Es la suma de tiras muy delgadas, una por cada valor <b>intermedio</b> entre \(0\) y \(x\). Para sumarlas hay que darle un nombre a ese valor intermedio.</li>
+      <li>No se lo puede llamar \(x\), porque \(x\) ya está ocupada: es donde está detenida la tira, el tope de la suma. Se elige otra letra: \(t\).</li>
+      <li>La tira que corresponde al valor \(t\), de espesor \(dt\), aporta
+        \[2t\cos\left(t^{2}\right)dt\]</li>
+      <li>Se suman desde \(t=0\) hasta \(t=x\):
+        \[\int_{0}^{x}2t\cos\left(t^{2}\right)dt=\int_{0}^{x^{2}}\cos u\,du=\Big[\operatorname{sen}u\Big]_{0}^{x^{2}}=\operatorname{sen}\left(x^{2}\right)\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(t\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>En la gráfica de abajo pasa lo mismo con \(u\): el eje horizontal mide \(u=t^{2}\) y la tira tiene ancho \(du\). Cuando arriba la tira llega a \(x=\sqrt{\pi/2}\), abajo llega a \(u=\dfrac{\pi}{2}\) y las dos áreas valen \(\operatorname{sen}\dfrac{\pi}{2}=1\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -187,7 +203,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L21-H08 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L21-H08 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -222,8 +238,8 @@ OA.scene('int-sustitucion', (function(){
       if (x > 0.005){ S.poly(pa, {fill:C.alt, alpha:0.45}); S.poly(pb, {fill:C.alt, alpha:0.45}); }
       c.strokeStyle = C.sec; c.lineWidth = 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= 120; i++){ a = XM*i/120; if (i) c.lineTo(X(a), Y(yt(f(a)))); else c.moveTo(X(a), Y(yt(f(a)))); } c.stroke();
       c.strokeStyle = C.rise; c.beginPath(); for (i = 0; i <= 120; i++){ a = Math.PI/2*i/120; if (i) c.lineTo(X(a), Y(yb(Math.cos(a)))); else c.moveTo(X(a), Y(yb(Math.cos(a)))); } c.stroke();
-      S.line(x, yt(0), x, yt(f(x)), {color:C.ink, width:2}); S.dot(x, yt(0), C.sec);
-      S.line(u, yb(0), u, yb(Math.cos(u)), {color:C.ink, width:2}); S.dot(u, yb(0), C.rise);
+      (function(){ var q1 = x, q0 = Math.max(0, q1 - 0.035), yb_ = yt(0), yt_ = yt(f(x)), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.035)){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(q0), Y(yb_) + 9*sd); c.lineTo(X(q1), Y(yb_) + 9*sd); c.moveTo(X(q0), Y(yb_) + 5*sd); c.lineTo(X(q0), Y(yb_) + 13*sd); c.moveTo(X(q1), Y(yb_) + 5*sd); c.lineTo(X(q1), Y(yb_) + 13*sd); c.stroke(); txt('dt', X((q0 + q1)/2) + -16, Y(yb_) + 23*sd, 'center', C.ink); } })(); S.dot(x, yt(0), C.sec);
+      (function(){ var q1 = u, q0 = Math.max(0, q1 - 0.035), yb_ = yb(0), yt_ = yb(Math.cos(u)), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.035)){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(q0), Y(yb_) + 9*sd); c.lineTo(X(q1), Y(yb_) + 9*sd); c.moveTo(X(q0), Y(yb_) + 5*sd); c.lineTo(X(q0), Y(yb_) + 13*sd); c.moveTo(X(q1), Y(yb_) + 5*sd); c.lineTo(X(q1), Y(yb_) + 13*sd); c.stroke(); txt('du', X((q0 + q1)/2) + -16, Y(yb_) + 23*sd, 'center', C.ink); } })(); S.dot(u, yb(0), C.rise);
       txt('y = 2t · cos(t²)', X(1.7), Y(T1 + 0.5), 'right', C.sec); txt('y = cos u', X(1.7), Y(B1 + 0.5), 'right', C.rise);
       txt('x = ' + dec(x, 2), X(x) + 10, Y(yt(f(x))) - 12, 'left', C.sec);
       txt('u = x² = ' + dec(u, 2), X(u) + 10, Y(yb(Math.cos(u))) - 12, 'left', C.rise);

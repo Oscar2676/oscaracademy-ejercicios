@@ -81,6 +81,14 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 - Avisos dados a Óscar: H11 afirma sin demostrar que ∫√(1+cos²x)dx no tiene antiderivada elemental; H03 usa sin demostrar valores extremos y valor intermedio. La vista previa del taller no dibuja las fórmulas (TeX): se le pidió mirarlas en la tarjeta.
 - `qa/rigor/derivadas_escenas.js` espera `_chk` con `d0, d1`; las escenas de l21 y l22 usan `_chk:[{f, df, at}]` y se comprueban con el bucle de node anotado en el historial del 21-nov (0 derivadas malas).
 
+## Respuestas de Óscar del 21-nov 09:24 y lo hecho
+- «4. Sí, corrígelas» (lotes 21 y 23 con el criterio del diferencial marcado y la letra muda explicada). **Hecho, pendientes de APR:**
+  - **Lote 21 v002:** H01, H08, H09, H12 (tira negra con «dt»/«dx»/«du» y recuadro «¿De dónde sale la τ / t?»); H04 y H05 (tira «dx» en la escena común `_acu.js` y su clave; H04 ya explicaba la letra en su recuadro). Sin cambios: H02, H03, H06, H07, H10, H11 (sin tira que avance ni letra muda). Todas ya publicadas: se ven en línea con pie «Pendiente de APR».
+  - **Lote 23:** H02 v002 (tramo «ds» y recuadro de la τ), H05 v002 (arco «dθ», recuadro de la u, entradilla «cuñas de ángulo dθ»).
+- **L23 H01 v003** (corrección 09:26): etiquetas por fuera de la elipse con las coordenadas en expresión: naranja «(3 cos t, 2 sen t)» para el punto de la elipse y burdeo «(3 cos t, 3 sen t)» para el punto del círculo grande. Óscar escribió «(3cost, 3sent)» para el punto de la elipse; se le avisó que ese es el del círculo y que el de la elipse lleva 2 sen t.
+- «3. Sí a hoja nueva»: los 3 títulos parecidos al lote 20 se hacen como hojas nuevas en el lote 23 → **faltan 9 hojas en el lote 23** (las 6 de abajo + «Definir y diferenciar ecuaciones paramétricas», «Segundas derivadas de ecuaciones paramétricas», «Derivada de funciones con valores vectoriales»).
+- «2. Aplícalas» / «5. Continúa»: las hojas nuevas van con los criterios nuevos; después sigue la cola (binomio de Newton, series, límites, integración, 1º Básico).
+
 ## Lote 23 · Paramétricas, polares y vectoriales (`calculo-integral/lote23/`, fuentes `taller/src/l23/partes/`, `qa/rigor/verificar_lote_23.py`)
 Tarjeta https://claude.ai/artifact/H9Jd3daoV1wVSG7FiX1zDA (slug 82bb0741-2206-4832-bb06-a09fe3f81dc5). Código de pie `CI-L23-HNN`. Se arma con `python3 taller/build.py 23 "Paramétricas, polares y vectoriales"`; partes → `NN-p.html` con `cat _txt.js NN.scene.js` (01, 02) o `cat _txt.js _pol.js NN.scene.js` (03–05; `_pol.js` trae la cardioide `oaCar` y la rejilla polar). Ruta de las hojas: Cursos › Cálculo II › Derivada de funciones paramétricas.
 - **Pendientes de APR (21-nov 09:30), v001** (ids del pedido; al enlazar, buscar por título exacto con `__scan`):

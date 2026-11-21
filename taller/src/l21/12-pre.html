@@ -34,8 +34,24 @@
     <li><b>Área verde:</b> la distancia recorrida hasta el instante \(t\), lo que marca el cuentakilómetros.</li>
     <li><b>Auto, arriba:</b> avanza sobre el camino esa misma distancia.</li>
     <li><b>Detención en \(t=2\):</b> velocidad máxima. El auto avanza lo más rápido; el área crece lo más rápido.</li>
+    <li><b>Rectángulo negro:</b> la tira que se agrega en ese momento. Su alto es la velocidad \(v(t)\) y su ancho es \(dt\), marcado con una llave.</li>
     <li><b>Bajo la animación:</b> la distancia como integral de la velocidad, y la velocidad como derivada de la distancia.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(\tau\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área pintada va desde \(0\) hasta el instante en que va la animación, \(t\). Su tamaño depende de ese valor: es una función de \(t\).</li>
+      <li>Es la suma de tiras muy delgadas, una por cada valor <b>intermedio</b> entre \(0\) y \(t\). Para sumarlas hay que darle un nombre a ese valor intermedio.</li>
+      <li>No se lo puede llamar \(t\), porque \(t\) ya está ocupada: es el instante actual, el tope de la suma. Se elige otra letra: \(\tau\).</li>
+      <li>La tira que corresponde al valor \(\tau\), de espesor \(d\tau\), aporta
+        \[v(\tau)\,d\tau=\left(4\tau-\tau^{2}\right)d\tau\]</li>
+      <li>Se suman desde \(\tau=0\) hasta \(\tau=t\):
+        \[\int_{0}^{t}\left(4\tau-\tau^{2}\right)d\tau=\left[2\tau^{2}-\frac{\tau^{3}}{3}\right]_{0}^{t}=2t^{2}-\frac{t^{3}}{3}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(\tau\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Esa es la distancia recorrida hasta el instante \(t\). En \(t=4\) vale \(32-\dfrac{64}{3}=\dfrac{32}{3}\approx 10{,}67\). Cada tira es lo que avanza el auto en un instante: velocidad por tiempo, \(v(\tau)\,d\tau\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -187,7 +203,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L21-H12 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L21-H12 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -217,7 +233,7 @@ OA.scene('acu-presentacion', (function(){
       for (i = 0; i <= 80; i++){ a = t*i/80; pts.push([a, vf(a)]); } pts.push([t, 0]);
       if (t > 0.01) S.poly(pts, {fill:C.alt, alpha:0.45});
       S.curve(vf, 0, 4, {color:C.sec, width:2.6});
-      S.line(t, 0, t, vf(t), {color:C.ink, width:2}); S.dot(t, vf(t), C.sec);
+      (function(){ var q1 = t, q0 = Math.max(0, q1 - 0.1), yb_ = 0, yt_ = vf(t), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.1)){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(q0), Y(yb_) + 9*sd); c.lineTo(X(q1), Y(yb_) + 9*sd); c.moveTo(X(q0), Y(yb_) + 5*sd); c.lineTo(X(q0), Y(yb_) + 13*sd); c.moveTo(X(q1), Y(yb_) + 5*sd); c.lineTo(X(q1), Y(yb_) + 13*sd); c.stroke(); txt('dt', X((q0 + q1)/2) + -15, Y(yb_) + 23*sd, 'center', C.ink); } })(); S.dot(t, vf(t), C.sec);
       if (Math.abs(t - 2) >= 0.004) txt('v(t) = ' + dec(vf(t), 2), X(t) + (t > 2.9 ? -10 : 10), Y(vf(t)) - 12, t > 2.9 ? 'right' : 'left', C.sec);
       if (t > 1) txt('área = ' + dec(sf(t), 2), X(Math.min(t, 3)*0.55), Y(1), 'center', C.alt);
       if (Math.abs(t - 2) < 0.004) txt('velocidad máxima: v(2) = 4', X(2), Y(4.5), 'center', C.sec);

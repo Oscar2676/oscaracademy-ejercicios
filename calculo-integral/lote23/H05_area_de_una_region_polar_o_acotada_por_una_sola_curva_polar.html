@@ -162,7 +162,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Calcular el área de una región polar o el área acotada por una sola curva polar</b></li>
     </ol>
     <h1>Calcular el área de una región polar o el área acotada por una sola curva polar</h1>
-    <p class="lede">En coordenadas polares la región no se corta en tiras: se corta en <b>cuñas</b> que salen del polo, como porciones de pizza. Cada cuña es casi un sector de círculo. El área es la suma de todas.
+    <p class="lede">En coordenadas polares la región no se corta en tiras: se corta en <b>cuñas de ángulo \(d\theta\)</b> que salen del polo, como porciones de pizza. Cada cuña es casi un sector de círculo. El área es la suma de todas.
     \[A=\int_{\alpha}^{\beta}\frac{1}{2}\,\big[f(\theta)\big]^{2}\,d\theta\]</p>
   </section>
 </header>
@@ -194,10 +194,25 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="stage" data-scene="pol-area"></div>
   <ul class="keys">
     <li><b>Rayo naranja:</b> va del polo a la curva; su largo es \(r\).</li>
-    <li><b>Cuña burdeo:</b> el sector delgado que se agrega, de área \(\dfrac{1}{2}r^{2}\,d\theta\).</li>
+    <li><b>Cuña burdeo:</b> el sector delgado que se agrega, de área \(\dfrac{1}{2}r^{2}\,d\theta\). Su ángulo, \(d\theta\), va marcado con un arco negro.</li>
     <li><b>Zona verde:</b> el área barrida desde \(\theta=0\).</li>
     <li><b>Bajo la animación:</b> el área de la cuña, la integral que la acumula y el valor al que llega.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(u\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área verde va desde \(0\) hasta el ángulo donde va el rayo, \(\theta\). Su tamaño depende de ese valor: es una función de \(\theta\).</li>
+      <li>Es la suma de cuñas muy delgadas, una por cada valor <b>intermedio</b> entre \(0\) y \(\theta\). Para sumarlas hay que darle un nombre a ese valor intermedio.</li>
+      <li>No se lo puede llamar \(\theta\), porque \(\theta\) ya está ocupada: es el ángulo donde está detenido el rayo, el tope de la suma. Se elige otra letra: \(u\).</li>
+      <li>La cuña que corresponde al valor \(u\), de espesor \(du\), aporta
+        \[\frac{1}{2}\,(1+\cos u)^{2}\,du\]</li>
+      <li>Se suman desde \(u=0\) hasta \(u=\theta\):
+        \[\int_{0}^{\theta}\frac{1}{2}(1+\cos u)^{2}\,du=\frac{1}{2}\left[\frac{3u}{2}+2\operatorname{sen}u+\frac{\operatorname{sen}2u}{4}\right]_{0}^{\theta}=\frac{1}{2}\left(\frac{3\theta}{2}+2\operatorname{sen}\theta+\frac{\operatorname{sen}2\theta}{4}\right)\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(u\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando el rayo completa la vuelta, \(\theta=2\pi\), los senos valen cero y queda el área completa: \(\dfrac{1}{2}\cdot\dfrac{3\cdot 2\pi}{2}=\dfrac{3\pi}{2}\). Es la integral del ejemplo 2, donde la variable se llama \(\theta\) porque los límites son números fijos.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -286,7 +301,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L23-H05 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L23-H05 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 </div>
@@ -529,6 +544,7 @@ OA.scene('pol-area', (function(){
       for (i = 0; i <= 12; i++){ q = th + d*i/12; w.push([K.r(th)*Math.cos(q), K.r(th)*Math.sin(q)]); } if (th < TP - 0.01) S.poly(w, {fill:C.tan, alpha:0.75});
       oaPar(S, K.x, K.y, 0, TP, C.sec, 2.8);
       S.line(0, 0, x, y, {color:C.rise, width:3.2}); S.dot(0, 0, C.ink); S.dot(x, y, C.rise);
+      if (th < TP - 0.01 && K.r(th) > 0.45){ c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.arc(X(0), Y(0), Math.abs(X(K.r(th)) - X(0)) + 8, -th, -(th + d), true); c.stroke(); txt('dθ', X((K.r(th))*Math.cos(th + d/2)) + 22*Math.cos(th + d/2), Y((K.r(th))*Math.sin(th + d/2)) - 22*Math.sin(th + d/2), 'center', C.ink); }
       txt('θ = ' + dec(th, 2) + ' rad,  r = ' + dec(K.r(th), 2), X(-1.45), Y(1.55), 'left', C.rise);
       txt('cuña: dA = ½ r² dθ', X(-1.45), Y(1.55) + 20, 'left', C.tan);
       txt('área barrida ≈ ' + dec(A(th), 2), X(-1.45), Y(1.55) + 40, 'left', C.alt);

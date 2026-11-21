@@ -17,6 +17,7 @@ OA.scene('pol-area', (function(){
       for (i = 0; i <= 12; i++){ q = th + d*i/12; w.push([K.r(th)*Math.cos(q), K.r(th)*Math.sin(q)]); } if (th < TP - 0.01) S.poly(w, {fill:C.tan, alpha:0.75});
       oaPar(S, K.x, K.y, 0, TP, C.sec, 2.8);
       S.line(0, 0, x, y, {color:C.rise, width:3.2}); S.dot(0, 0, C.ink); S.dot(x, y, C.rise);
+      if (th < TP - 0.01 && K.r(th) > 0.45){ c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.arc(X(0), Y(0), Math.abs(X(K.r(th)) - X(0)) + 8, -th, -(th + d), true); c.stroke(); txt('dθ', X((K.r(th))*Math.cos(th + d/2)) + 22*Math.cos(th + d/2), Y((K.r(th))*Math.sin(th + d/2)) - 22*Math.sin(th + d/2), 'center', C.ink); }
       txt('θ = ' + dec(th, 2) + ' rad,  r = ' + dec(K.r(th), 2), X(-1.45), Y(1.55), 'left', C.rise);
       txt('cuña: dA = ½ r² dθ', X(-1.45), Y(1.55) + 20, 'left', C.tan);
       txt('área barrida ≈ ' + dec(A(th), 2), X(-1.45), Y(1.55) + 40, 'left', C.alt);

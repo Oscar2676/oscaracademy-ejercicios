@@ -34,8 +34,24 @@
     <li><b>Área verde:</b> la distancia recorrida hasta el instante \(t\), lo que marca el cuentakilómetros.</li>
     <li><b>Auto, arriba:</b> avanza sobre el camino esa misma distancia.</li>
     <li><b>Detención en \(t=2\):</b> velocidad máxima. El auto avanza lo más rápido; el área crece lo más rápido.</li>
+    <li><b>Rectángulo negro:</b> la tira que se agrega en ese momento. Su alto es la velocidad \(v(t)\) y su ancho es \(dt\), marcado con una llave.</li>
     <li><b>Bajo la animación:</b> la distancia como integral de la velocidad, y la velocidad como derivada de la distancia.</li>
   </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(\tau\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>El área pintada va desde \(0\) hasta el instante en que va la animación, \(t\). Su tamaño depende de ese valor: es una función de \(t\).</li>
+      <li>Es la suma de tiras muy delgadas, una por cada valor <b>intermedio</b> entre \(0\) y \(t\). Para sumarlas hay que darle un nombre a ese valor intermedio.</li>
+      <li>No se lo puede llamar \(t\), porque \(t\) ya está ocupada: es el instante actual, el tope de la suma. Se elige otra letra: \(\tau\).</li>
+      <li>La tira que corresponde al valor \(\tau\), de espesor \(d\tau\), aporta
+        \[v(\tau)\,d\tau=\left(4\tau-\tau^{2}\right)d\tau\]</li>
+      <li>Se suman desde \(\tau=0\) hasta \(\tau=t\):
+        \[\int_{0}^{t}\left(4\tau-\tau^{2}\right)d\tau=\left[2\tau^{2}-\frac{\tau^{3}}{3}\right]_{0}^{t}=2t^{2}-\frac{t^{3}}{3}\]</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(\tau\) desaparece y solo quedan los límites. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Esa es la distancia recorrida hasta el instante \(t\). En \(t=4\) vale \(32-\dfrac{64}{3}=\dfrac{32}{3}\approx 10{,}67\). Cada tira es lo que avanza el auto en un instante: velocidad por tiempo, \(v(\tau)\,d\tau\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
@@ -187,6 +203,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L21-H12 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L21-H12 · v002 · Pendiente de APR</span>
 </footer>
 </article>

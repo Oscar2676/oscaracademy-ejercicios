@@ -46,6 +46,7 @@
     <li><b>Rayo negro y arco \(t\):</b> el parámetro, dibujado como un ángulo. El rayo corta a dos círculos punteados: uno de radio \(3\) y otro de radio \(2\).</li>
     <li><b>Punto naranja:</b> la posición \(\big(x(t),\,y(t)\big)\). Toma su \(x\) del corte con el círculo de radio \(3\) y su \(y\) del corte con el círculo de radio \(2\). <b>Flecha:</b> el sentido en que avanza.</li>
     <li><b>Trazo burdeo sobre el eje \(x\):</b> \(x=3\cos t\). <b>Trazo verde sobre el eje \(y\):</b> \(y=2\operatorname{sen}t\).</li>
+    <li><b>Etiquetas por fuera de la elipse:</b> en naranja, las coordenadas del punto que recorre la elipse, \((3\cos t,\,2\operatorname{sen}t)\). En burdeo, las del punto donde el rayo corta al círculo grande, \((3\cos t,\,3\operatorname{sen}t)\). Los dos tienen la misma \(x\); el de la elipse tiene la \(y\) del círculo chico.</li>
     <li><b>Ojo:</b> \(t\) es el ángulo del rayo negro, no el ángulo con que se ve el punto naranja desde el origen. Solo coinciden cuando el punto está sobre un eje.</li>
     <li><b>Curva azul gruesa:</b> lo ya recorrido.</li>
     <li><b>Bajo la animación:</b> las dos ecuaciones y cómo se elimina el parámetro.</li>
@@ -149,7 +150,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L23-H01 · v002 · Pendiente de APR</span>
+  <span class="status">CI-L23-H01 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -162,7 +163,7 @@ OA.scene('par-intro', (function(){
   function fx(t){ return 3*Math.cos(t); } function fy(t){ return 2*Math.sin(t); }
   function ts(s){ return s < 2 ? 0 : s < 20 ? TP*(s - 2)/18 : TP; }
   return {
-    world:{x0:-4.3, x1:4.3, y0:-3.4, y1:3.4}, aspect:6.8/8.6,
+    world:{x0:-6.3, x1:6.3, y0:-5.9, y1:5.9}, aspect:11.8/12.6,
     _chk:[{f:fx, df:function(t){ return -3*Math.sin(t); }, at:[0.5, 2, 4, 5.5]}, {f:fy, df:function(t){ return 2*Math.cos(t); }, at:[0.5, 2, 4, 5.5]}],
     aria:'Un rayo negro gira desde el origen formando el ángulo t con el eje x. Corta a un círculo punteado de radio 3 y a otro de radio 2. El punto naranja toma su x del corte con el círculo grande, 3 coseno de t, y su y del corte con el círculo chico, 2 seno de t. Un punto naranja recorre una elipse en sentido contrario a las agujas del reloj, partiendo de (3, 0). Su posición la dan dos ecuaciones: x igual a 3 coseno de t, y igual a 2 seno de t. Una línea punteada baja desde el punto al eje x y marca el valor de x; otra va al eje y y marca el valor de y. La parte ya recorrida de la curva queda en azul grueso.',
     labels:[['F', '\\left(\\dfrac{x}{3}\\right)^{2}+\\left(\\dfrac{y}{2}\\right)^{2}=\\cos^{2}t+\\operatorname{sen}^{2}t=1', '(x/3)² + (y/2)² = cos² t + sen² t = 1', 'diff']],
@@ -188,10 +189,13 @@ OA.scene('par-intro', (function(){
       a = Math.atan2(-(2*Math.cos(t)), -3*Math.sin(t)); c.fillStyle = C.rise; c.beginPath(); c.arc(X(x), Y(y), 7, 0, 6.2832); c.fill(); c.strokeStyle = C.ink; c.lineWidth = 1; c.stroke();
       c.strokeStyle = C.rise; c.lineWidth = 2.4; c.beginPath(); c.moveTo(X(x), Y(y)); c.lineTo(X(x) + 26*Math.cos(a), Y(y) + 26*Math.sin(a)); c.stroke();
       c.fillStyle = C.rise; c.beginPath(); c.moveTo(X(x) + 34*Math.cos(a), Y(y) + 34*Math.sin(a)); c.lineTo(X(x) + 24*Math.cos(a - 0.35), Y(y) + 24*Math.sin(a - 0.35)); c.lineTo(X(x) + 24*Math.cos(a + 0.35), Y(y) + 24*Math.sin(a + 0.35)); c.closePath(); c.fill();
-      txt('t = ' + dec(t, 2) + ' rad', X(-4.2), Y(2.85), 'left', C.ink);
-      txt('x = 3 cos t = ' + dec(x, 2), X(-4.2), Y(2.85) + 20, 'left', C.tan); txt('y = 2 sen t = ' + dec(y, 2), X(-4.2), Y(2.85) + 40, 'left', C.alt);
+      txt('t = ' + dec(t, 2) + ' rad', X(-6.2), Y(5.55), 'left', C.ink); txt('x = 3 cos t = ' + dec(x, 2), X(-0.7), Y(5.55), 'center', C.tan); txt('y = 2 sen t = ' + dec(y, 2), X(6.2), Y(5.55), 'right', C.alt);
+      /* coordenadas, por fuera de la elipse */
+      var ex = Math.cos(t), ey = -Math.sin(t), sv = Math.sin(t) >= 0 ? -1 : 1, lx = Math.max(X(-6.3) + 62, Math.min(X(6.3) - 62, X(3*Math.cos(t)) + ex*40)), ly = Y(3*Math.sin(t)) + sv*26;
+      txt('(3 cos t, 3 sen t)', lx, ly, 'center', C.tan); txt('(3 cos t, 2 sen t)', lx, ly + 20*sv, 'center', C.rise);
+      c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(x), Y(y)); c.lineTo(lx, ly + 20*sv); c.stroke(); c.setLineDash([]);
       txt('3 cos t', X(x/2), Y(0) + (y >= 0 ? 13 : -13), 'center', C.tan); txt('2 sen t', X(0) + (x >= 0 ? -8 : 8), Y(y/2), x >= 0 ? 'right' : 'left', C.alt);
-      S.lab('F', X(0.6), Y(-2.75), 0, 0, v.q != null && s >= 20);
+      S.lab('F', X(-6.2), Y(-5.2), 0, 0, v.q != null && s >= 20);
     },
     caption:function(v){
       var t = v.t, s = v.q == null ? null : v.q*RUN;

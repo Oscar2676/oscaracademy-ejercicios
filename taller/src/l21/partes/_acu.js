@@ -32,7 +32,7 @@ function oaAcu(o){
         S.poly([[ua, yf(0)], [ua, yf(fa)], [ub, yf(fb)], [ub, yf(0)]], {fill:(fa + fb) >= 0 ? C.alt : C.tan, alpha:0.45}); }
       /* f */
       c.strokeStyle = C.sec; c.lineWidth = 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= 300; i++){ u = x0 + (x1 - x0)*i/300; if (i) c.lineTo(X(u), Y(yf(o.f(u)))); else c.moveTo(X(u), Y(yf(o.f(u)))); } c.stroke();
-      S.line(x, yf(0), x, yf(m), {color:C.sec, width:3.5}); S.dot(x, yf(m), C.sec);
+      (function(){ var q1 = x, q0 = Math.max(x0, q1 - 0.022*(x1 - x0)), yb_ = yf(0), yt_ = yf(m), sd = yt_ >= yb_ ? 1 : -1; S.poly([[q0, yb_], [q1, yb_], [q1, yt_], [q0, yt_]], {fill:C.ink, alpha:0.8}); if (q1 - q0 > 0.5*(0.022*(x1 - x0))){ c.strokeStyle = C.ink; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(q0), Y(yb_) + 9*sd); c.lineTo(X(q1), Y(yb_) + 9*sd); c.moveTo(X(q0), Y(yb_) + 5*sd); c.lineTo(X(q0), Y(yb_) + 13*sd); c.moveTo(X(q1), Y(yb_) + 5*sd); c.lineTo(X(q1), Y(yb_) + 13*sd); c.stroke(); txt('dx', X((q0 + q1)/2) + -16, Y(yb_) + 23*sd, 'center', C.ink); } })(); S.dot(x, yf(m), C.sec);
       /* g: tramo recorrido, punto y tangente de pendiente f(x) */
       c.strokeStyle = C.rise; c.globalAlpha = 0.25; c.lineWidth = 2; c.beginPath(); for (i = 0; i <= 300; i++){ u = x0 + (x1 - x0)*i/300; if (i) c.lineTo(X(u), Y(yg(o.g(u)))); else c.moveTo(X(u), Y(yg(o.g(u)))); } c.stroke(); c.globalAlpha = 1;
       c.lineWidth = 2.8; c.beginPath(); for (i = 0; i <= 300; i++){ u = x0 + (x - x0)*i/300; if (i) c.lineTo(X(u), Y(yg(o.g(u)))); else c.moveTo(X(u), Y(yg(o.g(u)))); } c.stroke();
