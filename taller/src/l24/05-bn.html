@@ -1,0 +1,193 @@
+<!--file:H05_enunciado_del_binomio_de_newton.html-->
+<!--title:Enunciado del binomio de Newton-->
+<!--id:bn-enunciado-->
+<!--tab:H05 Enunciado-->
+<article class="sheet" id="bn-enunciado" data-hoja="L24 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Enunciado del binomio de Newton</b></li>
+    </ol>
+    <h1>Enunciado del binomio de Newton</h1>
+    <p class="lede">El binomio de Newton es la fórmula que desarrolla \((a+b)^{n}\) para cualquier exponente natural \(n\). Dice cuántos términos hay, qué potencias lleva cada uno y cuál es su coeficiente.
+    \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El desarrollo de \((a+b)^{5}\), término por término. Después cambia \(n\) con el deslizador.</p>
+  <div class="stage" data-scene="bn-enunciado"></div>
+  <ul class="keys">
+    <li><b>Una barra por término.</b> Su altura es el coeficiente, \(\dbinom{n}{k}\), escrito encima.</li>
+    <li><b>Bajo cada barra:</b> el número \(k\) del término; en azul, la potencia de \(a\), que baja de \(n\) a \(0\); en burdeo, la potencia de \(b\), que sube de \(0\) a \(n\).</li>
+    <li><b>Barra naranja:</b> el término que se está formando. Bajo el dibujo va la cuenta de su coeficiente con factoriales.</li>
+    <li><b>Al final:</b> el desarrollo completo.</li>
+    <li><b>Deslizador \(n\):</b> el exponente, de \(1\) a \(7\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Cómo se lee la fórmula</h3>
+    <ol class="steps">
+      <li><b>El símbolo \(\displaystyle\sum_{k=0}^{n}\)</b> significa «suma de los términos que se obtienen al dar a \(k\) los valores \(0,\ 1,\ 2,\dots,\ n\)». Escrita sin él:
+        \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n-1}ab^{n-1}+\binom{n}{n}b^{n}\]</li>
+      <li><b>\(n!\)</b> (factorial de \(n\)) es el producto \(n\,(n-1)\cdots 2\cdot 1\). Por ejemplo, \(4!=24\). Se conviene que \(0!=1\).</li>
+      <li><b>\(\dbinom{n}{k}\)</b> se lee «\(n\) sobre \(k\)» y se llama coeficiente binomial o número combinatorio.</li>
+      <li><b>Condición:</b> \(n\) es un número natural (\(0,\ 1,\ 2,\dots\)). \(a\) y \(b\) pueden ser números o expresiones cualesquiera.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Lo que la fórmula garantiza</h3>
+    <ol class="steps">
+      <li>El desarrollo tiene \(n+1\) términos (uno por cada \(k\) de \(0\) a \(n\)).</li>
+      <li>En cada término los exponentes de \(a\) y de \(b\) suman \(n\).</li>
+      <li>El primer y el último coeficiente valen \(1\): \(\dbinom{n}{0}=\dfrac{n!}{0!\,n!}=1\) y \(\dbinom{n}{n}=1\).</li>
+      <li>Los coeficientes son simétricos: \(\dbinom{n}{k}=\dbinom{n}{n-k}\).</li>
+      <li><b>Por qué es verdadera.</b> Cada término se forma eligiendo \(b\) en \(k\) de los \(n\) factores, y \(\dbinom{n}{k}\) cuenta esas elecciones (hoja «Del producto notable al binomio de Newton»). También se demuestra por inducción (hoja «Demostración por inducción»).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \((a+b)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Coeficientes.</b> \(\dbinom{4}{0}=1\), \(\dbinom{4}{1}=\dfrac{4!}{1!\,3!}=\dfrac{24}{6}=4\), \(\dbinom{4}{2}=\dfrac{4!}{2!\,2!}=\dfrac{24}{4}=6\), \(\dbinom{4}{3}=4\), \(\dbinom{4}{4}=1\).</li>
+    <li><b>Potencias.</b> \(a^{4},\ a^{3}b,\ a^{2}b^{2},\ ab^{3},\ b^{4}\).</li>
+    <li>\((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \((x+2)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se usa el ejemplo 1 con \(a=x\) y \(b=2\). Las potencias de \(2\) son \(1,\ 2,\ 4,\ 8,\ 16\).</li>
+    <li>\(x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 4+4\cdot x\cdot 8+16\).</li>
+    <li>\((x+2)^{4}=x^{4}+8x^{3}+24x^{2}+32x+16\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \((2x+y)^{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=3\): coeficientes \(1,\ 3,\ 3,\ 1\). Con \(a=2x\) y \(b=y\). El paréntesis de \(a\) es obligatorio.</li>
+    <li>\((2x)^{3}+3\,(2x)^{2}y+3\,(2x)\,y^{2}+y^{3}\).</li>
+    <li>\((2x+y)^{3}=8x^{3}+12x^{2}y+6xy^{2}+y^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: los casos \(n=0\), \(n=1\) y \(n=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=0\): un solo término, \(\dbinom{0}{0}a^{0}b^{0}=1\). Y \((a+b)^{0}=1\) (para \(a+b\neq 0\)).</li>
+    <li>\(n=1\): \(\dbinom{1}{0}a+\dbinom{1}{1}b=a+b\).</li>
+    <li>\(n=2\): \(\dbinom{2}{0}a^{2}+\dbinom{2}{1}ab+\dbinom{2}{2}b^{2}=a^{2}+2ab+b^{2}\): el cuadrado del binomio.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: empezar a contar en \(k=1\). El primer término es el de \(k=0\). Dos: olvidar el paréntesis cuando \(a\) o \(b\) traen coeficiente: \((2x)^{3}=8x^{3}\), no \(2x^{3}\). Tres: usar la fórmula con un exponente que no es natural; para esos casos hay otra, que es una suma infinita (hoja «Binomio con exponente fraccionario»).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Desarrolla \((x+1)^{5}\) con la fórmula.</p>
+    <details><summary>Pista</summary><div><p>Como \(b=1\), cada término es solo el coeficiente por la potencia de \(x\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Coeficientes: \(\dbinom{5}{0}=1\), \(\dbinom{5}{1}=5\), \(\dbinom{5}{2}=\dfrac{5!}{2!\,3!}=\dfrac{120}{12}=10\), y por simetría \(10,\ 5,\ 1\).</li>
+        <li>\((x+1)^{5}=x^{5}+5x^{4}+10x^{3}+10x^{2}+5x+1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Desarrolla \((x+3)^{4}\).</p>
+    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) y potencias de \(3\): \(1,\ 3,\ 9,\ 27,\ 81\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x^{4}+4\cdot x^{3}\cdot 3+6\cdot x^{2}\cdot 9+4\cdot x\cdot 27+81\).</li>
+        <li>\((x+3)^{4}=x^{4}+12x^{3}+54x^{2}+108x+81\).</li>
+        <li>Comprobación con \(x=1\): \(4^{4}=256\) y \(1+12+54+108+81=256\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un depósito de \(\$100\,000\) gana un \(10\,\%\) de interés compuesto al año. Después de \(3\) años se ha multiplicado por \((1+0{,}1)^{3}\). Desarrolla esa potencia con el binomio y calcula el monto.</p>
+    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}1\), \(n=3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\((1+0{,}1)^{3}=1+3\cdot 0{,}1+3\cdot 0{,}01+0{,}001=1+0{,}3+0{,}03+0{,}001=1{,}331\).</li>
+        <li>Monto: \(100\,000\cdot 1{,}331=\$133\,100\).</li>
+        <li>Lectura de los términos: \(0{,}3\) es el interés simple de tres años; \(0{,}03\) y \(0{,}001\) son el «interés sobre el interés».</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+OA.scene('bn-enunciado', (function(){
+  function f(n){ var r = 1, i; for (i = 2; i <= n; i++) r *= i; return r; }
+  return {
+    world:{x0:-0.9, x1:7.9, y0:-6.7, y1:4.0}, aspect:10.7/8.8,
+    aria:'Para el desarrollo de a más b elevado a n se dibuja una barra por cada término. La altura de la barra es el coeficiente, n sobre k. Bajo cada barra van el número k, la potencia de a, que baja de n hasta 0, y la potencia de b, que sube de 0 hasta n. Los términos aparecen uno por uno, y los coeficientes son simétricos.',
+    labels:[['F', '(a+b)^{n}=\\displaystyle\\sum_{k=0}^{n}\\binom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k}', '(a + b)ⁿ = Σ C(n, k) aⁿ⁻ᵏ bᵏ', 'diff']],
+    sliders:[{id:'n', tex:'n', min:1, max:7, step:1, value:5}],
+    legend:'<span><i class="sw rise"></i> coeficiente \\(\\binom{n}{k}\\) del término que se está formando</span><span><i class="sw sec"></i> potencia de \\(a\\): baja de \\(n\\) a \\(0\\)</span><span><i class="sw tan"></i> potencia de \\(b\\): sube de \\(0\\) a \\(n\\)</span>',
+    anim:{run:24000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = 5; v.k = Math.min(5, Math.floor(p*7.2)); v.fin = p*7.2 >= 6; }},
+    onInput:function(v){ v.q = null; v.k = v.n; v.fin = true; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 5), k = v.k == null ? n : Math.min(n, v.k), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), mx = bnC(n, Math.floor(n/2)), off = (7 - n)/2, i, h, x, x0, y0, cf;
+      function sm(t, px, py, col, b){ c.font = (b ? '700 ' : '600 ') + '12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(off - 0.6), Y(0)); c.lineTo(X(off + n + 0.6), Y(0)); c.stroke();
+      for (i = 0; i <= k; i++){ cf = bnC(n, i); h = 3*cf/mx; x = off + i;
+        S.poly([[x - 0.3, 0], [x + 0.3, 0], [x + 0.3, h], [x - 0.3, h]], {fill:i === k && !v.fin ? C.rise : C.grid, alpha:i === k && !v.fin ? 0.75 : 0.9});
+        sm('' + cf, X(x), Y(h) - 10, i === k && !v.fin ? C.rise : C.ink, true);
+        sm('k = ' + i, X(x), Y(0) + 12, C.muted || '#6b6b6b'); sm(n - i === 0 ? 'a⁰' : 'a' + (n - i === 1 ? '¹' : bnSup(n - i)), X(x), Y(0) + 29, C.sec, true); sm(i === 0 ? 'b⁰' : 'b' + (i === 1 ? '¹' : bnSup(i)), X(x), Y(0) + 45, C.tan, true); }
+      x0 = X(-0.8); y0 = Y(-1.85);
+      txt('n = ' + n + ': el desarrollo tiene ' + (n + 1) + ' términos (k = 0, 1, …, ' + n + ')', x0, y0, 'left', C.ink);
+      txt('término k = ' + k + ': coeficiente ' + n + '! / (' + k + '! · ' + (n - k) + '!) = ' + f(n) + ' / (' + f(k) + ' · ' + f(n - k) + ') = ' + bnC(n, k), x0, y0 + 21, 'left', C.rise);
+      txt('exponentes: ' + (n - k) + ' para a y ' + k + ' para b; suman ' + n, x0, y0 + 42, 'left', C.ink);
+      txt('término: ' + (bnTerm(n, k) || '1'), x0, y0 + 63, 'left', C.tan);
+      if (v.fin) bnExp2(n).forEach(function(l, q){ txt(l, x0, y0 + 84 + 19*q, 'left', C.tan); });
+      S.lab('F', x0, y0 + 132, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ var n = Math.round(v.n || 5), k = v.k == null ? n : Math.min(n, v.k); if (v.fin) return 'Desarrollo completo de (a + b)' + bnSup(n) + ': ' + (n + 1) + ' términos. Los coeficientes son simétricos, los exponentes de a bajan de ' + n + ' a 0 y los de b suben de 0 a ' + n + '. Cambia n con el deslizador'; return 'Término k = ' + k + ' de (a + b)' + bnSup(n) + ': el coeficiente es el número combinatorio de ' + n + ' sobre ' + k + ', que vale ' + bnC(n, k) + '; a va elevada a ' + (n - k) + ' y b a ' + k; },
+    readout:function(v){ var n = Math.round(v.n || 5), k = v.k == null ? n : Math.min(n, v.k); return [['', '\\dbinom{n}{k}=\\dfrac{n!}{k!\\,(n-k)!}\\qquad\\dbinom{' + n + '}{' + k + '}=\\dfrac{' + n + '!}{' + k + '!\\,' + (n - k) + '!}=' + bnC(n, k)], ['d', '\\text{término }k=' + k + ':\\quad\\dbinom{' + n + '}{' + k + '}a^{' + (n - k) + '}b^{' + k + '}=' + bnC(n, k) + '\\,a^{' + (n - k) + '}b^{' + k + '}']]; }
+  };
+})());

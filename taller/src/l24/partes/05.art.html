@@ -1,0 +1,148 @@
+<!--file:H05_enunciado_del_binomio_de_newton.html-->
+<!--title:Enunciado del binomio de Newton-->
+<!--id:bn-enunciado-->
+<!--tab:H05 Enunciado-->
+<article class="sheet" id="bn-enunciado" data-hoja="L24 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Enunciado del binomio de Newton</b></li>
+    </ol>
+    <h1>Enunciado del binomio de Newton</h1>
+    <p class="lede">El binomio de Newton es la fórmula que desarrolla \((a+b)^{n}\) para cualquier exponente natural \(n\). Dice cuántos términos hay, qué potencias lleva cada uno y cuál es su coeficiente.
+    \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El desarrollo de \((a+b)^{5}\), término por término. Después cambia \(n\) con el deslizador.</p>
+  <div class="stage" data-scene="bn-enunciado"></div>
+  <ul class="keys">
+    <li><b>Una barra por término.</b> Su altura es el coeficiente, \(\dbinom{n}{k}\), escrito encima.</li>
+    <li><b>Bajo cada barra:</b> el número \(k\) del término; en azul, la potencia de \(a\), que baja de \(n\) a \(0\); en burdeo, la potencia de \(b\), que sube de \(0\) a \(n\).</li>
+    <li><b>Barra naranja:</b> el término que se está formando. Bajo el dibujo va la cuenta de su coeficiente con factoriales.</li>
+    <li><b>Al final:</b> el desarrollo completo.</li>
+    <li><b>Deslizador \(n\):</b> el exponente, de \(1\) a \(7\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Cómo se lee la fórmula</h3>
+    <ol class="steps">
+      <li><b>El símbolo \(\displaystyle\sum_{k=0}^{n}\)</b> significa «suma de los términos que se obtienen al dar a \(k\) los valores \(0,\ 1,\ 2,\dots,\ n\)». Escrita sin él:
+        \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n-1}ab^{n-1}+\binom{n}{n}b^{n}\]</li>
+      <li><b>\(n!\)</b> (factorial de \(n\)) es el producto \(n\,(n-1)\cdots 2\cdot 1\). Por ejemplo, \(4!=24\). Se conviene que \(0!=1\).</li>
+      <li><b>\(\dbinom{n}{k}\)</b> se lee «\(n\) sobre \(k\)» y se llama coeficiente binomial o número combinatorio.</li>
+      <li><b>Condición:</b> \(n\) es un número natural (\(0,\ 1,\ 2,\dots\)). \(a\) y \(b\) pueden ser números o expresiones cualesquiera.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Lo que la fórmula garantiza</h3>
+    <ol class="steps">
+      <li>El desarrollo tiene \(n+1\) términos (uno por cada \(k\) de \(0\) a \(n\)).</li>
+      <li>En cada término los exponentes de \(a\) y de \(b\) suman \(n\).</li>
+      <li>El primer y el último coeficiente valen \(1\): \(\dbinom{n}{0}=\dfrac{n!}{0!\,n!}=1\) y \(\dbinom{n}{n}=1\).</li>
+      <li>Los coeficientes son simétricos: \(\dbinom{n}{k}=\dbinom{n}{n-k}\).</li>
+      <li><b>Por qué es verdadera.</b> Cada término se forma eligiendo \(b\) en \(k\) de los \(n\) factores, y \(\dbinom{n}{k}\) cuenta esas elecciones (hoja «Del producto notable al binomio de Newton»). También se demuestra por inducción (hoja «Demostración por inducción»).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \((a+b)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Coeficientes.</b> \(\dbinom{4}{0}=1\), \(\dbinom{4}{1}=\dfrac{4!}{1!\,3!}=\dfrac{24}{6}=4\), \(\dbinom{4}{2}=\dfrac{4!}{2!\,2!}=\dfrac{24}{4}=6\), \(\dbinom{4}{3}=4\), \(\dbinom{4}{4}=1\).</li>
+    <li><b>Potencias.</b> \(a^{4},\ a^{3}b,\ a^{2}b^{2},\ ab^{3},\ b^{4}\).</li>
+    <li>\((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \((x+2)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se usa el ejemplo 1 con \(a=x\) y \(b=2\). Las potencias de \(2\) son \(1,\ 2,\ 4,\ 8,\ 16\).</li>
+    <li>\(x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 4+4\cdot x\cdot 8+16\).</li>
+    <li>\((x+2)^{4}=x^{4}+8x^{3}+24x^{2}+32x+16\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \((2x+y)^{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=3\): coeficientes \(1,\ 3,\ 3,\ 1\). Con \(a=2x\) y \(b=y\). El paréntesis de \(a\) es obligatorio.</li>
+    <li>\((2x)^{3}+3\,(2x)^{2}y+3\,(2x)\,y^{2}+y^{3}\).</li>
+    <li>\((2x+y)^{3}=8x^{3}+12x^{2}y+6xy^{2}+y^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: los casos \(n=0\), \(n=1\) y \(n=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=0\): un solo término, \(\dbinom{0}{0}a^{0}b^{0}=1\). Y \((a+b)^{0}=1\) (para \(a+b\neq 0\)).</li>
+    <li>\(n=1\): \(\dbinom{1}{0}a+\dbinom{1}{1}b=a+b\).</li>
+    <li>\(n=2\): \(\dbinom{2}{0}a^{2}+\dbinom{2}{1}ab+\dbinom{2}{2}b^{2}=a^{2}+2ab+b^{2}\): el cuadrado del binomio.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: empezar a contar en \(k=1\). El primer término es el de \(k=0\). Dos: olvidar el paréntesis cuando \(a\) o \(b\) traen coeficiente: \((2x)^{3}=8x^{3}\), no \(2x^{3}\). Tres: usar la fórmula con un exponente que no es natural; para esos casos hay otra, que es una suma infinita (hoja «Binomio con exponente fraccionario»).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Desarrolla \((x+1)^{5}\) con la fórmula.</p>
+    <details><summary>Pista</summary><div><p>Como \(b=1\), cada término es solo el coeficiente por la potencia de \(x\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Coeficientes: \(\dbinom{5}{0}=1\), \(\dbinom{5}{1}=5\), \(\dbinom{5}{2}=\dfrac{5!}{2!\,3!}=\dfrac{120}{12}=10\), y por simetría \(10,\ 5,\ 1\).</li>
+        <li>\((x+1)^{5}=x^{5}+5x^{4}+10x^{3}+10x^{2}+5x+1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Desarrolla \((x+3)^{4}\).</p>
+    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) y potencias de \(3\): \(1,\ 3,\ 9,\ 27,\ 81\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x^{4}+4\cdot x^{3}\cdot 3+6\cdot x^{2}\cdot 9+4\cdot x\cdot 27+81\).</li>
+        <li>\((x+3)^{4}=x^{4}+12x^{3}+54x^{2}+108x+81\).</li>
+        <li>Comprobación con \(x=1\): \(4^{4}=256\) y \(1+12+54+108+81=256\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un depósito de \(\$100\,000\) gana un \(10\,\%\) de interés compuesto al año. Después de \(3\) años se ha multiplicado por \((1+0{,}1)^{3}\). Desarrolla esa potencia con el binomio y calcula el monto.</p>
+    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}1\), \(n=3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\((1+0{,}1)^{3}=1+3\cdot 0{,}1+3\cdot 0{,}01+0{,}001=1+0{,}3+0{,}03+0{,}001=1{,}331\).</li>
+        <li>Monto: \(100\,000\cdot 1{,}331=\$133\,100\).</li>
+        <li>Lectura de los términos: \(0{,}3\) es el interés simple de tres años; \(0{,}03\) y \(0{,}001\) son el «interés sobre el interés».</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>

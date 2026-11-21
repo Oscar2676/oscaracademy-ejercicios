@@ -1,0 +1,151 @@
+<!--file:H03_patron_de_los_coeficientes.html-->
+<!--title:Patrón de los coeficientes-->
+<!--id:bn-pascal-->
+<!--tab:H03 Patrón-->
+<article class="sheet" id="bn-pascal" data-hoja="L24 H03">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Productos notables</li>
+      <li><b>Patrón de los coeficientes</b></li>
+    </ol>
+    <h1>Patrón de los coeficientes</h1>
+    <p class="lede">Al desarrollar \((a+b)^{n}\) para \(n=0,\ 1,\ 2,\ 3,\dots\) los coeficientes forman un triángulo. Cada fila empieza y termina en \(1\), y cada número interior es la suma de los dos que tiene arriba.
+    \[\begin{array}{c}1\\1\quad 1\\1\quad 2\quad 1\\1\quad 3\quad 3\quad 1\\1\quad 4\quad 6\quad 4\quad 1\end{array}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El triángulo se arma número por número. Mira de dónde sale cada uno.</p>
+  <div class="stage" data-scene="bn-pascal"></div>
+  <ul class="keys">
+    <li><b>Número naranja:</b> el que se está calculando.</li>
+    <li><b>Números azules, unidos por líneas:</b> los dos de arriba, que se suman para obtenerlo.</li>
+    <li><b>A la izquierda:</b> el número de fila, \(n\). Es el exponente del binomio.</li>
+    <li><b>Bajo el triángulo:</b> la suma que se hizo y, cuando una fila queda completa, el desarrollo de \((a+b)^{n}\) con esos coeficientes.</li>
+    <li><b>Deslizador «paso»:</b> avanza o retrocede un número a la vez.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Los primeros desarrollos</h3>
+    <ol class="steps">
+      <li>\((a+b)^{0}=1\)</li>
+      <li>\((a+b)^{1}=a+b\)</li>
+      <li>\((a+b)^{2}=a^{2}+2ab+b^{2}\)</li>
+      <li>\((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\)</li>
+      <li>\((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\)</li>
+    </ol>
+    <p><b>Lo que se observa.</b> El desarrollo de \((a+b)^{n}\) tiene \(n+1\) términos. Las potencias de \(a\) bajan de \(n\) a \(0\); las de \(b\) suben de \(0\) a \(n\); en cada término suman \(n\). Los coeficientes se leen igual de izquierda a derecha que de derecha a izquierda.</p>
+  </div>
+
+  <div class="card k1">
+    <h3>Por qué cada número es la suma de los dos de arriba</h3>
+    <ol class="steps">
+      <li>Cada desarrollo sale del anterior multiplicando por \((a+b)\): \((a+b)^{4}=(a+b)\,(a+b)^{3}\).</li>
+      <li>\((a+b)\left(a^{3}+3a^{2}b+3ab^{2}+b^{3}\right)=a\left(a^{3}+3a^{2}b+3ab^{2}+b^{3}\right)+b\left(a^{3}+3a^{2}b+3ab^{2}+b^{3}\right)\).</li>
+      <li>Multiplicar por \(a\) da \(a^{4}+3a^{3}b+3a^{2}b^{2}+ab^{3}\). Multiplicar por \(b\) da \(a^{3}b+3a^{2}b^{2}+3ab^{3}+b^{4}\).</li>
+      <li>Se suman los semejantes. Por ejemplo, \(a^{2}b^{2}\) aparece con \(3\) en la primera línea y con \(3\) en la segunda: \(3+3=6\). Y \(a^{3}b\): \(3+1=4\).</li>
+      <li>Siempre pasa igual: el coeficiente de un término se forma con <b>dos coeficientes vecinos</b> de la fila anterior. Los extremos, \(a^{n}\) y \(b^{n}\), reciben un solo aporte: por eso valen \(1\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la fila 5, a partir de la fila 4</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fila 4: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+    <li>Extremos: \(1\). Interiores: \(1+4=5\), \(4+6=10\), \(6+4=10\), \(4+1=5\).</li>
+    <li>Fila 5: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li>\((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \((x+2)^{4}\) con la fila 4</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Coeficientes: \(1,\ 4,\ 6,\ 4,\ 1\). Con \(a=x\) y \(b=2\).</li>
+    <li>\(x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 4+4\cdot x\cdot 8+16\).</li>
+    <li>\((x+2)^{4}=x^{4}+8x^{3}+24x^{2}+32x+16\).</li>
+    <li><b>Comprobación con \(x=1\):</b> \(3^{4}=81\) y \(1+8+24+32+16=81\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: la suma de cada fila</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fila 0: \(1\). Fila 1: \(1+1=2\). Fila 2: \(1+2+1=4\). Fila 3: \(1+3+3+1=8\). Fila 4: \(16\).</li>
+    <li>Son las potencias de \(2\). La razón: al poner \(a=1\) y \(b=1\) en el desarrollo, cada término se reduce a su coeficiente, y el lado izquierdo es \((1+1)^{n}=2^{n}\).</li>
+    <li>La suma de los coeficientes de la fila \(n\) es \(2^{n}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \((a-b)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Mismos coeficientes, con \(-b\) en el lugar de \(b\): las potencias impares de \(-b\) son negativas.</li>
+    <li>\((a-b)^{4}=a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Nombre y límite.</b> Este arreglo se conoce como triángulo de Pascal (o de Tartaglia). Sirve bien para exponentes chicos; para uno grande habría que escribir todas las filas anteriores. Para eso está la fórmula de los coeficientes binomiales, \(\dbinom{n}{k}\), que da cualquier número del triángulo directamente.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Escribe la fila 6 del triángulo y el desarrollo de \((a+b)^{6}\).</p>
+    <details><summary>Pista</summary><div><p>Parte de la fila 5: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1+5=6\), \(5+10=15\), \(10+10=20\), \(10+5=15\), \(5+1=6\).</li>
+        <li>Fila 6: \(1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\). Suma: \(64=2^{6}\).</li>
+        <li>\((a+b)^{6}=a^{6}+6a^{5}b+15a^{4}b^{2}+20a^{3}b^{3}+15a^{2}b^{4}+6ab^{5}+b^{6}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Desarrolla \((2x-1)^{3}\) con la fila 3.</p>
+    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 3,\ 3,\ 1\), con \(a=2x\) y \(b=1\), signos alternados.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\((2x)^{3}-3\,(2x)^{2}\cdot 1+3\,(2x)\cdot 1^{2}-1^{3}\).</li>
+        <li>\(=8x^{3}-12x^{2}+6x-1\).</li>
+        <li>Comprobación con \(x=1\): \((2-1)^{3}=1\) y \(8-12+6-1=1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Se lanzan \(4\) monedas. ¿De cuántas maneras pueden salir exactamente \(2\) caras? ¿Cuántos resultados posibles hay en total?</p>
+    <details><summary>Pista</summary><div><p>Mira la fila 4: sus números cuentan las maneras de obtener \(0,\ 1,\ 2,\ 3\) y \(4\) caras.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila 4: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+        <li>Exactamente \(2\) caras: \(6\) maneras (CCSS, CSCS, CSSC, SCCS, SCSC, SSCC).</li>
+        <li>Total: \(1+4+6+4+1=16=2^{4}\) resultados.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H03 · v001 · Pendiente de APR</span>
+</footer>
+</article>
