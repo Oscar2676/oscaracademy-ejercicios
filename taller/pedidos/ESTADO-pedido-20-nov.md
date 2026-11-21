@@ -46,18 +46,18 @@ L20 H09 «Derivadas para razones relacionadas» (`H09_derivadas_para_razones_rel
 ## Lote 21 · Integración y acumulación de cambio (`calculo-integral/lote21/`, fuentes `taller/src/l21/partes/`, `qa/rigor/verificar_lote_21.py`)
 Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d6b-b293-cedf32eb1797). Código de pie `CI-L21-HNN`. Se arma con `python3 taller/build.py 21 "Integración y acumulación de cambio"`.
 - **Con APR del 21-nov (02:44), enlazadas y publicadas:** H01 «Exploración de acumulaciones de cambio» (`H01_exploracion_de_acumulaciones_de_cambio.html`; ft30u comp-lcno0t9w · qudgj comp-l2qt71ca · qclgl comp-l4skmywg · x238t comp-kagozn2k) y H02 «Aplicar propiedades de las integrales definidas» (`H02_propiedades_de_las_integrales_definidas.html`; ft30u comp-lcno0ta0 · qudgj comp-l2qtbctn · qclgl comp-l4skmywp1).
-- **Pendientes de APR (21-nov 03:10):**
+- **APR 21-nov 04:21, enlazadas y publicadas:**
   - H03 «Sumas de Riemann, notación de suma y notación de integral definida» (`H03_sumas_de_riemann_notacion_de_suma_e_integral_definida.html`): ft30u comp-lcno0ta11 · qudgj comp-l63sxn9u · qclgl comp-l63qfa0g
   - H04 «El teorema fundamental del cálculo y funciones de acumulación» (`H04_teorema_fundamental_del_calculo_y_funciones_de_acumulacion.html`): ft30u comp-lcno0ta31 · qudgj comp-l2qt9dak · qclgl comp-l4skmywm · qtf2i comp-la922ag4 · x238t comp-kagpi99q
   - H05 «Interpretar el comportamiento de funciones de acumulación que involucran área» (`H05_interpretar_funciones_de_acumulacion_que_involucran_area.html`): ft30u comp-lcno0ta5 · qudgj comp-l63syhke · qclgl comp-l63qho3e · qtf2i comp-la922ag52
 - Escena común de dos paneles (f arriba con su área, g = ∫f abajo con tangente): `taller/src/l21/partes/_acu.js` (`oaAcu`); H04 y H05 se arman con `cat _acu.js NN.scene.js`.
-- **Pendientes de APR (21-nov 03:45), segunda tanda:**
+- **APR 21-nov 04:21, enlazadas y publicadas, segunda tanda:**
   - H06 «Antiderivadas e integrales indefinidas: reglas básicas y notación; integrales definidas» (`H06_antiderivadas_reglas_basicas_e_integrales_definidas.html`): ft30u comp-lcno0taa · qudgj comp-l2qt9dc4 · qclgl comp-l4skmyx51
   - H07 «…regla de la potencia inversa» (`H07_antiderivadas_regla_de_la_potencia_inversa.html`): ft30u comp-lcno0ta81 · qudgj comp-l2qt71cl · qclgl comp-l4skmywt
   - H08 «Integrales por sustitución» (`H08_integrales_por_sustitucion.html`): ft30u comp-lcno0taj · qudgj comp-l59tqjj9
   - H09 «Integración mediante división larga y al completar el cuadrado» (`H09_integracion_por_division_larga_y_completando_el_cuadrado.html`): ft30u comp-lcno0tag · qudgj comp-l2qtbcu7 · qclgl comp-l4skmyww1
   - H10 «Integración con fracciones parciales» (`H10_integracion_con_fracciones_parciales.html`): ft30u comp-lcno0tah2 · qudgj comp-l63stqzk · qclgl comp-l63qj2oy · qtf2i comp-la945dne2 · x238t comp-kajoitym · bb5wq comp-mvuxjfcg5
-- **Pendientes de APR (21-nov 04:05), cierre del lote:**
+- **APR 21-nov 04:21, enlazadas y publicadas, cierre del lote:**
   - H11 «Evaluar integrales impropias» (`H11_evaluar_integrales_impropias.html`): ft30u comp-lcno0tae1 · qudgj comp-l2qtac3k · qclgl comp-l4skmyx31 · qtf2i comp-la94guzo
   - H12 «Integración y acumulación de cambio», **hoja propia de presentación del tema** pedida por Óscar (03:26): `H12_integracion_y_acumulacion_de_cambio_presentacion_del_tema.html`; ft30u comp-lcno0tad · qudgj comp-l2qtbcup · qclgl comp-l4skmywy · bb5wq comp-mvuxjfbi4. Trae un «mapa del tema» con enlaces a las otras hojas del lote y a L09 H01, L03 H02 y L03 H03: **si cambia el nombre de archivo de alguna, actualizar esos enlaces.**
 - **Lote 21 completo: 12/12 con APR (21-nov), enlazadas en Wix y publicadas.** Sigue: aplicaciones de la integral (12 hojas, lote 22).
