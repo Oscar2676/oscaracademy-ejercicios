@@ -1,0 +1,161 @@
+<!--file:H14_segundas_derivadas_de_ecuaciones_parametricas.html-->
+<!--title:Segundas derivadas de ecuaciones paramétricas-->
+<!--id:par-segunda-->
+<!--tab:H14 Segunda derivada paramétrica-->
+<article class="sheet" id="par-segunda" data-hoja="L23 H14">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Segundas derivadas de ecuaciones paramétricas</b></li>
+    </ol>
+    <h1>Segundas derivadas de ecuaciones paramétricas</h1>
+    <p class="lede">La segunda derivada \(\dfrac{d^{2}y}{dx^{2}}\) mide cómo cambia la <b>pendiente</b> al avanzar \(x\), y su signo dice hacia dónde es cóncava la curva. En una curva paramétrica se calcula derivando la pendiente respecto de \(t\) y dividiendo, otra vez, por \(\dfrac{dx}{dt}\).
+    \[\frac{d^{2}y}{dx^{2}}=\frac{\dfrac{d}{dt}\left(\dfrac{dy}{dx}\right)}{\dfrac{dx}{dt}},\quad\text{si }\frac{dx}{dt}\neq 0\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La curva \(x=t^{2}\), \(y=t^{3}-3t\), para \(t\) entre \(0{,}4\) y \(1{,}8\). Se comparan dos tangentes vecinas: cuánto cambió la pendiente y cuánto avanzó \(x\).</p>
+  <div class="stage" data-scene="par-segunda"></div>
+  <ul class="keys">
+    <li><b>Tangente naranja:</b> la del punto, de pendiente \(m=\dfrac{dy}{dx}\).</li>
+    <li><b>Tangente burdeo, delgada:</b> la de un punto un poco más adelante, de pendiente \(m+dm\).</li>
+    <li><b>Tramo negro sobre el eje \(x\), con su rótulo:</b> \(dx\), lo que avanzó \(x\) entre un punto y el otro. Se dibuja ancho para que se vea; en el cálculo es tan pequeño como se quiera.</li>
+    <li><b>La segunda derivada</b> es el cociente \(\dfrac{dm}{dx}\): cambio de pendiente por unidad de \(x\). Aquí la tangente burdeo siempre está más inclinada hacia arriba que la naranja: la pendiente crece, y la curva es cóncava hacia arriba.</li>
+    <li><b>Barra del parámetro:</b> el valor de \(t\).</li>
+    <li><b>Bajo la barra:</b> la pendiente, su derivada respecto de \(t\), \(\dfrac{dx}{dt}\) y el cociente.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La pendiente es una cantidad que depende de \(t\): \(m(t)=\dfrac{dy}{dx}=\dfrac{dy/dt}{dx/dt}\).</li>
+      <li>La segunda derivada es la derivada de la pendiente <b>respecto de \(x\)</b>: \(\dfrac{d^{2}y}{dx^{2}}=\dfrac{dm}{dx}\).</li>
+      <li>Para derivar respecto de \(x\) algo que está escrito con \(t\) ya hay una regla: la misma de la primera derivada, aplicada ahora a \(m\) en lugar de \(y\):
+        \[\frac{dm}{dx}=\frac{dm/dt}{dx/dt}\]</li>
+      <li>Reemplazando \(m=\dfrac{dy}{dx}\):
+        \[\frac{d^{2}y}{dx^{2}}=\frac{\dfrac{d}{dt}\left(\dfrac{dy}{dx}\right)}{\dfrac{dx}{dt}}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El procedimiento, en tres pasos</h3>
+    <ol class="steps">
+      <li>Calcular \(\dfrac{dy}{dx}=\dfrac{dy/dt}{dx/dt}\) y <b>simplificarla</b>, en función de \(t\).</li>
+      <li>Derivar ese resultado respecto de \(t\).</li>
+      <li>Dividir por \(\dfrac{dx}{dt}\).</li>
+      <li><b>Lectura:</b> si \(\dfrac{d^{2}y}{dx^{2}}&gt;0\), la curva es cóncava hacia arriba en ese punto; si es \(&lt;0\), cóncava hacia abajo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(x=t^{2}\), \(y=t^{3}-3t\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Pendiente.</b> \(\dfrac{dx}{dt}=2t\), \(\dfrac{dy}{dt}=3t^{2}-3\), así que \(\dfrac{dy}{dx}=\dfrac{3t^{2}-3}{2t}=\dfrac{3}{2}\left(t-\dfrac{1}{t}\right)\), para \(t\neq 0\).</li>
+    <li><b>Se deriva respecto de \(t\).</b> \(\dfrac{d}{dt}\left[\dfrac{3}{2}\left(t-\dfrac{1}{t}\right)\right]=\dfrac{3}{2}\left(1+\dfrac{1}{t^{2}}\right)\).</li>
+    <li><b>Se divide por \(\dfrac{dx}{dt}=2t\).</b>
+      \[\frac{d^{2}y}{dx^{2}}=\frac{\dfrac{3}{2}\left(1+\dfrac{1}{t^{2}}\right)}{2t}=\frac{3}{4t}\cdot\frac{t^{2}+1}{t^{2}}=\frac{3\left(t^{2}+1\right)}{4t^{3}}\]</li>
+    <li><b>En \(t=1\):</b> \(\dfrac{3\cdot 2}{4}=\dfrac{3}{2}\).</li>
+    <li><b>Concavidad.</b> El numerador es siempre positivo; el signo es el de \(t^{3}\). Para \(t&gt;0\) la curva es cóncava hacia arriba (lo que muestra la animación); para \(t&lt;0\), hacia abajo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: la semicircunferencia \(x=\cos t\), \(y=\operatorname{sen}t\), con \(0&lt;t&lt;\pi\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{dy}{dx}=\dfrac{\cos t}{-\operatorname{sen}t}=-\dfrac{\cos t}{\operatorname{sen}t}\).</li>
+    <li>Se deriva con la regla del cociente: \(\dfrac{d}{dt}\left(-\dfrac{\cos t}{\operatorname{sen}t}\right)=-\dfrac{(-\operatorname{sen}t)\operatorname{sen}t-\cos t\cos t}{\operatorname{sen}^{2}t}=\dfrac{\operatorname{sen}^{2}t+\cos^{2}t}{\operatorname{sen}^{2}t}=\dfrac{1}{\operatorname{sen}^{2}t}\).</li>
+    <li>Se divide por \(\dfrac{dx}{dt}=-\operatorname{sen}t\): \(\dfrac{d^{2}y}{dx^{2}}=-\dfrac{1}{\operatorname{sen}^{3}t}\).</li>
+    <li>Para \(0&lt;t&lt;\pi\), \(\operatorname{sen}t&gt;0\): la segunda derivada es negativa. La mitad de arriba de la circunferencia es cóncava hacia abajo, como debe ser.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: el error que hay que evitar, con \(x=t^{2}\), \(y=t^{3}\), \(t&gt;0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Mal:</b> dividir las segundas derivadas, \(\dfrac{y''(t)}{x''(t)}=\dfrac{6t}{2}=3t\).</li>
+    <li><b>Bien:</b> \(\dfrac{dy}{dx}=\dfrac{3t^{2}}{2t}=\dfrac{3t}{2}\); su derivada respecto de \(t\) es \(\dfrac{3}{2}\); dividida por \(2t\): \(\dfrac{d^{2}y}{dx^{2}}=\dfrac{3}{4t}\).</li>
+    <li><b>Comprobación sin parámetro.</b> De \(x=t^{2}\) con \(t&gt;0\): \(t=x^{1/2}\), así que \(y=x^{3/2}\). Entonces \(y'=\dfrac{3}{2}x^{1/2}\) e \(y''=\dfrac{3}{4}x^{-1/2}=\dfrac{3}{4t}\). Coincide con el cálculo correcto, no con \(3t\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(x=e^{t}\), \(y=e^{-t}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{dy}{dx}=\dfrac{-e^{-t}}{e^{t}}=-e^{-2t}\).</li>
+    <li>Su derivada respecto de \(t\): \(2e^{-2t}\).</li>
+    <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{2e^{-2t}}{e^{t}}=2e^{-3t}&gt;0\): cóncava hacia arriba en todos sus puntos.</li>
+    <li><b>Comprobación.</b> \(y=e^{-t}=\dfrac{1}{x}\), con \(y''=\dfrac{2}{x^{3}}=2e^{-3t}\). Coincide.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: calcular \(\dfrac{y''(t)}{x''(t)}\) (ejemplo 3). Dos: derivar la pendiente respecto de \(t\) y olvidar dividir por \(\dfrac{dx}{dt}\). Tres: no simplificar \(\dfrac{dy}{dx}\) antes de derivarla, lo que alarga la cuenta y multiplica los errores.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\dfrac{d^{2}y}{dx^{2}}\) para \(x=2t+1\), \(y=t^{2}\).</p>
+    <details><summary>Pista</summary><div><p>Primero la pendiente, en función de \(t\). Después se deriva y se divide por \(\frac{dx}{dt}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{dx}=\dfrac{2t}{2}=t\).</li>
+        <li>Su derivada respecto de \(t\) es \(1\).</li>
+        <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{1}{2}\).</li>
+        <li>Comprobación: \(t=\dfrac{x-1}{2}\), así que \(y=\dfrac{(x-1)^{2}}{4}\), con \(y''=\dfrac{2}{4}=\dfrac{1}{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Para \(x=t^{2}\), \(y=t^{2}+t\), con \(t&gt;0\): calcula \(\dfrac{d^{2}y}{dx^{2}}\), evalúala en \(t=1\) e indica la concavidad.</p>
+    <details><summary>Pista</summary><div><p>La pendiente se puede escribir como \(1+\dfrac{1}{2t}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{dx}=\dfrac{2t+1}{2t}=1+\dfrac{1}{2t}\).</li>
+        <li>Su derivada respecto de \(t\): \(-\dfrac{1}{2t^{2}}\).</li>
+        <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{-\dfrac{1}{2t^{2}}}{2t}=-\dfrac{1}{4t^{3}}\).</li>
+        <li>En \(t=1\): \(-\dfrac{1}{4}\). Es negativa para todo \(t&gt;0\): cóncava hacia abajo.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> El chorro de una manguera sigue la trayectoria \(x=6t\), \(y=1+8t-5t^{2}\), en metros, donde \(t\) son los segundos desde que el agua sale. Calcula \(\dfrac{d^{2}y}{dx^{2}}\) y explica qué dice sobre la forma del chorro.</p>
+    <details><summary>Pista</summary><div><p>La pendiente es \(\dfrac{8-10t}{6}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{dx}=\dfrac{8-10t}{6}\).</li>
+        <li>Su derivada respecto de \(t\): \(-\dfrac{10}{6}\).</li>
+        <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{-\dfrac{10}{6}}{6}=-\dfrac{10}{36}=-\dfrac{5}{18}\approx -0{,}28\) (por metro).</li>
+        <li>Es negativa y constante: el chorro es cóncavo hacia abajo en todo su recorrido, y con la misma «curvatura de pendiente» en todos sus puntos. Es una parábola: \(y=1+\dfrac{4}{3}x-\dfrac{5}{36}x^{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H14 · v001 · Pendiente de APR</span>
+</footer>
+</article>

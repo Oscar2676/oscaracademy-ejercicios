@@ -105,7 +105,15 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 - **L23 H06 v004** (10:53, «falta una animación que aclare y explique esto», sobre el título): animación `pol-area-idea` justo bajo la entradilla, con curvas genéricas R(θ) y r(θ) y 4 etapas (sector grande, sector chico, resta, suma de α a β). **Criterio: bajo el título/entradilla va una animación que explique la idea general de la hoja, antes de los ejemplos.** La hoja queda con 3 animaciones. Pendiente de APR.
 - **L23 H06 (v004), H07 y H08 (v001): APR de Óscar (21-nov 11:00).** **Enlazadas y publicadas (11:05):** H06 qudgj comp-lcklq9zi1 · qclgl comp-la7rpzbr2; H07 qudgj comp-loxdt831 · qtf2i comp-loxe01jj; H08 qudgj comp-loxdty8z · qtf2i comp-loxe01jk2 · fr2b0 comp-m32dfqb312. Método de enlace (ayudante `__one`): envolver el contenido del `<p>` en `<a dataquery="#link-<id>x"><span style="text-decoration:underline">…</span></a>` y poner `linkList:[{type:'ExternalLink',id,url,target:'_blank',rel:['noreferrer','noopener']}]` con `ds.components.data.update`; guardar con `ds.save(cb, err)`; la lectura inmediata tras el update da vacío (es asíncrono).
 - **L23 H01 (v003), H03 y H04 (v001): APR de Óscar (21-nov 11:17).** Con esto H01–H08 tienen APR.
-- **Faltan 6 hojas del lote 23:** r(t) con componentes trigonométricas · segunda derivada vectorial · vector aceleración · ejercicios de movimiento · definir y diferenciar paramétricas · segundas derivadas paramétricas.
+- **L23 H01, H03, H04: enlazadas (qudgj y qclgl) y publicadas, 11:20.**
+- **L23 H09–H14 v001 hechas (11:40), pendientes de APR. Lote 23 producido completo: 14 hojas.** Fábrica común `_mov.js` (`oaMov`: curva, flechas, barra del parámetro, cuentas); se arman con `cat _txt.js _vec.js _mov.js NN.scene.js`. Cada hoja lleva su animación justo bajo la entradilla («La idea, en una animación»).
+  - H09 «Derivada de r(t) con componentes trigonométricas» (`vec-trig`) → qudgj
+  - H10 «Segunda derivada de funciones con valores vectoriales» (`vec-segunda`) → qudgj · qtf2i
+  - H11 «Vector aceleración como segunda derivada de r(t)» (`vec-aceleracion`) → qudgj
+  - H12 «Resolver ejercicios de movimiento mediante funciones parametrizadas y con valores vectoriales» (`vec-movimiento`) → qudgj · qclgl ×2
+  - H13 «Definir y diferenciar ecuaciones paramétricas» (`par-derivada`) → qudgj · qclgl · qtf2i
+  - H14 «Segundas derivadas de ecuaciones paramétricas» (`par-segunda`) → qudgj · qclgl
+- **PEDIDO NUEVO (11:23, «a la cola»): 422 títulos** (`taller/pedidos/pedido-2026-11-21-422-hojas.txt`); contiene los 378 anteriores + **44 nuevos de números complejos** (Matemáticas II › Números Complejos 24 · Operaciones con complejos 8 · Plano complejo/Argand 6 · Álgebra II 2ª parte › cuadráticas con soluciones complejas 3 · Conjuntos Numéricos 1 · 3º Medio 1 · Álgebra 1ª parte 1). Van al final de la cola, como grupo 9.
 - **Esperan APR:** L03 H07 v003 · L21 H01 v003, H04, H05, H08, H09, H12 v002 · L23 H01 v003, H03, H04, H06, H07, H08.
 
 ## Lote 23 · Paramétricas, polares y vectoriales (`calculo-integral/lote23/`, fuentes `taller/src/l23/partes/`, `qa/rigor/verificar_lote_23.py`)

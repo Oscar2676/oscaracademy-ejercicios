@@ -1,0 +1,219 @@
+<!--file:H09_derivada_de_r_t_con_componentes_trigonometricas.html-->
+<!--title:Derivada de r(t) con componentes trigonométricas-->
+<!--id:vec-trig-->
+<!--tab:H09 r(t) trigonométrica-->
+<article class="sheet" id="vec-trig" data-hoja="L23 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Derivada de r(t) con componentes trigonométricas</b></li>
+    </ol>
+    <h1>Derivada de r(t) con componentes trigonométricas</h1>
+    <p class="lede">Cuando las componentes de \(\vec r(t)\) son senos y cosenos, la derivada se calcula igual que siempre: componente a componente. Solo hay que recordar dos derivadas y la regla de la cadena.
+    \[\frac{d}{dt}\operatorname{sen}t=\cos t\qquad\frac{d}{dt}\cos t=-\operatorname{sen}t\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\) recorre la circunferencia de radio \(2\). Mira su derivada, \(\vec r\,'(t)=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\), en cada punto.</p>
+  <div class="stage" data-scene="vec-trig"></div>
+  <ul class="keys">
+    <li><b>Flecha naranja:</b> la posición, \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\), del origen al punto.</li>
+    <li><b>Arco pequeño con la letra \(t\):</b> el parámetro. En esta curva \(t\) es el ángulo que forma la flecha naranja con el eje \(x\), en radianes.</li>
+    <li><b>Flecha burdeo:</b> la derivada, \(\vec r\,'(t)=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\). Sale del punto y es tangente a la circunferencia.</li>
+    <li><b>Barra bajo el dibujo:</b> el avance de \(t\), de \(0\) a \(2\pi\).</li>
+    <li><b>Bajo la barra:</b> las dos flechas con su expresión y su valor, y el producto punto \(\vec r\cdot\vec r\,'\), que vale \(0\) siempre: las dos flechas son perpendiculares.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Las reglas que se usan</h3>
+    <ol class="steps">
+      <li><b>Componente a componente:</b> si \(\vec r(t)=\big\langle x(t),\,y(t)\big\rangle\), entonces \(\vec r\,'(t)=\big\langle x'(t),\,y'(t)\big\rangle\).</li>
+      <li><b>Seno y coseno:</b> \(\left(\operatorname{sen}t\right)'=\cos t\) y \(\left(\cos t\right)'=-\operatorname{sen}t\). El signo menos va solo en la derivada del coseno.</li>
+      <li><b>Regla de la cadena:</b> si adentro hay \(kt\) en vez de \(t\), se multiplica por \(k\):
+        \[\frac{d}{dt}\operatorname{sen}(kt)=k\cos(kt)\qquad\frac{d}{dt}\cos(kt)=-k\operatorname{sen}(kt)\]</li>
+      <li><b>Regla del producto:</b> si una componente es un producto, como \(t\cos t\): \(\left(t\cos t\right)'=1\cdot\cos t+t\cdot(-\operatorname{sen}t)=\cos t-t\operatorname{sen}t\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Por qué \(\vec r\,'\) queda perpendicular a \(\vec r\) en la circunferencia</h3>
+    <ol class="steps">
+      <li>En la circunferencia de radio \(a\) el largo de \(\vec r(t)\) no cambia: \(\vec r(t)\cdot\vec r(t)=a^{2}\) para todo \(t\).</li>
+      <li>Se derivan los dos lados. A la izquierda, con la regla del producto punto: \(\vec r\,'\cdot\vec r+\vec r\cdot\vec r\,'=2\,\vec r\cdot\vec r\,'\). A la derecha, la derivada de una constante: \(0\).</li>
+      <li>Entonces \(2\,\vec r(t)\cdot\vec r\,'(t)=0\), es decir, \(\vec r(t)\cdot\vec r\,'(t)=0\): los dos vectores son perpendiculares.</li>
+      <li>Vale para cualquier \(\vec r(t)\) de largo constante, no solo para la circunferencia. Si el largo cambia (una elipse, una espiral), en general no son perpendiculares.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\) en \(t=\dfrac{\pi}{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivada.</b> \(\vec r\,'(t)=\big\langle 2\cdot(-\operatorname{sen}t),\;2\cos t\big\rangle=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\).</li>
+    <li><b>Punto.</b> \(\vec r\!\left(\dfrac{\pi}{3}\right)=\left\langle 2\cdot\dfrac{1}{2},\;2\cdot\dfrac{\sqrt 3}{2}\right\rangle=\big\langle 1,\;\sqrt 3\big\rangle\).</li>
+    <li><b>Vector tangente.</b> \(\vec r\,'\!\left(\dfrac{\pi}{3}\right)=\left\langle -2\cdot\dfrac{\sqrt 3}{2},\;2\cdot\dfrac{1}{2}\right\rangle=\big\langle -\sqrt 3,\;1\big\rangle\).</li>
+    <li><b>Comprobación.</b> \(\vec r\cdot\vec r\,'=1\cdot(-\sqrt 3)+\sqrt 3\cdot 1=0\): perpendiculares, como en la animación.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con la regla de la cadena: \(\vec r(t)=\big\langle\cos 2t,\;\operatorname{sen}2t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\left(\cos 2t\right)'=-2\operatorname{sen}2t\) y \(\left(\operatorname{sen}2t\right)'=2\cos 2t\).</li>
+    <li>\(\vec r\,'(t)=\big\langle -2\operatorname{sen}2t,\;2\cos 2t\big\rangle\).</li>
+    <li><b>Largo de la derivada.</b> \(\sqrt{4\operatorname{sen}^{2}2t+4\cos^{2}2t}=\sqrt{4}=2\), porque \(\operatorname{sen}^{2}u+\cos^{2}u=1\).</li>
+    <li>La curva es la circunferencia de radio \(1\), pero recorrida al doble de rapidez que con \(\langle\cos t,\,\operatorname{sen}t\rangle\), cuya derivada mide \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, una elipse: \(\vec r(t)=\big\langle 3\cos t,\;2\operatorname{sen}t\big\rangle\) en \(t=\dfrac{\pi}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec r\,'(t)=\big\langle -3\operatorname{sen}t,\;2\cos t\big\rangle\).</li>
+    <li>En \(t=\dfrac{\pi}{2}\): el punto es \(\vec r=\langle 0,\,2\rangle\) y la derivada es \(\vec r\,'=\langle -3,\,0\rangle\): tangente horizontal, hacia la izquierda.</li>
+    <li>En general no son perpendiculares: \(\vec r\cdot\vec r\,'=-9\cos t\operatorname{sen}t+4\operatorname{sen}t\cos t=-5\operatorname{sen}t\cos t\), que solo vale \(0\) en los cuatro vértices de la elipse.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, con la regla del producto: la espiral \(\vec r(t)=\big\langle t\cos t,\;t\operatorname{sen}t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\left(t\cos t\right)'=\cos t-t\operatorname{sen}t\) y \(\left(t\operatorname{sen}t\right)'=\operatorname{sen}t+t\cos t\).</li>
+    <li>\(\vec r\,'(t)=\big\langle\cos t-t\operatorname{sen}t,\;\operatorname{sen}t+t\cos t\big\rangle\).</li>
+    <li><b>Largo.</b> Se elevan al cuadrado y se suman; los términos cruzados \(-2t\cos t\operatorname{sen}t\) y \(+2t\operatorname{sen}t\cos t\) se anulan:
+      \[\big|\vec r\,'(t)\big|^{2}=\cos^{2}t+t^{2}\operatorname{sen}^{2}t+\operatorname{sen}^{2}t+t^{2}\cos^{2}t=1+t^{2}\]</li>
+    <li>\(\big|\vec r\,'(t)\big|=\sqrt{1+t^{2}}\): el punto va cada vez más rápido al alejarse del centro.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los dos errores más comunes.</b> Uno: el signo. La derivada del coseno es \(-\operatorname{sen}t\); la del seno es \(+\cos t\). Dos: olvidar la cadena. \(\left(\operatorname{sen}3t\right)'\) es \(3\cos 3t\), no \(\cos 3t\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\vec r\,'(t)\) para \(\vec r(t)=\big\langle\operatorname{sen}3t,\;\cos 3t\big\rangle\) y evalúa en \(t=\dfrac{\pi}{6}\).</p>
+    <details><summary>Pista</summary><div><p>Regla de la cadena: aparece un factor \(3\) en cada componente.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 3\cos 3t,\;-3\operatorname{sen}3t\big\rangle\).</li>
+        <li>En \(t=\dfrac{\pi}{6}\): \(3t=\dfrac{\pi}{2}\), con \(\cos\dfrac{\pi}{2}=0\) y \(\operatorname{sen}\dfrac{\pi}{2}=1\).</li>
+        <li>\(\vec r\,'\!\left(\dfrac{\pi}{6}\right)=\langle 0,\,-3\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra la recta tangente a la elipse \(\vec r(t)=\big\langle 3\cos t,\;2\operatorname{sen}t\big\rangle\) en \(t=\dfrac{\pi}{4}\).</p>
+    <details><summary>Pista</summary><div><p>Punto \(\vec r\!\left(\frac{\pi}{4}\right)\), dirección \(\vec r\,'\!\left(\frac{\pi}{4}\right)\). La pendiente es el cociente de las componentes de \(\vec r\,'\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Punto: \(\vec r\!\left(\dfrac{\pi}{4}\right)=\left\langle\dfrac{3\sqrt 2}{2},\;\sqrt 2\right\rangle\).</li>
+        <li>\(\vec r\,'(t)=\big\langle -3\operatorname{sen}t,\;2\cos t\big\rangle\), así que \(\vec r\,'\!\left(\dfrac{\pi}{4}\right)=\left\langle -\dfrac{3\sqrt 2}{2},\;\sqrt 2\right\rangle\).</li>
+        <li>Pendiente: \(\dfrac{\sqrt 2}{-\frac{3\sqrt 2}{2}}=-\dfrac{2}{3}\).</li>
+        <li>Recta: \(y-\sqrt 2=-\dfrac{2}{3}\left(x-\dfrac{3\sqrt 2}{2}\right)\), es decir, \(y=-\dfrac{2}{3}x+2\sqrt 2\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una cabina de una rueda de la fortuna de \(10\) m de radio, con el centro a \(12\) m del suelo, se mueve según \(\vec r(t)=\big\langle 10\operatorname{sen}(0{,}2\,t),\;12-10\cos(0{,}2\,t)\big\rangle\), en metros, con \(t\) en segundos. Calcula su velocidad, su rapidez, y la velocidad en el punto más alto.</p>
+    <details><summary>Pista</summary><div><p>Regla de la cadena con \(k=0{,}2\). El punto más alto se alcanza cuando \(\cos(0{,}2\,t)=-1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 10\cdot 0{,}2\cos(0{,}2\,t),\;-10\cdot 0{,}2\cdot\left(-\operatorname{sen}(0{,}2\,t)\right)\big\rangle=\big\langle 2\cos(0{,}2\,t),\;2\operatorname{sen}(0{,}2\,t)\big\rangle\) m/s.</li>
+        <li>Rapidez: \(\sqrt{4\cos^{2}(0{,}2\,t)+4\operatorname{sen}^{2}(0{,}2\,t)}=2\) m/s, constante.</li>
+        <li>Punto más alto: \(0{,}2\,t=\pi\), o sea \(t=5\pi\approx 15{,}7\) s, a \(12+10=22\) m. Ahí \(\vec r\,'=\langle 2\cos\pi,\;2\operatorname{sen}\pi\rangle=\langle -2,\,0\rangle\).</li>
+        <li>Respuesta: velocidad \(\langle 2\cos(0{,}2\,t),\;2\operatorname{sen}(0{,}2\,t)\rangle\) m/s; rapidez \(2\) m/s; arriba se mueve en horizontal, a \(2\) m/s.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* flecha de vector para las hojas vectoriales del lote 23 */
+function oaFle(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), L = Math.sqrt((bx - ax)*(bx - ax) + (by - ay)*(by - ay)), a = Math.atan2(by - ay, bx - ax), h = Math.min(11, L*0.45);
+  if (L < 2) return; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - 0.7*h*Math.cos(a), by - 0.7*h*Math.sin(a)); c.stroke();
+  c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - h*Math.cos(a - 0.38), by - h*Math.sin(a - 0.38)); c.lineTo(bx - h*Math.cos(a + 0.38), by - h*Math.sin(a + 0.38)); c.closePath(); c.fill(); }
+/* fábrica de escenas de movimiento en el plano (hojas H09–H14 del lote 23): curva, flechas, barra del parámetro y cuentas. Trazos finos y puntos chicos. */
+function oaMov(o){
+  var RUN = o.run || 22, dec = oaDec;
+  function ts(s){ return s < 2 ? o.a : s < RUN - 4 ? o.a + (o.b - o.a)*(s - 2)/(RUN - 6) : o.b; }
+  return {
+    world:o.world, aspect:o.aspect, _chk:o.chk, aria:o.aria, labels:o.labels,
+    sliders:[{id:'t', tex:'t', min:o.a, max:o.b, step:0.01, value:o.a}], legend:o.legend,
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.t = ts(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var t = v.t == null ? o.a : v.t, s = v.q == null ? RUN : v.q*RUN, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), ax = o.axes, A, L, B = o.bar, px, H;
+      function num(tx, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      H = {txt:txt, num:num, dot:function(x, y, col, r){ c.fillStyle = col; c.beginPath(); c.arc(X(x), Y(y), r || 2.8, 0, 6.2832); c.fill(); }};
+      if (ax){ S.line(ax.x[0], 0, ax.x[1], 0, {color:C.ink, width:1.1}); S.line(0, ax.y[0], 0, ax.y[1], {color:C.ink, width:1.1});
+        (ax.tx || []).forEach(function(q){ S.line(q, 0, q, 0, {color:C.ink, width:1}); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(q), Y(0) - 3); c.lineTo(X(q), Y(0) + 3); c.stroke(); num(('' + q).replace('-', '−'), X(q), Y(0) + 11, 'center'); });
+        (ax.ty || []).forEach(function(q){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(q)); c.lineTo(X(0) + 3, Y(q)); c.stroke(); num(('' + q).replace('-', '−'), X(0) - 7, Y(q), 'right'); });
+        num('x', X(ax.x[1]) - 2, Y(0) - 9, 'right'); num('y', X(0) + 8, Y(ax.y[1]) + 4, 'left'); }
+      oaPar(S, o.fx, o.fy, o.a, o.b, 'rgba(31,93,134,0.25)', 1.3); if (t > o.a + 0.005) oaPar(S, o.fx, o.fy, o.a, t, C.sec, 2);
+      if (o.before) o.before(S, t, H);
+      A = o.arrows ? o.arrows(t) : [];
+      A.forEach(function(r){ oaFle(S, r[0], r[1], r[2], r[3], C[r[4]], r[7] || 2); });
+      H.dot(o.fx(t), o.fy(t), C.ink, 3);
+      A.forEach(function(r){ var d = r[6] || [9, -10], len = Math.abs(X(r[2]) - X(r[0])) + Math.abs(Y(r[3]) - Y(r[1])); if (r[5] && len > 16) txt(r[5], X(r[2]) + d[0], Y(r[3]) + d[1], d[0] >= 0 ? 'left' : 'right', C[r[4]]); });
+      if (o.after) o.after(S, t, H);
+      if (B){ px = X(B.x0) + (X(B.x1) - X(B.x0))*(t - o.a)/(o.b - o.a);
+        c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(X(B.x1), Y(B.y)); c.moveTo(X(B.x0), Y(B.y) - 4); c.lineTo(X(B.x0), Y(B.y) + 4); c.moveTo(X(B.x1), Y(B.y) - 4); c.lineTo(X(B.x1), Y(B.y) + 4); c.stroke();
+        c.strokeStyle = C.rise; c.lineWidth = 2.2; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(px, Y(B.y)); c.stroke(); c.fillStyle = C.rise; c.beginPath(); c.arc(px, Y(B.y), 3.2, 0, 6.2832); c.fill();
+        num('parámetro t:  ' + B.la, X(B.x0), Y(B.y) + 12, 'left'); num(B.lb, X(B.x1), Y(B.y) + 12, 'right'); }
+      L = o.lines(t); L.forEach(function(r, i){ txt(r[0], X(o.textAt[0]), Y(o.textAt[1]) + 21*i, 'left', C[r[1]]); });
+      if (o.labAt) S.lab('F', X(o.labAt[0]), Y(o.labAt[1]), 0, 0, v.q != null && s >= RUN - 4);
+    },
+    caption:function(v){ var t = v.t == null ? o.a : v.t, s = v.q == null ? null : v.q*RUN; return o.caption(t, s != null && s < 2, t >= o.b - 0.006); },
+    readout:function(v){ return o.readout(v.t == null ? o.a : v.t); }
+  };
+}
+OA.scene('vec-trig', oaMov((function(){
+  var dec = oaDec, num = OA.num, PI = Math.PI;
+  function fx(t){ return 2*Math.cos(t); } function fy(t){ return 2*Math.sin(t); } function dx(t){ return -2*Math.sin(t); } function dy(t){ return 2*Math.cos(t); }
+  return { fx:fx, fy:fy, a:0, b:2*PI, run:26,
+    world:{x0:-3.6, x1:3.6, y0:-6.7, y1:3.3}, aspect:10/7.2,
+    chk:[{f:fx, df:dx, at:[0.4, 1.9, 4.1]}, {f:fy, df:dy, at:[0.4, 1.9, 4.1]}],
+    axes:{x:[-3.4, 3.4], y:[-3.0, 3.1], tx:[-2, 2], ty:[-2, 2]},
+    aria:'Un punto recorre la circunferencia de radio 2 con posición r de t igual a 2 coseno de t, 2 seno de t. Una flecha naranja va del origen al punto: es r de t, y un arco pequeño marca el ángulo t. Desde el punto sale una flecha burdeo, r prima de t igual a menos 2 seno de t, 2 coseno de t, tangente a la circunferencia y perpendicular a la flecha naranja en todo momento. Una barra bajo el dibujo muestra el avance del parámetro t de 0 a 2 pi.',
+    labels:[['F', '\\vec r\\,\'(t)=\\big\\langle -2\\operatorname{sen}t,\;2\\cos t\\big\\rangle', 'r′(t) = ⟨−2 sen t, 2 cos t⟩', 'tan']],
+    legend:'<span><i class="sw rise"></i> posición \\(\\vec r(t)=\\langle 2\\cos t,\\,2\\operatorname{sen}t\\rangle\\)</span><span><i class="sw tan"></i> derivada \\(\\vec r\\,\'(t)\\), tangente</span><span><i class="sw sec"></i> camino recorrido</span>',
+    bar:{x0:-3.3, x1:3.3, y:-3.6, la:'0', lb:'2π'}, textAt:[-3.45, -4.5], labAt:[-3.45, -6.2],
+    before:function(S, t, H){ var c = S.ctx; if (t > 0.05){ c.strokeStyle = S.C.rise; c.lineWidth = 1.2; c.beginPath(); c.arc(S.X(0), S.Y(0), 15, 0, -t, true); c.stroke(); H.txt('t', S.X(0) + 25*Math.cos(t/2), S.Y(0) - 25*Math.sin(t/2), 'center', S.C.rise); } },
+    arrows:function(t){ var x = fx(t), y = fy(t); return [[0, 0, x, y, 'rise', 'r(t)', [x >= 0 ? -12 : 12, y >= 0 ? 16 : -16]], [x, y, x + dx(t), y + dy(t), 'tan', 'r′(t)', [dx(t) >= 0 ? 8 : -8, dy(t) >= 0 ? -10 : 10]]]; },
+    lines:function(t){ return [['t = ' + dec(t, 2) + ' rad', 'ink'], ['r(t) = ⟨2 cos t, 2 sen t⟩ = ⟨' + dec(fx(t), 2) + '; ' + dec(fy(t), 2) + '⟩', 'rise'], ['r′(t) = ⟨−2 sen t, 2 cos t⟩ = ⟨' + dec(dx(t), 2) + '; ' + dec(dy(t), 2) + '⟩', 'tan'], ['r · r′ = −4 cos t sen t + 4 sen t cos t = 0', 'ink']]; },
+    caption:function(t, ini, fin){ if (ini) return 'El punto parte en (2, 0). La flecha naranja es su posición, r(t). La burdeo es la derivada, r′(t): se obtiene derivando el coseno y el seno, componente a componente'; if (fin) return 'El punto dio la vuelta completa. En todo momento r′(t) fue tangente a la circunferencia y perpendicular a r(t): su producto punto vale 0'; return 'En t = ' + dec(t, 2) + ' el punto está en ⟨' + dec(fx(t), 2) + '; ' + dec(fy(t), 2) + '⟩ y su derivada es ⟨' + dec(dx(t), 2) + '; ' + dec(dy(t), 2) + '⟩, tangente a la circunferencia'; },
+    readout:function(t){ return [['', '\\dfrac{d}{dt}\\big(2\\cos t\\big)=-2\\operatorname{sen}t\\qquad\\dfrac{d}{dt}\\big(2\\operatorname{sen}t\\big)=2\\cos t'], ['d', '\\vec r\\,\'(t)=\\big\\langle -2\\operatorname{sen}t,\;2\\cos t\\big\\rangle'], ['', 't=' + num(t, 2) + ':\\quad\\vec r\\,\'(t)=\\big\\langle ' + num(dx(t), 2) + ';\\ ' + num(dy(t), 2) + '\\big\\rangle']]; }
+  };
+})()));

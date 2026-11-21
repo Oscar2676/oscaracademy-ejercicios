@@ -70,4 +70,37 @@ ok('H08 ej.2: ⟨2t, 2e^{2t}⟩; en 0: ⟨0, 2⟩', cerca(d(lambda t: exp(2 * t)
 ok('H08 regla del producto punto (numérica)', cerca(d(lambda t: (t * t) * sin(t) + exp(t) * (3 * t), 0.8), (2 * 0.8) * sin(0.8) + exp(0.8) * (3 * 0.8) + (0.8 ** 2) * cos(0.8) + exp(0.8) * 3, 1e-5))
 ok('H08-A: ⟨2, 1⟩; H08-B: (1, 2) y (1, −2); H08-C: √104 ≈ 10,2; t = 5; 25 m', cerca(d(lambda t: t ** 3 - t, 1), 2, 1e-5) and cerca(d(log, 1), 1, 1e-5) and 3 * 1 - 3 == 0 and ((-1) ** 2, (-1) ** 3 + 3) == (1, 2) and (1, 1 - 3) == (1, -2) and round(sqrt(104), 1) == 10.2 and 10 - 2 * 5 == 0 and 10 * 5 - 25 == 25)
 
+# H09 · r(t) con componentes trigonométricas
+ok('H09 ej.1: r(π/3) = ⟨1, √3⟩, r′ = ⟨−√3, 1⟩, r·r′ = 0', cerca(2 * cos(pi / 3), 1) and cerca(2 * sin(pi / 3), sqrt(3)) and cerca(d(lambda t: 2 * cos(t), pi / 3), -sqrt(3), 1e-5) and cerca(d(lambda t: 2 * sin(t), pi / 3), 1, 1e-5) and cerca(1 * -sqrt(3) + sqrt(3) * 1, 0))
+ok('H09 ej.2: |r′| = 2; ej.3: r′(π/2) = ⟨−3, 0⟩ y r·r′ = −5 sen t cos t', all(cerca(sqrt(d(lambda u: cos(2 * u), t) ** 2 + d(lambda u: sin(2 * u), t) ** 2), 2, 1e-5) for t in (0.3, 1.7)) and cerca(d(lambda t: 3 * cos(t), pi / 2), -3, 1e-5) and cerca(d(lambda t: 2 * sin(t), pi / 2), 0, 1e-5) and all(cerca(3 * cos(t) * -3 * sin(t) + 2 * sin(t) * 2 * cos(t), -5 * sin(t) * cos(t)) for t in (0.4, 2.2)))
+ok('H09 ej.4: espiral, |r′|² = 1 + t²', all(cerca(d(lambda u: u * cos(u), t) ** 2 + d(lambda u: u * sin(u), t) ** 2, 1 + t * t, 1e-5) for t in (0.5, 2.0, 3.3)))
+ok('H09-A: ⟨0, −3⟩; H09-B: pendiente −2/3, y = −(2/3)x + 2√2; H09-C: rapidez 2, t = 5π ≈ 15,7, ⟨−2, 0⟩, 22 m', cerca(d(lambda t: sin(3 * t), pi / 6), 0, 1e-5) and cerca(d(lambda t: cos(3 * t), pi / 6), -3, 1e-5) and cerca((2 * cos(pi / 4)) / (-3 * sin(pi / 4)), -2 / 3) and cerca(-(2 / 3) * (3 * sqrt(2) / 2) + 2 * sqrt(2), sqrt(2)) and all(cerca(sqrt(d(lambda u: 10 * sin(0.2 * u), t) ** 2 + d(lambda u: 12 - 10 * cos(0.2 * u), t) ** 2), 2, 1e-5) for t in (1, 9)) and round(5 * pi, 1) == 15.7 and cerca(d(lambda u: 10 * sin(0.2 * u), 5 * pi), -2, 1e-5) and cerca(12 - 10 * cos(pi), 22))
+
+# H10 · segunda derivada vectorial
+def d2(f, t, h=1e-4): return (f(t + h) - 2 * f(t) + f(t - h)) / (h * h)
+ok('H10 ej.1: r″ = ⟨2, 2t⟩, en 1: ⟨2, 2⟩; ej.2: r″ = −r; ej.3: ⟨4e^{2t}, −1/t²⟩', cerca(d2(lambda t: t * t, 1), 2, 1e-4) and cerca(d2(lambda t: t ** 3 / 3, 1), 2, 1e-4) and cerca(d2(lambda t: 3 * cos(t), 0.7), -3 * cos(0.7), 1e-4) and cerca(d2(lambda t: exp(2 * t), 0.3), 4 * exp(0.6), 1e-4) and cerca(d2(log, 1.5), -1 / 2.25, 1e-4))
+ok('H10-A: ⟨12, 10⟩; H10-B: −4r; H10-C: ⟨0,6; 0,8⟩ de largo 1', cerca(d2(lambda t: t ** 4 - 2 * t, -1), 12, 1e-4) and cerca(d2(lambda t: 5 * t * t, -1), 10, 1e-4) and cerca(d2(lambda t: sin(2 * t), 0.4), -4 * sin(0.8), 1e-4) and cerca(d2(lambda t: 0.3 * t * t, 2), 0.6, 1e-4) and cerca(sqrt(0.36 + 0.64), 1))
+
+# H11 · aceleración
+ok('H11 ej.1: v·a = 4t − 8; rapidez 2 en la cima y √20 ≈ 4,47 en los extremos', all(cerca(2 * 0 + (4 - 2 * t) * -2, 4 * t - 8) for t in (0, 1, 3)) and round(sqrt(20), 2) == 4.47 and cerca(d2(lambda t: 4 * t - t * t, 1.3), -2, 1e-4))
+ok('H11 ej.3: v·a = 22, |a| = √40 ≈ 6,32; H11-A: v(2) = ⟨9, 12⟩ (15), a(2) = ⟨12, 6⟩', 2 * 2 + 3 * 6 == 22 and round(sqrt(40), 2) == 6.32 and 3 * 4 - 3 == 9 and sqrt(81 + 144) == 15 and cerca(d2(lambda t: t ** 3 - 3 * t, 2), 12, 1e-4) and cerca(d2(lambda t: 3 * t * t, 2), 6, 1e-4))
+ok('H11-B: a = −4r, |a| = 12; H11-C: rapidez 10, a = −0,25 r, |a| = 5', cerca(d2(lambda t: 3 * cos(2 * t), 0.6), -12 * cos(1.2), 1e-4) and cerca(d(lambda t: 20 * cos(0.5 * t), 1) ** 2 + d(lambda t: 20 * sin(0.5 * t), 1) ** 2, 100, 1e-4) and cerca(d2(lambda t: 20 * cos(0.5 * t), 1), -5 * cos(0.5), 1e-4) and cerca(0.25 * 20, 5))
+
+# H12 · movimiento
+ok('H12 ej.1–3: v(2) = ⟨4, 3⟩ (5), a(2) = ⟨2, 4⟩, |v| = t² + 1, d = 14/3 ≈ 4,67, |Δr| ≈ 4,06', sqrt(16 + 9) == 5 and all(cerca(sqrt((2 * t) ** 2 + (t * t - 1) ** 2), t * t + 1) for t in (0.3, 1, 1.9)) and cerca(riemann(lambda t: t * t + 1, 0, 2), 14 / 3) and round(14 / 3, 2) == 4.67 and round(sqrt(16 + 4 / 9), 2) == 4.06 and cerca(largo(lambda t: t * t, lambda t: t ** 3 / 3 - t, 0, 2), 14 / 3, 1e-4))
+ok('H12-A: |v| = 3t² + 3, d = 14; H12-B: r(6) = ⟨13, 0⟩; H12-C: 10 m/s, 4,2 m, t ≈ 1,72, 10,3 m', all(cerca(sqrt((3 * t * t - 3) ** 2 + 36 * t * t), 3 * t * t + 3) for t in (0.5, 1.6)) and cerca(riemann(lambda t: 3 * t * t + 3, 0, 2), 14) and (1 + 12, 36 - 36) == (13, 0) and sqrt(36 + 64) == 10 and cerca(1 + 8 * 0.8 - 5 * 0.64, 4.2) and round((8 + sqrt(84)) / 10, 2) == 1.72 and cerca(1 + 8 * ((8 + sqrt(84)) / 10) - 5 * ((8 + sqrt(84)) / 10) ** 2, 0) and round(6 * (8 + sqrt(84)) / 10, 1) == 10.3)
+
+# H13 · diferenciar paramétricas
+ok('H13 ej.1: pendiente √3/3 ≈ 0,58 en (1, √3/2); ej.3: pendientes 1 y −1 en el origen', cerca((2 * cos(2 * pi / 3)) / (-2 * sin(pi / 3)), sqrt(3) / 3) and round(sqrt(3) / 3, 2) == 0.58 and cerca(2 * cos(pi / 3), 1) and cerca(sin(2 * pi / 3), sqrt(3) / 2) and cerca((2 * cos(pi)) / (-2 * sin(pi / 2)), 1) and cerca((2 * cos(3 * pi)) / (-2 * sin(3 * pi / 2)), -1))
+ok('H13 ej.2: horizontales en (±√2, ±1); verticales en (±2, 0); ej.4: cicloide, pendiente 1 en π/2', all(cerca(2 * cos(2 * t), 0) for t in (pi / 4, 3 * pi / 4, 5 * pi / 4, 7 * pi / 4)) and [(round(2 * cos(t), 4), round(sin(2 * t), 4)) for t in (pi / 4, 3 * pi / 4, 5 * pi / 4, 7 * pi / 4)] == [(1.4142, 1.0), (-1.4142, -1.0), (-1.4142, 1.0), (1.4142, -1.0)] and cerca(sin(pi / 2) / (1 - cos(pi / 2)), 1))
+ok('H13-A: y = 3x − 7 en (5, 8); H13-B: (0, 0), (−2, 1), (2, 1); H13-C: −0,4 y 10π ≈ 31,4', 3 * 5 - 7 == 8 and cerca(3 * 4 / (2 * 2), 3) and (1 - 3, 1) == (-2, 1) and (-1 + 3, 1) == (2, 1) and cerca(-4 * sin(pi / 2) / 10, -0.4) and round(10 * pi, 1) == 31.4 and cerca(6 + 4 * cos(pi), 2))
+
+# H14 · segundas derivadas paramétricas (se comparan con la derivada numérica de la pendiente respecto de x)
+def d2p(fx, fy, t, h=1e-4):
+    m = lambda u: d(fy, u) / d(fx, u)
+    return (m(t + h) - m(t - h)) / (fx(t + h) - fx(t - h))
+ok('H14 ej.1: 3(t² + 1)/(4t³), en 1: 3/2', all(cerca(d2p(lambda u: u * u, lambda u: u ** 3 - 3 * u, t), 3 * (t * t + 1) / (4 * t ** 3), 1e-3) for t in (0.6, 1, 1.5, -1.2)) and cerca(3 * 2 / 4, 1.5))
+ok('H14 ej.2: −1/sen³t; ej.3: 3/(4t); ej.4: 2e^{−3t}', cerca(d2p(cos, sin, 1.1), -1 / sin(1.1) ** 3, 1e-3) and cerca(d2p(lambda u: u * u, lambda u: u ** 3, 1.3), 3 / (4 * 1.3), 1e-3) and cerca(d2p(exp, lambda u: exp(-u), 0.4), 2 * exp(-1.2), 1e-3))
+ok('H14-A: 1/2; H14-B: −1/(4t³), en 1: −1/4; H14-C: −5/18 ≈ −0,28 y la parábola', cerca(d2p(lambda u: 2 * u + 1, lambda u: u * u, 0.7), 0.5, 1e-3) and cerca(d2p(lambda u: u * u, lambda u: u * u + u, 1), -0.25, 1e-3) and cerca(d2p(lambda u: 6 * u, lambda u: 1 + 8 * u - 5 * u * u, 0.5), -5 / 18, 1e-3) and round(-5 / 18, 2) == -0.28 and all(cerca(1 + 8 * t - 5 * t * t, 1 + (4 / 3) * (6 * t) - (5 / 36) * (6 * t) ** 2) for t in (0.3, 1.1)))
+
 print('\nERRORES:', err)

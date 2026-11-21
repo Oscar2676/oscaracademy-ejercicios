@@ -1,0 +1,153 @@
+<!--file:H10_segunda_derivada_de_funciones_con_valores_vectoriales.html-->
+<!--title:Segunda derivada de funciones con valores vectoriales-->
+<!--id:vec-segunda-->
+<!--tab:H10 Segunda derivada-->
+<article class="sheet" id="vec-segunda" data-hoja="L23 H10">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Segunda derivada de funciones con valores vectoriales</b></li>
+    </ol>
+    <h1>Segunda derivada de funciones con valores vectoriales</h1>
+    <p class="lede">La segunda derivada de \(\vec r(t)\) es la derivada de su derivada. Se calcula derivando dos veces cada componente, y dice cómo está cambiando el vector \(\vec r\,'(t)\).
+    \[\vec r\,''(t)=\frac{d}{dt}\,\vec r\,'(t)=\big\langle x''(t),\;y''(t)\big\rangle\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función \(\vec r(t)=\left\langle t^{2},\;\dfrac{t^{3}}{3}\right\rangle\), con \(\vec r\,'(t)=\big\langle 2t,\;t^{2}\big\rangle\) y \(\vec r\,''(t)=\big\langle 2,\;2t\big\rangle\).</p>
+  <div class="stage" data-scene="vec-segunda"></div>
+  <ul class="keys">
+    <li><b>Arriba:</b> la curva azul y, en el punto, la flecha burdeo \(\vec r\,'(t)\), tangente.</li>
+    <li><b>Abajo:</b> la misma flecha burdeo, pero dibujada siempre desde un punto fijo. Así se ve cómo cambia: su punta recorre una curva propia (línea burdeo tenue).</li>
+    <li><b>Flecha verde:</b> \(\vec r\,''(t)\), dibujada desde la punta de la burdeo. Apunta hacia donde esa punta se está moviendo.</li>
+    <li><b>Barra bajo el dibujo:</b> el avance del parámetro \(t\), de \(-1{,}2\) a \(1{,}2\).</li>
+    <li><b>Bajo la barra:</b> las dos derivadas con su expresión y su valor.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale</h3>
+    <ol class="steps">
+      <li>\(\vec r\,'(t)=\big\langle x'(t),\,y'(t)\big\rangle\) es, a su vez, una función con valores vectoriales: a cada \(t\) le asigna un vector.</li>
+      <li>Su derivada se define con el mismo límite:
+        \[\vec r\,''(t)=\lim_{h\to 0}\frac{\vec r\,'(t+h)-\vec r\,'(t)}{h}\]</li>
+      <li>Como toda derivada de una función vectorial, se calcula componente a componente (si \(x'\) e \(y'\) son derivables):
+        \[\vec r\,''(t)=\big\langle\left(x'\right)'(t),\;\left(y'\right)'(t)\big\rangle=\big\langle x''(t),\;y''(t)\big\rangle\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Qué significa</h3>
+    <ol class="steps">
+      <li>\(\vec r\,'(t)\) dice cómo cambia la posición. \(\vec r\,''(t)\) dice cómo cambia \(\vec r\,'(t)\): en dirección, en largo, o en las dos cosas.</li>
+      <li>Si \(\vec r\,''(t)=\vec 0\) en todo un intervalo, \(\vec r\,'\) no cambia: el punto se mueve en línea recta y con rapidez constante.</li>
+      <li>En movimiento, \(\vec r\,''(t)\) es la <b>aceleración</b>.</li>
+      <li>\(\vec r\,''(t)\) no tiene por qué ser tangente a la curva de \(\vec r\). Es tangente a la curva que dibuja la punta de \(\vec r\,'\) (la de abajo, en la animación).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\vec r(t)=\left\langle t^{2},\;\dfrac{t^{3}}{3}\right\rangle\) en \(t=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Primera derivada.</b> \(\vec r\,'(t)=\left\langle 2t,\;\dfrac{3t^{2}}{3}\right\rangle=\big\langle 2t,\;t^{2}\big\rangle\).</li>
+    <li><b>Segunda derivada.</b> \(\vec r\,''(t)=\big\langle 2,\;2t\big\rangle\).</li>
+    <li><b>En \(t=1\).</b> \(\vec r\,'(1)=\langle 2,\,1\rangle\) y \(\vec r\,''(1)=\langle 2,\,2\rangle\).</li>
+    <li><b>Lectura.</b> En ese instante las dos componentes de \(\vec r\,'\) crecen a razón de \(2\) por unidad de \(t\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\vec r(t)=\big\langle 3\cos t,\;3\operatorname{sen}t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec r\,'(t)=\big\langle -3\operatorname{sen}t,\;3\cos t\big\rangle\).</li>
+    <li>\(\vec r\,''(t)=\big\langle -3\cos t,\;-3\operatorname{sen}t\big\rangle\).</li>
+    <li>Se compara con la función: \(\vec r\,''(t)=-\,\vec r(t)\). La segunda derivada apunta desde el punto hacia el centro de la circunferencia.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\vec r(t)=\big\langle e^{2t},\;\ln t\big\rangle\), para \(t&gt;0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec r\,'(t)=\left\langle 2e^{2t},\;\dfrac{1}{t}\right\rangle\).</li>
+    <li>Para la segunda componente, \(\dfrac{1}{t}=t^{-1}\), cuya derivada es \(-t^{-2}=-\dfrac{1}{t^{2}}\).</li>
+    <li>\(\vec r\,''(t)=\left\langle 4e^{2t},\;-\dfrac{1}{t^{2}}\right\rangle\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: una recta, \(\vec r(t)=\big\langle 1+3t,\;2-t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec r\,'(t)=\langle 3,\,-1\rangle\), constante.</li>
+    <li>\(\vec r\,''(t)=\langle 0,\,0\rangle=\vec 0\).</li>
+    <li>El vector \(\vec r\,'\) no cambia: movimiento en línea recta y con rapidez constante, \(\sqrt{9+1}=\sqrt{10}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Derivar dos veces solo una componente, o detenerse en la primera derivada. Hay que derivar <b>dos veces cada una</b>. Y ojo: \(\vec r\,''\) no es «la derivada al cuadrado». \(\big(\vec r\,'\big)^{2}\) ni siquiera está definido para vectores.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\vec r\,''(t)\) para \(\vec r(t)=\big\langle t^{4}-2t,\;5t^{2}\big\rangle\) y evalúa en \(t=-1\).</p>
+    <details><summary>Pista</summary><div><p>Deriva cada componente dos veces.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 4t^{3}-2,\;10t\big\rangle\).</li>
+        <li>\(\vec r\,''(t)=\big\langle 12t^{2},\;10\big\rangle\).</li>
+        <li>\(\vec r\,''(-1)=\langle 12,\,10\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Para \(\vec r(t)=\big\langle\operatorname{sen}2t,\;\cos 2t\big\rangle\), calcula \(\vec r\,''(t)\) y escríbela en función de \(\vec r(t)\).</p>
+    <details><summary>Pista</summary><div><p>Cada derivada agrega un factor \(2\) por la regla de la cadena.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 2\cos 2t,\;-2\operatorname{sen}2t\big\rangle\).</li>
+        <li>\(\vec r\,''(t)=\big\langle -4\operatorname{sen}2t,\;-4\cos 2t\big\rangle\).</li>
+        <li>\(\vec r\,''(t)=-4\,\big\langle\operatorname{sen}2t,\;\cos 2t\big\rangle=-4\,\vec r(t)\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un ascensor panorámico sube por un riel inclinado. Su posición, en metros, a los \(t\) segundos es \(\vec r(t)=\big\langle 0{,}3\,t^{2},\;0{,}4\,t^{2}\big\rangle\). Calcula \(\vec r\,'(t)\) y \(\vec r\,''(t)\). ¿Cuánto mide \(\vec r\,''\) y qué indica?</p>
+    <details><summary>Pista</summary><div><p>El largo de \(\langle a,\,b\rangle\) es \(\sqrt{a^{2}+b^{2}}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 0{,}6\,t,\;0{,}8\,t\big\rangle\) m/s.</li>
+        <li>\(\vec r\,''(t)=\big\langle 0{,}6;\;0{,}8\big\rangle\) m/s², constante.</li>
+        <li>Largo: \(\sqrt{0{,}36+0{,}64}=\sqrt{1}=1\) m/s².</li>
+        <li>Indica que la velocidad aumenta \(1\) m/s en cada segundo, siempre en la misma dirección: la del riel.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H10 · v001 · Pendiente de APR</span>
+</footer>
+</article>

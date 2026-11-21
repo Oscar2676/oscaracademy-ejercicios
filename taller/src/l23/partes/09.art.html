@@ -1,0 +1,157 @@
+<!--file:H09_derivada_de_r_t_con_componentes_trigonometricas.html-->
+<!--title:Derivada de r(t) con componentes trigonométricas-->
+<!--id:vec-trig-->
+<!--tab:H09 r(t) trigonométrica-->
+<article class="sheet" id="vec-trig" data-hoja="L23 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Derivada de r(t) con componentes trigonométricas</b></li>
+    </ol>
+    <h1>Derivada de r(t) con componentes trigonométricas</h1>
+    <p class="lede">Cuando las componentes de \(\vec r(t)\) son senos y cosenos, la derivada se calcula igual que siempre: componente a componente. Solo hay que recordar dos derivadas y la regla de la cadena.
+    \[\frac{d}{dt}\operatorname{sen}t=\cos t\qquad\frac{d}{dt}\cos t=-\operatorname{sen}t\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\) recorre la circunferencia de radio \(2\). Mira su derivada, \(\vec r\,'(t)=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\), en cada punto.</p>
+  <div class="stage" data-scene="vec-trig"></div>
+  <ul class="keys">
+    <li><b>Flecha naranja:</b> la posición, \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\), del origen al punto.</li>
+    <li><b>Arco pequeño con la letra \(t\):</b> el parámetro. En esta curva \(t\) es el ángulo que forma la flecha naranja con el eje \(x\), en radianes.</li>
+    <li><b>Flecha burdeo:</b> la derivada, \(\vec r\,'(t)=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\). Sale del punto y es tangente a la circunferencia.</li>
+    <li><b>Barra bajo el dibujo:</b> el avance de \(t\), de \(0\) a \(2\pi\).</li>
+    <li><b>Bajo la barra:</b> las dos flechas con su expresión y su valor, y el producto punto \(\vec r\cdot\vec r\,'\), que vale \(0\) siempre: las dos flechas son perpendiculares.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Las reglas que se usan</h3>
+    <ol class="steps">
+      <li><b>Componente a componente:</b> si \(\vec r(t)=\big\langle x(t),\,y(t)\big\rangle\), entonces \(\vec r\,'(t)=\big\langle x'(t),\,y'(t)\big\rangle\).</li>
+      <li><b>Seno y coseno:</b> \(\left(\operatorname{sen}t\right)'=\cos t\) y \(\left(\cos t\right)'=-\operatorname{sen}t\). El signo menos va solo en la derivada del coseno.</li>
+      <li><b>Regla de la cadena:</b> si adentro hay \(kt\) en vez de \(t\), se multiplica por \(k\):
+        \[\frac{d}{dt}\operatorname{sen}(kt)=k\cos(kt)\qquad\frac{d}{dt}\cos(kt)=-k\operatorname{sen}(kt)\]</li>
+      <li><b>Regla del producto:</b> si una componente es un producto, como \(t\cos t\): \(\left(t\cos t\right)'=1\cdot\cos t+t\cdot(-\operatorname{sen}t)=\cos t-t\operatorname{sen}t\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Por qué \(\vec r\,'\) queda perpendicular a \(\vec r\) en la circunferencia</h3>
+    <ol class="steps">
+      <li>En la circunferencia de radio \(a\) el largo de \(\vec r(t)\) no cambia: \(\vec r(t)\cdot\vec r(t)=a^{2}\) para todo \(t\).</li>
+      <li>Se derivan los dos lados. A la izquierda, con la regla del producto punto: \(\vec r\,'\cdot\vec r+\vec r\cdot\vec r\,'=2\,\vec r\cdot\vec r\,'\). A la derecha, la derivada de una constante: \(0\).</li>
+      <li>Entonces \(2\,\vec r(t)\cdot\vec r\,'(t)=0\), es decir, \(\vec r(t)\cdot\vec r\,'(t)=0\): los dos vectores son perpendiculares.</li>
+      <li>Vale para cualquier \(\vec r(t)\) de largo constante, no solo para la circunferencia. Si el largo cambia (una elipse, una espiral), en general no son perpendiculares.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\) en \(t=\dfrac{\pi}{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivada.</b> \(\vec r\,'(t)=\big\langle 2\cdot(-\operatorname{sen}t),\;2\cos t\big\rangle=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\).</li>
+    <li><b>Punto.</b> \(\vec r\!\left(\dfrac{\pi}{3}\right)=\left\langle 2\cdot\dfrac{1}{2},\;2\cdot\dfrac{\sqrt 3}{2}\right\rangle=\big\langle 1,\;\sqrt 3\big\rangle\).</li>
+    <li><b>Vector tangente.</b> \(\vec r\,'\!\left(\dfrac{\pi}{3}\right)=\left\langle -2\cdot\dfrac{\sqrt 3}{2},\;2\cdot\dfrac{1}{2}\right\rangle=\big\langle -\sqrt 3,\;1\big\rangle\).</li>
+    <li><b>Comprobación.</b> \(\vec r\cdot\vec r\,'=1\cdot(-\sqrt 3)+\sqrt 3\cdot 1=0\): perpendiculares, como en la animación.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con la regla de la cadena: \(\vec r(t)=\big\langle\cos 2t,\;\operatorname{sen}2t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\left(\cos 2t\right)'=-2\operatorname{sen}2t\) y \(\left(\operatorname{sen}2t\right)'=2\cos 2t\).</li>
+    <li>\(\vec r\,'(t)=\big\langle -2\operatorname{sen}2t,\;2\cos 2t\big\rangle\).</li>
+    <li><b>Largo de la derivada.</b> \(\sqrt{4\operatorname{sen}^{2}2t+4\cos^{2}2t}=\sqrt{4}=2\), porque \(\operatorname{sen}^{2}u+\cos^{2}u=1\).</li>
+    <li>La curva es la circunferencia de radio \(1\), pero recorrida al doble de rapidez que con \(\langle\cos t,\,\operatorname{sen}t\rangle\), cuya derivada mide \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, una elipse: \(\vec r(t)=\big\langle 3\cos t,\;2\operatorname{sen}t\big\rangle\) en \(t=\dfrac{\pi}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec r\,'(t)=\big\langle -3\operatorname{sen}t,\;2\cos t\big\rangle\).</li>
+    <li>En \(t=\dfrac{\pi}{2}\): el punto es \(\vec r=\langle 0,\,2\rangle\) y la derivada es \(\vec r\,'=\langle -3,\,0\rangle\): tangente horizontal, hacia la izquierda.</li>
+    <li>En general no son perpendiculares: \(\vec r\cdot\vec r\,'=-9\cos t\operatorname{sen}t+4\operatorname{sen}t\cos t=-5\operatorname{sen}t\cos t\), que solo vale \(0\) en los cuatro vértices de la elipse.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, con la regla del producto: la espiral \(\vec r(t)=\big\langle t\cos t,\;t\operatorname{sen}t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\left(t\cos t\right)'=\cos t-t\operatorname{sen}t\) y \(\left(t\operatorname{sen}t\right)'=\operatorname{sen}t+t\cos t\).</li>
+    <li>\(\vec r\,'(t)=\big\langle\cos t-t\operatorname{sen}t,\;\operatorname{sen}t+t\cos t\big\rangle\).</li>
+    <li><b>Largo.</b> Se elevan al cuadrado y se suman; los términos cruzados \(-2t\cos t\operatorname{sen}t\) y \(+2t\operatorname{sen}t\cos t\) se anulan:
+      \[\big|\vec r\,'(t)\big|^{2}=\cos^{2}t+t^{2}\operatorname{sen}^{2}t+\operatorname{sen}^{2}t+t^{2}\cos^{2}t=1+t^{2}\]</li>
+    <li>\(\big|\vec r\,'(t)\big|=\sqrt{1+t^{2}}\): el punto va cada vez más rápido al alejarse del centro.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los dos errores más comunes.</b> Uno: el signo. La derivada del coseno es \(-\operatorname{sen}t\); la del seno es \(+\cos t\). Dos: olvidar la cadena. \(\left(\operatorname{sen}3t\right)'\) es \(3\cos 3t\), no \(\cos 3t\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\vec r\,'(t)\) para \(\vec r(t)=\big\langle\operatorname{sen}3t,\;\cos 3t\big\rangle\) y evalúa en \(t=\dfrac{\pi}{6}\).</p>
+    <details><summary>Pista</summary><div><p>Regla de la cadena: aparece un factor \(3\) en cada componente.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 3\cos 3t,\;-3\operatorname{sen}3t\big\rangle\).</li>
+        <li>En \(t=\dfrac{\pi}{6}\): \(3t=\dfrac{\pi}{2}\), con \(\cos\dfrac{\pi}{2}=0\) y \(\operatorname{sen}\dfrac{\pi}{2}=1\).</li>
+        <li>\(\vec r\,'\!\left(\dfrac{\pi}{6}\right)=\langle 0,\,-3\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra la recta tangente a la elipse \(\vec r(t)=\big\langle 3\cos t,\;2\operatorname{sen}t\big\rangle\) en \(t=\dfrac{\pi}{4}\).</p>
+    <details><summary>Pista</summary><div><p>Punto \(\vec r\!\left(\frac{\pi}{4}\right)\), dirección \(\vec r\,'\!\left(\frac{\pi}{4}\right)\). La pendiente es el cociente de las componentes de \(\vec r\,'\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Punto: \(\vec r\!\left(\dfrac{\pi}{4}\right)=\left\langle\dfrac{3\sqrt 2}{2},\;\sqrt 2\right\rangle\).</li>
+        <li>\(\vec r\,'(t)=\big\langle -3\operatorname{sen}t,\;2\cos t\big\rangle\), así que \(\vec r\,'\!\left(\dfrac{\pi}{4}\right)=\left\langle -\dfrac{3\sqrt 2}{2},\;\sqrt 2\right\rangle\).</li>
+        <li>Pendiente: \(\dfrac{\sqrt 2}{-\frac{3\sqrt 2}{2}}=-\dfrac{2}{3}\).</li>
+        <li>Recta: \(y-\sqrt 2=-\dfrac{2}{3}\left(x-\dfrac{3\sqrt 2}{2}\right)\), es decir, \(y=-\dfrac{2}{3}x+2\sqrt 2\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una cabina de una rueda de la fortuna de \(10\) m de radio, con el centro a \(12\) m del suelo, se mueve según \(\vec r(t)=\big\langle 10\operatorname{sen}(0{,}2\,t),\;12-10\cos(0{,}2\,t)\big\rangle\), en metros, con \(t\) en segundos. Calcula su velocidad, su rapidez, y la velocidad en el punto más alto.</p>
+    <details><summary>Pista</summary><div><p>Regla de la cadena con \(k=0{,}2\). El punto más alto se alcanza cuando \(\cos(0{,}2\,t)=-1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 10\cdot 0{,}2\cos(0{,}2\,t),\;-10\cdot 0{,}2\cdot\left(-\operatorname{sen}(0{,}2\,t)\right)\big\rangle=\big\langle 2\cos(0{,}2\,t),\;2\operatorname{sen}(0{,}2\,t)\big\rangle\) m/s.</li>
+        <li>Rapidez: \(\sqrt{4\cos^{2}(0{,}2\,t)+4\operatorname{sen}^{2}(0{,}2\,t)}=2\) m/s, constante.</li>
+        <li>Punto más alto: \(0{,}2\,t=\pi\), o sea \(t=5\pi\approx 15{,}7\) s, a \(12+10=22\) m. Ahí \(\vec r\,'=\langle 2\cos\pi,\;2\operatorname{sen}\pi\rangle=\langle -2,\,0\rangle\).</li>
+        <li>Respuesta: velocidad \(\langle 2\cos(0{,}2\,t),\;2\operatorname{sen}(0{,}2\,t)\rangle\) m/s; rapidez \(2\) m/s; arriba se mueve en horizontal, a \(2\) m/s.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>

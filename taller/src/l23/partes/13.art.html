@@ -1,0 +1,160 @@
+<!--file:H13_definir_y_diferenciar_ecuaciones_parametricas.html-->
+<!--title:Definir y diferenciar ecuaciones paramétricas-->
+<!--id:par-derivada-->
+<!--tab:H13 Diferenciar paramétricas-->
+<article class="sheet" id="par-derivada" data-hoja="L23 H13">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Definir y diferenciar ecuaciones paramétricas</b></li>
+    </ol>
+    <h1>Definir y diferenciar ecuaciones paramétricas</h1>
+    <p class="lede">Una curva está dada por ecuaciones paramétricas cuando \(x\) e \(y\) se escriben, cada una, en función de una tercera variable, el parámetro \(t\). La pendiente de la curva se obtiene sin despejar nada: es el cociente de las dos derivadas respecto de \(t\).
+    \[x=x(t),\quad y=y(t)\qquad\Longrightarrow\qquad\frac{dy}{dx}=\frac{dy/dt}{dx/dt},\quad\text{si }\frac{dx}{dt}\neq 0\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La curva \(x=2\cos t\), \(y=\operatorname{sen}2t\), para \(0\le t\le 2\pi\). En cada punto se ven por separado cuánto cambia \(x\) y cuánto cambia \(y\); la pendiente es el cociente.</p>
+  <div class="stage" data-scene="par-derivada"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> los puntos \(\big(2\cos t,\;\operatorname{sen}2t\big)\). Tiene forma de ocho.</li>
+    <li><b>Flecha burdeo, horizontal:</b> \(\dfrac{dx}{dt}=-2\operatorname{sen}t\), lo que cambia \(x\) por unidad de \(t\).</li>
+    <li><b>Flecha verde, vertical:</b> \(\dfrac{dy}{dt}=2\cos 2t\), lo que cambia \(y\) por unidad de \(t\).</li>
+    <li><b>Recta naranja punteada:</b> la tangente. Su pendiente es \(\dfrac{dy}{dx}\): la flecha verde dividida por la burdeo.</li>
+    <li><b>Barra del parámetro:</b> el valor de \(t\), de \(0\) a \(2\pi\). En esta curva \(t\) no es un ángulo que se vea en el dibujo; por eso va en la barra.</li>
+    <li><b>Bajo la barra:</b> las dos derivadas, con su expresión y su valor, y el cociente.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>Cerca de un punto donde \(\dfrac{dx}{dt}\neq 0\), la curva es la gráfica de una función \(y=F(x)\). Sobre la curva, entonces, \(y(t)=F\big(x(t)\big)\).</li>
+      <li>Se deriva respecto de \(t\) con la regla de la cadena: \(\dfrac{dy}{dt}=F'\big(x(t)\big)\cdot\dfrac{dx}{dt}\).</li>
+      <li>\(F'(x)\) es la pendiente, \(\dfrac{dy}{dx}\). Entonces \(\dfrac{dy}{dt}=\dfrac{dy}{dx}\cdot\dfrac{dx}{dt}\).</li>
+      <li>Se despeja, dividiendo por \(\dfrac{dx}{dt}\neq 0\):
+        \[\frac{dy}{dx}=\frac{dy/dt}{dx/dt}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cómo se usa</h3>
+    <ol class="steps">
+      <li><b>Pendiente en un punto:</b> se derivan \(x\) e \(y\) respecto de \(t\), se divide, y se evalúa en el \(t\) del punto.</li>
+      <li><b>Recta tangente:</b> pasa por \(\big(x(t_{0}),\,y(t_{0})\big)\) con esa pendiente.</li>
+      <li><b>Tangente horizontal:</b> \(\dfrac{dy}{dt}=0\) y \(\dfrac{dx}{dt}\neq 0\).</li>
+      <li><b>Tangente vertical:</b> \(\dfrac{dx}{dt}=0\) y \(\dfrac{dy}{dt}\neq 0\).</li>
+      <li>Si las dos derivadas se anulan a la vez, la fórmula no decide: hay que estudiar el punto aparte.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: pendiente y recta tangente en \(t=\dfrac{\pi}{3}\), para \(x=2\cos t\), \(y=\operatorname{sen}2t\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivadas.</b> \(\dfrac{dx}{dt}=-2\operatorname{sen}t\) y \(\dfrac{dy}{dt}=2\cos 2t\).</li>
+    <li><b>En \(t=\dfrac{\pi}{3}\).</b> \(\dfrac{dx}{dt}=-2\cdot\dfrac{\sqrt 3}{2}=-\sqrt 3\) y \(\dfrac{dy}{dt}=2\cos\dfrac{2\pi}{3}=2\cdot\left(-\dfrac{1}{2}\right)=-1\).</li>
+    <li><b>Pendiente.</b> \(\dfrac{dy}{dx}=\dfrac{-1}{-\sqrt 3}=\dfrac{1}{\sqrt 3}=\dfrac{\sqrt 3}{3}\approx 0{,}58\).</li>
+    <li><b>Punto.</b> \(x=2\cos\dfrac{\pi}{3}=1\), \(y=\operatorname{sen}\dfrac{2\pi}{3}=\dfrac{\sqrt 3}{2}\).</li>
+    <li><b>Recta tangente.</b> \(y-\dfrac{\sqrt 3}{2}=\dfrac{\sqrt 3}{3}\,(x-1)\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: tangentes horizontales y verticales de la misma curva</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Horizontales.</b> \(2\cos 2t=0\) cuando \(2t=\dfrac{\pi}{2},\ \dfrac{3\pi}{2},\ \dfrac{5\pi}{2},\ \dfrac{7\pi}{2}\), es decir, \(t=\dfrac{\pi}{4},\ \dfrac{3\pi}{4},\ \dfrac{5\pi}{4},\ \dfrac{7\pi}{4}\). En todos, \(\operatorname{sen}t\neq 0\).</li>
+    <li>Puntos: \(\big(\sqrt 2,\,1\big)\), \(\big(-\sqrt 2,\,-1\big)\), \(\big(-\sqrt 2,\,1\big)\) y \(\big(\sqrt 2,\,-1\big)\): los cuatro puntos más altos y más bajos del ocho.</li>
+    <li><b>Verticales.</b> \(-2\operatorname{sen}t=0\) cuando \(t=0\) o \(t=\pi\). En ambos, \(2\cos 2t=2\neq 0\).</li>
+    <li>Puntos: \((2,\,0)\) y \((-2,\,0)\): los extremos derecho e izquierdo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un punto con dos tangentes</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La curva pasa por el origen cuando \(2\cos t=0\) y \(\operatorname{sen}2t=0\): en \(t=\dfrac{\pi}{2}\) y en \(t=\dfrac{3\pi}{2}\).</li>
+    <li>En \(t=\dfrac{\pi}{2}\): \(\dfrac{dx}{dt}=-2\), \(\dfrac{dy}{dt}=2\cos\pi=-2\). Pendiente: \(\dfrac{-2}{-2}=1\).</li>
+    <li>En \(t=\dfrac{3\pi}{2}\): \(\dfrac{dx}{dt}=2\), \(\dfrac{dy}{dt}=2\cos 3\pi=-2\). Pendiente: \(\dfrac{-2}{2}=-1\).</li>
+    <li>El mismo punto, dos valores de \(t\), dos tangentes: \(y=x\) e \(y=-x\). Con una ecuación \(y=f(x)\) esto no podría pasar.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la cicloide \(x=t-\operatorname{sen}t\), \(y=1-\cos t\), en \(t=\dfrac{\pi}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{dx}{dt}=1-\cos t\) y \(\dfrac{dy}{dt}=\operatorname{sen}t\).</li>
+    <li>\(\dfrac{dy}{dx}=\dfrac{\operatorname{sen}t}{1-\cos t}\), para \(\cos t\neq 1\).</li>
+    <li>En \(t=\dfrac{\pi}{2}\): \(\dfrac{dy}{dx}=\dfrac{1}{1-0}=1\). El punto es \(\left(\dfrac{\pi}{2}-1,\;1\right)\).</li>
+    <li>En \(t=\pi\): \(\dfrac{dy}{dt}=0\) y \(\dfrac{dx}{dt}=2\): tangente horizontal en el punto más alto, \((\pi,\,2)\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: dividir al revés. Arriba va la derivada de \(y\); abajo, la de \(x\). Dos: evaluar la pendiente en el valor de \(x\) en vez de en el valor de \(t\). Tres: olvidar la condición \(\dfrac{dx}{dt}\neq 0\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Para \(x=t^{2}+1\), \(y=t^{3}\): calcula \(\dfrac{dy}{dx}\) y la recta tangente en \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>Deriva las dos respecto de \(t\), divide, y evalúa en \(t=2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dx}{dt}=2t\), \(\dfrac{dy}{dt}=3t^{2}\), así que \(\dfrac{dy}{dx}=\dfrac{3t^{2}}{2t}=\dfrac{3t}{2}\), para \(t\neq 0\).</li>
+        <li>En \(t=2\): pendiente \(3\). Punto: \((5,\,8)\).</li>
+        <li>Recta: \(y-8=3\,(x-5)\), es decir, \(y=3x-7\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra los puntos de tangente horizontal y vertical de la curva \(x=t^{3}-3t\), \(y=t^{2}\).</p>
+    <details><summary>Pista</summary><div><p>Horizontal: \(\frac{dy}{dt}=0\). Vertical: \(\frac{dx}{dt}=0\). Revisa que la otra derivada no se anule.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dx}{dt}=3t^{2}-3\) y \(\dfrac{dy}{dt}=2t\).</li>
+        <li>Horizontal: \(2t=0\ \Longrightarrow\ t=0\), con \(\dfrac{dx}{dt}=-3\neq 0\). Punto: \((0,\,0)\).</li>
+        <li>Vertical: \(3t^{2}-3=0\ \Longrightarrow\ t=\pm 1\), con \(\dfrac{dy}{dt}=\pm 2\neq 0\).</li>
+        <li>\(t=1\): \((1-3,\;1)=(-2,\,1)\). \(t=-1\): \((-1+3,\;1)=(2,\,1)\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un carro de una montaña rusa se mueve de modo que, a los \(t\) segundos, está a \(x=10t\) metros de la partida (en horizontal) y a \(y=6+4\cos t\) metros de altura. ¿Qué pendiente tiene la vía donde pasa en \(t=\dfrac{\pi}{2}\)? ¿A qué distancia horizontal de la partida está el primer valle?</p>
+    <details><summary>Pista</summary><div><p>La pendiente de la vía es \(\frac{dy}{dx}\). En una cima o en un valle la tangente es horizontal.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dx}{dt}=10\) y \(\dfrac{dy}{dt}=-4\operatorname{sen}t\), así que \(\dfrac{dy}{dx}=-\dfrac{4\operatorname{sen}t}{10}=-0{,}4\operatorname{sen}t\).</li>
+        <li>En \(t=\dfrac{\pi}{2}\): pendiente \(-0{,}4\). La vía baja \(0{,}4\) m por cada metro que avanza en horizontal.</li>
+        <li>Tangente horizontal: \(\operatorname{sen}t=0\), en \(t=0\) (altura \(6+4=10\) m, una cima) y en \(t=\pi\) (altura \(6-4=2\) m, un valle).</li>
+        <li>Primer valle: \(x=10\pi\approx 31{,}4\) m de la partida.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H13 · v001 · Pendiente de APR</span>
+</footer>
+</article>

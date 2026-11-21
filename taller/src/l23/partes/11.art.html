@@ -1,0 +1,154 @@
+<!--file:H11_vector_aceleracion_como_segunda_derivada_de_r_t.html-->
+<!--title:Vector aceleración como segunda derivada de r(t)-->
+<!--id:vec-aceleracion-->
+<!--tab:H11 Aceleración-->
+<article class="sheet" id="vec-aceleracion" data-hoja="L23 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Vector aceleración como segunda derivada de r(t)</b></li>
+    </ol>
+    <h1>Vector aceleración como segunda derivada de r(t)</h1>
+    <p class="lede">Si \(\vec r(t)\) es la posición de un móvil en el instante \(t\), su primera derivada es la velocidad y su segunda derivada es la <b>aceleración</b>: el vector que dice cómo está cambiando la velocidad.
+    \[\vec v(t)=\vec r\,'(t)\qquad\vec a(t)=\vec v\,'(t)=\vec r\,''(t)\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Un móvil con posición \(\vec r(t)=\big\langle 2t,\;4t-t^{2}\big\rangle\), para \(0\le t\le 4\). Compara la flecha de la velocidad, que cambia, con la de la aceleración.</p>
+  <div class="stage" data-scene="vec-aceleracion"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> la trayectoria.</li>
+    <li><b>Flecha burdeo:</b> la velocidad, \(\vec v(t)=\big\langle 2,\;4-2t\big\rangle\), tangente a la trayectoria.</li>
+    <li><b>Flecha verde:</b> la aceleración, \(\vec a(t)=\langle 0,\,-2\rangle\). En este movimiento es constante: siempre hacia abajo y siempre del mismo largo.</li>
+    <li><b>Barra bajo el dibujo:</b> el avance del tiempo \(t\), de \(0\) a \(4\).</li>
+    <li><b>Bajo la barra:</b> los dos vectores con su expresión y su valor, y la rapidez.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale</h3>
+    <ol class="steps">
+      <li>La velocidad media entre \(t\) y \(t+h\) es el cambio de posición dividido por el tiempo: \(\dfrac{\vec r(t+h)-\vec r(t)}{h}\). Su límite cuando \(h\to 0\) es la velocidad: \(\vec v(t)=\vec r\,'(t)\).</li>
+      <li>La aceleración media es el cambio de velocidad dividido por el tiempo: \(\dfrac{\vec v(t+h)-\vec v(t)}{h}\). Su límite es la aceleración:
+        \[\vec a(t)=\lim_{h\to 0}\frac{\vec v(t+h)-\vec v(t)}{h}=\vec v\,'(t)\]</li>
+      <li>Como \(\vec v=\vec r\,'\), queda \(\vec a(t)=\big(\vec r\,'\big)'(t)=\vec r\,''(t)=\big\langle x''(t),\;y''(t)\big\rangle\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cómo leer el vector aceleración</h3>
+    <ol class="steps">
+      <li><b>Unidades.</b> Si la posición va en metros y el tiempo en segundos: velocidad en m/s y aceleración en m/s².</li>
+      <li><b>Hacia dónde dobla.</b> La trayectoria se curva hacia el lado al que apunta \(\vec a\).</li>
+      <li><b>¿Va más rápido o más lento?</b> Lo dice el signo de \(\vec v\cdot\vec a\). Sale de derivar el cuadrado de la rapidez, \(\vec v\cdot\vec v\), con la regla del producto punto: \(\big(\vec v\cdot\vec v\big)'=2\,\vec v\cdot\vec a\). Si \(\vec v\cdot\vec a&gt;0\), la rapidez aumenta; si es \(&lt;0\), disminuye; si es \(0\), en ese instante no cambia.</li>
+      <li><b>Aceleración no es «ir rápido».</b> Un móvil puede ir rápido con aceleración \(\vec 0\), y puede tener aceleración aunque su rapidez sea constante (ejemplo 2).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\vec r(t)=\big\langle 2t,\;4t-t^{2}\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Velocidad.</b> \(\vec v(t)=\vec r\,'(t)=\big\langle 2,\;4-2t\big\rangle\).</li>
+    <li><b>Aceleración.</b> \(\vec a(t)=\vec v\,'(t)=\langle 0,\,-2\rangle\).</li>
+    <li><b>¿Cuándo frena y cuándo acelera?</b> \(\vec v\cdot\vec a=2\cdot 0+(4-2t)(-2)=4t-8\). Es negativo para \(t&lt;2\) (la rapidez baja mientras sube), cero en \(t=2\) (la cima) y positivo para \(t&gt;2\) (la rapidez aumenta mientras baja).</li>
+    <li><b>Comprobación en la cima.</b> \(\vec v(2)=\langle 2,\,0\rangle\): rapidez \(2\), la mínima. En \(t=0\) y \(t=4\) la rapidez es \(\sqrt{4+16}=\sqrt{20}\approx 4{,}47\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, movimiento circular: \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec v(t)=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\). Rapidez: \(\sqrt{4\operatorname{sen}^{2}t+4\cos^{2}t}=2\), constante.</li>
+    <li>\(\vec a(t)=\big\langle -2\cos t,\;-2\operatorname{sen}t\big\rangle=-\,\vec r(t)\).</li>
+    <li>La aceleración apunta hacia el centro del círculo y mide \(2\). No cambia la rapidez (\(\vec v\cdot\vec a=4\operatorname{sen}t\cos t-4\cos t\operatorname{sen}t=0\)): solo cambia la dirección de la velocidad.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\vec r(t)=\big\langle t^{2},\;t^{3}\big\rangle\) en \(t=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec v(t)=\big\langle 2t,\;3t^{2}\big\rangle\) y \(\vec a(t)=\big\langle 2,\;6t\big\rangle\).</li>
+    <li>En \(t=1\): \(\vec v=\langle 2,\,3\rangle\) y \(\vec a=\langle 2,\,6\rangle\).</li>
+    <li>\(\vec v\cdot\vec a=4+18=22&gt;0\): en ese instante la rapidez está aumentando.</li>
+    <li>Largo de la aceleración: \(\sqrt{4+36}=\sqrt{40}\approx 6{,}32\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, al revés: de la aceleración a la velocidad</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se sabe que \(\vec a(t)=\langle 0,\,-2\rangle\) y que \(\vec v(0)=\langle 2,\,4\rangle\). Se busca \(\vec v(t)\).</li>
+    <li>Se integra cada componente: \(\vec v(t)=\big\langle C_{1},\;-2t+C_{2}\big\rangle\).</li>
+    <li>Con \(t=0\): \(\langle C_{1},\,C_{2}\rangle=\langle 2,\,4\rangle\).</li>
+    <li>\(\vec v(t)=\big\langle 2,\;4-2t\big\rangle\): la velocidad del ejemplo 1.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Dibujar la aceleración tangente a la trayectoria. La tangente es la <b>velocidad</b>. La aceleración puede apuntar hacia cualquier lado: en el ejemplo 1, siempre hacia abajo; en el ejemplo 2, hacia el centro.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la velocidad y la aceleración de \(\vec r(t)=\big\langle t^{3}-3t,\;3t^{2}\big\rangle\) y evalúalas en \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>Deriva una vez para la velocidad y otra vez para la aceleración.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle 3t^{2}-3,\;6t\big\rangle\) y \(\vec a(t)=\big\langle 6t,\;6\big\rangle\).</li>
+        <li>\(\vec v(2)=\langle 9,\,12\rangle\), de rapidez \(\sqrt{81+144}=15\).</li>
+        <li>\(\vec a(2)=\langle 12,\,6\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Para \(\vec r(t)=\big\langle 3\cos 2t,\;3\operatorname{sen}2t\big\rangle\), calcula \(\vec a(t)\), su largo, y escríbela en función de \(\vec r(t)\).</p>
+    <details><summary>Pista</summary><div><p>Cada derivada agrega un factor \(2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle -6\operatorname{sen}2t,\;6\cos 2t\big\rangle\).</li>
+        <li>\(\vec a(t)=\big\langle -12\cos 2t,\;-12\operatorname{sen}2t\big\rangle=-4\,\vec r(t)\).</li>
+        <li>Largo: \(\sqrt{144\cos^{2}2t+144\operatorname{sen}^{2}2t}=12\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un auto recorre una rotonda de \(20\) m de radio con rapidez constante. Su posición, en metros, es \(\vec r(t)=\big\langle 20\cos(0{,}5\,t),\;20\operatorname{sen}(0{,}5\,t)\big\rangle\), con \(t\) en segundos. Calcula su rapidez y el largo y la dirección de su aceleración.</p>
+    <details><summary>Pista</summary><div><p>Regla de la cadena con \(k=0{,}5\), dos veces.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle -10\operatorname{sen}(0{,}5\,t),\;10\cos(0{,}5\,t)\big\rangle\). Rapidez: \(10\) m/s (son \(36\) km/h).</li>
+        <li>\(\vec a(t)=\big\langle -5\cos(0{,}5\,t),\;-5\operatorname{sen}(0{,}5\,t)\big\rangle=-0{,}25\,\vec r(t)\).</li>
+        <li>Largo: \(0{,}25\cdot 20=5\) m/s². Dirección: hacia el centro de la rotonda.</li>
+        <li>Respuesta: va a \(10\) m/s y, aunque su rapidez no cambia, tiene una aceleración de \(5\) m/s² hacia el centro. Es la que lo hace doblar.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>

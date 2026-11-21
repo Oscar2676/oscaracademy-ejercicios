@@ -1,0 +1,222 @@
+<!--file:H13_definir_y_diferenciar_ecuaciones_parametricas.html-->
+<!--title:Definir y diferenciar ecuaciones paramétricas-->
+<!--id:par-derivada-->
+<!--tab:H13 Diferenciar paramétricas-->
+<article class="sheet" id="par-derivada" data-hoja="L23 H13">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Definir y diferenciar ecuaciones paramétricas</b></li>
+    </ol>
+    <h1>Definir y diferenciar ecuaciones paramétricas</h1>
+    <p class="lede">Una curva está dada por ecuaciones paramétricas cuando \(x\) e \(y\) se escriben, cada una, en función de una tercera variable, el parámetro \(t\). La pendiente de la curva se obtiene sin despejar nada: es el cociente de las dos derivadas respecto de \(t\).
+    \[x=x(t),\quad y=y(t)\qquad\Longrightarrow\qquad\frac{dy}{dx}=\frac{dy/dt}{dx/dt},\quad\text{si }\frac{dx}{dt}\neq 0\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La curva \(x=2\cos t\), \(y=\operatorname{sen}2t\), para \(0\le t\le 2\pi\). En cada punto se ven por separado cuánto cambia \(x\) y cuánto cambia \(y\); la pendiente es el cociente.</p>
+  <div class="stage" data-scene="par-derivada"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> los puntos \(\big(2\cos t,\;\operatorname{sen}2t\big)\). Tiene forma de ocho.</li>
+    <li><b>Flecha burdeo, horizontal:</b> \(\dfrac{dx}{dt}=-2\operatorname{sen}t\), lo que cambia \(x\) por unidad de \(t\).</li>
+    <li><b>Flecha verde, vertical:</b> \(\dfrac{dy}{dt}=2\cos 2t\), lo que cambia \(y\) por unidad de \(t\).</li>
+    <li><b>Recta naranja punteada:</b> la tangente. Su pendiente es \(\dfrac{dy}{dx}\): la flecha verde dividida por la burdeo.</li>
+    <li><b>Barra del parámetro:</b> el valor de \(t\), de \(0\) a \(2\pi\). En esta curva \(t\) no es un ángulo que se vea en el dibujo; por eso va en la barra.</li>
+    <li><b>Bajo la barra:</b> las dos derivadas, con su expresión y su valor, y el cociente.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>Cerca de un punto donde \(\dfrac{dx}{dt}\neq 0\), la curva es la gráfica de una función \(y=F(x)\). Sobre la curva, entonces, \(y(t)=F\big(x(t)\big)\).</li>
+      <li>Se deriva respecto de \(t\) con la regla de la cadena: \(\dfrac{dy}{dt}=F'\big(x(t)\big)\cdot\dfrac{dx}{dt}\).</li>
+      <li>\(F'(x)\) es la pendiente, \(\dfrac{dy}{dx}\). Entonces \(\dfrac{dy}{dt}=\dfrac{dy}{dx}\cdot\dfrac{dx}{dt}\).</li>
+      <li>Se despeja, dividiendo por \(\dfrac{dx}{dt}\neq 0\):
+        \[\frac{dy}{dx}=\frac{dy/dt}{dx/dt}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cómo se usa</h3>
+    <ol class="steps">
+      <li><b>Pendiente en un punto:</b> se derivan \(x\) e \(y\) respecto de \(t\), se divide, y se evalúa en el \(t\) del punto.</li>
+      <li><b>Recta tangente:</b> pasa por \(\big(x(t_{0}),\,y(t_{0})\big)\) con esa pendiente.</li>
+      <li><b>Tangente horizontal:</b> \(\dfrac{dy}{dt}=0\) y \(\dfrac{dx}{dt}\neq 0\).</li>
+      <li><b>Tangente vertical:</b> \(\dfrac{dx}{dt}=0\) y \(\dfrac{dy}{dt}\neq 0\).</li>
+      <li>Si las dos derivadas se anulan a la vez, la fórmula no decide: hay que estudiar el punto aparte.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: pendiente y recta tangente en \(t=\dfrac{\pi}{3}\), para \(x=2\cos t\), \(y=\operatorname{sen}2t\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivadas.</b> \(\dfrac{dx}{dt}=-2\operatorname{sen}t\) y \(\dfrac{dy}{dt}=2\cos 2t\).</li>
+    <li><b>En \(t=\dfrac{\pi}{3}\).</b> \(\dfrac{dx}{dt}=-2\cdot\dfrac{\sqrt 3}{2}=-\sqrt 3\) y \(\dfrac{dy}{dt}=2\cos\dfrac{2\pi}{3}=2\cdot\left(-\dfrac{1}{2}\right)=-1\).</li>
+    <li><b>Pendiente.</b> \(\dfrac{dy}{dx}=\dfrac{-1}{-\sqrt 3}=\dfrac{1}{\sqrt 3}=\dfrac{\sqrt 3}{3}\approx 0{,}58\).</li>
+    <li><b>Punto.</b> \(x=2\cos\dfrac{\pi}{3}=1\), \(y=\operatorname{sen}\dfrac{2\pi}{3}=\dfrac{\sqrt 3}{2}\).</li>
+    <li><b>Recta tangente.</b> \(y-\dfrac{\sqrt 3}{2}=\dfrac{\sqrt 3}{3}\,(x-1)\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: tangentes horizontales y verticales de la misma curva</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Horizontales.</b> \(2\cos 2t=0\) cuando \(2t=\dfrac{\pi}{2},\ \dfrac{3\pi}{2},\ \dfrac{5\pi}{2},\ \dfrac{7\pi}{2}\), es decir, \(t=\dfrac{\pi}{4},\ \dfrac{3\pi}{4},\ \dfrac{5\pi}{4},\ \dfrac{7\pi}{4}\). En todos, \(\operatorname{sen}t\neq 0\).</li>
+    <li>Puntos: \(\big(\sqrt 2,\,1\big)\), \(\big(-\sqrt 2,\,-1\big)\), \(\big(-\sqrt 2,\,1\big)\) y \(\big(\sqrt 2,\,-1\big)\): los cuatro puntos más altos y más bajos del ocho.</li>
+    <li><b>Verticales.</b> \(-2\operatorname{sen}t=0\) cuando \(t=0\) o \(t=\pi\). En ambos, \(2\cos 2t=2\neq 0\).</li>
+    <li>Puntos: \((2,\,0)\) y \((-2,\,0)\): los extremos derecho e izquierdo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un punto con dos tangentes</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La curva pasa por el origen cuando \(2\cos t=0\) y \(\operatorname{sen}2t=0\): en \(t=\dfrac{\pi}{2}\) y en \(t=\dfrac{3\pi}{2}\).</li>
+    <li>En \(t=\dfrac{\pi}{2}\): \(\dfrac{dx}{dt}=-2\), \(\dfrac{dy}{dt}=2\cos\pi=-2\). Pendiente: \(\dfrac{-2}{-2}=1\).</li>
+    <li>En \(t=\dfrac{3\pi}{2}\): \(\dfrac{dx}{dt}=2\), \(\dfrac{dy}{dt}=2\cos 3\pi=-2\). Pendiente: \(\dfrac{-2}{2}=-1\).</li>
+    <li>El mismo punto, dos valores de \(t\), dos tangentes: \(y=x\) e \(y=-x\). Con una ecuación \(y=f(x)\) esto no podría pasar.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la cicloide \(x=t-\operatorname{sen}t\), \(y=1-\cos t\), en \(t=\dfrac{\pi}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{dx}{dt}=1-\cos t\) y \(\dfrac{dy}{dt}=\operatorname{sen}t\).</li>
+    <li>\(\dfrac{dy}{dx}=\dfrac{\operatorname{sen}t}{1-\cos t}\), para \(\cos t\neq 1\).</li>
+    <li>En \(t=\dfrac{\pi}{2}\): \(\dfrac{dy}{dx}=\dfrac{1}{1-0}=1\). El punto es \(\left(\dfrac{\pi}{2}-1,\;1\right)\).</li>
+    <li>En \(t=\pi\): \(\dfrac{dy}{dt}=0\) y \(\dfrac{dx}{dt}=2\): tangente horizontal en el punto más alto, \((\pi,\,2)\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: dividir al revés. Arriba va la derivada de \(y\); abajo, la de \(x\). Dos: evaluar la pendiente en el valor de \(x\) en vez de en el valor de \(t\). Tres: olvidar la condición \(\dfrac{dx}{dt}\neq 0\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Para \(x=t^{2}+1\), \(y=t^{3}\): calcula \(\dfrac{dy}{dx}\) y la recta tangente en \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>Deriva las dos respecto de \(t\), divide, y evalúa en \(t=2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dx}{dt}=2t\), \(\dfrac{dy}{dt}=3t^{2}\), así que \(\dfrac{dy}{dx}=\dfrac{3t^{2}}{2t}=\dfrac{3t}{2}\), para \(t\neq 0\).</li>
+        <li>En \(t=2\): pendiente \(3\). Punto: \((5,\,8)\).</li>
+        <li>Recta: \(y-8=3\,(x-5)\), es decir, \(y=3x-7\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra los puntos de tangente horizontal y vertical de la curva \(x=t^{3}-3t\), \(y=t^{2}\).</p>
+    <details><summary>Pista</summary><div><p>Horizontal: \(\frac{dy}{dt}=0\). Vertical: \(\frac{dx}{dt}=0\). Revisa que la otra derivada no se anule.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dx}{dt}=3t^{2}-3\) y \(\dfrac{dy}{dt}=2t\).</li>
+        <li>Horizontal: \(2t=0\ \Longrightarrow\ t=0\), con \(\dfrac{dx}{dt}=-3\neq 0\). Punto: \((0,\,0)\).</li>
+        <li>Vertical: \(3t^{2}-3=0\ \Longrightarrow\ t=\pm 1\), con \(\dfrac{dy}{dt}=\pm 2\neq 0\).</li>
+        <li>\(t=1\): \((1-3,\;1)=(-2,\,1)\). \(t=-1\): \((-1+3,\;1)=(2,\,1)\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un carro de una montaña rusa se mueve de modo que, a los \(t\) segundos, está a \(x=10t\) metros de la partida (en horizontal) y a \(y=6+4\cos t\) metros de altura. ¿Qué pendiente tiene la vía donde pasa en \(t=\dfrac{\pi}{2}\)? ¿A qué distancia horizontal de la partida está el primer valle?</p>
+    <details><summary>Pista</summary><div><p>La pendiente de la vía es \(\frac{dy}{dx}\). En una cima o en un valle la tangente es horizontal.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dx}{dt}=10\) y \(\dfrac{dy}{dt}=-4\operatorname{sen}t\), así que \(\dfrac{dy}{dx}=-\dfrac{4\operatorname{sen}t}{10}=-0{,}4\operatorname{sen}t\).</li>
+        <li>En \(t=\dfrac{\pi}{2}\): pendiente \(-0{,}4\). La vía baja \(0{,}4\) m por cada metro que avanza en horizontal.</li>
+        <li>Tangente horizontal: \(\operatorname{sen}t=0\), en \(t=0\) (altura \(6+4=10\) m, una cima) y en \(t=\pi\) (altura \(6-4=2\) m, un valle).</li>
+        <li>Primer valle: \(x=10\pi\approx 31{,}4\) m de la partida.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H13 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* flecha de vector para las hojas vectoriales del lote 23 */
+function oaFle(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), L = Math.sqrt((bx - ax)*(bx - ax) + (by - ay)*(by - ay)), a = Math.atan2(by - ay, bx - ax), h = Math.min(11, L*0.45);
+  if (L < 2) return; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - 0.7*h*Math.cos(a), by - 0.7*h*Math.sin(a)); c.stroke();
+  c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - h*Math.cos(a - 0.38), by - h*Math.sin(a - 0.38)); c.lineTo(bx - h*Math.cos(a + 0.38), by - h*Math.sin(a + 0.38)); c.closePath(); c.fill(); }
+/* fábrica de escenas de movimiento en el plano (hojas H09–H14 del lote 23): curva, flechas, barra del parámetro y cuentas. Trazos finos y puntos chicos. */
+function oaMov(o){
+  var RUN = o.run || 22, dec = oaDec;
+  function ts(s){ return s < 2 ? o.a : s < RUN - 4 ? o.a + (o.b - o.a)*(s - 2)/(RUN - 6) : o.b; }
+  return {
+    world:o.world, aspect:o.aspect, _chk:o.chk, aria:o.aria, labels:o.labels,
+    sliders:[{id:'t', tex:'t', min:o.a, max:o.b, step:0.01, value:o.a}], legend:o.legend,
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.t = ts(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var t = v.t == null ? o.a : v.t, s = v.q == null ? RUN : v.q*RUN, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), ax = o.axes, A, L, B = o.bar, px, H;
+      function num(tx, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      H = {txt:txt, num:num, dot:function(x, y, col, r){ c.fillStyle = col; c.beginPath(); c.arc(X(x), Y(y), r || 2.8, 0, 6.2832); c.fill(); }};
+      if (ax){ S.line(ax.x[0], 0, ax.x[1], 0, {color:C.ink, width:1.1}); S.line(0, ax.y[0], 0, ax.y[1], {color:C.ink, width:1.1});
+        (ax.tx || []).forEach(function(q){ S.line(q, 0, q, 0, {color:C.ink, width:1}); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(q), Y(0) - 3); c.lineTo(X(q), Y(0) + 3); c.stroke(); num(('' + q).replace('-', '−'), X(q), Y(0) + 11, 'center'); });
+        (ax.ty || []).forEach(function(q){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(q)); c.lineTo(X(0) + 3, Y(q)); c.stroke(); num(('' + q).replace('-', '−'), X(0) - 7, Y(q), 'right'); });
+        num('x', X(ax.x[1]) - 2, Y(0) - 9, 'right'); num('y', X(0) + 8, Y(ax.y[1]) + 4, 'left'); }
+      oaPar(S, o.fx, o.fy, o.a, o.b, 'rgba(31,93,134,0.25)', 1.3); if (t > o.a + 0.005) oaPar(S, o.fx, o.fy, o.a, t, C.sec, 2);
+      if (o.before) o.before(S, t, H);
+      A = o.arrows ? o.arrows(t) : [];
+      A.forEach(function(r){ oaFle(S, r[0], r[1], r[2], r[3], C[r[4]], r[7] || 2); });
+      H.dot(o.fx(t), o.fy(t), C.ink, 3);
+      A.forEach(function(r){ var d = r[6] || [9, -10], len = Math.abs(X(r[2]) - X(r[0])) + Math.abs(Y(r[3]) - Y(r[1])); if (r[5] && len > 16) txt(r[5], X(r[2]) + d[0], Y(r[3]) + d[1], d[0] >= 0 ? 'left' : 'right', C[r[4]]); });
+      if (o.after) o.after(S, t, H);
+      if (B){ px = X(B.x0) + (X(B.x1) - X(B.x0))*(t - o.a)/(o.b - o.a);
+        c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(X(B.x1), Y(B.y)); c.moveTo(X(B.x0), Y(B.y) - 4); c.lineTo(X(B.x0), Y(B.y) + 4); c.moveTo(X(B.x1), Y(B.y) - 4); c.lineTo(X(B.x1), Y(B.y) + 4); c.stroke();
+        c.strokeStyle = C.rise; c.lineWidth = 2.2; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(px, Y(B.y)); c.stroke(); c.fillStyle = C.rise; c.beginPath(); c.arc(px, Y(B.y), 3.2, 0, 6.2832); c.fill();
+        num('parámetro t:  ' + B.la, X(B.x0), Y(B.y) + 12, 'left'); num(B.lb, X(B.x1), Y(B.y) + 12, 'right'); }
+      L = o.lines(t); L.forEach(function(r, i){ txt(r[0], X(o.textAt[0]), Y(o.textAt[1]) + 21*i, 'left', C[r[1]]); });
+      if (o.labAt) S.lab('F', X(o.labAt[0]), Y(o.labAt[1]), 0, 0, v.q != null && s >= RUN - 4);
+    },
+    caption:function(v){ var t = v.t == null ? o.a : v.t, s = v.q == null ? null : v.q*RUN; return o.caption(t, s != null && s < 2, t >= o.b - 0.006); },
+    readout:function(v){ return o.readout(v.t == null ? o.a : v.t); }
+  };
+}
+OA.scene('par-derivada', oaMov((function(){
+  var dec = oaDec, num = OA.num, PI = Math.PI;
+  function fx(t){ return 2*Math.cos(t); } function fy(t){ return Math.sin(2*t); } function dx(t){ return -2*Math.sin(t); } function dy(t){ return 2*Math.cos(2*t); }
+  return { fx:fx, fy:fy, a:0, b:2*PI, run:28,
+    world:{x0:-3.3, x1:3.3, y0:-6.4, y1:2.7}, aspect:9.1/6.6,
+    chk:[{f:fx, df:dx, at:[0.4, 1.9, 4.1]}, {f:fy, df:dy, at:[0.4, 1.9, 4.1]}],
+    axes:{x:[-3.1, 3.1], y:[-2.5, 2.5], tx:[-2, -1, 1, 2], ty:[-2, -1, 1, 2]},
+    aria:'Un punto recorre la curva con forma de ocho x igual a 2 coseno de t, y igual a seno de 2t. Desde el punto sale una flecha burdeo horizontal de largo dx dt y, a continuación, una flecha verde vertical de largo dy dt. La recta naranja punteada es la tangente: su pendiente es el cociente de la flecha verde por la burdeo. Cuando la flecha burdeo se anula la tangente queda vertical; cuando se anula la verde, horizontal.',
+    labels:[['F', '\\dfrac{dy}{dx}=\\dfrac{dy/dt}{dx/dt}=\\dfrac{2\\cos 2t}{-2\\operatorname{sen}t}', 'dy/dx = (dy/dt)/(dx/dt) = 2 cos 2t / (−2 sen t)', 'diff']],
+    legend:'<span><i class="sw sec"></i> curva \\(x=2\\cos t,\\ y=\\operatorname{sen}2t\\)</span><span><i class="sw tan"></i> \\(\\dfrac{dx}{dt}\\): cuánto cambia \\(x\\)</span><span><i class="sw alt"></i> \\(\\dfrac{dy}{dt}\\): cuánto cambia \\(y\\)</span><span><i class="sw rise"></i> recta tangente, de pendiente \\(\\dfrac{dy}{dx}\\)</span>',
+    bar:{x0:-3.0, x1:3.0, y:-3.1, la:'0', lb:'2π'}, textAt:[-3.15, -4.0], labAt:[-3.15, -5.75],
+    before:function(S, t, H){ var c = S.ctx, x = fx(t), y = fy(t), a = dx(t), b = dy(t), L = Math.sqrt(a*a + b*b) || 1, k = 1.5/L; c.strokeStyle = S.C.rise; c.lineWidth = 1.3; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(S.X(x - k*a), S.Y(y - k*b)); c.lineTo(S.X(x + k*a), S.Y(y + k*b)); c.stroke(); c.setLineDash([]); },
+    arrows:function(t){ var x = fx(t), y = fy(t), a = dx(t), b = dy(t); return [[x, y, x + a, y, 'tan', 'dx/dt', [a >= 0 ? -30 : 30, b >= 0 ? 12 : -12]], [x + a, y, x + a, y + b, 'alt', 'dy/dt', [a >= 0 ? 8 : -8, b >= 0 ? 14 : -14]]]; },
+    lines:function(t){ var a = dx(t), b = dy(t); return [['t = ' + dec(t, 2), 'ink'], ['dx/dt = −2 sen t = ' + dec(a, 2), 'tan'], ['dy/dt = 2 cos 2t = ' + dec(b, 2), 'alt'], [Math.abs(a) < 0.03 ? 'dx/dt = 0: la tangente es vertical' : 'dy/dx = (' + dec(b, 2) + ') / (' + dec(a, 2) + ') = ' + dec(b/a, 2), 'rise']]; },
+    caption:function(t, ini, fin){ var a = dx(t), b = dy(t); if (ini) return 'En t = 0 el punto está en (2, 0). Ahí dx/dt = 0 y dy/dt = 2: el punto solo sube, y la tangente es vertical'; if (fin) return 'El punto recorrió el ocho completo. Pasó dos veces por el origen, en t = π/2 con pendiente 1 y en t = 3π/2 con pendiente −1: una curva paramétrica puede tener dos tangentes en un mismo punto'; if (Math.abs(a) < 0.03) return 'Aquí dx/dt = 0: x no cambia en este instante y la tangente es vertical. La pendiente no existe'; return 'En t = ' + dec(t, 2) + ': x cambia a razón de ' + dec(a, 2) + ' y y a razón de ' + dec(b, 2) + '. La pendiente de la tangente es el cociente: ' + dec(b/a, 2); },
+    readout:function(t){ var a = dx(t), b = dy(t); return [['', '\\dfrac{dx}{dt}=-2\\operatorname{sen}t\\qquad\\dfrac{dy}{dt}=2\\cos 2t'], ['d', '\\dfrac{dy}{dx}=\\dfrac{dy/dt}{dx/dt}=\\dfrac{2\\cos 2t}{-2\\operatorname{sen}t}=-\\dfrac{\\cos 2t}{\\operatorname{sen}t}'], ['', Math.abs(a) < 0.03 ? 't=' + num(t, 2) + ':\\quad\\dfrac{dx}{dt}=0\\ \\text{(tangente vertical)}' : 't=' + num(t, 2) + ':\\quad\\dfrac{dy}{dx}\\approx ' + num(b/a, 2)]]; }
+  };
+})()));

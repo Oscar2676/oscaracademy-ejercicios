@@ -1,0 +1,215 @@
+<!--file:H11_vector_aceleracion_como_segunda_derivada_de_r_t.html-->
+<!--title:Vector aceleración como segunda derivada de r(t)-->
+<!--id:vec-aceleracion-->
+<!--tab:H11 Aceleración-->
+<article class="sheet" id="vec-aceleracion" data-hoja="L23 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Vector aceleración como segunda derivada de r(t)</b></li>
+    </ol>
+    <h1>Vector aceleración como segunda derivada de r(t)</h1>
+    <p class="lede">Si \(\vec r(t)\) es la posición de un móvil en el instante \(t\), su primera derivada es la velocidad y su segunda derivada es la <b>aceleración</b>: el vector que dice cómo está cambiando la velocidad.
+    \[\vec v(t)=\vec r\,'(t)\qquad\vec a(t)=\vec v\,'(t)=\vec r\,''(t)\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Un móvil con posición \(\vec r(t)=\big\langle 2t,\;4t-t^{2}\big\rangle\), para \(0\le t\le 4\). Compara la flecha de la velocidad, que cambia, con la de la aceleración.</p>
+  <div class="stage" data-scene="vec-aceleracion"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> la trayectoria.</li>
+    <li><b>Flecha burdeo:</b> la velocidad, \(\vec v(t)=\big\langle 2,\;4-2t\big\rangle\), tangente a la trayectoria.</li>
+    <li><b>Flecha verde:</b> la aceleración, \(\vec a(t)=\langle 0,\,-2\rangle\). En este movimiento es constante: siempre hacia abajo y siempre del mismo largo.</li>
+    <li><b>Barra bajo el dibujo:</b> el avance del tiempo \(t\), de \(0\) a \(4\).</li>
+    <li><b>Bajo la barra:</b> los dos vectores con su expresión y su valor, y la rapidez.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale</h3>
+    <ol class="steps">
+      <li>La velocidad media entre \(t\) y \(t+h\) es el cambio de posición dividido por el tiempo: \(\dfrac{\vec r(t+h)-\vec r(t)}{h}\). Su límite cuando \(h\to 0\) es la velocidad: \(\vec v(t)=\vec r\,'(t)\).</li>
+      <li>La aceleración media es el cambio de velocidad dividido por el tiempo: \(\dfrac{\vec v(t+h)-\vec v(t)}{h}\). Su límite es la aceleración:
+        \[\vec a(t)=\lim_{h\to 0}\frac{\vec v(t+h)-\vec v(t)}{h}=\vec v\,'(t)\]</li>
+      <li>Como \(\vec v=\vec r\,'\), queda \(\vec a(t)=\big(\vec r\,'\big)'(t)=\vec r\,''(t)=\big\langle x''(t),\;y''(t)\big\rangle\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cómo leer el vector aceleración</h3>
+    <ol class="steps">
+      <li><b>Unidades.</b> Si la posición va en metros y el tiempo en segundos: velocidad en m/s y aceleración en m/s².</li>
+      <li><b>Hacia dónde dobla.</b> La trayectoria se curva hacia el lado al que apunta \(\vec a\).</li>
+      <li><b>¿Va más rápido o más lento?</b> Lo dice el signo de \(\vec v\cdot\vec a\). Sale de derivar el cuadrado de la rapidez, \(\vec v\cdot\vec v\), con la regla del producto punto: \(\big(\vec v\cdot\vec v\big)'=2\,\vec v\cdot\vec a\). Si \(\vec v\cdot\vec a&gt;0\), la rapidez aumenta; si es \(&lt;0\), disminuye; si es \(0\), en ese instante no cambia.</li>
+      <li><b>Aceleración no es «ir rápido».</b> Un móvil puede ir rápido con aceleración \(\vec 0\), y puede tener aceleración aunque su rapidez sea constante (ejemplo 2).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\vec r(t)=\big\langle 2t,\;4t-t^{2}\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Velocidad.</b> \(\vec v(t)=\vec r\,'(t)=\big\langle 2,\;4-2t\big\rangle\).</li>
+    <li><b>Aceleración.</b> \(\vec a(t)=\vec v\,'(t)=\langle 0,\,-2\rangle\).</li>
+    <li><b>¿Cuándo frena y cuándo acelera?</b> \(\vec v\cdot\vec a=2\cdot 0+(4-2t)(-2)=4t-8\). Es negativo para \(t&lt;2\) (la rapidez baja mientras sube), cero en \(t=2\) (la cima) y positivo para \(t&gt;2\) (la rapidez aumenta mientras baja).</li>
+    <li><b>Comprobación en la cima.</b> \(\vec v(2)=\langle 2,\,0\rangle\): rapidez \(2\), la mínima. En \(t=0\) y \(t=4\) la rapidez es \(\sqrt{4+16}=\sqrt{20}\approx 4{,}47\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, movimiento circular: \(\vec r(t)=\big\langle 2\cos t,\;2\operatorname{sen}t\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec v(t)=\big\langle -2\operatorname{sen}t,\;2\cos t\big\rangle\). Rapidez: \(\sqrt{4\operatorname{sen}^{2}t+4\cos^{2}t}=2\), constante.</li>
+    <li>\(\vec a(t)=\big\langle -2\cos t,\;-2\operatorname{sen}t\big\rangle=-\,\vec r(t)\).</li>
+    <li>La aceleración apunta hacia el centro del círculo y mide \(2\). No cambia la rapidez (\(\vec v\cdot\vec a=4\operatorname{sen}t\cos t-4\cos t\operatorname{sen}t=0\)): solo cambia la dirección de la velocidad.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\vec r(t)=\big\langle t^{2},\;t^{3}\big\rangle\) en \(t=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec v(t)=\big\langle 2t,\;3t^{2}\big\rangle\) y \(\vec a(t)=\big\langle 2,\;6t\big\rangle\).</li>
+    <li>En \(t=1\): \(\vec v=\langle 2,\,3\rangle\) y \(\vec a=\langle 2,\,6\rangle\).</li>
+    <li>\(\vec v\cdot\vec a=4+18=22&gt;0\): en ese instante la rapidez está aumentando.</li>
+    <li>Largo de la aceleración: \(\sqrt{4+36}=\sqrt{40}\approx 6{,}32\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, al revés: de la aceleración a la velocidad</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se sabe que \(\vec a(t)=\langle 0,\,-2\rangle\) y que \(\vec v(0)=\langle 2,\,4\rangle\). Se busca \(\vec v(t)\).</li>
+    <li>Se integra cada componente: \(\vec v(t)=\big\langle C_{1},\;-2t+C_{2}\big\rangle\).</li>
+    <li>Con \(t=0\): \(\langle C_{1},\,C_{2}\rangle=\langle 2,\,4\rangle\).</li>
+    <li>\(\vec v(t)=\big\langle 2,\;4-2t\big\rangle\): la velocidad del ejemplo 1.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Dibujar la aceleración tangente a la trayectoria. La tangente es la <b>velocidad</b>. La aceleración puede apuntar hacia cualquier lado: en el ejemplo 1, siempre hacia abajo; en el ejemplo 2, hacia el centro.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la velocidad y la aceleración de \(\vec r(t)=\big\langle t^{3}-3t,\;3t^{2}\big\rangle\) y evalúalas en \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>Deriva una vez para la velocidad y otra vez para la aceleración.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle 3t^{2}-3,\;6t\big\rangle\) y \(\vec a(t)=\big\langle 6t,\;6\big\rangle\).</li>
+        <li>\(\vec v(2)=\langle 9,\,12\rangle\), de rapidez \(\sqrt{81+144}=15\).</li>
+        <li>\(\vec a(2)=\langle 12,\,6\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Para \(\vec r(t)=\big\langle 3\cos 2t,\;3\operatorname{sen}2t\big\rangle\), calcula \(\vec a(t)\), su largo, y escríbela en función de \(\vec r(t)\).</p>
+    <details><summary>Pista</summary><div><p>Cada derivada agrega un factor \(2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle -6\operatorname{sen}2t,\;6\cos 2t\big\rangle\).</li>
+        <li>\(\vec a(t)=\big\langle -12\cos 2t,\;-12\operatorname{sen}2t\big\rangle=-4\,\vec r(t)\).</li>
+        <li>Largo: \(\sqrt{144\cos^{2}2t+144\operatorname{sen}^{2}2t}=12\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un auto recorre una rotonda de \(20\) m de radio con rapidez constante. Su posición, en metros, es \(\vec r(t)=\big\langle 20\cos(0{,}5\,t),\;20\operatorname{sen}(0{,}5\,t)\big\rangle\), con \(t\) en segundos. Calcula su rapidez y el largo y la dirección de su aceleración.</p>
+    <details><summary>Pista</summary><div><p>Regla de la cadena con \(k=0{,}5\), dos veces.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle -10\operatorname{sen}(0{,}5\,t),\;10\cos(0{,}5\,t)\big\rangle\). Rapidez: \(10\) m/s (son \(36\) km/h).</li>
+        <li>\(\vec a(t)=\big\langle -5\cos(0{,}5\,t),\;-5\operatorname{sen}(0{,}5\,t)\big\rangle=-0{,}25\,\vec r(t)\).</li>
+        <li>Largo: \(0{,}25\cdot 20=5\) m/s². Dirección: hacia el centro de la rotonda.</li>
+        <li>Respuesta: va a \(10\) m/s y, aunque su rapidez no cambia, tiene una aceleración de \(5\) m/s² hacia el centro. Es la que lo hace doblar.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* flecha de vector para las hojas vectoriales del lote 23 */
+function oaFle(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), L = Math.sqrt((bx - ax)*(bx - ax) + (by - ay)*(by - ay)), a = Math.atan2(by - ay, bx - ax), h = Math.min(11, L*0.45);
+  if (L < 2) return; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - 0.7*h*Math.cos(a), by - 0.7*h*Math.sin(a)); c.stroke();
+  c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - h*Math.cos(a - 0.38), by - h*Math.sin(a - 0.38)); c.lineTo(bx - h*Math.cos(a + 0.38), by - h*Math.sin(a + 0.38)); c.closePath(); c.fill(); }
+/* fábrica de escenas de movimiento en el plano (hojas H09–H14 del lote 23): curva, flechas, barra del parámetro y cuentas. Trazos finos y puntos chicos. */
+function oaMov(o){
+  var RUN = o.run || 22, dec = oaDec;
+  function ts(s){ return s < 2 ? o.a : s < RUN - 4 ? o.a + (o.b - o.a)*(s - 2)/(RUN - 6) : o.b; }
+  return {
+    world:o.world, aspect:o.aspect, _chk:o.chk, aria:o.aria, labels:o.labels,
+    sliders:[{id:'t', tex:'t', min:o.a, max:o.b, step:0.01, value:o.a}], legend:o.legend,
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.t = ts(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var t = v.t == null ? o.a : v.t, s = v.q == null ? RUN : v.q*RUN, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), ax = o.axes, A, L, B = o.bar, px, H;
+      function num(tx, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      H = {txt:txt, num:num, dot:function(x, y, col, r){ c.fillStyle = col; c.beginPath(); c.arc(X(x), Y(y), r || 2.8, 0, 6.2832); c.fill(); }};
+      if (ax){ S.line(ax.x[0], 0, ax.x[1], 0, {color:C.ink, width:1.1}); S.line(0, ax.y[0], 0, ax.y[1], {color:C.ink, width:1.1});
+        (ax.tx || []).forEach(function(q){ S.line(q, 0, q, 0, {color:C.ink, width:1}); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(q), Y(0) - 3); c.lineTo(X(q), Y(0) + 3); c.stroke(); num(('' + q).replace('-', '−'), X(q), Y(0) + 11, 'center'); });
+        (ax.ty || []).forEach(function(q){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(q)); c.lineTo(X(0) + 3, Y(q)); c.stroke(); num(('' + q).replace('-', '−'), X(0) - 7, Y(q), 'right'); });
+        num('x', X(ax.x[1]) - 2, Y(0) - 9, 'right'); num('y', X(0) + 8, Y(ax.y[1]) + 4, 'left'); }
+      oaPar(S, o.fx, o.fy, o.a, o.b, 'rgba(31,93,134,0.25)', 1.3); if (t > o.a + 0.005) oaPar(S, o.fx, o.fy, o.a, t, C.sec, 2);
+      if (o.before) o.before(S, t, H);
+      A = o.arrows ? o.arrows(t) : [];
+      A.forEach(function(r){ oaFle(S, r[0], r[1], r[2], r[3], C[r[4]], r[7] || 2); });
+      H.dot(o.fx(t), o.fy(t), C.ink, 3);
+      A.forEach(function(r){ var d = r[6] || [9, -10], len = Math.abs(X(r[2]) - X(r[0])) + Math.abs(Y(r[3]) - Y(r[1])); if (r[5] && len > 16) txt(r[5], X(r[2]) + d[0], Y(r[3]) + d[1], d[0] >= 0 ? 'left' : 'right', C[r[4]]); });
+      if (o.after) o.after(S, t, H);
+      if (B){ px = X(B.x0) + (X(B.x1) - X(B.x0))*(t - o.a)/(o.b - o.a);
+        c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(X(B.x1), Y(B.y)); c.moveTo(X(B.x0), Y(B.y) - 4); c.lineTo(X(B.x0), Y(B.y) + 4); c.moveTo(X(B.x1), Y(B.y) - 4); c.lineTo(X(B.x1), Y(B.y) + 4); c.stroke();
+        c.strokeStyle = C.rise; c.lineWidth = 2.2; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(px, Y(B.y)); c.stroke(); c.fillStyle = C.rise; c.beginPath(); c.arc(px, Y(B.y), 3.2, 0, 6.2832); c.fill();
+        num('parámetro t:  ' + B.la, X(B.x0), Y(B.y) + 12, 'left'); num(B.lb, X(B.x1), Y(B.y) + 12, 'right'); }
+      L = o.lines(t); L.forEach(function(r, i){ txt(r[0], X(o.textAt[0]), Y(o.textAt[1]) + 21*i, 'left', C[r[1]]); });
+      if (o.labAt) S.lab('F', X(o.labAt[0]), Y(o.labAt[1]), 0, 0, v.q != null && s >= RUN - 4);
+    },
+    caption:function(v){ var t = v.t == null ? o.a : v.t, s = v.q == null ? null : v.q*RUN; return o.caption(t, s != null && s < 2, t >= o.b - 0.006); },
+    readout:function(v){ return o.readout(v.t == null ? o.a : v.t); }
+  };
+}
+OA.scene('vec-aceleracion', oaMov((function(){
+  var dec = oaDec, num = OA.num;
+  function fx(t){ return 2*t; } function fy(t){ return 4*t - t*t; } function dy(t){ return 4 - 2*t; }
+  return { fx:fx, fy:fy, a:0, b:4, run:24,
+    world:{x0:-0.9, x1:10.5, y0:-10.2, y1:5.3}, aspect:15.5/11.4,
+    chk:[{f:fx, df:function(){ return 2; }, at:[0.5, 2, 3.5]}, {f:fy, df:dy, at:[0.5, 2, 3.5]}, {f:dy, df:function(){ return -2; }, at:[0.5, 2, 3.5]}],
+    axes:{x:[-0.6, 10.2], y:[-4.2, 5.0], tx:[2, 4, 6, 8], ty:[-4, -2, 2, 4]},
+    aria:'Un punto recorre el arco de parábola r de t igual a 2t, 4t menos t al cuadrado, desde el origen hasta el punto 8, 0. Desde el punto salen dos flechas. La burdeo es la velocidad, v de t igual a 2, 4 menos 2t: va cambiando, primero apunta hacia arriba, en la cima queda horizontal y luego apunta hacia abajo. La verde es la aceleración, a de t igual a 0, menos 2: no cambia nunca, apunta siempre hacia abajo con el mismo largo.',
+    labels:[['F', '\\vec a(t)=\\vec v\\,\'(t)=\\vec r\\,\'\'(t)=\\big\\langle 0,\;-2\\big\\rangle', 'a(t) = v′(t) = r″(t) = ⟨0, −2⟩', 'diff']],
+    legend:'<span><i class="sw sec"></i> trayectoria \\(\\vec r(t)=\\langle 2t,\\,4t-t^{2}\\rangle\\)</span><span><i class="sw tan"></i> velocidad \\(\\vec v(t)=\\vec r\\,\'(t)\\)</span><span><i class="sw alt"></i> aceleración \\(\\vec a(t)=\\vec r\\,\'\'(t)\\)</span>',
+    bar:{x0:-0.5, x1:10.1, y:-5.1, la:'0', lb:'4'}, textAt:[-0.7, -6.5], labAt:[-0.7, -9.5],
+    arrows:function(t){ var x = fx(t), y = fy(t); return [[x, y, x + 2, y + dy(t), 'tan', 'v(t)', [8, dy(t) >= 0 ? -8 : 10]], [x, y, x, y - 2, 'alt', 'a(t)', [-9, 6]]]; },
+    lines:function(t){ return [['t = ' + dec(t, 2), 'ink'], ['v(t) = r′(t) = ⟨2, 4 − 2t⟩ = ⟨2; ' + dec(dy(t), 2) + '⟩', 'tan'], ['a(t) = r″(t) = ⟨0, −2⟩', 'alt'], ['rapidez |v(t)| = ' + dec(Math.sqrt(4 + dy(t)*dy(t)), 2), 'ink']]; },
+    caption:function(t, ini, fin){ if (ini) return 'El punto parte del origen con velocidad ⟨2, 4⟩ (flecha burdeo). La flecha verde es la aceleración: la derivada de la velocidad, es decir, la segunda derivada de la posición'; if (fin) return 'La velocidad cambió en todo el recorrido; la aceleración, no: fue siempre ⟨0, −2⟩. La aceleración es la que dobla la trayectoria hacia abajo'; return 'En t = ' + dec(t, 2) + ' la velocidad es ⟨2; ' + dec(dy(t), 2) + '⟩ y la aceleración sigue siendo ⟨0, −2⟩: en cada unidad de tiempo le resta 2 a la segunda componente de la velocidad'; },
+    readout:function(t){ return [['', '\\vec r(t)=\\big\\langle 2t,\;4t-t^{2}\\big\\rangle\\ \\Longrightarrow\\ \\vec v(t)=\\vec r\\,\'(t)=\\big\\langle 2,\;4-2t\\big\\rangle'], ['d', '\\vec a(t)=\\vec v\\,\'(t)=\\big\\langle 0,\;-2\\big\\rangle'], ['', 't=' + num(t, 2) + ':\\quad\\vec v=\\big\\langle 2;\\ ' + num(dy(t), 2) + '\\big\\rangle,\\quad\\vec a=\\big\\langle 0;\\ -2\\big\\rangle']]; }
+  };
+})()));

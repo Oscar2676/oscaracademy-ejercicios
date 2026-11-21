@@ -1,0 +1,167 @@
+<!--file:H12_resolver_ejercicios_de_movimiento_con_funciones_parametrizadas_y_vectoriales.html-->
+<!--title:Resolver ejercicios de movimiento mediante funciones parametrizadas y con valores vectoriales-->
+<!--id:vec-movimiento-->
+<!--tab:H12 Movimiento-->
+<article class="sheet" id="vec-movimiento" data-hoja="L23 H12">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Resolver ejercicios de movimiento mediante funciones parametrizadas y con valores vectoriales</b></li>
+    </ol>
+    <h1>Resolver ejercicios de movimiento mediante funciones parametrizadas y con valores vectoriales</h1>
+    <p class="lede">Un ejercicio de movimiento en el plano se resuelve con cuatro herramientas: derivar la posición da la velocidad, derivar la velocidad da la aceleración, el largo de la velocidad es la rapidez, e integrar la rapidez da la distancia recorrida. La distancia se arma sumando <b>pedacitos de camino de largo \(ds=\big|\vec v(t)\big|\,dt\)</b>.
+    \[\vec v(t)=\vec r\,'(t)\qquad\vec a(t)=\vec v\,'(t)\qquad\big|\vec v(t)\big|=\sqrt{x'(t)^{2}+y'(t)^{2}}\qquad d=\int_{a}^{b}\big|\vec v(t)\big|\,dt\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Un punto con posición \(\vec r(t)=\left\langle t^{2},\;\dfrac{t^{3}}{3}-t\right\rangle\), para \(0\le t\le 2\). Mira la diferencia entre lo que <b>recorre</b> y lo que <b>se desplaza</b>.</p>
+  <div class="stage" data-scene="vec-movimiento"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> la trayectoria. <b>Flecha burdeo:</b> la velocidad, \(\vec v(t)=\big\langle 2t,\;t^{2}-1\big\rangle\).</li>
+    <li><b>Tramo negro con su rótulo:</b> el pedacito de camino que avanza en un instante, \(ds=\big|\vec v(t)\big|\,dt\): rapidez por tiempo.</li>
+    <li><b>Regla azul, bajo los ejes:</b> la distancia recorrida. Es la curva «estirada»: la suma de todos los pedacitos \(ds\).</li>
+    <li><b>Flecha naranja:</b> el desplazamiento, \(\vec r(t)-\vec r(0)\): la flecha recta desde la partida hasta donde está ahora.</li>
+    <li><b>Barra del parámetro:</b> el avance del tiempo \(t\), de \(0\) a \(2\).</li>
+    <li><b>Bajo la barra:</b> velocidad, rapidez, distancia y desplazamiento, con su expresión y su valor.</li>
+  </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(u\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>La distancia recorrida desde \(0\) hasta el instante \(t\) es una integral cuyo límite superior es \(t\).</li>
+      <li>La letra \(t\) ya está ocupada: es el instante hasta el que se suma. Adentro de la integral hace falta otra letra para el instante que va recorriendo la suma. Se eligió \(u\).</li>
+      <li>\(d(t)=\displaystyle\int_{0}^{t}\big|\vec v(u)\big|\,du\) se lee: «suma de la rapidez en cada instante \(u\), por \(du\), desde \(u=0\) hasta \(u=t\)».</li>
+      <li>La letra de adentro es muda: con \(s\) o con \(\tau\) el resultado es el mismo. Aquí: \(\displaystyle\int_{0}^{t}\left(u^{2}+1\right)du=\left[\dfrac{u^{3}}{3}+u\right]_{0}^{t}=\dfrac{t^{3}}{3}+t\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula de la distancia</h3>
+    <ol class="steps">
+      <li>En un intervalo de tiempo muy corto, \(dt\), el punto cambia su posición en \(dx=x'(t)\,dt\) y \(dy=y'(t)\,dt\).</li>
+      <li>El pedacito de camino es la hipotenusa: \(ds=\sqrt{dx^{2}+dy^{2}}=\sqrt{x'(t)^{2}+y'(t)^{2}}\;dt=\big|\vec v(t)\big|\,dt\) (con \(dt&gt;0\)).</li>
+      <li>La distancia recorrida entre \(t=a\) y \(t=b\) es la suma de todos los pedacitos: \(d=\displaystyle\int_{a}^{b}\big|\vec v(t)\big|\,dt\). Es la longitud de arco de la trayectoria.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Distancia y desplazamiento no son lo mismo</h3>
+    <ol class="steps">
+      <li><b>Desplazamiento:</b> el vector \(\vec r(b)-\vec r(a)\). Solo importa dónde partió y dónde llegó. También es \(\displaystyle\int_{a}^{b}\vec v(t)\,dt\), integrando cada componente.</li>
+      <li><b>Distancia recorrida:</b> el número \(\displaystyle\int_{a}^{b}\big|\vec v(t)\big|\,dt\). Cuenta todo el camino.</li>
+      <li>Siempre \(\big|\vec r(b)-\vec r(a)\big|\le d\). Son iguales solo si el movimiento fue en línea recta y sin devolverse.</li>
+      <li><b>De la velocidad a la posición:</b> se integra cada componente y se usa la posición inicial para encontrar las constantes: \(\vec r(t)=\vec r(0)+\displaystyle\int_{0}^{t}\vec v(u)\,du\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: velocidad, rapidez y aceleración. \(\vec r(t)=\left\langle t^{2},\;\dfrac{t^{3}}{3}-t\right\rangle\) en \(t=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Velocidad.</b> \(\vec v(t)=\big\langle 2t,\;t^{2}-1\big\rangle\), así que \(\vec v(2)=\langle 4,\,3\rangle\).</li>
+    <li><b>Rapidez.</b> \(\big|\vec v(2)\big|=\sqrt{16+9}=5\).</li>
+    <li><b>Aceleración.</b> \(\vec a(t)=\big\langle 2,\;2t\big\rangle\), así que \(\vec a(2)=\langle 2,\,4\rangle\).</li>
+    <li><b>Posición.</b> \(\vec r(2)=\left\langle 4,\;\dfrac{8}{3}-2\right\rangle=\left\langle 4,\;\dfrac{2}{3}\right\rangle\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: distancia recorrida entre \(t=0\) y \(t=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Rapidez en general.</b> \(\big|\vec v(t)\big|^{2}=(2t)^{2}+\left(t^{2}-1\right)^{2}=4t^{2}+t^{4}-2t^{2}+1=t^{4}+2t^{2}+1=\left(t^{2}+1\right)^{2}\).</li>
+    <li>Como \(t^{2}+1&gt;0\): \(\big|\vec v(t)\big|=t^{2}+1\).</li>
+    <li><b>Distancia.</b> \(d=\displaystyle\int_{0}^{2}\left(t^{2}+1\right)dt=\left[\dfrac{t^{3}}{3}+t\right]_{0}^{2}=\dfrac{8}{3}+2=\dfrac{14}{3}\approx 4{,}67\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: desplazamiento en el mismo intervalo</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\vec r(2)-\vec r(0)=\left\langle 4,\;\dfrac{2}{3}\right\rangle-\langle 0,\,0\rangle=\left\langle 4,\;\dfrac{2}{3}\right\rangle\).</li>
+    <li>Su largo: \(\sqrt{16+\dfrac{4}{9}}=\sqrt{\dfrac{148}{9}}=\dfrac{\sqrt{148}}{3}\approx 4{,}06\).</li>
+    <li>Es menor que la distancia recorrida, \(4{,}67\), porque el camino fue curvo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: de la velocidad a la posición</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se sabe que \(\vec v(t)=\big\langle 2t,\;t^{2}-1\big\rangle\) y que \(\vec r(0)=\langle 0,\,0\rangle\).</li>
+    <li>Se integra cada componente: \(\vec r(t)=\left\langle t^{2}+C_{1},\;\dfrac{t^{3}}{3}-t+C_{2}\right\rangle\).</li>
+    <li>Con \(t=0\): \(\langle C_{1},\,C_{2}\rangle=\langle 0,\,0\rangle\).</li>
+    <li>\(\vec r(t)=\left\langle t^{2},\;\dfrac{t^{3}}{3}-t\right\rangle\): la posición de los ejemplos anteriores.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: confundir velocidad (un vector) con rapidez (un número, su largo). Dos: calcular la distancia como el largo del desplazamiento. Tres: integrar \(\vec v\) y olvidar la posición inicial.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Para \(\vec r(t)=\big\langle t^{3}-3t,\;3t^{2}\big\rangle\): calcula la velocidad, la rapidez y la aceleración en \(t=1\), y la distancia recorrida entre \(t=0\) y \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>\(\left(3t^{2}-3\right)^{2}+(6t)^{2}\) es un cuadrado perfecto.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec v(t)=\big\langle 3t^{2}-3,\;6t\big\rangle\) y \(\vec a(t)=\big\langle 6t,\;6\big\rangle\).</li>
+        <li>En \(t=1\): \(\vec v=\langle 0,\,6\rangle\), rapidez \(6\), y \(\vec a=\langle 6,\,6\rangle\).</li>
+        <li>\(\big|\vec v(t)\big|^{2}=9t^{4}-18t^{2}+9+36t^{2}=9t^{4}+18t^{2}+9=\left(3t^{2}+3\right)^{2}\), así que \(\big|\vec v(t)\big|=3t^{2}+3\).</li>
+        <li>\(d=\displaystyle\int_{0}^{2}\left(3t^{2}+3\right)dt=\left[t^{3}+3t\right]_{0}^{2}=8+6=14\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Un punto tiene velocidad \(\vec v(t)=\big\langle 2,\;6-2t\big\rangle\) y parte en \(\vec r(0)=\langle 1,\,0\rangle\). Encuentra \(\vec r(t)\), el instante \(t&gt;0\) en que su segunda coordenada vuelve a ser \(0\), y el desplazamiento hasta ese instante.</p>
+    <details><summary>Pista</summary><div><p>Integra cada componente y ajusta las constantes con \(\vec r(0)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r(t)=\big\langle 2t+C_{1},\;6t-t^{2}+C_{2}\big\rangle\); con \(\vec r(0)=\langle 1,\,0\rangle\): \(C_{1}=1\), \(C_{2}=0\).</li>
+        <li>\(\vec r(t)=\big\langle 1+2t,\;6t-t^{2}\big\rangle\).</li>
+        <li>\(6t-t^{2}=0\ \Longrightarrow\ t\,(6-t)=0\): \(t=6\).</li>
+        <li>\(\vec r(6)=\langle 13,\,0\rangle\). Desplazamiento: \(\langle 13,\,0\rangle-\langle 1,\,0\rangle=\langle 12,\,0\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Se lanza una pelota desde \(1\) m de altura. Su velocidad, en m/s, a los \(t\) segundos es \(\vec v(t)=\big\langle 6,\;8-10t\big\rangle\) (primera componente: horizontal; segunda: vertical, con la aceleración de gravedad aproximada a \(10\) m/s²). Calcula la rapidez inicial, la altura máxima, y a qué distancia horizontal cae al suelo.</p>
+    <details><summary>Pista</summary><div><p>Posición inicial \(\langle 0,\,1\rangle\). La altura es máxima cuando la componente vertical de la velocidad vale \(0\). Cae cuando la altura vale \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Rapidez inicial: \(\big|\vec v(0)\big|=\sqrt{36+64}=10\) m/s.</li>
+        <li>Posición: \(\vec r(t)=\big\langle 6t,\;1+8t-5t^{2}\big\rangle\).</li>
+        <li>Altura máxima: \(8-10t=0\ \Longrightarrow\ t=0{,}8\) s. Altura: \(1+8\cdot 0{,}8-5\cdot 0{,}64=1+6{,}4-3{,}2=4{,}2\) m.</li>
+        <li>Cae cuando \(1+8t-5t^{2}=0\), es decir, \(5t^{2}-8t-1=0\): \(t=\dfrac{8+\sqrt{64+20}}{10}=\dfrac{8+\sqrt{84}}{10}\approx 1{,}72\) s (la otra raíz es negativa).</li>
+        <li>Distancia horizontal: \(6\cdot 1{,}72\approx 10{,}3\) m.</li>
+        <li>Respuesta: sale a \(10\) m/s, sube hasta \(4{,}2\) m y cae a unos \(10{,}3\) m.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H12 · v001 · Pendiente de APR</span>
+</footer>
+</article>

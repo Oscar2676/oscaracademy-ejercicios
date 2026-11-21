@@ -1,0 +1,229 @@
+<!--file:H14_segundas_derivadas_de_ecuaciones_parametricas.html-->
+<!--title:Segundas derivadas de ecuaciones paramétricas-->
+<!--id:par-segunda-->
+<!--tab:H14 Segunda derivada paramétrica-->
+<article class="sheet" id="par-segunda" data-hoja="L23 H14">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Segundas derivadas de ecuaciones paramétricas</b></li>
+    </ol>
+    <h1>Segundas derivadas de ecuaciones paramétricas</h1>
+    <p class="lede">La segunda derivada \(\dfrac{d^{2}y}{dx^{2}}\) mide cómo cambia la <b>pendiente</b> al avanzar \(x\), y su signo dice hacia dónde es cóncava la curva. En una curva paramétrica se calcula derivando la pendiente respecto de \(t\) y dividiendo, otra vez, por \(\dfrac{dx}{dt}\).
+    \[\frac{d^{2}y}{dx^{2}}=\frac{\dfrac{d}{dt}\left(\dfrac{dy}{dx}\right)}{\dfrac{dx}{dt}},\quad\text{si }\frac{dx}{dt}\neq 0\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La curva \(x=t^{2}\), \(y=t^{3}-3t\), para \(t\) entre \(0{,}4\) y \(1{,}8\). Se comparan dos tangentes vecinas: cuánto cambió la pendiente y cuánto avanzó \(x\).</p>
+  <div class="stage" data-scene="par-segunda"></div>
+  <ul class="keys">
+    <li><b>Tangente naranja:</b> la del punto, de pendiente \(m=\dfrac{dy}{dx}\).</li>
+    <li><b>Tangente burdeo, delgada:</b> la de un punto un poco más adelante, de pendiente \(m+dm\).</li>
+    <li><b>Tramo negro sobre el eje \(x\), con su rótulo:</b> \(dx\), lo que avanzó \(x\) entre un punto y el otro. Se dibuja ancho para que se vea; en el cálculo es tan pequeño como se quiera.</li>
+    <li><b>La segunda derivada</b> es el cociente \(\dfrac{dm}{dx}\): cambio de pendiente por unidad de \(x\). Aquí la tangente burdeo siempre está más inclinada hacia arriba que la naranja: la pendiente crece, y la curva es cóncava hacia arriba.</li>
+    <li><b>Barra del parámetro:</b> el valor de \(t\).</li>
+    <li><b>Bajo la barra:</b> la pendiente, su derivada respecto de \(t\), \(\dfrac{dx}{dt}\) y el cociente.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La pendiente es una cantidad que depende de \(t\): \(m(t)=\dfrac{dy}{dx}=\dfrac{dy/dt}{dx/dt}\).</li>
+      <li>La segunda derivada es la derivada de la pendiente <b>respecto de \(x\)</b>: \(\dfrac{d^{2}y}{dx^{2}}=\dfrac{dm}{dx}\).</li>
+      <li>Para derivar respecto de \(x\) algo que está escrito con \(t\) ya hay una regla: la misma de la primera derivada, aplicada ahora a \(m\) en lugar de \(y\):
+        \[\frac{dm}{dx}=\frac{dm/dt}{dx/dt}\]</li>
+      <li>Reemplazando \(m=\dfrac{dy}{dx}\):
+        \[\frac{d^{2}y}{dx^{2}}=\frac{\dfrac{d}{dt}\left(\dfrac{dy}{dx}\right)}{\dfrac{dx}{dt}}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El procedimiento, en tres pasos</h3>
+    <ol class="steps">
+      <li>Calcular \(\dfrac{dy}{dx}=\dfrac{dy/dt}{dx/dt}\) y <b>simplificarla</b>, en función de \(t\).</li>
+      <li>Derivar ese resultado respecto de \(t\).</li>
+      <li>Dividir por \(\dfrac{dx}{dt}\).</li>
+      <li><b>Lectura:</b> si \(\dfrac{d^{2}y}{dx^{2}}&gt;0\), la curva es cóncava hacia arriba en ese punto; si es \(&lt;0\), cóncava hacia abajo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(x=t^{2}\), \(y=t^{3}-3t\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Pendiente.</b> \(\dfrac{dx}{dt}=2t\), \(\dfrac{dy}{dt}=3t^{2}-3\), así que \(\dfrac{dy}{dx}=\dfrac{3t^{2}-3}{2t}=\dfrac{3}{2}\left(t-\dfrac{1}{t}\right)\), para \(t\neq 0\).</li>
+    <li><b>Se deriva respecto de \(t\).</b> \(\dfrac{d}{dt}\left[\dfrac{3}{2}\left(t-\dfrac{1}{t}\right)\right]=\dfrac{3}{2}\left(1+\dfrac{1}{t^{2}}\right)\).</li>
+    <li><b>Se divide por \(\dfrac{dx}{dt}=2t\).</b>
+      \[\frac{d^{2}y}{dx^{2}}=\frac{\dfrac{3}{2}\left(1+\dfrac{1}{t^{2}}\right)}{2t}=\frac{3}{4t}\cdot\frac{t^{2}+1}{t^{2}}=\frac{3\left(t^{2}+1\right)}{4t^{3}}\]</li>
+    <li><b>En \(t=1\):</b> \(\dfrac{3\cdot 2}{4}=\dfrac{3}{2}\).</li>
+    <li><b>Concavidad.</b> El numerador es siempre positivo; el signo es el de \(t^{3}\). Para \(t&gt;0\) la curva es cóncava hacia arriba (lo que muestra la animación); para \(t&lt;0\), hacia abajo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: la semicircunferencia \(x=\cos t\), \(y=\operatorname{sen}t\), con \(0&lt;t&lt;\pi\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{dy}{dx}=\dfrac{\cos t}{-\operatorname{sen}t}=-\dfrac{\cos t}{\operatorname{sen}t}\).</li>
+    <li>Se deriva con la regla del cociente: \(\dfrac{d}{dt}\left(-\dfrac{\cos t}{\operatorname{sen}t}\right)=-\dfrac{(-\operatorname{sen}t)\operatorname{sen}t-\cos t\cos t}{\operatorname{sen}^{2}t}=\dfrac{\operatorname{sen}^{2}t+\cos^{2}t}{\operatorname{sen}^{2}t}=\dfrac{1}{\operatorname{sen}^{2}t}\).</li>
+    <li>Se divide por \(\dfrac{dx}{dt}=-\operatorname{sen}t\): \(\dfrac{d^{2}y}{dx^{2}}=-\dfrac{1}{\operatorname{sen}^{3}t}\).</li>
+    <li>Para \(0&lt;t&lt;\pi\), \(\operatorname{sen}t&gt;0\): la segunda derivada es negativa. La mitad de arriba de la circunferencia es cóncava hacia abajo, como debe ser.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: el error que hay que evitar, con \(x=t^{2}\), \(y=t^{3}\), \(t&gt;0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Mal:</b> dividir las segundas derivadas, \(\dfrac{y''(t)}{x''(t)}=\dfrac{6t}{2}=3t\).</li>
+    <li><b>Bien:</b> \(\dfrac{dy}{dx}=\dfrac{3t^{2}}{2t}=\dfrac{3t}{2}\); su derivada respecto de \(t\) es \(\dfrac{3}{2}\); dividida por \(2t\): \(\dfrac{d^{2}y}{dx^{2}}=\dfrac{3}{4t}\).</li>
+    <li><b>Comprobación sin parámetro.</b> De \(x=t^{2}\) con \(t&gt;0\): \(t=x^{1/2}\), así que \(y=x^{3/2}\). Entonces \(y'=\dfrac{3}{2}x^{1/2}\) e \(y''=\dfrac{3}{4}x^{-1/2}=\dfrac{3}{4t}\). Coincide con el cálculo correcto, no con \(3t\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(x=e^{t}\), \(y=e^{-t}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{dy}{dx}=\dfrac{-e^{-t}}{e^{t}}=-e^{-2t}\).</li>
+    <li>Su derivada respecto de \(t\): \(2e^{-2t}\).</li>
+    <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{2e^{-2t}}{e^{t}}=2e^{-3t}&gt;0\): cóncava hacia arriba en todos sus puntos.</li>
+    <li><b>Comprobación.</b> \(y=e^{-t}=\dfrac{1}{x}\), con \(y''=\dfrac{2}{x^{3}}=2e^{-3t}\). Coincide.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: calcular \(\dfrac{y''(t)}{x''(t)}\) (ejemplo 3). Dos: derivar la pendiente respecto de \(t\) y olvidar dividir por \(\dfrac{dx}{dt}\). Tres: no simplificar \(\dfrac{dy}{dx}\) antes de derivarla, lo que alarga la cuenta y multiplica los errores.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\dfrac{d^{2}y}{dx^{2}}\) para \(x=2t+1\), \(y=t^{2}\).</p>
+    <details><summary>Pista</summary><div><p>Primero la pendiente, en función de \(t\). Después se deriva y se divide por \(\frac{dx}{dt}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{dx}=\dfrac{2t}{2}=t\).</li>
+        <li>Su derivada respecto de \(t\) es \(1\).</li>
+        <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{1}{2}\).</li>
+        <li>Comprobación: \(t=\dfrac{x-1}{2}\), así que \(y=\dfrac{(x-1)^{2}}{4}\), con \(y''=\dfrac{2}{4}=\dfrac{1}{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Para \(x=t^{2}\), \(y=t^{2}+t\), con \(t&gt;0\): calcula \(\dfrac{d^{2}y}{dx^{2}}\), evalúala en \(t=1\) e indica la concavidad.</p>
+    <details><summary>Pista</summary><div><p>La pendiente se puede escribir como \(1+\dfrac{1}{2t}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{dx}=\dfrac{2t+1}{2t}=1+\dfrac{1}{2t}\).</li>
+        <li>Su derivada respecto de \(t\): \(-\dfrac{1}{2t^{2}}\).</li>
+        <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{-\dfrac{1}{2t^{2}}}{2t}=-\dfrac{1}{4t^{3}}\).</li>
+        <li>En \(t=1\): \(-\dfrac{1}{4}\). Es negativa para todo \(t&gt;0\): cóncava hacia abajo.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> El chorro de una manguera sigue la trayectoria \(x=6t\), \(y=1+8t-5t^{2}\), en metros, donde \(t\) son los segundos desde que el agua sale. Calcula \(\dfrac{d^{2}y}{dx^{2}}\) y explica qué dice sobre la forma del chorro.</p>
+    <details><summary>Pista</summary><div><p>La pendiente es \(\dfrac{8-10t}{6}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{dx}=\dfrac{8-10t}{6}\).</li>
+        <li>Su derivada respecto de \(t\): \(-\dfrac{10}{6}\).</li>
+        <li>\(\dfrac{d^{2}y}{dx^{2}}=\dfrac{-\dfrac{10}{6}}{6}=-\dfrac{10}{36}=-\dfrac{5}{18}\approx -0{,}28\) (por metro).</li>
+        <li>Es negativa y constante: el chorro es cóncavo hacia abajo en todo su recorrido, y con la misma «curvatura de pendiente» en todos sus puntos. Es una parábola: \(y=1+\dfrac{4}{3}x-\dfrac{5}{36}x^{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H14 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* flecha de vector para las hojas vectoriales del lote 23 */
+function oaFle(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), L = Math.sqrt((bx - ax)*(bx - ax) + (by - ay)*(by - ay)), a = Math.atan2(by - ay, bx - ax), h = Math.min(11, L*0.45);
+  if (L < 2) return; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - 0.7*h*Math.cos(a), by - 0.7*h*Math.sin(a)); c.stroke();
+  c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - h*Math.cos(a - 0.38), by - h*Math.sin(a - 0.38)); c.lineTo(bx - h*Math.cos(a + 0.38), by - h*Math.sin(a + 0.38)); c.closePath(); c.fill(); }
+/* fábrica de escenas de movimiento en el plano (hojas H09–H14 del lote 23): curva, flechas, barra del parámetro y cuentas. Trazos finos y puntos chicos. */
+function oaMov(o){
+  var RUN = o.run || 22, dec = oaDec;
+  function ts(s){ return s < 2 ? o.a : s < RUN - 4 ? o.a + (o.b - o.a)*(s - 2)/(RUN - 6) : o.b; }
+  return {
+    world:o.world, aspect:o.aspect, _chk:o.chk, aria:o.aria, labels:o.labels,
+    sliders:[{id:'t', tex:'t', min:o.a, max:o.b, step:0.01, value:o.a}], legend:o.legend,
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.t = ts(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var t = v.t == null ? o.a : v.t, s = v.q == null ? RUN : v.q*RUN, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), ax = o.axes, A, L, B = o.bar, px, H;
+      function num(tx, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      H = {txt:txt, num:num, dot:function(x, y, col, r){ c.fillStyle = col; c.beginPath(); c.arc(X(x), Y(y), r || 2.8, 0, 6.2832); c.fill(); }};
+      if (ax){ S.line(ax.x[0], 0, ax.x[1], 0, {color:C.ink, width:1.1}); S.line(0, ax.y[0], 0, ax.y[1], {color:C.ink, width:1.1});
+        (ax.tx || []).forEach(function(q){ S.line(q, 0, q, 0, {color:C.ink, width:1}); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(q), Y(0) - 3); c.lineTo(X(q), Y(0) + 3); c.stroke(); num(('' + q).replace('-', '−'), X(q), Y(0) + 11, 'center'); });
+        (ax.ty || []).forEach(function(q){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(q)); c.lineTo(X(0) + 3, Y(q)); c.stroke(); num(('' + q).replace('-', '−'), X(0) - 7, Y(q), 'right'); });
+        num('x', X(ax.x[1]) - 2, Y(0) - 9, 'right'); num('y', X(0) + 8, Y(ax.y[1]) + 4, 'left'); }
+      oaPar(S, o.fx, o.fy, o.a, o.b, 'rgba(31,93,134,0.25)', 1.3); if (t > o.a + 0.005) oaPar(S, o.fx, o.fy, o.a, t, C.sec, 2);
+      if (o.before) o.before(S, t, H);
+      A = o.arrows ? o.arrows(t) : [];
+      A.forEach(function(r){ oaFle(S, r[0], r[1], r[2], r[3], C[r[4]], r[7] || 2); });
+      H.dot(o.fx(t), o.fy(t), C.ink, 3);
+      A.forEach(function(r){ var d = r[6] || [9, -10], len = Math.abs(X(r[2]) - X(r[0])) + Math.abs(Y(r[3]) - Y(r[1])); if (r[5] && len > 16) txt(r[5], X(r[2]) + d[0], Y(r[3]) + d[1], d[0] >= 0 ? 'left' : 'right', C[r[4]]); });
+      if (o.after) o.after(S, t, H);
+      if (B){ px = X(B.x0) + (X(B.x1) - X(B.x0))*(t - o.a)/(o.b - o.a);
+        c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(X(B.x1), Y(B.y)); c.moveTo(X(B.x0), Y(B.y) - 4); c.lineTo(X(B.x0), Y(B.y) + 4); c.moveTo(X(B.x1), Y(B.y) - 4); c.lineTo(X(B.x1), Y(B.y) + 4); c.stroke();
+        c.strokeStyle = C.rise; c.lineWidth = 2.2; c.beginPath(); c.moveTo(X(B.x0), Y(B.y)); c.lineTo(px, Y(B.y)); c.stroke(); c.fillStyle = C.rise; c.beginPath(); c.arc(px, Y(B.y), 3.2, 0, 6.2832); c.fill();
+        num('parámetro t:  ' + B.la, X(B.x0), Y(B.y) + 12, 'left'); num(B.lb, X(B.x1), Y(B.y) + 12, 'right'); }
+      L = o.lines(t); L.forEach(function(r, i){ txt(r[0], X(o.textAt[0]), Y(o.textAt[1]) + 21*i, 'left', C[r[1]]); });
+      if (o.labAt) S.lab('F', X(o.labAt[0]), Y(o.labAt[1]), 0, 0, v.q != null && s >= RUN - 4);
+    },
+    caption:function(v){ var t = v.t == null ? o.a : v.t, s = v.q == null ? null : v.q*RUN; return o.caption(t, s != null && s < 2, t >= o.b - 0.006); },
+    readout:function(v){ return o.readout(v.t == null ? o.a : v.t); }
+  };
+}
+OA.scene('par-segunda', oaMov((function(){
+  var dec = oaDec, num = OA.num, HH = 0.2;
+  function fx(t){ return t*t; } function fy(t){ return t*t*t - 3*t; } function m(t){ return (3*t*t - 3)/(2*t); } function dm(t){ return 1.5*(1 + 1/(t*t)); } function d2(t){ return dm(t)/(2*t); }
+  return { fx:fx, fy:fy, a:0.4, b:1.8, run:24,
+    world:{x0:-0.7, x1:5.1, y0:-6.8, y1:2.7}, aspect:9.5/5.8,
+    chk:[{f:m, df:dm, at:[0.5, 1, 1.6]}, {f:fx, df:function(t){ return 2*t; }, at:[0.5, 1, 1.6]}, {f:fy, df:function(t){ return 3*t*t - 3; }, at:[0.5, 1, 1.6]}],
+    axes:{x:[-0.5, 4.9], y:[-2.7, 2.5], tx:[1, 2, 3, 4], ty:[-2, -1, 1, 2]},
+    aria:'Un punto recorre la curva x igual a t al cuadrado, y igual a t al cubo menos 3t, para t positivo. En el punto se dibuja la recta tangente naranja, de pendiente m. Un poco más adelante se dibuja otra tangente, más delgada, de pendiente m más dm. Sobre el eje x un tramo negro rotulado dx marca cuánto avanzó x entre las dos. La segunda derivada es el cociente dm sobre dx: como la pendiente va creciendo, es positiva y la curva es cóncava hacia arriba.',
+    labels:[['F', '\\dfrac{d^{2}y}{dx^{2}}=\\dfrac{\\dfrac{d}{dt}\\left(\\dfrac{dy}{dx}\\right)}{\\dfrac{dx}{dt}}', 'd²y/dx² = [d/dt (dy/dx)] / (dx/dt)', 'diff']],
+    legend:'<span><i class="sw sec"></i> curva \\(x=t^{2},\\ y=t^{3}-3t\\)</span><span><i class="sw rise"></i> tangente en \\(t\\), pendiente \\(m=\\dfrac{dy}{dx}\\)</span><span><i class="sw tan"></i> tangente un poco después, pendiente \\(m+dm\\)</span>',
+    bar:{x0:-0.5, x1:4.9, y:-3.3, la:'0,4', lb:'1,8'}, textAt:[-0.6, -4.1], labAt:[-0.6, -6.05],
+    before:function(S, t, H){ var c = S.ctx, C = S.C, X = S.X, Y = S.Y, t1 = t + HH;
+      function tang(u, col, w, half){ var x = fx(u), y = fy(u), k = m(u), L = half/Math.sqrt(1 + k*k); c.strokeStyle = col; c.lineWidth = w; c.beginPath(); c.moveTo(X(x - L), Y(y - k*L)); c.lineTo(X(x + L), Y(y + k*L)); c.stroke(); return [x + L, y + k*L]; }
+      var e1 = tang(t1, C.tan, 1.2, 0.85), e0 = tang(t, C.rise, 2, 0.85);
+      H.dot(fx(t1), fy(t1), C.tan, 2.4);
+      H.txt('m', X(e0[0]) + 9, Y(e0[1]) + 8, 'left', C.rise); H.txt('m + dm', X(e1[0]) + 6, Y(e1[1]) - 9, 'left', C.tan);
+      c.strokeStyle = C.grid; c.lineWidth = 1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(fx(t)), Y(fy(t))); c.lineTo(X(fx(t)), Y(0)); c.moveTo(X(fx(t1)), Y(fy(t1))); c.lineTo(X(fx(t1)), Y(0)); c.stroke(); c.setLineDash([]);
+      c.strokeStyle = C.ink; c.lineWidth = 3; c.beginPath(); c.moveTo(X(fx(t)), Y(0)); c.lineTo(X(fx(t1)), Y(0)); c.stroke();
+      c.lineWidth = 1; c.beginPath(); c.moveTo(X((fx(t) + fx(t1))/2), Y(0) - 3); c.lineTo(X((fx(t) + fx(t1))/2) + 8, Y(0) - 20); c.stroke(); H.txt('dx', X((fx(t) + fx(t1))/2) + 10, Y(0) - 28, 'left', C.ink); },
+    lines:function(t){ return [['t = ' + dec(t, 2), 'ink'], ['m = dy/dx = (3t² − 3)/(2t) = ' + dec(m(t), 2), 'rise'], ['dm/dt = (3/2)(1 + 1/t²) = ' + dec(dm(t), 2), 'tan'], ['dx/dt = 2t = ' + dec(2*t, 2), 'ink'], ['d²y/dx² = (' + dec(dm(t), 2) + ') / (' + dec(2*t, 2) + ') = ' + dec(d2(t), 2) + ' > 0', 'sec']]; },
+    caption:function(t, ini, fin){ if (ini) return 'La tangente naranja tiene pendiente m = dy/dx. La burdeo es la tangente un poco más adelante: su pendiente es m + dm. Entre una y otra, x avanzó dx (tramo negro sobre el eje)'; if (fin) return 'En todo el recorrido la pendiente fue creciendo al avanzar x: d²y/dx² > 0 y la curva es cóncava hacia arriba. Ojo: se divide por dx/dt, no se usa y″/x″'; return 'En t = ' + dec(t, 2) + ' la pendiente es ' + dec(m(t), 2) + ' y crece a razón de ' + dec(dm(t), 2) + ' por unidad de t, mientras x crece a razón de ' + dec(2*t, 2) + '. Por unidad de x, la pendiente crece ' + dec(d2(t), 2); },
+    readout:function(t){ return [['', 'm=\\dfrac{dy}{dx}=\\dfrac{3t^{2}-3}{2t}=\\dfrac{3}{2}\\left(t-\\dfrac{1}{t}\\right)\\qquad\\dfrac{dm}{dt}=\\dfrac{3}{2}\\left(1+\\dfrac{1}{t^{2}}\\right)'], ['d', '\\dfrac{d^{2}y}{dx^{2}}=\\dfrac{dm/dt}{dx/dt}=\\dfrac{\\frac{3}{2}\\left(1+\\frac{1}{t^{2}}\\right)}{2t}=\\dfrac{3\\left(t^{2}+1\\right)}{4t^{3}}'], ['', 't=' + num(t, 2) + ':\\quad\\dfrac{d^{2}y}{dx^{2}}\\approx ' + num(d2(t), 2)]]; }
+  };
+})()));
