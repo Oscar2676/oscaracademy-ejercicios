@@ -138,7 +138,7 @@
 </section>
 
 <footer>
-  <span class="status">MA-L24-H12 · v001 · Pendiente de APR</span>
+  <span class="status">MA-L24-H12 · v001 · APR de Óscar, 21-nov-2026</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -166,7 +166,7 @@ function bnExpo(o){
   var n = o.n, e0 = o.e0, d = o.d;
   function ex(k){ return e0 - d*k; }
   return {
-    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1, y1:o.ymax + 1.6}, aspect:o.aspect,
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
     aria:o.aria, labels:o.labels, legend:o.legend,
     sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
     anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
@@ -182,7 +182,7 @@ function bnExpo(o){
       txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
       c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
       for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
-      x0 = X(-1.6); y0 = Y(o.ymin - 0.9);
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
       L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
       S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
