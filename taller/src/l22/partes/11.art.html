@@ -1,0 +1,166 @@
+<!--file:H11_longitud_de_arco_de_una_curva_suave_y_distancia_recorrida.html-->
+<!--title:La longitud de arco de una curva suave planar y la distancia recorrida-->
+<!--id:apl-longitud-->
+<!--tab:H11 Longitud de arco-->
+<article class="sheet" id="apl-longitud" data-hoja="L22 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>La longitud de arco de una curva suave planar y la distancia recorrida</b></li>
+    </ol>
+    <h1>La longitud de arco de una curva suave planar y la distancia recorrida</h1>
+    <p class="lede">¿Cuánto mide una curva? Con una regla solo se miden tramos rectos. La idea es aproximar la curva con muchos tramos rectos cortos y sumar sus largos; en el límite, esa suma es una integral. Una curva es <b>suave</b> cuando su derivada existe y es continua.
+    \[L=\int_{a}^{b}\sqrt{1+\big[f'(x)\big]^{2}}\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La curva es \(y=f(x)\), de \(x=a\) a \(x=b\), con \(f'\) continua. Se marcan puntos sobre ella y se unen con tramos rectos: una línea quebrada.</li>
+      <li>Un tramo avanza \(\Delta x\) en horizontal y \(\Delta y\) en vertical. Por Pitágoras, su largo es
+        \[\sqrt{(\Delta x)^{2}+(\Delta y)^{2}}\]</li>
+      <li>Se saca \(\Delta x\) de la raíz (con \(\Delta x&gt;0\)):
+        \[\sqrt{(\Delta x)^{2}+(\Delta y)^{2}}=\sqrt{(\Delta x)^{2}\left[1+\left(\frac{\Delta y}{\Delta x}\right)^{2}\right]}=\sqrt{1+\left(\frac{\Delta y}{\Delta x}\right)^{2}}\;\Delta x\]</li>
+      <li>El cociente \(\dfrac{\Delta y}{\Delta x}\) es la pendiente del tramo recto. Por el teorema del valor medio, es igual a la derivada en algún punto \(x^{*}\) del tramo: \(\dfrac{\Delta y}{\Delta x}=f'(x^{*})\). El largo del tramo es
+        \[\sqrt{1+\big[f'(x^{*})\big]^{2}}\;\Delta x\]</li>
+      <li>La suma de todos los tramos es una suma de Riemann de la función \(\sqrt{1+\big[f'(x)\big]^{2}}\), que es continua. Con tramos cada vez más cortos, tiende a la integral. Ese límite se define como la longitud de la curva:
+        \[L=\int_{a}^{b}\sqrt{1+\big[f'(x)\big]^{2}}\,dx\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Curva recorrida en el tiempo: la distancia recorrida</h3>
+    <ol class="steps">
+      <li>Un punto se mueve en el plano. En el instante \(t\) está en \(\big(x(t),\,y(t)\big)\), con \(x'\) e \(y'\) continuas, para \(t\) entre \(t_{1}\) y \(t_{2}\).</li>
+      <li>En un tiempo corto \(\Delta t\) avanza \(\Delta x\) y \(\Delta y\). El tramo mide
+        \[\sqrt{(\Delta x)^{2}+(\Delta y)^{2}}=\sqrt{\left(\frac{\Delta x}{\Delta t}\right)^{2}+\left(\frac{\Delta y}{\Delta t}\right)^{2}}\;\Delta t\]</li>
+      <li>En el límite, los cocientes son las derivadas. La raíz es la <b>rapidez</b> del punto, \(\sqrt{x'(t)^{2}+y'(t)^{2}}\), y la distancia recorrida es su integral:
+        \[L=\int_{t_{1}}^{t_{2}}\sqrt{\big[x'(t)\big]^{2}+\big[y'(t)\big]^{2}}\,dt\]</li>
+      <li>Es la misma idea de «distancia = integral de la rapidez» del movimiento en una recta, ahora en el plano. Si el punto no pasa dos veces por el mismo tramo, la distancia recorrida es la longitud de la curva. Con \(x=t\), \(y=f(t)\) se recupera la primera fórmula.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La curva \(y=\cosh x\) tiene la forma de un cable que cuelga de dos postes. Se aproxima con una quebrada de \(n\) tramos. Mira cómo, al crecer \(n\), el largo de la quebrada se acerca al largo de la curva.</p>
+  <div class="stage" data-scene="apl-longitud-arco"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(y=\cosh x=\dfrac{e^{x}+e^{-x}}{2}\), de \(x=-2\) a \(x=2\).</li>
+    <li><b>Quebrada naranja:</b> \(n\) tramos rectos con los vértices sobre la curva.</li>
+    <li><b>Triángulo burdeo:</b> un tramo, con su avance \(\Delta x\) y su subida \(\Delta y\).</li>
+    <li><b>Bajo la animación:</b> el largo de un tramo, la suma de los \(n\) tramos y la integral a la que tiende.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(y=\dfrac{2}{3}\,x^{3/2}\), de \(x=0\) a \(x=3\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivada.</b> \(f'(x)=\dfrac{2}{3}\cdot\dfrac{3}{2}\,x^{1/2}=\sqrt{x}\).</li>
+    <li><b>Bajo la raíz.</b> \(1+\big[f'(x)\big]^{2}=1+x\).</li>
+    <li><b>Integral.</b> Con \(u=1+x\), \(du=dx\); cuando \(x=0\), \(u=1\); cuando \(x=3\), \(u=4\):
+      \[L=\int_{0}^{3}\sqrt{1+x}\,dx=\int_{1}^{4}u^{1/2}\,du=\left[\frac{2}{3}\,u^{3/2}\right]_{1}^{4}=\frac{2}{3}\,(8-1)=\frac{14}{3}\approx 4{,}67\]</li>
+    <li><b>Comprobación de sentido.</b> La recta que une los extremos \((0,\,0)\) y \(\left(3,\,2\sqrt{3}\right)\) mide \(\sqrt{9+12}=\sqrt{21}\approx 4{,}58\). La curva mide un poco más, como debe ser: la recta es el camino más corto.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, el cable colgante: \(y=\cosh x\), de \(x=-2\) a \(x=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Las funciones.</b> \(\cosh x=\dfrac{e^{x}+e^{-x}}{2}\) y \(\operatorname{senh}x=\dfrac{e^{x}-e^{-x}}{2}\). Derivando término a término: \((\cosh x)'=\operatorname{senh}x\) y \((\operatorname{senh}x)'=\cosh x\).</li>
+    <li><b>Una identidad.</b> Desarrollando los cuadrados:
+      \[\cosh^{2}x-\operatorname{senh}^{2}x=\frac{e^{2x}+2+e^{-2x}}{4}-\frac{e^{2x}-2+e^{-2x}}{4}=\frac{4}{4}=1\]
+      Entonces \(1+\operatorname{senh}^{2}x=\cosh^{2}x\).</li>
+    <li><b>Bajo la raíz.</b> \(f'(x)=\operatorname{senh}x\), así que \(\sqrt{1+\operatorname{senh}^{2}x}=\sqrt{\cosh^{2}x}=\cosh x\), porque \(\cosh x&gt;0\).</li>
+    <li><b>Integral.</b>
+      \[L=\int_{-2}^{2}\cosh x\,dx=\Big[\operatorname{senh}x\Big]_{-2}^{2}=\operatorname{senh}2-\operatorname{senh}(-2)=2\operatorname{senh}2=e^{2}-e^{-2}\approx 7{,}254\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, distancia recorrida: \(x(t)=3t^{2}\), \(y(t)=2t^{3}\), para \(0\le t\le 1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivadas.</b> \(x'(t)=6t\), \(y'(t)=6t^{2}\).</li>
+    <li><b>Rapidez.</b> \(\sqrt{36t^{2}+36t^{4}}=\sqrt{36t^{2}\left(1+t^{2}\right)}=6t\sqrt{1+t^{2}}\), porque \(t\ge 0\).</li>
+    <li><b>Integral.</b> Con \(u=1+t^{2}\), \(du=2t\,dt\), es decir, \(6t\,dt=3\,du\); \(u\) va de \(1\) a \(2\):
+      \[L=\int_{0}^{1}6t\sqrt{1+t^{2}}\,dt=\int_{1}^{2}3\,u^{1/2}\,du=\Big[2\,u^{3/2}\Big]_{1}^{2}=2\left(2\sqrt{2}-1\right)\approx 3{,}66\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: de aquí sale el perímetro de la circunferencia</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Una circunferencia de radio \(r\) se recorre una vez con \(x(t)=r\cos t\), \(y(t)=r\operatorname{sen}t\), para \(0\le t\le 2\pi\).</li>
+    <li>\(x'(t)=-r\operatorname{sen}t\), \(y'(t)=r\cos t\). Rapidez: \(\sqrt{r^{2}\operatorname{sen}^{2}t+r^{2}\cos^{2}t}=\sqrt{r^{2}}=r\).</li>
+    <li>\(L=\displaystyle\int_{0}^{2\pi}r\,dt=2\pi r\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dos avisos.</b> Uno, el error más común: olvidar el \(1\) o la raíz, y escribir \(\displaystyle\int f'(x)\,dx\). Eso da \(f(b)-f(a)\), cuánto <b>subió</b> la curva, no cuánto mide. Dos: los ejemplos de esta hoja están elegidos para que la raíz se simplifique. En la mayoría de las curvas no ocurre, y la integral se calcula con métodos numéricos. Por ejemplo, la longitud de \(y=\operatorname{sen}x\) lleva a \(\displaystyle\int\sqrt{1+\cos^{2}x}\,dx\), que no tiene antiderivada elemental (es una integral elíptica; aquí se afirma sin demostrarlo).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la longitud de \(y=\dfrac{x^{3}}{6}+\dfrac{1}{2x}\), de \(x=1\) a \(x=2\).</p>
+    <details><summary>Pista</summary><div><p>\(f'(x)=\dfrac{x^{2}}{2}-\dfrac{1}{2x^{2}}\). Al calcular \(1+\big[f'(x)\big]^{2}\) aparece un cuadrado perfecto: \(\left(\dfrac{x^{2}}{2}+\dfrac{1}{2x^{2}}\right)^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f'(x)=\dfrac{x^{2}}{2}-\dfrac{1}{2x^{2}}\).</li>
+        <li>\(\big[f'(x)\big]^{2}=\dfrac{x^{4}}{4}-2\cdot\dfrac{x^{2}}{2}\cdot\dfrac{1}{2x^{2}}+\dfrac{1}{4x^{4}}=\dfrac{x^{4}}{4}-\dfrac{1}{2}+\dfrac{1}{4x^{4}}\).</li>
+        <li>\(1+\big[f'(x)\big]^{2}=\dfrac{x^{4}}{4}+\dfrac{1}{2}+\dfrac{1}{4x^{4}}=\left(\dfrac{x^{2}}{2}+\dfrac{1}{2x^{2}}\right)^{2}\). La raíz es \(\dfrac{x^{2}}{2}+\dfrac{1}{2x^{2}}\), que es positiva.</li>
+        <li>\(L=\displaystyle\int_{1}^{2}\left(\frac{x^{2}}{2}+\frac{1}{2x^{2}}\right)dx=\left[\frac{x^{3}}{6}-\frac{1}{2x}\right]_{1}^{2}=\left(\frac{8}{6}-\frac{1}{4}\right)-\left(\frac{1}{6}-\frac{1}{2}\right)=\frac{13}{12}+\frac{4}{12}=\frac{17}{12}\approx 1{,}42\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Un punto se mueve según \(x(t)=e^{t}\cos t\), \(y(t)=e^{t}\operatorname{sen}t\), para \(0\le t\le\pi\). Calcula la distancia que recorre.</p>
+    <details><summary>Pista</summary><div><p>Deriva con la regla del producto. Al sumar los cuadrados, los términos cruzados se cancelan y queda \(2e^{2t}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x'(t)=e^{t}\left(\cos t-\operatorname{sen}t\right)\), \(y'(t)=e^{t}\left(\operatorname{sen}t+\cos t\right)\).</li>
+        <li>\(\left(\cos t-\operatorname{sen}t\right)^{2}+\left(\operatorname{sen}t+\cos t\right)^{2}=\left(1-2\operatorname{sen}t\cos t\right)+\left(1+2\operatorname{sen}t\cos t\right)=2\).</li>
+        <li>Rapidez: \(\sqrt{e^{2t}\cdot 2}=\sqrt{2}\,e^{t}\).</li>
+        <li>\(L=\displaystyle\int_{0}^{\pi}\sqrt{2}\,e^{t}\,dt=\sqrt{2}\left(e^{\pi}-1\right)\approx 31{,}31\) unidades.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un cable cuelga entre dos postes separados por \(20\) metros. Con el origen a medio camino entre los postes, su forma es \(y=10\cosh\!\left(\dfrac{x}{10}\right)\), para \(-10\le x\le 10\), en metros. ¿Cuánto mide el cable?</p>
+    <details><summary>Pista</summary><div><p>\(f'(x)=\operatorname{senh}\!\left(\dfrac{x}{10}\right)\). Usa \(1+\operatorname{senh}^{2}=\cosh^{2}\). Una antiderivada de \(\cosh\!\left(\dfrac{x}{10}\right)\) es \(10\operatorname{senh}\!\left(\dfrac{x}{10}\right)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f'(x)=10\cdot\dfrac{1}{10}\operatorname{senh}\!\left(\dfrac{x}{10}\right)=\operatorname{senh}\!\left(\dfrac{x}{10}\right)\).</li>
+        <li>\(\sqrt{1+\operatorname{senh}^{2}\!\left(\dfrac{x}{10}\right)}=\cosh\!\left(\dfrac{x}{10}\right)\).</li>
+        <li>\(L=\displaystyle\int_{-10}^{10}\cosh\!\left(\frac{x}{10}\right)dx=\left[10\operatorname{senh}\!\left(\frac{x}{10}\right)\right]_{-10}^{10}=10\operatorname{senh}1-10\operatorname{senh}(-1)=20\operatorname{senh}1\approx 23{,}5\).</li>
+        <li>Respuesta: el cable mide unos \(23{,}5\) metros, \(3{,}5\) metros más que la distancia entre los postes.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>

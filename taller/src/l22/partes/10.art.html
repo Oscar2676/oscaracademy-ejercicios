@@ -1,0 +1,145 @@
+<!--file:H10_volumen_con_secciones_transversales_triangulos_y_semicirculos.html-->
+<!--title:Volumen con secciones transversales: triángulos y semicírculos-->
+<!--id:apl-sec-tri-->
+<!--tab:H10 Secciones: triángulos y semicírculos-->
+<article class="sheet" id="apl-sec-tri" data-hoja="L22 H10">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Volumen con secciones transversales: triángulos y semicírculos</b></li>
+    </ol>
+    <h1>Volumen con secciones transversales: triángulos y semicírculos</h1>
+    <p class="lede">El método es el de la hoja anterior: el volumen es la integral del área de los cortes. Lo nuevo es escribir el área de un triángulo o de un semicírculo <b>en función del ancho de la base</b>, que es el único dato que cambia de un corte a otro.
+    \[V=\int_{a}^{b}A(x)\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>El área de cada figura, escrita con su lado \(s\) en el piso</h3>
+    <ol class="steps">
+      <li><b>Triángulo equilátero de lado \(s\).</b> Su altura parte al lado de abajo en dos mitades. Por Pitágoras, \(h^{2}+\left(\dfrac{s}{2}\right)^{2}=s^{2}\), de donde \(h^{2}=\dfrac{3s^{2}}{4}\) y \(h=\dfrac{\sqrt{3}}{2}\,s\). Área, base por altura partido por dos:
+        \[A=\frac{1}{2}\cdot s\cdot\frac{\sqrt{3}}{2}\,s=\frac{\sqrt{3}}{4}\,s^{2}\]</li>
+      <li><b>Triángulo rectángulo isósceles con un cateto \(s\) en el piso.</b> Los dos catetos miden \(s\):
+        \[A=\frac{1}{2}\cdot s\cdot s=\frac{s^{2}}{2}\]</li>
+      <li><b>Triángulo rectángulo isósceles con la hipotenusa \(s\) en el piso.</b> Cada cateto \(c\) cumple \(c^{2}+c^{2}=s^{2}\), así que \(c^{2}=\dfrac{s^{2}}{2}\):
+        \[A=\frac{1}{2}\,c^{2}=\frac{s^{2}}{4}\]</li>
+      <li><b>Semicírculo de diámetro \(s\).</b> Su radio es \(\dfrac{s}{2}\). Es medio círculo:
+        \[A=\frac{1}{2}\,\pi\left(\frac{s}{2}\right)^{2}=\frac{\pi}{8}\,s^{2}\]</li>
+      <li>En todos los casos \(s\) es el ancho de la base en la posición del corte: \(s=w(x)\). Todas las áreas son una constante por \(s^{2}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta las animaciones</h2>
+  <p><b>Triángulos equiláteros sobre un círculo.</b> La base es el círculo \(x^{2}+y^{2}\le 1\).</p>
+  <div class="stage" data-scene="apl-sec-triangulos"></div>
+  <ul class="keys">
+    <li><b>Zona naranja clara, en el piso:</b> la base circular.</li>
+    <li><b>Triángulo burdeo:</b> el corte en la posición \(x\). Su lado es la cuerda del círculo, \(2\sqrt{1-x^{2}}\).</li>
+    <li><b>Cuerpo azul:</b> el sólido construido hasta ese corte.</li>
+  </ul>
+  <p><b>Semicírculos sobre una parábola.</b> La base es la región entre el eje \(x\) y la parábola \(y=4-x^{2}\).</p>
+  <div class="stage" data-scene="apl-sec-semicirculos"></div>
+  <ul class="keys">
+    <li><b>Semicírculo burdeo:</b> el corte en \(x\). Su diámetro es el ancho de la base, \(4-x^{2}\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, triángulos equiláteros: base \(x^{2}+y^{2}\le 1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Ancho de la base.</b> En la posición \(x\), el círculo va de \(y=-\sqrt{1-x^{2}}\) a \(y=\sqrt{1-x^{2}}\): \(s=2\sqrt{1-x^{2}}\), con \(x\) de \(-1\) a \(1\).</li>
+    <li><b>Área del corte.</b>
+      \[A(x)=\frac{\sqrt{3}}{4}\left(2\sqrt{1-x^{2}}\right)^{2}=\frac{\sqrt{3}}{4}\cdot 4\left(1-x^{2}\right)=\sqrt{3}\left(1-x^{2}\right)\]</li>
+    <li><b>Integral.</b>
+      \[V=\sqrt{3}\int_{-1}^{1}\left(1-x^{2}\right)dx=\sqrt{3}\left[x-\frac{x^{3}}{3}\right]_{-1}^{1}=\sqrt{3}\left(\frac{2}{3}+\frac{2}{3}\right)=\frac{4\sqrt{3}}{3}\approx 2{,}31\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, semicírculos: base entre el eje \(x\) e \(y=4-x^{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Límites.</b> \(4-x^{2}=0\ \Longrightarrow\ x=-2\) o \(x=2\).</li>
+    <li><b>Ancho de la base.</b> \(s=4-x^{2}\). Es el diámetro del semicírculo.</li>
+    <li><b>Área del corte.</b> \(A(x)=\dfrac{\pi}{8}\left(4-x^{2}\right)^{2}=\dfrac{\pi}{8}\left(16-8x^{2}+x^{4}\right)\).</li>
+    <li><b>Integral.</b>
+      \[V=\frac{\pi}{8}\left[16x-\frac{8x^{3}}{3}+\frac{x^{5}}{5}\right]_{-2}^{2}=\frac{\pi}{8}\cdot 2\left(32-\frac{64}{3}+\frac{32}{5}\right)=\frac{\pi}{8}\cdot\frac{512}{15}=\frac{64\pi}{15}\approx 13{,}40\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, triángulos rectángulos isósceles: base entre el eje \(x\) e \(y=\sqrt{x}\), para \(0\le x\le 4\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Cada corte es un triángulo rectángulo isósceles con un cateto en el piso.</li>
+    <li><b>Ancho de la base.</b> \(s=\sqrt{x}\).</li>
+    <li><b>Área del corte.</b> \(A(x)=\dfrac{s^{2}}{2}=\dfrac{x}{2}\).</li>
+    <li><b>Integral.</b> \(V=\displaystyle\int_{0}^{4}\frac{x}{2}\,dx=\left[\frac{x^{2}}{4}\right]_{0}^{4}=4\).</li>
+    <li>Es la mitad del volumen que da la misma base con cortes cuadrados (\(8\), en la hoja anterior): cada triángulo es medio cuadrado.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> En el semicírculo, usar el ancho de la base como radio. El ancho es el <b>diámetro</b>; el radio es la mitad. Con el ancho como radio, el área sale cuatro veces más grande de lo que es.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>La base de un sólido es el círculo \(x^{2}+y^{2}\le 4\). Las secciones perpendiculares al eje \(x\) son semicírculos. Calcula el volumen. ¿Qué sólido conocido es?</p>
+    <details><summary>Pista</summary><div><p>El diámetro es \(2\sqrt{4-x^{2}}\), así que el radio es \(\sqrt{4-x^{2}}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Diámetro: \(s=2\sqrt{4-x^{2}}\). Área: \(A(x)=\dfrac{\pi}{8}\cdot 4\left(4-x^{2}\right)=\dfrac{\pi}{2}\left(4-x^{2}\right)\).</li>
+        <li>\(V=\dfrac{\pi}{2}\displaystyle\int_{-2}^{2}\left(4-x^{2}\right)dx=\frac{\pi}{2}\cdot\frac{32}{3}=\frac{16\pi}{3}\approx 16{,}76\) unidades cúbicas.</li>
+        <li>Es media esfera de radio \(2\): \(\dfrac{1}{2}\cdot\dfrac{4}{3}\pi\cdot 2^{3}=\dfrac{16\pi}{3}\). Coincide.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>La base de un sólido es la región entre \(y=x\) e \(y=x^{2}\). Las secciones perpendiculares al eje \(x\) son triángulos equiláteros. Calcula el volumen.</p>
+    <details><summary>Pista</summary><div><p>El lado es \(x-x^{2}\), con \(x\) de \(0\) a \(1\). Ya se sabe que \(\displaystyle\int_{0}^{1}\left(x-x^{2}\right)^{2}dx=\frac{1}{30}\) (hoja anterior, ejercicio B).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Lado: \(s=x-x^{2}\). Área: \(A(x)=\dfrac{\sqrt{3}}{4}\left(x-x^{2}\right)^{2}\).</li>
+        <li>\(\displaystyle\int_{0}^{1}\left(x^{2}-2x^{3}+x^{4}\right)dx=\frac{1}{3}-\frac{1}{2}+\frac{1}{5}=\frac{1}{30}\).</li>
+        <li>\(V=\dfrac{\sqrt{3}}{4}\cdot\dfrac{1}{30}=\dfrac{\sqrt{3}}{120}\approx 0{,}0144\) unidades cúbicas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una carpa mide \(4\) metros de largo. Su piso queda entre las curvas \(y=1-\dfrac{x^{2}}{4}\) e \(y=-\left(1-\dfrac{x^{2}}{4}\right)\), para \(-2\le x\le 2\), con las medidas en metros. Cada corte perpendicular al largo es un triángulo equilátero. ¿Cuántos metros cúbicos de aire hay dentro?</p>
+    <details><summary>Pista</summary><div><p>El lado del triángulo es el ancho del piso: \(2\left(1-\dfrac{x^{2}}{4}\right)=2-\dfrac{x^{2}}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Lado: \(s=\left(1-\dfrac{x^{2}}{4}\right)-\left[-\left(1-\dfrac{x^{2}}{4}\right)\right]=2-\dfrac{x^{2}}{2}\).</li>
+        <li>\(s^{2}=4-2x^{2}+\dfrac{x^{4}}{4}\).</li>
+        <li>\(\displaystyle\int_{-2}^{2}\left(4-2x^{2}+\frac{x^{4}}{4}\right)dx=\left[4x-\frac{2x^{3}}{3}+\frac{x^{5}}{20}\right]_{-2}^{2}=2\left(8-\frac{16}{3}+\frac{8}{5}\right)=\frac{128}{15}\).</li>
+        <li>\(V=\dfrac{\sqrt{3}}{4}\cdot\dfrac{128}{15}=\dfrac{32\sqrt{3}}{15}\approx 3{,}70\).</li>
+        <li>Respuesta: dentro de la carpa hay unos \(3{,}7\) metros cúbicos de aire.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H10 · v001 · Pendiente de APR</span>
+</footer>
+</article>

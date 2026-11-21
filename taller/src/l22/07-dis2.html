@@ -1,0 +1,223 @@
+<!--file:H07_volumen_con_metodo_de_discos_revolucion_alrededor_de_otros_ejes.html-->
+<!--title:Volumen con método de discos: revolución alrededor de otros ejes-->
+<!--id:apl-discos-otros-->
+<!--tab:H07 Discos, otros ejes-->
+<article class="sheet" id="apl-discos-otros" data-hoja="L22 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Volumen con método de discos: revolución alrededor de otros ejes</b></li>
+    </ol>
+    <h1>Volumen con método de discos: revolución alrededor de otros ejes</h1>
+    <p class="lede">El eje de giro no tiene por qué ser el eje \(x\) o el eje \(y\). Puede ser cualquier recta horizontal \(y=k\) o vertical \(x=k\). El método es el mismo; lo único que cambia es el <b>radio</b>: se mide desde esa recta, no desde el eje de coordenadas.
+    \[V=\int_{a}^{b}\pi\big[f(x)-k\big]^{2}\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La región está entre la curva \(y=f(x)\) y la recta \(y=k\), desde \(x=a\) hasta \(x=b\), y gira alrededor de esa misma recta. Como la región toca al eje de giro, cada corte perpendicular al eje es un disco macizo.</li>
+      <li>El radio del disco es la distancia entre la curva y el eje de giro. La distancia entre dos alturas es la mayor menos la menor:
+        \[R(x)=\big|f(x)-k\big|\]</li>
+      <li>Rebanada de grosor \(dx\): \(dV=\pi\big[R(x)\big]^{2}dx\). Al elevar al cuadrado, el valor absoluto ya no hace falta, porque \(\big|f(x)-k\big|^{2}=\big[f(x)-k\big]^{2}\):
+        \[V=\int_{a}^{b}\pi\big[f(x)-k\big]^{2}\,dx\]</li>
+      <li><b>Eje vertical \(x=k\).</b> Los discos son horizontales, de grosor \(dy\), y la curva se escribe \(x=g(y)\):
+        \[R(y)=\big|g(y)-k\big|\qquad\qquad V=\int_{c}^{d}\pi\big[g(y)-k\big]^{2}\,dy\]</li>
+      <li>Con \(k=0\) se recuperan las fórmulas para el eje \(x\) y el eje \(y\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta las animaciones</h2>
+  <p><b>Giro alrededor de la recta horizontal \(y=2\).</b> La región entre \(y=\sqrt{x}\), la recta \(y=2\) y el eje \(y\).</p>
+  <div class="stage" data-scene="apl-discos-yk"></div>
+  <ul class="keys">
+    <li><b>Línea burdeo de trazos:</b> el eje de giro, \(y=2\).</li>
+    <li><b>Curva azul:</b> \(y=\sqrt{x}\). <b>Trazo naranja:</b> el radio, del eje a la curva: \(R=2-\sqrt{x}\).</li>
+    <li><b>Disco burdeo:</b> el corte en la posición \(x\). Se achica hasta ser un punto en \(x=4\).</li>
+  </ul>
+  <p><b>Giro alrededor de la recta vertical \(x=1\).</b> La región entre la parábola \(x=y^{2}\) y la recta \(x=1\).</p>
+  <div class="stage" data-scene="apl-discos-xk"></div>
+  <ul class="keys">
+    <li><b>Línea burdeo de trazos:</b> el eje de giro, \(x=1\).</li>
+    <li><b>Curva azul:</b> \(x=y^{2}\). <b>Trazo naranja:</b> el radio, del eje a la parábola: \(R=1-y^{2}\).</li>
+    <li><b>Disco burdeo:</b> el corte horizontal a la altura \(y\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, eje horizontal: la región entre \(y=\sqrt{x}\), \(y=2\) y el eje \(y\), girada alrededor de \(y=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Límites.</b> La curva alcanza al eje de giro donde \(\sqrt{x}=2\), es decir, \(x=4\). La región va de \(x=0\) a \(x=4\).</li>
+    <li><b>Radio.</b> En ese tramo la curva está bajo la recta (\(\sqrt{x}\le 2\)). La distancia es la mayor menos la menor: \(R(x)=2-\sqrt{x}\).</li>
+    <li><b>Rebanada.</b> \(dV=\pi\left(2-\sqrt{x}\right)^{2}dx=\pi\left(4-4\sqrt{x}+x\right)dx\).</li>
+    <li><b>Integral.</b>
+      \[V=\pi\int_{0}^{4}\left(4-4x^{1/2}+x\right)dx=\pi\left[4x-\frac{8}{3}x^{3/2}+\frac{x^{2}}{2}\right]_{0}^{4}=\pi\left(16-\frac{64}{3}+8\right)=\frac{8\pi}{3}\approx 8{,}38\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, eje vertical: la región entre \(x=y^{2}\) y \(x=1\), girada alrededor de \(x=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Límites.</b> La parábola alcanza a la recta donde \(y^{2}=1\): \(y=-1\) e \(y=1\).</li>
+    <li><b>Radio.</b> Entre esas alturas la parábola está a la izquierda de la recta (\(y^{2}\le 1\)). Distancia horizontal: \(R(y)=1-y^{2}\).</li>
+    <li><b>Rebanada.</b> \(dV=\pi\left(1-y^{2}\right)^{2}dy=\pi\left(1-2y^{2}+y^{4}\right)dy\).</li>
+    <li><b>Integral.</b>
+      \[V=\pi\int_{-1}^{1}\left(1-2y^{2}+y^{4}\right)dy=\pi\left[y-\frac{2y^{3}}{3}+\frac{y^{5}}{5}\right]_{-1}^{1}=\pi\left(\frac{8}{15}\right)-\pi\left(-\frac{8}{15}\right)=\frac{16\pi}{15}\approx 3{,}35\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Usar como radio la altura de la curva, \(f(x)\), como si el eje de giro fuera el eje \(x\). En el ejemplo 1 eso daría \(\displaystyle\int_{0}^{4}\pi\left(\sqrt{x}\right)^{2}dx=8\pi\), que es el volumen de <b>otro</b> sólido: el de la hoja anterior. El radio siempre se mide desde el eje de giro.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>¿Y si la región no toca al eje de giro?</h3>
+    <p>Entonces el sólido queda con un hueco y el corte no es un disco: es un anillo. Ese caso se resuelve con el método de anillos, que es la hoja siguiente.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>La región entre la parábola \(y=x^{2}\) y la recta \(y=4\) gira alrededor de la recta \(y=4\). Calcula el volumen.</p>
+    <details><summary>Pista</summary><div><p>Se cruzan en \(x=-2\) y \(x=2\). El radio es \(4-x^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(x^{2}=4\ \Longrightarrow\ x=\pm 2\). Radio: \(R(x)=4-x^{2}\).</li>
+        <li>\(dV=\pi\left(4-x^{2}\right)^{2}dx=\pi\left(16-8x^{2}+x^{4}\right)dx\).</li>
+        <li>\(V=\pi\left[16x-\dfrac{8x^{3}}{3}+\dfrac{x^{5}}{5}\right]_{-2}^{2}=2\pi\left(32-\dfrac{64}{3}+\dfrac{32}{5}\right)=2\pi\cdot\dfrac{256}{15}=\dfrac{512\pi}{15}\approx 107{,}23\) unidades cúbicas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>La región entre la recta \(y=x\), la recta \(y=3\) y el eje \(y\) gira alrededor de \(y=3\). Calcula el volumen y comprueba con la fórmula del cono.</p>
+    <details><summary>Pista</summary><div><p>El radio es \(3-x\), con \(x\) de \(0\) a \(3\). El sólido es un cono de radio \(3\) y altura \(3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>La recta \(y=x\) alcanza a \(y=3\) en \(x=3\). Radio: \(R(x)=3-x\).</li>
+        <li>\(V=\displaystyle\int_{0}^{3}\pi\left(3-x\right)^{2}dx=\pi\left[-\frac{(3-x)^{3}}{3}\right]_{0}^{3}=\pi\left(0+\frac{27}{3}\right)=9\pi\approx 28{,}27\) unidades cúbicas.</li>
+        <li>Comprobación: cono de radio \(3\) y altura \(3\): \(\dfrac{1}{3}\pi\cdot 3^{2}\cdot 3=9\pi\). Coincide.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un adorno macizo de vidrio, con forma de punta, se modela girando alrededor de la recta \(x=3\) la región entre la curva \(y=x^{2}\), la recta \(x=3\) y el eje \(x\), con las medidas en centímetros. ¿Cuántos centímetros cúbicos de vidrio tiene?</p>
+    <details><summary>Pista</summary><div><p>El eje es vertical: integra en \(y\). Despeja \(x=\sqrt{y}\); la región va de \(y=0\) a \(y=9\) y el radio es \(3-\sqrt{y}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>La curva alcanza a la recta \(x=3\) en \(y=3^{2}=9\). A la altura \(y\), la curva está en \(x=\sqrt{y}\), a la izquierda de la recta. Radio: \(R(y)=3-\sqrt{y}\).</li>
+        <li>\(dV=\pi\left(3-\sqrt{y}\right)^{2}dy=\pi\left(9-6\sqrt{y}+y\right)dy\).</li>
+        <li>\(V=\pi\left[9y-4y^{3/2}+\dfrac{y^{2}}{2}\right]_{0}^{9}=\pi\left(81-108+\dfrac{81}{2}\right)=\dfrac{27\pi}{2}\approx 42{,}4\).</li>
+        <li>Respuesta: el adorno tiene unos \(42{,}4\) centímetros cúbicos de vidrio.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H07 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* Fábrica: sólido de revolución en 3D con degradado, generado al barrer un disco (o un anillo) a lo largo del eje de giro.
+   o.orient 'x': eje horizontal y = k, radio medido en y.  o.orient 'y': eje vertical x = k, radio medido en x. */
+function oaSol(o){
+  var RUN = o.run || 24, E = 0.3, a = o.a, b = o.b, hor = o.orient !== 'y', R = o.R, r = o.r || function(){ return 0; }, Rm = o.Rmax;
+  function dec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+  function us(s){ return s < 2 ? a + 0.04*(b - a) : s < RUN - 4 ? a + (b - a)*(0.04 + 0.96*OA.smooth((s - 2)/(RUN - 6))) : b; }
+  return {
+    world:o.world, aspect:o.aspect,
+    _chk:[{f:o.V, df:function(u){ return Math.PI*(R(u)*R(u) - r(u)*r(u)); }, at:o.chk}],
+    aria:o.aria, labels:[['F', o.Ftex, o.Ftxt, 'diff']],
+    sliders:[{id:'u', tex:hor ? 'x' : 'y', min:a, max:b, step:(b - a)/400, value:a + 0.04*(b - a)}],
+    legend:o.legend,
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.u = us(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = v.q == null ? RUN : v.q*RUN, u = v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, i, t, g, n = 60, W = o.world, p, q;
+      function txt(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      function P(t, w){ return hor ? [X(t), Y(o.k + w)] : [X(o.k + w), Y(t)]; }
+      function rp(w){ return hor ? Math.abs(Y(o.k + w) - Y(o.k)) : Math.abs(X(o.k + w) - X(o.k)); }
+      function ell(t, w, a0, a1, acw){ var m = P(t, 0), d = rp(w); if (hor) c.ellipse(m[0], m[1], E*d, d, 0, a0, a1, !!acw); else c.ellipse(m[0], m[1], d, E*d, 0, a0, a1, !!acw); }
+      function cuerpo(ua, ub, rad){
+        c.beginPath(); for (i = 0; i <= n; i++){ t = ua + (ub - ua)*i/n; p = P(t, rad(t)); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }
+        if (hor) ell(ub, rad(ub), -Math.PI/2, Math.PI/2); else ell(ub, rad(ub), 0, Math.PI, true);
+        for (i = n; i >= 0; i--){ t = ua + (ub - ua)*i/n; p = P(t, -rad(t)); c.lineTo(p[0], p[1]); }
+        if (hor) ell(ua, rad(ua), Math.PI/2, 3*Math.PI/2); else ell(ua, rad(ua), Math.PI, 0, true);
+        c.closePath();
+      }
+      S.axes({gx:o.gx, gy:o.gy});
+      /* eje de giro */
+      if (hor) S.line(W.x0, o.k, W.x1, o.k, {color:C.tan, width:1.4, dash:[7, 4]}); else S.line(o.k, W.y0, o.k, W.y1, {color:C.tan, width:1.4, dash:[7, 4]}); c.setLineDash([]);
+      /* cuerpo con degradado */
+      if (hor){ g = c.createLinearGradient(0, Y(o.k + Rm), 0, Y(o.k - Rm)); } else { g = c.createLinearGradient(X(o.k - Rm), 0, X(o.k + Rm), 0); }
+      g.addColorStop(0, '#1f5d86'); g.addColorStop(0.32, '#c4e2f5'); g.addColorStop(0.62, '#5d9cc6'); g.addColorStop(1, '#17486a');
+      cuerpo(a, u, R); c.globalAlpha = 0.93; c.fillStyle = g; c.fill(); c.globalAlpha = 1; c.strokeStyle = '#17486a'; c.lineWidth = 1.4; c.stroke();
+      /* anillos de la superficie */
+      c.strokeStyle = 'rgba(255,255,255,0.4)'; c.lineWidth = 1;
+      for (i = 1; i <= 5; i++){ t = a + (u - a)*i/6; c.beginPath(); if (hor) ell(t, R(t), Math.PI/2, 3*Math.PI/2); else ell(t, R(t), 0, Math.PI); c.stroke(); }
+      /* cara del corte en u: el disco (o el anillo) que se agrega */
+      q = P(u, 0); g = c.createRadialGradient(q[0] - 0.2*rp(R(u))*(hor ? E : 1), q[1] - 0.25*rp(R(u))*(hor ? 1 : E), 1, q[0], q[1], Math.max(2, rp(R(u))));
+      g.addColorStop(0, '#f6dfe2'); g.addColorStop(1, '#c98a93');
+      c.beginPath(); ell(u, R(u), 0, 2*Math.PI); c.fillStyle = g; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 2.6; c.stroke();
+      if (r(u) > 1e-6){ g = c.createLinearGradient(q[0] - rp(r(u)), q[1] - rp(r(u)), q[0] + rp(r(u)), q[1] + rp(r(u))); g.addColorStop(0, '#0f3550'); g.addColorStop(1, '#5d8fb0');
+        c.beginPath(); ell(u, r(u), 0, 2*Math.PI); c.fillStyle = g; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 2; c.stroke(); }
+      /* curvas que encierran la región */
+      (o.curves || []).forEach(function(k){ c.strokeStyle = C[k.color]; c.lineWidth = 2.4; c.beginPath(); for (i = 0; i <= 120; i++){ t = k.from + (k.to - k.from)*i/120; p = hor ? [X(t), Y(k.f(t))] : [X(k.f(t)), Y(t)]; if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.stroke(); txt(k.txt, X(k.tx), Y(k.ty), k.al || 'left', C[k.color]); });
+      txt(o.axisTxt, X(o.axisAt[0]), Y(o.axisAt[1]), o.axisAl || 'left', C.tan);
+      /* radios */
+      p = P(u, R(u)); c.strokeStyle = C.rise; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); S.dot(hor ? u : o.k + R(u), hor ? o.k + R(u) : u, C.rise);
+      txt('R = ' + dec(R(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? (o.Rdy || -4) : -13), hor ? 'left' : 'center', C.rise);
+      if (r(u) > 1e-6){ p = P(u, -r(u)); c.strokeStyle = C.alt; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); txt('r = ' + dec(r(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? 6 : 13), hor ? 'left' : 'center', C.alt); }
+      c.fillStyle = C.ink; c.beginPath(); c.arc(q[0], q[1], 3, 0, 6.2832); c.fill();
+      S.lab('F', X(o.Fat[0]), Y(o.Fat[1]), 0, 0, v.q != null && s >= RUN - 4);
+    },
+    caption:function(v){ var u = v.u, s = v.q == null ? null : v.q*RUN; if (s != null && s < 2) return o.cap0; if (u >= b - 1e-6) return o.cap1; return o.cap(u, dec); },
+    readout:function(v){ return o.readout(v.u, OA.num); }
+  };
+}
+OA.scene('apl-discos-yk', oaSol({
+  orient:'x', k:2, a:0, b:4, Rmax:2, R:function(x){ return 2 - Math.sqrt(x); }, Rdy:-4,
+  V:function(x){ return Math.PI*(4*x - 8/3*Math.pow(x, 1.5) + x*x/2); }, chk:[0.5, 1, 2, 3.5],
+  world:{x0:-1.1, x1:5.6, y0:-0.9, y1:4.7}, aspect:5.6/6.7, gx:[1, 2, 3, 4], gy:[1, 2, 3, 4],
+  curves:[{f:function(x){ return Math.sqrt(x); }, from:0, to:4.9, color:'sec', txt:'y = √x', tx:4.35, ty:1.75}],
+  axisTxt:'eje de giro: y = 2', axisAt:[2.9, 2.6], Fat:[1.3, -0.1],
+  Ftex:'V=\\displaystyle\\int_{0}^{4}\\pi\\left(2-\\sqrt{x}\\right)^{2}dx=\\dfrac{8\\pi}{3}', Ftxt:'V = ∫ de 0 a 4 de π(2 − √x)² dx = 8π/3',
+  legend:'<span><i class="sw sec"></i> \\(y=\\sqrt{x}\\) y el sólido</span><span><i class="sw tan"></i> eje \\(y=2\\) y disco en \\(x\\)</span><span><i class="sw rise"></i> radio \\(R=2-\\sqrt{x}\\)</span>',
+  aria:'La región entre la curva y igual a raíz de x, la recta y igual a 2 y el eje y gira alrededor de la recta y igual a 2. Se forma un sólido con punta en x igual a 4, dibujado en tres dimensiones con degradado azul. El disco burdeo avanza hacia la derecha y su radio, 2 menos raíz de x, se achica hasta cero. El volumen llega a 8 pi tercios.',
+  cap0:'El eje de giro ya no es el eje x: es la recta y = 2. El radio del disco se mide desde esa recta hasta la curva: R = 2 − √x',
+  cap1:'En x = 4 la curva toca al eje de giro y el radio vale 0. El sólido completo mide 8π/3, cerca de 8,38 unidades cúbicas',
+  cap:function(x, dec){ return 'En x = ' + dec(x, 2) + ' la curva está a la altura √x = ' + dec(Math.sqrt(x), 2) + '. Del eje y = 2 a la curva hay R = 2 − ' + dec(Math.sqrt(x), 2) + ' = ' + dec(2 - Math.sqrt(x), 2); },
+  readout:function(x, num){ var V = Math.PI*(4*x - 8/3*Math.pow(x, 1.5) + x*x/2); return [['', 'dV=\\pi R^{2}\\,dx=\\pi\\left(2-\\sqrt{x}\\right)^{2}dx=\\pi\\left(4-4\\sqrt{x}+x\\right)dx'], ['d', '\\displaystyle\\int_{0}^{x}\\pi\\left(4-4\\sqrt{t}+t\\right)dt=\\pi\\left(4x-\\dfrac{8}{3}x^{3/2}+\\dfrac{x^{2}}{2}\\right)'], ['', 'x=' + num(x, 2) + ':\\quad \\text{volumen acumulado}\\approx ' + num(V, 2) + '\\ \\longrightarrow\\ \\dfrac{8\\pi}{3}']]; }
+}));
+OA.scene('apl-discos-xk', oaSol({
+  orient:'y', k:1, a:-1, b:1, Rmax:1, R:function(y){ return 1 - y*y; },
+  V:function(y){ return Math.PI*(y - 2*y*y*y/3 + Math.pow(y, 5)/5 + 8/15); }, chk:[-0.6, -0.2, 0.3, 0.8],
+  world:{x0:-1.5, x1:3.5, y0:-1.5, y1:1.7}, aspect:3.2/5, gx:[1, 2, 3], gy:[-1, 1],
+  curves:[{f:function(y){ return y*y; }, from:-1.25, to:1.25, color:'sec', txt:'x = y²', tx:0.55, ty:-1.22, al:'right'}],
+  axisTxt:'eje de giro: x = 1', axisAt:[1.1, 1.52], Fat:[-1.4, 1.45],
+  Ftex:'V=\\displaystyle\\int_{-1}^{1}\\pi\\left(1-y^{2}\\right)^{2}dy=\\dfrac{16\\pi}{15}', Ftxt:'V = ∫ de −1 a 1 de π(1 − y²)² dy = 16π/15',
+  legend:'<span><i class="sw sec"></i> \\(x=y^{2}\\) y el sólido</span><span><i class="sw tan"></i> eje \\(x=1\\) y disco en \\(y\\)</span><span><i class="sw rise"></i> radio \\(R=1-y^{2}\\)</span>',
+  aria:'La región entre la parábola x igual a y al cuadrado y la recta vertical x igual a 1 gira alrededor de esa recta. Se forma un sólido con forma de limón, con puntas arriba y abajo, en tres dimensiones con degradado azul. El disco burdeo horizontal sube desde y igual a menos 1 hasta y igual a 1; su radio es 1 menos y al cuadrado. El volumen llega a 16 pi quinceavos.',
+  cap0:'Ahora el eje de giro es la recta vertical x = 1. Los discos son horizontales. El radio se mide desde la recta hasta la parábola: R = 1 − y²',
+  cap1:'El disco llegó a y = 1, donde el radio vuelve a ser 0. El sólido completo mide 16π/15, cerca de 3,35 unidades cúbicas',
+  cap:function(y, dec){ return 'A la altura y = ' + dec(y, 2) + ' la parábola está en x = y² = ' + dec(y*y, 2) + '. Del eje x = 1 a la parábola hay R = 1 − ' + dec(y*y, 2) + ' = ' + dec(1 - y*y, 2); },
+  readout:function(y, num){ var V = Math.PI*(y - 2*y*y*y/3 + Math.pow(y, 5)/5 + 8/15); return [['', 'dV=\\pi R^{2}\\,dy=\\pi\\left(1-y^{2}\\right)^{2}dy=\\pi\\left(1-2y^{2}+y^{4}\\right)dy'], ['d', '\\displaystyle\\int_{-1}^{y}\\pi\\left(1-2t^{2}+t^{4}\\right)dt=\\pi\\left(y-\\dfrac{2y^{3}}{3}+\\dfrac{y^{5}}{5}+\\dfrac{8}{15}\\right)'], ['', 'y=' + num(y, 2) + ':\\quad \\text{volumen acumulado}\\approx ' + num(V, 2) + '\\ \\longrightarrow\\ \\dfrac{16\\pi}{15}']]; }
+}));
