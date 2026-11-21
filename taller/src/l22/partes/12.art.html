@@ -1,0 +1,159 @@
+<!--file:H12_area_entre_curvas_expresadas_como_funciones_de_x.html-->
+<!--title:Determinar el área entre curvas expresadas como funciones de x-->
+<!--id:apl-area-x-->
+<!--tab:H12 Área, funciones de x-->
+<article class="sheet" id="apl-area-x" data-hoja="L22 H12">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de la integral</li>
+      <li><b>Determinar el área entre curvas expresadas como funciones de x</b></li>
+    </ol>
+    <h1>Determinar el área entre curvas expresadas como funciones de \(x\)</h1>
+    <p class="lede">La integral definida mide el área entre una curva y el eje \(x\). Con una resta, la misma idea mide el área entre <b>dos</b> curvas: en cada posición \(x\), la curva de arriba menos la de abajo.
+    \[A=\int_{a}^{b}\Big[f(x)-g(x)\Big]\,dx\qquad\text{con }f(x)\ge g(x)\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La región está entre dos curvas continuas, \(y=f(x)\) arriba e \(y=g(x)\) abajo, desde \(x=a\) hasta \(x=b\), con \(f(x)\ge g(x)\) en todo el tramo.</li>
+      <li>Se corta en tiras verticales muy delgadas. Una tira en la posición \(x\) tiene <b>ancho</b> \(dx\) y <b>alto</b> \(f(x)-g(x)\): la altura de arriba menos la de abajo. Su área es la de un rectángulo:
+        \[dA=\Big[f(x)-g(x)\Big]\,dx\]</li>
+      <li>El área total es la suma de todas las tiras, de \(a\) a \(b\). En el límite de tiras cada vez más delgadas, esa suma es la integral definida:
+        \[A=\int_{a}^{b}dA=\int_{a}^{b}\Big[f(x)-g(x)\Big]\,dx\]</li>
+      <li><b>No importa dónde esté el eje \(x\).</b> El alto de la tira es una diferencia de alturas. Si las dos curvas se suben o se bajan juntas una cantidad \(k\), la diferencia no cambia: \(\big[f(x)+k\big]-\big[g(x)+k\big]=f(x)-g(x)\). Por eso la fórmula sirve igual cuando una curva, o las dos, quedan bajo el eje.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El método, en cuatro pasos</h3>
+    <ol class="steps">
+      <li><b>Límites:</b> si el enunciado no los da, son los cruces. Se resuelve \(f(x)=g(x)\).</li>
+      <li><b>Quién va arriba:</b> se prueba un valor de \(x\) entre los límites y se comparan las dos curvas.</li>
+      <li><b>Tira:</b> se escribe \(dA=\big[\text{arriba}-\text{abajo}\big]\,dx\) y se simplifica.</li>
+      <li><b>Integral:</b> se integra entre los límites. El resultado debe ser positivo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La región entre la recta \(f(x)=x+4\) y la parábola \(g(x)=x^{2}-2x\). Una tira vertical avanza de un cruce al otro y va pintando el área. Fíjate en el tramo donde la parábola pasa bajo el eje \(x\).</p>
+  <div class="stage" data-scene="apl-area-x"></div>
+  <ul class="keys">
+    <li><b>Recta naranja:</b> \(f(x)=x+4\), el borde de arriba.</li>
+    <li><b>Curva azul:</b> \(g(x)=x^{2}-2x\), el borde de abajo.</li>
+    <li><b>Tira burdeo:</b> va de la parábola a la recta en la posición \(x\). Su alto es \(f(x)-g(x)\).</li>
+    <li><b>Zona verde:</b> el área acumulada desde \(x=-1\) hasta la tira.</li>
+    <li><b>Bajo la animación:</b> el área de la tira, la integral que la acumula y el valor al que llega.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la región entre \(f(x)=x+4\) y \(g(x)=x^{2}-2x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces.</b>
+      \[x+4=x^{2}-2x\ \Longrightarrow\ x^{2}-3x-4=0\ \Longrightarrow\ (x-4)(x+1)=0\ \Longrightarrow\ x=-1\ \text{ o }\ x=4\]
+      Los puntos son \((-1,\,3)\) y \((4,\,8)\).</li>
+    <li><b>Quién va arriba.</b> En \(x=0\): la recta da \(4\) y la parábola da \(0\). La recta va arriba en todo el tramo, porque no hay otro cruce entre \(-1\) y \(4\).</li>
+    <li><b>Tira.</b> \(dA=\Big[(x+4)-\left(x^{2}-2x\right)\Big]dx=\left(4+3x-x^{2}\right)dx\).</li>
+    <li><b>Integral.</b>
+      \[A=\int_{-1}^{4}\left(4+3x-x^{2}\right)dx=\left[4x+\frac{3x^{2}}{2}-\frac{x^{3}}{3}\right]_{-1}^{4}\]</li>
+    <li><b>Evaluación.</b>
+      \[\left(16+24-\frac{64}{3}\right)-\left(-4+\frac{3}{2}+\frac{1}{3}\right)=\frac{56}{3}-\left(-\frac{13}{6}\right)=\frac{112}{6}+\frac{13}{6}=\frac{125}{6}\approx 20{,}83\]</li>
+    <li>Entre \(x=0\) y \(x=2\) la parábola es negativa. No hubo que hacer nada especial: la resta \(f-g\) ya lo considera.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con límites dados: entre \(y=e^{x}\) e \(y=x\), desde \(x=0\) hasta \(x=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Límites.</b> Los da el enunciado: \(a=0\), \(b=1\). Estas curvas no se cruzan.</li>
+    <li><b>Quién va arriba.</b> En \(x=0\): \(e^{0}=1&gt;0\). En \(x=1\): \(e\approx 2{,}72&gt;1\). En todo el tramo \(e^{x}\ge 1\ge x\): va arriba \(y=e^{x}\).</li>
+    <li><b>Integral.</b>
+      \[A=\int_{0}^{1}\left(e^{x}-x\right)dx=\left[e^{x}-\frac{x^{2}}{2}\right]_{0}^{1}=\left(e-\frac{1}{2}\right)-(1-0)=e-\frac{3}{2}\approx 1{,}22\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, una curva bajo el eje: entre \(y=x^{2}-4\) y el eje \(x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces.</b> El eje \(x\) es la recta \(y=0\). \(x^{2}-4=0\ \Longrightarrow\ x=-2\) o \(x=2\).</li>
+    <li><b>Quién va arriba.</b> En \(x=0\) la parábola da \(-4\), menor que \(0\). Arriba va el eje; abajo, la parábola.</li>
+    <li><b>Integral.</b>
+      \[A=\int_{-2}^{2}\Big[0-\left(x^{2}-4\right)\Big]dx=\int_{-2}^{2}\left(4-x^{2}\right)dx=\left[4x-\frac{x^{3}}{3}\right]_{-2}^{2}=\frac{16}{3}+\frac{16}{3}=\frac{32}{3}\]</li>
+    <li>La integral de la función sola, \(\displaystyle\int_{-2}^{2}\left(x^{2}-4\right)dx=-\frac{32}{3}\), es negativa porque la curva está bajo el eje. El área es \(\dfrac{32}{3}\): «arriba menos abajo» siempre da positivo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dos errores comunes.</b> Uno: restar al revés, abajo menos arriba. El resultado sale negativo, y un área no puede serlo. Dos: no revisar si las curvas se cruzan dentro del intervalo. Si se cruzan, la de arriba cambia y hay que separar por tramos: es la hoja <a href="https://oscar2676.github.io/oscaracademy-ejercicios/calculo-integral/lote22/H02_area_entre_curvas_que_se_intersectan_en_mas_de_dos_puntos.html">área entre curvas que se intersectan en más de dos puntos</a>.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>¿Y si una tira vertical no sirve?</h3>
+    <p>Hay regiones donde la curva de arriba o la de abajo cambia en el camino, y con tiras verticales harían falta dos integrales. A veces conviene cortar con tiras horizontales e integrar en \(y\): es la hoja <a href="https://oscar2676.github.io/oscaracademy-ejercicios/calculo-integral/lote22/H01_area_entre_curvas_expresadas_como_funciones_de_y.html">área entre curvas expresadas como funciones de \(y\)</a>.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula el área de la región encerrada entre \(y=x^{2}\) e \(y=2x\).</p>
+    <details><summary>Pista</summary><div><p>Se cruzan donde \(x^{2}=2x\). En \(x=1\), ¿cuál es mayor?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(x^{2}-2x=0\ \Longrightarrow\ x(x-2)=0\ \Longrightarrow\ x=0\) o \(x=2\).</li>
+        <li>En \(x=1\): la recta da \(2\) y la parábola da \(1\). Va arriba la recta.</li>
+        <li>\[A=\int_{0}^{2}\left(2x-x^{2}\right)dx=\left[x^{2}-\frac{x^{3}}{3}\right]_{0}^{2}=4-\frac{8}{3}=\frac{4}{3}\]</li>
+        <li>El área es \(\dfrac{4}{3}\) unidades cuadradas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el área de la región encerrada entre \(y=\sqrt{x}\) e \(y=x^{2}\).</p>
+    <details><summary>Pista</summary><div><p>Se cruzan en \(x=0\) y \(x=1\). Prueba \(x=\tfrac{1}{4}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(\sqrt{x}=x^{2}\). Elevando al cuadrado, \(x=x^{4}\), es decir, \(x\left(x^{3}-1\right)=0\): \(x=0\) o \(x=1\). Los dos cumplen la ecuación original.</li>
+        <li>En \(x=\tfrac{1}{4}\): \(\sqrt{x}=\tfrac{1}{2}\) y \(x^{2}=\tfrac{1}{16}\). Va arriba la raíz.</li>
+        <li>\[A=\int_{0}^{1}\left(x^{1/2}-x^{2}\right)dx=\left[\frac{2}{3}x^{3/2}-\frac{x^{3}}{3}\right]_{0}^{1}=\frac{2}{3}-\frac{1}{3}=\frac{1}{3}\]</li>
+        <li>El área es \(\dfrac{1}{3}\) de unidad cuadrada.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un jardín queda entre un muro curvo y un camino recto. Con las medidas en metros, el muro sigue la curva \(y=6-\dfrac{x^{2}}{4}\) y el camino es la recta \(y=2\). ¿Cuántos metros cuadrados de pasto se necesitan para cubrirlo?</p>
+    <details><summary>Pista</summary><div><p>El muro y el camino se juntan donde \(6-\dfrac{x^{2}}{4}=2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(6-\dfrac{x^{2}}{4}=2\ \Longrightarrow\ x^{2}=16\ \Longrightarrow\ x=-4\) o \(x=4\).</li>
+        <li>En \(x=0\) el muro está en \(y=6\) y el camino en \(y=2\). Va arriba el muro.</li>
+        <li>\[A=\int_{-4}^{4}\left[\left(6-\frac{x^{2}}{4}\right)-2\right]dx=\int_{-4}^{4}\left(4-\frac{x^{2}}{4}\right)dx=\left[4x-\frac{x^{3}}{12}\right]_{-4}^{4}=\left(16-\frac{16}{3}\right)-\left(-16+\frac{16}{3}\right)=\frac{64}{3}\]</li>
+        <li>Respuesta: se necesitan \(\dfrac{64}{3}\approx 21{,}3\) metros cuadrados de pasto.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L22-H12 · v001 · Pendiente de APR</span>
+</footer>
+</article>

@@ -1,5 +1,5 @@
 OA.scene('apl-discos-yk', oaSol({
-  orient:'x', k:2, a:0, b:4, Rmax:2, R:function(x){ return 2 - Math.sqrt(x); }, Rdy:-4,
+  orient:'x', k:2, a:0, b:4, Rmax:2, dx:0.045, side:-1, Rdy:8, R:function(x){ return 2 - Math.sqrt(x); }, Rdy:-4,
   V:function(x){ return Math.PI*(4*x - 8/3*Math.pow(x, 1.5) + x*x/2); }, chk:[0.5, 1, 2, 3.5],
   world:{x0:-1.1, x1:5.6, y0:-0.9, y1:4.7}, aspect:5.6/6.7, gx:[1, 2, 3, 4], gy:[1, 2, 3, 4],
   curves:[{f:function(x){ return Math.sqrt(x); }, from:0, to:4.9, color:'sec', txt:'y = √x', tx:4.35, ty:1.75}],
@@ -13,7 +13,7 @@ OA.scene('apl-discos-yk', oaSol({
   readout:function(x, num){ var V = Math.PI*(4*x - 8/3*Math.pow(x, 1.5) + x*x/2); return [['', 'dV=\\pi R^{2}\\,dx=\\pi\\left(2-\\sqrt{x}\\right)^{2}dx=\\pi\\left(4-4\\sqrt{x}+x\\right)dx'], ['d', '\\displaystyle\\int_{0}^{x}\\pi\\left(4-4\\sqrt{t}+t\\right)dt=\\pi\\left(4x-\\dfrac{8}{3}x^{3/2}+\\dfrac{x^{2}}{2}\\right)'], ['', 'x=' + num(x, 2) + ':\\quad \\text{volumen acumulado}\\approx ' + num(V, 2) + '\\ \\longrightarrow\\ \\dfrac{8\\pi}{3}']]; }
 }));
 OA.scene('apl-discos-xk', oaSol({
-  orient:'y', k:1, a:-1, b:1, Rmax:1, R:function(y){ return 1 - y*y; },
+  orient:'y', k:1, a:-1, b:1, Rmax:1, dx:0.05, side:-1, R:function(y){ return 1 - y*y; },
   V:function(y){ return Math.PI*(y - 2*y*y*y/3 + Math.pow(y, 5)/5 + 8/15); }, chk:[-0.6, -0.2, 0.3, 0.8],
   world:{x0:-1.5, x1:3.5, y0:-1.5, y1:1.7}, aspect:3.2/5, gx:[1, 2, 3], gy:[-1, 1],
   curves:[{f:function(y){ return y*y; }, from:-1.25, to:1.25, color:'sec', txt:'x = y²', tx:0.55, ty:-1.22, al:'right'}],

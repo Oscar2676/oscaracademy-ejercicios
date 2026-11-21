@@ -101,4 +101,10 @@ ok('H11 ej.3: 2(2√2 − 1) ≈ 3,66; ej.4: 2πr', cerca(largo(lambda t: 3 * t 
 ok('H11-A: 17/12 ≈ 1,42; cuadrado perfecto', cerca(largo(lambda x: x, lambda x: x ** 3 / 6 + 1 / (2 * x), 1, 2), 17 / 12, 1e-5) and round(17 / 12, 2) == 1.42 and all(1 + (F(x) ** 2 / 2 - 1 / (2 * F(x) ** 2)) ** 2 == (F(x) ** 2 / 2 + 1 / (2 * F(x) ** 2)) ** 2 for x in (F(1), F(3, 2), F(2))) and F(8, 6) - F(1, 4) - (F(1, 6) - F(1, 2)) == F(17, 12))
 ok('H11-B: √2(e^π − 1) ≈ 31,31; H11-C: 20 senh 1 ≈ 23,5', cerca(largo(lambda t: exp(t) * cos(t), lambda t: exp(t) * sin(t), 0, pi), sqrt(2) * (exp(pi) - 1), 1e-5) and round(sqrt(2) * (exp(pi) - 1), 2) == 31.31 and cerca(largo(lambda x: x, lambda x: 10 * cosh(x / 10), -10, 10), 20 * sinh(1), 1e-5) and round(20 * sinh(1), 1) == 23.5)
 
+# H12 · área entre curvas, funciones de x
+Q = lambda x: 4 * F(x) + 3 * F(x) ** 2 / 2 - F(x) ** 3 / 3
+ok('H12 ej.1: cruces −1 y 4, puntos (−1,3), (4,8); 56/3 − (−13/6) = 125/6 ≈ 20,83; acumulado', all(x + 4 == x * x - 2 * x for x in (-1, 4)) and -1 + 4 == 3 and 4 + 4 == 8 and Q(4) == F(56, 3) and Q(-1) == F(-13, 6) and Q(4) - Q(-1) == F(125, 6) and round(125 / 6, 2) == 20.83 and cerca(riemann(lambda x: 4 + 3 * x - x * x, -1, 4), 125 / 6) and cerca(riemann(lambda x: 4 + 3 * x - x * x, -1, 2.2), float(Q(F(11, 5))) + 13 / 6))
+ok('H12 ej.2: e − 3/2 ≈ 1,22; ej.3: 32/3 y −32/3', cerca(riemann(lambda x: exp(x) - x, 0, 1), e - 1.5) and round(e - 1.5, 2) == 1.22 and cerca(riemann(lambda x: 4 - x * x, -2, 2), 32 / 3) and cerca(riemann(lambda x: x * x - 4, -2, 2), -32 / 3))
+ok('H12-A: 4/3; H12-B: 1/3; H12-C: 64/3 ≈ 21,3', cerca(riemann(lambda x: 2 * x - x * x, 0, 2), 4 / 3) and cerca(riemann(lambda x: sqrt(x) - x * x, 0, 1), 1 / 3, 1e-5) and cerca(riemann(lambda x: 4 - x * x / 4, -4, 4), 64 / 3) and (16 - F(16, 3)) * 2 == F(64, 3) and round(64 / 3, 1) == 21.3)
+
 print('\nERRORES:', err)

@@ -20,7 +20,9 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 04:30: 38 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)** y **lote 21 completo (12/12)**
+## Avance al 21-nov 08:10: 49 hojas con APR (lote 22: 11)
+
+## Antes, al 21-nov 04:30: 38 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)** y **lote 21 completo (12/12)**
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -65,21 +67,16 @@ Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d
 
 ## Lote 22 · Aplicaciones de la integral (`calculo-integral/lote22/`, fuentes `taller/src/l22/partes/`, `qa/rigor/verificar_lote_22.py`)
 Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-4255-80f2-4fbb3c72907c). Código de pie `CI-L22-HNN`. Se arma con `python3 taller/build.py 22 "Aplicaciones de la integral"` (partes → `01-ay`, `02-cru`, `03-prom`, `04-mov`, `05-acu`).
-- **Pendientes de APR (21-nov 06:00), v001:**
-  - H01 «Determinar el área entre curvas expresadas como funciones de y» (`H01_area_entre_curvas_expresadas_como_funciones_de_y.html`): qudgj comp-l63t26et · qclgl comp-l63qrtxr
-  - H02 «Calcular el área entre curvas que se intersectan en más de dos puntos» (`H02_area_entre_curvas_que_se_intersectan_en_mas_de_dos_puntos.html`): ft30u comp-lcno0tb8 · ft30u comp-lcno0tbb1 · qudgj comp-l63t8c9a · qudgj comp-l2quvfbw2 · qudgj comp-l63t25ql (5 lugares: comprobar el texto de cada uno antes de enlazar)
-  - H03 «Determinar el valor promedio de una función en un intervalo» (`H03_valor_promedio_de_una_funcion_en_un_intervalo.html`): qudgj comp-l2quvfb71 · qclgl comp-l63qrtyw
-  - H04 «Conectar con integrales funciones de posición, velocidad y aceleración» (`H04_conectar_con_integrales_posicion_velocidad_y_aceleracion.html`): qudgj comp-l63t26up · qclgl comp-l63r3orp
-  - H05 «Utilizar funciones de acumulación e integrales definidas en contextos aplicados» (`H05_funciones_de_acumulacion_e_integrales_definidas_en_contextos_aplicados.html`): qudgj comp-l63t268k · qclgl comp-l63qrs2l
-- **Pendientes de APR (21-nov 07:30), segunda tanda, v001** (sólidos en 3D con degradado; fábricas `_sol.js` [`oaSol`, revolución, discos y anillos, eje horizontal o vertical] y `_sec.js` [`oaSec`, secciones transversales]; se arman con `cat _sol.js NN.scene.js` o `cat _sec.js NN.scene.js` → `06-dis`, `07-dis2`, `08-ani`, `09-sec`, `10-sec2`, `11-arco`):
-  - H06 «Volumen con método de discos: revolución alrededor del eje x o y» (`H06_volumen_con_metodo_de_discos_revolucion_alrededor_del_eje_x_o_y.html`): ft30u comp-lcno0tb62 · qudgj comp-l63t6v00 · qclgl comp-l63qrt3u
-  - H07 «Volumen con método de discos: revolución alrededor de otros ejes» (`H07_volumen_con_metodo_de_discos_revolucion_alrededor_de_otros_ejes.html`): ft30u comp-lcno0tb92 · qudgj comp-l63t8bn8 · qclgl comp-l63qrt0f
-  - H08 «Volumen con método de anillos: revolución alrededor de otros ejes» (`H08_volumen_con_metodo_de_anillos_revolucion_alrededor_de_otros_ejes.html`): ft30u comp-lcno0tbd · qudgj comp-l63t8a5j · qclgl comp-l63ralz7
-  - H09 «Volumen con secciones transversales: cuadrados y rectángulos» (`H09_volumen_con_secciones_transversales_cuadrados_y_rectangulos.html`): qudgj comp-l63t26cx · qclgl comp-l63qrs86
-  - H10 «Volumen con secciones transversales: triángulos y semicírculos» (`H10_volumen_con_secciones_transversales_triangulos_y_semicirculos.html`): qudgj comp-l63t6qhh · qclgl comp-l63qrs1e
-  - H11 «La longitud de arco de una curva suave planar y la distancia recorrida» (`H11_longitud_de_arco_de_una_curva_suave_y_distancia_recorrida.html`): ft30u comp-lcno0tbe2 · qudgj comp-l2quvfc0 · qclgl comp-l63raera
-- Avisos dados a Óscar: H11 afirma sin demostrar que ∫√(1+cos²x)dx no tiene antiderivada elemental; H03 usa sin demostrar valores extremos y valor intermedio.
-- **En espera de respuesta de Óscar:** «Área entre curvas expresadas como funciones de x» (qudgj comp-l63t25gs · qclgl comp-l63qrszb): ¿se enlaza a L03 H04 o se hace hoja nueva?
+- **Lote 22: H01–H11 con APR de Óscar (21-nov 07:47), enlazadas en Wix (29 enlaces) y publicadas.** Los ids se buscan por título exacto con `__scan()` (los anotados a mano para H02 estaban malos). Ids reales:
+  - ft30u: H01 comp-lcno0taz1 · H02 comp-lcno0tb1 · H03 comp-lcno0tas1 · H04 comp-lcno0tau1 · H06 comp-lcno0tb62 · H07 comp-lcno0tb92 · H08 comp-lcno0tbd · H11 comp-lcno0tbe2
+  - qudgj: H01 comp-l63t26et · H02 comp-l63t25ql · H03 comp-l2quvfb71 · H04 comp-l63t26up · H05 comp-l63t268k · H06 comp-l63t6v00 · H07 comp-l63t8bn8 · H08 comp-l63t8a5j · H09 comp-l63t26cx · H10 comp-l63t6qhh · H11 comp-l2quvfc0
+  - qclgl: H01 comp-l63qrtxr · H03 comp-l63qrtyw · H04 comp-l63r3orp · H05 comp-l63qrs2l · H06 comp-l63qrt3u · H07 comp-l63qrt0f · H08 comp-l63ralz7 · H09 comp-l63qrs86 · H10 comp-l63qrs1e · H11 comp-l63raera
+  - Archivos: H01_area_entre_curvas_expresadas_como_funciones_de_y · H02_area_entre_curvas_que_se_intersectan_en_mas_de_dos_puntos · H03_valor_promedio_de_una_funcion_en_un_intervalo · H04_conectar_con_integrales_posicion_velocidad_y_aceleracion · H05_funciones_de_acumulacion_e_integrales_definidas_en_contextos_aplicados · H06_volumen_con_metodo_de_discos_revolucion_alrededor_del_eje_x_o_y · H07_volumen_con_metodo_de_discos_revolucion_alrededor_de_otros_ejes · H08_volumen_con_metodo_de_anillos_revolucion_alrededor_de_otros_ejes · H09_volumen_con_secciones_transversales_cuadrados_y_rectangulos · H10_volumen_con_secciones_transversales_triangulos_y_semicirculos · H11_longitud_de_arco_de_una_curva_suave_y_distancia_recorrida (.html)
+  - Fábricas 3D: `_sol.js` (`oaSol`, revolución; opciones `dx` [rebanada con grosor y mini rectángulo generador] y `side:-1` [radio hacia la curva]) y `_sec.js` (`oaSec`, secciones). Se arman con `cat _sol.js NN.scene.js` / `cat _sec.js NN.scene.js` → `06-dis`, `07-dis2`, `08-ani`, `09-sec`, `10-sec2`, `11-arco`, `12-ax`.
+- **Pendientes de APR (21-nov 08:10):**
+  - **H07 v002** (ya enlazada y en línea): corrección de Óscar tras el APR: en las dos animaciones, marcar el dx (dy) con un mini rectángulo de ese espesor y largo R. Hecho con `dx` y `side:-1`. **Ofrecido y sin respuesta: lo mismo en H06 y H08.**
+  - **H12 v001** «Determinar el área entre curvas expresadas como funciones de x» (Óscar: «hazla nueva»; `H12_area_entre_curvas_expresadas_como_funciones_de_x.html`): ft30u comp-lcno0tay · qudgj comp-l63t25gs · qclgl comp-l63qrszb. Enlaza a H01 y H02 del lote.
+- Avisos dados a Óscar: H11 afirma sin demostrar que ∫√(1+cos²x)dx no tiene antiderivada elemental; H03 usa sin demostrar valores extremos y valor intermedio. La vista previa del taller no dibuja las fórmulas (TeX): se le pidió mirarlas en la tarjeta.
 - `qa/rigor/derivadas_escenas.js` espera `_chk` con `d0, d1`; las escenas de l21 y l22 usan `_chk:[{f, df, at}]` y se comprueban con el bucle de node anotado en el historial del 21-nov (0 derivadas malas).
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
