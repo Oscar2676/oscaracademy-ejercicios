@@ -31,4 +31,31 @@ ok('H02: propiedades 4 y 5 numéricas con f=x², g=sen', cerca(riemann(lambda x:
 ok('H02 ejercicio resuelto: 6−2 = 4; −6; 0; 12−9 = 3; 6+15 = 21', 6 + -2 == 4 and 2 * 6 - 3 * 3 == 3 and 6 + 5 * (4 - 1) == 21)
 ok('H02: contraejemplo del producto, 2 ≠ 4', 1 * (2 - 0) == 2 and 2 * 2 == 4)
 ok('H02-A: 10−3 = 7; H02-B: 12−10−4 = −2 → 2; H02-C: 18+12 = 30', 10 - 3 == 7 and 3 * 4 + 2 * -5 - 1 * 4 == -2 and 18 + 12 == 30)
+# H03 · sumas de Riemann y notación
+from math import sin, cos, sqrt, exp, pi
+ok('H03: Σ (3i/n)²(3/n) = 9(n+1)(2n+1)/(2n²), exacto para n = 1…60; n=3 → 14', all(sum(F(3 * i, n) ** 2 * F(3, n) for i in range(1, n + 1)) == F(9 * (n + 1) * (2 * n + 1), 2 * n * n) for n in range(1, 61)) and F(9 * 4 * 7, 18) == 14 and 1 + 4 + 9 == 14)
+ok('H03: (n+1)(2n+1) = 2n²+3n+1; límite 9; ∫₀³ x² dx = 9', all((n + 1) * (2 * n + 1) == 2 * n * n + 3 * n + 1 for n in range(1, 30)) and abs(float(F(9 * 10001 * 20001, 2 * 10 ** 8)) - 9) < 2e-3 and cerca(riemann(lambda x: x * x, 0, 3), 9))
+ok('H03 animación: n=8 → 10,758; n=60 → 9,226', round(9 * 9 * 17 / (2 * 64), 3) == 10.758 and round(9 * 61 * 121 / (2 * 3600), 3) == 9.226)
+ok('H03: lím Σ (2+4i/n)³(4/n) = ∫₂⁶ x³ dx = ∫₀⁴ (2+x)³ dx = 320', abs(sum((2 + 4 * i / 20000) ** 3 * 4 / 20000 for i in range(1, 20001)) - 320) < 0.1 and cerca(riemann(lambda x: x ** 3, 2, 6), 320) and cerca(riemann(lambda x: (2 + x) ** 3, 0, 4), 320))
+ok('H03-A: 2(1+4i/n)+1 = 3+8i/n; H03-B: ∫₁⁴ √x; H03-C: 12/n²·n(n+1)/2 = 6+6/n → 6', all(2 * (1 + F(4 * i, 7)) + 1 == 3 + F(8 * i, 7) for i in range(1, 8)) and abs(sum(sqrt(1 + 3 * i / 20000) * 3 / 20000 for i in range(1, 20001)) - riemann(sqrt, 1, 4)) < 1e-3 and all(F(12, n * n) * F(n * (n + 1), 2) == 6 + F(6, n) for n in range(1, 30)) and cerca(riemann(lambda x: 3 * x, 0, 2), 6))
+
+# H04 · TFC y funciones de acumulación
+def dnum(g, t, h=1e-5): return (g(t + h) - g(t - h)) / (2 * h)
+G = lambda fn, a: (lambda x: riemann(fn, a, x, 20000))
+ok('H04: g(x) = ∫₀ˣ 2cos t dt = 2 sen x y g′ = 2 cos x', all(cerca(riemann(lambda t: 2 * cos(t), 0, x), 2 * sin(x)) and cerca(dnum(G(lambda t: 2 * cos(t), 0), x), 2 * cos(x), 1e-4) for x in (0.5, 1.2, 3, 4.5)))
+ok('H04 casos: d/dx ∫₁ˣ (t²+1) = x²+1; ∫₀^{x²} cos t → cos(x²)·2x; ∫ₓ³ √(1+t²) → −√(1+x²); ∫ₓ^{x²} e^t → −e^x + e^{x²}·2x', cerca(dnum(G(lambda t: t * t + 1, 1), 1.7), 1.7 ** 2 + 1, 1e-4) and cerca(dnum(lambda x: riemann(cos, 0, x * x, 20000), 1.1), cos(1.21) * 2.2, 1e-4) and cerca(dnum(lambda x: riemann(lambda t: sqrt(1 + t * t), x, 3, 20000), 1.3), -sqrt(1 + 1.69), 1e-4) and cerca(dnum(lambda x: riemann(exp, x, x * x, 20000), 1.2), -exp(1.2) + exp(1.44) * 2.4, 1e-4))
+ok('H04-A: √(2³+1) = 3; H04-B: (1/(3x))·3 = 1/x; H04-C: 40+5·4 = 60', 8 + 1 == 9 and cerca(dnum(lambda x: riemann(lambda t: 1 / t, 1, 3 * x, 20000), 2), 0.5, 1e-4) and 40 + 5 * 4 == 60)
+
+# H05 · interpretar funciones de acumulación (f por tramos)
+P = [(0, 2), (2, 2), (4, -2), (6, -2), (8, 2)]
+def fP(x):
+    for (xa, ya), (xb, yb) in zip(P, P[1:]):
+        if x <= xb: return ya + (yb - ya) * (x - xa) / (xb - xa)
+    return 2
+gP = lambda x: riemann(fP, 0, x, 40000)
+ok('H05: f(3) = 0 y f(7) = 0', fP(3) == 0 and fP(7) == 0)
+ok('H05: g(2)=4, g(3)=5, g(4)=4, g(6)=0, g(7)=−1, g(8)=0, g(5)=2', all(cerca(gP(x), v, 1e-4) for x, v in ((2, 4), (3, 5), (4, 4), (6, 0), (7, -1), (8, 0), (5, 2))))
+ok('H05-A: h(6) = −4, h(8) = −4, h = g − 4', cerca(riemann(fP, 4, 6, 40000), -4, 1e-4) and cerca(riemann(fP, 4, 8, 40000), -4, 1e-4))
+ok('H05-B: f(t) = t − 3; g(3) = −9/2; g(6) = 0', cerca(riemann(lambda t: t - 3, 0, 3), -4.5) and cerca(riemann(lambda t: t - 3, 0, 6), 0))
+
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)
