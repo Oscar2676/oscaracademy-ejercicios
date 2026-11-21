@@ -60,8 +60,20 @@ Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d
 - **APR 21-nov 04:21, enlazadas y publicadas, cierre del lote:**
   - H11 «Evaluar integrales impropias» (`H11_evaluar_integrales_impropias.html`): ft30u comp-lcno0tae1 · qudgj comp-l2qtac3k · qclgl comp-l4skmyx31 · qtf2i comp-la94guzo
   - H12 «Integración y acumulación de cambio», **hoja propia de presentación del tema** pedida por Óscar (03:26): `H12_integracion_y_acumulacion_de_cambio_presentacion_del_tema.html`; ft30u comp-lcno0tad · qudgj comp-l2qtbcup · qclgl comp-l4skmywy · bb5wq comp-mvuxjfbi4. Trae un «mapa del tema» con enlaces a las otras hojas del lote y a L09 H01, L03 H02 y L03 H03: **si cambia el nombre de archivo de alguna, actualizar esos enlaces.**
-- **Lote 21 completo: 12/12 con APR (21-nov), enlazadas en Wix y publicadas.** Sigue: aplicaciones de la integral (12 hojas, lote 22).
+- **Lote 21 completo: 12/12 con APR (21-nov), enlazadas en Wix y publicadas.**
 - **Ritmo acordado (21-nov 02:42):** Óscar pide que se le presenten las hojas para APR **de 5 en 5, y después de 10 en 10**.
+
+## Lote 22 · Aplicaciones de la integral (`calculo-integral/lote22/`, fuentes `taller/src/l22/partes/`, `qa/rigor/verificar_lote_22.py`)
+Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-4255-80f2-4fbb3c72907c). Código de pie `CI-L22-HNN`. Se arma con `python3 taller/build.py 22 "Aplicaciones de la integral"` (partes → `01-ay`, `02-cru`, `03-prom`, `04-mov`, `05-acu`).
+- **Pendientes de APR (21-nov 06:00), v001:**
+  - H01 «Determinar el área entre curvas expresadas como funciones de y» (`H01_area_entre_curvas_expresadas_como_funciones_de_y.html`): qudgj comp-l63t26et · qclgl comp-l63qrtxr
+  - H02 «Calcular el área entre curvas que se intersectan en más de dos puntos» (`H02_area_entre_curvas_que_se_intersectan_en_mas_de_dos_puntos.html`): ft30u comp-lcno0tb8 · ft30u comp-lcno0tbb1 · qudgj comp-l63t8c9a · qudgj comp-l2quvfbw2 · qudgj comp-l63t25ql (5 lugares: comprobar el texto de cada uno antes de enlazar)
+  - H03 «Determinar el valor promedio de una función en un intervalo» (`H03_valor_promedio_de_una_funcion_en_un_intervalo.html`): qudgj comp-l2quvfb71 · qclgl comp-l63qrtyw
+  - H04 «Conectar con integrales funciones de posición, velocidad y aceleración» (`H04_conectar_con_integrales_posicion_velocidad_y_aceleracion.html`): qudgj comp-l63t26up · qclgl comp-l63r3orp
+  - H05 «Utilizar funciones de acumulación e integrales definidas en contextos aplicados» (`H05_funciones_de_acumulacion_e_integrales_definidas_en_contextos_aplicados.html`): qudgj comp-l63t268k · qclgl comp-l63qrs2l
+- **Faltan por producir (6):** discos eje x o y (ft30u comp-lcno0tb62 · qudgj comp-l63t6v00 · qclgl comp-l63qrt3u) · discos otros ejes (ft30u comp-lcno0tb92 · qudgj comp-l63t8bn8 · qclgl comp-l63qrt0f) · anillos otros ejes (ft30u comp-lcno0tbd · qudgj comp-l63t8a5j · qclgl comp-l63ralz7) · secciones cuadrados y rectángulos (qudgj comp-l63t26cx · qclgl comp-l63qrs86) · secciones triángulos y semicírculos (qudgj comp-l63t6qhh · qclgl comp-l63qrs1e) · longitud de arco (ft30u comp-lcno0tbe2 · qudgj comp-l2quvfc0 · qclgl comp-l63raera). Los sólidos van en 3D con degradado (criterio de Óscar).
+- **En espera de respuesta de Óscar:** «Área entre curvas expresadas como funciones de x» (qudgj comp-l63t25gs · qclgl comp-l63qrszb): ¿se enlaza a L03 H04 o se hace hoja nueva?
+- `qa/rigor/derivadas_escenas.js` espera `_chk` con `d0, d1`; las escenas de l21 y l22 usan `_chk:[{f, df, at}]` y se comprueban con el bucle de node anotado en el historial del 21-nov (0 derivadas malas).
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
