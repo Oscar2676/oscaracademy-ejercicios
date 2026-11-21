@@ -29,3 +29,5 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 - `selector.py` lo arma con `arbol-sitio.json`, `datos-wix.json` y `enlaces.json`; GitHub lo ejecuta junto con `enlaces.py` y `tablero.py`.
 
 <!-- relectura de enlaces pedida el 21-11-2026 01:45 (tras publicar L20 H07 y H08) -->
+
+<!-- relectura de enlaces pedida el 21-11-2026 02:30 (tras publicar L20 H11-H13) -->

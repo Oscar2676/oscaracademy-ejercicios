@@ -1,6 +1,20 @@
-# Pedido de producción de Óscar · 20-nov-2026 (284 hojas)
+# Pedido de producción de Óscar · cola al 21-nov-2026 (378 títulos; 348 por producir)
 
-Texto completo del pedido (última versión, 20:07, **284 hojas** + 2 solo por enlazar): `taller/pedidos/pedido-2026-11-20-284-hojas.txt` en el repositorio. Creció durante el día: 44 → 63 → 124 → 184 → 284. Los 101 títulos nuevos de la última versión son casi todos de la página «Cálculo superior» [x238t] (propiedades de la integral definida, sumas de Riemann, cambio de variable, integrales de funciones comunes, por partes, sustitución trigonométrica, impropias…) y algunos de «Cálculo integral» [qtf2i]. Cada pedido nuevo **reemplaza** al anterior (lo contiene); es la cola de producción. Si el archivo se pierde, se regenera con el selector.
+Texto completo del pedido (última versión, 21-nov 02:18, **378 títulos** + 2 solo por enlazar): `taller/pedidos/pedido-2026-11-21-378-hojas.txt` en el repositorio. Creció así: 44 → 63 → 124 → 184 → 284 → 378 (los 94 últimos son de **1º Básico**). Cada pedido nuevo **reemplaza** al anterior (lo contiene); es la cola de producción. Ojo: el selector sigue listando los títulos ya producidos (sus marcas persisten): de los 378, **30 ya tienen hoja** (lote 18: 5, lote 19: 8, lote 20: 13, y 4 por enlace: L01, L03 ×2, L09) y **348 están por producir**.
+
+## Cola al 21-nov 02:30 (348 por producir)
+| # | Grupo | Hojas |
+|---|---|---|
+| 1 | Integración y acumulación de cambio (Cálculo I) | 12 |
+| 2 | Aplicaciones de la integral (Cálculo I: 5 · Cálculo II: 7) | 12 |
+| 3 | Paramétricas, polares y vectoriales (Cálculo II: 9 + 4 · Cálculo dif. 5ª parte: 1) | 14 |
+| 4 | Binomio de Newton (18) + Números combinatorios (1) | 19 |
+| 5 | Series y sucesiones (20) · Sucesiones geométricas (16) · Criterios de comparación (1), Cálculo II | 37 |
+| 6 | Límites y teorema del valor medio (Cálculo diferencial 1ª parte) | 60 |
+| 7 | Integración (Cálculo superior: 87 · Cálculo integral: 13) | 100 |
+| 8 | 1º Básico | 94 |
+
+En los grupos 6 y 7 muchos títulos equivalen entre sí o a hojas existentes: proponer a Óscar cuáles se enlazan y cuáles son hoja nueva. Falta enlazar en más lugares 3 hojas existentes: «Aproximar áreas con sumas de Riemann» → L09 H01 (ft30u comp-lcno0t9y · qudgj comp-l2qt71ce); «El teorema fundamental del cálculo e integrales definidas» → L03 H02 (ft30u comp-lcno0ta7 · qudgj comp-l2qt71cg1 · x238t comp-kagpp18d); «Utilizar integración por partes» → L03 H03 (ft30u comp-lcno0tab1 · qudgj comp-l63ssqjv). Preguntar antes: son títulos parecidos, no idénticos.
 
 Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, tolerancia cero, no inventar nada, preguntar lo que no se sepa; comparar resultados con sus fuentes de consulta; los títulos «Ejemplo N…» son hojas de ejercicio; borrar tarjetas repetidas dentro de una caja y reordenarla; títulos equivalentes a hojas ya aprobadas se enlazan a ellas; diagramación atractiva con recuadros en los cuatro colores institucionales (verdoso, azulino, caqui/naranjo, burdeo).
 
@@ -50,15 +64,6 @@ L20 H09 «Derivadas para razones relacionadas» (`H09_derivadas_para_razones_rel
 Fuentes en `taller/src/lNN/partes/` (`NN.art.html`, `NN.scene.js`; escenas comunes `_tvm.js` en l18; `_an.js` y `_tri.js` en l19; escenas propias en l20). Se arman con `cat` a `taller/src/lNN/NN-*.html`, luego `python3 taller/build.py NN "Nombre"` y se copian de `taller/out/hojas/loteNN/` a `calculo-diferencial/loteNN/`. Verificadores: `qa/rigor/verificar_lote_18.py`, `_19.py`, `_20.py` (0 errores), `derivadas_escenas.js`, `verificar_tex.py` (no sabe evaluar π ni e: marca como «FALSA» aproximaciones correctas; se comprueban en el verificador del lote), `rotulos_animaciones.js`.
 
 Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `__save()`, `__chk(pg, ids)`, `__sleep` definidos en la pestaña del editor (`seed`; se pierden si se recarga; están en el historial del 20-nov). Navegar a la página, enlazar, guardar antes de salir, verificar y publicar. Una página por llamada (límite de 45 s).
-
-## Orden para lo que falta (unas 255 hojas)
-1. Lote 20: terminado, 13/13 con APR y publicadas
-2. Integración y acumulación de cambio (12)
-3. Aplicaciones de la integral
-4. Binomio de Newton (19)
-5. Cálculo diferencial 1ª parte: límites y variantes del TVM (61; varias equivalen entre sí o a hojas existentes: L01 H01, H02, H04 y L18; proponer a Óscar cuáles se enlazan y cuáles son hoja nueva)
-6. Series y sucesiones; ecuaciones paramétricas, polares y vectoriales
-7. Cálculo superior [x238t]: los 101 títulos de integración agregados a las 20:07 (muchos equivalen a los del punto 2 o a hojas existentes: proponer enlaces)
 
 ## Preguntas abiertas a Óscar
 - Tablero: enlace para favoritos https://oscar2676.github.io/oscaracademy-ejercicios/sitio/tablero.html. La copia de su Mac (`Documentos/03_Educacion/Oscar_Academy/Dashboard_Contenido/Tablero_OA.html`) es un archivo fijo: **actualizarla tras cada publicación** (`python3 sitio/tablero.py` genera `sitio/Tablero_OA_copia_local.html`; copiar a `/mnt/user-data/outputs/` y `device_commit_files`). El tablero en línea puede quedar 1–2 hojas atrás si el push ocurre antes de que Wix termine de publicar: empujar algo de `sitio/` después de publicar.
