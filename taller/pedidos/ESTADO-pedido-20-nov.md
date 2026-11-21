@@ -170,6 +170,17 @@ Tarjeta https://claude.ai/artifact/H9Jd3daoV1wVSG7FiX1zDA (slug 82bb0741-2206-48
   - Si Óscar manda una imagen de referencia, **no se usa esa imagen**: se redibuja con los colores institucionales y se hace útil (animada y con su desarrollo).
 - Tras resolver notas, subir `taller/src/lNN/ronda.txt` para que la lista de la tarjeta parta en 0 (l20 va en 11).
 
+## Referencias de animación que mandó Óscar (21-nov 18:04): 8 grabaciones de pantalla + 12 capturas, «para que los observes y tomes de ejemplos de tipos de animaciones»
+Vistas todas (cuadro a cuadro). **No se copian** (ni imagen, ni marca, ni colores): se toma el *tipo* de animación y se redibuja con los colores institucionales. Tipos a usar donde calcen:
+1. **La fórmula se arma junto con la figura, pieza por pieza** (volumen por discos y por capas, volumen de la esfera): aparece el radio → el disco → su área πr² → su espesor dx → πr²dx → todos los discos (en colores) → la integral con sus límites → la cuenta línea por línea → resultado destacado. Cada símbolo de la fórmula lleva **el mismo color** que la pieza del dibujo.
+2. **Sacar la pieza y mirarla sola**: el disco o la capa cilíndrica sale del sólido, se muestra de frente (o se desenrolla en un rectángulo 2πr × h × dx) y vuelve.
+3. **Demostración geométrica por etapas** (fórmula general de 2º grado completando el cuadrado con áreas: x², los dos rectángulos, el cuadradito que falta); la ecuación va cambiando al lado de la figura y al final se enmarca el resultado; cierra con para qué sirve (parábola y sus raíces).
+4. **Número ↔ figura en vivo** (determinante = área del paralelogramo / volumen del paralelepípedo): al cambiar una entrada de la matriz, cambia el vector de ese color y el valor del área; caso límite área = 0.
+5. **Pregunta arriba («V = ?», «det = ?») y respuesta al final**, en el mismo lugar.
+6. **Construcción punto a punto con color por elemento** (puntos sobre rectas que forman un círculo; reloj en espiral áurea).
+7. **Lámina por etapas** tipo «la pregunta → el truco → el resultado» (integral gaussiana, problema de Basilea) y **mapa de tipos** (tipos de integrales en fichas de color).
+Coincide con sus criterios previos (diferencial marcado, cadena paso a paso, 3D con degradado, trazos finos). Aplicar desde L25 H06 en adelante.
+
 ## Taller
 Fuentes en `taller/src/lNN/partes/` (`NN.art.html`, `NN.scene.js`; escenas comunes `_tvm.js` en l18; `_an.js` y `_tri.js` en l19; escenas propias en l20). Se arman con `cat` a `taller/src/lNN/NN-*.html`, luego `python3 taller/build.py NN "Nombre"` y se copian de `taller/out/hojas/loteNN/` a `calculo-diferencial/loteNN/`. Verificadores: `qa/rigor/verificar_lote_18.py`, `_19.py`, `_20.py` (0 errores), `derivadas_escenas.js`, `verificar_tex.py` (no sabe evaluar π ni e: marca como «FALSA» aproximaciones correctas; se comprueban en el verificador del lote), `rotulos_animaciones.js`.
 
