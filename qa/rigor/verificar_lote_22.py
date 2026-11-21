@@ -106,5 +106,9 @@ Q = lambda x: 4 * F(x) + 3 * F(x) ** 2 / 2 - F(x) ** 3 / 3
 ok('H12 ej.1: cruces −1 y 4, puntos (−1,3), (4,8); 56/3 − (−13/6) = 125/6 ≈ 20,83; acumulado', all(x + 4 == x * x - 2 * x for x in (-1, 4)) and -1 + 4 == 3 and 4 + 4 == 8 and Q(4) == F(56, 3) and Q(-1) == F(-13, 6) and Q(4) - Q(-1) == F(125, 6) and round(125 / 6, 2) == 20.83 and cerca(riemann(lambda x: 4 + 3 * x - x * x, -1, 4), 125 / 6) and cerca(riemann(lambda x: 4 + 3 * x - x * x, -1, 2.2), float(Q(F(11, 5))) + 13 / 6))
 ok('H12 ej.2: e − 3/2 ≈ 1,22; ej.3: 32/3 y −32/3', cerca(riemann(lambda x: exp(x) - x, 0, 1), e - 1.5) and round(e - 1.5, 2) == 1.22 and cerca(riemann(lambda x: 4 - x * x, -2, 2), 32 / 3) and cerca(riemann(lambda x: x * x - 4, -2, 2), -32 / 3))
 ok('H12-A: 4/3; H12-B: 1/3; H12-C: 64/3 ≈ 21,3', cerca(riemann(lambda x: 2 * x - x * x, 0, 2), 4 / 3) and cerca(riemann(lambda x: sqrt(x) - x * x, 0, 1), 1 / 3, 1e-5) and cerca(riemann(lambda x: 4 - x * x / 4, -4, 4), 64 / 3) and (16 - F(16, 3)) * 2 == F(64, 3) and round(64 / 3, 1) == 21.3)
+ok('H13 capas: ej. 8π, 16π/5, π/6, 24π; A 128π/5; B 4π; C 64π', all(cerca(riemann(g, a0, b0), ex, 1e-4) and abs(ex - ap) < 0.006 for g, a0, b0, ex, ap in [
+    (lambda x: 2 * pi * x * (4 - x * x), 0, 2, 8 * pi, 25.13), (lambda y: pi * (4 - y), 0, 4, 8 * pi, 25.13), (lambda x: 2 * pi * x * (2 * x * x - x ** 3), 0, 2, 16 * pi / 5, 10.05),
+    (lambda x: 2 * pi * x * (x - x * x), 0, 1, pi / 6, 0.524), (lambda x: 2 * pi * (3 - x) * (4 - x * x), 0, 2, 24 * pi, 75.40), (lambda x: 2 * pi * x * sqrt(x), 0, 4, 128 * pi / 5, 80.42),
+    (lambda x: 2 * pi, 1, 3, 4 * pi, 12.57), (lambda x: 2 * pi * x * (6 * x - x * x - 5), 1, 5, 64 * pi, 201.06)]) and 250 - 156.25 - 62.5 == 31.25 and 2 - 0.25 - 2.5 == -0.75)
 
 print('\nERRORES:', err)
