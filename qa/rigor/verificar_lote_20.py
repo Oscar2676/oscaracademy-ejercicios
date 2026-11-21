@@ -88,4 +88,27 @@ ok('H08: (1+k/x)^x → e^k para k = 1, 2, 3; e ≈ 2,72', all(abs((1 + k / 1e7) 
 ok('H08-A: x·e^{−x} → 0; H08-B: x^{1/x} → 1 en +∞', 50 * exp(-50) < 1e-15 and all(abs(x ** (1 / x) - 1) < t for x, t in ((1e6, 2e-5), (1e9, 3e-8))))
 ok('H08 animación: mínimos en x = 1/e: x·ln x = −1/e ≈ −0,37 y x^x ≈ 0,69', round(-1 / e, 2) == -0.37 and round(exp(-1 / e), 2) == 0.69)
 
+# H09 · derivadas para razones relacionadas
+from math import atan, tan
+ok('H09: d(x²)/dt, d(√x)/dt, d(xy)/dt, d(x/y)/dt, d(tan θ)/dt por diferencias, con x=2+3t, y=5−t, θ=0,4+0,2t', cerca(dnum(lambda t: (2 + 3 * t) ** 2, 0), 2 * 2 * 3) and cerca(dnum(lambda t: sqrt(2 + 3 * t), 0), 3 / (2 * sqrt(2))) and cerca(dnum(lambda t: (2 + 3 * t) * (5 - t), 0), 3 * 5 + 2 * -1) and cerca(dnum(lambda t: (2 + 3 * t) / (5 - t), 0), (3 * 5 - 2 * -1) / 25) and cerca(dnum(lambda t: tan(0.4 + 0.2 * t), 0), 0.2 / cos(0.4) ** 2))
+ok('H09: A=x², x=5, dx/dt=3 → 30', 2 * 5 * 3 == 30)
+ok('H09 cohete: sec²θ = 1+(3/4)² = 25/16; (1/400)·50 = 1/8; dθ/dt = (1/8)(16/25) = 2/25 = 0,08; numérico', 1 + F(3, 4) ** 2 == F(25, 16) and F(50, 400) == F(1, 8) and F(1, 8) * F(16, 25) == F(2, 25) and cerca(dnum(lambda t: atan((300 + 50 * t) / 400), 0), 0.08))
+ok('H09 animación: y=300 → θ≈0,64 rad; y=202 → tan θ=0,51 (0,505)', round(atan(0.75), 2) == 0.64)
+ok('H09-A: 1+8=9; 12+12y′=0 → y′=−1; numérico con x=1+4t, y=(9−x³)^(1/3)', 1 + 8 == 9 and cerca(dnum(lambda t: (9 - (1 + 4 * t) ** 3) ** (1 / 3), 0), -1, 1e-5))
+ok('H09-B: 10·cos(π/3)·0,06 = 0,3; numérico', cerca(10 * cos(pi / 3) * 0.06, 0.3) and cerca(dnum(lambda t: 10 * sin(pi / 3 + 0.06 * t), 0), 0.3))
+ok('H09-C volantín: x=40; dz/dt = (40/50)·2 = 8/5 = 1,6; numérico', 2500 - 900 == 1600 and F(40, 50) * 2 == F(8, 5) and cerca(dnum(lambda t: sqrt((40 + 2 * t) ** 2 + 900), 0), 1.6))
+
+# H10 · movimiento rectilíneo: s = t³ − 9t² + 24t
+sp = lambda t: t ** 3 - 9 * t ** 2 + 24 * t
+vp = lambda t: 3 * t ** 2 - 18 * t + 24
+ap = lambda t: 6 * t - 18
+ok('H10: v = s′ y a = v′ por diferencias; v = 3(t−2)(t−4)', all(cerca(dnum(sp, t), vp(t), 1e-5) and cerca(dnum(vp, t), ap(t), 1e-5) and vp(F(t).limit_denominator()) == 3 * (F(t).limit_denominator() - 2) * (F(t).limit_denominator() - 4) for t in (0.5, 1, 2, 3, 4, 5)))
+ok('H10: v(1)=9, v(3)=−3, v(5)=9; s(0)=0, s(2)=20, s(4)=16, s(5)=20; distancia 28', (vp(1), vp(3), vp(5)) == (9, -3, 9) and (sp(0), sp(2), sp(4), sp(5)) == (0, 20, 16, 20) and 20 + 4 + 4 == 28)
+N2 = 200000
+ok('H10: distancia = ∫₀⁵ |v| dt = 28 (suma de Riemann)', abs(sum(abs(vp((i + 0.5) * 5 / N2)) * 5 / N2 for i in range(N2)) - 28) < 1e-6)
+ok('H10: signos de v y a en 1, 2,5, 3,5 y 4,5: frena, acelera, frena, acelera', [vp(t) * ap(t) > 0 for t in (1, 2.5, 3.5, 4.5)] == [False, True, False, True])
+ok('H10-A: v=2t−4; s(0)=3, s(2)=−1, s(3)=0; distancia 5', (lambda s: (s(0), s(2), s(3)))(lambda t: t * t - 4 * t + 3) == (3, -1, 0) and 4 + 1 == 5)
+ok('H10-B: h(2)=20; h(4)=0; v(4)=−20', 20 * 2 - 5 * 4 == 20 and 20 * 4 - 5 * 16 == 0 and 20 - 10 * 4 == -20)
+ok('H10-C: v=24−6t=0 en t=4; s(4)=48; a=−6', 24 - 6 * 4 == 0 and 24 * 4 - 3 * 16 == 48)
+
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)
