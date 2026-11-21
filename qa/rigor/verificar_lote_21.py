@@ -83,4 +83,19 @@ ok('H10 ej.4: ∫₂⁵ = ln 16 − ln 8 + ln 5 = ln 10 ≈ 2,30', cerca(riemann
 ok('H10: sistema A+B = 1, 3A−B = 7 → A = 2, B = −1', 2 + -1 == 1 and 3 * 2 - -1 == 7)
 ok('H10-A: (1/4)ln|(x−2)/(x+2)|; H10-B: ln|x²+x|; H10-C: x+ln|x−1|−ln|x+1|', anti(lambda x: log(abs((x - 2) / (x + 2))) / 4, lambda x: 1 / (x * x - 4), (-4, 0, 3)) and anti(lambda x: log(abs(x * x + x)), lambda x: (2 * x + 1) / (x * x + x), (-3, 0.5, 2)) and anti(lambda x: x + log(abs(x - 1)) - log(abs(x + 1)), lambda x: (x * x + 1) / (x * x - 1), (-3, 0, 2)))
 
+# H11 · integrales impropias
+ok('H11 ej.1: ∫₁ᵇ x⁻² = 1 − 1/b → 1; ej.2: ∫₁ᵇ 1/x = ln b → ∞', all(cerca(riemann(lambda x: x ** -2, 1, b), 1 - 1 / b, 1e-5) and cerca(riemann(lambda x: 1 / x, 1, b), log(b), 1e-5) for b in (2.6, 12)) and 1 - 1 / 1e9 > 0.999999 and log(1e9) > 20)
+ok('H11 regla p: ∫₁ᵇ x⁻ᵖ = (b^{1−p} − 1)/(1−p); p>1 → 1/(p−1)', all(cerca(riemann(lambda x, p=p: x ** -p, 1, 5), (5 ** (1 - p) - 1) / (1 - p), 1e-5) for p in (0.5, 2, 3)) and all(abs((1e8 ** (1 - p) - 1) / (1 - p) - 1 / (p - 1)) < 1e-3 for p in (1.5, 2, 3)))
+ok('H11 ej.3: ∫_c¹ x^{−1/2} = 2 − 2√c → 2; ej.4: −ln c → ∞', all(cerca(riemann(lambda x: x ** -0.5, c, 1), 2 - 2 * sqrt(c), 1e-4) for c in (0.25, 0.04)) and 2 - 2 * sqrt(1e-12) > 1.99999 and -log(1e-9) > 20)
+ok('H11: [−1/x] de −1 a 1 da −2 (resultado absurdo); ∫_c¹ x⁻² = −1 + 1/c → ∞', -1 / 1 - (-1 / -1) == -2 and cerca(riemann(lambda x: x ** -2, 0.1, 1), -1 + 10, 1e-4))
+ok('H11 animación: b=2,60 → 0,615 y 0,955 (rótulos según b exacto); b=12 → 0,917 y 2,485', round(1 - 1 / 12, 3) == 0.917 and round(log(12), 3) == 2.485)
+ok('H11-A: 1 − e^{−b} → 1; H11-B: 4 − 2√(4−c) → 4; H11-C: 100 − 100e^{−0,5b} → 100', cerca(riemann(lambda x: exp(-x), 0, 30), 1, 1e-6) and cerca(riemann(lambda x: 1 / sqrt(4 - x), 0, 3.99), 4 - 2 * sqrt(0.01), 1e-4) and anti(lambda x: -2 * sqrt(4 - x), lambda x: 1 / sqrt(4 - x), (0.5, 2, 3.5)) and cerca(riemann(lambda t: 50 * exp(-0.5 * t), 0, 60), 100, 1e-6))
+
+# H12 · presentación: el auto, v = 4t − t²
+vA = lambda t: 4 * t - t * t
+sA = lambda t: 2 * t * t - t ** 3 / 3
+ok('H12: s(t) = 2t² − t³/3 es ∫₀ᵗ v y s′ = v; s(4) = 32/3 ≈ 10,67', all(cerca(riemann(vA, 0, t), sA(t)) and cerca(dnum(sA, t), vA(t), 1e-5) for t in (0.5, 1.3, 2, 3, 4)) and 2 * 16 - F(64, 3) == F(32, 3) and round(32 / 3, 2) == 10.67)
+ok('H12 animación: t=2 → área 16/3 ≈ 5,33', 8 - F(8, 3) == F(16, 3) and round(16 / 3, 2) == 5.33)
+ok('H12-A: 9 − 5/3 = 22/3 ≈ 7,33; H12-B: v(2) = 4', 18 - 9 == 9 and 2 - F(1, 3) == F(5, 3) and 9 - F(5, 3) == F(22, 3) and round(22 / 3, 2) == 7.33 and vA(2) == 4 and cerca(riemann(vA, 1, 3), 22 / 3))
+
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)

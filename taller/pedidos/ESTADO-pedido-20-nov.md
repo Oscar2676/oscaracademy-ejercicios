@@ -5,7 +5,7 @@ Texto completo del pedido (última versión, 21-nov 02:18, **378 títulos** + 2 
 ## Cola al 21-nov 02:30 (348 por producir)
 | # | Grupo | Hojas |
 |---|---|---|
-| 1 | Integración y acumulación de cambio (Cálculo I) | 12 |
+| 1 | Integración y acumulación de cambio (Cálculo I) — **producido: lote 21** | 12 |
 | 2 | Aplicaciones de la integral (Cálculo I: 5 · Cálculo II: 7) | 12 |
 | 3 | Paramétricas, polares y vectoriales (Cálculo II: 9 + 4 · Cálculo dif. 5ª parte: 1) | 14 |
 | 4 | Binomio de Newton (18) + Números combinatorios (1) | 19 |
@@ -20,7 +20,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 03:10: 28 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**; lote 21: 2 publicadas, 8 en revisión (H03–H10)
+## Avance al 21-nov 03:10: 28 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**; lote 21: 2 publicadas, 10 en revisión (H03–H12)
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -57,7 +57,10 @@ Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d
   - H08 «Integrales por sustitución» (`H08_integrales_por_sustitucion.html`): ft30u comp-lcno0taj · qudgj comp-l59tqjj9
   - H09 «Integración mediante división larga y al completar el cuadrado» (`H09_integracion_por_division_larga_y_completando_el_cuadrado.html`): ft30u comp-lcno0tag · qudgj comp-l2qtbcu7 · qclgl comp-l4skmyww1
   - H10 «Integración con fracciones parciales» (`H10_integracion_con_fracciones_parciales.html`): ft30u comp-lcno0tah2 · qudgj comp-l63stqzk · qclgl comp-l63qj2oy · qtf2i comp-la945dne2 · x238t comp-kajoitym · bb5wq comp-mvuxjfcg5
-- **Por producir (2):** «Evaluar integrales impropias» (ft30u comp-lcno0tae1 · qudgj comp-l2qtac3k · qclgl comp-l4skmyx31 · qtf2i comp-la94guzo) y el título general «Integración y acumulación de cambio» (ft30u comp-lcno0tad · qudgj comp-l2qtbcup · qclgl comp-l4skmywy · bb5wq comp-mvuxjfbi4): preguntar a Óscar si este se enlaza a H01 o quiere hoja propia.
+- **Pendientes de APR (21-nov 04:05), cierre del lote:**
+  - H11 «Evaluar integrales impropias» (`H11_evaluar_integrales_impropias.html`): ft30u comp-lcno0tae1 · qudgj comp-l2qtac3k · qclgl comp-l4skmyx31 · qtf2i comp-la94guzo
+  - H12 «Integración y acumulación de cambio», **hoja propia de presentación del tema** pedida por Óscar (03:26): `H12_integracion_y_acumulacion_de_cambio_presentacion_del_tema.html`; ft30u comp-lcno0tad · qudgj comp-l2qtbcup · qclgl comp-l4skmywy · bb5wq comp-mvuxjfbi4. Trae un «mapa del tema» con enlaces a las otras hojas del lote y a L09 H01, L03 H02 y L03 H03: **si cambia el nombre de archivo de alguna, actualizar esos enlaces.**
+- **Lote 21 producido completo (12 hojas): 2 publicadas, 10 esperando APR (H03–H12).**
 - **Ritmo acordado (21-nov 02:42):** Óscar pide que se le presenten las hojas para APR **de 5 en 5, y después de 10 en 10**.
 
 ## Criterios de Óscar para animaciones y texto (20-nov)

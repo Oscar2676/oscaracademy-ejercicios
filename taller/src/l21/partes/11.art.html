@@ -1,0 +1,192 @@
+<!--file:H11_evaluar_integrales_impropias.html-->
+<!--title:Evaluar integrales impropias-->
+<!--id:int-impropias-->
+<!--tab:H11 Integrales impropias-->
+<article class="sheet" id="int-impropias" data-hoja="L21 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Evaluar integrales impropias</b></li>
+    </ol>
+    <h1>Evaluar integrales impropias</h1>
+    <p class="lede">La integral definida se definió para un intervalo de largo finito y una función continua en él. Una integral es <b>impropia</b> cuando falla una de esas dos cosas: el intervalo es infinito, o la función se va a infinito en algún punto del intervalo. En los dos casos se calcula con un límite.
+    \[\int_{a}^{\infty}f(x)\,dx=\lim_{b\to\infty}\int_{a}^{b}f(x)\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>Definiciones</h3>
+    <ol class="steps">
+      <li><b>Tipo 1, intervalo infinito.</b> Con \(f\) continua en \([a,\;\infty)\), se integra hasta un tope \(b\) y después se hace crecer \(b\):
+        \[\int_{a}^{\infty}f(x)\,dx=\lim_{b\to\infty}\int_{a}^{b}f(x)\,dx\]</li>
+      <li><b>Tipo 2, integrando no acotado.</b> Con \(f\) continua en \((a,\;b]\) y no acotada cerca de \(a\), se parte en un punto \(c\) un poco a la derecha de \(a\) y después se acerca \(c\) a \(a\):
+        \[\int_{a}^{b}f(x)\,dx=\lim_{c\to a^{+}}\int_{c}^{b}f(x)\,dx\]</li>
+      <li>Si el límite existe y es un número, la integral <b>converge</b> y ese número es su valor. Si no existe o es infinito, la integral <b>diverge</b>: no tiene valor.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Dos curvas que parecen iguales: \(y=\dfrac{1}{x^{2}}\) y \(y=\dfrac{1}{x}\). Las dos bajan hacia el eje cuando \(x\) crece. Pero el área bajo la primera, desde \(1\) hasta \(b\), se acerca a \(1\) y nunca lo pasa; el área bajo la segunda crece sin tope.</p>
+  <div class="stage" data-scene="int-impropias"></div>
+  <ul class="keys">
+    <li><b>Curva verde:</b> \(y=\dfrac{1}{x^{2}}\). <b>Área verde:</b> \(\displaystyle\int_{1}^{b}\frac{1}{x^{2}}\,dx=1-\frac{1}{b}\).</li>
+    <li><b>Curva naranja:</b> \(y=\dfrac{1}{x}\). <b>Área naranja:</b> \(\displaystyle\int_{1}^{b}\frac{1}{x}\,dx=\ln b\). Incluye a la verde, porque \(\dfrac{1}{x}\ge\dfrac{1}{x^{2}}\) para \(x\ge 1\).</li>
+    <li><b>Trazo vertical:</b> el tope \(b\), que avanza hacia la derecha.</li>
+    <li><b>Bajo la animación:</b> las dos áreas en función de \(b\) y sus valores.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Tipo 1: intervalo infinito</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, converge: \(\displaystyle\int_{1}^{\infty}\frac{1}{x^{2}}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se reemplaza \(\infty\) por un tope \(b\) y se escribe el límite:
+      \[\int_{1}^{\infty}\frac{1}{x^{2}}\,dx=\lim_{b\to\infty}\int_{1}^{b}x^{-2}\,dx\]</li>
+    <li>Antiderivada, con la regla de la potencia: \(\dfrac{x^{-1}}{-1}=-\dfrac{1}{x}\). Se evalúa entre \(1\) y \(b\):
+      \[\int_{1}^{b}x^{-2}\,dx=\Big[-\frac{1}{x}\Big]_{1}^{b}=-\frac{1}{b}-\left(-\frac{1}{1}\right)=1-\frac{1}{b}\]</li>
+    <li>Se toma el límite. Cuando \(b\to\infty\), \(\dfrac{1}{b}\) tiende a \(0\):
+      \[\lim_{b\to\infty}\left(1-\frac{1}{b}\right)=1\]</li>
+    <li>La integral converge y vale \(1\): una región de largo infinito con área finita.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, diverge: \(\displaystyle\int_{1}^{\infty}\frac{1}{x}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Con el tope \(b\):
+      \[\int_{1}^{b}\frac{1}{x}\,dx=\Big[\ln x\Big]_{1}^{b}=\ln b-\ln 1=\ln b\]</li>
+    <li>Cuando \(b\to\infty\), \(\ln b\) crece sin tope:
+      \[\lim_{b\to\infty}\ln b=+\infty\]</li>
+    <li>La integral diverge. Aunque \(\dfrac{1}{x}\) tiende a \(0\), no lo hace lo bastante rápido.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>La regla general: \(\displaystyle\int_{1}^{\infty}\frac{1}{x^{p}}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Con \(p\neq 1\), regla de la potencia con exponente \(-p\). El exponente nuevo es \(1-p\):
+      \[\int_{1}^{b}x^{-p}\,dx=\left[\frac{x^{1-p}}{1-p}\right]_{1}^{b}=\frac{b^{\,1-p}}{1-p}-\frac{1}{1-p}\]</li>
+    <li>Si \(p&gt;1\), el exponente \(1-p\) es negativo y \(b^{\,1-p}\) tiende a \(0\). Queda:
+      \[\int_{1}^{\infty}\frac{1}{x^{p}}\,dx=0-\frac{1}{1-p}=\frac{1}{p-1}\]</li>
+    <li>Si \(p&lt;1\), el exponente \(1-p\) es positivo y \(b^{\,1-p}\) crece sin tope: la integral diverge.</li>
+    <li>Si \(p=1\), es el ejemplo 2: diverge.</li>
+    <li>Resumen:
+      \[\int_{1}^{\infty}\frac{1}{x^{p}}\,dx\ \text{ converge si }p&gt;1\text{, con valor }\frac{1}{p-1}\text{, y diverge si }p\le 1\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Tipo 2: integrando no acotado</h2>
+
+  <div class="prop p4">
+  <h3>Ejemplo 3, converge: \(\displaystyle\int_{0}^{1}\frac{1}{\sqrt{x}}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dfrac{1}{\sqrt{x}}\) no está definida en \(x=0\) y crece sin tope cuando \(x\to 0^{+}\). Se parte en \(c&gt;0\):
+      \[\int_{0}^{1}\frac{1}{\sqrt{x}}\,dx=\lim_{c\to 0^{+}}\int_{c}^{1}x^{-1/2}\,dx\]</li>
+    <li>Antiderivada: \(2x^{1/2}=2\sqrt{x}\). Se evalúa entre \(c\) y \(1\):
+      \[\Big[2\sqrt{x}\Big]_{c}^{1}=2\sqrt{1}-2\sqrt{c}=2-2\sqrt{c}\]</li>
+    <li>Cuando \(c\to 0^{+}\), \(\sqrt{c}\) tiende a \(0\):
+      \[\lim_{c\to 0^{+}}\left(2-2\sqrt{c}\right)=2\]</li>
+    <li>La integral converge y vale \(2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p1">
+  <h3>Ejemplo 4, diverge: \(\displaystyle\int_{0}^{1}\frac{1}{x}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se parte en \(c&gt;0\):
+      \[\int_{c}^{1}\frac{1}{x}\,dx=\Big[\ln x\Big]_{c}^{1}=\ln 1-\ln c=-\ln c\]</li>
+    <li>Cuando \(c\to 0^{+}\), \(\ln c\) tiende a \(-\infty\), así que \(-\ln c\) tiende a \(+\infty\):
+      \[\lim_{c\to 0^{+}}\left(-\ln c\right)=+\infty\]</li>
+    <li>La integral diverge.</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: el error que da un área negativa</h3>
+    <ol class="steps">
+      <li>En \(\displaystyle\int_{-1}^{1}\frac{1}{x^{2}}\,dx\) el problema está <b>dentro</b> del intervalo, en \(x=0\), y no se ve en los límites. Si se aplica el teorema fundamental sin mirar:
+        \[\Big[-\frac{1}{x}\Big]_{-1}^{1}=-\frac{1}{1}-\left(-\frac{1}{-1}\right)=-1-1=-2\]</li>
+      <li>El resultado es absurdo: \(\dfrac{1}{x^{2}}\) es siempre positiva y su integral no puede ser negativa. El teorema no se puede usar porque la función no es continua en \([-1,\;1]\).</li>
+      <li>Lo correcto es cortar en el punto malo y estudiar cada parte como integral impropia:
+        \[\int_{-1}^{1}\frac{1}{x^{2}}\,dx=\int_{-1}^{0}\frac{1}{x^{2}}\,dx+\int_{0}^{1}\frac{1}{x^{2}}\,dx\]</li>
+      <li>La segunda parte, con \(c\to 0^{+}\):
+        \[\int_{c}^{1}\frac{1}{x^{2}}\,dx=\Big[-\frac{1}{x}\Big]_{c}^{1}=-1+\frac{1}{c}\qquad\text{y}\qquad\lim_{c\to 0^{+}}\left(-1+\frac{1}{c}\right)=+\infty\]</li>
+      <li>Una parte diverge: la integral completa diverge. Antes de integrar, siempre se revisa si el integrando deja de estar definido en algún punto del intervalo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Evalúa \(\displaystyle\int_{0}^{\infty}e^{-x}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>Una antiderivada de \(e^{-x}\) es \(-e^{-x}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Con el tope \(b\):
+          \[\int_{0}^{b}e^{-x}\,dx=\Big[-e^{-x}\Big]_{0}^{b}=-e^{-b}-\left(-e^{0}\right)=1-e^{-b}\]</li>
+        <li>Cuando \(b\to\infty\), \(e^{-b}=\dfrac{1}{e^{b}}\) tiende a \(0\):
+          \[\int_{0}^{\infty}e^{-x}\,dx=\lim_{b\to\infty}\left(1-e^{-b}\right)=1\]</li>
+        <li>Converge y vale \(1\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Evalúa \(\displaystyle\int_{0}^{4}\frac{1}{\sqrt{4-x}}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>El problema está en \(x=4\). Con \(u=4-x\), una antiderivada es \(-2\sqrt{4-x}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El integrando no está definido en \(x=4\). Se integra hasta \(c&lt;4\):
+          \[\int_{0}^{4}\frac{1}{\sqrt{4-x}}\,dx=\lim_{c\to 4^{-}}\int_{0}^{c}\frac{1}{\sqrt{4-x}}\,dx\]</li>
+        <li>Antiderivada. Con \(u=4-x\), \(du=-dx\): \(\displaystyle\int-u^{-1/2}\,du=-2u^{1/2}\).
+          \[\Big[-2\sqrt{4-x}\Big]_{0}^{c}=-2\sqrt{4-c}+2\sqrt{4}=4-2\sqrt{4-c}\]</li>
+        <li>Cuando \(c\to 4^{-}\), \(\sqrt{4-c}\) tiende a \(0\):
+          \[\lim_{c\to 4^{-}}\left(4-2\sqrt{4-c}\right)=4\]</li>
+        <li>Converge y vale \(4\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> El cuerpo elimina un medicamento a razón de \(r(t)=50\,e^{-0{,}5t}\) miligramos por hora, con \(t\) en horas desde la toma. ¿Cuántos miligramos elimina en total, sin límite de tiempo?</p>
+    <details><summary>Pista</summary><div><p>Calcula \(\displaystyle\int_{0}^{\infty}50\,e^{-0{,}5t}\,dt\). Una antiderivada es \(-100\,e^{-0{,}5t}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Antiderivada. Con \(u=-0{,}5\,t\), \(dt=-2\,du\): \(50\cdot(-2)\,e^{u}=-100\,e^{-0{,}5t}\). Con el tope \(b\):
+          \[\int_{0}^{b}50\,e^{-0{,}5t}\,dt=\Big[-100\,e^{-0{,}5t}\Big]_{0}^{b}=-100\,e^{-0{,}5b}+100\]</li>
+        <li>Cuando \(b\to\infty\), \(e^{-0{,}5b}\) tiende a \(0\):
+          \[\int_{0}^{\infty}50\,e^{-0{,}5t}\,dt=100\]</li>
+        <li>Respuesta: elimina \(100\) miligramos en total. Es una cantidad finita, aunque el proceso nunca termina del todo.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>
