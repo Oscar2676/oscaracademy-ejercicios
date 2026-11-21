@@ -6,7 +6,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 20-nov 20:20: 19 hojas con APR, enlazadas y publicadas
+## Avance al 21-nov 01:35: 21 hojas con APR, enlazadas y publicadas
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -20,8 +20,10 @@ Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D
 
 **Con APR del 20-nov, enlazadas en Cálculo II y publicadas:** L20 H05 «Razones relacionadas: llenado de un tanque cónico» (`H05_razones_relacionadas_llenado_de_un_tanque_conico.html`; qudgj comp-lcit6l3f) y L20 H06 «Razones relacionadas: sombra de una persona que camina» (`H06_razones_relacionadas_sombra_de_una_persona_que_camina.html`; qudgj comp-lcit6zcg). Fuentes `05.*` y `06.*`. «Solo enlazar» del pedido de 284: TFC → L03 H02 enlazado también en x238t comp-kajpp62e y bb5wq comp-mvuxjfce9 (publicado).
 
-## Por producir en el lote 20 (7)
-«Derivadas para razones relacionadas» (ft30u comp-lcno0t8d · qudgj comp-lcit01bi) · «La Regla de L´Hopital» (ft30u comp-lcno0t8l · qudgj comp-lcit01ai) · «Aplicación de la regla de L´Hopital…» (li9mn comp-lck53ins · ft30u comp-lcno0t8m2 · qudgj comp-lcit01bl1) · «Aplicaciones de las derivadas aplicadas al movimiento» (ft30u comp-lcno0t8b1 · qudgj comp-lcit01be) · «Derivada de funciones parametrizadas» (ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9) · «Derivada de funciones parametrizadas 2» (ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14) · «Derivada de funciones vectoriales» (ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19)
+**Con APR del 21-nov, enlazadas y publicadas:** L20 H07 «La regla de L'Hôpital» (`H07_la_regla_de_l_hopital.html`; ft30u comp-lcno0t8l · qudgj comp-lcit01ai) y L20 H08 «Aplicación de la regla de L'Hôpital para determinar límites indeterminados» (`H08_aplicacion_de_la_regla_de_l_hopital_limites_indeterminados.html`; li9mn comp-lck53ins · ft30u comp-lcno0t8m2 · qudgj comp-lcit01bl1). Fuentes `07.*` y `08.*` (se arman a `07-lh.html` y `08-lh.html`). H07 demuestra solo el caso simple; el general (TVM de Cauchy) queda sin demostrar y se le avisó.
+
+## Por producir en el lote 20 (5)
+«Derivadas para razones relacionadas» (ft30u comp-lcno0t8d · qudgj comp-lcit01bi) · «Aplicaciones de las derivadas aplicadas al movimiento» (ft30u comp-lcno0t8b1 · qudgj comp-lcit01be) · «Derivada de funciones parametrizadas» (ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9) · «Derivada de funciones parametrizadas 2» (ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14) · «Derivada de funciones vectoriales» (ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19)
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
@@ -45,8 +47,8 @@ Fuentes en `taller/src/lNN/partes/` (`NN.art.html`, `NN.scene.js`; escenas comun
 
 Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `__save()`, `__chk(pg, ids)`, `__sleep` definidos en la pestaña del editor (`seed`; se pierden si se recarga; están en el historial del 20-nov). Navegar a la página, enlazar, guardar antes de salir, verificar y publicar. Una página por llamada (límite de 45 s).
 
-## Orden para lo que falta (unas 262 hojas)
-1. Lote 20, resto (7): ver lista arriba
+## Orden para lo que falta (unas 260 hojas)
+1. Lote 20, resto (5): ver lista arriba
 2. Integración y acumulación de cambio (12)
 3. Aplicaciones de la integral
 4. Binomio de Newton (19)
@@ -55,6 +57,7 @@ Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `
 7. Cálculo superior [x238t]: los 101 títulos de integración agregados a las 20:07 (muchos equivalen a los del punto 2 o a hojas existentes: proponer enlaces)
 
 ## Preguntas abiertas a Óscar
+- **Ojo de funcionamiento:** Claude solo avanza mientras hay un mensaje de Óscar en curso; no trabaja «en segundo plano» entre mensajes. No prometer «sigo mientras tanto».
 - **Su lista de fuentes de consulta**: no está guardada en el proyecto, el repositorio ni la memoria. El 20-nov se usaron OpenStax, LibreTexts y GeoGebra; él mandó una búsqueda de Google como referencia. Pedírsela y anotarla aquí.
 - ¿Enlazar 4 títulos a hojas del lote 03? Cota de Lagrange → L03 H06; Introducción a polinomios de Taylor y Maclaurin → L03 H05; Suma parcial… progresión geométrica → L03 H09; Área entre curvas como funciones de x → L03 H04.
 
