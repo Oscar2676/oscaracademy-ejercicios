@@ -179,6 +179,7 @@ Vistas todas (cuadro a cuadro). **No se copian** (ni imagen, ni marca, ni colore
 5. **Pregunta arriba («V = ?», «det = ?») y respuesta al final**, en el mismo lugar.
 6. **Construcción punto a punto con color por elemento** (puntos sobre rectas que forman un círculo; reloj en espiral áurea).
 7. **Lámina por etapas** tipo «la pregunta → el truco → el resultado» (integral gaussiana, problema de Basilea) y **mapa de tipos** (tipos de integrales en fichas de color).
+**Óscar (18:22–18:23): «dejo a tu criterio cuáles rehacer. No copiar. Redibujadas, sí» y «aplica» a los tipos 1 y 2 (discos, capas, esfera).** Hecho (18:45), pendiente de APR: **L22 H06 v003** (`apl-discos-idea`) y **L22 H08 v003** (`apl-anillos-idea`): animación nueva bajo la entradilla, 7 pasos (V = ? → corte R → disco/anillo → visto de frente, área → espesor dx, dV → todas las piezas → integral en el lugar de la pregunta), fábrica `taller/src/l22/partes/_idea.js` (`oaIdeaRev({hole})`); se arman con `cat _sol.js _idea.js NN.scene.js`. No se borró ninguna animación. Falta: lo mismo para la esfera (L22 H06 ejemplo 3 / L20 H02) y L22 H07; **capas cilíndricas no tiene hoja** (no está en el pedido).
 Coincide con sus criterios previos (diferencial marcado, cadena paso a paso, 3D con degradado, trazos finos). Aplicar desde L25 H06 en adelante.
 
 ## Taller
