@@ -1,0 +1,195 @@
+<!--file:H10_integracion_con_fracciones_parciales.html-->
+<!--title:Integración con fracciones parciales-->
+<!--id:int-parciales-->
+<!--tab:H10 Fracciones parciales-->
+<article class="sheet" id="int-parciales" data-hoja="L21 H10">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Integración con fracciones parciales</b></li>
+    </ol>
+    <h1>Integración con fracciones parciales</h1>
+    <p class="lede">Sumar fracciones algebraicas es juntarlas en una sola. Las fracciones parciales hacen el camino inverso: separan una fracción complicada en una suma de fracciones simples, cada una fácil de integrar con un logaritmo o con la regla de la potencia.
+    \[\frac{x+7}{(x-1)(x+3)}=\frac{2}{x-1}-\frac{1}{x+3}\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k1">
+    <h3>Cuándo se usa y qué forma tiene la descomposición</h3>
+    <ol class="steps">
+      <li>Se usa para integrar un cociente de polinomios \(\dfrac{P(x)}{D(x)}\) en que el grado de \(P\) es <b>menor</b> que el de \(D\), y \(D\) se puede factorizar. Si el grado de \(P\) es mayor o igual, primero se hace la división larga.</li>
+      <li><b>Factores lineales distintos.</b> Por cada factor \((x-r)\) va una fracción con una constante arriba:
+        \[\frac{P(x)}{(x-r_{1})(x-r_{2})}=\frac{A}{x-r_{1}}+\frac{B}{x-r_{2}}\]</li>
+      <li><b>Factor lineal repetido.</b> Por un factor \((x-r)^{2}\) van dos fracciones, una por cada potencia:
+        \[\frac{P(x)}{(x-r)^{2}}=\frac{A}{x-r}+\frac{B}{(x-r)^{2}}\]</li>
+      <li>Que esa descomposición siempre existe y es única es un teorema de álgebra que no se demuestra en esta hoja. En cada ejemplo se comprueba el resultado volviendo a sumar las fracciones.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La descomposición del primer ejemplo, vista en las gráficas, para \(x&gt;1\). En cada \(x\), la altura de la curva completa es la suma de las alturas de las dos fracciones simples: una positiva y otra negativa.</p>
+  <div class="stage" data-scene="int-parciales"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> la fracción completa, \(\dfrac{x+7}{(x-1)(x+3)}\).</li>
+    <li><b>Curva verde:</b> la primera fracción simple, \(\dfrac{2}{x-1}\). Es positiva.</li>
+    <li><b>Curva burdeo:</b> la segunda fracción simple, \(-\dfrac{1}{x+3}\). Es negativa.</li>
+    <li><b>Trazos verticales:</b> las dos alturas en el mismo \(x\). La burdeo, trasladada sobre la punta de la verde, llega justo a la curva azul.</li>
+    <li><b>Bajo la animación:</b> las tres alturas y su suma.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ejemplos resueltos, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, factores lineales distintos: \(\displaystyle\int\frac{x+7}{(x-1)(x+3)}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Grados: numerador \(1\), denominador \(2\). No hace falta dividir. Se plantea la descomposición:
+      \[\frac{x+7}{(x-1)(x+3)}=\frac{A}{x-1}+\frac{B}{x+3}\]</li>
+    <li>Se multiplican los dos miembros por \((x-1)(x+3)\). En cada fracción de la derecha se simplifica un factor:
+      \[x+7=A\,(x+3)+B\,(x-1)\]</li>
+    <li>Esta igualdad vale para todo \(x\). Se elige \(x=1\), que anula el término de \(B\):
+      \[1+7=A\cdot(1+3)+B\cdot 0\qquad\Longrightarrow\qquad 8=4A\qquad\Longrightarrow\qquad A=2\]</li>
+    <li>Se elige \(x=-3\), que anula el término de \(A\):
+      \[-3+7=A\cdot 0+B\cdot(-3-1)\qquad\Longrightarrow\qquad 4=-4B\qquad\Longrightarrow\qquad B=-1\]</li>
+    <li>Descomposición:
+      \[\frac{x+7}{(x-1)(x+3)}=\frac{2}{x-1}-\frac{1}{x+3}\]</li>
+    <li>Comprobación, sumando con denominador común:
+      \[\frac{2\,(x+3)-1\cdot(x-1)}{(x-1)(x+3)}=\frac{2x+6-x+1}{(x-1)(x+3)}=\frac{x+7}{(x-1)(x+3)}\]</li>
+    <li>Se integra cada fracción. Sustituciones \(u=x-1\) y \(u=x+3\), las dos con \(du=dx\):
+      \[\int\frac{x+7}{(x-1)(x+3)}\,dx=2\ln|x-1|-\ln|x+3|+C\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, primero se factoriza: \(\displaystyle\int\frac{5x-4}{x^{2}-x-2}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se factoriza el denominador. Dos números que suman \(-1\) y multiplican \(-2\): \(-2\) y \(1\).
+      \[x^{2}-x-2=(x-2)(x+1)\]</li>
+    <li>Descomposición:
+      \[\frac{5x-4}{(x-2)(x+1)}=\frac{A}{x-2}+\frac{B}{x+1}\]</li>
+    <li>Se multiplica por \((x-2)(x+1)\):
+      \[5x-4=A\,(x+1)+B\,(x-2)\]</li>
+    <li>Con \(x=2\):
+      \[10-4=A\cdot 3\qquad\Longrightarrow\qquad A=2\]</li>
+    <li>Con \(x=-1\):
+      \[-5-4=B\cdot(-3)\qquad\Longrightarrow\qquad B=3\]</li>
+    <li>Comprobación: \(2\,(x+1)+3\,(x-2)=2x+2+3x-6=5x-4\).</li>
+    <li>Se integra:
+      \[\int\frac{5x-4}{x^{2}-x-2}\,dx=2\ln|x-2|+3\ln|x+1|+C\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, factor repetido: \(\displaystyle\int\frac{3x+5}{(x+1)^{2}}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El factor \((x+1)\) está al cuadrado: van dos fracciones.
+      \[\frac{3x+5}{(x+1)^{2}}=\frac{A}{x+1}+\frac{B}{(x+1)^{2}}\]</li>
+    <li>Se multiplica por \((x+1)^{2}\):
+      \[3x+5=A\,(x+1)+B\]</li>
+    <li>Con \(x=-1\), que anula el término de \(A\):
+      \[-3+5=B\qquad\Longrightarrow\qquad B=2\]</li>
+    <li>Ya no quedan valores que anulen términos. Se usa cualquier otro, por ejemplo \(x=0\), con \(B=2\):
+      \[5=A\cdot 1+2\qquad\Longrightarrow\qquad A=3\]</li>
+    <li>Comprobación: \(3\,(x+1)+2=3x+5\).</li>
+    <li>Se integra. La primera fracción da un logaritmo. La segunda es \(2\,(x+1)^{-2}\): regla de la potencia con \(u=x+1\).
+      \[\int\frac{3}{x+1}\,dx+\int 2\,(x+1)^{-2}\,dx=3\ln|x+1|+2\cdot\frac{(x+1)^{-1}}{-1}+C\]</li>
+    <li>Resultado:
+      \[\int\frac{3x+5}{(x+1)^{2}}\,dx=3\ln|x+1|-\frac{2}{x+1}+C\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, integral definida: \(\displaystyle\int_{2}^{5}\frac{x+7}{(x-1)(x+3)}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Antiderivada, del ejemplo 1. En \([2,\;5]\), \(x-1&gt;0\) y \(x+3&gt;0\): se quitan los valores absolutos.
+      \[F(x)=2\ln(x-1)-\ln(x+3)\]</li>
+    <li>Se evalúa en los dos límites, con \(\ln 1=0\):
+      \[F(5)=2\ln 4-\ln 8\qquad\qquad F(2)=2\ln 1-\ln 5=-\ln 5\]</li>
+    <li>Se resta:
+      \[F(5)-F(2)=2\ln 4-\ln 8+\ln 5\]</li>
+    <li>Propiedades de los logaritmos: \(2\ln 4=\ln 16\), y suma y resta de logaritmos.
+      \[\ln 16-\ln 8+\ln 5=\ln\left(\frac{16\cdot 5}{8}\right)=\ln 10\approx 2{,}30\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: tres cuidados</h3>
+    <ol class="steps">
+      <li><b>Primero los grados.</b> Si el numerador tiene grado mayor o igual que el denominador, la descomposición directa no funciona: antes va la división larga.</li>
+      <li><b>Un factor de grado \(2\) sin raíces reales</b>, como \(x^{2}+4\), no se separa en factores lineales. Lleva arriba un polinomio de grado \(1\), \(\dfrac{Ax+B}{x^{2}+4}\), y su integral usa logaritmo y arcotangente. Ese caso no se desarrolla en esta hoja.</li>
+      <li><b>El otro método para hallar las constantes:</b> igualar coeficientes. En el ejemplo 1, \(x+7=(A+B)\,x+(3A-B)\) da el sistema \(A+B=1\), \(3A-B=7\). Sumando las dos ecuaciones: \(4A=8\), \(A=2\), \(B=-1\). El mismo resultado.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\int\frac{1}{x^{2}-4}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>\(x^{2}-4=(x-2)(x+2)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Descomposición:
+          \[\frac{1}{(x-2)(x+2)}=\frac{A}{x-2}+\frac{B}{x+2}\qquad\Longrightarrow\qquad 1=A\,(x+2)+B\,(x-2)\]</li>
+        <li>Con \(x=2\): \(1=4A\), \(A=\dfrac{1}{4}\). Con \(x=-2\): \(1=-4B\), \(B=-\dfrac{1}{4}\).</li>
+        <li>Se integra:
+          \[\frac{1}{4}\ln|x-2|-\frac{1}{4}\ln|x+2|+C=\frac{1}{4}\ln\left|\frac{x-2}{x+2}\right|+C\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\int\frac{2x+1}{x^{2}+x}\,dx\) de dos maneras: con fracciones parciales y con una sustitución.</p>
+    <details><summary>Pista</summary><div><p>\(x^{2}+x=x\,(x+1)\). Además, \(2x+1\) es la derivada del denominador.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fracciones parciales:
+          \[\frac{2x+1}{x\,(x+1)}=\frac{A}{x}+\frac{B}{x+1}\qquad\Longrightarrow\qquad 2x+1=A\,(x+1)+B\,x\]</li>
+        <li>Con \(x=0\): \(1=A\). Con \(x=-1\): \(-1=-B\), \(B=1\).
+          \[\int\left(\frac{1}{x}+\frac{1}{x+1}\right)dx=\ln|x|+\ln|x+1|+C\]</li>
+        <li>Sustitución \(u=x^{2}+x\), \(du=(2x+1)\,dx\):
+          \[\int\frac{1}{u}\,du=\ln|u|+C=\ln\left|x^{2}+x\right|+C\]</li>
+        <li>Son el mismo resultado: \(\ln|x|+\ln|x+1|=\ln|x\,(x+1)|=\ln\left|x^{2}+x\right|\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Calcula \(\displaystyle\int\frac{x^{2}+1}{x^{2}-1}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>Los grados son iguales: primero divide. \(x^{2}+1=\left(x^{2}-1\right)+2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>División: cociente \(1\), resto \(2\).
+          \[\frac{x^{2}+1}{x^{2}-1}=1+\frac{2}{x^{2}-1}\]</li>
+        <li>Fracciones parciales de \(\dfrac{2}{(x-1)(x+1)}\):
+          \[2=A\,(x+1)+B\,(x-1)\]</li>
+        <li>Con \(x=1\): \(2=2A\), \(A=1\). Con \(x=-1\): \(2=-2B\), \(B=-1\).</li>
+        <li>Se integra:
+          \[\int\left(1+\frac{1}{x-1}-\frac{1}{x+1}\right)dx=x+\ln|x-1|-\ln|x+1|+C\]</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H10 · v001 · Pendiente de APR</span>
+</footer>
+</article>

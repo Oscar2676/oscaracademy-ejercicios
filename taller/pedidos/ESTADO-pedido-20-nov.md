@@ -20,7 +20,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 03:10: 28 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**; lote 21: 2 publicadas, 3 en revisión
+## Avance al 21-nov 03:10: 28 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**; lote 21: 2 publicadas, 8 en revisión (H03–H10)
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -51,7 +51,13 @@ Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d
   - H04 «El teorema fundamental del cálculo y funciones de acumulación» (`H04_teorema_fundamental_del_calculo_y_funciones_de_acumulacion.html`): ft30u comp-lcno0ta31 · qudgj comp-l2qt9dak · qclgl comp-l4skmywm · qtf2i comp-la922ag4 · x238t comp-kagpi99q
   - H05 «Interpretar el comportamiento de funciones de acumulación que involucran área» (`H05_interpretar_funciones_de_acumulacion_que_involucran_area.html`): ft30u comp-lcno0ta5 · qudgj comp-l63syhke · qclgl comp-l63qho3e · qtf2i comp-la922ag52
 - Escena común de dos paneles (f arriba con su área, g = ∫f abajo con tangente): `taller/src/l21/partes/_acu.js` (`oaAcu`); H04 y H05 se arman con `cat _acu.js NN.scene.js`.
-- **Por producir (7):** Antiderivadas: reglas básicas e integrales definidas · Antiderivadas: regla de la potencia inversa · Integrales por sustitución · División larga y completar el cuadrado · Fracciones parciales · Integrales impropias · «Integración y acumulación de cambio» (título general). Identificadores en el pedido de 378.
+- **Pendientes de APR (21-nov 03:45), segunda tanda:**
+  - H06 «Antiderivadas e integrales indefinidas: reglas básicas y notación; integrales definidas» (`H06_antiderivadas_reglas_basicas_e_integrales_definidas.html`): ft30u comp-lcno0taa · qudgj comp-l2qt9dc4 · qclgl comp-l4skmyx51
+  - H07 «…regla de la potencia inversa» (`H07_antiderivadas_regla_de_la_potencia_inversa.html`): ft30u comp-lcno0ta81 · qudgj comp-l2qt71cl · qclgl comp-l4skmywt
+  - H08 «Integrales por sustitución» (`H08_integrales_por_sustitucion.html`): ft30u comp-lcno0taj · qudgj comp-l59tqjj9
+  - H09 «Integración mediante división larga y al completar el cuadrado» (`H09_integracion_por_division_larga_y_completando_el_cuadrado.html`): ft30u comp-lcno0tag · qudgj comp-l2qtbcu7 · qclgl comp-l4skmyww1
+  - H10 «Integración con fracciones parciales» (`H10_integracion_con_fracciones_parciales.html`): ft30u comp-lcno0tah2 · qudgj comp-l63stqzk · qclgl comp-l63qj2oy · qtf2i comp-la945dne2 · x238t comp-kajoitym · bb5wq comp-mvuxjfcg5
+- **Por producir (2):** «Evaluar integrales impropias» (ft30u comp-lcno0tae1 · qudgj comp-l2qtac3k · qclgl comp-l4skmyx31 · qtf2i comp-la94guzo) y el título general «Integración y acumulación de cambio» (ft30u comp-lcno0tad · qudgj comp-l2qtbcup · qclgl comp-l4skmywy · bb5wq comp-mvuxjfbi4): preguntar a Óscar si este se enlaza a H01 o quiere hoja propia.
 - **Ritmo acordado (21-nov 02:42):** Óscar pide que se le presenten las hojas para APR **de 5 en 5, y después de 10 en 10**.
 
 ## Criterios de Óscar para animaciones y texto (20-nov)

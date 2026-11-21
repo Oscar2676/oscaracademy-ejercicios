@@ -1,0 +1,236 @@
+<!--file:H09_integracion_por_division_larga_y_completando_el_cuadrado.html-->
+<!--title:Integración de funciones mediante división larga y al completar el cuadrado-->
+<!--id:int-division-->
+<!--tab:H09 División y cuadrado-->
+<article class="sheet" id="int-division" data-hoja="L21 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Integración de funciones mediante división larga y al completar el cuadrado</b></li>
+    </ol>
+    <h1>Integración de funciones mediante división larga y al completar el cuadrado</h1>
+    <p class="lede">Dos técnicas de álgebra que no integran por sí solas: reescriben una función racional hasta dejarla en una forma que sí está en la tabla. La división larga sirve cuando el numerador tiene grado mayor o igual que el denominador. Completar el cuadrado sirve cuando el denominador es un polinomio de grado \(2\) que no se puede factorizar.
+    \[\frac{P(x)}{D(x)}=Q(x)+\frac{R(x)}{D(x)}\qquad\qquad x^{2}+bx+c=\left(x+\frac{b}{2}\right)^{2}+\left(c-\frac{b^{2}}{4}\right)\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>Primera técnica: división larga</h2>
+  <div class="card k1">
+    <h3>Cuándo y por qué</h3>
+    <ol class="steps">
+      <li>Se usa cuando el grado del numerador \(P\) es mayor o igual que el del denominador \(D\).</li>
+      <li>Al dividir se obtienen un cociente \(Q\) y un resto \(R\), con el grado de \(R\) menor que el de \(D\):
+        \[P(x)=D(x)\cdot Q(x)+R(x)\]</li>
+      <li>Se dividen los dos miembros por \(D(x)\):
+        \[\frac{P(x)}{D(x)}=Q(x)+\frac{R(x)}{D(x)}\]</li>
+      <li>\(Q\) es un polinomio, que se integra con la regla de la potencia. La fracción que queda es más simple que la original.</li>
+    </ol>
+  </div>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\displaystyle\int\frac{x^{2}+3x+5}{x+1}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El numerador tiene grado \(2\) y el denominador grado \(1\): se divide. Primer término del cociente, \(x^{2}\) dividido por \(x\):
+      \[\frac{x^{2}}{x}=x\]</li>
+    <li>Se multiplica \(x\) por el divisor y se resta del dividendo:
+      \[x\cdot(x+1)=x^{2}+x\qquad\qquad\left(x^{2}+3x+5\right)-\left(x^{2}+x\right)=2x+5\]</li>
+    <li>Segundo término del cociente, \(2x\) dividido por \(x\):
+      \[\frac{2x}{x}=2\]</li>
+    <li>Se multiplica \(2\) por el divisor y se resta:
+      \[2\cdot(x+1)=2x+2\qquad\qquad(2x+5)-(2x+2)=3\]</li>
+    <li>El resto, \(3\), tiene grado menor que el divisor: la división termina. Cociente \(x+2\), resto \(3\):
+      \[\frac{x^{2}+3x+5}{x+1}=x+2+\frac{3}{x+1}\]</li>
+    <li>Comprobación: \((x+1)(x+2)+3=x^{2}+3x+2+3=x^{2}+3x+5\).</li>
+    <li>Se integra término a término. En el último, sustitución \(u=x+1\), \(du=dx\):
+      \[\int\left(x+2+\frac{3}{x+1}\right)dx=\frac{x^{2}}{2}+2x+3\ln|x+1|+C\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Segunda técnica: completar el cuadrado</h2>
+  <div class="card k2">
+    <h3>Cuándo y por qué</h3>
+    <ol class="steps">
+      <li>Se usa cuando el denominador es \(x^{2}+bx+c\) y no tiene raíces reales, o cuando está dentro de una raíz.</li>
+      <li>Se suma y se resta el cuadrado de la mitad del coeficiente de \(x\):
+        \[x^{2}+bx+c=x^{2}+bx+\left(\frac{b}{2}\right)^{2}-\left(\frac{b}{2}\right)^{2}+c\]</li>
+      <li>Los tres primeros términos forman un cuadrado de binomio:
+        \[x^{2}+bx+c=\left(x+\frac{b}{2}\right)^{2}+\left(c-\frac{b^{2}}{4}\right)\]</li>
+      <li>Así el denominador queda en la forma \(u^{2}+a^{2}\), que está en la tabla:
+        \[\int\frac{1}{u^{2}+a^{2}}\,du=\frac{1}{a}\arctan\left(\frac{u}{a}\right)+C\qquad\text{con }a&gt;0\]</li>
+    </ol>
+  </div>
+
+  <div class="prop p2">
+  <h3>De dónde sale la fórmula del arcotangente</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se comprueba derivando el lado derecho. La derivada de \(\arctan t\) es \(\dfrac{1}{1+t^{2}}\); con \(t=\dfrac{u}{a}\), regla de la cadena:
+      \[\left(\frac{1}{a}\arctan\left(\frac{u}{a}\right)\right)'=\frac{1}{a}\cdot\frac{1}{1+\dfrac{u^{2}}{a^{2}}}\cdot\frac{1}{a}\]</li>
+    <li>Se multiplican los dos factores \(\dfrac{1}{a}\) y se distribuye \(a^{2}\) en el denominador:
+      \[\frac{1}{a^{2}\left(1+\dfrac{u^{2}}{a^{2}}\right)}=\frac{1}{a^{2}+u^{2}}\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 2: \(\displaystyle\int\frac{1}{x^{2}+4x+13}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>¿Se puede factorizar? Discriminante: \(4^{2}-4\cdot 1\cdot 13=16-52=-36&lt;0\). No tiene raíces reales: se completa el cuadrado.</li>
+    <li>La mitad del coeficiente de \(x\) es \(2\), y su cuadrado es \(4\). Se suma y se resta \(4\):
+      \[x^{2}+4x+13=\left(x^{2}+4x+4\right)-4+13=(x+2)^{2}+9\]</li>
+    <li>Sustitución \(u=x+2\), \(du=dx\), con \(a^{2}=9\), es decir \(a=3\):
+      \[\int\frac{1}{(x+2)^{2}+9}\,dx=\int\frac{1}{u^{2}+3^{2}}\,du\]</li>
+    <li>Fórmula del arcotangente:
+      \[\frac{1}{3}\arctan\left(\frac{u}{3}\right)+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int\frac{1}{x^{2}+4x+13}\,dx=\frac{1}{3}\arctan\left(\frac{x+2}{3}\right)+C\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>El ejemplo 2, visto como área. La curva \(y=\dfrac{1}{(x+2)^{2}+9}\) es una campana centrada en \(x=-2\): ahí el denominador, \((x+2)^{2}+9\), es mínimo y vale \(9\). El área desde \(-2\) hasta \(x\) es \(\dfrac{1}{3}\arctan\left(\dfrac{x+2}{3}\right)\), y nunca pasa de \(\dfrac{\pi}{6}\).</p>
+  <div class="stage" data-scene="int-division"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(y=\dfrac{1}{x^{2}+4x+13}=\dfrac{1}{(x+2)^{2}+9}\).</li>
+    <li><b>Línea punteada:</b> el eje de simetría, \(x=-2\). Completar el cuadrado es encontrar ese centro.</li>
+    <li><b>Área verde:</b> desde \(-2\) hasta \(x\).</li>
+    <li><b>Bajo la animación:</b> el cuadrado completado, la integral y su valor.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Las dos técnicas juntas</h2>
+  <div class="prop p4">
+  <h3>Ejemplo 3: \(\displaystyle\int\frac{x^{2}+4x+14}{x^{2}+4x+13}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Numerador y denominador tienen el mismo grado: primero se divide. El numerador es el denominador más \(1\):
+      \[x^{2}+4x+14=\left(x^{2}+4x+13\right)+1\]</li>
+    <li>Cociente \(1\), resto \(1\):
+      \[\frac{x^{2}+4x+14}{x^{2}+4x+13}=1+\frac{1}{x^{2}+4x+13}\]</li>
+    <li>Se integra término a término. El segundo es el ejemplo 2:
+      \[\int\left(1+\frac{1}{x^{2}+4x+13}\right)dx=x+\frac{1}{3}\arctan\left(\frac{x+2}{3}\right)+C\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: primero se mira el denominador</h3>
+    <ol class="steps">
+      <li>Si el denominador de grado \(2\) <b>sí</b> tiene raíces reales, no se completa el cuadrado: se factoriza y se usan fracciones parciales, tema de otra hoja.</li>
+      <li>Ejemplo: \(x^{2}+4x+3\) tiene discriminante \(16-12=4&gt;0\) y se factoriza como \((x+1)(x+3)\).</li>
+      <li>Si se completara el cuadrado igual, quedaría \((x+2)^{2}-1\), con signo menos: no tiene la forma \(u^{2}+a^{2}\) y el arcotangente no sirve.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\int\frac{2x^{2}-x+4}{x-2}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>Divide: el cociente es \(2x+3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Primer término del cociente: \(\dfrac{2x^{2}}{x}=2x\). Se multiplica y se resta:
+          \[2x\cdot(x-2)=2x^{2}-4x\qquad\qquad\left(2x^{2}-x+4\right)-\left(2x^{2}-4x\right)=3x+4\]</li>
+        <li>Segundo término: \(\dfrac{3x}{x}=3\). Se multiplica y se resta:
+          \[3\cdot(x-2)=3x-6\qquad\qquad(3x+4)-(3x-6)=10\]</li>
+        <li>Cociente \(2x+3\), resto \(10\):
+          \[\frac{2x^{2}-x+4}{x-2}=2x+3+\frac{10}{x-2}\]</li>
+        <li>Se integra término a término:
+          \[x^{2}+3x+10\ln|x-2|+C\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\int\frac{1}{x^{2}-6x+13}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>La mitad de \(-6\) es \(-3\), y su cuadrado es \(9\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Discriminante: \((-6)^{2}-4\cdot 13=36-52=-16&lt;0\). Se completa el cuadrado:
+          \[x^{2}-6x+13=\left(x^{2}-6x+9\right)-9+13=(x-3)^{2}+4\]</li>
+        <li>Con \(u=x-3\), \(du=dx\) y \(a=2\):
+          \[\int\frac{1}{u^{2}+2^{2}}\,du=\frac{1}{2}\arctan\left(\frac{u}{2}\right)+C\]</li>
+        <li>Se vuelve a \(x\):
+          \[\frac{1}{2}\arctan\left(\frac{x-3}{2}\right)+C\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span>Calcula \(\displaystyle\int_{-2}^{1}\frac{1}{x^{2}+4x+13}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>Usa la antiderivada del ejemplo 2. \(\arctan 1=\dfrac{\pi}{4}\) y \(\arctan 0=0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Antiderivada, del ejemplo 2:
+          \[F(x)=\frac{1}{3}\arctan\left(\frac{x+2}{3}\right)\]</li>
+        <li>Se evalúa en los dos límites:
+          \[F(1)=\frac{1}{3}\arctan\left(\frac{3}{3}\right)=\frac{1}{3}\cdot\frac{\pi}{4}=\frac{\pi}{12}\qquad\qquad F(-2)=\frac{1}{3}\arctan 0=0\]</li>
+        <li>Se resta:
+          \[\int_{-2}^{1}\frac{1}{x^{2}+4x+13}\,dx=\frac{\pi}{12}-0=\frac{\pi}{12}\approx 0{,}26\]</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+OA.scene('int-division', (function(){
+  var RUN = 22, num = OA.num;
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+  function f(x){ return 1/((x + 2)*(x + 2) + 9); } function F(x){ return Math.atan((x + 2)/3)/3; }
+  function xs(s){ return s < 2 ? -2 : s < 17 ? -2 + 14*OA.smooth((s - 2)/15) : s < 19 ? 12 : 12 - 11*OA.smooth(cl((s - 19)/2.5)); }
+  return {
+    world:{x0:-9.5, x1:12.8, y0:-0.035, y1:0.142}, aspect:0.62,
+    _chk:[{f:F, df:f, at:[-5, -2, 0, 1, 6]}],
+    aria:'Una curva azul con forma de campana, centrada en x igual a menos 2, donde alcanza su altura máxima, un noveno. El área verde bajo la curva se pinta desde x igual a menos 2 hacia la derecha. Crece cada vez más lento y no pasa de pi sextos.',
+    labels:[['F', '\\displaystyle\\int\\dfrac{dx}{x^{2}+4x+13}=\\dfrac{1}{3}\\arctan\\left(\\dfrac{x+2}{3}\\right)+C', '∫ dx/(x²+4x+13) = (1/3) arctan((x+2)/3) + C', 'diff']],
+    sliders:[{id:'x', tex:'x', min:-2, max:12, step:0.02, value:-2}],
+    legend:'<span><i class="sw sec"></i> \\(y=\\dfrac{1}{(x+2)^{2}+9}\\)</span><span><i class="sw alt"></i> área desde \\(-2\\) hasta \\(x\\)</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.x = xs(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = v.q == null ? RUN : v.q*RUN, x = v.x, C = S.C, c = S.ctx, X = S.X, Y = S.Y, i, a, pts = [[-2, 0]];
+      function txt(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xa = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.85)'; c.fillRect(xa, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      S.line(-9.3, 0, 12.6, 0, {color:C.ink, width:1.4}); S.line(0, 0, 0, 0.135, {color:C.ink, width:1.4});
+      [-8, -6, -4, -2, 2, 4, 6, 8, 10, 12].forEach(function(q){ S.line(q, -0.002, q, 0.002, {color:C.ink, width:1}); txt(('' + q).replace('-', '−'), X(q), Y(0) + 12, 'center', C.muted); });
+      S.line(-0.15, 1/9, 0.15, 1/9, {color:C.ink, width:1}); txt('1/9', X(0) + 8, Y(1/9) - 2, 'left', C.muted);
+      for (i = 0; i <= 80; i++){ a = -2 + (x + 2)*i/80; pts.push([a, f(a)]); } pts.push([x, 0]);
+      if (x > -1.98) S.poly(pts, {fill:C.alt, alpha:0.45});
+      S.line(-2, 0, -2, 0.135, {color:C.muted, width:1.3, dash:[4, 4]});
+      S.curve(f, -9.3, 12.6, {color:C.sec, width:2.6});
+      S.line(x, 0, x, f(x), {color:C.ink, width:2}); S.dot(x, 0, C.ink); S.dot(-2, 1/9, C.sec);
+      txt('centro: x = −2', X(-2) - 8, Y(0.128), 'right', C.muted);
+      txt('x = ' + dec(x, 2), X(x), Y(0) + 30, 'center', C.ink);
+      if (x > -0.6) txt('área ≈ ' + dec(F(x), 3), X(Math.min(x, 2.5)) - 4, Y(0.03), 'right', C.alt);
+      txt('el área nunca alcanza π/6 ≈ 0,524', X(12.6), Y(0.095), 'right', C.alt);
+      S.lab('F', X(1.2), Y(0.075), 0, 0, v.q != null && s >= 20.5);
+    },
+    caption:function(v){
+      var x = v.x, s = v.q == null ? null : v.q*RUN;
+      if (s != null && s < 2) return 'Curva azul: la campana, centrada en x = −2. Ahí el denominador (x + 2)² + 9 es mínimo y la curva es máxima: 1/9';
+      return 'Con x = ' + dec(x, 2) + ', el área desde −2 vale cerca de ' + dec(F(x), 3) + '. Sigue creciendo, cada vez más lento, sin llegar a π/6';
+    },
+    readout:function(v){ var x = v.x; return [['', 'x^{2}+4x+13=(x+2)^{2}+9'], ['d', '\\displaystyle\\int_{-2}^{x}\\dfrac{dt}{(t+2)^{2}+9}=\\dfrac{1}{3}\\arctan\\left(\\dfrac{x+2}{3}\\right)'], ['', 'x=' + num(x, 2) + ':\\quad\\dfrac{1}{3}\\arctan\\left(' + num((x + 2)/3, 2) + '\\right)\\approx ' + num(F(x), 3)]]; }
+  };
+})());

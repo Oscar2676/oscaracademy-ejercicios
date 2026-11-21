@@ -1,0 +1,198 @@
+<!--file:H06_antiderivadas_reglas_basicas_e_integrales_definidas.html-->
+<!--title:Encontrar antiderivadas e integrales indefinidas: reglas básicas y notación; integrales definidas-->
+<!--id:anti-basicas-->
+<!--tab:H06 Antiderivadas-->
+<article class="sheet" id="anti-basicas" data-hoja="L21 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Encontrar antiderivadas e integrales indefinidas: reglas básicas y notación; integrales definidas</b></li>
+    </ol>
+    <h1>Antiderivadas e integrales indefinidas: reglas básicas y notación; integrales definidas</h1>
+    <p class="lede">Una antiderivada de \(f\) es una función \(F\) cuya derivada es \(f\). Encontrarla es recorrer la derivación al revés. Con una antiderivada, una integral definida se calcula con una simple resta, sin sumas de Riemann.
+    \[F'(x)=f(x)\qquad\Longrightarrow\qquad\int_{a}^{b}f(x)\,dx=F(b)-F(a)\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>Definición y notación</h3>
+    <ol class="steps">
+      <li>\(F\) es una <b>antiderivada</b> de \(f\) en un intervalo si \(F'(x)=f(x)\) para todo \(x\) de ese intervalo.</li>
+      <li>Si \(F\) es una antiderivada, \(F(x)+C\) también lo es para cualquier constante \(C\), porque la derivada de una constante es \(0\):
+        \[\big(F(x)+C\big)'=F'(x)+0=f(x)\]</li>
+      <li>La <b>integral indefinida</b> de \(f\) es el conjunto de todas sus antiderivadas. Se escribe sin límites de integración:
+        \[\int f(x)\,dx=F(x)+C\]</li>
+      <li>\(C\) se llama constante de integración. \(f(x)\) es el integrando y \(dx\) indica la variable.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Todas las antiderivadas de \(f(x)=x\): las parábolas \(F(x)=\dfrac{x^{2}}{2}+C\). Cambiar \(C\) sube o baja la curva, pero no cambia su pendiente: en cada \(x\), todas tienen la misma pendiente, \(f(x)=x\).</p>
+  <div class="stage" data-scene="anti-basicas"></div>
+  <ul class="keys">
+    <li><b>Curvas grises:</b> antiderivadas con distintos valores de \(C\).</li>
+    <li><b>Curva verde:</b> la antiderivada con el valor de \(C\) del deslizador.</li>
+    <li><b>Trazos naranjas:</b> las tangentes en un mismo \(x\). Son paralelas: todas tienen pendiente \(f(x)=x\).</li>
+    <li><b>Bajo la animación:</b> la antiderivada y su derivada, que no depende de \(C\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Por qué no hay más antiderivadas que \(F(x)+C\)</h2>
+  <div class="prop p1">
+  <h3>Demostración</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sean \(F\) y \(G\) dos antiderivadas de \(f\) en un intervalo. Se llama \(H\) a su diferencia:
+      \[H(x)=G(x)-F(x)\]</li>
+    <li>Se deriva. Las dos tienen derivada \(f\):
+      \[H'(x)=G'(x)-F'(x)=f(x)-f(x)=0\]</li>
+    <li>Una función con derivada \(0\) en todo un intervalo es constante. Es una consecuencia del teorema del valor medio: para dos puntos cualesquiera \(x_{1}&lt;x_{2}\) del intervalo existe \(c\) entre ellos con
+      \[H(x_{2})-H(x_{1})=H'(c)\cdot(x_{2}-x_{1})=0\cdot(x_{2}-x_{1})=0\]</li>
+    <li>Entonces \(H(x)=C\), una constante, y por lo tanto:
+      \[G(x)=F(x)+C\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Reglas básicas</h2>
+  <p>Cada regla se comprueba derivando el lado derecho: tiene que dar el integrando.</p>
+  <div class="props">
+    <h3>Tabla de antiderivadas básicas</h3>
+    \[\begin{array}{lll}
+    \textbf{función}&\textbf{integral indefinida}&\textbf{comprobación}\\[4pt]
+    k\ \text{(constante)}&\displaystyle\int k\,dx=kx+C&(kx)'=k\\[10pt]
+    x^{n},\ n\neq -1&\displaystyle\int x^{n}\,dx=\frac{x^{n+1}}{n+1}+C&\left(\dfrac{x^{n+1}}{n+1}\right)'=x^{n}\\[10pt]
+    \dfrac{1}{x},\ x\neq 0&\displaystyle\int\frac{1}{x}\,dx=\ln|x|+C&(\ln|x|)'=\dfrac{1}{x}\\[10pt]
+    e^{x}&\displaystyle\int e^{x}\,dx=e^{x}+C&(e^{x})'=e^{x}\\[10pt]
+    \cos x&\displaystyle\int\cos x\,dx=\operatorname{sen}x+C&(\operatorname{sen}x)'=\cos x\\[10pt]
+    \operatorname{sen}x&\displaystyle\int\operatorname{sen}x\,dx=-\cos x+C&(-\cos x)'=\operatorname{sen}x\\[10pt]
+    \sec^{2}x&\displaystyle\int\sec^{2}x\,dx=\tan x+C&(\tan x)'=\sec^{2}x
+    \end{array}\]
+  </div>
+
+  <div class="prop p2">
+  <h3>Linealidad: constantes, sumas y restas</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Una constante sale de la integral, y la integral de una suma es la suma de las integrales:
+      \[\int k\,f(x)\,dx=k\int f(x)\,dx\qquad\qquad\int\big(f(x)\pm g(x)\big)\,dx=\int f(x)\,dx\pm\int g(x)\,dx\]</li>
+    <li>Por qué: si \(F'=f\) y \(G'=g\), las reglas de derivación dan
+      \[(k\,F)'=k\,F'=k\,f\qquad\qquad(F\pm G)'=F'\pm G'=f\pm g\]</li>
+    <li>Ejemplo. Se integra término a término, con una sola constante al final:
+      \[\int\left(6x^{2}-4x+5\right)dx=6\cdot\frac{x^{3}}{3}-4\cdot\frac{x^{2}}{2}+5x+C=2x^{3}-2x^{2}+5x+C\]</li>
+    <li>Comprobación, derivando:
+      \[\left(2x^{3}-2x^{2}+5x+C\right)'=6x^{2}-4x+5\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>De la antiderivada a la integral definida</h2>
+  <div class="props">
+    <h3>Teorema fundamental del cálculo, segunda parte</h3>
+    <p>Si \(f\) es continua en \([a,\;b]\) y \(F\) es una antiderivada cualquiera de \(f\), entonces</p>
+    \[\int_{a}^{b}f(x)\,dx=F(b)-F(a)\]
+    <p>Se anota \(\Big[F(x)\Big]_{a}^{b}=F(b)-F(a)\).</p>
+  </div>
+
+  <div class="prop p3">
+  <h3>Demostración, a partir de la primera parte</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea \(g(x)=\displaystyle\int_{a}^{x}f(t)\,dt\), la función de acumulación. Por la primera parte del teorema, \(g'(x)=f(x)\): \(g\) es una antiderivada de \(f\).</li>
+    <li>\(F\) es otra antiderivada. Dos antiderivadas difieren en una constante:
+      \[F(x)=g(x)+C\]</li>
+    <li>Se evalúa en \(b\) y en \(a\), y se resta. La constante \(C\) se cancela:
+      \[F(b)-F(a)=\big(g(b)+C\big)-\big(g(a)+C\big)=g(b)-g(a)\]</li>
+    <li>Como \(g(a)=\displaystyle\int_{a}^{a}f(t)\,dt=0\) y \(g(b)=\displaystyle\int_{a}^{b}f(t)\,dt\):
+      \[F(b)-F(a)=\int_{a}^{b}f(t)\,dt\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo resuelto: \(\displaystyle\int_{1}^{3}\left(6x^{2}-4x+5\right)dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Antiderivada, del ejemplo anterior. La constante no hace falta, porque se cancela en la resta:
+      \[F(x)=2x^{3}-2x^{2}+5x\]</li>
+    <li>Se evalúa en el límite superior:
+      \[F(3)=2\cdot 27-2\cdot 9+5\cdot 3=54-18+15=51\]</li>
+    <li>Se evalúa en el límite inferior:
+      \[F(1)=2\cdot 1-2\cdot 1+5\cdot 1=5\]</li>
+    <li>Se resta:
+      \[\int_{1}^{3}\left(6x^{2}-4x+5\right)dx=F(3)-F(1)=51-5=46\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: indefinida y definida no son lo mismo</h3>
+    <ol class="steps">
+      <li>La integral indefinida \(\displaystyle\int f(x)\,dx\) es una <b>familia de funciones</b>: lleva \(+C\).</li>
+      <li>La integral definida \(\displaystyle\int_{a}^{b}f(x)\,dx\) es un <b>número</b>: no lleva \(+C\).</li>
+      <li>El teorema exige que \(f\) sea continua en todo \([a,\;b]\). Por ejemplo, no se puede aplicar a \(\displaystyle\int_{-1}^{1}\frac{1}{x^{2}}\,dx\), porque \(\dfrac{1}{x^{2}}\) no está definida en \(x=0\). Ese caso es una integral impropia, tema de otra hoja.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\int\left(4x^{3}+\frac{2}{x}-3e^{x}\right)dx\), con \(x&gt;0\).</p>
+    <details><summary>Pista</summary><div><p>Integra término a término con la tabla.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Linealidad:
+          \[4\int x^{3}\,dx+2\int\frac{1}{x}\,dx-3\int e^{x}\,dx\]</li>
+        <li>Tabla:
+          \[4\cdot\frac{x^{4}}{4}+2\ln|x|-3e^{x}+C=x^{4}+2\ln x-3e^{x}+C\]</li>
+        <li>Comprobación, derivando: \(\left(x^{4}+2\ln x-3e^{x}\right)'=4x^{3}+\dfrac{2}{x}-3e^{x}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\int_{0}^{\pi}\operatorname{sen}x\,dx\).</p>
+    <details><summary>Pista</summary><div><p>Una antiderivada de \(\operatorname{sen}x\) es \(-\cos x\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Antiderivada: \(F(x)=-\cos x\).</li>
+        <li>Se evalúa y se resta, con \(\cos\pi=-1\) y \(\cos 0=1\):
+          \[\int_{0}^{\pi}\operatorname{sen}x\,dx=\Big[-\cos x\Big]_{0}^{\pi}=-\cos\pi-(-\cos 0)=1+1=2\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La velocidad de un tren que parte de una estación es \(v(t)=0{,}6\,t\) metros por segundo, durante los primeros \(20\) segundos. ¿Qué distancia recorre entre \(t=10\) y \(t=20\)?</p>
+    <details><summary>Pista</summary><div><p>La distancia es \(\displaystyle\int_{10}^{20}v(t)\,dt\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Antiderivada de \(0{,}6\,t\):
+          \[F(t)=0{,}6\cdot\frac{t^{2}}{2}=0{,}3\,t^{2}\]</li>
+        <li>Se evalúa y se resta:
+          \[\int_{10}^{20}0{,}6\,t\,dt=F(20)-F(10)=0{,}3\cdot 400-0{,}3\cdot 100=120-30=90\]</li>
+        <li>Respuesta: recorre \(90\) metros.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>

@@ -1,0 +1,192 @@
+<!--file:H08_integrales_por_sustitucion.html-->
+<!--title:Integrales por sustitución-->
+<!--id:int-sustitucion-->
+<!--tab:H08 Sustitución-->
+<article class="sheet" id="int-sustitucion" data-hoja="L21 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Integrales por sustitución</b></li>
+    </ol>
+    <h1>Integrales por sustitución</h1>
+    <p class="lede">La sustitución, o cambio de variable, es la regla de la cadena leída al revés. Sirve cuando el integrando contiene una función de adentro, \(u=g(x)\), acompañada de su derivada \(g'(x)\). Al cambiar de variable, la integral queda más simple.
+    \[\int f\big(g(x)\big)\,g'(x)\,dx=\int f(u)\,du\qquad\text{con }u=g(x),\ du=g'(x)\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="prop p1">
+  <h3>De dónde sale: la regla de la cadena al revés</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea \(F\) una antiderivada de \(f\), es decir \(F'=f\). Regla de la cadena para derivar \(F\big(g(x)\big)\):
+      \[\Big(F\big(g(x)\big)\Big)'=F'\big(g(x)\big)\cdot g'(x)=f\big(g(x)\big)\cdot g'(x)\]</li>
+    <li>Leída al revés, dice que \(F\big(g(x)\big)\) es una antiderivada de \(f\big(g(x)\big)\,g'(x)\):
+      \[\int f\big(g(x)\big)\,g'(x)\,dx=F\big(g(x)\big)+C\]</li>
+    <li>Con \(u=g(x)\), el lado derecho es \(F(u)+C\), que es \(\displaystyle\int f(u)\,du\):
+      \[\int f\big(g(x)\big)\,g'(x)\,dx=\int f(u)\,du\]</li>
+    <li>La escritura \(du=g'(x)\,dx\) es la forma de recordar qué se reemplaza por qué.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="card k1">
+    <h3>El método, en cuatro pasos</h3>
+    <ol class="steps">
+      <li><b>Elegir \(u\):</b> la función de adentro, cuya derivada aparece como factor, salvo una constante.</li>
+      <li><b>Calcular \(du\):</b> se deriva, \(du=g'(x)\,dx\), y se despeja lo que haga falta.</li>
+      <li><b>Reemplazar todo:</b> la integral debe quedar solo con \(u\) y \(du\), sin ninguna \(x\).</li>
+      <li><b>Integrar y volver:</b> se integra en \(u\) y se reemplaza \(u\) por \(g(x)\). En una integral definida, en lugar de volver se cambian los límites.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La sustitución \(u=x^{2}\) transforma \(\displaystyle\int_{0}^{x}2t\cos\left(t^{2}\right)dt\) en \(\displaystyle\int_{0}^{x^{2}}\cos u\,du\). Las dos curvas son distintas y sus intervalos también, pero el área acumulada es la misma en todo instante.</p>
+  <div class="stage" data-scene="int-sustitucion"></div>
+  <ul class="keys">
+    <li><b>Arriba, curva azul:</b> \(y=2t\cos\left(t^{2}\right)\), en la variable original. Área verde: de \(0\) a \(x\).</li>
+    <li><b>Abajo, curva naranja:</b> \(y=\cos u\), en la variable nueva. Área verde: de \(0\) a \(u=x^{2}\).</li>
+    <li><b>Los dos puntos:</b> cuando arriba se llega a \(x\), abajo se llega a \(x^{2}\). El de abajo parte lento y termina rápido.</li>
+    <li><b>Bajo la animación:</b> las dos integrales, iguales, y su valor.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ejemplos resueltos, paso a paso</h2>
+
+  <div class="prop p2">
+  <h3>Ejemplo 1: la derivada de \(u\) aparece completa. \(\displaystyle\int 2x\cos\left(x^{2}\right)dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función de adentro: \(u=x^{2}\). Su derivada, \(2x\), es justo el otro factor.
+      \[u=x^{2}\qquad\qquad du=2x\,dx\]</li>
+    <li>Se reemplaza: \(\cos\left(x^{2}\right)\) por \(\cos u\), y \(2x\,dx\) por \(du\).
+      \[\int\cos\left(x^{2}\right)\cdot 2x\,dx=\int\cos u\,du\]</li>
+    <li>Se integra en \(u\):
+      \[\int\cos u\,du=\operatorname{sen}u+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int 2x\cos\left(x^{2}\right)dx=\operatorname{sen}\left(x^{2}\right)+C\]</li>
+    <li>Comprobación, derivando con la regla de la cadena: \(\Big(\operatorname{sen}\left(x^{2}\right)\Big)'=\cos\left(x^{2}\right)\cdot 2x\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 2: falta una constante. \(\displaystyle\int x\sqrt{x^{2}+1}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función de adentro: \(u=x^{2}+1\).
+      \[u=x^{2}+1\qquad\qquad du=2x\,dx\]</li>
+    <li>En la integral aparece \(x\,dx\), no \(2x\,dx\). Se despeja dividiendo por \(2\):
+      \[x\,dx=\frac{1}{2}\,du\]</li>
+    <li>Se reemplaza. La constante \(\dfrac{1}{2}\) sale de la integral:
+      \[\int\sqrt{x^{2}+1}\cdot x\,dx=\int\sqrt{u}\cdot\frac{1}{2}\,du=\frac{1}{2}\int u^{1/2}\,du\]</li>
+    <li>Regla de la potencia, con exponente nuevo \(\dfrac{3}{2}\):
+      \[\frac{1}{2}\cdot\frac{u^{3/2}}{\dfrac{3}{2}}+C=\frac{1}{2}\cdot\frac{2}{3}\,u^{3/2}+C=\frac{1}{3}\,u^{3/2}+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int x\sqrt{x^{2}+1}\,dx=\frac{1}{3}\left(x^{2}+1\right)^{3/2}+C\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 3: integral definida, se cambian los límites. \(\displaystyle\int_{0}^{2}x\left(x^{2}+1\right)^{3}dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Misma sustitución del ejemplo 2:
+      \[u=x^{2}+1\qquad\qquad x\,dx=\frac{1}{2}\,du\]</li>
+    <li>Los límites \(0\) y \(2\) son valores de \(x\). Se pasan a valores de \(u\):
+      \[x=0\ \Longrightarrow\ u=0^{2}+1=1\qquad\qquad x=2\ \Longrightarrow\ u=2^{2}+1=5\]</li>
+    <li>Se reemplaza todo, límites incluidos:
+      \[\int_{0}^{2}x\left(x^{2}+1\right)^{3}dx=\frac{1}{2}\int_{1}^{5}u^{3}\,du\]</li>
+    <li>Se integra y se evalúa en \(u\). Ya no hace falta volver a \(x\):
+      \[\frac{1}{2}\left[\frac{u^{4}}{4}\right]_{1}^{5}=\frac{1}{2}\left(\frac{625}{4}-\frac{1}{4}\right)=\frac{1}{2}\cdot\frac{624}{4}=\frac{1}{2}\cdot 156=78\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p1">
+  <h3>Ejemplo 4: función de adentro lineal. \(\displaystyle\int e^{3x}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función de adentro: \(u=3x\).
+      \[u=3x\qquad\qquad du=3\,dx\qquad\Longrightarrow\qquad dx=\frac{1}{3}\,du\]</li>
+    <li>Se reemplaza y se integra:
+      \[\int e^{3x}\,dx=\frac{1}{3}\int e^{u}\,du=\frac{1}{3}\,e^{u}+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int e^{3x}\,dx=\frac{1}{3}\,e^{3x}+C\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: solo se pueden despejar constantes</h3>
+    <ol class="steps">
+      <li>En el ejemplo 2 faltaba el factor \(2\), una constante, y se arregló con \(\dfrac{1}{2}\). Eso se puede porque las constantes entran y salen de la integral.</li>
+      <li>Si lo que falta es un factor con \(x\), la sustitución no funciona. Ejemplo: \(\displaystyle\int\cos\left(x^{2}\right)dx\), sin el factor \(x\). Con \(u=x^{2}\) se tiene \(dx=\dfrac{du}{2x}\), y esa \(x\) no se puede sacar de la integral ni queda en términos de \(du\) solamente.</li>
+      <li>De hecho, \(\cos\left(x^{2}\right)\) no tiene antiderivada que se pueda escribir con las funciones elementales.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\int\left(3x^{2}+1\right)\left(x^{3}+x\right)^{5}dx\).</p>
+    <details><summary>Pista</summary><div><p>\(u=x^{3}+x\). Su derivada es el otro factor.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sustitución:
+          \[u=x^{3}+x\qquad\qquad du=\left(3x^{2}+1\right)dx\]</li>
+        <li>Se reemplaza y se integra:
+          \[\int u^{5}\,du=\frac{u^{6}}{6}+C\]</li>
+        <li>Se vuelve a \(x\):
+          \[\frac{\left(x^{3}+x\right)^{6}}{6}+C\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\int_{0}^{1}\frac{2x}{x^{2}+1}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>\(u=x^{2}+1\), y cambia los límites.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sustitución:
+          \[u=x^{2}+1\qquad\qquad du=2x\,dx\]</li>
+        <li>Límites: \(x=0\) da \(u=1\); \(x=1\) da \(u=2\).</li>
+        <li>Se reemplaza y se integra. En \([1,\;2]\), \(u&gt;0\):
+          \[\int_{1}^{2}\frac{1}{u}\,du=\Big[\ln u\Big]_{1}^{2}=\ln 2-\ln 1=\ln 2\approx 0{,}69\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una taza de café se enfría. Su temperatura cambia a razón de \(r(t)=-12\,e^{-0{,}2t}\) grados por minuto. ¿Cuánto baja la temperatura en los primeros \(5\) minutos?</p>
+    <details><summary>Pista</summary><div><p>\(u=-0{,}2\,t\), así que \(dt=-5\,du\). Cambia los límites.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El cambio de temperatura es \(\displaystyle\int_{0}^{5}-12\,e^{-0{,}2t}\,dt\). Sustitución:
+          \[u=-0{,}2\,t\qquad du=-0{,}2\,dt\qquad\Longrightarrow\qquad dt=-5\,du\]</li>
+        <li>Límites: \(t=0\) da \(u=0\); \(t=5\) da \(u=-1\).</li>
+        <li>Se reemplaza. \(-12\cdot(-5)=60\):
+          \[\int_{0}^{-1}-12\,e^{u}\cdot(-5)\,du=60\int_{0}^{-1}e^{u}\,du\]</li>
+        <li>Se integra y se evalúa:
+          \[60\,\Big[e^{u}\Big]_{0}^{-1}=60\left(e^{-1}-e^{0}\right)=60\left(\frac{1}{e}-1\right)\approx 60\cdot(-0{,}632)\approx -37{,}9\]</li>
+        <li>Respuesta: la temperatura baja cerca de \(37{,}9\) grados en los primeros \(5\) minutos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>

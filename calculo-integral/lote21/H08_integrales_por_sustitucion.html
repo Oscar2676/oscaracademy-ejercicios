@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrales por sustitución | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="int-sustitucion" data-hoja="L21 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Integrales por sustitución</b></li>
+    </ol>
+    <h1>Integrales por sustitución</h1>
+    <p class="lede">La sustitución, o cambio de variable, es la regla de la cadena leída al revés. Sirve cuando el integrando contiene una función de adentro, \(u=g(x)\), acompañada de su derivada \(g'(x)\). Al cambiar de variable, la integral queda más simple.
+    \[\int f\big(g(x)\big)\,g'(x)\,dx=\int f(u)\,du\qquad\text{con }u=g(x),\ du=g'(x)\,dx\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="prop p1">
+  <h3>De dónde sale: la regla de la cadena al revés</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Sea \(F\) una antiderivada de \(f\), es decir \(F'=f\). Regla de la cadena para derivar \(F\big(g(x)\big)\):
+      \[\Big(F\big(g(x)\big)\Big)'=F'\big(g(x)\big)\cdot g'(x)=f\big(g(x)\big)\cdot g'(x)\]</li>
+    <li>Leída al revés, dice que \(F\big(g(x)\big)\) es una antiderivada de \(f\big(g(x)\big)\,g'(x)\):
+      \[\int f\big(g(x)\big)\,g'(x)\,dx=F\big(g(x)\big)+C\]</li>
+    <li>Con \(u=g(x)\), el lado derecho es \(F(u)+C\), que es \(\displaystyle\int f(u)\,du\):
+      \[\int f\big(g(x)\big)\,g'(x)\,dx=\int f(u)\,du\]</li>
+    <li>La escritura \(du=g'(x)\,dx\) es la forma de recordar qué se reemplaza por qué.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="card k1">
+    <h3>El método, en cuatro pasos</h3>
+    <ol class="steps">
+      <li><b>Elegir \(u\):</b> la función de adentro, cuya derivada aparece como factor, salvo una constante.</li>
+      <li><b>Calcular \(du\):</b> se deriva, \(du=g'(x)\,dx\), y se despeja lo que haga falta.</li>
+      <li><b>Reemplazar todo:</b> la integral debe quedar solo con \(u\) y \(du\), sin ninguna \(x\).</li>
+      <li><b>Integrar y volver:</b> se integra en \(u\) y se reemplaza \(u\) por \(g(x)\). En una integral definida, en lugar de volver se cambian los límites.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La sustitución \(u=x^{2}\) transforma \(\displaystyle\int_{0}^{x}2t\cos\left(t^{2}\right)dt\) en \(\displaystyle\int_{0}^{x^{2}}\cos u\,du\). Las dos curvas son distintas y sus intervalos también, pero el área acumulada es la misma en todo instante.</p>
+  <div class="stage" data-scene="int-sustitucion"></div>
+  <ul class="keys">
+    <li><b>Arriba, curva azul:</b> \(y=2t\cos\left(t^{2}\right)\), en la variable original. Área verde: de \(0\) a \(x\).</li>
+    <li><b>Abajo, curva naranja:</b> \(y=\cos u\), en la variable nueva. Área verde: de \(0\) a \(u=x^{2}\).</li>
+    <li><b>Los dos puntos:</b> cuando arriba se llega a \(x\), abajo se llega a \(x^{2}\). El de abajo parte lento y termina rápido.</li>
+    <li><b>Bajo la animación:</b> las dos integrales, iguales, y su valor.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ejemplos resueltos, paso a paso</h2>
+
+  <div class="prop p2">
+  <h3>Ejemplo 1: la derivada de \(u\) aparece completa. \(\displaystyle\int 2x\cos\left(x^{2}\right)dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función de adentro: \(u=x^{2}\). Su derivada, \(2x\), es justo el otro factor.
+      \[u=x^{2}\qquad\qquad du=2x\,dx\]</li>
+    <li>Se reemplaza: \(\cos\left(x^{2}\right)\) por \(\cos u\), y \(2x\,dx\) por \(du\).
+      \[\int\cos\left(x^{2}\right)\cdot 2x\,dx=\int\cos u\,du\]</li>
+    <li>Se integra en \(u\):
+      \[\int\cos u\,du=\operatorname{sen}u+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int 2x\cos\left(x^{2}\right)dx=\operatorname{sen}\left(x^{2}\right)+C\]</li>
+    <li>Comprobación, derivando con la regla de la cadena: \(\Big(\operatorname{sen}\left(x^{2}\right)\Big)'=\cos\left(x^{2}\right)\cdot 2x\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 2: falta una constante. \(\displaystyle\int x\sqrt{x^{2}+1}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función de adentro: \(u=x^{2}+1\).
+      \[u=x^{2}+1\qquad\qquad du=2x\,dx\]</li>
+    <li>En la integral aparece \(x\,dx\), no \(2x\,dx\). Se despeja dividiendo por \(2\):
+      \[x\,dx=\frac{1}{2}\,du\]</li>
+    <li>Se reemplaza. La constante \(\dfrac{1}{2}\) sale de la integral:
+      \[\int\sqrt{x^{2}+1}\cdot x\,dx=\int\sqrt{u}\cdot\frac{1}{2}\,du=\frac{1}{2}\int u^{1/2}\,du\]</li>
+    <li>Regla de la potencia, con exponente nuevo \(\dfrac{3}{2}\):
+      \[\frac{1}{2}\cdot\frac{u^{3/2}}{\dfrac{3}{2}}+C=\frac{1}{2}\cdot\frac{2}{3}\,u^{3/2}+C=\frac{1}{3}\,u^{3/2}+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int x\sqrt{x^{2}+1}\,dx=\frac{1}{3}\left(x^{2}+1\right)^{3/2}+C\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 3: integral definida, se cambian los límites. \(\displaystyle\int_{0}^{2}x\left(x^{2}+1\right)^{3}dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Misma sustitución del ejemplo 2:
+      \[u=x^{2}+1\qquad\qquad x\,dx=\frac{1}{2}\,du\]</li>
+    <li>Los límites \(0\) y \(2\) son valores de \(x\). Se pasan a valores de \(u\):
+      \[x=0\ \Longrightarrow\ u=0^{2}+1=1\qquad\qquad x=2\ \Longrightarrow\ u=2^{2}+1=5\]</li>
+    <li>Se reemplaza todo, límites incluidos:
+      \[\int_{0}^{2}x\left(x^{2}+1\right)^{3}dx=\frac{1}{2}\int_{1}^{5}u^{3}\,du\]</li>
+    <li>Se integra y se evalúa en \(u\). Ya no hace falta volver a \(x\):
+      \[\frac{1}{2}\left[\frac{u^{4}}{4}\right]_{1}^{5}=\frac{1}{2}\left(\frac{625}{4}-\frac{1}{4}\right)=\frac{1}{2}\cdot\frac{624}{4}=\frac{1}{2}\cdot 156=78\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p1">
+  <h3>Ejemplo 4: función de adentro lineal. \(\displaystyle\int e^{3x}\,dx\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función de adentro: \(u=3x\).
+      \[u=3x\qquad\qquad du=3\,dx\qquad\Longrightarrow\qquad dx=\frac{1}{3}\,du\]</li>
+    <li>Se reemplaza y se integra:
+      \[\int e^{3x}\,dx=\frac{1}{3}\int e^{u}\,du=\frac{1}{3}\,e^{u}+C\]</li>
+    <li>Se vuelve a \(x\):
+      \[\int e^{3x}\,dx=\frac{1}{3}\,e^{3x}+C\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: solo se pueden despejar constantes</h3>
+    <ol class="steps">
+      <li>En el ejemplo 2 faltaba el factor \(2\), una constante, y se arregló con \(\dfrac{1}{2}\). Eso se puede porque las constantes entran y salen de la integral.</li>
+      <li>Si lo que falta es un factor con \(x\), la sustitución no funciona. Ejemplo: \(\displaystyle\int\cos\left(x^{2}\right)dx\), sin el factor \(x\). Con \(u=x^{2}\) se tiene \(dx=\dfrac{du}{2x}\), y esa \(x\) no se puede sacar de la integral ni queda en términos de \(du\) solamente.</li>
+      <li>De hecho, \(\cos\left(x^{2}\right)\) no tiene antiderivada que se pueda escribir con las funciones elementales.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\int\left(3x^{2}+1\right)\left(x^{3}+x\right)^{5}dx\).</p>
+    <details><summary>Pista</summary><div><p>\(u=x^{3}+x\). Su derivada es el otro factor.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sustitución:
+          \[u=x^{3}+x\qquad\qquad du=\left(3x^{2}+1\right)dx\]</li>
+        <li>Se reemplaza y se integra:
+          \[\int u^{5}\,du=\frac{u^{6}}{6}+C\]</li>
+        <li>Se vuelve a \(x\):
+          \[\frac{\left(x^{3}+x\right)^{6}}{6}+C\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\int_{0}^{1}\frac{2x}{x^{2}+1}\,dx\).</p>
+    <details><summary>Pista</summary><div><p>\(u=x^{2}+1\), y cambia los límites.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sustitución:
+          \[u=x^{2}+1\qquad\qquad du=2x\,dx\]</li>
+        <li>Límites: \(x=0\) da \(u=1\); \(x=1\) da \(u=2\).</li>
+        <li>Se reemplaza y se integra. En \([1,\;2]\), \(u&gt;0\):
+          \[\int_{1}^{2}\frac{1}{u}\,du=\Big[\ln u\Big]_{1}^{2}=\ln 2-\ln 1=\ln 2\approx 0{,}69\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una taza de café se enfría. Su temperatura cambia a razón de \(r(t)=-12\,e^{-0{,}2t}\) grados por minuto. ¿Cuánto baja la temperatura en los primeros \(5\) minutos?</p>
+    <details><summary>Pista</summary><div><p>\(u=-0{,}2\,t\), así que \(dt=-5\,du\). Cambia los límites.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El cambio de temperatura es \(\displaystyle\int_{0}^{5}-12\,e^{-0{,}2t}\,dt\). Sustitución:
+          \[u=-0{,}2\,t\qquad du=-0{,}2\,dt\qquad\Longrightarrow\qquad dt=-5\,du\]</li>
+        <li>Límites: \(t=0\) da \(u=0\); \(t=5\) da \(u=-1\).</li>
+        <li>Se reemplaza. \(-12\cdot(-5)=60\):
+          \[\int_{0}^{-1}-12\,e^{u}\cdot(-5)\,du=60\int_{0}^{-1}e^{u}\,du\]</li>
+        <li>Se integra y se evalúa:
+          \[60\,\Big[e^{u}\Big]_{0}^{-1}=60\left(e^{-1}-e^{0}\right)=60\left(\frac{1}{e}-1\right)\approx 60\cdot(-0{,}632)\approx -37{,}9\]</li>
+        <li>Respuesta: la temperatura baja cerca de \(37{,}9\) grados en los primeros \(5\) minutos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+OA.scene('int-sustitucion', (function(){
+  var RUN = 22, num = OA.num, XM = Math.sqrt(Math.PI/2);
+  function cl(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function dec(x, d){ return x.toFixed(d).replace('.', ','); }
+  function f(t){ return 2*t*Math.cos(t*t); }
+  function xs(s){ return s < 2 ? 0 : s < 16 ? XM*(s - 2)/14 : s < 18 ? XM : XM - 0.35*OA.smooth(cl((s - 18)/2.5)); }
+  var T0 = 11.6, T1 = 19.2, B0 = 1.2, B1 = 8.8;
+  function yt(y){ return T0 + y/1.25*(T1 - T0); } function yb(y){ return B0 + y/1.25*(B1 - B0); }
+  return {
+    world:{x0:-0.22, x1:1.75, y0:-0.9, y1:20.6}, aspect:1.08,
+    _chk:[{f:function(x){ return Math.sin(x*x); }, df:f, at:[0.3, 0.7, 1, 1.2]}],
+    aria:'Dos gráficas, una sobre otra. Arriba, la curva y igual a 2t por coseno de t al cuadrado, con el área pintada de 0 a x. Abajo, la curva y igual a coseno de u, con el área pintada de 0 a u igual a x al cuadrado. Las dos áreas valen siempre lo mismo, seno de x al cuadrado, y llegan a 1.',
+    labels:[['F', '\\displaystyle\\int_{0}^{x}2t\\cos\\left(t^{2}\\right)dt=\\int_{0}^{x^{2}}\\cos u\\,du=\\operatorname{sen}\\left(x^{2}\\right)', 'las dos áreas valen sen(x²)', 'diff']],
+    sliders:[{id:'x', tex:'x', min:0, max:1.25, step:0.005, value:0}],
+    legend:'<span><i class="sw sec"></i> \\(y=2t\\cos\\left(t^{2}\\right)\\)</span><span><i class="sw rise"></i> \\(y=\\cos u\\)</span><span><i class="sw alt"></i> áreas iguales</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.x = xs(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = v.q == null ? RUN : v.q*RUN, x = Math.min(v.x, XM), u = x*x, C = S.C, c = S.ctx, X = S.X, Y = S.Y, i, a, pa = [[0, yt(0)]], pb = [[0, yb(0)]], ar = Math.sin(u);
+      function txt(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xa = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.85)'; c.fillRect(xa, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      [[yt, [0.5, 1], [[XM, '√(π/2)']]], [yb, [0.5, 1, 1.5], [[Math.PI/2, 'π/2']]]].forEach(function(e){
+        S.line(0, e[0](0), 1.7, e[0](0), {color:C.ink, width:1.4}); S.line(0, e[0](0), 0, e[0](1.22), {color:C.ink, width:1.4});
+        e[1].forEach(function(q){ S.line(q, e[0](0) - 0.12, q, e[0](0) + 0.12, {color:C.ink, width:1}); txt(('' + q).replace('.', ','), X(q), Y(e[0](0)) + 12, 'center', C.muted); });
+        e[2].forEach(function(q){ S.line(q[0], e[0](0) - 0.2, q[0], e[0](0) + 0.2, {color:C.ink, width:1.6}); txt(q[1], X(q[0]), Y(e[0](0)) + 28, 'center', C.ink); });
+        S.line(-0.012, e[0](1), 0.012, e[0](1), {color:C.ink, width:1}); txt('1', X(0) - 7, Y(e[0](1)), 'right', C.muted);
+      });
+      for (i = 0; i <= 60; i++){ a = x*i/60; pa.push([a, yt(f(a))]); } pa.push([x, yt(0)]);
+      for (i = 0; i <= 60; i++){ a = u*i/60; pb.push([a, yb(Math.cos(a))]); } pb.push([u, yb(0)]);
+      if (x > 0.005){ S.poly(pa, {fill:C.alt, alpha:0.45}); S.poly(pb, {fill:C.alt, alpha:0.45}); }
+      c.strokeStyle = C.sec; c.lineWidth = 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= 120; i++){ a = XM*i/120; if (i) c.lineTo(X(a), Y(yt(f(a)))); else c.moveTo(X(a), Y(yt(f(a)))); } c.stroke();
+      c.strokeStyle = C.rise; c.beginPath(); for (i = 0; i <= 120; i++){ a = Math.PI/2*i/120; if (i) c.lineTo(X(a), Y(yb(Math.cos(a)))); else c.moveTo(X(a), Y(yb(Math.cos(a)))); } c.stroke();
+      S.line(x, yt(0), x, yt(f(x)), {color:C.ink, width:2}); S.dot(x, yt(0), C.sec);
+      S.line(u, yb(0), u, yb(Math.cos(u)), {color:C.ink, width:2}); S.dot(u, yb(0), C.rise);
+      txt('y = 2t · cos(t²)', X(1.7), Y(T1 + 0.5), 'right', C.sec); txt('y = cos u', X(1.7), Y(B1 + 0.5), 'right', C.rise);
+      txt('x = ' + dec(x, 2), X(x) + 10, Y(yt(f(x))) - 12, 'left', C.sec);
+      txt('u = x² = ' + dec(u, 2), X(u) + 10, Y(yb(Math.cos(u))) - 12, 'left', C.rise);
+      if (x > 0.5){ txt('área ≈ ' + dec(ar, 3), X(Math.min(x, 1)*0.62), Y(yt(0.32)), 'center', C.alt); txt('área ≈ ' + dec(ar, 3), X(Math.max(0.32, u*0.45)), Y(yb(0.32)), 'center', C.alt); }
+      S.lab('F', X(0.02), Y(10.3), 0, 0, v.q != null && s >= 20.5);
+    },
+    caption:function(v){
+      var x = Math.min(v.x, XM), s = v.q == null ? null : v.q*RUN;
+      if (s != null && s < 2) return 'Arriba: la integral original, en la variable t. Abajo: la misma integral después de sustituir u = t². El área se pinta en las dos a la vez';
+      return 'Con x = ' + dec(x, 2) + ' arriba, abajo se llega a u = x² = ' + dec(x*x, 2) + '. Las dos áreas valen lo mismo: cerca de ' + dec(Math.sin(x*x), 3);
+    },
+    readout:function(v){ var x = Math.min(v.x, XM); return [['', 'u=t^{2}\\qquad du=2t\\,dt'], ['d', '\\displaystyle\\int_{0}^{x}2t\\cos\\left(t^{2}\\right)dt=\\int_{0}^{x^{2}}\\cos u\\,du=\\Big[\\operatorname{sen}u\\Big]_{0}^{x^{2}}=\\operatorname{sen}\\left(x^{2}\\right)'], ['', 'x=' + num(x, 2) + ':\\quad\\operatorname{sen}\\left(' + num(x*x, 2) + '\\right)\\approx ' + num(Math.sin(x*x), 3)]]; }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
