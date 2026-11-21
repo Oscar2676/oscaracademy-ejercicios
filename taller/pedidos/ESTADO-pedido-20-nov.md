@@ -82,7 +82,7 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 ## Lote 23 · Paramétricas, polares y vectoriales (`calculo-integral/lote23/`, fuentes `taller/src/l23/partes/`, `qa/rigor/verificar_lote_23.py`)
 Tarjeta https://claude.ai/artifact/H9Jd3daoV1wVSG7FiX1zDA (slug 82bb0741-2206-4832-bb06-a09fe3f81dc5). Código de pie `CI-L23-HNN`. Se arma con `python3 taller/build.py 23 "Paramétricas, polares y vectoriales"`; partes → `NN-p.html` con `cat _txt.js NN.scene.js` (01, 02) o `cat _txt.js _pol.js NN.scene.js` (03–05; `_pol.js` trae la cardioide `oaCar` y la rejilla polar). Ruta de las hojas: Cursos › Cálculo II › Derivada de funciones paramétricas.
 - **Pendientes de APR (21-nov 09:30), v001** (ids del pedido; al enlazar, buscar por título exacto con `__scan`):
-  - H01 «Introducción a ecuaciones paramétricas» (`H01_introduccion_a_ecuaciones_parametricas.html`): qudgj comp-lcklq9xb1 · qclgl comp-l4skmyvn
+  - H01 **v002** (2 correcciones de Óscar, 08:40: en `par-intro` destacar las expresiones x = 3 cos t, y = 2 sen t y marcar t → construcción con círculos de radio 3 y 2 y rayo de ángulo t; el ejemplo de la tabla merece dibujo → escena `par-tabla` dentro del recuadro) «Introducción a ecuaciones paramétricas» (`H01_introduccion_a_ecuaciones_parametricas.html`): qudgj comp-lcklq9xb1 · qclgl comp-l4skmyvn
   - H02 «Determinar la longitud de arco de curvas dadas por ecuaciones parametrizadas» (`H02_longitud_de_arco_de_curvas_dadas_por_ecuaciones_parametrizadas.html`): qudgj comp-lcklq9xi1 · qclgl comp-l4skmyvt1 · qtf2i comp-la92e1083
   - H03 «Definir coordenadas polares y diferenciar en forma polar» (`H03_definir_coordenadas_polares_y_diferenciar_en_forma_polar.html`): qudgj comp-lcklq9za1 · qclgl comp-la7rpzbm1
   - H04 «Derivadas de funciones polares» (`H04_derivadas_de_funciones_polares.html`): qudgj comp-lcklq9zc1 · qclgl comp-la7rpzbo
@@ -94,6 +94,7 @@ Tarjeta https://claude.ai/artifact/H9Jd3daoV1wVSG7FiX1zDA (slug 82bb0741-2206-48
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
 - Una discontinuidad se dibuja con **curvas**, no con rectas, y la gráfica debe **seguir** después del salto por otra curva más arriba en el mismo x.
+- **Nuevos (L23 H01, 21-nov):** en una animación no basta mostrar valores numéricos de x e y: hay que destacar las **expresiones** que los producen (x = 3 cos t) y **marcar el parámetro** en el dibujo. Un ejemplo con tabla o con varias expresiones algebraicas lleva **su propio dibujo aclaratorio** que muestre cada valor.
 - La curva de una animación debe «nacer» donde corresponde (p. ej. desde el II cuadrante).
 - En máximos y mínimos el punto se **detiene** y muestra «f′(x) = 0»: sobre la tangente en el máximo, bajo ella en el mínimo (0,5 s en L19 H01–H02; 1,3 s en H03).
 - Rótulos de signo sobre la barra: 13 px.
