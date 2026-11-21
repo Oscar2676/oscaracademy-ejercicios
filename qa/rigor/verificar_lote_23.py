@@ -57,6 +57,8 @@ ok('H06 ej.2: cruces ±π/3; 4cos² − 1 = 1 + 2cos 2θ; π/3 + √3/2 ≈ 1,91
 ok('H06 error: ½(3²−1²) = 4 ≠ ½(3−1)² = 2', 0.5 * (9 - 1) == 4 and 0.5 * (3 - 1) ** 2 == 2)
 ok('H06-A: 3π; H06-B: cruces π/6, 5π/6 y área π; H06-C: 14π ≈ 44,0', cerca(riemann(lambda q: 0.5 * 3, 0, 2 * pi), 3 * pi) and cerca(3 * sin(pi / 6), 1 + sin(pi / 6)) and all(cerca(9 * sin(q) ** 2 - (1 + sin(q)) ** 2, 3 - 4 * cos(2 * q) - 2 * sin(q)) for q in (0.7, 1.9)) and cerca(riemann(lambda q: 0.5 * (9 * sin(q) ** 2 - (1 + sin(q)) ** 2), pi / 6, 5 * pi / 6), pi) and cerca(riemann(lambda q: 0.5 * ((4 + 2 * cos(q)) ** 2 - 4), 0, 2 * pi), 14 * pi) and round(14 * pi, 1) == 44.0)
 
+ok('H06 punto a punto: r(π/3) = ½, r(π/2) = 1, r(π) = 2; simetría; r(11π/12) ≈ 1,97', cerca(1 - cos(pi / 3), 0.5) and cerca(1 - cos(pi / 2), 1) and cerca(1 - cos(pi), 2) and all(cerca(cos(2 * pi - q), cos(q)) for q in (0.3, 1.1, 2.5)) and round(1 - cos(11 * pi / 12), 2) == 1.97 and round(cos(11 * pi / 12), 2) == -0.97)
+
 # H07 · funciones vectoriales
 ok('H07 ej.1: valores y y = 4 − x²', [(t, 4 - t * t) for t in (-2, 0, 1, 2)] == [(-2, 0), (0, 4), (1, 3), (2, 0)])
 ok('H07 ej.3: lím (sen t)/t = 1; ej.4: recta ⟨1+3t, 2−t⟩ ⇔ y = (7−x)/3', cerca(sin(1e-6) / 1e-6, 1) and all(cerca(2 - t, (7 - (1 + 3 * t)) / 3) for t in (-2, 0, 1.5)))
