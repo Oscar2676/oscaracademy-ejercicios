@@ -80,7 +80,7 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 - `qa/rigor/derivadas_escenas.js` espera `_chk` con `d0, d1`; las escenas de l21 y l22 usan `_chk:[{f, df, at}]` y se comprueban con el bucle de node anotado en el historial del 21-nov (0 derivadas malas).
 
 ## Lote 23 · Paramétricas, polares y vectoriales (`calculo-integral/lote23/`, fuentes `taller/src/l23/partes/`, `qa/rigor/verificar_lote_23.py`)
-Código de pie `CI-L23-HNN`. Se arma con `python3 taller/build.py 23 "Paramétricas, polares y vectoriales"`; partes → `NN-p.html` con `cat _txt.js NN.scene.js` (01, 02) o `cat _txt.js _pol.js NN.scene.js` (03–05; `_pol.js` trae la cardioide `oaCar` y la rejilla polar). Ruta de las hojas: Cursos › Cálculo II › Derivada de funciones paramétricas.
+Tarjeta https://claude.ai/artifact/H9Jd3daoV1wVSG7FiX1zDA (slug 82bb0741-2206-4832-bb06-a09fe3f81dc5). Código de pie `CI-L23-HNN`. Se arma con `python3 taller/build.py 23 "Paramétricas, polares y vectoriales"`; partes → `NN-p.html` con `cat _txt.js NN.scene.js` (01, 02) o `cat _txt.js _pol.js NN.scene.js` (03–05; `_pol.js` trae la cardioide `oaCar` y la rejilla polar). Ruta de las hojas: Cursos › Cálculo II › Derivada de funciones paramétricas.
 - **Pendientes de APR (21-nov 09:30), v001** (ids del pedido; al enlazar, buscar por título exacto con `__scan`):
   - H01 «Introducción a ecuaciones paramétricas» (`H01_introduccion_a_ecuaciones_parametricas.html`): qudgj comp-lcklq9xb1 · qclgl comp-l4skmyvn
   - H02 «Determinar la longitud de arco de curvas dadas por ecuaciones parametrizadas» (`H02_longitud_de_arco_de_curvas_dadas_por_ecuaciones_parametrizadas.html`): qudgj comp-lcklq9xi1 · qclgl comp-l4skmyvt1 · qtf2i comp-la92e1083
