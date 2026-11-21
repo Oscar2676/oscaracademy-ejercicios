@@ -6,7 +6,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 01:35: 21 hojas con APR, enlazadas y publicadas
+## Avance al 21-nov 02:30: 23 hojas con APR, enlazadas y publicadas; 3 en cola de revisión
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -22,8 +22,12 @@ Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D
 
 **Con APR del 21-nov, enlazadas y publicadas:** L20 H07 «La regla de L'Hôpital» (`H07_la_regla_de_l_hopital.html`; ft30u comp-lcno0t8l · qudgj comp-lcit01ai) y L20 H08 «Aplicación de la regla de L'Hôpital para determinar límites indeterminados» (`H08_aplicacion_de_la_regla_de_l_hopital_limites_indeterminados.html`; li9mn comp-lck53ins · ft30u comp-lcno0t8m2 · qudgj comp-lcit01bl1). Fuentes `07.*` y `08.*` (se arman a `07-lh.html` y `08-lh.html`). H07 demuestra solo el caso simple; el general (TVM de Cauchy) queda sin demostrar y se le avisó.
 
-## Por producir en el lote 20 (5)
-«Derivadas para razones relacionadas» (ft30u comp-lcno0t8d · qudgj comp-lcit01bi) · «Aplicaciones de las derivadas aplicadas al movimiento» (ft30u comp-lcno0t8b1 · qudgj comp-lcit01be) · «Derivada de funciones parametrizadas» (ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9) · «Derivada de funciones parametrizadas 2» (ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14) · «Derivada de funciones vectoriales» (ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19)
+L20 H09 «Derivadas para razones relacionadas» (`H09_derivadas_para_razones_relacionadas.html`; ft30u comp-lcno0t8d · qudgj comp-lcit01bi) y L20 H10 «Aplicaciones de las derivadas aplicadas al movimiento» (`H10_aplicaciones_de_las_derivadas_al_movimiento.html`; ft30u comp-lcno0t8b1 · qudgj comp-lcit01be): APR del 21-nov, enlazadas y publicadas.
+
+**En cola de revisión (pendientes de APR), lote 20 completo con ellas:**
+- L20 H11 «Derivada de funciones parametrizadas» (`H11_derivada_de_funciones_parametrizadas.html`): enlazar en ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9
+- L20 H12 «Derivada de funciones parametrizadas 2» (segunda derivada; `H12_derivada_de_funciones_parametrizadas_2_segunda_derivada.html`): ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14
+- L20 H13 «Derivada de funciones vectoriales» (`H13_derivada_de_funciones_vectoriales.html`): ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
@@ -40,15 +44,15 @@ Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D
   - La animación debe **apoyar lo que se quiere demostrar**, no ser «un simple dibujo bonito».
   - Una fórmula usada en la hoja (p. ej. el volumen de la esfera) se muestra **de dónde sale**.
   - Si Óscar manda una imagen de referencia, **no se usa esa imagen**: se redibuja con los colores institucionales y se hace útil (animada y con su desarrollo).
-- Tras resolver notas, subir `taller/src/lNN/ronda.txt` para que la lista de la tarjeta parta en 0 (l20 va en 8).
+- Tras resolver notas, subir `taller/src/lNN/ronda.txt` para que la lista de la tarjeta parta en 0 (l20 va en 11).
 
 ## Taller
 Fuentes en `taller/src/lNN/partes/` (`NN.art.html`, `NN.scene.js`; escenas comunes `_tvm.js` en l18; `_an.js` y `_tri.js` en l19; escenas propias en l20). Se arman con `cat` a `taller/src/lNN/NN-*.html`, luego `python3 taller/build.py NN "Nombre"` y se copian de `taller/out/hojas/loteNN/` a `calculo-diferencial/loteNN/`. Verificadores: `qa/rigor/verificar_lote_18.py`, `_19.py`, `_20.py` (0 errores), `derivadas_escenas.js`, `verificar_tex.py` (no sabe evaluar π ni e: marca como «FALSA» aproximaciones correctas; se comprueban en el verificador del lote), `rotulos_animaciones.js`.
 
 Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `__save()`, `__chk(pg, ids)`, `__sleep` definidos en la pestaña del editor (`seed`; se pierden si se recarga; están en el historial del 20-nov). Navegar a la página, enlazar, guardar antes de salir, verificar y publicar. Una página por llamada (límite de 45 s).
 
-## Orden para lo que falta (unas 260 hojas)
-1. Lote 20, resto (5): ver lista arriba
+## Orden para lo que falta (unas 255 hojas)
+1. Lote 20: terminado de producir (13 hojas); faltan los APR de H11–H13
 2. Integración y acumulación de cambio (12)
 3. Aplicaciones de la integral
 4. Binomio de Newton (19)
@@ -57,6 +61,7 @@ Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `
 7. Cálculo superior [x238t]: los 101 títulos de integración agregados a las 20:07 (muchos equivalen a los del punto 2 o a hojas existentes: proponer enlaces)
 
 ## Preguntas abiertas a Óscar
+- Tablero: enlace para favoritos https://oscar2676.github.io/oscaracademy-ejercicios/sitio/tablero.html. La copia de su Mac (`Documentos/03_Educacion/Oscar_Academy/Dashboard_Contenido/Tablero_OA.html`) es un archivo fijo: **actualizarla tras cada publicación** (`python3 sitio/tablero.py` genera `sitio/Tablero_OA_copia_local.html`; copiar a `/mnt/user-data/outputs/` y `device_commit_files`). El tablero en línea puede quedar 1–2 hojas atrás si el push ocurre antes de que Wix termine de publicar: empujar algo de `sitio/` después de publicar.
 - **Ojo de funcionamiento:** Claude solo avanza mientras hay un mensaje de Óscar en curso; no trabaja «en segundo plano» entre mensajes. No prometer «sigo mientras tanto».
 - **Su lista de fuentes de consulta**: no está guardada en el proyecto, el repositorio ni la memoria. El 20-nov se usaron OpenStax, LibreTexts y GeoGebra; él mandó una búsqueda de Google como referencia. Pedírsela y anotarla aquí.
 - ¿Enlazar 4 títulos a hojas del lote 03? Cota de Lagrange → L03 H06; Introducción a polinomios de Taylor y Maclaurin → L03 H05; Suma parcial… progresión geométrica → L03 H09; Área entre curvas como funciones de x → L03 H04.

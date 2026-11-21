@@ -1,0 +1,202 @@
+<!--file:H13_derivada_de_funciones_vectoriales.html-->
+<!--title:Derivada de funciones vectoriales-->
+<!--id:vec-derivada-->
+<!--tab:H13 Funciones vectoriales-->
+<article class="sheet" id="vec-derivada" data-hoja="L20 H13">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Aplicaciones de las derivadas</li>
+      <li><b>Derivada de funciones vectoriales</b></li>
+    </ol>
+    <h1>Derivada de funciones vectoriales</h1>
+    <p class="lede">Una función vectorial asigna a cada número \(t\) un vector: \(\vec{r}(t)=\langle x(t),\;y(t)\rangle\). Su punta dibuja una curva. La derivada de una función vectorial se calcula derivando cada componente, y es un vector tangente a la curva.
+    \[\vec{r}\,'(t)=\langle x'(t),\;y'(t)\rangle\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>Definición</h3>
+    <ol class="steps">
+      <li>La derivada de \(\vec{r}\) en \(t\) es el límite del cociente incremental, igual que para una función real, pero con vectores:
+        \[\vec{r}\,'(t)=\lim_{h\to 0}\frac{\vec{r}(t+h)-\vec{r}(t)}{h}\]</li>
+      <li>\(\vec{r}(t+h)-\vec{r}(t)\) es el vector que va de la punta de \(\vec{r}(t)\) a la punta de \(\vec{r}(t+h)\): una secante de la curva. Dividirlo por \(h\) cambia su largo, no su dirección.</li>
+      <li>La función es derivable en \(t\) cuando ese límite existe.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Por qué se deriva componente a componente</h2>
+  <div class="prop p1">
+  <h3>Demostración</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe la diferencia con sus componentes. Los vectores se restan componente a componente:
+      \[\vec{r}(t+h)-\vec{r}(t)=\langle x(t+h)-x(t),\;y(t+h)-y(t)\rangle\]</li>
+    <li>Se divide por \(h\neq 0\). Dividir un vector por un número es dividir cada componente:
+      \[\frac{\vec{r}(t+h)-\vec{r}(t)}{h}=\left\langle\frac{x(t+h)-x(t)}{h},\;\frac{y(t+h)-y(t)}{h}\right\rangle\]</li>
+    <li>El límite de un vector se toma componente a componente. Si \(x\) e \(y\) son derivables en \(t\), cada componente tiende a su derivada:
+      \[\lim_{h\to 0}\frac{x(t+h)-x(t)}{h}=x'(t)\qquad\qquad\lim_{h\to 0}\frac{y(t+h)-y(t)}{h}=y'(t)\]</li>
+    <li>Resultado:
+      \[\vec{r}\,'(t)=\langle x'(t),\;y'(t)\rangle\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La elipse \(\vec{r}(t)=\langle 3\cos t,\;2\operatorname{sen}t\rangle\). Primero, en \(t=\dfrac{\pi}{3}\), el cociente incremental se acerca al vector derivada mientras \(h\) se acerca a \(0\). Después, el vector derivada acompaña a la punta de \(\vec{r}(t)\) por toda la curva, siempre tangente.</p>
+  <div class="stage" data-scene="vec-derivada"></div>
+  <ul class="keys">
+    <li><b>Curva verde:</b> la elipse que dibuja la punta de \(\vec{r}(t)\).</li>
+    <li><b>Flecha azul:</b> el vector posición \(\vec{r}(t)\), desde el origen. <b>Flecha azul tenue:</b> \(\vec{r}(t+h)\).</li>
+    <li><b>Flecha naranja:</b> el cociente incremental \(\dfrac{\vec{r}(t+h)-\vec{r}(t)}{h}\), dibujado desde la punta de \(\vec{r}(t)\).</li>
+    <li><b>Flecha roja:</b> el vector derivada \(\vec{r}\,'(t)\), tangente a la curva.</li>
+    <li><b>Bajo la animación:</b> las componentes de \(\vec{r}(t)\) y de \(\vec{r}\,'(t)\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ejemplo resuelto, paso a paso</h2>
+  <div class="prop p2">
+  <h3>\(\vec{r}(t)=\langle 3\cos t,\;2\operatorname{sen}t\rangle\) en \(t=\dfrac{\pi}{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se deriva cada componente:
+      \[\vec{r}\,'(t)=\langle -3\operatorname{sen}t,\;2\cos t\rangle\]</li>
+    <li>Valores en \(t=\dfrac{\pi}{3}\):
+      \[\cos\frac{\pi}{3}=\frac{1}{2}\qquad\qquad\operatorname{sen}\frac{\pi}{3}=\frac{\sqrt{3}}{2}\]</li>
+    <li>Vector posición:
+      \[\vec{r}\left(\frac{\pi}{3}\right)=\left\langle 3\cdot\frac{1}{2},\;2\cdot\frac{\sqrt{3}}{2}\right\rangle=\left\langle\frac{3}{2},\;\sqrt{3}\right\rangle\approx\langle 1{,}5;\;1{,}73\rangle\]</li>
+    <li>Vector derivada:
+      \[\vec{r}\,'\left(\frac{\pi}{3}\right)=\left\langle -3\cdot\frac{\sqrt{3}}{2},\;2\cdot\frac{1}{2}\right\rangle=\left\langle -\frac{3\sqrt{3}}{2},\;1\right\rangle\approx\langle -2{,}60;\;1\rangle\]</li>
+    <li>Su módulo, con \(\left(\dfrac{3\sqrt{3}}{2}\right)^{2}=\dfrac{27}{4}\):
+      \[\left|\vec{r}\,'\left(\frac{\pi}{3}\right)\right|=\sqrt{\frac{27}{4}+1}=\sqrt{\frac{31}{4}}=\frac{\sqrt{31}}{2}\approx 2{,}78\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Qué significa: velocidad, rapidez y aceleración</h2>
+  <div class="prop p3">
+  <h3>Si \(\vec{r}(t)\) es la posición de un objeto en el instante \(t\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Velocidad:</b> el vector derivada. Su dirección es la del movimiento, tangente a la trayectoria.
+      \[\vec{v}(t)=\vec{r}\,'(t)=\langle x'(t),\;y'(t)\rangle\]</li>
+    <li><b>Rapidez:</b> el módulo de la velocidad. Es un número, no un vector.
+      \[|\vec{v}(t)|=\sqrt{x'(t)^{2}+y'(t)^{2}}\]</li>
+    <li><b>Aceleración:</b> la derivada de la velocidad.
+      \[\vec{a}(t)=\vec{v}\,'(t)=\vec{r}\,''(t)=\langle x''(t),\;y''(t)\rangle\]</li>
+    <li>Relación con la hoja de curvas parametrizadas: si \(x'(t)\neq 0\), la pendiente de la tangente es el cociente de las componentes de la velocidad.
+      \[\frac{dy}{dx}=\frac{y'(t)}{x'(t)}\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Reglas de derivación</h2>
+  <div class="prop p4">
+  <h3>Con \(\vec{u}\) y \(\vec{w}\) funciones vectoriales derivables, \(c\) constante y \(f\) función real derivable</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Suma:
+      \[\big(\vec{u}(t)+\vec{w}(t)\big)'=\vec{u}\,'(t)+\vec{w}\,'(t)\]</li>
+    <li>Constante por vector:
+      \[\big(c\,\vec{u}(t)\big)'=c\,\vec{u}\,'(t)\]</li>
+    <li>Función real por vector:
+      \[\big(f(t)\,\vec{u}(t)\big)'=f'(t)\,\vec{u}(t)+f(t)\,\vec{u}\,'(t)\]</li>
+    <li>Producto punto. El resultado es un número:
+      \[\big(\vec{u}(t)\cdot\vec{w}(t)\big)'=\vec{u}\,'(t)\cdot\vec{w}(t)+\vec{u}(t)\cdot\vec{w}\,'(t)\]</li>
+    <li>Demostración de la regla del producto punto, con \(\vec{u}=\langle u_{1},\;u_{2}\rangle\) y \(\vec{w}=\langle w_{1},\;w_{2}\rangle\). Definición del producto punto:
+      \[\vec{u}\cdot\vec{w}=u_{1}w_{1}+u_{2}w_{2}\]</li>
+    <li>Se deriva, con la regla del producto en cada término:
+      \[\big(\vec{u}\cdot\vec{w}\big)'=u_{1}'w_{1}+u_{1}w_{1}'+u_{2}'w_{2}+u_{2}w_{2}'\]</li>
+    <li>Se reordena. Los términos primero y tercero forman \(\vec{u}\,'\cdot\vec{w}\); el segundo y el cuarto, \(\vec{u}\cdot\vec{w}\,'\):
+      \[\big(\vec{u}\cdot\vec{w}\big)'=\left(u_{1}'w_{1}+u_{2}'w_{2}\right)+\left(u_{1}w_{1}'+u_{2}w_{2}'\right)=\vec{u}\,'\cdot\vec{w}+\vec{u}\cdot\vec{w}\,'\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: si el largo no cambia, la derivada es perpendicular</h3>
+    <ol class="steps">
+      <li>Supón que \(|\vec{r}(t)|=c\), constante, para todo \(t\). Como \(\vec{r}\cdot\vec{r}=|\vec{r}|^{2}\):
+        \[\vec{r}(t)\cdot\vec{r}(t)=c^{2}\]</li>
+      <li>Se derivan los dos miembros, con la regla del producto punto. La derivada de la constante \(c^{2}\) es \(0\):
+        \[\vec{r}\,'(t)\cdot\vec{r}(t)+\vec{r}(t)\cdot\vec{r}\,'(t)=0\qquad\Longrightarrow\qquad 2\,\vec{r}(t)\cdot\vec{r}\,'(t)=0\]</li>
+      <li>Se divide por \(2\). Producto punto \(0\) significa vectores perpendiculares:
+        \[\vec{r}(t)\cdot\vec{r}\,'(t)=0\]</li>
+      <li>Es lo que pasa en una circunferencia con centro en el origen: el radio y la tangente son perpendiculares. En la elipse de la animación no pasa, porque el largo de \(\vec{r}(t)\) cambia.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Para \(\vec{r}(t)=\langle t^{2},\;3t\rangle\), calcula \(\vec{r}\,'(t)\), y el vector derivada y su módulo en \(t=2\).</p>
+    <details><summary>Pista</summary><div><p>Deriva cada componente.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se deriva cada componente:
+          \[\vec{r}\,'(t)=\langle 2t,\;3\rangle\]</li>
+        <li>En \(t=2\):
+          \[\vec{r}\,'(2)=\langle 4,\;3\rangle\]</li>
+        <li>Módulo:
+          \[|\vec{r}\,'(2)|=\sqrt{4^{2}+3^{2}}=\sqrt{16+9}=\sqrt{25}=5\]</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Comprueba que en la circunferencia \(\vec{r}(t)=\langle 5\cos t,\;5\operatorname{sen}t\rangle\) el vector posición y el vector derivada son perpendiculares para todo \(t\).</p>
+    <details><summary>Pista</summary><div><p>Calcula el producto punto \(\vec{r}(t)\cdot\vec{r}\,'(t)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se deriva cada componente:
+          \[\vec{r}\,'(t)=\langle -5\operatorname{sen}t,\;5\cos t\rangle\]</li>
+        <li>Producto punto, componente por componente:
+          \[\vec{r}(t)\cdot\vec{r}\,'(t)=5\cos t\cdot(-5\operatorname{sen}t)+5\operatorname{sen}t\cdot 5\cos t\]</li>
+        <li>Se multiplica. Los dos términos son opuestos:
+          \[-25\cos t\operatorname{sen}t+25\operatorname{sen}t\cos t=0\]</li>
+        <li>El producto punto es \(0\) para todo \(t\): los vectores son perpendiculares.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una pelota pateada sigue la trayectoria \(\vec{r}(t)=\langle 12t,\;16t-5t^{2}\rangle\), en metros, con \(t\) en segundos. Calcula su velocidad, su rapidez inicial, su aceleración y el punto más alto de la trayectoria.</p>
+    <details><summary>Pista</summary><div><p>En el punto más alto la componente vertical de la velocidad es \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Velocidad, derivando cada componente:
+          \[\vec{v}(t)=\vec{r}\,'(t)=\langle 12,\;16-10t\rangle\]</li>
+        <li>Rapidez inicial, en \(t=0\):
+          \[|\vec{v}(0)|=\sqrt{12^{2}+16^{2}}=\sqrt{144+256}=\sqrt{400}=20\]</li>
+        <li>Aceleración, derivando la velocidad:
+          \[\vec{a}(t)=\vec{v}\,'(t)=\langle 0,\;-10\rangle\]</li>
+        <li>Punto más alto: la componente vertical de la velocidad es \(0\).
+          \[16-10t=0\qquad\Longrightarrow\qquad t=\frac{16}{10}=1{,}6\]</li>
+        <li>Posición en ese instante:
+          \[\vec{r}(1{,}6)=\langle 12\cdot 1{,}6;\;16\cdot 1{,}6-5\cdot 1{,}6^{2}\rangle=\langle 19{,}2;\;25{,}6-12{,}8\rangle=\langle 19{,}2;\;12{,}8\rangle\]</li>
+        <li>Respuesta: sale a \(20\) metros por segundo; su aceleración es constante, \(\langle 0,\;-10\rangle\), hacia abajo; el punto más alto está a \(12{,}8\) metros de altura, a \(19{,}2\) metros en horizontal.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD1-L20-H13 · v001 · Pendiente de APR</span>
+</footer>
+</article>

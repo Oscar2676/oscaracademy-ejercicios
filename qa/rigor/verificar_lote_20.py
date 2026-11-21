@@ -111,4 +111,28 @@ ok('H10-A: v=2t−4; s(0)=3, s(2)=−1, s(3)=0; distancia 5', (lambda s: (s(0), 
 ok('H10-B: h(2)=20; h(4)=0; v(4)=−20', 20 * 2 - 5 * 4 == 20 and 20 * 4 - 5 * 16 == 0 and 20 - 10 * 4 == -20)
 ok('H10-C: v=24−6t=0 en t=4; s(4)=48; a=−6', 24 - 6 * 4 == 0 and 24 * 4 - 3 * 16 == 48)
 
+# H11, H12 · curvas parametrizadas: la pendiente y la segunda derivada se comparan con diferencias sobre y(x)
+def pend(fx, fy, t, h=1e-6): return (fy(t + h) - fy(t - h)) / (fx(t + h) - fx(t - h))
+def seg(fx, fy, t, h=1e-4): return (pend(fx, fy, t + h) - pend(fx, fy, t - h)) / (fx(t + h) - fx(t - h))
+X1 = lambda t: t * t; Y1 = lambda t: t ** 3 / 3 - t
+ok('H11: dy/dx = (t²−1)/(2t) en varios t; dx/dt = 2t, dy/dt = t²−1', all(cerca(pend(X1, Y1, t), (t * t - 1) / (2 * t), 1e-5) and cerca(dnum(X1, t), 2 * t) and cerca(dnum(Y1, t), t * t - 1) for t in (-2, -1.5, -0.5, 0.5, 1.62, 2)))
+ok('H11: puntos (1, 2/3), (1, −2/3), (0, 0); t=2 → (4, 2/3), pendiente 3/4, recta y = (3/4)x − 7/3', (F(-1) ** 2, F(-1) ** 3 / 3 + 1) == (1, F(2, 3)) and (F(1), F(1, 3) - 1) == (1, F(-2, 3)) and F(8, 3) - 2 == F(2, 3) and F(4 - 1, 4) == F(3, 4) and -3 + F(2, 3) == F(-7, 3) and F(3, 4) * 4 - F(7, 3) == F(2, 3))
+ok('H11: cruce en t = ±√3, punto (3, 0), pendientes ±√3/3 ≈ ±0,58', cerca(Y1(sqrt(3)), 0) and cerca(X1(sqrt(3)), 3) and cerca(pend(X1, Y1, sqrt(3)), sqrt(3) / 3, 1e-5) and cerca(pend(X1, Y1, -sqrt(3)), -sqrt(3) / 3, 1e-5) and round(sqrt(3) / 3, 2) == 0.58)
+ok('H11-A: (2t−4)/3 en t=5 → 2', F(2 * 5 - 4, 3) == 2 and cerca(pend(lambda t: 3 * t + 1, lambda t: t * t - 4 * t, 5), 2))
+ok('H11-B elipse: vértices (0, ±2) y (±3, 0)', cerca(3 * cos(pi / 2), 0) and cerca(2 * sin(pi / 2), 2) and cerca(2 * sin(3 * pi / 2), -2) and cerca(3 * cos(pi), -3))
+ok('H11-C chorro: pendiente 3/4 en t=0; máximo en t=3/10, punto (6/5, 9/20)', F(3, 4) == F(3 - 0, 4) and 4 * F(3, 10) == F(6, 5) and 3 * F(3, 10) - 5 * F(9, 100) == F(9, 20))
+CX = lambda t: t - sin(t); CY = lambda t: 1 - cos(t)
+ok('H12 cicloide: dy/dx = sen t/(1−cos t); d/dt = −1/(1−cos t); d²y/dx² = −1/(1−cos t)²', all(cerca(pend(CX, CY, t), sin(t) / (1 - cos(t)), 1e-5) and cerca(dnum(lambda u: sin(u) / (1 - cos(u)), t), -1 / (1 - cos(t)), 1e-5) and cerca(seg(CX, CY, t), -1 / (1 - cos(t)) ** 2, 1e-3) for t in (1, 1.9, pi, 4.84)))
+ok('H12: en t=π, pendiente 0 y segunda derivada −1/4', cerca(sin(pi) / 2, 0) and -1 / (1 - cos(pi)) ** 2 == -0.25)
+ok('H12: x=2t, y=t² → 1/2', cerca(seg(lambda t: 2 * t, lambda t: t * t, 1.3), 0.5, 1e-4))
+ok('H12 segundo ejemplo: d²y/dx² = (t²+1)/(4t³); d/dt(t/2 − 1/(2t)) = (t²+1)/(2t²)', all(cerca(seg(X1, Y1, t), (t * t + 1) / (4 * t ** 3), 1e-3) and cerca(dnum(lambda u: u / 2 - 1 / (2 * u), t), (t * t + 1) / (2 * t * t), 1e-5) for t in (-2, -0.7, 0.6, 1.5)))
+ok('H12-A: 3/(4t); H12-B: −1/sen³t; H12-C: −5/8', cerca(seg(lambda t: t * t, lambda t: t ** 3, 1.4), 3 / (4 * 1.4), 1e-3) and cerca(seg(cos, sin, 1.1), -1 / sin(1.1) ** 3, 1e-3) and cerca(seg(lambda t: 4 * t, lambda t: 3 * t - 5 * t * t, 0.2), -5 / 8, 1e-4) and F(-10, 4) * F(1, 4) == F(-5, 8))
+
+# H13 · funciones vectoriales
+ok('H13: r(π/3) = (3/2, √3) ≈ (1,5; 1,73); r′(π/3) = (−3√3/2, 1) ≈ (−2,60; 1); |r′| = √31/2 ≈ 2,78', cerca(3 * cos(pi / 3), 1.5) and round(2 * sin(pi / 3), 2) == 1.73 and cerca(dnum(lambda t: 3 * cos(t), pi / 3), -3 * sqrt(3) / 2) and round(-3 * sqrt(3) / 2, 2) == -2.60 and cerca(dnum(lambda t: 2 * sin(t), pi / 3), 1) and F(27, 4) + 1 == F(31, 4) and round(sqrt(31) / 2, 2) == 2.78)
+ok('H13: cociente incremental → r′ cuando h → 0', all(abs((3 * cos(pi / 3 + h) - 1.5) / h + 3 * sqrt(3) / 2) < 3 * h and abs((2 * sin(pi / 3 + h) - sqrt(3)) / h - 1) < 3 * h for h in (0.1, 0.01, 0.001)))
+ok('H13 regla del producto punto, numérica, con u=(t², sen t), w=(e^t, 3t)', cerca(dnum(lambda t: t * t * exp(t) + sin(t) * 3 * t, 0.8), (2 * 0.8 * exp(0.8) + cos(0.8) * 3 * 0.8) + (0.64 * exp(0.8) + sin(0.8) * 3), 1e-5))
+ok('H13-A: (4, 3), módulo 5; H13-B: producto punto 0', 16 + 9 == 25 and all(cerca(5 * cos(t) * -5 * sin(t) + 5 * sin(t) * 5 * cos(t), 0) for t in (0.3, 2, 4)))
+ok('H13-C: rapidez 20; t=1,6; r = (19,2; 12,8)', 144 + 256 == 400 and F(16, 10) == F(8, 5) and 12 * F(8, 5) == F(96, 5) and 16 * F(8, 5) - 5 * F(8, 5) ** 2 == F(64, 5))
+
 print('\nERRORES:', err); raise SystemExit(1 if err else 0)
