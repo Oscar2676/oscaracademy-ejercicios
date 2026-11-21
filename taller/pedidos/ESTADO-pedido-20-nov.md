@@ -113,6 +113,8 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
   - H12 «Resolver ejercicios de movimiento mediante funciones parametrizadas y con valores vectoriales» (`vec-movimiento`) → qudgj · qclgl ×2
   - H13 «Definir y diferenciar ecuaciones paramétricas» (`par-derivada`) → qudgj · qclgl · qtf2i
   - H14 «Segundas derivadas de ecuaciones paramétricas» (`par-segunda`) → qudgj · qclgl
+- **L23 H09–H14: APR de Óscar (21-nov 14:21). LOTE 23 COMPLETO: 14/14 con APR.**
+- **Óscar eligió «B» (11:49):** igualar en las 78 páginas la separación última caja–pie a la separación entre cajas (alto de la última sección = borde inferior más bajo + separación mediana entre cajas; 20 si la mediana sale fuera de 12–30). Probado en y1zj7 con `ds.components.layout.update(seccion,{height})`: funciona y la página sigue a la sección.
 - **PEDIDO NUEVO (11:23, «a la cola»): 422 títulos** (`taller/pedidos/pedido-2026-11-21-422-hojas.txt`); contiene los 378 anteriores + **44 nuevos de números complejos** (Matemáticas II › Números Complejos 24 · Operaciones con complejos 8 · Plano complejo/Argand 6 · Álgebra II 2ª parte › cuadráticas con soluciones complejas 3 · Conjuntos Numéricos 1 · 3º Medio 1 · Álgebra 1ª parte 1). Van al final de la cola, como grupo 9.
 - **Esperan APR:** L03 H07 v003 · L21 H01 v003, H04, H05, H08, H09, H12 v002 · L23 H01 v003, H03, H04, H06, H07, H08.
 
