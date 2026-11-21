@@ -94,6 +94,8 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 ## 21-nov 10:30 · ALTO EN WIX + L23 H06–H08
 - **ALTO EN WIX (10:12):** Óscar edita las cajas de la página «Álgebra 1ª Parte» (cambia mucho el tamaño). **No enlazar ni publicar nada en Wix hasta que diga «terminé en Wix»** («entendido», 10:15). Los APR mientras tanto: solo pie + repo, y el enlace queda en cola. **Antes de volver a enlazar: recargar el editor y redefinir los ayudantes**, para no pisar sus cambios.
 - **Cola de enlaces Wix:** (vacía).
+- **10:39 Óscar: «terminé en Wix» → ALTO LEVANTADO.** Editor recargado (copia fresca). Los ayudantes (`__go`, `__link`, `__one`, `__save`, `__pub`…) hay que redefinirlos antes de enlazar.
+- **Pedido de Óscar (10:39): revisar que la última caja de cada página de cursos quede separada del pie igual que caja con caja.** Auditoría (solo lectura, `ds.components.layout.get` sin navegar; separación = alto de la sección − borde inferior de la caja más baja; coincide con lo publicado): 14 páginas con 0 px (qclgl, l2r26, yxl81, ra111, vp2km, sxqsb, j2qp2, ik0j0, d4yrb, nrtck, jvh30, u88nn, rxk3b, t2ams), 9 con menos que su separación entre cajas (iacyn, x238t, rujyu, ep9f2, x6vzw, a2ed2, i7o2q, ehzts, oy9bm) y unas 55 con más (30–73 px; entre cajas hay 19–25). **Nada modificado: se le preguntó si se corrigen las 23 o se igualan todas.**
 - **L23 H06–H08 v001 hechas, pendientes de APR** (verificador 0 errores, 9 escenas con derivadas comprobadas):
   - H06 «Área de la región acotada por dos curvas polares» (`pol-area-dos`).
   - H07 «Introducción a funciones con valores vectoriales» (`vec-intro`) → Wix: qudgj · qtf2i.
