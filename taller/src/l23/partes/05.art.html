@@ -1,0 +1,141 @@
+<!--file:H05_area_de_una_region_polar_o_acotada_por_una_sola_curva_polar.html-->
+<!--title:Calcular el área de una región polar o el área acotada por una sola curva polar-->
+<!--id:pol-area-->
+<!--tab:H05 Área polar-->
+<article class="sheet" id="pol-area" data-hoja="L23 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Calcular el área de una región polar o el área acotada por una sola curva polar</b></li>
+    </ol>
+    <h1>Calcular el área de una región polar o el área acotada por una sola curva polar</h1>
+    <p class="lede">En coordenadas polares la región no se corta en tiras: se corta en <b>cuñas</b> que salen del polo, como porciones de pizza. Cada cuña es casi un sector de círculo. El área es la suma de todas.
+    \[A=\int_{\alpha}^{\beta}\frac{1}{2}\,\big[f(\theta)\big]^{2}\,d\theta\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li><b>Área de un sector de círculo.</b> Un círculo de radio \(r\) tiene área \(\pi r^{2}\) y ángulo completo \(2\pi\). Un sector de ángulo \(\Delta\theta\) (en radianes) es la fracción \(\dfrac{\Delta\theta}{2\pi}\) del círculo:
+        \[A_{\text{sector}}=\frac{\Delta\theta}{2\pi}\cdot\pi r^{2}=\frac{1}{2}\,r^{2}\,\Delta\theta\]</li>
+      <li>La región está limitada por la curva \(r=f(\theta)\), con \(f\) continua y \(f(\theta)\ge 0\), y por los rayos \(\theta=\alpha\) y \(\theta=\beta\), con \(\beta-\alpha\le 2\pi\).</li>
+      <li>Se corta en cuñas de ángulo muy pequeño \(d\theta\). En una cuña tan delgada el radio casi no cambia: es casi un sector de radio \(r=f(\theta)\).
+        \[dA=\frac{1}{2}\,r^{2}\,d\theta=\frac{1}{2}\,\big[f(\theta)\big]^{2}\,d\theta\]</li>
+      <li>Sumando todas las cuñas, de \(\alpha\) a \(\beta\):
+        \[A=\int_{\alpha}^{\beta}\frac{1}{2}\,\big[f(\theta)\big]^{2}\,d\theta\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Una identidad que se usa casi siempre</h3>
+    <p>Al elevar \(r\) al cuadrado suelen aparecer \(\cos^{2}\) o \(\operatorname{sen}^{2}\). Se integran con las fórmulas de reducción de potencia:
+    \[\cos^{2}u=\frac{1+\cos 2u}{2}\qquad\qquad\operatorname{sen}^{2}u=\frac{1-\cos 2u}{2}\]</p>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La cardioide \(r=1+\cos\theta\). El rayo gira una vuelta y barre la región que encierra.</p>
+  <div class="stage" data-scene="pol-area"></div>
+  <ul class="keys">
+    <li><b>Rayo naranja:</b> va del polo a la curva; su largo es \(r\).</li>
+    <li><b>Cuña burdeo:</b> el sector delgado que se agrega, de área \(\dfrac{1}{2}r^{2}\,d\theta\).</li>
+    <li><b>Zona verde:</b> el área barrida desde \(\theta=0\).</li>
+    <li><b>Bajo la animación:</b> el área de la cuña, la integral que la acumula y el valor al que llega.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, para comprobar la fórmula: el círculo \(r=a\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La curva se recorre una vez con \(\theta\) de \(0\) a \(2\pi\).</li>
+    <li>\(A=\displaystyle\int_{0}^{2\pi}\frac{1}{2}\,a^{2}\,d\theta=\frac{1}{2}\,a^{2}\cdot 2\pi=\pi a^{2}\). Es el área conocida del círculo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el área encerrada por la cardioide \(r=1+\cos\theta\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Límites.</b> La curva se cierra en una vuelta: \(\theta\) de \(0\) a \(2\pi\). En todo ese recorrido \(r\ge 0\).</li>
+    <li><b>Cuadrado.</b> \((1+\cos\theta)^{2}=1+2\cos\theta+\cos^{2}\theta=1+2\cos\theta+\dfrac{1+\cos 2\theta}{2}=\dfrac{3}{2}+2\cos\theta+\dfrac{\cos 2\theta}{2}\).</li>
+    <li><b>Integral.</b>
+      \[A=\frac{1}{2}\int_{0}^{2\pi}\left(\frac{3}{2}+2\cos\theta+\frac{\cos 2\theta}{2}\right)d\theta=\frac{1}{2}\left[\frac{3\theta}{2}+2\operatorname{sen}\theta+\frac{\operatorname{sen}2\theta}{4}\right]_{0}^{2\pi}\]</li>
+    <li><b>Evaluación.</b> Los senos valen \(0\) en \(0\) y en \(2\pi\) (y \(\operatorname{sen}4\pi=0\)):
+      \[A=\frac{1}{2}\cdot\frac{3\cdot 2\pi}{2}=\frac{3\pi}{2}\approx 4{,}71\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un pétalo de la rosa \(r=\cos 2\theta\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Límites del pétalo.</b> Un pétalo empieza y termina en el polo, donde \(r=0\): \(\cos 2\theta=0\ \Longrightarrow\ 2\theta=\pm\dfrac{\pi}{2}\ \Longrightarrow\ \theta=\pm\dfrac{\pi}{4}\). Entre \(-\dfrac{\pi}{4}\) y \(\dfrac{\pi}{4}\) se tiene \(r\ge 0\): es el pétalo que apunta hacia la derecha.</li>
+    <li><b>Cuadrado.</b> \(\cos^{2}2\theta=\dfrac{1+\cos 4\theta}{2}\).</li>
+    <li><b>Integral.</b>
+      \[A=\frac{1}{2}\int_{-\pi/4}^{\pi/4}\frac{1+\cos 4\theta}{2}\,d\theta=\frac{1}{4}\left[\theta+\frac{\operatorname{sen}4\theta}{4}\right]_{-\pi/4}^{\pi/4}=\frac{1}{4}\left(\frac{\pi}{4}+\frac{\pi}{4}\right)=\frac{\pi}{8}\approx 0{,}39\]
+      (En los dos límites \(\operatorname{sen}4\theta=\operatorname{sen}(\pm\pi)=0\).)</li>
+    <li>La rosa completa tiene \(4\) pétalos iguales: su área total es \(4\cdot\dfrac{\pi}{8}=\dfrac{\pi}{2}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dos errores comunes.</b> Uno: olvidar el \(\dfrac{1}{2}\) o el cuadrado, e integrar \(r\) como si fuera una altura. La cuña es un sector, no un rectángulo. Dos: elegir mal los límites y barrer la región dos veces. Por ejemplo, la circunferencia \(r=2\cos\theta\) se completa con \(\theta\) de \(0\) a \(\pi\); si se integra de \(0\) a \(2\pi\) se obtiene el doble del área.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula el área encerrada por \(r=2\operatorname{sen}\theta\), que se recorre una vez con \(0\le\theta\le\pi\). Comprueba con la geometría: es una circunferencia de radio \(1\).</p>
+    <details><summary>Pista</summary><div><p>\(r^{2}=4\operatorname{sen}^{2}\theta=2\,(1-\cos 2\theta)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(A=\dfrac{1}{2}\displaystyle\int_{0}^{\pi}4\operatorname{sen}^{2}\theta\,d\theta=\int_{0}^{\pi}\left(1-\cos 2\theta\right)d\theta=\left[\theta-\frac{\operatorname{sen}2\theta}{2}\right]_{0}^{\pi}=\pi\).</li>
+        <li>Comprobación: \(r=2\operatorname{sen}\theta\) equivale a \(x^{2}+(y-1)^{2}=1\), un círculo de radio \(1\), de área \(\pi\cdot 1^{2}=\pi\). Coincide.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el área de un pétalo de la rosa \(r=\operatorname{sen}3\theta\).</p>
+    <details><summary>Pista</summary><div><p>Un pétalo va de \(\theta=0\) a \(\theta=\dfrac{\pi}{3}\), donde \(r\) vuelve a ser \(0\). Usa \(\operatorname{sen}^{2}3\theta=\dfrac{1-\cos 6\theta}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\operatorname{sen}3\theta=0\) en \(\theta=0\) y \(\theta=\dfrac{\pi}{3}\); entre ellos \(r\ge 0\).</li>
+        <li>\(A=\dfrac{1}{2}\displaystyle\int_{0}^{\pi/3}\frac{1-\cos 6\theta}{2}\,d\theta=\frac{1}{4}\left[\theta-\frac{\operatorname{sen}6\theta}{6}\right]_{0}^{\pi/3}=\frac{1}{4}\cdot\frac{\pi}{3}=\frac{\pi}{12}\approx 0{,}26\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un aspersor de jardín riega más lejos hacia un lado que hacia el otro. La zona que moja queda limitada por la curva \(r=4+2\cos\theta\), en metros, con el aspersor en el polo. ¿Cuántos metros cuadrados riega?</p>
+    <details><summary>Pista</summary><div><p>\((4+2\cos\theta)^{2}=16+16\cos\theta+4\cos^{2}\theta\), y \(4\cos^{2}\theta=2+2\cos 2\theta\). Una vuelta completa.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(r\ge 2&gt;0\) siempre; la curva se cierra con \(\theta\) de \(0\) a \(2\pi\).</li>
+        <li>\(r^{2}=16+16\cos\theta+2+2\cos 2\theta=18+16\cos\theta+2\cos 2\theta\).</li>
+        <li>\(A=\dfrac{1}{2}\Big[18\theta+16\operatorname{sen}\theta+\operatorname{sen}2\theta\Big]_{0}^{2\pi}=\dfrac{1}{2}\cdot 36\pi=18\pi\approx 56{,}5\).</li>
+        <li>Respuesta: riega unos \(56{,}5\) metros cuadrados.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>

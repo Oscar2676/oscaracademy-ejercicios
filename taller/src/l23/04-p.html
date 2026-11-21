@@ -1,0 +1,197 @@
+<!--file:H04_derivadas_de_funciones_polares.html-->
+<!--title:Derivadas de funciones polares-->
+<!--id:pol-tangente-->
+<!--tab:H04 Derivadas polares-->
+<article class="sheet" id="pol-tangente" data-hoja="L23 H04">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Derivadas de funciones polares</b></li>
+    </ol>
+    <h1>Derivadas de funciones polares</h1>
+    <p class="lede">La pendiente de la recta tangente a una curva polar \(r=f(\theta)\) sigue siendo \(\dfrac{dy}{dx}\). Se calcula tratando a \(\theta\) como parámetro: la derivada de \(y\) dividida por la derivada de \(x\).
+    \[\frac{dy}{dx}=\frac{dy/d\theta}{dx/d\theta}=\frac{f'(\theta)\operatorname{sen}\theta+f(\theta)\cos\theta}{f'(\theta)\cos\theta-f(\theta)\operatorname{sen}\theta}\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>Una curva polar \(r=f(\theta)\) es una curva paramétrica con parámetro \(\theta\):
+        \[x=f(\theta)\cos\theta,\qquad y=f(\theta)\operatorname{sen}\theta\]</li>
+      <li>Por la regla de la cadena, \(\dfrac{dy}{d\theta}=\dfrac{dy}{dx}\cdot\dfrac{dx}{d\theta}\). Donde \(\dfrac{dx}{d\theta}\neq 0\) se despeja:
+        \[\frac{dy}{dx}=\frac{dy/d\theta}{dx/d\theta}\]</li>
+      <li>Las dos derivadas salen con la regla del producto:
+        \[\frac{dy}{d\theta}=f'(\theta)\operatorname{sen}\theta+f(\theta)\cos\theta\qquad\qquad\frac{dx}{d\theta}=f'(\theta)\cos\theta-f(\theta)\operatorname{sen}\theta\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Tangentes horizontales y verticales</h3>
+    <ol class="steps">
+      <li><b>Horizontal:</b> pendiente cero. Ocurre donde \(\dfrac{dy}{d\theta}=0\) y \(\dfrac{dx}{d\theta}\neq 0\).</li>
+      <li><b>Vertical:</b> ocurre donde \(\dfrac{dx}{d\theta}=0\) y \(\dfrac{dy}{d\theta}\neq 0\).</li>
+      <li><b>Si las dos valen cero a la vez</b>, la fórmula da \(\dfrac{0}{0}\) y no decide. Hay que estudiar el límite de la pendiente.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La cardioide \(r=1+\cos\theta\). El punto la recorre llevando su recta tangente. Quedan marcados los lugares donde la tangente es horizontal o vertical.</p>
+  <div class="stage" data-scene="pol-tangente"></div>
+  <ul class="keys">
+    <li><b>Punto naranja:</b> el punto de la curva para el ángulo \(\theta\). <b>Recta burdeo:</b> su tangente.</li>
+    <li><b>Marcas verdes:</b> tangente horizontal. <b>Marcas negras:</b> tangente vertical.</li>
+    <li><b>Bajo la animación:</b> \(\dfrac{dy}{d\theta}\), \(\dfrac{dx}{d\theta}\) y su cociente, la pendiente.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, para comprobar la fórmula: la circunferencia \(r=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f(\theta)=2\), \(f'(\theta)=0\).</li>
+    <li>\(\dfrac{dy}{d\theta}=0+2\cos\theta\), \(\dfrac{dx}{d\theta}=0-2\operatorname{sen}\theta\).</li>
+    <li>\(\dfrac{dy}{dx}=\dfrac{2\cos\theta}{-2\operatorname{sen}\theta}=-\dfrac{\cos\theta}{\operatorname{sen}\theta}\).</li>
+    <li>El radio hacia el punto tiene pendiente \(\dfrac{\operatorname{sen}\theta}{\cos\theta}\). El producto de las dos pendientes es \(-1\): la tangente es perpendicular al radio, como debe ser en una circunferencia.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: la cardioide \(r=1+\cos\theta\), pendiente en \(\theta=\dfrac{\pi}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(f(\theta)=1+\cos\theta\), \(f'(\theta)=-\operatorname{sen}\theta\).</li>
+    <li>\[\frac{dy}{d\theta}=-\operatorname{sen}^{2}\theta+(1+\cos\theta)\cos\theta=2\cos^{2}\theta+\cos\theta-1=(2\cos\theta-1)(\cos\theta+1)\]</li>
+    <li>\[\frac{dx}{d\theta}=-\operatorname{sen}\theta\cos\theta-(1+\cos\theta)\operatorname{sen}\theta=-\operatorname{sen}\theta\,(1+2\cos\theta)\]</li>
+    <li>En \(\theta=\dfrac{\pi}{2}\): \(\dfrac{dy}{d\theta}=(0-1)(0+1)=-1\) y \(\dfrac{dx}{d\theta}=-1\cdot(1+0)=-1\).</li>
+    <li>Pendiente: \(\dfrac{dy}{dx}=\dfrac{-1}{-1}=1\). El punto es \((x,\,y)=(0,\,1)\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: dónde la cardioide tiene tangente horizontal o vertical, para \(0\le\theta&lt;2\pi\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>\(\dfrac{dy}{d\theta}=0\):</b> \((2\cos\theta-1)(\cos\theta+1)=0\). De \(\cos\theta=\dfrac{1}{2}\): \(\theta=\dfrac{\pi}{3}\) y \(\theta=\dfrac{5\pi}{3}\). De \(\cos\theta=-1\): \(\theta=\pi\).</li>
+    <li><b>\(\dfrac{dx}{d\theta}=0\):</b> \(\operatorname{sen}\theta\,(1+2\cos\theta)=0\). De \(\operatorname{sen}\theta=0\): \(\theta=0\) y \(\theta=\pi\). De \(\cos\theta=-\dfrac{1}{2}\): \(\theta=\dfrac{2\pi}{3}\) y \(\theta=\dfrac{4\pi}{3}\).</li>
+    <li><b>Horizontales:</b> \(\theta=\dfrac{\pi}{3}\) y \(\dfrac{5\pi}{3}\) (ahí \(\dfrac{dx}{d\theta}\neq 0\)). Con \(r=\dfrac{3}{2}\), los puntos son \(\left(\dfrac{3}{4},\,\dfrac{3\sqrt{3}}{4}\right)\) y \(\left(\dfrac{3}{4},\,-\dfrac{3\sqrt{3}}{4}\right)\).</li>
+    <li><b>Verticales:</b> \(\theta=0\), \(\dfrac{2\pi}{3}\) y \(\dfrac{4\pi}{3}\) (ahí \(\dfrac{dy}{d\theta}\neq 0\)). Los puntos son \((2,\,0)\), \(\left(-\dfrac{1}{4},\,\dfrac{\sqrt{3}}{4}\right)\) y \(\left(-\dfrac{1}{4},\,-\dfrac{\sqrt{3}}{4}\right)\).</li>
+    <li><b>El caso \(\theta=\pi\):</b> las dos derivadas valen cero. Es la punta de la cardioide, en el polo. Se estudia el límite. Para \(\theta\) cerca de \(\pi\) (con \(\operatorname{sen}\theta\neq 0\)):
+      \[\frac{dy}{dx}=\frac{(2\cos\theta-1)(\cos\theta+1)}{-\operatorname{sen}\theta\,(1+2\cos\theta)}=\frac{2\cos\theta-1}{-(1+2\cos\theta)}\cdot\frac{1+\cos\theta}{\operatorname{sen}\theta}\]
+      Cuando \(\theta\to\pi\), el primer factor tiende a \(\dfrac{-3}{1}=-3\). El segundo se escribe, multiplicando arriba y abajo por \(1-\cos\theta\), como \(\dfrac{1+\cos\theta}{\operatorname{sen}\theta}=\dfrac{\operatorname{sen}\theta}{1-\cos\theta}\), que tiende a \(\dfrac{0}{2}=0\). La pendiente tiende a \(-3\cdot 0=0\): en la punta, la tangente es horizontal.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Derivar \(r\) y creer que \(\dfrac{dr}{d\theta}\) es la pendiente. En la circunferencia \(r=2\) se tiene \(\dfrac{dr}{d\theta}=0\) en todos los puntos, y sin embargo la tangente solo es horizontal arriba y abajo. La pendiente es \(\dfrac{dy}{dx}\) y necesita las dos derivadas, la de \(y\) y la de \(x\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la pendiente de la tangente a \(r=2\operatorname{sen}\theta\) en \(\theta=\dfrac{\pi}{6}\).</p>
+    <details><summary>Pista</summary><div><p>Al simplificar aparecen \(\operatorname{sen}2\theta=2\operatorname{sen}\theta\cos\theta\) y \(\cos 2\theta=\cos^{2}\theta-\operatorname{sen}^{2}\theta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f=2\operatorname{sen}\theta\), \(f'=2\cos\theta\).</li>
+        <li>\(\dfrac{dy}{d\theta}=2\cos\theta\operatorname{sen}\theta+2\operatorname{sen}\theta\cos\theta=2\operatorname{sen}2\theta\).</li>
+        <li>\(\dfrac{dx}{d\theta}=2\cos^{2}\theta-2\operatorname{sen}^{2}\theta=2\cos 2\theta\).</li>
+        <li>\(\dfrac{dy}{dx}=\dfrac{\operatorname{sen}2\theta}{\cos 2\theta}=\tan 2\theta\). En \(\theta=\dfrac{\pi}{6}\): \(\tan\dfrac{\pi}{3}=\sqrt{3}\approx 1{,}73\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula la pendiente de la tangente a \(r=1+\operatorname{sen}\theta\) en \(\theta=0\).</p>
+    <details><summary>Pista</summary><div><p>\(f(0)=1\) y \(f'(0)=\cos 0=1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(f=1+\operatorname{sen}\theta\), \(f'=\cos\theta\). En \(\theta=0\): \(f=1\), \(f'=1\).</li>
+        <li>\(\dfrac{dy}{d\theta}=f'\operatorname{sen}\theta+f\cos\theta=1\cdot 0+1\cdot 1=1\).</li>
+        <li>\(\dfrac{dx}{d\theta}=f'\cos\theta-f\operatorname{sen}\theta=1\cdot 1-1\cdot 0=1\).</li>
+        <li>\(\dfrac{dy}{dx}=\dfrac{1}{1}=1\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La concha de un caracol se modela con la espiral \(r=2\theta\), en centímetros. Calcula la pendiente de la tangente en el punto que corresponde a \(\theta=\dfrac{\pi}{2}\).</p>
+    <details><summary>Pista</summary><div><p>\(f=2\theta\), \(f'=2\). En \(\theta=\dfrac{\pi}{2}\): \(f=\pi\), \(\operatorname{sen}\theta=1\), \(\cos\theta=0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dfrac{dy}{d\theta}=2\operatorname{sen}\theta+2\theta\cos\theta\). En \(\dfrac{\pi}{2}\): \(2\cdot 1+\pi\cdot 0=2\).</li>
+        <li>\(\dfrac{dx}{d\theta}=2\cos\theta-2\theta\operatorname{sen}\theta\). En \(\dfrac{\pi}{2}\): \(2\cdot 0-\pi\cdot 1=-\pi\).</li>
+        <li>\(\dfrac{dy}{dx}=\dfrac{2}{-\pi}=-\dfrac{2}{\pi}\approx -0{,}64\).</li>
+        <li>Respuesta: en ese punto, que es \((0,\,\pi)\), la tangente baja con pendiente cercana a \(-0{,}64\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H04 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* cardioide r = 1 + cos θ y rejilla polar, comunes a las hojas polares del lote 23 */
+var oaCar = { r:function(q){ return 1 + Math.cos(q); }, dr:function(q){ return -Math.sin(q); },
+  x:function(q){ return (1 + Math.cos(q))*Math.cos(q); }, y:function(q){ return (1 + Math.cos(q))*Math.sin(q); },
+  dx:function(q){ return -Math.sin(q)*(1 + 2*Math.cos(q)); }, dy:function(q){ return (2*Math.cos(q) - 1)*(Math.cos(q) + 1); },
+  ts:function(s){ var TP = 2*Math.PI; return s < 2 ? 0.02 : s < 20 ? 0.02 + (TP - 0.02)*(s - 2)/18 : TP; } };
+function oaRej(S, R){ var c = S.ctx, k, a; c.strokeStyle = S.C.grid; c.lineWidth = 1; c.setLineDash([]);
+  for (k = 1; k <= R; k++){ c.beginPath(); c.arc(S.X(0), S.Y(0), Math.abs(S.X(k) - S.X(0)), 0, 6.2832); c.stroke(); }
+  for (k = 0; k < 12; k++){ a = k*Math.PI/6; S.line(0, 0, R*Math.cos(a), R*Math.sin(a), {color:S.C.grid, width:1}); }
+  S.line(0, 0, R + 0.25, 0, {color:S.C.ink, width:1.5}); }
+function oaArco(S, q, rad, col){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = 2; c.beginPath(); c.arc(S.X(0), S.Y(0), rad, 0, -q, true); c.stroke(); }
+OA.scene('pol-tangente', (function(){
+  var RUN = 24, num = OA.num, dec = oaDec, K = oaCar, TP = 2*Math.PI, PI = Math.PI;
+  var HOR = [PI/3, 5*PI/3], VER = [0, 2*PI/3, 4*PI/3];
+  return {
+    world:{x0:-1.5, x1:2.9, y0:-2.4, y1:1.75}, aspect:4.15/4.4,
+    _chk:[{f:K.x, df:K.dx, at:[0.5, 2, 4, 5.5]}, {f:K.y, df:K.dy, at:[0.5, 2, 4, 5.5]}],
+    aria:'La cardioide azul r igual a 1 más coseno de theta sobre una rejilla polar. Un punto naranja la recorre y lleva una recta tangente burdeo que va cambiando de inclinación. Quedan marcados en verde los dos puntos donde la tangente es horizontal, en theta igual a pi tercios y 5 pi tercios, y en negro los tres donde es vertical, en theta igual a 0, 2 pi tercios y 4 pi tercios.',
+    labels:[['F', '\\dfrac{dy}{dx}=\\dfrac{dy/d\\theta}{dx/d\\theta}=\\dfrac{(2\\cos\\theta-1)(\\cos\\theta+1)}{-\\operatorname{sen}\\theta\\,(1+2\\cos\\theta)}', 'dy/dx = (2cos θ − 1)(cos θ + 1) / [−sen θ (1 + 2cos θ)]', 'diff']],
+    sliders:[{id:'th', tex:'\\theta', min:0, max:6.2832, step:0.01, value:0.02}],
+    legend:'<span><i class="sw sec"></i> \\(r=1+\\cos\\theta\\)</span><span><i class="sw tan"></i> recta tangente</span><span><i class="sw alt"></i> tangente horizontal</span><span><i class="sw rise"></i> el punto</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.th = K.ts(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var th = v.th == null ? 0.02 : v.th, s = v.q == null ? RUN : v.q*RUN, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), x = K.x(th), y = K.y(th), dx = K.dx(th), dy = K.dy(th), n = Math.sqrt(dx*dx + dy*dy), ux, uy;
+      oaRej(S, 2); oaPar(S, K.x, K.y, 0, TP, C.sec, 2.8);
+      HOR.forEach(function(q){ if (th >= q - 0.01){ S.line(K.x(q) - 0.45, K.y(q), K.x(q) + 0.45, K.y(q), {color:C.alt, width:2.4}); S.dot(K.x(q), K.y(q), C.alt); } });
+      VER.forEach(function(q){ if (th >= q - 0.01){ S.line(K.x(q), K.y(q) - 0.4, K.x(q), K.y(q) + 0.4, {color:C.ink, width:2}); S.dot(K.x(q), K.y(q), C.ink); } });
+      S.line(0, 0, x, y, {color:C.rise, width:1.6, dash:[4, 3]}); c.setLineDash([]);
+      if (n > 0.02){ ux = dx/n; uy = dy/n; S.line(x - 0.85*ux, y - 0.85*uy, x + 0.85*ux, y + 0.85*uy, {color:C.tan, width:3}); }
+      c.fillStyle = C.rise; c.beginPath(); c.arc(X(x), Y(y), 6.5, 0, 6.2832); c.fill(); c.strokeStyle = C.ink; c.lineWidth = 1; c.stroke();
+      txt('θ = ' + dec(th, 2) + ' rad', X(-1.45), Y(1.55), 'left', C.rise);
+      txt(n <= 0.02 ? 'punta: dx/dθ = dy/dθ = 0' : Math.abs(dx) < 0.03 ? 'tangente vertical' : 'pendiente = ' + dec(dy/dx, 2), X(-1.45), Y(1.55) + 20, 'left', C.tan);
+      S.lab('F', X(-1.45), Y(-1.8), 0, 0, v.q != null && s >= 20);
+    },
+    caption:function(v){
+      var th = v.th == null ? 0.02 : v.th, s = v.q == null ? null : v.q*RUN, dx = K.dx(th), dy = K.dy(th);
+      if (s != null && s < 2) return 'El punto va a recorrer la cardioide llevando su recta tangente. La pendiente de esa recta es dy/dx, y se calcula con las derivadas respecto de θ';
+      if (th >= 6.28) return 'Vuelta completa. Tangente horizontal (verde) donde dy/dθ = 0 y dx/dθ ≠ 0: θ = π/3 y 5π/3. Tangente vertical (negro) donde dx/dθ = 0 y dy/dθ ≠ 0: θ = 0, 2π/3 y 4π/3';
+      if (Math.abs(th - Math.PI) < 0.03) return 'En θ = π la curva pasa por el polo y hace una punta. Ahí dx/dθ y dy/dθ valen cero a la vez: la fórmula no decide y hay que mirar el límite';
+      return 'En θ = ' + dec(th, 2) + ': dy/dθ = ' + dec(dy, 2) + ' y dx/dθ = ' + dec(dx, 2) + '. ' + (Math.abs(dx) < 0.03 ? 'El denominador es casi cero: tangente vertical' : 'Pendiente: ' + dec(dy, 2) + ' / (' + dec(dx, 2) + ') = ' + dec(dy/dx, 2));
+    },
+    readout:function(v){ var th = v.th == null ? 0.02 : v.th, dx = K.dx(th), dy = K.dy(th); return [['', '\\dfrac{dy}{d\\theta}=(2\\cos\\theta-1)(\\cos\\theta+1)\\approx ' + num(dy, 2)], ['d', '\\dfrac{dx}{d\\theta}=-\\operatorname{sen}\\theta\\,(1+2\\cos\\theta)\\approx ' + num(dx, 2)], ['', Math.abs(dx) < 0.03 ? '\\dfrac{dx}{d\\theta}\\approx 0:\\ \\text{la pendiente no es un número (vertical o punta)}' : '\\dfrac{dy}{dx}=\\dfrac{dy/d\\theta}{dx/d\\theta}\\approx ' + num(dy/dx, 2)]]; }
+  };
+})());

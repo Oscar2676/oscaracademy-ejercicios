@@ -1,0 +1,130 @@
+<!--file:H02_longitud_de_arco_de_curvas_dadas_por_ecuaciones_parametrizadas.html-->
+<!--title:Determinar la longitud de arco de curvas dadas por ecuaciones parametrizadas-->
+<!--id:par-longitud-->
+<!--tab:H02 Longitud de arco paramétrica-->
+<article class="sheet" id="par-longitud" data-hoja="L23 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Determinar la longitud de arco de curvas dadas por ecuaciones parametrizadas</b></li>
+    </ol>
+    <h1>Determinar la longitud de arco de curvas dadas por ecuaciones parametrizadas</h1>
+    <p class="lede">Si un punto recorre una curva según \(x=x(t)\), \(y=y(t)\), el largo del camino es la integral de su <b>rapidez</b>. Vale cuando \(x'\) e \(y'\) son continuas y la curva se recorre una sola vez.
+    \[L=\int_{a}^{b}\sqrt{\big[x'(t)\big]^{2}+\big[y'(t)\big]^{2}}\,dt\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>Se parte el intervalo \([a,\,b]\) en trozos de duración \(\Delta t\). En cada trozo el punto pasa de una posición a otra; se unen esas posiciones con tramos rectos.</li>
+      <li>Un tramo avanza \(\Delta x\) en horizontal y \(\Delta y\) en vertical. Por Pitágoras mide \(\sqrt{(\Delta x)^{2}+(\Delta y)^{2}}\).</li>
+      <li>Por el teorema del valor medio, aplicado a \(x(t)\) y a \(y(t)\) por separado, hay instantes \(t^{*}\) y \(t^{**}\) del trozo con \(\Delta x=x'(t^{*})\,\Delta t\) y \(\Delta y=y'(t^{**})\,\Delta t\). El tramo mide
+        \[\sqrt{\big[x'(t^{*})\big]^{2}+\big[y'(t^{**})\big]^{2}}\;\Delta t\]</li>
+      <li>Al sumar todos los tramos y hacer \(\Delta t\to 0\), la suma tiende a la integral (aquí se usa, sin demostrarlo, que el límite existe aunque \(t^{*}\) y \(t^{**}\) no coincidan, porque \(x'\) e \(y'\) son continuas). Ese límite es la longitud:
+        \[L=\int_{a}^{b}\sqrt{\big[x'(t)\big]^{2}+\big[y'(t)\big]^{2}}\,dt\]</li>
+      <li><b>Lectura física.</b> \(x'(t)\) e \(y'(t)\) son las componentes de la velocidad. La raíz es la rapidez. Distancia recorrida = integral de la rapidez.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Una rueda de radio \(1\) rueda sin resbalar. Un punto de su borde describe una <b>cicloide</b>: \(x=t-\operatorname{sen}t\), \(y=1-\cos t\), donde \(t\) es el ángulo que ha girado la rueda. ¿Cuánto mide el camino del punto en una vuelta?</p>
+  <div class="stage" data-scene="par-cicloide"></div>
+  <ul class="keys">
+    <li><b>Círculo verde:</b> la rueda. <b>Punto naranja:</b> el punto del borde que se sigue.</li>
+    <li><b>Curva azul:</b> el camino del punto, la cicloide.</li>
+    <li><b>Trazo burdeo en el suelo:</b> lo que ha avanzado la rueda, igual al ángulo girado \(t\) (radio \(1\)).</li>
+    <li><b>Bajo la animación:</b> la rapidez del punto, la integral que la acumula y el largo recorrido.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: un arco de cicloide, \(x=t-\operatorname{sen}t\), \(y=1-\cos t\), para \(0\le t\le 2\pi\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivadas.</b> \(x'(t)=1-\cos t\), \(y'(t)=\operatorname{sen}t\).</li>
+    <li><b>Suma de cuadrados.</b>
+      \[(1-\cos t)^{2}+\operatorname{sen}^{2}t=1-2\cos t+\cos^{2}t+\operatorname{sen}^{2}t=2-2\cos t\]</li>
+    <li><b>Identidad del ángulo medio.</b> \(1-\cos t=2\operatorname{sen}^{2}\dfrac{t}{2}\). Entonces \(2-2\cos t=4\operatorname{sen}^{2}\dfrac{t}{2}\).</li>
+    <li><b>Rapidez.</b> \(\sqrt{4\operatorname{sen}^{2}\dfrac{t}{2}}=2\left|\operatorname{sen}\dfrac{t}{2}\right|=2\operatorname{sen}\dfrac{t}{2}\), porque para \(0\le t\le 2\pi\) el ángulo \(\dfrac{t}{2}\) está entre \(0\) y \(\pi\), donde el seno no es negativo.</li>
+    <li><b>Integral.</b>
+      \[L=\int_{0}^{2\pi}2\operatorname{sen}\frac{t}{2}\,dt=\left[-4\cos\frac{t}{2}\right]_{0}^{2\pi}=-4\cos\pi+4\cos 0=4+4=8\]</li>
+    <li>Con una rueda de radio \(r\), todo se multiplica por \(r\): el arco mide \(8r\). La rueda avanza \(2\pi r\approx 6{,}28\,r\); el punto del borde recorre más.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(x=t^{2}\), \(y=t^{3}\), para \(0\le t\le 2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Derivadas.</b> \(x'(t)=2t\), \(y'(t)=3t^{2}\).</li>
+    <li><b>Rapidez.</b> \(\sqrt{4t^{2}+9t^{4}}=\sqrt{t^{2}\left(4+9t^{2}\right)}=t\sqrt{4+9t^{2}}\), porque \(t\ge 0\).</li>
+    <li><b>Sustitución.</b> \(u=4+9t^{2}\), \(du=18t\,dt\), es decir, \(t\,dt=\dfrac{du}{18}\). Cuando \(t=0\), \(u=4\); cuando \(t=2\), \(u=40\).</li>
+    <li><b>Integral.</b>
+      \[L=\int_{4}^{40}\frac{u^{1/2}}{18}\,du=\frac{1}{18}\left[\frac{2}{3}u^{3/2}\right]_{4}^{40}=\frac{1}{27}\left(40^{3/2}-4^{3/2}\right)=\frac{80\sqrt{10}-8}{27}\approx 9{,}07\]</li>
+    <li><b>Comprobación de sentido.</b> La recta de \((0,\,0)\) a \((4,\,8)\) mide \(\sqrt{16+64}=\sqrt{80}\approx 8{,}94\). La curva mide un poco más.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Contar la curva más de una vez. Con \(x=\cos 2t\), \(y=\operatorname{sen}2t\), para \(0\le t\le 2\pi\), la rapidez es \(2\) y la integral da \(4\pi\): el doble del perímetro \(2\pi\) de la circunferencia de radio \(1\), porque el punto da dos vueltas. La integral mide la <b>distancia recorrida</b>; coincide con la longitud de la curva solo si se recorre una vez.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la longitud de \(x=3t\), \(y=4t\), para \(0\le t\le 2\), y comprueba con la distancia entre los extremos.</p>
+    <details><summary>Pista</summary><div><p>La rapidez es constante.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x'=3\), \(y'=4\). Rapidez: \(\sqrt{9+16}=5\).</li>
+        <li>\(L=\displaystyle\int_{0}^{2}5\,dt=10\).</li>
+        <li>Comprobación: es un segmento de \((0,\,0)\) a \((6,\,8)\), que mide \(\sqrt{36+64}=10\). Coincide.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula la longitud de \(x=\cos^{3}t\), \(y=\operatorname{sen}^{3}t\), para \(0\le t\le\dfrac{\pi}{2}\).</p>
+    <details><summary>Pista</summary><div><p>Al sumar los cuadrados de las derivadas se puede sacar factor común \(9\cos^{2}t\operatorname{sen}^{2}t\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x'=-3\cos^{2}t\operatorname{sen}t\), \(y'=3\operatorname{sen}^{2}t\cos t\).</li>
+        <li>\(x'^{2}+y'^{2}=9\cos^{4}t\operatorname{sen}^{2}t+9\operatorname{sen}^{4}t\cos^{2}t=9\cos^{2}t\operatorname{sen}^{2}t\left(\cos^{2}t+\operatorname{sen}^{2}t\right)=9\cos^{2}t\operatorname{sen}^{2}t\).</li>
+        <li>Rapidez: \(3\cos t\operatorname{sen}t\), porque en \(\left[0,\,\dfrac{\pi}{2}\right]\) el seno y el coseno no son negativos.</li>
+        <li>\(L=\displaystyle\int_{0}^{\pi/2}3\operatorname{sen}t\cos t\,dt=\left[\frac{3}{2}\operatorname{sen}^{2}t\right]_{0}^{\pi/2}=\frac{3}{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La rueda de una bicicleta tiene \(35\) centímetros de radio y lleva un reflectante en el borde. En una vuelta completa de la rueda, ¿cuánto avanza la bicicleta y cuánto recorre el reflectante?</p>
+    <details><summary>Pista</summary><div><p>La bicicleta avanza el perímetro de la rueda. El reflectante recorre un arco de cicloide: \(8r\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Radio: \(r=0{,}35\) m.</li>
+        <li>La bicicleta avanza \(2\pi r=2\pi\cdot 0{,}35\approx 2{,}20\) metros.</li>
+        <li>El reflectante recorre \(8r=8\cdot 0{,}35=2{,}80\) metros.</li>
+        <li>Respuesta: la bicicleta avanza unos \(2{,}20\) m y el reflectante recorre \(2{,}80\) m, unos \(60\) centímetros más.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>

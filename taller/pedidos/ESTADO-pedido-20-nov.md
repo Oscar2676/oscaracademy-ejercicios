@@ -79,6 +79,18 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 - Avisos dados a Óscar: H11 afirma sin demostrar que ∫√(1+cos²x)dx no tiene antiderivada elemental; H03 usa sin demostrar valores extremos y valor intermedio. La vista previa del taller no dibuja las fórmulas (TeX): se le pidió mirarlas en la tarjeta.
 - `qa/rigor/derivadas_escenas.js` espera `_chk` con `d0, d1`; las escenas de l21 y l22 usan `_chk:[{f, df, at}]` y se comprueban con el bucle de node anotado en el historial del 21-nov (0 derivadas malas).
 
+## Lote 23 · Paramétricas, polares y vectoriales (`calculo-integral/lote23/`, fuentes `taller/src/l23/partes/`, `qa/rigor/verificar_lote_23.py`)
+Código de pie `CI-L23-HNN`. Se arma con `python3 taller/build.py 23 "Paramétricas, polares y vectoriales"`; partes → `NN-p.html` con `cat _txt.js NN.scene.js` (01, 02) o `cat _txt.js _pol.js NN.scene.js` (03–05; `_pol.js` trae la cardioide `oaCar` y la rejilla polar). Ruta de las hojas: Cursos › Cálculo II › Derivada de funciones paramétricas.
+- **Pendientes de APR (21-nov 09:30), v001** (ids del pedido; al enlazar, buscar por título exacto con `__scan`):
+  - H01 «Introducción a ecuaciones paramétricas» (`H01_introduccion_a_ecuaciones_parametricas.html`): qudgj comp-lcklq9xb1 · qclgl comp-l4skmyvn
+  - H02 «Determinar la longitud de arco de curvas dadas por ecuaciones parametrizadas» (`H02_longitud_de_arco_de_curvas_dadas_por_ecuaciones_parametrizadas.html`): qudgj comp-lcklq9xi1 · qclgl comp-l4skmyvt1 · qtf2i comp-la92e1083
+  - H03 «Definir coordenadas polares y diferenciar en forma polar» (`H03_definir_coordenadas_polares_y_diferenciar_en_forma_polar.html`): qudgj comp-lcklq9za1 · qclgl comp-la7rpzbm1
+  - H04 «Derivadas de funciones polares» (`H04_derivadas_de_funciones_polares.html`): qudgj comp-lcklq9zc1 · qclgl comp-la7rpzbo
+  - H05 «Calcular el área de una región polar o el área acotada por una sola curva polar» (`H05_area_de_una_region_polar_o_acotada_por_una_sola_curva_polar.html`): qudgj comp-lcklq9zf1 · qclgl comp-la7rpzbq
+- **Faltan (6 por producir):** «Calcular el área de la región acotada por dos curvas polares» (qudgj comp-lcklq9zi1 · qclgl comp-la7rpzbr2) · «Introducción a funciones con valores vectoriales» (qudgj comp-loxdt831 · qtf2i comp-loxe01jj) · «Derivada de r(t) con componentes trigonométricas» (qudgj comp-loxduwdf) · «Segunda derivada de funciones con valores vectoriales» (qudgj comp-loxdvfip · qtf2i comp-loxe01jl8) · «Vector aceleración como segunda derivada de r(t)» (qudgj comp-loxdw2m3) · «Resolver ejercicios de movimiento mediante funciones parametrizadas y con valores vectoriales» (qudgj comp-lcklq9xn · qclgl comp-l63rs19r · qclgl comp-la7rt1gn1).
+- **Pregunta abierta a Óscar (3 títulos parecidos a hojas ya aprobadas del lote 20):** «Definir y diferenciar ecuaciones paramétricas» (qudgj comp-lcklq9xg · qclgl comp-l4skmyvr2 · qtf2i comp-la92e107) → ¿L20 H11? · «Segundas derivadas de ecuaciones paramétricas» (qudgj comp-lcklq9xl · qclgl comp-l4skmyvv) → ¿L20 H12? · «Derivada de funciones con valores vectoriales» (fr2b0 comp-m32dfqb312 · qudgj comp-loxdty8z · qtf2i comp-loxe01jk2) → ¿L20 H13? ¿Enlazar o hoja nueva?
+- Aviso dado: H02 usa sin demostrar que la suma con t* y t** distintos converge a la integral.
+
 ## Criterios de Óscar para animaciones y texto (20-nov)
 - Una condición o un caso importante dentro de un recuadro merece su propia animación explicativa dentro del mismo recuadro.
 - Una discontinuidad se dibuja con **curvas**, no con rectas, y la gráfica debe **seguir** después del salto por otra curva más arriba en el mismo x.
