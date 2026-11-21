@@ -1,0 +1,163 @@
+<!--file:H05_notacion_de_sumatoria.html-->
+<!--title:Notación de sumatoria-->
+<!--id:ss-sigma-->
+<!--tab:H05 Sumatoria-->
+<article class="sheet" id="ss-sigma" data-hoja="L25 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones</li>
+      <li><b>Notación de sumatoria</b></li>
+    </ol>
+    <h1>Notación de sumatoria</h1>
+    <p class="lede">La letra griega sigma mayúscula, \(\Sigma\), abrevia una suma de muchos sumandos que siguen una misma regla. \[\sum_{k=m}^{n}a_{k}=a_{m}+a_{m+1}+a_{m+2}+\cdots+a_{n}\] Se lee «sumatoria de \(a_{k}\), desde \(k=m\) hasta \(n\)».</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sumatoria \(\displaystyle\sum_{k=1}^{5}(2k+1)\), con sus partes rotuladas. El índice \(k\) recorre \(1,\ 2,\ 3,\ 4,\ 5\) y cada valor produce un sumando.</p>
+  <div class="stage" data-scene="ss-sigma"></div>
+  <ul class="keys">
+    <li><b>Bajo la sigma:</b> el índice (\(k\)) y su valor inicial (\(1\)). <b>Sobre la sigma:</b> el valor final (\(5\)).</li>
+    <li><b>A la derecha:</b> el término general, la regla que fabrica cada sumando.</li>
+    <li><b>Columna naranja:</b> el valor actual de \(k\), el reemplazo y el sumando que resulta.</li>
+    <li><b>Suma acumulada:</b> lo sumado hasta ese valor de \(k\). El índice avanza siempre de \(1\) en \(1\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Cómo se lee y se desarrolla</h3>
+    <ol class="steps">
+      <li>Se parte con el índice en el valor inicial y se reemplaza en el término general: ese es el primer sumando.</li>
+      <li>Se aumenta el índice en \(1\) y se repite, hasta llegar al valor final (incluido).</li>
+      <li>Se suman todos los sumandos.</li>
+      <li>Cantidad de sumandos de \(\displaystyle\sum_{k=m}^{n}\): son \(n-m+1\). De \(k=1\) a \(5\): \(5-1+1=5\). De \(k=3\) a \(6\): \(6-3+1=4\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(k\)? El índice es una variable muda</h3>
+    <ol class="steps">
+      <li>La letra del índice se elige libremente: \(\displaystyle\sum_{k=1}^{5}(2k+1)=\sum_{i=1}^{5}(2i+1)=\sum_{j=1}^{5}(2j+1)=35\).</li>
+      <li>El índice solo existe dentro de la sumatoria: el resultado, \(35\), no depende de \(k\).</li>
+      <li>Se usan \(i\), \(j\), \(k\) para no confundir el índice con \(n\), que suele ser el valor final.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Propiedades, con su porqué</h3>
+    <ol class="steps">
+      <li><b>Una constante que multiplica sale fuera:</b> \(\displaystyle\sum_{k=1}^{n}c\,a_{k}=c\sum_{k=1}^{n}a_{k}\). Es sacar factor común: \(ca_{1}+ca_{2}+\cdots+ca_{n}=c(a_{1}+a_{2}+\cdots+a_{n})\).</li>
+      <li><b>La sumatoria de una suma se separa:</b> \(\displaystyle\sum_{k=1}^{n}(a_{k}+b_{k})=\sum_{k=1}^{n}a_{k}+\sum_{k=1}^{n}b_{k}\). Es cambiar el orden de los sumandos. Lo mismo con la resta.</li>
+      <li><b>Sumar una constante \(n\) veces:</b> \(\displaystyle\sum_{k=1}^{n}c=\underbrace{c+c+\cdots+c}_{n\text{ veces}}=nc\).</li>
+      <li><b>Cuidado:</b> con el producto no hay regla así. En general, \(\displaystyle\sum a_{k}b_{k}\ne\left(\sum a_{k}\right)\left(\sum b_{k}\right)\). Por ejemplo, \(1\cdot 1+2\cdot 2=5\), pero \((1+2)(1+2)=9\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Una suma que conviene saber: \(1+2+3+\cdots+n\)</h3>
+    <ol class="steps">
+      <li>Sea \(S=1+2+3+\cdots+n\). Escrita al revés: \(S=n+(n-1)+(n-2)+\cdots+1\).</li>
+      <li>Sumando las dos filas, columna por columna: cada columna da \(n+1\), y hay \(n\) columnas. \(2S=n(n+1)\).</li>
+      <li>\(\displaystyle\sum_{k=1}^{n}k=\dfrac{n(n+1)}{2}\). Por ejemplo, \(1+2+\cdots+100=\dfrac{100\cdot 101}{2}=5\,050\).</li>
+      <li>También se usa \(\displaystyle\sum_{k=1}^{n}k^{2}=\dfrac{n(n+1)(2n+1)}{6}\). <b>Aquí se usa sin demostrarla</b> (se prueba por inducción). Comprobación con \(n=4\): \(1+4+9+16=30\) y \(\dfrac{4\cdot 5\cdot 9}{6}=30\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\displaystyle\sum_{k=1}^{5}(2k+1)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(k=1\): \(3\). \(k=2\): \(5\). \(k=3\): \(7\). \(k=4\): \(9\). \(k=5\): \(11\).</li>
+    <li>\(3+5+7+9+11=35\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el índice parte en \(0\), \(\displaystyle\sum_{j=0}^{3}2^{j}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(j=0\): \(2^{0}=1\). \(j=1\): \(2\). \(j=2\): \(4\). \(j=3\): \(8\).</li>
+    <li>Son \(3-0+1=4\) sumandos: \(1+2+4+8=15\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: el índice parte en \(3\), \(\displaystyle\sum_{i=3}^{6}i(i-1)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(i=3\): \(3\cdot 2=6\). \(i=4\): \(4\cdot 3=12\). \(i=5\): \(5\cdot 4=20\). \(i=6\): \(6\cdot 5=30\).</li>
+    <li>\(6+12+20+30=68\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con las propiedades, \(\displaystyle\sum_{k=1}^{100}(3k-2)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se separa: \(\displaystyle\sum_{k=1}^{100}3k-\sum_{k=1}^{100}2\).</li>
+    <li>Sale la constante: \(\displaystyle 3\sum_{k=1}^{100}k-\sum_{k=1}^{100}2\).</li>
+    <li>\(\displaystyle\sum_{k=1}^{100}k=\dfrac{100\cdot 101}{2}=5\,050\) y \(\displaystyle\sum_{k=1}^{100}2=100\cdot 2=200\).</li>
+    <li>\(3\cdot 5\,050-200=15\,150-200=14\,950\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Ojo con los paréntesis.</b> \(\displaystyle\sum_{k=1}^{3}(k+2)=3+4+5=12\): el \(2\) se suma tres veces. En cambio \(\displaystyle\sum_{k=1}^{3}k+2=(1+2+3)+2=8\): el \(2\) queda fuera de la sumatoria y se suma una sola vez.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\sum_{k=1}^{6}(k^{2}-1)\).</p>
+    <details><summary>Pista</summary><div><p>Desarrolla los seis sumandos, o separa en dos sumatorias.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sumandos: \(0,\ 3,\ 8,\ 15,\ 24,\ 35\).</li>
+        <li>\(0+3+8+15+24+35=85\).</li>
+        <li>Por propiedades: \(\displaystyle\sum_{k=1}^{6}k^{2}-\sum_{k=1}^{6}1=\dfrac{6\cdot 7\cdot 13}{6}-6=91-6=85\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Escribe \(4+7+10+\cdots+31\) con notación sigma y calcula la suma.</p>
+    <details><summary>Pista</summary><div><p>Suma siempre \(3\). ¿En qué posición está el \(31\)?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sumando general: \(3k+1\) (con \(k=1\) da \(4\)).</li>
+        <li>Último: \(3k+1=31\ \Longrightarrow\ k=10\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{10}(3k+1)=3\sum_{k=1}^{10}k+\sum_{k=1}^{10}1=3\cdot\dfrac{10\cdot 11}{2}+10\).</li>
+        <li>\(3\cdot 55+10=175\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Para un viaje, Pedro ahorra durante \(12\) semanas: en la semana \(k\) guarda \(1\,000+500k\) pesos. Escribe el total con notación sigma y calcúlalo.</p>
+    <details><summary>Pista</summary><div><p>Separa en dos sumatorias.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Total: \(\displaystyle\sum_{k=1}^{12}(1\,000+500k)\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{12}1\,000+500\sum_{k=1}^{12}k=12\cdot 1\,000+500\cdot\dfrac{12\cdot 13}{2}\).</li>
+        <li>\(12\,000+500\cdot 78=12\,000+39\,000=51\,000\) pesos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>

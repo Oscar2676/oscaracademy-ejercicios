@@ -1,0 +1,216 @@
+<!--file:H04_escribir_sucesiones_y_series.html-->
+<!--title:Escribir sucesiones y series-->
+<!--id:ss-serie-->
+<!--tab:H04 Escribir-->
+<article class="sheet" id="ss-serie" data-hoja="L25 H04">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones</li>
+      <li><b>Escribir sucesiones y series</b></li>
+    </ol>
+    <h1>Escribir sucesiones y series</h1>
+    <p class="lede">Dos tareas de escritura. Una: a partir de los primeros términos, proponer una fórmula para el término general. Otra: pasar de la <b>sucesión</b> (una lista) a la <b>serie</b> (la suma de esa lista) y anotarla. \[\text{sucesión: }a_{1},\ a_{2},\ a_{3},\dots\qquad\text{serie: }a_{1}+a_{2}+a_{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Arriba, la sucesión \(\dfrac{1}{2},\ \dfrac{1}{4},\ \dfrac{1}{8},\dots\) como lista. Abajo, la serie: los mismos términos, sumados uno tras otro sobre una barra de largo \(1\).</p>
+  <div class="stage" data-scene="ss-serie"></div>
+  <ul class="keys">
+    <li><b>Lista de arriba:</b> la sucesión. Los términos van separados por comas.</li>
+    <li><b>Barra de abajo:</b> la serie. Cada término agrega un trozo; lo pintado es la <b>suma parcial</b> \(S_{n}\).</li>
+    <li><b>Trozo naranja:</b> el término que se suma en este paso.</li>
+    <li><b>Lo que queda sin pintar:</b> lo que falta para \(1\). Con cada término se reduce a la mitad: vale \(\dfrac{1}{2^{n}}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De los términos a una fórmula</h3>
+    <ol class="steps">
+      <li>Se numeran las posiciones: \(n=1,\ 2,\ 3,\dots\) y se mira cómo cambia cada parte del término al avanzar \(n\).</li>
+      <li><b>¿Suman siempre lo mismo?</b> \(3,\ 7,\ 11,\ 15\): suman \(4\). Entonces \(a_{n}=4n+\text{algo}\); con \(n=1\) debe dar \(3\): \(a_{n}=4n-1\).</li>
+      <li><b>¿Se multiplican siempre por lo mismo?</b> \(2,\ 6,\ 18,\ 54\): por \(3\). Entonces \(a_{n}=2\cdot 3^{\,n-1}\).</li>
+      <li><b>¿Cambia el signo?</b> Se agrega \((-1)^{n}\) si el primero es negativo, o \((-1)^{n+1}\) si el primero es positivo.</li>
+      <li><b>¿Es una fracción?</b> Se busca la regla del numerador y la del denominador por separado.</li>
+      <li><b>Siempre se comprueba</b> la fórmula con todos los términos dados.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>De la sucesión a la serie</h3>
+    <ol class="steps">
+      <li>Una <b>serie</b> es la suma de los términos de una sucesión. Si la sucesión es finita, la serie es una suma común y da un número.</li>
+      <li>Se abrevia con la letra griega sigma mayúscula: \(\displaystyle\sum_{k=1}^{n}a_{k}=a_{1}+a_{2}+\cdots+a_{n}\).</li>
+      <li>La suma de los \(n\) primeros términos se llama <b>suma parcial</b>, \(S_{n}\).</li>
+      <li>Si la sucesión es infinita, la serie se anota \(\displaystyle\sum_{k=1}^{\infty}a_{k}\). Qué significa «sumar infinitos términos» se define con las sumas parciales, en las hojas de series infinitas.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(3,\ 7,\ 11,\ 15,\dots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diferencias: \(7-3=4\), \(11-7=4\), \(15-11=4\). Suma siempre \(4\).</li>
+    <li>Propuesta: \(a_{n}=4n+c\). Con \(n=1\): \(4+c=3\ \Longrightarrow\ c=-1\).</li>
+    <li>\(a_{n}=4n-1\). Comprobación: \(a_{2}=7\), \(a_{3}=11\), \(a_{4}=15\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(1,\ -\dfrac{1}{2},\ \dfrac{1}{4},\ -\dfrac{1}{8},\dots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Signo: el primero es positivo y alternan: \((-1)^{n+1}\).</li>
+    <li>Denominadores: \(1,\ 2,\ 4,\ 8\), que son \(2^{0},\ 2^{1},\ 2^{2},\ 2^{3}\): en la posición \(n\), \(2^{\,n-1}\).</li>
+    <li>\(a_{n}=\dfrac{(-1)^{n+1}}{2^{\,n-1}}\). Comprobación con \(n=4\): \(\dfrac{(-1)^{5}}{2^{3}}=-\dfrac{1}{8}\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\dfrac{1}{2},\ \dfrac{2}{3},\ \dfrac{3}{4},\ \dfrac{4}{5},\dots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Numeradores: \(1,\ 2,\ 3,\ 4\): es \(n\).</li>
+    <li>Denominadores: \(2,\ 3,\ 4,\ 5\): es \(n+1\).</li>
+    <li>\(a_{n}=\dfrac{n}{n+1}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: escribir \(2+4+6+\cdots+20\) con sigma y calcularla</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Los sumandos son los pares: el de la posición \(k\) es \(2k\).</li>
+    <li>El último: \(2k=20\ \Longrightarrow\ k=10\). Hay \(10\) sumandos.</li>
+    <li>\(\displaystyle\sum_{k=1}^{10}2k=2+4+6+8+10+12+14+16+18+20=110\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Con honestidad.</b> Unos pocos términos <b>no determinan</b> una sucesión. \(1,\ 2,\ 4,\dots\) puede seguir como \(a_{n}=2^{\,n-1}\) (el cuarto es \(8\)) o como \(a_{n}=\dfrac{n^{2}-n+2}{2}\) (el cuarto es \(7\)): las dos fórmulas dan \(1,\ 2,\ 4\) al comienzo. Cuando un ejercicio pide «el término general», pide la regla más simple que calza con los términos dados.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Propón un término general para \(5,\ 8,\ 11,\ 14,\dots\) y úsalo para calcular \(a_{20}\).</p>
+    <details><summary>Pista</summary><div><p>¿Cuánto suma de un término al siguiente?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Suma siempre \(3\): \(a_{n}=3n+c\).</li>
+        <li>Con \(n=1\): \(3+c=5\ \Longrightarrow\ c=2\). Entonces \(a_{n}=3n+2\).</li>
+        <li>Comprobación: \(a_{4}=14\). ✓</li>
+        <li>\(a_{20}=3\cdot 20+2=62\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Escribe con notación sigma y calcula: \(\dfrac{1}{3}+\dfrac{1}{9}+\dfrac{1}{27}+\dfrac{1}{81}\).</p>
+    <details><summary>Pista</summary><div><p>Los denominadores son potencias de \(3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El sumando de la posición \(k\) es \(\dfrac{1}{3^{k}}\), con \(k=1,\ 2,\ 3,\ 4\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{4}\dfrac{1}{3^{k}}\).</li>
+        <li>Con denominador común \(81\): \(\dfrac{27+9+3+1}{81}=\dfrac{40}{81}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En un teatro, la fila 1 tiene \(20\) butacas y cada fila tiene \(2\) más que la anterior. Hay \(15\) filas. Escribe el término general de las butacas por fila, la serie que da el total de butacas, y calcúlala.</p>
+    <details><summary>Pista</summary><div><p>El total es la suma de las butacas de las \(15\) filas.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Suma siempre \(2\): \(a_{n}=2n+c\); con \(n=1\), \(2+c=20\ \Longrightarrow\ c=18\). \(a_{n}=2n+18\).</li>
+        <li>Serie: \(\displaystyle\sum_{k=1}^{15}(2k+18)\).</li>
+        <li>Los sumandos: \(20,\ 22,\ 24,\ 26,\ 28,\ 30,\ 32,\ 34,\ 36,\ 38,\ 40,\ 42,\ 44,\ 46,\ 48\).</li>
+        <li>Sumando de a pares desde los extremos: \(20+48=68\), \(22+46=68\),… Son \(7\) pares de \(68\) y queda al medio el \(34\): \(7\cdot 68+34=510\) butacas.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H04 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+OA.scene('ss-serie', (function(){
+  var N = 6, dec = oaDec;
+  function a(k){ return Math.pow(0.5, k); } function Sn(n){ return 1 - Math.pow(0.5, n); }
+  function fr(k){ return '1/' + Math.pow(2, k); }
+  return {
+    world:{x0:-0.6, x1:10.6, y0:-5.6, y1:3.4}, aspect:9.0/11.2,
+    aria:'Arriba, la sucesión: los términos un medio, un cuarto, un octavo y los siguientes, escritos como una lista separada por comas. Abajo, la serie: una barra de largo 1 en la que se van poniendo trozos de largo un medio, un cuarto, un octavo, uno tras otro. La parte pintada es la suma parcial. Con cada término la barra se llena más, y lo que falta para llegar a 1 se reduce a la mitad.',
+    labels:[['F', 'S_{n}=\\displaystyle\\sum_{k=1}^{n}\\dfrac{1}{2^{k}}=1-\\dfrac{1}{2^{n}}', 'Sₙ = 1/2 + 1/4 + … + 1/2ⁿ = 1 − 1/2ⁿ', 'diff']],
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> sucesión: la lista de términos</span><span><i class="sw rise"></i> el término que se suma ahora</span><span><i class="sw tan"></i> serie: la suma de los términos</span>',
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.4))); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), k, x = 0, x0, y0, L = [];
+      function big(t, px, py, col, b){ c.font = (b ? '700 ' : '600 ') + '13px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      txt('la sucesión: una lista', X(-0.5), Y(3.0), 'left', C.sec);
+      for (k = 1; k <= N; k++){ big(fr(k) + (k < N ? ',' : ', …'), X(0.6 + 1.6*(k - 1)), Y(2.2), k === n ? C.rise : k < n ? C.sec : (C.muted || '#9a9a9a'), k === n); }
+      txt('la serie: la suma de esa lista', X(-0.5), Y(1.0), 'left', C.tan);
+      c.strokeStyle = C.ink; c.lineWidth = 1.2; c.strokeRect(X(0), Y(0.2), X(10) - X(0), Y(-0.6) - Y(0.2));
+      for (k = 1; k <= n; k++){ S.poly([[x, -0.6], [x + 10*a(k), -0.6], [x + 10*a(k), 0.2], [x, 0.2]], {fill:k === n ? C.rise : C.tan, alpha:k === n ? 0.8 : 0.45}); c.strokeStyle = '#fff'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(x + 10*a(k)), Y(0.2)); c.lineTo(X(x + 10*a(k)), Y(-0.6)); c.stroke(); if (10*a(k) > 0.9) big(fr(k), X(x + 5*a(k)), Y(-0.2), C.ink, false); x += 10*a(k); L.push(fr(k)); }
+      c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'center'; c.fillText('0', X(0), Y(-0.6) + 12); c.fillText('1', X(10), Y(-0.6) + 12);
+      x0 = X(-0.5); y0 = Y(-1.75);
+      txt('término ' + n + ' de la sucesión:  a' + ssSub(n) + ' = ' + fr(n) + ' = ' + dec(a(n), Math.min(6, n)), x0, y0, 'left', C.rise);
+      txt('suma parcial:  S' + ssSub(n) + ' = ' + L.join(' + '), x0, y0 + 21, 'left', C.tan);
+      txt('S' + ssSub(n) + ' = 1 − ' + fr(n) + ' = ' + dec(Sn(n), Math.min(6, n)), x0, y0 + 42, 'left', C.tan);
+      txt('falta para llegar a 1:  ' + fr(n), x0, y0 + 63, 'left', C.ink);
+      S.lab('F', x0, y0 + 92, 0, 0, n >= N && v.q != null);
+    },
+    caption:function(v){ var n = Math.round(v.n || 1); return n < N ? 'La sucesión es la lista 1/2, 1/4, 1/8, … La serie es otra cosa: es sumar esos términos. Con ' + n + (n > 1 ? ' términos' : ' término') + ' sumados, la suma parcial vale ' + dec(Sn(n), Math.min(6, n)) : 'Cada término llena la mitad de lo que faltaba. Las sumas parciales 1/2, 3/4, 7/8, … forman, a su vez, una nueva sucesión, que se acerca a 1'; },
+    readout:function(v){ var n = Math.round(v.n || 1); return [['', '\\text{sucesión: }a_{k}=\\dfrac{1}{2^{k}}\\qquad\\text{serie: }\\displaystyle\\sum_{k=1}^{\\infty}\\dfrac{1}{2^{k}}'], ['d', 'S_{' + n + '}=\\displaystyle\\sum_{k=1}^{' + n + '}\\dfrac{1}{2^{k}}=1-\\dfrac{1}{' + Math.pow(2, n) + '}=\\dfrac{' + (Math.pow(2, n) - 1) + '}{' + Math.pow(2, n) + '}']]; }
+  };
+})());

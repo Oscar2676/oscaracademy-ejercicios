@@ -1,0 +1,228 @@
+<!--file:H05_notacion_de_sumatoria.html-->
+<!--title:Notación de sumatoria-->
+<!--id:ss-sigma-->
+<!--tab:H05 Sumatoria-->
+<article class="sheet" id="ss-sigma" data-hoja="L25 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones</li>
+      <li><b>Notación de sumatoria</b></li>
+    </ol>
+    <h1>Notación de sumatoria</h1>
+    <p class="lede">La letra griega sigma mayúscula, \(\Sigma\), abrevia una suma de muchos sumandos que siguen una misma regla. \[\sum_{k=m}^{n}a_{k}=a_{m}+a_{m+1}+a_{m+2}+\cdots+a_{n}\] Se lee «sumatoria de \(a_{k}\), desde \(k=m\) hasta \(n\)».</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sumatoria \(\displaystyle\sum_{k=1}^{5}(2k+1)\), con sus partes rotuladas. El índice \(k\) recorre \(1,\ 2,\ 3,\ 4,\ 5\) y cada valor produce un sumando.</p>
+  <div class="stage" data-scene="ss-sigma"></div>
+  <ul class="keys">
+    <li><b>Bajo la sigma:</b> el índice (\(k\)) y su valor inicial (\(1\)). <b>Sobre la sigma:</b> el valor final (\(5\)).</li>
+    <li><b>A la derecha:</b> el término general, la regla que fabrica cada sumando.</li>
+    <li><b>Columna naranja:</b> el valor actual de \(k\), el reemplazo y el sumando que resulta.</li>
+    <li><b>Suma acumulada:</b> lo sumado hasta ese valor de \(k\). El índice avanza siempre de \(1\) en \(1\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Cómo se lee y se desarrolla</h3>
+    <ol class="steps">
+      <li>Se parte con el índice en el valor inicial y se reemplaza en el término general: ese es el primer sumando.</li>
+      <li>Se aumenta el índice en \(1\) y se repite, hasta llegar al valor final (incluido).</li>
+      <li>Se suman todos los sumandos.</li>
+      <li>Cantidad de sumandos de \(\displaystyle\sum_{k=m}^{n}\): son \(n-m+1\). De \(k=1\) a \(5\): \(5-1+1=5\). De \(k=3\) a \(6\): \(6-3+1=4\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(k\)? El índice es una variable muda</h3>
+    <ol class="steps">
+      <li>La letra del índice se elige libremente: \(\displaystyle\sum_{k=1}^{5}(2k+1)=\sum_{i=1}^{5}(2i+1)=\sum_{j=1}^{5}(2j+1)=35\).</li>
+      <li>El índice solo existe dentro de la sumatoria: el resultado, \(35\), no depende de \(k\).</li>
+      <li>Se usan \(i\), \(j\), \(k\) para no confundir el índice con \(n\), que suele ser el valor final.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Propiedades, con su porqué</h3>
+    <ol class="steps">
+      <li><b>Una constante que multiplica sale fuera:</b> \(\displaystyle\sum_{k=1}^{n}c\,a_{k}=c\sum_{k=1}^{n}a_{k}\). Es sacar factor común: \(ca_{1}+ca_{2}+\cdots+ca_{n}=c(a_{1}+a_{2}+\cdots+a_{n})\).</li>
+      <li><b>La sumatoria de una suma se separa:</b> \(\displaystyle\sum_{k=1}^{n}(a_{k}+b_{k})=\sum_{k=1}^{n}a_{k}+\sum_{k=1}^{n}b_{k}\). Es cambiar el orden de los sumandos. Lo mismo con la resta.</li>
+      <li><b>Sumar una constante \(n\) veces:</b> \(\displaystyle\sum_{k=1}^{n}c=\underbrace{c+c+\cdots+c}_{n\text{ veces}}=nc\).</li>
+      <li><b>Cuidado:</b> con el producto no hay regla así. En general, \(\displaystyle\sum a_{k}b_{k}\ne\left(\sum a_{k}\right)\left(\sum b_{k}\right)\). Por ejemplo, \(1\cdot 1+2\cdot 2=5\), pero \((1+2)(1+2)=9\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Una suma que conviene saber: \(1+2+3+\cdots+n\)</h3>
+    <ol class="steps">
+      <li>Sea \(S=1+2+3+\cdots+n\). Escrita al revés: \(S=n+(n-1)+(n-2)+\cdots+1\).</li>
+      <li>Sumando las dos filas, columna por columna: cada columna da \(n+1\), y hay \(n\) columnas. \(2S=n(n+1)\).</li>
+      <li>\(\displaystyle\sum_{k=1}^{n}k=\dfrac{n(n+1)}{2}\). Por ejemplo, \(1+2+\cdots+100=\dfrac{100\cdot 101}{2}=5\,050\).</li>
+      <li>También se usa \(\displaystyle\sum_{k=1}^{n}k^{2}=\dfrac{n(n+1)(2n+1)}{6}\). <b>Aquí se usa sin demostrarla</b> (se prueba por inducción). Comprobación con \(n=4\): \(1+4+9+16=30\) y \(\dfrac{4\cdot 5\cdot 9}{6}=30\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\displaystyle\sum_{k=1}^{5}(2k+1)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(k=1\): \(3\). \(k=2\): \(5\). \(k=3\): \(7\). \(k=4\): \(9\). \(k=5\): \(11\).</li>
+    <li>\(3+5+7+9+11=35\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el índice parte en \(0\), \(\displaystyle\sum_{j=0}^{3}2^{j}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(j=0\): \(2^{0}=1\). \(j=1\): \(2\). \(j=2\): \(4\). \(j=3\): \(8\).</li>
+    <li>Son \(3-0+1=4\) sumandos: \(1+2+4+8=15\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: el índice parte en \(3\), \(\displaystyle\sum_{i=3}^{6}i(i-1)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(i=3\): \(3\cdot 2=6\). \(i=4\): \(4\cdot 3=12\). \(i=5\): \(5\cdot 4=20\). \(i=6\): \(6\cdot 5=30\).</li>
+    <li>\(6+12+20+30=68\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con las propiedades, \(\displaystyle\sum_{k=1}^{100}(3k-2)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se separa: \(\displaystyle\sum_{k=1}^{100}3k-\sum_{k=1}^{100}2\).</li>
+    <li>Sale la constante: \(\displaystyle 3\sum_{k=1}^{100}k-\sum_{k=1}^{100}2\).</li>
+    <li>\(\displaystyle\sum_{k=1}^{100}k=\dfrac{100\cdot 101}{2}=5\,050\) y \(\displaystyle\sum_{k=1}^{100}2=100\cdot 2=200\).</li>
+    <li>\(3\cdot 5\,050-200=15\,150-200=14\,950\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Ojo con los paréntesis.</b> \(\displaystyle\sum_{k=1}^{3}(k+2)=3+4+5=12\): el \(2\) se suma tres veces. En cambio \(\displaystyle\sum_{k=1}^{3}k+2=(1+2+3)+2=8\): el \(2\) queda fuera de la sumatoria y se suma una sola vez.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\sum_{k=1}^{6}(k^{2}-1)\).</p>
+    <details><summary>Pista</summary><div><p>Desarrolla los seis sumandos, o separa en dos sumatorias.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sumandos: \(0,\ 3,\ 8,\ 15,\ 24,\ 35\).</li>
+        <li>\(0+3+8+15+24+35=85\).</li>
+        <li>Por propiedades: \(\displaystyle\sum_{k=1}^{6}k^{2}-\sum_{k=1}^{6}1=\dfrac{6\cdot 7\cdot 13}{6}-6=91-6=85\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Escribe \(4+7+10+\cdots+31\) con notación sigma y calcula la suma.</p>
+    <details><summary>Pista</summary><div><p>Suma siempre \(3\). ¿En qué posición está el \(31\)?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sumando general: \(3k+1\) (con \(k=1\) da \(4\)).</li>
+        <li>Último: \(3k+1=31\ \Longrightarrow\ k=10\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{10}(3k+1)=3\sum_{k=1}^{10}k+\sum_{k=1}^{10}1=3\cdot\dfrac{10\cdot 11}{2}+10\).</li>
+        <li>\(3\cdot 55+10=175\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Para un viaje, Pedro ahorra durante \(12\) semanas: en la semana \(k\) guarda \(1\,000+500k\) pesos. Escribe el total con notación sigma y calcúlalo.</p>
+    <details><summary>Pista</summary><div><p>Separa en dos sumatorias.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Total: \(\displaystyle\sum_{k=1}^{12}(1\,000+500k)\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{12}1\,000+500\sum_{k=1}^{12}k=12\cdot 1\,000+500\cdot\dfrac{12\cdot 13}{2}\).</li>
+        <li>\(12\,000+500\cdot 78=12\,000+39\,000=51\,000\) pesos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+OA.scene('ss-sigma', (function(){
+  var A = 1, B = 5;
+  function t(k){ return 2*k + 1; }
+  return {
+    world:{x0:-5.5, x1:5.5, y0:-6.2, y1:3.6}, aspect:9.8/11,
+    aria:'El símbolo de sumatoria, una letra sigma mayúscula grande, con sus cuatro partes rotuladas con líneas guía: abajo, el índice k y su valor inicial 1; arriba, el valor final 5; a la derecha, el término general 2k más 1. Debajo, el índice recorre los valores 1, 2, 3, 4 y 5: en cada paso se reemplaza k, se obtiene un sumando y se agrega a la suma. Los sumandos son 3, 5, 7, 9 y 11, y la suma total es 35.',
+    labels:[['F', '\\displaystyle\\sum_{k=1}^{5}(2k+1)=3+5+7+9+11=35', 'Σ (2k + 1), de k = 1 a 5, = 3 + 5 + 7 + 9 + 11 = 35', 'diff']],
+    sliders:[{id:'k', tex:'k', min:1, max:5, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> el valor actual del índice y su sumando</span><span><i class="sw sec"></i> sumandos anteriores</span><span><i class="sw tan"></i> la suma acumulada</span>',
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(B, A + Math.floor(p*(B - A + 1.6))); v.fin = p*(B - A + 1.6) >= B - A + 0.8; }},
+    onInput:function(v){ v.q = null; v.fin = v.k >= B; },
+    draw:function(S, v){
+      var k = Math.round(v.k || A), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, sum = 0, parts = [], x0, y0;
+      function tx(s, px, py, sz, col, al){ c.font = sz + ' "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, px, py); }
+      function guia(xa, ya, xb, yb){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(xa, ya); c.lineTo(xb, yb); c.stroke(); }
+      tx('Σ', X(0.4), Y(1.6), '400 58px', C.ink); tx('5', X(0.4), Y(1.6) - 44, '700 15px', C.ink); tx('k = 1', X(0.4), Y(1.6) + 44, '700 15px', C.ink); tx('(2k + 1)', X(2.3), Y(1.6), '700 19px', C.ink);
+      guia(X(-0.1), Y(1.6) - 44, X(-0.9), Y(1.6) - 44); txt('valor final del índice', X(-1.0), Y(1.6) - 44, 'right', C.ink);
+      guia(X(-0.5), Y(1.6) + 44, X(-0.9), Y(1.6) + 44); txt('índice y valor inicial', X(-1.0), Y(1.6) + 44, 'right', C.ink);
+      guia(X(2.6), Y(1.6) - 14, X(3.1), Y(1.6) - 34); txt('término general', X(3.2), Y(1.6) - 42, 'center', C.ink);
+      for (i = A; i <= B; i++){ tx('k = ' + i, X(-4 + 2*(i - A)), Y(-0.9), (i === k ? '700' : '500') + ' 12px', i === k ? C.rise : i < k ? C.sec : (C.muted || '#9a9a9a')); if (i <= k){ tx('2 · ' + i + ' + 1', X(-4 + 2*(i - A)), Y(-0.9) + 18, '500 11.5px', i === k ? C.rise : C.sec); tx('' + t(i), X(-4 + 2*(i - A)), Y(-0.9) + 38, '700 15px', i === k ? C.rise : C.sec); sum += t(i); parts.push(t(i)); } if (i < B && i < k) tx('+', X(-3 + 2*(i - A)), Y(-0.9) + 38, '600 14px', C.ink); }
+      x0 = X(-5.4); y0 = Y(-2.85);
+      txt('el índice vale k = ' + k + ':  sumando 2 · ' + k + ' + 1 = ' + t(k), x0, y0, 'left', C.rise);
+      txt('suma acumulada:  ' + parts.join(' + ') + (parts.length > 1 ? ' = ' + sum : ''), x0, y0 + 21, 'left', C.tan);
+      if (v.fin) txt('el índice llegó a 5: la suma termina.  Total: 35', x0, y0 + 42, 'left', C.ink);
+      S.lab('F', x0, y0 + 70, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ var k = Math.round(v.k || A); return v.fin ? 'La sumatoria completa: el índice recorrió 1, 2, 3, 4, 5, y los cinco sumandos dan 35. El símbolo Σ es solo una forma abreviada de escribir esa suma' : 'El índice k toma el valor ' + k + '. Se reemplaza en el término general, 2k + 1, y se obtiene el sumando ' + t(k) + ', que se agrega a la suma'; },
+    readout:function(v){ var k = Math.round(v.k || A), i, s = 0, p = []; for (i = A; i <= k; i++){ s += t(i); p.push(t(i)); } return [['', '\\displaystyle\\sum_{k=1}^{5}(2k+1)\\qquad k=' + k + ':\\ \\ 2\\cdot ' + k + '+1=' + t(k)], ['d', '\\text{suma hasta }k=' + k + ':\\quad ' + p.join('+') + '=' + s]]; }
+  };
+})());

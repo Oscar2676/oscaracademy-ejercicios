@@ -2,7 +2,7 @@ OA.scene('ss-sigma', (function(){
   var A = 1, B = 5;
   function t(k){ return 2*k + 1; }
   return {
-    world:{x0:-5.5, x1:5.5, y0:-5.3, y1:3.6}, aspect:8.9/11,
+    world:{x0:-5.5, x1:5.5, y0:-6.2, y1:3.6}, aspect:9.8/11,
     aria:'El símbolo de sumatoria, una letra sigma mayúscula grande, con sus cuatro partes rotuladas con líneas guía: abajo, el índice k y su valor inicial 1; arriba, el valor final 5; a la derecha, el término general 2k más 1. Debajo, el índice recorre los valores 1, 2, 3, 4 y 5: en cada paso se reemplaza k, se obtiene un sumando y se agrega a la suma. Los sumandos son 3, 5, 7, 9 y 11, y la suma total es 35.',
     labels:[['F', '\\displaystyle\\sum_{k=1}^{5}(2k+1)=3+5+7+9+11=35', 'Σ (2k + 1), de k = 1 a 5, = 3 + 5 + 7 + 9 + 11 = 35', 'diff']],
     sliders:[{id:'k', tex:'k', min:1, max:5, step:1, value:1}],
@@ -13,10 +13,10 @@ OA.scene('ss-sigma', (function(){
       var k = Math.round(v.k || A), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, sum = 0, parts = [], x0, y0;
       function tx(s, px, py, sz, col, al){ c.font = sz + ' "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, px, py); }
       function guia(xa, ya, xb, yb){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(xa, ya); c.lineTo(xb, yb); c.stroke(); }
-      tx('Σ', X(-1.0), Y(1.6), '400 58px', C.ink); tx('5', X(-1.0), Y(1.6) - 44, '700 15px', C.ink); tx('k = 1', X(-1.0), Y(1.6) + 44, '700 15px', C.ink); tx('(2k + 1)', X(0.9), Y(1.6), '700 19px', C.ink);
-      guia(X(-1.6), Y(1.6) - 44, X(-2.5), Y(1.6) - 52); txt('valor final del índice', X(-2.6), Y(1.6) - 54, 'right', C.ink);
-      guia(X(-1.9), Y(1.6) + 44, X(-2.5), Y(1.6) + 52); txt('índice y valor inicial', X(-2.6), Y(1.6) + 54, 'right', C.ink);
-      guia(X(2.1), Y(1.6), X(2.6), Y(1.6) - 14); txt('término general', X(2.7), Y(1.6) - 18, 'left', C.ink);
+      tx('Σ', X(0.4), Y(1.6), '400 58px', C.ink); tx('5', X(0.4), Y(1.6) - 44, '700 15px', C.ink); tx('k = 1', X(0.4), Y(1.6) + 44, '700 15px', C.ink); tx('(2k + 1)', X(2.3), Y(1.6), '700 19px', C.ink);
+      guia(X(-0.1), Y(1.6) - 44, X(-0.9), Y(1.6) - 44); txt('valor final del índice', X(-1.0), Y(1.6) - 44, 'right', C.ink);
+      guia(X(-0.5), Y(1.6) + 44, X(-0.9), Y(1.6) + 44); txt('índice y valor inicial', X(-1.0), Y(1.6) + 44, 'right', C.ink);
+      guia(X(2.6), Y(1.6) - 14, X(3.1), Y(1.6) - 34); txt('término general', X(3.2), Y(1.6) - 42, 'center', C.ink);
       for (i = A; i <= B; i++){ tx('k = ' + i, X(-4 + 2*(i - A)), Y(-0.9), (i === k ? '700' : '500') + ' 12px', i === k ? C.rise : i < k ? C.sec : (C.muted || '#9a9a9a')); if (i <= k){ tx('2 · ' + i + ' + 1', X(-4 + 2*(i - A)), Y(-0.9) + 18, '500 11.5px', i === k ? C.rise : C.sec); tx('' + t(i), X(-4 + 2*(i - A)), Y(-0.9) + 38, '700 15px', i === k ? C.rise : C.sec); sum += t(i); parts.push(t(i)); } if (i < B && i < k) tx('+', X(-3 + 2*(i - A)), Y(-0.9) + 38, '600 14px', C.ink); }
       x0 = X(-5.4); y0 = Y(-2.85);
       txt('el índice vale k = ' + k + ':  sumando 2 · ' + k + ' + 1 = ' + t(k), x0, y0, 'left', C.rise);

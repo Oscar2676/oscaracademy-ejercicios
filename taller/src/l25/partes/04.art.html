@@ -1,0 +1,149 @@
+<!--file:H04_escribir_sucesiones_y_series.html-->
+<!--title:Escribir sucesiones y series-->
+<!--id:ss-serie-->
+<!--tab:H04 Escribir-->
+<article class="sheet" id="ss-serie" data-hoja="L25 H04">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones</li>
+      <li><b>Escribir sucesiones y series</b></li>
+    </ol>
+    <h1>Escribir sucesiones y series</h1>
+    <p class="lede">Dos tareas de escritura. Una: a partir de los primeros términos, proponer una fórmula para el término general. Otra: pasar de la <b>sucesión</b> (una lista) a la <b>serie</b> (la suma de esa lista) y anotarla. \[\text{sucesión: }a_{1},\ a_{2},\ a_{3},\dots\qquad\text{serie: }a_{1}+a_{2}+a_{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Arriba, la sucesión \(\dfrac{1}{2},\ \dfrac{1}{4},\ \dfrac{1}{8},\dots\) como lista. Abajo, la serie: los mismos términos, sumados uno tras otro sobre una barra de largo \(1\).</p>
+  <div class="stage" data-scene="ss-serie"></div>
+  <ul class="keys">
+    <li><b>Lista de arriba:</b> la sucesión. Los términos van separados por comas.</li>
+    <li><b>Barra de abajo:</b> la serie. Cada término agrega un trozo; lo pintado es la <b>suma parcial</b> \(S_{n}\).</li>
+    <li><b>Trozo naranja:</b> el término que se suma en este paso.</li>
+    <li><b>Lo que queda sin pintar:</b> lo que falta para \(1\). Con cada término se reduce a la mitad: vale \(\dfrac{1}{2^{n}}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De los términos a una fórmula</h3>
+    <ol class="steps">
+      <li>Se numeran las posiciones: \(n=1,\ 2,\ 3,\dots\) y se mira cómo cambia cada parte del término al avanzar \(n\).</li>
+      <li><b>¿Suman siempre lo mismo?</b> \(3,\ 7,\ 11,\ 15\): suman \(4\). Entonces \(a_{n}=4n+\text{algo}\); con \(n=1\) debe dar \(3\): \(a_{n}=4n-1\).</li>
+      <li><b>¿Se multiplican siempre por lo mismo?</b> \(2,\ 6,\ 18,\ 54\): por \(3\). Entonces \(a_{n}=2\cdot 3^{\,n-1}\).</li>
+      <li><b>¿Cambia el signo?</b> Se agrega \((-1)^{n}\) si el primero es negativo, o \((-1)^{n+1}\) si el primero es positivo.</li>
+      <li><b>¿Es una fracción?</b> Se busca la regla del numerador y la del denominador por separado.</li>
+      <li><b>Siempre se comprueba</b> la fórmula con todos los términos dados.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>De la sucesión a la serie</h3>
+    <ol class="steps">
+      <li>Una <b>serie</b> es la suma de los términos de una sucesión. Si la sucesión es finita, la serie es una suma común y da un número.</li>
+      <li>Se abrevia con la letra griega sigma mayúscula: \(\displaystyle\sum_{k=1}^{n}a_{k}=a_{1}+a_{2}+\cdots+a_{n}\).</li>
+      <li>La suma de los \(n\) primeros términos se llama <b>suma parcial</b>, \(S_{n}\).</li>
+      <li>Si la sucesión es infinita, la serie se anota \(\displaystyle\sum_{k=1}^{\infty}a_{k}\). Qué significa «sumar infinitos términos» se define con las sumas parciales, en las hojas de series infinitas.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(3,\ 7,\ 11,\ 15,\dots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diferencias: \(7-3=4\), \(11-7=4\), \(15-11=4\). Suma siempre \(4\).</li>
+    <li>Propuesta: \(a_{n}=4n+c\). Con \(n=1\): \(4+c=3\ \Longrightarrow\ c=-1\).</li>
+    <li>\(a_{n}=4n-1\). Comprobación: \(a_{2}=7\), \(a_{3}=11\), \(a_{4}=15\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(1,\ -\dfrac{1}{2},\ \dfrac{1}{4},\ -\dfrac{1}{8},\dots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Signo: el primero es positivo y alternan: \((-1)^{n+1}\).</li>
+    <li>Denominadores: \(1,\ 2,\ 4,\ 8\), que son \(2^{0},\ 2^{1},\ 2^{2},\ 2^{3}\): en la posición \(n\), \(2^{\,n-1}\).</li>
+    <li>\(a_{n}=\dfrac{(-1)^{n+1}}{2^{\,n-1}}\). Comprobación con \(n=4\): \(\dfrac{(-1)^{5}}{2^{3}}=-\dfrac{1}{8}\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\dfrac{1}{2},\ \dfrac{2}{3},\ \dfrac{3}{4},\ \dfrac{4}{5},\dots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Numeradores: \(1,\ 2,\ 3,\ 4\): es \(n\).</li>
+    <li>Denominadores: \(2,\ 3,\ 4,\ 5\): es \(n+1\).</li>
+    <li>\(a_{n}=\dfrac{n}{n+1}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: escribir \(2+4+6+\cdots+20\) con sigma y calcularla</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Los sumandos son los pares: el de la posición \(k\) es \(2k\).</li>
+    <li>El último: \(2k=20\ \Longrightarrow\ k=10\). Hay \(10\) sumandos.</li>
+    <li>\(\displaystyle\sum_{k=1}^{10}2k=2+4+6+8+10+12+14+16+18+20=110\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Con honestidad.</b> Unos pocos términos <b>no determinan</b> una sucesión. \(1,\ 2,\ 4,\dots\) puede seguir como \(a_{n}=2^{\,n-1}\) (el cuarto es \(8\)) o como \(a_{n}=\dfrac{n^{2}-n+2}{2}\) (el cuarto es \(7\)): las dos fórmulas dan \(1,\ 2,\ 4\) al comienzo. Cuando un ejercicio pide «el término general», pide la regla más simple que calza con los términos dados.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Propón un término general para \(5,\ 8,\ 11,\ 14,\dots\) y úsalo para calcular \(a_{20}\).</p>
+    <details><summary>Pista</summary><div><p>¿Cuánto suma de un término al siguiente?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Suma siempre \(3\): \(a_{n}=3n+c\).</li>
+        <li>Con \(n=1\): \(3+c=5\ \Longrightarrow\ c=2\). Entonces \(a_{n}=3n+2\).</li>
+        <li>Comprobación: \(a_{4}=14\). ✓</li>
+        <li>\(a_{20}=3\cdot 20+2=62\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Escribe con notación sigma y calcula: \(\dfrac{1}{3}+\dfrac{1}{9}+\dfrac{1}{27}+\dfrac{1}{81}\).</p>
+    <details><summary>Pista</summary><div><p>Los denominadores son potencias de \(3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El sumando de la posición \(k\) es \(\dfrac{1}{3^{k}}\), con \(k=1,\ 2,\ 3,\ 4\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{4}\dfrac{1}{3^{k}}\).</li>
+        <li>Con denominador común \(81\): \(\dfrac{27+9+3+1}{81}=\dfrac{40}{81}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En un teatro, la fila 1 tiene \(20\) butacas y cada fila tiene \(2\) más que la anterior. Hay \(15\) filas. Escribe el término general de las butacas por fila, la serie que da el total de butacas, y calcúlala.</p>
+    <details><summary>Pista</summary><div><p>El total es la suma de las butacas de las \(15\) filas.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Suma siempre \(2\): \(a_{n}=2n+c\); con \(n=1\), \(2+c=20\ \Longrightarrow\ c=18\). \(a_{n}=2n+18\).</li>
+        <li>Serie: \(\displaystyle\sum_{k=1}^{15}(2k+18)\).</li>
+        <li>Los sumandos: \(20,\ 22,\ 24,\ 26,\ 28,\ 30,\ 32,\ 34,\ 36,\ 38,\ 40,\ 42,\ 44,\ 46,\ 48\).</li>
+        <li>Sumando de a pares desde los extremos: \(20+48=68\), \(22+46=68\),… Son \(7\) pares de \(68\) y queda al medio el \(34\): \(7\cdot 68+34=510\) butacas.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H04 · v001 · Pendiente de APR</span>
+</footer>
+</article>
