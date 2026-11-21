@@ -294,7 +294,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">MA-L24-H02 · v001 · Pendiente de APR</span>
+  <span class="status">MA-L24-H02 · v001 · APR de Óscar, 21-nov-2026</span>
 </footer>
 </article>
 </div>
@@ -518,6 +518,11 @@ function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y =
   c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
   oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
 function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
 OA.scene('bn-cubo', (function(){
   var A = 1.2, B = 0.7, K = 0.866, LIFT = 1.75;
   function P(x, y, z){ return [(x - y)*K, z - (x + y)*0.5]; }
