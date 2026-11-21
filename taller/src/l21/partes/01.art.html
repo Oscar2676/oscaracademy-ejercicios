@@ -1,0 +1,194 @@
+<!--file:H01_exploracion_de_acumulaciones_de_cambio.html-->
+<!--title:Exploración de acumulaciones de cambio-->
+<!--id:acu-exploracion-->
+<!--tab:H01 Acumulación de cambio-->
+<article class="sheet" id="acu-exploracion" data-hoja="L21 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo I</li>
+      <li>Integración y acumulación de cambio</li>
+      <li><b>Exploración de acumulaciones de cambio</b></li>
+    </ol>
+    <h1>Exploración de acumulaciones de cambio</h1>
+    <p class="lede">La derivada responde «¿a qué razón cambia una cantidad?». La pregunta inversa es «si conozco la razón de cambio en cada instante, ¿cuánto cambió la cantidad en total?». La respuesta es un área: el cambio acumulado entre \(t=a\) y \(t=b\) es el área, con signo, entre la gráfica de la razón de cambio y el eje \(t\). Se escribe con una integral definida.
+    \[\text{cambio acumulado}=\int_{a}^{b}r(t)\,dt\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>De la razón de cambio al cambio acumulado</h2>
+  <div class="prop p1">
+  <h3>Caso 1: razón constante, un rectángulo</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Una llave entrega agua a razón constante de \(2\) litros por minuto, durante \(5\) minutos. El agua acumulada es la razón por el tiempo:
+      \[2\ \frac{\text{litros}}{\text{minuto}}\cdot 5\ \text{minutos}=10\ \text{litros}\]</li>
+    <li>En la gráfica de la razón, \(r(t)=2\), ese producto es el área de un rectángulo de altura \(2\) y base \(5\):
+      \[\text{área}=\text{altura}\cdot\text{base}=2\cdot 5=10\]</li>
+    <li>Las unidades del área son las de la altura por las de la base: litros por minuto, por minutos, da litros.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Caso 2: razón que cambia, se corta en trozos</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Si la razón cambia con el tiempo, no hay un solo producto «razón por tiempo». Se corta el intervalo en trozos muy cortos, de duración \(dt\).</li>
+    <li>En un trozo tan corto la razón casi no alcanza a cambiar. El cambio en ese trozo es, aproximadamente, un rectángulo delgado:
+      \[r(t)\cdot dt\]</li>
+    <li>El cambio acumulado es la suma de todos esos rectángulos delgados, desde \(t=a\) hasta \(t=b\). Esa suma, en el límite cuando los trozos se hacen cada vez más cortos, es la integral definida y es el área bajo la gráfica:
+      \[\int_{a}^{b}r(t)\,dt\]</li>
+    <li>El símbolo \(\displaystyle\int\) es una S alargada, de «suma». Los números \(a\) y \(b\) son los límites de integración: dónde empieza y dónde termina la acumulación.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Caso 3: razón negativa, el área resta</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Si la razón es negativa, la cantidad disminuye. La gráfica queda bajo el eje \(t\) y el producto \(r(t)\cdot dt\) es negativo.</li>
+    <li>Por eso el área que queda bajo el eje se cuenta con signo negativo:
+      \[\int_{a}^{b}r(t)\,dt=\left(\text{área sobre el eje}\right)-\left(\text{área bajo el eje}\right)\]</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>Ejercicio resuelto. Un estanque tiene \(4\) litros de agua. Durante \(5\) minutos el agua entra o sale a razón de \(r(t)=6-2t\) litros por minuto. A la izquierda, la gráfica de la razón; a la derecha, el estanque. El área que se va pintando es el agua que se acumula.</p>
+  <div class="stage" data-scene="acu-exploracion"></div>
+  <ul class="keys">
+    <li><b>Recta azul:</b> la razón de cambio \(r(t)=6-2t\), en litros por minuto.</li>
+    <li><b>Área verde:</b> la razón es positiva, entra agua. Suma.</li>
+    <li><b>Área burdeo:</b> la razón es negativa, sale agua. Resta.</li>
+    <li><b>Estanque:</b> su contenido es los \(4\) litros iniciales más el cambio acumulado.</li>
+    <li><b>Detención en \(t=3\):</b> la razón es \(0\). El estanque deja de llenarse y empieza a vaciarse: es su nivel máximo.</li>
+    <li><b>Bajo la animación:</b> el cambio acumulado como integral, como área y su valor.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Desarrollo, paso a paso</h2>
+  <div class="prop p1">
+  <h3>Paso 1: ¿cuándo entra agua y cuándo sale?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se busca dónde la razón es \(0\):
+      \[6-2t=0\qquad\Longrightarrow\qquad t=3\]</li>
+    <li>Para \(0\le t&lt;3\), \(r(t)&gt;0\): entra agua. Para \(3&lt;t\le 5\), \(r(t)&lt;0\): sale agua.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Paso 2: lo que entra, de \(t=0\) a \(t=3\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El área es un triángulo. Su base va de \(0\) a \(3\): mide \(3\). Su altura es \(r(0)=6\).</li>
+    <li>Área del triángulo, base por altura partido por \(2\):
+      \[\int_{0}^{3}(6-2t)\,dt=\frac{3\cdot 6}{2}=9\]</li>
+    <li>Entran \(9\) litros.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Paso 3: lo que sale, de \(t=3\) a \(t=5\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El área es un triángulo bajo el eje. Su base va de \(3\) a \(5\): mide \(2\). Su altura es \(|r(5)|=|6-10|=4\).</li>
+    <li>Área del triángulo:
+      \[\frac{2\cdot 4}{2}=4\]</li>
+    <li>Está bajo el eje, así que cuenta con signo negativo:
+      \[\int_{3}^{5}(6-2t)\,dt=-4\]</li>
+    <li>Salen \(4\) litros.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Paso 4: el cambio acumulado y el contenido final</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Cambio acumulado en los \(5\) minutos, lo que entra menos lo que sale:
+      \[\int_{0}^{5}(6-2t)\,dt=9-4=5\]</li>
+    <li>Contenido final, el inicial más el cambio acumulado:
+      \[4+5=9\]</li>
+    <li>Contenido máximo, en \(t=3\), cuando deja de entrar agua:
+      \[4+9=13\]</li>
+    <li>Respuesta: el estanque gana \(5\) litros y termina con \(9\). Su contenido máximo es \(13\) litros, a los \(3\) minutos.</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="why">
+    <h3>Para tener en cuenta: el cambio acumulado hasta un instante cualquiera</h3>
+    <ol class="steps">
+      <li>Para \(0\le t\le 3\), el área desde \(0\) hasta \(t\) es un trapecio de bases \(r(0)=6\) y \(r(t)=6-2t\), y altura \(t\). Área del trapecio, suma de las bases por la altura partido por \(2\):
+        \[\frac{\big(6+(6-2t)\big)\cdot t}{2}=\frac{(12-2t)\cdot t}{2}=6t-t^{2}\]</li>
+      <li>Para \(3\le t\le 5\) se restan los \(9\) litros que entraron y el triángulo bajo el eje, de base \(t-3\) y altura \(|6-2t|=2t-6=2\,(t-3)\):
+        \[9-\frac{(t-3)\cdot 2\,(t-3)}{2}=9-(t-3)^{2}=9-t^{2}+6t-9=6t-t^{2}\]</li>
+      <li>En los dos tramos da la misma expresión. El cambio acumulado hasta el instante \(t\) es:
+        \[\int_{0}^{t}(6-2\tau)\,d\tau=6t-t^{2}\]</li>
+      <li>Si se deriva ese resultado respecto de \(t\), se recupera la razón de cambio: \(\left(6t-t^{2}\right)'=6-2t\). No es casualidad: es el teorema fundamental del cálculo, tema de otra hoja.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Ejercicios de refuerzo</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Un ciclista parte del reposo y su velocidad es \(v(t)=3t\) metros por segundo. ¿Qué distancia recorre en los primeros \(4\) segundos?</p>
+    <details><summary>Pista</summary><div><p>La velocidad es la razón de cambio de la posición. El área bajo \(v(t)\) es un triángulo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>La distancia es el cambio acumulado de la posición:
+          \[\int_{0}^{4}3t\,dt\]</li>
+        <li>El área es un triángulo de base \(4\) y altura \(v(4)=3\cdot 4=12\):
+          \[\frac{4\cdot 12}{2}=24\]</li>
+        <li>Respuesta: recorre \(24\) metros.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>La temperatura de una sala cambia a razón constante de \(-1{,}5\) grados por hora. ¿Cuánto cambia en \(4\) horas?</p>
+    <details><summary>Pista</summary><div><p>Razón constante: un rectángulo, bajo el eje.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>El área es un rectángulo de base \(4\) y altura \(1{,}5\), bajo el eje. Cuenta con signo negativo:
+          \[\int_{0}^{4}(-1{,}5)\,dt=-1{,}5\cdot 4=-6\]</li>
+        <li>Respuesta: la temperatura baja \(6\) grados.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Al bajar un archivo, la velocidad de descarga es de \(8\) megabytes por segundo durante los primeros \(3\) segundos. Después baja en línea recta hasta llegar a \(0\) en el segundo \(7\). ¿Cuántos megabytes se descargaron en los \(7\) segundos?</p>
+    <details><summary>Pista</summary><div><p>El área se separa en un rectángulo y un triángulo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>De \(t=0\) a \(t=3\), un rectángulo de altura \(8\) y base \(3\):
+          \[8\cdot 3=24\]</li>
+        <li>De \(t=3\) a \(t=7\), un triángulo de base \(7-3=4\) y altura \(8\):
+          \[\frac{4\cdot 8}{2}=16\]</li>
+        <li>Total:
+          \[24+16=40\]</li>
+        <li>Respuesta: se descargaron \(40\) megabytes.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L21-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>
