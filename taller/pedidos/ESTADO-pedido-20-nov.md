@@ -91,6 +91,16 @@ Tarjeta https://claude.ai/artifact/QAGc73ZARxHyBJJB67mP15 (slug bb8d800c-0943-42
 - «3. Sí a hoja nueva»: los 3 títulos parecidos al lote 20 se hacen como hojas nuevas en el lote 23 → **faltan 9 hojas en el lote 23** (las 6 de abajo + «Definir y diferenciar ecuaciones paramétricas», «Segundas derivadas de ecuaciones paramétricas», «Derivada de funciones con valores vectoriales»).
 - «2. Aplícalas» / «5. Continúa»: las hojas nuevas van con los criterios nuevos; después sigue la cola (binomio de Newton, series, límites, integración, 1º Básico).
 
+## 21-nov 10:30 · ALTO EN WIX + L23 H06–H08
+- **ALTO EN WIX (10:12):** Óscar edita las cajas de la página «Álgebra 1ª Parte» (cambia mucho el tamaño). **No enlazar ni publicar nada en Wix hasta que diga «terminé en Wix»** («entendido», 10:15). Los APR mientras tanto: solo pie + repo, y el enlace queda en cola. **Antes de volver a enlazar: recargar el editor y redefinir los ayudantes**, para no pisar sus cambios.
+- **Cola de enlaces Wix:** (vacía).
+- **L23 H06–H08 v001 hechas, pendientes de APR** (verificador 0 errores, 9 escenas con derivadas comprobadas):
+  - H06 «Área de la región acotada por dos curvas polares» (`pol-area-dos`).
+  - H07 «Introducción a funciones con valores vectoriales» (`vec-intro`) → Wix: qudgj · qtf2i.
+  - H08 «Derivada de funciones con valores vectoriales» (`vec-derivada`) → Wix: fr2b0 · qudgj · qtf2i.
+- **Faltan 6 hojas del lote 23:** r(t) con componentes trigonométricas · segunda derivada vectorial · vector aceleración · ejercicios de movimiento · definir y diferenciar paramétricas · segundas derivadas paramétricas.
+- **Esperan APR:** L03 H07 v003 · L21 H01 v003, H04, H05, H08, H09, H12 v002 · L23 H01 v003, H03, H04, H06, H07, H08.
+
 ## Lote 23 · Paramétricas, polares y vectoriales (`calculo-integral/lote23/`, fuentes `taller/src/l23/partes/`, `qa/rigor/verificar_lote_23.py`)
 Tarjeta https://claude.ai/artifact/H9Jd3daoV1wVSG7FiX1zDA (slug 82bb0741-2206-4832-bb06-a09fe3f81dc5). Código de pie `CI-L23-HNN`. Se arma con `python3 taller/build.py 23 "Paramétricas, polares y vectoriales"`; partes → `NN-p.html` con `cat _txt.js NN.scene.js` (01, 02) o `cat _txt.js _pol.js NN.scene.js` (03–05; `_pol.js` trae la cardioide `oaCar` y la rejilla polar). Ruta de las hojas: Cursos › Cálculo II › Derivada de funciones paramétricas.
 - **Pendientes de APR (21-nov 09:30), v001** (ids del pedido; al enlazar, buscar por título exacto con `__scan`):

@@ -1,0 +1,214 @@
+<!--file:H06_area_de_la_region_acotada_por_dos_curvas_polares.html-->
+<!--title:Calcular el área de la región acotada por dos curvas polares-->
+<!--id:pol-area-dos-->
+<!--tab:H06 Área entre dos polares-->
+<article class="sheet" id="pol-area-dos" data-hoja="L23 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones paramétricas</li>
+      <li><b>Calcular el área de la región acotada por dos curvas polares</b></li>
+    </ol>
+    <h1>Calcular el área de la región acotada por dos curvas polares</h1>
+    <p class="lede">Cuando una región queda entre dos curvas polares, se barre con un rayo desde el polo. La región se corta en <b>trozos de anillo de ángulo \(d\theta\)</b>: cada uno es un sector grande, hasta la curva de afuera, menos un sector chico, hasta la curva de adentro.
+    \[A=\int_{\alpha}^{\beta}\frac{1}{2}\Big(\big[R(\theta)\big]^{2}-\big[r(\theta)\big]^{2}\Big)\,d\theta\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li>La región está entre dos curvas polares continuas: la <b>exterior</b>, \(r=R(\theta)\), y la <b>interior</b>, \(r=r(\theta)\), con \(0\le r(\theta)\le R(\theta)\), para \(\theta\) entre \(\alpha\) y \(\beta\).</li>
+      <li>Un sector de círculo de radio \(\rho\) y ángulo \(d\theta\) mide \(\dfrac{1}{2}\rho^{2}\,d\theta\) (es la fracción \(\dfrac{d\theta}{2\pi}\) del círculo de área \(\pi\rho^{2}\)).</li>
+      <li>En un ángulo \(d\theta\) muy pequeño, el rayo cubre desde el polo hasta la curva exterior un sector de área \(\dfrac{1}{2}R^{2}\,d\theta\). De eso, lo que queda antes de la curva interior, \(\dfrac{1}{2}r^{2}\,d\theta\), no pertenece a la región. El trozo que sí pertenece mide
+        \[dA=\frac{1}{2}R^{2}\,d\theta-\frac{1}{2}r^{2}\,d\theta=\frac{1}{2}\left(R^{2}-r^{2}\right)d\theta\]</li>
+      <li>Sumando todos los trozos, de \(\alpha\) a \(\beta\):
+        \[A=\int_{\alpha}^{\beta}\frac{1}{2}\Big(\big[R(\theta)\big]^{2}-\big[r(\theta)\big]^{2}\Big)\,d\theta\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El método, en cuatro pasos</h3>
+    <ol class="steps">
+      <li><b>Cruces:</b> igualar las dos curvas y resolver para \(\theta\). Esos ángulos suelen ser los límites.</li>
+      <li><b>Cuál va afuera:</b> probar un ángulo intermedio y comparar los dos radios.</li>
+      <li><b>Trozo:</b> escribir \(\dfrac{1}{2}\left(R^{2}-r^{2}\right)\) y simplificar. Con \(\cos^{2}\) o \(\operatorname{sen}^{2}\) se usan \(\cos^{2}u=\dfrac{1+\cos 2u}{2}\) y \(\operatorname{sen}^{2}u=\dfrac{1-\cos 2u}{2}\).</li>
+      <li><b>Integrar</b> entre los límites. El resultado debe ser positivo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La región que queda <b>dentro</b> del círculo \(r=1\) y <b>fuera</b> de la cardioide \(r=1-\cos\theta\). El rayo la barre desde \(\theta=-\dfrac{\pi}{2}\) hasta \(\theta=\dfrac{\pi}{2}\).</p>
+  <div class="stage" data-scene="pol-area-dos"></div>
+  <ul class="keys">
+    <li><b>Círculo naranja:</b> \(r=1\), la curva exterior. <b>Cardioide azul:</b> \(r=1-\cos\theta\), la curva interior en este tramo.</li>
+    <li><b>Rayo:</b> su tramo azul va del polo a la cardioide (radio interior, \(r\)); su tramo naranja va de la cardioide al círculo. Todo el rayo mide el radio exterior, \(R=1\).</li>
+    <li><b>Trozo burdeo:</b> el pedazo de anillo que se agrega. Su ángulo va marcado con un arco negro y su rótulo, «ángulo \(d\theta\)».</li>
+    <li><b>Zona verde:</b> el área barrida desde \(\theta=-\dfrac{\pi}{2}\).</li>
+    <li><b>Bajo el dibujo:</b> el ángulo, los dos radios con su expresión, el área del trozo y el área barrida.</li>
+    <li><b>Bajo la animación:</b> el área de un trozo, la suma de los trozos y el valor al que llega.</li>
+  </ul>
+
+  <div class="card k3">
+    <h3>¿De dónde sale la \(u\) que aparece bajo la animación?</h3>
+    <ol class="steps">
+      <li>La zona verde va desde el ángulo \(-\dfrac{\pi}{2}\) hasta el ángulo donde está el rayo, \(\theta\). Su tamaño depende de ese ángulo: es una función de \(\theta\), \(A(\theta)\).</li>
+      <li>Es la suma de trozos muy delgados, uno por cada ángulo <b>intermedio</b> entre \(-\dfrac{\pi}{2}\) y \(\theta\). Para sumarlos hay que darle un nombre a ese ángulo intermedio.</li>
+      <li>No se lo puede llamar \(\theta\), porque \(\theta\) ya está ocupada: es el ángulo donde está detenido el rayo, el tope de la suma. Se elige otra letra: \(u\).</li>
+      <li>El trozo que corresponde al ángulo \(u\), de espesor \(du\), aporta
+        \[\frac{1}{2}\Big[1-(1-\cos u)^{2}\Big]du=\frac{1}{2}\left(2\cos u-\cos^{2}u\right)du\]</li>
+      <li>Se suman desde \(u=-\dfrac{\pi}{2}\) hasta \(u=\theta\). Con \(\cos^{2}u=\dfrac{1+\cos 2u}{2}\), una antiderivada de \(2\cos u-\cos^{2}u\) es \(2\operatorname{sen}u-\dfrac{u}{2}-\dfrac{\operatorname{sen}2u}{4}\):
+        \[A(\theta)=\frac{1}{2}\left[2\operatorname{sen}u-\frac{u}{2}-\frac{\operatorname{sen}2u}{4}\right]_{-\pi/2}^{\theta}=\frac{1}{2}\left(2\operatorname{sen}\theta-\frac{\theta}{2}-\frac{\operatorname{sen}2\theta}{4}+2-\frac{\pi}{4}\right)\]
+        El \(2-\dfrac{\pi}{4}\) sale de evaluar en el límite de abajo: \(-\left(-2+\dfrac{\pi}{4}-0\right)\).</li>
+      <li>La letra de adentro no influye en el resultado: después de evaluar, la \(u\) desaparece. Por eso se la llama <b>variable muda</b>.</li>
+      <li>Cuando el rayo llega a \(\theta=\dfrac{\pi}{2}\): \(A=\dfrac{1}{2}\left(2-\dfrac{\pi}{4}-0+2-\dfrac{\pi}{4}\right)=2-\dfrac{\pi}{4}\). Es la integral del ejemplo 1.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: dentro de \(r=1\) y fuera de \(r=1-\cos\theta\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces.</b> \(1=1-\cos\theta\ \Longrightarrow\ \cos\theta=0\ \Longrightarrow\ \theta=-\dfrac{\pi}{2}\) o \(\theta=\dfrac{\pi}{2}\).</li>
+    <li><b>Cuál va afuera.</b> En \(\theta=0\): el círculo da \(1\) y la cardioide da \(1-1=0\). Entre \(-\dfrac{\pi}{2}\) y \(\dfrac{\pi}{2}\) el coseno es positivo, así que \(1-\cos\theta&lt;1\): la cardioide va adentro.</li>
+    <li><b>Trozo.</b> \(R^{2}-r^{2}=1-(1-\cos\theta)^{2}=1-\left(1-2\cos\theta+\cos^{2}\theta\right)=2\cos\theta-\cos^{2}\theta\).</li>
+    <li><b>Integral.</b> Con \(\cos^{2}\theta=\dfrac{1+\cos 2\theta}{2}\):
+      \[A=\frac{1}{2}\int_{-\pi/2}^{\pi/2}\left(2\cos\theta-\frac{1}{2}-\frac{\cos 2\theta}{2}\right)d\theta=\frac{1}{2}\left[2\operatorname{sen}\theta-\frac{\theta}{2}-\frac{\operatorname{sen}2\theta}{4}\right]_{-\pi/2}^{\pi/2}\]</li>
+    <li><b>Evaluación.</b> En \(\dfrac{\pi}{2}\): \(2-\dfrac{\pi}{4}-0\). En \(-\dfrac{\pi}{2}\): \(-2+\dfrac{\pi}{4}-0\).
+      \[A=\frac{1}{2}\left[\left(2-\frac{\pi}{4}\right)-\left(-2+\frac{\pi}{4}\right)\right]=\frac{1}{2}\left(4-\frac{\pi}{2}\right)=2-\frac{\pi}{4}\approx 1{,}215\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: dentro de \(r=2\cos\theta\) y fuera de \(r=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Cruces.</b> \(2\cos\theta=1\ \Longrightarrow\ \cos\theta=\dfrac{1}{2}\ \Longrightarrow\ \theta=-\dfrac{\pi}{3}\) o \(\theta=\dfrac{\pi}{3}\).</li>
+    <li><b>Cuál va afuera.</b> En \(\theta=0\): \(2\cos 0=2&gt;1\). Entre los cruces va afuera \(r=2\cos\theta\).</li>
+    <li><b>Trozo.</b> \(R^{2}-r^{2}=4\cos^{2}\theta-1=2\,(1+\cos 2\theta)-1=1+2\cos 2\theta\).</li>
+    <li><b>Integral.</b>
+      \[A=\frac{1}{2}\int_{-\pi/3}^{\pi/3}\left(1+2\cos 2\theta\right)d\theta=\frac{1}{2}\Big[\theta+\operatorname{sen}2\theta\Big]_{-\pi/3}^{\pi/3}=\frac{1}{2}\left[\left(\frac{\pi}{3}+\frac{\sqrt{3}}{2}\right)-\left(-\frac{\pi}{3}-\frac{\sqrt{3}}{2}\right)\right]=\frac{\pi}{3}+\frac{\sqrt{3}}{2}\approx 1{,}913\]</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dos errores comunes.</b> Uno: restar los radios y después elevar, \(\dfrac{1}{2}(R-r)^{2}\). Eso no es el área del trozo. Con \(R=3\) y \(r=1\): \(\dfrac{1}{2}\left(3^{2}-1^{2}\right)=4\), mientras que \(\dfrac{1}{2}(3-1)^{2}=2\). Primero se eleva cada radio; después se resta. Dos: buscar los cruces solo igualando las fórmulas. Dos curvas polares pueden pasar por el polo con ángulos distintos; ese cruce no aparece al igualar. Conviene dibujar las curvas antes de plantear.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula con la fórmula el área de la región dentro de \(r=2\) y fuera de \(r=1\), y comprueba con la geometría.</p>
+    <details><summary>Pista</summary><div><p>Son dos círculos con el mismo centro. Vuelta completa: \(\theta\) de \(0\) a \(2\pi\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(A=\displaystyle\int_{0}^{2\pi}\frac{1}{2}\left(2^{2}-1^{2}\right)d\theta=\frac{3}{2}\cdot 2\pi=3\pi\).</li>
+        <li>Comprobación: área del círculo grande menos la del chico, \(\pi\cdot 4-\pi\cdot 1=3\pi\). Coincide.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>Calcula el área de la región dentro de \(r=3\operatorname{sen}\theta\) y fuera de \(r=1+\operatorname{sen}\theta\).</p>
+    <details><summary>Pista</summary><div><p>Se cruzan donde \(\operatorname{sen}\theta=\dfrac{1}{2}\). Al simplificar queda \(8\operatorname{sen}^{2}\theta-1-2\operatorname{sen}\theta\), y \(8\operatorname{sen}^{2}\theta=4-4\cos 2\theta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Cruces: \(3\operatorname{sen}\theta=1+\operatorname{sen}\theta\ \Longrightarrow\ \operatorname{sen}\theta=\dfrac{1}{2}\ \Longrightarrow\ \theta=\dfrac{\pi}{6}\) o \(\theta=\dfrac{5\pi}{6}\).</li>
+        <li>En \(\theta=\dfrac{\pi}{2}\): \(3&gt;2\). Va afuera \(r=3\operatorname{sen}\theta\).</li>
+        <li>\(R^{2}-r^{2}=9\operatorname{sen}^{2}\theta-\left(1+2\operatorname{sen}\theta+\operatorname{sen}^{2}\theta\right)=8\operatorname{sen}^{2}\theta-1-2\operatorname{sen}\theta=3-4\cos 2\theta-2\operatorname{sen}\theta\).</li>
+        <li>\(A=\dfrac{1}{2}\Big[3\theta-2\operatorname{sen}2\theta+2\cos\theta\Big]_{\pi/6}^{5\pi/6}\). En \(\dfrac{5\pi}{6}\): \(\dfrac{5\pi}{2}+\sqrt{3}-\sqrt{3}=\dfrac{5\pi}{2}\). En \(\dfrac{\pi}{6}\): \(\dfrac{\pi}{2}-\sqrt{3}+\sqrt{3}=\dfrac{\pi}{2}\).</li>
+        <li>\(A=\dfrac{1}{2}\left(\dfrac{5\pi}{2}-\dfrac{\pi}{2}\right)=\pi\approx 3{,}14\) unidades cuadradas.</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un aspersor moja la zona limitada por \(r=4+2\cos\theta\), en metros, con el aspersor en el polo. Alrededor del aspersor hay una losa circular de \(2\) metros de radio, donde no hay pasto. ¿Cuántos metros cuadrados de pasto se riegan?</p>
+    <details><summary>Pista</summary><div><p>Curva exterior: \(R=4+2\cos\theta\). Curva interior: \(r=2\). Vuelta completa. \(4\cos^{2}\theta=2+2\cos 2\theta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(4+2\cos\theta\ge 2\) siempre: la losa queda completa dentro de la zona mojada. \(\theta\) va de \(0\) a \(2\pi\).</li>
+        <li>\(R^{2}-r^{2}=16+16\cos\theta+4\cos^{2}\theta-4=14+16\cos\theta+2\cos 2\theta\).</li>
+        <li>\(A=\dfrac{1}{2}\Big[14\theta+16\operatorname{sen}\theta+\operatorname{sen}2\theta\Big]_{0}^{2\pi}=\dfrac{1}{2}\cdot 28\pi=14\pi\approx 44{,}0\).</li>
+        <li>Respuesta: se riegan unos \(44\) metros cuadrados de pasto.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* cardioide r = 1 + cos θ y rejilla polar, comunes a las hojas polares del lote 23 */
+var oaCar = { r:function(q){ return 1 + Math.cos(q); }, dr:function(q){ return -Math.sin(q); },
+  x:function(q){ return (1 + Math.cos(q))*Math.cos(q); }, y:function(q){ return (1 + Math.cos(q))*Math.sin(q); },
+  dx:function(q){ return -Math.sin(q)*(1 + 2*Math.cos(q)); }, dy:function(q){ return (2*Math.cos(q) - 1)*(Math.cos(q) + 1); },
+  ts:function(s){ var TP = 2*Math.PI; return s < 2 ? 0.02 : s < 20 ? 0.02 + (TP - 0.02)*(s - 2)/18 : TP; } };
+function oaRej(S, R){ var c = S.ctx, k, a; c.strokeStyle = S.C.grid; c.lineWidth = 1; c.setLineDash([]);
+  for (k = 1; k <= R; k++){ c.beginPath(); c.arc(S.X(0), S.Y(0), Math.abs(S.X(k) - S.X(0)), 0, 6.2832); c.stroke(); }
+  for (k = 0; k < 12; k++){ a = k*Math.PI/6; S.line(0, 0, R*Math.cos(a), R*Math.sin(a), {color:S.C.grid, width:1}); }
+  S.line(0, 0, R + 0.25, 0, {color:S.C.ink, width:1.5}); }
+function oaArco(S, q, rad, col){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = 2; c.beginPath(); c.arc(S.X(0), S.Y(0), rad, 0, -q, true); c.stroke(); }
+OA.scene('pol-area-dos', (function(){
+  var RUN = 24, num = OA.num, dec = oaDec, PI = Math.PI, A0 = -PI/2, A1 = PI/2, D = 0.2;
+  function ri(q){ return 1 - Math.cos(q); }
+  function A(q){ return 0.5*(2*Math.sin(q) - q/2 - Math.sin(2*q)/4 + 2 - PI/4); }
+  function qs(s){ return s < 2 ? A0 + 0.02 : s < 20 ? A0 + 0.02 + (PI - 0.02)*(s - 2)/18 : A1; }
+  return {
+    world:{x0:-2.4, x1:3.3, y0:-4.5, y1:1.6}, aspect:6.1/5.7,
+    _chk:[{f:A, df:function(q){ return 0.5*(1 - ri(q)*ri(q)); }, at:[-1.2, -0.4, 0.5, 1.3]}],
+    aria:'Sobre una rejilla polar, el círculo naranja r igual a 1 y la cardioide azul r igual a 1 menos coseno de theta, que se cruzan en theta igual a menos pi medios y pi medios. Un rayo gira entre esos dos ángulos. Sobre el rayo se marcan el radio interior, hasta la cardioide, y el radio exterior, hasta el círculo. Un trozo de anillo burdeo, de ángulo d theta, queda entre las dos curvas. La región barrida entre ellas se pinta de verde y llega a medir 2 menos pi cuartos.',
+    labels:[['F', 'A=\\displaystyle\\int_{-\\pi/2}^{\\pi/2}\\dfrac{1}{2}\\Big[1^{2}-(1-\\cos\\theta)^{2}\\Big]d\\theta=2-\\dfrac{\\pi}{4}', 'A = ∫ ½[1² − (1 − cos θ)²] dθ = 2 − π/4', 'diff']],
+    sliders:[{id:'th', tex:'\\theta', min:-1.5708, max:1.5708, step:0.005, value:-1.55}],
+    legend:'<span><i class="sw rise"></i> \\(r=1\\), exterior</span><span><i class="sw sec"></i> \\(r=1-\\cos\\theta\\), interior</span><span><i class="sw tan"></i> trozo de anillo de ángulo \\(d\\theta\\)</span><span><i class="sw alt"></i> área barrida</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.th = qs(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var th = v.th == null ? A0 + 0.02 : v.th, s = v.q == null ? RUN : v.q*RUN, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, q, pts = [], w = [], on = th < A1 - 0.01 && !(v.q != null && s >= 20), q1 = Math.min(A1, th + D), R1 = Math.abs(X(1) - X(0)), am, ax, ay;
+      oaRej(S, 1);
+      for (i = 0; i <= 120; i++){ q = A0 + (th - A0)*i/120; pts.push([Math.cos(q), Math.sin(q)]); } for (i = 120; i >= 0; i--){ q = A0 + (th - A0)*i/120; pts.push([ri(q)*Math.cos(q), ri(q)*Math.sin(q)]); }
+      if (th > A0 + 0.03) S.poly(pts, {fill:C.alt, alpha:0.45});
+      if (on){ for (i = 0; i <= 10; i++){ q = th + (q1 - th)*i/10; w.push([Math.cos(q), Math.sin(q)]); } for (i = 10; i >= 0; i--){ q = th + (q1 - th)*i/10; w.push([ri(th)*Math.cos(q), ri(th)*Math.sin(q)]); } S.poly(w, {fill:C.tan, alpha:0.8}); }
+      oaPar(S, function(q){ return Math.cos(q); }, function(q){ return Math.sin(q); }, 0, 2*PI, C.rise, 2.6);
+      oaPar(S, function(q){ return ri(q)*Math.cos(q); }, function(q){ return ri(q)*Math.sin(q); }, 0, 2*PI, C.sec, 2.6);
+      S.dot(0, 1, C.ink); S.dot(0, -1, C.ink); txt('θ = π/2', X(0) + 10, Y(1) - 12, 'left', C.ink); txt('θ = −π/2', X(0) + 10, Y(-1) + 12, 'left', C.ink);
+      /* rayo: tramo interior (hasta la cardioide) y tramo entre las dos curvas */
+      S.line(0, 0, ri(th)*Math.cos(th), ri(th)*Math.sin(th), {color:C.sec, width:3.4}); S.line(ri(th)*Math.cos(th), ri(th)*Math.sin(th), Math.cos(th), Math.sin(th), {color:C.rise, width:3.4});
+      S.dot(0, 0, C.ink); S.dot(ri(th)*Math.cos(th), ri(th)*Math.sin(th), C.sec); S.dot(Math.cos(th), Math.sin(th), C.rise);
+      if (on){ am = th + (q1 - th)/2; ax = X(0) + (R1 + 7)*Math.cos(am); ay = Y(0) - (R1 + 7)*Math.sin(am); c.strokeStyle = C.ink; c.lineWidth = 2.4; c.beginPath(); c.arc(X(0), Y(0), R1 + 7, -th, -q1, true); c.stroke(); c.lineWidth = 1.3; c.beginPath(); c.moveTo(ax, ay); c.lineTo(ax + 20, ay); c.stroke(); txt('ángulo dθ', ax + 24, ay, 'left', C.ink); }
+      /* datos */
+      txt('θ = ' + dec(th, 2) + ' rad', X(-2.3), Y(-1.75), 'left', C.ink);
+      txt('radio exterior: R = 1', X(-2.3), Y(-1.75) + 21, 'left', C.rise);
+      txt('radio interior: r = 1 − cos θ = ' + dec(ri(th), 2), X(-2.3), Y(-1.75) + 42, 'left', C.sec);
+      txt('trozo: dA = ½ (R² − r²) dθ', X(-2.3), Y(-1.75) + 63, 'left', C.tan);
+      txt('área barrida ≈ ' + dec(A(th), 3), X(-2.3), Y(-1.75) + 84, 'left', C.alt);
+      S.lab('F', X(-2.3), Y(-3.9), 0, 0, v.q != null && s >= 20);
+    },
+    caption:function(v){
+      var th = v.th == null ? A0 + 0.02 : v.th, s = v.q == null ? null : v.q*RUN;
+      if (s != null && s < 2) return 'El círculo r = 1 y la cardioide r = 1 − cos θ se cruzan en θ = −π/2 y θ = π/2. Entre esos ángulos la cardioide queda adentro. El rayo va a barrer la región que hay entre las dos';
+      if (th >= A1 - 0.006) return 'El rayo llegó a θ = π/2. La región dentro del círculo y fuera de la cardioide mide 2 − π/4, cerca de 1,215 unidades cuadradas';
+      return 'En θ = ' + dec(th, 2) + ' el rayo cruza primero la cardioide, en r = ' + dec(ri(th), 2) + ', y después el círculo, en R = 1. El trozo que agrega es un sector grande menos un sector chico: ½(1² − ' + dec(ri(th), 2) + '²) dθ';
+    },
+    readout:function(v){ var th = v.th == null ? A0 + 0.02 : v.th; return [['', 'dA=\\dfrac{1}{2}R^{2}\\,d\\theta-\\dfrac{1}{2}r^{2}\\,d\\theta=\\dfrac{1}{2}\\Big[1-(1-\\cos\\theta)^{2}\\Big]d\\theta=\\dfrac{1}{2}\\left(2\\cos\\theta-\\cos^{2}\\theta\\right)d\\theta'], ['d', 'A(\\theta)=\\displaystyle\\int_{-\\pi/2}^{\\theta}\\dfrac{1}{2}\\left(2\\cos u-\\cos^{2}u\\right)du=\\dfrac{1}{2}\\left(2\\operatorname{sen}\\theta-\\dfrac{\\theta}{2}-\\dfrac{\\operatorname{sen}2\\theta}{4}+2-\\dfrac{\\pi}{4}\\right)'], ['', '\\theta=' + num(th, 2) + ':\\quad A(\\theta)\\approx ' + num(A(th), 3) + '\\qquad\\theta=\\dfrac{\\pi}{2}:\\quad A=2-\\dfrac{\\pi}{4}']]; }
+  };
+})());

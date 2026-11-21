@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Derivada de funciones con valores vectoriales | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="vec-derivada" data-hoja="L23 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Derivada de funciones con valores vectoriales</b></li>
+    </ol>
+    <h1>Derivada de funciones con valores vectoriales</h1>
+    <p class="lede">La derivada de una función vectorial se define igual que la de una función común: como el límite de un cociente de cambios. El resultado es otro vector, y se calcula derivando cada componente.
+    \[\vec r\,'(t)=\lim_{h\to 0}\frac{\vec r(t+h)-\vec r(t)}{h}=\big\langle x'(t),\;y'(t)\big\rangle\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale que se deriva componente a componente</h3>
+    <ol class="steps">
+      <li>Sea \(\vec r(t)=\big\langle x(t),\,y(t)\big\rangle\). El cambio del vector entre \(t\) y \(t+h\) es una resta de vectores, que se hace componente a componente:
+        \[\Delta\vec r=\vec r(t+h)-\vec r(t)=\big\langle x(t+h)-x(t),\;y(t+h)-y(t)\big\rangle\]</li>
+      <li>Dividir por \(h\) es multiplicar el vector por el número \(\dfrac{1}{h}\), también componente a componente:
+        \[\frac{\Delta\vec r}{h}=\left\langle\frac{x(t+h)-x(t)}{h},\;\frac{y(t+h)-y(t)}{h}\right\rangle\]</li>
+      <li>El límite de un vector se toma en cada componente. Cada componente es el cociente con que se define una derivada común. Si \(x\) e \(y\) son derivables en \(t\):
+        \[\vec r\,'(t)=\left\langle\lim_{h\to 0}\frac{x(t+h)-x(t)}{h},\;\lim_{h\to 0}\frac{y(t+h)-y(t)}{h}\right\rangle=\big\langle x'(t),\;y'(t)\big\rangle\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Qué significa</h3>
+    <ol class="steps">
+      <li><b>En el dibujo.</b> \(\Delta\vec r\) es la flecha que va de la punta de \(\vec r(t)\) a la punta de \(\vec r(t+h)\): una cuerda de la curva. Al achicar \(h\), la dirección de esa cuerda se acerca a la de la tangente. Por eso, si \(\vec r\,'(t)\neq\vec 0\), el vector \(\vec r\,'(t)\) es <b>tangente</b> a la curva en ese punto y apunta en el sentido en que crece \(t\).</li>
+      <li><b>En movimiento.</b> Si \(\vec r(t)\) es la posición en el instante \(t\), entonces \(\vec r\,'(t)\) es el <b>vector velocidad</b>: su dirección dice hacia dónde va el móvil y su largo, \(\sqrt{x'(t)^{2}+y'(t)^{2}}\), es la rapidez.</li>
+      <li><b>Recta tangente.</b> Pasa por el punto \(\vec r(t_{0})\) con dirección \(\vec r\,'(t_{0})\): \(\;\vec L(s)=\vec r(t_{0})+s\,\vec r\,'(t_{0})\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La función \(\vec r(t)=\big\langle t,\;4-t^{2}\big\rangle\) en el punto \(t_{0}=-1\). Mira cómo el cociente \(\dfrac{\Delta\vec r}{h}\) (flecha naranja) gira hasta quedar sobre el vector tangente (flecha burdeo) cuando \(h\) se achica.</p>
+  <div class="stage" data-scene="vec-derivada"></div>
+  <ul class="keys">
+    <li><b>Punto negro:</b> \(\vec r(t_{0})=\vec r(-1)=(-1,\,3)\), fijo. <b>Punto verde:</b> \(\vec r(t_{0}+h)\), que se acerca al negro.</li>
+    <li><b>Flechas grises:</b> los vectores posición \(\vec r(t_{0})\) y \(\vec r(t_{0}+h)\), desde el origen.</li>
+    <li><b>Flecha verde:</b> el cambio \(\Delta\vec r=\vec r(t_{0}+h)-\vec r(t_{0})=\big\langle h,\;2h-h^{2}\big\rangle\).</li>
+    <li><b>Flecha naranja:</b> el cociente \(\dfrac{\Delta\vec r}{h}=\big\langle 1,\;2-h\big\rangle\). Tiene la misma dirección que la verde, pero su largo no se va a cero.</li>
+    <li><b>Flecha burdeo:</b> el límite, \(\vec r\,'(-1)=\langle 1,\,2\rangle\), tangente a la curva.</li>
+    <li><b>Bajo el dibujo:</b> el valor de \(h\) y las dos flechas escritas con su expresión y su valor.</li>
+    <li><b>Bajo la animación:</b> la resta, el cociente y el límite, paso a paso.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, con la definición: \(\vec r(t)=\big\langle t,\;4-t^{2}\big\rangle\) en \(t_{0}=-1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Punto.</b> \(\vec r(-1)=\langle -1,\;4-1\rangle=\langle -1,\,3\rangle\).</li>
+    <li><b>Punto vecino.</b> \(\vec r(-1+h)=\big\langle -1+h,\;4-(-1+h)^{2}\big\rangle=\big\langle -1+h,\;4-\left(1-2h+h^{2}\right)\big\rangle=\big\langle -1+h,\;3+2h-h^{2}\big\rangle\).</li>
+    <li><b>Cambio.</b> \(\Delta\vec r=\big\langle -1+h-(-1),\;3+2h-h^{2}-3\big\rangle=\big\langle h,\;2h-h^{2}\big\rangle\).</li>
+    <li><b>Cociente.</b> \(\dfrac{\Delta\vec r}{h}=\left\langle\dfrac{h}{h},\;\dfrac{2h-h^{2}}{h}\right\rangle=\big\langle 1,\;2-h\big\rangle\), para \(h\neq 0\).</li>
+    <li><b>Límite.</b> \(\vec r\,'(-1)=\displaystyle\lim_{h\to 0}\big\langle 1,\;2-h\big\rangle=\langle 1,\,2\rangle\).</li>
+    <li><b>Comprobación con la regla.</b> \(\vec r\,'(t)=\big\langle 1,\;-2t\big\rangle\), y en \(t=-1\): \(\langle 1,\,2\rangle\). Coincide.</li>
+    <li><b>Recta tangente.</b> \(\vec L(s)=\langle -1,\,3\rangle+s\,\langle 1,\,2\rangle\), es decir, \(x=-1+s\), \(y=3+2s\). Eliminando \(s\): \(y=3+2\,(x+1)=2x+5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con las reglas: \(\vec r(t)=\big\langle t^{2},\;e^{2t}\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primera componente: \(\left(t^{2}\right)'=2t\).</li>
+    <li>Segunda componente, con la regla de la cadena: \(\left(e^{2t}\right)'=2e^{2t}\).</li>
+    <li>\(\vec r\,'(t)=\big\langle 2t,\;2e^{2t}\big\rangle\).</li>
+    <li>En \(t=0\): el punto es \(\vec r(0)=\langle 0,\,1\rangle\) y el vector tangente es \(\vec r\,'(0)=\langle 0,\,2\rangle\), que apunta derecho hacia arriba. La recta tangente es vertical: \(x=0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Reglas de derivación</h3>
+  <div class="body">
+  <p>Para \(\vec u(t)\) y \(\vec v(t)\) derivables, \(c\) un número y \(f(t)\) una función común derivable:</p>
+  <ol class="steps">
+    <li>\(\big(\vec u+\vec v\big)'=\vec u\,'+\vec v\,'\) y \(\big(c\,\vec u\big)'=c\,\vec u\,'\).</li>
+    <li>\(\big(f\,\vec u\big)'=f'\,\vec u+f\,\vec u\,'\).</li>
+    <li>Producto punto: \(\big(\vec u\cdot\vec v\big)'=\vec u\,'\cdot\vec v+\vec u\cdot\vec v\,'\).</li>
+    <li><b>Por qué vale la del producto punto.</b> Con \(\vec u=\langle u_{1},\,u_{2}\rangle\) y \(\vec v=\langle v_{1},\,v_{2}\rangle\): \(\vec u\cdot\vec v=u_{1}v_{1}+u_{2}v_{2}\). Se deriva cada sumando con la regla del producto común:
+      \[\big(u_{1}v_{1}+u_{2}v_{2}\big)'=u_{1}'v_{1}+u_{1}v_{1}'+u_{2}'v_{2}+u_{2}v_{2}'=\big(u_{1}'v_{1}+u_{2}'v_{2}\big)+\big(u_{1}v_{1}'+u_{2}v_{2}'\big)=\vec u\,'\cdot\vec v+\vec u\cdot\vec v\,'\]
+      Las otras dos salen igual, escribiendo las componentes.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dos errores comunes.</b> Uno: creer que la derivada es un número, la pendiente. La derivada de una función vectorial es un <b>vector</b>; la pendiente de la tangente es el cociente de sus componentes, \(\dfrac{y'(t)}{x'(t)}\), cuando \(x'(t)\neq 0\). Dos: dibujar \(\vec r\,'(t)\) saliendo del origen. Como vector tangente se dibuja saliendo del punto \(\vec r(t)\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\vec r\,'(t)\) para \(\vec r(t)=\big\langle t^{3}-t,\;\ln t\big\rangle\) y evalúa en \(t=1\).</p>
+    <details><summary>Pista</summary><div><p>Deriva cada componente por separado.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\left(t^{3}-t\right)'=3t^{2}-1\) y \(\left(\ln t\right)'=\dfrac{1}{t}\).</li>
+        <li>\(\vec r\,'(t)=\left\langle 3t^{2}-1,\;\dfrac{1}{t}\right\rangle\), para \(t&gt;0\).</li>
+        <li>\(\vec r\,'(1)=\langle 3-1,\;1\rangle=\langle 2,\,1\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>¿En qué puntos de la curva \(\vec r(t)=\big\langle t^{2},\;t^{3}-3t\big\rangle\) el vector tangente es horizontal?</p>
+    <details><summary>Pista</summary><div><p>Horizontal significa segunda componente de \(\vec r\,'\) igual a cero y primera distinta de cero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 2t,\;3t^{2}-3\big\rangle\).</li>
+        <li>\(3t^{2}-3=0\ \Longrightarrow\ t=-1\) o \(t=1\). En ambos, \(2t\neq 0\).</li>
+        <li>\(t=-1\): \(\vec r(-1)=\langle 1,\;-1+3\rangle=\langle 1,\,2\rangle\), con \(\vec r\,'(-1)=\langle -2,\,0\rangle\).</li>
+        <li>\(t=1\): \(\vec r(1)=\langle 1,\;1-3\rangle=\langle 1,\,-2\rangle\), con \(\vec r\,'(1)=\langle 2,\,0\rangle\).</li>
+        <li>Los puntos son \((1,\,2)\) y \((1,\,-2)\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un dron vuela de modo que su posición a los \(t\) segundos es \(\vec r(t)=\big\langle 2t,\;10t-t^{2}\big\rangle\), en metros (primera componente: avance horizontal; segunda: altura). Calcula su vector velocidad, su rapidez al despegar y el instante en que deja de subir.</p>
+    <details><summary>Pista</summary><div><p>La velocidad es \(\vec r\,'(t)\). Deja de subir cuando la segunda componente de la velocidad vale cero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Velocidad: \(\vec r\,'(t)=\big\langle 2,\;10-2t\big\rangle\) m/s.</li>
+        <li>Al despegar, \(t=0\): \(\vec r\,'(0)=\langle 2,\,10\rangle\). Rapidez: \(\sqrt{2^{2}+10^{2}}=\sqrt{104}\approx 10{,}2\) m/s.</li>
+        <li>Deja de subir cuando \(10-2t=0\): \(t=5\) s. En ese instante la velocidad es \(\langle 2,\,0\rangle\), horizontal, y la altura es \(10\cdot 5-25=25\) m, la máxima.</li>
+        <li>Respuesta: velocidad \(\langle 2,\;10-2t\rangle\) m/s; despega a unos \(10{,}2\) m/s; deja de subir a los \(5\) segundos, a \(25\) m de altura.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* flecha de vector para las hojas vectoriales del lote 23 */
+function oaFle(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), L = Math.sqrt((bx - ax)*(bx - ax) + (by - ay)*(by - ay)), a = Math.atan2(by - ay, bx - ax), h = Math.min(11, L*0.45);
+  if (L < 2) return; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - 0.7*h*Math.cos(a), by - 0.7*h*Math.sin(a)); c.stroke();
+  c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - h*Math.cos(a - 0.38), by - h*Math.sin(a - 0.38)); c.lineTo(bx - h*Math.cos(a + 0.38), by - h*Math.sin(a + 0.38)); c.closePath(); c.fill(); }
+OA.scene('vec-derivada', (function(){
+  var RUN = 24, num = OA.num, dec = oaDec, T0 = -1;
+  function fx(t){ return t; } function fy(t){ return 4 - t*t; }
+  function hs(s){ return s < 2 ? 1.6 : s < 19 ? 1.6 - 1.55*OA.smooth((s - 2)/17) : 0.05; }
+  return {
+    world:{x0:-3.6, x1:3.4, y0:-3.3, y1:6.4}, aspect:9.7/7,
+    _chk:[{f:fy, df:function(t){ return -2*t; }, at:[-1.5, -1, 0.5]}],
+    aria:'La parábola azul que dibuja el vector r de t igual a t, 4 menos t al cuadrado. Está fijo el punto r de −1, que es (−1, 3). Un segundo punto, r de −1 más h, se acerca al primero a medida que h se achica. Entre los dos puntos va la flecha verde delta r. Desde el punto fijo sale la flecha naranja delta r dividido por h, que gira hasta coincidir con la flecha burdeo r prima de −1, igual a 1, 2: el vector tangente.',
+    labels:[['F', '\\vec r\\,\'(-1)=\\displaystyle\\lim_{h\\to 0}\\dfrac{\\vec r(-1+h)-\\vec r(-1)}{h}=\\lim_{h\\to 0}\\big\\langle 1,\;2-h\\big\\rangle=\\big\\langle 1,\;2\\big\\rangle', 'r′(−1) = lím ⟨1, 2 − h⟩ = ⟨1, 2⟩', 'diff']],
+    sliders:[{id:'h', tex:'h', min:0.05, max:1.6, step:0.01, value:1.6}],
+    legend:'<span><i class="sw sec"></i> curva de \\(\\vec r(t)\\)</span><span><i class="sw alt"></i> \\(\\Delta\\vec r=\\vec r(t_{0}+h)-\\vec r(t_{0})\\)</span><span><i class="sw rise"></i> \\(\\dfrac{\\Delta\\vec r}{h}\\)</span><span><i class="sw tan"></i> \\(\\vec r\\,\'(t_{0})\\), vector tangente</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.h = hs(p*RUN); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = v.q == null ? RUN : v.q*RUN, h = v.h, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), x0 = fx(T0), y0 = fy(T0), x1 = fx(T0 + h), y1 = fy(T0 + h), qx = 1, qy = 2 - h;
+      S.line(-3.4, 0, 3.2, 0, {color:C.ink, width:1.3}); S.line(0, -0.3, 0, 6.2, {color:C.ink, width:1.3}); [-2, -1, 1, 2].forEach(function(q){ S.line(q, -0.08, q, 0.08, {color:C.ink, width:1}); txt(('' + q).replace('-', '−'), X(q), Y(0) + 12, 'center', C.muted); }); [1, 2, 3, 4, 5].forEach(function(q){ S.line(-0.06, q, 0.06, q, {color:C.ink, width:1}); txt('' + q, X(0) + 9, Y(q), 'left', C.muted); });
+      oaPar(S, fx, fy, -2.1, 2.1, C.sec, 2.6);
+      oaFle(S, 0, 0, x0, y0, 'rgba(90,90,90,0.55)', 1.6); oaFle(S, 0, 0, x1, y1, 'rgba(90,90,90,0.55)', 1.6);
+      oaFle(S, x0, y0, x0 + 1, y0 + 2, C.tan, 3.4);
+      oaFle(S, x0, y0, x0 + qx, y0 + qy, C.rise, 2.6);
+      oaFle(S, x0, y0, x1, y1, C.alt, 3);
+      S.dot(x0, y0, C.ink); S.dot(x1, y1, C.alt);
+      txt('r(t₀), con t₀ = −1', X(x0) - 10, Y(y0) + 2, 'right', C.ink);
+      if (h > 0.3) txt('r(t₀ + h)', X(x1) + 12, Y(y1) + 4, 'left', C.alt);
+      txt('r′(t₀) = ⟨1, 2⟩', X(x0 + 1) + 8, Y(y0 + 2) - 12, 'left', C.tan);
+      if (h > 0.25) txt('Δr / h', X(x0 + qx/2) + 8, Y(y0 + qy/2) + 20, 'left', C.rise);
+      txt('h = ' + dec(h, 2), X(-3.5), Y(-0.95), 'left', C.ink);
+      txt('Δr = ⟨h, 2h − h²⟩ = ⟨' + dec(h, 2) + '; ' + dec(2*h - h*h, 2) + '⟩', X(-3.5), Y(-0.95) + 21, 'left', C.alt);
+      txt('Δr / h = ⟨1, 2 − h⟩ = ⟨1; ' + dec(2 - h, 2) + '⟩', X(-3.5), Y(-0.95) + 42, 'left', C.rise);
+      S.lab('F', X(-3.5), Y(-2.6), 0, 0, v.q != null && s >= 19);
+    },
+    caption:function(v){
+      var h = v.h, s = v.q == null ? null : v.q*RUN;
+      if (s != null && s < 2) return 'El punto negro es r(−1) = (−1, 3). El punto verde es r(−1 + h). La flecha verde, Δr, es el cambio del vector. Dividida por h da la flecha naranja. Mira qué le pasa a la naranja cuando h se achica';
+      if (h <= 0.055) return 'Con h casi cero, la flecha naranja Δr/h quedó sobre la burdeo: ⟨1, 2⟩. Ese límite es la derivada r′(−1), y es tangente a la curva en ese punto';
+      return 'Con h = ' + dec(h, 2) + ': Δr = ⟨' + dec(h, 2) + '; ' + dec(2*h - h*h, 2) + '⟩ y Δr/h = ⟨1; ' + dec(2 - h, 2) + '⟩. La segunda componente se acerca a 2';
+    },
+    readout:function(v){ var h = v.h; return [['', '\\Delta\\vec r=\\vec r(-1+h)-\\vec r(-1)=\\big\\langle -1+h,\;4-(-1+h)^{2}\\big\\rangle-\\big\\langle -1,\;3\\big\\rangle=\\big\\langle h,\;2h-h^{2}\\big\\rangle'], ['d', '\\dfrac{\\Delta\\vec r}{h}=\\left\\langle\\dfrac{h}{h},\;\\dfrac{2h-h^{2}}{h}\\right\\rangle=\\big\\langle 1,\;2-h\\big\\rangle'], ['', 'h=' + num(h, 2) + ':\\quad\\dfrac{\\Delta\\vec r}{h}=\\big\\langle 1;\\ ' + num(2 - h, 2) + '\\big\\rangle\\ \\longrightarrow\\ \\big\\langle 1,\;2\\big\\rangle']]; }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

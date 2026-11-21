@@ -1,0 +1,154 @@
+<!--file:H08_derivada_de_funciones_con_valores_vectoriales.html-->
+<!--title:Derivada de funciones con valores vectoriales-->
+<!--id:vec-derivada-->
+<!--tab:H08 Derivada vectorial-->
+<article class="sheet" id="vec-derivada" data-hoja="L23 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo II</li>
+      <li>Derivada de funciones vectoriales</li>
+      <li><b>Derivada de funciones con valores vectoriales</b></li>
+    </ol>
+    <h1>Derivada de funciones con valores vectoriales</h1>
+    <p class="lede">La derivada de una función vectorial se define igual que la de una función común: como el límite de un cociente de cambios. El resultado es otro vector, y se calcula derivando cada componente.
+    \[\vec r\,'(t)=\lim_{h\to 0}\frac{\vec r(t+h)-\vec r(t)}{h}=\big\langle x'(t),\;y'(t)\big\rangle\]</p>
+  </section>
+</header>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale que se deriva componente a componente</h3>
+    <ol class="steps">
+      <li>Sea \(\vec r(t)=\big\langle x(t),\,y(t)\big\rangle\). El cambio del vector entre \(t\) y \(t+h\) es una resta de vectores, que se hace componente a componente:
+        \[\Delta\vec r=\vec r(t+h)-\vec r(t)=\big\langle x(t+h)-x(t),\;y(t+h)-y(t)\big\rangle\]</li>
+      <li>Dividir por \(h\) es multiplicar el vector por el número \(\dfrac{1}{h}\), también componente a componente:
+        \[\frac{\Delta\vec r}{h}=\left\langle\frac{x(t+h)-x(t)}{h},\;\frac{y(t+h)-y(t)}{h}\right\rangle\]</li>
+      <li>El límite de un vector se toma en cada componente. Cada componente es el cociente con que se define una derivada común. Si \(x\) e \(y\) son derivables en \(t\):
+        \[\vec r\,'(t)=\left\langle\lim_{h\to 0}\frac{x(t+h)-x(t)}{h},\;\lim_{h\to 0}\frac{y(t+h)-y(t)}{h}\right\rangle=\big\langle x'(t),\;y'(t)\big\rangle\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Qué significa</h3>
+    <ol class="steps">
+      <li><b>En el dibujo.</b> \(\Delta\vec r\) es la flecha que va de la punta de \(\vec r(t)\) a la punta de \(\vec r(t+h)\): una cuerda de la curva. Al achicar \(h\), la dirección de esa cuerda se acerca a la de la tangente. Por eso, si \(\vec r\,'(t)\neq\vec 0\), el vector \(\vec r\,'(t)\) es <b>tangente</b> a la curva en ese punto y apunta en el sentido en que crece \(t\).</li>
+      <li><b>En movimiento.</b> Si \(\vec r(t)\) es la posición en el instante \(t\), entonces \(\vec r\,'(t)\) es el <b>vector velocidad</b>: su dirección dice hacia dónde va el móvil y su largo, \(\sqrt{x'(t)^{2}+y'(t)^{2}}\), es la rapidez.</li>
+      <li><b>Recta tangente.</b> Pasa por el punto \(\vec r(t_{0})\) con dirección \(\vec r\,'(t_{0})\): \(\;\vec L(s)=\vec r(t_{0})+s\,\vec r\,'(t_{0})\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Disfruta la animación</h2>
+  <p>La función \(\vec r(t)=\big\langle t,\;4-t^{2}\big\rangle\) en el punto \(t_{0}=-1\). Mira cómo el cociente \(\dfrac{\Delta\vec r}{h}\) (flecha naranja) gira hasta quedar sobre el vector tangente (flecha burdeo) cuando \(h\) se achica.</p>
+  <div class="stage" data-scene="vec-derivada"></div>
+  <ul class="keys">
+    <li><b>Punto negro:</b> \(\vec r(t_{0})=\vec r(-1)=(-1,\,3)\), fijo. <b>Punto verde:</b> \(\vec r(t_{0}+h)\), que se acerca al negro.</li>
+    <li><b>Flechas grises:</b> los vectores posición \(\vec r(t_{0})\) y \(\vec r(t_{0}+h)\), desde el origen.</li>
+    <li><b>Flecha verde:</b> el cambio \(\Delta\vec r=\vec r(t_{0}+h)-\vec r(t_{0})=\big\langle h,\;2h-h^{2}\big\rangle\).</li>
+    <li><b>Flecha naranja:</b> el cociente \(\dfrac{\Delta\vec r}{h}=\big\langle 1,\;2-h\big\rangle\). Tiene la misma dirección que la verde, pero su largo no se va a cero.</li>
+    <li><b>Flecha burdeo:</b> el límite, \(\vec r\,'(-1)=\langle 1,\,2\rangle\), tangente a la curva.</li>
+    <li><b>Bajo el dibujo:</b> el valor de \(h\) y las dos flechas escritas con su expresión y su valor.</li>
+    <li><b>Bajo la animación:</b> la resta, el cociente y el límite, paso a paso.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1, con la definición: \(\vec r(t)=\big\langle t,\;4-t^{2}\big\rangle\) en \(t_{0}=-1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Punto.</b> \(\vec r(-1)=\langle -1,\;4-1\rangle=\langle -1,\,3\rangle\).</li>
+    <li><b>Punto vecino.</b> \(\vec r(-1+h)=\big\langle -1+h,\;4-(-1+h)^{2}\big\rangle=\big\langle -1+h,\;4-\left(1-2h+h^{2}\right)\big\rangle=\big\langle -1+h,\;3+2h-h^{2}\big\rangle\).</li>
+    <li><b>Cambio.</b> \(\Delta\vec r=\big\langle -1+h-(-1),\;3+2h-h^{2}-3\big\rangle=\big\langle h,\;2h-h^{2}\big\rangle\).</li>
+    <li><b>Cociente.</b> \(\dfrac{\Delta\vec r}{h}=\left\langle\dfrac{h}{h},\;\dfrac{2h-h^{2}}{h}\right\rangle=\big\langle 1,\;2-h\big\rangle\), para \(h\neq 0\).</li>
+    <li><b>Límite.</b> \(\vec r\,'(-1)=\displaystyle\lim_{h\to 0}\big\langle 1,\;2-h\big\rangle=\langle 1,\,2\rangle\).</li>
+    <li><b>Comprobación con la regla.</b> \(\vec r\,'(t)=\big\langle 1,\;-2t\big\rangle\), y en \(t=-1\): \(\langle 1,\,2\rangle\). Coincide.</li>
+    <li><b>Recta tangente.</b> \(\vec L(s)=\langle -1,\,3\rangle+s\,\langle 1,\,2\rangle\), es decir, \(x=-1+s\), \(y=3+2s\). Eliminando \(s\): \(y=3+2\,(x+1)=2x+5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con las reglas: \(\vec r(t)=\big\langle t^{2},\;e^{2t}\big\rangle\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primera componente: \(\left(t^{2}\right)'=2t\).</li>
+    <li>Segunda componente, con la regla de la cadena: \(\left(e^{2t}\right)'=2e^{2t}\).</li>
+    <li>\(\vec r\,'(t)=\big\langle 2t,\;2e^{2t}\big\rangle\).</li>
+    <li>En \(t=0\): el punto es \(\vec r(0)=\langle 0,\,1\rangle\) y el vector tangente es \(\vec r\,'(0)=\langle 0,\,2\rangle\), que apunta derecho hacia arriba. La recta tangente es vertical: \(x=0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Reglas de derivación</h3>
+  <div class="body">
+  <p>Para \(\vec u(t)\) y \(\vec v(t)\) derivables, \(c\) un número y \(f(t)\) una función común derivable:</p>
+  <ol class="steps">
+    <li>\(\big(\vec u+\vec v\big)'=\vec u\,'+\vec v\,'\) y \(\big(c\,\vec u\big)'=c\,\vec u\,'\).</li>
+    <li>\(\big(f\,\vec u\big)'=f'\,\vec u+f\,\vec u\,'\).</li>
+    <li>Producto punto: \(\big(\vec u\cdot\vec v\big)'=\vec u\,'\cdot\vec v+\vec u\cdot\vec v\,'\).</li>
+    <li><b>Por qué vale la del producto punto.</b> Con \(\vec u=\langle u_{1},\,u_{2}\rangle\) y \(\vec v=\langle v_{1},\,v_{2}\rangle\): \(\vec u\cdot\vec v=u_{1}v_{1}+u_{2}v_{2}\). Se deriva cada sumando con la regla del producto común:
+      \[\big(u_{1}v_{1}+u_{2}v_{2}\big)'=u_{1}'v_{1}+u_{1}v_{1}'+u_{2}'v_{2}+u_{2}v_{2}'=\big(u_{1}'v_{1}+u_{2}'v_{2}\big)+\big(u_{1}v_{1}'+u_{2}v_{2}'\big)=\vec u\,'\cdot\vec v+\vec u\cdot\vec v\,'\]
+      Las otras dos salen igual, escribiendo las componentes.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dos errores comunes.</b> Uno: creer que la derivada es un número, la pendiente. La derivada de una función vectorial es un <b>vector</b>; la pendiente de la tangente es el cociente de sus componentes, \(\dfrac{y'(t)}{x'(t)}\), cuando \(x'(t)\neq 0\). Dos: dibujar \(\vec r\,'(t)\) saliendo del origen. Como vector tangente se dibuja saliendo del punto \(\vec r(t)\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\vec r\,'(t)\) para \(\vec r(t)=\big\langle t^{3}-t,\;\ln t\big\rangle\) y evalúa en \(t=1\).</p>
+    <details><summary>Pista</summary><div><p>Deriva cada componente por separado.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\left(t^{3}-t\right)'=3t^{2}-1\) y \(\left(\ln t\right)'=\dfrac{1}{t}\).</li>
+        <li>\(\vec r\,'(t)=\left\langle 3t^{2}-1,\;\dfrac{1}{t}\right\rangle\), para \(t&gt;0\).</li>
+        <li>\(\vec r\,'(1)=\langle 3-1,\;1\rangle=\langle 2,\,1\rangle\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">B</span>¿En qué puntos de la curva \(\vec r(t)=\big\langle t^{2},\;t^{3}-3t\big\rangle\) el vector tangente es horizontal?</p>
+    <details><summary>Pista</summary><div><p>Horizontal significa segunda componente de \(\vec r\,'\) igual a cero y primera distinta de cero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\vec r\,'(t)=\big\langle 2t,\;3t^{2}-3\big\rangle\).</li>
+        <li>\(3t^{2}-3=0\ \Longrightarrow\ t=-1\) o \(t=1\). En ambos, \(2t\neq 0\).</li>
+        <li>\(t=-1\): \(\vec r(-1)=\langle 1,\;-1+3\rangle=\langle 1,\,2\rangle\), con \(\vec r\,'(-1)=\langle -2,\,0\rangle\).</li>
+        <li>\(t=1\): \(\vec r(1)=\langle 1,\;1-3\rangle=\langle 1,\,-2\rangle\), con \(\vec r\,'(1)=\langle 2,\,0\rangle\).</li>
+        <li>Los puntos son \((1,\,2)\) y \((1,\,-2)\).</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un dron vuela de modo que su posición a los \(t\) segundos es \(\vec r(t)=\big\langle 2t,\;10t-t^{2}\big\rangle\), en metros (primera componente: avance horizontal; segunda: altura). Calcula su vector velocidad, su rapidez al despegar y el instante en que deja de subir.</p>
+    <details><summary>Pista</summary><div><p>La velocidad es \(\vec r\,'(t)\). Deja de subir cuando la segunda componente de la velocidad vale cero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Velocidad: \(\vec r\,'(t)=\big\langle 2,\;10-2t\big\rangle\) m/s.</li>
+        <li>Al despegar, \(t=0\): \(\vec r\,'(0)=\langle 2,\,10\rangle\). Rapidez: \(\sqrt{2^{2}+10^{2}}=\sqrt{104}\approx 10{,}2\) m/s.</li>
+        <li>Deja de subir cuando \(10-2t=0\): \(t=5\) s. En ese instante la velocidad es \(\langle 2,\,0\rangle\), horizontal, y la altura es \(10\cdot 5-25=25\) m, la máxima.</li>
+        <li>Respuesta: velocidad \(\langle 2,\;10-2t\rangle\) m/s; despega a unos \(10{,}2\) m/s; deja de subir a los \(5\) segundos, a \(25\) m de altura.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L23-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>

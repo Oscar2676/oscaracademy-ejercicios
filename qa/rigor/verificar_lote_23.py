@@ -50,4 +50,22 @@ ok('H05 ej.2: 3π/2 ≈ 4,71; acumulado; ej.3: π/8 ≈ 0,39 y rosa π/2', cerca
 ok('H05 error: r = 2cos θ de 0 a 2π da el doble (2π en vez de π)', cerca(riemann(lambda q: 0.5 * (2 * cos(q)) ** 2, 0, pi), pi) and cerca(riemann(lambda q: 0.5 * (2 * cos(q)) ** 2, 0, 2 * pi), 2 * pi))
 ok('H05-A: π; H05-B: π/12 ≈ 0,26; H05-C: 18π ≈ 56,5', cerca(riemann(lambda q: 0.5 * (2 * sin(q)) ** 2, 0, pi), pi) and cerca(riemann(lambda q: 0.5 * sin(3 * q) ** 2, 0, pi / 3), pi / 12) and round(pi / 12, 2) == 0.26 and cerca(riemann(lambda q: 0.5 * (4 + 2 * cos(q)) ** 2, 0, 2 * pi), 18 * pi) and round(18 * pi, 1) == 56.5)
 
+# H06 · área entre dos curvas polares
+from math import log, exp
+ok('H06 ej.1: cruces ±π/2; 2 − π/4 ≈ 1,215; acumulado', cerca(1 - cos(pi / 2), 1) and cerca(riemann(lambda q: 0.5 * (1 - (1 - cos(q)) ** 2), -pi / 2, pi / 2), 2 - pi / 4) and round(2 - pi / 4, 3) == 1.215 and all(cerca(riemann(lambda u: 0.5 * (1 - (1 - cos(u)) ** 2), -pi / 2, q), 0.5 * (2 * sin(q) - q / 2 - sin(2 * q) / 4 + 2 - pi / 4)) for q in (-1, -0.02, 0.9, pi / 2)))
+ok('H06 ej.2: cruces ±π/3; 4cos² − 1 = 1 + 2cos 2θ; π/3 + √3/2 ≈ 1,913', cerca(2 * cos(pi / 3), 1) and all(cerca(4 * cos(q) ** 2 - 1, 1 + 2 * cos(2 * q)) for q in (0.2, 0.9)) and cerca(riemann(lambda q: 0.5 * (4 * cos(q) ** 2 - 1), -pi / 3, pi / 3), pi / 3 + sqrt(3) / 2) and round(pi / 3 + sqrt(3) / 2, 3) == 1.913)
+ok('H06 error: ½(3²−1²) = 4 ≠ ½(3−1)² = 2', 0.5 * (9 - 1) == 4 and 0.5 * (3 - 1) ** 2 == 2)
+ok('H06-A: 3π; H06-B: cruces π/6, 5π/6 y área π; H06-C: 14π ≈ 44,0', cerca(riemann(lambda q: 0.5 * 3, 0, 2 * pi), 3 * pi) and cerca(3 * sin(pi / 6), 1 + sin(pi / 6)) and all(cerca(9 * sin(q) ** 2 - (1 + sin(q)) ** 2, 3 - 4 * cos(2 * q) - 2 * sin(q)) for q in (0.7, 1.9)) and cerca(riemann(lambda q: 0.5 * (9 * sin(q) ** 2 - (1 + sin(q)) ** 2), pi / 6, 5 * pi / 6), pi) and cerca(riemann(lambda q: 0.5 * ((4 + 2 * cos(q)) ** 2 - 4), 0, 2 * pi), 14 * pi) and round(14 * pi, 1) == 44.0)
+
+# H07 · funciones vectoriales
+ok('H07 ej.1: valores y y = 4 − x²', [(t, 4 - t * t) for t in (-2, 0, 1, 2)] == [(-2, 0), (0, 4), (1, 3), (2, 0)])
+ok('H07 ej.3: lím (sen t)/t = 1; ej.4: recta ⟨1+3t, 2−t⟩ ⇔ y = (7−x)/3', cerca(sin(1e-6) / 1e-6, 1) and all(cerca(2 - t, (7 - (1 + 3 * t)) / 3) for t in (-2, 0, 1.5)))
+ok('H07-B: ⟨1,−1⟩, ⟨4,8⟩, y² = x³; H07-C: (15, 20), 25 m', (1, -1) == ((-1) ** 2, (-1) ** 3) and (4, 8) == (2 ** 2, 2 ** 3) and all((t ** 3) ** 2 == (t ** 2) ** 3 for t in (-3, 2, 5)) and sqrt(15 ** 2 + 20 ** 2) == 25)
+
+# H08 · derivada vectorial
+ok('H08 ej.1: Δr = ⟨h, 2h − h²⟩; Δr/h = ⟨1, 2 − h⟩ → ⟨1, 2⟩; tangente y = 2x + 5', all(cerca((4 - (-1 + h) ** 2) - 3, 2 * h - h * h) for h in (1.25, 0.3, 0.05)) and cerca(d(lambda t: 4 - t * t, -1), 2, 1e-5) and all(cerca(3 + 2 * s_, 2 * (-1 + s_) + 5) for s_ in (-1, 0, 2)) and round(2 * 1.25 - 1.25 ** 2, 2) == 0.94)
+ok('H08 ej.2: ⟨2t, 2e^{2t}⟩; en 0: ⟨0, 2⟩', cerca(d(lambda t: exp(2 * t), 0.7), 2 * exp(1.4), 1e-5) and cerca(d(lambda t: exp(2 * t), 0), 2, 1e-5))
+ok('H08 regla del producto punto (numérica)', cerca(d(lambda t: (t * t) * sin(t) + exp(t) * (3 * t), 0.8), (2 * 0.8) * sin(0.8) + exp(0.8) * (3 * 0.8) + (0.8 ** 2) * cos(0.8) + exp(0.8) * 3, 1e-5))
+ok('H08-A: ⟨2, 1⟩; H08-B: (1, 2) y (1, −2); H08-C: √104 ≈ 10,2; t = 5; 25 m', cerca(d(lambda t: t ** 3 - t, 1), 2, 1e-5) and cerca(d(log, 1), 1, 1e-5) and 3 * 1 - 3 == 0 and ((-1) ** 2, (-1) ** 3 + 3) == (1, 2) and (1, 1 - 3) == (1, -2) and round(sqrt(104), 1) == 10.2 and 10 - 2 * 5 == 0 and 10 * 5 - 25 == 25)
+
 print('\nERRORES:', err)
