@@ -106,3 +106,65 @@ OA.scene('pol-cardioide-puntos', (function(){
     readout:function(v){ var k = Math.round(v.n || 0), th = k*PI/12; return [['', '\\theta_{k}=k\\cdot\\dfrac{\\pi}{12},\\quad k=0,\\,1,\\,2,\\,\\dots,\\,24'], ['d', 'k=' + k + ':\\quad\\theta=' + frT(k) + '\\quad\\Longrightarrow\\quad r=1-\\cos\\theta\\approx ' + OA.num(r(th), 2)], ['', '\\text{punto en cartesianas: }x=r\\cos\\theta\\approx ' + OA.num(r(th)*Math.cos(th), 2) + ',\\quad y=r\\operatorname{sen}\\theta\\approx ' + OA.num(r(th)*Math.sin(th), 2)]]; }
   };
 })());
+
+OA.scene('pol-area-idea', (function(){
+  var RUN = 26, dec = oaDec, PI = Math.PI, AL = 0.3, BE = 1.9, T0 = 0.95, D = 0.2;
+  function Ro(q){ return 2.25 + 0.22*Math.sin(2*q - 0.4); }
+  function ri(q){ return 1.05 + 0.2*Math.cos(2*q); }
+  return {
+    world:{x0:-1.35, x1:3.25, y0:-2.05, y1:2.85}, aspect:4.9/4.6,
+    aria:'Dos curvas polares: una exterior, naranja, de radio R de theta, y una interior, azul, de radio r de theta, entre los rayos theta igual a alfa y theta igual a beta. Primero se pinta un sector delgado, de ángulo d theta, que va del polo a la curva exterior: mide un medio de R al cuadrado por d theta. Después se pinta el sector que va del polo a la curva interior: mide un medio de r al cuadrado por d theta. Al quitar el chico del grande queda un trozo de anillo burdeo entre las dos curvas. Por último el trozo recorre la región desde alfa hasta beta y la región barrida se pinta de verde.',
+    labels:[['F', 'A=\\displaystyle\\int_{\\alpha}^{\\beta}\\dfrac{1}{2}\\left(R^{2}-r^{2}\\right)d\\theta', 'A = ∫ ½ (R² − r²) dθ, de α a β', 'diff']],
+    sliders:[{id:'e', tex:'\\text{etapa}', min:1, max:4, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> curva exterior \\(r=R(\\theta)\\) y sector grande</span><span><i class="sw sec"></i> curva interior \\(r=r(\\theta)\\) y sector chico</span><span><i class="sw tan"></i> trozo de anillo de ángulo \\(d\\theta\\)</span><span><i class="sw alt"></i> región barrida</span>',
+    anim:{run:RUN*1000, hold:6000, still:1, apply:function(p, v){ var s = p*RUN; v.q = p; v.e = s < 5 ? 1 : s < 10 ? 2 : s < 14 ? 3 : 4; v.th = s < 14 ? T0 : s < 15 ? AL : s < 24 ? AL + (BE - D - AL)*(s - 15)/9 : BE - D; v.end = s >= 24; }},
+    onInput:function(v){ v.q = null; v.th = v.e >= 4 ? BE - D : T0; v.end = v.e >= 4; },
+    draw:function(S, v){
+      var e = Math.round(v.e || 1), th = v.th == null ? T0 : v.th, q1 = th + D, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, q, p = [], am = th + D/2, ax, ay, rr, x0, y0;
+      function sect(f, col, al){ var w = [[0, 0]], j, u; for (j = 0; j <= 12; j++){ u = th + D*j/12; w.push([f(u)*Math.cos(u), f(u)*Math.sin(u)]); } S.poly(w, {fill:col, alpha:al}); }
+      function ring(col, al){ var w = [], j, u; for (j = 0; j <= 12; j++){ u = th + D*j/12; w.push([Ro(u)*Math.cos(u), Ro(u)*Math.sin(u)]); } for (j = 12; j >= 0; j--){ u = th + D*j/12; w.push([ri(u)*Math.cos(u), ri(u)*Math.sin(u)]); } S.poly(w, {fill:col, alpha:al}); }
+      function dotp(x, y, col){ c.fillStyle = col; c.beginPath(); c.arc(X(x), Y(y), 2.6, 0, 2*PI); c.fill(); }
+      /* eje polar y rayos límite */
+      S.line(0, 0, 3.1, 0, {color:C.ink, width:1.2});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([4, 4]); c.beginPath(); c.moveTo(X(0), Y(0)); c.lineTo(X(2.75*Math.cos(AL)), Y(2.75*Math.sin(AL))); c.moveTo(X(0), Y(0)); c.lineTo(X(2.75*Math.cos(BE)), Y(2.75*Math.sin(BE))); c.stroke(); c.setLineDash([]);
+      txt('θ = α', X(2.75*Math.cos(AL)) + 4, Y(2.75*Math.sin(AL)) - 10, 'center', C.ink); txt('θ = β', X(2.75*Math.cos(BE)) - 4, Y(2.75*Math.sin(BE)) - 9, 'center', C.ink);
+      /* región barrida (etapa 4) */
+      if (e >= 4 && th > AL + 0.01){ for (i = 0; i <= 80; i++){ q = AL + (th - AL)*i/80; p.push([Ro(q)*Math.cos(q), Ro(q)*Math.sin(q)]); } for (i = 80; i >= 0; i--){ q = AL + (th - AL)*i/80; p.push([ri(q)*Math.cos(q), ri(q)*Math.sin(q)]); } S.poly(p, {fill:C.alt, alpha:0.4}); }
+      /* sectores y trozo */
+      if (e === 1) sect(Ro, C.rise, 0.45);
+      if (e === 2){ sect(Ro, C.rise, 0.22); sect(ri, C.sec, 0.55); }
+      if (e === 3){ sect(ri, C.sec, 0.13); ring(C.tan, 0.8); }
+      if (e >= 4) ring(C.tan, 0.8);
+      /* curvas */
+      oaPar(S, function(u){ return Ro(u)*Math.cos(u); }, function(u){ return Ro(u)*Math.sin(u); }, AL - 0.22, BE + 0.22, C.rise, 1.8);
+      oaPar(S, function(u){ return ri(u)*Math.cos(u); }, function(u){ return ri(u)*Math.sin(u); }, AL - 0.22, BE + 0.22, C.sec, 1.8);
+      txt('r = R(θ), exterior', X(Ro(AL - 0.1)*Math.cos(AL - 0.1)) + 6, Y(Ro(AL - 0.1)*Math.sin(AL - 0.1)) + 14, 'center', C.rise);
+      txt('r = r(θ), interior', X(1.2), Y(0) + 13, 'center', C.sec);
+      /* rayo del trozo con sus dos radios */
+      S.line(0, 0, ri(th)*Math.cos(th), ri(th)*Math.sin(th), {color:C.sec, width:1.8}); S.line(ri(th)*Math.cos(th), ri(th)*Math.sin(th), Ro(th)*Math.cos(th), Ro(th)*Math.sin(th), {color:C.rise, width:1.8});
+      S.line(0, 0, Ro(q1)*Math.cos(q1), Ro(q1)*Math.sin(q1), {color:C.ink, width:0.8});
+      dotp(0, 0, C.ink); dotp(ri(th)*Math.cos(th), ri(th)*Math.sin(th), C.sec); dotp(Ro(th)*Math.cos(th), Ro(th)*Math.sin(th), C.rise);
+      if (e <= 3){ txt('r', X(0.55*ri(th)*Math.cos(th)) + 9, Y(0.55*ri(th)*Math.sin(th)) + 9, 'center', C.sec); txt('R', X(Ro(th)*Math.cos(th)) + 13, Y(Ro(th)*Math.sin(th)) + 2, 'center', C.rise); }
+      /* ángulo dθ con línea guía */
+      rr = Math.abs(X(Ro(am)) - X(0)) + 7; ax = X(0) + rr*Math.cos(am); ay = Y(0) - rr*Math.sin(am);
+      c.strokeStyle = C.ink; c.lineWidth = 1.8; c.beginPath(); c.arc(X(0), Y(0), rr, -th, -q1, true); c.stroke();
+      c.lineWidth = 1; c.beginPath(); c.moveTo(ax, ay); c.lineTo(ax + 16, ay - 10); c.stroke(); txt('ángulo dθ', ax + 20, ay - 12, 'left', C.ink);
+      /* texto de la etapa */
+      x0 = X(-1.25); y0 = Y(-0.45);
+      txt('etapa ' + e + ' de 4', x0, y0, 'left', C.ink);
+      if (e === 1){ txt('sector grande: del polo a la curva exterior', x0, y0 + 21, 'left', C.rise); txt('área = ½ R² dθ', x0, y0 + 42, 'left', C.rise); }
+      if (e === 2){ txt('sector chico: del polo a la curva interior', x0, y0 + 21, 'left', C.sec); txt('área = ½ r² dθ  (no es parte de la región)', x0, y0 + 42, 'left', C.sec); }
+      if (e === 3){ txt('trozo = sector grande − sector chico', x0, y0 + 21, 'left', C.tan); txt('dA = ½ R² dθ − ½ r² dθ = ½ (R² − r²) dθ', x0, y0 + 42, 'left', C.tan); }
+      if (e >= 4){ txt('el trozo recorre la región de α a β', x0, y0 + 21, 'left', C.tan); txt('la suma de todos los trozos es el área', x0, y0 + 42, 'left', C.alt); }
+      S.lab('F', x0, Y(-0.45) + 66, 0, 0, e >= 4 && !!v.end);
+    },
+    caption:function(v){
+      var e = Math.round(v.e || 1);
+      if (e === 1) return 'Etapa 1. Un sector muy delgado, de ángulo dθ, que va del polo hasta la curva exterior. Su radio es R y su área es ½ R² dθ';
+      if (e === 2) return 'Etapa 2. Dentro de ese sector hay otro más chico, que va del polo hasta la curva interior. Su radio es r y su área es ½ r² dθ. Esa parte no pertenece a la región';
+      if (e === 3) return 'Etapa 3. Al sector grande se le quita el chico. Lo que queda es el trozo de anillo que sí está entre las dos curvas: ½ (R² − r²) dθ';
+      return v.end ? 'Etapa 4. El trozo recorrió toda la región, de α a β. Sumar todos los trozos es integrar: A = ∫ ½ (R² − r²) dθ' : 'Etapa 4. El trozo avanza desde θ = α hasta θ = β. En cada ángulo R y r cambian, y la zona verde junta los trozos ya sumados';
+    },
+    readout:function(v){ var e = Math.round(v.e || 1); return [['', '\\text{sector grande: }\\dfrac{1}{2}R^{2}\\,d\\theta' + (e >= 2 ? '\\qquad\\text{sector chico: }\\dfrac{1}{2}r^{2}\\,d\\theta' : '')]].concat(e >= 3 ? [['d', 'dA=\\dfrac{1}{2}R^{2}\\,d\\theta-\\dfrac{1}{2}r^{2}\\,d\\theta=\\dfrac{1}{2}\\left(R^{2}-r^{2}\\right)d\\theta']] : []).concat(e >= 4 ? [['', 'A=\\displaystyle\\int_{\\alpha}^{\\beta}dA=\\int_{\\alpha}^{\\beta}\\dfrac{1}{2}\\Big(\\big[R(\\theta)\\big]^{2}-\\big[r(\\theta)\\big]^{2}\\Big)d\\theta']] : []); }
+  };
+})());
