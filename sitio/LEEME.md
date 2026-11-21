@@ -33,3 +33,4 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 <!-- relectura de enlaces pedida el 21-11-2026 02:30 (tras publicar L20 H11-H13) -->
 
 <!-- relectura de enlaces pedida el 21-11-2026 03:10 (tras publicar L21 H01-H02) -->
+<!-- relectura tras publicar L21 H03–H12, 21-nov -->

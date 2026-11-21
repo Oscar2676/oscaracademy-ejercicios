@@ -20,7 +20,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 03:10: 28 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**; lote 21: 2 publicadas, 10 en revisión (H03–H12)
+## Avance al 21-nov 04:30: 38 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)** y **lote 21 completo (12/12)**
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -60,7 +60,7 @@ Tarjeta https://claude.ai/artifact/PrRgE31ocsW1SQj37LuqdY (slug b90fb3da-81d8-4d
 - **Pendientes de APR (21-nov 04:05), cierre del lote:**
   - H11 «Evaluar integrales impropias» (`H11_evaluar_integrales_impropias.html`): ft30u comp-lcno0tae1 · qudgj comp-l2qtac3k · qclgl comp-l4skmyx31 · qtf2i comp-la94guzo
   - H12 «Integración y acumulación de cambio», **hoja propia de presentación del tema** pedida por Óscar (03:26): `H12_integracion_y_acumulacion_de_cambio_presentacion_del_tema.html`; ft30u comp-lcno0tad · qudgj comp-l2qtbcup · qclgl comp-l4skmywy · bb5wq comp-mvuxjfbi4. Trae un «mapa del tema» con enlaces a las otras hojas del lote y a L09 H01, L03 H02 y L03 H03: **si cambia el nombre de archivo de alguna, actualizar esos enlaces.**
-- **Lote 21 producido completo (12 hojas): 2 publicadas, 10 esperando APR (H03–H12).**
+- **Lote 21 completo: 12/12 con APR (21-nov), enlazadas en Wix y publicadas.** Sigue: aplicaciones de la integral (12 hojas, lote 22).
 - **Ritmo acordado (21-nov 02:42):** Óscar pide que se le presenten las hojas para APR **de 5 en 5, y después de 10 en 10**.
 
 ## Criterios de Óscar para animaciones y texto (20-nov)
