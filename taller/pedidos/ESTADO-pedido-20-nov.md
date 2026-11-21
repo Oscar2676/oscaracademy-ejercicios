@@ -6,7 +6,7 @@ Reglas de Óscar para este pedido: rigurosidad máxima, doble revisión, toleran
 
 **Regla desde las 15:55 del 20-nov: tras cada APR, Claude enlaza la hoja en Wix y PUBLICA él mismo** («publica tú, no dependas de mí para eso»). Se publica con `button.top-bar-publish-btn` del editor en el navegador integrado; Wix responde «Tu sitio se ha publicado» (cerrar con «Hecho»).
 
-## Avance al 21-nov 02:30: 23 hojas con APR, enlazadas y publicadas; 3 en cola de revisión
+## Avance al 21-nov 02:25: 26 hojas con APR, enlazadas y publicadas. **Lote 20 completo (13/13)**
 | Lote | Hojas | Estado |
 |---|---|---|
 | 18 · Teorema del valor medio (`calculo-diferencial/lote18/`) | H01 Condiciones (v005) · H02 Aplicación · H03 Ejemplo 1 (v002) · H04 Ejemplo 2 · H05 Ejemplo 3 | **5/5 con APR, publicadas** (Cálculo I [ft30u] y II [qudgj]). Tarjeta https://claude.ai/artifact/D7qobYPF5gJhfRbJnWdSX7 (slug 622233e3-3be9-4bd2-868f-b062c517a026) |
@@ -24,8 +24,8 @@ Tres animaciones en `taller/src/l20/partes/02.scene.js`: `rr-globo` (globo en 3D
 
 L20 H09 «Derivadas para razones relacionadas» (`H09_derivadas_para_razones_relacionadas.html`; ft30u comp-lcno0t8d · qudgj comp-lcit01bi) y L20 H10 «Aplicaciones de las derivadas aplicadas al movimiento» (`H10_aplicaciones_de_las_derivadas_al_movimiento.html`; ft30u comp-lcno0t8b1 · qudgj comp-lcit01be): APR del 21-nov, enlazadas y publicadas.
 
-**En cola de revisión (pendientes de APR), lote 20 completo con ellas:**
-- L20 H11 «Derivada de funciones parametrizadas» (`H11_derivada_de_funciones_parametrizadas.html`): enlazar en ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9
+**Con APR del 21-nov (02:17), enlazadas en Cálculo I, Cálculo II y Matemáticas · Parte 2, y publicadas:**
+- L20 H11 «Derivada de funciones parametrizadas» (`H11_derivada_de_funciones_parametrizadas.html`): ft30u comp-lcno0t8o · qudgj comp-lcit01bo · bb5wq comp-mvuxjfbh9
 - L20 H12 «Derivada de funciones parametrizadas 2» (segunda derivada; `H12_derivada_de_funciones_parametrizadas_2_segunda_derivada.html`): ft30u comp-lcno0t8q · qudgj comp-lcit01br · bb5wq comp-mvuxjfbh14
 - L20 H13 «Derivada de funciones vectoriales» (`H13_derivada_de_funciones_vectoriales.html`): ft30u comp-lcno0t8r1 · qudgj comp-lcit01by1 · bb5wq comp-mvuxjfbh19
 
@@ -52,7 +52,7 @@ Fuentes en `taller/src/lNN/partes/` (`NN.art.html`, `NN.scene.js`; escenas comun
 Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `__save()`, `__chk(pg, ids)`, `__sleep` definidos en la pestaña del editor (`seed`; se pierden si se recarga; están en el historial del 20-nov). Navegar a la página, enlazar, guardar antes de salir, verificar y publicar. Una página por llamada (límite de 45 s).
 
 ## Orden para lo que falta (unas 255 hojas)
-1. Lote 20: terminado de producir (13 hojas); faltan los APR de H11–H13
+1. Lote 20: terminado, 13/13 con APR y publicadas
 2. Integración y acumulación de cambio (12)
 3. Aplicaciones de la integral
 4. Binomio de Newton (19)
