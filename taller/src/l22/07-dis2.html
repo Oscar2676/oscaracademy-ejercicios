@@ -195,7 +195,7 @@ function oaSol(o){
       if (o.dx && v._rc){ c.beginPath(); v._rc.forEach(function(m, j){ if (j) c.lineTo(m[0], m[1]); else c.moveTo(m[0], m[1]); }); c.closePath(); c.fillStyle = 'rgba(255,255,255,0.6)'; c.fill(); c.strokeStyle = C.ink; c.lineWidth = 2; c.setLineDash([]); c.stroke(); }
       p = P(u, sg*R(u)); c.strokeStyle = C.rise; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); S.dot(hor ? u : o.k + sg*R(u), hor ? o.k + sg*R(u) : u, C.rise);
       txt('R = ' + dec(R(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? (o.Rdy || -4) : -13), hor ? 'left' : 'center', C.rise);
-      if (r(u) > 1e-6){ p = P(u, -r(u)); c.strokeStyle = C.alt; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); txt('r = ' + dec(r(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? 6 : 13), hor ? 'left' : 'center', C.alt); }
+      if (r(u) > 1e-6){ p = P(u, sg*r(u)); var ox = hor ? -5 : 0, oy = hor ? 0 : 5; c.strokeStyle = C.alt; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0] + ox, q[1] + oy); c.lineTo(p[0] + ox, p[1] + oy); c.stroke(); txt('r = ' + dec(r(u), 2), p[0] + (hor ? -14 : 0), p[1] + (hor ? -8*sg : 16), hor ? 'right' : 'center', C.alt); }
       c.fillStyle = C.ink; c.beginPath(); c.arc(q[0], q[1], 3, 0, 6.2832); c.fill();
       if (o.dx && v._dx){ var e0 = v._dx[1], e1 = v._dx[2], of = 9*sg; c.strokeStyle = C.ink; c.lineWidth = 1.4; c.beginPath();
         if (hor){ c.moveTo(e0[0], e0[1] + of - 4); c.lineTo(e0[0], e0[1] + of + 4); c.moveTo(e0[0], e0[1] + of); c.lineTo(e1[0], e1[1] + of); c.moveTo(e1[0], e1[1] + of - 4); c.lineTo(e1[0], e1[1] + of + 4); }

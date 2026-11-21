@@ -1,5 +1,5 @@
 OA.scene('apl-discos-x', oaSol({
-  orient:'x', k:0, a:0, b:4, Rmax:2, R:function(x){ return Math.sqrt(x); },
+  orient:'x', k:0, a:0, b:4, Rmax:2, dx:0.045, R:function(x){ return Math.sqrt(x); },
   V:function(x){ return Math.PI*x*x/2; }, chk:[0.5, 1, 2, 3.5],
   world:{x0:-1.1, x1:5.6, y0:-2.9, y1:3.1}, aspect:6/6.7, gx:[1, 2, 3, 4], gy:[-2, -1, 1, 2],
   curves:[{f:function(x){ return Math.sqrt(x); }, from:0, to:4.6, color:'sec', txt:'y = √x', tx:3.1, ty:2.35}],
@@ -13,7 +13,7 @@ OA.scene('apl-discos-x', oaSol({
   readout:function(x, num){ return [['', 'dV=\\pi R^{2}\\,dx=\\pi\\left(\\sqrt{x}\\right)^{2}dx=\\pi x\\,dx'], ['d', '\\displaystyle\\int_{0}^{x}\\pi t\\,dt=\\dfrac{\\pi x^{2}}{2}'], ['', 'x=' + num(x, 2) + ':\\quad \\text{volumen acumulado}\\approx ' + num(Math.PI*x*x/2, 2) + '\\ \\longrightarrow\\ 8\\pi']]; }
 }));
 OA.scene('apl-discos-y', oaSol({
-  orient:'y', k:0, a:0, b:2, Rmax:2, R:function(y){ return Math.sqrt(2*y); },
+  orient:'y', k:0, a:0, b:2, Rmax:2, dx:0.05, R:function(y){ return Math.sqrt(2*y); },
   V:function(y){ return Math.PI*y*y; }, chk:[0.3, 0.8, 1.2, 1.9],
   world:{x0:-3.1, x1:3.6, y0:-0.9, y1:3.3}, aspect:4.2/6.7, gx:[-2, -1, 1, 2], gy:[1, 2, 3],
   curves:[{f:function(y){ return Math.sqrt(2*y); }, from:0, to:2.6, color:'sec', txt:'x = √(2y)', tx:2.2, ty:1.3}],

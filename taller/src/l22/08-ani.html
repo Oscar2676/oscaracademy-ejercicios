@@ -42,7 +42,8 @@
     <li><b>Línea burdeo de trazos:</b> el eje de giro, \(y=2\).</li>
     <li><b>Curva azul:</b> \(y=x^{2}\), la más lejana al eje. <b>Recta verde:</b> \(y=x\), la más cercana.</li>
     <li><b>Trazo naranja:</b> radio mayor, \(R=2-x^{2}\). <b>Trazo verde:</b> radio menor, \(r=2-x\).</li>
-    <li><b>Anillo burdeo:</b> el corte en la posición \(x\). La parte oscura del centro es el hueco.</li>
+    <li><b>Rebanada burdeo:</b> el anillo en la posición \(x\), con su grosor \(dx\). La parte oscura del centro es el hueco.</li>
+    <li><b>Mini rectángulo de borde negro:</b> va de la curva cercana a la lejana; su ancho es \(dx\) y su largo es \(R-r\). Al girar alrededor del eje genera el anillo: \(dV=\pi\left(R^{2}-r^{2}\right)dx\).</li>
   </ul>
   <p><b>Giro alrededor de la recta vertical \(x=-1\).</b></p>
   <div class="stage" data-scene="apl-anillos-xk"></div>
@@ -50,6 +51,7 @@
     <li><b>Línea burdeo de trazos:</b> el eje de giro, \(x=-1\).</li>
     <li><b>Curva azul:</b> la parábola, escrita \(x=\sqrt{y}\); ahora es la más lejana. <b>Recta verde:</b> \(x=y\), la más cercana.</li>
     <li><b>Trazo naranja:</b> radio mayor, \(R=\sqrt{y}+1\). <b>Trazo verde:</b> radio menor, \(r=y+1\).</li>
+    <li><b>Mini rectángulo de borde negro:</b> alto \(dy\) y largo \(R-r\); al girar genera el anillo, \(dV=\pi\left(R^{2}-r^{2}\right)dy\).</li>
   </ul>
 </section>
 
@@ -142,7 +144,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H08 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">CI-L22-H08 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -204,7 +206,7 @@ function oaSol(o){
       if (o.dx && v._rc){ c.beginPath(); v._rc.forEach(function(m, j){ if (j) c.lineTo(m[0], m[1]); else c.moveTo(m[0], m[1]); }); c.closePath(); c.fillStyle = 'rgba(255,255,255,0.6)'; c.fill(); c.strokeStyle = C.ink; c.lineWidth = 2; c.setLineDash([]); c.stroke(); }
       p = P(u, sg*R(u)); c.strokeStyle = C.rise; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); S.dot(hor ? u : o.k + sg*R(u), hor ? o.k + sg*R(u) : u, C.rise);
       txt('R = ' + dec(R(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? (o.Rdy || -4) : -13), hor ? 'left' : 'center', C.rise);
-      if (r(u) > 1e-6){ p = P(u, -r(u)); c.strokeStyle = C.alt; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); txt('r = ' + dec(r(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? 6 : 13), hor ? 'left' : 'center', C.alt); }
+      if (r(u) > 1e-6){ p = P(u, sg*r(u)); var ox = hor ? -5 : 0, oy = hor ? 0 : 5; c.strokeStyle = C.alt; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0] + ox, q[1] + oy); c.lineTo(p[0] + ox, p[1] + oy); c.stroke(); txt('r = ' + dec(r(u), 2), p[0] + (hor ? -14 : 0), p[1] + (hor ? -8*sg : 16), hor ? 'right' : 'center', C.alt); }
       c.fillStyle = C.ink; c.beginPath(); c.arc(q[0], q[1], 3, 0, 6.2832); c.fill();
       if (o.dx && v._dx){ var e0 = v._dx[1], e1 = v._dx[2], of = 9*sg; c.strokeStyle = C.ink; c.lineWidth = 1.4; c.beginPath();
         if (hor){ c.moveTo(e0[0], e0[1] + of - 4); c.lineTo(e0[0], e0[1] + of + 4); c.moveTo(e0[0], e0[1] + of); c.lineTo(e1[0], e1[1] + of); c.moveTo(e1[0], e1[1] + of - 4); c.lineTo(e1[0], e1[1] + of + 4); }
@@ -217,7 +219,7 @@ function oaSol(o){
   };
 }
 OA.scene('apl-anillos-yk', oaSol({
-  orient:'x', k:2, a:0, b:1, Rmax:2, R:function(x){ return 2 - x*x; }, r:function(x){ return 2 - x; }, Rdy:-4,
+  orient:'x', k:2, a:0, b:1, Rmax:2, dx:0.05, side:-1, R:function(x){ return 2 - x*x; }, r:function(x){ return 2 - x; }, Rdy:8,
   V:function(x){ return Math.PI*(Math.pow(x, 5)/5 - 5*x*x*x/3 + 2*x*x); }, chk:[0.2, 0.5, 0.7, 0.9],
   world:{x0:-0.45, x1:1.75, y0:-0.6, y1:4.6}, aspect:0.86, gx:[0.5, 1, 1.5], gy:[1, 2, 3, 4],
   curves:[{f:function(x){ return x*x; }, from:0, to:1.25, color:'sec', txt:'y = x²', tx:1.28, ty:1.75}, {f:function(x){ return x; }, from:0, to:1.25, color:'alt', txt:'y = x', tx:1.28, ty:1.2}],
@@ -231,7 +233,7 @@ OA.scene('apl-anillos-yk', oaSol({
   readout:function(x, num){ var V = Math.PI*(Math.pow(x, 5)/5 - 5*x*x*x/3 + 2*x*x); return [['', 'dV=\\pi\\left(R^{2}-r^{2}\\right)dx=\\pi\\Big[\\left(2-x^{2}\\right)^{2}-(2-x)^{2}\\Big]dx=\\pi\\left(x^{4}-5x^{2}+4x\\right)dx'], ['d', '\\displaystyle\\int_{0}^{x}\\pi\\left(t^{4}-5t^{2}+4t\\right)dt=\\pi\\left(\\dfrac{x^{5}}{5}-\\dfrac{5x^{3}}{3}+2x^{2}\\right)'], ['', 'x=' + num(x, 2) + ':\\quad \\text{volumen acumulado}\\approx ' + num(V, 2) + '\\ \\longrightarrow\\ \\dfrac{8\\pi}{15}']]; }
 }));
 OA.scene('apl-anillos-xk', oaSol({
-  orient:'y', k:-1, a:0, b:1, Rmax:2, R:function(y){ return Math.sqrt(y) + 1; }, r:function(y){ return y + 1; },
+  orient:'y', k:-1, a:0, b:1, Rmax:2, dx:0.06, R:function(y){ return Math.sqrt(y) + 1; }, r:function(y){ return y + 1; },
   V:function(y){ return Math.PI*(4/3*Math.pow(y, 1.5) - y*y/2 - y*y*y/3); }, chk:[0.2, 0.5, 0.7, 0.9],
   world:{x0:-4, x1:2.2, y0:-0.75, y1:1.75}, aspect:0.52, gx:[-3, -2, 1, 2], gy:[0.5, 1, 1.5],
   curves:[{f:function(y){ return Math.sqrt(y); }, from:0, to:1.3, color:'sec', txt:'x = √y', tx:1.05, ty:0.62}, {f:function(y){ return y; }, from:0, to:1.3, color:'alt', txt:'x = y', tx:1.38, ty:1.52}],

@@ -1,5 +1,5 @@
 OA.scene('apl-anillos-yk', oaSol({
-  orient:'x', k:2, a:0, b:1, Rmax:2, R:function(x){ return 2 - x*x; }, r:function(x){ return 2 - x; }, Rdy:-4,
+  orient:'x', k:2, a:0, b:1, Rmax:2, dx:0.05, side:-1, R:function(x){ return 2 - x*x; }, r:function(x){ return 2 - x; }, Rdy:8,
   V:function(x){ return Math.PI*(Math.pow(x, 5)/5 - 5*x*x*x/3 + 2*x*x); }, chk:[0.2, 0.5, 0.7, 0.9],
   world:{x0:-0.45, x1:1.75, y0:-0.6, y1:4.6}, aspect:0.86, gx:[0.5, 1, 1.5], gy:[1, 2, 3, 4],
   curves:[{f:function(x){ return x*x; }, from:0, to:1.25, color:'sec', txt:'y = x²', tx:1.28, ty:1.75}, {f:function(x){ return x; }, from:0, to:1.25, color:'alt', txt:'y = x', tx:1.28, ty:1.2}],
@@ -13,7 +13,7 @@ OA.scene('apl-anillos-yk', oaSol({
   readout:function(x, num){ var V = Math.PI*(Math.pow(x, 5)/5 - 5*x*x*x/3 + 2*x*x); return [['', 'dV=\\pi\\left(R^{2}-r^{2}\\right)dx=\\pi\\Big[\\left(2-x^{2}\\right)^{2}-(2-x)^{2}\\Big]dx=\\pi\\left(x^{4}-5x^{2}+4x\\right)dx'], ['d', '\\displaystyle\\int_{0}^{x}\\pi\\left(t^{4}-5t^{2}+4t\\right)dt=\\pi\\left(\\dfrac{x^{5}}{5}-\\dfrac{5x^{3}}{3}+2x^{2}\\right)'], ['', 'x=' + num(x, 2) + ':\\quad \\text{volumen acumulado}\\approx ' + num(V, 2) + '\\ \\longrightarrow\\ \\dfrac{8\\pi}{15}']]; }
 }));
 OA.scene('apl-anillos-xk', oaSol({
-  orient:'y', k:-1, a:0, b:1, Rmax:2, R:function(y){ return Math.sqrt(y) + 1; }, r:function(y){ return y + 1; },
+  orient:'y', k:-1, a:0, b:1, Rmax:2, dx:0.06, R:function(y){ return Math.sqrt(y) + 1; }, r:function(y){ return y + 1; },
   V:function(y){ return Math.PI*(4/3*Math.pow(y, 1.5) - y*y/2 - y*y*y/3); }, chk:[0.2, 0.5, 0.7, 0.9],
   world:{x0:-4, x1:2.2, y0:-0.75, y1:1.75}, aspect:0.52, gx:[-3, -2, 1, 2], gy:[0.5, 1, 1.5],
   curves:[{f:function(y){ return Math.sqrt(y); }, from:0, to:1.3, color:'sec', txt:'x = √y', tx:1.05, ty:0.62}, {f:function(y){ return y; }, from:0, to:1.3, color:'alt', txt:'x = y', tx:1.38, ty:1.52}],
