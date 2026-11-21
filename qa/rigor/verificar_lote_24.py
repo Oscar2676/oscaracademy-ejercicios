@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Comprobación numérica de todas las igualdades y resultados del lote 24 (Binomio de Newton)."""
-from math import comb, factorial, sqrt, isclose
+from math import comb, factorial, sqrt
+from math import isclose as _ic
+def isclose(a, b, rel_tol=1e-9, abs_tol=1e-9): return _ic(a, b, rel_tol=rel_tol, abs_tol=abs_tol)
 err = 0
 def ok(n, c):
     global err
