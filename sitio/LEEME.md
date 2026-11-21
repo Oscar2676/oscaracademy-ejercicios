@@ -38,3 +38,4 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 <!-- relectura tras publicar L22 H12, 21-nov -->
 <!-- relectura tras publicar L23 H05, 21-nov -->
 <!-- relectura tras publicar L23 H02, 21-nov -->
+<!-- relectura 2 tras publicar L23 H02 -->
