@@ -1,0 +1,147 @@
+<!--file:H13_termino_independiente.html-->
+<!--title:Término independiente-->
+<!--id:bn-independiente-->
+<!--tab:H13 Término independiente-->
+<article class="sheet" id="bn-independiente" data-hoja="L24 H13">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Término general</li>
+      <li><b>Término independiente</b></li>
+    </ol>
+    <h1>Término independiente</h1>
+    <p class="lede">El término independiente de un desarrollo es el que no contiene la variable: aquel en que el exponente de \(x\) queda en \(0\). Aparece cuando en el binomio hay potencias de \(x\) que pueden cancelarse, como en \(\left(x^{2}+\dfrac{1}{x}\right)^{6}\).
+    \[\text{exponente de }x\text{ en }T_{k+1}=0\ \Longrightarrow\ k\ \Longrightarrow\ \text{término independiente}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El desarrollo de \(\left(x^{2}+\dfrac{1}{x}\right)^{6}\): qué exponente de \(x\) queda en cada término.</p>
+  <div class="stage" data-scene="bn-independiente"></div>
+  <ul class="keys">
+    <li><b>Eje horizontal:</b> \(k\), de \(0\) a \(6\): un punto por cada término.</li>
+    <li><b>Eje vertical:</b> el exponente de \(x\) que queda en ese término, \(12-3k\).</li>
+    <li><b>Recta punteada burdeo:</b> el exponente \(0\), donde la \(x\) desaparece.</li>
+    <li><b>Punto burdeo:</b> el término que cae sobre esa recta: el independiente.</li>
+    <li><b>Bajo el dibujo:</b> la cuenta del exponente en cada término y, al final, la ecuación \(12-3k=0\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>El procedimiento</h3>
+    <ol class="steps">
+      <li>Escribir el término general: \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li>Juntar todas las potencias de \(x\) en una sola, con las reglas de las potencias. Queda \(x\) elevado a una expresión con \(k\).</li>
+      <li>Igualar ese exponente a \(0\) y despejar \(k\).</li>
+      <li>Si \(k\) es un entero entre \(0\) y \(n\), reemplazarlo en el término general. Si no lo es, <b>no hay término independiente</b>.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>En el ejemplo de la animación</h3>
+    <ol class="steps">
+      <li>\(T_{k+1}=\dbinom{6}{k}\left(x^{2}\right)^{6-k}\left(\dfrac{1}{x}\right)^{k}\).</li>
+      <li>\(\left(x^{2}\right)^{6-k}=x^{12-2k}\) y \(\left(\dfrac{1}{x}\right)^{k}=x^{-k}\). Juntas: \(x^{12-2k-k}=x^{12-3k}\).</li>
+      <li>\(12-3k=0\ \Longrightarrow\ k=4\). Es entero y está entre \(0\) y \(6\).</li>
+      <li>\(T_{5}=\dbinom{6}{4}x^{0}=15\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\left(x+\dfrac{1}{x}\right)^{6}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(T_{k+1}=\dbinom{6}{k}x^{6-k}\cdot x^{-k}=\dbinom{6}{k}x^{6-2k}\).</li>
+    <li>\(6-2k=0\ \Longrightarrow\ k=3\).</li>
+    <li>Término independiente: \(\dbinom{6}{3}=20\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con coeficientes y signo: \(\left(2x-\dfrac{1}{x^{2}}\right)^{9}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=2x\), \(b=-\dfrac{1}{x^{2}}\). \(T_{k+1}=\dbinom{9}{k}(2x)^{9-k}\left(-\dfrac{1}{x^{2}}\right)^{k}=\dbinom{9}{k}\,2^{9-k}\,(-1)^{k}\,x^{9-k-2k}\).</li>
+    <li>Exponente: \(9-3k=0\ \Longrightarrow\ k=3\).</li>
+    <li>\(T_{4}=\dbinom{9}{3}\cdot 2^{6}\cdot(-1)^{3}=84\cdot 64\cdot(-1)=-5376\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: cuando no hay. \(\left(x+\dfrac{1}{x}\right)^{5}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Exponente de \(x\): \(5-2k\).</li>
+    <li>\(5-2k=0\ \Longrightarrow\ k=\dfrac{5}{2}\), que no es entero.</li>
+    <li>Ningún término queda sin \(x\): este desarrollo no tiene término independiente. Sus exponentes son \(5,\ 3,\ 1,\ -1,\ -3,\ -5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: un binomio sin fracciones, \((x+3)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(T_{k+1}=\dbinom{4}{k}x^{4-k}\cdot 3^{k}\). Exponente de \(x\): \(4-k\).</li>
+    <li>\(4-k=0\ \Longrightarrow\ k=4\): es el último término.</li>
+    <li>Término independiente: \(3^{4}=81\). En un binomio como \((x+c)^{n}\) siempre es \(c^{n}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: olvidar que \(\dfrac{1}{x^{2}}=x^{-2}\) y sumar los exponentes en vez de restarlos. Dos: encontrar \(k\) y entregar solo \(\dbinom{n}{k}\), olvidando los coeficientes y el signo que van dentro de \(a\) y de \(b\) (ejemplo 2).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Encuentra el término independiente de \(\left(x+\dfrac{2}{x}\right)^{4}\).</p>
+    <details><summary>Pista</summary><div><p>El exponente de \(x\) es \(4-2k\). No olvides el \(2^{k}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{k+1}=\dbinom{4}{k}x^{4-k}\cdot\dfrac{2^{k}}{x^{k}}=\dbinom{4}{k}2^{k}x^{4-2k}\).</li>
+        <li>\(4-2k=0\ \Longrightarrow\ k=2\).</li>
+        <li>\(T_{3}=\dbinom{4}{2}\cdot 2^{2}=6\cdot 4=24\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra el término independiente de \(\left(x^{3}+\dfrac{1}{x^{2}}\right)^{5}\).</p>
+    <details><summary>Pista</summary><div><p>\(\left(x^{3}\right)^{5-k}=x^{15-3k}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Exponente: \(15-3k-2k=15-5k\).</li>
+        <li>\(15-5k=0\ \Longrightarrow\ k=3\).</li>
+        <li>\(T_{4}=\dbinom{5}{3}=10\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En un taller, el costo de un trabajo (en miles de pesos) se modela con \(\left(t+\dfrac{2}{t}\right)^{2}\), donde \(t\) son las horas dedicadas. Desarrolla la expresión e indica qué parte del costo no depende de \(t\).</p>
+    <details><summary>Pista</summary><div><p>Es un cuadrado de binomio. Busca el término sin \(t\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\left(t+\dfrac{2}{t}\right)^{2}=t^{2}+2\cdot t\cdot\dfrac{2}{t}+\dfrac{4}{t^{2}}=t^{2}+4+\dfrac{4}{t^{2}}\).</li>
+        <li>El término independiente es \(4\) (con la fórmula: exponente \(2-2k=0\), \(k=1\), \(\dbinom{2}{1}\cdot 2=4\)).</li>
+        <li>Respuesta: \(\$4\,000\) del costo son fijos, cualquiera sea \(t\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H13 · v001 · Pendiente de APR</span>
+</footer>
+</article>

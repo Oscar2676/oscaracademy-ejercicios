@@ -1,0 +1,149 @@
+<!--file:H18_binomio_con_exponente_fraccionario.html-->
+<!--title:Binomio con exponente fraccionario-->
+<!--id:bn-fraccion-->
+<!--tab:H18 Exponente fraccionario-->
+<article class="sheet" id="bn-fraccion" data-hoja="L24 H18">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Aplicaciones</li>
+      <li><b>Binomio con exponente fraccionario</b></li>
+    </ol>
+    <h1>Binomio con exponente fraccionario</h1>
+    <p class="lede">Cuando el exponente no es un número natural —por ejemplo \(\tfrac{1}{2}\), que es una raíz cuadrada— el desarrollo del binomio ya no termina: es una suma de infinitos términos, y solo sirve si \(|x|&lt;1\). Se llama serie binomial.
+    \[(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{k}=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^{2}+\frac{\alpha(\alpha-1)(\alpha-2)}{3!}x^{3}+\cdots\qquad(|x|&lt;1)\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La curva \(y=\sqrt{1+x}=(1+x)^{1/2}\) y los polinomios que se obtienen al sumar los primeros términos de su desarrollo.</p>
+  <div class="stage" data-scene="bn-fraccion"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(y=\sqrt{1+x}\).</li>
+    <li><b>Curva naranja:</b> la suma de los primeros términos de la serie. Con más términos se pega más a la azul.</li>
+    <li><b>Rectas punteadas:</b> \(x=-1\) y \(x=1\). Entre ellas la serie funciona; fuera, no.</li>
+    <li><b>Bajo el dibujo:</b> la suma escrita, y su valor comparado con la raíz en un punto de adentro (\(x=0{,}5\)) y en uno de afuera (\(x=1{,}8\)).</li>
+    <li><b>Deslizador «términos»:</b> de \(1\) a \(6\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>El coeficiente binomial generalizado</h3>
+    <ol class="steps">
+      <li>Para \(n\) natural, \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\). Esa fórmula se puede calcular aunque arriba no haya un natural.</li>
+      <li>Para cualquier número real \(\alpha\) y \(k=1,\ 2,\ 3,\dots\) se define:
+        \[\binom{\alpha}{k}=\frac{\alpha\,(\alpha-1)\,(\alpha-2)\cdots(\alpha-k+1)}{k!},\qquad\binom{\alpha}{0}=1\]
+        Arriba van \(k\) factores, que bajan de uno en uno desde \(\alpha\).</li>
+      <li><b>Si \(\alpha\) es natural,</b> al llegar a \(k=\alpha+1\) aparece el factor \((\alpha-\alpha)=0\): todos los coeficientes siguientes valen \(0\) y la suma termina. Se recupera el binomio de Newton.</li>
+      <li><b>Si \(\alpha\) no es natural,</b> ningún factor se anula: la suma no termina nunca.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Qué se afirma, y qué no se demuestra aquí</h3>
+    <ol class="steps">
+      <li><b>Teorema (serie binomial).</b> Si \(|x|&lt;1\), la suma infinita converge y su valor es exactamente \((1+x)^{\alpha}\).</li>
+      <li>Esta hoja lo <b>usa sin demostrarlo</b>: la demostración necesita series de Taylor, que son de cálculo.</li>
+      <li>Un caso sí se puede comprobar con lo ya visto: para \(\alpha=-1\), \(\dbinom{-1}{k}=\dfrac{(-1)(-2)\cdots(-k)}{k!}=(-1)^{k}\), y la serie es \(1-x+x^{2}-x^{3}+\cdots\), la serie geométrica de razón \(-x\), cuya suma es \(\dfrac{1}{1+x}\) cuando \(|x|&lt;1\).</li>
+      <li><b>En la práctica</b> se usan los primeros términos como aproximación, que es muy buena cuando \(|x|\) es pequeño.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: los primeros términos de \((1+x)^{1/2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dbinom{1/2}{1}=\dfrac{1}{2}\).</li>
+    <li>\(\dbinom{1/2}{2}=\dfrac{\frac{1}{2}\cdot\left(-\frac{1}{2}\right)}{2}=-\dfrac{1}{8}\).</li>
+    <li>\(\dbinom{1/2}{3}=\dfrac{\frac{1}{2}\cdot\left(-\frac{1}{2}\right)\cdot\left(-\frac{3}{2}\right)}{6}=\dfrac{\frac{3}{8}}{6}=\dfrac{1}{16}\).</li>
+    <li>\(\sqrt{1+x}=1+\dfrac{1}{2}x-\dfrac{1}{8}x^{2}+\dfrac{1}{16}x^{3}-\cdots\), para \(|x|&lt;1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\sqrt{1{,}04}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(x=0{,}04\). Tres términos: \(1+\dfrac{0{,}04}{2}-\dfrac{0{,}0016}{8}=1+0{,}02-0{,}0002\).</li>
+    <li>\(\sqrt{1{,}04}\approx 1{,}0198\).</li>
+    <li>El valor con más decimales es \(1{,}0198039\ldots\): la aproximación acierta en cinco decimales.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, una raíz cúbica: \(\sqrt[3]{1{,}03}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\alpha=\dfrac{1}{3}\), \(x=0{,}03\). \(\dbinom{1/3}{1}=\dfrac{1}{3}\) y \(\dbinom{1/3}{2}=\dfrac{\frac{1}{3}\cdot\left(-\frac{2}{3}\right)}{2}=-\dfrac{1}{9}\).</li>
+    <li>\(1+\dfrac{0{,}03}{3}-\dfrac{0{,}0009}{9}=1+0{,}01-0{,}0001=1{,}0099\).</li>
+    <li>El valor con más decimales es \(1{,}0099016\ldots\)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(\sqrt{17}\), sacando factor</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(17\) no es de la forma \(1+x\) con \(|x|&lt;1\). Se saca el cuadrado más cercano: \(17=16\left(1+\dfrac{1}{16}\right)\), así que \(\sqrt{17}=4\sqrt{1+\dfrac{1}{16}}\).</li>
+    <li>Con \(x=\dfrac{1}{16}\): \(\sqrt{1+\dfrac{1}{16}}\approx 1+\dfrac{1}{32}-\dfrac{1}{8}\cdot\dfrac{1}{256}=1+\dfrac{1}{32}-\dfrac{1}{2048}\).</li>
+    <li>\(\sqrt{17}\approx 4+\dfrac{1}{8}-\dfrac{1}{512}=4{,}123046875\).</li>
+    <li>El valor con más decimales es \(4{,}1231056\ldots\)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más grave.</b> Usar la serie con \(|x|\ge 1\). Para \(\sqrt{1+3}=2\), los tres primeros términos dan \(1+\dfrac{3}{2}-\dfrac{9}{8}=1{,}375\), y agregar más términos lo empeora: la suma no se acerca a \(2\). La condición \(|x|&lt;1\) no es un detalle.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Escribe los cuatro primeros términos del desarrollo de \((1+x)^{-2}\), para \(|x|&lt;1\).</p>
+    <details><summary>Pista</summary><div><p>\(\alpha=-2\). Los factores de arriba son \(-2,\ -3,\ -4,\dots\)</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{-2}{1}=-2\); \(\ \dbinom{-2}{2}=\dfrac{(-2)(-3)}{2}=3\); \(\ \dbinom{-2}{3}=\dfrac{(-2)(-3)(-4)}{6}=-4\).</li>
+        <li>\((1+x)^{-2}=1-2x+3x^{2}-4x^{3}+\cdots\)</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Aproxima \(\sqrt{1{,}1}\) con tres términos.</p>
+    <details><summary>Pista</summary><div><p>\(x=0{,}1\): \(1+\dfrac{x}{2}-\dfrac{x^{2}}{8}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1+0{,}05-\dfrac{0{,}01}{8}=1+0{,}05-0{,}00125\).</li>
+        <li>\(\sqrt{1{,}1}\approx 1{,}04875\). (El valor con más decimales es \(1{,}0488088\ldots\))</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un terreno cuadrado tiene \(1{,}06\) hectáreas de superficie; un cuadrado de \(1\) hectárea mide \(100\) m de lado. ¿Cuánto mide el lado del terreno? Usa tres términos de la serie.</p>
+    <details><summary>Pista</summary><div><p>El lado es \(100\sqrt{1{,}06}\) metros. \(x=0{,}06\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\sqrt{1{,}06}\approx 1+0{,}03-\dfrac{0{,}0036}{8}=1+0{,}03-0{,}00045=1{,}02955\).</li>
+        <li>Lado: \(100\cdot 1{,}02955=102{,}955\) m, es decir, casi \(103\) m.</li>
+        <li>Lectura: un \(6\,\%\) más de superficie es solo cerca de un \(3\,\%\) más de lado.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H18 · v001 · Pendiente de APR</span>
+</footer>
+</article>

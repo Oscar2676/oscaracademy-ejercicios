@@ -1,0 +1,146 @@
+<!--file:H15_aproximaciones_como_1_02_a_la_5.html-->
+<!--title:Aproximaciones como (1,02)⁵-->
+<!--id:bn-aprox-->
+<!--tab:H15 Aproximaciones-->
+<article class="sheet" id="bn-aprox" data-hoja="L24 H15">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Aplicaciones</li>
+      <li><b>Aproximaciones como (1,02)⁵</b></li>
+    </ol>
+    <h1>Aproximaciones como (1,02)⁵</h1>
+    <p class="lede">Una potencia como \(1{,}02^{5}\) se puede calcular a mano escribiendo la base como \(1+0{,}02\) y desarrollando con el binomio. Como \(0{,}02\) es pequeño, sus potencias se achican muy rápido, y con dos o tres términos ya se tiene una muy buena aproximación.
+    \[(1+x)^{n}=\sum_{k=0}^{n}\binom{n}{k}x^{k}=1+nx+\frac{n(n-1)}{2}x^{2}+\cdots+x^{n}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Las sumas parciales del desarrollo de \((1+0{,}02)^{5}\), término a término, comparadas con el valor exacto.</p>
+  <div class="stage" data-scene="bn-aprox"></div>
+  <ul class="keys">
+    <li><b>Recta de arriba:</b> de \(1\) a \(1{,}12\). <b>Recta de abajo:</b> la misma, vista con lupa entre \(1{,}1038\) y \(1{,}1042\).</li>
+    <li><b>Punto naranja:</b> la suma de los términos usados hasta ahora. Los puntos tenues son las sumas anteriores.</li>
+    <li><b>Marca burdeo:</b> el valor exacto, \(1{,}02^{5}=1{,}1040808032\).</li>
+    <li><b>Bajo el dibujo:</b> el término que se agrega, la suma y el error (exacto menos suma).</li>
+    <li><b>Deslizador «términos usados»:</b> de \(1\) a \(6\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale</h3>
+    <ol class="steps">
+      <li>Es el binomio de Newton con \(a=1\) y \(b=x\). Como \(1\) elevado a cualquier exponente es \(1\), cada término queda \(\dbinom{n}{k}x^{k}\).</li>
+      <li>Los primeros coeficientes: \(\dbinom{n}{0}=1\), \(\dbinom{n}{1}=n\), \(\dbinom{n}{2}=\dfrac{n(n-1)}{2}\), \(\dbinom{n}{3}=\dfrac{n(n-1)(n-2)}{6}\).</li>
+      <li>La igualdad con todos los términos es <b>exacta</b>. La aproximación consiste en quedarse con los primeros:
+        \[(1+x)^{n}\approx 1+nx\qquad\text{o, mejor,}\qquad(1+x)^{n}\approx 1+nx+\frac{n(n-1)}{2}x^{2}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cuándo es buena la aproximación</h3>
+    <ol class="steps">
+      <li>Cuando \(|x|\) es pequeño y \(n\) no es grande: lo que importa es que \(n\cdot|x|\) sea bastante menor que \(1\).</li>
+      <li>Cada término es el anterior multiplicado por \(\dfrac{n-k+1}{k}\,x\). Si ese factor es chico, los términos caen rápido.</li>
+      <li>Cuando \(x&gt;0\), todos los términos son positivos: la suma parcial siempre queda <b>por debajo</b> del valor exacto, y el error es la suma de los términos que se dejaron fuera.</li>
+      <li>Para bases que no están cerca de \(1\) se saca factor: \(2{,}01^{3}=(2+0{,}01)^{3}\), con \(a=2\) y \(b=0{,}01\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(1{,}02^{5}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(1{,}02^{5}=(1+0{,}02)^{5}\), con coeficientes \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li>Términos: \(1\); \(\ 5\cdot 0{,}02=0{,}1\); \(\ 10\cdot 0{,}0004=0{,}004\); \(\ 10\cdot 0{,}000008=0{,}00008\); \(\ 5\cdot 0{,}00000016=0{,}0000008\); \(\ 0{,}02^{5}=0{,}0000000032\).</li>
+    <li>Con tres términos: \(1+0{,}1+0{,}004=1{,}104\).</li>
+    <li>Con todos: \(1{,}1040808032\), el valor exacto. El error de usar tres términos es \(0{,}0000808032\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con resta: \(0{,}99^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(0{,}99^{4}=(1-0{,}01)^{4}\): signos alternados, coeficientes \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+    <li>\(1-4\cdot 0{,}01+6\cdot 0{,}0001-4\cdot 0{,}000001+0{,}00000001\).</li>
+    <li>Con tres términos: \(1-0{,}04+0{,}0006=0{,}9606\).</li>
+    <li>Exacto: \(0{,}96059601\). Aquí la suma parcial no queda siempre del mismo lado, porque los signos se alternan.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(1{,}001^{10}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=10\), \(x=0{,}001\). \(\dbinom{10}{2}=45\).</li>
+    <li>\(1+10\cdot 0{,}001+45\cdot 0{,}000001=1+0{,}01+0{,}000045=1{,}010045\).</li>
+    <li>El término siguiente es \(\dbinom{10}{3}\cdot 0{,}001^{3}=120\cdot 0{,}000000001=0{,}00000012\): la aproximación ya tiene seis decimales correctos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, base lejos de \(1\): \(2{,}01^{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(2{,}01^{3}=(2+0{,}01)^{3}=2^{3}+3\cdot 2^{2}\cdot 0{,}01+3\cdot 2\cdot 0{,}01^{2}+0{,}01^{3}\).</li>
+    <li>\(=8+0{,}12+0{,}0006+0{,}000001=8{,}120601\).</li>
+    <li>Con \(n\) chico conviene escribir todos los términos: el resultado es exacto.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Creer que \(1{,}02^{5}\) es \(1+5\cdot 0{,}02=1{,}1\) exactamente. Eso es solo la aproximación de dos términos (la del «interés simple»). Lo que falta, \(0{,}0040808032\), es el efecto del interés sobre el interés.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Aproxima \(1{,}01^{6}\) con los tres primeros términos del desarrollo.</p>
+    <details><summary>Pista</summary><div><p>\(\dbinom{6}{2}=15\) y \(0{,}01^{2}=0{,}0001\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1+6\cdot 0{,}01+15\cdot 0{,}0001=1+0{,}06+0{,}0015\).</li>
+        <li>\(1{,}01^{6}\approx 1{,}0615\). (El valor exacto es \(1{,}0615201506\ldots\))</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Aproxima \(0{,}98^{5}\) con los tres primeros términos.</p>
+    <details><summary>Pista</summary><div><p>\(0{,}98=1-0{,}02\): el segundo término es negativo y el tercero, positivo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1-5\cdot 0{,}02+10\cdot 0{,}0004=1-0{,}1+0{,}004\).</li>
+        <li>\(0{,}98^{5}\approx 0{,}904\). (El valor exacto es \(0{,}9039207968\).)</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> El precio de un producto sube un \(2\,\%\) cada mes durante \(6\) meses. ¿En qué porcentaje sube en total, aproximadamente? Usa tres términos del desarrollo de \(1{,}02^{6}\).</p>
+    <details><summary>Pista</summary><div><p>No es \(6\cdot 2\,\%=12\,\%\): falta el término en \(0{,}02^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1{,}02^{6}\approx 1+6\cdot 0{,}02+15\cdot 0{,}0004=1+0{,}12+0{,}006=1{,}126\).</li>
+        <li>Sube aproximadamente un \(12{,}6\,\%\). (El valor exacto es \(12{,}616\ldots\,\%\).)</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H15 · v001 · Pendiente de APR</span>
+</footer>
+</article>

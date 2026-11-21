@@ -1,0 +1,232 @@
+<!--file:H17_demostracion_por_induccion.html-->
+<!--title:Demostración por inducción-->
+<!--id:bn-induccion-->
+<!--tab:H17 Demostración por inducción-->
+<article class="sheet" id="bn-induccion" data-hoja="L24 H17">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Aplicaciones</li>
+      <li><b>Demostración por inducción</b></li>
+    </ol>
+    <h1>Demostración por inducción</h1>
+    <p class="lede">El binomio de Newton vale para todo exponente natural \(n\). Para demostrarlo para <b>todos</b> a la vez se usa inducción: se prueba el primer caso, y se prueba que de cada caso se pasa al siguiente.
+    \[P(n):\qquad(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El paso de \((a+b)^{3}\) a \((a+b)^{4}\), que es el corazón de la demostración, en cuatro pasos.</p>
+  <div class="stage" data-scene="bn-induccion"></div>
+  <ul class="keys">
+    <li><b>Columnas:</b> las potencias que aparecen en \((a+b)^{4}\).</li>
+    <li><b>Fila azul:</b> los coeficientes de \(a\cdot(a+b)^{3}\). Multiplicar por \(a\) no los cambia de columna.</li>
+    <li><b>Fila naranja:</b> los coeficientes de \(b\cdot(a+b)^{3}\). Multiplicar por \(b\) los corre un lugar a la derecha.</li>
+    <li><b>Fila burdeo:</b> la suma por columnas. En cada columna se juntan dos coeficientes vecinos de la fila anterior.</li>
+    <li><b>Deslizador «paso»:</b> avanza o retrocede.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Cómo funciona la inducción</h3>
+    <ol class="steps">
+      <li><b>Caso base.</b> Se comprueba que la afirmación vale para el primer valor (aquí, \(n=0\)).</li>
+      <li><b>Paso inductivo.</b> Se supone que vale para un \(n\) cualquiera (hipótesis de inducción) y, usando eso, se demuestra que vale para \(n+1\).</li>
+      <li><b>Conclusión.</b> Vale para \(0\); por el paso, vale para \(1\); por el paso, para \(2\); y así para todo natural.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Lo que se va a usar</h3>
+    <ol class="steps">
+      <li>\(\dbinom{n}{0}=\dbinom{n}{n}=1\), para todo \(n\).</li>
+      <li>La regla de Pascal: \(\dbinom{n}{k}+\dbinom{n}{k-1}=\dbinom{n+1}{k}\), para \(1\le k\le n\) (demostrada en la hoja «Coeficientes binomiales»).</li>
+      <li>La propiedad distributiva y las reglas de las potencias: \(a\cdot a^{\,n-k}=a^{\,n+1-k}\) y \(b\cdot b^{\,k}=b^{\,k+1}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>La demostración, paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>1. Caso base: \(n=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Lado izquierdo: \((a+b)^{0}=1\).</li>
+    <li>Lado derecho: un solo término, \(\dbinom{0}{0}a^{0}b^{0}=1\).</li>
+    <li>Coinciden: \(P(0)\) es verdadera. (También \(P(1)\): \(a+b=\dbinom{1}{0}a+\dbinom{1}{1}b\).)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>2. Hipótesis de inducción y lo que hay que probar</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Se supone</b> \(P(n)\): \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+    <li><b>Hay que probar</b> \(P(n+1)\): \((a+b)^{n+1}=\displaystyle\sum_{k=0}^{n+1}\binom{n+1}{k}a^{\,n+1-k}b^{\,k}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>3. Paso inductivo</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\((a+b)^{n+1}=(a+b)\,(a+b)^{n}\). Se reemplaza \((a+b)^{n}\) por la hipótesis y se distribuye:
+      \[(a+b)^{n+1}=a\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}+b\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\]</li>
+    <li>La \(a\) y la \(b\) entran a cada sumatoria:
+      \[=\sum_{k=0}^{n}\binom{n}{k}a^{\,n+1-k}b^{\,k}+\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k+1}\]</li>
+    <li><b>Cambio de índice en la segunda.</b> Se llama \(j=k+1\): cuando \(k\) va de \(0\) a \(n\), \(j\) va de \(1\) a \(n+1\), y \(k=j-1\). La segunda sumatoria queda \(\displaystyle\sum_{j=1}^{n+1}\binom{n}{j-1}a^{\,n+1-j}b^{\,j}\). La letra del índice es muda: se vuelve a escribir \(k\) en lugar de \(j\).
+      \[=\sum_{k=0}^{n}\binom{n}{k}a^{\,n+1-k}b^{\,k}+\sum_{k=1}^{n+1}\binom{n}{k-1}a^{\,n+1-k}b^{\,k}\]</li>
+    <li><b>Se separan los extremos.</b> De la primera sumatoria se saca el término \(k=0\), que es \(a^{n+1}\). De la segunda, el término \(k=n+1\), que es \(b^{n+1}\). Las dos quedan con \(k\) de \(1\) a \(n\) y con las mismas potencias, así que se juntan:
+      \[=a^{n+1}+\sum_{k=1}^{n}\left[\binom{n}{k}+\binom{n}{k-1}\right]a^{\,n+1-k}b^{\,k}+b^{n+1}\]</li>
+    <li><b>Regla de Pascal</b> en el corchete: \(\dbinom{n}{k}+\dbinom{n}{k-1}=\dbinom{n+1}{k}\). Y los extremos: \(a^{n+1}=\dbinom{n+1}{0}a^{n+1}b^{0}\), \(b^{n+1}=\dbinom{n+1}{n+1}a^{0}b^{n+1}\).
+      \[=\sum_{k=0}^{n+1}\binom{n+1}{k}a^{\,n+1-k}b^{\,k}\]</li>
+    <li>Eso es \(P(n+1)\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>4. Conclusión</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(P(0)\) es verdadera, y de \(P(n)\) se sigue \(P(n+1)\) para todo \(n\).</li>
+    <li>Por el principio de inducción, \(P(n)\) es verdadera para todo natural \(n\): el binomio de Newton queda demostrado.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Dónde se suele fallar.</b> En el cambio de índice (paso 3 de la demostración): al correr el índice cambian los límites de la sumatoria <b>y</b> el coeficiente, que pasa de \(\dbinom{n}{k}\) a \(\dbinom{n}{k-1}\). La animación muestra ese corrimiento con números: es la fila naranja, un lugar a la derecha de la azul.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Repite el paso inductivo con números: obtén \((a+b)^{3}\) a partir de \((a+b)^{2}=a^{2}+2ab+b^{2}\), separando el producto por \(a\) y el producto por \(b\).</p>
+    <details><summary>Pista</summary><div><p>Escribe las dos filas de coeficientes, la segunda corrida un lugar, y suma por columnas.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(a\cdot(a+b)^{2}=a^{3}+2a^{2}b+ab^{2}\): coeficientes \(1,\ 2,\ 1\) en las columnas \(a^{3},\ a^{2}b,\ ab^{2}\).</li>
+        <li>\(b\cdot(a+b)^{2}=a^{2}b+2ab^{2}+b^{3}\): coeficientes \(1,\ 2,\ 1\) en las columnas \(a^{2}b,\ ab^{2},\ b^{3}\).</li>
+        <li>Suma por columnas: \(1,\ 2+1,\ 1+2,\ 1\). \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Demuestra por inducción que \(\displaystyle\sum_{k=0}^{n}\binom{n}{k}=2^{n}\) para todo natural \(n\), usando la regla de Pascal.</p>
+    <details><summary>Pista</summary><div><p>En la fila \(n+1\), los extremos valen \(1\) y cada número interior es suma de dos de la fila \(n\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li><b>Base:</b> \(n=0\): \(\dbinom{0}{0}=1=2^{0}\).</li>
+        <li><b>Hipótesis:</b> \(\displaystyle\sum_{k=0}^{n}\binom{n}{k}=2^{n}\).</li>
+        <li><b>Paso:</b> \(\displaystyle\sum_{k=0}^{n+1}\binom{n+1}{k}=1+\sum_{k=1}^{n}\left[\binom{n}{k}+\binom{n}{k-1}\right]+1\).</li>
+        <li>\(\displaystyle\sum_{k=1}^{n}\binom{n}{k}=2^{n}-\binom{n}{0}=2^{n}-1\) y \(\displaystyle\sum_{k=1}^{n}\binom{n}{k-1}=2^{n}-\binom{n}{n}=2^{n}-1\).</li>
+        <li>Total: \(1+\left(2^{n}-1\right)+\left(2^{n}-1\right)+1=2\cdot 2^{n}=2^{n+1}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una fila muy larga de fichas de dominó paradas. ¿Qué dos cosas hay que asegurar para estar seguro de que caerán <b>todas</b>? ¿A qué parte de una demostración por inducción corresponde cada una?</p>
+    <details><summary>Pista</summary><div><p>Piensa en la primera ficha, y en lo que pasa entre una ficha y la siguiente.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Que la primera ficha caiga: es el <b>caso base</b>.</li>
+        <li>Que cada ficha, al caer, bote a la siguiente: es el <b>paso inductivo</b> (si vale para \(n\), vale para \(n+1\)).</li>
+        <li>Si falta cualquiera de las dos, no se puede asegurar que caigan todas.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H17 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
+  return {
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
+    draw:function(S, v){
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+OA.scene('bn-induccion', (function(){
+  var CX = [-1.6, 0.2, 2.0, 3.8, 5.6], HD = ['a⁴', 'a³b', 'a²b²', 'ab³', 'b⁴'], R1 = [1, 3, 3, 1, null], R2 = [null, 1, 3, 3, 1];
+  return {
+    world:{x0:-6.6, x1:6.6, y0:-5.4, y1:3.3}, aspect:8.7/13.2,
+    aria:'Una tabla muestra el paso de a más b al cubo a a más b a la cuarta. Las columnas son las potencias a a la cuarta, a al cubo b, a al cuadrado b al cuadrado, a b al cubo y b a la cuarta. La primera fila tiene los coeficientes de a por a más b al cubo: 1, 3, 3, 1. La segunda, los de b por a más b al cubo, que son los mismos corridos un lugar a la derecha. La tercera fila es la suma por columnas: 1, 4, 6, 4, 1.',
+    labels:[['F', '\\dbinom{n}{k}+\\dbinom{n}{k-1}=\\dbinom{n+1}{k}', 'C(n, k) + C(n, k−1) = C(n+1, k)', 'diff']],
+    sliders:[{id:'s', tex:'\\text{paso}', min:1, max:4, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> al multiplicar por \\(a\\): los coeficientes quedan en su lugar</span><span><i class="sw rise"></i> al multiplicar por \\(b\\): se corren un lugar</span><span><i class="sw tan"></i> la suma: la fila siguiente</span>',
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.s = Math.min(4, 1 + Math.floor(p*4.6)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = Math.round(v.s || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), j, x0, y0;
+      function cell(t, x, y, col, b){ c.font = (b ? '700 ' : '600 ') + '13px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function lab(t, y, col){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(-6.5), Y(y)); }
+      for (j = 0; j < 5; j++) cell(HD[j], CX[j], 2.7, C.ink, true);
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(-6.5), Y(2.7) + 12); c.lineTo(X(6.5), Y(2.7) + 12); c.stroke();
+      lab('(a + b)³ = a³ + 3a²b + 3ab² + b³', 3.05 - 1.25, C.ink);
+      if (s >= 2){ lab('a · (a + b)³', 0.9, C.sec); for (j = 0; j < 5; j++) if (R1[j] != null) cell('' + R1[j], CX[j], 0.9, C.sec, true); }
+      if (s >= 3){ lab('b · (a + b)³', 0.1, C.rise); for (j = 0; j < 5; j++) if (R2[j] != null) cell('' + R2[j], CX[j], 0.1, C.rise, true); }
+      if (s >= 4){ c.beginPath(); c.moveTo(X(-6.5), Y(-0.45)); c.lineTo(X(6.5), Y(-0.45)); c.stroke(); lab('(a + b)⁴', -0.95, C.tan); for (j = 0; j < 5; j++) cell('' + ((R1[j] || 0) + (R2[j] || 0)), CX[j], -0.95, C.tan, true); }
+      x0 = X(-6.5); y0 = Y(-1.9);
+      txt(['se multiplica (a + b)³ por (a + b): primero por a, después por b', 'por a: los coeficientes no cambian de columna', 'por b: los coeficientes se corren una columna', 'suma por columnas: 1, 3+1, 3+3, 1+3, 1  →  1, 4, 6, 4, 1'][s - 1], x0, y0, 'left', [C.ink, C.sec, C.rise, C.tan][s - 1]);
+      if (s >= 4) txt('en cada columna: C(3, k) + C(3, k − 1) = C(4, k)', x0, y0 + 21, 'left', C.ink);
+      S.lab('F', x0, y0 + 50, 0, 0, s >= 4);
+    },
+    caption:function(v){ var s = Math.round(v.s || 1); return ['El paso inductivo, visto con n = 3. Se quiere llegar de (a + b)³ a (a + b)⁴ = (a + b)(a + b)³', 'Primera mitad del producto: a · (a + b)³ = a⁴ + 3a³b + 3a²b² + ab³', 'Segunda mitad: b · (a + b)³ = a³b + 3a²b² + 3ab³ + b⁴. Son los mismos coeficientes, un lugar más a la derecha', 'Al sumar, en cada columna se juntan dos coeficientes vecinos de la fila anterior. Esa suma es justamente el coeficiente de la fila siguiente: la regla de Pascal'][s - 1]; },
+    readout:function(v){ var s = Math.round(v.s || 1); return [['', '(a+b)^{4}=(a+b)(a+b)^{3}=a\\,(a+b)^{3}+b\\,(a+b)^{3}']].concat(s >= 4 ? [['d', '\\dbinom{3}{k}+\\dbinom{3}{k-1}=\\dbinom{4}{k}:\\qquad 3+1=4,\\quad 3+3=6,\\quad 1+3=4']] : []); }
+  };
+})());

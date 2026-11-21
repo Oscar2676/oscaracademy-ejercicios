@@ -1,0 +1,205 @@
+<!--file:H13_termino_independiente.html-->
+<!--title:Término independiente-->
+<!--id:bn-independiente-->
+<!--tab:H13 Término independiente-->
+<article class="sheet" id="bn-independiente" data-hoja="L24 H13">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Término general</li>
+      <li><b>Término independiente</b></li>
+    </ol>
+    <h1>Término independiente</h1>
+    <p class="lede">El término independiente de un desarrollo es el que no contiene la variable: aquel en que el exponente de \(x\) queda en \(0\). Aparece cuando en el binomio hay potencias de \(x\) que pueden cancelarse, como en \(\left(x^{2}+\dfrac{1}{x}\right)^{6}\).
+    \[\text{exponente de }x\text{ en }T_{k+1}=0\ \Longrightarrow\ k\ \Longrightarrow\ \text{término independiente}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El desarrollo de \(\left(x^{2}+\dfrac{1}{x}\right)^{6}\): qué exponente de \(x\) queda en cada término.</p>
+  <div class="stage" data-scene="bn-independiente"></div>
+  <ul class="keys">
+    <li><b>Eje horizontal:</b> \(k\), de \(0\) a \(6\): un punto por cada término.</li>
+    <li><b>Eje vertical:</b> el exponente de \(x\) que queda en ese término, \(12-3k\).</li>
+    <li><b>Recta punteada burdeo:</b> el exponente \(0\), donde la \(x\) desaparece.</li>
+    <li><b>Punto burdeo:</b> el término que cae sobre esa recta: el independiente.</li>
+    <li><b>Bajo el dibujo:</b> la cuenta del exponente en cada término y, al final, la ecuación \(12-3k=0\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>El procedimiento</h3>
+    <ol class="steps">
+      <li>Escribir el término general: \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li>Juntar todas las potencias de \(x\) en una sola, con las reglas de las potencias. Queda \(x\) elevado a una expresión con \(k\).</li>
+      <li>Igualar ese exponente a \(0\) y despejar \(k\).</li>
+      <li>Si \(k\) es un entero entre \(0\) y \(n\), reemplazarlo en el término general. Si no lo es, <b>no hay término independiente</b>.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>En el ejemplo de la animación</h3>
+    <ol class="steps">
+      <li>\(T_{k+1}=\dbinom{6}{k}\left(x^{2}\right)^{6-k}\left(\dfrac{1}{x}\right)^{k}\).</li>
+      <li>\(\left(x^{2}\right)^{6-k}=x^{12-2k}\) y \(\left(\dfrac{1}{x}\right)^{k}=x^{-k}\). Juntas: \(x^{12-2k-k}=x^{12-3k}\).</li>
+      <li>\(12-3k=0\ \Longrightarrow\ k=4\). Es entero y está entre \(0\) y \(6\).</li>
+      <li>\(T_{5}=\dbinom{6}{4}x^{0}=15\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\left(x+\dfrac{1}{x}\right)^{6}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(T_{k+1}=\dbinom{6}{k}x^{6-k}\cdot x^{-k}=\dbinom{6}{k}x^{6-2k}\).</li>
+    <li>\(6-2k=0\ \Longrightarrow\ k=3\).</li>
+    <li>Término independiente: \(\dbinom{6}{3}=20\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con coeficientes y signo: \(\left(2x-\dfrac{1}{x^{2}}\right)^{9}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=2x\), \(b=-\dfrac{1}{x^{2}}\). \(T_{k+1}=\dbinom{9}{k}(2x)^{9-k}\left(-\dfrac{1}{x^{2}}\right)^{k}=\dbinom{9}{k}\,2^{9-k}\,(-1)^{k}\,x^{9-k-2k}\).</li>
+    <li>Exponente: \(9-3k=0\ \Longrightarrow\ k=3\).</li>
+    <li>\(T_{4}=\dbinom{9}{3}\cdot 2^{6}\cdot(-1)^{3}=84\cdot 64\cdot(-1)=-5376\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: cuando no hay. \(\left(x+\dfrac{1}{x}\right)^{5}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Exponente de \(x\): \(5-2k\).</li>
+    <li>\(5-2k=0\ \Longrightarrow\ k=\dfrac{5}{2}\), que no es entero.</li>
+    <li>Ningún término queda sin \(x\): este desarrollo no tiene término independiente. Sus exponentes son \(5,\ 3,\ 1,\ -1,\ -3,\ -5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: un binomio sin fracciones, \((x+3)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(T_{k+1}=\dbinom{4}{k}x^{4-k}\cdot 3^{k}\). Exponente de \(x\): \(4-k\).</li>
+    <li>\(4-k=0\ \Longrightarrow\ k=4\): es el último término.</li>
+    <li>Término independiente: \(3^{4}=81\). En un binomio como \((x+c)^{n}\) siempre es \(c^{n}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: olvidar que \(\dfrac{1}{x^{2}}=x^{-2}\) y sumar los exponentes en vez de restarlos. Dos: encontrar \(k\) y entregar solo \(\dbinom{n}{k}\), olvidando los coeficientes y el signo que van dentro de \(a\) y de \(b\) (ejemplo 2).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Encuentra el término independiente de \(\left(x+\dfrac{2}{x}\right)^{4}\).</p>
+    <details><summary>Pista</summary><div><p>El exponente de \(x\) es \(4-2k\). No olvides el \(2^{k}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{k+1}=\dbinom{4}{k}x^{4-k}\cdot\dfrac{2^{k}}{x^{k}}=\dbinom{4}{k}2^{k}x^{4-2k}\).</li>
+        <li>\(4-2k=0\ \Longrightarrow\ k=2\).</li>
+        <li>\(T_{3}=\dbinom{4}{2}\cdot 2^{2}=6\cdot 4=24\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra el término independiente de \(\left(x^{3}+\dfrac{1}{x^{2}}\right)^{5}\).</p>
+    <details><summary>Pista</summary><div><p>\(\left(x^{3}\right)^{5-k}=x^{15-3k}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Exponente: \(15-3k-2k=15-5k\).</li>
+        <li>\(15-5k=0\ \Longrightarrow\ k=3\).</li>
+        <li>\(T_{4}=\dbinom{5}{3}=10\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En un taller, el costo de un trabajo (en miles de pesos) se modela con \(\left(t+\dfrac{2}{t}\right)^{2}\), donde \(t\) son las horas dedicadas. Desarrolla la expresión e indica qué parte del costo no depende de \(t\).</p>
+    <details><summary>Pista</summary><div><p>Es un cuadrado de binomio. Busca el término sin \(t\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\left(t+\dfrac{2}{t}\right)^{2}=t^{2}+2\cdot t\cdot\dfrac{2}{t}+\dfrac{4}{t^{2}}=t^{2}+4+\dfrac{4}{t^{2}}\).</li>
+        <li>El término independiente es \(4\) (con la fórmula: exponente \(2-2k=0\), \(k=1\), \(\dbinom{2}{1}\cdot 2=4\)).</li>
+        <li>Respuesta: \(\$4\,000\) del costo son fijos, cualquiera sea \(t\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H13 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
+  return {
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
+    draw:function(S, v){
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+OA.scene('bn-independiente', bnExpo({ n:6, e0:12, d:3, ymin:-6, ymax:12, ystep:3, aspect:1.25,
+  aria:'Para el desarrollo de x al cuadrado más 1 sobre x, elevado a 6, se dibuja un punto por cada término: en horizontal va k, de 0 a 6, y en vertical el exponente de x que queda en ese término, que es 12 menos 3k. Los puntos bajan en línea recta: 12, 9, 6, 3, 0, menos 3, menos 6. El punto de k igual a 4 cae justo sobre el exponente 0: ese es el término independiente, y vale 15.',
+  labels:[['F', '12-3k=0\\ \\Longrightarrow\\ k=4\\ \\Longrightarrow\\ T_{5}=\\dbinom{6}{4}=15', '12 − 3k = 0 ⟹ k = 4 ⟹ T₅ = 15', 'diff']],
+  legend:'<span><i class="sw sec"></i> exponente de \\(x\\) en cada término</span><span><i class="sw tan"></i> el término sin \\(x\\): el independiente</span>',
+  lines:function(k, m, hit, fin){ var e = 12 - 3*k; return [['término k = ' + k + ': (x²)' + bnSup(6 - k) + ' · (1/x)' + bnSup(k) + ' = x' + bnSup(12 - 2*k) + ' / x' + bnSup(k), 'ink'], ['exponente de x: 12 − 3k = ' + ('' + e).replace('-', '−'), e === 0 ? 'tan' : 'sec']].concat(fin ? [['12 − 3k = 0  ⟹  k = 4', 'tan'], ['término independiente: C(6, 4) = 15', 'tan']] : []); },
+  caption:function(k, m, fin){ if (fin) return 'El único término en que el exponente de x es 0 es el de k = 4. Ahí la x desaparece y queda solo el coeficiente: 15'; var e = 12 - 3*k; return 'En el término k = ' + k + ' queda x elevado a ' + e + (e === 0 ? ': la x desaparece. Este es el término independiente' : '. Cada vez que k sube 1, el exponente baja 3'); },
+  readout:function(k){ return [['', 'T_{k+1}=\\dbinom{6}{k}\\left(x^{2}\\right)^{6-k}\\left(\\dfrac{1}{x}\\right)^{k}=\\dbinom{6}{k}\\,x^{12-3k}'], ['d', 'k=' + k + ':\\quad x^{' + (12 - 3*k) + '}']]; }
+}));

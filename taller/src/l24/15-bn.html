@@ -1,0 +1,228 @@
+<!--file:H15_aproximaciones_como_1_02_a_la_5.html-->
+<!--title:Aproximaciones como (1,02)⁵-->
+<!--id:bn-aprox-->
+<!--tab:H15 Aproximaciones-->
+<article class="sheet" id="bn-aprox" data-hoja="L24 H15">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Aplicaciones</li>
+      <li><b>Aproximaciones como (1,02)⁵</b></li>
+    </ol>
+    <h1>Aproximaciones como (1,02)⁵</h1>
+    <p class="lede">Una potencia como \(1{,}02^{5}\) se puede calcular a mano escribiendo la base como \(1+0{,}02\) y desarrollando con el binomio. Como \(0{,}02\) es pequeño, sus potencias se achican muy rápido, y con dos o tres términos ya se tiene una muy buena aproximación.
+    \[(1+x)^{n}=\sum_{k=0}^{n}\binom{n}{k}x^{k}=1+nx+\frac{n(n-1)}{2}x^{2}+\cdots+x^{n}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Las sumas parciales del desarrollo de \((1+0{,}02)^{5}\), término a término, comparadas con el valor exacto.</p>
+  <div class="stage" data-scene="bn-aprox"></div>
+  <ul class="keys">
+    <li><b>Recta de arriba:</b> de \(1\) a \(1{,}12\). <b>Recta de abajo:</b> la misma, vista con lupa entre \(1{,}1038\) y \(1{,}1042\).</li>
+    <li><b>Punto naranja:</b> la suma de los términos usados hasta ahora. Los puntos tenues son las sumas anteriores.</li>
+    <li><b>Marca burdeo:</b> el valor exacto, \(1{,}02^{5}=1{,}1040808032\).</li>
+    <li><b>Bajo el dibujo:</b> el término que se agrega, la suma y el error (exacto menos suma).</li>
+    <li><b>Deslizador «términos usados»:</b> de \(1\) a \(6\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale</h3>
+    <ol class="steps">
+      <li>Es el binomio de Newton con \(a=1\) y \(b=x\). Como \(1\) elevado a cualquier exponente es \(1\), cada término queda \(\dbinom{n}{k}x^{k}\).</li>
+      <li>Los primeros coeficientes: \(\dbinom{n}{0}=1\), \(\dbinom{n}{1}=n\), \(\dbinom{n}{2}=\dfrac{n(n-1)}{2}\), \(\dbinom{n}{3}=\dfrac{n(n-1)(n-2)}{6}\).</li>
+      <li>La igualdad con todos los términos es <b>exacta</b>. La aproximación consiste en quedarse con los primeros:
+        \[(1+x)^{n}\approx 1+nx\qquad\text{o, mejor,}\qquad(1+x)^{n}\approx 1+nx+\frac{n(n-1)}{2}x^{2}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cuándo es buena la aproximación</h3>
+    <ol class="steps">
+      <li>Cuando \(|x|\) es pequeño y \(n\) no es grande: lo que importa es que \(n\cdot|x|\) sea bastante menor que \(1\).</li>
+      <li>Cada término es el anterior multiplicado por \(\dfrac{n-k+1}{k}\,x\). Si ese factor es chico, los términos caen rápido.</li>
+      <li>Cuando \(x&gt;0\), todos los términos son positivos: la suma parcial siempre queda <b>por debajo</b> del valor exacto, y el error es la suma de los términos que se dejaron fuera.</li>
+      <li>Para bases que no están cerca de \(1\) se saca factor: \(2{,}01^{3}=(2+0{,}01)^{3}\), con \(a=2\) y \(b=0{,}01\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(1{,}02^{5}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(1{,}02^{5}=(1+0{,}02)^{5}\), con coeficientes \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li>Términos: \(1\); \(\ 5\cdot 0{,}02=0{,}1\); \(\ 10\cdot 0{,}0004=0{,}004\); \(\ 10\cdot 0{,}000008=0{,}00008\); \(\ 5\cdot 0{,}00000016=0{,}0000008\); \(\ 0{,}02^{5}=0{,}0000000032\).</li>
+    <li>Con tres términos: \(1+0{,}1+0{,}004=1{,}104\).</li>
+    <li>Con todos: \(1{,}1040808032\), el valor exacto. El error de usar tres términos es \(0{,}0000808032\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2, con resta: \(0{,}99^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(0{,}99^{4}=(1-0{,}01)^{4}\): signos alternados, coeficientes \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+    <li>\(1-4\cdot 0{,}01+6\cdot 0{,}0001-4\cdot 0{,}000001+0{,}00000001\).</li>
+    <li>Con tres términos: \(1-0{,}04+0{,}0006=0{,}9606\).</li>
+    <li>Exacto: \(0{,}96059601\). Aquí la suma parcial no queda siempre del mismo lado, porque los signos se alternan.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(1{,}001^{10}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=10\), \(x=0{,}001\). \(\dbinom{10}{2}=45\).</li>
+    <li>\(1+10\cdot 0{,}001+45\cdot 0{,}000001=1+0{,}01+0{,}000045=1{,}010045\).</li>
+    <li>El término siguiente es \(\dbinom{10}{3}\cdot 0{,}001^{3}=120\cdot 0{,}000000001=0{,}00000012\): la aproximación ya tiene seis decimales correctos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4, base lejos de \(1\): \(2{,}01^{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(2{,}01^{3}=(2+0{,}01)^{3}=2^{3}+3\cdot 2^{2}\cdot 0{,}01+3\cdot 2\cdot 0{,}01^{2}+0{,}01^{3}\).</li>
+    <li>\(=8+0{,}12+0{,}0006+0{,}000001=8{,}120601\).</li>
+    <li>Con \(n\) chico conviene escribir todos los términos: el resultado es exacto.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Creer que \(1{,}02^{5}\) es \(1+5\cdot 0{,}02=1{,}1\) exactamente. Eso es solo la aproximación de dos términos (la del «interés simple»). Lo que falta, \(0{,}0040808032\), es el efecto del interés sobre el interés.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Aproxima \(1{,}01^{6}\) con los tres primeros términos del desarrollo.</p>
+    <details><summary>Pista</summary><div><p>\(\dbinom{6}{2}=15\) y \(0{,}01^{2}=0{,}0001\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1+6\cdot 0{,}01+15\cdot 0{,}0001=1+0{,}06+0{,}0015\).</li>
+        <li>\(1{,}01^{6}\approx 1{,}0615\). (El valor exacto es \(1{,}0615201506\ldots\))</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Aproxima \(0{,}98^{5}\) con los tres primeros términos.</p>
+    <details><summary>Pista</summary><div><p>\(0{,}98=1-0{,}02\): el segundo término es negativo y el tercero, positivo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1-5\cdot 0{,}02+10\cdot 0{,}0004=1-0{,}1+0{,}004\).</li>
+        <li>\(0{,}98^{5}\approx 0{,}904\). (El valor exacto es \(0{,}9039207968\).)</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> El precio de un producto sube un \(2\,\%\) cada mes durante \(6\) meses. ¿En qué porcentaje sube en total, aproximadamente? Usa tres términos del desarrollo de \(1{,}02^{6}\).</p>
+    <details><summary>Pista</summary><div><p>No es \(6\cdot 2\,\%=12\,\%\): falta el término en \(0{,}02^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1{,}02^{6}\approx 1+6\cdot 0{,}02+15\cdot 0{,}0004=1+0{,}12+0{,}006=1{,}126\).</li>
+        <li>Sube aproximadamente un \(12{,}6\,\%\). (El valor exacto es \(12{,}616\ldots\,\%\).)</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H15 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
+  return {
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
+    draw:function(S, v){
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 0.9);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+OA.scene('bn-aprox', (function(){
+  var X0 = 0.02, N = 5, T = [], Sx = [], k, s = 0, EX = Math.pow(1.02, 5), dec = oaDec;
+  for (k = 0; k <= N; k++){ T.push(bnC(N, k)*Math.pow(X0, k)); s += T[k]; Sx.push(s); }
+  return {
+    world:{x0:-0.6, x1:10.6, y0:-6.4, y1:3.7}, aspect:10.1/11.2,
+    aria:'Dos rectas numéricas. La de arriba va de 1 a 1,12: sobre ella se marcan las sumas parciales del desarrollo de 1,02 elevado a 5. La primera es 1, la segunda 1,1 y las siguientes quedan casi encima del valor exacto, 1,10408. La de abajo es una lupa entre 1,1038 y 1,1042, donde se ve que la tercera suma, 1,104, queda un poco antes del valor exacto y la cuarta, 1,10408, ya casi no se distingue de él.',
+    labels:[['F', '(1+x)^{n}\\approx 1+nx+\\dfrac{n(n-1)}{2}x^{2}\\quad\\text{si }|x|\\text{ es pequeño}', '(1 + x)ⁿ ≈ 1 + nx + n(n−1)x²/2, si |x| es pequeño', 'diff']],
+    sliders:[{id:'k', tex:'\\text{términos usados}', min:1, max:6, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> suma de los términos usados</span><span><i class="sw tan"></i> valor exacto de \\(1{,}02^{5}\\)</span>',
+    anim:{run:22000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(6, 1 + Math.floor(p*7)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var m = Math.round(v.k || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, x0, y0;
+      function num(t, px, py){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function eje(y, a, b, ticks, f){ var q; S.line(0, y, 10, y, {color:C.ink, width:1.1}); ticks.forEach(function(u){ q = 10*(u - a)/(b - a); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(q), Y(y) - 4); c.lineTo(X(q), Y(y) + 4); c.stroke(); num(f(u), X(q), Y(y) + 13); }); return function(u){ return 10*(u - a)/(b - a); }; }
+      function marca(q, y, col, r){ c.beginPath(); c.arc(X(q), Y(y), r, 0, 6.2832); c.fillStyle = col; c.fill(); }
+      var p1 = eje(2, 1, 1.12, [1, 1.02, 1.04, 1.06, 1.08, 1.1, 1.12], function(u){ return dec(u, 2); }), p2 = eje(-0.6, 1.1038, 1.1042, [1.1038, 1.1039, 1.104, 1.1041, 1.1042], function(u){ return dec(u, 4); });
+      txt('las sumas, de 1 a 1,12', X(0), Y(2) - 30, 'left', C.ink); txt('con lupa: de 1,1038 a 1,1042', X(0), Y(-0.6) - 30, 'left', C.ink);
+      c.strokeStyle = C.tan; c.lineWidth = 1.3; c.beginPath(); c.moveTo(X(p1(EX)), Y(2) - 13); c.lineTo(X(p1(EX)), Y(2) + 4); c.moveTo(X(p2(EX)), Y(-0.6) - 13); c.lineTo(X(p2(EX)), Y(-0.6) + 4); c.stroke();
+      txt('exacto', X(p1(EX)), Y(2) - 20, 'center', C.tan); txt('exacto', X(p2(EX)), Y(-0.6) - 20, 'center', C.tan);
+      for (i = 0; i < m; i++){ marca(p1(Sx[i]), 2, i === m - 1 ? C.rise : 'rgba(168,95,0,0.35)', i === m - 1 ? 4 : 2.6); if (Sx[i] >= 1.1038 && Sx[i] <= 1.1042) marca(p2(Sx[i]), -0.6, i === m - 1 ? C.rise : 'rgba(168,95,0,0.35)', i === m - 1 ? 4 : 2.6); }
+      x0 = X(-0.5); y0 = Y(-2.15);
+      txt('término ' + m + ': C(5, ' + (m - 1) + ') · 0,02' + bnSup(m - 1) + ' = ' + dec(T[m - 1], 2*(m - 1)), x0, y0, 'left', C.ink);
+      txt('suma de los ' + m + ' primeros: ' + dec(Sx[m - 1], Math.max(1, 2*(m - 1))), x0, y0 + 21, 'left', C.rise);
+      txt('valor exacto: 1,02⁵ = 1,1040808032', x0, y0 + 42, 'left', C.tan);
+      txt(m === 6 ? 'con los 6 términos la suma es exacta' : 'error: ' + dec(EX - Sx[m - 1], 10), x0, y0 + 63, 'left', C.ink);
+      S.lab('F', x0, y0 + 92, 0, 0, m >= 3);
+    },
+    caption:function(v){ var m = Math.round(v.k || 1); return ['Se escribe 1,02 = 1 + 0,02 y se desarrolla con el binomio. El primer término es 1', 'El segundo término, 5 · 0,02 = 0,1, es el que más aporta. Con dos términos: 1,1', 'El tercero ya es pequeño: 10 · 0,0004 = 0,004. Con tres términos, 1,104: el error está en la quinta cifra decimal', 'El cuarto término, 0,00008, casi no mueve la suma. Cada término es mucho más chico que el anterior', 'El quinto término vale 0,0000008. La suma ya coincide con el valor exacto en nueve decimales', 'Con los seis términos la suma es exactamente 1,02⁵ = 1,1040808032'][m - 1]; },
+    readout:function(v){ var m = Math.round(v.k || 1); return [['', '1{,}02^{5}=(1+0{,}02)^{5}=1+5(0{,}02)+10(0{,}02)^{2}+10(0{,}02)^{3}+5(0{,}02)^{4}+(0{,}02)^{5}'], ['d', '\\text{con }' + m + '\\text{ término' + (m > 1 ? 's' : '') + ':}\\quad ' + OA.num(Sx[m - 1], Math.max(1, 2*(m - 1)))]]; }
+  };
+})());

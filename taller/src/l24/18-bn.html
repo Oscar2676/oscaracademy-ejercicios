@@ -1,0 +1,233 @@
+<!--file:H18_binomio_con_exponente_fraccionario.html-->
+<!--title:Binomio con exponente fraccionario-->
+<!--id:bn-fraccion-->
+<!--tab:H18 Exponente fraccionario-->
+<article class="sheet" id="bn-fraccion" data-hoja="L24 H18">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Aplicaciones</li>
+      <li><b>Binomio con exponente fraccionario</b></li>
+    </ol>
+    <h1>Binomio con exponente fraccionario</h1>
+    <p class="lede">Cuando el exponente no es un número natural —por ejemplo \(\tfrac{1}{2}\), que es una raíz cuadrada— el desarrollo del binomio ya no termina: es una suma de infinitos términos, y solo sirve si \(|x|&lt;1\). Se llama serie binomial.
+    \[(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{k}=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^{2}+\frac{\alpha(\alpha-1)(\alpha-2)}{3!}x^{3}+\cdots\qquad(|x|&lt;1)\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La curva \(y=\sqrt{1+x}=(1+x)^{1/2}\) y los polinomios que se obtienen al sumar los primeros términos de su desarrollo.</p>
+  <div class="stage" data-scene="bn-fraccion"></div>
+  <ul class="keys">
+    <li><b>Curva azul:</b> \(y=\sqrt{1+x}\).</li>
+    <li><b>Curva naranja:</b> la suma de los primeros términos de la serie. Con más términos se pega más a la azul.</li>
+    <li><b>Rectas punteadas:</b> \(x=-1\) y \(x=1\). Entre ellas la serie funciona; fuera, no.</li>
+    <li><b>Bajo el dibujo:</b> la suma escrita, y su valor comparado con la raíz en un punto de adentro (\(x=0{,}5\)) y en uno de afuera (\(x=1{,}8\)).</li>
+    <li><b>Deslizador «términos»:</b> de \(1\) a \(6\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>El coeficiente binomial generalizado</h3>
+    <ol class="steps">
+      <li>Para \(n\) natural, \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\). Esa fórmula se puede calcular aunque arriba no haya un natural.</li>
+      <li>Para cualquier número real \(\alpha\) y \(k=1,\ 2,\ 3,\dots\) se define:
+        \[\binom{\alpha}{k}=\frac{\alpha\,(\alpha-1)\,(\alpha-2)\cdots(\alpha-k+1)}{k!},\qquad\binom{\alpha}{0}=1\]
+        Arriba van \(k\) factores, que bajan de uno en uno desde \(\alpha\).</li>
+      <li><b>Si \(\alpha\) es natural,</b> al llegar a \(k=\alpha+1\) aparece el factor \((\alpha-\alpha)=0\): todos los coeficientes siguientes valen \(0\) y la suma termina. Se recupera el binomio de Newton.</li>
+      <li><b>Si \(\alpha\) no es natural,</b> ningún factor se anula: la suma no termina nunca.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Qué se afirma, y qué no se demuestra aquí</h3>
+    <ol class="steps">
+      <li><b>Teorema (serie binomial).</b> Si \(|x|&lt;1\), la suma infinita converge y su valor es exactamente \((1+x)^{\alpha}\).</li>
+      <li>Esta hoja lo <b>usa sin demostrarlo</b>: la demostración necesita series de Taylor, que son de cálculo.</li>
+      <li>Un caso sí se puede comprobar con lo ya visto: para \(\alpha=-1\), \(\dbinom{-1}{k}=\dfrac{(-1)(-2)\cdots(-k)}{k!}=(-1)^{k}\), y la serie es \(1-x+x^{2}-x^{3}+\cdots\), la serie geométrica de razón \(-x\), cuya suma es \(\dfrac{1}{1+x}\) cuando \(|x|&lt;1\).</li>
+      <li><b>En la práctica</b> se usan los primeros términos como aproximación, que es muy buena cuando \(|x|\) es pequeño.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: los primeros términos de \((1+x)^{1/2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dbinom{1/2}{1}=\dfrac{1}{2}\).</li>
+    <li>\(\dbinom{1/2}{2}=\dfrac{\frac{1}{2}\cdot\left(-\frac{1}{2}\right)}{2}=-\dfrac{1}{8}\).</li>
+    <li>\(\dbinom{1/2}{3}=\dfrac{\frac{1}{2}\cdot\left(-\frac{1}{2}\right)\cdot\left(-\frac{3}{2}\right)}{6}=\dfrac{\frac{3}{8}}{6}=\dfrac{1}{16}\).</li>
+    <li>\(\sqrt{1+x}=1+\dfrac{1}{2}x-\dfrac{1}{8}x^{2}+\dfrac{1}{16}x^{3}-\cdots\), para \(|x|&lt;1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\sqrt{1{,}04}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(x=0{,}04\). Tres términos: \(1+\dfrac{0{,}04}{2}-\dfrac{0{,}0016}{8}=1+0{,}02-0{,}0002\).</li>
+    <li>\(\sqrt{1{,}04}\approx 1{,}0198\).</li>
+    <li>El valor con más decimales es \(1{,}0198039\ldots\): la aproximación acierta en cinco decimales.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, una raíz cúbica: \(\sqrt[3]{1{,}03}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\alpha=\dfrac{1}{3}\), \(x=0{,}03\). \(\dbinom{1/3}{1}=\dfrac{1}{3}\) y \(\dbinom{1/3}{2}=\dfrac{\frac{1}{3}\cdot\left(-\frac{2}{3}\right)}{2}=-\dfrac{1}{9}\).</li>
+    <li>\(1+\dfrac{0{,}03}{3}-\dfrac{0{,}0009}{9}=1+0{,}01-0{,}0001=1{,}0099\).</li>
+    <li>El valor con más decimales es \(1{,}0099016\ldots\)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(\sqrt{17}\), sacando factor</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(17\) no es de la forma \(1+x\) con \(|x|&lt;1\). Se saca el cuadrado más cercano: \(17=16\left(1+\dfrac{1}{16}\right)\), así que \(\sqrt{17}=4\sqrt{1+\dfrac{1}{16}}\).</li>
+    <li>Con \(x=\dfrac{1}{16}\): \(\sqrt{1+\dfrac{1}{16}}\approx 1+\dfrac{1}{32}-\dfrac{1}{8}\cdot\dfrac{1}{256}=1+\dfrac{1}{32}-\dfrac{1}{2048}\).</li>
+    <li>\(\sqrt{17}\approx 4+\dfrac{1}{8}-\dfrac{1}{512}=4{,}123046875\).</li>
+    <li>El valor con más decimales es \(4{,}1231056\ldots\)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más grave.</b> Usar la serie con \(|x|\ge 1\). Para \(\sqrt{1+3}=2\), los tres primeros términos dan \(1+\dfrac{3}{2}-\dfrac{9}{8}=1{,}375\), y agregar más términos lo empeora: la suma no se acerca a \(2\). La condición \(|x|&lt;1\) no es un detalle.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Escribe los cuatro primeros términos del desarrollo de \((1+x)^{-2}\), para \(|x|&lt;1\).</p>
+    <details><summary>Pista</summary><div><p>\(\alpha=-2\). Los factores de arriba son \(-2,\ -3,\ -4,\dots\)</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{-2}{1}=-2\); \(\ \dbinom{-2}{2}=\dfrac{(-2)(-3)}{2}=3\); \(\ \dbinom{-2}{3}=\dfrac{(-2)(-3)(-4)}{6}=-4\).</li>
+        <li>\((1+x)^{-2}=1-2x+3x^{2}-4x^{3}+\cdots\)</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Aproxima \(\sqrt{1{,}1}\) con tres términos.</p>
+    <details><summary>Pista</summary><div><p>\(x=0{,}1\): \(1+\dfrac{x}{2}-\dfrac{x^{2}}{8}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1+0{,}05-\dfrac{0{,}01}{8}=1+0{,}05-0{,}00125\).</li>
+        <li>\(\sqrt{1{,}1}\approx 1{,}04875\). (El valor con más decimales es \(1{,}0488088\ldots\))</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un terreno cuadrado tiene \(1{,}06\) hectáreas de superficie; un cuadrado de \(1\) hectárea mide \(100\) m de lado. ¿Cuánto mide el lado del terreno? Usa tres términos de la serie.</p>
+    <details><summary>Pista</summary><div><p>El lado es \(100\sqrt{1{,}06}\) metros. \(x=0{,}06\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\sqrt{1{,}06}\approx 1+0{,}03-\dfrac{0{,}0036}{8}=1+0{,}03-0{,}00045=1{,}02955\).</li>
+        <li>Lado: \(100\cdot 1{,}02955=102{,}955\) m, es decir, casi \(103\) m.</li>
+        <li>Lectura: un \(6\,\%\) más de superficie es solo cerca de un \(3\,\%\) más de lado.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H18 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
+  return {
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
+    draw:function(S, v){
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+OA.scene('bn-fraccion', (function(){
+  var CF = [1, 0.5, -0.125, 0.0625, -0.0390625, 0.02734375], dec = oaDec;
+  function P(m, x){ var s = 0, k; for (k = 0; k < m; k++) s += CF[k]*Math.pow(x, k); return s; }
+  function f(x){ return Math.sqrt(1 + x); }
+  return {
+    world:{x0:-1.6, x1:2.1, y0:-1.75, y1:2.0}, aspect:3.75/3.7,
+    _chk:[{f:f, df:function(x){ return 0.5/Math.sqrt(1 + x); }, at:[-0.5, 0.3, 1.2]}],
+    aria:'La gráfica de la raíz cuadrada de 1 más x, en azul, y la gráfica del polinomio que se obtiene al sumar los primeros términos de su desarrollo binomial, en naranja. Con más términos, el polinomio se pega cada vez más a la curva azul entre x igual a menos 1 y x igual a 1. Fuera de esa franja, marcada con dos rectas punteadas, el polinomio se separa de la curva.',
+    labels:[['F', '(1+x)^{1/2}=1+\\dfrac{1}{2}x-\\dfrac{1}{8}x^{2}+\\dfrac{1}{16}x^{3}-\\cdots\\quad(|x|<1)', '(1 + x)^(1/2) = 1 + x/2 − x²/8 + x³/16 − …, si |x| < 1', 'diff']],
+    sliders:[{id:'m', tex:'\\text{términos}', min:1, max:6, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> \\(y=\\sqrt{1+x}\\)</span><span><i class="sw rise"></i> suma de los primeros términos del desarrollo</span>',
+    anim:{run:21000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.m = Math.min(6, 1 + Math.floor(p*6.6)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var m = Math.round(v.m || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), x0, y0, i, t = ['1', '+ x/2', '− x²/8', '+ x³/16', '− 5x⁴/128', '+ 7x⁵/256'];
+      function num(tx, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      S.line(-1.5, 0, 2.0, 0, {color:C.ink, width:1.1}); S.line(0, -0.25, 0, 1.9, {color:C.ink, width:1.1});
+      [-1, 1, 2].forEach(function(q){ num(('' + q).replace('-', '−'), X(q), Y(0) + 11, 'center'); }); num('1', X(0) - 7, Y(1), 'right');
+      c.strokeStyle = C.tan; c.lineWidth = 1; c.setLineDash([4, 4]); c.beginPath(); c.moveTo(X(-1), Y(-0.2)); c.lineTo(X(-1), Y(1.9)); c.moveTo(X(1), Y(-0.2)); c.lineTo(X(1), Y(1.9)); c.stroke(); c.setLineDash([]);
+      txt('|x| < 1', X(0.5), Y(1.85), 'center', C.tan);
+      c.save(); c.beginPath(); c.rect(X(-1.5), Y(1.95), X(2.0) - X(-1.5), Y(-0.25) - Y(1.95)); c.clip();
+      oaPar(S, function(u){ return u; }, function(u){ return P(m, u); }, -1.45, 2.0, C.rise, 1.6);
+      oaPar(S, function(u){ return u; }, f, -1, 2.0, C.sec, 2);
+      c.restore();
+      x0 = X(-1.5); y0 = Y(-0.55);
+      txt('suma: ' + t.slice(0, m).join(' '), x0, y0, 'left', C.rise);
+      txt('en x = 0,5:  suma = ' + dec(P(m, 0.5), 5) + '   y   √1,5 = ' + dec(f(0.5), 5), x0, y0 + 21, 'left', C.ink);
+      txt('en x = 1,8 (fuera):  suma = ' + dec(P(m, 1.8), 3) + '   y   √2,8 = ' + dec(f(1.8), 3), x0, y0 + 42, 'left', C.tan);
+      S.lab('F', x0, y0 + 72, 0, 0, m >= 4);
+    },
+    caption:function(v){ var m = Math.round(v.m || 1); return m === 1 ? 'Con un solo término el «desarrollo» es la recta y = 1: toca a la curva azul solo en x = 0' : 'Con ' + m + ' términos, el polinomio naranja sigue a la raíz cada vez mejor dentro de la franja |x| < 1. Fuera de ella, agregar términos no ayuda: se aleja'; },
+    readout:function(v){ var m = Math.round(v.m || 1); return [['', '\\dbinom{1/2}{k}=\\dfrac{\\frac{1}{2}\\left(\\frac{1}{2}-1\\right)\\left(\\frac{1}{2}-2\\right)\\cdots\\left(\\frac{1}{2}-k+1\\right)}{k!}'], ['d', '\\dbinom{1/2}{0}=1,\\ \\dbinom{1/2}{1}=\\dfrac{1}{2},\\ \\dbinom{1/2}{2}=-\\dfrac{1}{8},\\ \\dbinom{1/2}{3}=\\dfrac{1}{16},\\ \\dbinom{1/2}{4}=-\\dfrac{5}{128},\\ \\dbinom{1/2}{5}=\\dfrac{7}{256}']]; }
+  };
+})());

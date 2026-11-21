@@ -1,0 +1,8 @@
+OA.scene('bn-independiente', bnExpo({ n:6, e0:12, d:3, ymin:-6, ymax:12, ystep:3, aspect:1.25,
+  aria:'Para el desarrollo de x al cuadrado más 1 sobre x, elevado a 6, se dibuja un punto por cada término: en horizontal va k, de 0 a 6, y en vertical el exponente de x que queda en ese término, que es 12 menos 3k. Los puntos bajan en línea recta: 12, 9, 6, 3, 0, menos 3, menos 6. El punto de k igual a 4 cae justo sobre el exponente 0: ese es el término independiente, y vale 15.',
+  labels:[['F', '12-3k=0\\ \\Longrightarrow\\ k=4\\ \\Longrightarrow\\ T_{5}=\\dbinom{6}{4}=15', '12 − 3k = 0 ⟹ k = 4 ⟹ T₅ = 15', 'diff']],
+  legend:'<span><i class="sw sec"></i> exponente de \\(x\\) en cada término</span><span><i class="sw tan"></i> el término sin \\(x\\): el independiente</span>',
+  lines:function(k, m, hit, fin){ var e = 12 - 3*k; return [['término k = ' + k + ': (x²)' + bnSup(6 - k) + ' · (1/x)' + bnSup(k) + ' = x' + bnSup(12 - 2*k) + ' / x' + bnSup(k), 'ink'], ['exponente de x: 12 − 3k = ' + ('' + e).replace('-', '−'), e === 0 ? 'tan' : 'sec']].concat(fin ? [['12 − 3k = 0  ⟹  k = 4', 'tan'], ['término independiente: C(6, 4) = 15', 'tan']] : []); },
+  caption:function(k, m, fin){ if (fin) return 'El único término en que el exponente de x es 0 es el de k = 4. Ahí la x desaparece y queda solo el coeficiente: 15'; var e = 12 - 3*k; return 'En el término k = ' + k + ' queda x elevado a ' + e + (e === 0 ? ': la x desaparece. Este es el término independiente' : '. Cada vez que k sube 1, el exponente baja 3'); },
+  readout:function(k){ return [['', 'T_{k+1}=\\dbinom{6}{k}\\left(x^{2}\\right)^{6-k}\\left(\\dfrac{1}{x}\\right)^{k}=\\dbinom{6}{k}\\,x^{12-3k}'], ['d', 'k=' + k + ':\\quad x^{' + (12 - 3*k) + '}']]; }
+}));

@@ -48,4 +48,41 @@ ok('H09 n+1 términos; centrales; ej.4 exponentes 18−3k distintos', comb(7, 3)
 # H10
 ok('H10 ej.1 20a³b³; ej.2 80x³; ej.3 560x³; ej.4 81x⁴ e y⁴', comb(6, 3) == 20 and comb(5, 2) * 2 ** 3 == 80 and comb(7, 4) * (-2) ** 4 == 560 and 3 ** 4 == 81)
 ok('H10-A 24x⁷; H10-B −126a⁴b⁵; H10-C 45·0,0016 = 0,072', comb(8, 1) * 3 == 24 and comb(9, 5) == 126 == 9 * 8 * 7 * 6 // 24 and isclose(comb(10, 2) * 0.04 ** 2, 0.072) and comb(10, 2) == 45)
+# H11
+ok('H11 ej.1 22 680x³; ej.2 28x⁴; ej.3 192ab⁵; ej.4 126a⁵b⁴', comb(7, 4) * 2 ** 3 * (-3) ** 4 == 22680 and comb(8, 2) == 28 and comb(6, 5) * 2 ** 5 == 192 and comb(9, 4) == 126)
+ok('H11-A 720x²; H11-B 210x⁴; H11-C 220·0,000027 = 0,00594', comb(5, 3) * 3 ** 2 * 2 ** 3 == 720 and comb(10, 6) == 210 and comb(12, 3) == 220 and isclose(220 * 0.03 ** 3, 0.00594))
+# H12
+ok('H12 ej.1 20; ej.2 1120x⁴; ej.3 80x³ y 40x²; ej.4 252; cociente (n−k+1)/k', comb(6, 3) == 20 and comb(8, 4) * 16 == 1120 and comb(5, 2) * 8 == 80 and comb(5, 3) * 4 == 40 and comb(10, 5) == 252 and all(comb(n, k) * k == comb(n, k - 1) * (n - k + 1) for n in range(1, 12) for k in range(1, n + 1)))
+ok('H12-B ∓35; H12-C 70 de 256', comb(7, 3) == comb(7, 4) == 35 and comb(8, 4) == 70 and 2 ** 8 == 256)
+# H13
+def coef(terms, m):  # terms: lista de (coeficiente, exponente)
+    return sum(c for c, e in terms if e == m)
+ok('H13 (x²+1/x)⁶ → 15; (x+1/x)⁶ → 20; (2x−1/x²)⁹ → −5376; (x+1/x)⁵ → no hay; (x+3)⁴ → 81', coef([(comb(6, k), 12 - 3 * k) for k in range(7)], 0) == 15 and coef([(comb(6, k), 6 - 2 * k) for k in range(7)], 0) == 20 and coef([(comb(9, k) * 2 ** (9 - k) * (-1) ** k, 9 - 3 * k) for k in range(10)], 0) == -5376 and all(5 - 2 * k != 0 for k in range(6)) and 3 ** 4 == 81)
+ok('H13-A 24; H13-B 10; H13-C (t+2/t)² = t²+4+4/t²', coef([(comb(4, k) * 2 ** k, 4 - 2 * k) for k in range(5)], 0) == 24 and coef([(comb(5, k), 15 - 5 * k) for k in range(6)], 0) == 10 and all(isclose((t + 2 / t) ** 2, t * t + 4 + 4 / t ** 2) for t in (0.5, 1.3, 3)))
+# H14
+ok('H14 animación: x³ → 160, x⁴ → 0, x⁶ → 60, x⁰ → 240', [coef([(comb(6, k) * 2 ** k, 12 - 3 * k) for k in range(7)], m) for m in (3, 4, 6, 0)] == [160, 0, 60, 240] and all(isclose((x * x + 2 / x) ** 6, sum(comb(6, k) * 2 ** k * x ** (12 - 3 * k) for k in range(7)), rel_tol=1e-9) for x in (0.7, 1.4, 2.2)))
+ok('H14 ej.1 560; ej.2 −1792; ej.3 720; ej.4 10 y 0', coef([(comb(7, k) * 2 ** k, 7 - k) for k in range(8)], 3) == 560 and coef([(comb(8, k) * 2 ** (8 - k) * (-1) ** k, 8 - k) for k in range(9)], 5) == -1792 and comb(5, 2) * 8 * 9 == 720 and coef([(comb(5, k), 10 - 2 * k) for k in range(6)], 4) == 10 and coef([(comb(5, k), 10 - 2 * k) for k in range(6)], 3) == 0)
+ok('H14-A 270; H14-B 10; H14-C 45 y 0,1125', coef([(comb(5, k) * 3 ** k, 5 - k) for k in range(6)], 2) == 270 and coef([(comb(5, k) * (-1) ** k, 10 - 2 * k) for k in range(6)], 6) == 10 and isclose(45 * 0.05 ** 2, 0.1125))
+# H15
+ok('H15 ej.1 1,02⁵ = 1,1040808032; términos y error 0,0000808032', isclose(1.02 ** 5, 1.1040808032, rel_tol=1e-12) and [round(comb(5, k) * 0.02 ** k, 12) for k in range(6)] == [1, 0.1, 0.004, 0.00008, 0.0000008, 0.0000000032] and isclose(1.1040808032 - 1.104, 0.0000808032, abs_tol=1e-13) and isclose(1.1040808032 - 1.1, 0.0040808032, abs_tol=1e-13))
+ok('H15 ej.2 0,9606 / 0,96059601; ej.3 1,010045 y 120·10⁻⁹; ej.4 8,120601', isclose(1 - 0.04 + 0.0006, 0.9606) and isclose(0.99 ** 4, 0.96059601, rel_tol=1e-12) and isclose(1 + 0.01 + 0.000045, 1.010045) and comb(10, 3) == 120 and isclose(1.001 ** 10, 1.010045120, abs_tol=1e-9) and isclose(2.01 ** 3, 8.120601, rel_tol=1e-12))
+ok('H15-A 1,0615 (1,0615201506…); H15-B 0,904 (0,9039207968); H15-C 1,126 (12,616 %)', isclose(1 + 0.06 + 0.0015, 1.0615) and round(1.01 ** 6, 10) == 1.0615201506 and isclose(1 - 0.1 + 0.004, 0.904) and round(0.98 ** 5, 10) == 0.9039207968 and isclose(1 + 0.12 + 0.006, 1.126) and round((1.02 ** 6 - 1) * 100, 3) == 12.616)
+# H16
+ok('H16 fila 5: 32, alternada 0, pares 16 = impares; (3x−1)⁴ → 16; (2a−3b)⁶ → 1; subconjuntos 8', sum(comb(5, k) for k in range(6)) == 32 and 1 - 5 + 10 - 10 + 5 - 1 == 0 and 1 + 10 + 5 == 5 + 10 + 1 == 16 and 81 - 108 + 54 - 12 + 1 == 16 == 2 ** 4 and all(isclose((3 * x - 1) ** 4, pol([81, -108, 54, -12, 1], x), abs_tol=1e-7) for x in X) and (2 - 3) ** 6 == 1 and all(sum(comb(n, k) for k in range(0, n + 1, 2)) == sum(comb(n, k) for k in range(1, n + 1, 2)) == 2 ** (n - 1) for n in range(1, 12)) and (2 + 3) ** 4 == 625)
+ok('H16-A 512; H16-B −1; H16-C 64', 2 ** 9 == 512 and (2 - 3) ** 5 == -1 and 1 + 6 + 15 + 20 + 15 + 6 + 1 == 64)
+# H17
+ok('H17 paso inductivo: (a+b)·Σ C(n,k)… = Σ C(n+1,k)…, n = 0…8; corrimiento 1,3,3,1 → 1,4,6,4,1', all([ (comb(n, k) if k <= n else 0) + (comb(n, k - 1) if k >= 1 else 0) for k in range(n + 2)] == [comb(n + 1, k) for k in range(n + 2)] for n in range(9)) and [a + b for a, b in zip([1, 3, 3, 1, 0], [0, 1, 3, 3, 1])] == [1, 4, 6, 4, 1])
+ok('H17-B: 1 + (2ⁿ−1) + (2ⁿ−1) + 1 = 2ⁿ⁺¹', all(1 + (2 ** n - 1) + (2 ** n - 1) + 1 == 2 ** (n + 1) for n in range(12)))
+# H18
+def gbin(al, k):
+    r = 1.0
+    for i in range(k): r *= (al - i) / (i + 1)
+    return r
+ok('H18 coeficientes de ½: 1, ½, −⅛, 1/16, −5/128, 7/256; de −1: (−1)ᵏ; de −2: 1, −2, 3, −4; de ⅓: ⅓, −1/9', all(isclose(gbin(0.5, k), v) for k, v in enumerate([1, 0.5, -0.125, 0.0625, -5 / 128, 7 / 256])) and all(isclose(gbin(-1, k), (-1) ** k) for k in range(8)) and [round(gbin(-2, k)) for k in range(4)] == [1, -2, 3, -4] and isclose(gbin(1 / 3, 2), -1 / 9) and all(round(gbin(5, k)) == (comb(5, k) if k <= 5 else 0) for k in range(9)))
+ok('H18 la serie converge a (1+x)^α para |x| < 1 (40 términos, α = ½, ⅓, −1, −2)', all(isclose(sum(gbin(al, k) * x ** k for k in range(200)), (1 + x) ** al, rel_tol=1e-7) for al in (0.5, 1 / 3, -1, -2) for x in (-0.6, 0.04, 0.5, 0.8)))
+ok('H18 ej.2 1,0198 (1,0198039); ej.3 1,0099 (1,0099016); ej.4 4,123046875 (4,1231056); error con x = 3: 1,375', isclose(1 + 0.02 - 0.0002, 1.0198) and round(sqrt(1.04), 7) == 1.0198039 and isclose(1 + 0.01 - 0.0001, 1.0099) and round(1.03 ** (1 / 3), 7) == 1.0099016 and isclose(4 + 1 / 8 - 1 / 512, 4.123046875) and round(sqrt(17), 7) == 4.1231056 and isclose(1 + 3 / 2 - 9 / 8, 1.375))
+ok('H18-B 1,04875 (1,0488088); H18-C 1,02955 → 102,955 m; animación: suma(0,5) con 6 términos 1,22498 y √1,5 = 1,22474', isclose(1 + 0.05 - 0.00125, 1.04875) and round(sqrt(1.1), 7) == 1.0488088 and isclose(1 + 0.03 - 0.00045, 1.02955) and isclose(100 * 1.02955, 102.955) and round(100 * sqrt(1.06)) == 103 and round(sum(gbin(0.5, k) * 0.5 ** k for k in range(6)), 5) == 1.22498 and round(sqrt(1.5), 5) == 1.22474)
+# H19
+ok('H19 Σ C(n,k) pᵏ qⁿ⁻ᵏ = 1; ej.1 6/16 = 0,375; ej.2 75/216 ≈ 0,347; ej.3 125+75+15+1 = 216; ej.4 0,67232', all(isclose(sum(comb(n, k) * p ** k * (1 - p) ** (n - k) for k in range(n + 1)), 1) for n in range(1, 9) for p in (0.1, 0.3, 0.5, 0.85)) and 6 / 16 == 0.375 and round(75 / 216, 3) == 0.347 and isclose(3 * (1 / 6) * (25 / 36), 75 / 216) and 125 + 75 + 15 + 1 == 216 and isclose(1 - 0.8 ** 5, 0.67232))
+ok('H19-A 10/32 = 0,3125; H19-B 0,2646; H19-C 0,4096; animación p = 0,5: 0,016 0,094 0,234 0,313', 10 / 32 == 0.3125 and isclose(6 * 0.09 * 0.49, 0.2646) and isclose(5 * 0.8 ** 4 * 0.2, 0.4096) and [round(comb(6, k) / 64 + 1e-9, 3) for k in range(4)] == [0.016, 0.094, 0.234, 0.313])
 print('\nERRORES:', err)

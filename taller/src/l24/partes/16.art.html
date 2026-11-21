@@ -1,0 +1,138 @@
+<!--file:H16_suma_de_los_coeficientes.html-->
+<!--title:Suma de los coeficientes-->
+<!--id:bn-suma-->
+<!--tab:H16 Suma de los coeficientes-->
+<article class="sheet" id="bn-suma" data-hoja="L24 H16">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Aplicaciones</li>
+      <li><b>Suma de los coeficientes</b></li>
+    </ol>
+    <h1>Suma de los coeficientes</h1>
+    <p class="lede">La suma de todos los coeficientes binomiales de una fila es una potencia de \(2\). Y la suma de los coeficientes de cualquier desarrollo se obtiene sin desarrollar: basta reemplazar las variables por \(1\).
+    \[\sum_{k=0}^{n}\binom{n}{k}=\binom{n}{0}+\binom{n}{1}+\cdots+\binom{n}{n}=2^{n}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Dos filas vecinas del triángulo de coeficientes. Mira por qué la suma se duplica al bajar una fila.</p>
+  <div class="stage" data-scene="bn-suma"></div>
+  <ul class="keys">
+    <li><b>Fila azul:</b> los coeficientes de \((a+b)^{n}\). <b>Fila burdeo:</b> los de \((a+b)^{n+1}\).</li>
+    <li><b>Líneas finas:</b> cada número de arriba aporta a los dos que tiene debajo. Se usa dos veces.</li>
+    <li><b>Bajo el dibujo:</b> la suma de cada fila. La de abajo es siempre el doble.</li>
+    <li><b>Deslizador \(n\):</b> la fila de arriba, de \(0\) a \(6\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Demostración</h3>
+    <ol class="steps">
+      <li>El binomio de Newton vale para cualesquiera \(a\) y \(b\): \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li>Se elige \(a=1\) y \(b=1\). Como toda potencia de \(1\) es \(1\), cada término se reduce a su coeficiente.</li>
+      <li>A la izquierda queda \((1+1)^{n}=2^{n}\). Entonces \(\displaystyle\sum_{k=0}^{n}\binom{n}{k}=2^{n}\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Tres consecuencias</h3>
+    <ol class="steps">
+      <li><b>Suma alternada.</b> Con \(a=1\), \(b=-1\) (y \(n\ge 1\)): \(\dbinom{n}{0}-\dbinom{n}{1}+\dbinom{n}{2}-\cdots=(1-1)^{n}=0\).</li>
+      <li><b>Pares e impares.</b> Sumando y restando las dos igualdades: los coeficientes de \(k\) par suman \(2^{n-1}\), y los de \(k\) impar también.</li>
+      <li><b>Cualquier desarrollo.</b> Al poner \(x=1\) en un polinomio, cada término queda igual a su coeficiente. Por eso la suma de los coeficientes de \((2x+3)^{4}\) es \((2+3)^{4}=625\), sin desarrollar nada.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la fila 5</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(1+5+10+10+5+1=32=2^{5}\).</li>
+    <li>Suma alternada: \(1-5+10-10+5-1=0\).</li>
+    <li>\(k\) par: \(1+10+5=16\). \(k\) impar: \(5+10+1=16\). Cada grupo suma \(2^{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: suma de los coeficientes de \((3x-1)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se reemplaza \(x=1\): \((3-1)^{4}=2^{4}=16\).</li>
+    <li><b>Comprobación desarrollando:</b> \((3x-1)^{4}=81x^{4}-108x^{3}+54x^{2}-12x+1\), y \(81-108+54-12+1=16\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: con dos letras, \((2a-3b)^{6}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se reemplazan las dos por \(1\): \((2-3)^{6}=(-1)^{6}=1\).</li>
+    <li>La suma de los siete coeficientes (con sus signos) es \(1\), aunque algunos son muy grandes: se compensan.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: cuántos subconjuntos tiene un conjunto</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Un conjunto de \(n\) elementos tiene \(\dbinom{n}{k}\) subconjuntos de \(k\) elementos.</li>
+    <li>En total, contando el vacío y el conjunto completo: \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=2^{n}\).</li>
+    <li>Para \(\{1,\,2,\,3\}\): \(1+3+3+1=8\) subconjuntos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Ojo con la palabra «coeficientes».</b> «Suma de los coeficientes binomiales» es siempre \(2^{n}\). «Suma de los coeficientes del desarrollo» depende del binomio: se calcula poniendo \(1\) en las variables. Para \((a+b)^{n}\) las dos coinciden; para \((2x+3)^{4}\), no: \(16\) contra \(625\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>¿Cuánto suman los coeficientes de \((x+1)^{9}\)?</p>
+    <details><summary>Pista</summary><div><p>Reemplaza \(x=1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\((1+1)^{9}=2^{9}=512\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>¿Cuánto suman los coeficientes del desarrollo de \((2x-3)^{5}\)?</p>
+    <details><summary>Pista</summary><div><p>Reemplaza \(x=1\) y cuida el signo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\((2-3)^{5}=(-1)^{5}=-1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una pizzería ofrece \(6\) ingredientes opcionales. Cada pizza puede llevar cualquier combinación de ellos, incluso ninguno. ¿Cuántas pizzas distintas se pueden pedir?</p>
+    <details><summary>Pista</summary><div><p>Con \(k\) ingredientes hay \(\dbinom{6}{k}\) pizzas. Suma para todos los \(k\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{6}{0}+\dbinom{6}{1}+\cdots+\dbinom{6}{6}=1+6+15+20+15+6+1\).</li>
+        <li>\(=64=2^{6}\).</li>
+        <li>Otra forma de verlo: cada ingrediente va o no va, \(2\) opciones, \(6\) veces: \(2^{6}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H16 · v001 · Pendiente de APR</span>
+</footer>
+</article>

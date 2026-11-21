@@ -1,0 +1,144 @@
+<!--file:H11_encontrar_un_termino_especifico.html-->
+<!--title:Encontrar un término específico-->
+<!--id:bn-buscar-->
+<!--tab:H11 Término específico-->
+<article class="sheet" id="bn-buscar" data-hoja="L24 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Término general</li>
+      <li><b>Encontrar un término específico</b></li>
+    </ol>
+    <h1>Encontrar un término específico</h1>
+    <p class="lede">Para encontrar un término cualquiera de \((a+b)^{n}\) —el quinto, el penúltimo, el que lleva \(b^{4}\)— se usa la fórmula del término general, sin escribir el desarrollo completo.
+    \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\qquad\text{(posición }p\ \Longrightarrow\ k=p-1\text{)}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El 5º término de \((2x-3)^{7}\), en seis pasos.</p>
+  <div class="stage" data-scene="bn-buscar"></div>
+  <ul class="keys">
+    <li><b>Arriba:</b> los ocho casilleros del desarrollo. El naranja es el que se busca.</li>
+    <li><b>Paso 1:</b> identificar \(a=2x\), \(b=-3\) (con su signo) y \(n=7\).</li>
+    <li><b>Paso 2:</b> de la posición a \(k\): \(k=5-1=4\).</li>
+    <li><b>Pasos 3, 4 y 5:</b> el coeficiente (naranja), la potencia de \(a\) (azul) y la potencia de \(b\) (burdeo).</li>
+    <li><b>Paso 6:</b> el producto de las tres partes.</li>
+    <li><b>Deslizador «paso»:</b> avanza o retrocede.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>El procedimiento</h3>
+    <ol class="steps">
+      <li><b>Identificar</b> \(a\), \(b\) y \(n\). El signo va dentro de \(b\); los coeficientes y exponentes, entre paréntesis.</li>
+      <li><b>Encontrar \(k\).</b> Si se da la posición \(p\): \(k=p-1\). Si se da la potencia de \(b\): \(k\) es ese exponente. Si se da la potencia de \(a\): \(k=n-\) ese exponente.</li>
+      <li><b>Calcular</b> \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\).</li>
+      <li><b>Multiplicar</b> y simplificar.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Contar desde el final</h3>
+    <ol class="steps">
+      <li>El desarrollo tiene \(n+1\) términos. El último está en la posición \(n+1\) (\(k=n\)); el penúltimo, en la posición \(n\) (\(k=n-1\)).</li>
+      <li>En general, el término que está en el lugar \(q\) contando desde el final ocupa la posición \(n+2-q\), y usa \(k=n+1-q\).</li>
+      <li>Por la simetría, su coeficiente es el mismo que el del lugar \(q\) contando desde el principio.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: el 5º término de \((2x-3)^{7}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=2x\), \(b=-3\), \(n=7\); posición \(5\): \(k=4\).</li>
+    <li>\(\dbinom{7}{4}=\dbinom{7}{3}=35\); \((2x)^{3}=8x^{3}\); \((-3)^{4}=81\).</li>
+    <li>\(T_{5}=35\cdot 8x^{3}\cdot 81=22\,680\,x^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el 3º término de \(\left(x+\dfrac{1}{x}\right)^{8}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=x\), \(b=\dfrac{1}{x}\), \(n=8\); posición \(3\): \(k=2\).</li>
+    <li>\(T_{3}=\dbinom{8}{2}x^{6}\cdot\dfrac{1}{x^{2}}=28\,x^{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: el penúltimo término de \((a+2b)^{6}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Hay \(7\) términos; el penúltimo es el 6º: \(k=5\).</li>
+    <li>\(T_{6}=\dbinom{6}{5}a^{1}(2b)^{5}=6\cdot a\cdot 32b^{5}\).</li>
+    <li>\(T_{6}=192\,ab^{5}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: el término de \((a-b)^{9}\) que contiene \(b^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El exponente de \(b\) es \(k\): \(k=4\). Es el 5º término.</li>
+    <li>\(T_{5}=\dbinom{9}{4}a^{5}(-b)^{4}\), con \(\dbinom{9}{4}=\dfrac{9\cdot 8\cdot 7\cdot 6}{4\cdot 3\cdot 2\cdot 1}=126\) y \((-b)^{4}=b^{4}\).</li>
+    <li>\(T_{5}=126\,a^{5}b^{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Para revisar el resultado.</b> Los exponentes de \(a\) y de \(b\) (antes de simplificar) tienen que sumar \(n\). Y el signo: si \(b\) es negativo, el término es negativo solo cuando \(k\) es impar.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Encuentra el 4º término de \((3x+2)^{5}\).</p>
+    <details><summary>Pista</summary><div><p>Posición \(4\): \(k=3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{4}=\dbinom{5}{3}(3x)^{2}\cdot 2^{3}=10\cdot 9x^{2}\cdot 8\).</li>
+        <li>\(T_{4}=720x^{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra el 7º término de \((x-1)^{10}\).</p>
+    <details><summary>Pista</summary><div><p>Posición \(7\): \(k=6\), par.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{7}=\dbinom{10}{6}x^{4}(-1)^{6}\), con \(\dbinom{10}{6}=\dbinom{10}{4}=\dfrac{10\cdot 9\cdot 8\cdot 7}{4\cdot 3\cdot 2\cdot 1}=210\).</li>
+        <li>\((-1)^{6}=1\). \(T_{7}=210x^{4}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un préstamo crece un \(3\,\%\) al mes durante \(12\) meses: la deuda se multiplica por \((1+0{,}03)^{12}\). Calcula el 4º término de ese desarrollo.</p>
+    <details><summary>Pista</summary><div><p>Posición \(4\): \(k=3\). \(0{,}03^{3}=0{,}000027\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{4}=\dbinom{12}{3}\cdot 1^{9}\cdot 0{,}03^{3}\), con \(\dbinom{12}{3}=\dfrac{12\cdot 11\cdot 10}{3\cdot 2\cdot 1}=220\).</li>
+        <li>\(T_{4}=220\cdot 0{,}000027=0{,}00594\).</li>
+        <li>Lectura: ese término agrega cerca de un \(0{,}6\,\%\) de la deuda inicial. Parece poco, pero se suma a los anteriores.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>
