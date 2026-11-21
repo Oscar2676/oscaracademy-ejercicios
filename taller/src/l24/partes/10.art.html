@@ -1,0 +1,144 @@
+<!--file:H10_formula_del_termino_k_mas_1.html-->
+<!--title:Fórmula del término k + 1-->
+<!--id:bn-termino-->
+<!--tab:H10 Término k + 1-->
+<article class="sheet" id="bn-termino" data-hoja="L24 H10">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Término general</li>
+      <li><b>Fórmula del término k + 1</b></li>
+    </ol>
+    <h1>Fórmula del término k + 1</h1>
+    <p class="lede">Para conocer un término del desarrollo de \((a+b)^{n}\) no hace falta escribir los anteriores. El término que ocupa la posición \(k+1\) se calcula directamente:
+    \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad k=0,\ 1,\ 2,\dots,\ n\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Los siete términos de \((a+b)^{6}\). Se elige una posición y se arma su término.</p>
+  <div class="stage" data-scene="bn-termino"></div>
+  <ul class="keys">
+    <li><b>Sobre cada casillero:</b> la posición del término. <b>Debajo:</b> su \(k\), que es siempre la posición menos \(1\).</li>
+    <li><b>Casillero naranja:</b> el término elegido.</li>
+    <li><b>Bajo la fila, paso a paso:</b> de la posición sale \(k\); con \(k\), el coeficiente \(\dbinom{6}{k}\) (naranja), la potencia de \(a\), que es \(6-k\) (azul), y la potencia de \(b\), que es \(k\) (burdeo).</li>
+    <li><b>Deslizador «posición»:</b> elige cualquiera de los siete.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Por qué se llama \(T_{k+1}\) y no \(T_{k}\)</h3>
+    <ol class="steps">
+      <li>En el binomio de Newton la suma empieza en \(k=0\): el primer término es \(\dbinom{n}{0}a^{n}b^{0}=a^{n}\).</li>
+      <li>Entonces \(k=0\) da el 1º, \(k=1\) da el 2º, \(k=2\) da el 3º, y así: el valor de \(k\) va siempre uno atrás de la posición.</li>
+      <li>Por eso el término de índice \(k\) ocupa la posición \(k+1\), y se escribe \(T_{k+1}\).</li>
+      <li><b>Regla práctica:</b> para el término de la posición \(p\), usar \(k=p-1\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Cómo se usa</h3>
+    <ol class="steps">
+      <li>Identificar \(a\), \(b\) y \(n\), con paréntesis y con su signo.</li>
+      <li>Pasar de la posición a \(k\): \(k=p-1\).</li>
+      <li>Calcular \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\), y multiplicar.</li>
+      <li><b>Con resta,</b> \((a-b)^{n}\): el signo va dentro de \(b\). \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}(-b)^{k}=(-1)^{k}\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: el 4º término de \((a+b)^{6}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Posición \(4\): \(k=3\).</li>
+    <li>\(T_{4}=\dbinom{6}{3}a^{6-3}b^{3}\), con \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3\cdot 2\cdot 1}=20\).</li>
+    <li>\(T_{4}=20a^{3}b^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el 3º término de \((2x+1)^{5}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=2x\), \(b=1\), \(n=5\). Posición \(3\): \(k=2\).</li>
+    <li>\(T_{3}=\dbinom{5}{2}(2x)^{3}\cdot 1^{2}=10\cdot 8x^{3}\cdot 1\).</li>
+    <li>\(T_{3}=80x^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, con resta: el 5º término de \((x-2)^{7}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=x\), \(b=-2\), \(n=7\). Posición \(5\): \(k=4\).</li>
+    <li>\(T_{5}=\dbinom{7}{4}x^{3}(-2)^{4}\), con \(\dbinom{7}{4}=\dbinom{7}{3}=35\) y \((-2)^{4}=16\).</li>
+    <li>\(T_{5}=35\cdot 16\,x^{3}=560x^{3}\). Es positivo porque \(k=4\) es par.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: el primer y el último término de \((3x+y)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Primero</b> (\(k=0\)): \(T_{1}=\dbinom{4}{0}(3x)^{4}y^{0}=81x^{4}\).</li>
+    <li><b>Último</b> (posición \(n+1=5\), \(k=4\)): \(T_{5}=\dbinom{4}{4}(3x)^{0}y^{4}=y^{4}\).</li>
+    <li>Siempre: el primero es \(a^{n}\) y el último es \(b^{n}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Usar \(k\) igual a la posición. Para el 4º término se usa \(k=3\), no \(k=4\). Una comprobación rápida: los exponentes de \(a\) y de \(b\) del término tienen que sumar \(n\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Encuentra el 2º término de \((x+3)^{8}\).</p>
+    <details><summary>Pista</summary><div><p>Posición \(2\): \(k=1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{2}=\dbinom{8}{1}x^{7}\cdot 3^{1}=8\cdot 3\,x^{7}\).</li>
+        <li>\(T_{2}=24x^{7}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Encuentra el 6º término de \((a-b)^{9}\).</p>
+    <details><summary>Pista</summary><div><p>Posición \(6\): \(k=5\), impar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{6}=\dbinom{9}{5}a^{4}(-b)^{5}\), con \(\dbinom{9}{5}=\dbinom{9}{4}=\dfrac{9\cdot 8\cdot 7\cdot 6}{4\cdot 3\cdot 2\cdot 1}=126\).</li>
+        <li>\((-b)^{5}=-b^{5}\), porque \(5\) es impar.</li>
+        <li>\(T_{6}=-126a^{4}b^{5}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un capital crece un \(4\,\%\) al año durante \(10\) años: se multiplica por \((1+0{,}04)^{10}\). Calcula el 3º término de ese desarrollo. ¿Qué parte del crecimiento representa?</p>
+    <details><summary>Pista</summary><div><p>Posición \(3\): \(k=2\). \(a=1\), \(b=0{,}04\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(T_{3}=\dbinom{10}{2}\cdot 1^{8}\cdot 0{,}04^{2}=45\cdot 0{,}0016=0{,}072\).</li>
+        <li>Lectura: el 1º término es \(1\) (el capital); el 2º es \(10\cdot 0{,}04=0{,}4\) (el interés simple de diez años); el 3º, \(0{,}072\), es la primera capa de «interés sobre interés»: un \(7{,}2\,\%\) del capital.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H10 · v001 · Pendiente de APR</span>
+</footer>
+</article>

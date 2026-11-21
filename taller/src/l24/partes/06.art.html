@@ -1,0 +1,146 @@
+<!--file:H06_coeficientes_binomiales.html-->
+<!--title:Coeficientes binomiales-->
+<!--id:bn-combinar-->
+<!--tab:H06 Coeficientes binomiales-->
+<article class="sheet" id="bn-combinar" data-hoja="L24 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Coeficientes binomiales</b></li>
+    </ol>
+    <h1>Coeficientes binomiales</h1>
+    <p class="lede">El coeficiente binomial \(\dbinom{n}{k}\), que se lee «\(n\) sobre \(k\)», cuenta de cuántas maneras se pueden elegir \(k\) objetos entre \(n\), sin importar el orden. Son los números que acompañan a cada término en el desarrollo de \((a+b)^{n}\).
+    \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!},\qquad 0\le k\le n\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Todos los grupos de \(2\) fichas que se pueden formar con \(5\) fichas, uno por uno. Después cambia \(k\) con el deslizador.</p>
+  <div class="stage" data-scene="bn-combinar"></div>
+  <ul class="keys">
+    <li><b>Fichas naranjas:</b> las elegidas en el grupo que se está formando.</li>
+    <li><b>Lista azul:</b> los grupos ya formados. El orden dentro de un grupo no importa: \(\{1,\,3\}\) y \(\{3,\,1\}\) son el mismo.</li>
+    <li><b>Bajo el dibujo:</b> la cuenta. Primero se cuentan las elecciones con orden; después se divide por las veces que cada grupo quedó repetido.</li>
+    <li><b>Deslizador \(k\):</b> cuántas fichas se eligen, de \(0\) a \(5\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li><b>Factorial.</b> \(n!=n\,(n-1)\,(n-2)\cdots 2\cdot 1\). Por ejemplo, \(5!=120\). Se conviene que \(0!=1\).</li>
+      <li><b>Elegir con orden.</b> Para el primer objeto hay \(n\) opciones; para el segundo, \(n-1\); así hasta el \(k\)-ésimo, con \(n-k+1\). Total: \(n\,(n-1)\cdots(n-k+1)\).</li>
+      <li><b>Quitar el orden.</b> Cada grupo de \(k\) objetos se contó una vez por cada manera de ordenarlo, que son \(k!\). Se divide:
+        \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\]</li>
+      <li><b>Forma con factoriales.</b> Se multiplica arriba y abajo por \((n-k)!\). Arriba queda \(n\,(n-1)\cdots(n-k+1)\cdot(n-k)!=n!\):
+        \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Propiedades</h3>
+    <ol class="steps">
+      <li><b>Extremos:</b> \(\dbinom{n}{0}=\dbinom{n}{n}=1\). Hay una sola manera de no elegir nada, y una sola de elegir todo.</li>
+      <li><b>Uno:</b> \(\dbinom{n}{1}=n\).</li>
+      <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Elegir cuáles \(k\) se llevan es lo mismo que elegir cuáles \(n-k\) se dejan.</li>
+      <li><b>Regla de Pascal:</b> \(\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\), para \(1\le k\le n-1\). Es la regla «cada número es la suma de los dos de arriba» del triángulo.</li>
+      <li><b>Suma de una fila:</b> \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=2^{n}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\dbinom{5}{2}\), de las dos maneras</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Con factoriales.</b> \(\dfrac{5!}{2!\,3!}=\dfrac{120}{2\cdot 6}=10\).</li>
+    <li><b>Simplificando antes.</b> \(\dfrac{5\cdot 4\cdot 3!}{2!\cdot 3!}=\dfrac{5\cdot 4}{2}=10\). Es la forma «con orden, dividido por \(k!\)».</li>
+    <li>Son los \(10\) grupos de la animación.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\dbinom{8}{3}\), sin calcular factoriales grandes</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Arriba van \(3\) factores que bajan desde \(8\); abajo, \(3!\): \(\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}\).</li>
+    <li>\(=\dfrac{336}{6}=56\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\dbinom{10}{8}\), usando la simetría</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dbinom{10}{8}=\dbinom{10}{2}\), porque \(10-8=2\).</li>
+    <li>\(\dbinom{10}{2}=\dfrac{10\cdot 9}{2}=45\).</li>
+    <li>Conviene siempre usar el menor entre \(k\) y \(n-k\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: demostración de la regla de Pascal</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se suman las dos fracciones: \(\dbinom{n-1}{k-1}+\dbinom{n-1}{k}=\dfrac{(n-1)!}{(k-1)!\,(n-k)!}+\dfrac{(n-1)!}{k!\,(n-k-1)!}\).</li>
+    <li>Denominador común, \(k!\,(n-k)!\). La primera fracción se amplifica por \(k\) (porque \(k!=k\,(k-1)!\)); la segunda, por \(n-k\) (porque \((n-k)!=(n-k)\,(n-k-1)!\)):
+      \[\frac{(n-1)!\;k+(n-1)!\;(n-k)}{k!\,(n-k)!}=\frac{(n-1)!\,\big(k+n-k\big)}{k!\,(n-k)!}=\frac{(n-1)!\;n}{k!\,(n-k)!}\]</li>
+    <li>Como \((n-1)!\cdot n=n!\), el resultado es \(\dfrac{n!}{k!\,(n-k)!}=\dbinom{n}{k}\).</li>
+    <li><b>Con números:</b> \(\dbinom{6}{3}=\dbinom{5}{2}+\dbinom{5}{3}=10+10=20\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: creer que \(0!=0\). Vale \(1\); si no, \(\dbinom{n}{0}\) no se podría calcular. Dos: «simplificar» factoriales como si fueran números: \(\dfrac{6!}{3!}\) no es \(2!\); es \(6\cdot 5\cdot 4=120\). Tres: confundir \(\dbinom{n}{k}\) con la fracción \(\dfrac{n}{k}\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\dbinom{7}{3}\).</p>
+    <details><summary>Pista</summary><div><p>Tres factores que bajan desde \(7\), dividido por \(3!\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{7}{3}=\dfrac{7\cdot 6\cdot 5}{3\cdot 2\cdot 1}=\dfrac{210}{6}=35\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\dbinom{12}{10}\).</p>
+    <details><summary>Pista</summary><div><p>Usa la simetría para trabajar con \(k=2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{12}{10}=\dbinom{12}{2}\).</li>
+        <li>\(=\dfrac{12\cdot 11}{2}=66\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> De un curso de \(8\) estudiantes hay que elegir a \(3\) para representar al colegio. ¿De cuántas maneras se puede formar el grupo?</p>
+    <details><summary>Pista</summary><div><p>El orden en que se eligen no importa: es un coeficiente binomial.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{8}{3}=\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}=56\).</li>
+        <li>Respuesta: \(56\) grupos distintos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>

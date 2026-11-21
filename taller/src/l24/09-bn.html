@@ -1,0 +1,180 @@
+<!--file:H09_numero_de_terminos_del_desarrollo.html-->
+<!--title:Número de términos del desarrollo-->
+<!--id:bn-terminos-->
+<!--tab:H09 Número de términos-->
+<article class="sheet" id="bn-terminos" data-hoja="L24 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Número de términos del desarrollo</b></li>
+    </ol>
+    <h1>Número de términos del desarrollo</h1>
+    <p class="lede">El desarrollo de \((a+b)^{n}\) tiene siempre un término más que el exponente. Saberlo permite revisar un desarrollo de un vistazo y ubicar el término del medio.
+    \[\text{número de términos de }(a+b)^{n}=n+1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Los términos de \((a+b)^{6}\), contados uno por uno. Después cambia \(n\) con el deslizador.</p>
+  <div class="stage" data-scene="bn-terminos"></div>
+  <ul class="keys">
+    <li><b>Un casillero por término,</b> con sus potencias de \(a\) y de \(b\) (sin el coeficiente, que aquí no importa).</li>
+    <li><b>Sobre cada casillero:</b> su posición (1º, 2º, 3º…). <b>Debajo:</b> su valor de \(k\), que parte en \(0\).</li>
+    <li><b>Casillero naranja:</b> el que se está contando.</li>
+    <li><b>Casillero burdeo, al final:</b> el término central. Si \(n\) es impar, son dos.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Por qué son \(n+1\)</h3>
+    <ol class="steps">
+      <li>Cada término es \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\), y hay uno por cada valor de \(k\).</li>
+      <li>\(k\) toma los valores \(0,\ 1,\ 2,\dots,\ n\). De \(1\) a \(n\) hay \(n\) valores; con el \(0\), son \(n+1\).</li>
+      <li>Dos términos distintos no se pueden juntar: tienen distinta potencia de \(b\) (y de \(a\)), así que no son semejantes.</li>
+      <li>Ningún coeficiente \(\dbinom{n}{k}\) vale \(0\), así que ningún término desaparece.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El término central</h3>
+    <ol class="steps">
+      <li><b>Si \(n\) es par,</b> \(n+1\) es impar y hay un término justo al medio: el de \(k=\dfrac{n}{2}\), en la posición \(\dfrac{n}{2}+1\).</li>
+      <li><b>Si \(n\) es impar,</b> \(n+1\) es par y al medio quedan dos: los de \(k=\dfrac{n-1}{2}\) y \(k=\dfrac{n+1}{2}\), en las posiciones \(\dfrac{n+1}{2}\) y \(\dfrac{n+3}{2}\).</li>
+      <li>Los términos centrales llevan los coeficientes más grandes del desarrollo. En el caso impar, los dos coeficientes son iguales, por la simetría.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \((a+b)^{7}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=7\): hay \(7+1=8\) términos.</li>
+    <li>\(n\) es impar: dos términos centrales, los de \(k=3\) y \(k=4\), en las posiciones 4ª y 5ª.</li>
+    <li>Sus coeficientes: \(\dbinom{7}{3}=\dbinom{7}{4}=35\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \((x-3)^{10}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=10\): \(11\) términos. La resta no cambia la cantidad, solo los signos.</li>
+    <li>\(n\) es par: un término central, el de \(k=5\), en la posición 6ª.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, al revés: un desarrollo con \(13\) términos</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n+1=13\ \Longrightarrow\ n=12\).</li>
+    <li>El término central es el 7º (\(k=6\)).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(\left(x^{2}+\dfrac{1}{x}\right)^{9}\), ¿se juntan términos?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El término \(k\) lleva \(\left(x^{2}\right)^{9-k}\cdot\dfrac{1}{x^{k}}=x^{18-2k-k}=x^{18-3k}\).</li>
+    <li>Para \(k=0,\ 1,\dots,\ 9\) los exponentes son \(18,\ 15,\ 12,\dots,\ -9\): todos distintos.</li>
+    <li>No hay términos semejantes: siguen siendo \(9+1=10\) términos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Ojo con el alcance.</b> La regla \(n+1\) es para un <b>binomio</b> elevado a un exponente natural. Con tres sumandos, como \((a+b+c)^{n}\), hay más términos y se cuentan de otra manera. Y si se reemplazan \(a\) y \(b\) por números, todo se reduce a un solo número.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>¿Cuántos términos tiene el desarrollo de \((2a-b)^{15}\)? ¿Cuáles son los centrales?</p>
+    <details><summary>Pista</summary><div><p>\(n=15\) es impar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(15+1=16\) términos.</li>
+        <li>Dos centrales: \(k=7\) y \(k=8\), en las posiciones 8ª y 9ª.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>El desarrollo de \((x+y)^{n}\) tiene \(21\) términos. ¿Cuánto vale \(n\) y cuál es el término central?</p>
+    <details><summary>Pista</summary><div><p>\(n+1=21\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(n=20\).</li>
+        <li>\(n\) es par: un término central, el de \(k=10\), en la posición 11ª.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Se lanzan \(9\) monedas y se anota cuántas caras salieron. ¿Cuántos resultados distintos puede tener esa anotación? ¿Qué tiene que ver con \((a+b)^{9}\)?</p>
+    <details><summary>Pista</summary><div><p>El número de caras puede ser \(0,\ 1,\ 2,\dots\)</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Pueden salir \(0,\ 1,\ 2,\dots,\ 9\) caras: \(9+1=10\) resultados.</li>
+        <li>Es la misma cuenta que los términos de \((a+b)^{9}\): un término por cada valor de \(k\), de \(0\) a \(9\). El término \(a^{9-k}b^{k}\) corresponde a «\(k\) caras».</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
+OA.scene('bn-terminos', {
+  world:{x0:-0.9, x1:7.9, y0:-3.2, y1:3.5}, aspect:6.7/8.8,
+  aria:'Una fila de casilleros, uno por cada término del desarrollo de a más b elevado a n. Sobre cada casillero va su posición: primero, segundo, tercero. Debajo va el valor de k, que empieza en 0. Los casilleros se cuentan uno por uno: como k va de 0 a n, son n más 1. Al final se destaca el término central, o los dos centrales si n es impar.',
+  labels:[['F', '\\text{número de términos de }(a+b)^{n}=n+1', 'número de términos = n + 1', 'diff']],
+  sliders:[{id:'n', tex:'n', min:1, max:7, step:1, value:6}],
+  legend:'<span><i class="sw rise"></i> el término que se está contando</span><span><i class="sw tan"></i> término central (o los dos centrales)</span>',
+  anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = 6; v.k = Math.min(6, Math.floor(p*8.4)); v.fin = p*8.4 >= 7; }},
+  onInput:function(v){ v.q = null; v.k = v.n; v.fin = true; },
+  draw:function(S, v){
+    var n = Math.round(v.n || 6), k = v.k == null ? n : Math.min(n, v.k), C = S.C, txt = oaTxt(S), x0, y0, par = n % 2 === 0, c1 = Math.floor(n/2), c2 = Math.ceil(n/2);
+    bnCajas(S, n, 2, function(i){ return v.fin ? (i === c1 || i === c2 ? C.tan : null) : i === k ? C.rise : i < k ? C.sec : null; }, function(i){ return i <= k ? (i + 1) + 'º' : ''; }, function(i){ return 'k = ' + i; });
+    x0 = S.X(-0.8); y0 = S.Y(0.55);
+    txt('contados hasta ahora: ' + (k + 1) + (k === n ? '  =  n + 1  =  ' + n + ' + 1' : ''), x0, y0, 'left', C.rise);
+    txt('k va de 0 a n = ' + n + ': un valor más que n', x0, y0 + 21, 'left', C.ink);
+    if (v.fin) txt(par ? 'n par: un término central, el ' + (c1 + 1) + 'º (k = ' + c1 + ')' : 'n impar: dos términos centrales, el ' + (c1 + 1) + 'º y el ' + (c2 + 1) + 'º (k = ' + c1 + ' y k = ' + c2 + ')', x0, y0 + 42, 'left', C.tan);
+    S.lab('F', x0, y0 + 70, 0, 0, !!v.fin && v.q != null);
+  },
+  caption:function(v){ var n = Math.round(v.n || 6), k = v.k == null ? n : Math.min(n, v.k); if (v.fin) return 'El desarrollo de (a + b)' + bnSup(n) + ' tiene ' + (n + 1) + ' términos. ' + (n % 2 === 0 ? 'Como ' + (n + 1) + ' es impar, hay uno justo al medio' : 'Como ' + (n + 1) + ' es par, al medio quedan dos') + '. Cambia n con el deslizador'; return 'Se cuenta el término ' + (k + 1) + 'º, que corresponde a k = ' + k + '. La posición siempre es k + 1, porque k parte en 0'; },
+  readout:function(v){ var n = Math.round(v.n || 6); return [['', 'k=0,\\,1,\\,2,\\,\\dots,\\,n\\quad\\Longrightarrow\\quad n+1\\ \\text{términos}'], ['d', 'n=' + n + ':\\quad ' + n + '+1=' + (n + 1) + '\\ \\text{términos}']]; }
+});

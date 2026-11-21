@@ -1,0 +1,140 @@
+<!--file:H09_numero_de_terminos_del_desarrollo.html-->
+<!--title:Número de términos del desarrollo-->
+<!--id:bn-terminos-->
+<!--tab:H09 Número de términos-->
+<article class="sheet" id="bn-terminos" data-hoja="L24 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Número de términos del desarrollo</b></li>
+    </ol>
+    <h1>Número de términos del desarrollo</h1>
+    <p class="lede">El desarrollo de \((a+b)^{n}\) tiene siempre un término más que el exponente. Saberlo permite revisar un desarrollo de un vistazo y ubicar el término del medio.
+    \[\text{número de términos de }(a+b)^{n}=n+1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Los términos de \((a+b)^{6}\), contados uno por uno. Después cambia \(n\) con el deslizador.</p>
+  <div class="stage" data-scene="bn-terminos"></div>
+  <ul class="keys">
+    <li><b>Un casillero por término,</b> con sus potencias de \(a\) y de \(b\) (sin el coeficiente, que aquí no importa).</li>
+    <li><b>Sobre cada casillero:</b> su posición (1º, 2º, 3º…). <b>Debajo:</b> su valor de \(k\), que parte en \(0\).</li>
+    <li><b>Casillero naranja:</b> el que se está contando.</li>
+    <li><b>Casillero burdeo, al final:</b> el término central. Si \(n\) es impar, son dos.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>Por qué son \(n+1\)</h3>
+    <ol class="steps">
+      <li>Cada término es \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\), y hay uno por cada valor de \(k\).</li>
+      <li>\(k\) toma los valores \(0,\ 1,\ 2,\dots,\ n\). De \(1\) a \(n\) hay \(n\) valores; con el \(0\), son \(n+1\).</li>
+      <li>Dos términos distintos no se pueden juntar: tienen distinta potencia de \(b\) (y de \(a\)), así que no son semejantes.</li>
+      <li>Ningún coeficiente \(\dbinom{n}{k}\) vale \(0\), así que ningún término desaparece.</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>El término central</h3>
+    <ol class="steps">
+      <li><b>Si \(n\) es par,</b> \(n+1\) es impar y hay un término justo al medio: el de \(k=\dfrac{n}{2}\), en la posición \(\dfrac{n}{2}+1\).</li>
+      <li><b>Si \(n\) es impar,</b> \(n+1\) es par y al medio quedan dos: los de \(k=\dfrac{n-1}{2}\) y \(k=\dfrac{n+1}{2}\), en las posiciones \(\dfrac{n+1}{2}\) y \(\dfrac{n+3}{2}\).</li>
+      <li>Los términos centrales llevan los coeficientes más grandes del desarrollo. En el caso impar, los dos coeficientes son iguales, por la simetría.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \((a+b)^{7}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=7\): hay \(7+1=8\) términos.</li>
+    <li>\(n\) es impar: dos términos centrales, los de \(k=3\) y \(k=4\), en las posiciones 4ª y 5ª.</li>
+    <li>Sus coeficientes: \(\dbinom{7}{3}=\dbinom{7}{4}=35\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \((x-3)^{10}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n=10\): \(11\) términos. La resta no cambia la cantidad, solo los signos.</li>
+    <li>\(n\) es par: un término central, el de \(k=5\), en la posición 6ª.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3, al revés: un desarrollo con \(13\) términos</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(n+1=13\ \Longrightarrow\ n=12\).</li>
+    <li>El término central es el 7º (\(k=6\)).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(\left(x^{2}+\dfrac{1}{x}\right)^{9}\), ¿se juntan términos?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El término \(k\) lleva \(\left(x^{2}\right)^{9-k}\cdot\dfrac{1}{x^{k}}=x^{18-2k-k}=x^{18-3k}\).</li>
+    <li>Para \(k=0,\ 1,\dots,\ 9\) los exponentes son \(18,\ 15,\ 12,\dots,\ -9\): todos distintos.</li>
+    <li>No hay términos semejantes: siguen siendo \(9+1=10\) términos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Ojo con el alcance.</b> La regla \(n+1\) es para un <b>binomio</b> elevado a un exponente natural. Con tres sumandos, como \((a+b+c)^{n}\), hay más términos y se cuentan de otra manera. Y si se reemplazan \(a\) y \(b\) por números, todo se reduce a un solo número.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>¿Cuántos términos tiene el desarrollo de \((2a-b)^{15}\)? ¿Cuáles son los centrales?</p>
+    <details><summary>Pista</summary><div><p>\(n=15\) es impar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(15+1=16\) términos.</li>
+        <li>Dos centrales: \(k=7\) y \(k=8\), en las posiciones 8ª y 9ª.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>El desarrollo de \((x+y)^{n}\) tiene \(21\) términos. ¿Cuánto vale \(n\) y cuál es el término central?</p>
+    <details><summary>Pista</summary><div><p>\(n+1=21\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(n=20\).</li>
+        <li>\(n\) es par: un término central, el de \(k=10\), en la posición 11ª.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Se lanzan \(9\) monedas y se anota cuántas caras salieron. ¿Cuántos resultados distintos puede tener esa anotación? ¿Qué tiene que ver con \((a+b)^{9}\)?</p>
+    <details><summary>Pista</summary><div><p>El número de caras puede ser \(0,\ 1,\ 2,\dots\)</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Pueden salir \(0,\ 1,\ 2,\dots,\ 9\) caras: \(9+1=10\) resultados.</li>
+        <li>Es la misma cuenta que los términos de \((a+b)^{9}\): un término por cada valor de \(k\), de \(0\) a \(9\). El término \(a^{9-k}b^{k}\) corresponde a «\(k\) caras».</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>

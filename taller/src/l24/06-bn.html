@@ -1,0 +1,194 @@
+<!--file:H06_coeficientes_binomiales.html-->
+<!--title:Coeficientes binomiales-->
+<!--id:bn-combinar-->
+<!--tab:H06 Coeficientes binomiales-->
+<article class="sheet" id="bn-combinar" data-hoja="L24 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Coeficientes binomiales</b></li>
+    </ol>
+    <h1>Coeficientes binomiales</h1>
+    <p class="lede">El coeficiente binomial \(\dbinom{n}{k}\), que se lee «\(n\) sobre \(k\)», cuenta de cuántas maneras se pueden elegir \(k\) objetos entre \(n\), sin importar el orden. Son los números que acompañan a cada término en el desarrollo de \((a+b)^{n}\).
+    \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!},\qquad 0\le k\le n\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Todos los grupos de \(2\) fichas que se pueden formar con \(5\) fichas, uno por uno. Después cambia \(k\) con el deslizador.</p>
+  <div class="stage" data-scene="bn-combinar"></div>
+  <ul class="keys">
+    <li><b>Fichas naranjas:</b> las elegidas en el grupo que se está formando.</li>
+    <li><b>Lista azul:</b> los grupos ya formados. El orden dentro de un grupo no importa: \(\{1,\,3\}\) y \(\{3,\,1\}\) son el mismo.</li>
+    <li><b>Bajo el dibujo:</b> la cuenta. Primero se cuentan las elecciones con orden; después se divide por las veces que cada grupo quedó repetido.</li>
+    <li><b>Deslizador \(k\):</b> cuántas fichas se eligen, de \(0\) a \(5\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>De dónde sale la fórmula</h3>
+    <ol class="steps">
+      <li><b>Factorial.</b> \(n!=n\,(n-1)\,(n-2)\cdots 2\cdot 1\). Por ejemplo, \(5!=120\). Se conviene que \(0!=1\).</li>
+      <li><b>Elegir con orden.</b> Para el primer objeto hay \(n\) opciones; para el segundo, \(n-1\); así hasta el \(k\)-ésimo, con \(n-k+1\). Total: \(n\,(n-1)\cdots(n-k+1)\).</li>
+      <li><b>Quitar el orden.</b> Cada grupo de \(k\) objetos se contó una vez por cada manera de ordenarlo, que son \(k!\). Se divide:
+        \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\]</li>
+      <li><b>Forma con factoriales.</b> Se multiplica arriba y abajo por \((n-k)!\). Arriba queda \(n\,(n-1)\cdots(n-k+1)\cdot(n-k)!=n!\):
+        \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Propiedades</h3>
+    <ol class="steps">
+      <li><b>Extremos:</b> \(\dbinom{n}{0}=\dbinom{n}{n}=1\). Hay una sola manera de no elegir nada, y una sola de elegir todo.</li>
+      <li><b>Uno:</b> \(\dbinom{n}{1}=n\).</li>
+      <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Elegir cuáles \(k\) se llevan es lo mismo que elegir cuáles \(n-k\) se dejan.</li>
+      <li><b>Regla de Pascal:</b> \(\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\), para \(1\le k\le n-1\). Es la regla «cada número es la suma de los dos de arriba» del triángulo.</li>
+      <li><b>Suma de una fila:</b> \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=2^{n}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\dbinom{5}{2}\), de las dos maneras</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Con factoriales.</b> \(\dfrac{5!}{2!\,3!}=\dfrac{120}{2\cdot 6}=10\).</li>
+    <li><b>Simplificando antes.</b> \(\dfrac{5\cdot 4\cdot 3!}{2!\cdot 3!}=\dfrac{5\cdot 4}{2}=10\). Es la forma «con orden, dividido por \(k!\)».</li>
+    <li>Son los \(10\) grupos de la animación.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\dbinom{8}{3}\), sin calcular factoriales grandes</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Arriba van \(3\) factores que bajan desde \(8\); abajo, \(3!\): \(\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}\).</li>
+    <li>\(=\dfrac{336}{6}=56\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\dbinom{10}{8}\), usando la simetría</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\dbinom{10}{8}=\dbinom{10}{2}\), porque \(10-8=2\).</li>
+    <li>\(\dbinom{10}{2}=\dfrac{10\cdot 9}{2}=45\).</li>
+    <li>Conviene siempre usar el menor entre \(k\) y \(n-k\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: demostración de la regla de Pascal</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se suman las dos fracciones: \(\dbinom{n-1}{k-1}+\dbinom{n-1}{k}=\dfrac{(n-1)!}{(k-1)!\,(n-k)!}+\dfrac{(n-1)!}{k!\,(n-k-1)!}\).</li>
+    <li>Denominador común, \(k!\,(n-k)!\). La primera fracción se amplifica por \(k\) (porque \(k!=k\,(k-1)!\)); la segunda, por \(n-k\) (porque \((n-k)!=(n-k)\,(n-k-1)!\)):
+      \[\frac{(n-1)!\;k+(n-1)!\;(n-k)}{k!\,(n-k)!}=\frac{(n-1)!\,\big(k+n-k\big)}{k!\,(n-k)!}=\frac{(n-1)!\;n}{k!\,(n-k)!}\]</li>
+    <li>Como \((n-1)!\cdot n=n!\), el resultado es \(\dfrac{n!}{k!\,(n-k)!}=\dbinom{n}{k}\).</li>
+    <li><b>Con números:</b> \(\dbinom{6}{3}=\dbinom{5}{2}+\dbinom{5}{3}=10+10=20\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Los errores más comunes.</b> Uno: creer que \(0!=0\). Vale \(1\); si no, \(\dbinom{n}{0}\) no se podría calcular. Dos: «simplificar» factoriales como si fueran números: \(\dfrac{6!}{3!}\) no es \(2!\); es \(6\cdot 5\cdot 4=120\). Tres: confundir \(\dbinom{n}{k}\) con la fracción \(\dfrac{n}{k}\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\dbinom{7}{3}\).</p>
+    <details><summary>Pista</summary><div><p>Tres factores que bajan desde \(7\), dividido por \(3!\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{7}{3}=\dfrac{7\cdot 6\cdot 5}{3\cdot 2\cdot 1}=\dfrac{210}{6}=35\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\dbinom{12}{10}\).</p>
+    <details><summary>Pista</summary><div><p>Usa la simetría para trabajar con \(k=2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{12}{10}=\dbinom{12}{2}\).</li>
+        <li>\(=\dfrac{12\cdot 11}{2}=66\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> De un curso de \(8\) estudiantes hay que elegir a \(3\) para representar al colegio. ¿De cuántas maneras se puede formar el grupo?</p>
+    <details><summary>Pista</summary><div><p>El orden en que se eligen no importa: es un coeficiente binomial.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\dbinom{8}{3}=\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}=56\).</li>
+        <li>Respuesta: \(56\) grupos distintos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 24 (binomio de Newton) */
+function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
+function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
+function bnC(n, k){ var r = 1, i; for (i = 1; i <= k; i++) r = r*(n - k + i)/i; return Math.round(r); }
+function bnTerm(n, k){ var c = bnC(n, k), s = bnPow('a', n - k) + bnPow('b', k); return (c === 1 ? '' : c) + s; }
+function bnExp(n){ var s = [], k; for (k = 0; k <= n; k++) s.push(bnTerm(n, k)); return '(a + b)' + bnSup(n) + ' = ' + s.join(' + '); }
+function bnCota(S, x0, y0, x1, y1, tx, col, dx, dy){ var c = S.ctx, X = S.X, Y = S.Y, nx = dx || 0, ny = dy || 0, L = Math.sqrt(nx*nx + ny*ny) || 1, ux = nx/L*4, uy = ny/L*4;
+  c.strokeStyle = col; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(x0) + nx, Y(y0) + ny); c.lineTo(X(x1) + nx, Y(y1) + ny); c.moveTo(X(x0) + nx - ux, Y(y0) + ny - uy); c.lineTo(X(x0) + nx + ux, Y(y0) + ny + uy); c.moveTo(X(x1) + nx - ux, Y(y1) + ny - uy); c.lineTo(X(x1) + nx + ux, Y(y1) + ny + uy); c.stroke();
+  oaTxt(S)(tx, (X(x0) + X(x1))/2 + nx*2.1, (Y(y0) + Y(y1))/2 + ny*2.1, 'center', col); }
+function bnExp2(n){ var s = bnExp(n), t, i, h; if (s.length <= 48) return [s]; t = s.split(' + '); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' + ') + ' +', '      ' + t.slice(h).join(' + ')]; }
+function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off = (7 - n)/2, k, cc, x;
+  for (k = 0; k <= n; k++){ x = off + k; cc = col(k); c.strokeStyle = cc || S.C.grid; c.lineWidth = cc ? 1.8 : 1; c.strokeRect(X(x - 0.42), Y(y + 0.36), X(x + 0.42) - X(x - 0.42), Y(y - 0.36) - Y(y + 0.36));
+    c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
+    c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
+  return off; }
+OA.scene('bn-combinar', (function(){
+  var N = 5;
+  function combos(k){ var out = [], cur = []; (function rec(s){ var i; if (cur.length === k){ out.push(cur.slice()); return; } for (i = s; i <= N; i++){ cur.push(i); rec(i + 1); cur.pop(); } })(1); return out; }
+  function f(n){ var r = 1, i; for (i = 2; i <= n; i++) r *= i; return r; }
+  return {
+    world:{x0:-0.6, x1:8.6, y0:-4.2, y1:4.0}, aspect:8.2/9.2,
+    aria:'Cinco fichas numeradas del 1 al 5. Se forman, uno por uno, todos los grupos de 2 fichas: las fichas elegidas se pintan de naranja y cada grupo nuevo se anota en una lista. Al terminar hay 10 grupos. Bajo el dibujo se hace la cuenta: eligiendo con orden hay 5 por 4, 20 maneras, pero cada grupo se contó 2 veces, así que son 20 dividido por 2, 10.',
+    labels:[['F', '\\dbinom{n}{k}=\\dfrac{n!}{k!\\,(n-k)!}', 'C(n, k) = n! / (k! (n − k)!)', 'diff']],
+    sliders:[{id:'k', tex:'k', min:0, max:5, step:1, value:2}],
+    legend:'<span><i class="sw rise"></i> fichas elegidas en este grupo</span><span><i class="sw sec"></i> grupos ya formados</span>',
+    anim:{run:22000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = 2; v.m = Math.min(10, 1 + Math.floor(p*12.5)); v.fin = p*12.5 >= 10.8; }},
+    onInput:function(v){ v.q = null; v.m = 1e9; v.fin = true; },
+    draw:function(S, v){
+      var k = Math.round(v.k), L = combos(k), tot = L.length, m = Math.min(tot, v.m || tot), cur = L[m - 1] || [], C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, x0, y0, ord = [], prod = 1, on;
+      for (i = 1; i <= N; i++){ on = cur.indexOf(i) >= 0; c.beginPath(); c.arc(X(1 + i), Y(3), 13, 0, 6.2832); c.fillStyle = on ? C.rise : '#fff'; c.fill(); c.strokeStyle = on ? C.rise : C.ink; c.lineWidth = 1.3; c.stroke(); c.font = '700 13px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = on ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + i, X(1 + i), Y(3)); }
+      for (i = 0; i < m; i++){ c.font = (i === m - 1 && !v.fin ? '700' : '500') + ' 12px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = i === m - 1 && !v.fin ? C.rise : C.sec; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('{' + L[i].join(', ') + '}', X(0.9 + 1.55*(i % 5)), Y(1.7) + 20*Math.floor(i/5)); }
+      for (i = 0; i < k; i++){ ord.push(N - i); prod *= N - i; }
+      x0 = X(-0.5); y0 = Y(-0.35);
+      txt('elegir k = ' + k + ' fichas de n = 5: grupo ' + m + ' de ' + tot, x0, y0, 'left', C.ink);
+      txt(k === 0 ? 'hay una sola manera: no elegir ninguna' : 'eligiendo con orden: ' + ord.join(' · ') + (k > 1 ? ' = ' + prod : '') + ' maneras', x0, y0 + 21, 'left', C.ink);
+      txt(k === 0 ? '0! = 1 (por convenio)' : 'cada grupo se contó ' + k + '! = ' + f(k) + (f(k) === 1 ? ' vez' : ' veces') + ' (sus órdenes)', x0, y0 + 42, 'left', C.ink);
+      if (v.fin) txt('C(5, ' + k + ') = ' + prod + ' / ' + f(k) + ' = ' + tot + ' grupos', x0, y0 + 63, 'left', C.tan);
+      S.lab('F', x0, y0 + 90, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ var k = Math.round(v.k), tot = combos(k).length; if (v.fin) return 'Hay ' + tot + ' maneras de elegir ' + k + ' fichas entre 5: ese número es el coeficiente binomial de 5 sobre ' + k + '. Cambia k con el deslizador'; return 'Se forman, uno por uno, todos los grupos de ' + k + ' fichas. El orden dentro del grupo no importa: {1, 3} y {3, 1} son el mismo'; },
+    readout:function(v){ var k = Math.round(v.k); return [['', '\\dbinom{5}{' + k + '}=\\dfrac{5!}{' + k + '!\\,' + (5 - k) + '!}=\\dfrac{120}{' + f(k) + '\\cdot ' + f(5 - k) + '}=' + bnC(5, k)]]; }
+  };
+})());

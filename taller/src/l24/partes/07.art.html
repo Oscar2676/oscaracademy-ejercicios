@@ -1,0 +1,149 @@
+<!--file:H07_desarrollo_de_a_mas_b_a_la_n.html-->
+<!--title:Desarrollo de (a + b)ⁿ-->
+<!--id:bn-desarrollo-->
+<!--tab:H07 Desarrollo (a + b)ⁿ-->
+<article class="sheet" id="bn-desarrollo" data-hoja="L24 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Binomio de Newton</li>
+      <li>Fórmula del binomio</li>
+      <li><b>Desarrollo de (a + b)ⁿ</b></li>
+    </ol>
+    <h1>Desarrollo de (a + b)ⁿ</h1>
+    <p class="lede">Desarrollar \((a+b)^{n}\) es escribirlo como suma de sus \(n+1\) términos. Con el binomio de Newton se hace sin multiplicar paréntesis: se arma cada término con su coeficiente y sus dos potencias.
+    \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n}b^{n}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El desarrollo de \((2x+3)^{4}\), armado en una tabla, fila por fila.</p>
+  <div class="stage" data-scene="bn-desarrollo"></div>
+  <ul class="keys">
+    <li><b>Una fila por cada \(k\),</b> de \(0\) a \(4\): cinco términos.</li>
+    <li><b>Columnas:</b> el coeficiente \(\dbinom{4}{k}\); la potencia de \(2x\), con exponente \(4-k\); la potencia de \(3\), con exponente \(k\); y el término, que es el producto de las tres.</li>
+    <li><b>Fila naranja:</b> la que se está calculando. <b>En burdeo:</b> el término que resulta.</li>
+    <li><b>Bajo la tabla:</b> la multiplicación de la fila y, al final, el desarrollo completo con su comprobación.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k2">
+    <h3>El procedimiento</h3>
+    <ol class="steps">
+      <li><b>Identificar</b> \(a\), \(b\) y \(n\). Si \(a\) o \(b\) traen coeficiente o exponente, van entre paréntesis.</li>
+      <li><b>Coeficientes:</b> \(\dbinom{n}{0},\ \dbinom{n}{1},\dots,\ \dbinom{n}{n}\). Para \(n\) chico, la fila \(n\) del triángulo de Pascal.</li>
+      <li><b>Potencias:</b> las de \(a\) bajan de \(n\) a \(0\); las de \(b\) suben de \(0\) a \(n\).</li>
+      <li><b>Multiplicar</b> en cada término: coeficiente, potencia de \(a\), potencia de \(b\).</li>
+      <li><b>Comprobar</b> con un valor sencillo de la variable, por ejemplo \(1\).</li>
+    </ol>
+  </div>
+
+  <div class="card k1">
+    <h3>Por qué sirve la comprobación con \(x=1\)</h3>
+    <ol class="steps">
+      <li>El desarrollo es una igualdad que vale para todo valor de la variable. En particular vale para \(x=1\).</li>
+      <li>A la izquierda queda un número fácil: \((2\cdot 1+3)^{4}=5^{4}=625\).</li>
+      <li>A la derecha queda la suma de los coeficientes del resultado: \(16+96+216+216+81=625\).</li>
+      <li>Si los dos números no coinciden, hay un error. Si coinciden, no es una demostración, pero es una buena señal.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \((2x+3)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=2x\), \(b=3\), \(n=4\). Coeficientes: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+    <li>\(1\cdot(2x)^{4}=16x^{4}\); \(\ 4\cdot(2x)^{3}\cdot 3=4\cdot 8x^{3}\cdot 3=96x^{3}\).</li>
+    <li>\(6\cdot(2x)^{2}\cdot 3^{2}=6\cdot 4x^{2}\cdot 9=216x^{2}\); \(\ 4\cdot(2x)\cdot 3^{3}=4\cdot 2x\cdot 27=216x\); \(\ 1\cdot 3^{4}=81\).</li>
+    <li>\((2x+3)^{4}=16x^{4}+96x^{3}+216x^{2}+216x+81\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\left(x^{2}+1\right)^{3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=x^{2}\), \(b=1\), \(n=3\). Coeficientes: \(1,\ 3,\ 3,\ 1\).</li>
+    <li>Potencia de potencia: \(\left(x^{2}\right)^{3}=x^{6}\), \(\left(x^{2}\right)^{2}=x^{4}\).</li>
+    <li>\(\left(x^{2}+1\right)^{3}=x^{6}+3x^{4}+3x^{2}+1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \((a+2b)^{5}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Coeficientes: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). Potencias de \(2b\): \(1,\ 2b,\ 4b^{2},\ 8b^{3},\ 16b^{4},\ 32b^{5}\).</li>
+    <li>\(a^{5}+5a^{4}(2b)+10a^{3}\left(4b^{2}\right)+10a^{2}\left(8b^{3}\right)+5a\left(16b^{4}\right)+32b^{5}\).</li>
+    <li>\((a+2b)^{5}=a^{5}+10a^{4}b+40a^{3}b^{2}+80a^{2}b^{3}+80ab^{4}+32b^{5}\).</li>
+    <li><b>Comprobación con \(a=b=1\):</b> \(3^{5}=243\) y \(1+10+40+80+80+32=243\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(\left(x+\dfrac{1}{x}\right)^{4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a=x\), \(b=\dfrac{1}{x}\), \(n=4\). En cada término, \(x^{4-k}\cdot\dfrac{1}{x^{k}}=x^{4-2k}\).</li>
+    <li>\(k=0\): \(x^{4}\). \(k=1\): \(4x^{2}\). \(k=2\): \(6x^{0}=6\). \(k=3\): \(4x^{-2}=\dfrac{4}{x^{2}}\). \(k=4\): \(\dfrac{1}{x^{4}}\).</li>
+    <li>\(\left(x+\dfrac{1}{x}\right)^{4}=x^{4}+4x^{2}+6+\dfrac{4}{x^{2}}+\dfrac{1}{x^{4}}\), para \(x\neq 0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>El error más común.</b> Elevar solo la letra y olvidar su coeficiente: \((2x)^{3}=8x^{3}\), no \(2x^{3}\). Por eso el primer paso es poner paréntesis.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Desarrolla \((x+2)^{5}\).</p>
+    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 5,\ 10,\ 10,\ 5,\ 1\) y potencias de \(2\): \(1,\ 2,\ 4,\ 8,\ 16,\ 32\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x^{5}+5x^{4}\cdot 2+10x^{3}\cdot 4+10x^{2}\cdot 8+5x\cdot 16+32\).</li>
+        <li>\((x+2)^{5}=x^{5}+10x^{4}+40x^{3}+80x^{2}+80x+32\).</li>
+        <li>Comprobación con \(x=1\): \(3^{5}=243\) y \(1+10+40+80+80+32=243\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Desarrolla \((3x+1)^{4}\).</p>
+    <details><summary>Pista</summary><div><p>\((3x)^{4}=81x^{4}\), \((3x)^{3}=27x^{3}\), \((3x)^{2}=9x^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(1\cdot 81x^{4}+4\cdot 27x^{3}+6\cdot 9x^{2}+4\cdot 3x+1\).</li>
+        <li>\((3x+1)^{4}=81x^{4}+108x^{3}+54x^{2}+12x+1\).</li>
+        <li>Comprobación con \(x=1\): \(4^{4}=256\) y \(81+108+54+12+1=256\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un ahorro de \(\$200\,000\) crece un \(5\,\%\) cada año. En \(4\) años se multiplica por \((1+0{,}05)^{4}\). Desarrolla esa potencia y calcula cuánto habrá.</p>
+    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}05\). Potencias de \(0{,}05\): \(0{,}05\); \(0{,}0025\); \(0{,}000125\); \(0{,}00000625\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\((1+0{,}05)^{4}=1+4\cdot 0{,}05+6\cdot 0{,}0025+4\cdot 0{,}000125+0{,}00000625\).</li>
+        <li>\(=1+0{,}2+0{,}015+0{,}0005+0{,}00000625=1{,}21550625\).</li>
+        <li>Monto: \(200\,000\cdot 1{,}21550625=\$243\,101\) (redondeado al peso).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">MA-L24-H07 · v001 · Pendiente de APR</span>
+</footer>
+</article>
