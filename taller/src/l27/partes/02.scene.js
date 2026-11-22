@@ -80,7 +80,7 @@
         }
         /* la celda ampliada, con sus cotas (no las pierde nunca) */
         if (k >= 4){
-          e = k === 4 ? u : 1; Z = 1.05/P.dr; ins = [S.X(2.45), S.Y(-1.75)]; a = K.at(cen);
+          e = k === 4 ? u : 1; Z = 0.525/P.dr; ins = [S.X(2.45), S.Y(-1.75)]; a = K.at(cen);
           /* flecha de la celda a su ampliación */
           c.strokeStyle = 'rgba(0,0,0,0.55)'; c.lineWidth = 1; c.beginPath(); c.moveTo(a[0] + 6, a[1]); c.quadraticCurveTo(S.X(3.85), S.Y(1.4), ins[0] + 26, ins[1] - 52); c.stroke();
           c.fillStyle = 'rgba(0,0,0,0.55)'; c.beginPath(); c.moveTo(ins[0] + 26, ins[1] - 46); c.lineTo(ins[0] + 21, ins[1] - 56); c.lineTo(ins[0] + 31, ins[1] - 56); c.closePath(); c.fill();
