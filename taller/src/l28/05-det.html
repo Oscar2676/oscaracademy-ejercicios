@@ -1,0 +1,280 @@
+<!--file:H05_el_determinante_de_una_matriz_a_es_igual_al_determinante_de_la_matriz_traspuesta_de_a.html-->
+<!--title:El determinante de una matriz A es igual al determinante de la matriz traspuesta de A-->
+<!--id:det-trasp-->
+<!--tab:H05 Traspuesta-->
+<article class="sheet" id="det-trasp" data-hoja="L28 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>El determinante de una matriz A es igual al determinante de la matriz traspuesta de A</b></li>
+    </ol>
+    <h1>El determinante de una matriz A es igual al determinante de la matriz traspuesta de A</h1>
+    <p class="lede">La <b>traspuesta</b> de una matriz \(A\), que se escribe \(A^{T}\), se obtiene poniendo cada fila de \(A\) como columna, en el mismo orden. Aunque \(A\) y \(A^{T}\) suelen ser matrices distintas, su determinante es el mismo.
+    \[\det A^{T}=\det A\]
+    Por eso, toda propiedad de los determinantes que vale para las filas vale también para las columnas.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Por qué no cambia el determinante al trasponer, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="trasp-idea"></div>
+  <ul class="keys">
+    <li><b>Línea naranja:</b> la diagonal principal, \(a\), \(e\), \(i\). Al trasponer no se mueve; las demás entradas cruzan al otro lado de ella.</li>
+    <li><b>Casillas azules:</b> las tres entradas de un producto que suma, \(bfg\), en \(A\) y en \(A^{T}\).</li>
+    <li><b>Casillas burdeo:</b> las tres entradas de un producto que resta, \(afh\), en \(A\) y en \(A^{T}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué es la traspuesta</h3>
+    <ol class="steps">
+      <li>La fila 1 de \(A\) pasa a ser la columna 1 de \(A^{T}\); la fila 2, la columna 2; la fila 3, la columna 3.</li>
+      <li>En segundo orden: \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\ \Longrightarrow\ A^{T}=\begin{pmatrix}a&c\\b&d\end{pmatrix}\).</li>
+      <li>En tercer orden: \(A=\begin{pmatrix}a&b&c\\d&e&f\\g&h&i\end{pmatrix}\ \Longrightarrow\ A^{T}=\begin{pmatrix}a&d&g\\b&e&h\\c&f&i\end{pmatrix}\).</li>
+      <li>La entrada que estaba en la fila \(m\) y la columna \(n\) queda en la fila \(n\) y la columna \(m\). Las de la diagonal principal (\(m=n\)) quedan donde estaban.</li>
+      <li>Si se traspone dos veces se vuelve a la matriz original: \(\left(A^{T}\right)^{T}=A\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración</h3>
+    <p><b>Segundo orden.</b></p>
+    <ol class="steps">
+      <li>\(\det A=\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\).</li>
+      <li>\(\det A^{T}=\begin{vmatrix}a&c\\b&d\end{vmatrix}=ad-cb\).</li>
+      <li>Como \(cb=bc\) (propiedad conmutativa del producto), \(\det A^{T}=ad-bc=\det A\).</li>
+    </ol>
+    <p><b>Tercer orden.</b> Se usa la fórmula de los seis productos (regla de Sarrus).</p>
+    <ol class="steps">
+      <li>\(\det A=aei+bfg+cdh-ceg-afh-bdi\).</li>
+      <li>La misma fórmula en \(A^{T}=\begin{pmatrix}a&d&g\\b&e&h\\c&f&i\end{pmatrix}\). Bajan: \(a\,e\,i\), \(d\,h\,c\) y \(g\,b\,f\). Suben: \(c\,e\,g\), \(f\,h\,a\) e \(i\,b\,d\).
+        \[\det A^{T}=aei+dhc+gbf-ceg-fha-ibd\]</li>
+      <li>Se ordenan los factores de cada producto (propiedad conmutativa del producto): \(dhc=cdh\), \(gbf=bfg\), \(fha=afh\), \(ibd=bdi\).</li>
+      <li>Se cambia el orden de los sumandos: \(\det A^{T}=aei+bfg+cdh-ceg-afh-bdi=\det A\).</li>
+    </ol>
+    <p>Para matrices de orden mayor el resultado también vale; aquí se enuncia sin demostrarlo.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Lo que se gana: filas y columnas valen lo mismo</h3>
+    <p>Las columnas de \(A\) son las filas de \(A^{T}\). Entonces, lo que se sabe de las filas se traslada a las columnas: si se intercambian dos columnas, el determinante cambia de signo; si una columna se multiplica por \(k\), queda multiplicado por \(k\); si a una columna se le suma un múltiplo de otra, no cambia; si dos columnas son proporcionales, vale \(0\).</p>
+    <p><b>Número ↔ figura.</b> En \(A=\begin{pmatrix}2&b\\1&2\end{pmatrix}\), las columnas forman un paralelogramo y las filas (que son las columnas de \(A^{T}\)) forman otro, de forma distinta. Mueve \(b\): las dos áreas cambian juntas y se anulan a la vez, con \(b=4\).</p>
+    <div class="stage" data-scene="trasp-vivo"></div>
+    <ul class="keys">
+      <li><b>Paralelogramo azul:</b> el de las columnas de \(A\), \((2,1)\) y \((b,2)\).</li>
+      <li><b>Paralelogramo naranja:</b> el de las columnas de \(A^{T}\), \((2,b)\) y \((1,2)\).</li>
+      <li><b>Bajo el dibujo:</b> los dos determinantes, \(4-b\). El área de cada paralelogramo es \(|4-b|\) (hoja «Determinante de segundo orden»).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: segundo orden, \(A=\begin{pmatrix}3&5\\2&4\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\det A=3\cdot 4-5\cdot 2=12-10=2\).</li>
+    <li>Traspuesta: la fila \((3,5)\) pasa a ser la columna 1 y la fila \((2,4)\), la columna 2. \(A^{T}=\begin{pmatrix}3&2\\5&4\end{pmatrix}\).</li>
+    <li>\(\det A^{T}=3\cdot 4-2\cdot 5=12-10=2\). Coinciden.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: tercer orden, \(A=\begin{pmatrix}1&2&3\\0&4&5\\1&0&6\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\det A=22\) (calculado en la hoja «Resolución de determinantes por regla de Sarrus»).</li>
+    <li>Traspuesta: \(A^{T}=\begin{pmatrix}1&0&1\\2&4&0\\3&5&6\end{pmatrix}\).</li>
+    <li>Regla de Sarrus en \(A^{T}\). Bajan: \(1\cdot 4\cdot 6=24\); \(0\cdot 0\cdot 3=0\); \(1\cdot 2\cdot 5=10\). Suma: \(34\).</li>
+    <li>Suben: \(3\cdot 4\cdot 1=12\); \(5\cdot 0\cdot 1=0\); \(6\cdot 2\cdot 0=0\). Suma: \(12\).</li>
+    <li>\(\det A^{T}=34-12=22\). Coinciden.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una propiedad de filas, usada en columnas, \(\begin{vmatrix}1&2&2\\3&1&6\\2&5&4\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La columna 3 es \(2\) veces la columna 1: \(2\,(1,3,2)=(2,6,4)\).</li>
+    <li>En la traspuesta, \(\begin{pmatrix}1&3&2\\2&1&5\\2&6&4\end{pmatrix}\), eso mismo se lee en las filas: la fila 3 es \(2\) veces la fila 1.</li>
+    <li>Filas proporcionales: \(\det A^{T}=0\) (hoja «Propiedades de los determinantes»).</li>
+    <li>\(\det A=\det A^{T}=0\).</li>
+    <li>Comprobación por Sarrus en \(A\). Bajan: \(1\cdot 1\cdot 4=4\); \(2\cdot 6\cdot 2=24\); \(2\cdot 3\cdot 5=30\); suma \(58\). Suben: \(2\cdot 1\cdot 2=4\); \(5\cdot 6\cdot 1=30\); \(4\cdot 3\cdot 2=24\); suma \(58\). \(58-58=0\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: una matriz de tercer orden con \(A^{T}=-A\) tiene determinante \(0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Por esta hoja: \(\det A=\det A^{T}\).</li>
+    <li>Por la condición \(A^{T}=-A\): \(\det A^{T}=\det(-A)\).</li>
+    <li>\(-A\) es \(A\) multiplicada por \(-1\). Con tres filas, \(\det(-A)=(-1)^{3}\det A=-\det A\) (hoja «Propiedades de los determinantes»).</li>
+    <li>Se juntan los tres pasos: \(\det A=-\det A\), es decir, \(2\det A=0\). Entonces \(\det A=0\).</li>
+    <li>Un caso: \(A=\begin{pmatrix}0&2&-1\\-2&0&3\\1&-3&0\end{pmatrix}\). Por Sarrus, bajan: \(0\cdot 0\cdot 0=0\); \(2\cdot 3\cdot 1=6\); \((-1)\cdot(-2)\cdot(-3)=-6\); suma \(0\). Suben: \(1\cdot 0\cdot(-1)=0\); \((-3)\cdot 3\cdot 0=0\); \(0\cdot(-2)\cdot 2=0\); suma \(0\). \(\det A=0-0=0\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: confundir trasponer con intercambiar dos filas; al intercambiar dos filas el determinante cambia de signo, al trasponer no cambia. Dos: leer \(\det A^{T}=\det A\) como si dijera \(A^{T}=A\); las matrices suelen ser distintas, lo que coincide es un número. Tres: mover la diagonal principal al trasponer; esas entradas quedan en su lugar.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Sea \(A=\begin{pmatrix}1&0&2\\3&1&0\\0&2&1\end{pmatrix}\). Escribe \(A^{T}\), calcula \(\det A\) y \(\det A^{T}\) por la regla de Sarrus y compáralos.</p>
+    <details><summary>Pista</summary><div><p>Las filas de \(A\), en orden, son las columnas de \(A^{T}\). Casi todos los productos pasan por un \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(A^{T}=\begin{pmatrix}1&3&0\\0&1&2\\2&0&1\end{pmatrix}\).</li>
+        <li>\(\det A\). Bajan: \(1\cdot 1\cdot 1=1\); \(0\cdot 0\cdot 0=0\); \(2\cdot 3\cdot 2=12\); suma \(13\). Suben: \(0\cdot 1\cdot 2=0\); \(2\cdot 0\cdot 1=0\); \(1\cdot 3\cdot 0=0\); suma \(0\). \(\det A=13\).</li>
+        <li>\(\det A^{T}\). Bajan: \(1\cdot 1\cdot 1=1\); \(3\cdot 2\cdot 2=12\); \(0\cdot 0\cdot 0=0\); suma \(13\). Suben: \(2\cdot 1\cdot 0=0\); \(0\cdot 2\cdot 1=0\); \(1\cdot 0\cdot 3=0\); suma \(0\). \(\det A^{T}=13\).</li>
+        <li>Coinciden: \(\det A^{T}=\det A=13\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Una matriz \(A\) de tres filas y tres columnas tiene \(\det A=7\). Calcula: (i) \(\det A^{T}\); (ii) \(\det\!\left(2A^{T}\right)\); (iii) el determinante de la matriz que resulta al intercambiar dos columnas de \(A\).</p>
+    <details><summary>Pista</summary><div><p>En (ii) el \(2\) sale una vez por cada fila. En (iii), intercambiar columnas de \(A\) es intercambiar filas de \(A^{T}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(i) \(\det A^{T}=\det A=7\).</li>
+        <li>(ii) \(2A^{T}\) tiene tres filas, cada una multiplicada por \(2\): \(\det\!\left(2A^{T}\right)=2^{3}\cdot 7=8\cdot 7=56\).</li>
+        <li>(iii) Las columnas se comportan como las filas: al intercambiar dos, el determinante cambia de signo. Vale \(-7\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una fábrica corta dos modelos de baldosa con forma de paralelogramo. En el modelo 1, los dos lados que salen de una esquina son, en centímetros, \((30,10)\) y \((20,25)\). En el modelo 2 son \((30,20)\) y \((10,25)\). ¿Cuál modelo ocupa más superficie? ¿Cuántas baldosas se necesitan para cubrir \(11\ \text{m}^{2}\), sin contar cortes ni juntas?</p>
+    <details><summary>Pista</summary><div><p>Pon los lados de cada modelo como columnas de una matriz. Compara las dos matrices antes de calcular.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Modelo 1: \(A=\begin{pmatrix}30&20\\10&25\end{pmatrix}\). Modelo 2: \(\begin{pmatrix}30&10\\20&25\end{pmatrix}\), que es \(A^{T}\).</li>
+        <li>\(\det A=30\cdot 25-20\cdot 10=750-200=550\). Como \(\det A^{T}=\det A\), el modelo 2 da lo mismo: \(30\cdot 25-10\cdot 20=550\) ✓.</li>
+        <li>Las dos baldosas miden \(|550|=550\ \text{cm}^{2}\): ocupan la misma superficie, aunque tienen forma distinta.</li>
+        <li>\(11\ \text{m}^{2}=11\cdot 10\,000\ \text{cm}^{2}=110\,000\ \text{cm}^{2}\).</li>
+        <li>\(110\,000:550=200\) baldosas, de cualquiera de los dos modelos.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H05 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L28 H05 · trasponer no cambia el determinante: los seis productos son los mismos */
+OA.scene('trasp-idea', (function(){
+  var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+  var PZ = LET.map(function(l, j){ return ['M' + j, l, l, '']; }).concat(LET.map(function(l, j){ return ['T' + j, l, l, '']; })).concat([
+    ['Q', '\\det A^{T}=\\ ?', 'det Aᵀ = ?', 'pt'], ['F', '\\det A^{T}=\\det A', 'det Aᵀ = det A', 'diff'],
+    ['TA', 'A', 'A', ''], ['TT', 'A^{T}', 'Aᵀ', ''],
+    ['R1', '\\text{filas de }A\\text{: }(a,b,c),\\ (d,e,f),\\ (g,h,i)', 'filas de A: (a, b, c), (d, e, f), (g, h, i)', ''],
+    ['R2', '\\text{columnas de }A^{T}\\text{: esas mismas filas}', 'columnas de Aᵀ: esas mismas filas', ''],
+    ['R3', '+\\,bfg\\ \\text{ en }A,\\qquad +\\,gbf\\ \\text{ en }A^{T}', '+ bfg en A, + gbf en Aᵀ', ''],
+    ['R4', '-\\,afh\\ \\text{ en }A,\\qquad -\\,fha\\ \\text{ en }A^{T}', '− afh en A, − fha en Aᵀ', ''],
+    ['R5', '\\det A^{T}=\\det A', 'det Aᵀ = det A', 'diff']]);
+  var TXT = [['Una matriz de tres filas y tres columnas.', '¿Cambia su determinante si se traspone?'],
+    ['Cada fila pasa a ser columna: es la traspuesta.', 'La diagonal principal no se mueve.'],
+    ['Un producto que suma: tres casillas azules.', 'En la traspuesta están las mismas tres, y suma.'],
+    ['Un producto que resta: tres casillas burdeo.', 'En la traspuesta están las mismas tres, y resta.'],
+    ['Pasa igual con los seis productos:', 'los dos determinantes valen lo mismo.']];
+  var MAS = [1, 5, 6], MEN = [0, 5, 7];
+  function xa(q){ return -0.4 + 0.8*q; } function xt(q){ return 3.0 + 0.8*q; } function cy(r){ return 2.75 - 0.8*r; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.2}, aspect:8.4/6.6,
+    aria:'Animación en cinco pasos. Uno: una matriz A de tres por tres con filas a, b, c; d, e, f; g, h, i. Dos: a su derecha se arma la traspuesta: cada fila de A pasa a ser una columna, así que sus filas son a, d, g; b, e, h; c, f, i; la diagonal a, e, i queda en su lugar. Tres: en A se marcan en azul las entradas b, f, g, cuyo producto suma; en la traspuesta están las mismas tres entradas, también en una diagonal que baja. Cuatro: en A se marcan en burdeo las entradas a, f, h, cuyo producto resta; en la traspuesta están las mismas tres, también en una diagonal que sube. Cinco: pasa lo mismo con los seis productos, y los dos determinantes son iguales. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> diagonal principal: no se mueve</span><span><i class="sw sec"></i> un producto que suma</span><span><i class="sw tan"></i> un producto que resta</span>',
+    anim:{run:26000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', j, r, q, s = X(1) - X(0), hw = 0.3, e = k > 2 ? 1 : (k === 2 ? u : 0);
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function barras(x0, x1, al){ c.globalAlpha = al; c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(x0), Y(cy(0) + 0.42)); c.lineTo(X(x0), Y(cy(2) - 0.42)); c.moveTo(X(x1), Y(cy(0) + 0.42)); c.lineTo(X(x1), Y(cy(2) - 0.42)); c.stroke(); c.globalAlpha = 1; }
+      function casillas(lista, col, al){ if (al <= 0.004) return; lista.forEach(function(j){ var r = Math.floor(j/3), q = j % 3; c.globalAlpha = al; c.fillStyle = col; c.fillRect(X(xa(q) - hw), Y(cy(r) + hw), 2*hw*s, 2*hw*s); c.fillRect(X(xt(r) - hw), Y(cy(q) + hw), 2*hw*s, 2*hw*s); c.globalAlpha = 1; }); }
+      function diag(x0, g){ if (g <= 0) return; c.globalAlpha = 0.7; c.strokeStyle = C.rise; c.lineWidth = 1.4; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(x0 - 0.3), Y(cy(0) + 0.3)); c.lineTo(X(x0 - 0.3 + 2.2*g), Y(cy(0) + 0.3 - 2.2*g)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+      barras(-0.85, 1.65, 1); if (e > 0) barras(2.55, 5.05, e);
+      /* casillas de un producto que suma (paso 3) y de uno que resta (paso 4); al final, las dos a la vez, más tenues */
+      if (k === 3) casillas(MAS, C.sec, 0.26*u);
+      if (k === 4) casillas(MEN, C.tan, 0.26*u);
+      if (k === 5){ casillas(MAS, C.sec, 0.16); casillas(MEN, C.tan, 0.16); }
+      diag(xa(0), e); diag(xt(0), k > 2 ? 1 : (k === 2 ? Math.max(0, 2*u - 1) : 0));
+      for (j = 0; j < 9; j++){ r = Math.floor(j/3); q = j % 3; L('M' + j, xa(q), cy(r)); }
+      /* la traspuesta se arma: cada entrada viaja desde su lugar en A hasta su lugar en la traspuesta */
+      if (k >= 2) for (j = 0; j < 9; j++){ r = Math.floor(j/3); q = j % 3; L('T' + j, xa(q) + (xt(r) - xa(q))*e, cy(r) + (cy(q) - cy(r))*e); }
+      if (k >= 2) dtFlecha(S, 1.85, 3.42, 1.85 + 0.55*Math.max(e, 0.05), 3.42, C.ink, 1.3);
+      L('TA', 0.4, 3.42); if (k > 2 || (k === 2 && u > 0.6)) L('TT', 3.8, 3.42);
+      if (k < 5 || u < 0.5) L('Q', -1.2, 3.97, 0); else L('F', -1.2, 3.97, 0);
+      txt(TXT[k - 1][0], -1.2, 0.25); txt(TXT[k - 1][1], -1.2, 0.25 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(3.97));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.3, [0, 30, 60, 90, 120]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['A=\\begin{pmatrix}a&b&c\\\\d&e&f\\\\g&h&i\\end{pmatrix}', 'A^{T}=\\begin{pmatrix}a&d&g\\\\b&e&h\\\\c&f&i\\end{pmatrix}', '\\det A=aei+bfg+cdh-ceg-afh-bdi', '\\det A^{T}=aei+dhc+gbf-ceg-fha-ibd', '\\det A^{T}=aei+bfg+cdh-ceg-afh-bdi=\\det A'][k - 1]]]; }
+  };
+})());
+/* número ↔ figura: el paralelogramo de las columnas de A y el de las columnas de su traspuesta */
+OA.scene('trasp-vivo', (function(){
+  var PZ = [['PA', '\\text{columnas de }A', 'columnas de A', 'c-sec'], ['PT', '\\text{columnas de }A^{T}', 'columnas de Aᵀ', 'diff']];
+  return {
+    world:{x0:-1.0, x1:7.6, y0:-2.2, y1:7.4}, aspect:9.6/8.6,
+    aria:'Dos paralelogramos que salen del origen. El azul lo forman las columnas de la matriz A, los vectores (2, 1) y (b, 2). El naranja lo forman las columnas de la traspuesta, los vectores (2, b) y (1, 2). Al mover b los dos cambian de forma de manera distinta, pero siempre tienen la misma área, el valor absoluto de 4 menos b. Con b igual a 2 los dos coinciden. Con b igual a 4 los dos se aplastan a la vez y el área es cero. Bajo el dibujo se calculan los dos determinantes.',
+    labels:PZ,
+    sliders:[{id:'b', tex:'b', min:0, max:5, step:0.1, value:1}],
+    legend:'<span><i class="sw sec"></i> columnas de \\(A\\): \\((2,1)\\) y \\((b,2)\\)</span><span><i class="sw rise"></i> columnas de \\(A^{T}\\): \\((2,b)\\) y \\((1,2)\\)</span>',
+    anim:{run:20000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.b = 5*dtSuave(p); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var b = v.b == null ? 1 : +v.b, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', D = 4 - b, i, m;
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      function par(P, Q, col){ if (Math.abs(D) > 1e-9){ S.poly([[0, 0], P, [P[0] + Q[0], P[1] + Q[1]], Q], {fill:col, alpha:0.26});
+          c.strokeStyle = col; c.lineWidth = 1.2; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(P[0]), Y(P[1])); c.lineTo(X(P[0] + Q[0]), Y(P[1] + Q[1])); c.lineTo(X(Q[0]), Y(Q[1])); c.stroke(); c.setLineDash([]); }
+        dtFlecha(S, 0, 0, P[0], P[1], col, 1.8); dtFlecha(S, 0, 0, Q[0], Q[1], col, 1.8); }
+      S.line(-0.8, 0, 7.4, 0, {color:C.ink, width:1}); S.line(0, -0.8, 0, 7.2, {color:C.ink, width:1});
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (i = 1; i <= 7; i++){ c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num('' + i, X(i), Y(0) + 11, 'center'); num('' + i, X(0) - 7, Y(i), 'right'); }
+      par([2, 1], [b, 2], C.sec); par([2, b], [1, 2], C.rise);
+      c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.4, 0, 6.2832); c.fill();
+      T.L('PA', 2 + b, 3, -100, 0, -11); T.L('PT', 3, b + 2, 0, 7, 0);
+      m = Math.abs(D) < 0.05 ? 'Determinante cero: los dos se aplastan a la vez' : 'Formas distintas, la misma área';
+      c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-1.7));
+      T.fin();
+    },
+    caption:function(v){ var b = v.b == null ? 1 : +v.b, n = function(z){ return oaDec(z, 2); }; return 'Con b = ' + n(b) + ' los dos determinantes valen ' + n(4 - b) + ' y cada paralelogramo mide ' + n(Math.abs(4 - b)) + ' unidades cuadradas. Con b = 4 los dos se aplastan a la vez'; },
+    readout:function(v){ var b = v.b == null ? 1 : +v.b, n = OA.num;
+      return [['', '\\det A=\\begin{vmatrix}2&b\\\\1&2\\end{vmatrix}=2\\cdot 2-b\\cdot 1=4-b'], ['', '\\det A^{T}=\\begin{vmatrix}2&1\\\\b&2\\end{vmatrix}=2\\cdot 2-1\\cdot b=4-b'], ['d', '4-' + n(b, 2) + '=' + n(4 - b, 2)], ['', '\\text{área de cada uno}=\\left|' + n(4 - b, 2) + '\\right|=' + n(Math.abs(4 - b), 2)]]; }
+  };
+})());

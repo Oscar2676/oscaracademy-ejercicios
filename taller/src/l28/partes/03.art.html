@@ -1,0 +1,173 @@
+<!--file:H03_resolucion_de_determinantes_por_regla_de_sarrus.html-->
+<!--title:Resolución de determinantes por regla de Sarrus-->
+<!--id:det-sarrus-->
+<!--tab:H03 Sarrus-->
+<article class="sheet" id="det-sarrus" data-hoja="L28 H03">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Resolución de determinantes por regla de Sarrus</b></li>
+    </ol>
+    <h1>Resolución de determinantes por regla de Sarrus</h1>
+    <p class="lede">La regla de Sarrus es una forma ordenada de calcular un determinante de <b>tercer orden</b>. Se repiten las dos primeras columnas a la derecha de la matriz; los tres productos de las diagonales que bajan se suman y los tres de las diagonales que suben se restan.
+    \[\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=aei+bfg+cdh-ceg-afh-bdi\]
+    Sirve solo para matrices de tres filas y tres columnas.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La regla, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="sarrus-idea"></div>
+  <ul class="keys">
+    <li><b>Letras verdes:</b> las columnas 1 y 2, repetidas a la derecha de la matriz.</li>
+    <li><b>Bandas azules:</b> las tres diagonales que bajan. Sus productos, \(aei\), \(bfg\) y \(cdh\), llevan signo \(+\).</li>
+    <li><b>Bandas burdeo:</b> las tres diagonales que suben. Sus productos, \(ceg\), \(afh\) y \(bdi\), llevan signo \(-\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La regla, paso a paso</h3>
+    <ol class="steps">
+      <li>Se escribe la matriz y, a su derecha, se repiten la columna 1 y la columna 2. Queda una tabla de tres filas y cinco columnas:
+        \[\begin{array}{ccc|cc}a&b&c&a&b\\d&e&f&d&e\\g&h&i&g&h\end{array}\]</li>
+      <li>Diagonales que bajan (de arriba a la izquierda a abajo a la derecha). Hay tres con tres entradas: \(a\,e\,i\), \(b\,f\,g\) y \(c\,d\,h\). Se multiplican las entradas de cada una y se suman los tres productos: \(aei+bfg+cdh\).</li>
+      <li>Diagonales que suben (de abajo a la izquierda a arriba a la derecha). Hay tres con tres entradas: \(g\,e\,c\), \(h\,f\,a\) e \(i\,d\,b\). Se multiplican las entradas de cada una y se suman los tres productos: \(ceg+afh+bdi\).</li>
+      <li>El determinante es la primera suma menos la segunda:
+        \[\det A=(aei+bfg+cdh)-(ceg+afh+bdi)\]</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale: del desarrollo por la primera fila</h3>
+    <p>La regla no es una definición nueva. Es el desarrollo por la primera fila (hoja «Determinante de tercer orden»), con los productos ordenados de otra manera.</p>
+    <ol class="steps">
+      <li>Desarrollo por la primera fila: \(\det A=a(ei-fh)-b(di-fg)+c(dh-eg)\).</li>
+      <li>Se distribuye \(a\): \(a(ei-fh)=aei-afh\).</li>
+      <li>Se distribuye \(-b\): \(-b(di-fg)=-bdi+bfg\).</li>
+      <li>Se distribuye \(c\): \(c(dh-eg)=cdh-ceg\).</li>
+      <li>Se suman los tres resultados: \(\det A=aei-afh-bdi+bfg+cdh-ceg\).</li>
+      <li>Se cambia el orden de los sumandos (propiedad conmutativa de la suma), primero los de signo \(+\):
+        \[\det A=aei+bfg+cdh-ceg-afh-bdi\]</li>
+    </ol>
+    <p>Los tres productos con \(+\) son los de las diagonales que bajan; los tres con \(-\), los de las diagonales que suben.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Otra forma de armarla y hasta dónde sirve</h3>
+    <p><b>Con filas en vez de columnas.</b> También se pueden repetir las filas 1 y 2 debajo de la matriz:</p>
+    \[\begin{array}{ccc}a&b&c\\d&e&f\\g&h&i\\\hline a&b&c\\d&e&f\end{array}\]
+    <p>Las diagonales que bajan dan \(aei\), \(dhc\) y \(gbf\); las que suben dan \(gec\), \(ahf\) y \(dbi\). Son los mismos seis productos, con los mismos signos.</p>
+    <p><b>Solo tercer orden.</b> Un determinante de cuarto orden se desarrolla por su primera fila con cuatro menores de tercer orden. Cada menor tiene \(6\) productos, así que el total es \(4\cdot 6=24\) productos. Un esquema de diagonales en una matriz de cuatro filas da solo \(8\): faltan \(16\). Por eso la regla de Sarrus no se usa en cuarto orden ni en órdenes mayores. El desarrollo de cuarto orden se nombra aquí sin desarrollarlo.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\begin{vmatrix}1&2&3\\0&4&5\\1&0&6\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se repiten las columnas 1 y 2: \(\begin{array}{ccc|cc}1&2&3&1&2\\0&4&5&0&4\\1&0&6&1&0\end{array}\)</li>
+    <li>Bajan: \(1\cdot 4\cdot 6=24\); \(2\cdot 5\cdot 1=10\); \(3\cdot 0\cdot 0=0\). Suma: \(24+10+0=34\).</li>
+    <li>Suben: \(1\cdot 4\cdot 3=12\); \(0\cdot 5\cdot 1=0\); \(6\cdot 0\cdot 2=0\). Suma: \(12+0+0=12\).</li>
+    <li>Determinante: \(34-12=22\). Es el mismo valor que da el desarrollo por la primera fila.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: con entradas negativas, \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se repiten las columnas 1 y 2: \(\begin{array}{ccc|cc}2&-1&0&2&-1\\3&1&-2&3&1\\-1&4&5&-1&4\end{array}\)</li>
+    <li>Bajan: \(2\cdot 1\cdot 5=10\); \((-1)\cdot(-2)\cdot(-1)=-2\); \(0\cdot 3\cdot 4=0\). Suma: \(10-2+0=8\).</li>
+    <li>Suben: \((-1)\cdot 1\cdot 0=0\); \(4\cdot(-2)\cdot 2=-16\); \(5\cdot 3\cdot(-1)=-15\). Suma: \(0-16-15=-31\).</li>
+    <li>Determinante: \(8-(-31)=8+31=39\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: con una fracción, \(\begin{vmatrix}\frac12&1&0\\2&4&1\\0&6&2\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se repiten las columnas 1 y 2: \(\begin{array}{ccc|cc}\frac12&1&0&\frac12&1\\2&4&1&2&4\\0&6&2&0&6\end{array}\)</li>
+    <li>Bajan: \(\tfrac12\cdot 4\cdot 2=4\); \(1\cdot 1\cdot 0=0\); \(0\cdot 2\cdot 6=0\). Suma: \(4\).</li>
+    <li>Suben: \(0\cdot 4\cdot 0=0\); \(6\cdot 1\cdot\tfrac12=3\); \(2\cdot 2\cdot 1=4\). Suma: \(0+3+4=7\).</li>
+    <li>Determinante: \(4-7=-3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con una incógnita, \(\begin{vmatrix}x&1&1\\1&x&1\\1&1&2\end{vmatrix}=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se repiten las columnas 1 y 2: \(\begin{array}{ccc|cc}x&1&1&x&1\\1&x&1&1&x\\1&1&2&1&1\end{array}\)</li>
+    <li>Bajan: \(x\cdot x\cdot 2=2x^{2}\); \(1\cdot 1\cdot 1=1\); \(1\cdot 1\cdot 1=1\). Suma: \(2x^{2}+2\).</li>
+    <li>Suben: \(1\cdot x\cdot 1=x\); \(1\cdot 1\cdot x=x\); \(2\cdot 1\cdot 1=2\). Suma: \(2x+2\).</li>
+    <li>Determinante: \((2x^{2}+2)-(2x+2)=2x^{2}-2x\).</li>
+    <li>\(2x^{2}-2x=0\ \Longrightarrow\ 2x(x-1)=0\ \Longrightarrow\ x=0\) o \(x=1\).</li>
+    <li>Comprobación: con \(x=0\), \(2\cdot 0-2\cdot 0=0\) ✓; con \(x=1\), \(2\cdot 1-2\cdot 1=0\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: usar la regla en una matriz de cuatro filas; ahí no vale. Dos: sumar los seis productos; los tres de las diagonales que suben se restan. Tres: restar una suma negativa sin cambiar el signo; \(8-(-31)\) es \(8+31\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula por la regla de Sarrus \(\begin{vmatrix}2&0&1\\1&3&-1\\0&4&2\end{vmatrix}\).</p>
+    <details><summary>Pista</summary><div><p>Todo producto que pase por un \(0\) vale \(0\). Quedan pocos por calcular.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se repiten las columnas 1 y 2: \(\begin{array}{ccc|cc}2&0&1&2&0\\1&3&-1&1&3\\0&4&2&0&4\end{array}\)</li>
+        <li>Bajan: \(2\cdot 3\cdot 2=12\); \(0\cdot(-1)\cdot 0=0\); \(1\cdot 1\cdot 4=4\). Suma: \(16\).</li>
+        <li>Suben: \(0\cdot 3\cdot 1=0\); \(4\cdot(-1)\cdot 2=-8\); \(2\cdot 1\cdot 0=0\). Suma: \(-8\).</li>
+        <li>Determinante: \(16-(-8)=16+8=24\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>¿Para qué valores de \(k\) se cumple \(\begin{vmatrix}k&2&0\\2&k&0\\1&1&3\end{vmatrix}=0\)?</p>
+    <details><summary>Pista</summary><div><p>Calcula el determinante con \(k\) como si fuera un número. Queda una ecuación de segundo grado sin término en \(k\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se repiten las columnas 1 y 2: \(\begin{array}{ccc|cc}k&2&0&k&2\\2&k&0&2&k\\1&1&3&1&1\end{array}\)</li>
+        <li>Bajan: \(k\cdot k\cdot 3=3k^{2}\); \(2\cdot 0\cdot 1=0\); \(0\cdot 2\cdot 1=0\). Suma: \(3k^{2}\).</li>
+        <li>Suben: \(1\cdot k\cdot 0=0\); \(1\cdot 0\cdot k=0\); \(3\cdot 2\cdot 2=12\). Suma: \(12\).</li>
+        <li>Determinante: \(3k^{2}-12\).</li>
+        <li>\(3k^{2}-12=0\ \Longrightarrow\ k^{2}=4\ \Longrightarrow\ k=2\) o \(k=-2\).</li>
+        <li>Comprobación: \(3\cdot 2^{2}-12=0\) ✓; \(3\cdot(-2)^{2}-12=0\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un bloque de espuma para embalaje tiene forma de paralelepípedo inclinado. Desde una esquina, sus tres aristas son, en centímetros, \(\vec u=(30,0,10)\), \(\vec v=(0,20,5)\) y \(\vec w=(10,10,40)\). ¿Cuántos litros de espuma tiene el bloque? (\(1\) litro \(=1000\ \text{cm}^{3}\).) Se usa, sin demostrarlo, que el volumen es el valor absoluto del determinante cuyas columnas son las tres aristas (hoja «Determinante de tercer orden»).</p>
+    <details><summary>Pista</summary><div><p>Pon \(\vec u\), \(\vec v\) y \(\vec w\) como columnas y aplica la regla de Sarrus.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Las aristas, como columnas, y las columnas 1 y 2 repetidas: \(\begin{array}{ccc|cc}30&0&10&30&0\\0&20&10&0&20\\10&5&40&10&5\end{array}\)</li>
+        <li>Bajan: \(30\cdot 20\cdot 40=24\,000\); \(0\cdot 10\cdot 10=0\); \(10\cdot 0\cdot 5=0\). Suma: \(24\,000\).</li>
+        <li>Suben: \(10\cdot 20\cdot 10=2000\); \(5\cdot 10\cdot 30=1500\); \(40\cdot 0\cdot 0=0\). Suma: \(3500\).</li>
+        <li>Determinante: \(24\,000-3500=20\,500\). Volumen \(=|20\,500|=20\,500\ \text{cm}^{3}\).</li>
+        <li>\(20\,500:1000=20{,}5\) litros.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H03 · v001 · Pendiente de APR</span>
+</footer>
+</article>
