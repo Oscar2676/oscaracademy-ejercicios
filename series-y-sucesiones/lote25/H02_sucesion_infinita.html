@@ -290,7 +290,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H02 · v001 · APR de Óscar, 22-nov-2026</span>
+  <span class="status">CI-L25-H02 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 </div>
@@ -524,6 +524,13 @@ function ssPlot(o){
       num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
       if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
       for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
       x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
@@ -534,11 +541,11 @@ function ssPlot(o){
     readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
   };
 }
-OA.scene('ss-infinita', ssPlot({ N:12, ymin:0, ymax:1, ystep:0.25, ydec:2, textH:0.72, aspect:1.15, endless:true, L:0, Llab:'',
+OA.scene('ss-infinita', ssPlot({ guia:2, glab:function(n){ return n === 1 ? '1' : '1/' + n; }, N:12, ymin:0, ymax:1, ystep:0.25, ydec:2, textH:0.72, aspect:1.15, endless:true, L:0, Llab:'',
   a:function(n){ return 1/n; },
   aria:'Una gráfica de puntos sueltos de la sucesión uno sobre n. En horizontal va la posición n; en vertical, el término. Los puntos bajan: 1, un medio, un tercio, un cuarto, y siguen acercándose al eje horizontal sin tocarlo. Después del último punto dibujado hay puntos suspensivos: la sucesión no termina, hay un término para cada número natural.',
   labels:[['F', 'a_{n}=\\dfrac{1}{n},\\qquad n=1,\\,2,\\,3,\\,\\dots', 'aₙ = 1/n, para n = 1, 2, 3, …', 'diff']],
-  legend:'<span><i class="sw rise"></i> el término que se está agregando</span><span><i class="sw sec"></i> los términos anteriores</span>',
+  legend:'<span><i class="sw rise"></i> el término que se está agregando</span><span><i class="sw sec"></i> los términos anteriores</span><span>líneas punteadas: llevan cada término a su valor en el eje \\(a_{n}\\)</span>',
   lines:function(n, fin){ return [['posición n = ' + n + ':  a' + ssSub(n) + ' = 1/' + n + ' ≈ ' + oaDec(1/n, 3), 'rise'], ['siempre hay un término siguiente:  a' + ssSub(n + 1) + ' = 1/' + (n + 1), 'sec']].concat(fin ? [['la lista no termina: 1, 1/2, 1/3, 1/4, …', 'ink'], ['hay primer término, pero no hay último', 'tan']] : []); },
   caption:function(n, fin){ return fin ? 'Aquí se dibujaron 12 términos, pero la sucesión sigue: para cada natural n hay un término 1/n. Los puntos suspensivos son parte de la notación' : 'El término de la posición ' + n + ' es 1/' + n + '. Y después de él viene el de la posición ' + (n + 1) + ': en una sucesión infinita siempre hay un siguiente'; },
   readout:function(n){ return [['', '\\{a_{n}\\}_{n=1}^{\\infty}=1,\\ \\dfrac{1}{2},\\ \\dfrac{1}{3},\\ \\dfrac{1}{4},\\ \\dots'], ['d', 'a_{' + n + '}=\\dfrac{1}{' + n + '}']]; }
