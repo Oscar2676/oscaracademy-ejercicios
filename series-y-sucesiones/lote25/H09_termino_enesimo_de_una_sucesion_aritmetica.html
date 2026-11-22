@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Término enésimo de una sucesión aritmética | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-enesimo" data-hoja="L25 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones aritméticas</li>
+      <li><b>Término enésimo de una sucesión aritmética</b></li>
+    </ol>
+    <h1>Término enésimo de una sucesión aritmética</h1>
+    <p class="lede">Para llegar al término de la posición \(n\) se parte del primero y se suma la diferencia \(d\) una vez por cada salto: son \(n-1\) saltos. \[a_{n}=a_{1}+(n-1)\,d\qquad\text{para todo entero } n\ge 1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(4,\ 7,\ 10,\ 13,\ \ldots\) sobre una recta numérica, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="ene-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos, ubicados en la recta numérica según su valor.</li>
+    <li><b>Arcos naranjas:</b> los saltos. Cada salto suma la diferencia, \(3\).</li>
+    <li><b>Barra naranja, bajo la recta:</b> todo lo avanzado desde el primer término: la cantidad de saltos por \(3\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué significa cada letra y cómo se usa</h3>
+    <ol class="steps">
+      <li>\(a_{1}\) es el primer término; \(d\), la diferencia constante; \(n\), la posición (un entero, \(n\ge 1\)); \(a_{n}\), el término de esa posición.</li>
+      <li><b>El factor es \(n-1\), no \(n\):</b> entre la posición \(1\) y la posición \(n\) hay \(n-1\) saltos. Con \(n=1\) la fórmula da \(a_{1}+0\cdot d=a_{1}\).</li>
+      <li><b>Cuatro cantidades, una igualdad:</b> si se conocen tres de \(a_{n},\ a_{1},\ n,\ d\), la cuarta se despeja.</li>
+      <li><b>Como expresión de \(n\):</b> al distribuir, \(a_{n}=a_{1}+dn-d=dn+(a_{1}-d)\). Es \(d\) por la posición, más un número fijo.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale: se cuentan los saltos</h3>
+    <p>En la hoja «Sucesiones aritméticas» la fórmula se demostró por inducción. Aquí va otra demostración, sumando los saltos. Sea \(n\ge 2\).</p>
+    <ol class="steps">
+      <li>Por la definición de sucesión aritmética, cada salto vale \(d\): \(a_{k+1}-a_{k}=d\) para \(k=1,\ 2,\ \ldots,\ n-1\).</li>
+      <li>Se suman esas \(n-1\) igualdades: \[\sum_{k=1}^{n-1}\left(a_{k+1}-a_{k}\right)=\sum_{k=1}^{n-1}d.\]</li>
+      <li>Lado izquierdo, escrito término a término: \((a_{2}-a_{1})+(a_{3}-a_{2})+\cdots+(a_{n}-a_{n-1})\). Cada término intermedio aparece una vez sumando y una vez restando, y se cancela. Queda \(a_{n}-a_{1}\).</li>
+      <li>Lado derecho: es \(d\) sumado \(n-1\) veces, o sea \((n-1)\,d\).</li>
+      <li>Entonces \(a_{n}-a_{1}=(n-1)\,d\). Se suma \(a_{1}\) en los dos lados: \[a_{n}=a_{1}+(n-1)\,d.\]</li>
+      <li>Para \(n=1\) la igualdad dice \(a_{1}=a_{1}\): también vale.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Partiendo de otro término: \(a_{n}=a_{k}+(n-k)\,d\)</h3>
+    <ol class="steps">
+      <li>Por el término general: \(a_{n}=a_{1}+(n-1)\,d\) y \(a_{k}=a_{1}+(k-1)\,d\).</li>
+      <li>Se restan las dos igualdades: \(a_{n}-a_{k}=(n-1)\,d-(k-1)\,d\).</li>
+      <li>Se saca factor común \(d\): \(a_{n}-a_{k}=\left[(n-1)-(k-1)\right]d=(n-k)\,d\).</li>
+      <li>Se suma \(a_{k}\) en los dos lados: \[a_{n}=a_{k}+(n-k)\,d.\]</li>
+    </ol>
+    <p>Vale para cualquier par de posiciones \(n\) y \(k\). Si \(n&lt;k\), el factor \(n-k\) es negativo: se retrocede. Con \(k=1\) queda la fórmula del término enésimo.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: calcular un término lejano. \(a_{1}=4,\ d=3\); ¿cuánto vale \(a_{50}\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se reemplaza en la fórmula con \(n=50\): \(a_{50}=4+(50-1)\cdot 3\).</li>
+    <li>Se resta en el paréntesis: \(a_{50}=4+49\cdot 3\).</li>
+    <li>Se multiplica: \(a_{50}=4+147\).</li>
+    <li>Se suma: \(a_{50}=151\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: encontrar la posición. En \(7,\ 11,\ 15,\ \ldots\), ¿qué lugar ocupa el \(203\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diferencia: \(11-7=4\) y \(15-11=4\), así que \(d=4\); además \(a_{1}=7\).</li>
+    <li>Se plantea \(a_{n}=203\): \(7+(n-1)\cdot 4=203\).</li>
+    <li>Se resta \(7\) en los dos lados: \((n-1)\cdot 4=196\).</li>
+    <li>Se divide por \(4\): \(n-1=49\).</li>
+    <li>Se suma \(1\): \(n=50\). El \(203\) es el término de la posición \(50\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: encontrar el primer término. \(d=-2\) y \(a_{10}=5\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fórmula con \(n=10\): \(a_{10}=a_{1}+9d\).</li>
+    <li>Se reemplaza: \(5=a_{1}+9\cdot(-2)=a_{1}-18\).</li>
+    <li>Se suma \(18\) en los dos lados: \(a_{1}=23\).</li>
+    <li>Comprobación: \(23+9\cdot(-2)=23-18=5\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la fórmula a partir de dos términos. \(a_{4}=11\) y \(a_{10}=29\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diferencia (hoja «Diferencia constante»): \(d=\dfrac{a_{10}-a_{4}}{10-4}=\dfrac{29-11}{6}=\dfrac{18}{6}=3\).</li>
+    <li>Se parte del término conocido \(a_{4}\): \(a_{n}=a_{4}+(n-4)\,d=11+(n-4)\cdot 3\).</li>
+    <li>Se distribuye: \(a_{n}=11+3n-12\).</li>
+    <li>Se reduce: \(a_{n}=3n-1\).</li>
+    <li>Comprobación: \(a_{4}=3\cdot 4-1=11\) ✓ y \(a_{10}=3\cdot 10-1=29\) ✓. El primer término es \(a_{1}=3\cdot 1-1=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Multiplicar por \(n\) en vez de \(n-1\): en el ejemplo 1, \(4+50\cdot 3=154\) es \(a_{51}\), no \(a_{50}\). Olvidar que \(n\) tiene que ser un entero positivo: si al despejar \(n\) no sale un entero, el número buscado no es término de la sucesión. Perder el signo cuando \(d\) es negativa: \(9\cdot(-2)=-18\). Y sumar antes de multiplicar: en \(4+49\cdot 3\) primero va el producto.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula: (a) el término \(a_{30}\) de \(6,\ 10,\ 14,\ \ldots\); (b) el término \(a_{21}\) de \(50,\ 45,\ 40,\ \ldots\)</p>
+    <details><summary>Pista</summary><div><p>Primero la diferencia; después, \(a_{n}=a_{1}+(n-1)\,d\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(d=10-6=4\). \(a_{30}=6+29\cdot 4=6+116=122\).</li>
+        <li>(b) \(d=45-50=-5\). \(a_{21}=50+20\cdot(-5)\).</li>
+        <li>\(50-100=-50\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>En la sucesión aritmética \(8,\ 15,\ 22,\ \ldots\): (a) ¿es \(500\) uno de sus términos?; (b) ¿cuál es el primer término mayor que \(500\)?</p>
+    <details><summary>Pista</summary><div><p>Plantea \(8+(n-1)\cdot 7=500\) y mira si \(n\) resulta entero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(d=15-8=7\). Se plantea \(8+(n-1)\cdot 7=500\); restando \(8\): \((n-1)\cdot 7=492\).</li>
+        <li>\(7\cdot 70=490\) y \(7\cdot 71=497\): \(492\) no es múltiplo de \(7\), así que \(n-1\) no es entero. (a) \(500\) no es término.</li>
+        <li>(b) Con \(n-1=70\): \(a_{71}=8+490=498\), menor que \(500\). Con \(n-1=71\): \(a_{72}=8+497=505\).</li>
+        <li>El primer término mayor que \(500\) es \(a_{72}=505\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Camila empieza un plan de trote: el primer día corre \(800\) metros y cada día corre \(200\) metros más que el día anterior. ¿Cuánto corre el día \(20\)? ¿Qué día corre \(5\,000\) metros?</p>
+    <details><summary>Pista</summary><div><p>Las distancias forman una sucesión aritmética con \(a_{1}=800\) y \(d=200\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Día 20: \(a_{20}=800+19\cdot 200=800+3\,800=4\,600\) metros.</li>
+        <li>Se plantea \(800+(n-1)\cdot 200=5\,000\); restando \(800\): \((n-1)\cdot 200=4\,200\).</li>
+        <li>Se divide por \(200\): \(n-1=21\), de donde \(n=22\).</li>
+        <li>Corre \(5\,000\) metros el día \(22\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H09 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L25 H09 · término enésimo: desde a₁ se dan n − 1 saltos de d; lo avanzado es (n − 1)·d */
+OA.scene('ene-idea', (function(){
+  var N = 5, A = [4, 7, 10, 13], YL = 2.45, YBAR = 1.5;
+  var PZ = [['T1', 'a_{1}', 'a₁', 'c-sec'], ['T2', 'a_{2}', 'a₂', 'c-sec'], ['T3', 'a_{3}', 'a₃', 'c-sec'], ['T4', 'a_{4}', 'a₄', 'c-sec'],
+    ['D1', '+3', '+3', 'diff'], ['D2', '+3', '+3', 'diff'], ['D3', '+3', '+3', 'diff'],
+    ['B2', '1\\cdot 3', '1 · 3', 'diff'], ['B3', '2\\cdot 3', '2 · 3', 'diff'], ['B4', '3\\cdot 3', '3 · 3', 'diff'], ['B5', '(4-1)\\cdot 3', '(4 − 1) · 3', 'diff'],
+    ['Q', '4,\\ 7,\\ 10,\\ 13,\\ \\ldots\\qquad a_{n}=\\ ?', '4, 7, 10, 13, …   aₙ = ?', 'pt'], ['F', 'a_{n}=a_{1}+(n-1)\\,d', 'aₙ = a₁ + (n − 1) d', 'diff'],
+    ['R1', 'a_{1}=4', 'a₁ = 4', ''],
+    ['R2', 'a_{2}=4+1\\cdot 3=7', 'a₂ = 4 + 1 · 3 = 7', ''],
+    ['R3', 'a_{3}=4+2\\cdot 3=10', 'a₃ = 4 + 2 · 3 = 10', ''],
+    ['R4', 'a_{4}=4+3\\cdot 3=13', 'a₄ = 4 + 3 · 3 = 13', ''],
+    ['R5', 'a_{n}=4+(n-1)\\cdot 3', 'aₙ = 4 + (n − 1) · 3', 'diff']];
+  var TXT = [['El primer término vale 4.', 'Todavía no se da ningún salto.'],
+    ['Un salto de 3 lleva al segundo término.', 'Lo avanzado desde el primero: una vez 3.'],
+    ['Dos saltos llevan al tercer término.', 'Lo avanzado: dos veces 3.'],
+    ['Tres saltos llevan al cuarto término.', 'Lo avanzado: tres veces 3.'],
+    ['Los saltos son uno menos que la posición.', 'Al término n se llega con n − 1 saltos.']];
+  function gx(a){ return -1.0 + 0.4*a; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:4.8}, aspect:9.4/6.6,
+    aria:'Animación en cinco pasos con la sucesión 4, 7, 10, 13 sobre una recta numérica. Uno: aparece el primer término, en el 4. Dos: un arco naranja rotulado más 3 salta del 4 al 7, el segundo término; bajo la recta, una barra naranja marca lo avanzado desde el primer término: una vez 3. Tres: otro arco lleva al 10; la barra crece a dos veces 3. Cuatro: otro arco lleva al 13; la barra mide tres veces 3. Cinco: los arcos quedan numerados, salto 1, salto 2 y salto 3: para el cuarto término hubo 4 menos 1 saltos; en general, a sub n es igual a a sub 1 más n menos 1 por d. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> los términos</span><span><i class="sw rise"></i> los saltos (cada uno suma la diferencia) y lo avanzado desde el primer término</span>',
+    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, j, w, m = Math.min(k, 4), xa, xb, xm, r, ang, fin, sal;
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(t, px, py, col, b){ c.font = (b ? '700 11.5px ' : '500 10.5px ') + F; c.fillStyle = col || C.muted || '#6b6b6b'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* recta numérica */
+      S.line(gx(-0.4), YL, gx(15.2), YL, {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 0; i <= 15; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(YL) - 2.5); c.lineTo(X(gx(i)), Y(YL) + 2.5); c.stroke(); }
+      num('0', X(gx(0)), Y(YL) + 11);
+      /* saltos: el arco i va del término i al término i + 1 */
+      for (i = 1; i <= 3; i++){ if (m < i + 1) break; w = (i + 1 === k) ? u : 1;
+        xa = X(gx(A[i - 1])); xb = X(gx(A[i])); xm = (xa + xb)/2; r = (xb - xa)/2; fin = Math.PI + Math.PI*Math.min(1, w/0.8);
+        c.strokeStyle = C.rise; c.lineWidth = 1.6; c.beginPath(); c.ellipse(xm, Y(YL), r, r*0.72, 0, Math.PI, fin); c.stroke();
+        if (w >= 0.8){ c.fillStyle = C.rise; c.beginPath(); c.moveTo(xb, Y(YL) - 1); c.lineTo(xb - 1.5, Y(YL) - 10); c.lineTo(xb + 6, Y(YL) - 7); c.closePath(); c.fill(); }
+        if (w > 0.4) L('D' + i, (gx(A[i - 1]) + gx(A[i]))/2, YL, -50, 0, -r*0.72 - 11);
+        if (k === 5){ c.globalAlpha = u; num('salto ' + i, xm, Y(YL) - r*0.72 + 13, C.rise, 1); c.globalAlpha = 1; } }
+      /* términos */
+      for (i = 1; i <= m; i++){ w = (i === k) ? (i === 1 ? u : Math.max(0, (u - 0.8)/0.2)) : 1; if (w <= 0) continue;
+        c.beginPath(); c.arc(X(gx(A[i - 1])), Y(YL), 3.8*w, 0, 6.2832); c.fillStyle = C.sec; c.fill();
+        if (w > 0.5){ num('' + A[i - 1], X(gx(A[i - 1])), Y(YL) + 11, C.sec, 1); L('T' + i, gx(A[i - 1]), YL, -50, 0, 27); } }
+      /* barra: lo avanzado desde el primer término */
+      if (k >= 2){ j = Math.min(k, 4); sal = k === 5 ? 3 : (j - 2) + u; xa = gx(4); xb = gx(4 + 3*sal);
+        S.poly([[xa, YBAR - 0.07], [xb, YBAR - 0.07], [xb, YBAR + 0.07], [xa, YBAR + 0.07]], {fill:C.rise, alpha:0.55});
+        c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(xa), Y(YL) + 38); c.lineTo(X(xa), Y(YBAR)); c.moveTo(X(xb), Y(YL) + (u >= 1 || k === 5 ? 38 : 4)); c.lineTo(X(xb), Y(YBAR)); c.stroke(); c.setLineDash([]);
+        for (i = 1; i < Math.floor(sal + 1e-9); i++){ c.strokeStyle = '#fff'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(gx(4 + 3*i)), Y(YBAR + 0.07)); c.lineTo(X(gx(4 + 3*i)), Y(YBAR - 0.07)); c.stroke(); }
+        if (k === 5) L(u < 0.5 ? 'B4' : 'B5', (xa + xb)/2, YBAR, -50, 0, 14); else if (u > 0.6) L('B' + k, (xa + xb)/2, YBAR, -50, 0, 14); else if (k > 2) L('B' + (k - 1), (xa + gx(4 + 3*(k - 2)))/2, YBAR, -50, 0, 14); }
+      if (k < N || u < 0.5) L('Q', -1.2, 4.45, 0); else L('F', -1.2, 4.45, 0);
+      txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.0));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.0, [6, 34, 62, 90, 118]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['a_{1}=4', 'a_{2}=a_{1}+1\\cdot d=4+1\\cdot 3=7', 'a_{3}=a_{1}+2\\cdot d=4+2\\cdot 3=10', 'a_{4}=a_{1}+3\\cdot d=4+3\\cdot 3=13', 'a_{n}=a_{1}+(n-1)\\,d=4+(n-1)\\cdot 3'][k - 1]]]; }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

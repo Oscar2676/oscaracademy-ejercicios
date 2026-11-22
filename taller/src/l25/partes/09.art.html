@@ -1,0 +1,166 @@
+<!--file:H09_termino_enesimo_de_una_sucesion_aritmetica.html-->
+<!--title:Término enésimo de una sucesión aritmética-->
+<!--id:ss-enesimo-->
+<!--tab:H09 Término enésimo-->
+<article class="sheet" id="ss-enesimo" data-hoja="L25 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones aritméticas</li>
+      <li><b>Término enésimo de una sucesión aritmética</b></li>
+    </ol>
+    <h1>Término enésimo de una sucesión aritmética</h1>
+    <p class="lede">Para llegar al término de la posición \(n\) se parte del primero y se suma la diferencia \(d\) una vez por cada salto: son \(n-1\) saltos. \[a_{n}=a_{1}+(n-1)\,d\qquad\text{para todo entero } n\ge 1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(4,\ 7,\ 10,\ 13,\ \ldots\) sobre una recta numérica, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="ene-idea"></div>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos, ubicados en la recta numérica según su valor.</li>
+    <li><b>Arcos naranjas:</b> los saltos. Cada salto suma la diferencia, \(3\).</li>
+    <li><b>Barra naranja, bajo la recta:</b> todo lo avanzado desde el primer término: la cantidad de saltos por \(3\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué significa cada letra y cómo se usa</h3>
+    <ol class="steps">
+      <li>\(a_{1}\) es el primer término; \(d\), la diferencia constante; \(n\), la posición (un entero, \(n\ge 1\)); \(a_{n}\), el término de esa posición.</li>
+      <li><b>El factor es \(n-1\), no \(n\):</b> entre la posición \(1\) y la posición \(n\) hay \(n-1\) saltos. Con \(n=1\) la fórmula da \(a_{1}+0\cdot d=a_{1}\).</li>
+      <li><b>Cuatro cantidades, una igualdad:</b> si se conocen tres de \(a_{n},\ a_{1},\ n,\ d\), la cuarta se despeja.</li>
+      <li><b>Como expresión de \(n\):</b> al distribuir, \(a_{n}=a_{1}+dn-d=dn+(a_{1}-d)\). Es \(d\) por la posición, más un número fijo.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale: se cuentan los saltos</h3>
+    <p>En la hoja «Sucesiones aritméticas» la fórmula se demostró por inducción. Aquí va otra demostración, sumando los saltos. Sea \(n\ge 2\).</p>
+    <ol class="steps">
+      <li>Por la definición de sucesión aritmética, cada salto vale \(d\): \(a_{k+1}-a_{k}=d\) para \(k=1,\ 2,\ \ldots,\ n-1\).</li>
+      <li>Se suman esas \(n-1\) igualdades: \[\sum_{k=1}^{n-1}\left(a_{k+1}-a_{k}\right)=\sum_{k=1}^{n-1}d.\]</li>
+      <li>Lado izquierdo, escrito término a término: \((a_{2}-a_{1})+(a_{3}-a_{2})+\cdots+(a_{n}-a_{n-1})\). Cada término intermedio aparece una vez sumando y una vez restando, y se cancela. Queda \(a_{n}-a_{1}\).</li>
+      <li>Lado derecho: es \(d\) sumado \(n-1\) veces, o sea \((n-1)\,d\).</li>
+      <li>Entonces \(a_{n}-a_{1}=(n-1)\,d\). Se suma \(a_{1}\) en los dos lados: \[a_{n}=a_{1}+(n-1)\,d.\]</li>
+      <li>Para \(n=1\) la igualdad dice \(a_{1}=a_{1}\): también vale.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Partiendo de otro término: \(a_{n}=a_{k}+(n-k)\,d\)</h3>
+    <ol class="steps">
+      <li>Por el término general: \(a_{n}=a_{1}+(n-1)\,d\) y \(a_{k}=a_{1}+(k-1)\,d\).</li>
+      <li>Se restan las dos igualdades: \(a_{n}-a_{k}=(n-1)\,d-(k-1)\,d\).</li>
+      <li>Se saca factor común \(d\): \(a_{n}-a_{k}=\left[(n-1)-(k-1)\right]d=(n-k)\,d\).</li>
+      <li>Se suma \(a_{k}\) en los dos lados: \[a_{n}=a_{k}+(n-k)\,d.\]</li>
+    </ol>
+    <p>Vale para cualquier par de posiciones \(n\) y \(k\). Si \(n&lt;k\), el factor \(n-k\) es negativo: se retrocede. Con \(k=1\) queda la fórmula del término enésimo.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: calcular un término lejano. \(a_{1}=4,\ d=3\); ¿cuánto vale \(a_{50}\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se reemplaza en la fórmula con \(n=50\): \(a_{50}=4+(50-1)\cdot 3\).</li>
+    <li>Se resta en el paréntesis: \(a_{50}=4+49\cdot 3\).</li>
+    <li>Se multiplica: \(a_{50}=4+147\).</li>
+    <li>Se suma: \(a_{50}=151\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: encontrar la posición. En \(7,\ 11,\ 15,\ \ldots\), ¿qué lugar ocupa el \(203\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diferencia: \(11-7=4\) y \(15-11=4\), así que \(d=4\); además \(a_{1}=7\).</li>
+    <li>Se plantea \(a_{n}=203\): \(7+(n-1)\cdot 4=203\).</li>
+    <li>Se resta \(7\) en los dos lados: \((n-1)\cdot 4=196\).</li>
+    <li>Se divide por \(4\): \(n-1=49\).</li>
+    <li>Se suma \(1\): \(n=50\). El \(203\) es el término de la posición \(50\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: encontrar el primer término. \(d=-2\) y \(a_{10}=5\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fórmula con \(n=10\): \(a_{10}=a_{1}+9d\).</li>
+    <li>Se reemplaza: \(5=a_{1}+9\cdot(-2)=a_{1}-18\).</li>
+    <li>Se suma \(18\) en los dos lados: \(a_{1}=23\).</li>
+    <li>Comprobación: \(23+9\cdot(-2)=23-18=5\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la fórmula a partir de dos términos. \(a_{4}=11\) y \(a_{10}=29\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diferencia (hoja «Diferencia constante»): \(d=\dfrac{a_{10}-a_{4}}{10-4}=\dfrac{29-11}{6}=\dfrac{18}{6}=3\).</li>
+    <li>Se parte del término conocido \(a_{4}\): \(a_{n}=a_{4}+(n-4)\,d=11+(n-4)\cdot 3\).</li>
+    <li>Se distribuye: \(a_{n}=11+3n-12\).</li>
+    <li>Se reduce: \(a_{n}=3n-1\).</li>
+    <li>Comprobación: \(a_{4}=3\cdot 4-1=11\) ✓ y \(a_{10}=3\cdot 10-1=29\) ✓. El primer término es \(a_{1}=3\cdot 1-1=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Multiplicar por \(n\) en vez de \(n-1\): en el ejemplo 1, \(4+50\cdot 3=154\) es \(a_{51}\), no \(a_{50}\). Olvidar que \(n\) tiene que ser un entero positivo: si al despejar \(n\) no sale un entero, el número buscado no es término de la sucesión. Perder el signo cuando \(d\) es negativa: \(9\cdot(-2)=-18\). Y sumar antes de multiplicar: en \(4+49\cdot 3\) primero va el producto.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula: (a) el término \(a_{30}\) de \(6,\ 10,\ 14,\ \ldots\); (b) el término \(a_{21}\) de \(50,\ 45,\ 40,\ \ldots\)</p>
+    <details><summary>Pista</summary><div><p>Primero la diferencia; después, \(a_{n}=a_{1}+(n-1)\,d\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(d=10-6=4\). \(a_{30}=6+29\cdot 4=6+116=122\).</li>
+        <li>(b) \(d=45-50=-5\). \(a_{21}=50+20\cdot(-5)\).</li>
+        <li>\(50-100=-50\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>En la sucesión aritmética \(8,\ 15,\ 22,\ \ldots\): (a) ¿es \(500\) uno de sus términos?; (b) ¿cuál es el primer término mayor que \(500\)?</p>
+    <details><summary>Pista</summary><div><p>Plantea \(8+(n-1)\cdot 7=500\) y mira si \(n\) resulta entero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(d=15-8=7\). Se plantea \(8+(n-1)\cdot 7=500\); restando \(8\): \((n-1)\cdot 7=492\).</li>
+        <li>\(7\cdot 70=490\) y \(7\cdot 71=497\): \(492\) no es múltiplo de \(7\), así que \(n-1\) no es entero. (a) \(500\) no es término.</li>
+        <li>(b) Con \(n-1=70\): \(a_{71}=8+490=498\), menor que \(500\). Con \(n-1=71\): \(a_{72}=8+497=505\).</li>
+        <li>El primer término mayor que \(500\) es \(a_{72}=505\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Camila empieza un plan de trote: el primer día corre \(800\) metros y cada día corre \(200\) metros más que el día anterior. ¿Cuánto corre el día \(20\)? ¿Qué día corre \(5\,000\) metros?</p>
+    <details><summary>Pista</summary><div><p>Las distancias forman una sucesión aritmética con \(a_{1}=800\) y \(d=200\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Día 20: \(a_{20}=800+19\cdot 200=800+3\,800=4\,600\) metros.</li>
+        <li>Se plantea \(800+(n-1)\cdot 200=5\,000\); restando \(800\): \((n-1)\cdot 200=4\,200\).</li>
+        <li>Se divide por \(200\): \(n-1=21\), de donde \(n=22\).</li>
+        <li>Corre \(5\,000\) metros el día \(22\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>

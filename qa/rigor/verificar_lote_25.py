@@ -98,4 +98,47 @@ for a1 in range(-5, 6):
         ok(all(F(ar(a1,d,m)-ar(a1,d,k), m-k) == d for m in range(1,10) for k in range(1,10) if m != k), 'H08 d con dos términos')
         ok(all((ar(a1,d,n+1) > ar(a1,d,n)) == (d > 0) and (ar(a1,d,n+1) == ar(a1,d,n)) == (d == 0) for n in range(1,10)), 'H08 signo de d')
 ok([ar(4,2,n) for n in (2,6)] == [6,14] and [ar(4,-2,n) for n in (2,6)] == [2,-6], 'H08 dif-vivo extremos')
-print('Lote 25 H01–H08:', 'sin errores' if not err else f'{err} errores')
+# H09 · término enésimo
+ok([ar(4,3,n) for n in range(1,5)] == [4,7,10,13] and [4+j*3 for j in range(4)] == [4,7,10,13], 'H09 anim')
+ok(ar(4,3,50) == 4+147 == 151 and 49*3 == 147 and 4+50*3 == 154 == ar(4,3,51), 'H09 e1 y error frecuente')
+ok(11-7 == 15-11 == 4 and 203-7 == 196 and F(196,4) == 49 and ar(7,4,50) == 203, 'H09 e2')
+ok(5-9*(-2) == 23 and ar(23,-2,10) == 5, 'H09 e3')
+ok(F(29-11,10-4) == 3 and all(11+(n-4)*3 == 3*n-1 for n in range(1,60)) and 3*4-1 == 11 and 3*10-1 == 29 and 3*1-1 == 2, 'H09 e4')
+ok(ar(6,4,30) == 6+116 == 122 and ar(50,-5,21) == 50-100 == -50, 'H09 A')
+ok(500-8 == 492 and 7*70 == 490 and 7*71 == 497 and 492 % 7 != 0 and ar(8,7,71) == 498 and ar(8,7,72) == 505 and 500 not in [ar(8,7,n) for n in range(1,200)], 'H09 B')
+ok(ar(800,200,20) == 800+3800 == 4600 and 5000-800 == 4200 and F(4200,200) == 21 and ar(800,200,22) == 5000, 'H09 C')
+for a1 in range(-5, 6):
+    for d in [F(x,3) for x in range(-7, 8)]:
+        t = [a1]
+        for _ in range(14): t.append(t[-1]+d)
+        ok(all(sum(t[k+1]-t[k] for k in range(n-1)) == t[n-1]-t[0] == (n-1)*d for n in range(1,16)), 'H09 suma de saltos')
+        ok(all(ar(a1,d,n) == ar(a1,d,k)+(n-k)*d for n in range(1,12) for k in range(1,12)), 'H09 desde otro término')
+        ok(all(ar(a1,d,n) == d*n+(a1-d) for n in range(1,12)), 'H09 forma dn + (a1 − d)')
+# H10 · suma de una sucesión aritmética
+sa = lambda a1, d, n: sum(ar(a1,d,k) for k in range(1,n+1))
+ok(sa(2,3,4) == 2+5+8+11 == 26 and [2+11,5+8,8+5,11+2] == [13]*4 and 4*13 == 52 and F(52,2) == 26 and 2+5 == 7 and 7+8 == 15 and 15+11 == 26, 'H10 anim e1')
+ok(ar(3,4,20) == 3+76 == 79 and 20*82 == 1640 and sa(3,4,20) == 820, 'H10 e2')
+ok(100*101 == 10100 and sum(range(1,101)) == 5050, 'H10 e3')
+ok(62-5 == 57 and F(57,3) == 19 and ar(5,3,20) == 62 and 20*67 == 1340 and sa(5,3,20) == 670, 'H10 e4')
+ok(F(4*(1+8),2) == 18 and 1+2+4+8 == 15, 'H10 error frecuente')
+ok(ar(4,5,15) == 74 and 15*78 == 1170 and sa(4,5,15) == 585, 'H10 A')
+ok(1-40 == -39 and F(-39,-3) == 13 and ar(40,-3,14) == 1 and 14*41 == 574 and sa(40,-3,14) == 287, 'H10 B')
+ok(ar(18,-2,8) == 4 and 8*22 == 176 and sa(18,-2,8) == 88, 'H10 C')
+ok(all(sum(range(1,n+1)) == F(n*(n+1),2) for n in range(1,300)), 'H10 k3 y sar-vivo')
+for a1 in range(-5, 6):
+    for d in [F(x,3) for x in range(-7, 8)]:
+        for n in range(1, 25):
+            ok(all(ar(a1,d,k)+ar(a1,d,n+1-k) == 2*a1+(n-1)*d == a1+ar(a1,d,n) for k in range(1,n+1)), 'H10 parejas')
+            ok(sa(a1,d,n) == F(n*(a1+ar(a1,d,n)),2) == F(n*(2*a1+(n-1)*d),2), 'H10 fórmulas de la suma')
+# H11 · series convergentes y divergentes
+ok(parc(lambda k: F(1,2**k), 4) == [F(1,2),F(3,4),F(7,8),F(15,16)], 'H11 anim')
+ok(all(F(1,2**(k-1))-F(1,2**k) == F(1,2**k) for k in range(1,80)) and all(sum(F(1,2**k) for k in range(1,n+1)) == 1-F(1,2**n) for n in range(1,80)), 'H11 k2')
+ok(all(sum(F(1,k*(k+1)) for k in range(1,n+1)) == F(n,n+1) == 1-F(1,n+1) for n in range(1,120)), 'H11 e1')
+ok(all(F(n*(n+1),2) >= n for n in range(1,300)), 'H11 e2'); ok(parc(lambda k: (-1)**(k+1), 4) == [1,0,1,0], 'H11 e3')
+ok(all(F(1,10**(k-1))-F(1,10**k) == F(9,10**k) and F(3,10**k) == F(1,3)*(F(1,10**(k-1))-F(1,10**k)) for k in range(1,60)) and all(sum(F(3,10**k) for k in range(1,n+1)) == F(1,3)*(1-F(1,10**n)) for n in range(1,60)) and F(1,3)*F(99,100) == F(33,100), 'H11 e4')
+ok(parc(lambda k: F(2,3**k), 3) == [F(2,3),F(8,9),F(26,27)] and all(F(1,3**(k-1))-F(1,3**k) == F(2,3**k) for k in range(1,60)) and all(sum(F(2,3**k) for k in range(1,n+1)) == 1-F(1,3**n) and 0 < F(1,3**n) < F(1,2**n) for n in range(1,60)), 'H11 A')
+SBn = lambda n: F(3*n+1,n+2)
+ok(all(SBn(n) == 3-F(5,n+2) for n in range(1,300)) and SBn(1) == F(4,3) and SBn(2) == F(7,4) and SBn(2)-SBn(1) == F(21,12)-F(16,12) == F(5,12), 'H11 B')
+ok(all(sum(F(2,2**k) for k in range(1,n+1)) == 2*(1-F(1,2**n)) for n in range(1,60)) and [F(2,2**k) for k in (1,2,3)] == [1,F(1,2),F(1,4)] and 2*F(31,32) == F(31,16) == F(19375,10000) and 2-F(31,16) == F(1,16) and F(1,16)*100 == F(625,100), 'H11 C')
+ok([(2**n-1, 2**n) for n in (1,7)] == [(1,2),(127,128)], 'H11 ser-vivo')
+print('Lote 25 H01–H11:', 'sin errores' if not err else f'{err} errores')

@@ -1,0 +1,300 @@
+<!--file:H10_suma_parcial_de_los_n_terminos_de_una_sucesion_aritmetica.html-->
+<!--title:Suma parcial de los n términos de una sucesión aritmética-->
+<!--id:ss-suma-arit-->
+<!--tab:H10 Suma aritmética-->
+<article class="sheet" id="ss-suma-arit" data-hoja="L25 H10">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones aritméticas</li>
+      <li><b>Suma parcial de los n términos de una sucesión aritmética</b></li>
+    </ol>
+    <h1>Suma parcial de los n términos de una sucesión aritmética</h1>
+    <p class="lede">La suma de los \(n\) primeros términos de una sucesión aritmética es la cantidad de términos por el promedio entre el primero y el último. \[S_{n}=\sum_{k=1}^{n}a_{k}=\dfrac{n\,(a_{1}+a_{n})}{2}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La suma \(2+5+8+11\), con los términos dibujados como columnas, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="sar-idea"></div>
+  <ul class="keys">
+    <li><b>Columnas azules:</b> los términos \(2,\ 5,\ 8,\ 11\); la altura de cada una es su valor. Juntas son la suma \(S_{4}\).</li>
+    <li><b>Columnas verdes:</b> la misma suma, con los términos en el orden contrario, puesta encima.</li>
+    <li><b>Borde naranja:</b> cada columna completa mide \(2+11=13\); el rectángulo entero es \(4\cdot 13\), el doble de la suma.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La fórmula y cuándo se usa</h3>
+    <ol class="steps">
+      <li>\(S_{n}=a_{1}+a_{2}+\cdots+a_{n}\) es la suma parcial de orden \(n\) (hoja «Determinar sumas parciales»).</li>
+      <li>Si la sucesión es aritmética: \(S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}\). Se necesitan tres datos: cuántos términos son, el primero y el último.</li>
+      <li>Si no se conoce el último, se calcula antes con \(a_{n}=a_{1}+(n-1)\,d\).</li>
+      <li>Si no se conoce la cantidad de términos, se despeja \(n\) de \(a_{n}=a_{1}+(n-1)\,d\).</li>
+    </ol>
+    <p>La fórmula vale solo para sucesiones aritméticas: la demostración usa que la diferencia es constante.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración: la suma, al derecho y al revés</h3>
+    <ol class="steps">
+      <li>La suma, del primero al último: \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\).</li>
+      <li>La misma suma, del último al primero (sumar en otro orden no cambia el resultado): \(S_{n}=a_{n}+a_{n-1}+\cdots+a_{1}=\displaystyle\sum_{k=1}^{n}a_{n+1-k}\).</li>
+      <li>Se suman las dos igualdades, juntando el sumando de la posición \(k\) de una con el de la posición \(k\) de la otra: \(2S_{n}=\displaystyle\sum_{k=1}^{n}\left(a_{k}+a_{n+1-k}\right)\).</li>
+      <li>Cada pareja, por el término general: \(a_{k}+a_{n+1-k}=a_{1}+(k-1)\,d+a_{1}+(n-k)\,d\).</li>
+      <li>Se saca factor común \(d\): \((k-1)+(n-k)=n-1\), así que la pareja vale \(2a_{1}+(n-1)\,d\). No depende de \(k\).</li>
+      <li>Ese valor es \(a_{1}+\left[a_{1}+(n-1)\,d\right]=a_{1}+a_{n}\).</li>
+      <li>Son \(n\) parejas iguales: \(2S_{n}=n\,(a_{1}+a_{n})\).</li>
+      <li>Se divide por \(2\): \[S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}.\]</li>
+    </ol>
+    <p><b>Otra forma, sin el último término.</b> Del paso 5, \(2S_{n}=n\left[2a_{1}+(n-1)\,d\right]\); al dividir por \(2\): \[S_{n}=\dfrac{n\left[2a_{1}+(n-1)\,d\right]}{2}.\]</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Un caso especial: \(1+2+3+\cdots+n=\dfrac{n\,(n+1)}{2}\)</h3>
+    <p>Los naturales forman una sucesión aritmética con \(a_{1}=1\), \(d=1\) y \(a_{n}=n\). Entonces \(S_{n}=\dfrac{n\,(1+n)}{2}\). Mueve \(n\) y mira la escalera y su copia.</p>
+    <div class="stage" data-scene="sar-vivo"></div>
+    <ul class="keys">
+      <li><b>Cuadraditos azules:</b> la escalera \(1+2+\cdots+n\). <b>Verdes:</b> la misma escalera, al revés. Juntas forman un rectángulo de \(n\) columnas y \(n+1\) cuadraditos de alto.</li>
+    </ul>
+    <p>Con \(n=1\) la escalera es un solo cuadradito y la fórmula da \(\dfrac{1\cdot 2}{2}=1\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la suma de la animación, \(2+5+8+11\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es aritmética: \(5-2=8-5=11-8=3\). Datos: \(n=4\), \(a_{1}=2\), \(a_{4}=11\).</li>
+    <li>\(S_{4}=\dfrac{4\cdot(2+11)}{2}=\dfrac{4\cdot 13}{2}\).</li>
+    <li>\(\dfrac{52}{2}=26\).</li>
+    <li>Comprobación, sumando directo: \(2+5=7\), \(7+8=15\), \(15+11=26\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: hay que calcular el último. Los \(20\) primeros términos de \(3,\ 7,\ 11,\ \ldots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a_{1}=3\) y \(d=7-3=4\).</li>
+    <li>Último término: \(a_{20}=3+19\cdot 4=3+76=79\).</li>
+    <li>\(S_{20}=\dfrac{20\cdot(3+79)}{2}=\dfrac{20\cdot 82}{2}\).</li>
+    <li>\(\dfrac{1\,640}{2}=820\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(1+2+3+\cdots+100\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Datos: \(n=100\), \(a_{1}=1\), \(a_{100}=100\).</li>
+    <li>\(S_{100}=\dfrac{100\cdot(1+100)}{2}=\dfrac{100\cdot 101}{2}\).</li>
+    <li>\(\dfrac{10\,100}{2}=5\,050\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: hay que contar los términos. \(5+8+11+\cdots+62\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a_{1}=5\) y \(d=8-5=3\). El último es \(a_{n}=62\).</li>
+    <li>Cantidad de términos: \(5+(n-1)\cdot 3=62\); restando \(5\), \((n-1)\cdot 3=57\); dividiendo por \(3\), \(n-1=19\); entonces \(n=20\).</li>
+    <li>\(S_{20}=\dfrac{20\cdot(5+62)}{2}=\dfrac{20\cdot 67}{2}\).</li>
+    <li>\(\dfrac{1\,340}{2}=670\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar la división por \(2\): \(n\,(a_{1}+a_{n})\) es el doble de la suma. Contar mal los términos: de \(5\) a \(62\) con saltos de \(3\) hay \(19\) saltos y \(20\) términos. Usar la fórmula en una sucesión que no es aritmética: en \(1,\ 2,\ 4,\ 8\) da \(\dfrac{4\cdot 9}{2}=18\), y la suma es \(15\). Y poner \(d\) en el lugar de \(a_{n}\): en el numerador van el primer y el último término.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la suma de los \(15\) primeros términos de \(4,\ 9,\ 14,\ \ldots\)</p>
+    <details><summary>Pista</summary><div><p>Primero \(a_{15}\); después, la fórmula de la suma.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(d=9-4=5\). \(a_{15}=4+14\cdot 5=4+70=74\).</li>
+        <li>\(S_{15}=\dfrac{15\cdot(4+74)}{2}=\dfrac{15\cdot 78}{2}\).</li>
+        <li>\(\dfrac{1\,170}{2}=585\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(40+37+34+\cdots+1\).</p>
+    <details><summary>Pista</summary><div><p>La diferencia es negativa. Despeja \(n\) de \(40+(n-1)\cdot(-3)=1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(d=37-40=-3\). Se plantea \(40+(n-1)\cdot(-3)=1\); restando \(40\): \((n-1)\cdot(-3)=-39\).</li>
+        <li>Se divide por \(-3\): \(n-1=13\), de donde \(n=14\).</li>
+        <li>\(S_{14}=\dfrac{14\cdot(40+1)}{2}=\dfrac{14\cdot 41}{2}\).</li>
+        <li>\(\dfrac{574}{2}=287\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En un almacén apilan tarros de conserva: la fila de abajo tiene \(18\) tarros y cada fila tiene \(2\) tarros menos que la de abajo. La pila tiene \(8\) filas. ¿Cuántos tarros tiene la fila de arriba? ¿Cuántos tarros hay en total?</p>
+    <details><summary>Pista</summary><div><p>Las filas forman una sucesión aritmética con \(a_{1}=18\) y \(d=-2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila de arriba: \(a_{8}=18+7\cdot(-2)=18-14=4\) tarros.</li>
+        <li>\(S_{8}=\dfrac{8\cdot(18+4)}{2}=\dfrac{8\cdot 22}{2}\).</li>
+        <li>\(\dfrac{176}{2}=88\) tarros en total.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H10 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L25 H10 · suma de una sucesión aritmética: la suma y su copia al revés forman un rectángulo de n columnas de altura a₁ + aₙ */
+OA.scene('sar-idea', (function(){
+  var N = 5, A = [2, 5, 8, 11], XC = [-0.6, 0.5, 1.6, 2.7], W = 0.7, YB = 1.3, K = 0.19;
+  var PZ = [['T1', '2', '2', 'c-sec'], ['T2', '5', '5', 'c-sec'], ['T3', '8', '8', 'c-sec'], ['T4', '11', '11', 'c-sec'],
+    ['G1', '11', '11', 'c-alt'], ['G2', '8', '8', 'c-alt'], ['G3', '5', '5', 'c-alt'], ['G4', '2', '2', 'c-alt'],
+    ['C1', '13', '13', 'diff'], ['C2', '13', '13', 'diff'], ['C3', '13', '13', 'diff'], ['C4', '13', '13', 'diff'],
+    ['RA', '4\\cdot 13=52', '4 · 13 = 52', 'diff'], ['RB', 'S_{4}=26', 'S₄ = 26', 'c-sec'],
+    ['Q', 'S_{4}=2+5+8+11=\\ ?', 'S₄ = 2 + 5 + 8 + 11 = ?', 'pt'], ['F', 'S_{n}=\\tfrac{n\\,(a_{1}+a_{n})}{2}', 'Sₙ = n (a₁ + aₙ) / 2', 'diff'],
+    ['R1', 'S_{4}=2+5+8+11', 'S₄ = 2 + 5 + 8 + 11', ''],
+    ['R2', 'S_{4}=11+8+5+2', 'S₄ = 11 + 8 + 5 + 2', ''],
+    ['R3', '2\\,S_{4}=13+13+13+13', '2 S₄ = 13 + 13 + 13 + 13', ''],
+    ['R4', '2\\,S_{4}=4\\cdot 13=52', '2 S₄ = 4 · 13 = 52', ''],
+    ['R5', 'S_{4}=\\tfrac{4\\cdot 13}{2}=26', 'S₄ = 4 · 13 / 2 = 26', 'diff']];
+  var TXT = [['Cuatro términos, dibujados como columnas.', 'La suma es toda la zona azul.'],
+    ['Encima va la misma suma, escrita al revés:', '11 sobre el 2, 8 sobre el 5, y así.'],
+    ['Cada columna completa mide lo mismo:', 'el primer término más el último, 13.'],
+    ['Las cuatro columnas forman un rectángulo:', 'vale 4 por 13, el doble de la suma.'],
+    ['La suma es la mitad del rectángulo:', '52 dividido por 2, que es 26.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:4.8}, aspect:9.4/6.6,
+    aria:'Animación en cinco pasos con la suma 2 más 5 más 8 más 11. Uno: los cuatro términos aparecen como columnas azules de esas alturas. Dos: encima de cada columna crece una columna verde con los mismos términos en orden contrario: 11 sobre el 2, 8 sobre el 5, 5 sobre el 8 y 2 sobre el 11. Tres: cada columna completa queda bordeada de naranja y mide 13. Cuatro: las cuatro columnas forman un rectángulo de 4 por 13, igual a 52, que es dos veces la suma. Cinco: la parte verde se aclara y queda marcada con borde punteado; la parte azul, la mitad del rectángulo, es la suma: 26. Arriba aparece la fórmula: S sub n igual a n por a sub 1 más a sub n, dividido por 2. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> la suma</span><span><i class="sw alt"></i> la misma suma, con los términos al revés</span><span><i class="sw rise"></i> cada columna completa y el rectángulo</span>',
+    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, g, w, a, b, ag;
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function caja(xc, y0, y1, col, al, dash, lw){ if (y1 - y0 < 1e-6) return; if (al > 0) S.poly([[xc - W/2, y0], [xc + W/2, y0], [xc + W/2, y1], [xc - W/2, y1]], {fill:col, alpha:al});
+        c.strokeStyle = col; c.lineWidth = lw || 1; c.setLineDash(dash ? [4, 3] : []); c.strokeRect(X(xc - W/2) + 0.5, Y(y1) + 0.5, W*s - 1, (y1 - y0)*s - 1); c.setLineDash([]); }
+      g = k === 1 ? u : 1;
+      S.line(-1.15, YB, 3.25, YB, {color:C.ink, width:1.1});
+      ag = k === 5 ? 0.3 - 0.24*u : 0.3; /* la mitad verde se aclara en el paso 5, pero deja su hueco marcado */
+      for (i = 0; i < 4; i++){ a = YB + K*A[i]*g; caja(XC[i], YB, a, C.sec, k === 5 ? 0.26 + 0.2*u : 0.26);
+        if (k > 1 || u > 0.6) L('T' + (i + 1), XC[i], YB + K*A[i]/2, -50);
+        if (k >= 2){ w = k === 2 ? u : 1; b = a + K*A[3 - i]*w; caja(XC[i], a, b, C.alt, ag, k === 5 && u > 0.5);
+          if (w > 0.6) L('G' + (i + 1), XC[i], a + K*A[3 - i]/2, -50); }
+        if (k === 3){ c.globalAlpha = u; caja(XC[i], YB, YB + K*13, C.rise, 0, 0, 2); c.globalAlpha = 1; }
+        if (k === 3 && u > 0.5) L('C' + (i + 1), XC[i], YB + K*13, -50, 0, -11); }
+      if (k >= 4){ w = k === 4 ? u : 1; c.globalAlpha = w; c.strokeStyle = C.rise; c.lineWidth = 2; c.strokeRect(X(XC[0] - W/2) - 2, Y(YB + K*13) - 2, (XC[3] - XC[0] + W)*s + 4, K*13*s + 4); c.globalAlpha = 1;
+        /* cotas del rectángulo: alto 13, a la derecha */
+        c.strokeStyle = C.rise; c.lineWidth = 1; c.beginPath(); c.moveTo(X(3.3), Y(YB)); c.lineTo(X(3.3), Y(YB + K*13*w)); c.stroke();
+        if (w > 0.5) L('RA', 3.42, YB + K*13*0.62, 0);
+        if (k === 5 && u > 0.5) L('RB', 3.42, YB + K*13*0.28, 0); }
+      if (k < N || u < 0.5) L('Q', -1.2, 4.45, 0); else L('F', -1.2, 4.45, 0);
+      txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.0));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.0, [6, 34, 62, 90, 120]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['S_{4}=\\sum_{k=1}^{4}a_{k}=2+5+8+11', 'S_{4}=11+8+5+2', '2\\,S_{4}=(2+11)+(5+8)+(8+5)+(11+2)', '2\\,S_{4}=4\\cdot 13=52', 'S_{4}=\\dfrac{4\\cdot(2+11)}{2}=26'][k - 1]]]; }
+  };
+})());
+/* número ↔ figura: 1 + 2 + … + n; la escalera y su copia al revés forman un rectángulo de n por (n + 1) */
+OA.scene('sar-vivo', (function(){
+  var PZ = [['AN', 'n', 'n', 'c-sec'], ['AL', 'n+1', 'n + 1', 'diff']];
+  return {
+    world:{x0:-1.6, x1:12.2, y0:-2.6, y1:11.7}, aspect:14.3/13.8,
+    aria:'Una escalera de cuadraditos azules: la primera columna tiene 1 cuadradito, la segunda 2, y así hasta la columna n, que tiene n. Encima, una copia verde de la misma escalera, al revés, completa un rectángulo de n columnas y n más 1 cuadraditos de alto. La suma 1 más 2 más, hasta n, es la mitad del rectángulo: n por n más 1, dividido por 2. Al mover n, cambian la escalera y la cuenta. Con n igual a 1 hay un cuadradito azul y uno verde, y la suma es 1.',
+    labels:PZ,
+    sliders:[{id:'n', tex:'n', min:1, max:10, step:1, value:6}],
+    legend:'<span><i class="sw sec"></i> \\(1+2+\\cdots+n\\)</span><span><i class="sw alt"></i> la misma suma, al revés</span><span><i class="sw rise"></i> alto del rectángulo: \\(n+1\\)</span>',
+    anim:{run:20000, hold:3000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(10, 1 + Math.floor(p*10)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 6), C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, j;
+      for (i = 1; i <= n; i++) for (j = 1; j <= n + 1; j++){ c.fillStyle = j <= i ? C.sec : C.alt; c.globalAlpha = j <= i ? 0.42 : 0.26; c.fillRect(X(i - 1) + 1, Y(j) + 1, s - 2, s - 2); c.globalAlpha = 1; }
+      c.strokeStyle = C.sec; c.lineWidth = 1.4; c.beginPath(); c.moveTo(X(0), Y(0)); for (i = 1; i <= n; i++){ c.lineTo(X(i - 1), Y(i)); c.lineTo(X(i), Y(i)); } c.lineTo(X(n), Y(0)); c.closePath(); c.stroke();
+      S.line(n + 0.35, 0, n + 0.35, n + 1, {color:C.rise, width:1.6}); T.L('AL', n + 0.35, (n + 1)/2, 0, 6, 0);
+      S.line(0, -0.35, n, -0.35, {color:C.sec, width:1.6}); T.L('AN', n/2, -0.35, -50, 0, 12);
+      c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle';
+      c.fillText(n === 1 ? 'Un solo término: la suma es 1' : 'Azules: ' + (n*(n + 1)/2) + '. Rectángulo: ' + n + ' por ' + (n + 1) + ', que es ' + (n*(n + 1)), X(-1.4), Y(-2.0));
+      T.fin();
+    },
+    caption:function(v){ var n = Math.round(v.n || 6); return 'Con n = ' + n + ', la escalera azul tiene ' + (n*(n + 1)/2) + ' cuadraditos: la mitad del rectángulo de ' + n + ' por ' + (n + 1) + '. Con n = 1 hay un solo cuadradito azul'; },
+    readout:function(v){ var n = Math.round(v.n || 6); return [['', '\\sum_{k=1}^{' + n + '}k=' + (n === 1 ? '1' : n === 2 ? '1+2' : n === 3 ? '1+2+3' : '1+2+\\cdots+' + n)], ['d', 'S_{' + n + '}=\\dfrac{' + n + '\\cdot(1+' + n + ')}{2}=\\dfrac{' + (n*(n + 1)) + '}{2}=' + (n*(n + 1)/2)]]; }
+  };
+})());
