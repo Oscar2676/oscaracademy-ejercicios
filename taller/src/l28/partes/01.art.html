@@ -1,0 +1,178 @@
+<!--file:H01_determinante_de_segundo_orden.html-->
+<!--title:Determinante de segundo orden-->
+<!--id:det-dos-->
+<!--tab:H01 Segundo orden-->
+<article class="sheet" id="det-dos" data-hoja="L28 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Determinante de segundo orden</b></li>
+    </ol>
+    <h1>Determinante de segundo orden</h1>
+    <p class="lede">A cada matriz cuadrada de dos filas y dos columnas se le asocia un número, su <b>determinante</b>. Se calcula con sus cuatro entradas: el producto de la diagonal principal menos el producto de la otra diagonal.
+    \[\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\]
+    Ese número mide algo que se puede dibujar: el <b>área del paralelogramo</b> que forman las dos columnas de la matriz, vistas como vectores.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>De dónde sale \(ad-bc\), en seis pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="det2-idea"></div>
+  <ul class="keys">
+    <li><b>Flecha azul:</b> la primera columna, \(\vec u=(a,c)\). <b>Flecha naranja:</b> la segunda columna, \(\vec v=(b,d)\).</li>
+    <li><b>Paralelogramo burdeo:</b> el que forman \(\vec u\) y \(\vec v\). Su área es lo que se busca.</li>
+    <li><b>Rectángulo de borde negro:</b> el que encierra al paralelogramo. Mide \(a+b\) de ancho y \(c+d\) de alto.</li>
+    <li><b>Piezas verdes y claras:</b> lo que sobra entre el rectángulo y el paralelogramo: dos rectángulos de área \(bc\), dos triángulos de área \(\dfrac{ac}{2}\) y dos de área \(\dfrac{bd}{2}\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Alcance del dibujo.</b> La figura supone \(a\), \(b\), \(c\) y \(d\) positivos y \(ad\gt bc\). Para cualquier signo de las entradas vale lo que se demuestra en el recuadro «El determinante y el área»: el área es el valor absoluto del determinante.</p>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Cómo se calcula</h3>
+    <ol class="steps">
+      <li>Se multiplican las entradas de la <b>diagonal principal</b> (de arriba a la izquierda a abajo a la derecha): \(a\cdot d\).</li>
+      <li>Se multiplican las de la <b>otra diagonal</b> (de arriba a la derecha a abajo a la izquierda): \(b\cdot c\).</li>
+      <li>Se resta, en ese orden: \(ad-bc\).</li>
+    </ol>
+    <p>El determinante se escribe \(\det A\) o \(|A|\). Las barras aquí <b>no</b> son valor absoluto: un determinante puede ser negativo.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>El determinante y el área</h3>
+    <p>Sean \(\vec u=(a,c)\) y \(\vec v=(b,d)\) las columnas, y \(\theta\) el ángulo entre ellas. El paralelogramo que forman tiene base \(|\vec u|\) y altura \(|\vec v|\operatorname{sen}\theta\).</p>
+    <ol class="steps">
+      <li>Área al cuadrado: \(\text{Área}^{2}=|\vec u|^{2}\,|\vec v|^{2}\operatorname{sen}^{2}\theta\).</li>
+      <li>Como \(\operatorname{sen}^{2}\theta=1-\cos^{2}\theta\): \(\text{Área}^{2}=|\vec u|^{2}|\vec v|^{2}-\big(|\vec u||\vec v|\cos\theta\big)^{2}\).</li>
+      <li>El paréntesis es el producto punto, \(\vec u\cdot\vec v=ab+cd\). Entonces \(\text{Área}^{2}=\left(a^{2}+c^{2}\right)\left(b^{2}+d^{2}\right)-(ab+cd)^{2}\).</li>
+      <li>Se desarrolla: \(a^{2}b^{2}+a^{2}d^{2}+b^{2}c^{2}+c^{2}d^{2}-a^{2}b^{2}-2abcd-c^{2}d^{2}=a^{2}d^{2}-2abcd+b^{2}c^{2}\).</li>
+      <li>Eso es un cuadrado de binomio: \(\text{Área}^{2}=(ad-bc)^{2}\). Como el área no es negativa:
+        \[\text{Área}=|ad-bc|\]</li>
+    </ol>
+    <p>Se usó, sin demostrarlo aquí, que \(\vec u\cdot\vec v=|\vec u||\vec v|\cos\theta\) (hojas de vectores).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>El signo, y cuándo vale cero</h3>
+    <p>Mueve la segunda columna y mira el número junto con la figura.</p>
+    <div class="stage" data-scene="det2-vivo"></div>
+    <ul class="keys">
+      <li><b>Flecha azul:</b> \(\vec u=(3,1)\), fija. <b>Flecha naranja:</b> \(\vec v=(b,d)\), la que se mueve.</li>
+      <li><b>Paralelogramo burdeo:</b> determinante positivo; para ir de \(\vec u\) a \(\vec v\) por el camino corto se gira en sentido antihorario.</li>
+      <li><b>Paralelogramo verde:</b> determinante negativo; se gira en sentido horario.</li>
+      <li><b>Sin paralelogramo:</b> los dos vectores quedan sobre una misma recta y el determinante es \(0\).</li>
+    </ul>
+    <p><b>El determinante es \(0\) exactamente cuando una columna es múltiplo de la otra.</b></p>
+    <ol class="steps">
+      <li>Si \(\vec v=k\,\vec u\), entonces \(b=ka\) y \(d=kc\), y \(ad-bc=a\cdot kc-ka\cdot c=0\).</li>
+      <li>Al revés, sea \(ad-bc=0\), es decir, \(ad=bc\). Si \(a\ne 0\), con \(k=\dfrac{b}{a}\) se tiene \(b=ka\) y \(d=\dfrac{bc}{a}=kc\): \(\vec v=k\,\vec u\).</li>
+      <li>Si \(a=0\) y \(c\ne 0\): de \(ad=bc\) sale \(bc=0\), luego \(b=0\); con \(k=\dfrac{d}{c}\), \(\vec v=(0,d)=k\,(0,c)=k\,\vec u\).</li>
+      <li>Si \(a=0\) y \(c=0\), entonces \(\vec u=(0,0)=0\cdot\vec v\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\begin{vmatrix}3&5\\2&4\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diagonal principal: \(3\cdot 4=12\).</li>
+    <li>Otra diagonal: \(5\cdot 2=10\).</li>
+    <li>\(\begin{vmatrix}3&5\\2&4\end{vmatrix}=12-10=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: con entradas negativas, \(\begin{vmatrix}-2&3\\4&-1\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diagonal principal: \((-2)\cdot(-1)=2\).</li>
+    <li>Otra diagonal: \(3\cdot 4=12\).</li>
+    <li>\(\begin{vmatrix}-2&3\\4&-1\end{vmatrix}=2-12=-10\).</li>
+    <li>El paralelogramo de las columnas \((-2,4)\) y \((3,-1)\) tiene área \(|-10|=10\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un determinante que vale cero, \(\begin{vmatrix}6&9\\4&6\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(6\cdot 6-9\cdot 4=36-36=0\).</li>
+    <li>Tiene que haber una columna múltiplo de la otra: \((9,6)=\dfrac{3}{2}\,(6,4)\), porque \(\dfrac{3}{2}\cdot 6=9\) y \(\dfrac{3}{2}\cdot 4=6\).</li>
+    <li>Los dos vectores están sobre la misma recta: no encierran área.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con una incógnita, \(\begin{vmatrix}x&2\\3&x-1\end{vmatrix}=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se calcula el determinante: \(x(x-1)-2\cdot 3=x^{2}-x-6\).</li>
+    <li>Se iguala a cero: \(x^{2}-x-6=0\).</li>
+    <li>Se factoriza: \((x-3)(x+2)=0\), porque \(-3\cdot 2=-6\) y \(-3+2=-1\).</li>
+    <li>\(x=3\) o \(x=-2\).</li>
+    <li>Comprobación: con \(x=3\), \(3\cdot 2-2\cdot 3=0\) ✓; con \(x=-2\), \((-2)\cdot(-3)-2\cdot 3=6-6=0\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: restar al revés; es diagonal principal menos la otra, \(ad-bc\), no \(bc-ad\). Dos: perder un signo cuando hay entradas negativas; conviene escribir cada producto con sus paréntesis. Tres: leer las barras como valor absoluto; \(\begin{vmatrix}1&2\\3&4\end{vmatrix}=4-6=-2\), no \(2\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\begin{vmatrix}5&-2\\3&4\end{vmatrix}\).</p>
+    <details><summary>Pista</summary><div><p>Restar un producto negativo es sumar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Diagonal principal: \(5\cdot 4=20\).</li>
+        <li>Otra diagonal: \((-2)\cdot 3=-6\).</li>
+        <li>\(20-(-6)=20+6=26\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>¿Para qué valores de \(k\) se cumple \(\begin{vmatrix}k&4\\9&k\end{vmatrix}=0\)? ¿Qué pasa con las columnas en esos casos?</p>
+    <details><summary>Pista</summary><div><p>Calcula el determinante en función de \(k\) e iguálalo a \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(k\cdot k-4\cdot 9=k^{2}-36\).</li>
+        <li>\(k^{2}-36=0\ \Longrightarrow\ k^{2}=36\ \Longrightarrow\ k=6\) o \(k=-6\).</li>
+        <li>Con \(k=6\): columnas \((6,9)\) y \((4,6)\), y \((6,9)=\dfrac{3}{2}\,(4,6)\).</li>
+        <li>Con \(k=-6\): columnas \((-6,9)\) y \((4,-6)\), y \((-6,9)=-\dfrac{3}{2}\,(4,-6)\).</li>
+        <li>En los dos casos una columna es múltiplo de la otra.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un terreno tiene forma de paralelogramo. En un plano con las medidas en metros, sus esquinas están en \((0,0)\), \((30,10)\), \((40,50)\) y \((10,40)\). ¿Cuántos metros cuadrados tiene?</p>
+    <details><summary>Pista</summary><div><p>Dos lados que salen de \((0,0)\) son los vectores \((30,10)\) y \((10,40)\). Ponlos como columnas.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Lados desde el origen: \(\vec u=(30,10)\) y \(\vec v=(10,40)\). La cuarta esquina es \(\vec u+\vec v=(40,50)\) ✓: es un paralelogramo.</li>
+        <li>\(\begin{vmatrix}30&10\\10&40\end{vmatrix}=30\cdot 40-10\cdot 10=1200-100=1100\).</li>
+        <li>Área \(=|1100|=1100\ \text{m}^{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>

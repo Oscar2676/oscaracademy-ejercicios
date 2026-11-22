@@ -1,0 +1,300 @@
+<!--file:H01_determinante_de_segundo_orden.html-->
+<!--title:Determinante de segundo orden-->
+<!--id:det-dos-->
+<!--tab:H01 Segundo orden-->
+<article class="sheet" id="det-dos" data-hoja="L28 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Determinante de segundo orden</b></li>
+    </ol>
+    <h1>Determinante de segundo orden</h1>
+    <p class="lede">A cada matriz cuadrada de dos filas y dos columnas se le asocia un número, su <b>determinante</b>. Se calcula con sus cuatro entradas: el producto de la diagonal principal menos el producto de la otra diagonal.
+    \[\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\]
+    Ese número mide algo que se puede dibujar: el <b>área del paralelogramo</b> que forman las dos columnas de la matriz, vistas como vectores.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>De dónde sale \(ad-bc\), en seis pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="det2-idea"></div>
+  <ul class="keys">
+    <li><b>Flecha azul:</b> la primera columna, \(\vec u=(a,c)\). <b>Flecha naranja:</b> la segunda columna, \(\vec v=(b,d)\).</li>
+    <li><b>Paralelogramo burdeo:</b> el que forman \(\vec u\) y \(\vec v\). Su área es lo que se busca.</li>
+    <li><b>Rectángulo de borde negro:</b> el que encierra al paralelogramo. Mide \(a+b\) de ancho y \(c+d\) de alto.</li>
+    <li><b>Piezas verdes y claras:</b> lo que sobra entre el rectángulo y el paralelogramo: dos rectángulos de área \(bc\), dos triángulos de área \(\dfrac{ac}{2}\) y dos de área \(\dfrac{bd}{2}\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Alcance del dibujo.</b> La figura supone \(a\), \(b\), \(c\) y \(d\) positivos y \(ad\gt bc\). Para cualquier signo de las entradas vale lo que se demuestra en el recuadro «El determinante y el área»: el área es el valor absoluto del determinante.</p>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Cómo se calcula</h3>
+    <ol class="steps">
+      <li>Se multiplican las entradas de la <b>diagonal principal</b> (de arriba a la izquierda a abajo a la derecha): \(a\cdot d\).</li>
+      <li>Se multiplican las de la <b>otra diagonal</b> (de arriba a la derecha a abajo a la izquierda): \(b\cdot c\).</li>
+      <li>Se resta, en ese orden: \(ad-bc\).</li>
+    </ol>
+    <p>El determinante se escribe \(\det A\) o \(|A|\). Las barras aquí <b>no</b> son valor absoluto: un determinante puede ser negativo.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>El determinante y el área</h3>
+    <p>Sean \(\vec u=(a,c)\) y \(\vec v=(b,d)\) las columnas, y \(\theta\) el ángulo entre ellas. El paralelogramo que forman tiene base \(|\vec u|\) y altura \(|\vec v|\operatorname{sen}\theta\).</p>
+    <ol class="steps">
+      <li>Área al cuadrado: \(\text{Área}^{2}=|\vec u|^{2}\,|\vec v|^{2}\operatorname{sen}^{2}\theta\).</li>
+      <li>Como \(\operatorname{sen}^{2}\theta=1-\cos^{2}\theta\): \(\text{Área}^{2}=|\vec u|^{2}|\vec v|^{2}-\big(|\vec u||\vec v|\cos\theta\big)^{2}\).</li>
+      <li>El paréntesis es el producto punto, \(\vec u\cdot\vec v=ab+cd\). Entonces \(\text{Área}^{2}=\left(a^{2}+c^{2}\right)\left(b^{2}+d^{2}\right)-(ab+cd)^{2}\).</li>
+      <li>Se desarrolla: \(a^{2}b^{2}+a^{2}d^{2}+b^{2}c^{2}+c^{2}d^{2}-a^{2}b^{2}-2abcd-c^{2}d^{2}=a^{2}d^{2}-2abcd+b^{2}c^{2}\).</li>
+      <li>Eso es un cuadrado de binomio: \(\text{Área}^{2}=(ad-bc)^{2}\). Como el área no es negativa:
+        \[\text{Área}=|ad-bc|\]</li>
+    </ol>
+    <p>Se usó, sin demostrarlo aquí, que \(\vec u\cdot\vec v=|\vec u||\vec v|\cos\theta\) (hojas de vectores).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>El signo, y cuándo vale cero</h3>
+    <p>Mueve la segunda columna y mira el número junto con la figura.</p>
+    <div class="stage" data-scene="det2-vivo"></div>
+    <ul class="keys">
+      <li><b>Flecha azul:</b> \(\vec u=(3,1)\), fija. <b>Flecha naranja:</b> \(\vec v=(b,d)\), la que se mueve.</li>
+      <li><b>Paralelogramo burdeo:</b> determinante positivo; para ir de \(\vec u\) a \(\vec v\) por el camino corto se gira en sentido antihorario.</li>
+      <li><b>Paralelogramo verde:</b> determinante negativo; se gira en sentido horario.</li>
+      <li><b>Sin paralelogramo:</b> los dos vectores quedan sobre una misma recta y el determinante es \(0\).</li>
+    </ul>
+    <p><b>El determinante es \(0\) exactamente cuando una columna es múltiplo de la otra.</b></p>
+    <ol class="steps">
+      <li>Si \(\vec v=k\,\vec u\), entonces \(b=ka\) y \(d=kc\), y \(ad-bc=a\cdot kc-ka\cdot c=0\).</li>
+      <li>Al revés, sea \(ad-bc=0\), es decir, \(ad=bc\). Si \(a\ne 0\), con \(k=\dfrac{b}{a}\) se tiene \(b=ka\) y \(d=\dfrac{bc}{a}=kc\): \(\vec v=k\,\vec u\).</li>
+      <li>Si \(a=0\) y \(c\ne 0\): de \(ad=bc\) sale \(bc=0\), luego \(b=0\); con \(k=\dfrac{d}{c}\), \(\vec v=(0,d)=k\,(0,c)=k\,\vec u\).</li>
+      <li>Si \(a=0\) y \(c=0\), entonces \(\vec u=(0,0)=0\cdot\vec v\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\begin{vmatrix}3&5\\2&4\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diagonal principal: \(3\cdot 4=12\).</li>
+    <li>Otra diagonal: \(5\cdot 2=10\).</li>
+    <li>\(\begin{vmatrix}3&5\\2&4\end{vmatrix}=12-10=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: con entradas negativas, \(\begin{vmatrix}-2&3\\4&-1\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Diagonal principal: \((-2)\cdot(-1)=2\).</li>
+    <li>Otra diagonal: \(3\cdot 4=12\).</li>
+    <li>\(\begin{vmatrix}-2&3\\4&-1\end{vmatrix}=2-12=-10\).</li>
+    <li>El paralelogramo de las columnas \((-2,4)\) y \((3,-1)\) tiene área \(|-10|=10\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un determinante que vale cero, \(\begin{vmatrix}6&9\\4&6\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(6\cdot 6-9\cdot 4=36-36=0\).</li>
+    <li>Tiene que haber una columna múltiplo de la otra: \((9,6)=\dfrac{3}{2}\,(6,4)\), porque \(\dfrac{3}{2}\cdot 6=9\) y \(\dfrac{3}{2}\cdot 4=6\).</li>
+    <li>Los dos vectores están sobre la misma recta: no encierran área.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con una incógnita, \(\begin{vmatrix}x&2\\3&x-1\end{vmatrix}=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se calcula el determinante: \(x(x-1)-2\cdot 3=x^{2}-x-6\).</li>
+    <li>Se iguala a cero: \(x^{2}-x-6=0\).</li>
+    <li>Se factoriza: \((x-3)(x+2)=0\), porque \(-3\cdot 2=-6\) y \(-3+2=-1\).</li>
+    <li>\(x=3\) o \(x=-2\).</li>
+    <li>Comprobación: con \(x=3\), \(3\cdot 2-2\cdot 3=0\) ✓; con \(x=-2\), \((-2)\cdot(-3)-2\cdot 3=6-6=0\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: restar al revés; es diagonal principal menos la otra, \(ad-bc\), no \(bc-ad\). Dos: perder un signo cuando hay entradas negativas; conviene escribir cada producto con sus paréntesis. Tres: leer las barras como valor absoluto; \(\begin{vmatrix}1&2\\3&4\end{vmatrix}=4-6=-2\), no \(2\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\begin{vmatrix}5&-2\\3&4\end{vmatrix}\).</p>
+    <details><summary>Pista</summary><div><p>Restar un producto negativo es sumar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Diagonal principal: \(5\cdot 4=20\).</li>
+        <li>Otra diagonal: \((-2)\cdot 3=-6\).</li>
+        <li>\(20-(-6)=20+6=26\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>¿Para qué valores de \(k\) se cumple \(\begin{vmatrix}k&4\\9&k\end{vmatrix}=0\)? ¿Qué pasa con las columnas en esos casos?</p>
+    <details><summary>Pista</summary><div><p>Calcula el determinante en función de \(k\) e iguálalo a \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(k\cdot k-4\cdot 9=k^{2}-36\).</li>
+        <li>\(k^{2}-36=0\ \Longrightarrow\ k^{2}=36\ \Longrightarrow\ k=6\) o \(k=-6\).</li>
+        <li>Con \(k=6\): columnas \((6,9)\) y \((4,6)\), y \((6,9)=\dfrac{3}{2}\,(4,6)\).</li>
+        <li>Con \(k=-6\): columnas \((-6,9)\) y \((4,-6)\), y \((-6,9)=-\dfrac{3}{2}\,(4,-6)\).</li>
+        <li>En los dos casos una columna es múltiplo de la otra.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un terreno tiene forma de paralelogramo. En un plano con las medidas en metros, sus esquinas están en \((0,0)\), \((30,10)\), \((40,50)\) y \((10,40)\). ¿Cuántos metros cuadrados tiene?</p>
+    <details><summary>Pista</summary><div><p>Dos lados que salen de \((0,0)\) son los vectores \((30,10)\) y \((10,40)\). Ponlos como columnas.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Lados desde el origen: \(\vec u=(30,10)\) y \(\vec v=(10,40)\). La cuarta esquina es \(\vec u+\vec v=(40,50)\) ✓: es un paralelogramo.</li>
+        <li>\(\begin{vmatrix}30&10\\10&40\end{vmatrix}=30\cdot 40-10\cdot 10=1200-100=1100\).</li>
+        <li>Área \(=|1100|=1100\ \text{m}^{2}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L28 H01 · de dónde sale ad − bc: rectángulo que encierra al paralelogramo, menos lo que sobra */
+OA.scene('det2-idea', (function(){
+  var N = 6, a = 3, cc = 1, b = 1, d = 2;
+  var PZ = [['Q', '\\det\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}=\\ ?', 'det = ?', 'pt'], ['F', '\\det\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}=ad-bc', 'det = ad − bc', 'diff'],
+    ['LU', '\\vec u=(a,c)', 'u = (a, c)', 'c-sec'], ['LV', '\\vec v=(b,d)', 'v = (b, d)', 'diff'],
+    ['La', 'a', 'a', ''], ['Lb', 'b', 'b', ''], ['Lc', 'c', 'c', ''], ['Ld', 'd', 'd', ''],
+    ['B1', 'bc', 'bc', 'c-alt'], ['B2', 'bc', 'bc', 'c-alt'],
+    ['T1', '\\tfrac{ac}{2}', 'ac/2', 'c-sec'], ['T2', '\\tfrac{ac}{2}', 'ac/2', 'c-sec'], ['T3', '\\tfrac{bd}{2}', 'bd/2', 'diff'], ['T4', '\\tfrac{bd}{2}', 'bd/2', 'diff'],
+    ['AR', 'ad-bc', 'ad − bc', 'c-tan'],
+    ['R1', 'A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix},\\quad \\vec u=(a,c),\\quad \\vec v=(b,d)', 'columnas u y v', ''],
+    ['R2', '\\text{Área del paralelogramo}=\\ ?', 'Área = ?', ''],
+    ['R3', '\\text{rectángulo: }(a+b)(c+d)', 'rectángulo (a + b)(c + d)', ''],
+    ['R4', '\\text{sobran dos rectángulos: }2\\cdot bc', 'menos 2bc', ''],
+    ['R5', '\\text{y cuatro triángulos: }2\\cdot\\tfrac{ac}{2}+2\\cdot\\tfrac{bd}{2}=ac+bd', 'menos ac + bd', ''],
+    ['R6', '\\text{Área}=(a+b)(c+d)-2bc-ac-bd=ad-bc', 'Área = ad − bc', 'diff']];
+  var TXT = [['Las dos columnas de la matriz se dibujan como flechas', 'que salen del mismo punto.'],
+    ['Las dos flechas forman un paralelogramo.', '¿Cuánto mide su área?'],
+    ['Se encierra en un rectángulo fácil de medir:', 'su ancho y su alto se leen en las cotas.'],
+    ['Entre el rectángulo y el paralelogramo sobran piezas.', 'Primero, dos rectángulos iguales.'],
+    ['También sobran cuatro triángulos rectángulos,', 'iguales de dos en dos.'],
+    ['Al rectángulo se le quita todo lo que sobra.', 'Queda el área: es el determinante.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-6.45, y1:3.95}, aspect:10.4/6.6,
+    aria:'Animación en seis pasos. Uno: las columnas de la matriz, u igual a (a, c) y v igual a (b, d), dibujadas como dos flechas desde el origen. Dos: el paralelogramo que forman. Tres: un rectángulo de ancho a más b y alto c más d que lo encierra. Cuatro: entre el rectángulo y el paralelogramo sobran dos rectángulos de área b por c. Cinco: sobran también cuatro triángulos rectángulos, dos de área a por c sobre 2 y dos de área b por d sobre 2. Seis: al área del rectángulo se le resta lo que sobra y queda a por d menos b por c. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> \\(\\vec u=(a,c)\\), primera columna</span><span><i class="sw rise"></i> \\(\\vec v=(b,d)\\), segunda columna</span><span><i class="sw tan"></i> paralelogramo</span><span><i class="sw alt"></i> rectángulos que sobran</span>',
+    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif';
+      var W = a + b, H = cc + d, al;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n */
+      function fr(n){ return k >= 6 ? 0.25 + 0.75*(1 - u) : ap(n); } /* las piezas que sobran se atenúan al final */
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function cota(x0, y0, x1, y1){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(x0), Y(y0)); c.lineTo(X(x1), Y(y1)); var h = Math.abs(y1 - y0) < 1e-9; if (h){ c.moveTo(X(x0), Y(y0) - 3); c.lineTo(X(x0), Y(y0) + 3); c.moveTo(X(x1), Y(y1) - 3); c.lineTo(X(x1), Y(y1) + 3); } else { c.moveTo(X(x0) - 3, Y(y0)); c.lineTo(X(x0) + 3, Y(y0)); c.moveTo(X(x1) - 3, Y(y1)); c.lineTo(X(x1) + 3, Y(y1)); } c.stroke(); }
+      /* ejes finos */
+      S.line(-0.5, 0, W + 0.7, 0, {color:'rgba(0,0,0,0.35)', width:1}); S.line(0, -0.4, 0, H + 0.6, {color:'rgba(0,0,0,0.35)', width:1});
+      /* rectángulo que encierra (paso 3) */
+      al = ap(3);
+      if (al > 0){ c.globalAlpha = k >= 6 ? 0.35 + 0.65*(1 - u) : 1; c.strokeStyle = C.ink; c.lineWidth = 1.4; var per = 2*(W + H), g = al*per, P = [[0, 0], [W, 0], [W, H], [0, H], [0, 0]], i, seg, q; c.beginPath(); c.moveTo(X(0), Y(0));
+        for (i = 0; i < 4 && g > 0; i++){ seg = (i % 2 === 0) ? W : H; q = Math.min(1, g/seg); c.lineTo(X(P[i][0] + (P[i + 1][0] - P[i][0])*q), Y(P[i][1] + (P[i + 1][1] - P[i][1])*q)); g -= seg; } c.stroke(); c.globalAlpha = 1; }
+      /* piezas que sobran: dos rectángulos bc (paso 4) y cuatro triángulos (paso 5) */
+      if (ap(4) > 0){ S.poly([[a, 0], [W, 0], [W, cc], [a, cc]], {fill:C.alt, alpha:0.38*fr(4)}); S.poly([[0, d], [b, d], [b, H], [0, H]], {fill:C.alt, alpha:0.38*fr(4)}); if (ap(4) > 0.5 && k < 6){ L('B1', a + b/2, cc/2); L('B2', b/2, d + cc/2); } }
+      if (ap(5) > 0){ S.poly([[0, 0], [a, 0], [a, cc]], {fill:C.sec, alpha:0.3*fr(5)}); S.poly([[b, d], [b, H], [W, H]], {fill:C.sec, alpha:0.3*fr(5)});
+        S.poly([[a, cc], [W, cc], [W, H]], {fill:C.rise, alpha:0.3*fr(5)}); S.poly([[0, 0], [0, d], [b, d]], {fill:C.rise, alpha:0.3*fr(5)});
+        if (ap(5) > 0.5 && k < 6){ L('T1', a*0.68, cc*0.27); L('T2', b + a*0.32, d + cc*0.73); L('T3', a + b*0.68, cc + d*0.3); L('T4', b*0.3, d*0.68); } }
+      /* paralelogramo (paso 2) */
+      al = ap(2);
+      if (al > 0){ S.poly([[0, 0], [a, cc], [W, H], [b, d]], {fill:C.tan, alpha:(k >= 6 ? 0.3 + 0.3*u : 0.3)*al});
+        c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(a), Y(cc)); c.lineTo(X(a + b*al), Y(cc + d*al)); c.moveTo(X(b), Y(d)); c.lineTo(X(b + a*al), Y(d + cc*al)); c.stroke(); c.setLineDash([]); }
+      /* cotas a, b, c, d (desde el paso 3) */
+      if (ap(3) > 0.6){ cota(0, -0.28, a, -0.28); cota(a, -0.28, W, -0.28); cota(-0.28, 0, -0.28, cc); cota(-0.28, cc, -0.28, H);
+        L('La', a/2, -0.28, -50, 0, 12); L('Lb', a + b/2, -0.28, -50, 0, 12); L('Lc', -0.28, cc/2, -100, -7, 0); L('Ld', -0.28, cc + d/2, -100, -7, 0); }
+      /* las dos columnas, como flechas */
+      dtFlecha(S, 0, 0, a*(k === 1 ? u : 1), cc*(k === 1 ? u : 1), C.sec, 2); dtFlecha(S, 0, 0, b*(k === 1 ? u : 1), d*(k === 1 ? u : 1), C.rise, 2);
+      c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.4, 0, 6.2832); c.fill();
+      if (k > 1 || u > 0.6){ if (k < 4){ L('LU', a, cc, 0, 8, 6); L('LV', b, d, 0, 6, -12); } }
+      if (k === 6 && u > 0.5) L('AR', W/2, H/2);
+      /* pregunta arriba; al final, en el mismo lugar, la respuesta */
+      if (k < 6 || u < 0.5) L('Q', 1.9, 3.5, 0); else L('F', 1.9, 3.5, 0);
+      txt(TXT[k - 1][0], -1.2, -1.0); if (TXT[k - 1][1]) txt(TXT[k - 1][1], -1.2, -1.0 - 21/(X(1) - X(0)));
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-0.55));
+      T.fin();
+      oaReg(S, k, N, -1.2, -2.45, [0, 40, 70, 100, 132, 166]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\vec u=(a,c),\\qquad \\vec v=(b,d)', '\\text{Área del paralelogramo}=\\ ?', '\\text{rectángulo}=(a+b)(c+d)=ac+ad+bc+bd', '\\text{sobra: }2\\cdot bc', '\\text{sobra: }2\\cdot\\dfrac{ac}{2}+2\\cdot\\dfrac{bd}{2}=ac+bd', '\\text{Área}=ac+ad+bc+bd-2bc-ac-bd=ad-bc'][k - 1]]]; }
+  };
+})());
+/* número ↔ figura: la segunda columna se mueve y el determinante cambia con el área y con el sentido de giro */
+OA.scene('det2-vivo', (function(){
+  var A0 = 3, C0 = 1;
+  var PZ = [['PU', '\\vec u=(3,1)', 'u = (3, 1)', 'c-sec'], ['PV', '\\vec v=(b,d)', 'v = (b, d)', 'diff']];
+  return {
+    world:{x0:-3.3, x1:5.5, y0:-4.5, y1:4.3}, aspect:1,
+    aria:'El vector azul u igual a (3, 1) está fijo. El vector naranja v igual a (b, d) gira alrededor del origen. Los dos forman un paralelogramo. Cuando v queda a la izquierda de u, el paralelogramo es burdeo y el determinante es positivo. Cuando v queda sobre la misma recta que u, el paralelogramo se aplasta y el determinante vale cero. Cuando v pasa al otro lado, el paralelogramo es verde y el determinante es negativo. Bajo el dibujo se calcula el determinante, 3 por d menos b por 1, y el área, que es su valor absoluto.',
+    labels:PZ,
+    sliders:[{id:'b', tex:'b', min:-2.5, max:2.5, step:0.1, value:1}, {id:'d', tex:'d', min:-2.5, max:2.5, step:0.1, value:2}],
+    legend:'<span><i class="sw sec"></i> \\(\\vec u=(3,1)\\), fijo</span><span><i class="sw rise"></i> \\(\\vec v=(b,d)\\)</span><span><i class="sw tan"></i> determinante positivo</span><span><i class="sw alt"></i> determinante negativo</span>',
+    anim:{run:22000, hold:4000, still:1, apply:function(p, v){ var th = 1.1 + 6.2832*p; v.q = p; v.b = 2.3*Math.cos(th); v.d = 2.3*Math.sin(th); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var b = v.b == null ? 1 : +v.b, d = v.d == null ? 2 : +v.d, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), D = A0*d - b*C0, i, F = '"Source Sans 3", system-ui, sans-serif', col = D > 0 ? C.tan : C.alt, t;
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      S.line(-3.1, 0, 5.3, 0, {color:C.ink, width:1}); S.line(0, -2.9, 0, 4.1, {color:C.ink, width:1});
+      for (i = -3; i <= 5; i++) if (i){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (i = -2; i <= 4; i++) if (i){ c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num('' + i, X(0) - 7, Y(i), 'right'); }
+      /* recta de u: sobre ella el determinante vale 0 */
+      c.strokeStyle = 'rgba(31,93,134,0.35)'; c.lineWidth = 1; c.setLineDash([4, 4]); c.beginPath(); c.moveTo(X(-3), Y(-1)); c.lineTo(X(5.1), Y(1.7)); c.stroke(); c.setLineDash([]);
+      if (Math.abs(D) > 1e-9){ S.poly([[0, 0], [A0, C0], [A0 + b, C0 + d], [b, d]], {fill:col, alpha:0.32});
+        c.strokeStyle = col; c.lineWidth = 1.2; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(A0), Y(C0)); c.lineTo(X(A0 + b), Y(C0 + d)); c.lineTo(X(b), Y(d)); c.stroke(); c.setLineDash([]); }
+      dtFlecha(S, 0, 0, A0, C0, C.sec, 2); dtFlecha(S, 0, 0, b, d, C.rise, 2);
+      c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.4, 0, 6.2832); c.fill();
+      T.L('PU', A0, C0, 0, 8, 10); T.L('PV', b, d, 0, 8, d >= 0 ? -10 : 12);
+      t = Math.abs(D) < 0.05 ? ['Determinante cero: flechas alineadas, sin área', C.ink] : (D > 0 ? ['Determinante positivo: giro antihorario', C.tan] : ['Determinante negativo: giro horario', C.alt]);
+      c.font = '600 12.5px ' + F; c.fillStyle = t[1]; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t[0], X(-3.2), Y(-3.6));
+      T.fin();
+    },
+    caption:function(v){ var b = v.b == null ? 1 : +v.b, d = v.d == null ? 2 : +v.d, D = A0*d - b*C0, n = function(z){ return oaDec(z, 2); }; return 'Con v = (' + n(b) + '; ' + n(d) + ') el determinante vale ' + n(D) + ' y el paralelogramo mide ' + n(Math.abs(D)) + ' unidades cuadradas. Sobre la recta punteada, la de u, el determinante es 0'; },
+    readout:function(v){ var b = v.b == null ? 1 : +v.b, d = v.d == null ? 2 : +v.d, D = A0*d - b*C0, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
+      return [['', '\\begin{vmatrix}3&b\\\\1&d\\end{vmatrix}=3\\cdot d-b\\cdot 1'], ['d', '3\\cdot ' + p(d) + '-' + p(b) + '\\cdot 1=' + n(D, 2)], ['', '\\text{área}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2)]]; }
+  };
+})());
