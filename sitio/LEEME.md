@@ -48,3 +48,4 @@ Se regenera completo después de cada cambio en Wix; el historial de git muestra
 <!-- tablero: L22 H13 enlazada y publicada, 21-nov 19:11 -->
 <!-- tablero: L27 H01 enlazada y publicada, 21-nov 19:41 -->
 <!-- tablero: L27 H01 v002 con APR, 22-nov 04:43 -->
+<!-- tablero: L27 H03 enlazada y publicada, 22-nov 05:05 -->
