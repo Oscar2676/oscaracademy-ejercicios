@@ -28,6 +28,7 @@
     <li><b>Abajo a la derecha:</b> la misma celda, ampliada, con sus tres lados: \(\Delta r\) y \(\Delta z\), rectos, y el <b>arco</b> \(r^{*}\Delta\theta\) (radio por ángulo, con el ángulo en radianes). No pierde sus cotas en ningún momento.</li>
     <li><b>Paso 5:</b> la celda recorre el bloque sin salir de él: gira en su nivel y luego va hacia el eje. En la ampliación, el arco se acorta cuando el radio disminuye.</li>
     <li><b>Paso 6:</b> la partición se afina. La celda se achica, pero en la ampliación se parece cada vez más a una caja.</li>
+    <li><b>Bajo la figura, el registro:</b> la expresión de cada paso queda escrita y numerada, una bajo la otra, sin borrarse, hasta llegar a la suma y a la integral del volumen.</li>
   </ul>
 </section>
 
@@ -165,7 +166,7 @@
 </section>
 
 <footer>
-  <span class="status">CM-L27-H02 · v005 · Pendiente de APR</span>
+  <span class="status">CM-L27-H02 · v006 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -213,14 +214,18 @@ function cmCirc(r, z){ var p = [], i, t; for (i = 0; i <= 72; i++){ t = 6.2832*i
     var N = 6, A = 1.2, B = 2.6, AL = 0.6, BE = 1.4, CC = 1.2, DD = 3.0;
     function part(n){ return {dr:(B - A)/n, dt:(BE - AL)/n, dz:(DD - CC)/n}; }
     var PZ = cmEJ.concat([
-      ['EE', 'E:\\ \\ a\\le r\\le b,\\quad \\alpha\\le\\theta\\le\\beta,\\quad c\\le z\\le d', 'E: a ≤ r ≤ b, α ≤ θ ≤ β, c ≤ z ≤ d', 'c-sec'],
       ['LA', 'a', 'a', ''], ['LB', 'b', 'b', ''], ['TA', '\\theta=\\alpha', 'θ = α', ''], ['TB', '\\theta=\\beta', 'θ = β', ''], ['ZC', 'c', 'c', ''], ['ZD', 'd', 'd', ''],
       ['PS', '\\left(r^{*},\\ \\theta^{*},\\ z^{*}\\right)', '(r*, θ*, z*)', 'pt'],
       ['DR', '\\Delta r', 'Δr', 'diff'], ['DT', 'r^{*}\\Delta\\theta', 'r* Δθ', 'c-alt'], ['DZ', '\\Delta z', 'Δz', 'c-sec'],
-      ['E4', '\\Delta r,\\qquad r^{*}\\Delta\\theta,\\qquad \\Delta z', 'Δr, r* Δθ, Δz', ''],
-      ['E5', '\\Delta V\\approx r^{*}\\,\\Delta r\\,\\Delta\\theta\\,\\Delta z', 'ΔV ≈ r* Δr Δθ Δz', ''],
-      ['E6', 'dV=r\\,dr\\,d\\theta\\,dz', 'dV = r dr dθ dz', 'diff']
+      ['R1', 'E:\\ \\ a\\le r\\le b,\\ \\ \\alpha\\le\\theta\\le\\beta,\\ \\ c\\le z\\le d', 'E: a ≤ r ≤ b, α ≤ θ ≤ β, c ≤ z ≤ d', ''],
+      ['R2', '\\Delta r=\\dfrac{b-a}{n},\\ \\ \\Delta\\theta=\\dfrac{\\beta-\\alpha}{n},\\ \\ \\Delta z=\\dfrac{d-c}{n}', 'Δr = (b − a)/n, Δθ = (β − α)/n, Δz = (d − c)/n', ''],
+      ['R3', '\\text{punto de muestra: }\\left(r^{*},\\ \\theta^{*},\\ z^{*}\\right)', 'punto de muestra: (r*, θ*, z*)', ''],
+      ['R4', '\\text{lados de la celda: }\\ \\Delta r,\\ \\ r^{*}\\Delta\\theta,\\ \\ \\Delta z', 'lados de la celda: Δr, r* Δθ, Δz', ''],
+      ['R5', '\\Delta V\\approx r^{*}\\,\\Delta r\\,\\Delta\\theta\\,\\Delta z', 'ΔV ≈ r* Δr Δθ Δz', ''],
+      ['R6', 'V\\approx\\displaystyle\\sum_{i=1}^{n}\\sum_{j=1}^{n}\\sum_{k=1}^{n} r_{ijk}^{*}\\,\\Delta r\\,\\Delta\\theta\\,\\Delta z', 'V ≈ suma triple de r* Δr Δθ Δz', ''],
+      ['R7', 'V=\\displaystyle\\int_{c}^{d}\\!\\int_{\\alpha}^{\\beta}\\!\\int_{a}^{b} r\\,dr\\,d\\theta\\,dz', 'V = ∫ de c a d ∫ de α a β ∫ de a a b de r dr dθ dz', 'diff']
     ]);
+    var FILA = [0, 34, 78, 108, 138, 176, 228];
     var TXT = [
       ['Un bloque curvo, descrito con radio, ángulo y altura.', 'En el suelo, su sombra: un sector de corona.'],
       ['El bloque se parte en celdas, cortando', 'en las tres direcciones. La sombra se parte igual.'],
@@ -230,8 +235,8 @@ function cmCirc(r, z){ var p = [], i, t; for (i = 0; i <= 72; i++){ t = 6.2832*i
       ['Con una partición más fina, las celdas se parecen', 'cada vez más a cajas. La suma se vuelve integral.']
     ];
     return {
-      world:{x0:-2.3, x1:3.9, y0:-5.5, y1:3.95}, aspect:9.45/6.2,
-      aria:'Animación en seis pasos sobre el elemento de volumen en coordenadas cilíndricas. Uno: un bloque curvo azul flota sobre el suelo, entre las alturas c y d, entre los radios a y b y entre los ángulos alfa y beta; en el suelo, su sombra burdeo, un sector de corona, con los rayos theta igual a alfa y theta igual a beta. Dos: el bloque y su sombra se parten en celdas con una malla. Tres: una celda de la capa de arriba se destaca en naranja, con un punto de muestra en su interior; líneas punteadas la unen con su baldosa en la sombra. Cuatro: abajo a la derecha aparece la misma celda ampliada, unida por una flecha, con sus tres lados rotulados: delta r, r asterisco por delta theta, que es un arco, y delta z. Cinco: la celda recorre el bloque, primero girando en su nivel y luego hacia el eje; en la ampliación el arco se acorta al acercarse al eje. Seis: la partición se hace más fina, de cuatro a ocho cortes por dirección; la celda se achica y en la ampliación se parece cada vez más a una caja.',
+      world:{x0:-2.3, x1:3.9, y0:-10.1, y1:3.95}, aspect:14.05/6.2,
+      aria:'Animación en seis pasos sobre el elemento de volumen en coordenadas cilíndricas. Uno: un bloque curvo azul flota sobre el suelo, entre las alturas c y d, entre los radios a y b y entre los ángulos alfa y beta; en el suelo, su sombra burdeo, un sector de corona, con los rayos theta igual a alfa y theta igual a beta. Dos: el bloque y su sombra se parten en celdas con una malla. Tres: una celda de la capa de arriba se destaca en naranja, con un punto de muestra en su interior; líneas punteadas la unen con su baldosa en la sombra. Cuatro: abajo a la derecha aparece la misma celda ampliada, unida por una flecha, con sus tres lados rotulados: delta r, r asterisco por delta theta, que es un arco, y delta z. Cinco: la celda recorre el bloque, primero girando en su nivel y luego hacia el eje; en la ampliación el arco se acorta al acercarse al eje. Seis: la partición se hace más fina, de cuatro a ocho cortes por dirección; la celda se achica y en la ampliación se parece cada vez más a una caja. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores: el bloque, los tamaños de la partición, el punto de muestra, los lados de la celda, el volumen de la celda, la suma triple y, al final, la integral triple del volumen.',
       labels:PZ,
       sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
       legend:'<span><i class="sw sec"></i> el bloque \\(E\\)</span><span><i class="sw tan"></i> su sombra en el suelo</span><span><i class="sw rise"></i> la celda y \\(\\Delta r\\)</span><span><i class="sw alt"></i> el arco \\(r^{*}\\Delta\\theta\\)</span>',
@@ -288,10 +293,14 @@ function cmCirc(r, z){ var p = [], i, t; for (i = 0; i <= 72; i++){ t = 6.2832*i
           K.P = base;
           K.txt('la celda, ampliada', 2.45, -3.2, C.rise, 11.5, 'center');
         }
-        L('EE', [S.X(-2.2), S.Y(3.7)], 0);
-        if (k === 4) L('E4', [S.X(-2.2), S.Y(-3.55)], 0); if (k === 5) L('E5', [S.X(-2.2), S.Y(-3.55)], 0); if (k === 6) L('E6', [S.X(-2.2), S.Y(-3.55)], 0);
+        /* registro: las expresiones de cada paso se van agregando hacia abajo y no se borran */
+        var nf = k < 6 ? k : (u >= 0.5 ? 7 : 6), y0r = S.Y(-5.25), fi;
+        K.txt('Paso a paso, lo que se va obteniendo:', -2.2, -4.7, C.muted || '#6b6b6b', 11.5);
+        for (fi = 0; fi < nf; fi++){ var act = (fi === k - 1) || (k === 6 && fi === nf - 1); c.beginPath(); c.arc(S.X(-2.05), y0r + FILA[fi], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+          c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (fi + 1), S.X(-2.05), y0r + FILA[fi] + 0.5);
+          L('R' + (fi + 1), [S.X(-1.75), y0r + FILA[fi]], 0); }
         if (k >= 2) K.txt(n + ' × ' + n + ' × ' + n + ' = ' + n*n*n + ' celdas', -2.2, -2.75, C.muted || '#6b6b6b', 11.5);
-        K.txt(TXT[k - 1][0], -2.2, -4.45); K.txt(TXT[k - 1][1], -2.2, -4.45 - 21/(S.X(1) - S.X(0)));
+        K.txt(TXT[k - 1][0], -2.2, -3.75); K.txt(TXT[k - 1][1], -2.2, -3.75 - 21/(S.X(1) - S.X(0)));
         K.txt('paso ' + k + ' de ' + N, 3.8, 3.75, C.muted || '#6b6b6b', 11, 'right');
         T.fin();
       },
