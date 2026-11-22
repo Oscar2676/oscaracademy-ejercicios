@@ -86,6 +86,21 @@ function oaIdeaRev(o){
           else { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(cx, cy + ey + 5); c.lineTo(cx, cy + ey + 9); c.lineTo(cx + 9, cy + ey + 9); c.lineTo(cx + 9, cy + ey + 5); c.stroke(); Lp('DD', cx + 4.5, cy + ey + 20); lab('con su espesor', X(CX), Y(CY) - ey - 12, 'tan', 'center', 11.5); }
         }
       }
+      /* sólido final con hueco: R y r salen del centro formando un ángulo, dos trazos finos de distinto largo */
+      if (hole && k === 7){
+        var fR = f(4), fr = g(4), ccx = X(4), ccy = Y(0), zz = 0.82;
+        function mano(ax, ay, bx, by, col){ c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 4; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.fillStyle = col; c.beginPath(); c.arc(bx, by, 2.2, 0, 6.2832); c.fill(); }
+        /* en la cara del extremo (en perspectiva) */
+        mano(ccx, ccy, ccx, ccy - fR*s, C.rise); mano(ccx, ccy, ccx + E*fr*s*Math.cos(-0.6), ccy + fr*s*Math.sin(-0.6), C.alt);
+        c.fillStyle = C.ink; c.beginPath(); c.arc(ccx, ccy, 2, 0, 6.2832); c.fill();
+        /* la misma cara, vista de frente, a la derecha */
+        var fx = X(CX), fy = Y(CY), RR = fR*s*zz, rr2 = fr*s*zz, a1 = -1.15, a2 = -0.2;
+        c.beginPath(); c.arc(fx, fy, RR, 0, 6.2832); c.fillStyle = C.sec; c.globalAlpha = 0.35*u; c.fill(); c.globalAlpha = u; c.strokeStyle = C.sec; c.lineWidth = 1.2; c.stroke();
+        c.beginPath(); c.arc(fx, fy, rr2, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.stroke();
+        mano(fx, fy, fx + RR*Math.cos(a1), fy + RR*Math.sin(a1), C.rise); mano(fx, fy, fx + rr2*Math.cos(a2), fy + rr2*Math.sin(a2), C.alt);
+        c.fillStyle = C.ink; c.beginPath(); c.arc(fx, fy, 2.2, 0, 6.2832); c.fill(); c.globalAlpha = 1;
+        if (u > 0.5){ Lp('DR', fx + RR*0.55*Math.cos(a1) + 9, fy + RR*0.55*Math.sin(a1), 0); Lp('Dr', fx + rr2*Math.cos(a2) + 6, fy + rr2*Math.sin(a2) + 11, 0); lab('la cara, de frente', fx, fy - RR - 12, 'sec', 'center', 11.5); }
+      }
       /* texto: la fórmula se arma pieza por pieza */
       var x0 = X(-1.8), y0 = Y(-2.45), y0r = Y(-4.2), fi;
       var TX = [['Una región gira alrededor de un eje y forma un sólido' + (hole ? ' hueco.' : '.'), '¿Cuánto mide su volumen?'],

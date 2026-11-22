@@ -54,18 +54,19 @@ function oaSol(o){
       txt(o.axisTxt, X(o.axisAt[0]), Y(o.axisAt[1]), o.axisAl || 'left', C.tan);
       /* radios */
       if (o.dx && v._rc){ c.beginPath(); v._rc.forEach(function(m, j){ if (j) c.lineTo(m[0], m[1]); else c.moveTo(m[0], m[1]); }); c.closePath(); c.fillStyle = 'rgba(255,255,255,0.6)'; c.fill(); c.strokeStyle = C.ink; c.lineWidth = 2; c.setLineDash([]); c.stroke(); }
-      var ani = r(u) > 1e-6, ox = hor ? 5 : 0, oy = hor ? 0 : 5;
-      function radio(pp, d, col){ /* radio fino que nace en el centro (eje), con topes en sus dos extremos */
-        var ax = q[0] + d*ox, ay = q[1] + d*oy, bx = pp[0] + d*ox, by = pp[1] + d*oy;
-        c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 4.2; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke();
-        c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by);
-        if (hor){ c.moveTo(ax - 3, ay); c.lineTo(ax + 3, ay); c.moveTo(bx - 3, by); c.lineTo(bx + 3, by); } else { c.moveTo(ax, ay - 3); c.lineTo(ax, ay + 3); c.moveTo(bx, by - 3); c.lineTo(bx, by + 3); }
-        c.stroke(); }
+      var ani = r(u) > 1e-6;
+      function mano(ex, ey, col){ /* trazo fino desde el centro de la cara, con halo blanco y tope en la punta */
+        c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 4.2; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(ex, ey); c.stroke();
+        c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(ex, ey); c.stroke(); c.fillStyle = col; c.beginPath(); c.arc(ex, ey, 2.6, 0, 6.2832); c.fill(); }
       p = P(u, sg*R(u));
-      if (ani) radio(p, 1, C.rise); else { c.strokeStyle = C.rise; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); }
+      if (ani) mano(p[0], p[1], C.rise); else { c.strokeStyle = C.rise; c.lineWidth = 3; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(p[0], p[1]); c.stroke(); }
       S.dot(hor ? u : o.k + sg*R(u), hor ? o.k + sg*R(u) : u, C.rise);
       txt('R = ' + dec(R(u), 2), p[0] + (hor ? 10 : 0), p[1] + (hor ? (o.Rdy || -4) : -13), hor ? 'left' : 'center', C.rise);
-      if (ani){ p = P(u, sg*r(u)); radio(p, -1, C.alt); c.fillStyle = C.alt; c.beginPath(); c.arc(p[0], p[1], 2.6, 0, 6.2832); c.fill(); txt('r = ' + dec(r(u), 2), p[0] + (hor ? -14 : 0), p[1] + (hor ? -8*sg : 16), hor ? 'right' : 'center', C.alt); }
+      if (ani){ /* r sale del mismo centro, en otra dirección de la cara: los dos radios forman un ángulo y se ve que miden distinto */
+        var dr = rp(r(u)), tR = hor ? (sg > 0 ? -Math.PI/2 : Math.PI/2) : (sg > 0 ? 0 : Math.PI), tr = tR + (hor ? -sg : sg)*0.96, ex, ey;
+        if (hor){ ex = q[0] + E*dr*Math.cos(tr); ey = q[1] + dr*Math.sin(tr); } else { ex = q[0] + dr*Math.cos(tr); ey = q[1] + E*dr*Math.sin(tr); }
+        mano(ex, ey, '#ffffff'); mano(ex, ey, C.alt);
+        txt('r = ' + dec(r(u), 2), ex + (ex >= q[0] ? 8 : -8), ey + (hor ? 0 : 12), ex >= q[0] ? 'left' : 'right', C.alt); }
       c.fillStyle = C.ink; c.beginPath(); c.arc(q[0], q[1], ani ? 2.2 : 3, 0, 6.2832); c.fill();
       if (o.dx && v._dx){ var e0 = v._dx[1], e1 = v._dx[2], of = 9*sg; c.strokeStyle = C.ink; c.lineWidth = 1.4; c.beginPath();
         if (hor){ c.moveTo(e0[0], e0[1] + of - 4); c.lineTo(e0[0], e0[1] + of + 4); c.moveTo(e0[0], e0[1] + of); c.lineTo(e1[0], e1[1] + of); c.moveTo(e1[0], e1[1] + of - 4); c.lineTo(e1[0], e1[1] + of + 4); }
