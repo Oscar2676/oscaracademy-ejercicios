@@ -41,11 +41,15 @@ EXTRA_CSS = """
 head = head.replace('</style>', EXTRA_CSS + '</style>', 1)
 LOTE = 'l' + NUM
 sheets = []
+# Crédito al pie de cada hoja y bajo cada animación (pedido de Óscar, 22-nov-2026): misma función que sitio/credito.py
+import importlib.util as _iu
+_sp = _iu.spec_from_file_location('credito', ROOT.parent/'sitio'/'credito.py'); _cr = _iu.module_from_spec(_sp); _sp.loader.exec_module(_cr)
 for f in sorted((ROOT/'src'/LOTE).glob('*.html')):
     txt = f.read_text(encoding='utf-8')
     art, js = txt.split('<!--SCENE-->')
     meta = dict(re.findall(r'<!--(\w+):(.*?)-->', art))
     art = re.sub(r'<!--\w+:.*?-->\n?', '', art).strip()
+    art = _cr.poner(art)
     sheets.append((meta, art, js.strip()))
 def page(title, body, js, extra=''):
     h = re.sub(r'<title>.*?</title>', '<title>' + html.escape(title) + ' | Oscar Academy</title>', head, count=1)
