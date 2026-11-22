@@ -1,0 +1,172 @@
+<!--file:H14_series_harmonicas_y_series_p.html-->
+<!--title:Series harmónicas y series-p-->
+<!--id:ss-armonica-p-->
+<!--tab:H14 Armónica y series p-->
+<article class="sheet" id="ss-armonica-p" data-hoja="L25 H14">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Series harmónicas y series-p</b></li>
+    </ol>
+    <h1>Series harmónicas y series-p</h1>
+    <p class="lede">La serie armónica (también se escribe «harmónica») suma los inversos de los naturales y diverge, aunque sus términos tienden a cero. Es el caso \(p=1\) de las series \(p\), que convergen solo cuando \(p&gt;1\). \[\sum_{n=1}^{\infty}\dfrac{1}{n^{p}}\ \text{ converge si }p&gt;1\ \text{ y diverge si }p\le 1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie armónica \(1+\dfrac{1}{2}+\dfrac{1}{3}+\dfrac{1}{4}+\cdots\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="arm-idea"></div>
+  <ul class="keys">
+    <li><b>Columnas azules:</b> los términos. Todas tienen el mismo ancho; el alto de la columna \(n\) es \(\dfrac{1}{n}\).</li>
+    <li><b>Parte naranja:</b> en cada grupo, todas las columnas se recortan al alto de la más baja. Lo naranja de cada grupo vale exactamente \(\dfrac{1}{2}\); el grupo completo vale eso o más.</li>
+    <li><b>Grupos:</b> terminan en las columnas \(2,\ 4,\ 8,\ 16,\ \ldots\) Cada grupo tiene el doble de columnas que el anterior. En el paso 5 las columnas se angostan para que quepa el grupo siguiente.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones y resultado</h3>
+    <ol class="steps">
+      <li><b>Serie armónica:</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}=1+\dfrac{1}{2}+\dfrac{1}{3}+\dfrac{1}{4}+\cdots\)</li>
+      <li><b>Serie \(p\):</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{p}}=1+\dfrac{1}{2^{p}}+\dfrac{1}{3^{p}}+\cdots\), con \(p\) un número real fijo. La armónica es la serie \(p\) con \(p=1\).</li>
+      <li><b>Resultado:</b> la serie \(p\) converge si \(p&gt;1\) y diverge si \(p\le 1\). En particular, la armónica diverge.</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) que una sucesión que supera cualquier número no tiene límite real; (2) que una sucesión creciente y acotada por arriba tiene límite real, y que ese límite no pasa de la cota (hoja «Sucesiones monótonas acotadas»); (3) las propiedades de las potencias de exponente real: para \(n\ge 1\) y \(p\le 1\) se cumple \(n^{p}\le n\); para \(p&gt;1\) se cumple \(2^{\,p-1}&gt;1\); y \((2^{\,j})^{p}=2^{\,jp}\). En esta hoja no se calcula la suma de las series \(p\) convergentes: solo se demuestra que existe.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: la serie armónica diverge</h3>
+    <ol class="steps">
+      <li>Después del \(1\), los términos se agrupan en bloques que terminan en \(n=2,\ 4,\ 8,\ \ldots\): el bloque \(j\) va desde \(n=2^{\,j-1}+1\) hasta \(n=2^{\,j}\), con \(j=1,\ 2,\ 3,\ \ldots\)</li>
+      <li>El bloque \(j\) tiene \(2^{\,j}-2^{\,j-1}=2^{\,j-1}\) términos.</li>
+      <li>En el bloque, \(n\le 2^{\,j}\); entonces cada término cumple \(\dfrac{1}{n}\ge\dfrac{1}{2^{\,j}}\).</li>
+      <li>La suma del bloque es al menos la cantidad de términos por el menor: \(2^{\,j-1}\cdot\dfrac{1}{2^{\,j}}=\dfrac{1}{2}\).</li>
+      <li>La suma parcial hasta \(n=2^{\,m}\) es el \(1\) más \(m\) bloques: \(S_{2^{m}}\ge 1+\underbrace{\tfrac{1}{2}+\cdots+\tfrac{1}{2}}_{m\ \text{veces}}=1+\dfrac{m}{2}\).</li>
+      <li>Dado cualquier número, hay un \(m\) con \(1+\dfrac{m}{2}\) mayor que él. Las sumas parciales superan cualquier número: no tienen límite real.</li>
+      <li>La serie armónica diverge.</li>
+    </ol>
+    <p>Los términos \(\dfrac{1}{n}\) tienen límite \(0\) y aun así la serie diverge: es el ejemplo que muestra que el recíproco del criterio del enésimo término es falso.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Demostración paso a paso: las series \(p\)</h3>
+    <p><b>Si \(p\le 1\), diverge.</b></p>
+    <ol class="steps">
+      <li>Para \(n\ge 1\) y \(p\le 1\): \(n^{p}\le n\). Al invertir números positivos la desigualdad se da vuelta: \(\dfrac{1}{n^{p}}\ge\dfrac{1}{n}\).</li>
+      <li>Sumando desde \(1\) hasta \(n\): cada suma parcial de la serie \(p\) es mayor o igual que la de la armónica.</li>
+      <li>Las de la armónica superan cualquier número; las de la serie \(p\) también. La serie diverge.</li>
+    </ol>
+    <p><b>Si \(p&gt;1\), converge.</b> Ahora los bloques empiezan en \(n=1,\ 2,\ 4,\ 8,\ \ldots\): el bloque \(j\) va desde \(n=2^{\,j}\) hasta \(n=2^{\,j+1}-1\), con \(j=0,\ 1,\ 2,\ \ldots\)</p>
+    <ol class="steps">
+      <li>El bloque \(j\) tiene \(2^{\,j+1}-2^{\,j}=2^{\,j}\) términos.</li>
+      <li>En el bloque, \(n\ge 2^{\,j}\); entonces cada término cumple \(\dfrac{1}{n^{p}}\le\dfrac{1}{(2^{\,j})^{p}}=\dfrac{1}{2^{\,jp}}\).</li>
+      <li>La suma del bloque es a lo más \(2^{\,j}\cdot\dfrac{1}{2^{\,jp}}=\dfrac{1}{2^{\,j(p-1)}}=q^{\,j}\), con \(q=\dfrac{1}{2^{\,p-1}}\). Como \(p&gt;1\), \(0&lt;q&lt;1\).</li>
+      <li>Los primeros \(m\) bloques llegan hasta \(n=2^{\,m}-1\): \(S_{2^{m}-1}\le 1+q+q^{2}+\cdots+q^{\,m-1}=\dfrac{1-q^{\,m}}{1-q}&lt;\dfrac{1}{1-q}\) (suma parcial geométrica, hoja «Series geométricas infinitas»).</li>
+      <li>Para cualquier \(n\) se cumple \(n\le 2^{\,n}-1\), y los términos son positivos: \(S_{n}\le S_{2^{n}-1}&lt;\dfrac{1}{1-q}\).</li>
+      <li>Las sumas parciales crecen (se suman términos positivos) y están acotadas por arriba: tienen límite real (ver el aviso de rigor). La serie converge.</li>
+    </ol>
+    <p><b>Con \(p=2\):</b> \(q=\dfrac{1}{2}\) y la cota es \(\dfrac{1}{1-\frac{1}{2}}=2\). La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\) converge y su suma no pasa de \(2\). Su valor exacto es \(\dfrac{\pi^{2}}{6}\approx 1{,}645\), resultado de Euler que aquí se enuncia sin demostrar.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es una serie \(p\) con \(p=3\).</li>
+    <li>\(3&gt;1\): la serie converge.</li>
+    <li>Cota de la suma con \(q=\dfrac{1}{2^{\,3-1}}=\dfrac{1}{4}\): no pasa de \(\dfrac{1}{1-\frac{1}{4}}=\dfrac{4}{3}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{\sqrt{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe la raíz como potencia: \(\sqrt{n}=n^{1/2}\). Es una serie \(p\) con \(p=\dfrac{1}{2}\).</li>
+    <li>\(\dfrac{1}{2}\le 1\): la serie diverge.</li>
+    <li>Sus términos tienen límite \(0\); el criterio del enésimo término no lo habría detectado.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un múltiplo de la armónica. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{5}{n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se saca el factor \(5\) de cada suma parcial: \(\displaystyle\sum_{k=1}^{n}\dfrac{5}{k}=5\sum_{k=1}^{n}\dfrac{1}{k}\).</li>
+    <li>Las sumas parciales de la armónica superan cualquier número; multiplicadas por \(5\), también.</li>
+    <li>La serie diverge. Multiplicar por una constante distinta de cero no arregla la divergencia.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la armónica diverge muy lento. ¿Cuántos términos aseguran una suma parcial mayor o igual que \(5\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se usa la cota \(S_{2^{m}}\ge 1+\dfrac{m}{2}\) y se pide \(1+\dfrac{m}{2}\ge 5\).</li>
+    <li>Se resta \(1\): \(\dfrac{m}{2}\ge 4\). Se multiplica por \(2\): \(m\ge 8\).</li>
+    <li>Con \(m=8\): \(2^{8}=256\) términos aseguran \(S_{256}\ge 5\).</li>
+    <li>La cota asegura, pero no es la cantidad mínima: sumando término a término, la primera suma parcial que pasa de \(5\) es \(S_{83}\approx 5{,}002\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que la armónica converge porque sus términos tienden a cero, o porque al sumar muchos términos «casi no cambia»: crece muy lento, pero sin tope. Confundir una serie \(p\) con una geométrica: en \(\dfrac{1}{n^{2}}\) la variable \(n\) está en la base; en \(\dfrac{1}{2^{n}}\) está en el exponente. Olvidar que el borde \(p=1\) es divergente: converge solo si \(p\) es estrictamente mayor que \(1\). Y no reescribir raíces como potencias antes de leer \(p\): \(\dfrac{1}{n\sqrt{n}}=\dfrac{1}{n^{3/2}}\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si cada serie converge o diverge: (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n\sqrt{n}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{\sqrt[3]{n}}\); (c) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3}{n^{4}}\).</p>
+    <details><summary>Pista</summary><div><p>Escribe cada término como \(\dfrac{c}{n^{p}}\) y compara \(p\) con \(1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(n\sqrt{n}=n^{1}\cdot n^{1/2}=n^{3/2}\). Serie \(p\) con \(p=\dfrac{3}{2}&gt;1\): converge.</li>
+        <li>(b) \(\sqrt[3]{n}=n^{1/3}\). Serie \(p\) con \(p=\dfrac{1}{3}\le 1\): diverge.</li>
+        <li>(c) Cada suma parcial es \(3\) veces la de \(\displaystyle\sum\dfrac{1}{n^{4}}\), serie \(p\) con \(p=4&gt;1\), que converge. Una constante por una sucesión con límite tiene límite: la serie converge.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Calcula la suma parcial \(S_{4}\) de la serie armónica. (b) Con la cota \(S_{2^{m}}\ge 1+\dfrac{m}{2}\), halla una cantidad de términos que asegure una suma parcial mayor o igual que \(4\). (c) Para \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\), calcula \(S_{3}\) y comprueba que no pasa de \(1+\dfrac{1}{2}\), la cota de dos bloques.</p>
+    <details><summary>Pista</summary><div><p>En (a), denominador común \(12\). En (c), denominador común \(36\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(S_{4}=1+\dfrac{1}{2}+\dfrac{1}{3}+\dfrac{1}{4}=\dfrac{12}{12}+\dfrac{6}{12}+\dfrac{4}{12}+\dfrac{3}{12}=\dfrac{25}{12}\approx 2{,}083\). La cota con \(m=2\) da \(1+\dfrac{2}{2}=2\), y \(\dfrac{25}{12}\ge 2\). ✓</li>
+        <li>(b) \(1+\dfrac{m}{2}\ge 4\) equivale a \(\dfrac{m}{2}\ge 3\), es decir, \(m\ge 6\). Con \(m=6\): \(2^{6}=64\) términos aseguran \(S_{64}\ge 4\).</li>
+        <li>(c) \(S_{3}=1+\dfrac{1}{4}+\dfrac{1}{9}=\dfrac{36}{36}+\dfrac{9}{36}+\dfrac{4}{36}=\dfrac{49}{36}\approx 1{,}361\).</li>
+        <li>\(1+\dfrac{1}{2}=\dfrac{3}{2}=\dfrac{54}{36}\), y \(\dfrac{49}{36}\le\dfrac{54}{36}\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Camila se propone un plan de trote cada vez más suave: el día \(n\) corre \(\dfrac{10}{n}\) kilómetros (\(10\) el primer día, \(5\) el segundo, y así). ¿Llegará alguna vez a acumular \(40\) kilómetros? ¿Cuántos días lo aseguran? ¿Y para acumular \(100\) kilómetros?</p>
+    <details><summary>Pista</summary><div><p>Lo acumulado en \(n\) días es \(10\) veces la suma parcial \(S_{n}\) de la serie armónica. Usa \(S_{2^{m}}\ge 1+\dfrac{m}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Acumulado en \(n\) días: \(\displaystyle\sum_{k=1}^{n}\dfrac{10}{k}=10\,S_{n}\), con \(S_{n}\) la suma parcial de la armónica.</li>
+        <li>La armónica diverge: \(10\,S_{n}\) supera cualquier número. Sí llega a \(40\) kilómetros, y a cualquier otra distancia.</li>
+        <li>Para \(40\): se pide \(10\left(1+\dfrac{m}{2}\right)\ge 40\), es decir, \(1+\dfrac{m}{2}\ge 4\), \(m\ge 6\). Con \(2^{6}=64\) días es seguro. (Sumando día a día, se alcanza antes: el día \(31\).)</li>
+        <li>Para \(100\): \(1+\dfrac{m}{2}\ge 10\), \(m\ge 18\). La cota asegura \(2^{18}=262\,144\) días: más de \(700\) años.</li>
+        <li>El plan no tiene tope, pero avanza lentísimo: así diverge la serie armónica.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H14 · v001 · Pendiente de APR</span>
+</footer>
+</article>

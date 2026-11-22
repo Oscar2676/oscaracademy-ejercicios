@@ -1,0 +1,181 @@
+<!--file:H12_series_geometricas_infinitas.html-->
+<!--title:Series geométricas infinitas-->
+<!--id:ss-geo-inf-->
+<!--tab:H12 Geométricas infinitas-->
+<article class="sheet" id="ss-geo-inf" data-hoja="L25 H12">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Series geométricas infinitas</b></li>
+    </ol>
+    <h1>Series geométricas infinitas</h1>
+    <p class="lede">En una serie geométrica cada término es el anterior multiplicado por un mismo número \(r\), la razón. Con primer término \(a\neq 0\), la serie converge exactamente cuando \(|r|&lt;1\), y entonces su suma es \[\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+\cdots=\dfrac{a}{1-r}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(1+\dfrac{2}{3}+\dfrac{4}{9}+\dfrac{8}{27}+\cdots\), de razón \(\dfrac{2}{3}\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="geo-idea"></div>
+  <ul class="keys">
+    <li><b>Barra azul:</b> la suma parcial \(S_{4}\); cada tramo es un término.</li>
+    <li><b>Barra verde:</b> la misma suma multiplicada por la razón, \(\dfrac{2}{3}S_{4}\). Cada tramo queda bajo el tramo azul del mismo largo.</li>
+    <li><b>Tramos naranjas:</b> los únicos que no tienen pareja al restar: el primer término, \(1\), y el último de la barra verde, \(\dfrac{16}{81}\).</li>
+    <li><b>Marca burdeo:</b> la suma de la serie, \(3\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie geométrica:</b> \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+ar^{3}+\cdots\), con \(a\neq 0\).</li>
+      <li><b>Primer término:</b> \(a\). <b>Razón:</b> \(r\), el número por el que se multiplica un término para obtener el siguiente.</li>
+      <li><b>Cómo reconocerla:</b> el cociente entre cada término y el anterior es siempre el mismo (cuando \(r\neq 0\)). Ese cociente es \(r\).</li>
+      <li>Si \(r=0\), la serie es \(a+0+0+\cdots\) y su suma es \(a\).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: que \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\) cuando \(|r|&lt;1\); y que el límite de una suma, de una resta y de una constante por una sucesión se calculan término a término cuando los límites existen. Esas demostraciones corresponden a la hoja «Límite de una sucesión».</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso</h3>
+    <p><b>Primera parte: la suma parcial, con \(r\neq 1\).</b></p>
+    <ol class="steps">
+      <li>Suma parcial: \(S_{n}=\displaystyle\sum_{k=1}^{n}a\,r^{\,k-1}=a+ar+ar^{2}+\cdots+ar^{\,n-1}\).</li>
+      <li>Se multiplica por \(r\) (distributiva): \(r\,S_{n}=ar+ar^{2}+\cdots+ar^{\,n-1}+ar^{\,n}\).</li>
+      <li>Se resta la segunda de la primera. Los términos \(ar,\ ar^{2},\ \ldots,\ ar^{\,n-1}\) están en las dos y se cancelan: \(S_{n}-r\,S_{n}=a-ar^{\,n}\).</li>
+      <li>Factor común en cada lado: \((1-r)\,S_{n}=a\,(1-r^{\,n})\).</li>
+      <li>Como \(r\neq 1\), \(1-r\neq 0\) y se puede dividir: \(S_{n}=\dfrac{a\,(1-r^{\,n})}{1-r}\).</li>
+    </ol>
+    <p><b>Segunda parte: si \(|r|&lt;1\), converge.</b></p>
+    <ol class="steps">
+      <li>\(|r|&lt;1\) implica \(r\neq 1\): vale la fórmula de \(S_{n}\).</li>
+      <li>Al crecer \(n\), \(r^{\,n}\) tiene límite \(0\) (ver el aviso de rigor).</li>
+      <li>Entonces \(\displaystyle\lim_{n\to\infty}S_{n}=\dfrac{a\,(1-0)}{1-r}=\dfrac{a}{1-r}\).</li>
+      <li>El límite es un número real: la serie converge y su suma es \(\dfrac{a}{1-r}\).</li>
+    </ol>
+    <p><b>Tercera parte: si \(|r|\ge 1\), diverge.</b></p>
+    <ol class="steps">
+      <li>El valor absoluto del término \(n\) es \(|a|\cdot|r|^{\,n-1}\).</li>
+      <li>Como \(|r|\ge 1\), se cumple \(|r|^{\,n-1}\ge 1\). Entonces \(|a\,r^{\,n-1}|\ge|a|\), y \(|a|&gt;0\) porque \(a\neq 0\).</li>
+      <li>Los términos se mantienen a distancia \(|a|\) o más del cero: no tienen límite \(0\).</li>
+      <li>Si una serie converge, sus términos tienen límite \(0\) (se demuestra en la hoja «Criterio del enésimo término»). Aquí no lo tienen: la serie diverge.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>La razón decide: número ↔ figura</h3>
+    <p>Las ocho primeras sumas parciales de \(1+r+r^{2}+\cdots\) (primer término \(a=1\)). Mueve \(r\) y mira qué pasa con los puntos.</p>
+    <div class="stage" data-scene="geo-vivo"></div>
+    <ul class="keys">
+      <li><b>Puntos:</b> las sumas parciales \(S_{1},\ \ldots,\ S_{8}\), cada una con su punteada hasta el eje \(S_{n}\).</li>
+      <li><b>Línea burdeo punteada:</b> la suma \(\dfrac{1}{1-r}\). Solo aparece cuando \(|r|&lt;1\).</li>
+      <li><b>Caso \(r=0\):</b> todas las sumas parciales valen \(1\). <b>Caso \(r=1\):</b> \(S_{n}=n\), crece sin tope. <b>Caso \(r=-1\):</b> \(1,\ 0,\ 1,\ 0,\ \ldots\), oscila.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: razón positiva. \(\displaystyle\sum_{n=1}^{\infty}3\left(\dfrac{1}{2}\right)^{n-1}=3+\dfrac{3}{2}+\dfrac{3}{4}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primer término: \(a=3\). Razón: \(r=\dfrac{1}{2}\).</li>
+    <li>\(|r|=\dfrac{1}{2}&lt;1\): la serie converge.</li>
+    <li>Suma: \(\dfrac{a}{1-r}=\dfrac{3}{1-\frac{1}{2}}=\dfrac{3}{\frac{1}{2}}\).</li>
+    <li>Dividir por \(\dfrac{1}{2}\) es multiplicar por \(2\): la suma es \(6\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: razón negativa. \(\displaystyle\sum_{n=1}^{\infty}5\left(-\dfrac{2}{3}\right)^{n-1}=5-\dfrac{10}{3}+\dfrac{20}{9}-\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primer término: \(a=5\). Razón: \(r=-\dfrac{2}{3}\).</li>
+    <li>\(|r|=\dfrac{2}{3}&lt;1\): la serie converge.</li>
+    <li>Denominador: \(1-r=1-\left(-\dfrac{2}{3}\right)=1+\dfrac{2}{3}=\dfrac{5}{3}\).</li>
+    <li>Suma: \(\dfrac{5}{\frac{5}{3}}=5\cdot\dfrac{3}{5}=3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: hallar \(a\) y \(r\) escribiendo los términos. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{4}{3^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(\dfrac{4}{3},\ \dfrac{4}{9},\ \dfrac{4}{27},\ \ldots\)</li>
+    <li>Primer término: \(a=\dfrac{4}{3}\) (no es \(4\)).</li>
+    <li>Razón: \(\dfrac{4}{3^{n+1}}\div\dfrac{4}{3^{n}}=\dfrac{4}{3^{n+1}}\cdot\dfrac{3^{n}}{4}=\dfrac{1}{3}\). Entonces \(r=\dfrac{1}{3}\) y \(|r|&lt;1\): converge.</li>
+    <li>Suma: \(\dfrac{\frac{4}{3}}{1-\frac{1}{3}}=\dfrac{\frac{4}{3}}{\frac{2}{3}}=\dfrac{4}{3}\cdot\dfrac{3}{2}=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: diverge. \(\displaystyle\sum_{n=1}^{\infty}2\left(\dfrac{3}{2}\right)^{n-1}=2+3+\dfrac{9}{2}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primer término: \(a=2\). Razón: \(r=\dfrac{3}{2}\).</li>
+    <li>\(|r|=\dfrac{3}{2}\ge 1\): la serie diverge. No tiene suma.</li>
+    <li>La fórmula de la suma parcial sí vale, porque \(r\neq 1\): \(S_{n}=\dfrac{2\left(1-\left(\frac{3}{2}\right)^{n}\right)}{1-\frac{3}{2}}=\dfrac{2\left(1-\left(\frac{3}{2}\right)^{n}\right)}{-\frac{1}{2}}=4\left(\left(\dfrac{3}{2}\right)^{n}-1\right)\).</li>
+    <li>Comprobación con \(n=2\): \(4\left(\dfrac{9}{4}-1\right)=4\cdot\dfrac{5}{4}=5=2+3\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Usar \(\dfrac{a}{1-r}\) sin revisar que \(|r|&lt;1\): con \(a=1\) y \(r=2\) daría \(\dfrac{1}{1-2}=-1\), un número negativo para \(1+2+4+8+\cdots\), que diverge. Tomar como \(a\) el número que acompaña a la potencia en vez del primer término (ejemplo 3). Equivocar el signo de \(1-r\) cuando \(r\) es negativa (ejemplo 2). Y usar la fórmula de \(S_{n}\) con \(r=1\): ahí el denominador es cero; con \(r=1\), \(S_{n}=n\,a\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si cada serie converge y, si converge, calcula su suma: (a) \(\displaystyle\sum_{n=1}^{\infty}7\left(\dfrac{1}{8}\right)^{n-1}\); (b) \(\displaystyle\sum_{n=1}^{\infty}9\left(-\dfrac{1}{2}\right)^{n-1}\); (c) \(\displaystyle\sum_{n=1}^{\infty}\left(\dfrac{5}{4}\right)^{n-1}\).</p>
+    <details><summary>Pista</summary><div><p>Identifica \(a\) y \(r\), y compara \(|r|\) con \(1\) antes de usar la fórmula.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(a=7\), \(r=\dfrac{1}{8}\), \(|r|&lt;1\): converge. Suma: \(\dfrac{7}{1-\frac{1}{8}}=\dfrac{7}{\frac{7}{8}}=7\cdot\dfrac{8}{7}=8\).</li>
+        <li>(b) \(a=9\), \(r=-\dfrac{1}{2}\), \(|r|=\dfrac{1}{2}&lt;1\): converge. \(1-r=1+\dfrac{1}{2}=\dfrac{3}{2}\). Suma: \(\dfrac{9}{\frac{3}{2}}=9\cdot\dfrac{2}{3}=6\).</li>
+        <li>(c) \(a=1\), \(r=\dfrac{5}{4}\), \(|r|=\dfrac{5}{4}\ge 1\): diverge. No tiene suma.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Escribe el decimal periódico \(0{,}272727\ldots\) como serie geométrica y úsala para expresarlo como fracción irreducible.</p>
+    <details><summary>Pista</summary><div><p>\(0{,}272727\ldots=\dfrac{27}{100}+\dfrac{27}{100^{2}}+\dfrac{27}{100^{3}}+\cdots\)</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(0{,}272727\ldots=\displaystyle\sum_{n=1}^{\infty}\dfrac{27}{100^{n}}\). Primer término: \(a=\dfrac{27}{100}\). Razón: \(r=\dfrac{1}{100}\).</li>
+        <li>\(|r|&lt;1\): converge.</li>
+        <li>Suma: \(\dfrac{\frac{27}{100}}{1-\frac{1}{100}}=\dfrac{\frac{27}{100}}{\frac{99}{100}}=\dfrac{27}{99}\).</li>
+        <li>Se simplifica por \(9\): \(\dfrac{27}{99}=\dfrac{3}{11}\).</li>
+        <li>Comprobación: \(3\div 11=0{,}2727\ldots\) ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una pelota se deja caer desde \(6\) metros. En cada rebote sube \(\dfrac{2}{3}\) de la altura desde la que cayó. Con este modelo (rebotes sin fin, cada vez más bajos), ¿cuál es la suma de todas las distancias que recorre, bajando y subiendo?</p>
+    <details><summary>Pista</summary><div><p>La primera bajada es de \(6\) metros. Después, cada altura se recorre dos veces: una subiendo y otra bajando. Las subidas son \(4,\ \dfrac{8}{3},\ \dfrac{16}{9},\ \ldots\)</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Primera subida: \(\dfrac{2}{3}\cdot 6=4\) metros. Cada subida siguiente es \(\dfrac{2}{3}\) de la anterior: las subidas forman una serie geométrica con \(a=4\) y \(r=\dfrac{2}{3}\).</li>
+        <li>\(|r|&lt;1\): converge. Suma de las subidas: \(\dfrac{4}{1-\frac{2}{3}}=\dfrac{4}{\frac{1}{3}}=12\) metros.</li>
+        <li>Cada subida va seguida de una bajada igual: subidas y bajadas posteriores suman \(2\cdot 12=24\) metros.</li>
+        <li>Se agrega la primera bajada: \(6+24=30\) metros.</li>
+        <li>La suma de todas las distancias es \(30\) metros. Es el límite del modelo: una pelota real deja de rebotar.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H12 · v001 · Pendiente de APR</span>
+</footer>
+</article>

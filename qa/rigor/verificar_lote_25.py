@@ -141,4 +141,54 @@ SBn = lambda n: F(3*n+1,n+2)
 ok(all(SBn(n) == 3-F(5,n+2) for n in range(1,300)) and SBn(1) == F(4,3) and SBn(2) == F(7,4) and SBn(2)-SBn(1) == F(21,12)-F(16,12) == F(5,12), 'H11 B')
 ok(all(sum(F(2,2**k) for k in range(1,n+1)) == 2*(1-F(1,2**n)) for n in range(1,60)) and [F(2,2**k) for k in (1,2,3)] == [1,F(1,2),F(1,4)] and 2*F(31,32) == F(31,16) == F(19375,10000) and 2-F(31,16) == F(1,16) and F(1,16)*100 == F(625,100), 'H11 C')
 ok([(2**n-1, 2**n) for n in (1,7)] == [(1,2),(127,128)], 'H11 ser-vivo')
-print('Lote 25 H01–H11:', 'sin errores' if not err else f'{err} errores')
+# H12 · series geométricas infinitas
+geo = lambda a, r, n: sum(a*r**(k-1) for k in range(1, n+1))
+ok(parc(lambda k: F(2,3)**(k-1), 4) == [1,F(5,3),F(19,9),F(65,27)] and F(2,3)*F(65,27) == F(2,3)+F(4,9)+F(8,27)+F(16,81) == F(130,81) and F(65,27)-F(130,81) == 1-F(16,81) == F(65,81) and 3*F(65,81) == F(65,27), 'H12 anim')
+ok(all(geo(1,F(2,3),n) == 3*(1-F(2,3)**n) for n in range(1,60)) and 1/(1-F(2,3)) == 3, 'H12 anim R5')
+for a in [F(x,2) for x in range(-6, 7) if x]:
+    for r in [F(x,4) for x in range(-9, 10) if x != 4]:
+        ok(all(geo(a,r,n) == a*(1-r**n)/(1-r) and geo(a,r,n)-r*geo(a,r,n) == a-a*r**n for n in range(1,20)), 'H12 k2 suma parcial')
+        if abs(r) >= 1: ok(all(abs(a*r**(n-1)) >= abs(a) for n in range(1,20)), 'H12 k2 |r| >= 1')
+ok(all(geo(F(5,2),1,n) == n*F(5,2) for n in range(1,30)) and parc(lambda k: (-1)**(k-1), 4) == [1,0,1,0] and all(geo(1,0,n) == 1 for n in range(1,9)), 'H12 r = 1, r = −1, r = 0')
+ok(3/(1-F(1,2)) == 6 and [3*F(1,2)**k for k in range(3)] == [3,F(3,2),F(3,4)], 'H12 e1')
+ok(1+F(2,3) == F(5,3) and 5/F(5,3) == 3 and [5*F(-2,3)**k for k in range(3)] == [5,F(-10,3),F(20,9)], 'H12 e2')
+ok([F(4,3**n) for n in (1,2,3)] == [F(4,3),F(4,9),F(4,27)] and all(F(4,3**(n+1))/F(4,3**n) == F(1,3) for n in range(1,30)) and F(4,3)/(1-F(1,3)) == 2, 'H12 e3')
+ok([2*F(3,2)**k for k in range(3)] == [2,3,F(9,2)] and all(geo(2,F(3,2),n) == 4*(F(3,2)**n-1) for n in range(1,40)) and 4*(F(9,4)-1) == 5, 'H12 e4')
+ok(1/F(1-2) == -1 and 7/(1-F(1,8)) == 8 and 9/(1+F(1,2)) == 6, 'H12 error frecuente y A')
+ok(F(27,100)/(1-F(1,100)) == F(27,99) == F(3,11) and all(sum(F(27,100**k) for k in range(1,n+1)) == F(3,11)*(1-F(1,100**n)) for n in range(1,30)) and str(3/11)[:8] == '0.272727', 'H12 B')
+ok(F(2,3)*6 == 4 and 4/(1-F(2,3)) == 12 and 6+2*12 == 30 and [4*F(2,3)**k for k in range(3)] == [4,F(8,3),F(16,9)], 'H12 C')
+ok([1/(1-F(x,4)) for x in (-3,-2,-1,0,1,2,3)] == [F(4,7),F(2,3),F(4,5),1,F(4,3),2,4], 'H12 geo-vivo')
+# H13 · criterio del enésimo término
+SG = parc(lambda k: F(2,3)**(k-1), 6)
+ok(SG == [1,F(5,3),F(19,9),F(65,27),F(211,81),F(665,243)] and all(SG[i]-SG[i-1] == F(2,3)**i for i in range(1,6)), 'H13 anim')
+bl = [F(1,m) for m in range(1,40) for _ in range(m)]
+ok(all(sum(bl[:m*(m+1)//2]) == m for m in range(1,40)), 'H13 k3 bloques')
+ok(all(F(n,n+1) == 1-F(1,n+1) for n in range(1,300)), 'H13 e1')
+ok(all(F(2*n+1,5*n-3) == (2+F(1,n))/(5-F(3,n)) and 5*n-3 != 0 for n in range(1,300)) and abs(F(2*10**6+1,5*10**6-3)-F(2,5)) < F(1,10**6), 'H13 e3')
+ok(all(F(3*n-1,n+4) == (3-F(1,n))/(1+F(4,n)) for n in range(1,300)) and abs(F(3*10**6-1,10**6+4)-3) < F(1,10**4), 'H13 A a')
+ok(F(2**7,100) == F(128,100) and 2**6 < 100 < 2**7 and all(F(2**n,100) > 1 for n in range(7,60)), 'H13 A c')
+SB13 = lambda n: F(4*n,2*n+1)
+ok(all(SB13(n) == 2-F(2,2*n+1) and 0 < F(2,2*n+1) < F(1,n) for n in range(1,300)) and all(SB13(n)-SB13(n-1) == F(4,4*n*n-1) and 4*n*(2*n-1)-(4*n-4)*(2*n+1) == 4 and (2*n+1)*(2*n-1) == 4*n*n-1 for n in range(2,300)) and all(4*n*n-1 >= 3*n and 0 < F(4,4*n*n-1) <= F(4,3*n) for n in range(1,300)), 'H13 B')
+aC = lambda n: 20000+F(30000,n)
+ok([aC(1),aC(2),aC(3)] == [50000,35000,30000] and all(aC(n) > 20000 for n in range(1,500)) and 20000*50 == 1000000 and sum(aC(n) for n in range(1,51)) > 1000000, 'H13 C')
+# H14 · serie armónica y series p
+Hn = lambda n: sum(F(1,k) for k in range(1,n+1))
+ok(F(1,3)+F(1,4) > 2*F(1,4) == F(1,2) and F(1,5)+F(1,6)+F(1,7)+F(1,8) > 4*F(1,8) == F(1,2) and Hn(8) > 1+3*F(1,2) == F(5,2) and Hn(16) > 3, 'H14 anim')
+for j in range(1, 11):
+    blq = [F(1,n) for n in range(2**(j-1)+1, 2**j+1)]
+    ok(len(blq) == 2**(j-1) and min(blq) == F(1,2**j) and sum(blq) >= F(1,2), 'H14 k2 bloque')
+ok(all(Hn(2**m) >= 1+F(m,2) for m in range(0,11)), 'H14 k2 cota')
+for p in (2, 3, 4):
+    q = F(1,2**(p-1)); Sp = lambda n: sum(F(1,k**p) for k in range(1,n+1))
+    for j in range(0, 9):
+        blq = [F(1,n**p) for n in range(2**j, 2**(j+1))]
+        ok(len(blq) == 2**j and max(blq) == F(1,2**(j*p)) and sum(blq) <= q**j, 'H14 k3 bloque')
+    ok(all(Sp(2**m-1) <= sum(q**j for j in range(m)) == (1-q**m)/(1-q) < 1/(1-q) for m in range(1,10)), 'H14 k3 cota')
+ok(all(n <= 2**n-1 for n in range(1,200)), 'H14 k3 n <= 2^n − 1')
+from math import pi
+ok(1/(1-F(1,2)) == 2 and abs(pi*pi/6-1.645) < 5e-4 and sum(1/k**2 for k in range(1,200000)) < pi*pi/6 < 2 and 1/(1-F(1,4)) == F(4,3) and sum(1/k**3 for k in range(1,20000)) < 4/3, 'H14 p = 2 y e1 (π²/6 solo numérico)')
+ok(all(k**0.5 <= k and 1/k**0.5 >= 1/k for k in range(1,2000)), 'H14 e2 (numérico)')
+ok(2**8 == 256 and 1+F(8,2) == 5 and Hn(82) < 5 < Hn(83) and abs(float(Hn(83))-5.002) < 5e-4 and Hn(256) >= 5, 'H14 e4')
+ok(Hn(4) == F(25,12) and abs(25/12-2.083) < 5e-4 and 1+F(6,2) == 4 and Hn(64) >= 4 and 1+F(1,4)+F(1,9) == F(49,36) and abs(49/36-1.361) < 5e-4 and F(49,36) <= F(3,2) == F(54,36), 'H14 B')
+ok(10*Hn(30) < 40 < 10*Hn(31) and 10*(1+F(6,2)) == 40 and 10*(1+F(18,2)) == 100 and 2**18 == 262144 and 262144/365.25 > 700, 'H14 C')
+print('Lote 25 H01–H14:', 'sin errores' if not err else f'{err} errores')
