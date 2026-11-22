@@ -90,9 +90,13 @@ function oaIdeaRev(o){
       if (hole && k === 7){
         var fR = f(4), fr = g(4), ccx = X(4), ccy = Y(0), zz = 0.82;
         function mano(ax, ay, bx, by, col){ c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 4; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.fillStyle = col; c.beginPath(); c.arc(bx, by, 2.2, 0, 6.2832); c.fill(); }
-        /* en la cara del extremo (en perspectiva) */
-        mano(ccx, ccy, ccx, ccy - fR*s, C.rise); mano(ccx, ccy, ccx + E*fr*s*Math.cos(-0.6), ccy + fr*s*Math.sin(-0.6), C.alt);
-        c.fillStyle = C.ink; c.beginPath(); c.arc(ccx, ccy, 2, 0, 6.2832); c.fill();
+        /* dentro del sólido: un corte interior punteado y, desde su centro, R y r en trazo fino punteado, formando un ángulo */
+        var xi = 2.0, Ri = f(xi), ri = g(xi), icx = X(xi), icy = Y(0), tr = -0.5, rx2 = icx + E*ri*s*Math.cos(tr), ry2 = icy + ri*s*Math.sin(tr);
+        function punteada(ax, ay, bx, by, col){ c.setLineDash([]); c.strokeStyle = 'rgba(255,255,255,0.92)'; c.lineWidth = 4.2; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([4, 3]); c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]); c.fillStyle = col; c.beginPath(); c.arc(bx, by, 2.2, 0, 6.2832); c.fill(); }
+        c.setLineDash([3, 3]); c.strokeStyle = 'rgba(255,255,255,0.85)'; c.lineWidth = 1.1; c.beginPath(); c.ellipse(icx, icy, E*Ri*s, Ri*s, 0, 0, 6.2832); c.stroke(); c.beginPath(); c.ellipse(icx, icy, E*ri*s, ri*s, 0, 0, 6.2832); c.stroke(); c.setLineDash([]);
+        punteada(icx, icy, icx, icy - Ri*s, C.rise); punteada(icx, icy, rx2, ry2, C.alt);
+        c.fillStyle = '#fff'; c.beginPath(); c.arc(icx, icy, 3.2, 0, 6.2832); c.fill(); c.fillStyle = C.ink; c.beginPath(); c.arc(icx, icy, 2.2, 0, 6.2832); c.fill();
+        Lp('LR', icx + 8, icy - Ri*s*0.8, 0); Lp('Lr', rx2 + 7, ry2 - 2, 0);
         /* la misma cara, vista de frente, a la derecha */
         var fx = X(CX), fy = Y(CY), RR = fR*s*zz, rr2 = fr*s*zz, a1 = -1.15, a2 = -0.2;
         c.beginPath(); c.arc(fx, fy, RR, 0, 6.2832); c.fillStyle = C.sec; c.globalAlpha = 0.35*u; c.fill(); c.globalAlpha = u; c.strokeStyle = C.sec; c.lineWidth = 1.2; c.stroke();

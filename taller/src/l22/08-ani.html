@@ -173,7 +173,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H08 · v006 · Pendiente de APR</span>
+  <span class="status">CI-L22-H08 · v007 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -349,9 +349,13 @@ function oaIdeaRev(o){
       if (hole && k === 7){
         var fR = f(4), fr = g(4), ccx = X(4), ccy = Y(0), zz = 0.82;
         function mano(ax, ay, bx, by, col){ c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 4; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.fillStyle = col; c.beginPath(); c.arc(bx, by, 2.2, 0, 6.2832); c.fill(); }
-        /* en la cara del extremo (en perspectiva) */
-        mano(ccx, ccy, ccx, ccy - fR*s, C.rise); mano(ccx, ccy, ccx + E*fr*s*Math.cos(-0.6), ccy + fr*s*Math.sin(-0.6), C.alt);
-        c.fillStyle = C.ink; c.beginPath(); c.arc(ccx, ccy, 2, 0, 6.2832); c.fill();
+        /* dentro del sólido: un corte interior punteado y, desde su centro, R y r en trazo fino punteado, formando un ángulo */
+        var xi = 2.0, Ri = f(xi), ri = g(xi), icx = X(xi), icy = Y(0), tr = -0.5, rx2 = icx + E*ri*s*Math.cos(tr), ry2 = icy + ri*s*Math.sin(tr);
+        function punteada(ax, ay, bx, by, col){ c.setLineDash([]); c.strokeStyle = 'rgba(255,255,255,0.92)'; c.lineWidth = 4.2; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([4, 3]); c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]); c.fillStyle = col; c.beginPath(); c.arc(bx, by, 2.2, 0, 6.2832); c.fill(); }
+        c.setLineDash([3, 3]); c.strokeStyle = 'rgba(255,255,255,0.85)'; c.lineWidth = 1.1; c.beginPath(); c.ellipse(icx, icy, E*Ri*s, Ri*s, 0, 0, 6.2832); c.stroke(); c.beginPath(); c.ellipse(icx, icy, E*ri*s, ri*s, 0, 0, 6.2832); c.stroke(); c.setLineDash([]);
+        punteada(icx, icy, icx, icy - Ri*s, C.rise); punteada(icx, icy, rx2, ry2, C.alt);
+        c.fillStyle = '#fff'; c.beginPath(); c.arc(icx, icy, 3.2, 0, 6.2832); c.fill(); c.fillStyle = C.ink; c.beginPath(); c.arc(icx, icy, 2.2, 0, 6.2832); c.fill();
+        Lp('LR', icx + 8, icy - Ri*s*0.8, 0); Lp('Lr', rx2 + 7, ry2 - 2, 0);
         /* la misma cara, vista de frente, a la derecha */
         var fx = X(CX), fy = Y(CY), RR = fR*s*zz, rr2 = fr*s*zz, a1 = -1.15, a2 = -0.2;
         c.beginPath(); c.arc(fx, fy, RR, 0, 6.2832); c.fillStyle = C.sec; c.globalAlpha = 0.35*u; c.fill(); c.globalAlpha = u; c.strokeStyle = C.sec; c.lineWidth = 1.2; c.stroke();
@@ -413,7 +417,7 @@ OA.scene('apl-anillos-xk', oaSol({
 OA.scene('apl-anillos-idea', oaIdeaRev({ hole:true,
   Ftex:'V=\\displaystyle\\int_{a}^{b}\\pi\\Big(\\big[f(x)\\big]^{2}-\\big[g(x)\\big]^{2}\\Big)dx', Ftxt:'V = ∫ de a a b de π([f(x)]² − [g(x)]²) dx',
   legend:'<span><i class="sw sec"></i> curva lejana, \\(y=f(x)\\)</span><span><i class="sw alt"></i> curva cercana, \\(y=g(x)\\), radio \\(r\\) y espesor \\(dx\\)</span><span><i class="sw rise"></i> radio \\(R\\)</span><span><i class="sw tan"></i> el anillo</span>',
-  aria:'Animación en siete pasos, con dos curvas cualesquiera, f de x más lejos del eje y g de x más cerca. Uno: la región entre las dos curvas y el eje de giro, con la pregunta V igual a signo de interrogación. Dos: un corte perpendicular al eje, con el radio mayor R hasta la curva lejana y el radio menor r hasta la cercana. Tres: al girar, el corte barre un anillo. Cuatro: el anillo sale y se ve de frente, un círculo grande menos uno chico, de área pi por R al cuadrado menos r al cuadrado. Cinco: el anillo con un espesor dx. Seis: el sólido hueco se llena con todos los anillos. Siete: la suma se escribe como integral, que reemplaza a la pregunta.',
+  aria:'Animación en siete pasos, con dos curvas cualesquiera, f de x más lejos del eje y g de x más cerca. Uno: la región entre las dos curvas y el eje de giro, con la pregunta V igual a signo de interrogación. Dos: un corte perpendicular al eje, con el radio mayor R hasta la curva lejana y el radio menor r hasta la cercana. Tres: al girar, el corte barre un anillo. Cuatro: el anillo sale y se ve de frente, un círculo grande menos uno chico, de área pi por R al cuadrado menos r al cuadrado. Cinco: el anillo con un espesor dx. Seis: el sólido hueco se llena con todos los anillos. Siete: la suma se escribe como integral, que reemplaza a la pregunta. En el sólido final se marca un corte interior con línea punteada y, desde su centro, dos trazos finos punteados de distinto largo que forman un ángulo: R hasta el borde de afuera y r hasta el borde del hueco; al lado, la misma cara vista de frente.',
   caps:['Paso 1. La región entre las dos curvas no toca al eje. Al girar va a formar un sólido con un hueco. La pregunta es su volumen', 'Paso 2. Un corte perpendicular al eje, en una posición x. Del eje a la curva lejana, R = f(x). Del eje a la curva cercana, r = g(x)', 'Paso 3. Cuando la región gira, el tramo entre las dos curvas da la vuelta y barre un anillo', 'Paso 4. El anillo se saca y se mira de frente: un círculo de radio R al que se le quita uno de radio r. Su área es π(R² − r²)', 'Paso 5. Al anillo se le da un espesor dx. Su volumen es el área de la cara por el espesor: π(R² − r²) dx', 'Paso 6. El sólido completo se arma con todos los anillos, uno junto al otro, desde a hasta b', 'Paso 7. La suma de infinitos anillos delgados es una integral. La pregunta de arriba ya tiene respuesta'],
   tex:['V=\\ ?', 'R=f(x),\\qquad r=g(x)', '\\text{el corte gira}\\ \\longrightarrow\\ \\text{anillo}', 'A(x)=\\pi R^{2}-\\pi r^{2}=\\pi\\big(R^{2}-r^{2}\\big)', 'dV=A(x)\\,dx=\\pi\\big(R^{2}-r^{2}\\big)dx', '\\displaystyle V\\approx\\sum \\pi\\big(R^{2}-r^{2}\\big)\\,\\Delta x', '\\displaystyle V=\\int_{a}^{b}\\pi\\Big(\\big[f(x)\\big]^{2}-\\big[g(x)\\big]^{2}\\Big)dx']
 }));
