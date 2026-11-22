@@ -49,21 +49,21 @@
       labels:PZ,
       sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
       legend:'<span><i class="sw sec"></i> la superficie</span><span><i class="sw rise"></i> corte y tangente en la dirección \\(x\\)</span><span><i class="sw alt"></i> corte y tangente en la dirección \\(y\\)</span><span><i class="sw tan"></i> el plano tangente</span>',
-      anim:{run:27000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); }},
-      onInput:function(v){ v.q = null; },
+      anim:{run:36000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N), w = Math.min(1, (t - Math.floor(t))*1.35); v.q = p; v.paso = 1 + Math.floor(t); v.u = w*w*(3 - 2*w); }},
+      onInput:function(v){ v.q = null; v.u = 1; },
       draw:function(S, v){
-        var k = Math.round(v.paso || 1), C = S.C, K = kit(S), T = etiquetas(S, PZ), L = T.L, Pt = [A, B, Z0], x1 = A + 0.7, y1 = B + 0.6, zf = f(x1, y1), zl = Z0 + M*0.7 + Nn*0.6;
+        var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, K = kit(S), T = etiquetas(S, PZ), L = T.L, Pt = [A, B, Z0], ua = Math.min(1, u/0.6), ub = Math.max(0, (u - 0.6)/0.4), g = k === 6 ? u : 1, x1 = A + 0.7*g, y1 = B + 0.6*g, zf = f(x1, y1), zl = Z0 + M*0.7*g + Nn*0.6*g, zp = k === 1 ? Z0*u : Z0;
         K.ejes(); ejesLab(K, L);
         K.sup(1);
-        K.line([A, B, 0], Pt, C.ink, 1, [3, 3]); K.dot([A, B, 0], C.ink, 2.2); L('AB', K.at([A, B, 0]), -50, 0, 13);
-        if (k >= 4) K.plano(A, B, 1.0, k === 6 ? 0.45 : 0.4);
-        if (k === 2 || k >= 4){ if (k === 2) K.curve(function(t){ return [t, B, f(t, B)]; }, -2, 2, C.rise, 2); K.line([A - 1.0, B, Z0 - M], [A + 1.0, B, Z0 + M], C.rise, 2); }
-        if (k === 3 || k >= 4){ if (k === 3) K.curve(function(t){ return [A, t, f(A, t)]; }, -2, 2, C.alt, 2); K.line([A, B - 1.0, Z0 - Nn], [A, B + 1.0, Z0 + Nn], C.alt, 2); }
-        K.dot(Pt, C.ink, 3.4); L('PP', K.at(Pt), -50, -4, -13);
+        K.line([A, B, 0], [A, B, zp], C.ink, 1, [3, 3]); K.dot([A, B, 0], C.ink, 2.2); L('AB', K.at([A, B, 0]), -50, 0, 13);
+        if (k >= 4) K.plano(A, B, k === 4 ? 0.05 + 0.95*u : 1.0, k === 4 ? 0.42*u : 0.42);
+        if (k === 2 || k >= 4){ var lx = k === 2 ? ub : 1; if (k === 2) K.curve(function(t){ return [t, B, f(t, B)]; }, -2, -2 + 4*ua, C.rise, 2); if (lx > 0) K.line([A - lx, B, Z0 - M*lx], [A + lx, B, Z0 + M*lx], C.rise, 2); }
+        if (k === 3 || k >= 4){ var ly = k === 3 ? ub : 1; if (k === 3) K.curve(function(t){ return [A, t, f(A, t)]; }, -2, -2 + 4*ua, C.alt, 2); if (ly > 0) K.line([A, B - ly, Z0 - Nn*ly], [A, B + ly, Z0 + Nn*ly], C.alt, 2); }
+        K.dot([A, B, zp], C.ink, 3.4); if (k > 1 || u >= 1) L('PP', K.at(Pt), -50, -4, -13);
         L('SF', [S.X(-3.6), S.Y(2.9)], 0);
-        if (k === 2) L('MX', K.at([A + 1.0, B, Z0 + M]), 0, 8, 10);
-        if (k === 3) L('MY', K.at([A, B + 1.0, Z0 + Nn]), 0, 8, -2);
-        if (k === 6){ K.line([x1, y1, zf], [x1, y1, zl], C.ink, 2); K.dot([x1, y1, zf], C.sec, 3); K.dot([x1, y1, zl], C.tan, 3); L('LV', K.at([x1, y1, zl]), 0, 8, -6); L('FV', K.at([x1, y1, zf]), 0, 8, 10); }
+        if (k === 2 && u >= 1) L('MX', K.at([A + 1.0, B, Z0 + M]), 0, 8, 10);
+        if (k === 3 && u >= 1) L('MY', K.at([A, B + 1.0, Z0 + Nn]), 0, 8, -2);
+        if (k === 6){ K.line([x1, y1, zf], [x1, y1, zl], C.ink, 2); K.dot([x1, y1, zf], C.sec, 3); K.dot([x1, y1, zl], C.tan, 3); if (u >= 1){ L('LV', K.at([x1, y1, zl]), 0, 8, -6); L('FV', K.at([x1, y1, zf]), 0, 8, 10); } }
         if (k === 1) L('Q', [S.X(-3.6), S.Y(4.0)], 0);
         if (k === 5) L('E5', [S.X(-3.6), S.Y(-1.85)], 0); if (k === 6) L('E6', [S.X(-3.6), S.Y(-1.85)], 0);
         K.txt(TXT[k - 1][0], -3.6, -3.0); K.txt(TXT[k - 1][1], -3.6, -3.0 - 21/(S.X(1) - S.X(0)));
@@ -84,7 +84,7 @@
       labels:PZ,
       sliders:[{id:'a', tex:'a', min:-1.5, max:1.5, step:0.1, value:-1.5}, {id:'b', tex:'b', min:-1.5, max:1.5, step:0.1, value:1}],
       legend:'<span><i class="sw sec"></i> la superficie</span><span><i class="sw tan"></i> el plano tangente en \\(P\\)</span><span><i class="sw rise"></i> dirección \\(x\\)</span><span><i class="sw alt"></i> dirección \\(y\\)</span>',
-      anim:{run:16000, hold:5000, still:1, apply:function(p, v){ v.q = p; v.a = Math.round((-1.5 + 3*p)*10)/10; if (v.b == null) v.b = 1; }},
+      anim:{run:16000, hold:5000, still:1, apply:function(p, v){ v.q = p; v.a = -1.5 + 3*p; if (v.b == null) v.b = 1; }},
       onInput:function(v){ v.q = null; },
       draw:function(S, v){
         var a = v.a == null ? -1.5 : +v.a, b = v.b == null ? 1 : +v.b, C = S.C, K = kit(S), T = etiquetas(S, PZ), L = T.L, z0 = f(a, b), m = fx(a), n = fy(a, b), Pt = [a, b, z0];

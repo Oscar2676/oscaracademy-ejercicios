@@ -92,7 +92,7 @@
       labels:PZ,
       sliders:[{id:'x', tex:'x', min:0.1, max:2, step:0.05, value:0.1}],
       legend:'<span><i class="sw sec"></i> \\(y=4-x^{2}\\) y la altura \\(h\\)</span><span><i class="sw rise"></i> radio \\(r=x\\)</span><span><i class="sw tan"></i> la capa en \\(x\\)</span>',
-      anim:{run:16000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.x = Math.round((0.1 + 1.9*p)*20)/20; }},
+      anim:{run:16000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.x = 0.1 + 1.9*p; }},
       onInput:function(v){ v.q = null; },
       draw:function(S, v){
         var x = v.x == null ? 0.1 : +v.x, C = S.C, K = kit(S), T = etiquetas(S, PZ), L = T.L, h = f(x), i, r, n = Math.floor(x/0.2);
