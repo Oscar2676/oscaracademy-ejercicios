@@ -64,8 +64,11 @@ function oaIdeaRev(o){
           /* mini rectángulo generador, de espesor dx */
           c.fillStyle = C.ink; c.globalAlpha = 0.85; c.fillRect(X(XC - DX/2), Y(R0), DX*s, (R0 - r0)*s); c.globalAlpha = 1;
           c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(XC), Y(R0) - 2); c.lineTo(X(XC - 0.75), Y(R0) - 22); c.stroke(); Lp('LD', X(XC - 0.8), Y(R0) - 29, -100); }
-        if (k <= 4){ c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.moveTo(X(XC), Y(0)); c.lineTo(X(XC), Y(R0)); c.stroke(); Lp('LR', X(XC) + 6, Y(hole ? R0*0.82 : R0*0.55), 0);
-          if (hole){ c.strokeStyle = C.alt; c.lineWidth = 3.4; c.beginPath(); c.moveTo(X(XC), Y(0)); c.lineTo(X(XC), Y(r0)); c.stroke(); Lp('Lr', X(XC) - 7, Y(r0*0.5), -100); }
+        if (k <= 4){ var od = hole ? 4 : 0; /* con hueco: los dos radios nacen en el eje, lado a lado, con línea fina y topes */
+          function fino(px, ya, yb, col){ c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 4; c.beginPath(); c.moveTo(px, ya); c.lineTo(px, yb); c.stroke(); c.strokeStyle = col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(px, ya); c.lineTo(px, yb); c.moveTo(px - 3, ya); c.lineTo(px + 3, ya); c.moveTo(px - 3, yb); c.lineTo(px + 3, yb); c.stroke(); }
+          if (hole) fino(X(XC) + od, Y(0), Y(R0), C.rise); else { c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.moveTo(X(XC), Y(0)); c.lineTo(X(XC), Y(R0)); c.stroke(); }
+          Lp('LR', X(XC) + od + 6, Y(hole ? R0*0.82 : R0*0.55), 0);
+          if (hole){ fino(X(XC) - od, Y(0), Y(r0), C.alt); Lp('Lr', X(XC) - od - 6, Y(r0*0.5), -100); }
           c.fillStyle = C.ink; c.beginPath(); c.arc(X(XC), Y(0), 2.2, 0, 6.2832); c.fill(); }
         L('LX', XC, 0, -50, 0, 13);
       }
@@ -77,8 +80,8 @@ function oaIdeaRev(o){
         if (k === 5){ c.fillStyle = '#fff'; c.globalAlpha = 0.35; c.beginPath(); c.ellipse(cx, cy, ex, ey, 0, 0, 6.2832); c.fill(); c.globalAlpha = 1; }
         if (hole){ c.beginPath(); c.ellipse(cx, cy, ex*rr/(R0*0.82), rr*s, 0, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.strokeStyle = C.tan; c.stroke(); }
         if (q >= 1){
-          if (k === 4){ c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx, cy - ey); c.stroke(); Lp('DR', cx + 6, cy - ey*0.72, 0);
-            if (hole){ c.strokeStyle = C.alt; c.lineWidth = 2; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx - rr*s, cy); c.stroke(); Lp('Dr', cx - rr*s*0.5, cy + 11); }
+          if (k === 4){ c.strokeStyle = C.rise; c.lineWidth = hole ? 1.5 : 2; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx, cy - ey); c.stroke(); Lp('DR', cx + 6, cy - ey*0.72, 0);
+            if (hole){ c.strokeStyle = C.alt; c.lineWidth = 1.5; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx - rr*s, cy); c.stroke(); Lp('Dr', cx - rr*s*0.5, cy + 11); }
             c.fillStyle = C.ink; c.beginPath(); c.arc(cx, cy, 2.2, 0, 6.2832); c.fill(); lab('visto de frente', X(CX), Y(CY) - ey - 12, 'tan', 'center', 11.5); }
           else { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(cx, cy + ey + 5); c.lineTo(cx, cy + ey + 9); c.lineTo(cx + 9, cy + ey + 9); c.lineTo(cx + 9, cy + ey + 5); c.stroke(); Lp('DD', cx + 4.5, cy + ey + 20); lab('con su espesor', X(CX), Y(CY) - ey - 12, 'tan', 'center', 11.5); }
         }
