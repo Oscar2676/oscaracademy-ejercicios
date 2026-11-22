@@ -250,3 +250,8 @@ Wix desde el navegador integrado: ayudantes `__go(pg)`, `__link(pg, id, url)`, `
 - Lotes 19 y 20: falta la comparación sistemática con sitios externos (lote 18 hecha; L20 H02 comparada con LibreTexts/OpenStax).
 - Las integrales de L20 H02 (área en esféricas, volumen por capas, área del círculo) se revisaron a mano, no por código.
 - Teorema de Weierstrass (L19 H02) va enunciado sin demostración; se le avisó a Óscar.
+
+## Producción automática (desde el 22-nov 15:00)
+- **Medición de consumo (plan Ultra de Óscar):** corrida de prueba de 3 hojas (L28 H03–H05, 14:40–14:56): semana 11 % → 12 %, Fable 21 % → 23 %. Es decir, unas 3 hojas ≈ 1 % semanal y ≈ 2 % del límite semanal de Fable (con error de redondeo). Los límites se restablecen los lunes a las 11:00 (hora de Chile). Créditos de uso activados: 57,83 US$ (no gastarlos).
+- **Techo real:** el límite semanal de Fable da para unas 50 corridas ≈ 150 hojas por semana; no alcanza para 200–300 títulos diarios. Avisado a Óscar.
+- Tarea programada «Oscar Academy · producción por hora» (3 hojas por corrida, guía `taller/LEEME-tarea-programada.md`). Revisar su ritmo el lunes 23 a las 10:50.
