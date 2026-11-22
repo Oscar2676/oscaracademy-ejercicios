@@ -1,0 +1,165 @@
+<!--file:H07_sucesiones_aritmeticas.html-->
+<!--title:Sucesiones aritméticas-->
+<!--id:ss-aritmeticas-->
+<!--tab:H07 Aritméticas-->
+<article class="sheet" id="ss-aritmeticas" data-hoja="L25 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones aritméticas</li>
+      <li><b>Sucesiones aritméticas</b></li>
+    </ol>
+    <h1>Sucesiones aritméticas</h1>
+    <p class="lede">Una sucesión es aritmética cuando cada término se obtiene sumando al anterior un mismo número \(d\), llamado diferencia. \[a_{n+1}=a_{n}+d\qquad\Longrightarrow\qquad a_{n}=a_{1}+(n-1)\,d\] También se llama progresión aritmética.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(2,\ 5,\ 8,\ 11,\ \ldots\), término por término, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="arit-idea"></div>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos. En el eje horizontal, la posición \(n\); en el vertical, el valor \(a_{n}\).</li>
+    <li><b>Líneas punteadas:</b> llevan cada término a su valor en el eje \(a_{n}\).</li>
+    <li><b>Flecha naranja:</b> la diferencia, \(+3\): lo que se sube al avanzar una posición. Es la misma en todos los pasos.</li>
+    <li><b>Recta burdeo:</b> pasa por todos los puntos. La sucesión es solo los puntos, no la recta.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición</h3>
+    <ol class="steps">
+      <li>Una sucesión \(a_{1},\ a_{2},\ a_{3},\ \ldots\) es <b>aritmética</b> si existe un número \(d\) tal que \(a_{n+1}=a_{n}+d\) para todo entero \(n\ge 1\).</li>
+      <li>Dicho de otro modo: la resta \(a_{n+1}-a_{n}\) vale siempre lo mismo, \(d\). Ese número es la <b>diferencia</b> de la sucesión.</li>
+      <li>\(d\) puede ser positivo, negativo o cero: \(2,\ 5,\ 8,\ 11,\ \ldots\) (\(d=3\)); \(10,\ 7,\ 4,\ 1,\ \ldots\) (\(d=-3\)); \(5,\ 5,\ 5,\ 5,\ \ldots\) (\(d=0\)).</li>
+      <li>Una sucesión aritmética queda determinada por dos datos: el primer término \(a_{1}\) y la diferencia \(d\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>¿De dónde sale \(a_{n}=a_{1}+(n-1)\,d\)?</h3>
+    <ol class="steps">
+      <li>\(a_{2}=a_{1}+d\), por la definición.</li>
+      <li>\(a_{3}=a_{2}+d=a_{1}+d+d=a_{1}+2d\).</li>
+      <li>\(a_{4}=a_{3}+d=a_{1}+2d+d=a_{1}+3d\).</li>
+      <li>Para llegar desde \(a_{1}\) hasta \(a_{n}\) se suma \(d\) una vez por cada paso, y hay \(n-1\) pasos. Eso sugiere \(a_{n}=a_{1}+(n-1)\,d\).</li>
+      <li><b>Demostración (por inducción).</b> Para \(n=1\): \(a_{1}+(1-1)\,d=a_{1}+0=a_{1}\). ✓</li>
+      <li>Si la fórmula vale para un \(n\), es decir, \(a_{n}=a_{1}+(n-1)\,d\), entonces \(a_{n+1}=a_{n}+d=a_{1}+(n-1)\,d+d=a_{1}+n\,d\), que es la fórmula para \(n+1\). ✓</li>
+      <li>Por lo tanto, \(a_{n}=a_{1}+(n-1)\,d\) para todo entero \(n\ge 1\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Los puntos quedan sobre una recta, y cada término es el promedio de sus vecinos</h3>
+    <ol class="steps">
+      <li>Se distribuye en el término general: \(a_{n}=a_{1}+(n-1)\,d=d\,n+(a_{1}-d)\).</li>
+      <li>Entonces los puntos \((n,\ a_{n})\) cumplen \(y=d\,x+(a_{1}-d)\): están sobre una recta de pendiente \(d\). En la animación, \(a_{n}=2+3(n-1)=3n-1\), y la recta es \(y=3x-1\).</li>
+      <li>Para \(n\ge 2\), el término anterior es \(a_{n-1}=a_{n}-d\) y el siguiente es \(a_{n+1}=a_{n}+d\).</li>
+      <li>Se suman: \(a_{n-1}+a_{n+1}=a_{n}-d+a_{n}+d=2a_{n}\).</li>
+      <li>Se divide por \(2\): \(a_{n}=\dfrac{a_{n-1}+a_{n+1}}{2}\). Cada término (salvo el primero) es la media aritmética del anterior y el siguiente. Por ejemplo, \(8=\dfrac{5+11}{2}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: ¿siguen una regla aritmética los términos \(4,\ 9,\ 14,\ 19\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(9-4=5\).</li>
+    <li>\(14-9=5\).</li>
+    <li>\(19-14=5\).</li>
+    <li>Las tres restas dan lo mismo: con los términos dados, sí, con \(d=5\).</li>
+    <li>Término general, con \(a_{1}=4\) y \(d=5\): \(a_{n}=4+5(n-1)=4+5n-5=5n-1\).</li>
+    <li>Comprobación: \(5\cdot 4-1=19\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: con diferencia negativa. \(a_{1}=7\), \(d=-2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se suma \(-2\) cada vez: \(7,\ 5,\ 3,\ 1,\ -1\).</li>
+    <li>Término general: \(a_{n}=7+(n-1)(-2)\).</li>
+    <li>El término de la posición \(20\): \(a_{20}=7+19\cdot(-2)=7-38=-31\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una que no es aritmética. \(1,\ 4,\ 9,\ 16,\ \ldots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(4-1=3\).</li>
+    <li>\(9-4=5\).</li>
+    <li>Las restas no coinciden (\(3\ne 5\)): no es aritmética. Basta un par de restas distintas para descartarlo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: dada por fórmula. ¿Es aritmética \(a_{n}=3n+4\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El término siguiente: \(a_{n+1}=3(n+1)+4=3n+3+4=3n+7\).</li>
+    <li>La resta: \(a_{n+1}-a_{n}=3n+7-(3n+4)=3\).</li>
+    <li>Da \(3\) para todo \(n\), sin depender de \(n\): es aritmética, con \(d=3\).</li>
+    <li>Primer término: \(a_{1}=3\cdot 1+4=7\). La sucesión es \(7,\ 10,\ 13,\ 16,\ \ldots\)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Escribir \(a_{n}=a_{1}+n\,d\): hasta el término \(n\) hay \(n-1\) pasos, no \(n\). Restar al revés (el anterior menos el siguiente): cambia el signo de \(d\). Decidir que una sucesión es aritmética mirando una sola resta: tienen que coincidir todas. Y confundirla con una sucesión geométrica, en la que se multiplica, en vez de sumar, por un mismo número.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Una sucesión aritmética tiene \(a_{1}=-3\) y \(d=4\). Escribe sus cinco primeros términos y calcula \(a_{15}\).</p>
+    <details><summary>Pista</summary><div><p>Suma \(4\) cada vez. Para \(a_{15}\), usa el término general.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(-3,\ 1,\ 5,\ 9,\ 13\).</li>
+        <li>\(a_{15}=a_{1}+(15-1)\,d=-3+14\cdot 4\).</li>
+        <li>\(-3+56=53\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>En la sucesión aritmética \(4,\ 7,\ 10,\ \ldots\), ¿qué posición ocupa el \(100\)? ¿Es el \(50\) uno de sus términos?</p>
+    <details><summary>Pista</summary><div><p>Iguala el término general al número buscado y despeja \(n\): tiene que resultar un entero positivo.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(a_{1}=4\), \(d=7-4=3\): \(a_{n}=4+3(n-1)\).</li>
+        <li>\(4+3(n-1)=100\). Se resta \(4\): \(3(n-1)=96\).</li>
+        <li>Se divide por \(3\): \(n-1=32\). Se suma \(1\): \(n=33\). El \(100\) ocupa la posición \(33\).</li>
+        <li>Para el \(50\): \(4+3(n-1)=50\) da \(3(n-1)=46\), y \(46\) no es múltiplo de \(3\) (\(3\cdot 15=45\), \(3\cdot 16=48\)). No hay un entero \(n\): el \(50\) no es término de la sucesión.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una piscina tiene \(1\,200\) litros de agua y una manguera le agrega \(150\) litros cada hora. Sea \(a_{n}\) la cantidad de litros al terminar la hora \(n\). Escribe el término general. ¿Al terminar qué hora la piscina tiene \(3\,000\) litros?</p>
+    <details><summary>Pista</summary><div><p>Al terminar la primera hora ya hay \(1\,200+150\) litros: ese es \(a_{1}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(a_{1}=1\,200+150=1\,350\), y cada hora se suman \(150\): \(d=150\).</li>
+        <li>\(a_{n}=1\,350+150(n-1)=1\,350+150n-150=1\,200+150n\).</li>
+        <li>\(1\,200+150n=3\,000\). Se resta \(1\,200\): \(150n=1\,800\).</li>
+        <li>Se divide por \(150\): \(n=12\). Al terminar la hora \(12\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H07 · v001 · Pendiente de APR</span>
+</footer>
+</article>
