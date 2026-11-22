@@ -1,0 +1,168 @@
+<!--file:H02_coordenadas_polares_esfericas_y_cilindricas.html-->
+<!--title:Coordenadas polares, esféricas y cilíndricas-->
+<!--id:cm-coord-->
+<!--tab:H02 Coordenadas-->
+<article class="sheet" id="cm-coord" data-hoja="L27 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo multivariable</li>
+      <li>Integración de funciones multivariables</li>
+      <li><b>Coordenadas polares, esféricas y cilíndricas</b></li>
+    </ol>
+    <h1>Coordenadas polares, esféricas y cilíndricas</h1>
+    <p class="lede">Cuando la región es redonda (un disco, un cilindro, una esfera), las coordenadas cartesianas complican los límites de integración. Conviene describirla con distancias y ángulos. El precio es un factor extra en cada <b>trocito de área o de volumen</b>:
+    \[dA=r\,dr\,d\theta\qquad\quad dV=r\,dr\,d\theta\,dz\qquad\quad dV=\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Coordenadas cilíndricas: de dónde sale el trocito de volumen \(dV=r\,dr\,d\theta\,dz\), en seis pasos.</p>
+  <div class="stage" data-scene="cm-coord-idea"></div>
+  <ul class="keys">
+    <li><b>Trazo naranja:</b> \(r\), la distancia al eje \(z\), medida en el suelo. <b>Arco verde:</b> \(\theta\), el giro desde el eje \(x\). <b>Trazo azul:</b> \(z\), la altura.</li>
+    <li><b>Celda burdeo:</b> lo que barre el punto cuando \(r\), \(\theta\) y \(z\) cambian un poco.</li>
+    <li><b>Sus tres lados:</b> \(\Delta r\) y \(\Delta z\), rectos; y un <b>arco</b> de largo \(r\,\Delta\theta\) (radio por ángulo, con el ángulo en radianes).</li>
+    <li><b>Último paso:</b> el bloque completo, partido en celdas cada vez más finas.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Polares: para el plano</h3>
+    <ol class="steps">
+      <li>Un punto del plano se ubica con \(r\) (distancia al origen, \(r\ge 0\)) y \(\theta\) (ángulo desde el eje \(x\) positivo).</li>
+      <li>\(x=r\cos\theta\), \(y=r\operatorname{sen}\theta\). Al revés: \(r=\sqrt{x^{2}+y^{2}}\) y \(\tan\theta=\dfrac{y}{x}\), eligiendo \(\theta\) según el cuadrante.</li>
+      <li>El trocito de área es casi un rectángulo de lados \(\Delta r\) y \(r\,\Delta\theta\): \(dA=r\,dr\,d\theta\). Es la base de la celda de la animación.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Cilíndricas: polares más la altura</h3>
+    <ol class="steps">
+      <li>\((r,\ \theta,\ z)\): polares en el suelo, y la altura \(z\) de siempre.</li>
+      <li>\(x=r\cos\theta\), \(y=r\operatorname{sen}\theta\), \(z=z\).</li>
+      <li>El trocito de volumen es la base polar por la altura: \(dV=r\,dr\,d\theta\,dz\).</li>
+      <li>Sirven cuando hay un eje de simetría: cilindros, conos, paraboloides, sólidos de revolución.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Esféricas: una distancia y dos ángulos</h3>
+    <p>Mueve \(\varphi\) y \(\theta\) y mira cómo se ubica el punto.</p>
+    <div class="stage" data-scene="cm-coord-esfera"></div>
+    <ul class="keys">
+      <li><b>Trazo naranja, \(\rho\):</b> distancia del punto al origen, \(\rho\ge 0\).</li>
+      <li><b>Arco burdeo, \(\varphi\):</b> ángulo desde el eje \(z\) positivo hasta el trazo, \(0\le\varphi\le\pi\).</li>
+      <li><b>Arco verde, \(\theta\):</b> el mismo ángulo de las polares, medido en el suelo sobre la sombra del punto.</li>
+    </ul>
+    <ol class="steps">
+      <li>La sombra del punto en el suelo queda a distancia \(r=\rho\operatorname{sen}\varphi\) del origen, y su altura es \(z=\rho\cos\varphi\).</li>
+      <li>Por eso: \(x=\rho\operatorname{sen}\varphi\cos\theta\), \(y=\rho\operatorname{sen}\varphi\operatorname{sen}\theta\), \(z=\rho\cos\varphi\). Y \(\rho=\sqrt{x^{2}+y^{2}+z^{2}}\).</li>
+      <li>El trocito de volumen es casi una caja de lados \(\Delta\rho\), \(\rho\,\Delta\varphi\) (arco de radio \(\rho\)) y \(\rho\operatorname{sen}\varphi\,\Delta\theta\) (arco de radio \(\rho\operatorname{sen}\varphi\)):
+        \[dV=\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\]</li>
+    </ol>
+    <p><b>Ojo con los libros.</b> Aquí \(\varphi\) se mide desde el eje \(z\) y \(\theta\) gira en el suelo, como en la mayoría de los textos de cálculo. En muchos textos de física las dos letras van intercambiadas. Antes de usar una fórmula, revisa cuál convención trae.</p>
+  </div>
+
+  <div class="why">
+    <p><b>Con honestidad.</b> Los tres factores (\(r\), \(r\) y \(\rho^{2}\operatorname{sen}\varphi\)) se justificaron aquí con la idea geométrica de la celda «casi caja». La demostración rigurosa es el teorema de cambio de variables para integrales múltiples, donde esos factores aparecen como el determinante jacobiano. Ese teorema <b>no se demuestra</b> en esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: pasar \((1,\ \sqrt{3})\) a polares</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(r=\sqrt{1^{2}+(\sqrt{3})^{2}}=\sqrt{4}=2\).</li>
+    <li>\(\tan\theta=\dfrac{\sqrt{3}}{1}\), y el punto está en el primer cuadrante: \(\theta=\dfrac{\pi}{3}\).</li>
+    <li>Comprobación: \(2\cos\dfrac{\pi}{3}=1\) y \(2\operatorname{sen}\dfrac{\pi}{3}=\sqrt{3}\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el área de un disco de radio \(R\), con polares</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El disco es \(0\le r\le R\), \(0\le\theta\le 2\pi\): los límites son constantes.</li>
+    <li>\(\displaystyle A=\int_{0}^{2\pi}\!\!\int_{0}^{R}r\,dr\,d\theta=\int_{0}^{2\pi}\frac{R^{2}}{2}\,d\theta=\frac{R^{2}}{2}\cdot 2\pi=\pi R^{2}\).</li>
+    <li>Sin el factor \(r\) habría dado \(2\pi R\), que ni siquiera es un área.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: volumen bajo \(z=4-x^{2}-y^{2}\) y sobre el suelo, con cilíndricas</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En cilíndricas, \(x^{2}+y^{2}=r^{2}\): la superficie es \(z=4-r^{2}\). Toca el suelo cuando \(r=2\).</li>
+    <li>Región: \(0\le\theta\le 2\pi\), \(0\le r\le 2\), \(0\le z\le 4-r^{2}\).</li>
+    <li>\(\displaystyle V=\int_{0}^{2\pi}\!\!\int_{0}^{2}\!\!\int_{0}^{4-r^{2}}r\,dz\,dr\,d\theta=\int_{0}^{2\pi}\!\!\int_{0}^{2}\left(4r-r^{3}\right)dr\,d\theta\).</li>
+    <li>\(\displaystyle\int_{0}^{2}\left(4r-r^{3}\right)dr=\left[2r^{2}-\frac{r^{4}}{4}\right]_{0}^{2}=8-4=4\).</li>
+    <li>\(V=4\cdot 2\pi=8\pi\approx 25{,}13\). Es el mismo sólido que en la hoja de capas cilíndricas, y da lo mismo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: el volumen de una esfera de radio \(R\), con esféricas</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La esfera es \(0\le\rho\le R\), \(0\le\varphi\le\pi\), \(0\le\theta\le 2\pi\).</li>
+    <li>\(\displaystyle V=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}\!\!\int_{0}^{R}\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\). Como los límites son constantes y el integrando es un producto, se separa en tres integrales.</li>
+    <li>\(\displaystyle\int_{0}^{R}\rho^{2}\,d\rho=\frac{R^{3}}{3}\), \(\displaystyle\int_{0}^{\pi}\operatorname{sen}\varphi\,d\varphi=\big[-\cos\varphi\big]_{0}^{\pi}=2\), \(\displaystyle\int_{0}^{2\pi}d\theta=2\pi\).</li>
+    <li>\(V=\dfrac{R^{3}}{3}\cdot 2\cdot 2\pi=\dfrac{4}{3}\pi R^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Pasa a cartesianas el punto de coordenadas esféricas \(\rho=2\), \(\varphi=\dfrac{\pi}{3}\), \(\theta=\dfrac{\pi}{4}\).</p>
+    <details><summary>Pista</summary><div><p>\(\operatorname{sen}\dfrac{\pi}{3}=\dfrac{\sqrt{3}}{2}\), \(\cos\dfrac{\pi}{3}=\dfrac{1}{2}\), \(\operatorname{sen}\dfrac{\pi}{4}=\cos\dfrac{\pi}{4}=\dfrac{\sqrt{2}}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x=2\cdot\dfrac{\sqrt{3}}{2}\cdot\dfrac{\sqrt{2}}{2}=\dfrac{\sqrt{6}}{2}\approx 1{,}225\).</li>
+        <li>\(y=2\cdot\dfrac{\sqrt{3}}{2}\cdot\dfrac{\sqrt{2}}{2}=\dfrac{\sqrt{6}}{2}\approx 1{,}225\).</li>
+        <li>\(z=2\cdot\dfrac{1}{2}=1\).</li>
+        <li>Comprobación: \(x^{2}+y^{2}+z^{2}=\dfrac{6}{4}+\dfrac{6}{4}+1=4=\rho^{2}\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\iint_{D}\left(x^{2}+y^{2}\right)dA\), donde \(D\) es el disco de centro \((0,0)\) y radio \(3\).</p>
+    <details><summary>Pista</summary><div><p>En polares, \(x^{2}+y^{2}=r^{2}\) y \(dA=r\,dr\,d\theta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle\int_{0}^{2\pi}\!\!\int_{0}^{3}r^{2}\cdot r\,dr\,d\theta=\int_{0}^{2\pi}\!\!\int_{0}^{3}r^{3}\,dr\,d\theta\).</li>
+        <li>\(\displaystyle\int_{0}^{3}r^{3}\,dr=\frac{3^{4}}{4}=\frac{81}{4}\).</li>
+        <li>\(\dfrac{81}{4}\cdot 2\pi=\dfrac{81\pi}{2}\approx 127{,}23\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un cono de helado lleno al ras, con la bola formando parte de una esfera centrada en la punta, se modela en esféricas con \(0\le\rho\le 6\) cm y \(0\le\varphi\le\dfrac{\pi}{6}\). ¿Cuántos centímetros cúbicos de helado contiene?</p>
+    <details><summary>Pista</summary><div><p>Los límites son constantes: separa en tres integrales. \(\cos\dfrac{\pi}{6}=\dfrac{\sqrt{3}}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle V=\int_{0}^{2\pi}\!\!\int_{0}^{\pi/6}\!\!\int_{0}^{6}\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\).</li>
+        <li>\(\displaystyle\int_{0}^{6}\rho^{2}\,d\rho=\frac{216}{3}=72\).</li>
+        <li>\(\displaystyle\int_{0}^{\pi/6}\operatorname{sen}\varphi\,d\varphi=1-\cos\frac{\pi}{6}=1-\frac{\sqrt{3}}{2}\approx 0{,}1340\).</li>
+        <li>\(V=72\cdot\left(1-\dfrac{\sqrt{3}}{2}\right)\cdot 2\pi=144\pi\left(1-\dfrac{\sqrt{3}}{2}\right)\approx 60{,}61\ \text{cm}^{3}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CM-L27-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>

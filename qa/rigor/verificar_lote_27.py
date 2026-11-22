@@ -36,4 +36,14 @@ h = lambda x, y: 500 - 20*(x*x + y*y)
 ok(h(2, 0) == 420 and h(0, 3) == 320 and 500 - 420 == 80 and 420 - 320 == 100, 'H03 C')
 # galería: las curvas de nivel dibujadas están a la altura c
 ok(all(isclose((2*c*cos(t)**2 + 2*c*sin(t)**2)/2, c) for c in (0.5, 2) for t in (1, 4)) and all(isclose(((2*c + t*t) - t*t)/2, c) for c in (0.5, 1.5) for t in (-1, 0.7)) and all(isclose(1 + (2*(c - 1) - y/2)/2 + y/4, c, abs_tol=1e-12) for c in (0, 1.3) for y in (-2, 0.4)), 'H03 galería')
-print('Lote 27 H01 y H03:', 'sin errores' if not err else f'{err} errores')
+# H02
+def simp(g, a, b, n=400):
+    h = (b - a)/n; return h/3*(g(a) + g(b) + 4*sum(g(a + (2*i - 1)*h) for i in range(1, n//2 + 1)) + 2*sum(g(a + 2*i*h) for i in range(1, n//2)))
+ok(isclose(2*cos(pi/3), 1) and isclose(2*sin(pi/3), sqrt(3)), 'H02 e1')
+R = 1.7; ok(isclose(2*pi*simp(lambda r: r, 0, R), pi*R*R), 'H02 e2')
+ok(isclose(simp(lambda r: 4*r - r**3, 0, 2), 4) and abs(8*pi - 25.13) < 0.005, 'H02 e3')
+ok(isclose(simp(lambda q: q*q, 0, R)*simp(sin, 0, pi)*2*pi, 4/3*pi*R**3, rel_tol=1e-7), 'H02 e4')
+x = 2*sin(pi/3)*cos(pi/4); ok(isclose(x, sqrt(6)/2) and abs(x - 1.225) < 5e-4 and isclose(2*cos(pi/3), 1) and isclose(2*x*x + 1, 4), 'H02 A')
+ok(isclose(simp(lambda r: r**3, 0, 3), 81/4) and abs(81*pi/2 - 127.23) < 0.005, 'H02 B')
+V = 72*(1 - sqrt(3)/2)*2*pi; ok(abs(1 - sqrt(3)/2 - 0.1340) < 5e-5 and abs(V - 60.61) < 0.005 and isclose(V, simp(lambda q: q*q, 0, 6)*simp(sin, 0, pi/6)*2*pi, rel_tol=1e-7), 'H02 C')
+print('Lote 27 H01–H03:', 'sin errores' if not err else f'{err} errores')

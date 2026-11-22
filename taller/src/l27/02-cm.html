@@ -1,0 +1,295 @@
+<!--file:H02_coordenadas_polares_esfericas_y_cilindricas.html-->
+<!--title:Coordenadas polares, esféricas y cilíndricas-->
+<!--id:cm-coord-->
+<!--tab:H02 Coordenadas-->
+<article class="sheet" id="cm-coord" data-hoja="L27 H02">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo multivariable</li>
+      <li>Integración de funciones multivariables</li>
+      <li><b>Coordenadas polares, esféricas y cilíndricas</b></li>
+    </ol>
+    <h1>Coordenadas polares, esféricas y cilíndricas</h1>
+    <p class="lede">Cuando la región es redonda (un disco, un cilindro, una esfera), las coordenadas cartesianas complican los límites de integración. Conviene describirla con distancias y ángulos. El precio es un factor extra en cada <b>trocito de área o de volumen</b>:
+    \[dA=r\,dr\,d\theta\qquad\quad dV=r\,dr\,d\theta\,dz\qquad\quad dV=\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Coordenadas cilíndricas: de dónde sale el trocito de volumen \(dV=r\,dr\,d\theta\,dz\), en seis pasos.</p>
+  <div class="stage" data-scene="cm-coord-idea"></div>
+  <ul class="keys">
+    <li><b>Trazo naranja:</b> \(r\), la distancia al eje \(z\), medida en el suelo. <b>Arco verde:</b> \(\theta\), el giro desde el eje \(x\). <b>Trazo azul:</b> \(z\), la altura.</li>
+    <li><b>Celda burdeo:</b> lo que barre el punto cuando \(r\), \(\theta\) y \(z\) cambian un poco.</li>
+    <li><b>Sus tres lados:</b> \(\Delta r\) y \(\Delta z\), rectos; y un <b>arco</b> de largo \(r\,\Delta\theta\) (radio por ángulo, con el ángulo en radianes).</li>
+    <li><b>Último paso:</b> el bloque completo, partido en celdas cada vez más finas.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Polares: para el plano</h3>
+    <ol class="steps">
+      <li>Un punto del plano se ubica con \(r\) (distancia al origen, \(r\ge 0\)) y \(\theta\) (ángulo desde el eje \(x\) positivo).</li>
+      <li>\(x=r\cos\theta\), \(y=r\operatorname{sen}\theta\). Al revés: \(r=\sqrt{x^{2}+y^{2}}\) y \(\tan\theta=\dfrac{y}{x}\), eligiendo \(\theta\) según el cuadrante.</li>
+      <li>El trocito de área es casi un rectángulo de lados \(\Delta r\) y \(r\,\Delta\theta\): \(dA=r\,dr\,d\theta\). Es la base de la celda de la animación.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Cilíndricas: polares más la altura</h3>
+    <ol class="steps">
+      <li>\((r,\ \theta,\ z)\): polares en el suelo, y la altura \(z\) de siempre.</li>
+      <li>\(x=r\cos\theta\), \(y=r\operatorname{sen}\theta\), \(z=z\).</li>
+      <li>El trocito de volumen es la base polar por la altura: \(dV=r\,dr\,d\theta\,dz\).</li>
+      <li>Sirven cuando hay un eje de simetría: cilindros, conos, paraboloides, sólidos de revolución.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Esféricas: una distancia y dos ángulos</h3>
+    <p>Mueve \(\varphi\) y \(\theta\) y mira cómo se ubica el punto.</p>
+    <div class="stage" data-scene="cm-coord-esfera"></div>
+    <ul class="keys">
+      <li><b>Trazo naranja, \(\rho\):</b> distancia del punto al origen, \(\rho\ge 0\).</li>
+      <li><b>Arco burdeo, \(\varphi\):</b> ángulo desde el eje \(z\) positivo hasta el trazo, \(0\le\varphi\le\pi\).</li>
+      <li><b>Arco verde, \(\theta\):</b> el mismo ángulo de las polares, medido en el suelo sobre la sombra del punto.</li>
+    </ul>
+    <ol class="steps">
+      <li>La sombra del punto en el suelo queda a distancia \(r=\rho\operatorname{sen}\varphi\) del origen, y su altura es \(z=\rho\cos\varphi\).</li>
+      <li>Por eso: \(x=\rho\operatorname{sen}\varphi\cos\theta\), \(y=\rho\operatorname{sen}\varphi\operatorname{sen}\theta\), \(z=\rho\cos\varphi\). Y \(\rho=\sqrt{x^{2}+y^{2}+z^{2}}\).</li>
+      <li>El trocito de volumen es casi una caja de lados \(\Delta\rho\), \(\rho\,\Delta\varphi\) (arco de radio \(\rho\)) y \(\rho\operatorname{sen}\varphi\,\Delta\theta\) (arco de radio \(\rho\operatorname{sen}\varphi\)):
+        \[dV=\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\]</li>
+    </ol>
+    <p><b>Ojo con los libros.</b> Aquí \(\varphi\) se mide desde el eje \(z\) y \(\theta\) gira en el suelo, como en la mayoría de los textos de cálculo. En muchos textos de física las dos letras van intercambiadas. Antes de usar una fórmula, revisa cuál convención trae.</p>
+  </div>
+
+  <div class="why">
+    <p><b>Con honestidad.</b> Los tres factores (\(r\), \(r\) y \(\rho^{2}\operatorname{sen}\varphi\)) se justificaron aquí con la idea geométrica de la celda «casi caja». La demostración rigurosa es el teorema de cambio de variables para integrales múltiples, donde esos factores aparecen como el determinante jacobiano. Ese teorema <b>no se demuestra</b> en esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: pasar \((1,\ \sqrt{3})\) a polares</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(r=\sqrt{1^{2}+(\sqrt{3})^{2}}=\sqrt{4}=2\).</li>
+    <li>\(\tan\theta=\dfrac{\sqrt{3}}{1}\), y el punto está en el primer cuadrante: \(\theta=\dfrac{\pi}{3}\).</li>
+    <li>Comprobación: \(2\cos\dfrac{\pi}{3}=1\) y \(2\operatorname{sen}\dfrac{\pi}{3}=\sqrt{3}\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el área de un disco de radio \(R\), con polares</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El disco es \(0\le r\le R\), \(0\le\theta\le 2\pi\): los límites son constantes.</li>
+    <li>\(\displaystyle A=\int_{0}^{2\pi}\!\!\int_{0}^{R}r\,dr\,d\theta=\int_{0}^{2\pi}\frac{R^{2}}{2}\,d\theta=\frac{R^{2}}{2}\cdot 2\pi=\pi R^{2}\).</li>
+    <li>Sin el factor \(r\) habría dado \(2\pi R\), que ni siquiera es un área.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: volumen bajo \(z=4-x^{2}-y^{2}\) y sobre el suelo, con cilíndricas</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En cilíndricas, \(x^{2}+y^{2}=r^{2}\): la superficie es \(z=4-r^{2}\). Toca el suelo cuando \(r=2\).</li>
+    <li>Región: \(0\le\theta\le 2\pi\), \(0\le r\le 2\), \(0\le z\le 4-r^{2}\).</li>
+    <li>\(\displaystyle V=\int_{0}^{2\pi}\!\!\int_{0}^{2}\!\!\int_{0}^{4-r^{2}}r\,dz\,dr\,d\theta=\int_{0}^{2\pi}\!\!\int_{0}^{2}\left(4r-r^{3}\right)dr\,d\theta\).</li>
+    <li>\(\displaystyle\int_{0}^{2}\left(4r-r^{3}\right)dr=\left[2r^{2}-\frac{r^{4}}{4}\right]_{0}^{2}=8-4=4\).</li>
+    <li>\(V=4\cdot 2\pi=8\pi\approx 25{,}13\). Es el mismo sólido que en la hoja de capas cilíndricas, y da lo mismo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: el volumen de una esfera de radio \(R\), con esféricas</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La esfera es \(0\le\rho\le R\), \(0\le\varphi\le\pi\), \(0\le\theta\le 2\pi\).</li>
+    <li>\(\displaystyle V=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}\!\!\int_{0}^{R}\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\). Como los límites son constantes y el integrando es un producto, se separa en tres integrales.</li>
+    <li>\(\displaystyle\int_{0}^{R}\rho^{2}\,d\rho=\frac{R^{3}}{3}\), \(\displaystyle\int_{0}^{\pi}\operatorname{sen}\varphi\,d\varphi=\big[-\cos\varphi\big]_{0}^{\pi}=2\), \(\displaystyle\int_{0}^{2\pi}d\theta=2\pi\).</li>
+    <li>\(V=\dfrac{R^{3}}{3}\cdot 2\cdot 2\pi=\dfrac{4}{3}\pi R^{3}\).</li>
+  </ol>
+  </div>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Pasa a cartesianas el punto de coordenadas esféricas \(\rho=2\), \(\varphi=\dfrac{\pi}{3}\), \(\theta=\dfrac{\pi}{4}\).</p>
+    <details><summary>Pista</summary><div><p>\(\operatorname{sen}\dfrac{\pi}{3}=\dfrac{\sqrt{3}}{2}\), \(\cos\dfrac{\pi}{3}=\dfrac{1}{2}\), \(\operatorname{sen}\dfrac{\pi}{4}=\cos\dfrac{\pi}{4}=\dfrac{\sqrt{2}}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(x=2\cdot\dfrac{\sqrt{3}}{2}\cdot\dfrac{\sqrt{2}}{2}=\dfrac{\sqrt{6}}{2}\approx 1{,}225\).</li>
+        <li>\(y=2\cdot\dfrac{\sqrt{3}}{2}\cdot\dfrac{\sqrt{2}}{2}=\dfrac{\sqrt{6}}{2}\approx 1{,}225\).</li>
+        <li>\(z=2\cdot\dfrac{1}{2}=1\).</li>
+        <li>Comprobación: \(x^{2}+y^{2}+z^{2}=\dfrac{6}{4}+\dfrac{6}{4}+1=4=\rho^{2}\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Calcula \(\displaystyle\iint_{D}\left(x^{2}+y^{2}\right)dA\), donde \(D\) es el disco de centro \((0,0)\) y radio \(3\).</p>
+    <details><summary>Pista</summary><div><p>En polares, \(x^{2}+y^{2}=r^{2}\) y \(dA=r\,dr\,d\theta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle\int_{0}^{2\pi}\!\!\int_{0}^{3}r^{2}\cdot r\,dr\,d\theta=\int_{0}^{2\pi}\!\!\int_{0}^{3}r^{3}\,dr\,d\theta\).</li>
+        <li>\(\displaystyle\int_{0}^{3}r^{3}\,dr=\frac{3^{4}}{4}=\frac{81}{4}\).</li>
+        <li>\(\dfrac{81}{4}\cdot 2\pi=\dfrac{81\pi}{2}\approx 127{,}23\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un cono de helado lleno al ras, con la bola formando parte de una esfera centrada en la punta, se modela en esféricas con \(0\le\rho\le 6\) cm y \(0\le\varphi\le\dfrac{\pi}{6}\). ¿Cuántos centímetros cúbicos de helado contiene?</p>
+    <details><summary>Pista</summary><div><p>Los límites son constantes: separa en tres integrales. \(\cos\dfrac{\pi}{6}=\dfrac{\sqrt{3}}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\displaystyle V=\int_{0}^{2\pi}\!\!\int_{0}^{\pi/6}\!\!\int_{0}^{6}\rho^{2}\operatorname{sen}\varphi\ d\rho\,d\varphi\,d\theta\).</li>
+        <li>\(\displaystyle\int_{0}^{6}\rho^{2}\,d\rho=\frac{216}{3}=72\).</li>
+        <li>\(\displaystyle\int_{0}^{\pi/6}\operatorname{sen}\varphi\,d\varphi=1-\cos\frac{\pi}{6}=1-\frac{\sqrt{3}}{2}\approx 0{,}1340\).</li>
+        <li>\(V=72\cdot\left(1-\dfrac{\sqrt{3}}{2}\right)\cdot 2\pi=144\pi\left(1-\dfrac{\sqrt{3}}{2}\right)\approx 60{,}61\ \text{cm}^{3}\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CM-L27-H02 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades 3D del lote 27: proyección oblicua, superficie por parches con degradado, curvas y etiquetas TeX */
+function cmKit(S){
+  var c = S.ctx, X = S.X, Y = S.Y, C = S.C, K = {}, FNT = '"Source Sans 3", system-ui, sans-serif';
+  K.P = function(x, y, z){ return [y - 0.45*x, z - 0.35*x]; };
+  K.at = function(p){ var q = K.P(p[0], p[1], p[2]); return [X(q[0]), Y(q[1])]; };
+  K.line = function(a, b, col, w, dash){ var p = K.at(a), q = K.at(b); c.strokeStyle = col; c.lineWidth = w || 1; if (dash) c.setLineDash(dash); c.beginPath(); c.moveTo(p[0], p[1]); c.lineTo(q[0], q[1]); c.stroke(); c.setLineDash([]); };
+  K.poly = function(pts, col, alpha, stroke){ c.beginPath(); pts.forEach(function(t, i){ var p = K.at(t); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.globalAlpha = alpha; c.fillStyle = col; c.fill(); c.globalAlpha = 1; if (stroke){ c.strokeStyle = stroke; c.lineWidth = 0.6; c.stroke(); } };
+  /* curva dada por tramos de puntos 3D; frac = parte dibujada (0…1) */
+  K.path = function(pts, col, w, dash, frac){ var n = Math.max(2, Math.round(pts.length*(frac == null ? 1 : frac))), i, p; if (pts.length < 2) return; c.strokeStyle = col; c.lineWidth = w; if (dash) c.setLineDash(dash); c.beginPath(); for (i = 0; i < Math.min(n, pts.length); i++){ p = K.at(pts[i]); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.stroke(); c.setLineDash([]); };
+  K.dot = function(p, col, r){ var q = K.at(p); c.beginPath(); c.arc(q[0], q[1], r || 3.2, 0, 6.2832); c.fillStyle = col; c.fill(); };
+  K.txt = function(t, x, y, col, sz, al){ c.font = '600 ' + (sz || 12.5) + 'px ' + FNT; c.fillStyle = col || C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); };
+  K.ejes = function(zt, zb){ K.line([0, 0, 0], [3.1, 0, 0], C.ink, 1); K.line([0, 0, 0], [0, 2.9, 0], C.ink, 1); K.line([0, 0, zb || 0], [0, 0, zt || 3.7], C.ink, 1); };
+  K.suelo = function(){ K.poly([[-2, -2, 0], [2, -2, 0], [2, 2, 0], [-2, 2, 0]], C.ink, 0.035, 'rgba(0,0,0,0.18)'); };
+  /* superficie z = f(x, y) sobre [-2,2]²; rows = cuántas filas (de atrás hacia adelante) se muestran, puede ser fraccionario */
+  K.sup = function(f, zlo, zhi, alpha, rows){ var n = 8, h = 4/n, i, j, x, y, z, a, R = rows == null ? n : rows;
+    for (i = 0; i < n; i++){ a = Math.max(0, Math.min(1, R - i)); if (a <= 0) break; for (j = 0; j < n; j++){ x = -2 + i*h; y = -2 + j*h; z = f(x + h/2, y + h/2);
+      K.poly([[x, y, f(x, y)], [x + h, y, f(x + h, y)], [x + h, y + h, f(x + h, y + h)], [x, y + h, f(x, y + h)]], C.sec, Math.max(0.03, a*alpha*(0.1 + 0.22*Math.max(0, Math.min(1, (z - zlo)/(zhi - zlo))))), 'rgba(31,95,138,' + (0.45*a) + ')'); } } };
+  return K;
+}
+function cmEtq(S, PZ){ var on = {}; return { L:function(id, p, ax, dx, dy){ on[id] = 1; S.lab(id, p[0] + (dx || 0), p[1] + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+var cmEJ = [['AX', 'x', 'x', ''], ['AY', 'y', 'y', ''], ['AZ', 'z', 'z', '']];
+function cmEjesLab(K, L, zt){ L('AX', K.at([3.3, 0, 0])); L('AY', K.at([0, 3.1, 0])); L('AZ', K.at([0, 0, (zt || 3.7) + 0.2])); }
+function cmSuave(w){ w = Math.max(0, Math.min(1, w)); return w*w*(3 - 2*w); }
+function cmCirc(r, z){ var p = [], i, t; for (i = 0; i <= 72; i++){ t = 6.2832*i/72; p.push([r*Math.cos(t), r*Math.sin(t), z]); } return p; }
+/* Coordenadas polares, cilíndricas y esféricas. Dibujo propio; rótulos algebraicos como etiquetas TeX. */
+(function(){
+  function cil(r, t, z){ return [r*Math.cos(t), r*Math.sin(t), z]; }
+  function arco(r, t0, t1, z){ var p = [], i; for (i = 0; i <= 16; i++) p.push(cil(r, t0 + (t1 - t0)*i/16, z)); return p; }
+  /* celda cilíndrica [r0,r1]×[t0,t1]×[z0,z1] */
+  function celda(K, r0, r1, t0, t1, z0, z1, col, alpha, st){
+    var a0 = arco(r0, t0, t1, z0), a1 = arco(r1, t0, t1, z0), b0 = arco(r0, t0, t1, z1), b1 = arco(r1, t0, t1, z1), s = st || col;
+    K.poly(a0.concat(a1.slice().reverse()), col, alpha*0.5, s);                                   /* piso */
+    K.poly(a0.concat(b0.slice().reverse()), col, alpha*0.6, s);                                   /* cara interior */
+    K.poly([cil(r0, t1, z0), cil(r1, t1, z0), cil(r1, t1, z1), cil(r0, t1, z1)], col, alpha*0.6, s); /* cara θ mayor */
+    K.poly([cil(r0, t0, z0), cil(r1, t0, z0), cil(r1, t0, z1), cil(r0, t0, z1)], col, alpha*0.8, s); /* cara θ menor */
+    K.poly(a1.concat(b1.slice().reverse()), col, alpha, s);                                       /* cara exterior */
+    K.poly(b0.concat(b1.slice().reverse()), col, alpha*0.9, s);                                   /* tapa */
+  }
+  /* ── la idea: el elemento de volumen en cilíndricas, en seis pasos ── */
+  OA.scene('cm-coord-idea', (function(){
+    var N = 6, R0 = 1.5, R1 = 2.3, T0 = 0.55, T1 = 1.05, Z0 = 1.3, Z1 = 2.3, BR0 = 0.8, BR1 = 2.6, BT0 = 0.25, BT1 = 1.35, BZ0 = 0, BZ1 = 2.6;
+    var PZ = cmEJ.concat([
+      ['Q', '\\text{¿Cuánto mide un trocito de volumen?}', '¿Cuánto mide un trocito de volumen?', 'pt'],
+      ['PT', '(r,\\ \\theta,\\ z)', '(r, θ, z)', 'pt'], ['LR', 'r', 'r', 'diff'], ['LT', '\\theta', 'θ', 'c-alt'], ['LZ', 'z', 'z', 'c-sec'],
+      ['DR', '\\Delta r', 'Δr', 'diff'], ['DT', 'r\\,\\Delta\\theta', 'r Δθ', 'c-alt'], ['DZ', '\\Delta z', 'Δz', 'c-sec'],
+      ['E2', 'x=r\\cos\\theta,\\quad y=r\\operatorname{sen}\\theta,\\quad z=z', 'x = r cos θ, y = r sen θ, z = z', ''],
+      ['E4', '\\text{lados: }\\Delta r,\\quad r\\,\\Delta\\theta,\\quad \\Delta z', 'lados: Δr, r Δθ, Δz', ''],
+      ['E5', '\\Delta V\\approx \\Delta r\\cdot r\\,\\Delta\\theta\\cdot\\Delta z', 'ΔV ≈ Δr · r Δθ · Δz', ''],
+      ['E6', 'dV=r\\,dr\\,d\\theta\\,dz', 'dV = r dr dθ dz', 'diff']
+    ]);
+    var TXT = [
+      ['Para sumar sobre un sólido redondo conviene', 'cortarlo en trocitos que sigan su forma.'],
+      ['Un punto se ubica con tres datos: distancia al eje,', 'ángulo de giro y altura.'],
+      ['Si cada dato cambia un poco, el punto barre', 'un trocito: una celda.'],
+      ['La celda es casi una caja. Dos lados son rectos.', 'El tercero es un arco: radio por ángulo.'],
+      ['Su volumen es, aproximadamente, el producto', 'de los tres lados.'],
+      ['Con celdas cada vez más finas, la suma', 'se vuelve integral. El factor del radio viene del arco.']
+    ];
+    return {
+      world:{x0:-3.7, x1:3.9, y0:-4.5, y1:4.4}, aspect:8.9/7.6,
+      aria:'Animación en seis pasos sobre las coordenadas cilíndricas. Uno: un bloque curvo, parte de un tubo grueso, apoyado en el suelo. Dos: un punto se ubica con su distancia r al eje vertical, medida en el suelo; el ángulo theta de giro desde el eje x; y su altura z. Tres: al aumentar un poco r, theta y z, el punto barre una celda pequeña, casi una caja. Cuatro: los tres lados de la celda, rotulados: delta r, el arco r por delta theta, y delta z. Cinco: su volumen aproximado es el producto de los tres lados. Seis: el bloque completo se parte en celdas cada vez más finas, y el elemento de volumen queda como r por dr por d theta por dz.',
+      labels:PZ,
+      sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+      legend:'<span><i class="sw rise"></i> radio \\(r\\) y su cambio \\(\\Delta r\\)</span><span><i class="sw alt"></i> ángulo \\(\\theta\\) y el arco \\(r\\,\\Delta\\theta\\)</span><span><i class="sw sec"></i> altura \\(z\\) y \\(\\Delta z\\)</span><span><i class="sw tan"></i> la celda</span>',
+      anim:{run:36000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = cmSuave((t - Math.floor(t))*1.3); }},
+      onInput:function(v){ v.q = null; v.u = 1; },
+      draw:function(S, v){
+        var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, K = cmKit(S), T = cmEtq(S, PZ), L = T.L, i, j, m, n, g;
+        K.suelo(); K.ejes(3.6); cmEjesLab(K, L, 3.6);
+        if (k === 1) celda(K, BR0, BR1, BT0, BT1, BZ0, BZ1*u, C.sec, 0.3);
+        if (k >= 2 && k <= 5) celda(K, BR0, BR1, BT0, BT1, BZ0, BZ1, C.sec, 0.07, 'rgba(31,95,138,0.25)');
+        if (k === 2 || k === 3){ /* r en el suelo, θ, y la altura z */
+          var ur = k === 2 ? Math.min(1, u/0.4) : 1, ut = k === 2 ? Math.max(0, Math.min(1, (u - 0.4)/0.3)) : 1, uz = k === 2 ? Math.max(0, (u - 0.7)/0.3) : 1, th = T0*ut;
+          K.line([0, 0, 0], cil(R0*ur, th, 0), C.rise, 2.4); if (ut > 0) K.path(arco(0.7, 0, th, 0), C.alt, 2);
+          if (uz > 0){ K.line(cil(R0, T0, 0), cil(R0, T0, Z0*uz), C.sec, 2.4); K.dot(cil(R0, T0, Z0*uz), C.ink, 3.4); }
+          if (k === 2 && u >= 1){ L('LR', K.at(cil(R0*0.55, T0, 0)), -50, -8, 10); L('LT', K.at(cil(0.95, T0/2, 0)), -50, 4, 6); L('LZ', K.at(cil(R0, T0, Z0/2)), 0, 7, 0); L('PT', K.at(cil(R0, T0, Z0)), 0, 8, -10); }
+        }
+        if (k >= 3 && k <= 5){ g = k === 3 ? u : 1; celda(K, R0, R0 + (R1 - R0)*g, T0, T0 + (T1 - T0)*g, Z0, Z0 + (Z1 - Z0)*g, C.tan, 0.5); if (k === 3) K.dot(cil(R0, T0, Z0), C.ink, 3.2); }
+        if (k === 4 || k === 5){
+          K.line(cil(R0, T0, Z0), cil(R1, T0, Z0), C.rise, 3); K.path(arco(R1, T0, T1, Z0), C.alt, 3); K.line(cil(R1, T1, Z0), cil(R1, T1, Z1), C.sec, 3);
+          L('DR', K.at(cil((R0 + R1)/2, T0, Z0)), -50, -12, 12); L('DT', K.at(cil(R1, (T0 + T1)/2, Z0)), -50, 6, 14); L('DZ', K.at(cil(R1, T1, (Z0 + Z1)/2)), 0, 8, 0);
+        }
+        if (k === 6){ n = 2 + Math.round(3*u); for (i = n - 1; i >= 0; i--) for (j = n - 1; j >= 0; j--) for (m = 0; m < n; m++)
+          celda(K, BR0 + (BR1 - BR0)*i/n, BR0 + (BR1 - BR0)*(i + 1)/n, BT0 + (BT1 - BT0)*j/n, BT0 + (BT1 - BT0)*(j + 1)/n, BZ0 + (BZ1 - BZ0)*m/n, BZ0 + (BZ1 - BZ0)*(m + 1)/n, C.sec, 0.2);
+          K.txt(n + ' × ' + n + ' × ' + n + ' = ' + n*n*n + ' celdas', 3.8, -1.25, C.muted || '#6b6b6b', 11.5, 'right'); }
+        if (k === 1) L('Q', [S.X(-3.6), S.Y(4.0)], 0);
+        if (k === 2) L('E2', [S.X(-3.6), S.Y(-1.95)], 0); if (k === 4) L('E4', [S.X(-3.6), S.Y(-1.95)], 0); if (k === 5) L('E5', [S.X(-3.6), S.Y(-1.95)], 0); if (k === 6) L('E6', [S.X(-3.6), S.Y(-1.95)], 0);
+        K.txt(TXT[k - 1][0], -3.6, -3.1); K.txt(TXT[k - 1][1], -3.6, -3.1 - 21/(S.X(1) - S.X(0)));
+        K.txt('paso ' + k + ' de ' + N, 3.8, 4.15, C.muted || '#6b6b6b', 11, 'right');
+        T.fin();
+      },
+      caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+      readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\Delta V=\\ ?', '(r,\\ \\theta,\\ z):\\qquad x=r\\cos\\theta,\\quad y=r\\operatorname{sen}\\theta,\\quad z=z', 'r\\to r+\\Delta r,\\qquad \\theta\\to\\theta+\\Delta\\theta,\\qquad z\\to z+\\Delta z', '\\text{arco}=\\text{radio}\\times\\text{ángulo}=r\\,\\Delta\\theta', '\\Delta V\\approx r\\,\\Delta r\\,\\Delta\\theta\\,\\Delta z', 'dV=r\\,dr\\,d\\theta\\,dz'][k - 1]]]; }
+    };
+  })());
+
+  /* ── coordenadas esféricas: un punto y sus tres datos ── */
+  OA.scene('cm-coord-esfera', (function(){
+    var RHO = 2.6;
+    var PZ = cmEJ.concat([['LP', '\\rho', 'ρ', 'diff'], ['LF', '\\varphi', 'φ', 'c-tan'], ['LT', '\\theta', 'θ', 'c-alt'], ['PT', '(\\rho,\\ \\varphi,\\ \\theta)', '(ρ, φ, θ)', 'pt']]);
+    return {
+      world:{x0:-3.7, x1:3.9, y0:-1.9, y1:4.3}, aspect:6.2/7.6,
+      aria:'Un punto en el espacio ubicado con coordenadas esféricas. Un trazo naranja une el origen con el punto: su largo es rho. Un arco burdeo marca el ángulo fi, que se mide desde el eje z positivo hasta ese trazo. La sombra del punto cae en el suelo, y un arco verde marca el ángulo theta, medido en el suelo desde el eje x hasta la sombra. Al mover fi, el punto baja desde el polo hacia el ecuador; al mover theta, gira alrededor del eje z.',
+      labels:PZ,
+      sliders:[{id:'fi', tex:'\\varphi', min:0.15, max:1.5, step:0.05, value:0.3}, {id:'th', tex:'\\theta', min:0.1, max:1.45, step:0.05, value:1.0}],
+      legend:'<span><i class="sw rise"></i> \\(\\rho\\): distancia al origen</span><span><i class="sw tan"></i> \\(\\varphi\\): ángulo desde el eje \\(z\\)</span><span><i class="sw alt"></i> \\(\\theta\\): ángulo en el suelo, desde el eje \\(x\\)</span>',
+      anim:{run:18000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.fi = 0.3 + 1.0*(0.5 - 0.5*Math.cos(6.2832*p)); v.th = 0.45 + 0.85*p; }},
+      onInput:function(v){ v.q = null; },
+      draw:function(S, v){
+        var fi = v.fi == null ? 0.3 : +v.fi, th = v.th == null ? 1 : +v.th, C = S.C, K = cmKit(S), T = cmEtq(S, PZ), L = T.L, i, a = [], b = [], r = RHO*Math.sin(fi), z = RHO*Math.cos(fi), P = cil(r, th, z);
+        K.suelo(); K.ejes(3.5); cmEjesLab(K, L, 3.5);
+        /* meridiano y paralelo de referencia, tenues */
+        for (i = 0; i <= 30; i++){ var f = 1.5708*i/30; a.push(cil(RHO*Math.sin(f), th, RHO*Math.cos(f))); } K.path(a, 'rgba(31,95,138,0.35)', 1);
+        K.path(arco(r, 0, 1.5708, z), 'rgba(31,95,138,0.35)', 1); K.path(arco(RHO, 0, 1.5708, 0), 'rgba(31,95,138,0.35)', 1);
+        K.line([0, 0, 0], cil(r, th, 0), C.ink, 1, [3, 3]); K.line(cil(r, th, 0), P, C.ink, 1, [3, 3]);
+        K.path(arco(0.9, 0, th, 0), C.alt, 2.2); L('LT', K.at(cil(1.15, th/2, 0)), -50, 2, 6);
+        for (i = 0; i <= 20; i++){ var g = fi*i/20; b.push(cil(0.8*Math.sin(g), th, 0.8*Math.cos(g))); } K.path(b, C.tan, 2.2); L('LF', K.at(cil(1.05*Math.sin(fi/2), th, 1.05*Math.cos(fi/2))), -50, 4, -2);
+        K.line([0, 0, 0], P, C.rise, 2.4); L('LP', K.at(cil(r*0.78, th, z*0.78)), -50, -13, -9);
+        K.dot(P, C.ink, 3.6); L('PT', K.at(P), 0, 9, -8);
+        T.fin();
+      },
+      caption:function(v){ var fi = v.fi == null ? 0.3 : +v.fi, d = function(z){ return z.toFixed(2).replace('.', ','); }; return 'El punto está a distancia ρ del origen. El ángulo φ, de ' + d(fi) + ' radianes, lo baja desde el eje z; el ángulo θ lo gira alrededor de ese eje. Con φ = 0 el punto queda sobre el eje z; con φ = π/2, en el suelo'; },
+      readout:function(v){ var fi = v.fi == null ? 0.3 : +v.fi, th = v.th == null ? 1 : +v.th, n = OA.num; return [['', 'x=\\rho\\operatorname{sen}\\varphi\\cos\\theta,\\quad y=\\rho\\operatorname{sen}\\varphi\\operatorname{sen}\\theta,\\quad z=\\rho\\cos\\varphi'], ['d', '\\rho=' + n(RHO, 1) + ',\\ \\varphi=' + n(fi, 2) + ',\\ \\theta=' + n(th, 2) + ':\\quad (x,y,z)\\approx\\big(' + n(RHO*Math.sin(fi)*Math.cos(th), 2) + ';\\ ' + n(RHO*Math.sin(fi)*Math.sin(th), 2) + ';\\ ' + n(RHO*Math.cos(fi), 2) + '\\big)']]; }
+    };
+  })());
+})();
