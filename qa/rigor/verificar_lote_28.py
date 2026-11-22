@@ -208,4 +208,86 @@ ok(cr2(3, 2, 2, 5, 5400, 6900) == (11, 13200, 9900) and 27000 - 13800 == 13200 a
 for m in (Fr(3), Fr(2), Fr(1), Fr(3, 4), Fr(11, 20)):
     D, Dx, Dy = cr2(2, 1, 1, m, 5, 5); ok(D == 2*m - 1 and Dx == 5*m - 5 and Dy == 5 and 2*Dx/D + Dy/D == 5 and Dx/D + m*Dy/D == 5, 'H08 escena cramer-vivo')
 ok(cr2(2, 1, 1, Fr(1, 2), 5, 5)[0] == 0 and cr2(2, 1, 1, 3, 5, 5) == (5, 10, 5), 'H08 escena cramer-vivo extremos')
-print('Lote 28 H01–H08: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
+# H09 · sistemas por determinantes (clasificación)
+def sols2(a, b, c, d, e, f):
+    """Clasificación exacta por eliminación, sin determinantes: 1 = única, 0 = ninguna, 2 = infinitas."""
+    if a*d - b*c != 0: return 1
+    filas = [(a, b, e), (c, d, f)]
+    if any(r[0] == 0 and r[1] == 0 and r[2] != 0 for r in filas): return 0
+    nz = [r for r in filas if r[0] != 0 or r[1] != 0]
+    if not nz: return 2
+    r0 = nz[0]
+    for r in filas:  # con determinante 0 las filas de coeficientes son proporcionales: basta comparar los términos libres
+        if r[0]*r0[2] != r0[0]*r[2] or r[1]*r0[2] != r0[1]*r[2]: return 0
+    return 2
+for a, b, c, d in itertools.product(R, repeat=4):
+    for e, f in itertools.product(range(-3, 4), repeat=2):
+        D, Dx, Dy = cr2(a, b, c, d, e, f); n_ = sols2(a, b, c, d, e, f)
+        if D != 0: ok(n_ == 1, 'H09 caso 1')
+        elif Dx != 0 or Dy != 0: ok(n_ == 0, 'H09 caso 2')
+        elif (a, b, c, d) != (0, 0, 0, 0): ok(n_ == 2, 'H09 caso 3')
+        else: ok((n_ == 2) == (e == 0 and f == 0), 'H09 coeficientes nulos')
+        if D == 0 and Dx == 0 and Dy == 0 and a != 0:
+            ok(Fr(b*c, a) == d and Fr(e*c, a) == f, 'H09 demostración caso 3')
+            for t in (Fr(-2), Fr(0), Fr(1, 3), Fr(5)):
+                x = (e - b*t)/Fr(a); ok(a*x + b*t == e and c*x + d*t == f, 'H09 caso 3 familia de soluciones')
+ok(cr2(1, 2, 2, 4, 4, 6) == (0, 4, -2) and cr2(1, 2, 2, 4, 4, 8) == (0, 0, 0) and 1*8 - 4*2 == 0, 'H09 escena sis-idea')
+for m in (Fr(6), Fr(5), Fr(9, 2), Fr(41, 10)):
+    for f in (Fr(6), Fr(8), Fr(10)):
+        D, Dx, Dy = cr2(1, 2, 2, m, 4, f); ok(D == m - 4 and Dx == 4*m - 2*f and Dy == f - 8 and Dx/D + 2*Dy/D == 4 and 2*Dx/D + m*Dy/D == f, 'H09 escena sis-vivo')
+ok(cr2(1, 2, 2, 6, 4, 10) == (2, 4, 2) and cr2(1, 2, 2, 4, 4, 10) == (0, -4, 2) and cr2(1, 2, 2, 4, 4, 8) == (0, 0, 0), 'H09 escena sis-vivo extremos')
+ok(cr2(3, -1, 1, 2, 5, 4) == (7, 14, 7) and 3*2 - 1 == 5 and 2 + 2*1 == 4, 'H09 ej1')
+ok(cr2(2, -3, -4, 6, 1, 5)[:2] == (0, 21) and sols2(2, -3, -4, 6, 1, 5) == 0 and -2*1 == -2 != 5, 'H09 ej2')
+ok(cr2(2, -3, -4, 6, 1, -2) == (0, 0, 0) and sols2(2, -3, -4, 6, 1, -2) == 2, 'H09 ej3')
+for t in (Fr(-1), Fr(0), Fr(2, 3), Fr(4)): ok(2*(1 + 3*t)/2 - 3*t == 1 and -4*(1 + 3*t)/2 + 6*t == -2, 'H09 ej3 familia')
+for k in (Fr(-5), Fr(-1), Fr(0), Fr(1, 2), Fr(3), Fr(7)):
+    D, Dx, Dy = cr2(1, k, k, 4, 1, 2); ok(D == 4 - k*k == (2 - k)*(2 + k) and Dx == 4 - 2*k == 2*(2 - k) and Dy == 2 - k, 'H09 ej4 determinantes')
+    x, y = Dx/D, Dy/D; ok(x == 2/(2 + k) and y == 1/(2 + k) and x + k*y == 1 and k*x + 4*y == 2, 'H09 ej4 solución')
+ok(cr2(1, 2, 2, 4, 1, 2) == (0, 0, 0) and cr2(1, -2, -2, 4, 1, 2)[:2] == (0, 8) and sols2(1, -2, -2, 4, 1, 2) == 0, 'H09 ej4 k = 2 y k = -2')
+ok(cr2(6, 4, 9, 6, 10, 15) == (0, 0, 0) and (36, 60, 90) == (6*6, 10*6, 6*15) and (4*9, 4*15, 10*9) == (36, 60, 90), 'H09 A')
+for t in (Fr(-2), Fr(0), Fr(1), Fr(7, 2)): x = (5 - 2*t)/3; ok(x == (10 - 4*t)/6 and 6*x + 4*t == 10 and 9*x + 6*t == 15, 'H09 A familia')
+for m in (Fr(-7), Fr(-1), Fr(0), Fr(1, 2), Fr(3), Fr(9)):
+    D, Dx, Dy = cr2(2, m, m, 8, 4, 8); ok(D == 16 - m*m == (4 - m)*(4 + m) and Dx == 32 - 8*m == 8*(4 - m) and Dy == 16 - 4*m == 4*(4 - m), 'H09 B determinantes')
+    x, y = Dx/D, Dy/D; ok(x == 8/(4 + m) and y == 4/(4 + m) and 2*x + m*y == 4 and m*x + 8*y == 8, 'H09 B solución')
+ok(cr2(2, 4, 4, 8, 4, 8) == (0, 0, 0) and cr2(2, -4, -4, 8, 4, 8)[:2] == (0, 64) and sols2(2, -4, -4, 8, 4, 8) == 0, 'H09 B m = 4 y m = -4')
+ok(cr2(2, 3, 4, 6, 6900, 13800) == (0, 0, 0) and 6900*6 == 41400 == 3*13800 and 2*13800 == 27600 == 6900*4, 'H09 C (i)')
+ok(2*1500 + 3*1300 == 6900 and 2*1800 + 3*1100 == 6900 and 4*1500 + 6*1300 == 13800 and 4*1800 + 6*1100 == 13800, 'H09 C ejemplos de precios')
+ok(cr2(2, 3, 4, 6, 6900, 14000)[1] == -600 == 41400 - 42000 and sols2(2, 3, 4, 6, 6900, 14000) == 0, 'H09 C (ii)')
+U3 = [[1, 1, 1]]*3  # advertencia de tercer orden: los cuatro determinantes valen 0 y no hay solución
+ok(det3(U3) == 0 and all(det3(cam(U3, q, [1, 2, 3])) == 0 for q in range(3)), 'H09 advertencia de tercer orden')
+# H10 · símbolo y notación
+ok(det2(3, 1, 2, 4) == 10 == 12 - 2, 'H10 escena nota-idea'); ok(det2(1, 4, 2, 3) == -5, 'H10 ej2 y recuadro')
+for a in (Fr(-2), Fr(0), Fr(1, 2), Fr(3), Fr(4)):
+    P_ = [(0, 0), (a, 2), (a + 1, 6), (1, 4)]; sh_ = sum(P_[i][0]*P_[(i + 1) % 4][1] - P_[(i + 1) % 4][0]*P_[i][1] for i in range(4))
+    ok(det2(a, 1, 2, 4) == 4*a - 2 and abs(sh_)/2 == abs(4*a - 2), 'H10 escena nota-vivo')
+ok(det2(Fr(1, 2), 1, 2, 4) == 0 and Fr(1, 2)*4 == 2, 'H10 escena nota-vivo caso cero')
+ok(det2(5, 2, 3, 4) == 14 == 20 - 6, 'H10 ej1')
+ok(det3([[2, 1, 0], [0, 3, 5], [0, 0, -1]]) == -6 and 3*(-1) - 5*0 == -3 and 0*(-1) - 5*0 == 0 and 2*(-3) - 1*0 + 0 == -6, 'H10 ej3')
+ok(det2(1, 2, 3, 4) == -2 and 3*(-2) == -6 and det2(3, 6, 9, 12) == -18 == 36 - 54 == 9*(-2), 'H10 ej4')
+ok(det2(1, 0, 0, 1) == 1 == det2(2, 1, 1, 1) and det2(0, 1, 1, 0) == -1, 'H10 errores y B')
+ok(det2(-2, 5, 1, 3) == -11 == -6 - 5, 'H10 A')
+ok(det2(1800, 1200, 2100, 1400) == 0 and 1800*1400 == 2520000 == 1200*2100 and Fr(7, 6)*1800 == 2100 and Fr(7, 6)*1200 == 1400, 'H10 C')
+# H11 · factor de escala de áreas
+def ap(A, p): return (A[0][0]*p[0] + A[0][1]*p[1], A[1][0]*p[0] + A[1][1]*p[1])
+def cordon(P): return abs(sum(P[i][0]*P[(i + 1) % len(P)][1] - P[(i + 1) % len(P)][0]*P[i][1] for i in range(len(P))))/Fr(2)
+random.seed(2811)
+for _ in range(4000):  # paralelogramos y triángulos en cualquier posición: área de la imagen = |det A| · área
+    A_ = [[random.randint(-4, 4) for _ in range(2)] for _ in range(2)]; p, u_, v_ = [(random.randint(-5, 5), random.randint(-5, 5)) for _ in range(3)]; dA = det2(A_[0][0], A_[0][1], A_[1][0], A_[1][1])
+    par = [p, (p[0] + u_[0], p[1] + u_[1]), (p[0] + u_[0] + v_[0], p[1] + u_[1] + v_[1]), (p[0] + v_[0], p[1] + v_[1])]
+    ok(cordon([ap(A_, q) for q in par]) == abs(dA)*cordon(par) and cordon(par) == abs(det2(u_[0], v_[0], u_[1], v_[1])), 'H11 paralelogramos')
+    ok(cordon([ap(A_, q) for q in par[:3]]) == abs(dA)*cordon(par[:3]), 'H11 triángulos')
+    s_, t_ = Fr(random.randint(0, 6), 6), Fr(random.randint(0, 6), 6); q = (p[0] + s_*u_[0] + t_*v_[0], p[1] + s_*u_[1] + t_*v_[1]); Tp, Tu, Tv = ap(A_, p), ap(A_, u_), ap(A_, v_)
+    ok(ap(A_, q) == (Tp[0] + s_*Tu[0] + t_*Tv[0], Tp[1] + s_*Tu[1] + t_*Tv[1]), 'H11 linealidad')
+    ok(det2(Tu[0], Tv[0], Tu[1], Tv[1]) == dA*det2(u_[0], v_[0], u_[1], v_[1]), 'H11 det(AM) = det A · det M')
+AE = [[1, 1], [0, 2]]; LL = [(0, 0), (2, 0), (2, 1), (1, 1), (1, 2), (0, 2)]
+ok(cordon(LL) == 3 and cordon([ap(AE, q) for q in LL]) == 6 and det2(1, 1, 0, 2) == 2 and ap(AE, (1, 0)) == (1, 0) and ap(AE, (0, 1)) == (1, 2), 'H11 escena esc-idea')
+for q0 in ((0, 0), (1, 0), (0, 1)): ok(cordon([ap(AE, (q0[0] + dx, q0[1] + dy)) for dx, dy in ((0, 0), (1, 0), (1, 1), (0, 1))]) == 2, 'H11 escena esc-idea cuadraditos')
+for k in (Fr(-1), Fr(0), Fr(1, 2), Fr(3, 2), Fr(2)): ok(det2(2, 0, 0, k) == 2*k and ap([[2, 0], [0, k]], (0, 1)) == (0, k) and ap([[2, 0], [0, k]], (1, 0)) == (2, 0), 'H11 escena esc-vivo')
+ok(det2(3, 1, 1, 2) == 5 and ap([[3, 1], [1, 2]], (1, 0)) == (3, 1) and ap([[3, 1], [1, 2]], (0, 1)) == (1, 2), 'H11 ej1')
+A2_ = [[2, -1], [1, 1]]; ok(det2(2, -1, 1, 1) == 3 and ap(A2_, (4, 0)) == (8, 4) and ap(A2_, (0, 3)) == (-3, 3) and det2(8, -3, 4, 3) == 36 and cordon([(0, 0), (8, 4), (-3, 3)]) == 18 == 3*6 and cordon([(0, 0), (4, 0), (0, 3)]) == 6, 'H11 ej2')
+A3_ = [[1, 2], [3, 1]]; ok(det2(1, 2, 3, 1) == -5 and ap(A3_, (2, 0)) == (2, 6) and ap(A3_, (0, 3)) == (6, 3) and det2(2, 6, 6, 3) == -30 and 5*6 == 30, 'H11 ej3')
+ok(det2(2, 4, 1, 2) == 0 and all(ap([[2, 4], [1, 2]], (x, y)) == ((x + 2*y)*2, (x + 2*y)*1) for x in R for y in R), 'H11 ej4')
+ok(det2(4, 1, 2, 3) == 10 and 10*4 == 40, 'H11 A')
+for k2, dv in ((5, 1), (3, -1), (4, 0)): ok(k2 - 4 == dv, 'H11 B')
+ok(det2(Fr(12, 10), 0, 0, Fr(15, 10)) == Fr(18, 10) == det2(Fr(12, 10), Fr(3, 10), 0, Fr(15, 10)) and Fr(18, 10)*150 == 270 and Fr(12, 10)*10 == 12 and Fr(15, 10)*15 == Fr(45, 2) and 12*Fr(45, 2) == 270, 'H11 C')
+print('Lote 28 H01–H11: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

@@ -1,0 +1,196 @@
+<!--file:H09_resolucion_de_sistemas_de_ecuaciones_lineales_por_determinantes.html-->
+<!--title:Resolución de sistemas de ecuaciones lineales por determinantes-->
+<!--id:det-sistemas-->
+<!--tab:H09 Sistemas-->
+<article class="sheet" id="det-sistemas" data-hoja="L28 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Resolución de sistemas de ecuaciones lineales por determinantes</b></li>
+    </ol>
+    <h1>Resolución de sistemas de ecuaciones lineales por determinantes</h1>
+    <p class="lede">Los determinantes dicen cuántas soluciones tiene un sistema de dos ecuaciones lineales con dos incógnitas, y las entregan cuando la solución es única. Se calculan tres: \(\Delta\), el de los coeficientes, y \(\Delta_x\), \(\Delta_y\), con la columna de una incógnita cambiada por la de los términos libres.
+    \[\Delta\neq 0:\ \text{una única solución},\qquad x=\frac{\Delta_x}{\Delta},\quad y=\frac{\Delta_y}{\Delta}\]
+    Si \(\Delta=0\), el sistema no tiene solución o tiene infinitas: lo deciden \(\Delta_x\) y \(\Delta_y\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El sistema \(x+2y=4\), \(2x+4y=6\), y lo que pasa al cambiar el \(6\) por un \(8\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="sis-idea"></div>
+  <ul class="keys">
+    <li><b>Recta azul:</b> la primera ecuación, \(x+2y=4\). No cambia.</li>
+    <li><b>Recta verde:</b> la segunda ecuación. Con \(2x+4y=6\) es paralela a la azul; con \(2x+4y=8\) queda sobre la azul.</li>
+    <li><b>Naranja:</b> la conclusión de cada caso.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Los tres casos, para dos ecuaciones con dos incógnitas</h3>
+    <p>Sistema ordenado, con sus tres determinantes:
+    \[\begin{cases}a\,x+b\,y=e\\ c\,x+d\,y=f\end{cases}\qquad \Delta=\begin{vmatrix}a&b\\c&d\end{vmatrix},\quad \Delta_x=\begin{vmatrix}e&b\\f&d\end{vmatrix},\quad \Delta_y=\begin{vmatrix}a&e\\c&f\end{vmatrix}\]</p>
+    <ol class="steps">
+      <li><b>\(\Delta\neq 0\):</b> una única solución, \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\) (regla de Cramer). El sistema se llama <b>compatible determinado</b>. Las dos rectas se cortan en un punto.</li>
+      <li><b>\(\Delta=0\) y \(\Delta_x\neq 0\) o \(\Delta_y\neq 0\):</b> no hay solución. El sistema se llama <b>incompatible</b>. Las rectas son paralelas.</li>
+      <li><b>\(\Delta=0\), \(\Delta_x=0\) y \(\Delta_y=0\), con algún coeficiente \(a,b,c,d\) distinto de \(0\):</b> infinitas soluciones. El sistema se llama <b>compatible indeterminado</b>. Las dos ecuaciones describen la misma recta.</li>
+    </ol>
+    <p>Si los cuatro coeficientes son \(0\), no hay rectas: el sistema dice \(0=e\) y \(0=f\), y solo tiene solución si \(e=0\) y \(f=0\).</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración</h3>
+    <p><b>Caso 1.</b> Es la regla de Cramer, demostrada en su hoja.</p>
+    <p><b>Caso 2.</b> Sean \(x\), \(y\) números que cumplen las dos ecuaciones.</p>
+    <ol class="steps">
+      <li>Se multiplica la primera ecuación por \(d\) y la segunda por \(b\): \(adx+bdy=ed\) y \(bcx+bdy=bf\).</li>
+      <li>Se resta la segunda igualdad de la primera: \((ad-bc)\,x=ed-bf\), es decir, \(\Delta\cdot x=\Delta_x\).</li>
+      <li>Se multiplica la segunda ecuación por \(a\) y la primera por \(c\): \(acx+ady=af\) y \(acx+bcy=ec\).</li>
+      <li>Se resta la segunda igualdad de la primera: \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
+      <li>Si \(\Delta=0\), los lados izquierdos valen \(0\): tendría que ser \(\Delta_x=0\) y \(\Delta_y=0\). Luego, si \(\Delta=0\) y alguno de los dos no es \(0\), ningún par \(x\), \(y\) cumple las dos ecuaciones.</li>
+    </ol>
+    <p><b>Caso 3, con \(a\neq 0\).</b></p>
+    <ol class="steps">
+      <li>\(\Delta=0\) dice \(ad=bc\). Se divide por \(a\): \(d=\dfrac{bc}{a}\).</li>
+      <li>\(\Delta_y=0\) dice \(af=ec\). Se divide por \(a\): \(f=\dfrac{ec}{a}\).</li>
+      <li>Se multiplica la primera ecuación por \(\dfrac{c}{a}\): \(c\,x+\dfrac{bc}{a}\,y=\dfrac{ec}{a}\).</li>
+      <li>Por los pasos 1 y 2, esa igualdad es \(c\,x+d\,y=f\): la segunda ecuación. Todo par que cumple la primera cumple la segunda.</li>
+      <li>La primera tiene infinitas soluciones: para cada número \(t\), el par \(y=t\), \(x=\dfrac{e-bt}{a}\) la cumple, porque \(a\cdot\dfrac{e-bt}{a}+bt=e-bt+bt=e\).</li>
+    </ol>
+    <p>Si \(a=0\) y otro coeficiente no es \(0\), se razona igual despejando con ese coeficiente; aquí no se escribe.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Tres incógnitas, y una advertencia</h3>
+    <p>Para tres ecuaciones con tres incógnitas se calculan \(\Delta\), \(\Delta_x\), \(\Delta_y\), \(\Delta_z\), de tercer orden. Se enuncia aquí sin demostrarlo:</p>
+    <ol class="steps">
+      <li><b>\(\Delta\neq 0\):</b> una única solución, \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\), \(z=\dfrac{\Delta_z}{\Delta}\).</li>
+      <li><b>\(\Delta=0\) y alguno de \(\Delta_x,\Delta_y,\Delta_z\) distinto de \(0\):</b> no hay solución.</li>
+      <li><b>Los cuatro valen \(0\):</b> los determinantes <b>no deciden</b>. Puede haber infinitas soluciones o ninguna, y hay que usar otro método, como la eliminación.</li>
+    </ol>
+    <p>Ejemplo del punto 3: en \(x+y+z=1\), \(x+y+z=2\), \(x+y+z=3\), cada uno de los cuatro determinantes tiene dos columnas iguales y vale \(0\). Sin embargo no hay solución: \(x+y+z\) no puede valer \(1\) y \(2\) a la vez.</p>
+    <p><b>Número ↔ figura.</b> En el sistema \(x+2y=4\), \(2x+my=f\), mueve \(m\) y \(f\). Con \(m\neq 4\) hay un punto de corte. Con \(m=4\) y \(f\neq 8\), rectas paralelas. Con \(m=4\) y \(f=8\), la misma recta.</p>
+    <div class="stage" data-scene="sis-vivo"></div>
+    <ul class="keys">
+      <li><b>Recta azul:</b> \(x+2y=4\), fija. <b>Recta verde:</b> \(2x+my=f\); \(m\) cambia su inclinación y \(f\) la desplaza.</li>
+      <li><b>Punto naranja:</b> la solución única, cuando \(\Delta=m-4\) no es \(0\).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: solución única, \(\begin{cases}3x-y=5\\x+2y=4\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=\begin{vmatrix}3&-1\\1&2\end{vmatrix}=3\cdot 2-(-1)\cdot 1=6+1=7\neq 0\): solución única.</li>
+    <li>\(\Delta_x=\begin{vmatrix}5&-1\\4&2\end{vmatrix}=5\cdot 2-(-1)\cdot 4=10+4=14\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}3&5\\1&4\end{vmatrix}=3\cdot 4-5\cdot 1=12-5=7\).</li>
+    <li>\(x=\dfrac{14}{7}=2\), \(y=\dfrac{7}{7}=1\).</li>
+    <li>Comprobación: \(3\cdot 2-1=5\) ✓ y \(2+2\cdot 1=4\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: sin solución, \(\begin{cases}2x-3y=1\\-4x+6y=5\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=\begin{vmatrix}2&-3\\-4&6\end{vmatrix}=2\cdot 6-(-3)\cdot(-4)=12-12=0\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}1&-3\\5&6\end{vmatrix}=1\cdot 6-(-3)\cdot 5=6+15=21\neq 0\).</li>
+    <li>\(\Delta=0\) y \(\Delta_x\neq 0\): el sistema no tiene solución (caso 2). No hace falta calcular \(\Delta_y\).</li>
+    <li>Comprobación por otro camino: la primera ecuación multiplicada por \(-2\) es \(-4x+6y=-2\). La segunda dice \(-4x+6y=5\). El mismo lado izquierdo no puede valer \(-2\) y \(5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: infinitas soluciones, \(\begin{cases}2x-3y=1\\-4x+6y=-2\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=2\cdot 6-(-3)\cdot(-4)=12-12=0\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}1&-3\\-2&6\end{vmatrix}=1\cdot 6-(-3)\cdot(-2)=6-6=0\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}2&1\\-4&-2\end{vmatrix}=2\cdot(-2)-1\cdot(-4)=-4+4=0\).</li>
+    <li>Los tres valen \(0\) y \(a=2\neq 0\): infinitas soluciones (caso 3).</li>
+    <li>Se escriben con la primera ecuación: \(y=t\), \(x=\dfrac{1+3t}{2}\), para cualquier número \(t\).</li>
+    <li>Comprobación en la segunda: \(-4\cdot\dfrac{1+3t}{2}+6t=-2-6t+6t=-2\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con un parámetro, \(\begin{cases}x+ky=1\\kx+4y=2\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=\begin{vmatrix}1&k\\k&4\end{vmatrix}=1\cdot 4-k\cdot k=4-k^{2}=(2-k)(2+k)\). Vale \(0\) solo si \(k=2\) o \(k=-2\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}1&k\\2&4\end{vmatrix}=1\cdot 4-k\cdot 2=4-2k=2\,(2-k)\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}1&1\\k&2\end{vmatrix}=1\cdot 2-1\cdot k=2-k\).</li>
+    <li><b>Si \(k\neq 2\) y \(k\neq -2\):</b> solución única. Se simplifica por \(2-k\), que no es \(0\): \(x=\dfrac{2\,(2-k)}{(2-k)(2+k)}=\dfrac{2}{2+k}\), \(y=\dfrac{2-k}{(2-k)(2+k)}=\dfrac{1}{2+k}\).</li>
+    <li><b>Si \(k=2\):</b> \(\Delta=0\), \(\Delta_x=0\), \(\Delta_y=0\) y \(a=1\neq 0\): infinitas soluciones. El sistema es \(x+2y=1\), \(2x+4y=2\): la misma recta.</li>
+    <li><b>Si \(k=-2\):</b> \(\Delta=0\) y \(\Delta_x=4-2\cdot(-2)=8\neq 0\): sin solución. El sistema es \(x-2y=1\), \(-2x+4y=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: concluir «no hay solución» apenas \(\Delta=0\); falta mirar \(\Delta_x\) y \(\Delta_y\). Dos: escribir \(x=\dfrac{0}{0}\) cuando todo vale \(0\); esa división no existe, y las infinitas soluciones se escriben con un parámetro \(t\). Tres: con tres incógnitas, afirmar «infinitas soluciones» porque los cuatro determinantes valen \(0\); ahí los determinantes no deciden. Cuatro: no ordenar el sistema antes de armar los determinantes; las incógnitas van en el mismo orden y los términos libres, al lado derecho.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Clasifica el sistema y, si tiene solución, escríbela: \(\begin{cases}6x+4y=10\\9x+6y=15\end{cases}\)</p>
+    <details><summary>Pista</summary><div><p>Calcula \(\Delta\). Si vale \(0\), calcula también \(\Delta_x\) y \(\Delta_y\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\Delta=\begin{vmatrix}6&4\\9&6\end{vmatrix}=6\cdot 6-4\cdot 9=36-36=0\).</li>
+        <li>\(\Delta_x=\begin{vmatrix}10&4\\15&6\end{vmatrix}=10\cdot 6-4\cdot 15=60-60=0\).</li>
+        <li>\(\Delta_y=\begin{vmatrix}6&10\\9&15\end{vmatrix}=6\cdot 15-10\cdot 9=90-90=0\).</li>
+        <li>Los tres valen \(0\) y \(a=6\neq 0\): compatible indeterminado, infinitas soluciones.</li>
+        <li>Con la primera ecuación: \(y=t\), \(x=\dfrac{10-4t}{6}=\dfrac{5-2t}{3}\), para cualquier número \(t\).</li>
+        <li>Comprobación en la segunda: \(9\cdot\dfrac{5-2t}{3}+6t=15-6t+6t=15\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Clasifica según el valor de \(m\) y resuelve cuando la solución sea única: \(\begin{cases}2x+my=4\\mx+8y=8\end{cases}\)</p>
+    <details><summary>Pista</summary><div><p>Factoriza los tres determinantes: en todos aparece \(4-m\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\Delta=\begin{vmatrix}2&m\\m&8\end{vmatrix}=2\cdot 8-m\cdot m=16-m^{2}=(4-m)(4+m)\).</li>
+        <li>\(\Delta_x=\begin{vmatrix}4&m\\8&8\end{vmatrix}=4\cdot 8-m\cdot 8=32-8m=8\,(4-m)\).</li>
+        <li>\(\Delta_y=\begin{vmatrix}2&4\\m&8\end{vmatrix}=2\cdot 8-4\cdot m=16-4m=4\,(4-m)\).</li>
+        <li>Si \(m\neq 4\) y \(m\neq -4\): solución única. Se simplifica por \(4-m\neq 0\): \(x=\dfrac{8}{4+m}\), \(y=\dfrac{4}{4+m}\).</li>
+        <li>Comprobación en la primera: \(\dfrac{16}{4+m}+\dfrac{4m}{4+m}=\dfrac{4\,(4+m)}{4+m}=4\) ✓. En la segunda: \(\dfrac{8m}{4+m}+\dfrac{32}{4+m}=\dfrac{8\,(m+4)}{4+m}=8\) ✓.</li>
+        <li>Si \(m=4\): los tres determinantes valen \(0\) y \(a=2\neq 0\): infinitas soluciones (\(2x+4y=4\) y \(4x+8y=8\) son la misma recta).</li>
+        <li>Si \(m=-4\): \(\Delta=0\) y \(\Delta_x=8\cdot 8=64\neq 0\): sin solución.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una boleta de un café dice: \(2\) cafés y \(3\) empanadas, \(\$6\,900\). Otra boleta del mismo local: \(4\) cafés y \(6\) empanadas, \(\$13\,800\). (i) ¿Se puede saber con eso el precio de un café y el de una empanada? (ii) ¿Qué concluirías si la segunda boleta dijera \(\$14\,000\)?</p>
+    <details><summary>Pista</summary><div><p>Llama \(c\) al precio del café y \(p\) al de la empanada. Antes de dividir, mira si \(\Delta\) es \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sistema: \(2c+3p=6\,900\) y \(4c+6p=13\,800\).</li>
+        <li>\(\Delta=\begin{vmatrix}2&3\\4&6\end{vmatrix}=2\cdot 6-3\cdot 4=12-12=0\). No hay solución única.</li>
+        <li>\(\Delta_c=\begin{vmatrix}6\,900&3\\13\,800&6\end{vmatrix}=6\,900\cdot 6-3\cdot 13\,800=41\,400-41\,400=0\).</li>
+        <li>\(\Delta_p=\begin{vmatrix}2&6\,900\\4&13\,800\end{vmatrix}=2\cdot 13\,800-6\,900\cdot 4=27\,600-27\,600=0\).</li>
+        <li>(i) Los tres valen \(0\) y \(a=2\neq 0\): infinitas soluciones. No se puede saber: la segunda boleta es el doble de la primera y no agrega información. Por ejemplo, sirven \(c=1\,500\), \(p=1\,300\) (\(3\,000+3\,900=6\,900\)) y también \(c=1\,800\), \(p=1\,100\) (\(3\,600+3\,300=6\,900\)).</li>
+        <li>(ii) Con \(\$14\,000\): \(\Delta_c=6\,900\cdot 6-3\cdot 14\,000=41\,400-42\,000=-600\neq 0\). Con \(\Delta=0\), el sistema no tiene solución: ningún par de precios explica las dos boletas. Una de ellas tiene un error, o los precios cambiaron entre una y otra.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>

@@ -1,0 +1,290 @@
+<!--file:H11_determinante_como_factor_de_escala_de_areas.html-->
+<!--title:Determinante como factor de escala de áreas-->
+<!--id:det-escala-->
+<!--tab:H11 Factor de escala-->
+<article class="sheet" id="det-escala" data-hoja="L28 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Determinante como factor de escala de áreas</b></li>
+    </ol>
+    <h1>Determinante como factor de escala de áreas</h1>
+    <p class="lede">Una matriz \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) transforma el plano: lleva cada punto \((x,y)\) al punto \((ax+by,\ cx+dy)\). Al hacerlo, toda figura cambia de área en el mismo factor, que es el valor absoluto del determinante.
+    \[\text{área de la imagen}=|\det A|\cdot\text{área de la figura},\qquad \det A=ad-bc\]
+    Si \(\det A=0\), toda figura queda aplastada y su imagen tiene área \(0\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Una figura en «L», hecha de tres cuadraditos de área \(1\), se transforma con la matriz \(A\) de filas \(1,\ 1\) y \(0,\ 2\), en seis pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="esc-idea"></div>
+  <ul class="keys">
+    <li><b>Gris, con borde punteado:</b> la figura original, de área \(3\).</li>
+    <li><b>Naranja:</b> su imagen. Cada cuadradito pasa a un paralelogramo de lados \((1,0)\) y \((1,2)\), las columnas de \(A\).</li>
+    <li><b>Azul:</b> un solo cuadradito transformado, de área \(|\det A|=2\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>El cuadrado de lado 1 y las columnas de la matriz</h3>
+    <ol class="steps">
+      <li>El punto \((1,0)\) va a \((a\cdot 1+b\cdot 0,\ c\cdot 1+d\cdot 0)=(a,c)\): la primera columna de \(A\).</li>
+      <li>El punto \((0,1)\) va a \((a\cdot 0+b\cdot 1,\ c\cdot 0+d\cdot 1)=(b,d)\): la segunda columna de \(A\).</li>
+      <li>El cuadrado de lados \((1,0)\) y \((0,1)\), de área \(1\), va al paralelogramo de lados \((a,c)\) y \((b,d)\).</li>
+      <li>El área de ese paralelogramo es \(|ad-bc|=|\det A|\) (hoja «Determinante de segundo orden»).</li>
+      <li>El área pasó de \(1\) a \(|\det A|\): se multiplicó por \(|\det A|\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración para cualquier paralelogramo</h3>
+    <p>Se llama \(T\) a la transformación: \(T(x,y)=(ax+by,\ cx+dy)\).</p>
+    <ol class="steps">
+      <li><b>\(T\) respeta la suma.</b> Primera coordenada de \(T(x_1+x_2,\ y_1+y_2)\): \(a(x_1+x_2)+b(y_1+y_2)=(ax_1+by_1)+(ax_2+by_2)\), por distributividad. Con la segunda coordenada pasa lo mismo. Luego \(T(p+q)=T(p)+T(q)\).</li>
+      <li><b>\(T\) respeta el producto por un número.</b> \(a(sx)+b(sy)=s\,(ax+by)\), y lo mismo en la segunda coordenada. Luego \(T(s\,p)=s\,T(p)\).</li>
+      <li>Un paralelogramo con un vértice en \(p\) y lados \(u\), \(v\) (no paralelos) está formado por los puntos \(p+s\,u+t\,v\), con \(0\leq s\leq 1\) y \(0\leq t\leq 1\).</li>
+      <li>Por los pasos 1 y 2, \(T(p+s\,u+t\,v)=T(p)+s\,T(u)+t\,T(v)\): la imagen es el paralelogramo con un vértice en \(T(p)\) y lados \(T(u)\), \(T(v)\).</li>
+      <li>Área original: \(|\det M|\), donde \(M\) es la matriz de columnas \(u\), \(v\).</li>
+      <li>La matriz de columnas \(T(u)\), \(T(v)\) es el producto \(AM\): cada columna de \(AM\) es \(A\) aplicada a la columna de \(M\).</li>
+      <li>Área de la imagen: \(|\det(AM)|=|\det A\cdot\det M|\), por \(|AB|=|A|\,|B|\) (su hoja).</li>
+      <li>El valor absoluto de un producto es el producto de los valores absolutos: área de la imagen \(=|\det A|\cdot|\det M|=|\det A|\cdot\) área original.</li>
+    </ol>
+    <p>En el paso 5 se usa, sin demostrarlo, que trasladar un paralelogramo no cambia su área. <b>Triángulos:</b> un triángulo es la mitad de un paralelogramo y su imagen es la mitad del paralelogramo imagen; su área también se multiplica por \(|\det A|\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Otras figuras, el signo y el caso cero</h3>
+    <p><b>Cualquier figura.</b> Para círculos y otras figuras con borde curvo el factor es el mismo, \(|\det A|\). Se enuncia aquí sin demostrarlo: la idea es cubrir la figura con cuadraditos cada vez más chicos, como en la animación.</p>
+    <p><b>El signo.</b> Si \(\det A&lt;0\), la figura además se da vuelta, como en un espejo. El factor de escala de las áreas es \(|\det A|\), nunca negativo.</p>
+    <p><b>Número ↔ figura.</b> La matriz \(A=\begin{pmatrix}2&0\\0&k\end{pmatrix}\) lleva el círculo de radio \(1\), de área \(\pi\), a una elipse de semiejes \(2\) y \(|k|\). Mueve \(k\): \(\det A=2k\) y el área de la elipse es \(|2k|\cdot\pi\). Con \(k=0\) el círculo se aplasta en un segmento.</p>
+    <div class="stage" data-scene="esc-vivo"></div>
+    <ul class="keys">
+      <li><b>Círculo azul, punteado:</b> la figura original, de radio \(1\) y área \(\pi\).</li>
+      <li><b>Elipse naranja:</b> su imagen. El punto marcado es la imagen de \((0,1)\): con \(k\) negativo pasa abajo, la figura se dio vuelta.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: el cuadrado de lado \(1\) con \(A=\begin{pmatrix}3&1\\1&2\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\((1,0)\) va a \((3,1)\) y \((0,1)\) va a \((1,2)\): las columnas de \(A\).</li>
+    <li>La imagen es el paralelogramo de lados \((3,1)\) y \((1,2)\).</li>
+    <li>\(\det A=3\cdot 2-1\cdot 1=5\).</li>
+    <li>Área de la imagen: \(|5|\cdot 1=5\). El factor de escala es \(5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: un triángulo con \(A=\begin{pmatrix}2&-1\\1&1\end{pmatrix}\)</h3>
+  <div class="body">
+  <p>Triángulo de vértices \((0,0)\), \((4,0)\) y \((0,3)\).</p>
+  <ol class="steps">
+    <li>Área original: base \(4\), altura \(3\). \(\dfrac{4\cdot 3}{2}=6\).</li>
+    <li>\(\det A=2\cdot 1-(-1)\cdot 1=2+1=3\). Área de la imagen: \(|3|\cdot 6=18\).</li>
+    <li>Comprobación directa. Imágenes de los vértices: \((0,0)\); \((2\cdot 4-1\cdot 0,\ 1\cdot 4+1\cdot 0)=(8,4)\); \((2\cdot 0-1\cdot 3,\ 1\cdot 0+1\cdot 3)=(-3,3)\).</li>
+    <li>El triángulo imagen es la mitad del paralelogramo de lados \((8,4)\) y \((-3,3)\): \(\dfrac{1}{2}\left|\begin{vmatrix}8&-3\\4&3\end{vmatrix}\right|=\dfrac{1}{2}\,|8\cdot 3-(-3)\cdot 4|=\dfrac{1}{2}\cdot 36=18\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: determinante negativo, \(A=\begin{pmatrix}1&2\\3&1\end{pmatrix}\)</h3>
+  <div class="body">
+  <p>Rectángulo de lados \((2,0)\) y \((0,3)\), con un vértice en el origen.</p>
+  <ol class="steps">
+    <li>Área original: \(2\cdot 3=6\).</li>
+    <li>\(\det A=1\cdot 1-2\cdot 3=1-6=-5\). El factor de escala es \(|-5|=5\), y la figura se da vuelta.</li>
+    <li>Área de la imagen: \(5\cdot 6=30\).</li>
+    <li>Comprobación: \((2,0)\) va a \((1\cdot 2+2\cdot 0,\ 3\cdot 2+1\cdot 0)=(2,6)\) y \((0,3)\) va a \((1\cdot 0+2\cdot 3,\ 3\cdot 0+1\cdot 3)=(6,3)\). \(\left|\begin{vmatrix}2&6\\6&3\end{vmatrix}\right|=|2\cdot 3-6\cdot 6|=|-30|=30\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: determinante cero, \(A=\begin{pmatrix}2&4\\1&2\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\det A=2\cdot 2-4\cdot 1=0\).</li>
+    <li>El punto \((x,y)\) va a \((2x+4y,\ x+2y)\).</li>
+    <li>Se saca factor común: \((2x+4y,\ x+2y)=(x+2y)\cdot(2,1)\).</li>
+    <li>Toda imagen es un múltiplo de \((2,1)\): todo el plano cae sobre una sola recta, la que pasa por el origen y por \((2,1)\).</li>
+    <li>Una figura sobre una recta tiene área \(0\): coincide con \(|\det A|\cdot\) área \(=0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: usar \(\det A\) con su signo como factor y obtener un área negativa; el factor es \(|\det A|\). Dos: aplicar el factor a las longitudes; el determinante escala áreas, y los lados pueden cambiar cada uno en otra proporción. Tres: creer que el factor depende de la figura o de dónde está; es el mismo para todas. Cuatro: pensar que \(|\det A|=1\) significa que nada cambia; la figura puede deformarse y conservar su área.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Un cuadrado de lado \(2\) se transforma con \(A=\begin{pmatrix}4&1\\2&3\end{pmatrix}\). ¿Qué área tiene su imagen?</p>
+    <details><summary>Pista</summary><div><p>No hace falta dibujar la imagen: basta el área original y \(\det A\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Área original: \(2\cdot 2=4\).</li>
+        <li>\(\det A=4\cdot 3-1\cdot 2=12-2=10\).</li>
+        <li>Área de la imagen: \(|10|\cdot 4=40\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Para \(A=\begin{pmatrix}k&1\\4&k\end{pmatrix}\): (i) ¿para qué valores de \(k\) la transformación conserva las áreas (factor \(1\))? (ii) ¿Para cuáles aplasta toda figura (factor \(0\))?</p>
+    <details><summary>Pista</summary><div><p>\(|z|=1\) significa \(z=1\) o \(z=-1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\det A=k\cdot k-1\cdot 4=k^{2}-4\).</li>
+        <li>(i) \(|k^{2}-4|=1\) significa \(k^{2}-4=1\) o \(k^{2}-4=-1\).</li>
+        <li>\(k^{2}=5\): \(k=\sqrt{5}\) o \(k=-\sqrt{5}\). \(k^{2}=3\): \(k=\sqrt{3}\) o \(k=-\sqrt{3}\).</li>
+        <li>(ii) \(k^{2}-4=0\): \(k=2\) o \(k=-2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una foto de \(10\) cm de ancho y \(15\) cm de alto se muestra en una pantalla que multiplica el ancho por \(1{,}2\) y el alto por \(1{,}5\). (i) Escribe la matriz de esa transformación y calcula el área de la foto en la pantalla. (ii) Un proyector mal alineado aplica en cambio la matriz \(\begin{pmatrix}1{,}2&0{,}3\\0&1{,}5\end{pmatrix}\), que además inclina la imagen. ¿Cambia el área respecto de (i)?</p>
+    <details><summary>Pista</summary><div><p>El ancho va en la primera coordenada y el alto en la segunda. Compara los dos determinantes.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(i) \((x,y)\) va a \((1{,}2\,x,\ 1{,}5\,y)\): la matriz es \(\begin{pmatrix}1{,}2&0\\0&1{,}5\end{pmatrix}\).</li>
+        <li>Su determinante: \(1{,}2\cdot 1{,}5-0\cdot 0=1{,}8\).</li>
+        <li>Área original: \(10\cdot 15=150\ \text{cm}^2\). En la pantalla: \(1{,}8\cdot 150=270\ \text{cm}^2\).</li>
+        <li>Comprobación: la foto queda de \(1{,}2\cdot 10=12\) cm por \(1{,}5\cdot 15=22{,}5\) cm, y \(12\cdot 22{,}5=270\) ✓.</li>
+        <li>(ii) \(\begin{vmatrix}1{,}2&0{,}3\\0&1{,}5\end{vmatrix}=1{,}2\cdot 1{,}5-0{,}3\cdot 0=1{,}8\). El determinante es el mismo: el área sigue siendo \(270\ \text{cm}^2\). La imagen queda inclinada (es un paralelogramo), pero con la misma área.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L28 H11 · el determinante como factor de escala de áreas: una figura de tres cuadraditos y su imagen */
+OA.scene('esc-idea', (function(){
+  var N = 6;
+  var PZ = [['Q', '\\text{área de la imagen}=\\ ?', 'área de la imagen = ?', 'pt'], ['F', '\\text{área imagen}=|\\det A|\\cdot\\text{área}', 'área imagen = |det A| · área', 'diff'],
+    ['A1', '\\text{área }3', 'área 3', ''], ['A2', '\\text{área }|\\det A|=2', 'área |det A| = 2', 'c-sec'], ['A3', '\\text{área }6', 'área 6', 'diff'],
+    ['R1', '\\text{área de la figura}=3\\cdot 1=3', 'área de la figura = 3·1 = 3', ''],
+    ['R2', '(1,0)\\to(1,0),\\qquad (0,1)\\to(1,2)', '(1, 0) → (1, 0), (0, 1) → (1, 2)', ''],
+    ['R3', '|\\det A|=|1\\cdot 2-1\\cdot 0|=2', '|det A| = |1·2 − 1·0| = 2', 'c-sec'],
+    ['R4', '\\text{cada cuadradito}\\to\\text{paralelogramo de área }2', 'cada cuadradito → paralelogramo de área 2', ''],
+    ['R5', '\\text{área de la imagen}=3\\cdot 2=6', 'área de la imagen = 3·2 = 6', ''],
+    ['R6', '6=2\\cdot 3=|\\det A|\\cdot\\text{área de la figura}', '6 = 2·3 = |det A| · área de la figura', 'diff']];
+  var TXT = [['Una figura de tres cuadraditos: área 3.', 'Se transforma con la matriz: ¿qué área queda?'],
+    ['Cada punto se mueve y la figura se deforma.', 'La original queda marcada con puntos.'],
+    ['Un cuadradito pasa a un paralelogramo.', 'Su área es el determinante: vale 2.'],
+    ['Los tres cuadraditos cambian igual:', 'tres paralelogramos de área 2.'],
+    ['El área de la imagen es la suma', 'de las tres: vale 6.'],
+    ['De 3 a 6: el área se multiplicó por 2,', 'el valor absoluto del determinante.']];
+  var OX = 1.0, OY = 1.0, E = 0.7, CEL = [[0, 0], [1, 0], [0, 1]];
+  var BOR = [[0, 0], [2, 0], [2, 1], [1, 1], [1, 2], [0, 2]];   /* contorno de la «L» */
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.5, y1:4.6}, aspect:9.1/6.6,
+    aria:'Animación en seis pasos con la matriz A de filas 1, 1 y 0, 2. Uno: una figura en forma de L hecha de tres cuadraditos de lado 1; su área es 3. Dos: la matriz mueve cada punto y la figura se deforma; la original queda marcada con una línea punteada. Tres: un cuadradito pasa a un paralelogramo azul de lados (1, 0) y (1, 2), las columnas de la matriz; su área es el valor absoluto del determinante, 1 por 2 menos 1 por 0, que es 2. Cuatro: los tres cuadraditos pasan a tres paralelogramos iguales, de área 2. Cinco: el área de la imagen es 3 por 2, 6. Seis: de 3 a 6, el área se multiplicó por 2, el valor absoluto del determinante. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> imagen de la figura</span><span><i class="sw sec"></i> un cuadradito transformado: área \\(|\\det A|\\)</span>',
+    anim:{run:32000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, g;
+      function tr(x, y, m){ return [OX + E*(x + m*y), OY + E*(y + m*y)]; }   /* de la identidad (m = 0) a la matriz (1 1; 0 2) (m = 1) */
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      function celda(q, m){ return [tr(q[0], q[1], m), tr(q[0] + 1, q[1], m), tr(q[0] + 1, q[1] + 1, m), tr(q[0], q[1] + 1, m)]; }
+      function traza(P, col, wd, dash){ var j; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); for (j = 0; j < P.length; j++){ if (j) c.lineTo(X(P[j][0]), Y(P[j][1])); else c.moveTo(X(P[j][0]), Y(P[j][1])); } c.closePath(); c.stroke(); c.setLineDash([]); }
+      function contorno(m){ return BOR.map(function(q){ return tr(q[0], q[1], m); }); }
+      /* ejes finos con sus marcas */
+      S.line(OX - 0.35, OY, OX + E*3.6, OY, {color:C.ink, width:1}); S.line(OX, OY - 0.21, OX, OY + E*4.3, {color:C.ink, width:1});
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (i = 1; i <= 4; i++){ c.beginPath(); if (i <= 3){ c.moveTo(X(OX + E*i), Y(OY) - 3); c.lineTo(X(OX + E*i), Y(OY) + 3); } c.moveTo(X(OX) - 3, Y(OY + E*i)); c.lineTo(X(OX) + 3, Y(OY + E*i)); c.stroke(); if (i <= 3) num('' + i, X(OX + E*i), Y(OY) + 11, 'center'); num('' + i, X(OX) - 7, Y(OY + E*i), 'right'); }
+      /* paso 1: la figura original, con sus tres cuadraditos; después queda su contorno punteado */
+      if (k === 1){ g = Math.max(u, 0.15); S.poly(contorno(0), {fill:C.muted || '#6b6b6b', alpha:0.22*g}); CEL.forEach(function(q){ traza(celda(q, 0), C.ink, 1.1); }); }
+      else traza(contorno(0), C.muted || '#6b6b6b', 1.1, [4, 3]);
+      /* paso 2 en adelante: la imagen */
+      if (k >= 2){ w = k === 2 ? u : 1; S.poly(contorno(w), {fill:C.rise, alpha:0.26}); traza(contorno(w), C.rise, 1.3); }
+      /* paso 3: un cuadradito transformado, con sus dos lados como flechas */
+      if (k >= 3){ g = k === 3 ? u : 1; S.poly(celda(CEL[0], 1), {fill:C.sec, alpha:0.3*g}); traza(celda(CEL[0], 1), C.sec, 1.2);
+        dtFlecha(S, OX, OY, OX + E*g, OY, C.sec, 1.8); dtFlecha(S, OX, OY, OX + E*g, OY + E*2*g, C.sec, 1.8); }
+      /* paso 4: los otros dos, iguales */
+      if (k >= 4){ c.globalAlpha = k === 4 ? u : 1; traza(celda(CEL[1], 1), C.rise, 1.2); traza(celda(CEL[2], 1), C.rise, 1.2); c.globalAlpha = 1; }
+      c.fillStyle = C.ink; c.beginPath(); c.arc(X(OX), Y(OY), 2.4, 0, 6.2832); c.fill();
+      L('A1', OX - 0.14, OY + E*1.5, -100);
+      if (k > 3 || (k === 3 && u > 0.6)) L('A2', OX + E*3.0, OY + E*0.9, 0);
+      if (k > 5 || (k === 5 && u > 0.5)) L('A3', OX + E*3.3, OY + E*3.3, 0);
+      if (k < N || u < 0.5) L('Q', -1.2, 4.3, 0); else L('F', -1.2, 4.3, 0);
+      txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.3));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.15, [0, 28, 56, 84, 112, 140]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['A=\\begin{pmatrix}1&1\\\\0&2\\end{pmatrix},\\qquad \\text{área de la figura}=3', '(x,y)\\ \\to\\ (1\\cdot x+1\\cdot y,\\ 0\\cdot x+2\\cdot y)=(x+y,\\ 2y)', '\\det A=\\begin{vmatrix}1&1\\\\0&2\\end{vmatrix}=1\\cdot 2-1\\cdot 0=2', '\\text{tres paralelogramos de lados }(1,0)\\text{ y }(1,2)\\text{, de área }2', '\\text{área de la imagen}=2+2+2=3\\cdot 2=6', '\\text{área de la imagen}=6=2\\cdot 3=|\\det A|\\cdot\\text{área de la figura}'][k - 1]]]; }
+  };
+})());
+/* número ↔ figura: A = (2 0; 0 k) lleva el círculo de radio 1 a una elipse de área |2k|·π */
+OA.scene('esc-vivo', (function(){
+  var PZ = [['CI', '\\text{círculo: área }\\pi', 'círculo: área π', 'c-sec'], ['EL', '\\text{elipse: área }|2k|\\,\\pi', 'elipse: área |2k|·π', 'diff'], ['P', '(0,k)', '(0, k)', 'diff']];
+  return {
+    world:{x0:-2.9, x1:2.9, y0:-2.9, y1:2.6}, aspect:5.5/5.8,
+    aria:'Un círculo de radio 1, punteado en azul, y su imagen por la matriz de filas 2, 0 y 0, k: una elipse naranja de semiejes 2 y el valor absoluto de k. Un punto naranja marca la imagen del punto (0, 1), que es (0, k). Al mover k la elipse cambia de alto. Su área es el valor absoluto de 2k por pi. Con k igual a 0,5 el determinante vale 1 y la elipse tiene la misma área que el círculo. Con k igual a 0 la elipse se aplasta en un segmento sobre el eje horizontal y el área es cero. Con k negativo el punto marcado queda abajo: la figura se dio vuelta.',
+    labels:PZ,
+    sliders:[{id:'k', tex:'k', min:-1, max:1.5, step:0.05, value:1.5}],
+    legend:'<span><i class="sw sec"></i> círculo de radio \\(1\\)</span><span><i class="sw rise"></i> su imagen por \\(A\\)</span>',
+    anim:{run:20000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.k = 1.5 - 2.5*dtSuave(p); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var k = v.k == null ? 1.5 : +v.k, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', i, a, pe = [], cero = Math.abs(k) < 0.02, m;
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      S.line(-2.7, 0, 2.7, 0, {color:C.ink, width:1}); S.line(0, -2.2, 0, 2.15, {color:C.ink, width:1});
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (i = -2; i <= 2; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(i) + 7, Y(0) + 11, 'center'); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 7, Y(i) - 8, 'right'); }
+      for (i = 0; i < 72; i++){ a = i*6.2832/72; pe.push([2*Math.cos(a), k*Math.sin(a)]); }
+      if (!cero) S.poly(pe, {fill:C.rise, alpha:0.26});
+      c.strokeStyle = C.rise; c.lineWidth = cero ? 2.4 : 1.4; c.setLineDash([]); c.beginPath(); for (i = 0; i < 72; i++){ if (i) c.lineTo(X(pe[i][0]), Y(pe[i][1])); else c.moveTo(X(pe[i][0]), Y(pe[i][1])); } c.closePath(); c.stroke();
+      c.strokeStyle = C.sec; c.lineWidth = 1.3; c.setLineDash([4, 3]); c.beginPath(); c.arc(X(0), Y(0), X(1) - X(0), 0, 6.2832); c.stroke(); c.setLineDash([]);
+      c.fillStyle = C.sec; c.beginPath(); c.arc(X(0), Y(1), 3, 0, 6.2832); c.fill();
+      c.fillStyle = C.rise; c.beginPath(); c.arc(X(0), Y(k), 3.6, 0, 6.2832); c.fill();
+      T.L('P', 0, k, 0, 8, k < 0 ? 10 : -10);
+      T.L('CI', -2.8, 2.38, 0); T.L('EL', 0.25, 2.38, 0);
+      m = cero ? 'Determinante cero: el círculo se aplasta' : (k < 0 ? 'Determinante negativo: la figura se dio vuelta' : 'El área se multiplica por el determinante');
+      c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-2.8), Y(-2.6));
+      T.fin();
+    },
+    caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ' el determinante vale ' + n(2*k) + ' y el área de la elipse es ' + n(Math.abs(2*k)) + ' veces la del círculo: ' + n(Math.abs(2*k)*Math.PI) + ' unidades cuadradas, aproximadamente. Con k = 0 se aplasta'; },
+    readout:function(v){ var k = v.k == null ? 1.5 : +v.k, n = OA.num;
+      return [['', '\\det A=\\begin{vmatrix}2&0\\\\0&k\\end{vmatrix}=2\\cdot k-0\\cdot 0=2k'], ['d', '\\det A=2\\cdot\\left(' + n(k, 2) + '\\right)=' + n(2*k, 2)], ['', '\\text{área de la elipse}=|\\det A|\\cdot\\pi=' + n(Math.abs(2*k), 2) + '\\,\\pi\\approx ' + n(Math.abs(2*k)*Math.PI, 2)]]; }
+  };
+})());

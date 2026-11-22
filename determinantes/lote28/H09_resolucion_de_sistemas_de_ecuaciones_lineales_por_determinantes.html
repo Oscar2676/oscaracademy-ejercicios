@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resolución de sistemas de ecuaciones lineales por determinantes | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="det-sistemas" data-hoja="L28 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Resolución de sistemas de ecuaciones lineales por determinantes</b></li>
+    </ol>
+    <h1>Resolución de sistemas de ecuaciones lineales por determinantes</h1>
+    <p class="lede">Los determinantes dicen cuántas soluciones tiene un sistema de dos ecuaciones lineales con dos incógnitas, y las entregan cuando la solución es única. Se calculan tres: \(\Delta\), el de los coeficientes, y \(\Delta_x\), \(\Delta_y\), con la columna de una incógnita cambiada por la de los términos libres.
+    \[\Delta\neq 0:\ \text{una única solución},\qquad x=\frac{\Delta_x}{\Delta},\quad y=\frac{\Delta_y}{\Delta}\]
+    Si \(\Delta=0\), el sistema no tiene solución o tiene infinitas: lo deciden \(\Delta_x\) y \(\Delta_y\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>El sistema \(x+2y=4\), \(2x+4y=6\), y lo que pasa al cambiar el \(6\) por un \(8\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="sis-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Recta azul:</b> la primera ecuación, \(x+2y=4\). No cambia.</li>
+    <li><b>Recta verde:</b> la segunda ecuación. Con \(2x+4y=6\) es paralela a la azul; con \(2x+4y=8\) queda sobre la azul.</li>
+    <li><b>Naranja:</b> la conclusión de cada caso.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Los tres casos, para dos ecuaciones con dos incógnitas</h3>
+    <p>Sistema ordenado, con sus tres determinantes:
+    \[\begin{cases}a\,x+b\,y=e\\ c\,x+d\,y=f\end{cases}\qquad \Delta=\begin{vmatrix}a&b\\c&d\end{vmatrix},\quad \Delta_x=\begin{vmatrix}e&b\\f&d\end{vmatrix},\quad \Delta_y=\begin{vmatrix}a&e\\c&f\end{vmatrix}\]</p>
+    <ol class="steps">
+      <li><b>\(\Delta\neq 0\):</b> una única solución, \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\) (regla de Cramer). El sistema se llama <b>compatible determinado</b>. Las dos rectas se cortan en un punto.</li>
+      <li><b>\(\Delta=0\) y \(\Delta_x\neq 0\) o \(\Delta_y\neq 0\):</b> no hay solución. El sistema se llama <b>incompatible</b>. Las rectas son paralelas.</li>
+      <li><b>\(\Delta=0\), \(\Delta_x=0\) y \(\Delta_y=0\), con algún coeficiente \(a,b,c,d\) distinto de \(0\):</b> infinitas soluciones. El sistema se llama <b>compatible indeterminado</b>. Las dos ecuaciones describen la misma recta.</li>
+    </ol>
+    <p>Si los cuatro coeficientes son \(0\), no hay rectas: el sistema dice \(0=e\) y \(0=f\), y solo tiene solución si \(e=0\) y \(f=0\).</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración</h3>
+    <p><b>Caso 1.</b> Es la regla de Cramer, demostrada en su hoja.</p>
+    <p><b>Caso 2.</b> Sean \(x\), \(y\) números que cumplen las dos ecuaciones.</p>
+    <ol class="steps">
+      <li>Se multiplica la primera ecuación por \(d\) y la segunda por \(b\): \(adx+bdy=ed\) y \(bcx+bdy=bf\).</li>
+      <li>Se resta la segunda igualdad de la primera: \((ad-bc)\,x=ed-bf\), es decir, \(\Delta\cdot x=\Delta_x\).</li>
+      <li>Se multiplica la segunda ecuación por \(a\) y la primera por \(c\): \(acx+ady=af\) y \(acx+bcy=ec\).</li>
+      <li>Se resta la segunda igualdad de la primera: \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
+      <li>Si \(\Delta=0\), los lados izquierdos valen \(0\): tendría que ser \(\Delta_x=0\) y \(\Delta_y=0\). Luego, si \(\Delta=0\) y alguno de los dos no es \(0\), ningún par \(x\), \(y\) cumple las dos ecuaciones.</li>
+    </ol>
+    <p><b>Caso 3, con \(a\neq 0\).</b></p>
+    <ol class="steps">
+      <li>\(\Delta=0\) dice \(ad=bc\). Se divide por \(a\): \(d=\dfrac{bc}{a}\).</li>
+      <li>\(\Delta_y=0\) dice \(af=ec\). Se divide por \(a\): \(f=\dfrac{ec}{a}\).</li>
+      <li>Se multiplica la primera ecuación por \(\dfrac{c}{a}\): \(c\,x+\dfrac{bc}{a}\,y=\dfrac{ec}{a}\).</li>
+      <li>Por los pasos 1 y 2, esa igualdad es \(c\,x+d\,y=f\): la segunda ecuación. Todo par que cumple la primera cumple la segunda.</li>
+      <li>La primera tiene infinitas soluciones: para cada número \(t\), el par \(y=t\), \(x=\dfrac{e-bt}{a}\) la cumple, porque \(a\cdot\dfrac{e-bt}{a}+bt=e-bt+bt=e\).</li>
+    </ol>
+    <p>Si \(a=0\) y otro coeficiente no es \(0\), se razona igual despejando con ese coeficiente; aquí no se escribe.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Tres incógnitas, y una advertencia</h3>
+    <p>Para tres ecuaciones con tres incógnitas se calculan \(\Delta\), \(\Delta_x\), \(\Delta_y\), \(\Delta_z\), de tercer orden. Se enuncia aquí sin demostrarlo:</p>
+    <ol class="steps">
+      <li><b>\(\Delta\neq 0\):</b> una única solución, \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\), \(z=\dfrac{\Delta_z}{\Delta}\).</li>
+      <li><b>\(\Delta=0\) y alguno de \(\Delta_x,\Delta_y,\Delta_z\) distinto de \(0\):</b> no hay solución.</li>
+      <li><b>Los cuatro valen \(0\):</b> los determinantes <b>no deciden</b>. Puede haber infinitas soluciones o ninguna, y hay que usar otro método, como la eliminación.</li>
+    </ol>
+    <p>Ejemplo del punto 3: en \(x+y+z=1\), \(x+y+z=2\), \(x+y+z=3\), cada uno de los cuatro determinantes tiene dos columnas iguales y vale \(0\). Sin embargo no hay solución: \(x+y+z\) no puede valer \(1\) y \(2\) a la vez.</p>
+    <p><b>Número ↔ figura.</b> En el sistema \(x+2y=4\), \(2x+my=f\), mueve \(m\) y \(f\). Con \(m\neq 4\) hay un punto de corte. Con \(m=4\) y \(f\neq 8\), rectas paralelas. Con \(m=4\) y \(f=8\), la misma recta.</p>
+    <div class="stage" data-scene="sis-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+    <ul class="keys">
+      <li><b>Recta azul:</b> \(x+2y=4\), fija. <b>Recta verde:</b> \(2x+my=f\); \(m\) cambia su inclinación y \(f\) la desplaza.</li>
+      <li><b>Punto naranja:</b> la solución única, cuando \(\Delta=m-4\) no es \(0\).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: solución única, \(\begin{cases}3x-y=5\\x+2y=4\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=\begin{vmatrix}3&-1\\1&2\end{vmatrix}=3\cdot 2-(-1)\cdot 1=6+1=7\neq 0\): solución única.</li>
+    <li>\(\Delta_x=\begin{vmatrix}5&-1\\4&2\end{vmatrix}=5\cdot 2-(-1)\cdot 4=10+4=14\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}3&5\\1&4\end{vmatrix}=3\cdot 4-5\cdot 1=12-5=7\).</li>
+    <li>\(x=\dfrac{14}{7}=2\), \(y=\dfrac{7}{7}=1\).</li>
+    <li>Comprobación: \(3\cdot 2-1=5\) ✓ y \(2+2\cdot 1=4\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: sin solución, \(\begin{cases}2x-3y=1\\-4x+6y=5\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=\begin{vmatrix}2&-3\\-4&6\end{vmatrix}=2\cdot 6-(-3)\cdot(-4)=12-12=0\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}1&-3\\5&6\end{vmatrix}=1\cdot 6-(-3)\cdot 5=6+15=21\neq 0\).</li>
+    <li>\(\Delta=0\) y \(\Delta_x\neq 0\): el sistema no tiene solución (caso 2). No hace falta calcular \(\Delta_y\).</li>
+    <li>Comprobación por otro camino: la primera ecuación multiplicada por \(-2\) es \(-4x+6y=-2\). La segunda dice \(-4x+6y=5\). El mismo lado izquierdo no puede valer \(-2\) y \(5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: infinitas soluciones, \(\begin{cases}2x-3y=1\\-4x+6y=-2\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=2\cdot 6-(-3)\cdot(-4)=12-12=0\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}1&-3\\-2&6\end{vmatrix}=1\cdot 6-(-3)\cdot(-2)=6-6=0\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}2&1\\-4&-2\end{vmatrix}=2\cdot(-2)-1\cdot(-4)=-4+4=0\).</li>
+    <li>Los tres valen \(0\) y \(a=2\neq 0\): infinitas soluciones (caso 3).</li>
+    <li>Se escriben con la primera ecuación: \(y=t\), \(x=\dfrac{1+3t}{2}\), para cualquier número \(t\).</li>
+    <li>Comprobación en la segunda: \(-4\cdot\dfrac{1+3t}{2}+6t=-2-6t+6t=-2\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con un parámetro, \(\begin{cases}x+ky=1\\kx+4y=2\end{cases}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\Delta=\begin{vmatrix}1&k\\k&4\end{vmatrix}=1\cdot 4-k\cdot k=4-k^{2}=(2-k)(2+k)\). Vale \(0\) solo si \(k=2\) o \(k=-2\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}1&k\\2&4\end{vmatrix}=1\cdot 4-k\cdot 2=4-2k=2\,(2-k)\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}1&1\\k&2\end{vmatrix}=1\cdot 2-1\cdot k=2-k\).</li>
+    <li><b>Si \(k\neq 2\) y \(k\neq -2\):</b> solución única. Se simplifica por \(2-k\), que no es \(0\): \(x=\dfrac{2\,(2-k)}{(2-k)(2+k)}=\dfrac{2}{2+k}\), \(y=\dfrac{2-k}{(2-k)(2+k)}=\dfrac{1}{2+k}\).</li>
+    <li><b>Si \(k=2\):</b> \(\Delta=0\), \(\Delta_x=0\), \(\Delta_y=0\) y \(a=1\neq 0\): infinitas soluciones. El sistema es \(x+2y=1\), \(2x+4y=2\): la misma recta.</li>
+    <li><b>Si \(k=-2\):</b> \(\Delta=0\) y \(\Delta_x=4-2\cdot(-2)=8\neq 0\): sin solución. El sistema es \(x-2y=1\), \(-2x+4y=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: concluir «no hay solución» apenas \(\Delta=0\); falta mirar \(\Delta_x\) y \(\Delta_y\). Dos: escribir \(x=\dfrac{0}{0}\) cuando todo vale \(0\); esa división no existe, y las infinitas soluciones se escriben con un parámetro \(t\). Tres: con tres incógnitas, afirmar «infinitas soluciones» porque los cuatro determinantes valen \(0\); ahí los determinantes no deciden. Cuatro: no ordenar el sistema antes de armar los determinantes; las incógnitas van en el mismo orden y los términos libres, al lado derecho.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Clasifica el sistema y, si tiene solución, escríbela: \(\begin{cases}6x+4y=10\\9x+6y=15\end{cases}\)</p>
+    <details><summary>Pista</summary><div><p>Calcula \(\Delta\). Si vale \(0\), calcula también \(\Delta_x\) y \(\Delta_y\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\Delta=\begin{vmatrix}6&4\\9&6\end{vmatrix}=6\cdot 6-4\cdot 9=36-36=0\).</li>
+        <li>\(\Delta_x=\begin{vmatrix}10&4\\15&6\end{vmatrix}=10\cdot 6-4\cdot 15=60-60=0\).</li>
+        <li>\(\Delta_y=\begin{vmatrix}6&10\\9&15\end{vmatrix}=6\cdot 15-10\cdot 9=90-90=0\).</li>
+        <li>Los tres valen \(0\) y \(a=6\neq 0\): compatible indeterminado, infinitas soluciones.</li>
+        <li>Con la primera ecuación: \(y=t\), \(x=\dfrac{10-4t}{6}=\dfrac{5-2t}{3}\), para cualquier número \(t\).</li>
+        <li>Comprobación en la segunda: \(9\cdot\dfrac{5-2t}{3}+6t=15-6t+6t=15\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Clasifica según el valor de \(m\) y resuelve cuando la solución sea única: \(\begin{cases}2x+my=4\\mx+8y=8\end{cases}\)</p>
+    <details><summary>Pista</summary><div><p>Factoriza los tres determinantes: en todos aparece \(4-m\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\Delta=\begin{vmatrix}2&m\\m&8\end{vmatrix}=2\cdot 8-m\cdot m=16-m^{2}=(4-m)(4+m)\).</li>
+        <li>\(\Delta_x=\begin{vmatrix}4&m\\8&8\end{vmatrix}=4\cdot 8-m\cdot 8=32-8m=8\,(4-m)\).</li>
+        <li>\(\Delta_y=\begin{vmatrix}2&4\\m&8\end{vmatrix}=2\cdot 8-4\cdot m=16-4m=4\,(4-m)\).</li>
+        <li>Si \(m\neq 4\) y \(m\neq -4\): solución única. Se simplifica por \(4-m\neq 0\): \(x=\dfrac{8}{4+m}\), \(y=\dfrac{4}{4+m}\).</li>
+        <li>Comprobación en la primera: \(\dfrac{16}{4+m}+\dfrac{4m}{4+m}=\dfrac{4\,(4+m)}{4+m}=4\) ✓. En la segunda: \(\dfrac{8m}{4+m}+\dfrac{32}{4+m}=\dfrac{8\,(m+4)}{4+m}=8\) ✓.</li>
+        <li>Si \(m=4\): los tres determinantes valen \(0\) y \(a=2\neq 0\): infinitas soluciones (\(2x+4y=4\) y \(4x+8y=8\) son la misma recta).</li>
+        <li>Si \(m=-4\): \(\Delta=0\) y \(\Delta_x=8\cdot 8=64\neq 0\): sin solución.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una boleta de un café dice: \(2\) cafés y \(3\) empanadas, \(\$6\,900\). Otra boleta del mismo local: \(4\) cafés y \(6\) empanadas, \(\$13\,800\). (i) ¿Se puede saber con eso el precio de un café y el de una empanada? (ii) ¿Qué concluirías si la segunda boleta dijera \(\$14\,000\)?</p>
+    <details><summary>Pista</summary><div><p>Llama \(c\) al precio del café y \(p\) al de la empanada. Antes de dividir, mira si \(\Delta\) es \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Sistema: \(2c+3p=6\,900\) y \(4c+6p=13\,800\).</li>
+        <li>\(\Delta=\begin{vmatrix}2&3\\4&6\end{vmatrix}=2\cdot 6-3\cdot 4=12-12=0\). No hay solución única.</li>
+        <li>\(\Delta_c=\begin{vmatrix}6\,900&3\\13\,800&6\end{vmatrix}=6\,900\cdot 6-3\cdot 13\,800=41\,400-41\,400=0\).</li>
+        <li>\(\Delta_p=\begin{vmatrix}2&6\,900\\4&13\,800\end{vmatrix}=2\cdot 13\,800-6\,900\cdot 4=27\,600-27\,600=0\).</li>
+        <li>(i) Los tres valen \(0\) y \(a=2\neq 0\): infinitas soluciones. No se puede saber: la segunda boleta es el doble de la primera y no agrega información. Por ejemplo, sirven \(c=1\,500\), \(p=1\,300\) (\(3\,000+3\,900=6\,900\)) y también \(c=1\,800\), \(p=1\,100\) (\(3\,600+3\,300=6\,900\)).</li>
+        <li>(ii) Con \(\$14\,000\): \(\Delta_c=6\,900\cdot 6-3\cdot 14\,000=41\,400-42\,000=-600\neq 0\). Con \(\Delta=0\), el sistema no tiene solución: ningún par de precios explica las dos boletas. Una de ellas tiene un error, o los precios cambiaron entre una y otra.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H09 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L28 H09 · sistemas por determinantes: con determinante cero, paralelas (sin solución) o la misma recta (infinitas) */
+OA.scene('sis-idea', (function(){
+  var N = 5;
+  var PZ = [['LA', 'x+2y=4', 'x + 2y = 4', 'c-sec'], ['LB', '2x+4y=6', '2x + 4y = 6', 'c-alt'], ['LC', '2x+4y=8', '2x + 4y = 8', 'c-alt'],
+    ['D0', '\\Delta=0', 'Δ = 0', ''], ['DX', '\\Delta_x=4\\neq 0', 'Δx = 4 ≠ 0', ''], ['DZ', '\\Delta_x=0,\\ \\Delta_y=0', 'Δx = 0, Δy = 0', ''],
+    ['V1', '\\text{sin solución}', 'sin solución', 'diff'], ['V2', '\\text{infinitas soluciones}', 'infinitas soluciones', 'diff'],
+    ['Q', '\\text{¿cuántas soluciones?}', '¿cuántas soluciones?', 'pt'], ['F', '\\Delta=0\\text{: ninguna o infinitas}', 'Δ = 0: ninguna o infinitas', 'diff'],
+    ['R1', 'x+2y=4,\\qquad 2x+4y=6', 'x + 2y = 4, 2x + 4y = 6', ''],
+    ['R2', '\\Delta=1\\cdot 4-2\\cdot 2=0', 'Δ = 1·4 − 2·2 = 0', ''],
+    ['R3', '\\Delta_x=4\\cdot 4-2\\cdot 6=4\\neq 0\\text{: sin solución}', 'Δx = 4·4 − 2·6 = 4 ≠ 0: sin solución', ''],
+    ['R4', '\\text{con }8\\text{: }\\Delta_x=4\\cdot 4-2\\cdot 8=0,\\ \\ \\Delta_y=0', 'con 8: Δx = 4·4 − 2·8 = 0, Δy = 0', ''],
+    ['R5', '\\Delta=\\Delta_x=\\Delta_y=0\\text{: infinitas soluciones}', 'Δ = Δx = Δy = 0: infinitas soluciones', 'diff']];
+  var TXT = [['Dos ecuaciones, dos rectas.', '¿Cuántas soluciones tiene el sistema?'],
+    ['El determinante del sistema vale 0:', 'las rectas son paralelas o son la misma.'],
+    ['El determinante de la x no es 0:', 'paralelas, y el sistema no tiene solución.'],
+    ['Se cambia el 6 por 8: la recta verde sube.', 'Ahora los tres determinantes valen 0.'],
+    ['La recta verde quedó sobre la azul:', 'todos sus puntos son solución. Son infinitas.']];
+  var GX = -0.75, GY = 1.05, E = 0.5;
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.4}, aspect:8.6/6.6,
+    aria:'Animación en cinco pasos para el sistema x más 2y igual a 4, 2x más 4y igual a 6. Uno: se dibujan las dos rectas, la azul y la verde. Dos: el determinante del sistema, 1 por 4 menos 2 por 2, vale cero; las rectas son paralelas o son la misma. Tres: el determinante de x, 4 por 4 menos 2 por 6, vale 4, que no es cero: las rectas son paralelas y el sistema no tiene solución. Cuatro: el 6 de la segunda ecuación se cambia por 8; la recta verde sube hasta quedar sobre la azul, y ahora el determinante de x y el de y valen cero. Cinco: las dos ecuaciones describen la misma recta y hay infinitas soluciones. Conclusión: con determinante cero el sistema no tiene solución o tiene infinitas. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> \\(x+2y=4\\)</span><span><i class="sw alt"></i> segunda ecuación</span><span><i class="sw rise"></i> conclusión</span>',
+    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, a, b, f;
+      function mx(x){ return GX + E*x; } function my(y){ return GY + E*y; }
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      /* plano */
+      S.line(mx(-0.4), my(0), mx(5.4), my(0), {color:C.ink, width:1}); S.line(mx(0), my(-0.4), mx(0), my(4.4), {color:C.ink, width:1});
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (i = 1; i <= 5; i++){ c.beginPath(); c.moveTo(X(mx(i)), Y(my(0)) - 3); c.lineTo(X(mx(i)), Y(my(0)) + 3); if (i <= 4){ c.moveTo(X(mx(0)) - 3, Y(my(i))); c.lineTo(X(mx(0)) + 3, Y(my(i))); } c.stroke(); num('' + i, X(mx(i)), Y(my(0)) + 11, 'center'); if (i <= 4) num('' + i, X(mx(0)) - 7, Y(my(i)), 'right'); }
+      /* las dos rectas se trazan en el paso 1; en el paso 4 la verde sube de 2x + 4y = 6 a 2x + 4y = 8 */
+      a = k > 1 ? 1 : Math.min(1, 2*u); b = k > 1 ? 1 : Math.max(0, 2*u - 1);
+      f = k < 4 ? 6 : (k === 4 ? 6 + 2*u : 8);
+      if (a > 0) S.line(mx(0), my(2), mx(4*a), my(2 - 2*a), {color:C.sec, width:1.8});
+      if (b > 0) S.line(mx(0), my(f/4), mx(f/2*b), my(f/4 - f/4*b), {color:C.alt, width:1.8, dash:f > 7.98 ? [5, 4] : null});
+      if (a > 0.6) L('LA', mx(1.3), my(3.7), 0);
+      if (b > 0.6){ if (k < 4 || (k === 4 && u < 0.5)) L('LB', mx(1.3), my(2.9), 0); else L('LC', mx(1.3), my(2.9), 0); }
+      /* determinantes y conclusión, a la derecha */
+      if (k > 2 || (k === 2 && u > 0.5)) L('D0', 2.75, 3.3, 0);
+      if ((k === 3 && u > 0.4) || (k === 4 && u < 0.6)) L('DX', 2.75, 2.65, 0);
+      if ((k === 4 && u >= 0.6) || k === 5) L('DZ', 2.75, 2.65, 0);
+      if ((k === 3 && u > 0.7) || (k === 4 && u < 0.3)) L('V1', 2.75, 1.95, 0);
+      if (k === 5 && u > 0.5) L('V2', 2.75, 1.95, 0);
+      if (k < N || u < 0.5) L('Q', -1.2, 4.12, 0); else L('F', -1.2, 4.12, 0);
+      txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.12));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.25, [0, 30, 60, 90, 120]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\begin{cases}x+2y=4\\\\2x+4y=6\\end{cases}', '\\Delta=\\begin{vmatrix}1&2\\\\2&4\\end{vmatrix}=1\\cdot 4-2\\cdot 2=0', '\\Delta_x=\\begin{vmatrix}4&2\\\\6&4\\end{vmatrix}=4\\cdot 4-2\\cdot 6=4\\neq 0', '\\Delta_x=\\begin{vmatrix}4&2\\\\8&4\\end{vmatrix}=4\\cdot 4-2\\cdot 8=0,\\qquad \\Delta_y=\\begin{vmatrix}1&4\\\\2&8\\end{vmatrix}=1\\cdot 8-4\\cdot 2=0', '\\Delta=0,\\ \\Delta_x=0,\\ \\Delta_y=0\\text{: la misma recta, infinitas soluciones}'][k - 1]]]; }
+  };
+})());
+/* número ↔ figura: x + 2y = 4, 2x + my = f; un punto, paralelas o la misma recta */
+OA.scene('sis-vivo', (function(){
+  var PZ = [['LA', 'x+2y=4', 'x + 2y = 4', 'c-sec'], ['LB', '2x+my=f', '2x + my = f', 'c-alt'], ['P', '\\left(\\tfrac{\\Delta_x}{\\Delta},\\tfrac{\\Delta_y}{\\Delta}\\right)', '(Δx/Δ, Δy/Δ)', 'diff']];
+  function caso(m, f){ return Math.abs(m - 4) >= 0.02 ? 1 : (Math.abs(f - 8) >= 0.02 ? 2 : 3); }
+  return {
+    world:{x0:-3.4, x1:7.2, y0:-2.4, y1:7.4}, aspect:9.8/10.6,
+    aria:'Un plano con dos rectas. La azul, fija, es x más 2y igual a 4. La verde es 2x más m por y igual a f: m cambia su inclinación y f la desplaza. Con m igual a 6 y f igual a 10 se cortan en el punto (2, 1), marcado en naranja. Al acercarse m a 4, el determinante m menos 4 se acerca a cero y el punto de corte se aleja hasta salir del dibujo. Con m igual a 4 las rectas son paralelas y el sistema no tiene solución, salvo cuando f es 8: entonces la verde queda sobre la azul y hay infinitas soluciones.',
+    labels:PZ,
+    sliders:[{id:'m', tex:'m', min:4, max:6, step:0.1, value:6}, {id:'f', tex:'f', min:6, max:10, step:0.5, value:10}],
+    legend:'<span><i class="sw sec"></i> \\(x+2y=4\\)</span><span><i class="sw alt"></i> \\(2x+my=f\\)</span><span><i class="sw rise"></i> punto de corte</span>',
+    anim:{run:24000, hold:5000, still:1, apply:function(p, v){ v.q = p; if (p < 0.5){ v.m = 6 - 2*dtSuave(2*p); v.f = 10; } else { v.m = 4; v.f = 10 - 2*dtSuave(2*p - 1); } }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var m = v.m == null ? 6 : +v.m, f = v.f == null ? 10 : +v.f, D = m - 4, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', i, px, py, cs = caso(m, f), dentro = false, msg;
+      function num(tx, px_, py_, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px_, py_); }
+      S.line(-3.2, 0, 7, 0, {color:C.ink, width:1}); S.line(0, -1, 0, 7.2, {color:C.ink, width:1});
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (i = -3; i <= 6; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(i), Y(0) + 11, 'center'); }
+      for (i = 1; i <= 7; i++){ c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num('' + i, X(0) - 7, Y(i), 'right'); }
+      c.save(); c.beginPath(); c.rect(X(-3.2), Y(7.2), X(7) - X(-3.2), Y(-1) - Y(7.2)); c.clip();
+      S.line(-4, 4, 8, -2, {color:C.sec, width:1.8});
+      S.line(-4, (f + 8)/m, 8, (f - 16)/m, {color:C.alt, width:1.8, dash:cs === 3 ? [5, 4] : null});
+      c.restore();
+      if (cs === 1){ px = (4*m - 2*f)/D; py = (f - 8)/D; dentro = px > -3.1 && px < 6.9 && py > -0.9 && py < 7.1;
+        if (dentro){ c.fillStyle = C.rise; c.beginPath(); c.arc(X(px), Y(py), 3.6, 0, 6.2832); c.fill(); T.L('P', px, py, 0, 9, -14); } }
+      T.L('LA', 3.3, 6.7, 0); T.L('LB', 3.3, 5.9, 0);
+      msg = cs === 3 ? 'La misma recta: infinitas soluciones' : (cs === 2 ? 'Rectas paralelas: el sistema no tiene solución' : (dentro ? 'Un solo punto de corte: solución única' : 'El punto de corte ya salió del dibujo'));
+      c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(msg, X(-3.2), Y(-1.8));
+      T.fin();
+    },
+    caption:function(v){ var m = v.m == null ? 6 : +v.m, f = v.f == null ? 10 : +v.f, D = m - 4, cs = caso(m, f), n = function(z){ return oaDec(z, 2); };
+      return cs === 3 ? 'Con m = 4 y f = 8 los tres determinantes valen 0: las dos ecuaciones describen la misma recta y hay infinitas soluciones' : (cs === 2 ? 'Con m = 4 el determinante del sistema vale 0 y el de la y vale ' + n(f - 8) + ': rectas paralelas, sin solución' : 'Con m = ' + n(m) + ' y f = ' + n(f) + ' el determinante del sistema vale ' + n(D) + ' y las rectas se cortan en (' + n((4*m - 2*f)/D) + '; ' + n((f - 8)/D) + ')'); },
+    readout:function(v){ var m = v.m == null ? 6 : +v.m, f = v.f == null ? 10 : +v.f, D = m - 4, cs = caso(m, f), n = OA.num, r;
+      r = [['', '\\Delta=\\begin{vmatrix}1&2\\\\2&m\\end{vmatrix}=m-4,\\qquad \\Delta_x=\\begin{vmatrix}4&2\\\\f&m\\end{vmatrix}=4m-2f'], ['', '\\Delta_y=\\begin{vmatrix}1&4\\\\2&f\\end{vmatrix}=1\\cdot f-4\\cdot 2=f-8'],
+        ['d', '\\Delta=' + n(D, 2) + ',\\qquad \\Delta_x=' + n(4*m - 2*f, 2) + ',\\qquad \\Delta_y=' + n(f - 8, 2)]];
+      if (cs === 1) r.push(['', 'x=\\dfrac{4m-2f}{m-4}=' + n((4*m - 2*f)/D, 2) + ',\\qquad y=\\dfrac{f-8}{m-4}=' + n((f - 8)/D, 2)]);
+      else if (cs === 2) r.push(['', '\\Delta=0,\\ \\Delta_y\\neq 0\\text{: sin solución (rectas paralelas)}']);
+      else r.push(['', '\\Delta=\\Delta_x=\\Delta_y=0\\text{: infinitas soluciones (la misma recta)}']);
+      return r; }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

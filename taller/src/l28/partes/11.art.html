@@ -1,0 +1,175 @@
+<!--file:H11_determinante_como_factor_de_escala_de_areas.html-->
+<!--title:Determinante como factor de escala de áreas-->
+<!--id:det-escala-->
+<!--tab:H11 Factor de escala-->
+<article class="sheet" id="det-escala" data-hoja="L28 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Determinante como factor de escala de áreas</b></li>
+    </ol>
+    <h1>Determinante como factor de escala de áreas</h1>
+    <p class="lede">Una matriz \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) transforma el plano: lleva cada punto \((x,y)\) al punto \((ax+by,\ cx+dy)\). Al hacerlo, toda figura cambia de área en el mismo factor, que es el valor absoluto del determinante.
+    \[\text{área de la imagen}=|\det A|\cdot\text{área de la figura},\qquad \det A=ad-bc\]
+    Si \(\det A=0\), toda figura queda aplastada y su imagen tiene área \(0\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Una figura en «L», hecha de tres cuadraditos de área \(1\), se transforma con la matriz \(A\) de filas \(1,\ 1\) y \(0,\ 2\), en seis pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="esc-idea"></div>
+  <ul class="keys">
+    <li><b>Gris, con borde punteado:</b> la figura original, de área \(3\).</li>
+    <li><b>Naranja:</b> su imagen. Cada cuadradito pasa a un paralelogramo de lados \((1,0)\) y \((1,2)\), las columnas de \(A\).</li>
+    <li><b>Azul:</b> un solo cuadradito transformado, de área \(|\det A|=2\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>El cuadrado de lado 1 y las columnas de la matriz</h3>
+    <ol class="steps">
+      <li>El punto \((1,0)\) va a \((a\cdot 1+b\cdot 0,\ c\cdot 1+d\cdot 0)=(a,c)\): la primera columna de \(A\).</li>
+      <li>El punto \((0,1)\) va a \((a\cdot 0+b\cdot 1,\ c\cdot 0+d\cdot 1)=(b,d)\): la segunda columna de \(A\).</li>
+      <li>El cuadrado de lados \((1,0)\) y \((0,1)\), de área \(1\), va al paralelogramo de lados \((a,c)\) y \((b,d)\).</li>
+      <li>El área de ese paralelogramo es \(|ad-bc|=|\det A|\) (hoja «Determinante de segundo orden»).</li>
+      <li>El área pasó de \(1\) a \(|\det A|\): se multiplicó por \(|\det A|\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración para cualquier paralelogramo</h3>
+    <p>Se llama \(T\) a la transformación: \(T(x,y)=(ax+by,\ cx+dy)\).</p>
+    <ol class="steps">
+      <li><b>\(T\) respeta la suma.</b> Primera coordenada de \(T(x_1+x_2,\ y_1+y_2)\): \(a(x_1+x_2)+b(y_1+y_2)=(ax_1+by_1)+(ax_2+by_2)\), por distributividad. Con la segunda coordenada pasa lo mismo. Luego \(T(p+q)=T(p)+T(q)\).</li>
+      <li><b>\(T\) respeta el producto por un número.</b> \(a(sx)+b(sy)=s\,(ax+by)\), y lo mismo en la segunda coordenada. Luego \(T(s\,p)=s\,T(p)\).</li>
+      <li>Un paralelogramo con un vértice en \(p\) y lados \(u\), \(v\) (no paralelos) está formado por los puntos \(p+s\,u+t\,v\), con \(0\leq s\leq 1\) y \(0\leq t\leq 1\).</li>
+      <li>Por los pasos 1 y 2, \(T(p+s\,u+t\,v)=T(p)+s\,T(u)+t\,T(v)\): la imagen es el paralelogramo con un vértice en \(T(p)\) y lados \(T(u)\), \(T(v)\).</li>
+      <li>Área original: \(|\det M|\), donde \(M\) es la matriz de columnas \(u\), \(v\).</li>
+      <li>La matriz de columnas \(T(u)\), \(T(v)\) es el producto \(AM\): cada columna de \(AM\) es \(A\) aplicada a la columna de \(M\).</li>
+      <li>Área de la imagen: \(|\det(AM)|=|\det A\cdot\det M|\), por \(|AB|=|A|\,|B|\) (su hoja).</li>
+      <li>El valor absoluto de un producto es el producto de los valores absolutos: área de la imagen \(=|\det A|\cdot|\det M|=|\det A|\cdot\) área original.</li>
+    </ol>
+    <p>En el paso 5 se usa, sin demostrarlo, que trasladar un paralelogramo no cambia su área. <b>Triángulos:</b> un triángulo es la mitad de un paralelogramo y su imagen es la mitad del paralelogramo imagen; su área también se multiplica por \(|\det A|\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Otras figuras, el signo y el caso cero</h3>
+    <p><b>Cualquier figura.</b> Para círculos y otras figuras con borde curvo el factor es el mismo, \(|\det A|\). Se enuncia aquí sin demostrarlo: la idea es cubrir la figura con cuadraditos cada vez más chicos, como en la animación.</p>
+    <p><b>El signo.</b> Si \(\det A&lt;0\), la figura además se da vuelta, como en un espejo. El factor de escala de las áreas es \(|\det A|\), nunca negativo.</p>
+    <p><b>Número ↔ figura.</b> La matriz \(A=\begin{pmatrix}2&0\\0&k\end{pmatrix}\) lleva el círculo de radio \(1\), de área \(\pi\), a una elipse de semiejes \(2\) y \(|k|\). Mueve \(k\): \(\det A=2k\) y el área de la elipse es \(|2k|\cdot\pi\). Con \(k=0\) el círculo se aplasta en un segmento.</p>
+    <div class="stage" data-scene="esc-vivo"></div>
+    <ul class="keys">
+      <li><b>Círculo azul, punteado:</b> la figura original, de radio \(1\) y área \(\pi\).</li>
+      <li><b>Elipse naranja:</b> su imagen. El punto marcado es la imagen de \((0,1)\): con \(k\) negativo pasa abajo, la figura se dio vuelta.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: el cuadrado de lado \(1\) con \(A=\begin{pmatrix}3&1\\1&2\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\((1,0)\) va a \((3,1)\) y \((0,1)\) va a \((1,2)\): las columnas de \(A\).</li>
+    <li>La imagen es el paralelogramo de lados \((3,1)\) y \((1,2)\).</li>
+    <li>\(\det A=3\cdot 2-1\cdot 1=5\).</li>
+    <li>Área de la imagen: \(|5|\cdot 1=5\). El factor de escala es \(5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: un triángulo con \(A=\begin{pmatrix}2&-1\\1&1\end{pmatrix}\)</h3>
+  <div class="body">
+  <p>Triángulo de vértices \((0,0)\), \((4,0)\) y \((0,3)\).</p>
+  <ol class="steps">
+    <li>Área original: base \(4\), altura \(3\). \(\dfrac{4\cdot 3}{2}=6\).</li>
+    <li>\(\det A=2\cdot 1-(-1)\cdot 1=2+1=3\). Área de la imagen: \(|3|\cdot 6=18\).</li>
+    <li>Comprobación directa. Imágenes de los vértices: \((0,0)\); \((2\cdot 4-1\cdot 0,\ 1\cdot 4+1\cdot 0)=(8,4)\); \((2\cdot 0-1\cdot 3,\ 1\cdot 0+1\cdot 3)=(-3,3)\).</li>
+    <li>El triángulo imagen es la mitad del paralelogramo de lados \((8,4)\) y \((-3,3)\): \(\dfrac{1}{2}\left|\begin{vmatrix}8&-3\\4&3\end{vmatrix}\right|=\dfrac{1}{2}\,|8\cdot 3-(-3)\cdot 4|=\dfrac{1}{2}\cdot 36=18\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: determinante negativo, \(A=\begin{pmatrix}1&2\\3&1\end{pmatrix}\)</h3>
+  <div class="body">
+  <p>Rectángulo de lados \((2,0)\) y \((0,3)\), con un vértice en el origen.</p>
+  <ol class="steps">
+    <li>Área original: \(2\cdot 3=6\).</li>
+    <li>\(\det A=1\cdot 1-2\cdot 3=1-6=-5\). El factor de escala es \(|-5|=5\), y la figura se da vuelta.</li>
+    <li>Área de la imagen: \(5\cdot 6=30\).</li>
+    <li>Comprobación: \((2,0)\) va a \((1\cdot 2+2\cdot 0,\ 3\cdot 2+1\cdot 0)=(2,6)\) y \((0,3)\) va a \((1\cdot 0+2\cdot 3,\ 3\cdot 0+1\cdot 3)=(6,3)\). \(\left|\begin{vmatrix}2&6\\6&3\end{vmatrix}\right|=|2\cdot 3-6\cdot 6|=|-30|=30\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: determinante cero, \(A=\begin{pmatrix}2&4\\1&2\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\det A=2\cdot 2-4\cdot 1=0\).</li>
+    <li>El punto \((x,y)\) va a \((2x+4y,\ x+2y)\).</li>
+    <li>Se saca factor común: \((2x+4y,\ x+2y)=(x+2y)\cdot(2,1)\).</li>
+    <li>Toda imagen es un múltiplo de \((2,1)\): todo el plano cae sobre una sola recta, la que pasa por el origen y por \((2,1)\).</li>
+    <li>Una figura sobre una recta tiene área \(0\): coincide con \(|\det A|\cdot\) área \(=0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: usar \(\det A\) con su signo como factor y obtener un área negativa; el factor es \(|\det A|\). Dos: aplicar el factor a las longitudes; el determinante escala áreas, y los lados pueden cambiar cada uno en otra proporción. Tres: creer que el factor depende de la figura o de dónde está; es el mismo para todas. Cuatro: pensar que \(|\det A|=1\) significa que nada cambia; la figura puede deformarse y conservar su área.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Un cuadrado de lado \(2\) se transforma con \(A=\begin{pmatrix}4&1\\2&3\end{pmatrix}\). ¿Qué área tiene su imagen?</p>
+    <details><summary>Pista</summary><div><p>No hace falta dibujar la imagen: basta el área original y \(\det A\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Área original: \(2\cdot 2=4\).</li>
+        <li>\(\det A=4\cdot 3-1\cdot 2=12-2=10\).</li>
+        <li>Área de la imagen: \(|10|\cdot 4=40\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Para \(A=\begin{pmatrix}k&1\\4&k\end{pmatrix}\): (i) ¿para qué valores de \(k\) la transformación conserva las áreas (factor \(1\))? (ii) ¿Para cuáles aplasta toda figura (factor \(0\))?</p>
+    <details><summary>Pista</summary><div><p>\(|z|=1\) significa \(z=1\) o \(z=-1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(\det A=k\cdot k-1\cdot 4=k^{2}-4\).</li>
+        <li>(i) \(|k^{2}-4|=1\) significa \(k^{2}-4=1\) o \(k^{2}-4=-1\).</li>
+        <li>\(k^{2}=5\): \(k=\sqrt{5}\) o \(k=-\sqrt{5}\). \(k^{2}=3\): \(k=\sqrt{3}\) o \(k=-\sqrt{3}\).</li>
+        <li>(ii) \(k^{2}-4=0\): \(k=2\) o \(k=-2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una foto de \(10\) cm de ancho y \(15\) cm de alto se muestra en una pantalla que multiplica el ancho por \(1{,}2\) y el alto por \(1{,}5\). (i) Escribe la matriz de esa transformación y calcula el área de la foto en la pantalla. (ii) Un proyector mal alineado aplica en cambio la matriz \(\begin{pmatrix}1{,}2&0{,}3\\0&1{,}5\end{pmatrix}\), que además inclina la imagen. ¿Cambia el área respecto de (i)?</p>
+    <details><summary>Pista</summary><div><p>El ancho va en la primera coordenada y el alto en la segunda. Compara los dos determinantes.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(i) \((x,y)\) va a \((1{,}2\,x,\ 1{,}5\,y)\): la matriz es \(\begin{pmatrix}1{,}2&0\\0&1{,}5\end{pmatrix}\).</li>
+        <li>Su determinante: \(1{,}2\cdot 1{,}5-0\cdot 0=1{,}8\).</li>
+        <li>Área original: \(10\cdot 15=150\ \text{cm}^2\). En la pantalla: \(1{,}8\cdot 150=270\ \text{cm}^2\).</li>
+        <li>Comprobación: la foto queda de \(1{,}2\cdot 10=12\) cm por \(1{,}5\cdot 15=22{,}5\) cm, y \(12\cdot 22{,}5=270\) ✓.</li>
+        <li>(ii) \(\begin{vmatrix}1{,}2&0{,}3\\0&1{,}5\end{vmatrix}=1{,}2\cdot 1{,}5-0{,}3\cdot 0=1{,}8\). El determinante es el mismo: el área sigue siendo \(270\ \text{cm}^2\). La imagen queda inclinada (es un paralelogramo), pero con la misma área.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>
