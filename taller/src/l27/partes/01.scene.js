@@ -1,3 +1,10 @@
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 24);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* Planos tangentes y linealización local. Dibujo propio; rótulos algebraicos como etiquetas TeX. */
 (function(){
   var FNT = '"Source Sans 3", system-ui, sans-serif';
@@ -35,6 +42,7 @@
       ['E6', 'f(x,y)\\approx L(x,y)\\quad\\text{cerca de }(a,b)', 'f(x, y) ≈ L(x, y) cerca de (a, b)', ''],
       ['FV', 'f(x,y)', 'f(x, y)', 'c-sec'], ['LV', 'L(x,y)', 'L(x, y)', 'c-tan']
     ]);
+    PZ = PZ.concat([['R1', 'z=f(x,y),\\qquad P=\\big(a,\\ b,\\ f(a,b)\\big)', 'paso 1', ''], ['R2', 'y=b\\text{ fijo:}\\quad f_{x}(a,b)=\\dfrac{\\partial f}{\\partial x}(a,b)', 'paso 2', ''], ['R3', 'x=a\\text{ fijo:}\\quad f_{y}(a,b)=\\dfrac{\\partial f}{\\partial y}(a,b)', 'paso 3', ''], ['R4', '\\text{dos rectas por }P\\ \\longrightarrow\\ \\text{un plano}', 'paso 4', ''], ['R5', 'z=f(a,b)+f_{x}(a,b)(x-a)+f_{y}(a,b)(y-b)', 'paso 5', ''], ['R6', 'f(x,y)\\approx L(x,y)\\quad\\text{cerca de }(a,b)', 'paso 6', '']]);
     var TXT = [
       ['Una superficie y un punto sobre ella.', 'Se busca el plano que mejor se le pega en ese punto.'],
       ['Corte de frente: la segunda variable queda fija.', 'La curva del corte tiene su recta tangente.'],
@@ -44,7 +52,7 @@
       ['Cerca del punto, plano y superficie casi coinciden.', 'El plano sirve para aproximar: es la linealización.']
     ];
     return {
-      world:{x0:-3.7, x1:3.9, y0:-4.3, y1:4.4}, aspect:8.7/7.6,
+      world:{x0:-3.7, x1:3.9, y0:-7.75, y1:4.4}, aspect:12.15/7.6,
       aria:'Animación en seis pasos. Uno: una superficie con forma de cúpula, z igual a f de x y, dibujada en tres dimensiones con degradado azul, y un punto P sobre ella, encima del punto a, b del plano del suelo. Dos: se corta la superficie con un plano vertical que mantiene y igual a b; aparece una curva naranja y su recta tangente en P, de pendiente f sub x. Tres: se corta con un plano vertical que mantiene x igual a a; aparece una curva verde y su recta tangente, de pendiente f sub y. Cuatro: las dos rectas tangentes determinan un plano burdeo, el plano tangente. Cinco: la ecuación del plano. Seis: un punto cercano muestra que la altura del plano y la de la superficie casi coinciden.',
       labels:PZ,
       sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -65,10 +73,10 @@
         if (k === 3 && u >= 1) L('MY', K.at([A, B + 1.0, Z0 + Nn]), 0, 8, -2);
         if (k === 6){ K.line([x1, y1, zf], [x1, y1, zl], C.ink, 2); K.dot([x1, y1, zf], C.sec, 3); K.dot([x1, y1, zl], C.tan, 3); if (u >= 1){ L('LV', K.at([x1, y1, zl]), 0, 8, -6); L('FV', K.at([x1, y1, zf]), 0, 8, 10); } }
         if (k === 1) L('Q', [S.X(-3.6), S.Y(4.0)], 0);
-        if (k === 5) L('E5', [S.X(-3.6), S.Y(-1.85)], 0); if (k === 6) L('E6', [S.X(-3.6), S.Y(-1.85)], 0);
-        K.txt(TXT[k - 1][0], -3.6, -3.0); K.txt(TXT[k - 1][1], -3.6, -3.0 - 21/(S.X(1) - S.X(0)));
+        K.txt(TXT[k - 1][0], -3.6, -1.95); K.txt(TXT[k - 1][1], -3.6, -1.95 - 21/(S.X(1) - S.X(0)));
         K.txt('paso ' + k + ' de ' + N, 3.8, 4.15, C.muted || '#6b6b6b', 11, 'right');
         T.fin();
+        oaReg(S, k, N, -3.6, -3.55, [0, 34, 74, 108, 138, 168]);
       },
       caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
       readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['z=f(x,y),\\qquad P=\\big(a,\\ b,\\ f(a,b)\\big)', '\\text{con }y=b\\text{ fijo:}\\quad \\text{pendiente}=f_{x}(a,b)=\\dfrac{\\partial f}{\\partial x}(a,b)', '\\text{con }x=a\\text{ fijo:}\\quad \\text{pendiente}=f_{y}(a,b)=\\dfrac{\\partial f}{\\partial y}(a,b)', '\\text{dos rectas que se cruzan en }P\\ \\longrightarrow\\ \\text{un plano}', 'z=f(a,b)+f_{x}(a,b)\\,(x-a)+f_{y}(a,b)\\,(y-b)', 'L(x,y)=f(a,b)+f_{x}(a,b)\\,(x-a)+f_{y}(a,b)\\,(y-b)\\approx f(x,y)'][k - 1]]]; }

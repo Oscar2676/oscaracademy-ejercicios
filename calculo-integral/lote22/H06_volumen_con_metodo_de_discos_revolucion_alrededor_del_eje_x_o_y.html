@@ -326,7 +326,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L22-H06 · v003 · APR de Óscar, 22-nov-2026</span>
+  <span class="status">CI-L22-H06 · v004 · Pendiente de APR</span>
 </footer>
 </article>
 </div>
@@ -617,11 +617,10 @@ function oaIdeaRev(o){
   var PZ = [['F', o.Ftex, o.Ftxt, 'diff'], ['Q', 'V=\\ ?', 'V = ?', 'pt'], ['YF', 'y=f(x)', 'y = f(x)', 'c-sec'], ['YG', 'y=g(x)', 'y = g(x)', 'c-alt'],
     ['LA', 'a', 'a', ''], ['LB', 'b', 'b', ''], ['LX', 'x', 'x', ''], ['LR', hole ? 'R' : 'R=f(x)', hole ? 'R' : 'R = f(x)', 'diff'], ['Lr', 'r', 'r', 'c-alt'],
     ['LD', '\\text{espesor }dx', 'espesor dx', 'c-alt'], ['DR', 'R', 'R', 'diff'], ['Dr', 'r', 'r', 'c-alt'], ['DD', 'dx', 'dx', 'c-alt'],
-    ['E2', hole ? 'R=f(x),\\qquad r=g(x)' : 'R=f(x)', hole ? 'R = f(x), r = g(x)' : 'R = f(x)', ''],
-    ['E4', '\\text{área}=' + AR, 'área = ' + ARt, ''], ['E5', 'dV=' + AR + '\\,dx', 'dV = ' + ARt + ' dx', ''],
-    ['E6', 'V\\approx\\displaystyle\\sum ' + AR + '\\,\\Delta x', 'V ≈ suma de ' + ARt + ' Δx', ''], ['E7', hole ? 'R=f(x),\\qquad r=g(x)' : 'R=f(x)', hole ? 'R = f(x), r = g(x)' : 'R = f(x)', '']];
+    ['R1', o.tex[0], 'V = ?', ''], ['R2', o.tex[1], 'radios', ''], ['R3', o.tex[2], 'el corte gira', ''], ['R4', o.tex[3], 'área', ''], ['R5', o.tex[4], 'dV', ''], ['R6', o.tex[5], 'suma', ''], ['R7', o.tex[6], 'integral', '']];
+  var FILA = [0, 28, 56, 86, 116, 152, 198];
   return {
-    world:{x0:-1.9, x1:7.9, y0:-4.75, y1:3.05}, aspect:7.8/9.8,
+    world:{x0:-1.9, x1:7.9, y0:-10.5, y1:3.05}, aspect:13.55/9.8,
     aria:o.aria, labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:o.legend,
@@ -693,7 +692,7 @@ function oaIdeaRev(o){
         }
       }
       /* texto: la fórmula se arma pieza por pieza */
-      var x0 = X(-1.8), y0 = Y(-3.6);
+      var x0 = X(-1.8), y0 = Y(-2.45), y0r = Y(-4.2), fi;
       var TX = [['Una región gira alrededor de un eje y forma un sólido' + (hole ? ' hueco.' : '.'), '¿Cuánto mide su volumen?'],
         ['Un corte perpendicular al eje, en cualquier posición.', hole ? 'Hay dos radios: a la curva lejana y a la cercana.' : 'El corte va del eje a la curva: es el radio.'],
         ['Al girar, el corte barre un ' + pieza + (hole ? ': un disco con un hueco.' : '.'), ''],
@@ -701,7 +700,11 @@ function oaIdeaRev(o){
         ['Con su espesor, el ' + pieza + ' tiene volumen:', 'área de la cara por espesor.'],
         ['El sólido es la suma de todos los ' + piezas + ',', 'desde el primero hasta el último.'],
         ['Sumar infinitos ' + piezas + ' delgados es integrar.', 'La pregunta de arriba ya tiene respuesta.']];
-      if (k === 2) Lp('E2', x0, Y(-2.55), 0); if (k === 4) Lp('E4', x0, Y(-2.55), 0); if (k === 5) Lp('E5', x0, Y(-2.55), 0); if (k === 6) Lp('E6', x0, Y(-2.65), 0); if (k === 7) Lp('E7', x0, Y(-2.55), 0);
+      /* registro: la expresión de cada paso queda escrita y se acumula hacia abajo; no se borra */
+      lab('Paso a paso, lo que se va obteniendo:', x0, Y(-3.65), C.muted || '#6b6b6b', 'left', 11.5);
+      for (fi = 0; fi < k; fi++){ var act = fi === k - 1; c.beginPath(); c.arc(X(-1.62), y0r + FILA[fi], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.globalAlpha = act ? Math.max(0.25, u) : 1; c.fill(); c.globalAlpha = 1;
+        c.font = '700 11px ' + F; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (fi + 1), X(-1.62), y0r + FILA[fi] + 0.5);
+        Lp('R' + (fi + 1), X(-1.3), y0r + FILA[fi], 0); }
       seg([[TX[k - 1][0], 'ink']], x0, y0); seg([[TX[k - 1][1], 'ink']], x0, y0 + 21);
       PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); });
       lab('paso ' + k + ' de ' + N, X(7.8), Y(2.75), C.muted || '#6b6b6b', 'right', 11);
@@ -710,6 +713,13 @@ function oaIdeaRev(o){
     readout:function(v){ return [['', o.tex[Math.round(v.paso || 1) - 1]]]; }
   };
 }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 24);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* La esfera, armada con discos, en seis pasos. Dibujo propio; rótulos algebraicos como etiquetas TeX; transiciones continuas. */
 OA.scene('apl-esfera-discos', (function(){
   var N = 6, RR = 2, XC = 0.9, E = 0.24, FNT = '"Source Sans 3", system-ui, sans-serif';
@@ -722,6 +732,7 @@ OA.scene('apl-esfera-discos', (function(){
     ['E4', 'dV=\\pi\\left(r^{2}-x^{2}\\right)dx', 'dV = π(r² − x²) dx', ''],
     ['E5', 'V=\\displaystyle\\int_{-r}^{r}\\pi\\left(r^{2}-x^{2}\\right)dx', 'V = ∫ de −r a r de π(r² − x²) dx', ''],
     ['E6', 'V=\\pi\\left[r^{2}x-\\dfrac{x^{3}}{3}\\right]_{-r}^{r}=\\dfrac{4}{3}\\pi r^{3}', 'V = π[r²x − x³/3] de −r a r = (4/3)πr³', '']];
+  PZ = PZ.concat([['R1', 'V=\\ ?', 'paso 1', ''], ['R2', 'R^{2}+x^{2}=r^{2}\\quad\\Longrightarrow\\quad R^{2}=r^{2}-x^{2}', 'paso 2', ''], ['R3', 'A(x)=\\pi R^{2}=\\pi\\left(r^{2}-x^{2}\\right)', 'paso 3', ''], ['R4', 'dV=\\pi\\left(r^{2}-x^{2}\\right)dx', 'paso 4', ''], ['R5', 'V=\\displaystyle\\int_{-r}^{r}\\pi\\left(r^{2}-x^{2}\\right)dx', 'paso 5', ''], ['R6', 'V=\\pi\\left[r^{2}x-\\dfrac{x^{3}}{3}\\right]_{-r}^{r}=\\dfrac{4}{3}\\pi r^{3}', 'paso 6', '']]);
   var TXT = [
     ['Un semicírculo gira alrededor de su diámetro', 'y forma una esfera. ¿Cuánto mide su volumen?'],
     ['Un corte perpendicular al eje, en cualquier posición.', 'Con el radio de la esfera forma un triángulo rectángulo.'],
@@ -730,7 +741,7 @@ OA.scene('apl-esfera-discos', (function(){
     ['El disco recorre la esfera de un extremo al otro.', 'Sumar todos los discos es integrar.'],
     ['Se calcula la integral.', 'La pregunta de arriba ya tiene respuesta.']];
   return {
-    world:{x0:-3.3, x1:3.3, y0:-5.6, y1:3.1}, aspect:8.7/6.6,
+    world:{x0:-3.3, x1:3.3, y0:-8.6, y1:3.1}, aspect:11.7/6.6,
     aria:'La fórmula del volumen de la esfera, armada con discos en seis pasos. Uno: un semicírculo de radio r sobre el eje x, que al girar alrededor del eje forma una esfera; arriba, la pregunta V igual a signo de interrogación. Dos: un corte vertical en la posición x; el corte, de largo R mayúscula, forma con el radio r de la esfera y con el tramo x del eje un triángulo rectángulo. Tres: al girar, el corte barre un disco de radio R, y por Pitágoras R al cuadrado es r al cuadrado menos x al cuadrado. Cuatro: el disco con su espesor dx. Cinco: el disco recorre la esfera desde menos r hasta r y la va llenando. Seis: la integral da cuatro tercios de pi por r al cubo, que reemplaza a la pregunta.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -767,10 +778,10 @@ OA.scene('apl-esfera-discos', (function(){
         c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.2, 0, 6.2832); c.fill();
       }
       /* expresión del paso y frases */
-      if (k === 2 && u >= 1) L('E2', -3.2, -2.75, 0); if (k === 3) L('E3', -3.2, -2.75, 0); if (k === 4) L('E4', -3.2, -2.75, 0); if (k === 5) L('E5', -3.2, -2.85, 0); if (k === 6) L('E6', -3.2, -2.85, 0);
-      txt(TXT[k - 1][0], -3.2, -4.3); txt(TXT[k - 1][1], -3.2, -4.3 - 21/s);
+      txt(TXT[k - 1][0], -3.2, -2.75); txt(TXT[k - 1][1], -3.2, -2.75 - 21/s);
       txt('paso ' + k + ' de ' + N, 3.2, 2.85, C.muted || '#6b6b6b', 11, 'right');
       PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); });
+      oaReg(S, k, N, -3.2, -4.45, [0, 28, 56, 84, 120, 164]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
     readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['V=\\ ?', 'R^{2}+x^{2}=r^{2}', 'A(x)=\\pi R^{2}=\\pi\\left(r^{2}-x^{2}\\right)', 'dV=\\pi\\left(r^{2}-x^{2}\\right)dx', '\\displaystyle V=\\int_{-r}^{r}\\pi\\left(r^{2}-x^{2}\\right)dx', '\\displaystyle V=\\pi\\left[r^{2}x-\\dfrac{x^{3}}{3}\\right]_{-r}^{r}=\\pi\\left(\\dfrac{2r^{3}}{3}\\right)-\\pi\\left(-\\dfrac{2r^{3}}{3}\\right)=\\dfrac{4}{3}\\pi r^{3}'][k - 1]]]; }

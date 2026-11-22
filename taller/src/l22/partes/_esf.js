@@ -1,3 +1,10 @@
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 24);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* La esfera, armada con discos, en seis pasos. Dibujo propio; rótulos algebraicos como etiquetas TeX; transiciones continuas. */
 OA.scene('apl-esfera-discos', (function(){
   var N = 6, RR = 2, XC = 0.9, E = 0.24, FNT = '"Source Sans 3", system-ui, sans-serif';
@@ -10,6 +17,7 @@ OA.scene('apl-esfera-discos', (function(){
     ['E4', 'dV=\\pi\\left(r^{2}-x^{2}\\right)dx', 'dV = π(r² − x²) dx', ''],
     ['E5', 'V=\\displaystyle\\int_{-r}^{r}\\pi\\left(r^{2}-x^{2}\\right)dx', 'V = ∫ de −r a r de π(r² − x²) dx', ''],
     ['E6', 'V=\\pi\\left[r^{2}x-\\dfrac{x^{3}}{3}\\right]_{-r}^{r}=\\dfrac{4}{3}\\pi r^{3}', 'V = π[r²x − x³/3] de −r a r = (4/3)πr³', '']];
+  PZ = PZ.concat([['R1', 'V=\\ ?', 'paso 1', ''], ['R2', 'R^{2}+x^{2}=r^{2}\\quad\\Longrightarrow\\quad R^{2}=r^{2}-x^{2}', 'paso 2', ''], ['R3', 'A(x)=\\pi R^{2}=\\pi\\left(r^{2}-x^{2}\\right)', 'paso 3', ''], ['R4', 'dV=\\pi\\left(r^{2}-x^{2}\\right)dx', 'paso 4', ''], ['R5', 'V=\\displaystyle\\int_{-r}^{r}\\pi\\left(r^{2}-x^{2}\\right)dx', 'paso 5', ''], ['R6', 'V=\\pi\\left[r^{2}x-\\dfrac{x^{3}}{3}\\right]_{-r}^{r}=\\dfrac{4}{3}\\pi r^{3}', 'paso 6', '']]);
   var TXT = [
     ['Un semicírculo gira alrededor de su diámetro', 'y forma una esfera. ¿Cuánto mide su volumen?'],
     ['Un corte perpendicular al eje, en cualquier posición.', 'Con el radio de la esfera forma un triángulo rectángulo.'],
@@ -18,7 +26,7 @@ OA.scene('apl-esfera-discos', (function(){
     ['El disco recorre la esfera de un extremo al otro.', 'Sumar todos los discos es integrar.'],
     ['Se calcula la integral.', 'La pregunta de arriba ya tiene respuesta.']];
   return {
-    world:{x0:-3.3, x1:3.3, y0:-5.6, y1:3.1}, aspect:8.7/6.6,
+    world:{x0:-3.3, x1:3.3, y0:-8.6, y1:3.1}, aspect:11.7/6.6,
     aria:'La fórmula del volumen de la esfera, armada con discos en seis pasos. Uno: un semicírculo de radio r sobre el eje x, que al girar alrededor del eje forma una esfera; arriba, la pregunta V igual a signo de interrogación. Dos: un corte vertical en la posición x; el corte, de largo R mayúscula, forma con el radio r de la esfera y con el tramo x del eje un triángulo rectángulo. Tres: al girar, el corte barre un disco de radio R, y por Pitágoras R al cuadrado es r al cuadrado menos x al cuadrado. Cuatro: el disco con su espesor dx. Cinco: el disco recorre la esfera desde menos r hasta r y la va llenando. Seis: la integral da cuatro tercios de pi por r al cubo, que reemplaza a la pregunta.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -55,10 +63,10 @@ OA.scene('apl-esfera-discos', (function(){
         c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.2, 0, 6.2832); c.fill();
       }
       /* expresión del paso y frases */
-      if (k === 2 && u >= 1) L('E2', -3.2, -2.75, 0); if (k === 3) L('E3', -3.2, -2.75, 0); if (k === 4) L('E4', -3.2, -2.75, 0); if (k === 5) L('E5', -3.2, -2.85, 0); if (k === 6) L('E6', -3.2, -2.85, 0);
-      txt(TXT[k - 1][0], -3.2, -4.3); txt(TXT[k - 1][1], -3.2, -4.3 - 21/s);
+      txt(TXT[k - 1][0], -3.2, -2.75); txt(TXT[k - 1][1], -3.2, -2.75 - 21/s);
       txt('paso ' + k + ' de ' + N, 3.2, 2.85, C.muted || '#6b6b6b', 11, 'right');
       PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); });
+      oaReg(S, k, N, -3.2, -4.45, [0, 28, 56, 84, 120, 164]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
     readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['V=\\ ?', 'R^{2}+x^{2}=r^{2}', 'A(x)=\\pi R^{2}=\\pi\\left(r^{2}-x^{2}\\right)', 'dV=\\pi\\left(r^{2}-x^{2}\\right)dx', '\\displaystyle V=\\int_{-r}^{r}\\pi\\left(r^{2}-x^{2}\\right)dx', '\\displaystyle V=\\pi\\left[r^{2}x-\\dfrac{x^{3}}{3}\\right]_{-r}^{r}=\\pi\\left(\\dfrac{2r^{3}}{3}\\right)-\\pi\\left(-\\dfrac{2r^{3}}{3}\\right)=\\dfrac{4}{3}\\pi r^{3}'][k - 1]]]; }

@@ -9,11 +9,10 @@ function oaIdeaRev(o){
   var PZ = [['F', o.Ftex, o.Ftxt, 'diff'], ['Q', 'V=\\ ?', 'V = ?', 'pt'], ['YF', 'y=f(x)', 'y = f(x)', 'c-sec'], ['YG', 'y=g(x)', 'y = g(x)', 'c-alt'],
     ['LA', 'a', 'a', ''], ['LB', 'b', 'b', ''], ['LX', 'x', 'x', ''], ['LR', hole ? 'R' : 'R=f(x)', hole ? 'R' : 'R = f(x)', 'diff'], ['Lr', 'r', 'r', 'c-alt'],
     ['LD', '\\text{espesor }dx', 'espesor dx', 'c-alt'], ['DR', 'R', 'R', 'diff'], ['Dr', 'r', 'r', 'c-alt'], ['DD', 'dx', 'dx', 'c-alt'],
-    ['E2', hole ? 'R=f(x),\\qquad r=g(x)' : 'R=f(x)', hole ? 'R = f(x), r = g(x)' : 'R = f(x)', ''],
-    ['E4', '\\text{área}=' + AR, 'área = ' + ARt, ''], ['E5', 'dV=' + AR + '\\,dx', 'dV = ' + ARt + ' dx', ''],
-    ['E6', 'V\\approx\\displaystyle\\sum ' + AR + '\\,\\Delta x', 'V ≈ suma de ' + ARt + ' Δx', ''], ['E7', hole ? 'R=f(x),\\qquad r=g(x)' : 'R=f(x)', hole ? 'R = f(x), r = g(x)' : 'R = f(x)', '']];
+    ['R1', o.tex[0], 'V = ?', ''], ['R2', o.tex[1], 'radios', ''], ['R3', o.tex[2], 'el corte gira', ''], ['R4', o.tex[3], 'área', ''], ['R5', o.tex[4], 'dV', ''], ['R6', o.tex[5], 'suma', ''], ['R7', o.tex[6], 'integral', '']];
+  var FILA = [0, 28, 56, 86, 116, 152, 198];
   return {
-    world:{x0:-1.9, x1:7.9, y0:-4.75, y1:3.05}, aspect:7.8/9.8,
+    world:{x0:-1.9, x1:7.9, y0:-10.5, y1:3.05}, aspect:13.55/9.8,
     aria:o.aria, labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:o.legend,
@@ -85,7 +84,7 @@ function oaIdeaRev(o){
         }
       }
       /* texto: la fórmula se arma pieza por pieza */
-      var x0 = X(-1.8), y0 = Y(-3.6);
+      var x0 = X(-1.8), y0 = Y(-2.45), y0r = Y(-4.2), fi;
       var TX = [['Una región gira alrededor de un eje y forma un sólido' + (hole ? ' hueco.' : '.'), '¿Cuánto mide su volumen?'],
         ['Un corte perpendicular al eje, en cualquier posición.', hole ? 'Hay dos radios: a la curva lejana y a la cercana.' : 'El corte va del eje a la curva: es el radio.'],
         ['Al girar, el corte barre un ' + pieza + (hole ? ': un disco con un hueco.' : '.'), ''],
@@ -93,7 +92,11 @@ function oaIdeaRev(o){
         ['Con su espesor, el ' + pieza + ' tiene volumen:', 'área de la cara por espesor.'],
         ['El sólido es la suma de todos los ' + piezas + ',', 'desde el primero hasta el último.'],
         ['Sumar infinitos ' + piezas + ' delgados es integrar.', 'La pregunta de arriba ya tiene respuesta.']];
-      if (k === 2) Lp('E2', x0, Y(-2.55), 0); if (k === 4) Lp('E4', x0, Y(-2.55), 0); if (k === 5) Lp('E5', x0, Y(-2.55), 0); if (k === 6) Lp('E6', x0, Y(-2.65), 0); if (k === 7) Lp('E7', x0, Y(-2.55), 0);
+      /* registro: la expresión de cada paso queda escrita y se acumula hacia abajo; no se borra */
+      lab('Paso a paso, lo que se va obteniendo:', x0, Y(-3.65), C.muted || '#6b6b6b', 'left', 11.5);
+      for (fi = 0; fi < k; fi++){ var act = fi === k - 1; c.beginPath(); c.arc(X(-1.62), y0r + FILA[fi], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.globalAlpha = act ? Math.max(0.25, u) : 1; c.fill(); c.globalAlpha = 1;
+        c.font = '700 11px ' + F; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (fi + 1), X(-1.62), y0r + FILA[fi] + 0.5);
+        Lp('R' + (fi + 1), X(-1.3), y0r + FILA[fi], 0); }
       seg([[TX[k - 1][0], 'ink']], x0, y0); seg([[TX[k - 1][1], 'ink']], x0, y0 + 21);
       PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); });
       lab('paso ' + k + ' de ' + N, X(7.8), Y(2.75), C.muted || '#6b6b6b', 'right', 11);

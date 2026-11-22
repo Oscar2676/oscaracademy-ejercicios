@@ -168,10 +168,17 @@
 </section>
 
 <footer>
-  <span class="status">CI-L22-H13 · v002 · APR de Óscar, 22-nov-2026</span>
+  <span class="status">CI-L22-H13 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 24);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* Capas cilíndricas. Dibujo propio; rótulos algebraicos como etiquetas TeX. */
 (function(){
   var E = 0.25, FNT = '"Source Sans 3", system-ui, sans-serif';
@@ -206,6 +213,7 @@
       ['E5', 'dV=2\\pi r\\cdot h\\cdot dx=2\\pi\\,x\\,f(x)\\,dx', 'dV = 2πr · h · dx = 2π x f(x) dx', ''],
       ['E6', 'V\\approx\\displaystyle\\sum 2\\pi\\,x\\,f(x)\\,\\Delta x', 'V ≈ suma de 2π x f(x) Δx', '']
     ];
+    PZ = PZ.concat([['R1', 'V=\\ ?', 'paso 1', ''], ['R2', 'r=x,\\qquad h=f(x)', 'paso 2', ''], ['R3', '\\text{la tira gira}\\ \\longrightarrow\\ \\text{capa cilíndrica}', 'paso 3', ''], ['R4', '\\text{área de la capa}=2\\pi r\\cdot h', 'paso 4', ''], ['R5', 'dV=2\\pi r\\cdot h\\cdot dx=2\\pi\\,x\\,f(x)\\,dx', 'paso 5', ''], ['R6', 'V\\approx\\displaystyle\\sum 2\\pi\\,x\\,f(x)\\,\\Delta x', 'paso 6', ''], ['R7', 'V=\\displaystyle\\int_{a}^{b}2\\pi\\,x\\,f(x)\\,dx', 'paso 7', '']]);
     var TXT = [
       ['Una región gira alrededor de un eje vertical', 'y forma un sólido. ¿Cuánto mide su volumen?'],
       ['Se toma una tira vertical, paralela al eje.', 'Importan su distancia al eje y su altura.'],
@@ -216,7 +224,7 @@
       ['Sumar infinitas capas delgadas es integrar.', 'La pregunta de arriba ya tiene respuesta.']
     ];
     return {
-      world:{x0:-3.0, x1:7.4, y0:-4.9, y1:3.7}, aspect:8.6/10.4,
+      world:{x0:-3.0, x1:7.4, y0:-10.9, y1:3.7}, aspect:14.6/10.4,
       aria:'Animación en siete pasos, con una curva cualquiera y igual a f de x. Uno: la región bajo la curva, entre x igual a a y x igual a b, y el eje de giro vertical; arriba, la pregunta V igual a signo de interrogación. Dos: una tira vertical en la posición x, de altura h igual a f de x, a distancia r igual a x del eje y de espesor dx. Tres: al girar, la tira barre una capa cilíndrica, un tubo de pared delgada. Cuatro: la capa se corta y se estira en un rectángulo de largo 2 pi r y alto h. Cinco: con su espesor dx, el volumen de la capa es 2 pi r por h por dx. Seis: el sólido se arma con todas las capas, una dentro de otra, en colores. Siete: la suma se escribe como la integral de a a b de 2 pi x f de x dx, que reemplaza a la pregunta.',
       labels:PZ,
       sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -245,10 +253,10 @@
         }
         if (k >= 6){ M = k === 6 ? 7 : 14; var m = k === 6 ? Math.max(1, Math.round(u*M)) : M; for (i = Math.min(m, M) - 1; i >= 0; i--){ r = A + (B - A)*(i + 0.5)/M; K.capa(r + (B - A)/(2*M), f(r), k === 6 ? cols[i % 4] : C.sec, k === 6 ? 0.85 : 0.6); } K.eje(-0.9, 3.0); L('LA', A, -0.95); L('LB', B, -0.95); }
         /* ecuación del paso y frases */
-        if (k === 2) L('E2', -2.9, -1.75, 0); if (k === 4) L('E4', -2.9, -1.75, 0); if (k === 5) L('E5', -2.9, -1.75, 0); if (k === 6) L('E6', -2.9, -1.85, 0);
-        K.txt(TXT[k - 1][0], -2.9, -3.3); K.txt(TXT[k - 1][1], -2.9, -3.3 - 21/(X(1) - X(0)));
+        K.txt(TXT[k - 1][0], -2.9, -1.95); K.txt(TXT[k - 1][1], -2.9, -1.95 - 21/(X(1) - X(0)));
         K.txt('paso ' + k + ' de ' + N, 7.3, 3.45, C.muted || '#6b6b6b', 11, 'right');
         T.fin();
+        oaReg(S, k, N, -2.9, -3.95, [0, 28, 56, 84, 112, 148, 194]);
       },
       caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
       readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['V=\\ ?', 'r=x,\\qquad h=f(x)', '\\text{la tira gira}\\ \\longrightarrow\\ \\text{capa cilíndrica}', '\\text{área de la capa}=2\\pi r\\cdot h=2\\pi\\,x\\,f(x)', 'dV=2\\pi\\,x\\,f(x)\\,dx', '\\displaystyle V\\approx\\sum 2\\pi\\,x\\,f(x)\\,\\Delta x', '\\displaystyle V=\\int_{a}^{b}2\\pi\\,x\\,f(x)\\,dx'][k - 1]]]; }

@@ -10,6 +10,7 @@
       ['E3', '\\text{corte horizontal: }z=c', 'corte horizontal: z = c', ''], ['E4', '\\text{curva de nivel: }f(x,y)=c', 'curva de nivel: f(x, y) = c', ''],
       ['E5', 'f(x,y)=c_{1},\\quad f(x,y)=c_{2},\\quad f(x,y)=c_{3},\\ \\dots', 'f(x, y) = c₁, f(x, y) = c₂, f(x, y) = c₃, …', '']
     ]);
+    PZ = PZ.concat([['R1', '(x,y)\\ \\longmapsto\\ f(x,y)\\in\\mathbb{R}', 'paso 1', ''], ['R2', '\\text{gráfica: }\\big\\{(x,\\,y,\\,z):\\ z=f(x,y)\\big\\}', 'paso 2', ''], ['R3', '\\text{corte horizontal: }z=c', 'paso 3', ''], ['R4', '\\text{curva de nivel: }f(x,y)=c', 'paso 4', ''], ['R5', '\\text{mapa: }f(x,y)=c_{1},\\ c_{2},\\ c_{3},\\ \\dots', 'paso 5', '']]);
     var TXT = [
       ['A cada punto del suelo, la función le da un número.', 'Ese número se dibuja como una altura sobre el punto.'],
       ['Con todos los puntos, las alturas forman', 'una superficie: la gráfica de la función.'],
@@ -18,7 +19,7 @@
       ['Con varias alturas se obtiene un mapa', 'de curvas de nivel: la superficie vista desde arriba.']
     ];
     return {
-      world:{x0:-3.7, x1:3.9, y0:-4.5, y1:4.4}, aspect:8.9/7.6,
+      world:{x0:-3.7, x1:3.9, y0:-7.2, y1:4.4}, aspect:11.6/7.6,
       aria:'Animación en cinco pasos. Uno: sobre un punto del suelo se levanta una barra naranja cuya altura es el valor de la función en ese punto. Dos: al hacerlo con todos los puntos aparece una superficie azul con forma de cúpula, la gráfica de la función. Tres: un plano horizontal burdeo baja y corta la cúpula en un círculo. Cuatro: ese círculo baja al suelo y queda dibujado como curva de nivel. Cinco: se repite con cuatro alturas y en el suelo queda un mapa de círculos concéntricos, más juntos hacia afuera, donde la cúpula es más empinada.',
       labels:PZ,
       sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -40,10 +41,10 @@
         if (k === 4 && u >= 1) L('NC', K.at([rad(c0)*0.7, rad(c0)*0.72, 0]), 0, 8, 8);
         if (k >= 2) L('SF', [S.X(-3.6), S.Y(2.9)], 0);
         if (k === 1) L('Q', [S.X(-3.6), S.Y(4.0)], 0);
-        if (k === 3) L('E3', [S.X(-3.6), S.Y(-1.95)], 0); if (k === 4) L('E4', [S.X(-3.6), S.Y(-1.95)], 0); if (k === 5) L('E5', [S.X(-3.6), S.Y(-1.95)], 0);
-        K.txt(TXT[k - 1][0], -3.6, -3.1); K.txt(TXT[k - 1][1], -3.6, -3.1 - 21/(S.X(1) - S.X(0)));
+        K.txt(TXT[k - 1][0], -3.6, -2.05); K.txt(TXT[k - 1][1], -3.6, -2.05 - 21/(S.X(1) - S.X(0)));
         K.txt('paso ' + k + ' de ' + N, 3.8, 4.15, C.muted || '#6b6b6b', 11, 'right');
         T.fin();
+        oaReg(S, k, N, -3.6, -3.65, [0, 30, 60, 90, 120]);
       },
       caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
       readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['(x,y)\\ \\longmapsto\\ f(x,y)\\in\\mathbb{R}', '\\text{gráfica: }\\big\\{(x,\\,y,\\,z):\\ z=f(x,y)\\big\\}', '\\text{corte con el plano }z=c', '\\text{curva de nivel: }\\big\\{(x,y):\\ f(x,y)=c\\big\\}', '\\text{mapa de curvas de nivel: }f(x,y)=c\\ \\text{ para varios }c'][k - 1]]]; }

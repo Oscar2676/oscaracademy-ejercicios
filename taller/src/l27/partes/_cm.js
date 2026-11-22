@@ -22,3 +22,11 @@ var cmEJ = [['AX', 'x', 'x', ''], ['AY', 'y', 'y', ''], ['AZ', 'z', 'z', '']];
 function cmEjesLab(K, L, zt){ L('AX', K.at([3.3, 0, 0])); L('AY', K.at([0, 3.1, 0])); L('AZ', K.at([0, 0, (zt || 3.7) + 0.2])); }
 function cmSuave(w){ w = Math.max(0, Math.min(1, w)); return w*w*(3 - 2*w); }
 function cmCirc(r, z){ var p = [], i, t; for (i = 0; i <= 72; i++){ t = 6.2832*i/72; p.push([r*Math.cos(t), r*Math.sin(t), z]); } return p; }
+
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 24);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }

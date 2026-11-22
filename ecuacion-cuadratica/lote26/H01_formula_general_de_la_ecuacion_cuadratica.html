@@ -314,7 +314,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L26-H01 · v002 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">AL-L26-H01 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 </div>
@@ -559,7 +559,7 @@ OA.scene('ec-formula', (function(){
     ['E0', 'ax^{2}+bx+c=0,\\quad a\\neq 0', 'ax² + bx + c = 0, a ≠ 0', '']
   ];
   return {
-    world:{x0:-1.1, x1:6.9, y0:-6.9, y1:3.5}, aspect:10.4/8,
+    world:{x0:-1.1, x1:6.9, y0:-12.6, y1:3.5}, aspect:16.1/8,
     aria:'Demostración geométrica de la fórmula general, en siete etapas. Un cuadrado azul de lado x y área x al cuadrado tiene a su derecha un rectángulo naranja de ancho b sobre a. El rectángulo se parte en dos mitades de ancho b sobre 2a. Una mitad se traslada bajo el cuadrado y queda una figura en forma de L. En la esquina falta un cuadradito de lado b sobre 2a; se agrega, en burdeo, y se completa un cuadrado grande de lado x más b sobre 2a. Bajo la figura, la ecuación cambia en cada etapa hasta llegar a x igual a menos b más menos raíz de b al cuadrado menos 4ac, todo sobre 2a.',
     labels:EQ.map(function(e){ return [e[0], e[1], e[2], e[0] === 'E7' ? 'diff' : '']; }).concat(PZ),
     sliders:[{id:'paso', tex:'\\text{etapa}', min:1, max:N, step:1, value:1}],
@@ -594,10 +594,16 @@ OA.scene('ec-formula', (function(){
       /* el cuadrado grande */
       if (k >= 5){ c.strokeStyle = C.ink; c.lineWidth = 1.8; c.strokeRect(X(OX), Y(OY + SX), X(OX + SX + H) - X(OX), Y(OY - H) - Y(OY + SX)); cota(OX, OX + SX + H, OY - H - 0.3, ''); L('SB', OX + (SX + H)/2, OY - H - 0.78); cotaV(OX + SX + H + 0.3, OY - H, OY + SX, ''); L('SR', OX + SX + H + 0.45, OY + (SX - H)/2, 0); }
       /* ecuación de la etapa y su explicación */
-      if (k === 1) L('E0', -1.0, -2.25, 0);
       PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); });
-      EQ.forEach(function(e, i){ S.lab(e[0], X(-1.0), Y(-3.2), 0, 0, i === k - 1); });
-      txt(TXT[k - 1][0], X(-1.0), Y(-5.6), 'left', C.ink); txt(TXT[k - 1][1], X(-1.0), Y(-5.6) + 21, 'left', C.ink);
+      /* registro: la ecuación de cada etapa queda escrita y se acumula hacia abajo; no se borra */
+      txt(TXT[k - 1][0], X(-1.0), Y(-2.4), 'left', C.ink); txt(TXT[k - 1][1], X(-1.0), Y(-2.4) + 21, 'left', C.ink);
+      var FILA = [34, 78, 122, 166, 214, 262, 310], yr = Y(-4.3), fi, act;
+      c.font = '600 11.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Etapa por etapa, cómo va cambiando la ecuación:', X(-1.0), yr - 26);
+      S.lab('E0', X(-1.0) + 25, yr, 0, -50, true);
+      EQ.forEach(function(e, i){ if (i >= k){ S.lab(e[0], 0, 0, 0, 0, false); return; } act = i === k - 1;
+        c.beginPath(); c.arc(X(-1.0) + 9, yr + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+        c.font = '700 11px ' + F; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), X(-1.0) + 9, yr + FILA[i] + 0.5);
+        S.lab(e[0], X(-1.0) + 25, yr + FILA[i], 0, -50, true); });
       lab('etapa ' + k + ' de ' + N, 6.8, 3.25, C.muted || '#6b6b6b', 11, 'right');
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Etapa ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
