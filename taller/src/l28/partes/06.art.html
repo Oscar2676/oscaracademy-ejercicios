@@ -1,0 +1,187 @@
+<!--file:H06_ab_igual_a_por_b.html-->
+<!--title:|AB| = |A| |B|-->
+<!--id:det-prod-->
+<!--tab:H06 Producto-->
+<article class="sheet" id="det-prod" data-hoja="L28 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>|AB| = |A| |B|</b></li>
+    </ol>
+    <h1>|AB| = |A| |B|</h1>
+    <p class="lede">Si \(A\) y \(B\) son matrices cuadradas del mismo orden, el determinante de su producto es el producto de sus determinantes.
+    \[|AB|=|A|\,|B|\]
+    Sirve para conocer \(|AB|\) sin multiplicar las matrices. Aquí \(|A|\) es el determinante de \(A\), no un valor absoluto.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Con \(A=\begin{pmatrix}1&-1\\1&1\end{pmatrix}\) y \(B=\begin{pmatrix}2&1\\0&1\end{pmatrix}\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="prod-idea"></div>
+  <ul class="keys">
+    <li><b>Cuadrado gris:</b> el de lados \((1,0)\) y \((0,1)\). Su área es \(1\).</li>
+    <li><b>Paralelogramo azul:</b> el de las columnas de \(B\), \((2,0)\) y \((1,1)\). Su área es \(|B|=2\) (hoja «Determinante de segundo orden»).</li>
+    <li><b>Paralelogramo naranja:</b> el de las columnas de \(AB\), \((2,2)\) y \((0,2)\). Su área es \(|AB|=4\), que es \(2\cdot 2=|A|\,|B|\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué dice y cuándo vale</h3>
+    <ol class="steps">
+      <li><b>Condición:</b> \(A\) y \(B\) son cuadradas y del mismo orden (las dos de \(2\times 2\), o las dos de \(3\times 3\), etc.). Solo las matrices cuadradas tienen determinante.</li>
+      <li><b>Producto de matrices.</b> La entrada de \(AB\) en la fila \(m\) y la columna \(n\) se obtiene multiplicando, término a término, la fila \(m\) de \(A\) por la columna \(n\) de \(B\), y sumando. En segundo orden:
+        \[\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}e&f\\g&h\end{pmatrix}=\begin{pmatrix}ae+bg&af+bh\\ce+dg&cf+dh\end{pmatrix}\]</li>
+      <li><b>Resultado:</b> \(|AB|=|A|\,|B|\).</li>
+      <li>La columna \(n\) de \(AB\) es \(A\) multiplicada por la columna \(n\) de \(B\). Por eso, en la animación, \(A\) lleva los lados del paralelogramo de \(B\) a los lados del paralelogramo de \(AB\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración en segundo orden</h3>
+    <ol class="steps">
+      <li>Se escribe el determinante del producto: \(|AB|=(ae+bg)(cf+dh)-(af+bh)(ce+dg)\).</li>
+      <li>Se desarrolla el primer producto (propiedad distributiva): \((ae+bg)(cf+dh)=acef+adeh+bcfg+bdgh\).</li>
+      <li>Se desarrolla el segundo producto (propiedad distributiva): \((af+bh)(ce+dg)=acef+adfg+bceh+bdgh\).</li>
+      <li>Se restan. Los términos \(acef\) y \(bdgh\) están en los dos desarrollos y se cancelan:
+        \[|AB|=adeh+bcfg-adfg-bceh\]</li>
+      <li>Se saca factor común \(ad\) de \(adeh-adfg\) y factor común \(-bc\) de \(bcfg-bceh\):
+        \[|AB|=ad\,(eh-fg)-bc\,(eh-fg)\]</li>
+      <li>Se saca factor común \((eh-fg)\): \(|AB|=(ad-bc)(eh-fg)\).</li>
+      <li>Como \(|A|=ad-bc\) y \(|B|=eh-fg\), queda \(|AB|=|A|\,|B|\).</li>
+    </ol>
+    <p>Para tercer orden y órdenes mayores el resultado también vale; aquí se enuncia sin demostrarlo.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Lo que se deduce</h3>
+    <ol class="steps">
+      <li><b>\(|AB|=|BA|\).</b> Las matrices \(AB\) y \(BA\) suelen ser distintas, pero \(|AB|=|A|\,|B|\) y \(|BA|=|B|\,|A|\), y el producto de números es conmutativo.</li>
+      <li><b>Potencias.</b> \(|A^{2}|=|A\,A|=|A|\,|A|=|A|^{2}\). Repitiendo el paso, \(|A^{n}|=|A|^{n}\) para \(n=1,2,3,\dots\)</li>
+      <li><b>Inversa.</b> Si existe una matriz \(A^{-1}\) con \(A\,A^{-1}=I\) (la matriz identidad, que tiene \(1\) en la diagonal principal y \(0\) fuera de ella, y cuyo determinante es \(1\)), entonces \(|A|\,|A^{-1}|=|I|=1\). Por lo tanto \(|A|\neq 0\) y
+        \[\left|A^{-1}\right|=\frac{1}{|A|}\qquad(|A|\neq 0)\]</li>
+      <li><b>Si \(|A|=0\) o \(|B|=0\)</b>, entonces \(|AB|=0\).</li>
+    </ol>
+    <p><b>Número ↔ figura.</b> Con \(B=\begin{pmatrix}2&1\\0&1\end{pmatrix}\) fija y \(A=\begin{pmatrix}1&1\\0&k\end{pmatrix}\), mueve \(k\): \(|A|=k\) y el área del paralelogramo de \(AB\) es la del paralelogramo de \(B\) multiplicada por \(|k|\). Con \(k=0\) se aplasta.</p>
+    <div class="stage" data-scene="prod-vivo"></div>
+    <ul class="keys">
+      <li><b>Paralelogramo azul:</b> el de las columnas de \(B\), \((2,0)\) y \((1,1)\); no cambia.</li>
+      <li><b>Paralelogramo naranja:</b> el de las columnas de \(AB\), \((2,0)\) y \((2,k)\).</li>
+      <li><b>Bajo el dibujo:</b> \(|A|\), \(|B|\) y \(|AB|\), calculados por separado.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: comprobar con \(A=\begin{pmatrix}1&2\\3&4\end{pmatrix}\) y \(B=\begin{pmatrix}2&0\\1&3\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fila 1 de \(AB\): \(1\cdot 2+2\cdot 1=4\) y \(1\cdot 0+2\cdot 3=6\).</li>
+    <li>Fila 2 de \(AB\): \(3\cdot 2+4\cdot 1=10\) y \(3\cdot 0+4\cdot 3=12\). Entonces \(AB=\begin{pmatrix}4&6\\10&12\end{pmatrix}\).</li>
+    <li>\(|AB|=4\cdot 12-6\cdot 10=48-60=-12\).</li>
+    <li>\(|A|=1\cdot 4-2\cdot 3=4-6=-2\).</li>
+    <li>\(|B|=2\cdot 3-0\cdot 1=6\).</li>
+    <li>\(|A|\,|B|=(-2)\cdot 6=-12\). Coincide con \(|AB|\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(BA\) es otra matriz, con el mismo determinante</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Con las matrices del ejemplo 1, fila 1 de \(BA\): \(2\cdot 1+0\cdot 3=2\) y \(2\cdot 2+0\cdot 4=4\).</li>
+    <li>Fila 2 de \(BA\): \(1\cdot 1+3\cdot 3=10\) y \(1\cdot 2+3\cdot 4=14\). Entonces \(BA=\begin{pmatrix}2&4\\10&14\end{pmatrix}\), distinta de \(AB\).</li>
+    <li>\(|BA|=2\cdot 14-4\cdot 10=28-40=-12\).</li>
+    <li>\(|BA|=|AB|=-12\), aunque \(BA\neq AB\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: tercer orden, sin multiplicar las matrices</h3>
+  <div class="body">
+  <p>\(A=\begin{pmatrix}1&2&3\\0&4&5\\1&0&6\end{pmatrix}\) y \(B=\begin{pmatrix}2&5&-1\\0&3&4\\0&0&-2\end{pmatrix}\).</p>
+  <ol class="steps">
+    <li>\(|A|=22\) (hoja «Resolución de determinantes por regla de Sarrus»).</li>
+    <li>\(B\) es triangular: \(|B|=2\cdot 3\cdot(-2)=-12\) (hoja «Propiedades de los determinantes»).</li>
+    <li>\(|AB|=|A|\,|B|=22\cdot(-12)=-264\).</li>
+    <li>Comprobación. Multiplicando: \(AB=\begin{pmatrix}2&11&1\\0&12&6\\2&5&-13\end{pmatrix}\).</li>
+    <li>Regla de Sarrus en \(AB\). Bajan: \(2\cdot 12\cdot(-13)=-312\); \(11\cdot 6\cdot 2=132\); \(1\cdot 0\cdot 5=0\). Suma: \(-180\).</li>
+    <li>Suben: \(2\cdot 12\cdot 1=24\); \(5\cdot 6\cdot 2=60\); \((-13)\cdot 0\cdot 11=0\). Suma: \(84\).</li>
+    <li>\(|AB|=-180-84=-264\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: potencia e inversa de \(A=\begin{pmatrix}3&5\\2&4\end{pmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(|A|=3\cdot 4-5\cdot 2=12-10=2\).</li>
+    <li>\(|A^{3}|=|A|^{3}=2^{3}=8\).</li>
+    <li>Como \(|A|\neq 0\), si \(A\) tiene inversa su determinante es \(\left|A^{-1}\right|=\dfrac{1}{|A|}=\dfrac{1}{2}\).</li>
+    <li>Comprobación. La matriz \(C=\begin{pmatrix}2&-\frac{5}{2}\\-1&\frac{3}{2}\end{pmatrix}\) es la inversa de \(A\), porque \(A\,C=I\): \(3\cdot 2+5\cdot(-1)=1\); \(3\cdot\left(-\frac{5}{2}\right)+5\cdot\frac{3}{2}=0\); \(2\cdot 2+4\cdot(-1)=0\); \(2\cdot\left(-\frac{5}{2}\right)+4\cdot\frac{3}{2}=1\).</li>
+    <li>\(|C|=2\cdot\frac{3}{2}-\left(-\frac{5}{2}\right)\cdot(-1)=3-\frac{5}{2}=\frac{1}{2}\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: usar la regla con la suma; en general \(|A+B|\neq|A|+|B|\). Por ejemplo, con \(A=B=I\) de segundo orden, \(|A+B|=\begin{vmatrix}2&0\\0&2\end{vmatrix}=4\), y \(|A|+|B|=1+1=2\). Dos: concluir de \(|AB|=|BA|\) que \(AB=BA\); lo que coincide es un número, no las matrices. Tres: aplicarla a matrices que no son cuadradas; una matriz de \(2\times 3\) no tiene determinante, aunque su producto por una de \(3\times 2\) sea una matriz cuadrada.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Sean \(A=\begin{pmatrix}2&1\\1&3\end{pmatrix}\) y \(B=\begin{pmatrix}1&-1\\2&4\end{pmatrix}\). Calcula \(AB\) y \(|AB|\), y comprueba que \(|AB|=|A|\,|B|\).</p>
+    <details><summary>Pista</summary><div><p>Cada entrada de \(AB\) es una fila de \(A\) por una columna de \(B\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila 1 de \(AB\): \(2\cdot 1+1\cdot 2=4\) y \(2\cdot(-1)+1\cdot 4=2\).</li>
+        <li>Fila 2 de \(AB\): \(1\cdot 1+3\cdot 2=7\) y \(1\cdot(-1)+3\cdot 4=11\). \(AB=\begin{pmatrix}4&2\\7&11\end{pmatrix}\).</li>
+        <li>\(|AB|=4\cdot 11-2\cdot 7=44-14=30\).</li>
+        <li>\(|A|=2\cdot 3-1\cdot 1=5\) y \(|B|=1\cdot 4-(-1)\cdot 2=4+2=6\).</li>
+        <li>\(|A|\,|B|=5\cdot 6=30=|AB|\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>\(A\) y \(B\) son matrices de tres filas y tres columnas, con \(|A|=3\) y \(|B|=-2\). Calcula: (i) \(|AB|\); (ii) \(|A^{2}B|\); (iii) \(|2AB|\); (iv) \(\left|B^{T}A\right|\).</p>
+    <details><summary>Pista</summary><div><p>En (iii), el \(2\) sale una vez por cada fila. En (iv), trasponer no cambia el determinante.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(i) \(|AB|=|A|\,|B|=3\cdot(-2)=-6\).</li>
+        <li>(ii) \(|A^{2}B|=|A^{2}|\,|B|=|A|^{2}\,|B|=9\cdot(-2)=-18\).</li>
+        <li>(iii) \(2AB\) tiene tres filas, cada una multiplicada por \(2\): \(|2AB|=2^{3}\,|AB|=8\cdot(-6)=-48\) (hoja «Propiedades de los determinantes»).</li>
+        <li>(iv) \(\left|B^{T}A\right|=\left|B^{T}\right||A|=|B|\,|A|=(-2)\cdot 3=-6\) (hoja de la matriz traspuesta).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un programa de diseño parte de una etiqueta rectangular cuyos lados, en centímetros, son \((4,0)\) y \((0,3)\). Primero la inclina con \(A=\begin{pmatrix}1&\frac{1}{2}\\0&1\end{pmatrix}\) y después la amplía con \(M=\begin{pmatrix}2&0\\0&2\end{pmatrix}\). Los lados de la etiqueta final son las columnas de \(MAB\), con \(B=\begin{pmatrix}4&0\\0&3\end{pmatrix}\). ¿Cuánto mide la etiqueta final? ¿Cuánto vinilo se necesita para \(50\) etiquetas, sin contar pérdidas?</p>
+    <details><summary>Pista</summary><div><p>El área del paralelogramo es el valor absoluto del determinante de la matriz de sus lados. No hace falta multiplicar las tres matrices.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(|B|=4\cdot 3-0\cdot 0=12\); \(|A|=1\cdot 1-\frac{1}{2}\cdot 0=1\); \(|M|=2\cdot 2-0\cdot 0=4\).</li>
+        <li>Se aplica la regla dos veces: \(|MAB|=|M|\,|AB|=|M|\,|A|\,|B|=4\cdot 1\cdot 12=48\).</li>
+        <li>La etiqueta final mide \(|48|=48\ \text{cm}^{2}\). Inclinarla no cambió el área (\(|A|=1\)); ampliarla al doble la multiplicó por \(4\).</li>
+        <li>Comprobación: \(AB=\begin{pmatrix}4&\frac{3}{2}\\0&3\end{pmatrix}\), \(MAB=\begin{pmatrix}8&3\\0&6\end{pmatrix}\) y \(8\cdot 6-3\cdot 0=48\) ✓.</li>
+        <li>\(50\cdot 48=2\,400\ \text{cm}^{2}\). Como \(1\ \text{m}^{2}=10\,000\ \text{cm}^{2}\), son \(0{,}24\ \text{m}^{2}\) de vinilo.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>

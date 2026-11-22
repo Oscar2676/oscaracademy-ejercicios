@@ -1,0 +1,181 @@
+<!--file:H07_filas_i_y_columnas_j_de_un_determinante.html-->
+<!--title:Filas i y columnas j de un determinante-->
+<!--id:det-filcol-->
+<!--tab:H07 Filas y columnas-->
+<article class="sheet" id="det-filcol" data-hoja="L28 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Filas i y columnas j de un determinante</b></li>
+    </ol>
+    <h1>Filas i y columnas j de un determinante</h1>
+    <p class="lede">En un determinante, las <b>filas</b> son las líneas horizontales y las <b>columnas</b>, las verticales. Cada elemento se nombra con dos subíndices: primero el número \(i\) de su fila y después el número \(j\) de su columna.
+    \[a_{ij}\ =\ \text{elemento de la fila } i \text{ y la columna } j\]
+    Las filas se cuentan de arriba hacia abajo y las columnas, de izquierda a derecha.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se nombra cada elemento de un determinante de tercer orden, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="filcol-idea"></div>
+  <ul class="keys">
+    <li><b>Banda azul:</b> la fila \(i=2\). Todos sus elementos tienen primer subíndice \(2\).</li>
+    <li><b>Banda verde:</b> la columna \(j=3\). Todos sus elementos tienen segundo subíndice \(3\).</li>
+    <li><b>Casilla naranja:</b> el cruce de las dos, el elemento \(a_{23}\).</li>
+    <li><b>Línea burdeo:</b> la diagonal principal, los elementos con \(i=j\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones</h3>
+    <ol class="steps">
+      <li><b>Orden.</b> Un determinante de orden \(n\) tiene \(n\) filas y \(n\) columnas. Tiene \(n\cdot n=n^{2}\) elementos.</li>
+      <li><b>Fila \(i\).</b> La línea horizontal número \(i\), contando desde arriba: \(i=1,2,\dots,n\).</li>
+      <li><b>Columna \(j\).</b> La línea vertical número \(j\), contando desde la izquierda: \(j=1,2,\dots,n\).</li>
+      <li><b>Elemento \(a_{ij}\).</b> El que está en la fila \(i\) y la columna \(j\). Se lee «a sub i, j». Por ejemplo, \(a_{23}\) se lee «a dos tres» (no «a veintitrés»): fila \(2\), columna \(3\).</li>
+      <li>Con esta notación, los determinantes de segundo y de tercer orden se escriben
+        \[\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}\qquad\qquad\begin{vmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{vmatrix}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Las fórmulas, escritas con subíndices</h3>
+    <p><b>Segundo orden.</b> En la hoja «Determinante de segundo orden», \(\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\).</p>
+    <ol class="steps">
+      <li>Se cambia cada letra por su nombre con subíndices: \(a=a_{11}\), \(b=a_{12}\), \(c=a_{21}\), \(d=a_{22}\).</li>
+      <li>Se reemplaza en la fórmula: \(\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}=a_{11}\,a_{22}-a_{12}\,a_{21}\).</li>
+    </ol>
+    <p><b>Tercer orden.</b> En la hoja «Determinante de tercer orden», el desarrollo por la primera fila es \(a\,(ei-fh)-b\,(di-fg)+c\,(dh-eg)\).</p>
+    <ol class="steps">
+      <li>Se cambia cada letra: \(a,b,c\) son \(a_{11},a_{12},a_{13}\); \(d,e,f\) son \(a_{21},a_{22},a_{23}\); \(g,h,i\) son \(a_{31},a_{32},a_{33}\).</li>
+      <li>Se reemplaza en la fórmula:
+        \[a_{11}\,(a_{22}a_{33}-a_{23}a_{32})-a_{12}\,(a_{21}a_{33}-a_{23}a_{31})+a_{13}\,(a_{21}a_{32}-a_{22}a_{31})\]</li>
+    </ol>
+    <p><b>Diagonales.</b> La <b>diagonal principal</b> la forman los elementos con \(i=j\): \(a_{11},a_{22},\dots,a_{nn}\). La <b>diagonal secundaria</b>, los elementos con \(i+j=n+1\): en tercer orden, \(a_{13},a_{22},a_{31}\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>El signo de cada posición</h3>
+    <p>A cada posición se le asocia el signo \((-1)^{i+j}\): es \(+\) si \(i+j\) es par y \(-\) si \(i+j\) es impar. Los signos se alternan como en un tablero de ajedrez, y la posición \((1,1)\) lleva \(+\).</p>
+    <p>En la primera fila, \(i=1\): los signos son \((-1)^{1+1}=+1\), \((-1)^{1+2}=-1\), \((-1)^{1+3}=+1\). Son los signos \(+,-,+\) del desarrollo por la primera fila.</p>
+    <p><b>Número ↔ figura.</b> En \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\), mueve \(i\) y \(j\): se marcan la fila, la columna y el elemento del cruce, con su valor y el signo de su posición.</p>
+    <div class="stage" data-scene="filcol-vivo"></div>
+    <ul class="keys">
+      <li><b>Banda azul:</b> la fila \(i\) elegida. <b>Banda verde:</b> la columna \(j\) elegida.</li>
+      <li><b>Casilla naranja:</b> el elemento \(a_{ij}\).</li>
+      <li><b>Signos grises en las esquinas de las casillas:</b> el signo \((-1)^{i+j}\) de cada posición. Es el signo de la posición, no el del número que está en ella.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: leer elementos, filas y columnas en \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a_{12}\): fila \(1\), columna \(2\). Vale \(-1\).</li>
+    <li>\(a_{21}\): fila \(2\), columna \(1\). Vale \(3\). No es lo mismo que \(a_{12}\).</li>
+    <li>\(a_{23}=-2\) y \(a_{32}=4\).</li>
+    <li>Fila \(3\) (\(i=3\)): \(a_{31},a_{32},a_{33}\), es decir, \(-1,\ 4,\ 5\).</li>
+    <li>Columna \(2\) (\(j=2\)): \(a_{12},a_{22},a_{32}\), es decir, \(-1,\ 1,\ 4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: armar un determinante de segundo orden con \(a_{ij}=i+2j\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a_{11}=1+2\cdot 1=3\) y \(a_{12}=1+2\cdot 2=5\).</li>
+    <li>\(a_{21}=2+2\cdot 1=4\) y \(a_{22}=2+2\cdot 2=6\).</li>
+    <li>El determinante es \(\begin{vmatrix}3&5\\4&6\end{vmatrix}\).</li>
+    <li>\(a_{11}\,a_{22}-a_{12}\,a_{21}=3\cdot 6-5\cdot 4=18-20=-2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: tercer orden con \(a_{ij}=i\cdot j\); diagonales y valor</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fila \(1\): \(1\cdot 1,\ 1\cdot 2,\ 1\cdot 3\), es decir, \(1,2,3\). Fila \(2\): \(2,4,6\). Fila \(3\): \(3,6,9\).</li>
+    <li>El determinante es \(\begin{vmatrix}1&2&3\\2&4&6\\3&6&9\end{vmatrix}\).</li>
+    <li>Diagonal principal (\(i=j\)): \(a_{11},a_{22},a_{33}\), es decir, \(1,4,9\).</li>
+    <li>Diagonal secundaria (\(i+j=4\)): \(a_{13},a_{22},a_{31}\), es decir, \(3,4,3\).</li>
+    <li>La fila \(2\) es \(2\) veces la fila \(1\): filas proporcionales, el determinante vale \(0\) (hoja «Propiedades de los determinantes»).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: tercer orden con \(a_{ij}=i+j\) si \(i\le j\), y \(a_{ij}=0\) si \(i&gt;j\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Los elementos con \(i&gt;j\) son \(a_{21},a_{31},a_{32}\): están bajo la diagonal principal y valen \(0\).</li>
+    <li>Fila \(1\): \(a_{11}=2\), \(a_{12}=3\), \(a_{13}=4\). Fila \(2\): \(a_{22}=4\), \(a_{23}=5\). Fila \(3\): \(a_{33}=6\).</li>
+    <li>El determinante es \(\begin{vmatrix}2&3&4\\0&4&5\\0&0&6\end{vmatrix}\), triangular.</li>
+    <li>Un determinante triangular es el producto de su diagonal principal (hoja «Propiedades de los determinantes»): \(a_{11}\,a_{22}\,a_{33}=2\cdot 4\cdot 6=48\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: invertir los subíndices; \(a_{23}\) está en la fila \(2\) y la columna \(3\), y \(a_{32}\), en la fila \(3\) y la columna \(2\). Primero la fila, después la columna. Dos: contar las filas desde abajo; la fila \(1\) es la de arriba. Tres: confundir el signo de la posición, \((-1)^{i+j}\), con el signo del número; en el ejemplo 1, \(a_{12}=-1\) es negativo y además está en una posición de signo \(-\), y \(a_{23}=-2\) es negativo en una posición de signo \(-\), mientras que \(a_{31}=-1\) es negativo en una posición de signo \(+\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>En \(\begin{vmatrix}4&0&-3\\1&7&2\\5&-6&8\end{vmatrix}\): (i) escribe \(a_{13}\), \(a_{31}\) y \(a_{22}\); (ii) escribe la fila \(2\) y la columna \(3\); (iii) suma los elementos de la diagonal principal y multiplica los de la diagonal secundaria.</p>
+    <details><summary>Pista</summary><div><p>Primer subíndice, fila; segundo, columna. La diagonal secundaria va de la esquina superior derecha a la inferior izquierda.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(i) \(a_{13}=-3\) (fila 1, columna 3); \(a_{31}=5\) (fila 3, columna 1); \(a_{22}=7\).</li>
+        <li>(ii) Fila \(2\): \(1,\ 7,\ 2\). Columna \(3\): \(-3,\ 2,\ 8\).</li>
+        <li>(iii) Diagonal principal: \(a_{11}+a_{22}+a_{33}=4+7+8=19\).</li>
+        <li>Diagonal secundaria: \(a_{13}\cdot a_{22}\cdot a_{31}=(-3)\cdot 7\cdot 5=-105\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Arma el determinante de tercer orden con \(a_{ij}=2i-j\) y calcúlalo por la regla de Sarrus.</p>
+    <details><summary>Pista</summary><div><p>Calcula fila por fila: en la fila \(1\), \(a_{1j}=2-j\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila \(1\) (\(i=1\)): \(2-1,\ 2-2,\ 2-3\), es decir, \(1,\ 0,\ -1\).</li>
+        <li>Fila \(2\) (\(i=2\)): \(4-1,\ 4-2,\ 4-3\), es decir, \(3,\ 2,\ 1\).</li>
+        <li>Fila \(3\) (\(i=3\)): \(6-1,\ 6-2,\ 6-3\), es decir, \(5,\ 4,\ 3\).</li>
+        <li>El determinante es \(\begin{vmatrix}1&0&-1\\3&2&1\\5&4&3\end{vmatrix}\).</li>
+        <li>Bajan: \(1\cdot 2\cdot 3=6\); \(0\cdot 1\cdot 5=0\); \((-1)\cdot 3\cdot 4=-12\). Suma: \(-6\).</li>
+        <li>Suben: \(5\cdot 2\cdot(-1)=-10\); \(4\cdot 1\cdot 1=4\); \(3\cdot 3\cdot 0=0\). Suma: \(-6\).</li>
+        <li>Valor: \(-6-(-6)=0\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La conserjería de un edificio tiene un casillero de correspondencia de \(3\) filas y \(3\) columnas. La casilla de la fila \(i\) y la columna \(j\) lleva el número \(a_{ij}=3\,(i-1)+j\). (i) ¿Qué número lleva la casilla de la fila \(2\) y la columna \(3\)? (ii) ¿En qué fila y columna está la casilla \(8\)? (iii) Suma los números de la fila \(3\), los de la columna \(1\) y los de la diagonal principal. (iv) Calcula el determinante formado por los nueve números.</p>
+    <details><summary>Pista</summary><div><p>Escribe primero la tabla completa, fila por fila. Para (iv), ese determinante ya se calculó en la hoja «Determinante de tercer orden».</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila \(1\): \(3\cdot 0+1,\ 3\cdot 0+2,\ 3\cdot 0+3\), es decir, \(1,2,3\). Fila \(2\): \(3\cdot 1+j\), es decir, \(4,5,6\). Fila \(3\): \(3\cdot 2+j\), es decir, \(7,8,9\).</li>
+        <li>(i) \(a_{23}=3\cdot(2-1)+3=6\).</li>
+        <li>(ii) El \(8\) está en la fila \(3\) y la columna \(2\): \(a_{32}=3\cdot 2+2=8\).</li>
+        <li>(iii) Fila \(3\): \(7+8+9=24\). Columna \(1\): \(1+4+7=12\). Diagonal principal: \(1+5+9=15\).</li>
+        <li>(iv) \(\begin{vmatrix}1&2&3\\4&5&6\\7&8&9\end{vmatrix}=0\) (ejercicio B de la hoja «Determinante de tercer orden»). Por Sarrus: bajan \(1\cdot 5\cdot 9=45\), \(2\cdot 6\cdot 7=84\), \(3\cdot 4\cdot 8=96\), suma \(225\); suben \(7\cdot 5\cdot 3=105\), \(8\cdot 6\cdot 1=48\), \(9\cdot 4\cdot 2=72\), suma \(225\); \(225-225=0\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H07 · v001 · Pendiente de APR</span>
+</footer>
+</article>

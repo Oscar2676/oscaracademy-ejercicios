@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filas i y columnas j de un determinante | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="det-filcol" data-hoja="L28 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Álgebra 1ª parte</li>
+      <li>Determinantes</li>
+      <li><b>Filas i y columnas j de un determinante</b></li>
+    </ol>
+    <h1>Filas i y columnas j de un determinante</h1>
+    <p class="lede">En un determinante, las <b>filas</b> son las líneas horizontales y las <b>columnas</b>, las verticales. Cada elemento se nombra con dos subíndices: primero el número \(i\) de su fila y después el número \(j\) de su columna.
+    \[a_{ij}\ =\ \text{elemento de la fila } i \text{ y la columna } j\]
+    Las filas se cuentan de arriba hacia abajo y las columnas, de izquierda a derecha.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se nombra cada elemento de un determinante de tercer orden, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <div class="stage" data-scene="filcol-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Banda azul:</b> la fila \(i=2\). Todos sus elementos tienen primer subíndice \(2\).</li>
+    <li><b>Banda verde:</b> la columna \(j=3\). Todos sus elementos tienen segundo subíndice \(3\).</li>
+    <li><b>Casilla naranja:</b> el cruce de las dos, el elemento \(a_{23}\).</li>
+    <li><b>Línea burdeo:</b> la diagonal principal, los elementos con \(i=j\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones</h3>
+    <ol class="steps">
+      <li><b>Orden.</b> Un determinante de orden \(n\) tiene \(n\) filas y \(n\) columnas. Tiene \(n\cdot n=n^{2}\) elementos.</li>
+      <li><b>Fila \(i\).</b> La línea horizontal número \(i\), contando desde arriba: \(i=1,2,\dots,n\).</li>
+      <li><b>Columna \(j\).</b> La línea vertical número \(j\), contando desde la izquierda: \(j=1,2,\dots,n\).</li>
+      <li><b>Elemento \(a_{ij}\).</b> El que está en la fila \(i\) y la columna \(j\). Se lee «a sub i, j». Por ejemplo, \(a_{23}\) se lee «a dos tres» (no «a veintitrés»): fila \(2\), columna \(3\).</li>
+      <li>Con esta notación, los determinantes de segundo y de tercer orden se escriben
+        \[\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}\qquad\qquad\begin{vmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{vmatrix}\]</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Las fórmulas, escritas con subíndices</h3>
+    <p><b>Segundo orden.</b> En la hoja «Determinante de segundo orden», \(\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\).</p>
+    <ol class="steps">
+      <li>Se cambia cada letra por su nombre con subíndices: \(a=a_{11}\), \(b=a_{12}\), \(c=a_{21}\), \(d=a_{22}\).</li>
+      <li>Se reemplaza en la fórmula: \(\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}=a_{11}\,a_{22}-a_{12}\,a_{21}\).</li>
+    </ol>
+    <p><b>Tercer orden.</b> En la hoja «Determinante de tercer orden», el desarrollo por la primera fila es \(a\,(ei-fh)-b\,(di-fg)+c\,(dh-eg)\).</p>
+    <ol class="steps">
+      <li>Se cambia cada letra: \(a,b,c\) son \(a_{11},a_{12},a_{13}\); \(d,e,f\) son \(a_{21},a_{22},a_{23}\); \(g,h,i\) son \(a_{31},a_{32},a_{33}\).</li>
+      <li>Se reemplaza en la fórmula:
+        \[a_{11}\,(a_{22}a_{33}-a_{23}a_{32})-a_{12}\,(a_{21}a_{33}-a_{23}a_{31})+a_{13}\,(a_{21}a_{32}-a_{22}a_{31})\]</li>
+    </ol>
+    <p><b>Diagonales.</b> La <b>diagonal principal</b> la forman los elementos con \(i=j\): \(a_{11},a_{22},\dots,a_{nn}\). La <b>diagonal secundaria</b>, los elementos con \(i+j=n+1\): en tercer orden, \(a_{13},a_{22},a_{31}\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>El signo de cada posición</h3>
+    <p>A cada posición se le asocia el signo \((-1)^{i+j}\): es \(+\) si \(i+j\) es par y \(-\) si \(i+j\) es impar. Los signos se alternan como en un tablero de ajedrez, y la posición \((1,1)\) lleva \(+\).</p>
+    <p>En la primera fila, \(i=1\): los signos son \((-1)^{1+1}=+1\), \((-1)^{1+2}=-1\), \((-1)^{1+3}=+1\). Son los signos \(+,-,+\) del desarrollo por la primera fila.</p>
+    <p><b>Número ↔ figura.</b> En \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\), mueve \(i\) y \(j\): se marcan la fila, la columna y el elemento del cruce, con su valor y el signo de su posición.</p>
+    <div class="stage" data-scene="filcol-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+    <ul class="keys">
+      <li><b>Banda azul:</b> la fila \(i\) elegida. <b>Banda verde:</b> la columna \(j\) elegida.</li>
+      <li><b>Casilla naranja:</b> el elemento \(a_{ij}\).</li>
+      <li><b>Signos grises en las esquinas de las casillas:</b> el signo \((-1)^{i+j}\) de cada posición. Es el signo de la posición, no el del número que está en ella.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: leer elementos, filas y columnas en \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a_{12}\): fila \(1\), columna \(2\). Vale \(-1\).</li>
+    <li>\(a_{21}\): fila \(2\), columna \(1\). Vale \(3\). No es lo mismo que \(a_{12}\).</li>
+    <li>\(a_{23}=-2\) y \(a_{32}=4\).</li>
+    <li>Fila \(3\) (\(i=3\)): \(a_{31},a_{32},a_{33}\), es decir, \(-1,\ 4,\ 5\).</li>
+    <li>Columna \(2\) (\(j=2\)): \(a_{12},a_{22},a_{32}\), es decir, \(-1,\ 1,\ 4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: armar un determinante de segundo orden con \(a_{ij}=i+2j\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(a_{11}=1+2\cdot 1=3\) y \(a_{12}=1+2\cdot 2=5\).</li>
+    <li>\(a_{21}=2+2\cdot 1=4\) y \(a_{22}=2+2\cdot 2=6\).</li>
+    <li>El determinante es \(\begin{vmatrix}3&5\\4&6\end{vmatrix}\).</li>
+    <li>\(a_{11}\,a_{22}-a_{12}\,a_{21}=3\cdot 6-5\cdot 4=18-20=-2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: tercer orden con \(a_{ij}=i\cdot j\); diagonales y valor</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fila \(1\): \(1\cdot 1,\ 1\cdot 2,\ 1\cdot 3\), es decir, \(1,2,3\). Fila \(2\): \(2,4,6\). Fila \(3\): \(3,6,9\).</li>
+    <li>El determinante es \(\begin{vmatrix}1&2&3\\2&4&6\\3&6&9\end{vmatrix}\).</li>
+    <li>Diagonal principal (\(i=j\)): \(a_{11},a_{22},a_{33}\), es decir, \(1,4,9\).</li>
+    <li>Diagonal secundaria (\(i+j=4\)): \(a_{13},a_{22},a_{31}\), es decir, \(3,4,3\).</li>
+    <li>La fila \(2\) es \(2\) veces la fila \(1\): filas proporcionales, el determinante vale \(0\) (hoja «Propiedades de los determinantes»).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: tercer orden con \(a_{ij}=i+j\) si \(i\le j\), y \(a_{ij}=0\) si \(i&gt;j\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Los elementos con \(i&gt;j\) son \(a_{21},a_{31},a_{32}\): están bajo la diagonal principal y valen \(0\).</li>
+    <li>Fila \(1\): \(a_{11}=2\), \(a_{12}=3\), \(a_{13}=4\). Fila \(2\): \(a_{22}=4\), \(a_{23}=5\). Fila \(3\): \(a_{33}=6\).</li>
+    <li>El determinante es \(\begin{vmatrix}2&3&4\\0&4&5\\0&0&6\end{vmatrix}\), triangular.</li>
+    <li>Un determinante triangular es el producto de su diagonal principal (hoja «Propiedades de los determinantes»): \(a_{11}\,a_{22}\,a_{33}=2\cdot 4\cdot 6=48\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: invertir los subíndices; \(a_{23}\) está en la fila \(2\) y la columna \(3\), y \(a_{32}\), en la fila \(3\) y la columna \(2\). Primero la fila, después la columna. Dos: contar las filas desde abajo; la fila \(1\) es la de arriba. Tres: confundir el signo de la posición, \((-1)^{i+j}\), con el signo del número; en el ejemplo 1, \(a_{12}=-1\) es negativo y además está en una posición de signo \(-\), y \(a_{23}=-2\) es negativo en una posición de signo \(-\), mientras que \(a_{31}=-1\) es negativo en una posición de signo \(+\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>En \(\begin{vmatrix}4&0&-3\\1&7&2\\5&-6&8\end{vmatrix}\): (i) escribe \(a_{13}\), \(a_{31}\) y \(a_{22}\); (ii) escribe la fila \(2\) y la columna \(3\); (iii) suma los elementos de la diagonal principal y multiplica los de la diagonal secundaria.</p>
+    <details><summary>Pista</summary><div><p>Primer subíndice, fila; segundo, columna. La diagonal secundaria va de la esquina superior derecha a la inferior izquierda.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(i) \(a_{13}=-3\) (fila 1, columna 3); \(a_{31}=5\) (fila 3, columna 1); \(a_{22}=7\).</li>
+        <li>(ii) Fila \(2\): \(1,\ 7,\ 2\). Columna \(3\): \(-3,\ 2,\ 8\).</li>
+        <li>(iii) Diagonal principal: \(a_{11}+a_{22}+a_{33}=4+7+8=19\).</li>
+        <li>Diagonal secundaria: \(a_{13}\cdot a_{22}\cdot a_{31}=(-3)\cdot 7\cdot 5=-105\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Arma el determinante de tercer orden con \(a_{ij}=2i-j\) y calcúlalo por la regla de Sarrus.</p>
+    <details><summary>Pista</summary><div><p>Calcula fila por fila: en la fila \(1\), \(a_{1j}=2-j\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila \(1\) (\(i=1\)): \(2-1,\ 2-2,\ 2-3\), es decir, \(1,\ 0,\ -1\).</li>
+        <li>Fila \(2\) (\(i=2\)): \(4-1,\ 4-2,\ 4-3\), es decir, \(3,\ 2,\ 1\).</li>
+        <li>Fila \(3\) (\(i=3\)): \(6-1,\ 6-2,\ 6-3\), es decir, \(5,\ 4,\ 3\).</li>
+        <li>El determinante es \(\begin{vmatrix}1&0&-1\\3&2&1\\5&4&3\end{vmatrix}\).</li>
+        <li>Bajan: \(1\cdot 2\cdot 3=6\); \(0\cdot 1\cdot 5=0\); \((-1)\cdot 3\cdot 4=-12\). Suma: \(-6\).</li>
+        <li>Suben: \(5\cdot 2\cdot(-1)=-10\); \(4\cdot 1\cdot 1=4\); \(3\cdot 3\cdot 0=0\). Suma: \(-6\).</li>
+        <li>Valor: \(-6-(-6)=0\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La conserjería de un edificio tiene un casillero de correspondencia de \(3\) filas y \(3\) columnas. La casilla de la fila \(i\) y la columna \(j\) lleva el número \(a_{ij}=3\,(i-1)+j\). (i) ¿Qué número lleva la casilla de la fila \(2\) y la columna \(3\)? (ii) ¿En qué fila y columna está la casilla \(8\)? (iii) Suma los números de la fila \(3\), los de la columna \(1\) y los de la diagonal principal. (iv) Calcula el determinante formado por los nueve números.</p>
+    <details><summary>Pista</summary><div><p>Escribe primero la tabla completa, fila por fila. Para (iv), ese determinante ya se calculó en la hoja «Determinante de tercer orden».</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Fila \(1\): \(3\cdot 0+1,\ 3\cdot 0+2,\ 3\cdot 0+3\), es decir, \(1,2,3\). Fila \(2\): \(3\cdot 1+j\), es decir, \(4,5,6\). Fila \(3\): \(3\cdot 2+j\), es decir, \(7,8,9\).</li>
+        <li>(i) \(a_{23}=3\cdot(2-1)+3=6\).</li>
+        <li>(ii) El \(8\) está en la fila \(3\) y la columna \(2\): \(a_{32}=3\cdot 2+2=8\).</li>
+        <li>(iii) Fila \(3\): \(7+8+9=24\). Columna \(1\): \(1+4+7=12\). Diagonal principal: \(1+5+9=15\).</li>
+        <li>(iv) \(\begin{vmatrix}1&2&3\\4&5&6\\7&8&9\end{vmatrix}=0\) (ejercicio B de la hoja «Determinante de tercer orden»). Por Sarrus: bajan \(1\cdot 5\cdot 9=45\), \(2\cdot 6\cdot 7=84\), \(3\cdot 4\cdot 8=96\), suma \(225\); suben \(7\cdot 5\cdot 3=105\), \(8\cdot 6\cdot 1=48\), \(9\cdot 4\cdot 2=72\), suma \(225\); \(225-225=0\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">AL-L28-H07 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* L28 H07 · filas i y columnas j: cada elemento se nombra con su fila y su columna */
+OA.scene('filcol-idea', (function(){
+  var N = 5, j0, PZ = [];
+  for (j0 = 0; j0 < 9; j0++) PZ.push(['M' + j0, 'a_{' + (Math.floor(j0/3) + 1) + (j0 % 3 + 1) + '}', 'a' + (Math.floor(j0/3) + 1) + (j0 % 3 + 1), '']);
+  for (j0 = 1; j0 <= 3; j0++){ PZ.push(['I' + j0, 'i=' + j0, 'i = ' + j0, 'c-sec']); PZ.push(['J' + j0, 'j=' + j0, 'j = ' + j0, 'c-alt']); }
+  PZ = PZ.concat([['Q', 'a_{ij}\\text{: ¿qué indican }i\\text{ y }j\\text{?}', 'a_ij: ¿qué indican i y j?', 'pt'], ['F', 'a_{ij}\\text{: fila }i,\\ \\text{columna }j', 'a_ij: fila i, columna j', 'diff'],
+    ['R1', '3\\text{ filas}\\times 3\\text{ columnas}=9\\text{ elementos}', '3 filas × 3 columnas = 9 elementos', ''],
+    ['R2', '\\text{fila }i=2\\text{: }\\ a_{21},\\ a_{22},\\ a_{23}', 'fila i = 2: a21, a22, a23', 'c-sec'],
+    ['R3', '\\text{columna }j=3\\text{: }\\ a_{13},\\ a_{23},\\ a_{33}', 'columna j = 3: a13, a23, a33', 'c-alt'],
+    ['R4', 'a_{23}\\text{: fila }2,\\ \\text{columna }3', 'a23: fila 2, columna 3', 'diff'],
+    ['R5', '\\text{diagonal principal }(i=j)\\text{: }\\ a_{11},\\ a_{22},\\ a_{33}', 'diagonal principal (i = j): a11, a22, a33', 'c-tan']]);
+  var TXT = [['Un determinante de tercer orden:', 'nueve elementos. ¿Cómo se nombra cada uno?'],
+    ['Las filas son horizontales y se cuentan desde', 'arriba. En la fila 2, el primer subíndice es 2.'],
+    ['Las columnas son verticales y se cuentan desde', 'la izquierda. En la 3, el segundo subíndice es 3.'],
+    ['Donde se cruzan la fila 2 y la columna 3', 'hay un solo elemento.'],
+    ['Si fila y columna tienen el mismo número,', 'el elemento está en la diagonal principal.']];
+  function cx(q){ return 1.2 + q; } function cy(r){ return 3.0 - 0.85*r; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.5}, aspect:8.7/6.6,
+    aria:'Animación en cinco pasos sobre un determinante de tercer orden con elementos a11, a12, a13 en la primera fila; a21, a22, a23 en la segunda; a31, a32, a33 en la tercera. Uno: tiene tres filas y tres columnas, nueve elementos. Dos: se marca en azul la fila 2, la segunda línea horizontal contando desde arriba; sus elementos son a21, a22, a23, todos con primer subíndice 2. Tres: se marca en verde la columna 3, la tercera línea vertical contando desde la izquierda; sus elementos son a13, a23, a33, todos con segundo subíndice 3. Cuatro: en el cruce queda en naranja el elemento a23. Cinco: una línea burdeo recorre la diagonal principal, a11, a22, a33, donde el número de fila y el de columna coinciden. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> fila \\(i=2\\)</span><span><i class="sw alt"></i> columna \\(j=3\\)</span><span><i class="sw rise"></i> elemento \\(a_{23}\\)</span><span><i class="sw tan"></i> diagonal principal</span>',
+    anim:{run:26000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', j, s = X(1) - X(0), hw = 0.46, hh = 0.36, g;
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function rect(x0, y1, w, h, col, al){ if (al <= 0.004 || w <= 0 || h <= 0) return; c.globalAlpha = al; c.fillStyle = col; c.fillRect(X(x0), Y(y1), w*s, h*s); c.globalAlpha = 1; }
+      /* banda de la fila 2: crece de izquierda a derecha */
+      g = k > 2 ? 1 : (k === 2 ? u : 0); rect(cx(0) - hw, cy(1) + hh, (2 + 2*hw)*g, 2*hh, C.sec, k === 5 ? 0.13 : 0.22);
+      /* banda de la columna 3: crece de arriba hacia abajo */
+      g = k > 3 ? 1 : (k === 3 ? u : 0); rect(cx(2) - hw, cy(0) + hh, 2*hw, (1.7 + 2*hh)*g, C.alt, k === 5 ? 0.13 : 0.22);
+      /* casilla del cruce */
+      g = k > 4 ? 1 : (k === 4 ? u : 0);
+      if (g > 0){ rect(cx(2) - hw, cy(1) + hh, 2*hw, 2*hh, C.rise, 0.36*g); c.globalAlpha = g; c.strokeStyle = C.rise; c.lineWidth = 1.6; c.strokeRect(X(cx(2) - hw), Y(cy(1) + hh), 2*hw*s, 2*hh*s); c.globalAlpha = 1; }
+      /* diagonal principal */
+      if (k === 5){ c.strokeStyle = C.tan; c.lineWidth = 1.5; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(cx(0) - 0.42), Y(cy(0) + 0.36)); c.lineTo(X(cx(0) - 0.42 + 2.84*u), Y(cy(0) + 0.36 - 2.42*u)); c.stroke(); c.setLineDash([]); }
+      /* barras del determinante */
+      c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(cx(0) - 0.6), Y(cy(0) + 0.45)); c.lineTo(X(cx(0) - 0.6), Y(cy(2) - 0.45)); c.moveTo(X(cx(2) + 0.6), Y(cy(0) + 0.45)); c.lineTo(X(cx(2) + 0.6), Y(cy(2) - 0.45)); c.stroke();
+      for (j = 0; j < 9; j++) L('M' + j, cx(j % 3), cy(Math.floor(j/3)));
+      if (k > 2 || (k === 2 && u > 0.3)) for (j = 1; j <= 3; j++) L('I' + j, cx(0) - 0.78, cy(j - 1), -100);
+      if (k > 3 || (k === 3 && u > 0.3)) for (j = 1; j <= 3; j++) L('J' + j, cx(j - 1), cy(0) + 0.68);
+      if (k < N || u < 0.5) L('Q', -1.2, 4.2, 0); else L('F', -1.2, 4.2, 0);
+      txt(TXT[k - 1][0], -1.2, 0.25); txt(TXT[k - 1][1], -1.2, 0.25 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.2));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.3, [0, 30, 60, 90, 120]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\begin{vmatrix}a_{11}&a_{12}&a_{13}\\\\a_{21}&a_{22}&a_{23}\\\\a_{31}&a_{32}&a_{33}\\end{vmatrix}', '\\text{fila }2\\text{: }\\ a_{21},\\ a_{22},\\ a_{23}\\qquad(i=2)', '\\text{columna }3\\text{: }\\ a_{13},\\ a_{23},\\ a_{33}\\qquad(j=3)', 'a_{23}\\text{: }\\ i=2,\\ j=3', 'i=j\\text{: }\\ a_{11},\\ a_{22},\\ a_{33}'][k - 1]]]; }
+  };
+})());
+/* número ↔ figura: se eligen i y j; se marcan la fila, la columna, el elemento y el signo de su posición */
+OA.scene('filcol-vivo', (function(){
+  var NUM = [2, -1, 0, 3, 1, -2, -1, 4, 5], j0, PZ = [];
+  for (j0 = 0; j0 < 9; j0++) PZ.push(['V' + j0, '' + NUM[j0], ('' + NUM[j0]).replace('-', '−'), '']);
+  for (j0 = 1; j0 <= 3; j0++){ PZ.push(['I' + j0, 'i=' + j0, 'i = ' + j0, 'c-sec']); PZ.push(['J' + j0, 'j=' + j0, 'j = ' + j0, 'c-alt']); }
+  function cx(q){ return 1.3 + q; } function cy(r){ return 2.6 - 0.85*r; }
+  return {
+    world:{x0:-1.0, x1:5.6, y0:-0.9, y1:3.8}, aspect:4.7/6.6,
+    aria:'Un determinante de tercer orden con filas 2, menos 1, 0; 3, 1, menos 2; menos 1, 4, 5. Dos deslizadores eligen el número de fila i y el número de columna j, de 1 a 3. Una banda azul marca la fila elegida, una banda verde marca la columna elegida y una casilla naranja marca el elemento del cruce. En la esquina de cada casilla hay un signo gris, más o menos, que es el signo de la posición: más si i más j es par, menos si es impar. Bajo el dibujo se escribe el elemento elegido con su valor y el signo de su posición.',
+    labels:PZ,
+    sliders:[{id:'i', tex:'i', min:1, max:3, step:1, value:2}, {id:'j', tex:'j', min:1, max:3, step:1, value:3}],
+    legend:'<span><i class="sw sec"></i> fila \\(i\\)</span><span><i class="sw alt"></i> columna \\(j\\)</span><span><i class="sw rise"></i> elemento \\(a_{ij}\\)</span>',
+    anim:{run:27000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(9 - 1e-6, p*9), n = Math.floor(t), m = n ? n - 1 : 0, w = dtSuave((t - n)*2.5);
+      v.q = p; v.i = Math.floor(n/3) + 1; v.j = n % 3 + 1; v.fi = Math.floor(m/3) + (Math.floor(n/3) - Math.floor(m/3))*w; v.fj = m % 3 + (n % 3 - m % 3)*w; }},
+    onInput:function(v){ v.q = null; v.fi = null; v.fj = null; },
+    draw:function(S, v){
+      var i = Math.round(v.i || 2), j = Math.round(v.j || 3), fi = v.fi == null ? i - 1 : v.fi, fj = v.fj == null ? j - 1 : v.fj, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), hw = 0.46, hh = 0.36, n, r, q, m;
+      function rect(x0, y1, w, h, col, al){ c.globalAlpha = al; c.fillStyle = col; c.fillRect(X(x0), Y(y1), w*s, h*s); c.globalAlpha = 1; }
+      rect(cx(0) - hw, cy(fi) + hh, 2 + 2*hw, 2*hh, C.sec, 0.22);
+      rect(cx(fj) - hw, cy(0) + hh, 2*hw, 1.7 + 2*hh, C.alt, 0.22);
+      rect(cx(fj) - hw, cy(fi) + hh, 2*hw, 2*hh, C.rise, 0.36); c.strokeStyle = C.rise; c.lineWidth = 1.6; c.strokeRect(X(cx(fj) - hw), Y(cy(fi) + hh), 2*hw*s, 2*hh*s);
+      c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(cx(0) - 0.6), Y(cy(0) + 0.45)); c.lineTo(X(cx(0) - 0.6), Y(cy(2) - 0.45)); c.moveTo(X(cx(2) + 0.6), Y(cy(0) + 0.45)); c.lineTo(X(cx(2) + 0.6), Y(cy(2) - 0.45)); c.stroke();
+      for (n = 0; n < 9; n++){ r = Math.floor(n/3); q = n % 3; T.L('V' + n, cx(q), cy(r));
+        c.font = '600 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText((r + q) % 2 ? '−' : '+', X(cx(q) - hw) + 3, Y(cy(r) + hh) + 7); }
+      for (n = 1; n <= 3; n++){ T.L('I' + n, cx(0) - 0.78, cy(n - 1), -100); T.L('J' + n, cx(n - 1), cy(0) + 0.68); }
+      m = 'Fila ' + i + ', columna ' + j + ': posición de signo ' + ((i + j) % 2 ? 'menos' : 'más');
+      c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-0.45));
+      T.fin();
+    },
+    caption:function(v){ var i = Math.round(v.i || 2), j = Math.round(v.j || 3), a = NUM[3*(i - 1) + j - 1]; return 'El elemento de la fila ' + i + ' y la columna ' + j + ' vale ' + ('' + a).replace('-', '−') + '. El signo de su posición es ' + ((i + j) % 2 ? 'menos' : 'más') + ', porque ' + i + ' + ' + j + ' = ' + (i + j) + ' es ' + ((i + j) % 2 ? 'impar' : 'par'); },
+    readout:function(v){ var i = Math.round(v.i || 2), j = Math.round(v.j || 3), a = NUM[3*(i - 1) + j - 1], f = [['d', 'a_{' + i + j + '}=' + a + '\\qquad(\\text{fila }' + i + ',\\ \\text{columna }' + j + ')'], ['', '(-1)^{i+j}=(-1)^{' + i + '+' + j + '}=(-1)^{' + (i + j) + '}=' + ((i + j) % 2 ? '-1' : '+1')]];
+      if (i === j) f.push(['', 'i=j\\text{: está en la diagonal principal}']);
+      if (i + j === 4) f.push(['', 'i+j=4\\text{: está en la diagonal secundaria}']);
+      return f; }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

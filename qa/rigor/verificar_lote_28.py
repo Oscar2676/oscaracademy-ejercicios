@@ -126,4 +126,86 @@ chk(EA5, (1, 0, 12), (0, 0, 0), 13, 'H05 A'); chk([[1, 3, 0], [0, 1, 2], [2, 0, 
 ok(2**3*7 == 56, 'H05 B')
 ok(det2(30, 20, 10, 25) == 550 == det2(30, 10, 20, 25) and 11*10000 == 110000 and Fr(110000, 550) == 200, 'H05 C')
 for b in (Fr(0), Fr(1), Fr(2), Fr(4), Fr(5)): ok(det2(2, b, 1, 2) == 4 - b == det2(2, 1, b, 2), 'H05 escena trasp-vivo')
-print('Lote 28 H01–H05: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
+# H06 · |AB| = |A| |B|
+def mul(A, B): return [[sum(A[r][t]*B[t][c_] for t in range(len(B))) for c_ in range(len(B[0]))] for r in range(len(A))]
+def d2(M): return det2(M[0][0], M[0][1], M[1][0], M[1][1])
+for a, b, c, d in itertools.product(R, repeat=4):
+    for e, f, g, h in itertools.product(range(-2, 3), repeat=4):
+        ok((a*e + b*g)*(c*f + d*h) == a*c*e*f + a*d*e*h + b*c*f*g + b*d*g*h, 'H06 primer producto')
+        ok((a*f + b*h)*(c*e + d*g) == a*c*e*f + a*d*f*g + b*c*e*h + b*d*g*h, 'H06 segundo producto')
+        ok(d2(mul([[a, b], [c, d]], [[e, f], [g, h]])) == a*d*e*h + b*c*f*g - a*d*f*g - b*c*e*h == a*d*(e*h - f*g) - b*c*(e*h - f*g) == (a*d - b*c)*(e*h - f*g), 'H06 demostración 2x2')
+import random
+random.seed(28)
+for _ in range(4000):
+    A_ = [[random.randint(-4, 4) for _ in range(3)] for _ in range(3)]; B_ = [[random.randint(-4, 4) for _ in range(3)] for _ in range(3)]
+    ok(det3(mul(A_, B_)) == det3(A_)*det3(B_) == det3(mul(B_, A_)), 'H06 tercer orden (muestra aleatoria de enteros)')
+A6 = [[1, 2], [3, 4]]; B6 = [[2, 0], [1, 3]]
+ok(mul(A6, B6) == [[4, 6], [10, 12]] and d2(mul(A6, B6)) == -12 == 48 - 60 and d2(A6) == -2 and d2(B6) == 6, 'H06 ej1')
+ok(mul(B6, A6) == [[2, 4], [10, 14]] and d2(mul(B6, A6)) == -12 == 28 - 40, 'H06 ej2')
+A63 = [[1, 2, 3], [0, 4, 5], [1, 0, 6]]; B63 = [[2, 5, -1], [0, 3, 4], [0, 0, -2]]
+ok(mul(A63, B63) == [[2, 11, 1], [0, 12, 6], [2, 5, -13]] and det3(A63) == 22 and det3(B63) == -12 and 22*(-12) == -264, 'H06 ej3')
+chk([[2, 11, 1], [0, 12, 6], [2, 5, -13]], (-312, 132, 0), (24, 60, 0), -264, 'H06 ej3 Sarrus'); ok(-312 + 132 == -180 and 24 + 60 == 84, 'H06 ej3 sumas')
+A64 = [[3, 5], [2, 4]]; C64 = [[2, Fr(-5, 2)], [-1, Fr(3, 2)]]
+ok(d2(A64) == 2 and mul(A64, C64) == [[1, 0], [0, 1]] and d2(C64) == Fr(1, 2) == 3 - Fr(5, 2) and d2(mul(mul(A64, A64), A64)) == 8, 'H06 ej4')
+ok(d2([[2, 0], [0, 2]]) == 4 and 1 + 1 == 2, 'H06 error frecuente')
+ok(mul([[2, 1], [1, 3]], [[1, -1], [2, 4]]) == [[4, 2], [7, 11]] and 44 - 14 == 30 and d2([[2, 1], [1, 3]]) == 5 and d2([[1, -1], [2, 4]]) == 6, 'H06 A')
+ok(3*(-2) == -6 and 9*(-2) == -18 and 8*(-6) == -48, 'H06 B')
+B6c = [[4, 0], [0, 3]]; A6c = [[1, Fr(1, 2)], [0, 1]]; M6c = [[2, 0], [0, 2]]
+ok(d2(B6c) == 12 and d2(A6c) == 1 and d2(M6c) == 4 and mul(A6c, B6c) == [[4, Fr(3, 2)], [0, 3]] and mul(M6c, mul(A6c, B6c)) == [[8, 3], [0, 6]] and 8*6 - 3*0 == 48 and 50*48 == 2400 and Fr(2400, 10000) == Fr(24, 100), 'H06 C')
+Ai = [[1, -1], [1, 1]]; Bi = [[2, 1], [0, 1]]
+ok(mul(Ai, Bi) == [[2, 0], [2, 2]] and d2(Ai) == 2 and d2(Bi) == 2 and d2(mul(Ai, Bi)) == 4, 'H06 escena prod-idea')
+for k in (Fr(-1), Fr(0), Fr(1), Fr(3, 2), Fr(2)): ok(mul([[1, 1], [0, k]], Bi) == [[2, 2], [0, k]] and d2([[2, 2], [0, k]]) == 2*k == d2([[1, 1], [0, k]])*d2(Bi), 'H06 escena prod-vivo')
+# H07 · filas i y columnas j
+def arma(f, n): return [[f(i, j) for j in range(1, n + 1)] for i in range(1, n + 1)]
+M7 = [[2, -1, 0], [3, 1, -2], [-1, 4, 5]]
+ok(M7[0][1] == -1 and M7[1][0] == 3 and M7[1][2] == -2 and M7[2][1] == 4 and M7[2] == [-1, 4, 5] and [r[1] for r in M7] == [-1, 1, 4] and M7[2][0] == -1, 'H07 ej1')
+ok([(-1)**(1 + j) for j in (1, 2, 3)] == [1, -1, 1] and (-1)**(1 + 2) == -1 and (-1)**(2 + 3) == -1 and (-1)**(3 + 1) == 1, 'H07 signos de posición')
+ok(arma(lambda i, j: i + 2*j, 2) == [[3, 5], [4, 6]] and 18 - 20 == -2 == d2([[3, 5], [4, 6]]), 'H07 ej2')
+M73 = arma(lambda i, j: i*j, 3)
+ok(M73 == [[1, 2, 3], [2, 4, 6], [3, 6, 9]] and [M73[t][t] for t in range(3)] == [1, 4, 9] and [M73[0][2], M73[1][1], M73[2][0]] == [3, 4, 3] and det3(M73) == 0, 'H07 ej3')
+M74 = arma(lambda i, j: i + j if i <= j else 0, 3)
+ok(M74 == [[2, 3, 4], [0, 4, 5], [0, 0, 6]] and det3(M74) == 48 == 2*4*6, 'H07 ej4')
+for m in G3:
+    a, b, c, d, e, f, g, h, i = m
+    ok(det3([[a, b, c], [d, e, f], [g, h, i]]) == a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g), 'H07 desarrollo con subíndices')
+M7a = [[4, 0, -3], [1, 7, 2], [5, -6, 8]]
+ok(M7a[0][2] == -3 and M7a[2][0] == 5 and M7a[1][1] == 7 and [r[2] for r in M7a] == [-3, 2, 8] and 4 + 7 + 8 == 19 and (-3)*7*5 == -105, 'H07 A')
+chk(arma(lambda i, j: 2*i - j, 3), (6, 0, -12), (-10, 4, 0), 0, 'H07 B'); ok(arma(lambda i, j: 2*i - j, 3) == [[1, 0, -1], [3, 2, 1], [5, 4, 3]], 'H07 B matriz')
+M7c = arma(lambda i, j: 3*(i - 1) + j, 3)
+ok(M7c == [[1, 2, 3], [4, 5, 6], [7, 8, 9]] and M7c[1][2] == 6 and M7c[2][1] == 8 and sum(M7c[2]) == 24 and sum(r[0] for r in M7c) == 12 and 1 + 5 + 9 == 15, 'H07 C')
+chk(M7c, (45, 84, 96), (105, 48, 72), 0, 'H07 C Sarrus'); ok(45 + 84 + 96 == 225 == 105 + 48 + 72, 'H07 C sumas')
+# H08 · regla de Cramer
+def cr2(a, b, c, d, e, f):
+    D = det2(a, b, c, d); Dx = det2(e, b, f, d); Dy = det2(a, e, c, f); return D, Dx, Dy
+for a, b, c, d in itertools.product(R, repeat=4):
+    for e, f in itertools.product(range(-2, 3), repeat=2):
+        D, Dx, Dy = cr2(a, b, c, d, e, f)
+        ok(Dx == e*d - b*f and Dy == a*f - e*c, 'H08 fórmulas')
+        ok(a*Dx + b*Dy == e*D and c*Dx + d*Dy == f*D, 'H08 la solución cumple las dos ecuaciones')
+        ok(a*e*d - a*b*f + a*b*f - b*e*c == e*(a*d - b*c) and c*e*d - b*c*f + a*d*f - c*e*d == f*(a*d - b*c), 'H08 desarrollo de la comprobación')
+        if D != 0:
+            for x in range(-2, 3):
+                for y in range(-2, 3):
+                    if a*x + b*y == e and c*x + d*y == f: ok(Fr(Dx, D) == x and Fr(Dy, D) == y, 'H08 unicidad')
+ok(cr2(2, 1, 1, 3, 5, 5) == (5, 10, 5) and 2*2 + 1 == 5 and 2 + 3*1 == 5, 'H08 ej1 y escena cramer-idea')
+ok(cr2(3, -2, 5, 4, 4, 3) == (22, 22, -11) and Fr(-11, 22) == Fr(-1, 2) and 3*1 - 2*Fr(-1, 2) == 4 and 5*1 + 4*Fr(-1, 2) == 3, 'H08 ej2')
+K = [[1, 1, 1], [2, -1, 1], [1, 2, -1]]; kb = [6, 3, 2]
+def cam(M, col, v): return [[v[r] if q == col else M[r][q] for q in range(3)] for r in range(3)]
+chk(K, (1, 1, 4), (-1, 2, -2), 7, 'H08 ej3 delta'); chk(cam(K, 0, kb), (6, 2, 6), (-2, 12, -3), 7, 'H08 ej3 delta x')
+chk(cam(K, 1, kb), (-3, 6, 4), (3, 2, -12), 14, 'H08 ej3 delta y'); chk(cam(K, 2, kb), (-2, 3, 24), (-6, 6, 4), 21, 'H08 ej3 delta z')
+ok(cam(K, 0, kb) == [[6, 1, 1], [3, -1, 1], [2, 2, -1]] and cam(K, 1, kb) == [[1, 6, 1], [2, 3, 1], [1, 2, -1]] and cam(K, 2, kb) == [[1, 1, 6], [2, -1, 3], [1, 2, 2]], 'H08 ej3 matrices')
+ok(all(sum(K[r][q]*(1, 2, 3)[q] for q in range(3)) == kb[r] for r in range(3)), 'H08 ej3 comprobación')
+for _ in range(3000):  # regla de tercer orden: muestra aleatoria de sistemas con solución entera conocida
+    M_ = [[random.randint(-4, 4) for _ in range(3)] for _ in range(3)]; s_ = [random.randint(-5, 5) for _ in range(3)]
+    t_ = [sum(M_[r][q]*s_[q] for q in range(3)) for r in range(3)]; D = det3(M_)
+    for q in range(3): ok(det3(cam(M_, q, t_)) == D*s_[q], 'H08 Cramer de tercer orden')
+ok(cr2(2, 1, 4, 2, 5, 7)[0] == 0 and 2*5 == 10 != 7, 'H08 ej4')
+ok(cr2(4, 3, 2, -1, 10, 0) == (-10, -10, -20) and 4*1 + 3*2 == 10 and 2*1 - 2 == 0, 'H08 A')
+for k in (Fr(-3), Fr(0), Fr(1, 2), Fr(2), Fr(5)):
+    D, Dx, Dy = cr2(k, 1, 1, k, 1, 1); ok(D == k*k - 1 == (k - 1)*(k + 1) and Dx == k - 1 == Dy and Dx/D == 1/(k + 1) and k/(k + 1) + 1/(k + 1) == 1, 'H08 B')
+ok(cr2(1, 1, 1, 1, 1, 1)[0] == 0 and cr2(-1, 1, 1, -1, 1, 1)[0] == 0, 'H08 B raíces')
+ok(cr2(3, 2, 2, 5, 5400, 6900) == (11, 13200, 9900) and 27000 - 13800 == 13200 and 20700 - 10800 == 9900 and Fr(13200, 11) == 1200 and Fr(9900, 11) == 900 and 3*1200 + 2*900 == 5400 and 2*1200 + 5*900 == 6900, 'H08 C')
+for m in (Fr(3), Fr(2), Fr(1), Fr(3, 4), Fr(11, 20)):
+    D, Dx, Dy = cr2(2, 1, 1, m, 5, 5); ok(D == 2*m - 1 and Dx == 5*m - 5 and Dy == 5 and 2*Dx/D + Dy/D == 5 and Dx/D + m*Dy/D == 5, 'H08 escena cramer-vivo')
+ok(cr2(2, 1, 1, Fr(1, 2), 5, 5)[0] == 0 and cr2(2, 1, 1, 3, 5, 5) == (5, 10, 5), 'H08 escena cramer-vivo extremos')
+print('Lote 28 H01–H08: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
