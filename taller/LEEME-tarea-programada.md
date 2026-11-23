@@ -64,3 +64,5 @@ El lote 28 y el lote 25 ya no tienen nada por producir. **El lote en curso es el
 
 ## Lote en curso desde el 23-nov 16:32 UTC
 El lote 29 ya no tiene nada por producir (H01–H12). **El lote en curso es el 30 · Propiedades de límites** (`taller/src/l30/partes/`, ayudantes `_txt.js _det.js _lim.js _prop.js` (desde H02), armado `../NN-prop.html`, `python3 taller/build.py 30 "Propiedades de límites"`, código `CD-L30-HNN`, carpeta `limites/lote30/`, verificador `qa/rigor/verificar_lote_30.py`, tarjeta https://claude.ai/artifact/3NVzZhZq36ve1KnezsneKL). Modelo: `l30/partes/01.*` y `l29/partes/10.*` a `12.*`. La línea «Faltan» está en la sección «Lote 30» del estado.
+
+**Tarjetas grandes (23-nov):** para republicar una tarjeta no hace falta leerla entera: `python3 taller/build.py NN "Nombre"` y publicar `taller/out/loteNN.html` con `publish_files` (`as: index.html`, `slug` y `base_version` de `get_artifact`). Así quedaron al día L29 (H01–H12, versión `1795472271-7ba4`) y L25 (H01–H34, versión `1795472273-6d3e`). Republicar la tarjeta en cada corrida.
