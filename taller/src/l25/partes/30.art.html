@@ -1,0 +1,281 @@
+<!--file:H30_determinar_serie_de_taylor_de_una_funcion.html-->
+<!--title:Determinar serie de Taylor de una función-->
+<!--id:ss-taylor-->
+<!--tab:H30 Determinar serie de Taylor de una función-->
+<article class="sheet" id="ss-taylor" data-hoja="L25 H30">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Determinar serie de Taylor de una función</b></li>
+    </ol>
+    <h1>Determinar serie de Taylor de una función</h1>
+    <p class="lede">La <b>serie de Taylor</b> de una función \(f\) centrada en un punto \(a\) es la serie de potencias de \((x-a)\) cuyos coeficientes se calculan con las derivadas de \(f\) en \(a\): el coeficiente de lugar \(n\) es \(\dfrac{f^{(n)}(a)}{n!}\). Para determinarla se deriva, se evalúa en el centro, se busca el patrón y se escribe la serie. Después hay que responder dos preguntas distintas: dónde converge, y si su suma es \(f(x)\). \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(a)}{n!}\,(x-a)^{n}=f(a)+f'(a)\,(x-a)+\dfrac{f''(a)}{2!}\,(x-a)^{2}+\dfrac{f'''(a)}{3!}\,(x-a)^{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se determina, en seis pasos, la serie de Taylor de \(f(x)=\dfrac{1}{x}\) centrada en \(a=1\). Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo y el punto (paso 1):</b> la curva es \(y=\dfrac{1}{x}\); el punto burdeo es el centro, \((1,\ 1)\). En horizontal va \(x\); en vertical, el valor. La recta gris, \(T_{0}=1\), copia solo la altura de la curva en el centro: es el coeficiente \(c_{0}=f(1)=1\).</li>
+    <li><b>Pasos 2, 3 y 4, una curva nueva por cada derivada:</b> en cada paso se calcula una derivada más, se evalúa en el centro y se divide por el factorial. Sale un coeficiente y, con él, un término más: la recta azul \(T_{1}\) (la tangente), la curva verde \(T_{2}\) y la naranja \(T_{3}\). Cada una sigue a la curva burdeo un tramo más largo que la anterior.</li>
+    <li><b>Paso 5, el patrón:</b> las derivadas en el centro valen \(1,\ -1,\ 2,\ -6,\ \ldots\); el registro anota la regla general y el coeficiente \(c_{n}=(-1)^{n}\). La línea negra fina es \(T_{8}\), el polinomio que llega hasta \(n=8\).</li>
+    <li><b>Paso 6, franja gris:</b> es el intervalo \(0&lt;x&lt;2\), donde la serie converge; los anillos abiertos dicen que los extremos no entran. Dentro, la línea negra va pegada a la curva; a la derecha de \(x=2\) se despega.</li>
+    <li><b>Registro y cuenta de abajo:</b> el registro guarda el coeficiente de cada paso. La cuenta de abajo repite cada paso con todas sus operaciones. Conclusión: la serie de Taylor de \(\dfrac{1}{x}\) centrada en \(1\) es \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}\), y su suma es \(\dfrac{1}{x}\) solo si \(0&lt;x&lt;2\).</li>
+  </ol>
+  <div class="stage" data-scene="tay-idea"></div>
+  <ul class="keys">
+    <li><b>Burdeo:</b> la función \(y=\dfrac{1}{x}\) y el centro, \((1,\ 1)\), donde se evalúan las derivadas.</li>
+    <li><b>Gris, azul, verde y naranja:</b> los polinomios de Taylor \(T_{0}=1\), \(T_{1}=1-(x-1)\), \(T_{2}=T_{1}+(x-1)^{2}\) y \(T_{3}=T_{2}-(x-1)^{3}\). Son las sumas parciales de la serie.</li>
+    <li><b>Línea negra fina:</b> \(T_{8}\), la suma parcial que llega hasta \(n=8\). Pegada a la curva dentro de la franja; despegada fuera.</li>
+    <li><b>Franja gris:</b> el intervalo \(0&lt;x&lt;2\), donde la serie converge. Los extremos, con anillo abierto, no entran.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Lo que se necesita.</b> Una función \(f\) y un punto \(a\) tales que \(f\) tenga derivadas de todos los órdenes en un intervalo abierto que contiene a \(a\): existen \(f'\), \(f''\), \(f'''\), y así sin fin. Notación: \(f^{(n)}\) es la derivada de orden \(n\) (derivar \(n\) veces); \(f^{(0)}=f\), \(f^{(1)}=f'\), \(f^{(2)}=f''\). El factorial: \(0!=1\), \(1!=1\), y \(n!=n\cdot(n-1)!\) para \(n\ge 1\); así \(2!=2\), \(3!=6\), \(4!=24\).</li>
+      <li><b>Definición.</b> La <b>serie de Taylor de \(f\) centrada en \(a\)</b> es \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(a)}{n!}\,(x-a)^{n}\] Es una serie de potencias (hoja «Series de potencias») con centro \(a\) y coeficientes \(c_{n}=\dfrac{f^{(n)}(a)}{n!}\). El índice parte en \(n=0\), y \((x-a)^{0}=1\): el primer término es \(c_{0}=\dfrac{f(a)}{0!}=f(a)\).</li>
+      <li><b>Sus sumas parciales son los polinomios de Taylor.</b> La suma hasta \(n=N\) es \(T_{N}(x)=\displaystyle\sum_{n=0}^{N}\dfrac{f^{(n)}(a)}{n!}\,(x-a)^{n}\): el polinomio de Taylor de grado \(N\) (hoja «Polinomios de Taylor y de Maclaurin», donde se llama \(P_{n}\)). La serie es lo que resulta de no detenerse en ningún grado.</li>
+      <li><b>En el centro siempre funciona.</b> En \(x=a\) todos los términos con \(n\ge 1\) valen \(0\), porque \((a-a)^{n}=0^{n}=0\). La serie converge y su suma es \(c_{0}=f(a)\) (hoja «Series de potencias»).</li>
+      <li><b>Maclaurin.</b> Si el centro es \(a=0\), la serie se llama <b>serie de Maclaurin</b>; tiene su propia hoja. Aquí el centro es un punto cualquiera y los ejemplos usan \(a\ne 0\).</li>
+      <li><b>Dos preguntas que la definición no responde.</b> (1) ¿Para qué valores de \(x\) converge la serie? (2) Donde converge, ¿su suma es \(f(x)\)? La definición solo dice cómo se fabrican los coeficientes. Hasta responder las dos preguntas no se escribe el signo \(=\) entre \(f(x)\) y su serie.</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa como en la hoja de ese nombre. En esta hoja se usan <b>sin demostrar</b>: (1) el <b>teorema de derivación término a término</b> de una serie de potencias, que la hoja «Representación de funciones como series de potencias» solo enuncia: de él depende la demostración del recuadro siguiente (por qué los coeficientes tienen que ser \(\dfrac{f^{(n)}(a)}{n!}\)) y, a través de esa hoja, el primer camino del ejemplo 3 y el ejercicio B; (2) las reglas de derivación: \(\big(x^{k}\big)'=k\,x^{k-1}\) para exponente entero (con \(x\ne 0\) si \(k&lt;0\)) y para exponente fraccionario (con \(x&gt;0\)), \(\big((x-a)^{n}\big)'=n\,(x-a)^{n-1}\), \(\big(\ln x\big)'=\dfrac{1}{x}\) para \(x&gt;0\), \(\big(e^{x}\big)'=e^{x}\), la derivada de una suma, de una constante por una función y de una constante; (3) los patrones «derivada de orden \(n\)»: en cada uno se escribe el paso de \(n\) a \(n+1\); el argumento formal es por inducción; (4) la <b>cota de Lagrange</b>, citada de la hoja «Cota de Lagrange para el error» (ahí está demostrada con centro \(0\) y \(x&gt;0\), y enunciada para cualquier centro); se usa con centro \(1\) en los ejemplos 3 y 4 y con centro \(25\) en el ejercicio C; (5) de los límites: que si \(0\le b_{N}\le d_{N}\) para todo \(N\) y \(d_{N}\) tiene límite \(0\), entonces \(b_{N}\) tiene límite \(0\); las reglas «constante por sucesión» y «límite de una resta»; los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\); y que una sucesión que es constante desde algún lugar en adelante tiene por límite esa constante; (6) que \(e^{x}\) es creciente y positiva, que \(t^{k}\ge 1\) si \(t\ge 1\) y \(k\) es positivo, que una potencia de exponente positivo conserva el orden entre números positivos (si \(t\ge 25\), entonces \(t^{5/2}\ge 25^{5/2}\)), y que \(|u|&lt;R\) equivale a \(-R&lt;u&lt;R\); (7) las propiedades \(\ln 1=0\) y \(\ln(a\cdot b)=\ln a+\ln b\) para \(a,\ b&gt;0\); (8) los resultados de otras hojas, citados por su título: «Series de potencias», «Criterio del cociente para la convergencia», «Criterio del enésimo término», «Series harmónicas y series-p», «Criterio de Leibniz», «Suma de una serie geométrica infinita», «Una función como una serie geométrica», «Representación de funciones como series de potencias» y «Límite de una sucesión»; (9) que existen funciones con derivadas de todos los órdenes cuya serie de Taylor converge y <b>no</b> suma la función: solo se menciona, sin desarrollar ningún ejemplo. Los valores de \(\ln\), de \(e\) y de raíces dados con decimales son aproximaciones de calculadora, y por eso llevan el signo \(\approx\). En el ejercicio C, las medidas del terreno son datos inventados.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde salen los coeficientes, y el procedimiento</h3>
+    <p><b>Teorema (demostrado a partir de un teorema enunciado).</b> Si una serie de potencias \(\displaystyle\sum_{n=0}^{\infty}c_{n}(x-a)^{n}\) tiene radio de convergencia \(R&gt;0\) (o infinito) y \(f(x)\) es su suma en el intervalo \((a-R,\ a+R)\), entonces \(f\) tiene derivadas de todos los órdenes en ese intervalo y \[c_{n}=\dfrac{f^{(n)}(a)}{n!}\qquad\text{para todo }n\ge 0\]</p>
+    <ol class="steps">
+      <li>Hipótesis, escrita término a término: \(f(x)=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+c_{4}(x-a)^{4}+\cdots\) si \(|x-a|&lt;R\).</li>
+      <li>Se evalúa en \(x=a\). Cada término con \(n\ge 1\) tiene el factor \((a-a)^{n}=0\). Queda \(f(a)=c_{0}\).</li>
+      <li>Se deriva término a término (teorema de la hoja «Representación de funciones como series de potencias»: vale en \((a-R,\ a+R)\), y la serie derivada tiene el mismo radio). Con \((c_{0})'=0\) y \(\big(c_{n}(x-a)^{n}\big)'=n\,c_{n}(x-a)^{n-1}\): \[f'(x)=c_{1}+2c_{2}(x-a)+3c_{3}(x-a)^{2}+4c_{4}(x-a)^{3}+\cdots\]</li>
+      <li>Se evalúa en \(x=a\): solo queda el término sin \((x-a)\). \(f'(a)=c_{1}\).</li>
+      <li>La serie del paso 3 es otra serie de potencias con el mismo radio \(R\): se le aplica el mismo teorema. \[f''(x)=2c_{2}+3\cdot 2\,c_{3}(x-a)+4\cdot 3\,c_{4}(x-a)^{2}+\cdots\] En \(x=a\): \(f''(a)=2c_{2}\).</li>
+      <li>Otra vez: \[f'''(x)=3\cdot 2\cdot 1\,c_{3}+4\cdot 3\cdot 2\,c_{4}(x-a)+\cdots\] En \(x=a\): \(f'''(a)=3\cdot 2\cdot 1\,c_{3}=3!\,c_{3}\).</li>
+      <li>El patrón. Al derivar \(n\) veces: los términos de grado menor que \(n\) ya se convirtieron en \(0\); el término \(c_{n}(x-a)^{n}\) perdió su exponente multiplicando por \(n\), después por \(n-1\), y así hasta \(1\): quedó \(n!\,c_{n}\); los términos de grado mayor que \(n\) conservan algún factor \((x-a)\). \[f^{(n)}(x)=n!\,c_{n}+\big(\text{términos con el factor }(x-a)\big)\]</li>
+      <li>Se evalúa en \(x=a\): los términos con el factor \((x-a)\) valen \(0\). \(f^{(n)}(a)=n!\,c_{n}\).</li>
+      <li>Se divide cada lado por \(n!\), que no es \(0\): \(c_{n}=\dfrac{f^{(n)}(a)}{n!}\).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> Los pasos 3, 5, 6 y 7 usan el teorema de derivación término a término, que <b>no está demostrado</b> en ninguna hoja de este curso: solo está enunciado. El paso 7 describe un patrón; su versión formal es una demostración por inducción sobre \(n\).</p>
+    <p><b>Lo que dice el teorema: unicidad.</b> Si una función se puede representar con una serie de potencias centrada en \(a\), esa serie es su serie de Taylor: no hay otra. Por eso, una serie obtenida por otro camino (con una serie geométrica, o derivando o integrando una serie conocida) es también la serie de Taylor de la función con ese centro.</p>
+    <p><b>Lo que el teorema no dice.</b> Parte de suponer que la representación existe. No dice que toda función con derivadas de todos los órdenes sea la suma de su serie de Taylor. Hay funciones cuya serie de Taylor converge y suma otra cosa (aviso de rigor, 9). Por eso el procedimiento termina con una pregunta aparte.</p>
+    <p><b>Procedimiento para determinar la serie de Taylor de \(f\) centrada en \(a\).</b></p>
+    <ol class="steps">
+      <li><b>Derivar.</b> Se calculan \(f'\), \(f''\), \(f'''\), \(f^{(4)}\), hasta reconocer cómo sigue la lista.</li>
+      <li><b>Evaluar en el centro.</b> Se calculan \(f(a)\), \(f'(a)\), \(f''(a)\), \(f'''(a)\), \(\ldots\) Se evalúa en \(a\), no en \(x\).</li>
+      <li><b>Hallar el patrón.</b> Se busca una fórmula para \(f^{(n)}(a)\) que valga para todo \(n\), y se justifica (paso de \(n\) a \(n+1\)).</li>
+      <li><b>Coeficientes.</b> \(c_{n}=\dfrac{f^{(n)}(a)}{n!}\). Se simplifica.</li>
+      <li><b>Escribir la serie.</b> Con \(\Sigma\), en potencias de \((x-a)\), con su índice de partida, y con sus primeros términos.</li>
+      <li><b>¿Dónde converge?</b> Con el criterio del cociente, como en la hoja «Series de potencias»: se fija \(x\ne a\), se calcula el límite \(L\) del cociente de tamaños de un término y el anterior, y se resuelve \(L&lt;1\). Los extremos se revisan aparte.</li>
+      <li><b>¿Su suma es \(f(x)\)?</b> Que la serie converja <b>no lo prueba</b>. Hay que demostrarlo con alguno de los caminos de abajo.</li>
+    </ol>
+    <p><b>Cuándo sí se sabe que la serie suma \(f(x)\).</b></p>
+    <ol class="steps">
+      <li><b>La serie es finita.</b> Si \(f\) es un polinomio, las derivadas valen \(0\) desde algún orden y la serie tiene una cantidad finita de términos. Que su suma es \(f(x)\) se comprueba desarrollando las potencias: es álgebra (ejemplo 2).</li>
+      <li><b>La serie es una ya conocida.</b> Si la serie obtenida es una serie geométrica, su suma se conoce (ejemplo 1). Si coincide con una representación obtenida en otra hoja, vale lo que ahí se estableció (ejemplo 3, primer camino).</li>
+      <li><b>El resto tiende a cero.</b> El <b>resto</b> es \(R_{N}(x)=f(x)-T_{N}(x)\). Despejando, \(T_{N}(x)=f(x)-R_{N}(x)\). Para un \(x\) fijo, \(f(x)\) es una constante; entonces \(T_{N}(x)\) tiene límite \(f(x)\) exactamente cuando \(R_{N}(x)\) tiene límite \(0\). Para probarlo sirve la cota de Lagrange (hoja «Cota de Lagrange para el error»): si \(\big|f^{(N+1)}(t)\big|\le M\) para todo \(t\) entre \(a\) y \(x\), entonces \(|R_{N}(x)|\le\dfrac{M}{(N+1)!}\,|x-a|^{N+1}\) (ejemplos 3 y 4).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>El centro se elige. Número ↔ figura</h3>
+    <p>La misma función tiene una serie de Taylor distinta para cada centro. Para \(f(x)=\dfrac{1}{x}\) y un centro \(a&gt;0\) cualquiera:</p>
+    <ol class="steps">
+      <li>Derivadas (ejemplo 1, paso 3): \(f^{(n)}(x)=\dfrac{(-1)^{n}\,n!}{x^{\,n+1}}\). En el centro: \(f^{(n)}(a)=\dfrac{(-1)^{n}\,n!}{a^{\,n+1}}\).</li>
+      <li>Coeficientes: \(c_{n}=\dfrac{f^{(n)}(a)}{n!}=\dfrac{(-1)^{n}\,n!}{a^{\,n+1}\cdot n!}=\dfrac{(-1)^{n}}{a^{\,n+1}}\).</li>
+      <li>Serie de Taylor centrada en \(a\): \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{a^{\,n+1}}\,(x-a)^{n}=\dfrac{1}{a}-\dfrac{x-a}{a^{2}}+\dfrac{(x-a)^{2}}{a^{3}}-\dfrac{(x-a)^{3}}{a^{4}}+\cdots\)</li>
+      <li>Es geométrica. Como \(a^{\,n+1}=a\cdot a^{n}\): \(\dfrac{(-1)^{n}(x-a)^{n}}{a^{\,n+1}}=\dfrac{1}{a}\cdot\left(-\dfrac{x-a}{a}\right)^{n}\). Primer término \(\dfrac{1}{a}\), razón \(r=-\dfrac{x-a}{a}\).</li>
+      <li>Converge exactamente cuando \(|r|&lt;1\) (hoja «Suma de una serie geométrica infinita»). Como \(a&gt;0\): \(|r|=\dfrac{|x-a|}{a}\), y \(|r|&lt;1\) es \(|x-a|&lt;a\), es decir, \(-a&lt;x-a&lt;a\); sumando \(a\): \(0&lt;x&lt;2a\). Radio de convergencia: \(R=a\).</li>
+      <li>Suma, si \(0&lt;x&lt;2a\). Primero \(1-r=1+\dfrac{x-a}{a}=\dfrac{a+x-a}{a}=\dfrac{x}{a}\). Entonces \(\dfrac{1/a}{1-r}=\dfrac{1}{a}:\dfrac{x}{a}=\dfrac{1}{a}\cdot\dfrac{a}{x}=\dfrac{1}{x}\). La serie suma \(f(x)\).</li>
+      <li>Lo que falta al cortar. Para una serie geométrica de primer término \(1\) y razón \(r\ne 1\), la hoja «Una función como una serie geométrica» demuestra que la suma hasta \(n=N\) difiere de \(\dfrac{1}{1-r}\) en \(\dfrac{r^{\,N+1}}{1-r}\). Multiplicando por \(\dfrac{1}{a}\) y usando \(1-r=\dfrac{x}{a}\): \[f(x)-T_{N}(x)=\dfrac{1}{a}\cdot\dfrac{r^{\,N+1}}{x/a}=\dfrac{r^{\,N+1}}{x}\qquad(x\ne 0)\]</li>
+    </ol>
+    <p>Resultado: \(\dfrac{1}{x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{a^{\,n+1}}\,(x-a)^{n}\) si \(0&lt;x&lt;2a\). En esta función el intervalo llega justo hasta \(x=0\), el punto donde \(f\) no existe. (Con \(a&lt;0\) la cuenta es la misma con \(|a|\) en lugar de \(a\) en el paso 5: el intervalo es \(2a&lt;x&lt;0\). El centro no puede ser \(0\).)</p>
+    <p>En la animación se elige el centro y se prueba siempre en el mismo punto, \(x=2\), donde \(f(2)=\dfrac{1}{2}\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la curva burdeo y el punto con anillo:</b> la curva es \(y=\dfrac{1}{x}\); el punto es el centro elegido, \(\left(a,\ \dfrac{1}{a}\right)\). La curva azul es \(T_{3}\), el polinomio de Taylor de grado \(3\) con ese centro: cerca del centro va pegada a la burdeo.</li>
+      <li><b>Mira después la franja gris:</b> es el intervalo \(0&lt;x&lt;2a\), donde la serie con ese centro converge y suma \(\dfrac{1}{x}\). Su ancho cambia con el centro.</li>
+      <li><b>Mira la línea punteada vertical:</b> marca el punto de prueba, \(x=2\). Sobre ella hay un punto burdeo (la función) y uno azul (el polinomio). El trazo naranja que los une es la distancia entre los dos.</li>
+      <li><b>Mueve el deslizador «centro»:</b> recorre \(a=\dfrac{1}{2},\ 1,\ \dfrac{3}{2},\ 2,\ \dfrac{5}{2},\ 3\). Con \(a=\dfrac{3}{2}\), \(\dfrac{5}{2}\) o \(3\), el punto \(x=2\) queda dentro de la franja y los dos puntos casi coinciden. Con \(a=2\), el punto de prueba es el centro: coinciden exactamente. Con \(a=1\), \(x=2\) es el extremo de la franja. Con \(a=\dfrac{1}{2}\), \(x=2\) queda fuera y el polinomio se va lejos.</li>
+      <li><b>Lee bajo el dibujo y en la cuenta de abajo:</b> bajo el dibujo están las distancias entre \(f(2)\) y \(T_{0}(2)\), \(T_{1}(2)\), \(T_{2}(2)\), \(T_{3}(2)\). La cuenta de abajo las calcula paso a paso: potencias del centro, derivadas en el centro, coeficientes, términos, sumas y distancias. Conclusión: dentro del intervalo, cada término que se agrega acerca la suma a \(f(2)\); fuera, la aleja. Para aproximar \(f\) en un punto se elige un centro cercano a ese punto.</li>
+    </ol>
+    <div class="stage" data-scene="tay-vivo"></div>
+    <ul class="keys">
+      <li><b>Burdeo:</b> la función \(y=\dfrac{1}{x}\) y el centro elegido, con su línea punteada hasta el eje.</li>
+      <li><b>Azul:</b> \(T_{3}\), el polinomio de Taylor de grado \(3\) con ese centro.</li>
+      <li><b>Naranja:</b> la distancia entre \(f(2)\) y \(T_{3}(2)\).</li>
+      <li><b>Franja gris:</b> el intervalo \(0&lt;x&lt;2a\), sin los extremos.</li>
+      <li><b>Caso límite 1 (\(a=2\)):</b> el punto de prueba es el centro. Todos los términos con \((x-a)\) valen \(0\) y la distancia es \(0\) con cualquier grado.</li>
+      <li><b>Caso límite 2 (\(a=1\)):</b> \(x=2\) es un extremo del intervalo \((0,\ 2)\). Las sumas van \(1,\ 0,\ 1,\ 0\) y la distancia es siempre \(\dfrac{1}{2}\): la serie no converge ahí.</li>
+      <li><b>Fuera (\(a=\dfrac{1}{2}\)):</b> \(T_{3}(2)=-40\), que no cabe en el dibujo; una flecha naranja lo indica. Las distancias crecen: \(\dfrac{3}{2},\ \dfrac{9}{2},\ \dfrac{27}{2},\ \dfrac{81}{2}\).</li>
+      <li><b>Sobre las cuentas:</b> todo se calcula con fracciones exactas; no hay redondeos.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(f(x)=\dfrac{1}{x}\) centrada en \(a=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función y centro: \(f(x)=\dfrac{1}{x}=x^{-1}\), definida si \(x\ne 0\); centro \(a=1\). (El centro no puede ser \(0\): ahí \(f\) no existe.)</li>
+    <li>Derivar. Regla de la potencia (citada), una vez por derivada: \(f'(x)=(-1)\,x^{-2}\); \(f''(x)=(-1)(-2)\,x^{-3}=2\,x^{-3}\); \(f'''(x)=2\cdot(-3)\,x^{-4}=-6\,x^{-4}\); \(f^{(4)}(x)=(-6)(-4)\,x^{-5}=24\,x^{-5}\).</li>
+    <li>Patrón: \(f^{(n)}(x)=(-1)^{n}\,n!\;x^{-(n+1)}=\dfrac{(-1)^{n}\,n!}{x^{\,n+1}}\). Con \(n=0\) da \(x^{-1}\), y con \(n=1,\ 2,\ 3,\ 4\) da la lista del paso 2. Paso de \(n\) a \(n+1\): al derivar \((-1)^{n}\,n!\;x^{-(n+1)}\) el exponente baja multiplicando: \((-1)^{n}\,n!\cdot\big(-(n+1)\big)\cdot x^{-(n+2)}\). Como \((-1)^{n}\cdot(-1)=(-1)^{n+1}\) y \(n!\cdot(n+1)=(n+1)!\), queda \((-1)^{n+1}\,(n+1)!\;x^{-(n+2)}\): la misma fórmula con \(n+1\) en lugar de \(n\).</li>
+    <li>Evaluar en el centro. \(1^{\,n+1}=1\): \(f^{(n)}(1)=\dfrac{(-1)^{n}\,n!}{1}=(-1)^{n}\,n!\). Los primeros: \(1,\ -1,\ 2,\ -6,\ 24\).</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{f^{(n)}(1)}{n!}=\dfrac{(-1)^{n}\,n!}{n!}=(-1)^{n}\).</li>
+    <li>Serie de Taylor de \(\dfrac{1}{x}\) centrada en \(1\): \[\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}=1-(x-1)+(x-1)^{2}-(x-1)^{3}+\cdots\]</li>
+    <li>¿Dónde converge? En \(x=1\) (el centro), converge y su suma es \(c_{0}=1\). Se fija \(x\ne 1\); el término \(u_{n}=(-1)^{n}(x-1)^{n}\) no es \(0\) y su tamaño es \(|u_{n}|=|x-1|^{n}\). Cociente: \(\dfrac{|u_{n+1}|}{|u_{n}|}=\dfrac{|x-1|^{n+1}}{|x-1|^{n}}=|x-1|\). No depende de \(n\): \(L=|x-1|\).</li>
+    <li>Criterio del cociente. \(L&lt;1\) es \(|x-1|&lt;1\), es decir, \(-1&lt;x-1&lt;1\); sumando \(1\): \(0&lt;x&lt;2\). Ahí la serie converge absolutamente. \(L&gt;1\) es \(|x-1|&gt;1\): ahí diverge. Radio: \(R=1\).</li>
+    <li>Extremos, aparte. En \(x=0\): \((x-1)^{n}=(-1)^{n}\) y el término es \((-1)^{n}(-1)^{n}=(-1)^{2n}=1\); la serie es \(1+1+1+\cdots\) En \(x=2\): \((x-1)^{n}=1\) y la serie es \(1-1+1-\cdots\) En las dos, el tamaño del término es \(1\), que no tiende a \(0\): divergen (hoja «Criterio del enésimo término»). Intervalo de convergencia: \((0,\ 2)\).</li>
+    <li>¿Su suma es \(f(x)\)? Potencia de un producto: \((-1)^{n}(x-1)^{n}=\big(-(x-1)\big)^{n}\). Es una serie geométrica de primer término \(1\) y razón \(r=-(x-1)\). Si \(|r|&lt;1\), su suma es \(\dfrac{1}{1-r}=\dfrac{1}{1+(x-1)}=\dfrac{1}{x}\) (hoja «Suma de una serie geométrica infinita»). Sí: la suma es \(f(x)\).</li>
+    <li>Resultado: \[\dfrac{1}{x}=\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}\qquad(0&lt;x&lt;2)\]</li>
+    <li>Cotejo. La hoja «Una función como una serie geométrica» (ejemplo 4) llegó a la misma serie y al mismo intervalo sin derivar, escribiendo \(x=1+(x-1)\). Tiene que ser así: por la unicidad, la serie de potencias de \((x-1)\) que representa a \(\dfrac{1}{x}\) es una sola.</li>
+    <li>Comprobación en \(x=\dfrac{6}{5}\), el mismo punto de esa hoja. \(x-1=\dfrac{1}{5}\). \(T_{2}=1-\dfrac{1}{5}+\dfrac{1}{25}=\dfrac{25}{25}-\dfrac{5}{25}+\dfrac{1}{25}=\dfrac{21}{25}\). Función: \(1:\dfrac{6}{5}=\dfrac{5}{6}\). Diferencia, con denominador común \(150\): \(\dfrac{5}{6}-\dfrac{21}{25}=\dfrac{125}{150}-\dfrac{126}{150}=-\dfrac{1}{150}\). Con la fórmula del recuadro (\(a=1\), \(r=-\dfrac{1}{5}\), \(N=2\)): \(\dfrac{r^{3}}{x}=-\dfrac{1}{125}:\dfrac{6}{5}=-\dfrac{1}{125}\cdot\dfrac{5}{6}=-\dfrac{5}{750}=-\dfrac{1}{150}\). Coincide.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2 (un polinomio, recentrado): \(f(x)=x^{3}-3x^{2}+5\) centrada en \(a=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Derivar: \(f'(x)=3x^{2}-6x\); \(f''(x)=6x-6\); \(f'''(x)=6\); \(f^{(4)}(x)=0\), porque la derivada de una constante es \(0\). Desde ahí, todas las derivadas son \(0\).</li>
+    <li>Evaluar en \(a=2\). \(f(2)=2^{3}-3\cdot 2^{2}+5=8-12+5=1\). \(f'(2)=3\cdot 2^{2}-6\cdot 2=12-12=0\). \(f''(2)=6\cdot 2-6=12-6=6\). \(f'''(2)=6\). \(f^{(n)}(2)=0\) para \(n\ge 4\).</li>
+    <li>Coeficientes: \(c_{0}=\dfrac{1}{0!}=1\); \(c_{1}=\dfrac{0}{1!}=0\); \(c_{2}=\dfrac{6}{2!}=\dfrac{6}{2}=3\); \(c_{3}=\dfrac{6}{3!}=\dfrac{6}{6}=1\); \(c_{n}=\dfrac{0}{n!}=0\) para \(n\ge 4\).</li>
+    <li>Serie de Taylor centrada en \(2\): \(1+0\cdot(x-2)+3(x-2)^{2}+1\cdot(x-2)^{3}+0+0+\cdots\) Solo tiene tres términos distintos de \(0\): \[1+3(x-2)^{2}+(x-2)^{3}\]</li>
+    <li>¿Dónde converge? Desde \(N=3\) en adelante, todas las sumas parciales son iguales: \(T_{3}(x)=T_{4}(x)=T_{5}(x)=\cdots\) Una sucesión que es constante desde un lugar en adelante tiene por límite esa constante. La serie converge para todo \(x\) real, y su suma es \(T_{3}(x)\).</li>
+    <li>¿Su suma es \(f(x)\)? Se desarrollan las potencias: \((x-2)^{2}=x^{2}-4x+4\) y \((x-2)^{3}=(x-2)(x^{2}-4x+4)=x^{3}-4x^{2}+4x-2x^{2}+8x-8=x^{3}-6x^{2}+12x-8\).</li>
+    <li>Se reemplaza: \(1+3(x^{2}-4x+4)+(x^{3}-6x^{2}+12x-8)=1+3x^{2}-12x+12+x^{3}-6x^{2}+12x-8\).</li>
+    <li>Se juntan los términos de igual grado: \(x^{3}+(3x^{2}-6x^{2})+(-12x+12x)+(1+12-8)=x^{3}-3x^{2}+5\). Es \(f(x)\).</li>
+    <li>Resultado, para todo \(x\) real: \(x^{3}-3x^{2}+5=1+3(x-2)^{2}+(x-2)^{3}\). La serie de Taylor de un polinomio es el mismo polinomio, escrito en potencias de \((x-a)\). Es finita y exacta: no hizo falta ningún teorema sobre series.</li>
+    <li>Comprobación en \(x=3\). Función: \(27-27+5=5\). Serie: \(x-2=1\), y \(1+3\cdot 1^{2}+1^{3}=1+3+1=5\). Coincide.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(f(x)=\ln x\) centrada en \(a=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función y centro: \(f(x)=\ln x\), definida si \(x&gt;0\); centro \(a=1\). \(f(1)=\ln 1=0\).</li>
+    <li>Derivar. \(f'(x)=\dfrac{1}{x}\) (citada). Esa es la función del ejemplo 1: derivar \(\ln x\) un total de \(n\) veces (\(n\ge 1\)) es derivar \(\dfrac{1}{x}\) un total de \(n-1\) veces. Por el patrón del ejemplo 1, con \(n-1\) en lugar de \(n\): \[f^{(n)}(x)=\dfrac{(-1)^{n-1}\,(n-1)!}{x^{\,n}}\qquad(n\ge 1)\] Los primeros: \(f'(x)=\dfrac{1}{x}\), \(f''(x)=-\dfrac{1}{x^{2}}\), \(f'''(x)=\dfrac{2}{x^{3}}\), \(f^{(4)}(x)=-\dfrac{6}{x^{4}}\).</li>
+    <li>Evaluar en el centro. \(1^{n}=1\): \(f^{(n)}(1)=(-1)^{n-1}\,(n-1)!\) para \(n\ge 1\). Los primeros: \(1,\ -1,\ 2,\ -6\). Y \(f(1)=0\).</li>
+    <li>Coeficientes. \(c_{0}=\dfrac{0}{0!}=0\). Para \(n\ge 1\), como \(n!=n\cdot(n-1)!\): \(c_{n}=\dfrac{(-1)^{n-1}\,(n-1)!}{n\cdot(n-1)!}=\dfrac{(-1)^{n-1}}{n}\).</li>
+    <li>Serie de Taylor de \(\ln x\) centrada en \(1\) (parte en \(n=1\) porque \(c_{0}=0\)): \[\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n}\,(x-1)^{n}=(x-1)-\dfrac{(x-1)^{2}}{2}+\dfrac{(x-1)^{3}}{3}-\dfrac{(x-1)^{4}}{4}+\cdots\]</li>
+    <li>¿Dónde converge? Se fija \(x\ne 1\). Tamaño del término: \(|u_{n}|=\dfrac{|x-1|^{n}}{n}\). Cociente: \(\dfrac{|x-1|^{n+1}}{n+1}\cdot\dfrac{n}{|x-1|^{n}}=|x-1|\cdot\dfrac{n}{n+1}\). Como \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\), \(L=|x-1|\cdot 1=|x-1|\). Si \(|x-1|&lt;1\), es decir, \(0&lt;x&lt;2\), converge absolutamente; si \(|x-1|&gt;1\), diverge. Radio: \(R=1\).</li>
+    <li>Extremos, aparte. En \(x=0\): \((x-1)^{n}=(-1)^{n}\), y el término es \(\dfrac{(-1)^{n-1}(-1)^{n}}{n}=\dfrac{(-1)^{2n-1}}{n}=-\dfrac{1}{n}\), porque \(2n-1\) es impar. La serie es el opuesto de la armónica: diverge (hoja «Series harmónicas y series-p»). En \(x=2\): \((x-1)^{n}=1\) y la serie es \(1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\), que converge (hoja «Criterio de Leibniz»). Intervalo de convergencia: \((0,\ 2]\).</li>
+    <li>¿Su suma es \(\ln x\)? <b>Primer camino: una serie ya conocida.</b> La hoja «Representación de funciones como series de potencias» (ejemplo 2) obtuvo \(\ln(1+u)=\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{u^{n}}{n}\) si \(|u|&lt;1\). Con \(u=x-1\): \(1+u=x\), y \(|u|&lt;1\) es \(0&lt;x&lt;2\). Los signos coinciden: \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\). Es la misma serie. Entonces \[\ln x=\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n}\,(x-1)^{n}\qquad(0&lt;x&lt;2)\] Esta igualdad depende del teorema de integración término a término, que esa hoja enuncia sin demostrar.</li>
+    <li><b>Segundo camino: el resto, para \(1\le x\le 2\).</b> Por el paso 2 con \(N+1\) en lugar de \(n\): \(\big|f^{(N+1)}(t)\big|=\dfrac{N!}{t^{\,N+1}}\) para \(t&gt;0\). Si \(t\) está entre \(1\) y \(x\), entonces \(t\ge 1\), así que \(t^{\,N+1}\ge 1\) y \(\dfrac{N!}{t^{\,N+1}}\le N!\). Se toma \(M=N!\).</li>
+    <li>Cota de Lagrange con \(a=1\): \(|R_{N}(x)|\le\dfrac{N!}{(N+1)!}\,|x-1|^{N+1}\). Como \((N+1)!=(N+1)\cdot N!\), es \(\dfrac{N!}{(N+1)!}=\dfrac{1}{N+1}\). Y como \(0\le x-1\le 1\), es \(|x-1|^{N+1}=(x-1)^{N+1}\le 1\). Queda \[0\le|R_{N}(x)|\le\dfrac{1}{N+1}\]</li>
+    <li>\(\displaystyle\lim_{N\to\infty}\dfrac{1}{N+1}=0\). Entonces \(|R_{N}(x)|\) tiene límite \(0\) (aviso de rigor, 5), y \(T_{N}(x)\) tiene límite \(\ln x\). Queda demostrado, sin el teorema de integración término a término, que la serie suma \(\ln x\) para \(1\le x\le 2\). Incluye el extremo \(x=2\): \[\ln 2=1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\] (Para \(0&lt;x&lt;1\) este camino necesita una cota más fina, que aquí no se hace; ahí vale el primer camino.)</li>
+    <li>Comprobación en \(x=\dfrac{3}{2}\), con cuatro términos. \(x-1=\dfrac{1}{2}\): \(T_{4}=\dfrac{1}{2}-\dfrac{1}{8}+\dfrac{1}{24}-\dfrac{1}{64}\). Denominador común \(192\): \(\dfrac{96}{192}-\dfrac{24}{192}+\dfrac{8}{192}-\dfrac{3}{192}=\dfrac{77}{192}\approx 0{,}4010\). Con calculadora, \(\ln(1{,}5)\approx 0{,}4055\). Distancia: \(|0{,}4055-0{,}4010|=0{,}0045\). Cota del paso 10 sin el último reemplazo, con \(N=4\): \(\dfrac{1}{5}\cdot\left(\dfrac{1}{2}\right)^{5}=\dfrac{1}{5}\cdot\dfrac{1}{32}=\dfrac{1}{160}=0{,}00625\). La distancia queda bajo la cota.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(f(x)=e^{x}\) centrada en \(a=1\)</h3>
+  <div class="body">
+  <p>La serie de \(e^{x}\) con centro \(0\) es tema de otra hoja. Aquí el centro es \(1\) y no se usa esa serie.</p>
+  <ol class="steps">
+    <li>Derivar. \(\big(e^{x}\big)'=e^{x}\) (citada): la derivada es la misma función. Paso de \(n\) a \(n+1\): si \(f^{(n)}(x)=e^{x}\), al derivar otra vez queda \(e^{x}\). Entonces \(f^{(n)}(x)=e^{x}\) para todo \(n\ge 0\).</li>
+    <li>Evaluar en el centro: \(f^{(n)}(1)=e^{1}=e\) para todo \(n\). (\(e\approx 2{,}7183\).)</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{e}{n!}\).</li>
+    <li>Serie de Taylor de \(e^{x}\) centrada en \(1\): \[\sum_{n=0}^{\infty}\dfrac{e}{n!}\,(x-1)^{n}=e+e\,(x-1)+\dfrac{e}{2}\,(x-1)^{2}+\dfrac{e}{6}\,(x-1)^{3}+\cdots\]</li>
+    <li>¿Dónde converge? Se fija \(x\ne 1\). Tamaño del término: \(|u_{n}|=\dfrac{e\,|x-1|^{n}}{n!}\). Cociente: \(\dfrac{e\,|x-1|^{n+1}}{(n+1)!}\cdot\dfrac{n!}{e\,|x-1|^{n}}\). Se simplifica \(e\); \(\dfrac{|x-1|^{n+1}}{|x-1|^{n}}=|x-1|\); y \(\dfrac{n!}{(n+1)!}=\dfrac{1}{n+1}\). Queda \(|x-1|\cdot\dfrac{1}{n+1}\).</li>
+    <li>Límite: \(|x-1|\) es constante y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\). \(L=|x-1|\cdot 0=0&lt;1\), sea cual sea \(x\). La serie converge absolutamente para todo \(x\) real. Radio: \(R=\infty\); no hay extremos.</li>
+    <li>¿Su suma es \(e^{x}\)? Con el resto. \(f^{(N+1)}(t)=e^{t}\), que es positivo. Como \(e^{t}\) es creciente (citado): si \(x\ge 1\), los \(t\) entre \(1\) y \(x\) cumplen \(t\le x\) y \(e^{t}\le e^{x}\); si \(x&lt;1\), cumplen \(t\le 1\) y \(e^{t}\le e\). Se toma \(M\) igual al mayor de los números \(e\) y \(e^{x}\). \(M\) depende de \(x\), pero no de \(N\).</li>
+    <li>Cota de Lagrange con \(a=1\): \(0\le|R_{N}(x)|\le M\cdot\dfrac{|x-1|^{N+1}}{(N+1)!}\).</li>
+    <li>La sucesión \(\dfrac{|x-1|^{n}}{n!}\) tiene límite \(0\). Razón: con \(u=|x-1|\), la serie \(\displaystyle\sum_{n=0}^{\infty}\dfrac{u^{n}}{n!}\) converge (hoja «Series de potencias», ejemplo 2), y los términos de una serie convergente tienen límite \(0\) (hoja «Criterio del enésimo término»). Correr el índice de \(n\) a \(N+1\) no cambia el límite (hoja «Límite de una sucesión», teorema 3).</li>
+    <li>Constante por sucesión: \(M\cdot\dfrac{|x-1|^{N+1}}{(N+1)!}\) tiene límite \(M\cdot 0=0\). Entonces \(|R_{N}(x)|\) tiene límite \(0\) (aviso de rigor, 5) y \(T_{N}(x)\) tiene límite \(e^{x}\).</li>
+    <li>Resultado, para todo \(x\) real: \[e^{x}=\sum_{n=0}^{\infty}\dfrac{e}{n!}\,(x-1)^{n}\]</li>
+    <li>Comprobación en \(x=\dfrac{3}{2}\), hasta \(n=3\). \(x-1=\dfrac{1}{2}\); \(\left(\dfrac{1}{2}\right)^{2}=\dfrac{1}{4}\) y \(\dfrac{1}{4}:2=\dfrac{1}{8}\); \(\left(\dfrac{1}{2}\right)^{3}=\dfrac{1}{8}\) y \(\dfrac{1}{8}:6=\dfrac{1}{48}\). Factor común \(e\): \(T_{3}=e\left(1+\dfrac{1}{2}+\dfrac{1}{8}+\dfrac{1}{48}\right)=e\cdot\dfrac{48+24+6+1}{48}=e\cdot\dfrac{79}{48}\).</li>
+    <li>Con \(e\approx 2{,}7183\): \(2{,}7183\cdot 79=214{,}7457\) y \(214{,}7457:48\approx 4{,}4739\). Con calculadora, \(e^{1{,}5}\approx 4{,}4817\). Distancia: \(|4{,}4817-4{,}4739|=0{,}0078\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar el factorial: el coeficiente es \(\dfrac{f^{(n)}(a)}{n!}\), no \(f^{(n)}(a)\). Evaluar las derivadas en \(x\) en vez de en el centro: los coeficientes son números, no funciones. Escribir potencias de \(x\) cuando el centro es \(a\ne 0\): van potencias de \((x-a)\). Elegir un centro donde la función no existe (para \(\dfrac{1}{x}\) o \(\ln x\), el centro \(0\)). Dar el patrón de \(f^{(n)}(a)\) mirando tres casos y sin justificarlo. Olvidar que \(0!=1\) y que el índice parte en \(n=0\); o partir en \(n=0\) cuando el término general tiene \(n\) en el denominador (ejemplo 3: ahí \(c_{0}=0\) y la suma parte en \(n=1\)). Escribir la serie sin su intervalo. Dar por revisados los extremos: van aparte. Usar la serie fuera del intervalo «porque la función existe ahí»: \(\dfrac{1}{x}\) existe en \(x=3\), y su serie centrada en \(1\) diverge en \(x=3\). Y el más serio: concluir que la serie suma \(f(x)\) solo porque converge. Eso se demuestra aparte: porque la serie es finita, porque es una serie de suma conocida, o porque el resto tiende a \(0\).</p>
+    <p>Cuando el centro es \(a=0\), la serie de Taylor se llama serie de Maclaurin. Las hojas siguientes tratan ese caso y las series de \(e^{x}\), \(\operatorname{sen}x\) y \(\cos x\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Determina la serie de Taylor de \(f(x)=x^{3}+x\) centrada en \(a=-1\) y comprueba que su suma es \(f(x)\). (b) Determina la serie de Taylor de \(f(x)=\dfrac{1}{x}\) centrada en \(a=2\), con su intervalo, y comprueba en \(x=3\) con \(T_{2}\). (c) ¿Sirve la serie de (b) para calcular \(f(5)=\dfrac{1}{5}\)?</p>
+    <details><summary>Pista</summary><div><p>En (a), \(x-a=x-(-1)=x+1\): la serie va en potencias de \((x+1)\) y tiene cuatro términos. En (b), usa el patrón del ejemplo 1 y evalúa en \(2\): aparece una potencia de \(2\) en el denominador.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Derivar: \(f'(x)=3x^{2}+1\); \(f''(x)=6x\); \(f'''(x)=6\); \(f^{(n)}(x)=0\) para \(n\ge 4\).</li>
+        <li>(a) Evaluar en \(a=-1\): \(f(-1)=(-1)^{3}+(-1)=-1-1=-2\); \(f'(-1)=3\cdot(-1)^{2}+1=3+1=4\); \(f''(-1)=6\cdot(-1)=-6\); \(f'''(-1)=6\).</li>
+        <li>(a) Coeficientes: \(c_{0}=\dfrac{-2}{0!}=-2\); \(c_{1}=\dfrac{4}{1!}=4\); \(c_{2}=\dfrac{-6}{2!}=\dfrac{-6}{2}=-3\); \(c_{3}=\dfrac{6}{3!}=\dfrac{6}{6}=1\); \(c_{n}=0\) para \(n\ge 4\).</li>
+        <li>(a) Serie, con \(x-a=x+1\): \(-2+4(x+1)-3(x+1)^{2}+(x+1)^{3}\). Es finita: converge para todo \(x\) (ejemplo 2, paso 5).</li>
+        <li>(a) Comprobación. \((x+1)^{2}=x^{2}+2x+1\) y \((x+1)^{3}=(x+1)(x^{2}+2x+1)=x^{3}+2x^{2}+x+x^{2}+2x+1=x^{3}+3x^{2}+3x+1\).</li>
+        <li>(a) Se reemplaza: \(-2+(4x+4)+(-3x^{2}-6x-3)+(x^{3}+3x^{2}+3x+1)\). Por grados: \(x^{3}+(-3x^{2}+3x^{2})+(4x-6x+3x)+(-2+4-3+1)=x^{3}+x\). Es \(f(x)\), para todo \(x\) real.</li>
+        <li>(b) Patrón del ejemplo 1: \(f^{(n)}(x)=\dfrac{(-1)^{n}\,n!}{x^{\,n+1}}\). En \(a=2\): \(f^{(n)}(2)=\dfrac{(-1)^{n}\,n!}{2^{\,n+1}}\). Los primeros: \(\dfrac{1}{2},\ -\dfrac{1}{4},\ \dfrac{2}{8}=\dfrac{1}{4},\ -\dfrac{6}{16}=-\dfrac{3}{8}\).</li>
+        <li>(b) Coeficientes: \(c_{n}=\dfrac{(-1)^{n}\,n!}{2^{\,n+1}\cdot n!}=\dfrac{(-1)^{n}}{2^{\,n+1}}\). Serie: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{\,n+1}}\,(x-2)^{n}=\dfrac{1}{2}-\dfrac{x-2}{4}+\dfrac{(x-2)^{2}}{8}-\dfrac{(x-2)^{3}}{16}+\cdots\)</li>
+        <li>(b) ¿Dónde converge? Con \(x\ne 2\), tamaño del término: \(\dfrac{|x-2|^{n}}{2^{\,n+1}}\). Cociente: \(\dfrac{|x-2|^{n+1}}{2^{\,n+2}}\cdot\dfrac{2^{\,n+1}}{|x-2|^{n}}=\dfrac{|x-2|}{2}\). \(L=\dfrac{|x-2|}{2}\); \(L&lt;1\) es \(|x-2|&lt;2\), es decir, \(-2&lt;x-2&lt;2\); sumando \(2\): \(0&lt;x&lt;4\). Si \(|x-2|&gt;2\), diverge. Radio: \(R=2\).</li>
+        <li>(b) Extremos: en \(x=0\) y en \(x=4\), \(|x-2|=2\) y el tamaño del término es \(\dfrac{2^{n}}{2^{\,n+1}}=\dfrac{1}{2}\), que no tiende a \(0\): diverge en los dos (hoja «Criterio del enésimo término»). Intervalo de convergencia: \((0,\ 4)\).</li>
+        <li>(b) ¿Suma \(f(x)\)? Es geométrica: primer término \(\dfrac{1}{2}\), razón \(r=-\dfrac{x-2}{2}\). \(1-r=1+\dfrac{x-2}{2}=\dfrac{2+x-2}{2}=\dfrac{x}{2}\). Suma: \(\dfrac{1}{2}:\dfrac{x}{2}=\dfrac{1}{2}\cdot\dfrac{2}{x}=\dfrac{1}{x}\). Sí. Resultado: \(\dfrac{1}{x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{\,n+1}}\,(x-2)^{n}\) si \(0&lt;x&lt;4\). Es el recuadro «El centro se elige» con \(a=2\).</li>
+        <li>(b) Comprobación en \(x=3\): \(x-2=1\). \(T_{2}=\dfrac{1}{2}-\dfrac{1}{4}+\dfrac{1}{8}=\dfrac{4}{8}-\dfrac{2}{8}+\dfrac{1}{8}=\dfrac{3}{8}\). Función: \(\dfrac{1}{3}\). Diferencia, con denominador común \(24\): \(\dfrac{1}{3}-\dfrac{3}{8}=\dfrac{8}{24}-\dfrac{9}{24}=-\dfrac{1}{24}\). Con la fórmula del recuadro (\(r=-\dfrac{1}{2}\), \(N=2\)): \(\dfrac{r^{3}}{x}=-\dfrac{1}{8}:3=-\dfrac{1}{24}\). Coincide.</li>
+        <li>(c) No. \(|5-2|=3\), que es mayor que el radio \(2\): \(x=5\) está fuera de \((0,\ 4)\). Ahí la razón es \(r=-\dfrac{3}{2}\) y los términos, \(\dfrac{1}{2},\ -\dfrac{3}{4},\ \dfrac{9}{8},\ -\dfrac{27}{16},\ \ldots\), crecen de tamaño: la serie diverge. Para calcular \(f(5)\) con una serie de Taylor hay que elegir otro centro; por ejemplo, con \(a=4\) el intervalo es \((0,\ 8)\), que contiene a \(5\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Determina la serie de Taylor de \(f(x)=\ln x\) centrada en \(a=2\). (b) Halla su radio y su intervalo de convergencia, con los extremos. (c) Muestra que su suma es \(\ln x\) si \(0&lt;x&lt;4\). (d) Aproxima \(\ln 3\) con los términos hasta \(n=4\), usando \(\ln 2\approx 0{,}6931\).</p>
+    <details><summary>Pista</summary><div><p>En (a), usa el patrón del ejemplo 3 y evalúa en \(2\); el primer coeficiente es \(c_{0}=\ln 2\), que no es \(0\). En (c), escribe \(x=2\cdot\dfrac{x}{2}\) y \(\dfrac{x}{2}=1+\dfrac{x-2}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(f(2)=\ln 2\). Patrón del ejemplo 3: \(f^{(n)}(x)=\dfrac{(-1)^{n-1}\,(n-1)!}{x^{\,n}}\) para \(n\ge 1\). En \(a=2\): \(f^{(n)}(2)=\dfrac{(-1)^{n-1}\,(n-1)!}{2^{n}}\). Los primeros: \(\dfrac{1}{2},\ -\dfrac{1}{4},\ \dfrac{2}{8}=\dfrac{1}{4},\ -\dfrac{6}{16}=-\dfrac{3}{8}\).</li>
+        <li>(a) Coeficientes: \(c_{0}=\dfrac{\ln 2}{0!}=\ln 2\). Para \(n\ge 1\), con \(n!=n\cdot(n-1)!\): \(c_{n}=\dfrac{(-1)^{n-1}\,(n-1)!}{2^{n}\cdot n\cdot(n-1)!}=\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\). Los primeros: \(c_{1}=\dfrac{1}{2}\), \(c_{2}=-\dfrac{1}{8}\), \(c_{3}=\dfrac{1}{24}\), \(c_{4}=-\dfrac{1}{64}\).</li>
+        <li>(a) Serie de Taylor de \(\ln x\) centrada en \(2\): \[\ln 2+\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\,(x-2)^{n}=\ln 2+\dfrac{x-2}{2}-\dfrac{(x-2)^{2}}{8}+\dfrac{(x-2)^{3}}{24}-\cdots\]</li>
+        <li>(b) Se fija \(x\ne 2\). Tamaño del término (\(n\ge 1\)): \(\dfrac{|x-2|^{n}}{n\cdot 2^{n}}\). Cociente: \(\dfrac{|x-2|^{n+1}}{(n+1)\cdot 2^{\,n+1}}\cdot\dfrac{n\cdot 2^{n}}{|x-2|^{n}}=\dfrac{|x-2|}{2}\cdot\dfrac{n}{n+1}\). Como \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\): \(L=\dfrac{|x-2|}{2}\).</li>
+        <li>(b) \(L&lt;1\) es \(|x-2|&lt;2\), es decir, \(0&lt;x&lt;4\): converge absolutamente. Si \(|x-2|&gt;2\), diverge. Radio: \(R=2\). (El término \(\ln 2\) es uno solo: agregar un término no cambia la convergencia.)</li>
+        <li>(b) Extremo \(x=0\): \((x-2)^{n}=(-2)^{n}=(-1)^{n}\,2^{n}\). Término: \(\dfrac{(-1)^{n-1}(-1)^{n}\,2^{n}}{n\cdot 2^{n}}=\dfrac{(-1)^{2n-1}}{n}=-\dfrac{1}{n}\). Es el opuesto de la armónica: diverge. Extremo \(x=4\): \((x-2)^{n}=2^{n}\) y el término es \(\dfrac{(-1)^{n-1}}{n}\): la serie \(1-\dfrac{1}{2}+\dfrac{1}{3}-\cdots\) converge (hoja «Criterio de Leibniz»). Intervalo de convergencia: \((0,\ 4]\).</li>
+        <li>(c) Para \(x&gt;0\): \(x=2\cdot\dfrac{x}{2}\), y por la propiedad del logaritmo (citada), \(\ln x=\ln 2+\ln\dfrac{x}{2}\).</li>
+        <li>(c) \(\dfrac{x}{2}=\dfrac{2+(x-2)}{2}=1+\dfrac{x-2}{2}\). Se llama \(u=\dfrac{x-2}{2}\). La condición \(|u|&lt;1\) es \(|x-2|&lt;2\), es decir, \(0&lt;x&lt;4\).</li>
+        <li>(c) Serie conocida (ejemplo 3, primer camino): \(\ln(1+u)=\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n}\,u^{n}\) si \(|u|&lt;1\). Con \(u^{n}=\dfrac{(x-2)^{n}}{2^{n}}\): \(\ln\dfrac{x}{2}=\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\,(x-2)^{n}\).</li>
+        <li>(c) Entonces \(\ln x=\ln 2+\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\,(x-2)^{n}\) si \(0&lt;x&lt;4\): es la serie de (a). Depende, como el ejemplo 3, del teorema enunciado en la hoja «Representación de funciones como series de potencias».</li>
+        <li>(d) \(x=3\) está en \((0,\ 4)\); \(x-2=1\). Términos: \(\dfrac{1}{2}-\dfrac{1}{8}+\dfrac{1}{24}-\dfrac{1}{64}\). Denominador común \(192\): \(\dfrac{96}{192}-\dfrac{24}{192}+\dfrac{8}{192}-\dfrac{3}{192}=\dfrac{77}{192}\approx 0{,}4010\).</li>
+        <li>(d) \(\ln 3\approx 0{,}6931+0{,}4010=1{,}0941\). Con calculadora, \(\ln 3\approx 1{,}0986\). Distancia: \(|1{,}0986-1{,}0941|=0{,}0045\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un terreno cuadrado tiene \(26\) m² de área (dato inventado). Para cercarlo hay que conocer su lado, \(\sqrt{26}\) m, y no hay calculadora. Como \(\sqrt{25}=5\) se conoce, se usa \(f(x)=\sqrt{x}\) con centro \(a=25\). (a) Calcula los tres primeros términos de la serie de Taylor de \(f\) centrada en \(25\). (b) Con ellos, aproxima \(\sqrt{26}\). (c) Acota el error con la cota de Lagrange. (d) ¿Cuántos metros de cerca se necesitan, y con qué seguridad?</p>
+    <details><summary>Pista</summary><div><p>Escribe \(f(x)=x^{1/2}\) y deriva con la regla de la potencia. Para evaluar: \(25^{1/2}=5\), \(25^{3/2}=5^{3}=125\), \(25^{5/2}=5^{5}=3125\). En (c) hace falta la tercera derivada, que es positiva y decreciente para \(x&gt;0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Derivar \(f(x)=x^{1/2}\) (regla de la potencia, citada, \(x&gt;0\)): \(f'(x)=\dfrac{1}{2}\,x^{-1/2}\); \(f''(x)=\dfrac{1}{2}\cdot\left(-\dfrac{1}{2}\right)x^{-3/2}=-\dfrac{1}{4}\,x^{-3/2}\).</li>
+        <li>(a) Evaluar en \(a=25\): \(f(25)=5\). \(f'(25)=\dfrac{1}{2}\cdot\dfrac{1}{5}=\dfrac{1}{10}\). \(25^{3/2}=5^{3}=125\), y \(f''(25)=-\dfrac{1}{4}\cdot\dfrac{1}{125}=-\dfrac{1}{500}\).</li>
+        <li>(a) Coeficientes: \(c_{0}=\dfrac{5}{0!}=5\); \(c_{1}=\dfrac{1/10}{1!}=\dfrac{1}{10}\); \(c_{2}=\dfrac{-1/500}{2!}=-\dfrac{1}{500}:2=-\dfrac{1}{1000}\).</li>
+        <li>(a) Tres primeros términos: \(T_{2}(x)=5+\dfrac{1}{10}\,(x-25)-\dfrac{1}{1000}\,(x-25)^{2}\).</li>
+        <li>(b) En \(x=26\): \(x-25=1\) y \((x-25)^{2}=1\). \(T_{2}(26)=5+\dfrac{1}{10}-\dfrac{1}{1000}=5+0{,}1-0{,}001=5{,}099\).</li>
+        <li>(c) Tercera derivada: \(f'''(x)=-\dfrac{1}{4}\cdot\left(-\dfrac{3}{2}\right)x^{-5/2}=\dfrac{3}{8}\,x^{-5/2}=\dfrac{3}{8\,x^{5/2}}\). Es positiva.</li>
+        <li>(c) Para \(t\) entre \(25\) y \(26\): \(t\ge 25\), así que \(t^{5/2}\ge 25^{5/2}=5^{5}=3125\) y \(f'''(t)\le\dfrac{3}{8\cdot 3125}=\dfrac{3}{25000}\). Se toma \(M=\dfrac{3}{25000}\).</li>
+        <li>(c) Cota de Lagrange con \(a=25\), \(N=2\), \(x=26\): \(|R_{2}(26)|\le\dfrac{M}{3!}\cdot|26-25|^{3}=\dfrac{3}{25000}:6\cdot 1=\dfrac{3}{150000}=\dfrac{1}{50000}=0{,}00002\).</li>
+        <li>(c) Entonces \(5{,}099-0{,}00002\le\sqrt{26}\le 5{,}099+0{,}00002\), es decir, \(5{,}09898\le\sqrt{26}\le 5{,}09902\). Verificación al cuadrado: \(5{,}099^{2}=25{,}999801\), muy cerca de \(26\).</li>
+        <li>(d) Perímetro: \(4\) lados. \(4\cdot 5{,}099=20{,}396\) m. Error máximo: \(4\cdot 0{,}00002=0{,}00008\) m, menos de una décima de milímetro. Se necesitan unos \(20{,}40\) m de cerca.</li>
+        <li>Interpretación: se eligió el centro \(25\) porque ahí la función y sus derivadas se calculan a mano, y porque \(26\) está cerca. Lo que se usó es un polinomio de Taylor con su cota de error, que es un resultado seguro. Esta solución no determinó el término general de la serie de \(\sqrt{x}\), ni dónde converge, ni si suma \(\sqrt{x}\): esas preguntas quedan abiertas aquí.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H30 · v001 · Pendiente de APR</span>
+</footer>
+</article>

@@ -1,0 +1,269 @@
+<!--file:H32_series_de_maclaurin_de_ex_sin_x_y_cos_x.html-->
+<!--title:Series de Maclaurin de eˣ, sin(x) y cos(x)-->
+<!--id:ss-exp-sen-cos-->
+<!--tab:H32 Series de Maclaurin de eˣ, sin(x) y cos(x)-->
+<article class="sheet" id="ss-exp-sen-cos" data-hoja="L25 H32">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Series de Maclaurin de eˣ, sin(x) y cos(x)</b></li>
+    </ol>
+    <h1>Series de Maclaurin de eˣ, sin(x) y cos(x)</h1>
+    <p class="lede">Las tres series de Maclaurin más usadas se arman igual: se deriva la función, se evalúa cada derivada en \(0\) y se divide por el factorial. En las tres, la serie converge para <b>todo</b> \(x\) real y su suma es la función. (El seno se escribe aquí \(\operatorname{sen}x\); en inglés y en muchas calculadoras, \(\sin x\).) \[e^{x}=\sum_{n=0}^{\infty}\dfrac{x^{n}}{n!}\qquad\operatorname{sen}x=\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\qquad\cos x=\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se arma, en seis pasos, la serie de Maclaurin de \(\operatorname{sen}x\), y cómo sus sumas parciales siguen a la curva en una zona cada vez más ancha. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo (paso 1):</b> es la función \(y=\operatorname{sen}x\), con \(x\) en radianes. En horizontal va \(x\); en vertical, el valor. Arriba queda la pregunta: ¿qué serie de potencias la suma? El registro anota sus cuatro primeras derivadas: la cuarta es otra vez \(\operatorname{sen}x\).</li>
+    <li><b>Pasos 2 y 3, el centro y la recta azul:</b> el anillo burdeo marca el centro, \(x=0\). Ahí se evalúan las derivadas: salen \(0,\ 1,\ 0,\ -1\). Cada valor dividido por su factorial es un coeficiente. Con el primero que no es \(0\) se forma \(P_{1}=x\), la recta azul.</li>
+    <li><b>Paso 4, dos curvas nuevas:</b> \(P_{3}=x-\dfrac{x^{3}}{6}\) (verde) y \(P_{5}=x-\dfrac{x^{3}}{6}+\dfrac{x^{5}}{120}\) (naranja). Cada una sigue a la curva burdeo en una zona más ancha que la anterior y después se escapa.</li>
+    <li><b>Paso 5, línea negra fina:</b> es \(P_{17}\), la suma de nueve términos. Va pegada a la curva en todo el cuadro, de \(-6{,}5\) a \(6{,}5\).</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> la flecha doble dice que la igualdad vale en toda la recta, y la respuesta se escribe bajo la pregunta. La cuenta de abajo repite cada paso con todas sus operaciones, con una prueba en \(x=1\) y otra, lejos del centro, en \(x=3\). Conclusión: \(\operatorname{sen}x=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\) para todo \(x\) real.</li>
+  </ol>
+  <div class="stage" data-scene="esc3-idea"></div>
+  <ul class="keys">
+    <li><b>Burdeo:</b> la función \(y=\operatorname{sen}x\), y el centro \(x=0\), donde se evalúan las derivadas.</li>
+    <li><b>Azul, verde y naranja:</b> las sumas parciales \(P_{1}=x\), \(P_{3}=x-\dfrac{x^{3}}{6}\) y \(P_{5}=x-\dfrac{x^{3}}{6}+\dfrac{x^{5}}{120}\). El número de abajo es el grado: la mayor potencia de \(x\) que aparece.</li>
+    <li><b>Línea negra fina:</b> \(P_{17}\), la suma parcial de nueve términos (hasta \(\dfrac{x^{17}}{17!}\)).</li>
+    <li><b>Flecha doble:</b> no hay una franja fuera de la cual la serie deje de servir. La figura muestra solo un tramo de la recta; que vale para todo \(x\) se demuestra más abajo.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Lo que se va a hacer, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie de Maclaurin.</b> Si \(f\) tiene derivadas de todos los órdenes en \(0\), su serie de Maclaurin es la serie de potencias de centro \(0\) con coeficientes \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\): \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\] Aquí \(f^{(n)}\) es la derivada de orden \(n\); \(f^{(0)}=f\); \(0!=1\); y \(x^{0}=1\) también cuando \(x=0\) (convención de la hoja «Series de potencias»). Las hojas de series de Taylor y de Maclaurin de este mismo grupo tratan la definición general.</li>
+      <li><b>Sus sumas parciales son los polinomios de Maclaurin.</b> Al cortar la serie en la potencia \(x^{N}\) queda \(P_{N}(x)=\displaystyle\sum_{k=0}^{N}\dfrac{f^{(k)}(0)}{k!}\,x^{k}\), el polinomio de Maclaurin de grado \(N\) (hoja «Polinomios de Taylor y de Maclaurin», de Cálculo Integral, donde se demuestra de dónde sale el coeficiente \(\dfrac{f^{(k)}(0)}{k!}\)).</li>
+      <li><b>Procedimiento, igual para las tres funciones.</b> (1) Derivar hasta ver el patrón. (2) Evaluar cada derivada en \(0\). (3) Dividir por el factorial: coeficientes. (4) Escribir la serie con \(\Sigma\), desde \(n=0\). (5) Ver para qué \(x\) converge. (6) Ver si su suma es \(f(x)\).</li>
+      <li><b>Los pasos (5) y (6) son dos preguntas distintas.</b> Que la serie converja en un \(x\) dice que sus sumas parciales tienen un límite. <b>No dice que ese límite sea \(f(x)\).</b> Para saberlo hay que mirar la diferencia entre la función y la suma parcial, el <b>resto</b> \(R_{N}(x)=f(x)-P_{N}(x)\), y demostrar que tiene límite \(0\). Eso se hace en el recuadro «¿La suma es la función?».</li>
+      <li><b>Las derivadas que se usan (citadas).</b> \(\big(e^{x}\big)'=e^{x}\); \(\big(\operatorname{sen}x\big)'=\cos x\); \(\big(\cos x\big)'=-\operatorname{sen}x\), con \(x\) en radianes. Y los valores \(e^{0}=1\), \(\operatorname{sen}0=0\), \(\cos 0=1\).</li>
+      <li><b>Un lema que se usa varias veces (demostrado aquí).</b> Si \(0\le b_{n}\le c_{n}\) para todo \(n\) y \(\displaystyle\lim_{n\to\infty}c_{n}=0\), entonces \(\displaystyle\lim_{n\to\infty}b_{n}=0\). Demostración, con la definición de la hoja «Límite de una sucesión»: sea \(\varepsilon&gt;0\). Como \(c_{n}\) tiene límite \(0\), hay un \(N\) tal que \(|c_{n}-0|&lt;\varepsilon\) para todo \(n&gt;N\). Para esos \(n\): \(|b_{n}-0|=b_{n}\le c_{n}=|c_{n}-0|&lt;\varepsilon\). Entonces \(b_{n}\) tiene límite \(0\). Se le llamará <b>lema de comparación</b>.</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa como en la hoja de ese nombre. En esta hoja se usan <b>sin demostrar</b>: (1) las tres derivadas y los tres valores del paso 5, y la regla de la cadena en \(\big(e^{-t}\big)'=-e^{-t}\); (2) que \(e^{t}\) es creciente y positiva, que \(e^{-s}=\dfrac{1}{e^{s}}\), y que \(|\operatorname{sen}t|\le 1\) y \(|\cos t|\le 1\) para todo \(t\); (3) la <b>cota de Lagrange</b>, demostrada en la hoja «Cota de Lagrange para el error» (Cálculo Integral) para centro \(0\) y \(x&gt;0\): aquí se cita en ese caso y los \(x\) negativos se tratan aparte, sin apoyarse en lo que esa hoja no demuestra; (4) los criterios y teoremas de otras hojas, citados por su título: «Criterio del cociente para la convergencia», «Convergencia absoluta y condicional», «Criterio del enésimo término», «Criterio de Leibniz», «Series geométricas infinitas» y «Series de potencias»; (5) del álgebra de límites (enunciada en «Límite de una sucesión»): constante por sucesión y resta; \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\), y que correr el índice no cambia el límite (teorema 3 de esa hoja); (6) que agregar o quitar una cantidad finita de términos no cambia que una serie converja, y que intercalar términos iguales a \(0\) no cambia su suma; (7) que si todos los términos de una sucesión son menores que un número y la sucesión tiene límite, el límite no supera ese número, y que el límite de una sucesión creciente no es menor que ninguno de sus términos (ejemplo 1, pasos 12 y 14); (8) el <b>teorema de derivación término a término</b> de una serie de potencias, que la hoja «Representación de funciones como series de potencias» solo enuncia: aquí se usa únicamente en el ejemplo 4 y en el ejercicio B, como comprobación; ninguna de las tres series depende de él. Los valores de \(e\), \(\operatorname{sen}\) y \(\cos\) dados con decimales son aproximaciones de calculadora, en radianes, y por eso llevan el signo \(\approx\). En el ejercicio C, las medidas son datos inventados y el péndulo es un modelo.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>¿La suma es la función? El resto y la cota de Lagrange</h3>
+    <p>En los ejemplos 1, 2 y 3 se demuestra, con el criterio del cociente, que las tres series convergen para todo \(x\). Aquí se demuestra lo que falta: que su suma es \(e^{x}\), \(\operatorname{sen}x\) y \(\cos x\).</p>
+    <ol class="steps">
+      <li><b>El resto.</b> \(R_{N}(x)=f(x)-P_{N}(x)\). Despejando, \(P_{N}(x)=f(x)-R_{N}(x)\). Si, con \(x\) fijo, \(\displaystyle\lim_{N\to\infty}R_{N}(x)=0\), entonces por el límite de una resta \(P_{N}(x)\) tiene límite \(f(x)-0=f(x)\): la serie converge en ese \(x\) y su suma es \(f(x)\).</li>
+      <li><b>Cota de Lagrange</b> (hoja «Cota de Lagrange para el error», demostrada ahí para \(x&gt;0\)). Si \(|f^{(N+1)}(t)|\le M\) para todo \(t\) entre \(0\) y \(x\), entonces \[|R_{N}(x)|\le\dfrac{M}{(N+1)!}\,x^{N+1}\]</li>
+      <li><b>Hecho clave: para cada número \(x\), \(\displaystyle\lim_{k\to\infty}\dfrac{|x|^{k}}{k!}=0\).</b> La serie \(\displaystyle\sum_{k=0}^{\infty}\dfrac{|x|^{k}}{k!}\) converge: es la serie del ejemplo 1 con \(|x|\) en lugar de \(x\) (ejemplo 1, pasos 5 a 9; también hoja «Series de potencias», ejemplo 2). Si una serie converge, sus términos tienen límite \(0\) (teorema de la hoja «Criterio del enésimo término»; empezar en \(k=0\) o en \(k=1\) no cambia la convergencia). Entonces \(\dfrac{|x|^{k}}{k!}\) tiene límite \(0\). El factorial termina ganándole a cualquier potencia.</li>
+      <li><b>\(\operatorname{sen}x\) y \(\cos x\), con \(x&gt;0\).</b> Todas las derivadas de \(\operatorname{sen}\) y de \(\cos\) son \(\operatorname{sen}t\), \(\cos t\), \(-\operatorname{sen}t\) o \(-\cos t\) (ejemplos 2 y 3, paso 1). Su valor absoluto no pasa de \(1\): sirve \(M=1\), para todo \(N\). Cota de Lagrange: \(0\le|R_{N}(x)|\le\dfrac{x^{N+1}}{(N+1)!}\).</li>
+      <li>Por el paso 3 y correr el índice, \(\dfrac{x^{N+1}}{(N+1)!}\) tiene límite \(0\). Lema de comparación: \(|R_{N}(x)|\) tiene límite \(0\). Y si \(|R_{N}(x)|\) tiene límite \(0\), también \(R_{N}(x)\), porque las dos condiciones se escriben igual: \(\big||R_{N}(x)|-0\big|=|R_{N}(x)-0|\).</li>
+      <li><b>\(\operatorname{sen}x\) y \(\cos x\), con \(x&lt;0\).</b> Se usa la paridad. En \(P_{N}\) del seno solo hay potencias impares (ejemplo 2), y \((-x)^{k}=-x^{k}\) si \(k\) es impar: \(P_{N}(-x)=-P_{N}(x)\). Además \(\operatorname{sen}(-x)=-\operatorname{sen}x\) (citada). Entonces \(R_{N}(-x)=\operatorname{sen}(-x)-P_{N}(-x)=-\operatorname{sen}x+P_{N}(x)=-R_{N}(x)\), y \(|R_{N}(-x)|=|R_{N}(x)|\): el resto en un número negativo mide lo mismo que en su opuesto, que es positivo, y tiene límite \(0\). Para el coseno, solo potencias pares, \((-x)^{k}=x^{k}\) y \(\cos(-x)=\cos x\) (citada): \(R_{N}(-x)=R_{N}(x)\). Vale, para todo \(x\): \[|R_{N}(x)|\le\dfrac{|x|^{N+1}}{(N+1)!}\]</li>
+      <li><b>\(x=0\).</b> \(P_{N}(0)=f(0)\), porque todos los términos con \(x\) valen \(0\). Entonces \(R_{N}(0)=0\) para todo \(N\).</li>
+      <li><b>\(e^{x}\), con \(x&gt;0\).</b> Todas las derivadas son \(e^{t}\) (ejemplo 1, paso 1). Como \(e^{t}\) es creciente y positiva (citado), para \(t\) entre \(0\) y \(x\) es \(0&lt;e^{t}\le e^{x}\): sirve \(M=e^{x}\), que no depende de \(N\). Cota de Lagrange: \(0\le|R_{N}(x)|\le e^{x}\cdot\dfrac{x^{N+1}}{(N+1)!}\). Constante por sucesión: el lado derecho tiene límite \(e^{x}\cdot 0=0\). Lema de comparación: \(R_{N}(x)\) tiene límite \(0\).</li>
+      <li><b>\(e^{x}\), con \(x&lt;0\).</b> Se escribe \(t=-x\), que es positivo, y se usa la función \(g(t)=e^{-t}\), de modo que \(g(t)=e^{x}\). Regla de la cadena (citada): \(g'(t)=-e^{-t}\), \(g''(t)=e^{-t}\), y en general \(g^{(k)}(t)=(-1)^{k}e^{-t}\). En \(0\): \(g^{(k)}(0)=(-1)^{k}\). El polinomio de Maclaurin de \(g\) es \(\displaystyle\sum_{k=0}^{N}\dfrac{(-1)^{k}}{k!}\,t^{k}=\sum_{k=0}^{N}\dfrac{(-t)^{k}}{k!}=\sum_{k=0}^{N}\dfrac{x^{k}}{k!}=P_{N}(x)\), porque \((-1)^{k}t^{k}=(-t)^{k}=x^{k}\).</li>
+      <li>Para \(s\ge 0\): \(e^{s}\ge e^{0}=1\) (creciente), así que \(|g^{(N+1)}(s)|=e^{-s}=\dfrac{1}{e^{s}}\le 1\). Sirve \(M=1\). Cota de Lagrange para \(g\) en \(t&gt;0\): \(|e^{x}-P_{N}(x)|=|g(t)-P_{N}(x)|\le\dfrac{t^{N+1}}{(N+1)!}=\dfrac{|x|^{N+1}}{(N+1)!}\), que tiene límite \(0\). Lema de comparación: \(R_{N}(x)\) tiene límite \(0\).</li>
+      <li><b>Conclusión.</b> En las tres funciones, para cada \(x\) real, \(\displaystyle\lim_{N\to\infty}R_{N}(x)=0\). Por el paso 1, las tres igualdades de la entradilla valen <b>para todo \(x\) real</b>.</li>
+    </ol>
+    <p><b>Con la serie escrita sin los términos que valen \(0\).</b> En el seno, la suma de \(n=0\) a \(n=m\) es \(P_{2m+1}(x)\), y como el coeficiente de \(x^{2m+2}\) es \(0\), también es \(P_{2m+2}(x)\). Su distancia a \(\operatorname{sen}x\) no pasa de \(\dfrac{|x|^{2m+3}}{(2m+3)!}\) (paso 6 con \(N=2m+2\)). Esa cota tiene límite \(0\) cuando \(m\) crece: si \(\dfrac{|x|^{k}}{k!}&lt;\varepsilon\) para todo \(k&gt;K\), entonces para \(m&gt;K\) es \(2m+3&gt;K\) y la cota es menor que \(\varepsilon\). En el coseno, la suma de \(n=0\) a \(n=m\) es \(P_{2m}(x)=P_{2m+1}(x)\) y su distancia a \(\cos x\) no pasa de \(\dfrac{|x|^{2m+2}}{(2m+2)!}\).</p>
+    <p><b>Aviso de rigor.</b> No es una obviedad que la serie de Maclaurin de una función sume esa función. Hay funciones con derivadas de todos los órdenes cuya serie de Maclaurin converge para todo \(x\) y, sin embargo, suma otra cosa: el ejemplo clásico es \(f(x)=e^{-1/x^{2}}\) para \(x\ne 0\), con \(f(0)=0\); todas sus derivadas en \(0\) valen \(0\), su serie de Maclaurin es \(0+0+0+\cdots\), y la función no vale \(0\) fuera de \(x=0\). Ese ejemplo <b>solo se menciona</b>: aquí no se demuestra. Por eso el paso (6) del procedimiento no se puede saltar.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Cerca y lejos del centro. Número ↔ figura</h3>
+    <p>La serie de \(\cos x\), cortada en tres términos (\(P_{4}\)) y en cinco (\(P_{8}\)), comparada con la función en seis valores de \(x\): \(-2\), \(0\), \(1\), \(2\), \(3\) y \(4\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero las tres curvas:</b> en burdeo, la función \(y=\cos x\); en azul, \(P_{4}=1-\dfrac{x^{2}}{2}+\dfrac{x^{4}}{24}\); en verde, \(P_{8}\), que agrega \(-\dfrac{x^{6}}{720}+\dfrac{x^{8}}{40320}\). Cerca de \(x=0\) las tres van juntas.</li>
+      <li><b>Mira después la línea punteada vertical:</b> marca el \(x\) elegido. Sobre ella hay un punto en cada curva. Arriba del dibujo se leen los tres valores. Los trazos naranjas unen el punto de la función con el de cada suma parcial: su largo es la distancia entre ellos (grueso: con \(P_{4}\); delgado: con \(P_{8}\)).</li>
+      <li><b>Mueve el deslizador \(x\):</b> en \(x=0\), el centro, los tres puntos coinciden. En \(1\) y en \(2\) casi coinciden. En \(-2\) pasa lo mismo que en \(2\). En \(3\) y en \(4\), lejos del centro, el punto azul se separa mucho y el verde queda cerca.</li>
+      <li><b>Lee las frases bajo el dibujo:</b> dan la distancia con tres y con cinco términos, y dicen si el \(x\) está cerca o lejos del centro.</li>
+      <li><b>Cuenta de abajo:</b> para el \(x\) elegido, las potencias, cada término, \(P_{4}\) con denominador común, el valor de la función, la distancia, los dos términos siguientes, \(P_{8}\), la nueva distancia, la cota de Lagrange y qué significa. Conclusión: a diferencia de la serie de \(\ln(1+x)\), que fuera de su intervalo se aleja de la función, esta sirve para todo \(x\); lejos del centro solo hacen falta más términos.</li>
+    </ol>
+    <div class="stage" data-scene="esc3-vivo"></div>
+    <ul class="keys">
+      <li><b>Burdeo:</b> la función \(y=\cos x\).</li>
+      <li><b>Azul y verde:</b> las sumas parciales \(P_{4}\) (tres términos) y \(P_{8}\) (cinco términos) de la serie \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}\).</li>
+      <li><b>Naranja:</b> la distancia entre la función y cada suma parcial en el \(x\) elegido.</li>
+      <li><b>Caso límite (\(x=0\), el centro):</b> solo queda el primer término, \(1\), y \(\cos 0=1\): la distancia es \(0\) con cualquier número de términos.</li>
+      <li><b>La cota:</b> como el coeficiente de \(x^{9}\) es \(0\), \(P_{8}=P_{9}\), y el recuadro anterior (paso 6, con \(N=9\)) da \(|\cos x-P_{8}(x)|\le\dfrac{|x|^{10}}{10!}\), con \(10!=3628800\).</li>
+      <li><b>Sobre los decimales:</b> los valores se redondean a cuatro decimales y las cuentas se hacen con esos valores redondeados; por eso llevan \(\approx\). En \(x=1\) la distancia con cinco términos sale \(0{,}0000\): no es cero, es menor que media diezmilésima.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(e^{x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{n!}\) para todo \(x\), y el número \(e\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Derivadas. \(f(x)=e^{x}\) y \(\big(e^{x}\big)'=e^{x}\) (citada). Al derivar se obtiene la misma función, así que cada derivada es \(e^{x}\): \(f^{(n)}(x)=e^{x}\) para todo \(n\ge 0\).</li>
+    <li>Valores en \(0\): \(f^{(n)}(0)=e^{0}=1\) para todo \(n\ge 0\).</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{f^{(n)}(0)}{n!}=\dfrac{1}{n!}\). Los primeros: \(c_{0}=\dfrac{1}{0!}=1\); \(c_{1}=\dfrac{1}{1!}=1\); \(c_{2}=\dfrac{1}{2!}=\dfrac{1}{2}\); \(c_{3}=\dfrac{1}{3!}=\dfrac{1}{6}\); \(c_{4}=\dfrac{1}{4!}=\dfrac{1}{24}\).</li>
+    <li>Serie de Maclaurin: \[\sum_{n=0}^{\infty}\dfrac{x^{n}}{n!}=1+x+\dfrac{x^{2}}{2}+\dfrac{x^{3}}{6}+\dfrac{x^{4}}{24}+\cdots\]</li>
+    <li>Convergencia, en \(x=0\): la serie es \(1+0+0+\cdots\) y su suma es \(1\).</li>
+    <li>Convergencia, con \(x\ne 0\) fijo. Término: \(u_{n}=\dfrac{x^{n}}{n!}\), distinto de \(0\). Siguiente: \(u_{n+1}=\dfrac{x^{n+1}}{(n+1)!}\). Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x^{n+1}}{(n+1)!}\cdot\dfrac{n!}{x^{n}}\).</li>
+    <li>Se simplifica. Potencias: \(\dfrac{x^{n+1}}{x^{n}}=x\). Factoriales: \((n+1)!=(n+1)\cdot n!\), así que \(\dfrac{n!}{(n+1)!}=\dfrac{1}{n+1}\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x}{n+1}\), y en valor absoluto, \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=|x|\cdot\dfrac{1}{n+1}\).</li>
+    <li>Límite. \(\dfrac{1}{n}\) tiene límite \(0\); corriendo el índice, \(\dfrac{1}{n+1}\) también. Constante por sucesión: \(L=|x|\cdot 0=0\).</li>
+    <li>\(L=0&lt;1\), sea cual sea \(x\ne 0\): por el criterio del cociente, la serie converge absolutamente, y entonces converge (hoja «Convergencia absoluta y condicional»). Con el paso 5: <b>converge para todo \(x\) real</b>. Es la misma cuenta del ejemplo 2 de la hoja «Series de potencias».</li>
+    <li>La suma. Por el recuadro «¿La suma es la función?» (pasos 7 a 10), el resto tiene límite \(0\) para todo \(x\). Entonces \[e^{x}=\sum_{n=0}^{\infty}\dfrac{x^{n}}{n!}\qquad\text{para todo }x\text{ real}\]</li>
+    <li>El número \(e\). Con \(x=1\): \(e=e^{1}=\displaystyle\sum_{n=0}^{\infty}\dfrac{1}{n!}=1+1+\dfrac{1}{2}+\dfrac{1}{6}+\dfrac{1}{24}+\dfrac{1}{120}+\dfrac{1}{720}+\cdots\) Sumas parciales, \(S_{N}\) hasta el término \(\dfrac{1}{N!}\): \(S_{0}=1\); \(S_{1}=1+1=2\); \(S_{2}=2+\dfrac{1}{2}=\dfrac{5}{2}\); \(S_{3}=\dfrac{5}{2}+\dfrac{1}{6}=\dfrac{15}{6}+\dfrac{1}{6}=\dfrac{16}{6}=\dfrac{8}{3}\); \(S_{4}=\dfrac{8}{3}+\dfrac{1}{24}=\dfrac{64}{24}+\dfrac{1}{24}=\dfrac{65}{24}\); \(S_{5}=\dfrac{65}{24}+\dfrac{1}{120}=\dfrac{325}{120}+\dfrac{1}{120}=\dfrac{326}{120}=\dfrac{163}{60}\); \(S_{6}=\dfrac{163}{60}+\dfrac{1}{720}=\dfrac{1956}{720}+\dfrac{1}{720}=\dfrac{1957}{720}\approx 2{,}71806\).</li>
+    <li>Un tope para \(e\). Si \(n\ge 1\), \(n!=1\cdot 2\cdot 3\cdots n\) tiene \(n-1\) factores mayores o iguales que \(2\): \(n!\ge 2^{\,n-1}\), y \(\dfrac{1}{n!}\le\dfrac{1}{2^{\,n-1}}\). Entonces \(S_{N}\le 1+\left(1+\dfrac{1}{2}+\dfrac{1}{4}+\cdots+\dfrac{1}{2^{\,N-1}}\right)\). El paréntesis es una suma parcial geométrica con \(a=1\) y \(r=\dfrac{1}{2}\) (hoja «Series geométricas infinitas»): vale \(\dfrac{1-\left(\frac{1}{2}\right)^{N}}{1-\frac{1}{2}}=2-\dfrac{1}{2^{\,N-1}}\), menor que \(2\). Entonces \(S_{N}&lt;1+2=3\) para todo \(N\), y su límite cumple \(e\le 3\) (aviso de rigor, 7).</li>
+    <li>Cota del error de \(S_{6}\). Cota de Lagrange con \(N=6\), \(x=1\) y \(M=e^{1}\le 3\): \(|e-S_{6}|\le\dfrac{3}{7!}\cdot 1^{7}=\dfrac{3}{5040}=\dfrac{1}{1680}\approx 0{,}0006\).</li>
+    <li>Además \(e&gt;S_{6}\), porque \(S_{7}=S_{6}+\dfrac{1}{5040}\) ya es mayor y las sumas parciales, que suman términos positivos, crecen hacia \(e\). Entonces \(2{,}7180&lt;e&lt;2{,}71806+0{,}0006=2{,}71866\): \(e\approx 2{,}718\), con error menor que \(0{,}001\). Con calculadora, \(e\approx 2{,}71828\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\operatorname{sen}x=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\) para todo \(x\), y \(\operatorname{sen}\dfrac{1}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Derivadas (con las dos citadas). \(f(x)=\operatorname{sen}x\); \(f'(x)=\cos x\); \(f''(x)=\big(\cos x\big)'=-\operatorname{sen}x\); \(f'''(x)=\big(-\operatorname{sen}x\big)'=-\cos x\); \(f^{(4)}(x)=\big(-\cos x\big)'=-(-\operatorname{sen}x)=\operatorname{sen}x\). La cuarta derivada es \(f\): desde ahí se repiten las mismas cuatro. Es un <b>ciclo de 4</b>: \(f^{(k+4)}=f^{(k)}\).</li>
+    <li>Valores en \(0\), con \(\operatorname{sen}0=0\) y \(\cos 0=1\): \(f(0)=0\); \(f'(0)=1\); \(f''(0)=-0=0\); \(f'''(0)=-1\). Y se repiten: \(f^{(4)}(0)=0\); \(f^{(5)}(0)=1\); \(f^{(6)}(0)=0\); \(f^{(7)}(0)=-1\).</li>
+    <li>El patrón. Orden par, \(k=2n\): el valor es \(0\). Orden impar, \(k=2n+1\): los valores son \(1\) (\(k=1\), \(n=0\)), \(-1\) (\(k=3\), \(n=1\)), \(1\) (\(k=5\), \(n=2\)), \(-1\) (\(k=7\), \(n=3\)): cada vez que \(n\) sube en \(1\), el orden sube en \(2\), medio ciclo, y el valor cambia de signo. Entonces \(f^{(2n+1)}(0)=(-1)^{n}\).</li>
+    <li>Coeficientes: \(c_{2n}=\dfrac{0}{(2n)!}=0\) y \(c_{2n+1}=\dfrac{(-1)^{n}}{(2n+1)!}\). Los primeros: \(c_{1}=\dfrac{1}{1!}=1\); \(c_{3}=\dfrac{-1}{3!}=-\dfrac{1}{6}\); \(c_{5}=\dfrac{1}{5!}=\dfrac{1}{120}\); \(c_{7}=\dfrac{-1}{7!}=-\dfrac{1}{5040}\).</li>
+    <li>Serie de Maclaurin: \(0+x+0-\dfrac{x^{3}}{6}+0+\dfrac{x^{5}}{120}+0-\cdots\) Los términos que valen \(0\) no cambian la suma y se dejan de escribir. Quedan las potencias impares: \[\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}=x-\dfrac{x^{3}}{6}+\dfrac{x^{5}}{120}-\dfrac{x^{7}}{5040}+\cdots\]</li>
+    <li>Convergencia, en \(x=0\): todos los términos valen \(0\) y la suma es \(0\). (Ahí no se puede usar el criterio del cociente, que pide términos distintos de \(0\).)</li>
+    <li>Convergencia, con \(x\ne 0\) fijo. Término: \(u_{n}=(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\), distinto de \(0\), de tamaño \(|u_{n}|=\dfrac{|x|^{2n+1}}{(2n+1)!}\). En el siguiente, el exponente es \(2(n+1)+1=2n+3\): \(|u_{n+1}|=\dfrac{|x|^{2n+3}}{(2n+3)!}\). Cociente: \(\dfrac{|u_{n+1}|}{|u_{n}|}=\dfrac{|x|^{2n+3}}{(2n+3)!}\cdot\dfrac{(2n+1)!}{|x|^{2n+1}}\).</li>
+    <li>Se simplifica. Potencias: \(\dfrac{|x|^{2n+3}}{|x|^{2n+1}}=|x|^{2}=x^{2}\). Factoriales: \((2n+3)!=(2n+3)(2n+2)\cdot(2n+1)!\), así que \(\dfrac{(2n+1)!}{(2n+3)!}=\dfrac{1}{(2n+2)(2n+3)}\). Queda \(\dfrac{|u_{n+1}|}{|u_{n}|}=\dfrac{x^{2}}{(2n+2)(2n+3)}\).</li>
+    <li>Límite. Para \(n\ge 1\): \(2n+2\ge n\) y \(2n+3\ge 1\), así que \((2n+2)(2n+3)\ge n\) y \(0&lt;\dfrac{x^{2}}{(2n+2)(2n+3)}\le x^{2}\cdot\dfrac{1}{n}\). El lado derecho tiene límite \(x^{2}\cdot 0=0\) (constante por sucesión). Lema de comparación: \(L=0\).</li>
+    <li>\(L=0&lt;1\), sea cual sea \(x\ne 0\): por el criterio del cociente, la serie converge absolutamente, y entonces converge. Con el paso 6: <b>converge para todo \(x\) real</b>.</li>
+    <li>La suma. Por el recuadro «¿La suma es la función?» (pasos 4 a 7), el resto tiene límite \(0\) para todo \(x\). Entonces \[\operatorname{sen}x=\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\qquad\text{para todo }x\text{ real}\]</li>
+    <li>Un valor: \(\operatorname{sen}\dfrac{1}{2}\) (medio radián). La serie es alternante, \(b_{1}-b_{2}+b_{3}-\cdots\), con \(b_{k}=\dfrac{(1/2)^{2k-1}}{(2k-1)!}\). \(b_{1}=\dfrac{1}{2}\). \(\left(\dfrac{1}{2}\right)^{3}=\dfrac{1}{8}\) y \(3!=6\): \(b_{2}=\dfrac{1}{8}:6=\dfrac{1}{48}\). \(\left(\dfrac{1}{2}\right)^{5}=\dfrac{1}{32}\) y \(5!=120\): \(b_{3}=\dfrac{1}{32}:120=\dfrac{1}{3840}\).</li>
+    <li>Las tres condiciones del criterio de Leibniz. Positivos: sí, cada \(b_{k}\) es un cociente de positivos. Decrecientes: \(\dfrac{b_{k+1}}{b_{k}}=\dfrac{(1/2)^{2}}{(2k)(2k+1)}=\dfrac{1}{4\cdot 2k\cdot(2k+1)}\) (la cuenta del paso 8, con \(n=k-1\)), que es menor que \(1\); entonces \(b_{k+1}&lt;b_{k}\). Límite \(0\): \(\left(\dfrac{1}{2}\right)^{2k-1}\le 1\) y \((2k-1)!\ge 2k-1\ge k\), así que \(0&lt;b_{k}\le\dfrac{1}{k}\); lema de comparación.</li>
+    <li>Dos términos: \(S_{2}=\dfrac{1}{2}-\dfrac{1}{48}=\dfrac{24}{48}-\dfrac{1}{48}=\dfrac{23}{48}\approx 0{,}47917\). Cota del error (hoja «Criterio de Leibniz»): \(\left|\operatorname{sen}\dfrac{1}{2}-S_{2}\right|\le b_{3}=\dfrac{1}{3840}\approx 0{,}00026\).</li>
+    <li>El mismo criterio da \(S_{2}\le\operatorname{sen}\dfrac{1}{2}\le S_{3}\), con \(S_{3}=\dfrac{23}{48}+\dfrac{1}{3840}=\dfrac{1840}{3840}+\dfrac{1}{3840}=\dfrac{1841}{3840}\approx 0{,}47943\). Entonces \(0{,}47917\le\operatorname{sen}\dfrac{1}{2}\le 0{,}47943\), aproximadamente. Con calculadora, en radianes: \(\operatorname{sen}(0{,}5)\approx 0{,}47943\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\cos x=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}\) para todo \(x\), y \(\cos 1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Derivadas. \(f(x)=\cos x\); \(f'(x)=-\operatorname{sen}x\); \(f''(x)=\big(-\operatorname{sen}x\big)'=-\cos x\); \(f'''(x)=\big(-\cos x\big)'=-(-\operatorname{sen}x)=\operatorname{sen}x\); \(f^{(4)}(x)=\big(\operatorname{sen}x\big)'=\cos x\). Otra vez un ciclo de 4.</li>
+    <li>Valores en \(0\): \(f(0)=\cos 0=1\); \(f'(0)=-\operatorname{sen}0=0\); \(f''(0)=-\cos 0=-1\); \(f'''(0)=\operatorname{sen}0=0\). Y se repiten: \(1,\ 0,\ -1,\ 0,\ \ldots\)</li>
+    <li>El patrón. Orden impar, \(k=2n+1\): el valor es \(0\). Orden par, \(k=2n\): \(1\) (\(k=0\), \(n=0\)), \(-1\) (\(k=2\), \(n=1\)), \(1\) (\(k=4\), \(n=2\)), \(-1\) (\(k=6\), \(n=3\)); el signo cambia cada medio ciclo. Entonces \(f^{(2n)}(0)=(-1)^{n}\).</li>
+    <li>Coeficientes: \(c_{2n+1}=0\) y \(c_{2n}=\dfrac{(-1)^{n}}{(2n)!}\). Los primeros: \(c_{0}=\dfrac{1}{0!}=1\); \(c_{2}=\dfrac{-1}{2!}=-\dfrac{1}{2}\); \(c_{4}=\dfrac{1}{4!}=\dfrac{1}{24}\); \(c_{6}=\dfrac{-1}{6!}=-\dfrac{1}{720}\).</li>
+    <li>Serie de Maclaurin, sin los términos que valen \(0\): \[\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}=1-\dfrac{x^{2}}{2}+\dfrac{x^{4}}{24}-\dfrac{x^{6}}{720}+\cdots\]</li>
+    <li>Convergencia, en \(x=0\): el primer término es \(\dfrac{x^{0}}{0!}=1\) y los demás valen \(0\); la suma es \(1\).</li>
+    <li>Convergencia, con \(x\ne 0\) fijo. Tamaño del término: \(|u_{n}|=\dfrac{|x|^{2n}}{(2n)!}\), distinto de \(0\). En el siguiente, el exponente es \(2(n+1)=2n+2\): \(|u_{n+1}|=\dfrac{|x|^{2n+2}}{(2n+2)!}\). Cociente: \(\dfrac{|u_{n+1}|}{|u_{n}|}=\dfrac{|x|^{2n+2}}{(2n+2)!}\cdot\dfrac{(2n)!}{|x|^{2n}}\).</li>
+    <li>Se simplifica. Potencias: \(\dfrac{|x|^{2n+2}}{|x|^{2n}}=x^{2}\). Factoriales: \((2n+2)!=(2n+2)(2n+1)\cdot(2n)!\). Queda \(\dfrac{|u_{n+1}|}{|u_{n}|}=\dfrac{x^{2}}{(2n+1)(2n+2)}\).</li>
+    <li>Límite. Para \(n\ge 1\): \(2n+1\ge n\) y \(2n+2\ge 1\), así que \(0&lt;\dfrac{x^{2}}{(2n+1)(2n+2)}\le x^{2}\cdot\dfrac{1}{n}\), que tiene límite \(0\). Lema de comparación: \(L=0\).</li>
+    <li>\(L=0&lt;1\): por el criterio del cociente, la serie converge absolutamente, y entonces converge, para todo \(x\ne 0\). Con el paso 6: <b>converge para todo \(x\) real</b>.</li>
+    <li>La suma. Por el recuadro «¿La suma es la función?» (pasos 4 a 7): \[\cos x=\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}\qquad\text{para todo }x\text{ real}\]</li>
+    <li>Un valor: \(\cos 1\) (un radián). La serie es \(1-\dfrac{1}{2}+\dfrac{1}{24}-\dfrac{1}{720}+\cdots\), alternante con \(b_{k}=\dfrac{1}{(2k-2)!}\): \(b_{1}=\dfrac{1}{0!}=1\), \(b_{2}=\dfrac{1}{2!}=\dfrac{1}{2}\), \(b_{3}=\dfrac{1}{4!}=\dfrac{1}{24}\), \(b_{4}=\dfrac{1}{6!}=\dfrac{1}{720}\).</li>
+    <li>Condiciones de Leibniz. Positivos: sí. Decrecientes: \(\dfrac{b_{k+1}}{b_{k}}=\dfrac{(2k-2)!}{(2k)!}=\dfrac{1}{(2k-1)(2k)}\le\dfrac{1}{2}&lt;1\). Límite \(0\): \(b_{1}=1\) y, para \(k\ge 2\), \((2k-2)!\ge 2k-2\ge k\); entonces \(0&lt;b_{k}\le\dfrac{1}{k}\) para todo \(k\ge 1\); lema de comparación.</li>
+    <li>Tres términos: \(S_{3}=1-\dfrac{1}{2}+\dfrac{1}{24}=\dfrac{24}{24}-\dfrac{12}{24}+\dfrac{1}{24}=\dfrac{13}{24}\approx 0{,}54167\). Cota del error: \(|\cos 1-S_{3}|\le b_{4}=\dfrac{1}{720}\approx 0{,}00139\).</li>
+    <li>Y \(S_{4}\le\cos 1\le S_{3}\), con \(S_{4}=\dfrac{13}{24}-\dfrac{1}{720}=\dfrac{390}{720}-\dfrac{1}{720}=\dfrac{389}{720}\approx 0{,}54028\). Con calculadora, en radianes: \(\cos 1\approx 0{,}54030\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: cómo se relacionan las tres series (derivar término a término y paridad)</h3>
+  <div class="body">
+  <p><b>(a)</b> Al derivar término a término la serie de \(\operatorname{sen}x\) sale la de \(\cos x\).</p>
+  <ol class="steps">
+    <li>Serie del seno (ejemplo 2): \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\). Converge para todo \(x\): radio de convergencia infinito.</li>
+    <li>Derivada de cada término, con \(\big(x^{k}\big)'=k\,x^{k-1}\) (citada): \(\left((-1)^{n}\dfrac{x^{2n+1}}{(2n+1)!}\right)'=(-1)^{n}\dfrac{(2n+1)\,x^{2n}}{(2n+1)!}\).</li>
+    <li>Factorial: \((2n+1)!=(2n+1)\cdot(2n)!\), así que \(\dfrac{2n+1}{(2n+1)!}=\dfrac{1}{(2n)!}\). Cada término derivado es \((-1)^{n}\dfrac{x^{2n}}{(2n)!}\).</li>
+    <li>La serie derivada es \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}=1-\dfrac{x^{2}}{2}+\dfrac{x^{4}}{24}-\cdots\): exactamente la serie del coseno (ejemplo 3). La suma sigue empezando en \(n=0\) porque el primer término del seno, \(x\), no es constante: su derivada es \(1\).</li>
+    <li>Qué dice esto. El teorema de derivación término a término (hoja «Representación de funciones como series de potencias», donde <b>solo se enuncia</b>) asegura que la derivada de la suma es la suma de las derivadas. Con él, la cuenta anterior dice \(\big(\operatorname{sen}x\big)'=\cos x\), que es la derivada citada. Aquí sirve de <b>comprobación</b>: las dos series se obtuvieron por separado, en los ejemplos 2 y 3, sin ese teorema.</li>
+  </ol>
+  <p><b>(b)</b> La serie de \(e^{x}\), derivada término a término, es ella misma.</p>
+  <ol class="steps">
+    <li>Serie (ejemplo 1): \(\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{n!}\). Término \(n=0\): es la constante \(1\), con derivada \(0\).</li>
+    <li>Para \(n\ge 1\): \(\left(\dfrac{x^{n}}{n!}\right)'=\dfrac{n\,x^{n-1}}{n!}\). Como \(n!=n\cdot(n-1)!\), queda \(\dfrac{x^{n-1}}{(n-1)!}\).</li>
+    <li>Serie derivada: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{x^{n-1}}{(n-1)!}\). Cambio de índice, con \(m=n-1\): \(n=1\) corresponde a \(m=0\), y queda \(\displaystyle\sum_{m=0}^{\infty}\dfrac{x^{m}}{m!}\).</li>
+    <li>Es la misma serie: \(0+1+x+\dfrac{x^{2}}{2}+\cdots\) Cada término derivado es el término anterior. Coincide con \(\big(e^{x}\big)'=e^{x}\) (misma advertencia del paso 5 de la parte a).</li>
+  </ol>
+  <p><b>(c)</b> Paridad: el seno es impar y el coseno es par.</p>
+  <ol class="steps">
+    <li>Seno: solo potencias impares. \((-x)^{2n+1}=(-1)^{2n+1}x^{2n+1}=-x^{2n+1}\), porque \(2n+1\) es impar. Al cambiar \(x\) por \(-x\), cada término cambia de signo, y con él cada suma parcial: \(s_{m}(-x)=-s_{m}(x)\).</li>
+    <li>Constante por sucesión, con la constante \(-1\): el límite de \(-s_{m}(x)\) es \(-\operatorname{sen}x\). Entonces \(\operatorname{sen}(-x)=-\operatorname{sen}x\): función <b>impar</b>.</li>
+    <li>Coseno: solo potencias pares. \((-x)^{2n}=(-1)^{2n}x^{2n}=x^{2n}\), porque \(2n\) es par. Ningún término cambia: \(\cos(-x)=\cos x\): función <b>par</b>.</li>
+    <li>\(e^{x}\): tiene potencias pares e impares, y no es par ni impar. Un caso basta: \(e^{1}\approx 2{,}718\) y \(e^{-1}=\dfrac{1}{e}\approx 0{,}368\) (calculadora); no son iguales ni opuestos.</li>
+    <li>Las tres juntas: la serie de \(e^{x}\) usa todos los términos \(\dfrac{x^{k}}{k!}\); la del coseno, los de \(k\) par, y la del seno, los de \(k\) impar, en los dos casos con signos alternados.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar el factorial y escribir \(x-\dfrac{x^{3}}{3}+\dfrac{x^{5}}{5}-\cdots\): esa es la serie de \(\arctan x\), no la del seno. Poner el factorial equivocado: en el seno va \((2n+1)!\), el mismo número del exponente; en el coseno, \((2n)!\). Confundir cuál tiene las potencias pares: el coseno, que vale \(1\) en \(0\), empieza con \(1\); el seno, que vale \(0\) en \(0\), empieza con \(x\). Olvidar los signos alternados en seno y coseno, o ponerlos en \(e^{x}\). Empezar la suma en \(n=1\): las tres empiezan en \(n=0\). Usar grados: las series valen con \(x\) en radianes, porque \(\big(\operatorname{sen}x\big)'=\cos x\) solo vale en radianes. Aplicar el criterio del cociente en \(x=0\), donde los términos valen \(0\) y no se puede dividir. Creer que «la serie converge» ya dice «la serie suma la función»: son dos pasos, y el segundo necesita el resto. Usar la cota de Leibniz sin revisar que los tamaños decrecen: con \(x=3\) en el seno los primeros tamaños son \(3\) y \(4{,}5\); crecen, y la cota vale solo desde que empiezan a bajar. Y creer que, como la serie sirve para todo \(x\), pocos términos bastan para cualquier \(x\): lejos del centro hacen falta más.</p>
+    <p>Mención, sin desarrollo: el parecido entre las tres series tiene una explicación con números complejos (la fórmula de Euler), que queda fuera de esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Sin mirar los ejemplos, escribe el coeficiente de \(x^{5}\) en la serie de \(e^{x}\), el de \(x^{7}\) en la de \(\operatorname{sen}x\) y el de \(x^{6}\) y el de \(x^{3}\) en la de \(\cos x\). (b) Aproxima \(\cos\dfrac{1}{2}\) con tres términos y acota el error con el criterio de Leibniz. (c) Aproxima \(e^{1/2}=\sqrt{e}\) con los términos hasta \(x^{3}\) y acota el error con la cota de Lagrange.</p>
+    <details><summary>Pista</summary><div><p>En (a), el coeficiente de \(x^{k}\) es \(\dfrac{f^{(k)}(0)}{k!}\). En (b), los tamaños son \(b_{k}=\dfrac{(1/2)^{2k-2}}{(2k-2)!}\) y el error no pasa del primero que no se sumó. En (c), usa \(e\le 3&lt;4\) para ver que \(e^{1/2}&lt;2\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(e^{x}\): todas las derivadas valen \(1\) en \(0\); \(c_{5}=\dfrac{1}{5!}=\dfrac{1}{120}\).</li>
+        <li>(a) \(\operatorname{sen}x\): \(7=2\cdot 3+1\), así que \(n=3\) y \(f^{(7)}(0)=(-1)^{3}=-1\); \(c_{7}=\dfrac{-1}{7!}=-\dfrac{1}{5040}\).</li>
+        <li>(a) \(\cos x\): \(6=2\cdot 3\), así que \(n=3\) y \(f^{(6)}(0)=(-1)^{3}=-1\); \(c_{6}=\dfrac{-1}{6!}=-\dfrac{1}{720}\). Y \(3\) es impar: \(c_{3}=0\).</li>
+        <li>(b) \(x=\dfrac{1}{2}\). Potencias: \(x^{2}=\dfrac{1}{4}\); \(x^{4}=\dfrac{1}{4}\cdot\dfrac{1}{4}=\dfrac{1}{16}\); \(x^{6}=\dfrac{1}{16}\cdot\dfrac{1}{4}=\dfrac{1}{64}\).</li>
+        <li>(b) Tamaños: \(b_{1}=1\); \(b_{2}=\dfrac{1}{4}:2=\dfrac{1}{8}\); \(b_{3}=\dfrac{1}{16}:24=\dfrac{1}{384}\); \(b_{4}=\dfrac{1}{64}:720=\dfrac{1}{46080}\).</li>
+        <li>(b) Condiciones de Leibniz. Positivos: sí. Decrecientes: \(\dfrac{b_{k+1}}{b_{k}}=\dfrac{(1/2)^{2}}{(2k-1)(2k)}=\dfrac{1}{4\,(2k-1)(2k)}&lt;1\) (ejemplo 3, paso 8, con \(n=k-1\)). Límite \(0\): \(\left(\dfrac{1}{2}\right)^{2k-2}\le 1\), así que \(b_{k}\le\dfrac{1}{(2k-2)!}\le\dfrac{1}{k}\) (ejemplo 3, paso 13); lema de comparación.</li>
+        <li>(b) Tres términos, con denominador común \(384\): \(S_{3}=1-\dfrac{1}{8}+\dfrac{1}{384}=\dfrac{384}{384}-\dfrac{48}{384}+\dfrac{1}{384}=\dfrac{337}{384}\approx 0{,}87760\).</li>
+        <li>(b) Cota: \(\left|\cos\dfrac{1}{2}-S_{3}\right|\le b_{4}=\dfrac{1}{46080}\approx 0{,}00002\). Con calculadora, \(\cos(0{,}5)\approx 0{,}87758\).</li>
+        <li>(c) \(x=\dfrac{1}{2}\). Términos: \(1\); \(\dfrac{1}{2}\); \(\dfrac{x^{2}}{2}=\dfrac{1}{4}:2=\dfrac{1}{8}\); \(x^{3}=\dfrac{1}{8}\) y \(\dfrac{x^{3}}{6}=\dfrac{1}{8}:6=\dfrac{1}{48}\).</li>
+        <li>(c) Suma, con denominador común \(48\): \(P_{3}\!\left(\dfrac{1}{2}\right)=\dfrac{48}{48}+\dfrac{24}{48}+\dfrac{6}{48}+\dfrac{1}{48}=\dfrac{79}{48}\approx 1{,}6458\).</li>
+        <li>(c) \(M\). La derivada de orden \(4\) es \(e^{t}\), con \(t\) entre \(0\) y \(\dfrac{1}{2}\): \(e^{t}\le e^{1/2}\). Como \(e\le 3&lt;4\) (ejemplo 1, paso 12) y \(\left(e^{1/2}\right)^{2}=e\), resulta \(e^{1/2}&lt;2\) (si fuera \(e^{1/2}\ge 2\), su cuadrado sería \(\ge 4\)). Sirve \(M=2\).</li>
+        <li>(c) Cota de Lagrange con \(N=3\): \(|R_{3}|\le\dfrac{2}{4!}\cdot\left(\dfrac{1}{2}\right)^{4}=\dfrac{2}{24}\cdot\dfrac{1}{16}=\dfrac{2}{384}=\dfrac{1}{192}\approx 0{,}0052\).</li>
+        <li>(c) Con calculadora, \(e^{0{,}5}\approx 1{,}6487\). Distancia: \(|1{,}6487-1{,}6458|=0{,}0029\), que no supera la cota \(0{,}0052\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Deriva término a término la serie de \(\cos x\) y comprueba que resulta la de \(-\operatorname{sen}x\). (b) Cambia \(x\) por \(-x\) en la serie de \(e^{x}\) y escribe la serie de \(e^{-x}\). (c) Con (b), escribe la serie de \(\dfrac{e^{x}+e^{-x}}{2}\) y compárala con la del coseno.</p>
+    <details><summary>Pista</summary><div><p>En (a), el término \(n=0\) es la constante \(1\): la suma derivada empieza en \(n=1\); después cambia el índice con \(m=n-1\). En (c), suma las dos series término a término (regla de la suma de la hoja «Representación de funciones como series de potencias») y mira qué pasa con \(1+(-1)^{n}\) según \(n\) sea par o impar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Serie: \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{2n}}{(2n)!}\). Término \(n=0\): la constante \(1\), con derivada \(0\).</li>
+        <li>(a) Para \(n\ge 1\): \(\left((-1)^{n}\dfrac{x^{2n}}{(2n)!}\right)'=(-1)^{n}\dfrac{2n\,x^{2n-1}}{(2n)!}\). Como \((2n)!=2n\cdot(2n-1)!\), queda \((-1)^{n}\dfrac{x^{2n-1}}{(2n-1)!}\).</li>
+        <li>(a) Serie derivada: \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\dfrac{x^{2n-1}}{(2n-1)!}=-x+\dfrac{x^{3}}{6}-\dfrac{x^{5}}{120}+\cdots\)</li>
+        <li>(a) Cambio de índice, \(m=n-1\) (\(n=m+1\); \(n=1\) corresponde a \(m=0\)): exponente \(2(m+1)-1=2m+1\); signo \((-1)^{m+1}=-(-1)^{m}\). Queda \(\displaystyle\sum_{m=0}^{\infty}\left(-(-1)^{m}\dfrac{x^{2m+1}}{(2m+1)!}\right)\).</li>
+        <li>(a) Es la serie del seno con cada término cambiado de signo: la serie de \(-\operatorname{sen}x\). Coincide con \(\big(\cos x\big)'=-\operatorname{sen}x\). (Que la derivada de la suma sea la suma de las derivadas lo asegura el teorema que la hoja «Representación de funciones como series de potencias» solo enuncia.)</li>
+        <li>(b) La igualdad \(e^{u}=\displaystyle\sum_{n=0}^{\infty}\dfrac{u^{n}}{n!}\) vale para todo número \(u\). Con \(u=-x\): \(e^{-x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{(-x)^{n}}{n!}\).</li>
+        <li>(b) Como \((-x)^{n}=(-1)^{n}x^{n}\): \(e^{-x}=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}\dfrac{x^{n}}{n!}=1-x+\dfrac{x^{2}}{2}-\dfrac{x^{3}}{6}+\cdots\) para todo \(x\) real.</li>
+        <li>(c) Regla de la suma (demostrada en esa hoja), válida para todo \(x\) porque las dos series convergen para todo \(x\): \(e^{x}+e^{-x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{1+(-1)^{n}}{n!}\,x^{n}\).</li>
+        <li>(c) Si \(n\) es impar, \(1+(-1)^{n}=1-1=0\). Si \(n\) es par, \(1+(-1)^{n}=1+1=2\). Quedan los pares, \(n=2k\): \(e^{x}+e^{-x}=\displaystyle\sum_{k=0}^{\infty}\dfrac{2\,x^{2k}}{(2k)!}\).</li>
+        <li>(c) Regla de la constante, con \(c=\dfrac{1}{2}\): \(\dfrac{e^{x}+e^{-x}}{2}=\displaystyle\sum_{k=0}^{\infty}\dfrac{x^{2k}}{(2k)!}=1+\dfrac{x^{2}}{2}+\dfrac{x^{4}}{24}+\dfrac{x^{6}}{720}+\cdots\) para todo \(x\) real.</li>
+        <li>(c) Comparación: tiene los mismos términos que la serie del coseno, pero todos con signo \(+\). (Esa función se llama coseno hiperbólico; aquí solo se nombra.)</li>
+        <li>(c) Comprobación con \(x=1\), cuatro términos: \(1+\dfrac{1}{2}+\dfrac{1}{24}+\dfrac{1}{720}=\dfrac{720}{720}+\dfrac{360}{720}+\dfrac{30}{720}+\dfrac{1}{720}=\dfrac{1111}{720}\approx 1{,}5431\). Con calculadora: \(e\approx 2{,}7183\), \(\dfrac{1}{e}\approx 0{,}3679\), y \(\dfrac{2{,}7183+0{,}3679}{2}=\dfrac{3{,}0862}{2}=1{,}5431\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un columpio se suelta desde un ángulo de \(\theta=0{,}2\) radianes respecto de la vertical (datos inventados). En el modelo del péndulo, la fuerza que lo devuelve es proporcional a \(\operatorname{sen}\theta\), y para ángulos chicos los libros de física reemplazan \(\operatorname{sen}\theta\) por \(\theta\). (a) ¿Cuánto se puede equivocar ese reemplazo en \(\theta=0{,}2\)? Acota el error con el criterio de Leibniz. (b) Mejora la aproximación con un término más y acota el nuevo error. (c) ¿Hasta qué ángulo, con dos decimales, la cota asegura que \(|\operatorname{sen}\theta-\theta|\le 0{,}01\)? (d) Pasa \(0{,}2\) rad a grados, con \(\pi\approx 3{,}1416\).</p>
+    <details><summary>Pista</summary><div><p>Reemplazar \(\operatorname{sen}\theta\) por \(\theta\) es cortar la serie en su primer término. Con \(\theta=\dfrac{1}{5}\) la serie es alternante: \(\dfrac{1}{5}-\dfrac{1}{750}+\dfrac{1}{375000}-\cdots\) El error no pasa del primer término que no se sumó. En (c), busca \(\theta\) con \(\dfrac{\theta^{3}}{6}\le 0{,}01\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(\theta=0{,}2=\dfrac{1}{5}\). Serie del seno (ejemplo 2): \(\operatorname{sen}\theta=\theta-\dfrac{\theta^{3}}{6}+\dfrac{\theta^{5}}{120}-\cdots\), alternante con \(b_{k}=\dfrac{\theta^{2k-1}}{(2k-1)!}\).</li>
+        <li>(a) Tamaños: \(b_{1}=\dfrac{1}{5}\). \(\left(\dfrac{1}{5}\right)^{3}=\dfrac{1}{125}\): \(b_{2}=\dfrac{1}{125}:6=\dfrac{1}{750}\). \(\left(\dfrac{1}{5}\right)^{5}=\dfrac{1}{3125}\): \(b_{3}=\dfrac{1}{3125}:120=\dfrac{1}{375000}\).</li>
+        <li>(a) Condiciones de Leibniz. Positivos: sí. Decrecientes: \(\dfrac{b_{k+1}}{b_{k}}=\dfrac{\theta^{2}}{(2k)(2k+1)}=\dfrac{1}{25\cdot 2k\cdot(2k+1)}&lt;1\) (ejemplo 2, paso 8). Límite \(0\): \(\theta^{2k-1}\le 1\) y \((2k-1)!\ge k\), así que \(0&lt;b_{k}\le\dfrac{1}{k}\); lema de comparación.</li>
+        <li>(a) Con un término, \(S_{1}=\theta\). Cota: \(|\operatorname{sen}\theta-\theta|\le b_{2}=\dfrac{1}{750}\approx 0{,}00133\). El reemplazo se equivoca, a lo más, en \(0{,}0014\).</li>
+        <li>(b) Dos términos, con denominador común \(750\): \(S_{2}=\dfrac{1}{5}-\dfrac{1}{750}=\dfrac{150}{750}-\dfrac{1}{750}=\dfrac{149}{750}\approx 0{,}198667\).</li>
+        <li>(b) Cota: \(|\operatorname{sen}\theta-S_{2}|\le b_{3}=\dfrac{1}{375000}\approx 0{,}0000027\). Con calculadora, \(\operatorname{sen}(0{,}2)\approx 0{,}198669\). (La hoja «Cota de Lagrange para el error» llega a la misma cota, \(\dfrac{0{,}2^{5}}{120}\), por otro camino.)</li>
+        <li>(c) Para \(0&lt;\theta\le 1\) las tres condiciones se cumplen igual: \(\dfrac{b_{k+1}}{b_{k}}=\dfrac{\theta^{2}}{(2k)(2k+1)}\le\dfrac{1}{6}&lt;1\) y \(0&lt;b_{k}\le\dfrac{1}{k}\). Entonces \(|\operatorname{sen}\theta-\theta|\le\dfrac{\theta^{3}}{6}\).</li>
+        <li>(c) Se pide \(\dfrac{\theta^{3}}{6}\le 0{,}01\). Se multiplica por \(6\): \(\theta^{3}\le 0{,}06\).</li>
+        <li>(c) Se prueba. \(0{,}39^{2}=0{,}1521\) y \(0{,}1521\cdot 0{,}39=0{,}059319\), que es menor que \(0{,}06\): sirve. \(0{,}40^{2}=0{,}16\) y \(0{,}16\cdot 0{,}40=0{,}064\), que es mayor que \(0{,}06\): no sirve. Como \(\theta^{3}\) crece con \(\theta\), con dos decimales la cota asegura el error hasta \(\theta=0{,}39\) rad.</li>
+        <li>(d) \(\pi\) rad son \(180^{\circ}\): se multiplica por \(180\) y se divide por \(\pi\). \(0{,}2\cdot 180=36\); \(36:3{,}1416\approx 11{,}46\). El columpio parte a unos \(11{,}5^{\circ}\) de la vertical.</li>
+        <li>Interpretación: a \(0{,}2\) rad, cambiar \(\operatorname{sen}\theta\) por \(\theta\) altera el valor en menos de \(0{,}0014\), menos del \(1\,\%\) de \(0{,}2\) (el \(1\,\%\) de \(0{,}2\) es \(0{,}002\)). Por eso el reemplazo funciona para oscilaciones chicas; la cota dice hasta dónde se puede confiar en él. Para ángulos grandes hacen falta más términos de la serie.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H32 · v001 · Pendiente de APR</span>
+</footer>
+</article>

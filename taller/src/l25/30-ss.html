@@ -1,0 +1,549 @@
+<!--file:H30_determinar_serie_de_taylor_de_una_funcion.html-->
+<!--title:Determinar serie de Taylor de una función-->
+<!--id:ss-taylor-->
+<!--tab:H30 Determinar serie de Taylor de una función-->
+<article class="sheet" id="ss-taylor" data-hoja="L25 H30">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Determinar serie de Taylor de una función</b></li>
+    </ol>
+    <h1>Determinar serie de Taylor de una función</h1>
+    <p class="lede">La <b>serie de Taylor</b> de una función \(f\) centrada en un punto \(a\) es la serie de potencias de \((x-a)\) cuyos coeficientes se calculan con las derivadas de \(f\) en \(a\): el coeficiente de lugar \(n\) es \(\dfrac{f^{(n)}(a)}{n!}\). Para determinarla se deriva, se evalúa en el centro, se busca el patrón y se escribe la serie. Después hay que responder dos preguntas distintas: dónde converge, y si su suma es \(f(x)\). \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(a)}{n!}\,(x-a)^{n}=f(a)+f'(a)\,(x-a)+\dfrac{f''(a)}{2!}\,(x-a)^{2}+\dfrac{f'''(a)}{3!}\,(x-a)^{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se determina, en seis pasos, la serie de Taylor de \(f(x)=\dfrac{1}{x}\) centrada en \(a=1\). Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo y el punto (paso 1):</b> la curva es \(y=\dfrac{1}{x}\); el punto burdeo es el centro, \((1,\ 1)\). En horizontal va \(x\); en vertical, el valor. La recta gris, \(T_{0}=1\), copia solo la altura de la curva en el centro: es el coeficiente \(c_{0}=f(1)=1\).</li>
+    <li><b>Pasos 2, 3 y 4, una curva nueva por cada derivada:</b> en cada paso se calcula una derivada más, se evalúa en el centro y se divide por el factorial. Sale un coeficiente y, con él, un término más: la recta azul \(T_{1}\) (la tangente), la curva verde \(T_{2}\) y la naranja \(T_{3}\). Cada una sigue a la curva burdeo un tramo más largo que la anterior.</li>
+    <li><b>Paso 5, el patrón:</b> las derivadas en el centro valen \(1,\ -1,\ 2,\ -6,\ \ldots\); el registro anota la regla general y el coeficiente \(c_{n}=(-1)^{n}\). La línea negra fina es \(T_{8}\), el polinomio que llega hasta \(n=8\).</li>
+    <li><b>Paso 6, franja gris:</b> es el intervalo \(0&lt;x&lt;2\), donde la serie converge; los anillos abiertos dicen que los extremos no entran. Dentro, la línea negra va pegada a la curva; a la derecha de \(x=2\) se despega.</li>
+    <li><b>Registro y cuenta de abajo:</b> el registro guarda el coeficiente de cada paso. La cuenta de abajo repite cada paso con todas sus operaciones. Conclusión: la serie de Taylor de \(\dfrac{1}{x}\) centrada en \(1\) es \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}\), y su suma es \(\dfrac{1}{x}\) solo si \(0&lt;x&lt;2\).</li>
+  </ol>
+  <div class="stage" data-scene="tay-idea"></div>
+  <ul class="keys">
+    <li><b>Burdeo:</b> la función \(y=\dfrac{1}{x}\) y el centro, \((1,\ 1)\), donde se evalúan las derivadas.</li>
+    <li><b>Gris, azul, verde y naranja:</b> los polinomios de Taylor \(T_{0}=1\), \(T_{1}=1-(x-1)\), \(T_{2}=T_{1}+(x-1)^{2}\) y \(T_{3}=T_{2}-(x-1)^{3}\). Son las sumas parciales de la serie.</li>
+    <li><b>Línea negra fina:</b> \(T_{8}\), la suma parcial que llega hasta \(n=8\). Pegada a la curva dentro de la franja; despegada fuera.</li>
+    <li><b>Franja gris:</b> el intervalo \(0&lt;x&lt;2\), donde la serie converge. Los extremos, con anillo abierto, no entran.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Lo que se necesita.</b> Una función \(f\) y un punto \(a\) tales que \(f\) tenga derivadas de todos los órdenes en un intervalo abierto que contiene a \(a\): existen \(f'\), \(f''\), \(f'''\), y así sin fin. Notación: \(f^{(n)}\) es la derivada de orden \(n\) (derivar \(n\) veces); \(f^{(0)}=f\), \(f^{(1)}=f'\), \(f^{(2)}=f''\). El factorial: \(0!=1\), \(1!=1\), y \(n!=n\cdot(n-1)!\) para \(n\ge 1\); así \(2!=2\), \(3!=6\), \(4!=24\).</li>
+      <li><b>Definición.</b> La <b>serie de Taylor de \(f\) centrada en \(a\)</b> es \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(a)}{n!}\,(x-a)^{n}\] Es una serie de potencias (hoja «Series de potencias») con centro \(a\) y coeficientes \(c_{n}=\dfrac{f^{(n)}(a)}{n!}\). El índice parte en \(n=0\), y \((x-a)^{0}=1\): el primer término es \(c_{0}=\dfrac{f(a)}{0!}=f(a)\).</li>
+      <li><b>Sus sumas parciales son los polinomios de Taylor.</b> La suma hasta \(n=N\) es \(T_{N}(x)=\displaystyle\sum_{n=0}^{N}\dfrac{f^{(n)}(a)}{n!}\,(x-a)^{n}\): el polinomio de Taylor de grado \(N\) (hoja «Polinomios de Taylor y de Maclaurin», donde se llama \(P_{n}\)). La serie es lo que resulta de no detenerse en ningún grado.</li>
+      <li><b>En el centro siempre funciona.</b> En \(x=a\) todos los términos con \(n\ge 1\) valen \(0\), porque \((a-a)^{n}=0^{n}=0\). La serie converge y su suma es \(c_{0}=f(a)\) (hoja «Series de potencias»).</li>
+      <li><b>Maclaurin.</b> Si el centro es \(a=0\), la serie se llama <b>serie de Maclaurin</b>; tiene su propia hoja. Aquí el centro es un punto cualquiera y los ejemplos usan \(a\ne 0\).</li>
+      <li><b>Dos preguntas que la definición no responde.</b> (1) ¿Para qué valores de \(x\) converge la serie? (2) Donde converge, ¿su suma es \(f(x)\)? La definición solo dice cómo se fabrican los coeficientes. Hasta responder las dos preguntas no se escribe el signo \(=\) entre \(f(x)\) y su serie.</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa como en la hoja de ese nombre. En esta hoja se usan <b>sin demostrar</b>: (1) el <b>teorema de derivación término a término</b> de una serie de potencias, que la hoja «Representación de funciones como series de potencias» solo enuncia: de él depende la demostración del recuadro siguiente (por qué los coeficientes tienen que ser \(\dfrac{f^{(n)}(a)}{n!}\)) y, a través de esa hoja, el primer camino del ejemplo 3 y el ejercicio B; (2) las reglas de derivación: \(\big(x^{k}\big)'=k\,x^{k-1}\) para exponente entero (con \(x\ne 0\) si \(k&lt;0\)) y para exponente fraccionario (con \(x&gt;0\)), \(\big((x-a)^{n}\big)'=n\,(x-a)^{n-1}\), \(\big(\ln x\big)'=\dfrac{1}{x}\) para \(x&gt;0\), \(\big(e^{x}\big)'=e^{x}\), la derivada de una suma, de una constante por una función y de una constante; (3) los patrones «derivada de orden \(n\)»: en cada uno se escribe el paso de \(n\) a \(n+1\); el argumento formal es por inducción; (4) la <b>cota de Lagrange</b>, citada de la hoja «Cota de Lagrange para el error» (ahí está demostrada con centro \(0\) y \(x&gt;0\), y enunciada para cualquier centro); se usa con centro \(1\) en los ejemplos 3 y 4 y con centro \(25\) en el ejercicio C; (5) de los límites: que si \(0\le b_{N}\le d_{N}\) para todo \(N\) y \(d_{N}\) tiene límite \(0\), entonces \(b_{N}\) tiene límite \(0\); las reglas «constante por sucesión» y «límite de una resta»; los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\); y que una sucesión que es constante desde algún lugar en adelante tiene por límite esa constante; (6) que \(e^{x}\) es creciente y positiva, que \(t^{k}\ge 1\) si \(t\ge 1\) y \(k\) es positivo, que una potencia de exponente positivo conserva el orden entre números positivos (si \(t\ge 25\), entonces \(t^{5/2}\ge 25^{5/2}\)), y que \(|u|&lt;R\) equivale a \(-R&lt;u&lt;R\); (7) las propiedades \(\ln 1=0\) y \(\ln(a\cdot b)=\ln a+\ln b\) para \(a,\ b&gt;0\); (8) los resultados de otras hojas, citados por su título: «Series de potencias», «Criterio del cociente para la convergencia», «Criterio del enésimo término», «Series harmónicas y series-p», «Criterio de Leibniz», «Suma de una serie geométrica infinita», «Una función como una serie geométrica», «Representación de funciones como series de potencias» y «Límite de una sucesión»; (9) que existen funciones con derivadas de todos los órdenes cuya serie de Taylor converge y <b>no</b> suma la función: solo se menciona, sin desarrollar ningún ejemplo. Los valores de \(\ln\), de \(e\) y de raíces dados con decimales son aproximaciones de calculadora, y por eso llevan el signo \(\approx\). En el ejercicio C, las medidas del terreno son datos inventados.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde salen los coeficientes, y el procedimiento</h3>
+    <p><b>Teorema (demostrado a partir de un teorema enunciado).</b> Si una serie de potencias \(\displaystyle\sum_{n=0}^{\infty}c_{n}(x-a)^{n}\) tiene radio de convergencia \(R&gt;0\) (o infinito) y \(f(x)\) es su suma en el intervalo \((a-R,\ a+R)\), entonces \(f\) tiene derivadas de todos los órdenes en ese intervalo y \[c_{n}=\dfrac{f^{(n)}(a)}{n!}\qquad\text{para todo }n\ge 0\]</p>
+    <ol class="steps">
+      <li>Hipótesis, escrita término a término: \(f(x)=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+c_{4}(x-a)^{4}+\cdots\) si \(|x-a|&lt;R\).</li>
+      <li>Se evalúa en \(x=a\). Cada término con \(n\ge 1\) tiene el factor \((a-a)^{n}=0\). Queda \(f(a)=c_{0}\).</li>
+      <li>Se deriva término a término (teorema de la hoja «Representación de funciones como series de potencias»: vale en \((a-R,\ a+R)\), y la serie derivada tiene el mismo radio). Con \((c_{0})'=0\) y \(\big(c_{n}(x-a)^{n}\big)'=n\,c_{n}(x-a)^{n-1}\): \[f'(x)=c_{1}+2c_{2}(x-a)+3c_{3}(x-a)^{2}+4c_{4}(x-a)^{3}+\cdots\]</li>
+      <li>Se evalúa en \(x=a\): solo queda el término sin \((x-a)\). \(f'(a)=c_{1}\).</li>
+      <li>La serie del paso 3 es otra serie de potencias con el mismo radio \(R\): se le aplica el mismo teorema. \[f''(x)=2c_{2}+3\cdot 2\,c_{3}(x-a)+4\cdot 3\,c_{4}(x-a)^{2}+\cdots\] En \(x=a\): \(f''(a)=2c_{2}\).</li>
+      <li>Otra vez: \[f'''(x)=3\cdot 2\cdot 1\,c_{3}+4\cdot 3\cdot 2\,c_{4}(x-a)+\cdots\] En \(x=a\): \(f'''(a)=3\cdot 2\cdot 1\,c_{3}=3!\,c_{3}\).</li>
+      <li>El patrón. Al derivar \(n\) veces: los términos de grado menor que \(n\) ya se convirtieron en \(0\); el término \(c_{n}(x-a)^{n}\) perdió su exponente multiplicando por \(n\), después por \(n-1\), y así hasta \(1\): quedó \(n!\,c_{n}\); los términos de grado mayor que \(n\) conservan algún factor \((x-a)\). \[f^{(n)}(x)=n!\,c_{n}+\big(\text{términos con el factor }(x-a)\big)\]</li>
+      <li>Se evalúa en \(x=a\): los términos con el factor \((x-a)\) valen \(0\). \(f^{(n)}(a)=n!\,c_{n}\).</li>
+      <li>Se divide cada lado por \(n!\), que no es \(0\): \(c_{n}=\dfrac{f^{(n)}(a)}{n!}\).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> Los pasos 3, 5, 6 y 7 usan el teorema de derivación término a término, que <b>no está demostrado</b> en ninguna hoja de este curso: solo está enunciado. El paso 7 describe un patrón; su versión formal es una demostración por inducción sobre \(n\).</p>
+    <p><b>Lo que dice el teorema: unicidad.</b> Si una función se puede representar con una serie de potencias centrada en \(a\), esa serie es su serie de Taylor: no hay otra. Por eso, una serie obtenida por otro camino (con una serie geométrica, o derivando o integrando una serie conocida) es también la serie de Taylor de la función con ese centro.</p>
+    <p><b>Lo que el teorema no dice.</b> Parte de suponer que la representación existe. No dice que toda función con derivadas de todos los órdenes sea la suma de su serie de Taylor. Hay funciones cuya serie de Taylor converge y suma otra cosa (aviso de rigor, 9). Por eso el procedimiento termina con una pregunta aparte.</p>
+    <p><b>Procedimiento para determinar la serie de Taylor de \(f\) centrada en \(a\).</b></p>
+    <ol class="steps">
+      <li><b>Derivar.</b> Se calculan \(f'\), \(f''\), \(f'''\), \(f^{(4)}\), hasta reconocer cómo sigue la lista.</li>
+      <li><b>Evaluar en el centro.</b> Se calculan \(f(a)\), \(f'(a)\), \(f''(a)\), \(f'''(a)\), \(\ldots\) Se evalúa en \(a\), no en \(x\).</li>
+      <li><b>Hallar el patrón.</b> Se busca una fórmula para \(f^{(n)}(a)\) que valga para todo \(n\), y se justifica (paso de \(n\) a \(n+1\)).</li>
+      <li><b>Coeficientes.</b> \(c_{n}=\dfrac{f^{(n)}(a)}{n!}\). Se simplifica.</li>
+      <li><b>Escribir la serie.</b> Con \(\Sigma\), en potencias de \((x-a)\), con su índice de partida, y con sus primeros términos.</li>
+      <li><b>¿Dónde converge?</b> Con el criterio del cociente, como en la hoja «Series de potencias»: se fija \(x\ne a\), se calcula el límite \(L\) del cociente de tamaños de un término y el anterior, y se resuelve \(L&lt;1\). Los extremos se revisan aparte.</li>
+      <li><b>¿Su suma es \(f(x)\)?</b> Que la serie converja <b>no lo prueba</b>. Hay que demostrarlo con alguno de los caminos de abajo.</li>
+    </ol>
+    <p><b>Cuándo sí se sabe que la serie suma \(f(x)\).</b></p>
+    <ol class="steps">
+      <li><b>La serie es finita.</b> Si \(f\) es un polinomio, las derivadas valen \(0\) desde algún orden y la serie tiene una cantidad finita de términos. Que su suma es \(f(x)\) se comprueba desarrollando las potencias: es álgebra (ejemplo 2).</li>
+      <li><b>La serie es una ya conocida.</b> Si la serie obtenida es una serie geométrica, su suma se conoce (ejemplo 1). Si coincide con una representación obtenida en otra hoja, vale lo que ahí se estableció (ejemplo 3, primer camino).</li>
+      <li><b>El resto tiende a cero.</b> El <b>resto</b> es \(R_{N}(x)=f(x)-T_{N}(x)\). Despejando, \(T_{N}(x)=f(x)-R_{N}(x)\). Para un \(x\) fijo, \(f(x)\) es una constante; entonces \(T_{N}(x)\) tiene límite \(f(x)\) exactamente cuando \(R_{N}(x)\) tiene límite \(0\). Para probarlo sirve la cota de Lagrange (hoja «Cota de Lagrange para el error»): si \(\big|f^{(N+1)}(t)\big|\le M\) para todo \(t\) entre \(a\) y \(x\), entonces \(|R_{N}(x)|\le\dfrac{M}{(N+1)!}\,|x-a|^{N+1}\) (ejemplos 3 y 4).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>El centro se elige. Número ↔ figura</h3>
+    <p>La misma función tiene una serie de Taylor distinta para cada centro. Para \(f(x)=\dfrac{1}{x}\) y un centro \(a&gt;0\) cualquiera:</p>
+    <ol class="steps">
+      <li>Derivadas (ejemplo 1, paso 3): \(f^{(n)}(x)=\dfrac{(-1)^{n}\,n!}{x^{\,n+1}}\). En el centro: \(f^{(n)}(a)=\dfrac{(-1)^{n}\,n!}{a^{\,n+1}}\).</li>
+      <li>Coeficientes: \(c_{n}=\dfrac{f^{(n)}(a)}{n!}=\dfrac{(-1)^{n}\,n!}{a^{\,n+1}\cdot n!}=\dfrac{(-1)^{n}}{a^{\,n+1}}\).</li>
+      <li>Serie de Taylor centrada en \(a\): \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{a^{\,n+1}}\,(x-a)^{n}=\dfrac{1}{a}-\dfrac{x-a}{a^{2}}+\dfrac{(x-a)^{2}}{a^{3}}-\dfrac{(x-a)^{3}}{a^{4}}+\cdots\)</li>
+      <li>Es geométrica. Como \(a^{\,n+1}=a\cdot a^{n}\): \(\dfrac{(-1)^{n}(x-a)^{n}}{a^{\,n+1}}=\dfrac{1}{a}\cdot\left(-\dfrac{x-a}{a}\right)^{n}\). Primer término \(\dfrac{1}{a}\), razón \(r=-\dfrac{x-a}{a}\).</li>
+      <li>Converge exactamente cuando \(|r|&lt;1\) (hoja «Suma de una serie geométrica infinita»). Como \(a&gt;0\): \(|r|=\dfrac{|x-a|}{a}\), y \(|r|&lt;1\) es \(|x-a|&lt;a\), es decir, \(-a&lt;x-a&lt;a\); sumando \(a\): \(0&lt;x&lt;2a\). Radio de convergencia: \(R=a\).</li>
+      <li>Suma, si \(0&lt;x&lt;2a\). Primero \(1-r=1+\dfrac{x-a}{a}=\dfrac{a+x-a}{a}=\dfrac{x}{a}\). Entonces \(\dfrac{1/a}{1-r}=\dfrac{1}{a}:\dfrac{x}{a}=\dfrac{1}{a}\cdot\dfrac{a}{x}=\dfrac{1}{x}\). La serie suma \(f(x)\).</li>
+      <li>Lo que falta al cortar. Para una serie geométrica de primer término \(1\) y razón \(r\ne 1\), la hoja «Una función como una serie geométrica» demuestra que la suma hasta \(n=N\) difiere de \(\dfrac{1}{1-r}\) en \(\dfrac{r^{\,N+1}}{1-r}\). Multiplicando por \(\dfrac{1}{a}\) y usando \(1-r=\dfrac{x}{a}\): \[f(x)-T_{N}(x)=\dfrac{1}{a}\cdot\dfrac{r^{\,N+1}}{x/a}=\dfrac{r^{\,N+1}}{x}\qquad(x\ne 0)\]</li>
+    </ol>
+    <p>Resultado: \(\dfrac{1}{x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{a^{\,n+1}}\,(x-a)^{n}\) si \(0&lt;x&lt;2a\). En esta función el intervalo llega justo hasta \(x=0\), el punto donde \(f\) no existe. (Con \(a&lt;0\) la cuenta es la misma con \(|a|\) en lugar de \(a\) en el paso 5: el intervalo es \(2a&lt;x&lt;0\). El centro no puede ser \(0\).)</p>
+    <p>En la animación se elige el centro y se prueba siempre en el mismo punto, \(x=2\), donde \(f(2)=\dfrac{1}{2}\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la curva burdeo y el punto con anillo:</b> la curva es \(y=\dfrac{1}{x}\); el punto es el centro elegido, \(\left(a,\ \dfrac{1}{a}\right)\). La curva azul es \(T_{3}\), el polinomio de Taylor de grado \(3\) con ese centro: cerca del centro va pegada a la burdeo.</li>
+      <li><b>Mira después la franja gris:</b> es el intervalo \(0&lt;x&lt;2a\), donde la serie con ese centro converge y suma \(\dfrac{1}{x}\). Su ancho cambia con el centro.</li>
+      <li><b>Mira la línea punteada vertical:</b> marca el punto de prueba, \(x=2\). Sobre ella hay un punto burdeo (la función) y uno azul (el polinomio). El trazo naranja que los une es la distancia entre los dos.</li>
+      <li><b>Mueve el deslizador «centro»:</b> recorre \(a=\dfrac{1}{2},\ 1,\ \dfrac{3}{2},\ 2,\ \dfrac{5}{2},\ 3\). Con \(a=\dfrac{3}{2}\), \(\dfrac{5}{2}\) o \(3\), el punto \(x=2\) queda dentro de la franja y los dos puntos casi coinciden. Con \(a=2\), el punto de prueba es el centro: coinciden exactamente. Con \(a=1\), \(x=2\) es el extremo de la franja. Con \(a=\dfrac{1}{2}\), \(x=2\) queda fuera y el polinomio se va lejos.</li>
+      <li><b>Lee bajo el dibujo y en la cuenta de abajo:</b> bajo el dibujo están las distancias entre \(f(2)\) y \(T_{0}(2)\), \(T_{1}(2)\), \(T_{2}(2)\), \(T_{3}(2)\). La cuenta de abajo las calcula paso a paso: potencias del centro, derivadas en el centro, coeficientes, términos, sumas y distancias. Conclusión: dentro del intervalo, cada término que se agrega acerca la suma a \(f(2)\); fuera, la aleja. Para aproximar \(f\) en un punto se elige un centro cercano a ese punto.</li>
+    </ol>
+    <div class="stage" data-scene="tay-vivo"></div>
+    <ul class="keys">
+      <li><b>Burdeo:</b> la función \(y=\dfrac{1}{x}\) y el centro elegido, con su línea punteada hasta el eje.</li>
+      <li><b>Azul:</b> \(T_{3}\), el polinomio de Taylor de grado \(3\) con ese centro.</li>
+      <li><b>Naranja:</b> la distancia entre \(f(2)\) y \(T_{3}(2)\).</li>
+      <li><b>Franja gris:</b> el intervalo \(0&lt;x&lt;2a\), sin los extremos.</li>
+      <li><b>Caso límite 1 (\(a=2\)):</b> el punto de prueba es el centro. Todos los términos con \((x-a)\) valen \(0\) y la distancia es \(0\) con cualquier grado.</li>
+      <li><b>Caso límite 2 (\(a=1\)):</b> \(x=2\) es un extremo del intervalo \((0,\ 2)\). Las sumas van \(1,\ 0,\ 1,\ 0\) y la distancia es siempre \(\dfrac{1}{2}\): la serie no converge ahí.</li>
+      <li><b>Fuera (\(a=\dfrac{1}{2}\)):</b> \(T_{3}(2)=-40\), que no cabe en el dibujo; una flecha naranja lo indica. Las distancias crecen: \(\dfrac{3}{2},\ \dfrac{9}{2},\ \dfrac{27}{2},\ \dfrac{81}{2}\).</li>
+      <li><b>Sobre las cuentas:</b> todo se calcula con fracciones exactas; no hay redondeos.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(f(x)=\dfrac{1}{x}\) centrada en \(a=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función y centro: \(f(x)=\dfrac{1}{x}=x^{-1}\), definida si \(x\ne 0\); centro \(a=1\). (El centro no puede ser \(0\): ahí \(f\) no existe.)</li>
+    <li>Derivar. Regla de la potencia (citada), una vez por derivada: \(f'(x)=(-1)\,x^{-2}\); \(f''(x)=(-1)(-2)\,x^{-3}=2\,x^{-3}\); \(f'''(x)=2\cdot(-3)\,x^{-4}=-6\,x^{-4}\); \(f^{(4)}(x)=(-6)(-4)\,x^{-5}=24\,x^{-5}\).</li>
+    <li>Patrón: \(f^{(n)}(x)=(-1)^{n}\,n!\;x^{-(n+1)}=\dfrac{(-1)^{n}\,n!}{x^{\,n+1}}\). Con \(n=0\) da \(x^{-1}\), y con \(n=1,\ 2,\ 3,\ 4\) da la lista del paso 2. Paso de \(n\) a \(n+1\): al derivar \((-1)^{n}\,n!\;x^{-(n+1)}\) el exponente baja multiplicando: \((-1)^{n}\,n!\cdot\big(-(n+1)\big)\cdot x^{-(n+2)}\). Como \((-1)^{n}\cdot(-1)=(-1)^{n+1}\) y \(n!\cdot(n+1)=(n+1)!\), queda \((-1)^{n+1}\,(n+1)!\;x^{-(n+2)}\): la misma fórmula con \(n+1\) en lugar de \(n\).</li>
+    <li>Evaluar en el centro. \(1^{\,n+1}=1\): \(f^{(n)}(1)=\dfrac{(-1)^{n}\,n!}{1}=(-1)^{n}\,n!\). Los primeros: \(1,\ -1,\ 2,\ -6,\ 24\).</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{f^{(n)}(1)}{n!}=\dfrac{(-1)^{n}\,n!}{n!}=(-1)^{n}\).</li>
+    <li>Serie de Taylor de \(\dfrac{1}{x}\) centrada en \(1\): \[\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}=1-(x-1)+(x-1)^{2}-(x-1)^{3}+\cdots\]</li>
+    <li>¿Dónde converge? En \(x=1\) (el centro), converge y su suma es \(c_{0}=1\). Se fija \(x\ne 1\); el término \(u_{n}=(-1)^{n}(x-1)^{n}\) no es \(0\) y su tamaño es \(|u_{n}|=|x-1|^{n}\). Cociente: \(\dfrac{|u_{n+1}|}{|u_{n}|}=\dfrac{|x-1|^{n+1}}{|x-1|^{n}}=|x-1|\). No depende de \(n\): \(L=|x-1|\).</li>
+    <li>Criterio del cociente. \(L&lt;1\) es \(|x-1|&lt;1\), es decir, \(-1&lt;x-1&lt;1\); sumando \(1\): \(0&lt;x&lt;2\). Ahí la serie converge absolutamente. \(L&gt;1\) es \(|x-1|&gt;1\): ahí diverge. Radio: \(R=1\).</li>
+    <li>Extremos, aparte. En \(x=0\): \((x-1)^{n}=(-1)^{n}\) y el término es \((-1)^{n}(-1)^{n}=(-1)^{2n}=1\); la serie es \(1+1+1+\cdots\) En \(x=2\): \((x-1)^{n}=1\) y la serie es \(1-1+1-\cdots\) En las dos, el tamaño del término es \(1\), que no tiende a \(0\): divergen (hoja «Criterio del enésimo término»). Intervalo de convergencia: \((0,\ 2)\).</li>
+    <li>¿Su suma es \(f(x)\)? Potencia de un producto: \((-1)^{n}(x-1)^{n}=\big(-(x-1)\big)^{n}\). Es una serie geométrica de primer término \(1\) y razón \(r=-(x-1)\). Si \(|r|&lt;1\), su suma es \(\dfrac{1}{1-r}=\dfrac{1}{1+(x-1)}=\dfrac{1}{x}\) (hoja «Suma de una serie geométrica infinita»). Sí: la suma es \(f(x)\).</li>
+    <li>Resultado: \[\dfrac{1}{x}=\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}\qquad(0&lt;x&lt;2)\]</li>
+    <li>Cotejo. La hoja «Una función como una serie geométrica» (ejemplo 4) llegó a la misma serie y al mismo intervalo sin derivar, escribiendo \(x=1+(x-1)\). Tiene que ser así: por la unicidad, la serie de potencias de \((x-1)\) que representa a \(\dfrac{1}{x}\) es una sola.</li>
+    <li>Comprobación en \(x=\dfrac{6}{5}\), el mismo punto de esa hoja. \(x-1=\dfrac{1}{5}\). \(T_{2}=1-\dfrac{1}{5}+\dfrac{1}{25}=\dfrac{25}{25}-\dfrac{5}{25}+\dfrac{1}{25}=\dfrac{21}{25}\). Función: \(1:\dfrac{6}{5}=\dfrac{5}{6}\). Diferencia, con denominador común \(150\): \(\dfrac{5}{6}-\dfrac{21}{25}=\dfrac{125}{150}-\dfrac{126}{150}=-\dfrac{1}{150}\). Con la fórmula del recuadro (\(a=1\), \(r=-\dfrac{1}{5}\), \(N=2\)): \(\dfrac{r^{3}}{x}=-\dfrac{1}{125}:\dfrac{6}{5}=-\dfrac{1}{125}\cdot\dfrac{5}{6}=-\dfrac{5}{750}=-\dfrac{1}{150}\). Coincide.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2 (un polinomio, recentrado): \(f(x)=x^{3}-3x^{2}+5\) centrada en \(a=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Derivar: \(f'(x)=3x^{2}-6x\); \(f''(x)=6x-6\); \(f'''(x)=6\); \(f^{(4)}(x)=0\), porque la derivada de una constante es \(0\). Desde ahí, todas las derivadas son \(0\).</li>
+    <li>Evaluar en \(a=2\). \(f(2)=2^{3}-3\cdot 2^{2}+5=8-12+5=1\). \(f'(2)=3\cdot 2^{2}-6\cdot 2=12-12=0\). \(f''(2)=6\cdot 2-6=12-6=6\). \(f'''(2)=6\). \(f^{(n)}(2)=0\) para \(n\ge 4\).</li>
+    <li>Coeficientes: \(c_{0}=\dfrac{1}{0!}=1\); \(c_{1}=\dfrac{0}{1!}=0\); \(c_{2}=\dfrac{6}{2!}=\dfrac{6}{2}=3\); \(c_{3}=\dfrac{6}{3!}=\dfrac{6}{6}=1\); \(c_{n}=\dfrac{0}{n!}=0\) para \(n\ge 4\).</li>
+    <li>Serie de Taylor centrada en \(2\): \(1+0\cdot(x-2)+3(x-2)^{2}+1\cdot(x-2)^{3}+0+0+\cdots\) Solo tiene tres términos distintos de \(0\): \[1+3(x-2)^{2}+(x-2)^{3}\]</li>
+    <li>¿Dónde converge? Desde \(N=3\) en adelante, todas las sumas parciales son iguales: \(T_{3}(x)=T_{4}(x)=T_{5}(x)=\cdots\) Una sucesión que es constante desde un lugar en adelante tiene por límite esa constante. La serie converge para todo \(x\) real, y su suma es \(T_{3}(x)\).</li>
+    <li>¿Su suma es \(f(x)\)? Se desarrollan las potencias: \((x-2)^{2}=x^{2}-4x+4\) y \((x-2)^{3}=(x-2)(x^{2}-4x+4)=x^{3}-4x^{2}+4x-2x^{2}+8x-8=x^{3}-6x^{2}+12x-8\).</li>
+    <li>Se reemplaza: \(1+3(x^{2}-4x+4)+(x^{3}-6x^{2}+12x-8)=1+3x^{2}-12x+12+x^{3}-6x^{2}+12x-8\).</li>
+    <li>Se juntan los términos de igual grado: \(x^{3}+(3x^{2}-6x^{2})+(-12x+12x)+(1+12-8)=x^{3}-3x^{2}+5\). Es \(f(x)\).</li>
+    <li>Resultado, para todo \(x\) real: \(x^{3}-3x^{2}+5=1+3(x-2)^{2}+(x-2)^{3}\). La serie de Taylor de un polinomio es el mismo polinomio, escrito en potencias de \((x-a)\). Es finita y exacta: no hizo falta ningún teorema sobre series.</li>
+    <li>Comprobación en \(x=3\). Función: \(27-27+5=5\). Serie: \(x-2=1\), y \(1+3\cdot 1^{2}+1^{3}=1+3+1=5\). Coincide.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(f(x)=\ln x\) centrada en \(a=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función y centro: \(f(x)=\ln x\), definida si \(x&gt;0\); centro \(a=1\). \(f(1)=\ln 1=0\).</li>
+    <li>Derivar. \(f'(x)=\dfrac{1}{x}\) (citada). Esa es la función del ejemplo 1: derivar \(\ln x\) un total de \(n\) veces (\(n\ge 1\)) es derivar \(\dfrac{1}{x}\) un total de \(n-1\) veces. Por el patrón del ejemplo 1, con \(n-1\) en lugar de \(n\): \[f^{(n)}(x)=\dfrac{(-1)^{n-1}\,(n-1)!}{x^{\,n}}\qquad(n\ge 1)\] Los primeros: \(f'(x)=\dfrac{1}{x}\), \(f''(x)=-\dfrac{1}{x^{2}}\), \(f'''(x)=\dfrac{2}{x^{3}}\), \(f^{(4)}(x)=-\dfrac{6}{x^{4}}\).</li>
+    <li>Evaluar en el centro. \(1^{n}=1\): \(f^{(n)}(1)=(-1)^{n-1}\,(n-1)!\) para \(n\ge 1\). Los primeros: \(1,\ -1,\ 2,\ -6\). Y \(f(1)=0\).</li>
+    <li>Coeficientes. \(c_{0}=\dfrac{0}{0!}=0\). Para \(n\ge 1\), como \(n!=n\cdot(n-1)!\): \(c_{n}=\dfrac{(-1)^{n-1}\,(n-1)!}{n\cdot(n-1)!}=\dfrac{(-1)^{n-1}}{n}\).</li>
+    <li>Serie de Taylor de \(\ln x\) centrada en \(1\) (parte en \(n=1\) porque \(c_{0}=0\)): \[\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n}\,(x-1)^{n}=(x-1)-\dfrac{(x-1)^{2}}{2}+\dfrac{(x-1)^{3}}{3}-\dfrac{(x-1)^{4}}{4}+\cdots\]</li>
+    <li>¿Dónde converge? Se fija \(x\ne 1\). Tamaño del término: \(|u_{n}|=\dfrac{|x-1|^{n}}{n}\). Cociente: \(\dfrac{|x-1|^{n+1}}{n+1}\cdot\dfrac{n}{|x-1|^{n}}=|x-1|\cdot\dfrac{n}{n+1}\). Como \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\), \(L=|x-1|\cdot 1=|x-1|\). Si \(|x-1|&lt;1\), es decir, \(0&lt;x&lt;2\), converge absolutamente; si \(|x-1|&gt;1\), diverge. Radio: \(R=1\).</li>
+    <li>Extremos, aparte. En \(x=0\): \((x-1)^{n}=(-1)^{n}\), y el término es \(\dfrac{(-1)^{n-1}(-1)^{n}}{n}=\dfrac{(-1)^{2n-1}}{n}=-\dfrac{1}{n}\), porque \(2n-1\) es impar. La serie es el opuesto de la armónica: diverge (hoja «Series harmónicas y series-p»). En \(x=2\): \((x-1)^{n}=1\) y la serie es \(1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\), que converge (hoja «Criterio de Leibniz»). Intervalo de convergencia: \((0,\ 2]\).</li>
+    <li>¿Su suma es \(\ln x\)? <b>Primer camino: una serie ya conocida.</b> La hoja «Representación de funciones como series de potencias» (ejemplo 2) obtuvo \(\ln(1+u)=\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{u^{n}}{n}\) si \(|u|&lt;1\). Con \(u=x-1\): \(1+u=x\), y \(|u|&lt;1\) es \(0&lt;x&lt;2\). Los signos coinciden: \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\). Es la misma serie. Entonces \[\ln x=\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n}\,(x-1)^{n}\qquad(0&lt;x&lt;2)\] Esta igualdad depende del teorema de integración término a término, que esa hoja enuncia sin demostrar.</li>
+    <li><b>Segundo camino: el resto, para \(1\le x\le 2\).</b> Por el paso 2 con \(N+1\) en lugar de \(n\): \(\big|f^{(N+1)}(t)\big|=\dfrac{N!}{t^{\,N+1}}\) para \(t&gt;0\). Si \(t\) está entre \(1\) y \(x\), entonces \(t\ge 1\), así que \(t^{\,N+1}\ge 1\) y \(\dfrac{N!}{t^{\,N+1}}\le N!\). Se toma \(M=N!\).</li>
+    <li>Cota de Lagrange con \(a=1\): \(|R_{N}(x)|\le\dfrac{N!}{(N+1)!}\,|x-1|^{N+1}\). Como \((N+1)!=(N+1)\cdot N!\), es \(\dfrac{N!}{(N+1)!}=\dfrac{1}{N+1}\). Y como \(0\le x-1\le 1\), es \(|x-1|^{N+1}=(x-1)^{N+1}\le 1\). Queda \[0\le|R_{N}(x)|\le\dfrac{1}{N+1}\]</li>
+    <li>\(\displaystyle\lim_{N\to\infty}\dfrac{1}{N+1}=0\). Entonces \(|R_{N}(x)|\) tiene límite \(0\) (aviso de rigor, 5), y \(T_{N}(x)\) tiene límite \(\ln x\). Queda demostrado, sin el teorema de integración término a término, que la serie suma \(\ln x\) para \(1\le x\le 2\). Incluye el extremo \(x=2\): \[\ln 2=1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\] (Para \(0&lt;x&lt;1\) este camino necesita una cota más fina, que aquí no se hace; ahí vale el primer camino.)</li>
+    <li>Comprobación en \(x=\dfrac{3}{2}\), con cuatro términos. \(x-1=\dfrac{1}{2}\): \(T_{4}=\dfrac{1}{2}-\dfrac{1}{8}+\dfrac{1}{24}-\dfrac{1}{64}\). Denominador común \(192\): \(\dfrac{96}{192}-\dfrac{24}{192}+\dfrac{8}{192}-\dfrac{3}{192}=\dfrac{77}{192}\approx 0{,}4010\). Con calculadora, \(\ln(1{,}5)\approx 0{,}4055\). Distancia: \(|0{,}4055-0{,}4010|=0{,}0045\). Cota del paso 10 sin el último reemplazo, con \(N=4\): \(\dfrac{1}{5}\cdot\left(\dfrac{1}{2}\right)^{5}=\dfrac{1}{5}\cdot\dfrac{1}{32}=\dfrac{1}{160}=0{,}00625\). La distancia queda bajo la cota.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(f(x)=e^{x}\) centrada en \(a=1\)</h3>
+  <div class="body">
+  <p>La serie de \(e^{x}\) con centro \(0\) es tema de otra hoja. Aquí el centro es \(1\) y no se usa esa serie.</p>
+  <ol class="steps">
+    <li>Derivar. \(\big(e^{x}\big)'=e^{x}\) (citada): la derivada es la misma función. Paso de \(n\) a \(n+1\): si \(f^{(n)}(x)=e^{x}\), al derivar otra vez queda \(e^{x}\). Entonces \(f^{(n)}(x)=e^{x}\) para todo \(n\ge 0\).</li>
+    <li>Evaluar en el centro: \(f^{(n)}(1)=e^{1}=e\) para todo \(n\). (\(e\approx 2{,}7183\).)</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{e}{n!}\).</li>
+    <li>Serie de Taylor de \(e^{x}\) centrada en \(1\): \[\sum_{n=0}^{\infty}\dfrac{e}{n!}\,(x-1)^{n}=e+e\,(x-1)+\dfrac{e}{2}\,(x-1)^{2}+\dfrac{e}{6}\,(x-1)^{3}+\cdots\]</li>
+    <li>¿Dónde converge? Se fija \(x\ne 1\). Tamaño del término: \(|u_{n}|=\dfrac{e\,|x-1|^{n}}{n!}\). Cociente: \(\dfrac{e\,|x-1|^{n+1}}{(n+1)!}\cdot\dfrac{n!}{e\,|x-1|^{n}}\). Se simplifica \(e\); \(\dfrac{|x-1|^{n+1}}{|x-1|^{n}}=|x-1|\); y \(\dfrac{n!}{(n+1)!}=\dfrac{1}{n+1}\). Queda \(|x-1|\cdot\dfrac{1}{n+1}\).</li>
+    <li>Límite: \(|x-1|\) es constante y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\). \(L=|x-1|\cdot 0=0&lt;1\), sea cual sea \(x\). La serie converge absolutamente para todo \(x\) real. Radio: \(R=\infty\); no hay extremos.</li>
+    <li>¿Su suma es \(e^{x}\)? Con el resto. \(f^{(N+1)}(t)=e^{t}\), que es positivo. Como \(e^{t}\) es creciente (citado): si \(x\ge 1\), los \(t\) entre \(1\) y \(x\) cumplen \(t\le x\) y \(e^{t}\le e^{x}\); si \(x&lt;1\), cumplen \(t\le 1\) y \(e^{t}\le e\). Se toma \(M\) igual al mayor de los números \(e\) y \(e^{x}\). \(M\) depende de \(x\), pero no de \(N\).</li>
+    <li>Cota de Lagrange con \(a=1\): \(0\le|R_{N}(x)|\le M\cdot\dfrac{|x-1|^{N+1}}{(N+1)!}\).</li>
+    <li>La sucesión \(\dfrac{|x-1|^{n}}{n!}\) tiene límite \(0\). Razón: con \(u=|x-1|\), la serie \(\displaystyle\sum_{n=0}^{\infty}\dfrac{u^{n}}{n!}\) converge (hoja «Series de potencias», ejemplo 2), y los términos de una serie convergente tienen límite \(0\) (hoja «Criterio del enésimo término»). Correr el índice de \(n\) a \(N+1\) no cambia el límite (hoja «Límite de una sucesión», teorema 3).</li>
+    <li>Constante por sucesión: \(M\cdot\dfrac{|x-1|^{N+1}}{(N+1)!}\) tiene límite \(M\cdot 0=0\). Entonces \(|R_{N}(x)|\) tiene límite \(0\) (aviso de rigor, 5) y \(T_{N}(x)\) tiene límite \(e^{x}\).</li>
+    <li>Resultado, para todo \(x\) real: \[e^{x}=\sum_{n=0}^{\infty}\dfrac{e}{n!}\,(x-1)^{n}\]</li>
+    <li>Comprobación en \(x=\dfrac{3}{2}\), hasta \(n=3\). \(x-1=\dfrac{1}{2}\); \(\left(\dfrac{1}{2}\right)^{2}=\dfrac{1}{4}\) y \(\dfrac{1}{4}:2=\dfrac{1}{8}\); \(\left(\dfrac{1}{2}\right)^{3}=\dfrac{1}{8}\) y \(\dfrac{1}{8}:6=\dfrac{1}{48}\). Factor común \(e\): \(T_{3}=e\left(1+\dfrac{1}{2}+\dfrac{1}{8}+\dfrac{1}{48}\right)=e\cdot\dfrac{48+24+6+1}{48}=e\cdot\dfrac{79}{48}\).</li>
+    <li>Con \(e\approx 2{,}7183\): \(2{,}7183\cdot 79=214{,}7457\) y \(214{,}7457:48\approx 4{,}4739\). Con calculadora, \(e^{1{,}5}\approx 4{,}4817\). Distancia: \(|4{,}4817-4{,}4739|=0{,}0078\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar el factorial: el coeficiente es \(\dfrac{f^{(n)}(a)}{n!}\), no \(f^{(n)}(a)\). Evaluar las derivadas en \(x\) en vez de en el centro: los coeficientes son números, no funciones. Escribir potencias de \(x\) cuando el centro es \(a\ne 0\): van potencias de \((x-a)\). Elegir un centro donde la función no existe (para \(\dfrac{1}{x}\) o \(\ln x\), el centro \(0\)). Dar el patrón de \(f^{(n)}(a)\) mirando tres casos y sin justificarlo. Olvidar que \(0!=1\) y que el índice parte en \(n=0\); o partir en \(n=0\) cuando el término general tiene \(n\) en el denominador (ejemplo 3: ahí \(c_{0}=0\) y la suma parte en \(n=1\)). Escribir la serie sin su intervalo. Dar por revisados los extremos: van aparte. Usar la serie fuera del intervalo «porque la función existe ahí»: \(\dfrac{1}{x}\) existe en \(x=3\), y su serie centrada en \(1\) diverge en \(x=3\). Y el más serio: concluir que la serie suma \(f(x)\) solo porque converge. Eso se demuestra aparte: porque la serie es finita, porque es una serie de suma conocida, o porque el resto tiende a \(0\).</p>
+    <p>Cuando el centro es \(a=0\), la serie de Taylor se llama serie de Maclaurin. Las hojas siguientes tratan ese caso y las series de \(e^{x}\), \(\operatorname{sen}x\) y \(\cos x\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Determina la serie de Taylor de \(f(x)=x^{3}+x\) centrada en \(a=-1\) y comprueba que su suma es \(f(x)\). (b) Determina la serie de Taylor de \(f(x)=\dfrac{1}{x}\) centrada en \(a=2\), con su intervalo, y comprueba en \(x=3\) con \(T_{2}\). (c) ¿Sirve la serie de (b) para calcular \(f(5)=\dfrac{1}{5}\)?</p>
+    <details><summary>Pista</summary><div><p>En (a), \(x-a=x-(-1)=x+1\): la serie va en potencias de \((x+1)\) y tiene cuatro términos. En (b), usa el patrón del ejemplo 1 y evalúa en \(2\): aparece una potencia de \(2\) en el denominador.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Derivar: \(f'(x)=3x^{2}+1\); \(f''(x)=6x\); \(f'''(x)=6\); \(f^{(n)}(x)=0\) para \(n\ge 4\).</li>
+        <li>(a) Evaluar en \(a=-1\): \(f(-1)=(-1)^{3}+(-1)=-1-1=-2\); \(f'(-1)=3\cdot(-1)^{2}+1=3+1=4\); \(f''(-1)=6\cdot(-1)=-6\); \(f'''(-1)=6\).</li>
+        <li>(a) Coeficientes: \(c_{0}=\dfrac{-2}{0!}=-2\); \(c_{1}=\dfrac{4}{1!}=4\); \(c_{2}=\dfrac{-6}{2!}=\dfrac{-6}{2}=-3\); \(c_{3}=\dfrac{6}{3!}=\dfrac{6}{6}=1\); \(c_{n}=0\) para \(n\ge 4\).</li>
+        <li>(a) Serie, con \(x-a=x+1\): \(-2+4(x+1)-3(x+1)^{2}+(x+1)^{3}\). Es finita: converge para todo \(x\) (ejemplo 2, paso 5).</li>
+        <li>(a) Comprobación. \((x+1)^{2}=x^{2}+2x+1\) y \((x+1)^{3}=(x+1)(x^{2}+2x+1)=x^{3}+2x^{2}+x+x^{2}+2x+1=x^{3}+3x^{2}+3x+1\).</li>
+        <li>(a) Se reemplaza: \(-2+(4x+4)+(-3x^{2}-6x-3)+(x^{3}+3x^{2}+3x+1)\). Por grados: \(x^{3}+(-3x^{2}+3x^{2})+(4x-6x+3x)+(-2+4-3+1)=x^{3}+x\). Es \(f(x)\), para todo \(x\) real.</li>
+        <li>(b) Patrón del ejemplo 1: \(f^{(n)}(x)=\dfrac{(-1)^{n}\,n!}{x^{\,n+1}}\). En \(a=2\): \(f^{(n)}(2)=\dfrac{(-1)^{n}\,n!}{2^{\,n+1}}\). Los primeros: \(\dfrac{1}{2},\ -\dfrac{1}{4},\ \dfrac{2}{8}=\dfrac{1}{4},\ -\dfrac{6}{16}=-\dfrac{3}{8}\).</li>
+        <li>(b) Coeficientes: \(c_{n}=\dfrac{(-1)^{n}\,n!}{2^{\,n+1}\cdot n!}=\dfrac{(-1)^{n}}{2^{\,n+1}}\). Serie: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{\,n+1}}\,(x-2)^{n}=\dfrac{1}{2}-\dfrac{x-2}{4}+\dfrac{(x-2)^{2}}{8}-\dfrac{(x-2)^{3}}{16}+\cdots\)</li>
+        <li>(b) ¿Dónde converge? Con \(x\ne 2\), tamaño del término: \(\dfrac{|x-2|^{n}}{2^{\,n+1}}\). Cociente: \(\dfrac{|x-2|^{n+1}}{2^{\,n+2}}\cdot\dfrac{2^{\,n+1}}{|x-2|^{n}}=\dfrac{|x-2|}{2}\). \(L=\dfrac{|x-2|}{2}\); \(L&lt;1\) es \(|x-2|&lt;2\), es decir, \(-2&lt;x-2&lt;2\); sumando \(2\): \(0&lt;x&lt;4\). Si \(|x-2|&gt;2\), diverge. Radio: \(R=2\).</li>
+        <li>(b) Extremos: en \(x=0\) y en \(x=4\), \(|x-2|=2\) y el tamaño del término es \(\dfrac{2^{n}}{2^{\,n+1}}=\dfrac{1}{2}\), que no tiende a \(0\): diverge en los dos (hoja «Criterio del enésimo término»). Intervalo de convergencia: \((0,\ 4)\).</li>
+        <li>(b) ¿Suma \(f(x)\)? Es geométrica: primer término \(\dfrac{1}{2}\), razón \(r=-\dfrac{x-2}{2}\). \(1-r=1+\dfrac{x-2}{2}=\dfrac{2+x-2}{2}=\dfrac{x}{2}\). Suma: \(\dfrac{1}{2}:\dfrac{x}{2}=\dfrac{1}{2}\cdot\dfrac{2}{x}=\dfrac{1}{x}\). Sí. Resultado: \(\dfrac{1}{x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{\,n+1}}\,(x-2)^{n}\) si \(0&lt;x&lt;4\). Es el recuadro «El centro se elige» con \(a=2\).</li>
+        <li>(b) Comprobación en \(x=3\): \(x-2=1\). \(T_{2}=\dfrac{1}{2}-\dfrac{1}{4}+\dfrac{1}{8}=\dfrac{4}{8}-\dfrac{2}{8}+\dfrac{1}{8}=\dfrac{3}{8}\). Función: \(\dfrac{1}{3}\). Diferencia, con denominador común \(24\): \(\dfrac{1}{3}-\dfrac{3}{8}=\dfrac{8}{24}-\dfrac{9}{24}=-\dfrac{1}{24}\). Con la fórmula del recuadro (\(r=-\dfrac{1}{2}\), \(N=2\)): \(\dfrac{r^{3}}{x}=-\dfrac{1}{8}:3=-\dfrac{1}{24}\). Coincide.</li>
+        <li>(c) No. \(|5-2|=3\), que es mayor que el radio \(2\): \(x=5\) está fuera de \((0,\ 4)\). Ahí la razón es \(r=-\dfrac{3}{2}\) y los términos, \(\dfrac{1}{2},\ -\dfrac{3}{4},\ \dfrac{9}{8},\ -\dfrac{27}{16},\ \ldots\), crecen de tamaño: la serie diverge. Para calcular \(f(5)\) con una serie de Taylor hay que elegir otro centro; por ejemplo, con \(a=4\) el intervalo es \((0,\ 8)\), que contiene a \(5\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Determina la serie de Taylor de \(f(x)=\ln x\) centrada en \(a=2\). (b) Halla su radio y su intervalo de convergencia, con los extremos. (c) Muestra que su suma es \(\ln x\) si \(0&lt;x&lt;4\). (d) Aproxima \(\ln 3\) con los términos hasta \(n=4\), usando \(\ln 2\approx 0{,}6931\).</p>
+    <details><summary>Pista</summary><div><p>En (a), usa el patrón del ejemplo 3 y evalúa en \(2\); el primer coeficiente es \(c_{0}=\ln 2\), que no es \(0\). En (c), escribe \(x=2\cdot\dfrac{x}{2}\) y \(\dfrac{x}{2}=1+\dfrac{x-2}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(f(2)=\ln 2\). Patrón del ejemplo 3: \(f^{(n)}(x)=\dfrac{(-1)^{n-1}\,(n-1)!}{x^{\,n}}\) para \(n\ge 1\). En \(a=2\): \(f^{(n)}(2)=\dfrac{(-1)^{n-1}\,(n-1)!}{2^{n}}\). Los primeros: \(\dfrac{1}{2},\ -\dfrac{1}{4},\ \dfrac{2}{8}=\dfrac{1}{4},\ -\dfrac{6}{16}=-\dfrac{3}{8}\).</li>
+        <li>(a) Coeficientes: \(c_{0}=\dfrac{\ln 2}{0!}=\ln 2\). Para \(n\ge 1\), con \(n!=n\cdot(n-1)!\): \(c_{n}=\dfrac{(-1)^{n-1}\,(n-1)!}{2^{n}\cdot n\cdot(n-1)!}=\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\). Los primeros: \(c_{1}=\dfrac{1}{2}\), \(c_{2}=-\dfrac{1}{8}\), \(c_{3}=\dfrac{1}{24}\), \(c_{4}=-\dfrac{1}{64}\).</li>
+        <li>(a) Serie de Taylor de \(\ln x\) centrada en \(2\): \[\ln 2+\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\,(x-2)^{n}=\ln 2+\dfrac{x-2}{2}-\dfrac{(x-2)^{2}}{8}+\dfrac{(x-2)^{3}}{24}-\cdots\]</li>
+        <li>(b) Se fija \(x\ne 2\). Tamaño del término (\(n\ge 1\)): \(\dfrac{|x-2|^{n}}{n\cdot 2^{n}}\). Cociente: \(\dfrac{|x-2|^{n+1}}{(n+1)\cdot 2^{\,n+1}}\cdot\dfrac{n\cdot 2^{n}}{|x-2|^{n}}=\dfrac{|x-2|}{2}\cdot\dfrac{n}{n+1}\). Como \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\): \(L=\dfrac{|x-2|}{2}\).</li>
+        <li>(b) \(L&lt;1\) es \(|x-2|&lt;2\), es decir, \(0&lt;x&lt;4\): converge absolutamente. Si \(|x-2|&gt;2\), diverge. Radio: \(R=2\). (El término \(\ln 2\) es uno solo: agregar un término no cambia la convergencia.)</li>
+        <li>(b) Extremo \(x=0\): \((x-2)^{n}=(-2)^{n}=(-1)^{n}\,2^{n}\). Término: \(\dfrac{(-1)^{n-1}(-1)^{n}\,2^{n}}{n\cdot 2^{n}}=\dfrac{(-1)^{2n-1}}{n}=-\dfrac{1}{n}\). Es el opuesto de la armónica: diverge. Extremo \(x=4\): \((x-2)^{n}=2^{n}\) y el término es \(\dfrac{(-1)^{n-1}}{n}\): la serie \(1-\dfrac{1}{2}+\dfrac{1}{3}-\cdots\) converge (hoja «Criterio de Leibniz»). Intervalo de convergencia: \((0,\ 4]\).</li>
+        <li>(c) Para \(x&gt;0\): \(x=2\cdot\dfrac{x}{2}\), y por la propiedad del logaritmo (citada), \(\ln x=\ln 2+\ln\dfrac{x}{2}\).</li>
+        <li>(c) \(\dfrac{x}{2}=\dfrac{2+(x-2)}{2}=1+\dfrac{x-2}{2}\). Se llama \(u=\dfrac{x-2}{2}\). La condición \(|u|&lt;1\) es \(|x-2|&lt;2\), es decir, \(0&lt;x&lt;4\).</li>
+        <li>(c) Serie conocida (ejemplo 3, primer camino): \(\ln(1+u)=\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n}\,u^{n}\) si \(|u|&lt;1\). Con \(u^{n}=\dfrac{(x-2)^{n}}{2^{n}}\): \(\ln\dfrac{x}{2}=\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\,(x-2)^{n}\).</li>
+        <li>(c) Entonces \(\ln x=\ln 2+\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n\cdot 2^{n}}\,(x-2)^{n}\) si \(0&lt;x&lt;4\): es la serie de (a). Depende, como el ejemplo 3, del teorema enunciado en la hoja «Representación de funciones como series de potencias».</li>
+        <li>(d) \(x=3\) está en \((0,\ 4)\); \(x-2=1\). Términos: \(\dfrac{1}{2}-\dfrac{1}{8}+\dfrac{1}{24}-\dfrac{1}{64}\). Denominador común \(192\): \(\dfrac{96}{192}-\dfrac{24}{192}+\dfrac{8}{192}-\dfrac{3}{192}=\dfrac{77}{192}\approx 0{,}4010\).</li>
+        <li>(d) \(\ln 3\approx 0{,}6931+0{,}4010=1{,}0941\). Con calculadora, \(\ln 3\approx 1{,}0986\). Distancia: \(|1{,}0986-1{,}0941|=0{,}0045\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un terreno cuadrado tiene \(26\) m² de área (dato inventado). Para cercarlo hay que conocer su lado, \(\sqrt{26}\) m, y no hay calculadora. Como \(\sqrt{25}=5\) se conoce, se usa \(f(x)=\sqrt{x}\) con centro \(a=25\). (a) Calcula los tres primeros términos de la serie de Taylor de \(f\) centrada en \(25\). (b) Con ellos, aproxima \(\sqrt{26}\). (c) Acota el error con la cota de Lagrange. (d) ¿Cuántos metros de cerca se necesitan, y con qué seguridad?</p>
+    <details><summary>Pista</summary><div><p>Escribe \(f(x)=x^{1/2}\) y deriva con la regla de la potencia. Para evaluar: \(25^{1/2}=5\), \(25^{3/2}=5^{3}=125\), \(25^{5/2}=5^{5}=3125\). En (c) hace falta la tercera derivada, que es positiva y decreciente para \(x&gt;0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Derivar \(f(x)=x^{1/2}\) (regla de la potencia, citada, \(x&gt;0\)): \(f'(x)=\dfrac{1}{2}\,x^{-1/2}\); \(f''(x)=\dfrac{1}{2}\cdot\left(-\dfrac{1}{2}\right)x^{-3/2}=-\dfrac{1}{4}\,x^{-3/2}\).</li>
+        <li>(a) Evaluar en \(a=25\): \(f(25)=5\). \(f'(25)=\dfrac{1}{2}\cdot\dfrac{1}{5}=\dfrac{1}{10}\). \(25^{3/2}=5^{3}=125\), y \(f''(25)=-\dfrac{1}{4}\cdot\dfrac{1}{125}=-\dfrac{1}{500}\).</li>
+        <li>(a) Coeficientes: \(c_{0}=\dfrac{5}{0!}=5\); \(c_{1}=\dfrac{1/10}{1!}=\dfrac{1}{10}\); \(c_{2}=\dfrac{-1/500}{2!}=-\dfrac{1}{500}:2=-\dfrac{1}{1000}\).</li>
+        <li>(a) Tres primeros términos: \(T_{2}(x)=5+\dfrac{1}{10}\,(x-25)-\dfrac{1}{1000}\,(x-25)^{2}\).</li>
+        <li>(b) En \(x=26\): \(x-25=1\) y \((x-25)^{2}=1\). \(T_{2}(26)=5+\dfrac{1}{10}-\dfrac{1}{1000}=5+0{,}1-0{,}001=5{,}099\).</li>
+        <li>(c) Tercera derivada: \(f'''(x)=-\dfrac{1}{4}\cdot\left(-\dfrac{3}{2}\right)x^{-5/2}=\dfrac{3}{8}\,x^{-5/2}=\dfrac{3}{8\,x^{5/2}}\). Es positiva.</li>
+        <li>(c) Para \(t\) entre \(25\) y \(26\): \(t\ge 25\), así que \(t^{5/2}\ge 25^{5/2}=5^{5}=3125\) y \(f'''(t)\le\dfrac{3}{8\cdot 3125}=\dfrac{3}{25000}\). Se toma \(M=\dfrac{3}{25000}\).</li>
+        <li>(c) Cota de Lagrange con \(a=25\), \(N=2\), \(x=26\): \(|R_{2}(26)|\le\dfrac{M}{3!}\cdot|26-25|^{3}=\dfrac{3}{25000}:6\cdot 1=\dfrac{3}{150000}=\dfrac{1}{50000}=0{,}00002\).</li>
+        <li>(c) Entonces \(5{,}099-0{,}00002\le\sqrt{26}\le 5{,}099+0{,}00002\), es decir, \(5{,}09898\le\sqrt{26}\le 5{,}09902\). Verificación al cuadrado: \(5{,}099^{2}=25{,}999801\), muy cerca de \(26\).</li>
+        <li>(d) Perímetro: \(4\) lados. \(4\cdot 5{,}099=20{,}396\) m. Error máximo: \(4\cdot 0{,}00002=0{,}00008\) m, menos de una décima de milímetro. Se necesitan unos \(20{,}40\) m de cerca.</li>
+        <li>Interpretación: se eligió el centro \(25\) porque ahí la función y sus derivadas se calculan a mano, y porque \(26\) está cerca. Lo que se usó es un polinomio de Taylor con su cota de error, que es un resultado seguro. Esta solución no determinó el término general de la serie de \(\sqrt{x}\), ni dónde converge, ni si suma \(\sqrt{x}\): esas preguntas quedan abiertas aquí.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H30 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H30 · determinar la serie de Taylor de una función: cada derivada en el centro da un coeficiente; 1/x con centro 1 (por pasos) y 1/x con el centro que se elija (número ↔ figura) */
+function ty30Cl(t){ return Math.max(0, Math.min(1, t)); }
+function ty30Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+/* fracción p/q simplificada, con q > 0 */
+function ty30F(p, q){ if (q < 0){ p = -p; q = -q; } var g = ty30Mcd(p, q); return [p/g, q/g]; }
+function ty30Mul(a, b){ return ty30F(a[0]*b[0], a[1]*b[1]); }
+function ty30Div(a, b){ return ty30F(a[0]*b[1], a[1]*b[0]); }
+function ty30Sum(a, b){ return ty30F(a[0]*b[1] + b[0]*a[1], a[1]*b[1]); }
+function ty30Abs(a){ return [Math.abs(a[0]), a[1]]; }
+/* fracción en TeX, con el signo delante; t = 1 para tamaño chico */
+function ty30Tx(f, t){ var s = f[0] < 0 ? '-' : '', p = Math.abs(f[0]); return f[1] === 1 ? s + p : s + '\\' + (t ? 't' : 'd') + 'frac{' + p + '}{' + f[1] + '}'; }
+function ty30Pl(f){ return (f[0] < 0 ? '−' : '') + Math.abs(f[0]) + (f[1] === 1 ? '' : '/' + f[1]); }
+/* paréntesis si es negativo */
+function ty30Pa(s){ return s.charAt(0) === '-' ? '\\left(' + s + '\\right)' : s; }
+/* A + B (o A − B si resta = 1) escrito con denominador común: devuelve la cadena TeX desde el denominador común y el resultado */
+function ty30Op(A, B, resta){ var D = A[1]*B[1]/ty30Mcd(A[1], B[1]), na = A[0]*(D/A[1]), nb = B[0]*(D/B[1]), n = resta ? na - nb : na + nb, r = ty30F(n, D), s = '';
+  function fr(m){ return D === 1 ? '' + m : (m < 0 ? '-' : '') + '\\tfrac{' + Math.abs(m) + '}{' + D + '}'; }
+  if ((A[1] !== D || B[1] !== D) && na !== 0 && nb !== 0) s += '=' + fr(na) + (resta ? '-' : '+') + ty30Pa(fr(nb));
+  if (n === 0) s += '=0'; else { s += '=' + fr(n); if (r[1] !== D) s += '=' + ty30Tx(r, 1); }
+  return {tex:s, r:r}; }
+function ty30Curva(S, gx, gy, f, a, b, col, wd, dash){ var c = S.ctx, i, n = 180, t; if (b <= a) return; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(gx(t)), S.Y(gy(f(t)))); else c.moveTo(S.X(gx(t)), S.Y(gy(f(t)))); } c.stroke(); c.setLineDash([]); }
+/* polinomio de Taylor de grado N de 1/x con centro a: suma de (1/a)·(−(x − a)/a)^n, n = 0…N */
+function ty30T(N, a, x){ var r = -(x - a)/a, s = 0, p = 1, n; for (n = 0; n <= N; n++){ s += p/a; p *= r; } return s; }
+OA.scene('tay-idea', (function(){
+  var N = 6, XA = -0.15, XB = 2.65, YA = -0.5, YB = 3, Q = '\\\\&\\qquad ';
+  function gx(x){ return -0.72 + 2.2*x; } function gy(y){ return 1.875 + 1.75*y; }
+  var PZ = [['IV', '0<x<2', '0 < x < 2', ''], ['CF', 'y=\\tfrac{1}{x}', 'y = 1/x', 'c-tan'], ['CN', '\\text{centro }(1,\\ 1)', 'centro (1, 1)', 'c-tan'],
+    ['L0', 'T_{0}', 'T₀', ''], ['L1', 'T_{1}', 'T₁', 'c-sec'], ['L2', 'T_{2}', 'T₂', 'c-alt'], ['L3', 'T_{3}', 'T₃', 'diff'], ['L8', 'T_{8}', 'T₈', 'pt'],
+    ['Q', '\\text{¿Cuál es la serie de Taylor de }\\tfrac{1}{x}\\text{ centrada en }1\\text{?}', '¿Cuál es la serie de Taylor de 1/x centrada en 1?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\textstyle\\sum_{n=0}^{\\infty}(-1)^{n}(x-1)^{n}\\text{; suma }\\tfrac{1}{x}\\text{ si }0<x<2', '⟹ Σ (−1)ⁿ (x − 1)ⁿ; suma 1/x si 0 < x < 2', 'diff'],
+    ['R1', 'f(1)=1\\ \\Longrightarrow\\ c_{0}=\\tfrac{1}{0!}=1', 'f(1) = 1 ⟹ c₀ = 1/0! = 1', ''],
+    ['R2', 'f\'(1)=-1\\ \\Longrightarrow\\ c_{1}=\\tfrac{-1}{1!}=-1', 'f′(1) = −1 ⟹ c₁ = −1/1! = −1', ''],
+    ['R3', 'f\'\'(1)=2\\ \\Longrightarrow\\ c_{2}=\\tfrac{2}{2!}=1', 'f″(1) = 2 ⟹ c₂ = 2/2! = 1', ''],
+    ['R4', 'f\'\'\'(1)=-6\\ \\Longrightarrow\\ c_{3}=\\tfrac{-6}{3!}=-1', 'f‴(1) = −6 ⟹ c₃ = −6/3! = −1', ''],
+    ['R5', 'f^{(n)}(1)=(-1)^{n}\\,n!\\ \\Longrightarrow\\ c_{n}=(-1)^{n}', 'f⁽ⁿ⁾(1) = (−1)ⁿ n! ⟹ cₙ = (−1)ⁿ', ''],
+    ['R6', '\\tfrac{1}{x}=\\textstyle\\sum_{n=0}^{\\infty}(-1)^{n}(x-1)^{n}\\quad(0<x<2)', '1/x = Σ (−1)ⁿ (x − 1)ⁿ (0 < x < 2)', 'diff']];
+  var TXT = [['Curva burdeo: la función. Punto: el centro.', 'La recta gris copia ahí solo la altura, 1.'],
+    ['La derivada en el centro da la pendiente, −1:', 'la recta azul es la tangente en el centro.'],
+    ['La segunda derivada en el centro vale 2: la', 'curva verde copia también cómo se dobla.'],
+    ['La tercera derivada en el centro vale −6: la', 'naranja sigue a la curva un tramo más largo.'],
+    ['Las derivadas siguen un patrón: sale la serie', 'completa. La negra fina llega hasta n = 8.'],
+    ['La serie converge solo en la franja gris. Ahí,', 'más términos se pegan a la curva; fuera, no.']];
+  function f0(x){ return 1/x; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.9, y1:9.6}, aspect:14.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: cada derivada en el centro da un coeficiente de la serie de Taylor. Animación en seis pasos sobre una gráfica con x en horizontal, de menos 0,15 a 2,65, y los valores en vertical, de menos 0,5 a 3. Uno: se traza en burdeo la curva de 1 dividido por x, que baja de izquierda a derecha; se marca el centro, el punto de coordenadas 1 y 1, y una recta gris horizontal de altura 1, que copia solo el valor de la función en el centro. Dos: la recta azul, 1 menos x menos 1, es la tangente en el centro; su pendiente, menos 1, es la primera derivada en el centro. Tres: la curva verde agrega x menos 1 al cuadrado; el coeficiente 1 sale de la segunda derivada en el centro, 2, dividida por 2 factorial. Cuatro: la curva naranja agrega menos x menos 1 al cubo; el coeficiente menos 1 sale de la tercera derivada en el centro, menos 6, dividida por 3 factorial. Cinco: las derivadas en el centro siguen el patrón menos 1 elevado a n por n factorial, y cada coeficiente es menos 1 elevado a n; una línea negra fina dibuja el polinomio que llega hasta n igual a 8. Seis: se sombrea en gris la franja entre x igual a 0 y x igual a 2, con los extremos marcados con anillos abiertos; dentro de ella la línea negra va pegada a la curva burdeo y, a la derecha de x igual a 2, se separa bruscamente hacia arriba. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta, la serie de menos 1 elevado a n por x menos 1 elevado a n, que suma 1 dividido por x solo si x está entre 0 y 2, se escribe debajo de ella. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> la función, \\(y=\\tfrac{1}{x}\\), y el centro \\((1,\\ 1)\\)</span><span>recta gris: \\(T_{0}=1\\)</span><span><i class="sw sec"></i> \\(T_{1}=1-(x-1)\\)</span><span><i class="sw alt"></i> \\(T_{2}=T_{1}+(x-1)^{2}\\)</span><span><i class="sw rise"></i> \\(T_{3}=T_{2}-(x-1)^{3}\\)</span><span>línea negra fina: \\(T_{8}\\), hasta \\(n=8\\)</span><span>franja gris: el intervalo \\(0&lt;x&lt;2\\), sin los extremos</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), G = C.muted || '#6b6b6b', w, bx0 = X(gx(XA)), bx1 = X(gx(XB)), by0 = Y(gy(YB)), by1 = Y(gy(YA));
+      function txt(t, x, y, al, cc, an){ c.globalAlpha = al == null ? 1 : al; c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = an || 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || G; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function caja(){ c.save(); c.beginPath(); c.rect(bx0, by0, bx1 - bx0, by1 - by0); c.clip(); }
+      function anillo(x, y, col, lleno){ c.beginPath(); c.arc(X(gx(x)), Y(gy(y)), 4, 0, 6.2832); c.fillStyle = lleno ? col : '#fff'; c.fill(); c.strokeStyle = col; c.lineWidth = 1.6; c.setLineDash([]); c.stroke(); }
+      function pol(n, col, wd, w){ caja(); ty30Curva(S, gx, gy, function(t){ return ty30T(n, 1, t); }, XA, XA + (XB - XA)*w, col, wd); c.restore(); }
+      /* paso 6: la franja donde la serie converge, debajo de todo */
+      if (k >= 6){ w = u; c.globalAlpha = 0.08*w; c.fillStyle = C.ink; c.fillRect(X(gx(0)), by0, (X(gx(2)) - X(gx(0)))*w, by1 - by0); c.globalAlpha = 0.55*w; c.strokeStyle = G; c.lineWidth = 1; c.setLineDash([4, 3]);
+        if (w >= 0.98){ c.beginPath(); c.moveTo(X(gx(2)), by0); c.lineTo(X(gx(2)), by1); c.stroke(); } c.setLineDash([]); c.globalAlpha = 1;
+        if (w > 0.6) L('IV', gx(1.05), gy(2.82), -50); }
+      /* ejes */
+      S.line(gx(XA), gy(0), gx(XB), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(YA), gx(0), gy(YB), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [[0.5, '0,5'], [1, '1'], [1.5, '1,5'], [2, '2'], [2.5, '2,5']].forEach(function(m){ c.beginPath(); c.moveTo(X(gx(m[0])), Y(gy(0)) - 3); c.lineTo(X(gx(m[0])), Y(gy(0)) + 3); c.stroke(); num(m[1], X(gx(m[0])), Y(gy(0)) + 11, 'center'); });
+      [[1, '1'], [2, '2']].forEach(function(m){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(m[0]))); c.lineTo(X(gx(0)) + 3, Y(gy(m[0]))); c.stroke(); num(m[1], X(gx(0)) - 7, Y(gy(m[0])), 'right'); });
+      num('x', bx1 + 4, Y(gy(0)), 'left'); num('y', X(gx(0)) + 6, by0 + 2, 'left');
+      /* paso 5: el polinomio que llega hasta n = 8, fino */
+      if (k >= 5){ w = k === 5 ? u : 1; pol(8, C.ink, 1.1, w); if (w > 0.92) L('L8', gx(2.36), gy(2.82), -50); }
+      /* pasos 2, 3 y 4: tangente, grado 2 y grado 3 */
+      if (k >= 4){ w = k === 4 ? u : 1; pol(3, C.rise, 1.5, w); if (w > 0.85) L('L3', gx(1.8), gy(-0.33), -50); }
+      if (k >= 3){ w = k === 3 ? u : 1; pol(2, C.alt, 1.5, w); if (w > 0.97) L('L2', gx(2.52), gy(1.52), -50); }
+      if (k >= 2){ w = k === 2 ? u : 1; pol(1, C.sec, 1.5, w); if (w > 0.2) L('L1', gx(0.1), gy(1.64), -50); }
+      /* paso 1: la curva de la función, el centro y la recta de altura 1 */
+      w = k === 1 ? ty30Cl(u/0.55) : 1; caja(); ty30Curva(S, gx, gy, f0, 0.3, 0.3 + (XB - 0.3)*w, C.tan, 2.2); c.restore(); if (w > 0.97) L('CF', gx(2.42), gy(0.63), -50);
+      w = k === 1 ? ty30Cl((u - 0.5)/0.5) : 1;
+      if (w > 0){ c.globalAlpha = w; ty30Curva(S, gx, gy, function(){ return 1; }, XA, XA + (XB - XA)*w, G, 1.3, [5, 3]); c.globalAlpha = w;
+        c.strokeStyle = C.tan; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(gx(1)), Y(gy(0))); c.lineTo(X(gx(1)), Y(gy(1))); c.stroke(); c.setLineDash([]);
+        anillo(1, 1, C.tan, 1); c.globalAlpha = 1; if (w > 0.6){ L('CN', gx(1.1), gy(1.27), 0); L('L0', gx(2.56), gy(1.13), -50); } }
+      /* paso 6: extremos abiertos y lo que pasa dentro y fuera */
+      if (k >= 6){ anillo(0, 0, G, 0); if (u > 0.98) anillo(2, 0, G, 0);
+        if (u > 0.9){ txt('dentro: se pega', gx(0.08), gy(0.3), 1, C.ink, 'left'); txt('Fuera de la franja, la línea negra se despega.', -1.2, 0.62); } }
+      L('Q', -1.2, 8.2, 0); if (k === N && u > 0.5) L('F', -1.2, 7.62, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.05); txt(TXT[k - 1][1], -1.2, 0.05 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = G; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.2));
+      dtQue(S, 'cada derivada en el centro da un', 'coeficiente de la serie de Taylor.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.35, [6, 36, 66, 96, 126, 156]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{Función: }f(x)=\\dfrac{1}{x}\\ \\ (x\\neq 0).\\quad\\text{Centro: }a=1.' + Q + '\\text{Coeficiente de lugar }n\\text{: }c_{n}=\\dfrac{f^{(n)}(a)}{n!}' + Q + 'n=0\\text{: }f(1)=\\dfrac{1}{1}=1,\\qquad 0!=1' + Q + 'c_{0}=\\dfrac{f(1)}{0!}=\\dfrac{1}{1}=1' + Q + 'T_{0}(x)=c_{0}=1\\quad\\text{(recta gris, horizontal)}',
+      '\\text{Se escribe }f(x)=x^{-1}\\text{. Regla de la potencia:}' + Q + 'f\'(x)=(-1)\\cdot x^{-2}=-\\dfrac{1}{x^{2}}' + Q + 'f\'(1)=-\\dfrac{1}{1^{2}}=-\\dfrac{1}{1}=-1,\\qquad 1!=1' + Q + 'c_{1}=\\dfrac{f\'(1)}{1!}=\\dfrac{-1}{1}=-1' + Q + 'T_{1}(x)=T_{0}(x)+c_{1}(x-1)=1-(x-1)',
+      '\\text{Se deriva }f\'(x)=-x^{-2}\\text{:}' + Q + 'f\'\'(x)=-(-2)\\cdot x^{-3}=\\dfrac{2}{x^{3}}' + Q + 'f\'\'(1)=\\dfrac{2}{1^{3}}=\\dfrac{2}{1}=2,\\qquad 2!=2\\cdot 1=2' + Q + 'c_{2}=\\dfrac{f\'\'(1)}{2!}=\\dfrac{2}{2}=1' + Q + 'T_{2}(x)=T_{1}(x)+c_{2}(x-1)^{2}' + Q + '\\phantom{T_{2}(x)}=1-(x-1)+(x-1)^{2}',
+      '\\text{Se deriva }f\'\'(x)=2x^{-3}\\text{:}' + Q + 'f\'\'\'(x)=2\\cdot(-3)\\cdot x^{-4}=-\\dfrac{6}{x^{4}}' + Q + 'f\'\'\'(1)=-\\dfrac{6}{1^{4}}=-\\dfrac{6}{1}=-6' + Q + '3!=3\\cdot 2\\cdot 1=6' + Q + 'c_{3}=\\dfrac{f\'\'\'(1)}{3!}=\\dfrac{-6}{6}=-1' + Q + 'T_{3}(x)=T_{2}(x)+c_{3}(x-1)^{3}' + Q + '=1-(x-1)+(x-1)^{2}-(x-1)^{3}',
+      '\\text{Valores en el centro: }1,\\ \\ -1,\\ \\ 2,\\ \\ -6.' + Q + '\\text{Sin el signo: }1=0!,\\ \\ 1=1!,\\ \\ 2=2!,\\ \\ 6=3!' + Q + '\\text{Signos: }+,\\ -,\\ +,\\ -\\text{; es decir, }(-1)^{n}.' + Q + '\\text{Patrón (se demuestra en el ejemplo 1):}' + Q + 'f^{(n)}(1)=(-1)^{n}\\,n!' + Q + 'c_{n}=\\dfrac{f^{(n)}(1)}{n!}=\\dfrac{(-1)^{n}\\,n!}{n!}=(-1)^{n}' + Q + '\\text{Serie de Taylor: }\\displaystyle\\sum_{n=0}^{\\infty}(-1)^{n}(x-1)^{n}' + Q + '=1-(x-1)+(x-1)^{2}-(x-1)^{3}+\\cdots' + Q + '\\text{La línea negra fina es }T_{8}\\text{: llega a }n=8.',
+      '\\text{¿Dónde converge? Criterio del cociente,}' + Q + '\\text{con }x\\neq 1\\text{. Tamaño del término: }|x-1|^{n}.' + Q + '\\dfrac{|x-1|^{n+1}}{|x-1|^{n}}=|x-1|\\text{, así que }L=|x-1|.' + Q + 'L<1\\text{: }|x-1|<1\\text{, o sea }0<x<2\\text{: converge.}' + Q + 'L>1\\text{: }|x-1|>1\\text{: diverge.}' + Q + 'x=0\\text{ y }x=2\\text{: cada término tiene tamaño }1\\text{,}' + Q + '\\text{que no tiende a }0\\text{: diverge.}' + Q + '\\text{¿Suma }\\tfrac{1}{x}\\text{? Es una serie geométrica de}' + Q + '\\text{primer término }1\\text{ y razón }r=-(x-1)\\text{:}' + Q + '\\dfrac{1}{1-r}=\\dfrac{1}{1+(x-1)}=\\dfrac{1}{x}\\quad\\text{si }|r|<1.' + Q + '\\text{Prueba con }x=\\dfrac{3}{2}\\text{: }\\ x-1=\\dfrac{1}{2}' + Q + 'T_{0}=1,\\qquad T_{1}=1-\\dfrac{1}{2}=\\dfrac{1}{2}' + Q + 'T_{2}=\\dfrac{1}{2}+\\dfrac{1}{4}=\\dfrac{3}{4},\\qquad T_{3}=\\dfrac{3}{4}-\\dfrac{1}{8}=\\dfrac{5}{8}' + Q + '\\text{Función: }1:\\dfrac{3}{2}=\\dfrac{2}{3}' + Q + '\\text{Distancias: }\\left|\\dfrac{2}{3}-1\\right|=\\dfrac{1}{3},\\quad\\left|\\dfrac{2}{3}-\\dfrac{1}{2}\\right|=\\dfrac{1}{6}' + Q + '\\left|\\dfrac{2}{3}-\\dfrac{3}{4}\\right|=\\dfrac{1}{12},\\quad\\left|\\dfrac{2}{3}-\\dfrac{5}{8}\\right|=\\dfrac{1}{24}' + Q + '\\text{Cada distancia es la mitad de la anterior.}' + Q + '\\dfrac{1}{x}=\\displaystyle\\sum_{n=0}^{\\infty}(-1)^{n}(x-1)^{n}\\quad\\text{si }0<x<2'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: se elige el centro a; cambian los coeficientes, el polinomio y el intervalo; se prueba siempre en x = 2. Casos límite: a = 2 (el punto de prueba es el centro: distancia 0), a = 1 (x = 2 es extremo) y a = 1/2 (x = 2 queda fuera) */
+OA.scene('tay-vivo', (function(){
+  var Q = '\\\\&\\qquad ', AS = [[1, 2], [1, 1], [3, 2], [2, 1], [5, 2], [3, 1]], NP = AS.length, XA = -0.2, XB = 6.3, YA = -0.5, YB = 2.6, FAC = [1, 1, 2, 6], NUM = [1, -1, 2, -6], PR = ['', '\'', '\'\'', '\'\'\''];
+  function gx(x){ return -0.84 + 0.93*x; } function gy(y){ return 2.45 + 1.55*y; }
+  function cual(v){ return Math.max(1, Math.min(NP, Math.round(v.pos || 1))) - 1; }
+  var NOTA = {d:'dentro de la franja: más términos, más cerca', c:'caso límite: x = 2 es el centro; coinciden', e:'extremo de la franja: ahí la serie no converge', f:'fuera de la franja: más términos, más lejos'};
+  var DAT = AS.map(function(f){ var a = ty30F(f[0], f[1]), o = {a:a, av:f[0]/f[1], pa:[[1, 1], a], fd:[], c:[], dp:[[1, 1]], tm:[], T:[], ds:[]}, n, half = [1, 2];
+    for (n = 2; n <= 4; n++) o.pa[n] = ty30Mul(o.pa[n - 1], a); /* potencias del centro */
+    for (n = 0; n <= 3; n++){ o.fd[n] = ty30Div([NUM[n], 1], o.pa[n + 1]); o.c[n] = ty30Div(o.fd[n], [FAC[n], 1]); } /* derivadas en el centro y coeficientes */
+    o.d = ty30Sum([2, 1], [-a[0], a[1]]); for (n = 1; n <= 3; n++) o.dp[n] = ty30Mul(o.dp[n - 1], o.d); /* x − a con x = 2, y sus potencias */
+    for (n = 0; n <= 3; n++){ o.tm[n] = ty30Mul(o.c[n], o.dp[n]); o.T[n] = n ? ty30Sum(o.T[n - 1], o.tm[n]) : o.tm[0]; o.ds[n] = ty30Abs(ty30Sum(half, [-o.T[n][0], o.T[n][1]])); }
+    o.b = ty30Mul([2, 1], a); o.r = ty30Div([-o.d[0], o.d[1]], a); /* extremo derecho 2a y razón */
+    o.tipo = o.d[0] === 0 ? 'c' : Math.abs(o.d[0])*a[1] < a[0]*o.d[1] ? 'd' : Math.abs(o.d[0])*a[1] === a[0]*o.d[1] ? 'e' : 'f';
+    return o; });
+  var PZ = [['CF', 'y=\\tfrac{1}{x}', 'y = 1/x', 'c-tan'], ['C3', 'T_{3}', 'T₃', 'c-sec']];
+  DAT.forEach(function(o, j){ var at = ty30Tx(o.a, 1), ap = ty30Pl(o.a), iv = '(0,\\ ' + ty30Tx(o.b, 1) + ')', ip = '(0, ' + ty30Pl(o.b) + ')', ds = o.ds.map(function(d){ return ty30Tx(d, 1); }).join(',\\ '), dp = o.ds.map(ty30Pl).join(', ');
+    PZ.push(['A' + j, 'a=' + at + (o.tipo === 'c' ? '\\text{: }x=2\\text{ es el centro de }' : o.tipo === 'd' ? '\\text{: }x=2\\text{ está dentro de }' : o.tipo === 'e' ? '\\text{: }x=2\\text{ es extremo de }' : '\\text{: }x=2\\text{ está fuera de }') + iv, 'a = ' + ap + (o.tipo === 'c' ? ': x = 2 es el centro de ' : o.tipo === 'd' ? ': x = 2 está dentro de ' : o.tipo === 'e' ? ': x = 2 es extremo de ' : ': x = 2 está fuera de ') + ip, 'pt']);
+    PZ.push(['B' + j, '\\text{función: }f(2)=\\tfrac{1}{2}', 'función: f(2) = 1/2', 'c-tan']);
+    PZ.push(['D' + j, '\\text{polinomio de grado 3: }T_{3}(2)=' + ty30Tx(o.T[3], 1), 'polinomio de grado 3: T₃(2) = ' + ty30Pl(o.T[3]), 'c-sec']);
+    PZ.push(['E' + j, '\\text{distancia }\\left|f(2)-T_{3}(2)\\right|=' + ty30Tx(o.ds[3], 1), 'distancia |f(2) − T₃(2)| = ' + ty30Pl(o.ds[3]), 'diff']);
+    PZ.push(['G' + j, '\\text{distancias, de }T_{0}\\text{ a }T_{3}\\text{: }' + ds, 'distancias, de T₀ a T₃: ' + dp, 'pt']);
+    PZ.push(['I' + j, '\\text{converge: }0<x<' + ty30Tx(o.b, 1), 'converge: 0 < x < ' + ty30Pl(o.b), '']);
+    PZ.push(['N' + j, '\\text{centro }\\left(' + at + ',\\ ' + ty30Tx(o.fd[0], 1) + '\\right)', 'centro (' + ap + ', ' + ty30Pl(o.fd[0]) + ')', 'c-tan']); });
+  function lectura(j){ var o = DAT[j], at = ty30Tx(o.a), R = [], n, l, op;
+    R.push('\\text{Datos: }f(x)=\\dfrac{1}{x},\\quad\\text{centro }a=' + at + ',\\quad x=2' + Q + '\\text{Derivadas (ejemplo 1):}' + Q + 'f\'(x)=-\\dfrac{1}{x^{2}},\\quad f\'\'(x)=\\dfrac{2}{x^{3}},\\quad f\'\'\'(x)=-\\dfrac{6}{x^{4}}');
+    l = '\\text{Potencias del centro:}';
+    for (n = 2; n <= 4; n++) l += Q + 'a^{' + n + '}=' + (n === 2 ? 'a' : 'a^{' + (n - 1) + '}') + '\\cdot a=' + ty30Tx(o.pa[n - 1]) + '\\cdot ' + at + '=' + ty30Tx(o.pa[n]);
+    R.push(l);
+    l = '\\text{Derivadas en el centro (dividir por una}' + Q + '\\text{fracción es multiplicar por su inversa):}';
+    for (n = 0; n <= 3; n++){ l += Q + 'f' + PR[n] + '(a)=' + (n === 0 ? '\\dfrac{1}{a}' : (NUM[n] < 0 ? '-' : '') + '\\dfrac{' + Math.abs(NUM[n]) + '}{a^{' + (n + 1) + '}}') + '=' + NUM[n] + ':' + ty30Tx(o.pa[n + 1]) + '=' + ty30Tx(o.fd[n]); }
+    R.push(l);
+    l = '\\text{Coeficientes, }c_{n}=\\dfrac{f^{(n)}(a)}{n!}\\text{, con}' + Q + '0!=1,\\quad 1!=1,\\quad 2!=2,\\quad 3!=6\\text{:}';
+    for (n = 0; n <= 3; n++) l += Q + 'c_{' + n + '}=' + ty30Pa(ty30Tx(o.fd[n])) + ':' + FAC[n] + '=' + ty30Tx(o.c[n]);
+    R.push(l);
+    R.push('\\text{Polinomio de Taylor de grado 3:}' + Q + 'T_{3}(x)=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}' + Q + '\\text{Intervalo (recuadro): la serie completa}' + Q + '\\text{suma }\\tfrac{1}{x}\\text{ si }|x-a|<a\\text{, o sea }0<x<2a.' + Q + '2a=2\\cdot ' + at + '=' + ty30Tx(o.b) + '\\text{: intervalo }\\left(0,\\ ' + ty30Tx(o.b) + '\\right)');
+    l = '\\text{En }x=2\\text{:}' + Q + 'x-a=2-' + at + '=' + ty30Tx(o.d);
+    for (n = 2; n <= 3; n++) l += Q + '(x-a)^{' + n + '}=' + ty30Pa(ty30Tx(o.dp[n - 1])) + '\\cdot ' + ty30Pa(ty30Tx(o.d)) + '=' + ty30Tx(o.dp[n]);
+    R.push(l);
+    l = '\\text{Cada término en }x=2\\text{:}' + Q + 'c_{0}=' + ty30Tx(o.tm[0]);
+    for (n = 1; n <= 3; n++) l += Q + 'c_{' + n + '}(x-a)' + (n > 1 ? '^{' + n + '}' : '') + '=' + ty30Pa(ty30Tx(o.c[n])) + '\\cdot ' + ty30Pa(ty30Tx(o.dp[n])) + '=' + ty30Tx(o.tm[n]);
+    R.push(l);
+    l = '\\text{Se suma de a un término:}' + Q + 'T_{0}(2)=' + ty30Tx(o.T[0]);
+    for (n = 1; n <= 3; n++){ op = ty30Op(o.T[n - 1], o.tm[n], 0); l += Q + 'T_{' + n + '}(2)=' + ty30Tx(o.T[n - 1], 1) + '+' + ty30Pa(ty30Tx(o.tm[n], 1)) + op.tex; }
+    R.push(l);
+    l = '\\text{Función: }f(2)=\\dfrac{1}{2}\\text{. Distancias:}';
+    for (n = 0; n <= 3; n++){ op = ty30Op([1, 2], o.T[n], 1); l += Q + '\\left|\\tfrac{1}{2}-' + ty30Pa(ty30Tx(o.T[n], 1)) + '\\right|=\\left|' + op.tex.slice(1).split('=').join('\\right|=\\left|') + '\\right|=' + ty30Tx(o.ds[n], 1); }
+    R.push(l);
+    if (o.tipo === 'd') R.push('|x-a|=' + ty30Tx(ty30Abs(o.d)) + '<' + at + '=a\\text{: }x=2\\text{ está en }\\left(0,\\ ' + ty30Tx(o.b) + '\\right).' + Q + '\\text{Razón: }r=-\\dfrac{x-a}{a}=' + ty30Tx(o.r) + '\\text{. Cada distancia}' + Q + '\\text{es la anterior por }|r|=' + ty30Tx(ty30Abs(o.r)) + '\\text{: se achican}' + Q + '\\text{sin parar. En }x=2\\text{ la serie de Taylor con}' + Q + '\\text{este centro suma }f(2)=\\tfrac{1}{2}.');
+    else if (o.tipo === 'c') R.push('x=2\\text{ es el centro: }x-a=0.' + Q + '\\text{Todos los términos con }(x-a)\\text{ valen }0\\text{ y}' + Q + 'T_{N}(2)=c_{0}=f(2)\\text{ con cualquier }N\\text{:}' + Q + '\\text{la distancia es }0\\text{. Caso límite: en su}' + Q + '\\text{centro, toda serie de Taylor suma }f(a).');
+    else if (o.tipo === 'e') R.push('|x-a|=1=a\\text{: }x=2\\text{ es un extremo de }(0,\\ 2)\\text{;}' + Q + '\\text{no está dentro. Las sumas van }1,\\ 0,\\ 1,\\ 0\\text{:}' + Q + '\\text{no se acercan a ningún número, y la}' + Q + '\\text{distancia es siempre }\\tfrac{1}{2}\\text{. En }x=2\\text{ la serie}' + Q + '\\text{con centro }1\\text{ diverge, aunque }f(2)\\text{ existe.}');
+    else R.push('|x-a|=' + ty30Tx(ty30Abs(o.d)) + '>' + at + '=a\\text{: }x=2\\text{ está fuera de }\\left(0,\\ ' + ty30Tx(o.b) + '\\right).' + Q + '\\text{Razón: }r=-\\dfrac{x-a}{a}=' + ty30Tx(o.r) + '\\text{. Cada distancia}' + Q + '\\text{es la anterior por }|r|=' + ty30Tx(ty30Abs(o.r)) + '\\text{: crecen sin}' + Q + '\\text{parar. La serie con este centro diverge en}' + Q + 'x=2\\text{: no representa ahí a la función. Con}' + Q + '\\text{otro centro (por ejemplo }a=\\tfrac{3}{2}\\text{), sí.}');
+    return R; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-0.4, y1:9.35}, aspect:9.75/6.6, _dat:DAT,
+    aria:'Arriba, una franja dice qué muestra: al cambiar el centro cambian la serie y el intervalo donde suma 1 dividido por x. Una gráfica con x en horizontal, de menos 0,2 a 6,3, y los valores en vertical, de menos 0,5 a 2,6. En burdeo, la curva de 1 dividido por x. Un deslizador elige el centro a entre seis valores: un medio, 1, tres medios, 2, cinco medios y 3. El centro se marca con un punto burdeo sobre la curva. En azul, el polinomio de Taylor de grado 3 con ese centro. Una franja gris marca el intervalo de 0 a 2 a, sin los extremos, donde la serie completa converge. Una línea vertical punteada marca el punto de prueba, x igual a 2, con un punto sobre la curva y otro sobre el polinomio, unidos por un trazo naranja. Con a igual a tres medios, cinco medios o 3, x igual a 2 queda dentro de la franja y las distancias entre la función y los polinomios de grado 0 a 3 se achican: con a igual a tres medios son un sexto, un dieciochoavo, 1 sobre 54 y 1 sobre 162. Con a igual a 2, el punto de prueba es el centro y la distancia es 0. Con a igual a 1, x igual a 2 es un extremo: las sumas van 1, 0, 1, 0 y la distancia es siempre un medio. Con a igual a un medio, x igual a 2 queda fuera de la franja: el polinomio vale menos 40, se sale del dibujo, y las distancias crecen: tres medios, nueve medios, 27 medios y 81 medios. Bajo el dibujo se leen las distancias y, más abajo, la cuenta completa.',
+    labels:PZ,
+    sliders:[{id:'pos', tex:'\\text{centro}', min:1, max:NP, step:1, value:3}],
+    legend:'<span><i class="sw tan"></i> la función, \\(y=\\tfrac{1}{x}\\), y el centro elegido</span><span><i class="sw sec"></i> \\(T_{3}\\), polinomio de Taylor de grado 3 con ese centro</span><span><i class="sw rise"></i> distancia entre la función y \\(T_{3}\\) en \\(x=2\\)</span><span>franja gris: el intervalo \\(0&lt;x&lt;2a\\), sin los extremos</span><span>posiciones del deslizador: \\(a=\\tfrac{1}{2},\\ 1,\\ \\tfrac{3}{2},\\ 2,\\ \\tfrac{5}{2},\\ 3\\)</span>',
+    anim:{run:30000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.pos = Math.min(NP, 1 + Math.floor(p*NP)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var j = cual(v), o = DAT[j], a = o.av, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), G = C.muted || '#6b6b6b', bx0 = X(gx(XA)), bx1 = X(gx(XB)), by0 = Y(gy(YB)), by1 = Y(gy(YA)), px = X(gx(2)), yf = Y(gy(0.5)), t3 = o.T[3][0]/o.T[3][1], y3 = Y(gy(t3)), fuera = t3 < YA || t3 > YB, xl, yl;
+      function txt(t, y, cc){ c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(-1.2), Y(y)); }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || G; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function punto(qx, py, col, r){ c.beginPath(); c.arc(qx, py, r || 3.4, 0, 6.2832); c.fillStyle = col; c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 1; c.setLineDash([]); c.stroke(); }
+      function anillo(x){ c.beginPath(); c.arc(X(gx(x)), Y(gy(0)), 4, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.strokeStyle = G; c.lineWidth = 1.6; c.setLineDash([]); c.stroke(); }
+      /* la franja del intervalo (0, 2a) */
+      c.globalAlpha = 0.08; c.fillStyle = C.ink; c.fillRect(X(gx(0)), by0, X(gx(2*a)) - X(gx(0)), by1 - by0); c.globalAlpha = 0.55; c.strokeStyle = G; c.lineWidth = 1; c.setLineDash([4, 3]);
+      c.beginPath(); c.moveTo(X(gx(2*a)), by0); c.lineTo(X(gx(2*a)), by1); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+      /* ejes */
+      S.line(gx(XA), gy(0), gx(XB), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(YA), gx(0), gy(YB), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [1, 2, 3, 4, 5, 6].forEach(function(m){ c.beginPath(); c.moveTo(X(gx(m)), Y(gy(0)) - 3); c.lineTo(X(gx(m)), Y(gy(0)) + 3); c.stroke(); if (m !== 2){ c.fillStyle = 'rgba(255,255,255,0.85)'; c.fillRect(X(gx(m)) - 5, Y(gy(0)) + 5, 10, 12); num('' + m, X(gx(m)), Y(gy(0)) + 11, 'center'); } });
+      [1, 2].forEach(function(m){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(m))); c.lineTo(X(gx(0)) + 3, Y(gy(m))); c.stroke(); num('' + m, X(gx(0)) - 7, Y(gy(m)), 'right'); });
+      num('x', bx1 + 4, Y(gy(0)), 'left'); num('y', X(gx(0)) + 6, by0 + 2, 'left');
+      /* curvas, recortadas al cuadro */
+      c.save(); c.beginPath(); c.rect(bx0, by0, bx1 - bx0, by1 - by0); c.clip();
+      ty30Curva(S, gx, gy, function(t){ return ty30T(3, a, t); }, XA, XB, C.sec, 1.6);
+      ty30Curva(S, gx, gy, function(t){ return 1/t; }, 0.3, XB, C.tan, 2.2); c.restore();
+      T.L('CF', gx(5.75), gy(0.47), -50);
+      xl = a <= 1 ? 1.6*a : 0.4*a; yl = ty30T(3, a, xl); T.L('C3', gx(xl), gy(yl), -100, -7, 11);
+      anillo(0); anillo(2*a);
+      T.L('I' + j, Math.max(gx(a), -0.2), gy(-0.37), -50);
+      /* el punto de prueba x = 2: línea vertical, distancia y puntos */
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(px, by0); c.lineTo(px, by1); c.stroke(); c.setLineDash([]);
+      c.strokeStyle = C.rise; c.lineWidth = 3; c.beginPath(); c.moveTo(px, yf);
+      if (fuera){ c.lineTo(px, by1 - 7); c.stroke(); c.fillStyle = C.rise; c.beginPath(); c.moveTo(px, by1); c.lineTo(px - 5, by1 - 9); c.lineTo(px + 5, by1 - 9); c.closePath(); c.fill();
+        c.font = '600 11.5px ' + F; c.fillStyle = C.rise; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('el polinomio se sale', px + 9, Y(gy(1.42))); c.fillText('del dibujo, hacia abajo', px + 9, Y(gy(1.22))); }
+      else { c.lineTo(px, y3); c.stroke(); punto(px, y3, C.sec); }
+      punto(px, yf, C.tan);
+      c.font = '700 11px ' + F; c.fillStyle = '#fff'; c.fillRect(px - 16, Y(gy(0)) + 5, 32, 13); c.fillStyle = C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('x = 2', px, Y(gy(0)) + 11.5);
+      /* el centro */
+      c.strokeStyle = C.tan; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(gx(a)), Y(gy(0))); c.lineTo(X(gx(a)), Y(gy(1/a))); c.stroke(); c.setLineDash([]);
+      c.beginPath(); c.arc(X(gx(a)), Y(gy(1/a)), 5.2, 0, 6.2832); c.strokeStyle = C.tan; c.lineWidth = 1.8; c.stroke(); punto(X(gx(a)), Y(gy(1/a)), C.tan, 2.6);
+      T.L('N' + j, gx(a), gy(1/a), 0, 9, -13);
+      T.L('A' + j, -1.2, 8.0, 0); T.L('B' + j, -1.2, 7.5, 0); T.L('D' + j, -1.2, 7.0, 0);
+      T.L('E' + j, -1.2, 1.12, 0); T.L('G' + j, -1.2, 0.6, 0); txt(NOTA[o.tipo], 0.1, C.ink);
+      dtQue(S, 'al cambiar el centro cambian la serie', 'y el intervalo donde suma 1/x.');
+      T.fin();
+    },
+    caption:function(v){ var o = DAT[cual(v)]; return 'Centro a = ' + ty30Pl(o.a) + '. Intervalo: de 0 a ' + ty30Pl(o.b) + '. En x = 2 la función vale 1/2 y el polinomio de grado 3 vale ' + ty30Pl(o.T[3]) + '; distancia ' + ty30Pl(o.ds[3]) + '. Distancias con los grados 0 a 3: ' + o.ds.map(ty30Pl).join(', ') + '. ' + NOTA[o.tipo].charAt(0).toUpperCase() + NOTA[o.tipo].slice(1) + '.'; },
+    readout:function(v){ return dtPasos(lectura(cual(v))); }
+  };
+})());

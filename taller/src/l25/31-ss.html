@@ -1,0 +1,550 @@
+<!--file:H31_determinar_serie_de_maclaurin_de_una_funcion.html-->
+<!--title:Determinar serie de Maclaurin de una función-->
+<!--id:ss-maclaurin-->
+<!--tab:H31 Determinar serie de Maclaurin de una función-->
+<article class="sheet" id="ss-maclaurin" data-hoja="L25 H31">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Determinar serie de Maclaurin de una función</b></li>
+    </ol>
+    <h1>Determinar serie de Maclaurin de una función</h1>
+    <p class="lede">La serie de Maclaurin de una función \(f\) es la serie de potencias centrada en \(0\) cuyos coeficientes se fabrican con las derivadas de \(f\) en \(0\): el coeficiente de \(x^{n}\) es la derivada de orden \(n\) en \(0\), dividida por \(n!\). Es la serie de Taylor con centro \(a=0\). Hay dos caminos para determinarla: calcular las derivadas, o partir de una serie ya conocida. Los dos dan los mismos coeficientes. \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se determina, en seis pasos, la serie de Maclaurin de \(f(x)=\dfrac{1}{(1+x)^{2}}\) por el camino de las derivadas. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo (paso 1):</b> es la función \(y=\dfrac{1}{(1+x)^{2}}\); se dibuja solo para \(x&gt;-1\). El anillo burdeo marca su punto en el centro, \(x=0\): ahí vale \(1\). Ese valor es el primer coeficiente, \(c_{0}=1\), y la recta horizontal punteada es la suma de grado \(0\), \(P_{0}=1\). Arriba queda la pregunta.</li>
+    <li><b>Pasos 2, 3 y 4, una curva nueva por cada derivada:</b> la primera derivada en \(0\) da \(c_{1}=-2\) y aparece la recta azul \(P_{1}=1-2x\); la segunda da \(c_{2}=3\) y aparece la parábola verde \(P_{2}\); la tercera da \(c_{3}=-4\) y aparece la cúbica naranja \(P_{3}\). Cada una acompaña a la curva burdeo en un tramo más largo alrededor de \(0\). El registro anota cada derivada en \(0\) y su coeficiente.</li>
+    <li><b>Paso 5, el patrón:</b> los coeficientes \(1,\ -2,\ 3,\ -4\) siguen la regla \(c_{n}=(-1)^{n}(n+1)\). Con ella se tienen todos, y se dibuja en negro fino la suma hasta el grado \(8\), \(P_{8}\).</li>
+    <li><b>Paso 6, la franja gris:</b> el criterio del cociente dice que la serie converge solo si \(-1&lt;x&lt;1\). Los anillos abiertos indican que los extremos no entran. Cerca del centro la línea negra va pegada a la curva; cerca de los bordes de la franja todavía se separa: ahí hacen falta muchos más términos.</li>
+    <li><b>Cuenta de abajo:</b> repite cada paso con todas sus operaciones: cada derivada, su valor en \(0\), la división por \(n!\), una prueba con \(x=\dfrac{1}{4}\), el patrón, el cociente y los extremos. Conclusión: cada derivada en \(0\) fija un coeficiente, y dónde converge la serie se averigua aparte.</li>
+  </ol>
+  <div class="stage" data-scene="mac-idea"></div>
+  <ul class="keys">
+    <li><b>Burdeo:</b> la función \(y=\dfrac{1}{(1+x)^{2}}\) y su punto en el centro, \((0,\ 1)\).</li>
+    <li><b>Punteada gris, azul, verde y naranja:</b> las sumas \(P_{0}=1\), \(P_{1}=1-2x\), \(P_{2}=1-2x+3x^{2}\) y \(P_{3}=1-2x+3x^{2}-4x^{3}\). Cada una agrega un término de la serie.</li>
+    <li><b>Línea negra fina:</b> \(P_{8}\), la suma hasta el grado \(8\) (nueve términos).</li>
+    <li><b>Franja gris:</b> el intervalo \(-1&lt;x&lt;1\), donde la serie converge. Los extremos, con anillo abierto, no entran.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>De dónde sale la fórmula, y la definición</h3>
+    <p>Se parte de una función que ya está representada por una serie de potencias centrada en \(0\) (hojas «Series de potencias» y «Representación de funciones como series de potencias»): \[f(x)=\sum_{n=0}^{\infty}c_{n}\,x^{n}=c_{0}+c_{1}x+c_{2}x^{2}+c_{3}x^{3}+c_{4}x^{4}+\cdots\qquad\text{si }|x|&lt;R,\ \text{con }R&gt;0\] Pregunta: ¿cuánto valen los coeficientes \(c_{0},\ c_{1},\ c_{2},\ \ldots\)?</p>
+    <ol class="steps">
+      <li><b>Se evalúa en \(x=0\).</b> Todos los términos con \(x\) valen \(0\), porque \(0^{n}=0\) para \(n\ge 1\). Queda \(f(0)=c_{0}\). Entonces \(c_{0}=f(0)\).</li>
+      <li><b>Se deriva.</b> Por el teorema de derivación término a término (hoja «Representación de funciones como series de potencias»; ahí se enuncia sin demostrar), si \(|x|&lt;R\): \[f'(x)=c_{1}+2c_{2}x+3c_{3}x^{2}+4c_{4}x^{3}+\cdots\] Se evalúa en \(x=0\): queda \(f'(0)=c_{1}\). Entonces \(c_{1}=f'(0)\).</li>
+      <li><b>Se deriva otra vez.</b> El mismo teorema dice que la serie derivada tiene el mismo radio \(R\): se le puede aplicar de nuevo. Como \(\big(2c_{2}x\big)'=2c_{2}\), \(\big(3c_{3}x^{2}\big)'=3\cdot 2\,c_{3}x\) y \(\big(4c_{4}x^{3}\big)'=4\cdot 3\,c_{4}x^{2}\): \[f''(x)=2c_{2}+3\cdot 2\,c_{3}x+4\cdot 3\,c_{4}x^{2}+\cdots\] En \(x=0\): \(f''(0)=2c_{2}\). Entonces \(c_{2}=\dfrac{f''(0)}{2}\).</li>
+      <li><b>Y otra.</b> \(f'''(x)=3\cdot 2\cdot 1\,c_{3}+4\cdot 3\cdot 2\,c_{4}x+\cdots\) En \(x=0\): \(f'''(0)=3\cdot 2\cdot 1\,c_{3}=6c_{3}\). Entonces \(c_{3}=\dfrac{f'''(0)}{6}=\dfrac{f'''(0)}{3!}\).</li>
+      <li><b>El paso que se repite.</b> Al derivar \(n\) veces el término \(c_{n}x^{n}\), el exponente baja multiplicando por \(n\), después por \(n-1\), y así hasta \(1\): queda la constante \(n\cdot(n-1)\cdots 2\cdot 1\cdot c_{n}=n!\,c_{n}\). Los términos de grado menor que \(n\) ya se anularon en alguna derivada anterior. Los de grado mayor que \(n\) conservan una potencia de \(x\), que vale \(0\) en \(x=0\). Entonces \[f^{(n)}(0)=n!\,c_{n}\quad\Longrightarrow\quad c_{n}=\dfrac{f^{(n)}(0)}{n!}\]</li>
+      <li><b>Convenciones.</b> \(f^{(n)}\) es la derivada de orden \(n\) de \(f\); \(f^{(0)}=f\), \(f^{(1)}=f'\), \(f^{(2)}=f''\). Además \(0!=1\) y \(1!=1\). Así la fórmula vale desde \(n=0\): \(c_{0}=\dfrac{f(0)}{0!}=f(0)\) y \(c_{1}=\dfrac{f'(0)}{1!}=f'(0)\), como en los pasos 1 y 2.</li>
+    </ol>
+    <p><b>Teorema (unicidad).</b> Si \(f(x)=\displaystyle\sum_{n=0}^{\infty}c_{n}x^{n}\) para todo \(x\) con \(|x|&lt;R\), y \(R&gt;0\), entonces \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\) para todo \(n\ge 0\). Los coeficientes quedan obligados por la función: dos series de potencias centradas en \(0\) que representan a la misma función en un intervalo alrededor de \(0\) tienen los mismos coeficientes. La demostración son los seis pasos anteriores; <b>depende del teorema de derivación término a término, que no se demuestra</b>, y su paso 5 es una inducción de la que se escribe el paso que se repite.</p>
+    <p><b>Definición.</b> Sea \(f\) una función que tiene derivadas de todos los órdenes en \(x=0\). Su <b>serie de Maclaurin</b> es \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\] Es la serie de Taylor de \(f\) con centro \(a=0\) (hoja «Determinar serie de Taylor de una función»): al poner \(a=0\) en \(\displaystyle\sum_{n=0}^{\infty}\dfrac{f^{(n)}(a)}{n!}(x-a)^{n}\), queda \(x-0=x\). Su suma hasta el grado \(N\), \(P_{N}(x)=\displaystyle\sum_{n=0}^{N}\dfrac{f^{(n)}(0)}{n!}x^{n}\), es el polinomio de Maclaurin de grado \(N\) (hoja «Polinomios de Taylor y de Maclaurin», del curso Cálculo Integral).</p>
+    <p><b>Lo que la definición no dice.</b> La serie se arma con las derivadas en un solo punto. Que la serie converja en un \(x\ne 0\), y que su suma ahí sea \(f(x)\), son dos preguntas aparte:</p>
+    <ol class="steps">
+      <li><b>¿Para qué \(x\) converge?</b> Se responde con el criterio del cociente y la revisión de los extremos (hojas «Criterio del cociente para la convergencia» y «Series de potencias»). En \(x=0\) siempre converge, con suma \(c_{0}=f(0)\).</li>
+      <li><b>¿Su suma es \(f(x)\)?</b> Que la serie converja <b>no lo prueba</b>. Se asegura por otro medio: (a) por el segundo camino: si \(f\) ya se representó con una serie de potencias centrada en \(0\), el teorema de unicidad dice que esa es su serie de Maclaurin, y la igualdad vale donde valía la representación; (b) con una identidad exacta, como pasa con los polinomios (ejemplo 3) y con \(\dfrac{1}{1-x}\) (ejemplo 1); (c) acotando la diferencia \(f(x)-P_{N}(x)\) con la cota de Lagrange (hoja «Cota de Lagrange para el error», del curso Cálculo Integral), que aquí solo se menciona.</li>
+    </ol>
+    <p><b>Un caso de advertencia (se menciona; no se demuestra).</b> Hay funciones con derivadas de todos los órdenes cuya serie de Maclaurin converge para todo \(x\) y, aun así, no suma \(f(x)\) en ningún \(x\ne 0\). El ejemplo clásico es \(f(x)=e^{-1/x^{2}}\) para \(x\ne 0\), con \(f(0)=0\): todas sus derivadas en \(0\) valen \(0\), su serie de Maclaurin es \(0+0+0+\cdots\), y la función es positiva en todo \(x\ne 0\).</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa como en la hoja de ese nombre. En esta hoja se usan <b>sin demostrar</b>: (1) el <b>teorema de derivación e integración término a término</b> de una serie de potencias (enunciado en la hoja «Representación de funciones como series de potencias»); de él dependen la deducción de \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\), el teorema de unicidad y todo lo que en el segundo camino se obtiene derivando o integrando; (2) las reglas de derivación: \(\big(u^{p}\big)'=p\,u^{p-1}\cdot u'\) para exponente entero \(p\) (regla de la potencia con la regla de la cadena), la derivada de una suma y de una constante por una función, la derivada de una constante (\(0\)), \(\big(\ln u\big)'=\dfrac{u'}{u}\) para \(u&gt;0\) y la regla del cociente (ejercicio B); (3) los pasos «se repite»: el paso 5 de la deducción y cada fórmula para \(f^{(n)}(x)\) se justifican por inducción, y aquí se escribe el paso de \(n\) a \(n+1\); lo mismo vale para el «repitiendo» del ejercicio C; (4) los resultados de otras hojas, citados por su título: «Una función como una serie geométrica», «Representación de funciones como series de potencias», «Series de potencias», «Criterio del cociente para la convergencia», «Criterio del enésimo término» y «Criterio de Leibniz»; (5) los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\), el álgebra de límites (suma y constante por sucesión), que \(r^{\,n}\) tiene límite \(0\) si \(|r|&lt;1\), y que si \(0&lt;b_{n}\le d_{n}\) y \(d_{n}\) tiene límite \(0\), entonces \(b_{n}\) tiene límite \(0\) (ejercicio C); (6) las propiedades \(|u\cdot v|=|u|\cdot|v|\), \(|x^{n}|=|x|^{n}\), \((n+1)!=(n+1)\cdot n!\), y que \(x^{2}&lt;1\) equivale a \(|x|&lt;1\); (7) el caso de advertencia \(e^{-1/x^{2}}\) y la cota de Lagrange solo se mencionan. Los valores de \(\ln\) con decimales son aproximaciones de calculadora y llevan \(\approx\). Las series de Maclaurin de \(e^{x}\), \(\operatorname{sen}x\) y \(\cos x\) tienen su propia hoja y aquí no se desarrollan. En el ejercicio C, el interés compuesto anual es un modelo y los montos son datos inventados.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Dos caminos para determinarla</h3>
+    <p><b>Camino 1: por derivadas.</b></p>
+    <ol class="steps">
+      <li><b>Derivar.</b> Se calculan \(f'\), \(f''\), \(f'''\) y las que hagan falta hasta ver cómo siguen. Conviene escribir la función como potencia: \(\dfrac{1}{1-x}=(1-x)^{-1}\).</li>
+      <li><b>Evaluar en \(0\).</b> Se calculan \(f(0)\), \(f'(0)\), \(f''(0)\), \(f'''(0)\), …</li>
+      <li><b>Hallar el patrón.</b> Se busca una fórmula para \(f^{(n)}(0)\) que valga para todo \(n\). Para estar seguros, se escribe una fórmula para \(f^{(n)}(x)\) y se comprueba que, al derivarla una vez, da la misma fórmula con \(n+1\).</li>
+      <li><b>Dividir por \(n!\).</b> \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\). Casi siempre los factoriales se simplifican.</li>
+      <li><b>Escribir la serie,</b> con \(\Sigma\) y con sus primeros términos.</li>
+      <li><b>Decir dónde converge.</b> Criterio del cociente con \(a_{n}=c_{n}x^{n}\), para \(x\ne 0\); después, cada extremo por separado. Si hay coeficientes que valen \(0\) intercalados (solo potencias pares o solo impares), el cociente se arma con términos no nulos consecutivos, o se reconoce una serie geométrica.</li>
+      <li><b>Decir si la suma es \(f(x)\), y por qué.</b> Es la segunda pregunta del recuadro anterior: se responde aparte.</li>
+    </ol>
+    <p><b>Camino 2: desde una serie conocida.</b></p>
+    <ol class="steps">
+      <li><b>Se parte de una representación ya establecida,</b> casi siempre la geométrica: \(\dfrac{1}{1-x}=\displaystyle\sum_{n=0}^{\infty}x^{n}\) si \(|x|&lt;1\) (hoja «Una función como una serie geométrica»).</li>
+      <li><b>Se opera hasta llegar a \(f\):</b> cambiar la razón (por \(-x\), por \(x^{2}\), por \(2x\), …), multiplicar por una constante o por \(x^{m}\), sumar dos series, derivar o integrar término a término (reglas y teorema de la hoja «Representación de funciones como series de potencias»).</li>
+      <li><b>Se anota el intervalo</b> que entrega cada operación.</li>
+      <li><b>Se concluye con la unicidad:</b> lo que se obtuvo es una serie de potencias centrada en \(0\) que representa a \(f\) en un intervalo alrededor de \(0\); por el teorema de unicidad, es la serie de Maclaurin de \(f\). Este camino entrega, además, la igualdad con \(f\) y el intervalo donde vale.</li>
+    </ol>
+    <p><b>Cuál conviene.</b> El camino 1 sirve siempre que se puedan calcular las derivadas y ver su patrón, pero deja pendiente la segunda pregunta. El camino 2 es más corto cuando \(f\) se parece a una función de serie conocida, y responde las dos preguntas de una vez.</p>
+    <p><b>Los dos caminos, con la función de la animación.</b></p>
+    <ol class="steps">
+      <li>Camino 1 (animación): \(c_{n}=(-1)^{n}(n+1)\). Serie: \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}(n+1)\,x^{n}=1-2x+3x^{2}-4x^{3}+\cdots\)</li>
+      <li>Camino 2. En la hoja «Representación de funciones como series de potencias» (ejercicio A), derivando término a término \(\dfrac{1}{1+x}=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}x^{n}\) y multiplicando por \(-1\), se obtuvo: \(\dfrac{1}{(1+x)^{2}}=\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,n\,x^{n-1}\) si \(|x|&lt;1\).</li>
+      <li>Cambio de índice, para que el exponente sea la letra del índice. Con \(m=n-1\): \(n=m+1\), y \(n=1\) corresponde a \(m=0\). El signo: \((-1)^{n+1}=(-1)^{m+2}=(-1)^{m}\cdot(-1)^{2}=(-1)^{m}\). Queda \(\displaystyle\sum_{m=0}^{\infty}(-1)^{m}(m+1)\,x^{m}\).</li>
+      <li>Es la misma serie: el coeficiente de \(x^{m}\) es \((-1)^{m}(m+1)\) por los dos caminos, como asegura la unicidad. El camino 2 agrega lo que el camino 1 no daba: la suma de la serie es \(\dfrac{1}{(1+x)^{2}}\) para todo \(x\) con \(|x|&lt;1\) (con el teorema enunciado en esa hoja).</li>
+    </ol>
+    <p><b>Funciones pares e impares (demostrado con la regla de la cadena).</b> \(f\) es <b>par</b> si \(f(-x)=f(x)\) para todo \(x\) de su dominio, e <b>impar</b> si \(f(-x)=-f(x)\). Se supone que el dominio contiene a \(-x\) siempre que contiene a \(x\), y que \(f\) tiene derivadas de todos los órdenes.</p>
+    <ol class="steps">
+      <li><b>Una función impar vale \(0\) en \(0\).</b> Con \(x=0\) en \(g(-x)=-g(x)\): \(g(0)=-g(0)\). Se suma \(g(0)\) a cada lado: \(2\,g(0)=0\). Entonces \(g(0)=0\).</li>
+      <li><b>La derivada de una par es impar.</b> Se deriva cada lado de \(f(-x)=f(x)\). A la izquierda, regla de la cadena con \((-x)'=-1\): \(f'(-x)\cdot(-1)=f'(x)\). Se multiplica por \(-1\): \(f'(-x)=-f'(x)\).</li>
+      <li><b>La derivada de una impar es par.</b> Se deriva cada lado de \(g(-x)=-g(x)\): \(g'(-x)\cdot(-1)=-g'(x)\). Se multiplica por \(-1\): \(g'(-x)=g'(x)\).</li>
+      <li><b>Si \(f\) es par:</b> \(f'\) es impar, \(f''\) es par, \(f'''\) es impar, y así se alternan. Las derivadas de orden impar son funciones impares: valen \(0\) en \(0\) (paso 1). Entonces \(c_{n}=0\) para todo \(n\) impar: <b>su serie de Maclaurin tiene solo potencias pares.</b></li>
+      <li><b>Si \(f\) es impar:</b> \(f\), \(f''\), \(f^{(4)}\), … son impares y valen \(0\) en \(0\). Entonces \(c_{n}=0\) para todo \(n\) par: <b>su serie de Maclaurin tiene solo potencias impares.</b></li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Una serie que termina: \((1+x)^{k}\). Número ↔ figura</h3>
+    <p>La función \(f(x)=(1+x)^{k}\), con \(k\) entero entre \(0\) y \(4\), es un polinomio: sus derivadas valen \(0\) desde la de orden \(k+1\), y su serie de Maclaurin tiene solo \(k+1\) términos distintos de \(0\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la curva burdeo y la línea de arriba:</b> es la función \(y=(1+x)^{k}\) para el \(k\) elegido. En horizontal va \(x\); en vertical, el valor.</li>
+      <li><b>Mira después la curva azul y la segunda línea:</b> es la suma de la serie de Maclaurin hasta el grado \(N\). La línea vertical punteada marca \(x=0{,}5\), donde se prueba: hay un punto burdeo (la función) y uno azul (la suma), cada uno con su valor, y el trazo naranja entre ellos es la diferencia.</li>
+      <li><b>Mira las barras:</b> son los coeficientes \(c_{0},\ c_{1},\ c_{2},\ c_{3},\ c_{4}\) de la serie. En azul, los que ya entraron en la suma; en gris, los que faltan. Los coeficientes de grado mayor que \(k\) valen \(0\) y no tienen barra.</li>
+      <li><b>Mueve \(N\) con \(k\) fijo:</b> cada grado que se agrega acerca la curva azul a la burdeo y acorta el trazo naranja. Cuando \(N\) llega a \(k\), la curva azul (ahora punteada) queda encima de la burdeo y la diferencia es \(0\): la serie terminó. <b>Mueve \(k\):</b> cambian la curva y las barras. Con \(k=0\) la función es la constante \(1\) y hay una sola barra.</li>
+      <li><b>Cuenta de abajo:</b> para el \(k\) y el \(N\) elegidos, cada derivada, su valor en \(0\), cada coeficiente con su división por \(n!\), la serie, la suma en \(x=\dfrac{1}{2}\) con denominador común, el valor de la función, la diferencia y qué significa. Conclusión: la serie de Maclaurin de un polinomio es finita, y su suma es el mismo polinomio.</li>
+    </ol>
+    <div class="stage" data-scene="mac-vivo"></div>
+    <ul class="keys">
+      <li><b>Burdeo:</b> la función \(y=(1+x)^{k}\) y su valor en \(x=0{,}5\).</li>
+      <li><b>Azul:</b> la suma de la serie hasta el grado \(N\), su valor en \(x=0{,}5\) y las barras de los coeficientes ya sumados.</li>
+      <li><b>Naranja:</b> la diferencia entre la función y la suma en \(x=0{,}5\).</li>
+      <li><b>Barras grises:</b> los coeficientes de los términos que todavía no se suman.</li>
+      <li><b>Caso límite 1 (\(k=0\)):</b> \(f(x)=1\). Todas las derivadas valen \(0\): la serie es \(1+0+0+\cdots\), con un solo término.</li>
+      <li><b>Caso límite 2 (\(N\ge k\)):</b> ya se sumaron todos los términos distintos de \(0\). La diferencia es \(0\) en \(x=0{,}5\) y en cualquier otro \(x\): la suma es la función.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1 (camino 1): \(f(x)=\dfrac{1}{1-x}\) por derivadas. Coincide con la serie geométrica</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función como potencia: \(f(x)=(1-x)^{-1}\), definida si \(x\ne 1\). Valor en \(0\): \(f(0)=(1-0)^{-1}=1^{-1}=1\).</li>
+    <li>Primera derivada. Regla de la potencia y regla de la cadena, con \((1-x)'=-1\): \(f'(x)=(-1)\cdot(1-x)^{-2}\cdot(-1)=(1-x)^{-2}\).</li>
+    <li>Segunda derivada: \(f''(x)=(-2)\cdot(1-x)^{-3}\cdot(-1)=2\,(1-x)^{-3}\).</li>
+    <li>Tercera derivada: \(f'''(x)=2\cdot(-3)\cdot(1-x)^{-4}\cdot(-1)=6\,(1-x)^{-4}\).</li>
+    <li>En \(x=0\), \(1-0=1\) y toda potencia de \(1\) es \(1\): \(f(0)=1\), \(f'(0)=1\), \(f''(0)=2\), \(f'''(0)=6\).</li>
+    <li>Patrón: \(1=0!\), \(1=1!\), \(2=2!\), \(6=3!\). Fórmula: \(f^{(n)}(x)=n!\,(1-x)^{-(n+1)}\).</li>
+    <li>Comprobación del patrón. Se deriva la fórmula: \(n!\cdot\big(-(n+1)\big)\cdot(1-x)^{-(n+2)}\cdot(-1)=n!\,(n+1)\,(1-x)^{-(n+2)}=(n+1)!\,(1-x)^{-(n+2)}\). Es la misma fórmula con \(n+1\) en lugar de \(n\): el patrón sigue para todo \(n\).</li>
+    <li>Valores en \(0\): \(f^{(n)}(0)=n!\cdot 1=n!\). Coeficientes: \(c_{n}=\dfrac{f^{(n)}(0)}{n!}=\dfrac{n!}{n!}=1\) para todo \(n\).</li>
+    <li>Serie de Maclaurin: \(\displaystyle\sum_{n=0}^{\infty}1\cdot x^{n}=\sum_{n=0}^{\infty}x^{n}=1+x+x^{2}+x^{3}+\cdots\)</li>
+    <li>Dónde converge. Con \(a_{n}=x^{n}\) y \(x\ne 0\): \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{|x|^{n+1}}{|x|^{n}}=|x|\) para todo \(n\); el límite es \(L=|x|\). Si \(|x|&lt;1\), converge; si \(|x|&gt;1\), diverge (hoja «Criterio del cociente para la convergencia»).</li>
+    <li>Extremos. En \(x=1\) los términos son \(1,\ 1,\ 1,\ \ldots\); en \(x=-1\), \(1,\ -1,\ 1,\ \ldots\) En los dos, el tamaño es \(1\), que no tiende a \(0\): la serie diverge (hoja «Criterio del enésimo término»). Converge solo si \(-1&lt;x&lt;1\).</li>
+    <li>¿Su suma es \(f(x)\)? Sí, y está demostrado sin derivar ninguna serie: la hoja «Una función como una serie geométrica» prueba, con la identidad \((1-x)\cdot s_{N}(x)=1-x^{N+1}\), que \(\displaystyle\sum_{n=0}^{\infty}x^{n}=\dfrac{1}{1-x}\) si \(|x|&lt;1\).</li>
+    <li>Conclusión: la serie de Maclaurin de \(\dfrac{1}{1-x}\) es la serie geométrica de razón \(x\). El camino de las derivadas y el de la fórmula geométrica llegan a los mismos coeficientes, todos iguales a \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2 (camino 1): \(f(x)=\ln(1+x)\) por derivadas, y comparación con el camino 2</h3>
+  <div class="body">
+  <p>La hoja «Representación de funciones como series de potencias» obtuvo esta serie integrando término a término (su ejemplo 2). Aquí se obtiene por derivadas.</p>
+  <ol class="steps">
+    <li>Función: \(f(x)=\ln(1+x)\), definida si \(x&gt;-1\). Valor en \(0\): \(f(0)=\ln(1+0)=\ln 1=0\).</li>
+    <li>Primera derivada. Derivada del logaritmo con la regla de la cadena, \((1+x)'=1\): \(f'(x)=\dfrac{1}{1+x}\cdot 1=(1+x)^{-1}\).</li>
+    <li>Segunda derivada: \(f''(x)=(-1)\cdot(1+x)^{-2}\cdot 1=-(1+x)^{-2}\).</li>
+    <li>Tercera derivada: \(f'''(x)=(-1)\cdot(-2)\cdot(1+x)^{-3}\cdot 1=2\,(1+x)^{-3}\).</li>
+    <li>Cuarta derivada: \(f^{(4)}(x)=2\cdot(-3)\cdot(1+x)^{-4}\cdot 1=-6\,(1+x)^{-4}\).</li>
+    <li>En \(x=0\), \(1+0=1\): \(f(0)=0\), \(f'(0)=1\), \(f''(0)=-1\), \(f'''(0)=2\), \(f^{(4)}(0)=-6\).</li>
+    <li>Patrón, desde \(n=1\). Sin el signo: \(1=0!\), \(1=1!\), \(2=2!\), \(6=3!\); es decir, \((n-1)!\). Signos \(+,\ -,\ +,\ -\): \((-1)^{n-1}\). Fórmula, para \(n\ge 1\): \(f^{(n)}(x)=(-1)^{n-1}(n-1)!\,(1+x)^{-n}\).</li>
+    <li>Comprobación del patrón. Se deriva la fórmula: \((-1)^{n-1}(n-1)!\cdot(-n)\cdot(1+x)^{-n-1}\cdot 1\). Como \((-1)^{n-1}\cdot(-1)=(-1)^{n}\) y \((n-1)!\cdot n=n!\), queda \((-1)^{n}\,n!\,(1+x)^{-(n+1)}\): la misma fórmula con \(n+1\) en lugar de \(n\).</li>
+    <li>Valores en \(0\): \(f^{(n)}(0)=(-1)^{n-1}(n-1)!\) para \(n\ge 1\), y \(f(0)=0\).</li>
+    <li>Coeficientes. \(c_{0}=\dfrac{0}{0!}=0\). Para \(n\ge 1\), como \(n!=n\cdot(n-1)!\): \(c_{n}=\dfrac{(-1)^{n-1}(n-1)!}{n\cdot(n-1)!}=\dfrac{(-1)^{n-1}}{n}\).</li>
+    <li>Serie de Maclaurin. El término \(n=0\) vale \(0\) y la suma se escribe desde \(n=1\): \[\sum_{n=1}^{\infty}(-1)^{n-1}\dfrac{x^{n}}{n}=x-\dfrac{x^{2}}{2}+\dfrac{x^{3}}{3}-\dfrac{x^{4}}{4}+\cdots\]</li>
+    <li>Comparación con el camino 2. La otra hoja escribió \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{x^{n}}{n}\). Es la misma serie: \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\). Los dos caminos dan los mismos coeficientes.</li>
+    <li>Dónde converge. Con \(a_{n}=(-1)^{n-1}\dfrac{x^{n}}{n}\) y \(x\ne 0\): \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{|x|^{n+1}}{n+1}\cdot\dfrac{n}{|x|^{n}}=|x|\cdot\dfrac{n}{n+1}\), con límite \(|x|\cdot 1=|x|\). Si \(|x|&lt;1\) converge; si \(|x|&gt;1\) diverge. Los extremos los revisó la otra hoja: en \(x=-1\) diverge y en \(x=1\) converge. La serie converge en \((-1,\ 1]\).</li>
+    <li>¿Su suma es \(\ln(1+x)\)? El camino 1 no lo dice. Lo asegura el camino 2, en \(-1&lt;x&lt;1\), con el teorema de integración término a término (enunciado, no demostrado). En \(x=1\) la igualdad necesita otro teorema (el de Abel), que no se usa.</li>
+    <li>Comprobación con \(x=\dfrac{1}{5}\), tres términos. \(x^{2}=\dfrac{1}{25}\) y \(\dfrac{x^{2}}{2}=\dfrac{1}{50}\); \(x^{3}=\dfrac{1}{125}\) y \(\dfrac{x^{3}}{3}=\dfrac{1}{375}\). Con denominador común \(750\): \(\dfrac{1}{5}-\dfrac{1}{50}+\dfrac{1}{375}=\dfrac{150}{750}-\dfrac{15}{750}+\dfrac{2}{750}=\dfrac{137}{750}\approx 0{,}1827\). Con calculadora, \(\ln(1{,}2)\approx 0{,}1823\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un polinomio. Su serie de Maclaurin es él mismo</h3>
+  <div class="body">
+  <p><b>(a)</b> \(p(x)=3-5x+2x^{3}\).</p>
+  <ol class="steps">
+    <li>Derivadas (suma, constante por función y regla de la potencia): \(p'(x)=-5+6x^{2}\); \(p''(x)=12x\); \(p'''(x)=12\); \(p^{(4)}(x)=0\), y todas las siguientes valen \(0\).</li>
+    <li>En \(x=0\): \(p(0)=3\); \(p'(0)=-5+6\cdot 0=-5\); \(p''(0)=12\cdot 0=0\); \(p'''(0)=12\); \(p^{(n)}(0)=0\) para \(n\ge 4\).</li>
+    <li>Coeficientes: \(c_{0}=\dfrac{3}{0!}=3\); \(c_{1}=\dfrac{-5}{1!}=-5\); \(c_{2}=\dfrac{0}{2!}=0\); \(c_{3}=\dfrac{12}{3!}=\dfrac{12}{6}=2\); \(c_{n}=\dfrac{0}{n!}=0\) para \(n\ge 4\).</li>
+    <li>Serie de Maclaurin: \(3-5x+0\cdot x^{2}+2x^{3}+0+0+\cdots\) Desde el grado \(4\) todos los términos son \(0\).</li>
+    <li>Suma. Las sumas parciales \(P_{N}(x)\) con \(N\ge 3\) son todas iguales a \(3-5x+2x^{3}\): su límite es ese mismo número. La serie converge para todo \(x\) real y su suma es \(p(x)\). No hizo falta ningún criterio ni ningún teorema sobre series.</li>
+  </ol>
+  <p><b>(b)</b> \(q(x)=(x-1)^{2}\), que no está escrito en potencias de \(x\).</p>
+  <ol class="steps">
+    <li>Derivadas: \(q'(x)=2\,(x-1)\cdot 1=2(x-1)\); \(q''(x)=2\); \(q'''(x)=0\), y todas las siguientes valen \(0\).</li>
+    <li>En \(x=0\): \(q(0)=(0-1)^{2}=(-1)^{2}=1\); \(q'(0)=2\cdot(0-1)=-2\); \(q''(0)=2\).</li>
+    <li>Coeficientes: \(c_{0}=\dfrac{1}{0!}=1\); \(c_{1}=\dfrac{-2}{1!}=-2\); \(c_{2}=\dfrac{2}{2!}=\dfrac{2}{2}=1\); los demás valen \(0\).</li>
+    <li>Serie de Maclaurin: \(1-2x+x^{2}\). Es el cuadrado del binomio desarrollado: \((x-1)^{2}=x^{2}-2x+1\). Determinar la serie de Maclaurin de un polinomio es escribirlo ordenado en potencias de \(x\).</li>
+  </ol>
+  <p><b>(c) En general.</b> Sea \(p(x)=a_{0}+a_{1}x+a_{2}x^{2}+\cdots+a_{m}x^{m}\).</p>
+  <ol class="steps">
+    <li>Es una suma de una cantidad finita de términos: su derivada es la suma de las derivadas (regla de la suma), sin necesidad del teorema de las series.</li>
+    <li>Se deriva \(n\) veces el término \(a_{j}x^{j}\) y se evalúa en \(0\). Si \(j&lt;n\): tras \(j\) derivadas queda la constante \(j!\,a_{j}\), y la siguiente derivada es \(0\). Si \(j=n\): queda \(n!\,a_{n}\). Si \(j&gt;n\): queda \(j(j-1)\cdots(j-n+1)\,a_{j}\,x^{\,j-n}\), que en \(x=0\) vale \(0\).</li>
+    <li>Entonces \(p^{(n)}(0)=n!\,a_{n}\) si \(n\le m\), y \(p^{(n)}(0)=0\) si \(n&gt;m\). Coeficientes: \(c_{n}=\dfrac{n!\,a_{n}}{n!}=a_{n}\) si \(n\le m\), y \(c_{n}=0\) si \(n&gt;m\).</li>
+    <li>La serie de Maclaurin de \(p\) es \(a_{0}+a_{1}x+\cdots+a_{m}x^{m}+0+0+\cdots\): el mismo polinomio. Converge para todo \(x\) y su suma es \(p(x)\), exactamente. Es lo que muestra la segunda animación con \((1+x)^{k}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4 (los dos caminos): una función par, \(f(x)=\dfrac{1}{1-x^{2}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es par. Está definida si \(x\ne 1\) y \(x\ne -1\), y \(f(-x)=\dfrac{1}{1-(-x)^{2}}=\dfrac{1}{1-x^{2}}=f(x)\), porque \((-x)^{2}=x^{2}\). Por el recuadro «Dos caminos», su serie de Maclaurin tendrá solo potencias pares. Se comprueba por los dos caminos.</li>
+    <li><b>Camino 1.</b> Derivar el cociente directamente es largo. Se separa en dos fracciones: \(\dfrac{1}{1-x^{2}}=\dfrac{1}{2}\cdot\dfrac{1}{1-x}+\dfrac{1}{2}\cdot\dfrac{1}{1+x}\).</li>
+    <li>Comprobación de la separación. Como \((1-x)(1+x)=1-x^{2}\): \(\dfrac{1}{2}\cdot\dfrac{1}{1-x}+\dfrac{1}{2}\cdot\dfrac{1}{1+x}=\dfrac{1}{2}\cdot\dfrac{(1+x)+(1-x)}{(1-x)(1+x)}=\dfrac{1}{2}\cdot\dfrac{2}{1-x^{2}}=\dfrac{1}{1-x^{2}}\).</li>
+    <li>Derivadas de la primera fracción (ejemplo 1): la derivada de orden \(n\) de \((1-x)^{-1}\) es \(n!\,(1-x)^{-(n+1)}\); en \(0\) vale \(n!\).</li>
+    <li>Derivadas de la segunda, \(g(x)=(1+x)^{-1}\), con \((1+x)'=1\): \(g'(x)=-(1+x)^{-2}\); \(g''(x)=(-1)\cdot(-2)\cdot(1+x)^{-3}=2(1+x)^{-3}\); \(g'''(x)=2\cdot(-3)\cdot(1+x)^{-4}=-6(1+x)^{-4}\). Fórmula: \(g^{(n)}(x)=(-1)^{n}\,n!\,(1+x)^{-(n+1)}\).</li>
+    <li>Comprobación del patrón. Se deriva la fórmula: \((-1)^{n}\,n!\cdot\big(-(n+1)\big)\cdot(1+x)^{-(n+2)}=(-1)^{n+1}(n+1)!\,(1+x)^{-(n+2)}\): la misma fórmula con \(n+1\). En \(0\): \(g^{(n)}(0)=(-1)^{n}\,n!\).</li>
+    <li>Derivada de una suma y de una constante por una función: \(f^{(n)}(0)=\dfrac{1}{2}\cdot n!+\dfrac{1}{2}\cdot(-1)^{n}\,n!=\dfrac{n!}{2}\,\big(1+(-1)^{n}\big)\).</li>
+    <li>Si \(n\) es par, \((-1)^{n}=1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 2=n!\). Si \(n\) es impar, \((-1)^{n}=-1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 0=0\).</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{n!}{n!}=1\) si \(n\) es par; \(c_{n}=\dfrac{0}{n!}=0\) si \(n\) es impar. Serie de Maclaurin: \(1+0\cdot x+x^{2}+0\cdot x^{3}+x^{4}+\cdots\) Con \(n=2k\): \[\sum_{k=0}^{\infty}x^{2k}=1+x^{2}+x^{4}+x^{6}+\cdots\]</li>
+    <li><b>Camino 2.</b> Serie geométrica con razón \(r=x^{2}\) (hoja «Una función como una serie geométrica»): \(\dfrac{1}{1-x^{2}}=\displaystyle\sum_{n=0}^{\infty}\big(x^{2}\big)^{n}=\sum_{n=0}^{\infty}x^{2n}\) si \(|x^{2}|&lt;1\). Como \(|x^{2}|=x^{2}\), y \(x^{2}&lt;1\) equivale a \(|x|&lt;1\): vale si \(-1&lt;x&lt;1\).</li>
+    <li>Es la misma serie: solo potencias pares, todas con coeficiente \(1\). Los dos caminos coinciden, y los coeficientes impares valen \(0\), como anunciaba el paso 1.</li>
+    <li>Dónde converge y cuánto suma. Es una serie geométrica de razón \(x^{2}\): converge si \(x^{2}&lt;1\), con suma \(\dfrac{1}{1-x^{2}}\), y diverge si \(x^{2}\ge 1\) (misma hoja). En particular diverge en \(x=1\) y en \(x=-1\), donde todos los términos valen \(1\). Aquí la igualdad con \(f\) no depende del teorema de derivación.</li>
+    <li>Comprobación con \(x=\dfrac{1}{2}\). Función: \(1-\dfrac{1}{4}=\dfrac{3}{4}\) y \(1:\dfrac{3}{4}=\dfrac{4}{3}\approx 1{,}3333\). Serie, tres términos: \(1+\dfrac{1}{4}+\dfrac{1}{16}=\dfrac{16}{16}+\dfrac{4}{16}+\dfrac{1}{16}=\dfrac{21}{16}=1{,}3125\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar la división por \(n!\) y poner como coeficiente la derivada sola: en la animación, \(f''(0)=6\), pero \(c_{2}=\dfrac{6}{2!}=3\). Evaluar las derivadas en \(x\) en vez de en \(0\): los coeficientes son números, no dependen de \(x\). Olvidar el factor \(-1\) de la regla de la cadena al derivar \((1-x)^{-1}\). Adivinar el patrón con dos o tres valores y no comprobarlo: se comprueba derivando la fórmula de \(f^{(n)}(x)\). Olvidar que \(0!=1\) y dejar fuera el término \(n=0\); o, al revés, empezar en \(n=0\) una serie cuyo primer término no existe con esa fórmula, como \(\dfrac{x^{n}}{n}\). Escribir la serie sin decir dónde converge. Creer que, donde converge, la serie suma \(f(x)\) sin más: eso se asegura aparte. Usar la serie fuera de su intervalo porque «la función existe ahí». Y creer que los dos caminos pueden dar series distintas: si las dos representan a \(f\) cerca de \(0\), tienen los mismos coeficientes.</p>
+    <p>La hoja «Series de Maclaurin de \(e^{x}\), \(\operatorname{sen}(x)\) y \(\cos(x)\)» aplica este procedimiento a esas tres funciones.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Determina por derivadas la serie de Maclaurin de \(f(x)=\dfrac{1}{2-x}\). (b) Di para qué \(x\) converge, con el criterio del cociente y revisando los extremos. (c) Compárala con la serie que la hoja «Una función como una serie geométrica» obtuvo para la misma función, y di cuánto suma. (d) Determina la serie de Maclaurin de \(h(x)=(1-x)^{3}\).</p>
+    <details><summary>Pista</summary><div><p>En (a), \(f(x)=(2-x)^{-1}\) y \((2-x)'=-1\): cada derivada trae un factor \(-1\) de la cadena, que cancela el signo del exponente. En \(0\), \(2-0=2\): aparecen potencias de \(2\) en el denominador. En (d), las derivadas se anulan desde la cuarta.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(f(x)=(2-x)^{-1}\), definida si \(x\ne 2\). \(f(0)=2^{-1}=\dfrac{1}{2}\).</li>
+        <li>(a) \(f'(x)=(-1)\cdot(2-x)^{-2}\cdot(-1)=(2-x)^{-2}\); \(f''(x)=(-2)\cdot(2-x)^{-3}\cdot(-1)=2(2-x)^{-3}\); \(f'''(x)=2\cdot(-3)\cdot(2-x)^{-4}\cdot(-1)=6(2-x)^{-4}\).</li>
+        <li>(a) En \(x=0\): \(f'(0)=2^{-2}=\dfrac{1}{4}\); \(f''(0)=2\cdot 2^{-3}=\dfrac{2}{8}=\dfrac{1}{4}\); \(f'''(0)=6\cdot 2^{-4}=\dfrac{6}{16}=\dfrac{3}{8}\).</li>
+        <li>(a) Patrón: \(f^{(n)}(x)=n!\,(2-x)^{-(n+1)}\). Al derivarla: \(n!\cdot\big(-(n+1)\big)\cdot(2-x)^{-(n+2)}\cdot(-1)=(n+1)!\,(2-x)^{-(n+2)}\), la misma fórmula con \(n+1\). En \(0\): \(f^{(n)}(0)=\dfrac{n!}{2^{\,n+1}}\).</li>
+        <li>(a) Coeficientes: \(c_{n}=\dfrac{f^{(n)}(0)}{n!}=\dfrac{n!}{2^{\,n+1}\cdot n!}=\dfrac{1}{2^{\,n+1}}\). Con los valores del paso 3: \(c_{0}=\dfrac{1}{2}\); \(c_{1}=\dfrac{1}{4}\); \(c_{2}=\dfrac{1}{4}:2=\dfrac{1}{8}\); \(c_{3}=\dfrac{3}{8}:6=\dfrac{3}{48}=\dfrac{1}{16}\).</li>
+        <li>(a) Serie de Maclaurin: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{2^{\,n+1}}=\dfrac{1}{2}+\dfrac{x}{4}+\dfrac{x^{2}}{8}+\dfrac{x^{3}}{16}+\cdots\)</li>
+        <li>(b) Con \(a_{n}=\dfrac{x^{n}}{2^{\,n+1}}\) y \(x\ne 0\): \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{|x|^{n+1}}{2^{\,n+2}}\cdot\dfrac{2^{\,n+1}}{|x|^{n}}=\dfrac{|x|}{2}\) para todo \(n\); el límite es \(L=\dfrac{|x|}{2}\). Converge si \(\dfrac{|x|}{2}&lt;1\), es decir, \(|x|&lt;2\); diverge si \(|x|&gt;2\).</li>
+        <li>(b) Extremos. En \(x=2\): \(\dfrac{2^{n}}{2^{\,n+1}}=\dfrac{1}{2}\) para todo \(n\). En \(x=-2\): \(\dfrac{(-2)^{n}}{2^{\,n+1}}=\dfrac{(-1)^{n}}{2}\). En los dos el tamaño es \(\dfrac{1}{2}\), que no tiende a \(0\): diverge (hoja «Criterio del enésimo término»). Converge solo si \(-2&lt;x&lt;2\).</li>
+        <li>(c) Esa hoja (ejercicio A) obtuvo, con \(a=\dfrac{1}{2}\) y \(r(x)=\dfrac{x}{2}\): \(\dfrac{1}{2-x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{2^{\,n+1}}\) si \(-2&lt;x&lt;2\). Es la misma serie, con los mismos coeficientes. Y dice cuánto suma: \(\dfrac{1}{2-x}\), en todo el intervalo \((-2,\ 2)\), por la fórmula de la serie geométrica.</li>
+        <li>(c) Comprobación con \(x=1\): \(f(1)=\dfrac{1}{2-1}=1\). Sumas parciales: \(\dfrac{1}{2}\); \(\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{3}{4}\); \(\dfrac{3}{4}+\dfrac{1}{8}=\dfrac{7}{8}\); \(\dfrac{7}{8}+\dfrac{1}{16}=\dfrac{15}{16}\). Se acercan a \(1\).</li>
+        <li>(d) \(h(x)=(1-x)^{3}\), con \((1-x)'=-1\): \(h'(x)=3(1-x)^{2}\cdot(-1)=-3(1-x)^{2}\); \(h''(x)=-3\cdot 2\,(1-x)\cdot(-1)=6(1-x)\); \(h'''(x)=6\cdot(-1)=-6\); \(h^{(4)}(x)=0\), y todas las siguientes valen \(0\).</li>
+        <li>(d) En \(x=0\): \(h(0)=1\); \(h'(0)=-3\); \(h''(0)=6\); \(h'''(0)=-6\). Coeficientes: \(c_{0}=1\); \(c_{1}=\dfrac{-3}{1!}=-3\); \(c_{2}=\dfrac{6}{2!}=3\); \(c_{3}=\dfrac{-6}{3!}=-1\); \(c_{n}=0\) para \(n\ge 4\).</li>
+        <li>(d) Serie de Maclaurin: \(1-3x+3x^{2}-x^{3}\). Es finita, converge para todo \(x\) y su suma es \((1-x)^{3}\) (ejemplo 3). Comprobación con \(x=2\): \((1-2)^{3}=(-1)^{3}=-1\), y \(1-3\cdot 2+3\cdot 4-8=1-6+12-8=-1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(f(x)=\dfrac{x}{1-x^{2}}\). (a) Muestra que es impar y di qué coeficientes de su serie de Maclaurin valen \(0\). (b) Determina la serie por el camino 2, a partir del ejemplo 4. (c) Compruébala por el camino 1, separando \(f\) en dos fracciones. (d) Sin derivar, da \(f^{(5)}(0)\) y \(f^{(6)}(0)\). (e) Calcula \(f'(0)\) derivando el cociente, y compara con el coeficiente \(c_{1}\).</p>
+    <details><summary>Pista</summary><div><p>En (b), multiplica por \(x\) la serie de \(\dfrac{1}{1-x^{2}}\). En (c), \(\dfrac{x}{1-x^{2}}=\dfrac{1}{2}\cdot\dfrac{1}{1-x}-\dfrac{1}{2}\cdot\dfrac{1}{1+x}\), y las derivadas de orden \(n\) de cada fracción están en el ejemplo 4. En (d), usa \(f^{(n)}(0)=n!\,c_{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Está definida si \(x\ne 1\) y \(x\ne -1\). \(f(-x)=\dfrac{-x}{1-(-x)^{2}}=\dfrac{-x}{1-x^{2}}=-f(x)\): es impar. Por el recuadro «Dos caminos», \(c_{n}=0\) para todo \(n\) par: la serie tiene solo potencias impares.</li>
+        <li>(b) Ejemplo 4: \(\dfrac{1}{1-x^{2}}=\displaystyle\sum_{n=0}^{\infty}x^{2n}\) si \(|x|&lt;1\). Se multiplica por \(x\) (regla 3 de la hoja «Representación de funciones como series de potencias», con \(m=1\)): cada término, \(x^{2n}\cdot x=x^{2n+1}\).</li>
+        <li>(b) \(\dfrac{x}{1-x^{2}}=\displaystyle\sum_{n=0}^{\infty}x^{2n+1}=x+x^{3}+x^{5}+x^{7}+\cdots\) si \(|x|&lt;1\). Por la unicidad, es la serie de Maclaurin de \(f\): \(c_{n}=1\) si \(n\) es impar y \(c_{n}=0\) si \(n\) es par.</li>
+        <li>(c) Separación: \(\dfrac{1}{2}\cdot\dfrac{1}{1-x}-\dfrac{1}{2}\cdot\dfrac{1}{1+x}=\dfrac{1}{2}\cdot\dfrac{(1+x)-(1-x)}{(1-x)(1+x)}=\dfrac{1}{2}\cdot\dfrac{2x}{1-x^{2}}=\dfrac{x}{1-x^{2}}\).</li>
+        <li>(c) Derivadas de orden \(n\) en \(0\) (ejemplo 4, pasos 4 a 6): la de \((1-x)^{-1}\) vale \(n!\); la de \((1+x)^{-1}\) vale \((-1)^{n}\,n!\). Entonces \(f^{(n)}(0)=\dfrac{1}{2}\cdot n!-\dfrac{1}{2}\cdot(-1)^{n}\,n!=\dfrac{n!}{2}\,\big(1-(-1)^{n}\big)\).</li>
+        <li>(c) Si \(n\) es impar, \((-1)^{n}=-1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 2=n!\) y \(c_{n}=\dfrac{n!}{n!}=1\). Si \(n\) es par, \((-1)^{n}=1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 0=0\) y \(c_{n}=0\). Los mismos coeficientes que en (b).</li>
+        <li>(d) De \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\) sale \(f^{(n)}(0)=n!\cdot c_{n}\). Con \(n=5\): \(5!=5\cdot 4\cdot 3\cdot 2\cdot 1=120\) y \(c_{5}=1\); \(f^{(5)}(0)=120\cdot 1=120\). Con \(n=6\): \(6!=6\cdot 120=720\) y \(c_{6}=0\); \(f^{(6)}(0)=720\cdot 0=0\).</li>
+        <li>(e) Regla del cociente, con numerador \(x\) (derivada \(1\)) y denominador \(1-x^{2}\) (derivada \(-2x\)): \(f'(x)=\dfrac{1\cdot(1-x^{2})-x\cdot(-2x)}{(1-x^{2})^{2}}=\dfrac{1-x^{2}+2x^{2}}{(1-x^{2})^{2}}=\dfrac{1+x^{2}}{(1-x^{2})^{2}}\).</li>
+        <li>(e) \(f'(0)=\dfrac{1+0}{(1-0)^{2}}=1\). Y \(c_{1}=\dfrac{f'(0)}{1!}=1\): coincide con el coeficiente de \(x\) de la serie.</li>
+        <li>Comprobación con \(x=\dfrac{1}{2}\). Función: \(1-\dfrac{1}{4}=\dfrac{3}{4}\) y \(\dfrac{1}{2}:\dfrac{3}{4}=\dfrac{1}{2}\cdot\dfrac{4}{3}=\dfrac{2}{3}\approx 0{,}6667\). Serie, tres términos: \(\dfrac{1}{2}+\dfrac{1}{8}+\dfrac{1}{32}=\dfrac{16}{32}+\dfrac{4}{32}+\dfrac{1}{32}=\dfrac{21}{32}=0{,}65625\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una persona va a recibir \(\$1.000.000\) dentro de \(2\) años (datos inventados). Modelo: interés compuesto anual con tasa \(x\) (por ejemplo, \(x=0{,}05\) es \(5\,\%\) al año); el valor que ese pago tiene hoy es \(V=1.000.000\cdot f(x)\), con \(f(x)=\dfrac{1}{(1+x)^{2}}\), la función de la animación. Con \(x=0{,}05\): (a) aproxima \(f(x)\) con los tres primeros términos de su serie de Maclaurin; (b) acota el error con el criterio de Leibniz; (c) da el valor de hoy en pesos, con su margen, y compáralo con el valor exacto; (d) ¿sirve la misma serie si la tasa fuera \(150\,\%\) al año?</p>
+    <details><summary>Pista</summary><div><p>La serie es \(1-2x+3x^{2}-4x^{3}+\cdots\) y su suma es \(f(x)\) si \(|x|&lt;1\) (recuadro «Dos caminos»). Con \(x=\dfrac{1}{20}\) es alternante, con tamaños \(b_{n}=n\,x^{\,n-1}\). En (d), mira si \(x=1{,}5\) está en \((-1,\ 1)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(x=0{,}05=\dfrac{1}{20}\) cumple \(|x|&lt;1\): por el recuadro «Dos caminos», \(f(x)=1-2x+3x^{2}-4x^{3}+\cdots\)</li>
+        <li>(a) Potencias: \(x^{2}=\dfrac{1}{400}=0{,}0025\); \(x^{3}=\dfrac{1}{8000}=0{,}000125\). Términos: \(2x=0{,}1\); \(3x^{2}=3\cdot 0{,}0025=0{,}0075\); \(4x^{3}=4\cdot 0{,}000125=0{,}0005\).</li>
+        <li>(a) Tres términos: \(S_{3}=1-0{,}1+0{,}0075=0{,}9+0{,}0075=0{,}9075\).</li>
+        <li>(b) La serie es alternante, \(b_{1}-b_{2}+b_{3}-\cdots\), con \(b_{n}=n\left(\dfrac{1}{20}\right)^{n-1}\): \(b_{1}=1\), \(b_{2}=0{,}1\), \(b_{3}=0{,}0075\), \(b_{4}=0{,}0005\). Se revisan las tres condiciones del criterio de Leibniz.</li>
+        <li>(b) Positivos: sí. Decrecientes: \(\dfrac{b_{n+1}}{b_{n}}=\dfrac{n+1}{n}\cdot\dfrac{1}{20}\). Como \(\dfrac{n+1}{n}=1+\dfrac{1}{n}\le 2\), el cociente es a lo más \(\dfrac{2}{20}=\dfrac{1}{10}\), menor que \(1\): \(b_{n+1}\le\dfrac{1}{10}\,b_{n}&lt;b_{n}\).</li>
+        <li>(b) Límite \(0\): de \(b_{n+1}\le\dfrac{1}{10}\,b_{n}\) y \(b_{1}=1\) sale \(b_{2}\le\dfrac{1}{10}\), \(b_{3}\le\dfrac{1}{100}\) y, repitiendo, \(0&lt;b_{n}\le\left(\dfrac{1}{10}\right)^{n-1}\), que tiene límite \(0\). Entonces \(b_{n}\) tiene límite \(0\) (aviso de rigor, 5).</li>
+        <li>(b) Cota del error (hoja «Criterio de Leibniz»): \(|f(x)-S_{3}|\le b_{4}=0{,}0005\).</li>
+        <li>(c) Valor de hoy con tres términos: \(1.000.000\cdot 0{,}9075=907.500\) pesos. Margen: \(1.000.000\cdot 0{,}0005=500\) pesos. El valor de hoy está entre \(907.000\) y \(908.000\) pesos.</li>
+        <li>(c) Más fino: el mismo criterio da \(S_{2m}\le f(x)\le S_{2m+1}\) para todo \(m\ge 1\); con \(m=2\), \(S_{4}\le f(x)\), y con \(m=1\), \(f(x)\le S_{3}\). Aquí \(S_{4}=0{,}9075-0{,}0005=0{,}907\). El valor está entre \(907.000\) y \(907.500\) pesos.</li>
+        <li>(c) Valor exacto: \(1+\dfrac{1}{20}=\dfrac{21}{20}\); \(\left(\dfrac{21}{20}\right)^{2}=\dfrac{441}{400}\); \(f(x)=1:\dfrac{441}{400}=\dfrac{400}{441}\approx 0{,}907029\). En pesos: \(1.000.000\cdot\dfrac{400}{441}\approx 907.029\). Está dentro de los dos márgenes; la diferencia real con \(907.500\) es de unos \(471\) pesos.</li>
+        <li>(d) Con \(150\,\%\), \(x=1{,}5\). Como \(|1{,}5|&gt;1\), está fuera de \((-1,\ 1)\): la serie diverge (animación, paso 6). Sus términos, sin el signo, crecen: \(1\); \(2\cdot 1{,}5=3\); \(3\cdot 2{,}25=6{,}75\); \(4\cdot 3{,}375=13{,}5\). La función sí existe: \(f(1{,}5)=\dfrac{1}{2{,}5^{2}}=\dfrac{1}{6{,}25}=0{,}16\), es decir, \(160.000\) pesos. Pero la serie no la representa ahí: no sirve.</li>
+        <li>Interpretación: con tasas chicas, «descontar \(2x\)» (aquí, \(10\,\%\)) da una primera idea, \(900.000\) pesos; el término \(3x^{2}\) la corrige a \(907.500\), y el criterio de Leibniz dice cuánto se puede confiar. Con tasas mayores que \(100\,\%\) la serie no entrega nada.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H31 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H31 · serie de Maclaurin: cada derivada de f en 0, dividida por n!, es un coeficiente; con 1/(1 + x)² salen 1, −2, 3, −4, …; la serie converge solo si −1 < x < 1. Segunda escena: (1 + x)^k con k entero de 0 a 4, una serie que termina */
+function mc31Cl(t){ return Math.max(0, Math.min(1, t)); }
+function mc31Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+/* fracción p/q simplificada, en TeX; t = 1 para tamaño chico */
+function mc31Tx(p, q, t){ var g = mc31Mcd(p, q), s; p /= g; q /= g; s = p < 0 ? '-' : ''; p = Math.abs(p); return q === 1 ? s + p : s + '\\' + (t ? 't' : 'd') + 'frac{' + p + '}{' + q + '}'; }
+/* p/q con q potencia de 2: decimal exacto, con coma */
+function mc31Dc(p, q, tex){ var e = 0, d = q, s; while (d > 1){ d /= 2; e++; } s = (p/q).toFixed(e); if (e) s = s.replace(/0+$/, '').replace(/\.$/, ''); return s.replace('.', tex ? '{,}' : ','); }
+function mc31Curva(S, gx, gy, f, a, b, col, wd, dash){ var c = S.ctx, i, n = 160, t; if (b <= a) return; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(gx(t)), S.Y(gy(f(t)))); else c.moveTo(S.X(gx(t)), S.Y(gy(f(t)))); } c.stroke(); c.setLineDash([]); }
+/* suma hasta el grado n de 1 − 2x + 3x² − 4x³ + … */
+function mc31P(n, x){ var s = 0, p = 1, j; for (j = 0; j <= n; j++){ s += (j % 2 ? -1 : 1)*(j + 1)*p; p *= x; } return s; }
+function mc31F(x){ return 1/((1 + x)*(1 + x)); }
+function mc31Bin(k, n){ var r = 1, j; if (n > k) return 0; for (j = 1; j <= n; j++) r = r*(k - j + 1)/j; return Math.round(r); }
+function mc31Fac(n){ var r = 1, j; for (j = 2; j <= n; j++) r *= j; return r; }
+OA.scene('mac-idea', (function(){
+  var N = 6, XA = -1.3, XB = 1.5, YA = -1.5, YB = 4.5, Q = '\\\\&\\qquad ';
+  function gx(x){ return 1.75 + 2.2*x; } function gy(y){ return 2.55 + y; }
+  var PZ = [['IV', '-1<x<1', '−1 < x < 1', ''], ['CF', 'y=\\tfrac{1}{(1+x)^{2}}', 'y = 1/(1 + x)²', 'c-tan'],
+    ['L0', 'P_{0}', 'P₀', ''], ['L1', 'P_{1}', 'P₁', 'c-sec'], ['L2', 'P_{2}', 'P₂', 'c-alt'], ['L3', 'P_{3}', 'P₃', 'diff'], ['L8', 'P_{8}', 'P₈', 'pt'],
+    ['Q', '\\text{¿Cuál es la serie de Maclaurin de }\\tfrac{1}{(1+x)^{2}}\\text{?}', '¿Cuál es la serie de Maclaurin de 1/(1 + x)²?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\textstyle\\sum_{n=0}^{\\infty}(-1)^{n}(n+1)\\,x^{n}\\text{; converge si }-1<x<1', '⟹ Σ (−1)ⁿ(n + 1)xⁿ; converge si −1 < x < 1', 'diff'],
+    ['R1', 'f(0)=\\tfrac{1}{(1+0)^{2}}=1\\ \\Longrightarrow\\ c_{0}=\\tfrac{1}{0!}=1', 'f(0) = 1/(1 + 0)² = 1 ⟹ c₀ = 1/0! = 1', ''],
+    ['R2', 'f\'(0)=-2\\ \\Longrightarrow\\ c_{1}=\\tfrac{-2}{1!}=-2', 'f′(0) = −2 ⟹ c₁ = −2/1! = −2', ''],
+    ['R3', 'f\'\'(0)=6\\ \\Longrightarrow\\ c_{2}=\\tfrac{6}{2!}=3', 'f″(0) = 6 ⟹ c₂ = 6/2! = 3', ''],
+    ['R4', 'f\'\'\'(0)=-24\\ \\Longrightarrow\\ c_{3}=\\tfrac{-24}{3!}=-4', 'f‴(0) = −24 ⟹ c₃ = −24/3! = −4', ''],
+    ['R5', 'c_{n}=\\tfrac{f^{(n)}(0)}{n!}=\\tfrac{(-1)^{n}(n+1)!}{n!}=(-1)^{n}(n+1)', 'cₙ = f⁽ⁿ⁾(0)/n! = (−1)ⁿ(n + 1)!/n! = (−1)ⁿ(n + 1)', ''],
+    ['R6', '\\textstyle\\sum_{n=0}^{\\infty}(-1)^{n}(n+1)\\,x^{n}\\text{ converge solo si }-1<x<1', 'Σ (−1)ⁿ(n + 1)xⁿ converge solo si −1 < x < 1', 'diff']];
+  var TXT = [['La curva burdeo es la función. Su valor en 0', 'es el primer coeficiente: la recta horizontal.'],
+    ['La primera derivada en 0 da el segundo', 'coeficiente: la recta azul, tangente en 0.'],
+    ['La segunda derivada en 0, dividida por 2!, da', 'el tercer coeficiente: la parábola verde.'],
+    ['La tercera derivada en 0, dividida por 3!, da', 'el cuarto coeficiente: la cúbica naranja.'],
+    ['El patrón da todos los coeficientes. Línea negra:', 'la suma hasta el grado 8, con nueve términos.'],
+    ['La serie converge solo en la franja gris. Cerca', 'de sus bordes hacen falta muchos más términos.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.9, y1:9.6}, aspect:14.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: cada derivada en 0 fija un coeficiente de la serie, y la franja gris dice dónde converge. Animación en seis pasos sobre una gráfica con x en horizontal, de menos 1,3 a 1,5, y los valores en vertical, de menos 1,5 a 4,5. Uno: se traza en burdeo la curva de 1 dividido por 1 más x, al cuadrado, para x mayor que menos 1; pasa por el punto de x igual a 0 y altura 1, marcado con un anillo, y sube sin tope al acercarse a x igual a menos 1. Una recta horizontal punteada a la altura 1 es la suma de grado 0. Dos: una recta azul, 1 menos 2 x, tangente a la curva en ese punto. Tres: una parábola verde, 1 menos 2 x más 3 x al cuadrado. Cuatro: una cúbica naranja, que agrega menos 4 x al cubo. Cada una queda junto a la curva en un tramo más largo alrededor de 0. Cinco: una línea negra fina, la suma hasta el grado 8, que sigue a la curva entre menos 0,5 y 0,6 y se separa hacia arriba antes de llegar a x igual a 1. Seis: se sombrea en gris la franja vertical entre x igual a menos 1 y x igual a 1, con anillos abiertos en los extremos: es donde la serie converge. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta, la serie de menos 1 elevado a n por n más 1 por x elevado a n, que converge si x está entre menos 1 y 1, se escribe debajo de ella. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> la función, \\(y=\\tfrac{1}{(1+x)^{2}}\\)</span><span>punteada gris: \\(P_{0}=1\\)</span><span><i class="sw sec"></i> \\(P_{1}=1-2x\\)</span><span><i class="sw alt"></i> \\(P_{2}=1-2x+3x^{2}\\)</span><span><i class="sw rise"></i> \\(P_{3}=1-2x+3x^{2}-4x^{3}\\)</span><span>línea negra fina: \\(P_{8}\\), la suma hasta el grado 8</span><span>franja gris: el intervalo \\(-1&lt;x&lt;1\\), sin los extremos</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), w, bx0 = X(gx(XA)), bx1 = X(gx(XB)), by0 = Y(gy(YB)), by1 = Y(gy(YA)), gm = C.muted || '#6b6b6b';
+      function txt(t, x, y, al, cc, an){ c.globalAlpha = al == null ? 1 : al; c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = an || 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || gm; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function caja(){ c.save(); c.beginPath(); c.rect(bx0, by0, bx1 - bx0, by1 - by0); c.clip(); }
+      function anillo(x, y, col, lleno){ c.beginPath(); c.arc(X(gx(x)), Y(gy(y)), 4, 0, 6.2832); c.fillStyle = lleno ? col : '#fff'; c.fill(); c.strokeStyle = col; c.lineWidth = 1.6; c.setLineDash([]); c.stroke(); }
+      /* paso 6: la franja donde la serie converge, debajo de todo */
+      if (k >= 6){ w = u; c.globalAlpha = 0.08*w; c.fillStyle = C.ink; c.fillRect(X(gx(-1)), by0, (X(gx(1)) - X(gx(-1)))*w, by1 - by0); c.globalAlpha = 0.55*w; c.strokeStyle = gm; c.lineWidth = 1; c.setLineDash([4, 3]);
+        [-1, 1].forEach(function(x){ if (x === 1 && w < 0.98) return; c.beginPath(); c.moveTo(X(gx(x)), by0); c.lineTo(X(gx(x)), by1); c.stroke(); }); c.setLineDash([]); c.globalAlpha = 1;
+        if (w > 0.6) L('IV', gx(0.45), gy(2.6), -50); }
+      /* ejes */
+      S.line(gx(XA), gy(0), gx(XB), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(YA), gx(0), gy(YB), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [[-1, '−1'], [-0.5, '−0,5'], [0.5, '0,5'], [1, '1'], [1.5, '1,5']].forEach(function(m){ c.beginPath(); c.moveTo(X(gx(m[0])), Y(gy(0)) - 3); c.lineTo(X(gx(m[0])), Y(gy(0)) + 3); c.stroke(); num(m[1], X(gx(m[0])), Y(gy(0)) + 11, 'center'); });
+      [[1, '1'], [2, '2'], [3, '3'], [4, '4']].forEach(function(m){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(m[0]))); c.lineTo(X(gx(0)) + 3, Y(gy(m[0]))); c.stroke(); if (m[0] !== 1) num(m[1], X(gx(0)) - 7, Y(gy(m[0])), 'right'); });
+      num('x', bx1 + 4, Y(gy(0)), 'left'); num('y', X(gx(0)) + 6, by0 + 2, 'left');
+      /* paso 5: la suma hasta el grado 8, fina */
+      if (k >= 5){ w = k === 5 ? u : 1; caja(); mc31Curva(S, gx, gy, function(t){ return mc31P(8, t); }, -0.62, -0.62 + (1.05 + 0.62)*w, C.ink, 1.1); c.restore(); if (w > 0.9) L('L8', gx(0.84), gy(3.3), -100); }
+      /* paso 1: la suma de grado 0, una recta horizontal */
+      w = k === 1 ? mc31Cl(2*u - 1) : 1; if (w > 0){ c.strokeStyle = gm; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(bx0, Y(gy(1))); c.lineTo(bx0 + (bx1 - bx0)*w, Y(gy(1))); c.stroke(); c.setLineDash([]); if (w > 0.9) L('L0', gx(1.4), gy(1.3), -50); }
+      /* pasos 2, 3 y 4: las sumas de grado 1, 2 y 3 */
+      if (k >= 2){ w = k === 2 ? u : 1; caja(); mc31Curva(S, gx, gy, function(t){ return mc31P(1, t); }, XA, XA + (XB - XA)*w, C.sec, 1.5); c.restore(); if (w > 0.95) L('L1', gx(1.2), gy(-1.12), 0); }
+      if (k >= 3){ w = k === 3 ? u : 1; caja(); mc31Curva(S, gx, gy, function(t){ return mc31P(2, t); }, XA, XA + (XB - XA)*w, C.alt, 1.5); c.restore(); if (w > 0.95) L('L2', gx(1.36), gy(3.1), 0); }
+      if (k >= 4){ w = k === 4 ? u : 1; caja(); mc31Curva(S, gx, gy, function(t){ return mc31P(3, t); }, XA, XA + (XB - XA)*w, C.rise, 1.5); c.restore(); if (w > 0.95) L('L3', gx(0.8), gy(-1.12), -100); }
+      /* paso 1: la curva de la función y su punto en el centro */
+      w = k === 1 ? mc31Cl(2*u) : 1; caja(); mc31Curva(S, gx, gy, mc31F, -0.55, -0.55 + (XB + 0.55)*w, C.tan, 2.2); c.restore(); if (w > 0.5) L('CF', gx(0.08), gy(4.1), 0);
+      anillo(0, 1, C.tan, k > 1 || u > 0.5); num('centro', X(gx(0)) + 7, Y(gy(0)) + 11, 'left', C.tan);
+      /* paso 6: extremos abiertos del intervalo */
+      if (k >= 6){ anillo(-1, 0, gm, 0); if (u > 0.98) anillo(1, 0, gm, 0); if (u > 0.9){ txt('cerca del centro', gx(-0.93), gy(-0.62)); txt('la línea negra se', gx(-0.93), gy(-0.62) - 16/s); txt('pega a la curva', gx(-0.93), gy(-0.62) - 32/s); } }
+      L('Q', -1.2, 8.2, 0); if (k === N && u > 0.5) L('F', -1.2, 7.62, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = gm; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.2));
+      dtQue(S, 'cada derivada en 0 fija un coeficiente', 'de la serie; la franja dice dónde converge.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -0.95, [6, 36, 66, 96, 126, 156]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{Función: }f(x)=\\dfrac{1}{(1+x)^{2}}=(1+x)^{-2},\\quad x\\neq -1.' + Q + '\\text{Valor en el centro, }x=0\\text{:}' + Q + 'f(0)=\\dfrac{1}{(1+0)^{2}}=\\dfrac{1}{1^{2}}=\\dfrac{1}{1}=1' + Q + '\\text{Coeficiente, con }0!=1\\text{:}' + Q + 'c_{0}=\\dfrac{f(0)}{0!}=\\dfrac{1}{1}=1' + Q + '\\text{Suma hasta el grado }0\\text{: }P_{0}(x)=1',
+      '\\text{Primera derivada (regla de la potencia y}' + Q + '\\text{regla de la cadena, citadas):}' + Q + 'f\'(x)=(-2)\\cdot(1+x)^{-3}\\cdot(1+x)\'' + Q + '\\phantom{f\'(x)}=(-2)\\cdot(1+x)^{-3}\\cdot 1=-2(1+x)^{-3}' + Q + 'f\'(0)=-2\\cdot(1+0)^{-3}=-2\\cdot 1=-2' + Q + '\\text{Coeficiente, con }1!=1\\text{:}' + Q + 'c_{1}=\\dfrac{f\'(0)}{1!}=\\dfrac{-2}{1}=-2' + Q + 'P_{1}(x)=1-2x\\quad\\text{(la recta tangente en }x=0)',
+      '\\text{Segunda derivada: se deriva }-2(1+x)^{-3}\\text{:}' + Q + 'f\'\'(x)=(-2)\\cdot(-3)\\cdot(1+x)^{-4}\\cdot 1=6(1+x)^{-4}' + Q + 'f\'\'(0)=6\\cdot(1+0)^{-4}=6\\cdot 1=6' + Q + '\\text{Coeficiente, con }2!=2\\cdot 1=2\\text{:}' + Q + 'c_{2}=\\dfrac{f\'\'(0)}{2!}=\\dfrac{6}{2}=3' + Q + 'P_{2}(x)=1-2x+3x^{2}',
+      '\\text{Tercera derivada: se deriva }6(1+x)^{-4}\\text{:}' + Q + 'f\'\'\'(x)=6\\cdot(-4)\\cdot(1+x)^{-5}\\cdot 1=-24(1+x)^{-5}' + Q + 'f\'\'\'(0)=-24\\cdot(1+0)^{-5}=-24\\cdot 1=-24' + Q + '\\text{Coeficiente, con }3!=3\\cdot 2\\cdot 1=6\\text{:}' + Q + 'c_{3}=\\dfrac{f\'\'\'(0)}{3!}=\\dfrac{-24}{6}=-4' + Q + 'P_{3}(x)=1-2x+3x^{2}-4x^{3}' + Q + '\\text{Prueba con }x=\\dfrac{1}{4}\\text{: }\\ x^{2}=\\dfrac{1}{16},\\ \\ x^{3}=\\dfrac{1}{64}' + Q + '2x=\\dfrac{2}{4}=\\dfrac{1}{2},\\qquad 3x^{2}=\\dfrac{3}{16}' + Q + '4x^{3}=\\dfrac{4}{64}=\\dfrac{1}{16}' + Q + 'P_{0}=1,\\qquad P_{1}=1-\\dfrac{1}{2}=\\dfrac{1}{2}=0{,}5' + Q + 'P_{2}=\\dfrac{1}{2}+\\dfrac{3}{16}=\\dfrac{8}{16}+\\dfrac{3}{16}=\\dfrac{11}{16}=0{,}6875' + Q + 'P_{3}=\\dfrac{11}{16}-\\dfrac{1}{16}=\\dfrac{10}{16}=\\dfrac{5}{8}=0{,}625' + Q + '\\text{Función: }1+\\dfrac{1}{4}=\\dfrac{5}{4},\\quad\\left(\\dfrac{5}{4}\\right)^{2}=\\dfrac{25}{16}' + Q + 'f\\!\\left(\\tfrac{1}{4}\\right)=1:\\dfrac{25}{16}=\\dfrac{16}{25}=0{,}64' + Q + '\\text{Distancias: }|0{,}64-1|=0{,}36' + Q + '|0{,}64-0{,}5|=0{,}14' + Q + '|0{,}64-0{,}6875|=0{,}0475' + Q + '|0{,}64-0{,}625|=0{,}015' + Q + '\\text{Cada distancia es menor que la anterior.}',
+      '\\text{Valores en }0\\text{: }\\ 1,\\ -2,\\ 6,\\ -24' + Q + '\\text{Sin el signo: }1=1!,\\ \\ 2=2!,\\ \\ 6=3!,\\ \\ 24=4!' + Q + '\\text{Signos: }+,\\ -,\\ +,\\ -\\text{, es decir, }(-1)^{n}' + Q + '\\text{Fórmula: }f^{(n)}(x)=(-1)^{n}(n+1)!\\,(1+x)^{-(n+2)}' + Q + '\\text{Al derivarla sale el factor }-(n+2)\\text{:}' + Q + '(-1)^{n}(n+1)!\\cdot\\big(-(n+2)\\big)=(-1)^{n+1}(n+2)!' + Q + '\\text{y el exponente baja a }-(n+3)\\text{: es la misma}' + Q + '\\text{fórmula con }n+1\\text{. El patrón sigue.}' + Q + 'f^{(n)}(0)=(-1)^{n}(n+1)!\\cdot 1=(-1)^{n}(n+1)!' + Q + '\\text{Como }(n+1)!=(n+1)\\cdot n!\\text{:}' + Q + 'c_{n}=\\dfrac{(-1)^{n}(n+1)\\cdot n!}{n!}=(-1)^{n}(n+1)' + Q + '\\text{Serie de Maclaurin:}' + Q + '\\displaystyle\\sum_{n=0}^{\\infty}(-1)^{n}(n+1)\\,x^{n}' + Q + '=1-2x+3x^{2}-4x^{3}+\\cdots' + Q + '\\text{Término de grado }8\\text{: }(-1)^{8}\\cdot 9\\cdot x^{8}=9x^{8}',
+      '\\text{¿Para qué }x\\text{ converge? Criterio del cociente}' + Q + '\\text{con }a_{n}=(-1)^{n}(n+1)\\,x^{n}\\text{ y }x\\neq 0.' + Q + '\\text{Tamaño: }|a_{n}|=(n+1)\\,|x|^{n}' + Q + '\\dfrac{|a_{n+1}|}{|a_{n}|}=\\dfrac{(n+2)\\,|x|^{n+1}}{(n+1)\\,|x|^{n}}=|x|\\cdot\\dfrac{n+2}{n+1}' + Q + '\\dfrac{n+2}{n+1}=1+\\dfrac{1}{n+1}\\text{, con límite }1+0=1' + Q + 'L=|x|\\cdot 1=|x|' + Q + '|x|<1\\text{: converge.}\\qquad|x|>1\\text{: diverge.}' + Q + '\\text{Extremos }x=1\\text{ y }x=-1\\text{: el tamaño es }n+1\\text{,}' + Q + '\\text{que no tiende a }0\\text{: la serie diverge}' + Q + '\\text{(criterio del enésimo término).}' + Q + '\\text{Converge solo si }-1<x<1.' + Q + '\\text{Converger no prueba que la suma sea }f(x).' + Q + '\\text{Aquí sí lo es: recuadro «Dos caminos».}'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: f(x) = (1 + x)^k con k de 0 a 4; se elige además hasta qué grado N se suma. Coeficientes en barras; función y suma en x = 1/2, con toda la cuenta; casos límite: k = 0 (constante) y N ≥ k (la serie terminó: diferencia 0) */
+OA.scene('mac-vivo', (function(){
+  var Q = '\\\\&\\qquad ', KM = 4, XA = -2.1, XB = 0.8, YA = -1, YB = 5.5, DER = ['f', 'f\'', 'f\'\'', 'f\'\'\'', 'f^{(4)}', 'f^{(5)}'];
+  function gx(x){ return 3.35 + 1.85*x; } function gy(y){ return 3.75 + 0.6*y; }
+  function kk(v){ return Math.max(0, Math.min(KM, Math.round(v.k == null ? 3 : v.k))); }
+  function nn(v){ return Math.max(0, Math.min(KM, Math.round(v.gr == null ? 1 : v.gr))); }
+  /* a(k, j) = k(k − 1)…(k − j + 1): el valor de la derivada j-ésima en 0 */
+  function caida(k, j){ var r = 1, i; for (i = 0; i < j; i++) r *= (k - i); return r; }
+  function mono(cf, n, pri){ var s = n === 0 ? '' + cf : (cf === 1 ? '' : cf) + 'x' + (n > 1 ? '^{' + n + '}' : ''); return (pri ? '' : '+') + s; }
+  function monoP(cf, n, pri){ var sup = ['', '', '²', '³', '⁴'], s = n === 0 ? '' + cf : (cf === 1 ? '' : cf) + 'x' + sup[n]; return (pri ? '' : ' + ') + s; }
+  function poli(k, m){ var s = '', n; for (n = 0; n <= m; n++) s += mono(mc31Bin(k, n), n, n === 0); return s; }
+  function poliP(k, m){ var s = '', n; for (n = 0; n <= m; n++) s += monoP(mc31Bin(k, n), n, n === 0); return s; }
+  function dato(k, N){ var m = Math.min(N, k), o = {k:k, N:N, m:m, c:[], d:[]}, n, q = 1, p = 0;
+    for (n = 0; n <= KM; n++){ o.d[n] = caida(k, n); o.c[n] = mc31Bin(k, n); }
+    for (n = 0; n < m; n++) q *= 2; o.qP = q; for (n = 0; n <= m; n++) p += o.c[n]*(q/Math.pow(2, n)); o.pP = p; /* suma en x = 1/2, como pP/qP */
+    o.qF = Math.pow(2, k); o.pF = Math.pow(3, k); o.pD = o.pF - o.pP*(o.qF/o.qP); /* diferencia, como pD/qF */
+    return o; }
+  var DAT = [], kI, nI; for (kI = 0; kI <= KM; kI++){ DAT[kI] = []; for (nI = 0; nI <= KM; nI++) DAT[kI][nI] = dato(kI, nI); }
+  var PZ = [['K0', 'c_{0}', 'c₀', ''], ['K1', 'c_{1}', 'c₁', ''], ['K2', 'c_{2}', 'c₂', ''], ['K3', 'c_{3}', 'c₃', ''], ['K4', 'c_{4}', 'c₄', '']];
+  for (kI = 0; kI <= KM; kI++){ PZ.push(['A' + kI, '\\text{función: }f(x)=(1+x)^{' + kI + '}' + (kI === 0 ? '=1' : ''), 'función: f(x) = (1 + x)' + ['⁰ = 1', '¹', '²', '³', '⁴'][kI], 'c-tan']);
+    for (nI = 0; nI <= kI; nI++) PZ.push(['B' + kI + nI, '\\text{suma: }' + poli(kI, nI), 'suma: ' + poliP(kI, nI), 'c-sec']); }
+  function derTex(k, j){ /* derivada j-ésima de (1 + x)^k, con su cuenta */
+    var e = k - j, a = caida(k, j), ap = caida(k, j - 1), base = e === 0 ? '' : e === 1 ? '(1+x)' : '(1+x)^{' + e + '}';
+    if (j > k) return DER[j] + '(x)=0\\quad\\text{(derivada de la constante }' + caida(k, k) + ')';
+    if (j === 1) return 'f\'(x)=' + k + '\\cdot(1+x)^{' + e + '}\\cdot(1+x)\'' + Q + '\\phantom{f\'(x)}=' + k + '\\cdot(1+x)^{' + e + '}\\cdot 1=' + (e === 0 ? '' + a : a + base);
+    return DER[j] + '(x)=' + ap + '\\cdot ' + (e + 1) + '\\cdot(1+x)^{' + e + '}\\cdot 1=' + a + base; }
+  function lectura(k, N){ var o = DAT[k][N], m = o.m, R = [], l, n, falt;
+    R.push('\\text{Datos: }f(x)=(1+x)^{' + k + '}' + (k === 0 ? '=1\\text{ (constante)}' : '') + Q + '\\text{Se suma la serie hasta el grado }N=' + N + '.' + Q + '\\text{Fórmula: }c_{n}=\\dfrac{f^{(n)}(0)}{n!}');
+    if (k === 0) l = '\\text{Derivadas: la derivada de una constante es }0\\text{:}' + Q + 'f\'(x)=0\\text{, y todas las siguientes valen }0.';
+    else { l = '\\text{Derivadas (regla de la potencia y regla de la}' + Q + '\\text{cadena, citadas; }(1+x)\'=1\\text{):}'; for (n = 1; n <= k + 1; n++) l += Q + derTex(k, n); l += Q + '\\text{Las derivadas siguientes también valen }0.'; }
+    R.push(l);
+    l = '\\text{En }x=0\\text{: }1+0=1\\text{, y }1\\text{ elevado a cualquier}' + Q + '\\text{exponente es }1\\text{. Valores:}' + Q + 'f(0)=1';
+    for (n = 1; n <= KM; n++) l += (n % 2 ? ',\\quad ' : Q) + DER[n] + '(0)=' + (n <= k && k - n > 0 ? o.d[n] + '\\cdot 1=' : '') + o.d[n];
+    R.push(l);
+    l = '\\text{Coeficientes, }c_{n}=\\dfrac{f^{(n)}(0)}{n!}\\text{:}';
+    for (n = 0; n <= KM; n++) l += Q + 'c_{' + n + '}=\\dfrac{' + o.d[n] + '}{' + n + '!}=\\dfrac{' + o.d[n] + '}{' + mc31Fac(n) + '}=' + o.c[n] + (n === 0 ? '\\qquad(0!=1)' : n === 3 ? '\\qquad(3!=3\\cdot 2\\cdot 1=6)' : n === 4 ? '\\qquad(4!=4\\cdot 6=24)' : n === 2 ? '\\qquad(2!=2\\cdot 1=2)' : '');
+    R.push(l);
+    R.push('\\text{Serie de Maclaurin:}' + Q + '\\displaystyle\\sum_{n=0}^{\\infty}c_{n}x^{n}' + Q + '=' + poli(k, k) + '+0+0+\\cdots' + Q + '\\text{Desde }n=' + (k + 1) + '\\text{ todos los coeficientes son }0\\text{:}' + Q + '\\text{la serie termina en el grado }' + k + '.');
+    l = '\\text{Suma hasta el grado }N=' + N + '\\text{:}' + Q + 'P_{' + N + '}(x)=' + poli(k, m) + (N > k ? Q + '\\text{(los términos de grado mayor que }' + k + '\\text{ valen }0)' : '') + Q + '\\text{Se prueba en }x=\\dfrac{1}{2}\\text{.}';
+    if (m >= 2){ l += '\\text{ Potencias:}'; for (n = 2; n <= m; n++) l += Q + '\\left(\\dfrac{1}{2}\\right)^{' + n + '}=' + (n === 2 ? '\\dfrac{1}{2}\\cdot\\dfrac{1}{2}' : '\\dfrac{1}{' + Math.pow(2, n - 1) + '}\\cdot\\dfrac{1}{2}') + '=\\dfrac{1}{' + Math.pow(2, n) + '}'; }
+    if (m >= 1){ l += Q + '\\text{Cada término:}'; for (n = 1; n <= m; n++) l += Q + mono(o.c[n], n, 1) + '=' + o.c[n] + '\\cdot\\dfrac{1}{' + Math.pow(2, n) + '}=' + mc31Tx(o.c[n], Math.pow(2, n)); }
+    if (m === 0) l += Q + 'P_{' + N + '}\\!\\left(\\tfrac{1}{2}\\right)=1';
+    else { l += Q + '\\text{Con denominador común }' + o.qP + '\\text{:}' + Q + 'P_{' + N + '}\\!\\left(\\tfrac{1}{2}\\right)='; for (n = 0; n <= m; n++) l += (n ? '+' : '') + '\\dfrac{' + (o.c[n]*o.qP/Math.pow(2, n)) + '}{' + o.qP + '}'; l += (m >= 3 ? Q + '\\phantom{P_{' + N + '}\\!\\left(\\tfrac{1}{2}\\right)}' : '') + '=\\dfrac{' + o.pP + '}{' + o.qP + '}' + (mc31Mcd(o.pP, o.qP) > 1 ? '=' + mc31Tx(o.pP, o.qP) : '') + (o.pP % o.qP ? '=' + mc31Dc(o.pP, o.qP, 1) : ''); }
+    R.push(l);
+    if (k === 0) R.push('\\text{Función en }x=\\dfrac{1}{2}\\text{: es constante,}' + Q + 'f\\!\\left(\\tfrac{1}{2}\\right)=1');
+    else R.push('\\text{Función en }x=\\dfrac{1}{2}\\text{:}\\quad 1+\\dfrac{1}{2}=\\dfrac{3}{2}' + Q + 'f\\!\\left(\\tfrac{1}{2}\\right)=\\left(\\dfrac{3}{2}\\right)^{' + k + '}' + (k > 1 ? '=\\dfrac{3^{' + k + '}}{2^{' + k + '}}' : '') + '=\\dfrac{' + o.pF + '}{' + o.qF + '}=' + mc31Dc(o.pF, o.qF, 1));
+    l = '\\text{Diferencia entre la función y la suma:}' + Q + mc31Tx(o.pF, o.qF) + '-' + mc31Tx(o.pP, o.qP);
+    if (o.qP/mc31Mcd(o.pP, o.qP) !== o.qF) l += '=\\dfrac{' + o.pF + '}{' + o.qF + '}-\\dfrac{' + (o.pP*o.qF/o.qP) + '}{' + o.qF + '}';
+    l += '=' + mc31Tx(o.pD, o.qF) + (o.pD % o.qF ? '=' + mc31Dc(o.pD, o.qF, 1) : '');
+    R.push(l);
+    if (k === 0) R.push('\\text{Caso límite }k=0\\text{: la función es la constante }1.' + Q + '\\text{Todas sus derivadas valen }0\\text{ y su serie de}' + Q + '\\text{Maclaurin tiene un solo término: }1.' + Q + '\\text{Con cualquier }N\\text{, la suma es la función.}');
+    else if (N < k){ falt = ''; for (n = N + 1; n <= k; n++) falt += mono(o.c[n], n, n === N + 1); l = '\\text{Como }N=' + N + '\\text{ es menor que }k=' + k + '\\text{, faltan}' + Q + '\\text{términos. La diferencia}' + Q + '\\text{es lo que falta sumar: }' + falt + Q + '\\text{En }x=\\tfrac{1}{2}\\text{, con denominador }' + o.qF + '\\text{:}' + Q;
+      for (n = N + 1; n <= k; n++) l += (n > N + 1 ? '+' : '') + '\\dfrac{' + (o.c[n]*o.qF/Math.pow(2, n)) + '}{' + o.qF + '}'; if (k - N > 1) l += '=\\dfrac{' + o.pD + '}{' + o.qF + '}'; if (mc31Mcd(o.pD, o.qF) > 1) l += '=' + mc31Tx(o.pD, o.qF); R.push(l + Q + '\\text{Con un grado más, la diferencia baja.}'); }
+    else R.push('\\text{Como }N=' + N + (N === k ? '\\text{ es igual a }k=' : '\\text{ es mayor que }k=') + k + '\\text{, ya se}' + Q + '\\text{sumaron todos los términos que no valen }0\\text{:}' + Q + '\\text{la diferencia es }0.' + Q + '\\text{La serie terminó y su suma es exactamente la}' + Q + '\\text{función, para todo }x\\text{ (ejemplo 3).}');
+    return R; }
+  var SEQ = [[0, 2], [1, 0], [1, 1], [2, 1], [2, 2], [3, 1], [3, 2], [3, 3], [4, 3], [4, 4]];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-0.3, y1:9.5}, aspect:9.8/6.6, _dat:DAT,
+    aria:'Arriba, una franja dice qué muestra: la serie de Maclaurin de un polinomio termina y, desde ahí, suma y función coinciden. Una gráfica con x en horizontal, de menos 2,1 a 0,8, y los valores en vertical, de menos 1 a 5,5. En burdeo, la curva de 1 más x elevado a k, con k entre 0 y 4 elegido con un deslizador. En azul, la suma de la serie de Maclaurin hasta el grado N, elegido con otro deslizador entre 0 y 4. Una línea vertical punteada marca x igual a 0,5, con un punto sobre cada curva y un trazo naranja entre los dos, que es la diferencia. Debajo, cinco barras muestran los coeficientes c sub 0 a c sub 4, que son los números de la fila k del triángulo de Pascal seguidos de ceros; las barras de los términos ya sumados van en azul. Con k igual a 3 y N igual a 1: función 3,375, suma 2,5, diferencia 0,875. Cuando N es mayor o igual que k, la curva azul queda encima de la burdeo y la diferencia es 0: la serie terminó. Con k igual a 0 la función es la constante 1 y su serie tiene un solo término. Bajo el dibujo, la cuenta completa.',
+    labels:PZ,
+    sliders:[{id:'k', tex:'k', min:0, max:KM, step:1, value:3}, {id:'gr', tex:'N', min:0, max:KM, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> la función, \\(y=(1+x)^{k}\\)</span><span><i class="sw sec"></i> la suma de la serie hasta el grado \\(N\\), y las barras de los coeficientes ya sumados</span><span><i class="sw rise"></i> diferencia entre la función y la suma en \\(x=0{,}5\\)</span><span>barras grises: coeficientes que todavía no se suman</span>',
+    anim:{run:30000, hold:4000, still:1, apply:function(p, v){ var j = Math.min(SEQ.length - 1, Math.floor(p*SEQ.length)); v.q = p; v.k = SEQ[j][0]; v.gr = SEQ[j][1]; }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var k = kk(v), N = nn(v), o = DAT[k][N], m = o.m, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), gm = C.muted || '#6b6b6b', bx0 = X(gx(XA)), bx1 = X(gx(XB)), by0 = Y(gy(YB)), by1 = Y(gy(YA)), px = X(gx(0.5)), vf = o.pF/o.qF, vp = o.pP/o.qP, yf = Y(gy(vf)), yp = Y(gy(vp)), n, cx, bw, bh, y0, ta, tb, la, lb, ig = o.pD === 0;
+      function fn(x){ return Math.pow(1 + x, k); }
+      function pn(x){ var r = 0, j; for (j = m; j >= 0; j--) r = r*x + o.c[j]; return r; }
+      function txt(t, y, cc){ c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(-1.2), Y(y)); }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || gm; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function punto(py, col){ c.beginPath(); c.arc(px, py, 3.4, 0, 6.2832); c.fillStyle = col; c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 1; c.setLineDash([]); c.stroke(); }
+      function rot(t, py, col){ var w; c.font = '700 11px ' + F; w = c.measureText(t).width; c.fillStyle = 'rgba(255,255,255,0.9)'; c.fillRect(px - 9 - w - 3, py - 8, w + 6, 16); c.fillStyle = col; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(t, px - 9, py); }
+      la = yf; lb = yp; if (!ig && lb - la < 17){ la = (yf + yp)/2 - 8.5; lb = la + 17; } /* alturas de los rótulos de los dos valores; los números del eje que quedarían debajo no se escriben */
+      /* ejes */
+      S.line(gx(XA), gy(0), gx(XB), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(YA), gx(0), gy(YB), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [[-2, '−2'], [-1, '−1'], [0.5, '0,5']].forEach(function(e){ c.beginPath(); c.moveTo(X(gx(e[0])), Y(gy(0)) - 3); c.lineTo(X(gx(e[0])), Y(gy(0)) + 3); c.stroke(); num(e[1], X(gx(e[0])), Y(gy(0)) + 11, 'center', e[0] === 0.5 ? C.ink : gm); });
+      [1, 2, 3, 4, 5].forEach(function(e){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(e))); c.lineTo(X(gx(0)) + 3, Y(gy(e))); c.stroke(); if (Math.abs(Y(gy(e)) - la) > 13 && Math.abs(Y(gy(e)) - lb) > 13) num('' + e, X(gx(0)) - 7, Y(gy(e)), 'right'); });
+      num('x', bx1 + 4, Y(gy(0)), 'left'); num('y', X(gx(0)) + 6, by0 + 2, 'left');
+      /* curvas, recortadas al cuadro: la suma (azul) y la función (burdeo); si coinciden, la azul va punteada encima */
+      c.save(); c.beginPath(); c.rect(bx0, by0, bx1 - bx0, by1 - by0); c.clip();
+      if (!ig) mc31Curva(S, gx, gy, pn, XA, XB, C.sec, 1.6);
+      mc31Curva(S, gx, gy, fn, XA, XB, C.tan, 2.2);
+      if (ig) mc31Curva(S, gx, gy, pn, XA, XB, C.sec, 1.6, [5, 5]);
+      c.restore();
+      /* el punto de prueba: línea vertical, diferencia y puntos */
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(px, by0); c.lineTo(px, by1); c.stroke(); c.setLineDash([]);
+      c.font = '700 10.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('se prueba aquí', bx1 + 14, by0 - 7);
+      if (!ig){ c.strokeStyle = C.rise; c.lineWidth = 3.2; c.beginPath(); c.moveTo(px, yf); c.lineTo(px, yp); c.stroke(); }
+      punto(yp, C.sec); punto(yf, C.tan);
+      ta = 'función: ' + mc31Dc(o.pF, o.qF); tb = 'suma: ' + mc31Dc(o.pP, o.qP);
+      if (ig) rot('función = suma: ' + mc31Dc(o.pF, o.qF), yf, C.ink);
+      else { rot(ta, la, C.tan); rot(tb, lb, C.sec); }
+      /* los coeficientes, en barras */
+      y0 = Y(1.42); bw = 0.62*s; c.font = '600 11.5px ' + F; c.fillStyle = gm; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Coeficientes de la serie (en azul, los ya sumados):', X(-1.2), Y(2.98));
+      c.strokeStyle = gm; c.lineWidth = 1; c.beginPath(); c.moveTo(X(-0.75), y0); c.lineTo(X(5.05), y0); c.stroke();
+      for (n = 0; n <= KM; n++){ cx = X(-0.15 + 1.15*n); bh = o.c[n]*0.17*s; c.fillStyle = n <= N ? C.sec : 'rgba(0,0,0,0.16)'; if (bh > 0) c.fillRect(cx - bw/2, y0 - bh, bw, bh);
+        c.font = '700 11.5px ' + F; c.fillStyle = n <= N ? C.sec : gm; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + o.c[n], cx, y0 - bh - 9);
+        T.L('K' + n, -0.15 + 1.15*n, 1.42, -50, 0, 12); }
+      T.L('A' + k, -1.2, 8.14, 0); T.L('B' + k + m, -1.2, 7.62, 0);
+      txt('diferencia donde se prueba: ' + mc31Dc(o.pD, o.qF), 0.5, C.rise);
+      txt(k === 0 ? 'caso límite: función constante, un solo término' : ig ? 'la serie terminó: la suma es la función' : 'faltan términos: la suma aún no es la función', 0.5 - 21/s, C.ink);
+      dtQue(S, 'la serie de Maclaurin de un polinomio', 'termina: desde ahí, suma y función coinciden.');
+      T.fin();
+    },
+    caption:function(v){ var k = kk(v), N = nn(v), o = DAT[k][N]; return 'k = ' + k + ', suma hasta el grado ' + N + '. Coeficientes: ' + o.c.join(', ') + '. En x = 0,5: función ' + mc31Dc(o.pF, o.qF) + ', suma ' + mc31Dc(o.pP, o.qP) + ', diferencia ' + mc31Dc(o.pD, o.qF) + '. ' + (k === 0 ? 'Caso límite: la función es constante y su serie tiene un solo término.' : o.pD === 0 ? 'La serie terminó: la suma es exactamente la función.' : 'Faltan términos: la suma todavía no es la función.'); },
+    readout:function(v){ return dtPasos(lectura(kk(v), nn(v))); }
+  };
+})());

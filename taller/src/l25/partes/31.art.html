@@ -1,0 +1,291 @@
+<!--file:H31_determinar_serie_de_maclaurin_de_una_funcion.html-->
+<!--title:Determinar serie de Maclaurin de una función-->
+<!--id:ss-maclaurin-->
+<!--tab:H31 Determinar serie de Maclaurin de una función-->
+<article class="sheet" id="ss-maclaurin" data-hoja="L25 H31">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Determinar serie de Maclaurin de una función</b></li>
+    </ol>
+    <h1>Determinar serie de Maclaurin de una función</h1>
+    <p class="lede">La serie de Maclaurin de una función \(f\) es la serie de potencias centrada en \(0\) cuyos coeficientes se fabrican con las derivadas de \(f\) en \(0\): el coeficiente de \(x^{n}\) es la derivada de orden \(n\) en \(0\), dividida por \(n!\). Es la serie de Taylor con centro \(a=0\). Hay dos caminos para determinarla: calcular las derivadas, o partir de una serie ya conocida. Los dos dan los mismos coeficientes. \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Cómo se determina, en seis pasos, la serie de Maclaurin de \(f(x)=\dfrac{1}{(1+x)^{2}}\) por el camino de las derivadas. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo (paso 1):</b> es la función \(y=\dfrac{1}{(1+x)^{2}}\); se dibuja solo para \(x&gt;-1\). El anillo burdeo marca su punto en el centro, \(x=0\): ahí vale \(1\). Ese valor es el primer coeficiente, \(c_{0}=1\), y la recta horizontal punteada es la suma de grado \(0\), \(P_{0}=1\). Arriba queda la pregunta.</li>
+    <li><b>Pasos 2, 3 y 4, una curva nueva por cada derivada:</b> la primera derivada en \(0\) da \(c_{1}=-2\) y aparece la recta azul \(P_{1}=1-2x\); la segunda da \(c_{2}=3\) y aparece la parábola verde \(P_{2}\); la tercera da \(c_{3}=-4\) y aparece la cúbica naranja \(P_{3}\). Cada una acompaña a la curva burdeo en un tramo más largo alrededor de \(0\). El registro anota cada derivada en \(0\) y su coeficiente.</li>
+    <li><b>Paso 5, el patrón:</b> los coeficientes \(1,\ -2,\ 3,\ -4\) siguen la regla \(c_{n}=(-1)^{n}(n+1)\). Con ella se tienen todos, y se dibuja en negro fino la suma hasta el grado \(8\), \(P_{8}\).</li>
+    <li><b>Paso 6, la franja gris:</b> el criterio del cociente dice que la serie converge solo si \(-1&lt;x&lt;1\). Los anillos abiertos indican que los extremos no entran. Cerca del centro la línea negra va pegada a la curva; cerca de los bordes de la franja todavía se separa: ahí hacen falta muchos más términos.</li>
+    <li><b>Cuenta de abajo:</b> repite cada paso con todas sus operaciones: cada derivada, su valor en \(0\), la división por \(n!\), una prueba con \(x=\dfrac{1}{4}\), el patrón, el cociente y los extremos. Conclusión: cada derivada en \(0\) fija un coeficiente, y dónde converge la serie se averigua aparte.</li>
+  </ol>
+  <div class="stage" data-scene="mac-idea"></div>
+  <ul class="keys">
+    <li><b>Burdeo:</b> la función \(y=\dfrac{1}{(1+x)^{2}}\) y su punto en el centro, \((0,\ 1)\).</li>
+    <li><b>Punteada gris, azul, verde y naranja:</b> las sumas \(P_{0}=1\), \(P_{1}=1-2x\), \(P_{2}=1-2x+3x^{2}\) y \(P_{3}=1-2x+3x^{2}-4x^{3}\). Cada una agrega un término de la serie.</li>
+    <li><b>Línea negra fina:</b> \(P_{8}\), la suma hasta el grado \(8\) (nueve términos).</li>
+    <li><b>Franja gris:</b> el intervalo \(-1&lt;x&lt;1\), donde la serie converge. Los extremos, con anillo abierto, no entran.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>De dónde sale la fórmula, y la definición</h3>
+    <p>Se parte de una función que ya está representada por una serie de potencias centrada en \(0\) (hojas «Series de potencias» y «Representación de funciones como series de potencias»): \[f(x)=\sum_{n=0}^{\infty}c_{n}\,x^{n}=c_{0}+c_{1}x+c_{2}x^{2}+c_{3}x^{3}+c_{4}x^{4}+\cdots\qquad\text{si }|x|&lt;R,\ \text{con }R&gt;0\] Pregunta: ¿cuánto valen los coeficientes \(c_{0},\ c_{1},\ c_{2},\ \ldots\)?</p>
+    <ol class="steps">
+      <li><b>Se evalúa en \(x=0\).</b> Todos los términos con \(x\) valen \(0\), porque \(0^{n}=0\) para \(n\ge 1\). Queda \(f(0)=c_{0}\). Entonces \(c_{0}=f(0)\).</li>
+      <li><b>Se deriva.</b> Por el teorema de derivación término a término (hoja «Representación de funciones como series de potencias»; ahí se enuncia sin demostrar), si \(|x|&lt;R\): \[f'(x)=c_{1}+2c_{2}x+3c_{3}x^{2}+4c_{4}x^{3}+\cdots\] Se evalúa en \(x=0\): queda \(f'(0)=c_{1}\). Entonces \(c_{1}=f'(0)\).</li>
+      <li><b>Se deriva otra vez.</b> El mismo teorema dice que la serie derivada tiene el mismo radio \(R\): se le puede aplicar de nuevo. Como \(\big(2c_{2}x\big)'=2c_{2}\), \(\big(3c_{3}x^{2}\big)'=3\cdot 2\,c_{3}x\) y \(\big(4c_{4}x^{3}\big)'=4\cdot 3\,c_{4}x^{2}\): \[f''(x)=2c_{2}+3\cdot 2\,c_{3}x+4\cdot 3\,c_{4}x^{2}+\cdots\] En \(x=0\): \(f''(0)=2c_{2}\). Entonces \(c_{2}=\dfrac{f''(0)}{2}\).</li>
+      <li><b>Y otra.</b> \(f'''(x)=3\cdot 2\cdot 1\,c_{3}+4\cdot 3\cdot 2\,c_{4}x+\cdots\) En \(x=0\): \(f'''(0)=3\cdot 2\cdot 1\,c_{3}=6c_{3}\). Entonces \(c_{3}=\dfrac{f'''(0)}{6}=\dfrac{f'''(0)}{3!}\).</li>
+      <li><b>El paso que se repite.</b> Al derivar \(n\) veces el término \(c_{n}x^{n}\), el exponente baja multiplicando por \(n\), después por \(n-1\), y así hasta \(1\): queda la constante \(n\cdot(n-1)\cdots 2\cdot 1\cdot c_{n}=n!\,c_{n}\). Los términos de grado menor que \(n\) ya se anularon en alguna derivada anterior. Los de grado mayor que \(n\) conservan una potencia de \(x\), que vale \(0\) en \(x=0\). Entonces \[f^{(n)}(0)=n!\,c_{n}\quad\Longrightarrow\quad c_{n}=\dfrac{f^{(n)}(0)}{n!}\]</li>
+      <li><b>Convenciones.</b> \(f^{(n)}\) es la derivada de orden \(n\) de \(f\); \(f^{(0)}=f\), \(f^{(1)}=f'\), \(f^{(2)}=f''\). Además \(0!=1\) y \(1!=1\). Así la fórmula vale desde \(n=0\): \(c_{0}=\dfrac{f(0)}{0!}=f(0)\) y \(c_{1}=\dfrac{f'(0)}{1!}=f'(0)\), como en los pasos 1 y 2.</li>
+    </ol>
+    <p><b>Teorema (unicidad).</b> Si \(f(x)=\displaystyle\sum_{n=0}^{\infty}c_{n}x^{n}\) para todo \(x\) con \(|x|&lt;R\), y \(R&gt;0\), entonces \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\) para todo \(n\ge 0\). Los coeficientes quedan obligados por la función: dos series de potencias centradas en \(0\) que representan a la misma función en un intervalo alrededor de \(0\) tienen los mismos coeficientes. La demostración son los seis pasos anteriores; <b>depende del teorema de derivación término a término, que no se demuestra</b>, y su paso 5 es una inducción de la que se escribe el paso que se repite.</p>
+    <p><b>Definición.</b> Sea \(f\) una función que tiene derivadas de todos los órdenes en \(x=0\). Su <b>serie de Maclaurin</b> es \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\] Es la serie de Taylor de \(f\) con centro \(a=0\) (hoja «Determinar serie de Taylor de una función»): al poner \(a=0\) en \(\displaystyle\sum_{n=0}^{\infty}\dfrac{f^{(n)}(a)}{n!}(x-a)^{n}\), queda \(x-0=x\). Su suma hasta el grado \(N\), \(P_{N}(x)=\displaystyle\sum_{n=0}^{N}\dfrac{f^{(n)}(0)}{n!}x^{n}\), es el polinomio de Maclaurin de grado \(N\) (hoja «Polinomios de Taylor y de Maclaurin», del curso Cálculo Integral).</p>
+    <p><b>Lo que la definición no dice.</b> La serie se arma con las derivadas en un solo punto. Que la serie converja en un \(x\ne 0\), y que su suma ahí sea \(f(x)\), son dos preguntas aparte:</p>
+    <ol class="steps">
+      <li><b>¿Para qué \(x\) converge?</b> Se responde con el criterio del cociente y la revisión de los extremos (hojas «Criterio del cociente para la convergencia» y «Series de potencias»). En \(x=0\) siempre converge, con suma \(c_{0}=f(0)\).</li>
+      <li><b>¿Su suma es \(f(x)\)?</b> Que la serie converja <b>no lo prueba</b>. Se asegura por otro medio: (a) por el segundo camino: si \(f\) ya se representó con una serie de potencias centrada en \(0\), el teorema de unicidad dice que esa es su serie de Maclaurin, y la igualdad vale donde valía la representación; (b) con una identidad exacta, como pasa con los polinomios (ejemplo 3) y con \(\dfrac{1}{1-x}\) (ejemplo 1); (c) acotando la diferencia \(f(x)-P_{N}(x)\) con la cota de Lagrange (hoja «Cota de Lagrange para el error», del curso Cálculo Integral), que aquí solo se menciona.</li>
+    </ol>
+    <p><b>Un caso de advertencia (se menciona; no se demuestra).</b> Hay funciones con derivadas de todos los órdenes cuya serie de Maclaurin converge para todo \(x\) y, aun así, no suma \(f(x)\) en ningún \(x\ne 0\). El ejemplo clásico es \(f(x)=e^{-1/x^{2}}\) para \(x\ne 0\), con \(f(0)=0\): todas sus derivadas en \(0\) valen \(0\), su serie de Maclaurin es \(0+0+0+\cdots\), y la función es positiva en todo \(x\ne 0\).</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa como en la hoja de ese nombre. En esta hoja se usan <b>sin demostrar</b>: (1) el <b>teorema de derivación e integración término a término</b> de una serie de potencias (enunciado en la hoja «Representación de funciones como series de potencias»); de él dependen la deducción de \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\), el teorema de unicidad y todo lo que en el segundo camino se obtiene derivando o integrando; (2) las reglas de derivación: \(\big(u^{p}\big)'=p\,u^{p-1}\cdot u'\) para exponente entero \(p\) (regla de la potencia con la regla de la cadena), la derivada de una suma y de una constante por una función, la derivada de una constante (\(0\)), \(\big(\ln u\big)'=\dfrac{u'}{u}\) para \(u&gt;0\) y la regla del cociente (ejercicio B); (3) los pasos «se repite»: el paso 5 de la deducción y cada fórmula para \(f^{(n)}(x)\) se justifican por inducción, y aquí se escribe el paso de \(n\) a \(n+1\); lo mismo vale para el «repitiendo» del ejercicio C; (4) los resultados de otras hojas, citados por su título: «Una función como una serie geométrica», «Representación de funciones como series de potencias», «Series de potencias», «Criterio del cociente para la convergencia», «Criterio del enésimo término» y «Criterio de Leibniz»; (5) los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\), el álgebra de límites (suma y constante por sucesión), que \(r^{\,n}\) tiene límite \(0\) si \(|r|&lt;1\), y que si \(0&lt;b_{n}\le d_{n}\) y \(d_{n}\) tiene límite \(0\), entonces \(b_{n}\) tiene límite \(0\) (ejercicio C); (6) las propiedades \(|u\cdot v|=|u|\cdot|v|\), \(|x^{n}|=|x|^{n}\), \((n+1)!=(n+1)\cdot n!\), y que \(x^{2}&lt;1\) equivale a \(|x|&lt;1\); (7) el caso de advertencia \(e^{-1/x^{2}}\) y la cota de Lagrange solo se mencionan. Los valores de \(\ln\) con decimales son aproximaciones de calculadora y llevan \(\approx\). Las series de Maclaurin de \(e^{x}\), \(\operatorname{sen}x\) y \(\cos x\) tienen su propia hoja y aquí no se desarrollan. En el ejercicio C, el interés compuesto anual es un modelo y los montos son datos inventados.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Dos caminos para determinarla</h3>
+    <p><b>Camino 1: por derivadas.</b></p>
+    <ol class="steps">
+      <li><b>Derivar.</b> Se calculan \(f'\), \(f''\), \(f'''\) y las que hagan falta hasta ver cómo siguen. Conviene escribir la función como potencia: \(\dfrac{1}{1-x}=(1-x)^{-1}\).</li>
+      <li><b>Evaluar en \(0\).</b> Se calculan \(f(0)\), \(f'(0)\), \(f''(0)\), \(f'''(0)\), …</li>
+      <li><b>Hallar el patrón.</b> Se busca una fórmula para \(f^{(n)}(0)\) que valga para todo \(n\). Para estar seguros, se escribe una fórmula para \(f^{(n)}(x)\) y se comprueba que, al derivarla una vez, da la misma fórmula con \(n+1\).</li>
+      <li><b>Dividir por \(n!\).</b> \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\). Casi siempre los factoriales se simplifican.</li>
+      <li><b>Escribir la serie,</b> con \(\Sigma\) y con sus primeros términos.</li>
+      <li><b>Decir dónde converge.</b> Criterio del cociente con \(a_{n}=c_{n}x^{n}\), para \(x\ne 0\); después, cada extremo por separado. Si hay coeficientes que valen \(0\) intercalados (solo potencias pares o solo impares), el cociente se arma con términos no nulos consecutivos, o se reconoce una serie geométrica.</li>
+      <li><b>Decir si la suma es \(f(x)\), y por qué.</b> Es la segunda pregunta del recuadro anterior: se responde aparte.</li>
+    </ol>
+    <p><b>Camino 2: desde una serie conocida.</b></p>
+    <ol class="steps">
+      <li><b>Se parte de una representación ya establecida,</b> casi siempre la geométrica: \(\dfrac{1}{1-x}=\displaystyle\sum_{n=0}^{\infty}x^{n}\) si \(|x|&lt;1\) (hoja «Una función como una serie geométrica»).</li>
+      <li><b>Se opera hasta llegar a \(f\):</b> cambiar la razón (por \(-x\), por \(x^{2}\), por \(2x\), …), multiplicar por una constante o por \(x^{m}\), sumar dos series, derivar o integrar término a término (reglas y teorema de la hoja «Representación de funciones como series de potencias»).</li>
+      <li><b>Se anota el intervalo</b> que entrega cada operación.</li>
+      <li><b>Se concluye con la unicidad:</b> lo que se obtuvo es una serie de potencias centrada en \(0\) que representa a \(f\) en un intervalo alrededor de \(0\); por el teorema de unicidad, es la serie de Maclaurin de \(f\). Este camino entrega, además, la igualdad con \(f\) y el intervalo donde vale.</li>
+    </ol>
+    <p><b>Cuál conviene.</b> El camino 1 sirve siempre que se puedan calcular las derivadas y ver su patrón, pero deja pendiente la segunda pregunta. El camino 2 es más corto cuando \(f\) se parece a una función de serie conocida, y responde las dos preguntas de una vez.</p>
+    <p><b>Los dos caminos, con la función de la animación.</b></p>
+    <ol class="steps">
+      <li>Camino 1 (animación): \(c_{n}=(-1)^{n}(n+1)\). Serie: \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}(n+1)\,x^{n}=1-2x+3x^{2}-4x^{3}+\cdots\)</li>
+      <li>Camino 2. En la hoja «Representación de funciones como series de potencias» (ejercicio A), derivando término a término \(\dfrac{1}{1+x}=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}x^{n}\) y multiplicando por \(-1\), se obtuvo: \(\dfrac{1}{(1+x)^{2}}=\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,n\,x^{n-1}\) si \(|x|&lt;1\).</li>
+      <li>Cambio de índice, para que el exponente sea la letra del índice. Con \(m=n-1\): \(n=m+1\), y \(n=1\) corresponde a \(m=0\). El signo: \((-1)^{n+1}=(-1)^{m+2}=(-1)^{m}\cdot(-1)^{2}=(-1)^{m}\). Queda \(\displaystyle\sum_{m=0}^{\infty}(-1)^{m}(m+1)\,x^{m}\).</li>
+      <li>Es la misma serie: el coeficiente de \(x^{m}\) es \((-1)^{m}(m+1)\) por los dos caminos, como asegura la unicidad. El camino 2 agrega lo que el camino 1 no daba: la suma de la serie es \(\dfrac{1}{(1+x)^{2}}\) para todo \(x\) con \(|x|&lt;1\) (con el teorema enunciado en esa hoja).</li>
+    </ol>
+    <p><b>Funciones pares e impares (demostrado con la regla de la cadena).</b> \(f\) es <b>par</b> si \(f(-x)=f(x)\) para todo \(x\) de su dominio, e <b>impar</b> si \(f(-x)=-f(x)\). Se supone que el dominio contiene a \(-x\) siempre que contiene a \(x\), y que \(f\) tiene derivadas de todos los órdenes.</p>
+    <ol class="steps">
+      <li><b>Una función impar vale \(0\) en \(0\).</b> Con \(x=0\) en \(g(-x)=-g(x)\): \(g(0)=-g(0)\). Se suma \(g(0)\) a cada lado: \(2\,g(0)=0\). Entonces \(g(0)=0\).</li>
+      <li><b>La derivada de una par es impar.</b> Se deriva cada lado de \(f(-x)=f(x)\). A la izquierda, regla de la cadena con \((-x)'=-1\): \(f'(-x)\cdot(-1)=f'(x)\). Se multiplica por \(-1\): \(f'(-x)=-f'(x)\).</li>
+      <li><b>La derivada de una impar es par.</b> Se deriva cada lado de \(g(-x)=-g(x)\): \(g'(-x)\cdot(-1)=-g'(x)\). Se multiplica por \(-1\): \(g'(-x)=g'(x)\).</li>
+      <li><b>Si \(f\) es par:</b> \(f'\) es impar, \(f''\) es par, \(f'''\) es impar, y así se alternan. Las derivadas de orden impar son funciones impares: valen \(0\) en \(0\) (paso 1). Entonces \(c_{n}=0\) para todo \(n\) impar: <b>su serie de Maclaurin tiene solo potencias pares.</b></li>
+      <li><b>Si \(f\) es impar:</b> \(f\), \(f''\), \(f^{(4)}\), … son impares y valen \(0\) en \(0\). Entonces \(c_{n}=0\) para todo \(n\) par: <b>su serie de Maclaurin tiene solo potencias impares.</b></li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Una serie que termina: \((1+x)^{k}\). Número ↔ figura</h3>
+    <p>La función \(f(x)=(1+x)^{k}\), con \(k\) entero entre \(0\) y \(4\), es un polinomio: sus derivadas valen \(0\) desde la de orden \(k+1\), y su serie de Maclaurin tiene solo \(k+1\) términos distintos de \(0\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la curva burdeo y la línea de arriba:</b> es la función \(y=(1+x)^{k}\) para el \(k\) elegido. En horizontal va \(x\); en vertical, el valor.</li>
+      <li><b>Mira después la curva azul y la segunda línea:</b> es la suma de la serie de Maclaurin hasta el grado \(N\). La línea vertical punteada marca \(x=0{,}5\), donde se prueba: hay un punto burdeo (la función) y uno azul (la suma), cada uno con su valor, y el trazo naranja entre ellos es la diferencia.</li>
+      <li><b>Mira las barras:</b> son los coeficientes \(c_{0},\ c_{1},\ c_{2},\ c_{3},\ c_{4}\) de la serie. En azul, los que ya entraron en la suma; en gris, los que faltan. Los coeficientes de grado mayor que \(k\) valen \(0\) y no tienen barra.</li>
+      <li><b>Mueve \(N\) con \(k\) fijo:</b> cada grado que se agrega acerca la curva azul a la burdeo y acorta el trazo naranja. Cuando \(N\) llega a \(k\), la curva azul (ahora punteada) queda encima de la burdeo y la diferencia es \(0\): la serie terminó. <b>Mueve \(k\):</b> cambian la curva y las barras. Con \(k=0\) la función es la constante \(1\) y hay una sola barra.</li>
+      <li><b>Cuenta de abajo:</b> para el \(k\) y el \(N\) elegidos, cada derivada, su valor en \(0\), cada coeficiente con su división por \(n!\), la serie, la suma en \(x=\dfrac{1}{2}\) con denominador común, el valor de la función, la diferencia y qué significa. Conclusión: la serie de Maclaurin de un polinomio es finita, y su suma es el mismo polinomio.</li>
+    </ol>
+    <div class="stage" data-scene="mac-vivo"></div>
+    <ul class="keys">
+      <li><b>Burdeo:</b> la función \(y=(1+x)^{k}\) y su valor en \(x=0{,}5\).</li>
+      <li><b>Azul:</b> la suma de la serie hasta el grado \(N\), su valor en \(x=0{,}5\) y las barras de los coeficientes ya sumados.</li>
+      <li><b>Naranja:</b> la diferencia entre la función y la suma en \(x=0{,}5\).</li>
+      <li><b>Barras grises:</b> los coeficientes de los términos que todavía no se suman.</li>
+      <li><b>Caso límite 1 (\(k=0\)):</b> \(f(x)=1\). Todas las derivadas valen \(0\): la serie es \(1+0+0+\cdots\), con un solo término.</li>
+      <li><b>Caso límite 2 (\(N\ge k\)):</b> ya se sumaron todos los términos distintos de \(0\). La diferencia es \(0\) en \(x=0{,}5\) y en cualquier otro \(x\): la suma es la función.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1 (camino 1): \(f(x)=\dfrac{1}{1-x}\) por derivadas. Coincide con la serie geométrica</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Función como potencia: \(f(x)=(1-x)^{-1}\), definida si \(x\ne 1\). Valor en \(0\): \(f(0)=(1-0)^{-1}=1^{-1}=1\).</li>
+    <li>Primera derivada. Regla de la potencia y regla de la cadena, con \((1-x)'=-1\): \(f'(x)=(-1)\cdot(1-x)^{-2}\cdot(-1)=(1-x)^{-2}\).</li>
+    <li>Segunda derivada: \(f''(x)=(-2)\cdot(1-x)^{-3}\cdot(-1)=2\,(1-x)^{-3}\).</li>
+    <li>Tercera derivada: \(f'''(x)=2\cdot(-3)\cdot(1-x)^{-4}\cdot(-1)=6\,(1-x)^{-4}\).</li>
+    <li>En \(x=0\), \(1-0=1\) y toda potencia de \(1\) es \(1\): \(f(0)=1\), \(f'(0)=1\), \(f''(0)=2\), \(f'''(0)=6\).</li>
+    <li>Patrón: \(1=0!\), \(1=1!\), \(2=2!\), \(6=3!\). Fórmula: \(f^{(n)}(x)=n!\,(1-x)^{-(n+1)}\).</li>
+    <li>Comprobación del patrón. Se deriva la fórmula: \(n!\cdot\big(-(n+1)\big)\cdot(1-x)^{-(n+2)}\cdot(-1)=n!\,(n+1)\,(1-x)^{-(n+2)}=(n+1)!\,(1-x)^{-(n+2)}\). Es la misma fórmula con \(n+1\) en lugar de \(n\): el patrón sigue para todo \(n\).</li>
+    <li>Valores en \(0\): \(f^{(n)}(0)=n!\cdot 1=n!\). Coeficientes: \(c_{n}=\dfrac{f^{(n)}(0)}{n!}=\dfrac{n!}{n!}=1\) para todo \(n\).</li>
+    <li>Serie de Maclaurin: \(\displaystyle\sum_{n=0}^{\infty}1\cdot x^{n}=\sum_{n=0}^{\infty}x^{n}=1+x+x^{2}+x^{3}+\cdots\)</li>
+    <li>Dónde converge. Con \(a_{n}=x^{n}\) y \(x\ne 0\): \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{|x|^{n+1}}{|x|^{n}}=|x|\) para todo \(n\); el límite es \(L=|x|\). Si \(|x|&lt;1\), converge; si \(|x|&gt;1\), diverge (hoja «Criterio del cociente para la convergencia»).</li>
+    <li>Extremos. En \(x=1\) los términos son \(1,\ 1,\ 1,\ \ldots\); en \(x=-1\), \(1,\ -1,\ 1,\ \ldots\) En los dos, el tamaño es \(1\), que no tiende a \(0\): la serie diverge (hoja «Criterio del enésimo término»). Converge solo si \(-1&lt;x&lt;1\).</li>
+    <li>¿Su suma es \(f(x)\)? Sí, y está demostrado sin derivar ninguna serie: la hoja «Una función como una serie geométrica» prueba, con la identidad \((1-x)\cdot s_{N}(x)=1-x^{N+1}\), que \(\displaystyle\sum_{n=0}^{\infty}x^{n}=\dfrac{1}{1-x}\) si \(|x|&lt;1\).</li>
+    <li>Conclusión: la serie de Maclaurin de \(\dfrac{1}{1-x}\) es la serie geométrica de razón \(x\). El camino de las derivadas y el de la fórmula geométrica llegan a los mismos coeficientes, todos iguales a \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2 (camino 1): \(f(x)=\ln(1+x)\) por derivadas, y comparación con el camino 2</h3>
+  <div class="body">
+  <p>La hoja «Representación de funciones como series de potencias» obtuvo esta serie integrando término a término (su ejemplo 2). Aquí se obtiene por derivadas.</p>
+  <ol class="steps">
+    <li>Función: \(f(x)=\ln(1+x)\), definida si \(x&gt;-1\). Valor en \(0\): \(f(0)=\ln(1+0)=\ln 1=0\).</li>
+    <li>Primera derivada. Derivada del logaritmo con la regla de la cadena, \((1+x)'=1\): \(f'(x)=\dfrac{1}{1+x}\cdot 1=(1+x)^{-1}\).</li>
+    <li>Segunda derivada: \(f''(x)=(-1)\cdot(1+x)^{-2}\cdot 1=-(1+x)^{-2}\).</li>
+    <li>Tercera derivada: \(f'''(x)=(-1)\cdot(-2)\cdot(1+x)^{-3}\cdot 1=2\,(1+x)^{-3}\).</li>
+    <li>Cuarta derivada: \(f^{(4)}(x)=2\cdot(-3)\cdot(1+x)^{-4}\cdot 1=-6\,(1+x)^{-4}\).</li>
+    <li>En \(x=0\), \(1+0=1\): \(f(0)=0\), \(f'(0)=1\), \(f''(0)=-1\), \(f'''(0)=2\), \(f^{(4)}(0)=-6\).</li>
+    <li>Patrón, desde \(n=1\). Sin el signo: \(1=0!\), \(1=1!\), \(2=2!\), \(6=3!\); es decir, \((n-1)!\). Signos \(+,\ -,\ +,\ -\): \((-1)^{n-1}\). Fórmula, para \(n\ge 1\): \(f^{(n)}(x)=(-1)^{n-1}(n-1)!\,(1+x)^{-n}\).</li>
+    <li>Comprobación del patrón. Se deriva la fórmula: \((-1)^{n-1}(n-1)!\cdot(-n)\cdot(1+x)^{-n-1}\cdot 1\). Como \((-1)^{n-1}\cdot(-1)=(-1)^{n}\) y \((n-1)!\cdot n=n!\), queda \((-1)^{n}\,n!\,(1+x)^{-(n+1)}\): la misma fórmula con \(n+1\) en lugar de \(n\).</li>
+    <li>Valores en \(0\): \(f^{(n)}(0)=(-1)^{n-1}(n-1)!\) para \(n\ge 1\), y \(f(0)=0\).</li>
+    <li>Coeficientes. \(c_{0}=\dfrac{0}{0!}=0\). Para \(n\ge 1\), como \(n!=n\cdot(n-1)!\): \(c_{n}=\dfrac{(-1)^{n-1}(n-1)!}{n\cdot(n-1)!}=\dfrac{(-1)^{n-1}}{n}\).</li>
+    <li>Serie de Maclaurin. El término \(n=0\) vale \(0\) y la suma se escribe desde \(n=1\): \[\sum_{n=1}^{\infty}(-1)^{n-1}\dfrac{x^{n}}{n}=x-\dfrac{x^{2}}{2}+\dfrac{x^{3}}{3}-\dfrac{x^{4}}{4}+\cdots\]</li>
+    <li>Comparación con el camino 2. La otra hoja escribió \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{x^{n}}{n}\). Es la misma serie: \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\). Los dos caminos dan los mismos coeficientes.</li>
+    <li>Dónde converge. Con \(a_{n}=(-1)^{n-1}\dfrac{x^{n}}{n}\) y \(x\ne 0\): \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{|x|^{n+1}}{n+1}\cdot\dfrac{n}{|x|^{n}}=|x|\cdot\dfrac{n}{n+1}\), con límite \(|x|\cdot 1=|x|\). Si \(|x|&lt;1\) converge; si \(|x|&gt;1\) diverge. Los extremos los revisó la otra hoja: en \(x=-1\) diverge y en \(x=1\) converge. La serie converge en \((-1,\ 1]\).</li>
+    <li>¿Su suma es \(\ln(1+x)\)? El camino 1 no lo dice. Lo asegura el camino 2, en \(-1&lt;x&lt;1\), con el teorema de integración término a término (enunciado, no demostrado). En \(x=1\) la igualdad necesita otro teorema (el de Abel), que no se usa.</li>
+    <li>Comprobación con \(x=\dfrac{1}{5}\), tres términos. \(x^{2}=\dfrac{1}{25}\) y \(\dfrac{x^{2}}{2}=\dfrac{1}{50}\); \(x^{3}=\dfrac{1}{125}\) y \(\dfrac{x^{3}}{3}=\dfrac{1}{375}\). Con denominador común \(750\): \(\dfrac{1}{5}-\dfrac{1}{50}+\dfrac{1}{375}=\dfrac{150}{750}-\dfrac{15}{750}+\dfrac{2}{750}=\dfrac{137}{750}\approx 0{,}1827\). Con calculadora, \(\ln(1{,}2)\approx 0{,}1823\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un polinomio. Su serie de Maclaurin es él mismo</h3>
+  <div class="body">
+  <p><b>(a)</b> \(p(x)=3-5x+2x^{3}\).</p>
+  <ol class="steps">
+    <li>Derivadas (suma, constante por función y regla de la potencia): \(p'(x)=-5+6x^{2}\); \(p''(x)=12x\); \(p'''(x)=12\); \(p^{(4)}(x)=0\), y todas las siguientes valen \(0\).</li>
+    <li>En \(x=0\): \(p(0)=3\); \(p'(0)=-5+6\cdot 0=-5\); \(p''(0)=12\cdot 0=0\); \(p'''(0)=12\); \(p^{(n)}(0)=0\) para \(n\ge 4\).</li>
+    <li>Coeficientes: \(c_{0}=\dfrac{3}{0!}=3\); \(c_{1}=\dfrac{-5}{1!}=-5\); \(c_{2}=\dfrac{0}{2!}=0\); \(c_{3}=\dfrac{12}{3!}=\dfrac{12}{6}=2\); \(c_{n}=\dfrac{0}{n!}=0\) para \(n\ge 4\).</li>
+    <li>Serie de Maclaurin: \(3-5x+0\cdot x^{2}+2x^{3}+0+0+\cdots\) Desde el grado \(4\) todos los términos son \(0\).</li>
+    <li>Suma. Las sumas parciales \(P_{N}(x)\) con \(N\ge 3\) son todas iguales a \(3-5x+2x^{3}\): su límite es ese mismo número. La serie converge para todo \(x\) real y su suma es \(p(x)\). No hizo falta ningún criterio ni ningún teorema sobre series.</li>
+  </ol>
+  <p><b>(b)</b> \(q(x)=(x-1)^{2}\), que no está escrito en potencias de \(x\).</p>
+  <ol class="steps">
+    <li>Derivadas: \(q'(x)=2\,(x-1)\cdot 1=2(x-1)\); \(q''(x)=2\); \(q'''(x)=0\), y todas las siguientes valen \(0\).</li>
+    <li>En \(x=0\): \(q(0)=(0-1)^{2}=(-1)^{2}=1\); \(q'(0)=2\cdot(0-1)=-2\); \(q''(0)=2\).</li>
+    <li>Coeficientes: \(c_{0}=\dfrac{1}{0!}=1\); \(c_{1}=\dfrac{-2}{1!}=-2\); \(c_{2}=\dfrac{2}{2!}=\dfrac{2}{2}=1\); los demás valen \(0\).</li>
+    <li>Serie de Maclaurin: \(1-2x+x^{2}\). Es el cuadrado del binomio desarrollado: \((x-1)^{2}=x^{2}-2x+1\). Determinar la serie de Maclaurin de un polinomio es escribirlo ordenado en potencias de \(x\).</li>
+  </ol>
+  <p><b>(c) En general.</b> Sea \(p(x)=a_{0}+a_{1}x+a_{2}x^{2}+\cdots+a_{m}x^{m}\).</p>
+  <ol class="steps">
+    <li>Es una suma de una cantidad finita de términos: su derivada es la suma de las derivadas (regla de la suma), sin necesidad del teorema de las series.</li>
+    <li>Se deriva \(n\) veces el término \(a_{j}x^{j}\) y se evalúa en \(0\). Si \(j&lt;n\): tras \(j\) derivadas queda la constante \(j!\,a_{j}\), y la siguiente derivada es \(0\). Si \(j=n\): queda \(n!\,a_{n}\). Si \(j&gt;n\): queda \(j(j-1)\cdots(j-n+1)\,a_{j}\,x^{\,j-n}\), que en \(x=0\) vale \(0\).</li>
+    <li>Entonces \(p^{(n)}(0)=n!\,a_{n}\) si \(n\le m\), y \(p^{(n)}(0)=0\) si \(n&gt;m\). Coeficientes: \(c_{n}=\dfrac{n!\,a_{n}}{n!}=a_{n}\) si \(n\le m\), y \(c_{n}=0\) si \(n&gt;m\).</li>
+    <li>La serie de Maclaurin de \(p\) es \(a_{0}+a_{1}x+\cdots+a_{m}x^{m}+0+0+\cdots\): el mismo polinomio. Converge para todo \(x\) y su suma es \(p(x)\), exactamente. Es lo que muestra la segunda animación con \((1+x)^{k}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4 (los dos caminos): una función par, \(f(x)=\dfrac{1}{1-x^{2}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es par. Está definida si \(x\ne 1\) y \(x\ne -1\), y \(f(-x)=\dfrac{1}{1-(-x)^{2}}=\dfrac{1}{1-x^{2}}=f(x)\), porque \((-x)^{2}=x^{2}\). Por el recuadro «Dos caminos», su serie de Maclaurin tendrá solo potencias pares. Se comprueba por los dos caminos.</li>
+    <li><b>Camino 1.</b> Derivar el cociente directamente es largo. Se separa en dos fracciones: \(\dfrac{1}{1-x^{2}}=\dfrac{1}{2}\cdot\dfrac{1}{1-x}+\dfrac{1}{2}\cdot\dfrac{1}{1+x}\).</li>
+    <li>Comprobación de la separación. Como \((1-x)(1+x)=1-x^{2}\): \(\dfrac{1}{2}\cdot\dfrac{1}{1-x}+\dfrac{1}{2}\cdot\dfrac{1}{1+x}=\dfrac{1}{2}\cdot\dfrac{(1+x)+(1-x)}{(1-x)(1+x)}=\dfrac{1}{2}\cdot\dfrac{2}{1-x^{2}}=\dfrac{1}{1-x^{2}}\).</li>
+    <li>Derivadas de la primera fracción (ejemplo 1): la derivada de orden \(n\) de \((1-x)^{-1}\) es \(n!\,(1-x)^{-(n+1)}\); en \(0\) vale \(n!\).</li>
+    <li>Derivadas de la segunda, \(g(x)=(1+x)^{-1}\), con \((1+x)'=1\): \(g'(x)=-(1+x)^{-2}\); \(g''(x)=(-1)\cdot(-2)\cdot(1+x)^{-3}=2(1+x)^{-3}\); \(g'''(x)=2\cdot(-3)\cdot(1+x)^{-4}=-6(1+x)^{-4}\). Fórmula: \(g^{(n)}(x)=(-1)^{n}\,n!\,(1+x)^{-(n+1)}\).</li>
+    <li>Comprobación del patrón. Se deriva la fórmula: \((-1)^{n}\,n!\cdot\big(-(n+1)\big)\cdot(1+x)^{-(n+2)}=(-1)^{n+1}(n+1)!\,(1+x)^{-(n+2)}\): la misma fórmula con \(n+1\). En \(0\): \(g^{(n)}(0)=(-1)^{n}\,n!\).</li>
+    <li>Derivada de una suma y de una constante por una función: \(f^{(n)}(0)=\dfrac{1}{2}\cdot n!+\dfrac{1}{2}\cdot(-1)^{n}\,n!=\dfrac{n!}{2}\,\big(1+(-1)^{n}\big)\).</li>
+    <li>Si \(n\) es par, \((-1)^{n}=1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 2=n!\). Si \(n\) es impar, \((-1)^{n}=-1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 0=0\).</li>
+    <li>Coeficientes: \(c_{n}=\dfrac{n!}{n!}=1\) si \(n\) es par; \(c_{n}=\dfrac{0}{n!}=0\) si \(n\) es impar. Serie de Maclaurin: \(1+0\cdot x+x^{2}+0\cdot x^{3}+x^{4}+\cdots\) Con \(n=2k\): \[\sum_{k=0}^{\infty}x^{2k}=1+x^{2}+x^{4}+x^{6}+\cdots\]</li>
+    <li><b>Camino 2.</b> Serie geométrica con razón \(r=x^{2}\) (hoja «Una función como una serie geométrica»): \(\dfrac{1}{1-x^{2}}=\displaystyle\sum_{n=0}^{\infty}\big(x^{2}\big)^{n}=\sum_{n=0}^{\infty}x^{2n}\) si \(|x^{2}|&lt;1\). Como \(|x^{2}|=x^{2}\), y \(x^{2}&lt;1\) equivale a \(|x|&lt;1\): vale si \(-1&lt;x&lt;1\).</li>
+    <li>Es la misma serie: solo potencias pares, todas con coeficiente \(1\). Los dos caminos coinciden, y los coeficientes impares valen \(0\), como anunciaba el paso 1.</li>
+    <li>Dónde converge y cuánto suma. Es una serie geométrica de razón \(x^{2}\): converge si \(x^{2}&lt;1\), con suma \(\dfrac{1}{1-x^{2}}\), y diverge si \(x^{2}\ge 1\) (misma hoja). En particular diverge en \(x=1\) y en \(x=-1\), donde todos los términos valen \(1\). Aquí la igualdad con \(f\) no depende del teorema de derivación.</li>
+    <li>Comprobación con \(x=\dfrac{1}{2}\). Función: \(1-\dfrac{1}{4}=\dfrac{3}{4}\) y \(1:\dfrac{3}{4}=\dfrac{4}{3}\approx 1{,}3333\). Serie, tres términos: \(1+\dfrac{1}{4}+\dfrac{1}{16}=\dfrac{16}{16}+\dfrac{4}{16}+\dfrac{1}{16}=\dfrac{21}{16}=1{,}3125\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar la división por \(n!\) y poner como coeficiente la derivada sola: en la animación, \(f''(0)=6\), pero \(c_{2}=\dfrac{6}{2!}=3\). Evaluar las derivadas en \(x\) en vez de en \(0\): los coeficientes son números, no dependen de \(x\). Olvidar el factor \(-1\) de la regla de la cadena al derivar \((1-x)^{-1}\). Adivinar el patrón con dos o tres valores y no comprobarlo: se comprueba derivando la fórmula de \(f^{(n)}(x)\). Olvidar que \(0!=1\) y dejar fuera el término \(n=0\); o, al revés, empezar en \(n=0\) una serie cuyo primer término no existe con esa fórmula, como \(\dfrac{x^{n}}{n}\). Escribir la serie sin decir dónde converge. Creer que, donde converge, la serie suma \(f(x)\) sin más: eso se asegura aparte. Usar la serie fuera de su intervalo porque «la función existe ahí». Y creer que los dos caminos pueden dar series distintas: si las dos representan a \(f\) cerca de \(0\), tienen los mismos coeficientes.</p>
+    <p>La hoja «Series de Maclaurin de \(e^{x}\), \(\operatorname{sen}(x)\) y \(\cos(x)\)» aplica este procedimiento a esas tres funciones.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Determina por derivadas la serie de Maclaurin de \(f(x)=\dfrac{1}{2-x}\). (b) Di para qué \(x\) converge, con el criterio del cociente y revisando los extremos. (c) Compárala con la serie que la hoja «Una función como una serie geométrica» obtuvo para la misma función, y di cuánto suma. (d) Determina la serie de Maclaurin de \(h(x)=(1-x)^{3}\).</p>
+    <details><summary>Pista</summary><div><p>En (a), \(f(x)=(2-x)^{-1}\) y \((2-x)'=-1\): cada derivada trae un factor \(-1\) de la cadena, que cancela el signo del exponente. En \(0\), \(2-0=2\): aparecen potencias de \(2\) en el denominador. En (d), las derivadas se anulan desde la cuarta.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(f(x)=(2-x)^{-1}\), definida si \(x\ne 2\). \(f(0)=2^{-1}=\dfrac{1}{2}\).</li>
+        <li>(a) \(f'(x)=(-1)\cdot(2-x)^{-2}\cdot(-1)=(2-x)^{-2}\); \(f''(x)=(-2)\cdot(2-x)^{-3}\cdot(-1)=2(2-x)^{-3}\); \(f'''(x)=2\cdot(-3)\cdot(2-x)^{-4}\cdot(-1)=6(2-x)^{-4}\).</li>
+        <li>(a) En \(x=0\): \(f'(0)=2^{-2}=\dfrac{1}{4}\); \(f''(0)=2\cdot 2^{-3}=\dfrac{2}{8}=\dfrac{1}{4}\); \(f'''(0)=6\cdot 2^{-4}=\dfrac{6}{16}=\dfrac{3}{8}\).</li>
+        <li>(a) Patrón: \(f^{(n)}(x)=n!\,(2-x)^{-(n+1)}\). Al derivarla: \(n!\cdot\big(-(n+1)\big)\cdot(2-x)^{-(n+2)}\cdot(-1)=(n+1)!\,(2-x)^{-(n+2)}\), la misma fórmula con \(n+1\). En \(0\): \(f^{(n)}(0)=\dfrac{n!}{2^{\,n+1}}\).</li>
+        <li>(a) Coeficientes: \(c_{n}=\dfrac{f^{(n)}(0)}{n!}=\dfrac{n!}{2^{\,n+1}\cdot n!}=\dfrac{1}{2^{\,n+1}}\). Con los valores del paso 3: \(c_{0}=\dfrac{1}{2}\); \(c_{1}=\dfrac{1}{4}\); \(c_{2}=\dfrac{1}{4}:2=\dfrac{1}{8}\); \(c_{3}=\dfrac{3}{8}:6=\dfrac{3}{48}=\dfrac{1}{16}\).</li>
+        <li>(a) Serie de Maclaurin: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{2^{\,n+1}}=\dfrac{1}{2}+\dfrac{x}{4}+\dfrac{x^{2}}{8}+\dfrac{x^{3}}{16}+\cdots\)</li>
+        <li>(b) Con \(a_{n}=\dfrac{x^{n}}{2^{\,n+1}}\) y \(x\ne 0\): \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{|x|^{n+1}}{2^{\,n+2}}\cdot\dfrac{2^{\,n+1}}{|x|^{n}}=\dfrac{|x|}{2}\) para todo \(n\); el límite es \(L=\dfrac{|x|}{2}\). Converge si \(\dfrac{|x|}{2}&lt;1\), es decir, \(|x|&lt;2\); diverge si \(|x|&gt;2\).</li>
+        <li>(b) Extremos. En \(x=2\): \(\dfrac{2^{n}}{2^{\,n+1}}=\dfrac{1}{2}\) para todo \(n\). En \(x=-2\): \(\dfrac{(-2)^{n}}{2^{\,n+1}}=\dfrac{(-1)^{n}}{2}\). En los dos el tamaño es \(\dfrac{1}{2}\), que no tiende a \(0\): diverge (hoja «Criterio del enésimo término»). Converge solo si \(-2&lt;x&lt;2\).</li>
+        <li>(c) Esa hoja (ejercicio A) obtuvo, con \(a=\dfrac{1}{2}\) y \(r(x)=\dfrac{x}{2}\): \(\dfrac{1}{2-x}=\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{2^{\,n+1}}\) si \(-2&lt;x&lt;2\). Es la misma serie, con los mismos coeficientes. Y dice cuánto suma: \(\dfrac{1}{2-x}\), en todo el intervalo \((-2,\ 2)\), por la fórmula de la serie geométrica.</li>
+        <li>(c) Comprobación con \(x=1\): \(f(1)=\dfrac{1}{2-1}=1\). Sumas parciales: \(\dfrac{1}{2}\); \(\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{3}{4}\); \(\dfrac{3}{4}+\dfrac{1}{8}=\dfrac{7}{8}\); \(\dfrac{7}{8}+\dfrac{1}{16}=\dfrac{15}{16}\). Se acercan a \(1\).</li>
+        <li>(d) \(h(x)=(1-x)^{3}\), con \((1-x)'=-1\): \(h'(x)=3(1-x)^{2}\cdot(-1)=-3(1-x)^{2}\); \(h''(x)=-3\cdot 2\,(1-x)\cdot(-1)=6(1-x)\); \(h'''(x)=6\cdot(-1)=-6\); \(h^{(4)}(x)=0\), y todas las siguientes valen \(0\).</li>
+        <li>(d) En \(x=0\): \(h(0)=1\); \(h'(0)=-3\); \(h''(0)=6\); \(h'''(0)=-6\). Coeficientes: \(c_{0}=1\); \(c_{1}=\dfrac{-3}{1!}=-3\); \(c_{2}=\dfrac{6}{2!}=3\); \(c_{3}=\dfrac{-6}{3!}=-1\); \(c_{n}=0\) para \(n\ge 4\).</li>
+        <li>(d) Serie de Maclaurin: \(1-3x+3x^{2}-x^{3}\). Es finita, converge para todo \(x\) y su suma es \((1-x)^{3}\) (ejemplo 3). Comprobación con \(x=2\): \((1-2)^{3}=(-1)^{3}=-1\), y \(1-3\cdot 2+3\cdot 4-8=1-6+12-8=-1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(f(x)=\dfrac{x}{1-x^{2}}\). (a) Muestra que es impar y di qué coeficientes de su serie de Maclaurin valen \(0\). (b) Determina la serie por el camino 2, a partir del ejemplo 4. (c) Compruébala por el camino 1, separando \(f\) en dos fracciones. (d) Sin derivar, da \(f^{(5)}(0)\) y \(f^{(6)}(0)\). (e) Calcula \(f'(0)\) derivando el cociente, y compara con el coeficiente \(c_{1}\).</p>
+    <details><summary>Pista</summary><div><p>En (b), multiplica por \(x\) la serie de \(\dfrac{1}{1-x^{2}}\). En (c), \(\dfrac{x}{1-x^{2}}=\dfrac{1}{2}\cdot\dfrac{1}{1-x}-\dfrac{1}{2}\cdot\dfrac{1}{1+x}\), y las derivadas de orden \(n\) de cada fracción están en el ejemplo 4. En (d), usa \(f^{(n)}(0)=n!\,c_{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Está definida si \(x\ne 1\) y \(x\ne -1\). \(f(-x)=\dfrac{-x}{1-(-x)^{2}}=\dfrac{-x}{1-x^{2}}=-f(x)\): es impar. Por el recuadro «Dos caminos», \(c_{n}=0\) para todo \(n\) par: la serie tiene solo potencias impares.</li>
+        <li>(b) Ejemplo 4: \(\dfrac{1}{1-x^{2}}=\displaystyle\sum_{n=0}^{\infty}x^{2n}\) si \(|x|&lt;1\). Se multiplica por \(x\) (regla 3 de la hoja «Representación de funciones como series de potencias», con \(m=1\)): cada término, \(x^{2n}\cdot x=x^{2n+1}\).</li>
+        <li>(b) \(\dfrac{x}{1-x^{2}}=\displaystyle\sum_{n=0}^{\infty}x^{2n+1}=x+x^{3}+x^{5}+x^{7}+\cdots\) si \(|x|&lt;1\). Por la unicidad, es la serie de Maclaurin de \(f\): \(c_{n}=1\) si \(n\) es impar y \(c_{n}=0\) si \(n\) es par.</li>
+        <li>(c) Separación: \(\dfrac{1}{2}\cdot\dfrac{1}{1-x}-\dfrac{1}{2}\cdot\dfrac{1}{1+x}=\dfrac{1}{2}\cdot\dfrac{(1+x)-(1-x)}{(1-x)(1+x)}=\dfrac{1}{2}\cdot\dfrac{2x}{1-x^{2}}=\dfrac{x}{1-x^{2}}\).</li>
+        <li>(c) Derivadas de orden \(n\) en \(0\) (ejemplo 4, pasos 4 a 6): la de \((1-x)^{-1}\) vale \(n!\); la de \((1+x)^{-1}\) vale \((-1)^{n}\,n!\). Entonces \(f^{(n)}(0)=\dfrac{1}{2}\cdot n!-\dfrac{1}{2}\cdot(-1)^{n}\,n!=\dfrac{n!}{2}\,\big(1-(-1)^{n}\big)\).</li>
+        <li>(c) Si \(n\) es impar, \((-1)^{n}=-1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 2=n!\) y \(c_{n}=\dfrac{n!}{n!}=1\). Si \(n\) es par, \((-1)^{n}=1\): \(f^{(n)}(0)=\dfrac{n!}{2}\cdot 0=0\) y \(c_{n}=0\). Los mismos coeficientes que en (b).</li>
+        <li>(d) De \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\) sale \(f^{(n)}(0)=n!\cdot c_{n}\). Con \(n=5\): \(5!=5\cdot 4\cdot 3\cdot 2\cdot 1=120\) y \(c_{5}=1\); \(f^{(5)}(0)=120\cdot 1=120\). Con \(n=6\): \(6!=6\cdot 120=720\) y \(c_{6}=0\); \(f^{(6)}(0)=720\cdot 0=0\).</li>
+        <li>(e) Regla del cociente, con numerador \(x\) (derivada \(1\)) y denominador \(1-x^{2}\) (derivada \(-2x\)): \(f'(x)=\dfrac{1\cdot(1-x^{2})-x\cdot(-2x)}{(1-x^{2})^{2}}=\dfrac{1-x^{2}+2x^{2}}{(1-x^{2})^{2}}=\dfrac{1+x^{2}}{(1-x^{2})^{2}}\).</li>
+        <li>(e) \(f'(0)=\dfrac{1+0}{(1-0)^{2}}=1\). Y \(c_{1}=\dfrac{f'(0)}{1!}=1\): coincide con el coeficiente de \(x\) de la serie.</li>
+        <li>Comprobación con \(x=\dfrac{1}{2}\). Función: \(1-\dfrac{1}{4}=\dfrac{3}{4}\) y \(\dfrac{1}{2}:\dfrac{3}{4}=\dfrac{1}{2}\cdot\dfrac{4}{3}=\dfrac{2}{3}\approx 0{,}6667\). Serie, tres términos: \(\dfrac{1}{2}+\dfrac{1}{8}+\dfrac{1}{32}=\dfrac{16}{32}+\dfrac{4}{32}+\dfrac{1}{32}=\dfrac{21}{32}=0{,}65625\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una persona va a recibir \(\$1.000.000\) dentro de \(2\) años (datos inventados). Modelo: interés compuesto anual con tasa \(x\) (por ejemplo, \(x=0{,}05\) es \(5\,\%\) al año); el valor que ese pago tiene hoy es \(V=1.000.000\cdot f(x)\), con \(f(x)=\dfrac{1}{(1+x)^{2}}\), la función de la animación. Con \(x=0{,}05\): (a) aproxima \(f(x)\) con los tres primeros términos de su serie de Maclaurin; (b) acota el error con el criterio de Leibniz; (c) da el valor de hoy en pesos, con su margen, y compáralo con el valor exacto; (d) ¿sirve la misma serie si la tasa fuera \(150\,\%\) al año?</p>
+    <details><summary>Pista</summary><div><p>La serie es \(1-2x+3x^{2}-4x^{3}+\cdots\) y su suma es \(f(x)\) si \(|x|&lt;1\) (recuadro «Dos caminos»). Con \(x=\dfrac{1}{20}\) es alternante, con tamaños \(b_{n}=n\,x^{\,n-1}\). En (d), mira si \(x=1{,}5\) está en \((-1,\ 1)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(x=0{,}05=\dfrac{1}{20}\) cumple \(|x|&lt;1\): por el recuadro «Dos caminos», \(f(x)=1-2x+3x^{2}-4x^{3}+\cdots\)</li>
+        <li>(a) Potencias: \(x^{2}=\dfrac{1}{400}=0{,}0025\); \(x^{3}=\dfrac{1}{8000}=0{,}000125\). Términos: \(2x=0{,}1\); \(3x^{2}=3\cdot 0{,}0025=0{,}0075\); \(4x^{3}=4\cdot 0{,}000125=0{,}0005\).</li>
+        <li>(a) Tres términos: \(S_{3}=1-0{,}1+0{,}0075=0{,}9+0{,}0075=0{,}9075\).</li>
+        <li>(b) La serie es alternante, \(b_{1}-b_{2}+b_{3}-\cdots\), con \(b_{n}=n\left(\dfrac{1}{20}\right)^{n-1}\): \(b_{1}=1\), \(b_{2}=0{,}1\), \(b_{3}=0{,}0075\), \(b_{4}=0{,}0005\). Se revisan las tres condiciones del criterio de Leibniz.</li>
+        <li>(b) Positivos: sí. Decrecientes: \(\dfrac{b_{n+1}}{b_{n}}=\dfrac{n+1}{n}\cdot\dfrac{1}{20}\). Como \(\dfrac{n+1}{n}=1+\dfrac{1}{n}\le 2\), el cociente es a lo más \(\dfrac{2}{20}=\dfrac{1}{10}\), menor que \(1\): \(b_{n+1}\le\dfrac{1}{10}\,b_{n}&lt;b_{n}\).</li>
+        <li>(b) Límite \(0\): de \(b_{n+1}\le\dfrac{1}{10}\,b_{n}\) y \(b_{1}=1\) sale \(b_{2}\le\dfrac{1}{10}\), \(b_{3}\le\dfrac{1}{100}\) y, repitiendo, \(0&lt;b_{n}\le\left(\dfrac{1}{10}\right)^{n-1}\), que tiene límite \(0\). Entonces \(b_{n}\) tiene límite \(0\) (aviso de rigor, 5).</li>
+        <li>(b) Cota del error (hoja «Criterio de Leibniz»): \(|f(x)-S_{3}|\le b_{4}=0{,}0005\).</li>
+        <li>(c) Valor de hoy con tres términos: \(1.000.000\cdot 0{,}9075=907.500\) pesos. Margen: \(1.000.000\cdot 0{,}0005=500\) pesos. El valor de hoy está entre \(907.000\) y \(908.000\) pesos.</li>
+        <li>(c) Más fino: el mismo criterio da \(S_{2m}\le f(x)\le S_{2m+1}\) para todo \(m\ge 1\); con \(m=2\), \(S_{4}\le f(x)\), y con \(m=1\), \(f(x)\le S_{3}\). Aquí \(S_{4}=0{,}9075-0{,}0005=0{,}907\). El valor está entre \(907.000\) y \(907.500\) pesos.</li>
+        <li>(c) Valor exacto: \(1+\dfrac{1}{20}=\dfrac{21}{20}\); \(\left(\dfrac{21}{20}\right)^{2}=\dfrac{441}{400}\); \(f(x)=1:\dfrac{441}{400}=\dfrac{400}{441}\approx 0{,}907029\). En pesos: \(1.000.000\cdot\dfrac{400}{441}\approx 907.029\). Está dentro de los dos márgenes; la diferencia real con \(907.500\) es de unos \(471\) pesos.</li>
+        <li>(d) Con \(150\,\%\), \(x=1{,}5\). Como \(|1{,}5|&gt;1\), está fuera de \((-1,\ 1)\): la serie diverge (animación, paso 6). Sus términos, sin el signo, crecen: \(1\); \(2\cdot 1{,}5=3\); \(3\cdot 2{,}25=6{,}75\); \(4\cdot 3{,}375=13{,}5\). La función sí existe: \(f(1{,}5)=\dfrac{1}{2{,}5^{2}}=\dfrac{1}{6{,}25}=0{,}16\), es decir, \(160.000\) pesos. Pero la serie no la representa ahí: no sirve.</li>
+        <li>Interpretación: con tasas chicas, «descontar \(2x\)» (aquí, \(10\,\%\)) da una primera idea, \(900.000\) pesos; el término \(3x^{2}\) la corrige a \(907.500\), y el criterio de Leibniz dice cuánto se puede confiar. Con tasas mayores que \(100\,\%\) la serie no entrega nada.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H31 · v001 · Pendiente de APR</span>
+</footer>
+</article>
