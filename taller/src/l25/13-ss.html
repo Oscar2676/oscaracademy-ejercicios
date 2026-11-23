@@ -18,12 +18,21 @@
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Las sumas parciales de la serie \(1+\dfrac{2}{3}+\dfrac{4}{9}+\cdots\), que converge a \(3\) (hoja «Series geométricas infinitas»), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p>Las sumas parciales de la serie \(1+\dfrac{2}{3}+\dfrac{4}{9}+\cdots\), que converge a \(3\) (hoja «Series geométricas infinitas»), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los seis puntos azules:</b> son las sumas parciales \(S_{1},\ \ldots,\ S_{6}\); la altura de cada uno es su valor. Suben y se acercan a la línea burdeo punteada, \(S=3\). Arriba queda la pregunta: si la serie converge, ¿qué pasa con \(a_{n}\)?</li>
+    <li><b>Paso 2:</b> una punteada naranja lleva la altura de un punto hasta el siguiente. Lo que el siguiente sube de más es el trazo naranja: el salto, que es un término, \(a_{n}=S_{n}-S_{n-1}\).</li>
+    <li><b>Paso 3:</b> los trazos burdeo marcan lo que le falta a cada suma parcial para llegar a \(3\). Son cada vez más cortos: una suma parcial y la anterior se acercan las dos a \(3\).</li>
+    <li><b>Pasos 4 y 5:</b> una copia de cada salto baja al eje \(n\) y queda como barra naranja; los saltos originales no se mueven. Las barras son cada vez más bajas, y la punteada que une sus puntas se pega al eje.</li>
+    <li><b>Registro y cuenta de abajo:</b> ahí está la cuenta de cada suma parcial, de cada salto y de lo que falta para \(3\), y al final \(\displaystyle\lim_{n\to\infty}a_{n}=3-3=0\). Conclusión: si la serie converge, sus términos tienden a cero; si no tienden a cero, la serie diverge.</li>
+  </ol>
   <div class="stage" data-scene="net-idea"></div>
   <ul class="keys">
     <li><b>Puntos azules:</b> las sumas parciales \(S_{n}\), cada una con su punteada hasta el eje \(S_{n}\).</li>
     <li><b>Línea burdeo punteada:</b> la suma de la serie, \(S=3\). Los trazos burdeo verticales marcan lo que le falta a cada suma parcial para llegar.</li>
     <li><b>Trazos naranjas:</b> los saltos de una suma parcial a la siguiente. Cada salto es un término: \(a_{n}=S_{n}-S_{n-1}\).</li>
+    <li><b>Barras naranjas sobre el eje \(n\):</b> copias de los saltos, puestas una al lado de la otra para comparar sus alturas. La punteada naranja une sus puntas.</li>
   </ul>
 </section>
 
@@ -36,7 +45,7 @@
       <li><b>Lo que el criterio no dice.</b> Si \(\displaystyle\lim_{n\to\infty}a_{n}=0\), el criterio no decide: la serie puede converger o divergir. Hay que usar otro método.</li>
     </ol>
     <p>También se llama criterio de divergencia o criterio del término general. Sirve solo para probar que una serie diverge; nunca prueba que converge.</p>
-    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: que si \(S_{n}\) tiene límite \(S\), la sucesión desplazada \(S_{n-1}\) tiene el mismo límite; que el límite de una suma, de una resta, de un cociente (con límite del denominador distinto de cero) y de una constante por una sucesión se calculan término a término cuando los límites existen; y que \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\). Esas demostraciones corresponden a la hoja «Límite de una sucesión».</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: que si \(S_{n}\) tiene límite \(S\), la sucesión desplazada \(S_{n-1}\) tiene el mismo límite; que el límite de una suma, de una resta, de un cociente (con límite del denominador distinto de cero) y de una constante por una sucesión se calculan término a término cuando los límites existen; y que \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\), \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\) y, en el ejemplo 4, \(\displaystyle\lim_{n\to\infty}\dfrac{1}{2^{n}}=0\). Esas demostraciones corresponden a la hoja «Límite de una sucesión».</p>
   </div>
 
   <div class="card k2">
@@ -72,8 +81,11 @@
   <div class="body">
   <ol class="steps">
     <li>Término general: \(a_{n}=\dfrac{n}{n+1}\).</li>
-    <li>Se suma y se resta \(1\) en el numerador: \(\dfrac{n}{n+1}=\dfrac{(n+1)-1}{n+1}=1-\dfrac{1}{n+1}\).</li>
-    <li>\(\dfrac{1}{n+1}\) tiene límite \(0\): \(\displaystyle\lim_{n\to\infty}a_{n}=1-0=1\).</li>
+    <li>Se suma y se resta \(1\) en el numerador: \(n=(n+1)-1\). Entonces \(\dfrac{n}{n+1}=\dfrac{(n+1)-1}{n+1}\).</li>
+    <li>Se separa en dos fracciones con el mismo denominador: \(\dfrac{(n+1)-1}{n+1}=\dfrac{n+1}{n+1}-\dfrac{1}{n+1}\).</li>
+    <li>Se simplifica la primera: \(\dfrac{n+1}{n+1}=1\). Queda \(a_{n}=1-\dfrac{1}{n+1}\).</li>
+    <li>La constante \(1\) tiene límite \(1\), y \(\dfrac{1}{n+1}\) tiene límite \(0\) (aviso de rigor).</li>
+    <li>El límite de una resta es la resta de los límites: \(\displaystyle\lim_{n\to\infty}a_{n}=1-0=1\).</li>
     <li>\(1\neq 0\): por el criterio, la serie diverge.</li>
   </ol>
   </div>
@@ -83,8 +95,9 @@
   <h3>Ejemplo 2: el límite no existe. \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}=-1+1-1+1-\cdots\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Términos: \(-1,\ 1,\ -1,\ 1,\ \ldots\)</li>
-    <li>Todos están a distancia \(1\) del cero: no tienen límite \(0\).</li>
+    <li>Se calculan los primeros términos: \((-1)^{1}=-1\); \((-1)^{2}=(-1)\cdot(-1)=1\); \((-1)^{3}=1\cdot(-1)=-1\); \((-1)^{4}=(-1)\cdot(-1)=1\).</li>
+    <li>Términos: \(-1,\ 1,\ -1,\ 1,\ \ldots\) Cada uno es el anterior multiplicado por \(-1\): se alternan \(-1\) y \(1\).</li>
+    <li>Distancia al cero: \(|-1|=1\) y \(|1|=1\). Todos están a distancia \(1\) del cero: no tienen límite \(0\).</li>
     <li>Por el criterio, la serie diverge.</li>
   </ol>
   </div>
@@ -94,8 +107,12 @@
   <h3>Ejemplo 3: un cociente. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{2n+1}{5n-3}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Se dividen numerador y denominador por \(n\) (\(n\ge 1\), no es cero): \(a_{n}=\dfrac{2+\frac{1}{n}}{5-\frac{3}{n}}\).</li>
-    <li>\(\dfrac{1}{n}\) tiene límite \(0\), y \(\dfrac{3}{n}=3\cdot\dfrac{1}{n}\) también. El numerador tiene límite \(2+0=2\) y el denominador, \(5-0=5\).</li>
+    <li>Término general: \(a_{n}=\dfrac{2n+1}{5n-3}\). Se dividen numerador y denominador por \(n\) (\(n\ge 1\), no es cero); la fracción no cambia.</li>
+    <li>Numerador: \(\dfrac{2n+1}{n}=\dfrac{2n}{n}+\dfrac{1}{n}=2+\dfrac{1}{n}\).</li>
+    <li>Denominador: \(\dfrac{5n-3}{n}=\dfrac{5n}{n}-\dfrac{3}{n}=5-\dfrac{3}{n}\).</li>
+    <li>Queda \(a_{n}=\dfrac{2+\frac{1}{n}}{5-\frac{3}{n}}\).</li>
+    <li>\(\dfrac{1}{n}\) tiene límite \(0\) (aviso de rigor). \(\dfrac{3}{n}=3\cdot\dfrac{1}{n}\) es una constante por una sucesión: tiene límite \(3\cdot 0=0\).</li>
+    <li>Límite de una suma y de una resta: el numerador tiene límite \(2+0=2\) y el denominador, \(5-0=5\).</li>
     <li>El límite del denominador no es cero; el límite del cociente es el cociente de los límites: \(\displaystyle\lim_{n\to\infty}a_{n}=\dfrac{2}{5}\).</li>
     <li>\(\dfrac{2}{5}\neq 0\): por el criterio, la serie diverge.</li>
   </ol>
@@ -126,9 +143,13 @@
     <details><summary>Pista</summary><div><p>En (a) divide numerador y denominador por \(n\). En (c) calcula el término con \(n=7\) y piensa en los que siguen.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>(a) \(a_{n}=\dfrac{3-\frac{1}{n}}{1+\frac{4}{n}}\). El numerador tiene límite \(3-0=3\) y el denominador, \(1+0=1\): \(\displaystyle\lim_{n\to\infty}a_{n}=3\neq 0\). La serie diverge.</li>
-        <li>(b) \(\dfrac{5}{n}=5\cdot\dfrac{1}{n}\) tiene límite \(5\cdot 0=0\). El criterio no decide.</li>
-        <li>(c) Con \(n=7\): \(\dfrac{2^{7}}{100}=\dfrac{128}{100}=1{,}28\). Cada término es el doble del anterior, así que desde \(n=7\) todos son mayores que \(1\).</li>
+        <li>(a) \(a_{n}=\dfrac{3n-1}{n+4}\). Se dividen numerador y denominador por \(n\). Numerador: \(\dfrac{3n-1}{n}=\dfrac{3n}{n}-\dfrac{1}{n}=3-\dfrac{1}{n}\).</li>
+        <li>Denominador: \(\dfrac{n+4}{n}=\dfrac{n}{n}+\dfrac{4}{n}=1+\dfrac{4}{n}\). Queda \(a_{n}=\dfrac{3-\frac{1}{n}}{1+\frac{4}{n}}\).</li>
+        <li>\(\dfrac{1}{n}\) tiene límite \(0\), y \(\dfrac{4}{n}=4\cdot\dfrac{1}{n}\) tiene límite \(4\cdot 0=0\). El numerador tiene límite \(3-0=3\) y el denominador, \(1+0=1\).</li>
+        <li>El límite del denominador no es cero; el límite del cociente es el cociente de los límites: \(\displaystyle\lim_{n\to\infty}a_{n}=\dfrac{3}{1}=3\). Como \(3\neq 0\), la serie diverge.</li>
+        <li>(b) \(a_{n}=\dfrac{5}{n}=5\cdot\dfrac{1}{n}\): una constante por una sucesión de límite \(0\). Tiene límite \(5\cdot 0=0\). El criterio no decide.</li>
+        <li>(c) \(a_{n}=\dfrac{2^{n}}{100}\). Con \(n=7\): \(2^{7}=2\cdot 2\cdot 2\cdot 2\cdot 2\cdot 2\cdot 2=128\), y \(\dfrac{128}{100}=1{,}28\).</li>
+        <li>Cada término es el doble del anterior: \(a_{n+1}=\dfrac{2^{n+1}}{100}=\dfrac{2\cdot 2^{n}}{100}=2\cdot a_{n}\). Por ejemplo, \(a_{8}=2\cdot 1{,}28=2{,}56\). Así que desde \(n=7\) todos son mayores que \(1\).</li>
         <li>Los términos de (c) no tienen límite \(0\): la serie diverge.</li>
       </ol>
     </div></details>
@@ -138,12 +159,19 @@
     <details><summary>Pista</summary><div><p>Escribe \(4n=2(2n+1)-2\) para ver si la serie converge. Para (b): \(a_{n}=S_{n}-S_{n-1}\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(S_{n}=\dfrac{2(2n+1)-2}{2n+1}=2-\dfrac{2}{2n+1}\).</li>
-        <li>\(\dfrac{2}{2n+1}\) es positivo y menor que \(\dfrac{2}{2n}=\dfrac{1}{n}\), que tiene límite \(0\); entonces también tiene límite \(0\) (se usa sin demostrar) y \(\displaystyle\lim_{n\to\infty}S_{n}=2\). La serie converge.</li>
-        <li>(a) Por el teorema, \(\displaystyle\lim_{n\to\infty}a_{n}=0\).</li>
-        <li>(b) \(S_{n-1}=\dfrac{4(n-1)}{2(n-1)+1}=\dfrac{4n-4}{2n-1}\). Resta con denominador común: \(a_{n}=\dfrac{4n(2n-1)-(4n-4)(2n+1)}{(2n+1)(2n-1)}\).</li>
-        <li>Numerador: \(4n(2n-1)=8n^{2}-4n\) y \((4n-4)(2n+1)=8n^{2}-4n-4\). Su resta es \(4\). Denominador: \((2n+1)(2n-1)=4n^{2}-1\).</li>
-        <li>\(a_{n}=\dfrac{4}{4n^{2}-1}\). Para \(n\ge 1\), \(4n^{2}-1\ge 3n\), así que \(0&lt;a_{n}\le\dfrac{4}{3n}\): tiene límite \(0\). ✓</li>
+        <li>Como \(2(2n+1)=4n+2\), se tiene \(4n=2(2n+1)-2\). Entonces \(S_{n}=\dfrac{2(2n+1)-2}{2n+1}\).</li>
+        <li>Se separa en dos fracciones y se simplifica la primera: \(S_{n}=\dfrac{2(2n+1)}{2n+1}-\dfrac{2}{2n+1}=2-\dfrac{2}{2n+1}\).</li>
+        <li>Como \(2n+1&gt;2n\), \(\dfrac{2}{2n+1}\) es positivo y menor que \(\dfrac{2}{2n}=\dfrac{1}{n}\) (se simplifica por \(2\)), que tiene límite \(0\); entonces también tiene límite \(0\) (se usa sin demostrar).</li>
+        <li>Límite de una resta: \(\displaystyle\lim_{n\to\infty}S_{n}=2-0=2\). La serie converge.</li>
+        <li>(a) La serie converge; por el teorema, \(\displaystyle\lim_{n\to\infty}a_{n}=0\).</li>
+        <li>(b) Se reemplaza \(n\) por \(n-1\) en \(S_{n}\): \(S_{n-1}=\dfrac{4(n-1)}{2(n-1)+1}\). Numerador: \(4(n-1)=4n-4\). Denominador: \(2(n-1)+1=2n-2+1=2n-1\). Queda \(S_{n-1}=\dfrac{4n-4}{2n-1}\).</li>
+        <li>\(a_{n}=S_{n}-S_{n-1}=\dfrac{4n}{2n+1}-\dfrac{4n-4}{2n-1}\). Resta con denominador común \((2n+1)(2n-1)\): \(a_{n}=\dfrac{4n(2n-1)-(4n-4)(2n+1)}{(2n+1)(2n-1)}\).</li>
+        <li>Primer producto del numerador: \(4n(2n-1)=4n\cdot 2n-4n\cdot 1=8n^{2}-4n\).</li>
+        <li>Segundo producto: \((4n-4)(2n+1)=4n\cdot 2n+4n\cdot 1-4\cdot 2n-4\cdot 1=8n^{2}+4n-8n-4=8n^{2}-4n-4\).</li>
+        <li>Resta: \((8n^{2}-4n)-(8n^{2}-4n-4)=8n^{2}-4n-8n^{2}+4n+4=4\).</li>
+        <li>Denominador: \((2n+1)(2n-1)=2n\cdot 2n-2n\cdot 1+1\cdot 2n-1\cdot 1=4n^{2}-2n+2n-1=4n^{2}-1\).</li>
+        <li>\(a_{n}=\dfrac{4}{4n^{2}-1}\). Para comparar: \((4n^{2}-1)-3n=4n^{2}-3n-1=(4n+1)(n-1)\), porque \((4n+1)(n-1)=4n^{2}-4n+n-1=4n^{2}-3n-1\). Para \(n\ge 1\), \(4n+1&gt;0\) y \(n-1\ge 0\): el producto es \(\ge 0\), o sea \(4n^{2}-1\ge 3n\).</li>
+        <li>Entonces \(0&lt;a_{n}\le\dfrac{4}{3n}=\dfrac{4}{3}\cdot\dfrac{1}{n}\), que tiene límite \(\dfrac{4}{3}\cdot 0=0\). Por la misma propiedad del paso 3 (se usa sin demostrar), \(a_{n}\) tiene límite \(0\). ✓</li>
       </ol>
     </div></details>
   </div>
@@ -152,17 +180,19 @@
     <details><summary>Pista</summary><div><p>Mira el límite de \(a_{n}\). Para la segunda pregunta, cada mes guarda más de \(20\,000\) pesos.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dfrac{30\,000}{n}=30\,000\cdot\dfrac{1}{n}\) tiene límite \(0\): \(\displaystyle\lim_{n\to\infty}a_{n}=20\,000+0=20\,000\).</li>
+        <li>\(\dfrac{30\,000}{n}=30\,000\cdot\dfrac{1}{n}\): una constante por una sucesión de límite \(0\). Tiene límite \(30\,000\cdot 0=0\).</li>
+        <li>Límite de una suma: \(\displaystyle\lim_{n\to\infty}a_{n}=20\,000+0=20\,000\).</li>
         <li>\(20\,000\neq 0\): por el criterio, la serie de los ahorros diverge. Lo ahorrado no se acerca a ningún tope.</li>
-        <li>Cada mes guarda más de \(20\,000\) pesos: en \(n\) meses lleva más de \(20\,000\cdot n\).</li>
-        <li>Con \(n=50\): \(20\,000\cdot 50=1\,000\,000\). A los \(50\) meses es seguro que pasó de \(1\,000\,000\) de pesos (lo pasa antes, por los extras).</li>
+        <li>Como \(\dfrac{30\,000}{n}&gt;0\), cada mes guarda más de \(20\,000\) pesos: en \(n\) meses lleva más de \(20\,000\cdot n\).</li>
+        <li>Se busca \(n\) con \(20\,000\cdot n=1\,000\,000\). Dividiendo por \(20\,000\) en los dos lados: \(n=\dfrac{1\,000\,000}{20\,000}=50\).</li>
+        <li>Comprobación con \(n=50\): \(20\,000\cdot 50=1\,000\,000\). A los \(50\) meses es seguro que pasó de \(1\,000\,000\) de pesos (lo pasa antes, por los extras).</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">CI-L25-H13 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H13 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -221,13 +251,22 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
     c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L25 H13 · criterio del enésimo término: si Sₙ → S, el salto aₙ = Sₙ − Sₙ₋₁ entre sumas parciales seguidas tiende a cero */
 OA.scene('net-idea', (function(){
   var N = 5, NP = 6, SV = [], i, t = 1, acc = 0;
   for (i = 0; i < NP; i++){ acc += t; SV.push(acc); t *= 2/3; } /* 1, 5/3, 19/9, 65/27, 211/81, 665/243 */
   var PZ = [['LS', 'S=3', 'S = 3', 'c-tan'], ['J2', 'a_{2}', 'a₂', 'diff'], ['J3', 'a_{3}', 'a₃', 'diff'], ['J4', 'a_{4}', 'a₄', 'diff'],
+    ['P1', 'S_{1}', 'S₁', 'c-sec'], ['P2', 'S_{2}', 'S₂', 'c-sec'], ['P3', 'S_{3}', 'S₃', 'c-sec'], ['P4', 'S_{4}', 'S₄', 'c-sec'], ['P5', 'S_{5}', 'S₅', 'c-sec'], ['P6', 'S_{6}', 'S₆', 'c-sec'],
+    ['B2', 'a_{2}', 'a₂', 'diff'], ['B3', 'a_{3}', 'a₃', 'diff'], ['B4', 'a_{4}', 'a₄', 'diff'], ['B5', 'a_{5}', 'a₅', 'diff'], ['B6', 'a_{6}', 'a₆', 'diff'],
     ['Q', '\\text{Si la serie converge, ¿qué pasa con }a_{n}\\text{?}', 'Si la serie converge, ¿qué pasa con aₙ?', 'pt'],
-    ['F', '\\sum a_{n}\\ \\text{converge}\\ \\Longrightarrow\\ \\lim_{n\\to\\infty}a_{n}=0', 'si la serie converge, el límite de aₙ es 0', 'diff'],
+    ['F', '\\Longrightarrow\\ \\lim_{n\\to\\infty}a_{n}=0\\quad\\text{(los términos tienden a cero)}', '⟹ el límite de aₙ es 0 (los términos tienden a cero)', 'diff'],
     ['R1', '\\lim_{n\\to\\infty}S_{n}=3\\quad\\text{(la serie converge)}', 'el límite de Sₙ es 3 (la serie converge)', ''],
     ['R2', 'a_{n}=S_{n}-S_{n-1}\\quad(n\\ge 2)', 'aₙ = Sₙ − Sₙ₋₁ (n ≥ 2)', ''],
     ['R3', '\\lim_{n\\to\\infty}S_{n}=3\\quad\\text{y}\\quad\\lim_{n\\to\\infty}S_{n-1}=3', 'el límite de Sₙ es 3 y el de Sₙ₋₁ también es 3', ''],
@@ -235,17 +274,17 @@ OA.scene('net-idea', (function(){
     ['R5', '\\lim_{n\\to\\infty}a_{n}\\neq 0\\ \\text{o no existe}\\ \\Longrightarrow\\ \\sum a_{n}\\ \\text{diverge}', 'si el límite de aₙ no es 0 o no existe, la serie diverge', 'diff']];
   var TXT = [['Las sumas parciales de una serie que converge', 'se acercan a un número: aquí, a 3.'],
     ['Cada término es un salto: lo que sube la', 'suma parcial de un punto al siguiente.'],
-    ['La suma parcial y la anterior se acercan', 'las dos al mismo número.'],
-    ['Entonces el salto entre ellas se achica:', 'bajados al eje, los saltos tienden a cero.'],
-    ['Si la serie converge, sus términos tienden a', 'cero. Si no tienden a cero, la serie diverge.']];
+    ['A cada suma parcial le falta menos para llegar', 'a 3: ella y la anterior se acercan a 3.'],
+    ['Una copia de cada salto baja al eje n:', 'las barras se achican; los saltos van a cero.'],
+    ['La punteada naranja une las puntas de las barras', 'y se pega al eje: los términos tienden a cero.']];
   function gx(n){ return -0.6 + 0.8*n; } function gy(y){ return 1.05 + 0.82*y; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:4.8}, aspect:9.4/6.6,
-    aria:'Animación en cinco pasos con una gráfica de las seis primeras sumas parciales de una serie que converge a 3. Uno: aparecen los puntos, cada uno con una línea punteada hasta el eje vertical, y una recta horizontal punteada a la altura 3; los puntos suben y se acercan a ella. Dos: entre cada punto y el siguiente se marca en naranja el salto vertical; ese salto es un término de la serie, la resta de dos sumas parciales seguidas. Tres: trazos verticales burdeo muestran lo que le falta a cada suma parcial para llegar a 3; se achican. Cuatro: los saltos naranjas bajan hasta el eje horizontal y quedan como barras cada vez más bajas: los términos tienden a cero. Cinco: una curva punteada pasa por los extremos de las barras y se pega al eje; conclusión: si la serie converge, sus términos tienden a cero, y si no tienden a cero, la serie diverge. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:6.2}, aspect:10.8/6.6,
+    aria:'Arriba, una franja dice qué muestra: si las sumas parciales van a 3, los saltos, que son los términos, van a cero. Animación en cinco pasos con una gráfica de las seis primeras sumas parciales de la serie 1 más dos tercios más cuatro novenos y así sucesivamente, que converge a 3. Uno: aparecen los puntos, cada uno con su nombre y con una línea punteada hasta el eje vertical, y una recta horizontal punteada a la altura 3; los puntos suben y se acercan a ella. Dos: entre cada punto y el siguiente se marca en naranja el salto vertical; ese salto es un término de la serie, la resta de dos sumas parciales seguidas. Tres: trazos verticales burdeo muestran lo que le falta a cada suma parcial para llegar a 3; se achican. Cuatro: una copia de cada salto naranja baja hasta el eje horizontal y queda como barra, con su nombre; las barras son cada vez más bajas: los términos tienden a cero. Los saltos originales no se mueven. Cinco: una curva punteada pasa por los extremos de las barras y se pega al eje; conclusión: si la serie converge, sus términos tienden a cero, y si no tienden a cero, la serie diverge. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta se escribe debajo de ella. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw sec"></i> las sumas parciales \\(S_{n}\\)</span><span><i class="sw rise"></i> los saltos: \\(a_{n}=S_{n}-S_{n-1}\\)</span><span><i class="sw tan"></i> la suma \\(S=3\\) y lo que le falta a cada \\(S_{n}\\)</span><span>líneas punteadas: llevan cada suma parcial a su valor en el eje \\(S_{n}\\)</span>',
-    anim:{run:34000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:34000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, a, b, d, x, e;
@@ -264,24 +303,39 @@ OA.scene('net-idea', (function(){
       for (i = 1; i <= NP; i++){ w = k === 1 ? Math.max(0, Math.min(1, u*NP - (i - 1))) : 1; if (w <= 0) continue;
         seg(gx(i), gy(0), gx(i), gy(SV[i - 1]*w), 'rgba(31,93,134,0.3)', 1);
         if (w >= 1){ seg(gx(i), gy(SV[i - 1]), gx(0), gy(SV[i - 1]), C.sec, 0.9, [3, 3], 0.45); c.beginPath(); c.arc(X(gx(0)), Y(gy(SV[i - 1])), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); }
-        c.beginPath(); c.arc(X(gx(i)), Y(gy(SV[i - 1]*w)), 3.2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); }
-      /* paso 3 en adelante: lo que le falta a cada suma parcial para llegar a 3 (se desvanece en el paso 5) */
-      if (k >= 3){ w = k === 3 ? u : 1; e = k === 5 ? 1 - 0.75*u : 1; for (i = 1; i <= NP; i++) seg(gx(i) + 0.07, gy(3), gx(i) + 0.07, gy(3 - (3 - SV[i - 1])*w), C.tan, 1.6, null, e); }
-      /* paso 2 en adelante: saltos entre sumas parciales seguidas; en el paso 4 bajan al eje */
-      if (k >= 2) for (i = 2; i <= NP; i++){ w = k === 2 ? u : 1; a = SV[i - 2]; b = SV[i - 1]; d = k === 4 ? u : (k === 5 ? 1 : 0);
+        c.beginPath(); c.arc(X(gx(i)), Y(gy(SV[i - 1]*w)), 3.2, 0, 6.2832); c.fillStyle = C.sec; c.fill();
+        if (w >= 1) L('P' + i, gx(i), gy(SV[i - 1]), 0, 5, 9); }
+      /* paso 3 en adelante: lo que le falta a cada suma parcial para llegar a 3 (queda hasta el final) */
+      if (k >= 3){ w = k === 3 ? u : 1; for (i = 1; i <= NP; i++) seg(gx(i) + 0.07, gy(3), gx(i) + 0.07, gy(3 - (3 - SV[i - 1])*w), C.tan, 1.6);
+        if (w > 0.5){ c.font = '600 11px ' + F; c.fillStyle = C.tan; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('burdeo: lo que falta para llegar a 3', X(gx(0)) + 26, Y(gy(3)) - 9); } }
+      /* paso 2 en adelante: saltos entre sumas parciales seguidas (no se mueven de su lugar) */
+      if (k >= 2) for (i = 2; i <= NP; i++){ w = k === 2 ? u : 1; a = SV[i - 2]; b = SV[i - 1];
         seg(gx(i - 1), gy(a), gx(i - 1) + 0.8*Math.min(1, w*2), gy(a), C.rise, 0.9, [3, 3], 0.8);
-        if (w > 0.5){ e = (w - 0.5)*2; seg(gx(i), gy(a), gx(i), gy(a + (b - a)*e), C.rise, 2.4, null, d > 0 ? 0.3 : 1);
-          if (d > 0) seg(gx(i) - 0.07, gy(a*(1 - d)), gx(i) - 0.07, gy(a*(1 - d) + (b - a)), C.rise, 3.2); }
-        if (i <= 4 && w > 0.8) L('J' + i, gx(i) - (d > 0 ? 0.07 : 0), gy((a + b)/2 - a*d), -100, -5, 0); }
+        if (w > 0.5){ e = (w - 0.5)*2; seg(gx(i), gy(a), gx(i), gy(a + (b - a)*e), C.rise, 2.4); }
+        if (i <= 4 && w > 0.8) L('J' + i, gx(i), gy((a + b)/2), -100, -5, 0); }
+      /* paso 4 en adelante: una copia de cada salto baja al eje n y queda como barra, con su nombre */
+      if (k >= 4) for (i = 2; i <= NP; i++){ d = k === 4 ? u : 1; a = SV[i - 2]; b = SV[i - 1]; w = a*(1 - d);
+        seg(gx(i) - 0.07, gy(w), gx(i) - 0.07, gy(w + (b - a)), C.rise, 3.2);
+        if (d > 0.85) L('B' + i, gx(i), gy(b - a), 0, 3, -9); }
       /* paso 5: curva punteada por los extremos de las barras, que se pega al eje */
       if (k === 5){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([2, 3]); c.beginPath(); for (i = 0; i <= 60; i++){ x = 2 + (6.6 - 2)*u*i/60; if (i) c.lineTo(X(gx(x) - 0.07), Y(gy(Math.pow(2/3, x - 1)))); else c.moveTo(X(gx(x) - 0.07), Y(gy(Math.pow(2/3, x - 1)))); } c.stroke(); c.setLineDash([]); }
-      if (k < N || u < 0.5) L('Q', -1.2, 4.42, 0); else L('F', -1.2, 4.4, 0);
+      L('Q', -1.2, 4.95, 0); if (k === N && u > 0.5) L('F', -1.2, 4.42, 0); /* la pregunta queda; la respuesta se escribe debajo */
       txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(3.98));
+      dtQue(S, 'si las sumas parciales van a 3,', 'los saltos, que son los términos, van a cero.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.0, [6, 36, 66, 96, 126]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\lim_{n\\to\\infty}S_{n}=3', 'a_{n}=S_{n}-S_{n-1}\\quad(n\\ge 2)', '\\lim_{n\\to\\infty}S_{n}=\\lim_{n\\to\\infty}S_{n-1}=3', '\\lim_{n\\to\\infty}a_{n}=3-3=0', '\\lim_{n\\to\\infty}a_{n}\\neq 0\\ \\text{o no existe}\\ \\Longrightarrow\\ \\sum_{n=1}^{\\infty}a_{n}\\ \\text{diverge}'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', f = function(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }, R = [
+      '\\text{Serie: }1+' + f(2, 3) + '+' + f(4, 9) + '+\\cdots' + Q + '\\text{Cada término es el anterior por }' + f(2, 3) + '\\text{:}' + Q + 'a_{1}=1,\\qquad a_{2}=1\\cdot' + f(2, 3) + '=' + f(2, 3) + Q + 'a_{3}=' + f(2, 3) + '\\cdot' + f(2, 3) + '=' + f(4, 9) + ',\\qquad a_{4}=' + f(4, 9) + '\\cdot' + f(2, 3) + '=' + f(8, 27) + Q + 'a_{5}=' + f(8, 27) + '\\cdot' + f(2, 3) + '=' + f(16, 81) + Q + 'a_{6}=' + f(16, 81) + '\\cdot' + f(2, 3) + '=' + f(32, 243)
+        + Q + '\\text{Sumas parciales (puntos azules):}' + Q + 'S_{1}=a_{1}=1' + Q + 'S_{2}=S_{1}+a_{2}=1+' + f(2, 3) + '=' + f(3, 3) + '+' + f(2, 3) + '=' + f(5, 3) + Q + 'S_{3}=S_{2}+a_{3}=' + f(5, 3) + '+' + f(4, 9) + '=' + f(15, 9) + '+' + f(4, 9) + '=' + f(19, 9) + Q + 'S_{4}=S_{3}+a_{4}=' + f(19, 9) + '+' + f(8, 27) + Q + '\\phantom{S_{4}}=' + f(57, 27) + '+' + f(8, 27) + '=' + f(65, 27) + Q + 'S_{5}=S_{4}+a_{5}=' + f(65, 27) + '+' + f(16, 81) + Q + '\\phantom{S_{5}}=' + f(195, 81) + '+' + f(16, 81) + '=' + f(211, 81) + Q + 'S_{6}=S_{5}+a_{6}=' + f(211, 81) + '+' + f(32, 243) + Q + '\\phantom{S_{6}}=' + f(633, 243) + '+' + f(32, 243) + '=' + f(665, 243)
+        + Q + '\\displaystyle\\lim_{n\\to\\infty}S_{n}=3\\quad\\text{(la serie converge a }3\\text{;}' + Q + '\\text{hoja «Series geométricas infinitas»)}',
+      '\\text{Como }S_{n}=S_{n-1}+a_{n}\\text{, al restar }S_{n-1}\\text{:}' + Q + 'a_{n}=S_{n}-S_{n-1}\\quad(n\\ge 2)' + Q + '\\text{Saltos (trazos naranjas):}' + Q + 'a_{2}=S_{2}-S_{1}=' + f(5, 3) + '-1=' + f(5, 3) + '-' + f(3, 3) + '=' + f(2, 3) + Q + 'a_{3}=S_{3}-S_{2}=' + f(19, 9) + '-' + f(5, 3) + '=' + f(19, 9) + '-' + f(15, 9) + '=' + f(4, 9) + Q + 'a_{4}=S_{4}-S_{3}=' + f(65, 27) + '-' + f(19, 9) + Q + '\\phantom{a_{4}}=' + f(65, 27) + '-' + f(57, 27) + '=' + f(8, 27) + Q + 'a_{5}=S_{5}-S_{4}=' + f(211, 81) + '-' + f(65, 27) + Q + '\\phantom{a_{5}}=' + f(211, 81) + '-' + f(195, 81) + '=' + f(16, 81) + Q + 'a_{6}=S_{6}-S_{5}=' + f(665, 243) + '-' + f(211, 81) + Q + '\\phantom{a_{6}}=' + f(665, 243) + '-' + f(633, 243) + '=' + f(32, 243),
+      '\\text{Lo que le falta a }S_{n}\\text{ para llegar a }3\\text{: }3-S_{n}' + Q + '\\text{(trazos burdeo)}' + Q + '3-S_{1}=3-1=2' + Q + '3-S_{2}=3-' + f(5, 3) + '=' + f(9, 3) + '-' + f(5, 3) + '=' + f(4, 3) + Q + '3-S_{3}=3-' + f(19, 9) + '=' + f(27, 9) + '-' + f(19, 9) + '=' + f(8, 9) + Q + '3-S_{4}=3-' + f(65, 27) + '=' + f(81, 27) + '-' + f(65, 27) + '=' + f(16, 27) + Q + '3-S_{5}=3-' + f(211, 81) + '=' + f(243, 81) + '-' + f(211, 81) + '=' + f(32, 81) + Q + '3-S_{6}=3-' + f(665, 243) + Q + '\\phantom{3-S_{6}}=' + f(729, 243) + '-' + f(665, 243) + '=' + f(64, 243)
+        + Q + '\\displaystyle\\lim_{n\\to\\infty}S_{n}=3\\quad\\text{(paso 1)}' + Q + '\\displaystyle\\lim_{n\\to\\infty}S_{n-1}=3\\quad\\text{(las mismas sumas,}' + Q + '\\text{un lugar atrás; se usa sin demostrar)}',
+      '\\text{Barras naranjas en el eje }n\\text{: los saltos del paso 2}' + Q + 'a_{2}=' + f(2, 3) + ',\\ \\ a_{3}=' + f(4, 9) + ',\\ \\ a_{4}=' + f(8, 27) + ',\\ \\ a_{5}=' + f(16, 81) + ',\\ \\ a_{6}=' + f(32, 243) + Q + '\\text{El límite de una resta es la resta de los}' + Q + '\\text{límites (se usa sin demostrar):}' + Q + '\\displaystyle\\lim_{n\\to\\infty}a_{n}=\\lim_{n\\to\\infty}S_{n}-\\lim_{n\\to\\infty}S_{n-1}' + Q + '\\displaystyle\\lim_{n\\to\\infty}a_{n}=3-3=0',
+      '\\text{Teorema: si }\\displaystyle\\sum_{n=1}^{\\infty}a_{n}\\text{ converge, }\\lim_{n\\to\\infty}a_{n}=0.' + Q + '\\text{Leído al revés (criterio):}' + Q + '\\displaystyle\\lim_{n\\to\\infty}a_{n}\\neq 0\\ \\text{o no existe}\\ \\Longrightarrow\\ \\sum_{n=1}^{\\infty}a_{n}\\ \\text{diverge}' + Q + '\\text{Ojo: que }a_{n}\\text{ tienda a }0\\text{ no prueba}' + Q + '\\text{que la serie converja (recuadro del recíproco).}'];
+      return dtPasos(R.slice(0, k)); }
   };
 })());
