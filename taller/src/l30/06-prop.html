@@ -1,0 +1,413 @@
+<!--file:H06_teorema_para_los_limites_de_funciones_compuestas_cuando_las_condiciones_no_se_cumplen.html-->
+<!--title:Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen-->
+<!--id:comp-teo-->
+<!--tab:H06 Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen-->
+<article class="sheet" id="comp-teo" data-hoja="L30 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Propiedades de límites</li>
+      <li><b>Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen</b></li>
+    </ol>
+    <h1>Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen</h1>
+    <p class="lede">El teorema de la compuesta tiene dos condiciones. Uno: el límite interno existe, \(\lim_{x\to a}g(x)=b\). Dos: la externa cumple \(\lim_{u\to b}f(u)=f(b)\). Con las dos,
+    \[\lim_{x\to a}f(g(x))=f(b)\]
+    Si falta una, el teorema <b>no se puede usar</b>. Eso <b>no</b> significa que el límite de la compuesta no exista: hay que estudiarla directamente. Esta hoja trata el caso en que la externa tiene límite en \(b\), pero su valor \(f(b)\) es otro número: el resultado depende de si la interna toma o no el valor \(b\) cerca de \(a\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función interna de la animación es \(g(x)=x+1\). La externa es \(f(u)=u+1\) si \(u\ne 2\), con \(f(2)=5\): su gráfica es una recta con un hueco en \((2, 3)\) y un punto lleno aparte, en \((2, 5)\). El lugar es \(a=1\) y la compuesta se llama \(h(x)=f(g(x))\). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de la interna, \(u=g(x)\), una recta. A la derecha, la de la externa, \(y=f(u)\): una recta con un círculo vacío a la altura \(3\) y un punto lleno a la altura \(5\), los dos sobre \(u=2\). El eje vertical de la primera y el eje horizontal de la segunda son el mismo: \(u\).</li>
+    <li><b>Pasos 2, 3 y 4, las dos condiciones del teorema:</b> la interna va hacia \(2\) (azul): la primera condición se cumple. Cerca de \(u=2\) las alturas de \(f\) van hacia \(3\) (verde), pero el valor \(f(2)\) es \(5\) (burdeo): la segunda condición no se cumple y el teorema no se puede usar.</li>
+    <li><b>Pasos 5 y 6, el estudio directo:</b> \(g(x)\) vale \(2\) solo cuando \(x=1\). Para \(x\ne 1\), lo que entra en \(f\) está cerca de \(2\) pero no es \(2\): \(f\) nunca usa su punto lleno, y la compuesta va hacia el hueco. Su límite es \(3\) (naranjo), no \(5\).</li>
+    <li><b>Paso 7, otra interna:</b> la constante \(c(x)=2\) (recta burdeo) tiene el mismo límite interno, \(2\), pero siempre entrega \(2\): \(f\) siempre usa su punto lleno y el límite de esa compuesta es \(5\). Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> las fórmulas, la revisión de cada condición, los valores de la compuesta y su límite. Conclusión: \(\lim_{x\to 1}f(g(x))=3\), y con la interna constante el límite es \(5\).</li>
+  </ol>
+  <div class="stage" data-scene="compteo-idea"></div>
+  <ul class="keys">
+    <li><b>Azul:</b> la interna \(g\): las flechas hacia la altura \(2\) y el único punto donde \(g\) vale \(2\), que es \((1, 2)\).</li>
+    <li><b>Verde:</b> el límite de la externa en \(2\): las flechas sobre su gráfica y la punteada de la altura \(3\), la del hueco.</li>
+    <li><b>Burdeo:</b> el valor \(f(2)=5\) (punto lleno, con un anillo) y la interna constante \(c(x)=2\), que es la única que lo usa.</li>
+    <li><b>Naranjo:</b> el límite de la compuesta \(f(g(x))\): el anillo sobre el hueco y el resultado \(3\).</li>
+    <li><b>Círculo vacío y punto lleno:</b> sobre \(u=2\), la gráfica de \(f\) no pasa por \((2, 3)\); su punto es \((2, 5)\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra dos gráficas y unos pocos valores: sugiere el resultado, no lo demuestra.</p>
+    <ol class="steps">
+      <li><b>Se demuestran aquí</b>, con la definición formal de límite: el teorema de la compuesta y la regla del hueco (recuadro de la demostración).</li>
+      <li><b>Nombre de la segunda condición.</b> \(\lim_{u\to b}f(u)=f(b)\) se llama continuidad de \(f\) en \(b\) y se estudia más adelante. Todo polinomio la cumple en todo \(b\) (hoja «Propiedades de límites»).</li>
+      <li><b>Se usa sin demostrar:</b> que dos funciones iguales para todo \(u\ne b\) de un intervalo abierto que contiene a \(b\) tienen el mismo límite en \(b\) (así se obtiene el límite de una externa con hueco a partir de su fórmula); y que una función constante por un lado de \(a\) tiene por ese lado el límite igual a esa constante.</li>
+      <li><b>También se usan sin demostrar:</b> el criterio de los laterales (\(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y valen \(L\)) y la versión por un lado de la regla del hueco, que no se escribe aparte: su demostración es la misma, con \(x\) de un solo lado de \(a\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>El teorema, sus dos condiciones y la regla del hueco</h3>
+    <p><b>Teorema de la compuesta.</b> Sea \(g\) definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\). Si</p>
+    <ol class="steps">
+      <li>\(\lim_{x\to a}g(x)=b\) (condición 1: el límite interno existe y es el número \(b\)),</li>
+      <li>\(f\) está definida en un intervalo abierto que contiene a \(b\), y</li>
+      <li>\(\lim_{u\to b}f(u)=f(b)\) (condición 2: el límite de la externa en \(b\) existe y es igual a su valor en \(b\)),</li>
+    </ol>
+    <p>entonces \(\lim_{x\to a}f(g(x))=f(b)\). En palabras: el límite «entra» en la externa.</p>
+    <p><b>Cuando una condición no se cumple</b>, el teorema no se puede usar: no dice que el límite exista ni que no exista. La compuesta se estudia directamente.</p>
+    <p><b>Regla del hueco</b> (para cuando la externa tiene límite en \(b\), pero \(f(b)\) es otro número o no existe). Si</p>
+    <ol class="steps">
+      <li>\(\lim_{x\to a}g(x)=b\),</li>
+      <li>existe un intervalo abierto que contiene a \(a\) tal que \(g(x)\ne b\) para todo \(x\ne a\) de ese intervalo, y</li>
+      <li>\(f\) está definida en un intervalo abierto que contiene a \(b\), salvo quizá en \(b\), y \(\lim_{u\to b}f(u)=K\),</li>
+    </ol>
+    <p>entonces \(\lim_{x\to a}f(g(x))=K\). El resultado es el límite de la externa (la altura del hueco), no su valor \(f(b)\).</p>
+    <p><b>Procedimiento:</b></p>
+    <ol class="steps">
+      <li>Hallar el límite interno \(b\). Si no existe, se estudia cada lado (hoja «Límites de funciones compuestas cuando el límite interno no existe»).</li>
+      <li>Hallar el límite de la externa en \(b\) y compararlo con \(f(b)\). Si son iguales, se usa el teorema.</li>
+      <li>Si el límite de la externa existe pero \(f(b)\) es otro número o no existe: revisar si \(g(x)\ne b\) cerca de \(a\). Si es así, se usa la regla del hueco.</li>
+      <li>Si la interna toma el valor \(b\) cerca de \(a\), ninguna de las dos reglas se puede usar: se estudia la compuesta con sus fórmulas, lado por lado (recuadro del caso especial).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: el teorema y la regla del hueco</h3>
+    <p><b>Teorema.</b> Se sabe: \(\lim_{x\to a}g(x)=b\); \(f\) está definida en un intervalo abierto que contiene a \(b\); \(\lim_{u\to b}f(u)=f(b)\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-f(b)|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
+      <li>Como \(\lim_{u\to b}f(u)=f(b)\), existe \(\eta\gt 0\) tal que, si \(0\lt |u-b|\lt \eta\), entonces \(|f(u)-f(b)|\lt \varepsilon\). (Se toma \(\eta\) tan chico que esos \(u\) estén en el intervalo donde \(f\) está definida.)</li>
+      <li>Para \(u=b\) también se cumple: \(|f(b)-f(b)|=0\), y \(0\lt \varepsilon\). Entonces: si \(|u-b|\lt \eta\), con \(u=b\) o con \(u\ne b\), se tiene \(|f(u)-f(b)|\lt \varepsilon\).</li>
+      <li>El número \(\eta\) es positivo: sirve como tolerancia para \(g\). Como \(\lim_{x\to a}g(x)=b\), existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|g(x)-b|\lt \eta\).</li>
+      <li>Se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Por el paso 4, el número \(u=g(x)\) cumple \(|u-b|\lt \eta\). Por el paso 3, \(|f(g(x))-f(b)|\lt \varepsilon\).</li>
+      <li>Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}f(g(x))=f(b)\).</li>
+    </ol>
+    <p><b>Dónde se usa la condición 2:</b> en el paso 3. Ahí puede ocurrir \(g(x)=b\), y entonces la compuesta vale \(f(b)\): solo queda cerca del límite de \(f\) si \(f(b)\) es ese límite.</p>
+    <p><b>Regla del hueco.</b> Se sabe: \(\lim_{x\to a}g(x)=b\); \(g(x)\ne b\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\); \(\lim_{u\to b}f(u)=K\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-K|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
+      <li>Como \(\lim_{u\to b}f(u)=K\), existe \(\eta\gt 0\) tal que, si \(0\lt |u-b|\lt \eta\), entonces \(|f(u)-K|\lt \varepsilon\). De \(u=b\) no se sabe nada.</li>
+      <li>Como \(\lim_{x\to a}g(x)=b\), existe \(\delta_{1}\gt 0\) tal que, si \(0\lt |x-a|\lt \delta_{1}\), entonces \(|g(x)-b|\lt \eta\).</li>
+      <li>Por la condición 2 de la regla, existe \(\delta_{2}\gt 0\) tal que, si \(0\lt |x-a|\lt \delta_{2}\), entonces \(g(x)\ne b\) (basta que el intervalo de \(a-\delta_{2}\) a \(a+\delta_{2}\) quede dentro del intervalo de esa condición).</li>
+      <li>Se elige \(\delta=\min\{\delta_{1},\delta_{2}\}\) y se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Entonces \(|g(x)-b|\lt \eta\) (paso 3) y \(g(x)\ne b\) (paso 4): el número \(u=g(x)\) cumple \(0\lt |u-b|\lt \eta\).</li>
+      <li>Por el paso 2, \(|f(g(x))-K|\lt \varepsilon\). Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}f(g(x))=K\).</li>
+    </ol>
+    <p><b>Con los números de la animación</b> (\(a=1\), \(b=2\), \(K=3\)) y la tolerancia \(\varepsilon=0{,}5\). Para \(u\ne 2\): \(|f(u)-3|=|u+1-3|=|u-2|\), menor que \(0{,}5\) si \(0\lt |u-2|\lt 0{,}5\); sirve \(\eta=0{,}5\). Para \(g\): \(|g(x)-2|=|x+1-2|=|x-1|\), menor que \(0{,}5\) si \(|x-1|\lt 0{,}5\); sirve \(\delta_{1}=0{,}5\). Además \(g(x)=2\) solo si \(x=1\): sirve cualquier \(\delta_{2}\), y se toma \(\delta=0{,}5\). Prueba con \(x=1{,}1\): \(|1{,}1-1|=0{,}1\), menor que \(0{,}5\); \(g(1{,}1)=1{,}1+1=2{,}1\) y \(|2{,}1-2|=0{,}1\), mayor que \(0\) y menor que \(0{,}5\); \(h(1{,}1)=f(2{,}1)=3{,}1\) y \(|3{,}1-3|=0{,}1\), menor que \(0{,}5\). En cambio, en \(u=2\): \(|f(2)-3|=|5-3|=2\), que no es menor que \(0{,}5\). Por eso la regla necesita \(g(x)\ne 2\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: cuando la interna toca el valor \(b\)</h3>
+    <p>La externa es la \(f\) de la animación: límite \(3\) en \(2\) y valor \(f(2)=5\). Las tres internas que siguen tienen el mismo límite interno, \(2\), en \(a=1\).</p>
+    <ol class="steps">
+      <li><b>La interna no toca el \(2\):</b> \(g(x)=x+1\) vale \(2\) solo en \(x=1\). Regla del hueco: \(\lim_{x\to 1}f(g(x))=3\).</li>
+      <li><b>La interna es constante:</b> \(c(x)=2\) para todo \(x\). La regla del hueco no se puede usar (su condición 2 falla). Estudio directo: \(f(c(x))=f(2)=5\) para todo \(x\); la compuesta es la constante \(5\) y \(\lim_{x\to 1}f(c(x))=5\).</li>
+      <li><b>La interna toca el \(2\) por un solo lado:</b> sea \(s(x)=2\) si \(x\lt 1\) y \(s(x)=x+1\) si \(x\ge 1\). Sus laterales en \(1\) son \(2\) (constante) y \(1+1=2\): el límite interno es \(2\).</li>
+      <li>Por la izquierda de \(1\): \(f(s(x))=f(2)=5\), constante. El límite por la izquierda de la compuesta es \(5\).</li>
+      <li>Por la derecha de \(1\): \(s(x)=x+1\) es mayor que \(2\), así que \(s(x)\ne 2\) y \(f(s(x))=(x+1)+1=x+2\). El límite por la derecha es \(1+2=3\) (regla del hueco por la derecha).</li>
+      <li>Como \(5\ne 3\), \(f(s(x))\) no tiene límite en \(1\) (criterio de los laterales).</li>
+      <li><b>Resumen:</b> con el mismo límite interno y la misma externa, la compuesta tuvo límite \(3\), límite \(5\) o no tuvo límite. Saber solo «el límite interno es \(2\)» no alcanza cuando la condición 2 del teorema falla.</li>
+    </ol>
+    <p><b>Qué condición falla y qué se hace:</b></p>
+    <ol class="steps">
+      <li><b>El límite interno no existe</b> (la interna salta en \(a\)): se estudia cada lado de \(a\). Hoja «Límites de funciones compuestas cuando el límite interno no existe».</li>
+      <li><b>La externa tiene límite en \(b\), pero \(f(b)\) es otro número o no existe:</b> regla del hueco si \(g(x)\ne b\) cerca de \(a\); si la interna toca \(b\), estudio directo. Es esta hoja.</li>
+      <li><b>La externa no tiene límite en \(b\)</b> (salta en \(b\)): se mira por qué lado de \(b\) llegan los valores de la interna. Hoja «Límites de funciones compuestas cuando el límite externo no existe».</li>
+      <li><b>Se cumplen las dos condiciones:</b> se usa el teorema, sin revisar nada más.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>En cada ejemplo se revisan, en orden, la condición 1 (límite interno) y la condición 2 (límite de la externa frente a su valor). Recién entonces se elige: teorema, regla del hueco o estudio directo.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la compuesta de la animación, \(\lim_{x\to 1}f(g(x))\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Condición 1. La interna \(g(x)=x+1\) es un polinomio: \(\lim_{x\to 1}g(x)=1+1=2\). Se cumple, con \(b=2\).</li>
+    <li>Límite de la externa en \(2\). Para \(u\ne 2\), \(f(u)=u+1\), que es un polinomio: \(\lim_{u\to 2}f(u)=2+1=3\).</li>
+    <li>Condición 2. El valor es \(f(2)=5\), y \(3\ne 5\). No se cumple: el teorema no se puede usar.</li>
+    <li>¿La interna toca el \(2\)? \(x+1=2\) solo si \(x=1\). Entonces \(g(x)\ne 2\) para todo \(x\ne 1\).</li>
+    <li>Regla del hueco, con \(K=3\): \(\lim_{x\to 1}f(g(x))=3\).</li>
+    <li>Comprobación con la fórmula. Para \(x\ne 1\): \(h(x)=f(x+1)=(x+1)+1=x+2\), y \(\lim_{x\to 1}(x+2)=1+2=3\).</li>
+    <li>Comprobación con valores. \(g(0{,}9)=1{,}9\) y \(f(1{,}9)=1{,}9+1=2{,}9\). \(g(1{,}1)=2{,}1\) y \(f(2{,}1)=2{,}1+1=3{,}1\).</li>
+    <li>Más cerca. \(g(0{,}99)=1{,}99\) y \(f(1{,}99)=1{,}99+1=2{,}99\). \(g(1{,}01)=2{,}01\) y \(f(2{,}01)=2{,}01+1=3{,}01\). Los valores se acercan a \(3\), no a \(5\).</li>
+    <li>El valor de la compuesta en \(1\) no participa: \(h(1)=f(2)=5\), distinto de su límite.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: se cumplen las dos condiciones</h3>
+  <div class="body">
+  <p>La interna es la misma, \(g(x)=x+1\), y la externa es el polinomio \(P(u)=u^{2}-3u+1\). El lugar es \(a=1\).</p>
+  <ol class="steps">
+    <li>Condición 1: \(\lim_{x\to 1}g(x)=1+1=2\). Se cumple, con \(b=2\).</li>
+    <li>Condición 2: \(P\) es un polinomio, así que \(\lim_{u\to 2}P(u)=P(2)\). Se cumple.</li>
+    <li>Teorema de la compuesta: \(\lim_{x\to 1}P(g(x))=P(2)\).</li>
+    <li>Valor: \(P(2)=2^{2}-3\cdot 2+1=4-6+1=-1\). El límite es \(-1\).</li>
+    <li>No hizo falta revisar si \(g\) toca el \(2\): con las dos condiciones, el teorema basta.</li>
+    <li>Comprobación con valores: \(P(1{,}9)=3{,}61-5{,}7+1=-1{,}09\) y \(P(2{,}1)=4{,}41-6{,}3+1=-0{,}89\), los dos cerca de \(-1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: la externa no tiene valor en \(b\)</h3>
+  <div class="body">
+  <p>La interna es \(q(x)=3x-1\) y la externa, \(F(u)=\dfrac{u^{2}-4}{u-2}\), que no está definida en \(u=2\). El lugar es \(a=1\).</p>
+  <ol class="steps">
+    <li>Condición 1: \(\lim_{x\to 1}q(x)=3\cdot 1-1=3-1=2\). Se cumple, con \(b=2\).</li>
+    <li>Condición 2: \(F(2)\) no existe (el denominador sería \(2-2=0\)). No se cumple: el teorema no se puede usar.</li>
+    <li>Límite de la externa en \(2\). Como \(u^{2}-4=(u-2)(u+2)\), para todo \(u\ne 2\) se tiene \(F(u)=u+2\). Luego \(\lim_{u\to 2}F(u)=2+2=4\) (funciones iguales fuera de \(2\): mismo límite).</li>
+    <li>¿La interna toca el \(2\)? \(3x-1=2\) solo si \(3x=3\), es decir, \(x=1\). Entonces \(q(x)\ne 2\) para todo \(x\ne 1\).</li>
+    <li>Regla del hueco, con \(K=4\): \(\lim_{x\to 1}F(q(x))=4\).</li>
+    <li>Comprobación con valores. \(q(0{,}9)=2{,}7-1=1{,}7\) y \(F(1{,}7)=1{,}7+2=3{,}7\). \(q(1{,}1)=3{,}3-1=2{,}3\) y \(F(2{,}3)=2{,}3+2=4{,}3\).</li>
+    <li>Con la interna constante \(c(x)=2\) la compuesta \(F(c(x))\) no estaría definida en ningún \(x\): no habría límite que calcular.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: solo se conocen los límites</h3>
+  <div class="body">
+  <p>Datos: \(\lim_{x\to 4}G(x)=1\); la externa \(r\) cumple \(\lim_{u\to 1}r(u)=6\) y \(r(1)=2\).</p>
+  <ol class="steps">
+    <li>Condición 1: se cumple, con \(b=1\).</li>
+    <li>Condición 2: el límite de \(r\) en \(1\) es \(6\) y su valor es \(2\). Como \(6\ne 2\), no se cumple: el teorema no se puede usar.</li>
+    <li>Si además se sabe que \(G(x)\ne 1\) para todo \(x\ne 4\) cercano a \(4\): por la regla del hueco, \(\lim_{x\to 4}r(G(x))=6\).</li>
+    <li>Si, en cambio, se sabe que \(G(x)=1\) para todo \(x\) cercano a \(4\): la compuesta es la constante \(r(1)=2\) cerca de \(4\), y \(\lim_{x\to 4}r(G(x))=2\).</li>
+    <li>Si solo se conocen los datos del enunciado: no se puede decidir. Falta saber si \(G\) toma el valor \(1\) cerca de \(4\).</li>
+    <li>Si el valor de \(r\) en \(1\) fuera \(6\), la condición 2 se cumpliría y el teorema daría \(6\) en todos los casos, sin más datos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>usar el teorema sin revisar la condición 2</b> y responder \(f(b)\). En la animación daría \(5\), y el límite es \(3\). Dos: <b>responder «no existe» porque una condición falla</b>. Que el teorema no se pueda usar no decide nada: hay que estudiar directo. Tres: <b>usar la regla del hueco sin revisar que \(g(x)\ne b\) cerca de \(a\)</b>. Con una interna constante el resultado es \(f(b)\). Cuatro: <b>confundir el valor de la compuesta en \(a\) con su límite</b>. En la animación, \(h(1)=5\) y el límite es \(3\). Cinco: <b>creer que basta conocer el límite interno</b>. Cuando la condición 2 falla, importa también si la interna toca ese número.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>La interna es \(m(x)=x+2\). La externa es \(n(u)=2u-1\) si \(u\ne 3\), con \(n(3)=1\). La compuesta es \(k(x)=n(m(x))\) y el lugar, \(a=1\). a) Halla el límite interno. b) Halla el límite de \(n\) en \(3\) y decide si se cumple la condición 2. c) Halla \(\lim_{x\to 1}n(m(x))\), indicando la regla que usas. d) Comprueba con \(k(0{,}9)\) y \(k(1{,}1)\). e) ¿Cuál sería el límite con la interna constante \(3\)?</p>
+    <details><summary>Pista</summary><div><p>Compara el límite de \(n\) en \(3\) con el valor \(n(3)\). Después revisa para qué \(x\) la interna vale exactamente \(3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(m\) es un polinomio: \(\lim_{x\to 1}m(x)=1+2=3\). La condición 1 se cumple, con \(b=3\).</li>
+        <li>b) Para \(u\ne 3\), \(n(u)=2u-1\): \(\lim_{u\to 3}n(u)=2\cdot 3-1=6-1=5\). El valor es \(n(3)=1\). Como \(5\ne 1\), la condición 2 no se cumple: el teorema no se puede usar.</li>
+        <li>c) \(x+2=3\) solo si \(x=1\): \(m(x)\ne 3\) para todo \(x\ne 1\). Regla del hueco, con \(K=5\): \(\lim_{x\to 1}n(m(x))=5\).</li>
+        <li>d) \(m(0{,}9)=0{,}9+2=2{,}9\) y \(n(2{,}9)=2\cdot 2{,}9-1=5{,}8-1=4{,}8\): \(k(0{,}9)=4{,}8\).</li>
+        <li>\(m(1{,}1)=1{,}1+2=3{,}1\) y \(n(3{,}1)=2\cdot 3{,}1-1=6{,}2-1=5{,}2\): \(k(1{,}1)=5{,}2\). Los dos valores están cerca de \(5\).</li>
+        <li>e) Con la interna constante \(3\), la compuesta vale \(n(3)=1\) para todo \(x\): es la constante \(1\) y su límite en \(1\) es \(1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>De una función \(v\) se sabe que \(\lim_{x\to 0}v(x)=2\). La externa \(E\) cumple \(\lim_{u\to 2}E(u)=7\) y \(E(2)=7\). La externa \(D\) cumple \(\lim_{u\to 2}D(u)=4\) y \(D(2)=9\). Decide, y calcula si se puede: a) \(\lim_{x\to 0}E(v(x))\); b) \(\lim_{x\to 0}D(v(x))\) solo con esos datos; c) el mismo límite, si además \(v(x)\ne 2\) para todo \(x\ne 0\) cercano a \(0\); d) el mismo límite, si \(v(x)=2\) para todo \(x\) cercano a \(0\); e) el mismo límite, si \(v(x)=2\) para \(x\lt 0\) y \(v(x)\ne 2\) para \(x\gt 0\).</p>
+    <details><summary>Pista</summary><div><p>Para cada externa, compara su límite en \(2\) con su valor en \(2\). Cuando no coinciden, lo que decide es si \(v\) toma el valor \(2\) cerca de \(0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Condición 1: el límite interno es \(2\). Condición 2: el límite de \(E\) en \(2\) es \(7\) y \(E(2)=7\), iguales. Teorema de la compuesta: \(\lim_{x\to 0}E(v(x))=7\).</li>
+        <li>b) El límite de \(D\) en \(2\) es \(4\) y \(D(2)=9\). Como \(4\ne 9\), la condición 2 no se cumple: el teorema no se puede usar. Solo con esos datos no se puede decidir.</li>
+        <li>c) Si \(v(x)\ne 2\) cerca de \(0\): regla del hueco, con \(K=4\). El límite es \(4\).</li>
+        <li>d) Si \(v(x)=2\) cerca de \(0\): la compuesta es la constante \(D(2)=9\) cerca de \(0\). El límite es \(9\).</li>
+        <li>e) Por la izquierda de \(0\) la compuesta es la constante \(9\): su límite por la izquierda es \(9\). Por la derecha, \(v(x)\ne 2\) y la regla del hueco por la derecha da \(4\). Como \(9\ne 4\), no tiene límite en \(0\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En la heladería de la plaza, el cliente abre la máquina y paga según el peso. <b>Modelo:</b> si la máquina está abierta \(x\) segundos, entrega \(w(x)=50\,x\) gramos. El precio de \(u\) gramos, en pesos, es \(p(u)=12\,u\) si \(u\ne 200\), y \(p(200)=2000\): el vaso de \(200\) gramos justos está en promoción. (Fórmulas inventadas para el ejercicio.) a) Halla \(\lim_{x\to 4}w(x)\). b) Halla el límite del precio en \(200\) gramos y compáralo con \(p(200)\). ¿Se puede usar el teorema de la compuesta? c) Halla \(\lim_{x\to 4}p(w(x))\), indicando la regla. d) Comprueba con \(x=3{,}9\) y \(x=4{,}1\). e) Explica el resultado con palabras. f) Una máquina nueva entrega siempre \(200\) gramos, sin importar el tiempo. ¿Cuál es el límite del precio ahí?</p>
+    <details><summary>Pista</summary><div><p>La interna es el peso y la externa, el precio. El precio tiene un punto aparte en \(200\) gramos: revisa para qué tiempos el peso es exactamente \(200\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(w\) es un polinomio: \(\lim_{x\to 4}w(x)=50\cdot 4=200\). La condición 1 se cumple, con \(b=200\).</li>
+        <li>b) Para \(u\ne 200\), \(p(u)=12\,u\): \(\lim_{u\to 200}p(u)=12\cdot 200=2400\). El valor es \(p(200)=2000\). Como \(2400\ne 2000\), la condición 2 no se cumple: el teorema no se puede usar.</li>
+        <li>c) \(50\,x=200\) solo si \(x=4\): \(w(x)\ne 200\) para todo \(x\ne 4\). Regla del hueco, con \(K=2400\): \(\lim_{x\to 4}p(w(x))=2400\).</li>
+        <li>d) \(w(3{,}9)=50\cdot 3{,}9=195\) y \(p(195)=12\cdot 195=2340\). \(w(4{,}1)=50\cdot 4{,}1=205\) y \(p(205)=12\cdot 205=2460\). Los dos precios están cerca de \(2400\).</li>
+        <li>e) Con tiempos cercanos a \(4\) segundos, pero distintos de \(4\), el peso nunca es \(200\) gramos justos y la promoción no se aplica: los precios se acercan a \(2400\) pesos, aunque a los \(4\) segundos exactos se pagan \(2000\).</li>
+        <li>f) La interna es la constante \(200\): el precio es \(p(200)=2000\) para todo tiempo. La compuesta es la constante \(2000\) y su límite es \(2000\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L30-H06 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* utilidades del lote 30 (propiedades de límites): dos marcos lado a lado, frases con fondo y notas bajo los marcos */
+/* frase corta con fondo, en coordenadas del marco M, corrida (dx, dy) píxeles */
+function prFr(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.textBaseline = 'middle'; c.textAlign = al || 'left'; var w = c.measureText(t).width, px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = al === 'right' ? px - w : (al === 'center' ? px - w/2 : px); c.globalAlpha = 0.9; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 2, py - 7, w + 4, 14); c.globalAlpha = 1; c.fillStyle = col; c.fillText(t, px, py); }
+/* nota bajo los marcos, en coordenadas del mundo; devuelve su ancho en píxeles (para poner una etiqueta TeX a continuación) */
+function prNota(S, t, xw, yw, col){ var c = S.ctx; c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; c.textBaseline = 'middle'; c.textAlign = 'left'; c.fillStyle = col; c.fillText(t, S.X(xw), S.Y(yw)); return c.measureText(t).width; }
+/* anillo alrededor de un punto del marco (para destacar un punto sin taparlo) */
+function prAnillo(S, M, x, y, col, r){ var c = S.ctx; c.setLineDash([]); c.strokeStyle = col; c.lineWidth = 1.4; c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 7, 0, 6.2832); c.stroke(); }
+/* las dos líneas de texto del paso y el contador «paso k de N», sobre el registro */
+function prPie(S, k, N, TXT, yT, yR){ var c = S.ctx; lmTxt(S, TXT[k - 1][0], -1.2, yT); lmTxt(S, TXT[k - 1][1], -1.2, yT - 21/(S.X(1) - S.X(0))); c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = S.C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, S.X(5.2), S.Y(yR) - 26); }
+/* L30 H06 · teorema de la compuesta cuando la condición sobre la externa no se cumple: g(x) = x + 1 tiene límite 2 en a = 1; f(u) = u + 1 si u ≠ 2 y f(2) = 5 tiene límite 3 en 2, distinto de su valor; como g(x) ≠ 2 para x ≠ 1, la compuesta tiene límite 3 (el hueco), no 5; con la interna constante c(x) = 2 el límite es 5 (por pasos) */
+OA.scene('compteo-idea', (function(){
+  var N = 7, Q = '\\\\&\\qquad ';
+  function g(x){ return x + 1; }                    /* interna */
+  function fl(z){ return z + 1; }                   /* la recta de la externa (vale para u ≠ 2) */
+  function f(z){ return z === 2 ? 5 : z + 1; }      /* externa: hueco en (2, 3) y punto lleno en (2, 5) */
+  /* lugar, límite interno, límite de la externa en b y valor de la externa en b */
+  var A = 1, B = 2, K = 3, FB = 5;
+  /* marco izquierdo: la interna, u = g(x), con 0 ≤ x ≤ 2,2 y 0 ≤ u ≤ 4,4; marco derecho: la externa, y = f(u), con 0 ≤ u ≤ 4,4 y 0 ≤ y ≤ 5,8 */
+  var MG = lmMarco(-0.85, 2.1, 2.6, 2.95, 0, 2.2, 0, 4.4), MF = lmMarco(2.55, 2.1, 2.6, 2.95, 0, 4.4, 0, 5.8);
+  var PZ = [['Q', '\\text{¿a qué se acerca }f(g(x))\\text{ cerca de }1\\text{?}', '¿a qué se acerca f(g(x)) cerca de 1?', 'pt'], ['F', '\\Longrightarrow\\ 3', '⟹ 3', 'diff'],
+    ['EX', 'x', 'x', ''], ['EU1', 'u', 'u', ''], ['EU2', 'u', 'u', ''], ['EY', 'y', 'y', ''],
+    ['CG', 'u=g(x)', 'u = g(x)', ''], ['CF', 'y=f(u)', 'y = f(u)', ''],
+    ['LG', '\\lim_{x\\to 1}g(x)=2', 'lím g(x) = 2', 'c-sec'], ['LF', '\\lim_{u\\to 2}f(u)=3', 'lím f(u) = 3', 'c-alt'],
+    ['VF', 'f(2)=5', 'f(2) = 5', 'c-tan'],
+    ['CM', 'h(0{,}9)=2{,}9;\\ \\ h(1{,}1)=3{,}1', 'h(0,9) = 2,9; h(1,1) = 3,1', ''],
+    ['LS', '\\lim_{x\\to 1}f(g(x))=3', 'lím f(g(x)) = 3', 'diff'],
+    ['KC', 'u=c(x)', 'u = c(x)', 'c-tan'], ['CC', '\\lim_{x\\to 1}f(c(x))=5', 'lím f(c(x)) = 5', 'c-tan'],
+    ['R1', 'h(x)=f(g(x));\\ \\ a=1', 'h(x) = f(g(x)); a = 1', ''],
+    ['R2', '\\lim_{x\\to 1}g(x)=2', 'lím x→1 g(x) = 2', 'c-sec'],
+    ['R3', '\\lim_{u\\to 2}f(u)=3', 'lím u→2 f(u) = 3', 'c-alt'],
+    ['R4', 'f(2)=5\\ne 3', 'f(2) = 5 ≠ 3', 'c-tan'],
+    ['R5', 'h(0{,}99)=2{,}99;\\ \\ h(1{,}01)=3{,}01', 'h(0,99) = 2,99; h(1,01) = 3,01', ''],
+    ['R6', '\\lim_{x\\to 1}f(g(x))=3', 'lím f(g(x)) = 3', 'diff'],
+    ['R7', 'c(x)=2:\\ \\ \\lim_{x\\to 1}f(c(x))=5', 'c(x) = 2: lím f(c(x)) = 5', 'c-tan']];
+  var TXT = [['A la izquierda, g recibe x y entrega u.', 'A la derecha, f recibe ese u y entrega y.'],
+    ['Condición 1: por los dos lados del 1,', 'lo que entrega g va hacia 2. Se cumple.'],
+    ['Cerca de u igual a 2, las alturas de f', 'van hacia 3: ese es su límite (el hueco).'],
+    ['Condición 2: el valor de f en 2 es 5, no 3.', 'No se cumple: el teorema no se puede usar.'],
+    ['Estudio directo: si x no es 1, g no vale 2.', 'Entonces f nunca usa su punto lleno.'],
+    ['La compuesta va hacia el hueco:', 'su límite es 3, y no el valor 5.'],
+    ['Otra interna, la constante 2 (burdeo):', 'siempre entra 2 en f, y el límite es 5.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-6.3, y1:7.2}, aspect:13.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: si el valor de la externa no es su límite, el teorema no se puede usar y se estudia directo. Animación en siete pasos con dos gráficas lado a lado. Uno: a la izquierda, la gráfica de la función interna, u igual a g de x, una recta que pasa por el punto 1 coma 2; a la derecha, la gráfica de la función externa, y igual a f de u, una recta con un círculo vacío en 2 coma 3 y un punto lleno aparte en 2 coma 5. Dos: dos flechas azules recorren la recta de g hacia el punto 1 coma 2: lo que entrega g va hacia 2; la primera condición se cumple. Tres: dos flechas verdes recorren la gráfica de f hacia el círculo vacío: las alturas van hacia 3, que es el límite de f en 2. Cuatro: un anillo burdeo marca el punto lleno: el valor de f en 2 es 5, distinto de 3; la segunda condición no se cumple y el teorema no se puede usar. Cinco: en la gráfica de g se marca el único punto donde g vale 2; para x distinto de 1, f nunca usa su punto lleno; valores: h de 0,9 igual a 2,9 y h de 1,1 igual a 3,1. Seis: un anillo naranjo marca el círculo vacío: el límite de la compuesta es 3, no 5. Siete: otra interna, la constante 2, dibujada como recta horizontal burdeo: siempre entra 2 en f y el límite de esa compuesta es 5. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> la interna \\(g\\)</span><span><i class="sw alt"></i> el límite de \\(f\\) en \\(2\\)</span><span><i class="sw tan"></i> el valor \\(f(2)\\) y la interna constante</span><span><i class="sw rise"></i> el límite de la compuesta</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, T = dtEtq(S, PZ), a, w, mu = C.muted || '#6b6b6b';
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      function frase(t, M, x, y, dx, dy, col, al){ prFr(S, M, t, x, y, dx, dy, col, al); }
+      dtQue(S, 'si el valor de f no es su límite,', 'el teorema no se puede usar: se estudia directo.');
+      /* los dos marcos: ejes con marcas y números; en el de g, la vertical punteada del lugar a = 1 */
+      lmEjes(S, MG); lmEjes(S, MF); lmSeg(S, MG, A, 0, A, 4.4, mu, 1, [2, 4]);
+      lmEtq(T, MG, 'EX', 2.2, 0, 0, 8, 0); lmEtq(T, MG, 'EU1', 0, 4.4, -50, 0, -13); lmEtq(T, MF, 'EU2', 4.4, 0, 0, 8, 0); lmEtq(T, MF, 'EY', 0, 5.8, -50, 0, -13);
+      /* paso 7 (al fondo): la interna constante c(x) = 2, recta horizontal burdeo; en f, la punteada sube del hueco al punto lleno */
+      a = ap(7);
+      if (a > 0){ lmSeg(S, MG, 0, B, 2.2*a, B, C.tan, 1.8, 0); lmSeg(S, MF, B, K, B, K + (FB - K)*a, C.tan, 1.2); }
+      if (a > 0.6) lmEtq(T, MG, 'KC', 2.2, B, -100, 0, 11);
+      /* paso 1: las dos gráficas: la recta de g y la recta de f con su hueco y su punto lleno */
+      a = Math.min(1, ap(1)*2);
+      lmCurva(S, MG, g, 0, 2.2*a, C.ink, 2);
+      lmCurva(S, MF, fl, 0.3, 0.3 + 3.6*a, C.ink, 2);
+      if (ap(1) > 0.9){ lmEtq(T, MG, 'CG', 2.15, 4, -100); lmEtq(T, MF, 'CF', 4.35, 2.6, -100); }
+      /* paso 2: por los dos lados del 1, lo que entrega g va hacia 2 (flechas y punteada azules) */
+      a = ap(2);
+      if (a > 0){ lmFlecha(S, MG, 0.25, 1.25, 0.25 + 0.6*a, 1.25 + 0.6*a, C.sec, 1.6, -5, -6); lmFlecha(S, MG, 1.75, 2.75, 1.75 - 0.6*a, 2.75 - 0.6*a, C.sec, 1.6, 5, 6); }
+      if (a > 0.6){ lmSeg(S, MG, A, B, 0, B, C.sec, 1); frase('hacia 2', MG, 0, B, 5, -9, C.sec); w = prNota(S, 'interna:', -1.2, 1.4, C.sec); T.L('LG', -1.2, 1.4, 0, w + 6, 0); }
+      /* paso 3: cerca de u = 2 las alturas de f van hacia 3 (flechas y punteadas verdes) */
+      a = ap(3);
+      if (a > 0){ lmSeg(S, MF, B, 0, B, K*Math.min(1, a*2), C.alt, 1); lmFlecha(S, MF, 0.8, 1.8, 0.8 + 0.9*a, 1.8 + 0.9*a, C.alt, 1.6, -5, -6); lmFlecha(S, MF, 3.2, 4.2, 3.2 - 0.9*a, 4.2 - 0.9*a, C.alt, 1.6, 5, 6); }
+      if (a > 0.6){ lmSeg(S, MF, B, K, 0, K, C.alt, 1); frase('hacia 3', MF, 0, K, 5, -9, C.alt); w = prNota(S, 'externa:', 2.15, 1.4, C.alt); T.L('LF', 2.15, 1.4, 0, w + 6, 0); }
+      /* hueco y punto lleno de f (encima de las guías) */
+      if (ap(1) > 0.5){ lmPunto(S, MF, B, K, C.ink, true, 3.2); lmPunto(S, MF, B, FB, C.ink, false, 3.2); }
+      /* paso 4: el valor f(2) = 5 no es el límite 3 (anillo y rótulo burdeo) */
+      a = ap(4);
+      if (a > 0.3){ prAnillo(S, MF, B, FB, C.tan, 7); lmPunto(S, MF, B, FB, C.tan, false, 3.2); }
+      if (a > 0.6) lmEtq(T, MF, 'VF', B, FB, -100, -11, 0);
+      /* paso 5: g vale 2 solo en x = 1 (punto y anillo azules); valores de la compuesta */
+      a = ap(5);
+      if (a > 0.3){ lmPunto(S, MG, A, B, C.sec, false, 3.2); prAnillo(S, MG, A, B, C.sec, 7); frase('solo aquí g vale 2', MG, 1.1, 0.5, 0, 0, C.sec, 'center'); }
+      if (a > 0.6){ w = prNota(S, 'valores:', -1.2, 0.85, C.ink); T.L('CM', -1.2, 0.85, 0, w + 6, 0); }
+      /* paso 6: la compuesta va hacia el hueco (anillo naranjo) y su límite es 3 */
+      a = ap(6);
+      if (a > 0.3) prAnillo(S, MF, B, K, C.rise, 7);
+      if (a > 0.6) T.L('LS', -1.2, 0.3, 0);
+      /* paso 7: con la interna constante, el límite es el valor 5 */
+      a = ap(7);
+      if (a > 0.6){ w = prNota(S, 'con c:', 2.15, 0.3, C.tan); T.L('CC', 2.15, 0.3, 0, w + 6, 0); }
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 5.86, 0); if (k >= 6 && ap(6) > 0.6) T.L('F', 5.2, 5.86, -100);
+      prPie(S, k, N, TXT, -0.3, -1.85);
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.85, [0, 34, 68, 102, 136, 170, 204]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{interna: }g(x)=x+1' + Q + '\\text{externa: }f(u)=u+1\\text{ si }u\\ne 2\\text{, y }f(2)=5' + Q + '\\text{compuesta: }h(x)=f(g(x))\\text{; lugar: }a=1' + Q + '\\text{primero actúa }g\\text{; su resultado }u\\text{ entra en }f' + Q + '\\text{pregunta: ¿a qué se acerca }h(x)\\text{ cerca de }1\\text{?}',
+      '\\text{condición 1: ¿existe el límite interno?}' + Q + 'g(0{,}9)=0{,}9+1=1{,}9' + Q + 'g(1{,}1)=1{,}1+1=2{,}1' + Q + '\\lim_{x\\to 1}g(x)=1+1=2' + Q + '\\text{se cumple, con }b=2',
+      '\\text{la externa cerca de }2\\text{ (con }u\\ne 2\\text{):}' + Q + 'f(1{,}9)=1{,}9+1=2{,}9' + Q + 'f(2{,}1)=2{,}1+1=3{,}1' + Q + '\\lim_{u\\to 2}f(u)=2+1=3',
+      '\\text{condición 2: ¿ese límite es el valor de }f\\text{ en }2\\text{?}' + Q + '\\text{límite: }3\\text{; valor: }f(2)=5' + Q + '3\\ne 5\\text{: no se cumple}' + Q + '\\text{el teorema no se puede usar}',
+      '\\text{estudio directo: }g(x)=2\\text{ solo si }x=1' + Q + '\\text{para }x\\ne 1\\text{: }g(x)\\ne 2\\text{ y }f(g(x))=g(x)+1' + Q + 'h(0{,}9)=f(1{,}9)=1{,}9+1=2{,}9' + Q + 'h(1{,}1)=f(2{,}1)=2{,}1+1=3{,}1' + Q + 'h(0{,}99)=f(1{,}99)=1{,}99+1=2{,}99' + Q + 'h(1{,}01)=f(2{,}01)=2{,}01+1=3{,}01',
+      '\\text{para }x\\ne 1:\\ h(x)=(x+1)+1=x+2' + Q + '\\lim_{x\\to 1}f(g(x))=1+2=3' + Q + '\\text{es el límite de }f\\text{ en }2\\text{ (el hueco),}' + Q + '\\text{no el valor }f(2)=5',
+      '\\text{otra interna: }c(x)=2\\text{ para todo }x' + Q + '\\lim_{x\\to 1}c(x)=2\\text{ (el mismo límite interno)}' + Q + 'f(c(x))=f(2)=5\\text{ para todo }x' + Q + '\\lim_{x\\to 1}f(c(x))=5' + Q + '\\text{mismo límite interno, otro resultado:}' + Q + '\\text{importa si la interna toca el }2']; return dtPasos(R.slice(0, k)); }
+  };
+})());

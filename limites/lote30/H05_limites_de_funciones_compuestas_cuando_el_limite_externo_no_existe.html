@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Límites de funciones compuestas cuando el límite externo no existe | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="comp-ext" data-hoja="L30 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Propiedades de límites</li>
+      <li><b>Límites de funciones compuestas cuando el límite externo no existe</b></li>
+    </ol>
+    <h1>Límites de funciones compuestas cuando el límite externo no existe</h1>
+    <p class="lede">En una función compuesta \(f(g(x))\), la función <b>interna</b> \(g\) puede tener límite \(b\) en \(a\) y la <b>externa</b> \(f\) saltar justo en \(b\): el límite externo \(\lim_{u\to b}f(u)\) no existe. Eso <b>no</b> decide nada sobre la compuesta. Lo que decide es <b>por qué lado llega \(g(x)\) a \(b\)</b>. Si \(g(x)\) es mayor que \(b\) para todo \(x\ne a\) cercano a \(a\), a la externa solo le llegan valores mayores que \(b\), y entonces
+    \[\lim_{x\to a}f(g(x))=\lim_{u\to b^{+}}f(u)\]
+    siempre que ese límite lateral de \(f\) exista. Si \(g(x)\) es menor que \(b\), se usa el lateral izquierdo, \(\lim_{u\to b^{-}}f(u)\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función interna de la animación es \(g(x)=2+(x-1)^{2}\). La externa es \(f(u)=u-1\) si \(u\le 2\) y \(f(u)=5-u\) si \(u\gt 2\). El lugar es \(a=1\) y la compuesta se llama \(h(x)=f(g(x))\). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de la interna, \(u=g(x)\), una parábola cuyo punto más bajo es \((1, 2)\). A la derecha, la de la externa, \(y=f(u)\), con un salto sobre \(u=2\). El eje vertical de la primera y el eje horizontal de la segunda son el mismo: \(u\).</li>
+    <li><b>Paso 2, el salto de la externa (burdeo):</b> por la izquierda de \(2\), la altura de \(f\) va hacia \(1\); por la derecha, hacia \(3\). Como \(1\ne 3\), \(f\) no tiene límite en \(2\).</li>
+    <li><b>Pasos 3 y 4, la interna (azul y verde):</b> por la izquierda de \(1\) y por la derecha de \(1\), lo que entrega \(g\) baja hacia \(2\), y en los dos lados es mayor que \(2\): la parábola queda sobre la línea punteada de la altura \(2\).</li>
+    <li><b>Pasos 5 a 7 (naranjo):</b> a \(f\) solo le llegan valores mayores que \(2\); se usa solo su tramo derecho, que va hacia \(3\). Ese es el límite de la compuesta. El último paso lo comprueba con valores. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> los valores de \(f\) a cada lado de \(2\) y sus dos límites laterales, los valores de \(g\) a cada lado de \(1\), el lateral de \(f\) que se usa y los valores de la compuesta. Conclusión: \(\lim_{x\to 1}f(g(x))=3\).</li>
+  </ol>
+  <div class="stage" data-scene="compext-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Azul:</b> lo que ocurre por la izquierda de \(1\): la flecha sobre la parábola de \(g\), que baja hacia la altura \(2\).</li>
+    <li><b>Verde:</b> lo que ocurre por la derecha de \(1\): la flecha sobre la parábola de \(g\), que también baja hacia la altura \(2\).</li>
+    <li><b>Burdeo:</b> el salto de \(f\) sobre \(u=2\), de la altura \(1\) a la altura \(3\).</li>
+    <li><b>Naranjo:</b> el tramo de \(f\) que se usa (el derecho), la punteada de la altura \(3\), el anillo sobre el hueco \((2, 3)\) y el límite de la compuesta.</li>
+    <li><b>Punto lleno y círculo vacío de \(f\):</b> \(f(2)=1\) (punto lleno en \((2, 1)\)); el círculo vacío en \((2, 3)\) marca la altura a la que se acerca el tramo derecho, que no se alcanza.</li>
+    <li><b>Punteadas grises:</b> en la gráfica de \(g\), la vertical del lugar \(x=1\) y la horizontal de la altura \(2\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra dos gráficas y unos pocos valores: sugiere el resultado, no lo demuestra.</p>
+    <ol class="steps">
+      <li><b>Se demuestra aquí:</b> la regla de la compuesta cuando la interna llega por arriba, con la definición formal de límite y de límite lateral (recuadro de la demostración).</li>
+      <li><b>No se escriben aquí</b> las demostraciones de las otras versiones de la regla (la interna llega por abajo; \(x\) se acerca a \(a\) por un solo lado). Siguen los mismos pasos, cambiando el lado en cada desigualdad; en esta hoja se usan sin demostrar.</li>
+      <li><b>Se usa sin demostrar el criterio de los laterales:</b> \(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y los dos valen \(L\).</li>
+      <li><b>También se usa sin demostrar:</b> que el límite de un polinomio en \(a\) es su valor en \(a\) (hoja «Propiedades de límites»); que cada tramo de una función definida por partes tiene, por su lado, el límite que da el reemplazo en su fórmula; que una función constante por un lado de \(b\) tiene por ese lado el límite igual a esa constante; que dos funciones iguales para todo \(x\ne a\) cercano a \(a\) tienen el mismo límite en \(a\); que el cuadrado de un número distinto de \(0\) es positivo; y que si \(0\le s\lt t\), entonces \(s^{2}\lt t^{2}\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La regla: importa por qué lado llega la interna</h3>
+    <p><b>Límite lateral derecho de la externa.</b> \(\lim_{u\to b^{+}}f(u)=K\) significa: para todo \(\varepsilon\gt 0\) existe \(\eta\gt 0\) tal que, si \(b\lt u\lt b+\eta\), entonces \(|f(u)-K|\lt \varepsilon\). En particular, \(f\) está definida en esos \(u\). Solo cuentan los \(u\) mayores que \(b\): ni el valor \(f(b)\) ni lo que pasa a la izquierda de \(b\) participan.</p>
+    <p><b>Regla de la compuesta cuando la interna llega por arriba.</b> Si</p>
+    <ol class="steps">
+      <li>\(\lim_{x\to a}g(x)=b\) (la interna tiene límite \(b\) en \(a\)),</li>
+      <li>\(g(x)\gt b\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\), y</li>
+      <li>\(\lim_{u\to b^{+}}f(u)=K\),</li>
+    </ol>
+    <p>entonces \(\lim_{x\to a}f(g(x))=K\).</p>
+    <p><b>Versión por abajo.</b> Si en la condición 2 se tiene \(g(x)\lt b\) y en la condición 3 se tiene \(\lim_{u\to b^{-}}f(u)=K\), la conclusión es la misma: \(\lim_{x\to a}f(g(x))=K\).</p>
+    <p><b>Versiones por un lado de \(a\).</b> Si las condiciones 1 y 2 se cumplen solo por la izquierda de \(a\) (con \(x\to a^{-}\) y con los \(x\lt a\) de un intervalo abierto que contiene a \(a\)), la conclusión vale por la izquierda: \(\lim_{x\to a^{-}}f(g(x))=K\). Lo mismo por la derecha.</p>
+    <p><b>Procedimiento cuando la externa salta en \(b\):</b></p>
+    <ol class="steps">
+      <li>Hallar el límite de la interna: \(b=\lim_{x\to a}g(x)\).</li>
+      <li>Hallar los dos límites laterales de la externa en \(b\): \(K_{1}\) por la izquierda y \(K_{2}\) por la derecha. Como \(K_{1}\ne K_{2}\), el límite externo no existe.</li>
+      <li>Decidir, a cada lado de \(a\), si \(g(x)\) es mayor o menor que \(b\). Sirve mirar el signo de \(g(x)-b\).</li>
+      <li>Aplicar la regla en cada lado de \(a\): donde \(g(x)\gt b\), el lateral de la compuesta es \(K_{2}\); donde \(g(x)\lt b\), es \(K_{1}\).</li>
+      <li>Comparar (criterio de los laterales): si los dos lados de \(a\) dan el mismo número, ese es \(\lim_{x\to a}f(g(x))\); si dan números distintos, la compuesta no tiene límite en \(a\).</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: la regla cuando la interna llega por arriba</h3>
+    <p>Se sabe: \(\lim_{x\to a}g(x)=b\); \(g(x)\gt b\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\); \(\lim_{u\to b^{+}}f(u)=K\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-K|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
+      <li>Como \(\lim_{u\to b^{+}}f(u)=K\), existe \(\eta\gt 0\) tal que, si \(b\lt u\lt b+\eta\), entonces \(|f(u)-K|\lt \varepsilon\).</li>
+      <li>El número \(\eta\) es positivo: sirve como tolerancia para \(g\). Como \(\lim_{x\to a}g(x)=b\), existe \(\delta_{1}\gt 0\) tal que, si \(0\lt |x-a|\lt \delta_{1}\), entonces \(|g(x)-b|\lt \eta\).</li>
+      <li>El intervalo abierto de la condición 2 contiene a \(a\); por eso contiene todos los \(x\) con \(|x-a|\lt r\), para algún \(r\gt 0\). Entonces: si \(0\lt |x-a|\lt r\), se tiene \(g(x)\gt b\).</li>
+      <li>Se elige \(\delta=\min\{\delta_{1},r\}\), el menor de los dos. Es positivo.</li>
+      <li>Se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Por el paso 3, \(|g(x)-b|\lt \eta\); en particular, \(g(x)\lt b+\eta\). Por el paso 4, \(g(x)\gt b\). Juntas: el número \(u=g(x)\) cumple \(b\lt u\lt b+\eta\).</li>
+      <li>Por el paso 2, \(|f(g(x))-K|\lt \varepsilon\).</li>
+      <li>Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}f(g(x))=K\).</li>
+    </ol>
+    <p><b>Dónde se usa cada condición:</b> la 3 en el paso 2, la 1 en el paso 3 y la 2 en el paso 4. Sin la condición 2, en el paso 6 no se sabría si \(g(x)\) quedó a la derecha de \(b\), a la izquierda o justo en \(b\), y el paso 2 no se podría usar.</p>
+    <p><b>Con los números de la animación</b> (\(a=1\), \(b=2\), \(K=3\)) y la tolerancia \(\varepsilon=0{,}5\). Para \(u\gt 2\): \(|f(u)-3|=|5-u-3|=|2-u|=u-2\), menor que \(0{,}5\) si \(2\lt u\lt 2{,}5\); sirve \(\eta=0{,}5\). Para \(g\): \(|g(x)-2|=(x-1)^{2}\). Si \(|x-1|\lt 0{,}7\), entonces \((x-1)^{2}\) es menor que \(0{,}7^{2}=0{,}49\), que es menor que \(0{,}5\); sirve \(\delta_{1}=0{,}7\). Además \(g(x)-2=(x-1)^{2}\) es positivo para todo \(x\ne 1\): sirve cualquier \(r\), por ejemplo \(r=1\). El menor es \(\delta=0{,}7\). Prueba con \(x=0{,}5\): \(|0{,}5-1|=0{,}5\), menor que \(0{,}7\); \(g(0{,}5)=2+(-0{,}5)^{2}=2+0{,}25=2{,}25\), que está entre \(2\) y \(2{,}5\); \(h(0{,}5)=f(2{,}25)=5-2{,}25=2{,}75\) y \(|2{,}75-3|=0{,}25\), menor que \(0{,}5\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: la interna cruza \(b\), llega por abajo o vale justo \(b\)</h3>
+    <p>En los cuatro puntos, la externa es la \(f\) de la animación o una parecida, el lugar es \(a=1\) y la interna tiene límite \(2\) en \(1\). El límite externo no existe en ninguno.</p>
+    <ol class="steps">
+      <li><b>La interna cruza \(b\): no hay límite.</b> Interna \(x+1\). Para \(x\lt 1\) es menor que \(2\): se usa el lateral izquierdo de \(f\), que es \(1\). Para \(x\gt 1\) es mayor que \(2\): se usa el lateral derecho, que es \(3\). Los laterales de la compuesta son \(1\) y \(3\). Como \(1\ne 3\), \(f(x+1)\) no tiene límite en \(1\).</li>
+      <li><b>La interna llega por abajo.</b> Interna \(2-(x-1)^{2}\). Para todo \(x\ne 1\) es menor que \(2\), porque \((x-1)^{2}\gt 0\). Por la versión por abajo, el límite de la compuesta en \(1\) es el lateral izquierdo de \(f\): \(1\).</li>
+      <li><b>La interna vale justo \(b\): la regla no se puede usar.</b> Interna constante \(2\). No es mayor ni menor que \(2\): la condición 2 falla. Se estudia directamente con la externa \(E(u)=1\) si \(u\lt 2\), \(E(2)=5\) y \(E(u)=3\) si \(u\gt 2\) (laterales \(1\) y \(3\) en \(2\), como \(f\)). Para todo \(x\), la compuesta vale \(E(2)=5\): es la constante \(5\), y su límite en \(1\) es \(5\). No es ninguno de los dos laterales de \(E\).</li>
+      <li><b>«El límite externo no existe» no decide nada.</b> Con tres internas que tienen el mismo límite \(2\) en \(1\) salieron tres respuestas: límite igual al lateral derecho (animación), sin límite (punto 1) y límite igual al lateral izquierdo (punto 2). Y con una interna constante, el valor \(E(2)\) (punto 3). Hay que mirar cada vez cómo llega la interna a \(b\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>En cada ejemplo se sigue el procedimiento: límite de la interna, laterales de la externa, lado por el que llega la interna, regla en cada lado de \(a\) y comparación.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la compuesta de la animación, \(\lim_{x\to 1}f(g(x))\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Límite de la interna (un polinomio: se reemplaza): \(\lim_{x\to 1}g(x)=2+(1-1)^{2}=2+0=2\). Luego \(b=2\).</li>
+    <li>Externa por la izquierda de \(2\) (\(u\lt 2\), \(f(u)=u-1\)): \(\lim_{u\to 2^{-}}f(u)=2-1=1\).</li>
+    <li>Externa por la derecha de \(2\) (\(u\gt 2\), \(f(u)=5-u\)): \(\lim_{u\to 2^{+}}f(u)=5-2=3\).</li>
+    <li>Como \(1\ne 3\), el límite externo \(\lim_{u\to 2}f(u)\) no existe.</li>
+    <li>Lado por el que llega la interna: \(g(x)-2=(x-1)^{2}\), positivo para todo \(x\ne 1\). Luego \(g(x)\gt 2\) para todo \(x\ne 1\).</li>
+    <li>Regla de la compuesta cuando la interna llega por arriba, con \(K=3\): \(\lim_{x\to 1}f(g(x))=3\).</li>
+    <li>Comprobación con valores. \(g(0{,}9)=2+(-0{,}1)^{2}=2+0{,}01=2{,}01\) y \(f(2{,}01)=5-2{,}01=2{,}99\). \(g(1{,}1)=2+0{,}1^{2}=2+0{,}01=2{,}01\) y \(f(2{,}01)=2{,}99\).</li>
+    <li>Otra comprobación, con la fórmula de la compuesta. Para \(x\ne 1\), \(g(x)\gt 2\), así que \(h(x)=5-g(x)=5-2-(x-1)^{2}=3-(x-1)^{2}\). Ese polinomio tiene límite \(3-(1-1)^{2}=3-0=3\) en \(1\).</li>
+    <li>El valor en el propio \(1\) no participa: \(h(1)=f(g(1))=f(2)=2-1=1\), distinto de \(3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: una interna que llega por abajo</h3>
+  <div class="body">
+  <p>Interna \(r(x)=2-x^{2}\), lugar \(a=0\), y la misma externa \(f\).</p>
+  <ol class="steps">
+    <li>Límite de la interna: \(\lim_{x\to 0}r(x)=2-0^{2}=2-0=2\). Luego \(b=2\).</li>
+    <li>Laterales de la externa en \(2\) (ejemplo 1): \(1\) por la izquierda y \(3\) por la derecha. El límite externo no existe.</li>
+    <li>Lado por el que llega la interna: \(r(x)-2=-x^{2}\), negativo para todo \(x\ne 0\). Luego \(r(x)\lt 2\) para todo \(x\ne 0\).</li>
+    <li>Versión por abajo de la regla, con \(K=1\): \(\lim_{x\to 0}f(r(x))=1\).</li>
+    <li>Comprobación. \(r(0{,}1)=2-0{,}1^{2}=2-0{,}01=1{,}99\) y \(f(1{,}99)=1{,}99-1=0{,}99\). \(r(-0{,}1)=2-(-0{,}1)^{2}=2-0{,}01=1{,}99\) y \(f(1{,}99)=0{,}99\).</li>
+    <li>Misma externa, mismo \(b\), otro resultado que en el ejemplo 1: cambió el lado por el que llega la interna.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una interna que cruza \(b\)</h3>
+  <div class="body">
+  <p>Interna \(s(x)=x+1\), lugar \(a=1\), y la misma externa \(f\).</p>
+  <ol class="steps">
+    <li>Límite de la interna: \(\lim_{x\to 1}s(x)=1+1=2\). Luego \(b=2\).</li>
+    <li>Lado por el que llega: \(s(x)-2=x-1\). Es negativo si \(x\lt 1\) y positivo si \(x\gt 1\). La interna llega por abajo por la izquierda de \(1\) y por arriba por la derecha de \(1\).</li>
+    <li>Por la izquierda de \(1\) (versión por un lado, \(s(x)\lt 2\)): se usa el lateral izquierdo de \(f\). \(\lim_{x\to 1^{-}}f(s(x))=1\).</li>
+    <li>Por la derecha de \(1\) (\(s(x)\gt 2\)): se usa el lateral derecho de \(f\). \(\lim_{x\to 1^{+}}f(s(x))=3\).</li>
+    <li>Comparación: \(1\ne 3\). Por el criterio de los laterales, \(f(s(x))\) no tiene límite en \(1\).</li>
+    <li>Comprobación. \(s(0{,}9)=0{,}9+1=1{,}9\) y \(f(1{,}9)=1{,}9-1=0{,}9\). \(s(1{,}1)=1{,}1+1=2{,}1\) y \(f(2{,}1)=5-2{,}1=2{,}9\). Un lado queda cerca de \(1\) y el otro cerca de \(3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: solo se conocen los límites</h3>
+  <div class="body">
+  <p>Datos: \(\lim_{x\to 4}G(x)=0\), con \(G(x)\gt 0\) para todo \(x\ne 4\) de un intervalo abierto que contiene a \(4\). De la externa: \(\lim_{u\to 0^{-}}F(u)=-2\) y \(\lim_{u\to 0^{+}}F(u)=6\).</p>
+  <ol class="steps">
+    <li>Como \(-2\ne 6\), el límite externo \(\lim_{u\to 0}F(u)\) no existe.</li>
+    <li>\(F(G(x))\): la interna tiene límite \(0\) y llega por arriba (\(G(x)\gt 0\)). Se usa el lateral derecho: \(\lim_{x\to 4}F(G(x))=6\).</li>
+    <li>\(F(-G(x))\): la interna es \(-G(x)\). Por la propiedad del múltiplo constante, su límite es \((-1)\cdot 0=0\). Como \(G(x)\gt 0\), se tiene \(-G(x)\lt 0\): llega por abajo.</li>
+    <li>Se usa el lateral izquierdo: \(\lim_{x\to 4}F(-G(x))=-2\).</li>
+    <li>\(F([G(x)]^{2})\): la interna es \([G(x)]^{2}\). Por la propiedad de la potencia, su límite es \(0^{2}=0\). Como \(G(x)\ne 0\), su cuadrado es positivo: llega por arriba. \(\lim_{x\to 4}F([G(x)]^{2})=6\).</li>
+    <li>Si de otra interna \(H\) solo se sabe que \(\lim_{x\to 4}H(x)=0\), sin saber de qué lado de \(0\) quedan sus valores, no se puede decidir si \(F(H(x))\) tiene límite en \(4\): falta la condición 2.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>responder «no existe» porque el límite externo no existe</b>. La compuesta puede tener límite: hay que mirar por qué lado llega la interna. Dos: <b>responder \(f(b)\)</b>. En la animación \(f(2)=1\) y el límite de la compuesta es \(3\). Tres: <b>mirar un solo lado de \(a\)</b>. La interna puede llegar por arriba por un lado y por abajo por el otro (ejemplo 3). Cuatro: <b>confundir los lados</b>. «Por la izquierda de \(a\)» habla de \(x\); «por arriba de \(b\)» habla de \(g(x)\). En la animación, \(x\) se acerca a \(1\) por los dos lados y \(g(x)\) llega a \(2\) solo por arriba. Cinco: <b>usar la regla cuando la interna vale justo \(b\)</b> en puntos cercanos a \(a\). Ahí entra el valor de la externa en \(b\) y la regla no se puede usar (recuadro del caso especial).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>La interna es \(m(x)=3+(x-2)^{2}\). La externa es \(n(u)=2u\) si \(u\lt 3\) y \(n(u)=u+1\) si \(u\ge 3\), y la compuesta, \(c(x)=n(m(x))\). a) Halla \(\lim_{x\to 2}m(x)\). b) Halla los límites laterales de \(n\) en ese número. ¿Existe el límite externo? c) ¿Por qué lado llega \(m(x)\)? Halla \(\lim_{x\to 2}n(m(x))\). d) Comprueba con \(c(1{,}9)\) y \(c(2{,}1)\). e) Repite c) con la interna \(x+1\).</p>
+    <details><summary>Pista</summary><div><p>Mira el signo de \(m(x)-3\) para \(x\ne 2\). Con ese signo sabes cuál de los dos tramos de la externa se usa.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) La interna es un polinomio: \(\lim_{x\to 2}m(x)=3+(2-2)^{2}=3+0=3\). Luego \(b=3\).</li>
+        <li>b) Por la izquierda de \(3\), \(n(u)=2u\): el límite es \(2\cdot 3=6\). Por la derecha, \(n(u)=u+1\): el límite es \(3+1=4\). Como \(6\ne 4\), el límite externo no existe.</li>
+        <li>c) \(m(x)-3=(x-2)^{2}\), positivo para todo \(x\ne 2\): \(m(x)\gt 3\), la interna llega por arriba.</li>
+        <li>Se usa el lateral derecho de la externa: \(\lim_{x\to 2}n(m(x))=4\).</li>
+        <li>d) \(m(1{,}9)=3+(-0{,}1)^{2}=3+0{,}01=3{,}01\) y \(n(3{,}01)=3{,}01+1=4{,}01\): \(c(1{,}9)=4{,}01\).</li>
+        <li>\(m(2{,}1)=3+0{,}1^{2}=3+0{,}01=3{,}01\) y \(n(3{,}01)=4{,}01\): \(c(2{,}1)=4{,}01\). Los dos valores están cerca de \(4\).</li>
+        <li>e) Interna \(x+1\): su límite en \(2\) es \(2+1=3\). Para \(x\lt 2\) es menor que \(3\): lateral izquierdo de la externa, \(6\). Para \(x\gt 2\) es mayor que \(3\): lateral derecho, \(4\). Como \(6\ne 4\), \(n(x+1)\) no tiene límite en \(2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>De una función \(w\) se sabe que \(\lim_{x\to 0}w(x)=5\). De una función \(V\) se sabe que \(\lim_{u\to 5^{-}}V(u)=-1\), \(\lim_{u\to 5^{+}}V(u)=2\) y \(V(5)=7\). Decide en cada caso si existe \(\lim_{x\to 0}V(w(x))\) y, si existe, da su valor. Los datos valen para los \(x\ne 0\) de un intervalo abierto que contiene a \(0\): a) \(w(x)\gt 5\); b) \(w(x)\lt 5\); c) \(w(x)\lt 5\) si \(x\lt 0\) y \(w(x)\gt 5\) si \(x\gt 0\); d) no hay más datos; e) \(w(x)=5\).</p>
+    <details><summary>Pista</summary><div><p>El límite externo no existe (\(-1\ne 2\)). En cada caso, decide qué valores le llegan a \(V\): mayores que \(5\), menores que \(5\) o justo \(5\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) La interna llega por arriba: se usa el lateral derecho. El límite es \(2\).</li>
+        <li>b) La interna llega por abajo: se usa el lateral izquierdo. El límite es \(-1\).</li>
+        <li>c) Por la izquierda de \(0\) llega por abajo: lateral \(-1\). Por la derecha de \(0\) llega por arriba: lateral \(2\). Como \(-1\ne 2\), no tiene límite en \(0\).</li>
+        <li>d) No se puede decidir: falta saber de qué lado de \(5\) quedan los valores de \(w\).</li>
+        <li>e) Para esos \(x\), la compuesta vale \(V(5)=7\): es constante cerca de \(0\) y su límite es \(7\). La regla no se puede usar aquí; se estudió directamente.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En la oficina de Valentina, el aire acondicionado se enciende solo cuando la temperatura pasa de \(24\) grados Celsius. <b>Modelo:</b> una tarde, la temperatura a las \(t\) horas después del mediodía es \(T(t)=24+(t-3)^{2}\), para \(2\le t\le 4\). La potencia del equipo, en watts, es \(P(T)=0\) si \(T\le 24\) y \(P(T)=800+100\cdot(T-24)\) si \(T\gt 24\). (Fórmulas inventadas para el ejercicio.) a) Halla el límite de la temperatura en \(t=3\). b) Halla los límites laterales de la potencia en \(T=24\). ¿Existe el límite externo? c) ¿Por qué lado llega la temperatura a \(24\)? Halla el límite de la potencia \(P(T(t))\) en \(t=3\). d) Comprueba con \(t=2{,}9\) y \(t=3{,}1\). e) ¿Cuánto vale la potencia en el propio \(t=3\)? Explica con palabras. f) Otra tarde la temperatura es \(27-t\). Repite c).</p>
+    <details><summary>Pista</summary><div><p>La interna es la temperatura y la externa, la potencia. Mira el signo de \(T(t)-24\) a cada lado de \(t=3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) La temperatura es un polinomio en \(t\): su límite en \(3\) es \(24+(3-3)^{2}=24+0=24\).</li>
+        <li>b) Por la izquierda de \(24\), la potencia es la constante \(0\): el límite es \(0\). Por la derecha, es \(800+100\cdot(T-24)\): el límite es \(800+100\cdot(24-24)=800+100\cdot 0=800\). Como \(0\ne 800\), el límite externo no existe.</li>
+        <li>c) \(T(t)-24=(t-3)^{2}\), positivo para todo \(t\ne 3\): la temperatura llega a \(24\) por arriba, por los dos lados de \(t=3\).</li>
+        <li>Se usa el lateral derecho de la potencia: el límite de \(P(T(t))\) en \(t=3\) es \(800\) watts.</li>
+        <li>d) \(T(2{,}9)=24+(-0{,}1)^{2}=24+0{,}01=24{,}01\) y \(P(24{,}01)=800+100\cdot 0{,}01=800+1=801\).</li>
+        <li>\(T(3{,}1)=24+0{,}1^{2}=24+0{,}01=24{,}01\) y \(P(24{,}01)=801\). Los dos valores están cerca de \(800\).</li>
+        <li>e) \(T(3)=24\) y \(P(24)=0\). Esa tarde la temperatura baja hasta tocar los \(24\) grados y vuelve a subir: el equipo trabaja cerca de \(800\) watts antes y después, y solo en ese instante el modelo lo da por apagado. El límite, \(800\), no mira ese instante.</li>
+        <li>f) El límite de \(27-t\) en \(3\) es \(27-3=24\). Para \(t\lt 3\), \(27-t\) es mayor que \(24\): lateral derecho de la potencia, \(800\). Para \(t\gt 3\), es menor que \(24\): lateral izquierdo, \(0\). Como \(800\ne 0\), la potencia no tiene límite en \(t=3\): el equipo se apaga de golpe.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L30-H05 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* utilidades del lote 30 (propiedades de límites): dos marcos lado a lado, frases con fondo y notas bajo los marcos */
+/* frase corta con fondo, en coordenadas del marco M, corrida (dx, dy) píxeles */
+function prFr(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.textBaseline = 'middle'; c.textAlign = al || 'left'; var w = c.measureText(t).width, px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = al === 'right' ? px - w : (al === 'center' ? px - w/2 : px); c.globalAlpha = 0.9; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 2, py - 7, w + 4, 14); c.globalAlpha = 1; c.fillStyle = col; c.fillText(t, px, py); }
+/* nota bajo los marcos, en coordenadas del mundo; devuelve su ancho en píxeles (para poner una etiqueta TeX a continuación) */
+function prNota(S, t, xw, yw, col){ var c = S.ctx; c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; c.textBaseline = 'middle'; c.textAlign = 'left'; c.fillStyle = col; c.fillText(t, S.X(xw), S.Y(yw)); return c.measureText(t).width; }
+/* anillo alrededor de un punto del marco (para destacar un punto sin taparlo) */
+function prAnillo(S, M, x, y, col, r){ var c = S.ctx; c.setLineDash([]); c.strokeStyle = col; c.lineWidth = 1.4; c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 7, 0, 6.2832); c.stroke(); }
+/* las dos líneas de texto del paso y el contador «paso k de N», sobre el registro */
+function prPie(S, k, N, TXT, yT, yR){ var c = S.ctx; lmTxt(S, TXT[k - 1][0], -1.2, yT); lmTxt(S, TXT[k - 1][1], -1.2, yT - 21/(S.X(1) - S.X(0))); c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = S.C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, S.X(5.2), S.Y(yR) - 26); }
+/* L30 H05 · límite de una compuesta cuando el límite externo no existe: g(x) = 2 + (x − 1)² tiene límite 2 en a = 1 y entrega más que 2 para x ≠ 1; f salta en u = 2 (laterales 1 y 3), pero a f solo le llegan valores mayores que 2: el límite de f(g(x)) es el lateral derecho de f, 3 (por pasos) */
+OA.scene('compext-idea', (function(){
+  var N = 7, Q = '\\\\&\\qquad ';
+  function g(x){ return 2 + (x - 1)*(x - 1); }     /* interna: un polinomio; límite 2 en 1, y g(x) > 2 si x ≠ 1 */
+  function f(z){ return z <= 2 ? z - 1 : 5 - z; }  /* externa: salta en u = 2 */
+  /* lugar, límite de la interna, laterales de la externa en ese número (izquierdo y derecho) */
+  var A = 1, B = 2, KI = 1, KD = 3;
+  /* marco izquierdo: la interna, u = g(x), con 0 ≤ x ≤ 2,2 y 0 ≤ u ≤ 4,4; marco derecho: la externa, y = f(u), con 0 ≤ u ≤ 4,4 y 0 ≤ y ≤ 4,4 */
+  var MG = lmMarco(-0.85, 2.1, 2.6, 2.95, 0, 2.2, 0, 4.4), MF = lmMarco(2.55, 2.1, 2.6, 2.95, 0, 4.4, 0, 4.4);
+  var PZ = [['Q', '\\text{¿a qué se acerca }f(g(x))\\text{ cerca de }1\\text{?}', '¿a qué se acerca f(g(x)) cerca de 1?', 'pt'], ['F', '\\Longrightarrow\\ 3', '⟹ 3', 'diff'],
+    ['EX', 'x', 'x', ''], ['EU1', 'u', 'u', ''], ['EU2', 'u', 'u', ''], ['EY', 'y', 'y', ''],
+    ['CG', 'u=g(x)', 'u = g(x)', ''], ['CF', 'y=f(u)', 'y = f(u)', ''],
+    ['GS', 'g(x)\\gt 2\\text{ si }x\\ne 1', 'g(x) > 2 si x ≠ 1', ''],
+    ['LS', '\\lim_{x\\to 1}f(g(x))=3', 'lím f(g(x)) = 3', 'diff'],
+    ['CM', 'h(0{,}9)=2{,}99;\\ \\ h(1{,}1)=2{,}99', 'h(0,9) = 2,99; h(1,1) = 2,99', ''],
+    ['R1', 'h(x)=f(g(x));\\ \\ a=1', 'h(x) = f(g(x)); a = 1', ''],
+    ['R2', '\\lim_{u\\to 2^{-}}f(u)=1;\\ \\ \\lim_{u\\to 2^{+}}f(u)=3', 'lím u→2⁻ f(u) = 1; lím u→2⁺ f(u) = 3', 'c-tan'],
+    ['R3', '\\lim_{x\\to 1^{-}}g(x)=2;\\ \\ g(x)\\gt 2', 'lím x→1⁻ g(x) = 2; g(x) > 2', 'c-sec'],
+    ['R4', '\\lim_{x\\to 1^{+}}g(x)=2;\\ \\ g(x)\\gt 2', 'lím x→1⁺ g(x) = 2; g(x) > 2', 'c-alt'],
+    ['R5', '\\text{se usa }\\lim_{u\\to 2^{+}}f(u)=3', 'se usa lím u→2⁺ f(u) = 3', 'diff'],
+    ['R6', '\\lim_{x\\to 1}f(g(x))=3', 'lím f(g(x)) = 3', 'diff'],
+    ['R7', 'h(0{,}99)=2{,}9999;\\ \\ h(1{,}01)=2{,}9999', 'h(0,99) = 2,9999; h(1,01) = 2,9999', '']];
+  var TXT = [['A la izquierda, g recibe x y entrega u.', 'A la derecha, f recibe ese u y entrega y.'],
+    ['La externa f salta en u igual a 2: por un lado', 'va hacia 1 y por el otro hacia 3. Sin límite.'],
+    ['Por la izquierda del 1 (flecha azul), g baja', 'hacia 2: ahí entrega siempre más que 2.'],
+    ['Por la derecha del 1 (flecha verde), lo mismo:', 'g va hacia 2 y entrega más que 2.'],
+    ['A f le llegan solo valores mayores que 2:', 'se usa su tramo derecho, que va hacia 3.'],
+    ['El límite externo no existe, pero el de la', 'compuesta sí: es el lateral derecho de f, 3.'],
+    ['Comprobación con valores cercanos al 1:', 'la compuesta da 2,99 y 2,99.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-6.3, y1:7.2}, aspect:13.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: aunque la externa salte, la compuesta puede tener límite, y decide por qué lado llega g. Animación en siete pasos con dos gráficas lado a lado. Uno: a la izquierda, la gráfica de la función interna, u igual a g de x, una parábola con su punto más bajo en 1 coma 2; a la derecha, la gráfica de la función externa, y igual a f de u, con un salto sobre u igual a 2: por la izquierda llega a un punto lleno a la altura 1 y por la derecha parte de un círculo vacío a la altura 3. Dos: se marca en burdeo el salto de f, de la altura 1 a la altura 3: f no tiene límite en 2. Tres: una flecha azul recorre la parábola por la izquierda de 1: lo que entrega g va hacia 2 y es mayor que 2. Cuatro: una flecha verde la recorre por la derecha de 1: también va hacia 2 y es mayor que 2. Cinco: en la gráfica de f, una flecha naranja recorre el tramo derecho hacia el círculo vacío de altura 3: a f solo le llegan valores mayores que 2. Seis: el límite de la compuesta es 3, el lateral derecho de f. Siete: comprobación con valores: h de 0,9 igual a 2,99 y h de 1,1 igual a 2,99. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> por la izquierda de \\(1\\)</span><span><i class="sw alt"></i> por la derecha de \\(1\\)</span><span><i class="sw rise"></i> el tramo de \\(f\\) que se usa y el límite</span><span><i class="sw tan"></i> el salto de \\(f\\)</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, T = dtEtq(S, PZ), a, mu = C.muted || '#6b6b6b';
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      function frase(t, M, x, y, dx, dy, col, al){ prFr(S, M, t, x, y, dx, dy, col, al); }
+      dtQue(S, 'aunque la externa salte, la compuesta', 'puede tener límite: decide por dónde llega g.');
+      /* los dos marcos: ejes con marcas y números; en el de g, la vertical del lugar a = 1 y la horizontal de la altura 2 */
+      lmEjes(S, MG); lmEjes(S, MF); lmSeg(S, MG, A, 0, A, 4.4, mu, 1, [2, 4]); lmSeg(S, MG, 0, B, 2.2, B, mu, 1, [2, 4]);
+      lmEtq(T, MG, 'EX', 2.2, 0, 0, 8, 0); lmEtq(T, MG, 'EU1', 0, 4.4, -50, 0, -13); lmEtq(T, MF, 'EU2', 4.4, 0, 0, 8, 0); lmEtq(T, MF, 'EY', 0, 4.4, -50, 0, -13);
+      /* paso 5 (al fondo): en la gráfica de f, la punteada naranja de la altura 3 */
+      a = ap(5);
+      if (a > 0) lmSeg(S, MF, B, KD, B - B*a, KD, C.rise, 1.2, [5, 3]);
+      /* paso 1: las dos gráficas: la parábola de g y los dos tramos de f */
+      a = Math.min(1, ap(1)*2);
+      lmCurva(S, MG, g, 0, 2.2*a, C.ink, 2);
+      lmCurva(S, MF, f, 1, 1 + a, C.ink, 2); lmCurva(S, MF, f, B + 1e-6, B + 2.4*a, C.ink, 2);
+      if (ap(1) > 0.9){ lmEtq(T, MG, 'CG', 1.1, 4, -50); lmEtq(T, MF, 'CF', 3.3, 4, -50); }
+      /* paso 2: la externa salta en u = 2, de la altura 1 a la altura 3 */
+      a = ap(2);
+      if (a > 0) lmSeg(S, MF, B, KI, B, KI + (KD - KI)*Math.min(1, a*1.6), C.tan, 2.2, 0);
+      if (a > 0.5){ frase('hacia 1', MF, B, KI, 9, 5, C.tan); frase('hacia 3', MF, B, KD, -9, 0, C.tan, 'right'); prNota(S, 'f salta en 2: de 1 a 3', 2.55, 1.4, C.tan); }
+      /* paso 3: por la izquierda del 1, lo que entrega g baja hacia 2 (flecha azul) */
+      a = ap(3);
+      if (a > 0) lmFlecha(S, MG, 0.2, g(0.2), 0.2 + 0.6*a, g(0.2) + (g(0.8) - g(0.2))*a, C.sec, 1.6, 6, -6);
+      if (a > 0.6) frase('hacia 2', MG, 0, B, 5, 9, C.sec);
+      /* paso 4: por la derecha del 1, lo mismo (flecha verde): g entrega más que 2 por los dos lados */
+      a = ap(4);
+      if (a > 0) lmFlecha(S, MG, 1.8, g(1.8), 1.8 - 0.6*a, g(1.8) + (g(1.2) - g(1.8))*a, C.alt, 1.6, -6, -6);
+      if (a > 0.6) T.L('GS', -1.2, 1.4, 0);
+      /* paso 5: a f solo le llegan valores mayores que 2: se recorre su tramo derecho hacia el hueco (2, 3) */
+      a = ap(5);
+      if (a > 0) lmFlecha(S, MF, 3.5, f(3.5), 3.5 - 1.05*a, f(3.5) + (f(2.45) - f(3.5))*a, C.rise, 1.6, 6, -6);
+      if (a > 0.5) prNota(S, 'a f solo le llegan valores mayores que 2', -1.2, 0.9, C.rise);
+      /* puntos de las gráficas (encima de las guías): el más bajo de g, el lleno y el hueco de f */
+      if (ap(1) > 0.5){ lmPunto(S, MG, A, B, C.ink, false, 3); lmPunto(S, MF, B, KI, C.ink, false, 3.2); lmPunto(S, MF, B, KD, C.ink, true, 3.2); }
+      /* paso 6: el límite de la compuesta es el lateral derecho de f */
+      a = ap(6);
+      if (a > 0.3) prAnillo(S, MF, B, KD, C.rise, 7);
+      if (a > 0.6) T.L('LS', -1.2, 0.4, 0);
+      /* paso 7: comprobación con valores cercanos al 1 */
+      a = ap(7);
+      if (a > 0.4) T.L('CM', 5.2, 0.4, -100);
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 5.86, 0); if (k >= 6 && ap(6) > 0.6) T.L('F', 5.2, 5.86, -100);
+      prPie(S, k, N, TXT, -0.3, -1.85);
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.85, [0, 34, 68, 102, 136, 170, 204]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{interna: }g(x)=2+(x-1)^{2}' + Q + '\\text{externa: }f(u)=u-1\\text{ si }u\\le 2' + Q + '\\text{y }f(u)=5-u\\text{ si }u\\gt 2' + Q + '\\text{compuesta: }h(x)=f(g(x))' + Q + '\\text{primero actúa }g\\text{; su resultado }u\\text{ entra en }f' + Q + '\\text{pregunta: ¿a qué se acerca }h(x)\\text{ cerca de }1\\text{?}',
+      '\\text{la externa, a la izquierda de }2\\text{ (}u\\lt 2\\text{):}' + Q + 'f(1{,}9)=1{,}9-1=0{,}9' + Q + 'f(1{,}99)=1{,}99-1=0{,}99' + Q + '\\lim_{u\\to 2^{-}}f(u)=2-1=1' + Q + '\\text{a la derecha de }2\\text{ (}u\\gt 2\\text{):}' + Q + 'f(2{,}1)=5-2{,}1=2{,}9' + Q + 'f(2{,}01)=5-2{,}01=2{,}99' + Q + '\\lim_{u\\to 2^{+}}f(u)=5-2=3' + Q + '1\\ne 3:\\ f\\text{ no tiene límite en }2',
+      '\\text{la interna, por la izquierda del }1:' + Q + 'g(0{,}9)=2+(0{,}9-1)^{2}' + Q + '=2+(-0{,}1)^{2}=2+0{,}01=2{,}01' + Q + 'g(0{,}99)=2+(0{,}99-1)^{2}' + Q + '=2+(-0{,}01)^{2}=2+0{,}0001=2{,}0001' + Q + '\\lim_{x\\to 1^{-}}g(x)=2+(1-1)^{2}=2+0=2' + Q + '(x-1)^{2}\\gt 0\\text{ si }x\\ne 1:\\ g(x)\\gt 2',
+      '\\text{la interna, por la derecha del }1:' + Q + 'g(1{,}1)=2+(1{,}1-1)^{2}' + Q + '=2+0{,}1^{2}=2+0{,}01=2{,}01' + Q + 'g(1{,}01)=2+(1{,}01-1)^{2}' + Q + '=2+0{,}01^{2}=2+0{,}0001=2{,}0001' + Q + '\\lim_{x\\to 1^{+}}g(x)=2+(1-1)^{2}=2+0=2' + Q + '\\text{también }g(x)\\gt 2',
+      '\\lim_{x\\to 1}g(x)=2\\text{, y }g(x)\\gt 2\\text{ si }x\\ne 1' + Q + '\\text{lo que entra en }f\\text{ es mayor que }2' + Q + '\\text{y se acerca a }2\\text{: solo cuenta}' + Q + '\\lim_{u\\to 2^{+}}f(u)=3' + Q + '\\text{el lateral izquierdo, }1\\text{, no participa}',
+      '\\text{límite externo: no existe (}1\\ne 3\\text{)}' + Q + '\\text{límite de la compuesta:}' + Q + '\\lim_{x\\to 1}f(g(x))=\\lim_{u\\to 2^{+}}f(u)=3',
+      '\\text{comprobación con valores:}' + Q + 'h(0{,}9)=f(2{,}01)=5-2{,}01=2{,}99' + Q + 'h(1{,}1)=f(2{,}01)=5-2{,}01=2{,}99' + Q + '\\text{más cerca del }1:' + Q + 'h(0{,}99)=f(2{,}0001)' + Q + '=5-2{,}0001=2{,}9999' + Q + 'h(1{,}01)=f(2{,}0001)' + Q + '=5-2{,}0001=2{,}9999' + Q + '\\text{los valores se acercan a }3' + Q + '\\text{en el propio }1:\\ h(1)=f(2)=2-1=1' + Q + '\\text{ese valor no participa en el límite}']; return dtPasos(R.slice(0, k)); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
