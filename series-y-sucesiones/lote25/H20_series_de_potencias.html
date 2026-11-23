@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Series de potencias | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-potencias" data-hoja="L25 H20">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Series de potencias</b></li>
+    </ol>
+    <h1>Series de potencias</h1>
+    <p class="lede">Una serie de potencias es una suma sin fin de potencias de \((x-a)\), cada una con su coeficiente. Para cada valor de \(x\) es una serie numérica distinta: para unos valores converge y para otros no. Los valores donde converge forman un intervalo centrado en \(a\). \[\sum_{n=0}^{\infty}c_{n}\,(x-a)^{n}=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+\cdots\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie de potencias más simple, \(\displaystyle\sum_{n=0}^{\infty}x^{n}=1+x+x^{2}+x^{3}+\cdots\), probada en cuatro valores de \(x\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes:</b> en horizontal va \(x\), con el centro, \(0\), marcado; en vertical, el valor de las sumas parciales \(S_{n}=1+x+x^{2}+\cdots+x^{n}\). Arriba queda la pregunta: ¿para qué \(x\) converge la serie?</li>
+    <li><b>Cada grupo de cinco puntos es un valor de \(x\):</b> el primer punto está justo sobre ese \(x\) y los demás siguen hacia la derecha, unidos por una línea fina. Son \(S_{0},\ S_{1},\ S_{2},\ S_{3},\ S_{4}\), en ese orden. Las líneas horizontales claras marcan las alturas \(1,\ 2,\ 3,\ 4,\ 5\).</li>
+    <li><b>Pasos 1 a 4, un valor de \(x\) por paso:</b> en \(x=0\) (negro) los cinco puntos están a la altura \(1\). En \(x=\dfrac{1}{2}\) (azul) suben cada vez menos y se juntan bajo la punteada puesta en \(2\). En \(x=-\dfrac{1}{2}\) (verde) suben y bajan cada vez menos en torno a la punteada puesta en \(\dfrac{2}{3}\). En \(x=1\) (naranja) suben siempre lo mismo: no se juntan.</li>
+    <li><b>Paso 5:</b> se pinta burdeo la franja \(-1&lt;x&lt;1\), con anillos abiertos en \(-1\) y en \(1\) porque esos dos valores no entran. La curva burdeo es la suma de la serie en cada \(x\) de la franja, \(\dfrac{1}{1-x}\); pasa por los valores donde se juntan los puntos (anillos sobre la curva).</li>
+    <li><b>Registro y cuenta de abajo:</b> ahí está cada suma parcial calculada desde la anterior, para cada \(x\), y la suma que da la hoja «Series geométricas infinitas». Conclusión: la serie converge solo si \(-1&lt;x&lt;1\); ese intervalo tiene centro \(0\) y radio \(1\).</li>
+  </ol>
+  <div class="stage" data-scene="pot-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Puntos negros:</b> las sumas parciales en \(x=0\), el centro. Todas valen \(1\).</li>
+    <li><b>Puntos azules:</b> las sumas parciales en \(x=\dfrac{1}{2}\). <b>Punteada azul:</b> su límite, \(2\).</li>
+    <li><b>Puntos verdes:</b> las sumas parciales en \(x=-\dfrac{1}{2}\). <b>Punteada verde:</b> su límite, \(\dfrac{2}{3}\).</li>
+    <li><b>Puntos naranjas:</b> las sumas parciales en \(x=1\). No tienen límite.</li>
+    <li><b>Franja y tramo burdeo:</b> los \(x\) donde la serie converge, \(-1&lt;x&lt;1\). <b>Curva burdeo:</b> la suma de la serie, \(\dfrac{1}{1-x}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie de potencias centrada en \(a\):</b> \(\displaystyle\sum_{n=0}^{\infty}c_{n}\,(x-a)^{n}=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+\cdots\)</li>
+      <li><b>Centro:</b> el número fijo \(a\). <b>Coeficientes:</b> los números \(c_{0},\ c_{1},\ c_{2},\ \ldots\); no dependen de \(x\). <b>Variable:</b> \(x\). Cuando \(a=0\) la serie queda \(\displaystyle\sum_{n=0}^{\infty}c_{n}\,x^{n}\).</li>
+      <li><b>Convención:</b> \((x-a)^{0}=1\) para todo \(x\), también cuando \(x=a\). Así el primer término es siempre \(c_{0}\).</li>
+      <li><b>Para cada \(x\) es una serie numérica.</b> Al reemplazar \(x\) por un número, cada término \(c_{n}(x-a)^{n}\) es un número, y la serie converge o diverge según la definición de la hoja «Series infinitas convergentes y divergentes»: converge si sus sumas parciales \(S_{N}=\displaystyle\sum_{n=0}^{N}c_{n}(x-a)^{n}\) tienen límite real cuando \(N\) crece.</li>
+      <li><b>En el centro siempre converge.</b> Con \(x=a\): para \(n\ge 1\), \((a-a)^{n}=0^{n}=0\), así que el término vale \(c_{n}\cdot 0=0\). Entonces \(S_{N}=c_{0}+0+\cdots+0=c_{0}\) para todo \(N\): el límite es \(c_{0}\). La serie converge en \(x=a\) y su suma es \(c_{0}\).</li>
+      <li><b>La serie puede empezar en otro índice,</b> por ejemplo \(\displaystyle\sum_{n=1}^{\infty}\dfrac{x^{n}}{n}\): es la misma definición con \(c_{0}=0\).</li>
+    </ol>
+    <p><b>Ejemplo base: \(\displaystyle\sum_{n=0}^{\infty}x^{n}\).</b> Aquí \(a=0\) y \(c_{n}=1\) para todo \(n\). Sus términos, \(1,\ x,\ x^{2},\ x^{3},\ \ldots\), son los de la serie geométrica de primer término \(1\) y razón \(x\). Por la hoja «Series geométricas infinitas», converge exactamente cuando \(|x|&lt;1\), y entonces \[\sum_{n=0}^{\infty}x^{n}=\dfrac{1}{1-x}\qquad(|x|&lt;1)\] Para \(|x|\ge 1\) diverge. Es lo que muestra la animación.</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». En esta hoja se usan sin demostrar: (1) el teorema de los tres casos del recuadro siguiente, que solo se enuncia; (2) el álgebra de límites: el límite de una constante por una sucesión es la constante por el límite, el de un producto es el producto de los límites y el de un cociente es el cociente de los límites cuando el del denominador no es \(0\); y los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\); (3) las propiedades del valor absoluto: \(|u\cdot v|=|u|\cdot|v|\); \(\left|\dfrac{u}{v}\right|=\dfrac{|u|}{|v|}\) con \(v\ne 0\); y \(|u|&lt;R\) equivale a \(-R&lt;u&lt;R\); (4) los resultados de otras hojas, que se citan sin repetir su demostración: «Series geométricas infinitas», «Criterio del enésimo término», «Series harmónicas y series-p», «Criterio de Leibniz», «Convergencia absoluta y condicional» y «Criterio del cociente para la convergencia»; (5) que una sucesión cuyos términos, sin el signo, son todos mayores o iguales que un mismo número positivo no tiene límite \(0\); (6) que agregar o quitar una cantidad finita de términos no cambia que una serie converja o diverja (se usa al aplicar un criterio a una serie que empieza en \(n=0\) o cuyos términos son distintos de \(0\) solo desde algún \(n\)); (7) que una sucesión que supera cualquier número no tiene límite real. Los valores \(e\) y \(e^{x}\) que se nombran en el ejemplo 2 solo se anuncian.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Teorema (se enuncia): los tres casos</h3>
+    <p>Para una serie de potencias \(\displaystyle\sum_{n=0}^{\infty}c_{n}\,(x-a)^{n}\) ocurre exactamente una de estas tres cosas:</p>
+    <ol class="steps">
+      <li><b>Converge solo en el centro,</b> \(x=a\), y diverge para todo \(x\ne a\). Se dice que el radio de convergencia es \(R=0\).</li>
+      <li><b>Converge para todo \(x\) real,</b> y la convergencia es absoluta. Se dice que el radio de convergencia es infinito, \(R=\infty\).</li>
+      <li><b>Hay un número \(R&gt;0\)</b> tal que la serie converge absolutamente si \(|x-a|&lt;R\) y diverge si \(|x-a|&gt;R\). Ese número es el <b>radio de convergencia</b>.</li>
+    </ol>
+    <p>\(|x-a|\) es la distancia de \(x\) al centro. El caso (3) dice: a menos de \(R\) del centro, converge; a más de \(R\), diverge.</p>
+    <p><b>Lo que el teorema no dice.</b> En el caso (3) hay dos valores a distancia exactamente \(R\) del centro: los extremos \(x=a-R\) y \(x=a+R\). De ellos el teorema no dice nada: en cada uno la serie puede converger o divergir, y hay que revisarlos aparte.</p>
+    <p><b>Intervalo de convergencia:</b> el conjunto de todos los \(x\) donde la serie converge. Según el caso es: (1) solo el punto \(a\); (2) toda la recta, \((-\infty,\ \infty)\); (3) uno de estos cuatro, según lo que pase en cada extremo: \((a-R,\ a+R)\), \([a-R,\ a+R)\), \((a-R,\ a+R]\) o \([a-R,\ a+R]\). Siempre está centrado en \(a\).</p>
+    <p><b>Aviso de rigor.</b> Este teorema <b>se enuncia y no se demuestra</b> en esta hoja: su demostración general compara la serie con una serie geométrica y usa una propiedad de los números reales (la del supremo) que queda fuera de este nivel. «Converge absolutamente» significa que converge la serie de los valores absolutos, \(\displaystyle\sum|c_{n}(x-a)^{n}|\); eso asegura que la serie converge (hoja «Convergencia absoluta y condicional»). En los ejemplos y ejercicios de esta hoja no se usa el teorema para concluir: en cada serie, la convergencia y la divergencia se demuestran directamente con el criterio del cociente y con la revisión de los extremos.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Cómo hallar el radio: el criterio del cociente</h3>
+    <p>Se usa el criterio de la hoja «Criterio del cociente para la convergencia»: para una serie \(\displaystyle\sum u_{n}\) con \(u_{n}\ne 0\) y \(L=\displaystyle\lim_{n\to\infty}\left|\dfrac{u_{n+1}}{u_{n}}\right|\): si \(L&lt;1\), converge absolutamente; si \(L&gt;1\), o si el cociente supera cualquier número, diverge; si \(L=1\), el criterio no decide. («Supera cualquier número»: para cada número \(M\), el cociente es mayor que \(M\) desde algún \(n\) en adelante.)</p>
+    <ol class="steps">
+      <li><b>Se fija un \(x\ne a\)</b> (en \(x=a\) ya se sabe que converge). El término es \(u_{n}=c_{n}(x-a)^{n}\). Hace falta \(c_{n}\ne 0\), al menos desde algún \(n\) en adelante; entonces \(u_{n}\ne 0\).</li>
+      <li><b>Se escribe el cociente</b> de un término con el anterior: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{c_{n+1}(x-a)^{n+1}}{c_{n}(x-a)^{n}}\).</li>
+      <li><b>Se simplifican las potencias:</b> \(\dfrac{(x-a)^{n+1}}{(x-a)^{n}}=x-a\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{c_{n+1}}{c_{n}}\cdot(x-a)\).</li>
+      <li><b>Valor absoluto de un producto:</b> \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=\left|\dfrac{c_{n+1}}{c_{n}}\right|\cdot|x-a|\).</li>
+      <li><b>Límite cuando \(n\) crece.</b> \(x\) está fijo: \(|x-a|\) es una constante. Si \(\displaystyle\lim_{n\to\infty}\left|\dfrac{c_{n+1}}{c_{n}}\right|=\ell\), entonces \(L=\ell\cdot|x-a|\) (límite de una constante por una sucesión).</li>
+      <li><b>Si \(\ell&gt;0\):</b> \(L&lt;1\) es \(\ell\cdot|x-a|&lt;1\); se divide por \(\ell\), que es positivo: \(|x-a|&lt;\dfrac{1}{\ell}\). Para esos \(x\) la serie converge absolutamente. Del mismo modo, \(L&gt;1\) es \(|x-a|&gt;\dfrac{1}{\ell}\): para esos \(x\) diverge. El radio es \(R=\dfrac{1}{\ell}\).</li>
+      <li><b>Si \(\ell=0\):</b> \(L=0\cdot|x-a|=0&lt;1\) para todo \(x\ne a\). La serie converge absolutamente para todo \(x\): \(R=\infty\).</li>
+      <li><b>Si \(\left|\dfrac{c_{n+1}}{c_{n}}\right|\) supera cualquier número:</b> dado \(M&gt;0\), desde algún \(n\) en adelante \(\left|\dfrac{c_{n+1}}{c_{n}}\right|&gt;\dfrac{M}{|x-a|}\); se multiplica por \(|x-a|\), que es positivo: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|&gt;M\). El cociente supera cualquier número: la serie diverge para todo \(x\ne a\). Solo converge en el centro: \(R=0\).</li>
+    </ol>
+    <p><b>Por qué los extremos se revisan aparte.</b> En el paso 6, si \(|x-a|=R=\dfrac{1}{\ell}\), entonces \(L=\ell\cdot\dfrac{1}{\ell}=1\): justo el caso en que el criterio del cociente no decide. En cada extremo se reemplaza \(x\) y queda una serie numérica, que se estudia con otra herramienta:</p>
+    <ol class="steps">
+      <li>si sus términos no tienden a \(0\): diverge, por el criterio del enésimo término (hoja «Criterio del enésimo término»);</li>
+      <li>si es la armónica o una serie \(p\): hoja «Series harmónicas y series-p»;</li>
+      <li>si es alternante: criterio de Leibniz (hoja «Criterio de Leibniz»);</li>
+      <li>si la serie de sus valores absolutos converge: converge (hoja «Convergencia absoluta y condicional»).</li>
+    </ol>
+    <p><b>Límite de este método.</b> Sirve cuando \(\left|\dfrac{c_{n+1}}{c_{n}}\right|\) tiene límite o supera cualquier número. Si no ocurre ninguna de las dos cosas, el radio existe igual (teorema de los tres casos), pero hay que hallarlo de otra manera, que no se ve en esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Número ↔ figura: la distancia al centro y el radio</h2>
+  <p>La serie del ejemplo 4, \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(x-2)^{n}}{3^{n}}\), con centro \(a=2\) y radio \(R=3\). Ahora eliges tú el valor de \(x\). La figura compara la distancia de \(x\) al centro con el radio y muestra qué pasa con los términos.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la recta de arriba:</b> el punto negro es el centro, \(a=2\). Las dos cotas burdeo, una a cada lado, miden el radio, \(R=3\): llegan a \(-1\) y a \(5\). El tramo burdeo entre \(-1\) y \(5\) es donde la serie converge; los anillos abiertos indican que \(-1\) y \(5\) no entran.</li>
+    <li><b>Mira después el punto naranja:</b> es el \(x\) elegido, con su valor. Bajo la recta, la cota naranja mide su distancia al centro, \(|x-2|\).</li>
+    <li><b>Las barras de abajo</b> son los tamaños, sin el signo, de los términos de \(n=0\) a \(n=5\). Azul: el término es positivo; naranja: es negativo. La punteada horizontal marca la altura \(1\). El número sobre cada barra está redondeado a dos decimales.</li>
+    <li><b>Mueve el deslizador \(x\)</b> de \(-2\) a \(6\). Mientras la distancia es menor que \(3\), las barras se achican. En \(x=-1\) y en \(x=5\) todas miden \(1\). Más lejos, crecen. En \(x=2\), el centro (caso límite), solo queda la primera barra.</li>
+    <li><b>Cuenta de abajo:</b> datos; la distancia \(|x-2|\); la comparación con el radio; la razón \(r=\dfrac{x-2}{3}\); el tamaño de los seis términos como fracción exacta; la conclusión, con la suma cuando converge; y qué significa.</li>
+  </ol>
+  <div class="stage" data-scene="pot-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Punto negro:</b> el centro, \(a=2\). <b>Cotas y tramo burdeo:</b> el radio, \(R=3\), y el intervalo de convergencia, \((-1,\ 5)\).</li>
+    <li><b>Punto y cota naranja:</b> el \(x\) elegido y su distancia al centro, \(|x-2|\).</li>
+    <li><b>Barras azules:</b> tamaño de los términos positivos. <b>Barras naranjas:</b> tamaño de los términos negativos (aparecen cuando \(x&lt;2\), en los \(n\) impares).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{x^{n}}{n}\). Radio e intervalo de convergencia</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se identifican el centro y los coeficientes: \(a=0\) y \(c_{n}=\dfrac{1}{n}\), para \(n\ge 1\). En \(x=0\) todos los términos valen \(\dfrac{0^{n}}{n}=0\): la serie converge (su suma es \(0\)).</li>
+    <li>Se fija \(x\ne 0\). Término: \(u_{n}=\dfrac{x^{n}}{n}\ne 0\). Término siguiente: \(u_{n+1}=\dfrac{x^{n+1}}{n+1}\).</li>
+    <li>Cociente (dividir es multiplicar por el inverso): \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x^{n+1}}{n+1}\cdot\dfrac{n}{x^{n}}\).</li>
+    <li>Se simplifican las potencias, \(\dfrac{x^{n+1}}{x^{n}}=x\): \(\dfrac{u_{n+1}}{u_{n}}=x\cdot\dfrac{n}{n+1}\).</li>
+    <li>Valor absoluto de un producto; \(\dfrac{n}{n+1}\) es positivo: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=|x|\cdot\dfrac{n}{n+1}\).</li>
+    <li>Se divide el numerador y el denominador por \(n\): \(\dfrac{n}{n+1}=\dfrac{n:n}{(n+1):n}=\dfrac{1}{1+\frac{1}{n}}\).</li>
+    <li>Límite: como \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\), el denominador tiene límite \(1+0=1\) y el cociente, \(\dfrac{1}{1}=1\). Entonces \(L=|x|\cdot 1=|x|\).</li>
+    <li>Criterio del cociente: si \(|x|&lt;1\), la serie converge absolutamente; si \(|x|&gt;1\), diverge. El radio es \(R=1\). Si \(|x|=1\), es \(L=1\) y el criterio no decide: quedan los extremos \(x=1\) y \(x=-1\).</li>
+    <li><b>Extremo \(x=1\):</b> se reemplaza, \(\dfrac{1^{n}}{n}=\dfrac{1}{n}\). Queda \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\), la serie armónica: diverge (hoja «Series harmónicas y series-p»).</li>
+    <li><b>Extremo \(x=-1\):</b> se reemplaza y queda \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n}}{n}=-1+\dfrac{1}{2}-\dfrac{1}{3}+\cdots\) Es alternante, empieza restando y su tamaño es \(b_{n}=\dfrac{1}{n}\): positivo, decreciente y con límite \(0\). Por el criterio de Leibniz, converge (hoja «Criterio de Leibniz», ejemplo 1).</li>
+    <li>Se junta todo: converge si \(-1&lt;x&lt;1\) y en \(x=-1\); diverge en \(x=1\) y si \(|x|&gt;1\). <b>Intervalo de convergencia: \([-1,\ 1)\)</b>, es decir, \(-1\le x&lt;1\).</li>
+    <li>En \(x=-1\) la convergencia no es absoluta: la serie de los valores absolutos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\), que diverge. Es convergencia condicional (hoja «Convergencia absoluta y condicional»).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{n!}\). Converge para todo \(x\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Centro y coeficientes: \(a=0\) y \(c_{n}=\dfrac{1}{n!}\), con \(0!=1\). En \(x=0\) converge y su suma es \(c_{0}=\dfrac{1}{0!}=1\).</li>
+    <li>Se fija \(x\ne 0\). Término: \(u_{n}=\dfrac{x^{n}}{n!}\ne 0\). Término siguiente: \(u_{n+1}=\dfrac{x^{n+1}}{(n+1)!}\).</li>
+    <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x^{n+1}}{(n+1)!}\cdot\dfrac{n!}{x^{n}}\).</li>
+    <li>Se simplifican las potencias: \(\dfrac{x^{n+1}}{x^{n}}=x\).</li>
+    <li>Se simplifican los factoriales: como \((n+1)!=(n+1)\cdot n!\), es \(\dfrac{n!}{(n+1)!}=\dfrac{1}{n+1}\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x}{n+1}\).</li>
+    <li>Valor absoluto; \(n+1\) es positivo: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=\dfrac{|x|}{n+1}=|x|\cdot\dfrac{1}{n+1}\).</li>
+    <li>Límite: \(|x|\) es constante y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\). Entonces \(L=|x|\cdot 0=0\).</li>
+    <li>\(L=0&lt;1\), sea cual sea \(x\): por el criterio del cociente, la serie converge absolutamente para todo \(x\ne 0\); y en \(x=0\) también converge.</li>
+    <li>Radio de convergencia: \(R=\infty\). <b>Intervalo de convergencia: \((-\infty,\ \infty)\).</b> No hay extremos que revisar.</li>
+    <li>Un caso con números, \(x=1\): los términos son \(\dfrac{1}{0!}=1\), \(\dfrac{1}{1!}=1\), \(\dfrac{1}{2!}=\dfrac{1}{2}\), \(\dfrac{1}{3!}=\dfrac{1}{6}\), \(\dfrac{1}{4!}=\dfrac{1}{24}\).</li>
+    <li>Sumas parciales: \(S_{0}=1\); \(S_{1}=1+1=2\); \(S_{2}=2+\dfrac{1}{2}=\dfrac{4}{2}+\dfrac{1}{2}=\dfrac{5}{2}\); \(S_{3}=\dfrac{5}{2}+\dfrac{1}{6}=\dfrac{15}{6}+\dfrac{1}{6}=\dfrac{16}{6}=\dfrac{8}{3}\); \(S_{4}=\dfrac{8}{3}+\dfrac{1}{24}=\dfrac{64}{24}+\dfrac{1}{24}=\dfrac{65}{24}\approx 2{,}708\).</li>
+    <li>Anuncio, sin demostración: la suma de esta serie en \(x=1\) es el número \(e\approx 2{,}718\), y para cada \(x\) es \(e^{x}\). Eso corresponde a las hojas siguientes, sobre series de Taylor y de Maclaurin.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: \(\displaystyle\sum_{n=0}^{\infty}n!\,x^{n}\). Converge solo en el centro</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Centro y coeficientes: \(a=0\) y \(c_{n}=n!\). En \(x=0\) converge y su suma es \(c_{0}=0!=1\).</li>
+    <li>Se fija \(x\ne 0\). Término: \(u_{n}=n!\,x^{n}\ne 0\). Término siguiente: \(u_{n+1}=(n+1)!\,x^{n+1}\).</li>
+    <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{(n+1)!\,x^{n+1}}{n!\,x^{n}}\).</li>
+    <li>Se simplifican los factoriales, \(\dfrac{(n+1)!}{n!}=\dfrac{(n+1)\cdot n!}{n!}=n+1\), y las potencias, \(\dfrac{x^{n+1}}{x^{n}}=x\): \(\dfrac{u_{n+1}}{u_{n}}=(n+1)\,x\).</li>
+    <li>Valor absoluto; \(n+1\) es positivo: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=(n+1)\,|x|\).</li>
+    <li>Ese cociente supera cualquier número: dado \(M&gt;0\), si \(n+1&gt;\dfrac{M}{|x|}\), al multiplicar por \(|x|\), que es positivo, queda \((n+1)\,|x|&gt;M\).</li>
+    <li>Por el criterio del cociente (cociente que supera cualquier número), la serie diverge. Vale para todo \(x\ne 0\), por chico que sea.</li>
+    <li>Un caso con números, \(x=0{,}1\): el cociente es \((n+1)\cdot 0{,}1\). Para \(n=9\) vale \(10\cdot 0{,}1=1\); para \(n=19\), \(20\cdot 0{,}1=2\); para \(n=99\), \(100\cdot 0{,}1=10\). Desde \(n=10\) cada término es más grande que el anterior.</li>
+    <li>La serie converge solo en \(x=0\). Radio de convergencia: \(R=0\). <b>El intervalo de convergencia se reduce al punto \(0\).</b></li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: centro distinto de cero. \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(x-2)^{n}}{3^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Centro y coeficientes: \(a=2\) y \(c_{n}=\dfrac{1}{3^{n}}\). En \(x=2\) converge y su suma es \(c_{0}=\dfrac{1}{3^{0}}=\dfrac{1}{1}=1\).</li>
+    <li>Se fija \(x\ne 2\). Término: \(u_{n}=\dfrac{(x-2)^{n}}{3^{n}}\ne 0\). Término siguiente: \(u_{n+1}=\dfrac{(x-2)^{n+1}}{3^{n+1}}\).</li>
+    <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{(x-2)^{n+1}}{3^{n+1}}\cdot\dfrac{3^{n}}{(x-2)^{n}}\).</li>
+    <li>Se simplifican las potencias: \(\dfrac{(x-2)^{n+1}}{(x-2)^{n}}=x-2\) y \(\dfrac{3^{n}}{3^{n+1}}=\dfrac{1}{3}\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x-2}{3}\).</li>
+    <li>Valor absoluto de un cociente: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=\dfrac{|x-2|}{3}\). No depende de \(n\): su límite es \(L=\dfrac{|x-2|}{3}\).</li>
+    <li>\(L&lt;1\) es \(\dfrac{|x-2|}{3}&lt;1\); se multiplica por \(3\): \(|x-2|&lt;3\). Ahí la serie converge absolutamente. Del mismo modo, si \(|x-2|&gt;3\), diverge. El radio es \(R=3\).</li>
+    <li>Se escribe sin valor absoluto: \(|x-2|&lt;3\) equivale a \(-3&lt;x-2&lt;3\). Se suma \(2\) en las tres partes: \(-3+2&lt;x&lt;3+2\), es decir, \(-1&lt;x&lt;5\).</li>
+    <li>Los extremos son \(a-R=2-3=-1\) y \(a+R=2+3=5\). En ellos \(L=1\): se revisan aparte.</li>
+    <li><b>Extremo \(x=5\):</b> \(\dfrac{(5-2)^{n}}{3^{n}}=\dfrac{3^{n}}{3^{n}}=1\). Queda \(1+1+1+\cdots\): el término vale \(1\) y no tiende a \(0\). Diverge (hoja «Criterio del enésimo término»).</li>
+    <li><b>Extremo \(x=-1\):</b> \(\dfrac{(-1-2)^{n}}{3^{n}}=\dfrac{(-3)^{n}}{3^{n}}=\left(\dfrac{-3}{3}\right)^{n}=(-1)^{n}\). Queda \(1-1+1-1+\cdots\): el término tiene tamaño \(1\) y no tiende a \(0\) (aviso de rigor, 5). Diverge (hoja «Criterio del enésimo término»).</li>
+    <li><b>Intervalo de convergencia: \((-1,\ 5)\)</b>, centrado en \(2\) y de radio \(3\).</li>
+    <li>Además, aquí se puede calcular la suma. Potencia de un cociente: \(\dfrac{(x-2)^{n}}{3^{n}}=\left(\dfrac{x-2}{3}\right)^{n}\). Es la serie geométrica de primer término \(1\) y razón \(r=\dfrac{x-2}{3}\); para \(|r|&lt;1\) su suma es \(\dfrac{1}{1-r}\) (hoja «Series geométricas infinitas»).</li>
+    <li>Se calcula \(1-r\) con denominador común: \(1-\dfrac{x-2}{3}=\dfrac{3}{3}-\dfrac{x-2}{3}=\dfrac{3-(x-2)}{3}\). Se quita el paréntesis: \(3-x+2=5-x\). Queda \(1-r=\dfrac{5-x}{3}\).</li>
+    <li>Se invierte: \(\dfrac{1}{1-r}=1:\dfrac{5-x}{3}=\dfrac{3}{5-x}\). Entonces \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(x-2)^{n}}{3^{n}}=\dfrac{3}{5-x}\) para \(-1&lt;x&lt;5\).</li>
+    <li>Comprobación con \(x=3{,}5\): \(\dfrac{3}{5-3{,}5}=\dfrac{3}{1{,}5}=2\), el mismo valor que da la animación.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Olvidar los extremos: el criterio del cociente da el radio, pero en \(x=a-R\) y \(x=a+R\) no decide, y cada uno se revisa aparte (en el ejemplo 1, uno converge y el otro no). Creer que \(L=1\) significa que la serie diverge: significa que el criterio no decide. Tomar el límite respecto de \(x\): el límite es cuando \(n\) crece, con \(x\) fijo. Olvidar el valor absoluto y escribir \(x&lt;R\) en vez de \(|x-a|&lt;R\). Centrar el intervalo en \(0\) cuando el centro es otro: el intervalo va de \(a-R\) a \(a+R\). Y olvidar que en el centro, \(x=a\), toda serie de potencias converge, aunque el radio sea \(0\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Halla el radio y el intervalo de convergencia de: (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{x^{n}}{n^{2}}\); (b) \(\displaystyle\sum_{n=0}^{\infty}2^{n}x^{n}\); (c) \(\displaystyle\sum_{n=0}^{\infty}(n+1)!\,x^{n}\).</p>
+    <details><summary>Pista</summary><div><p>En cada una, fija \(x\ne 0\), escribe \(\left|\dfrac{u_{n+1}}{u_{n}}\right|\), simplifica y busca su límite cuando \(n\) crece. Si hay radio \(R&gt;0\), revisa los dos extremos aparte.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Centro \(a=0\), coeficientes \(c_{n}=\dfrac{1}{n^{2}}\). Con \(x\ne 0\): \(u_{n}=\dfrac{x^{n}}{n^{2}}\) y \(u_{n+1}=\dfrac{x^{n+1}}{(n+1)^{2}}\).</li>
+        <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x^{n+1}}{(n+1)^{2}}\cdot\dfrac{n^{2}}{x^{n}}\). Se simplifican las potencias de \(x\): \(x\cdot\dfrac{n^{2}}{(n+1)^{2}}\).</li>
+        <li>Valor absoluto, y cociente de cuadrados como cuadrado del cociente: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=|x|\cdot\left(\dfrac{n}{n+1}\right)^{2}\).</li>
+        <li>Límite: \(\dfrac{n}{n+1}=\dfrac{1}{1+\frac{1}{n}}\) tiene límite \(\dfrac{1}{1+0}=1\) (como en el ejemplo 1); su cuadrado, límite de un producto, \(1\cdot 1=1\). Entonces \(L=|x|\cdot 1=|x|\).</li>
+        <li>Si \(|x|&lt;1\) converge absolutamente; si \(|x|&gt;1\) diverge. Radio: \(R=1\). Extremos: \(x=1\) y \(x=-1\).</li>
+        <li>Extremo \(x=1\): queda \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\), serie \(p\) con \(p=2&gt;1\): converge (hoja «Series harmónicas y series-p»).</li>
+        <li>Extremo \(x=-1\): queda \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n}}{n^{2}}\). Sus valores absolutos son \(\left|\dfrac{(-1)^{n}}{n^{2}}\right|=\dfrac{1}{n^{2}}\), y \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\) converge: la serie converge absolutamente, así que converge (hoja «Convergencia absoluta y condicional»).</li>
+        <li>Converge en los dos extremos. Intervalo de convergencia: \([-1,\ 1]\).</li>
+        <li>(b) Centro \(a=0\), coeficientes \(c_{n}=2^{n}\). Con \(x\ne 0\): \(u_{n}=2^{n}x^{n}\) y \(u_{n+1}=2^{n+1}x^{n+1}\).</li>
+        <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{2^{n+1}x^{n+1}}{2^{n}x^{n}}\). Se simplifica: \(\dfrac{2^{n+1}}{2^{n}}=2\) y \(\dfrac{x^{n+1}}{x^{n}}=x\). Queda \(2x\).</li>
+        <li>Valor absoluto: \(|2x|=2\,|x|\). No depende de \(n\): \(L=2\,|x|\).</li>
+        <li>\(L&lt;1\) es \(2\,|x|&lt;1\); se divide por \(2\): \(|x|&lt;\dfrac{1}{2}\). Ahí converge absolutamente; si \(|x|&gt;\dfrac{1}{2}\), diverge. Radio: \(R=\dfrac{1}{2}\).</li>
+        <li>Extremo \(x=\dfrac{1}{2}\): \(2^{n}\left(\dfrac{1}{2}\right)^{n}=\left(2\cdot\dfrac{1}{2}\right)^{n}=1^{n}=1\). El término no tiende a \(0\): diverge (hoja «Criterio del enésimo término»).</li>
+        <li>Extremo \(x=-\dfrac{1}{2}\): \(2^{n}\left(-\dfrac{1}{2}\right)^{n}=\left(2\cdot\left(-\dfrac{1}{2}\right)\right)^{n}=(-1)^{n}\). Tiene tamaño \(1\) y no tiende a \(0\): diverge.</li>
+        <li>Intervalo de convergencia: \(\left(-\dfrac{1}{2},\ \dfrac{1}{2}\right)\).</li>
+        <li>(c) Centro \(a=0\), coeficientes \(c_{n}=(n+1)!\). Con \(x\ne 0\): \(u_{n}=(n+1)!\,x^{n}\) y \(u_{n+1}=(n+2)!\,x^{n+1}\).</li>
+        <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{(n+2)!\,x^{n+1}}{(n+1)!\,x^{n}}\). Como \((n+2)!=(n+2)\cdot(n+1)!\), se simplifica: \((n+2)\,x\).</li>
+        <li>Valor absoluto: \((n+2)\,|x|\). Supera cualquier número: dado \(M&gt;0\), si \(n+2&gt;\dfrac{M}{|x|}\), entonces \((n+2)\,|x|&gt;M\).</li>
+        <li>Por el criterio del cociente, diverge para todo \(x\ne 0\). Converge solo en \(x=0\), donde su suma es \(c_{0}=(0+1)!=1!=1\). Radio: \(R=0\); el intervalo de convergencia se reduce al punto \(0\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Para la serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(x-1)^{n}}{n\cdot 2^{n}}\): (a) halla el centro, el radio y el intervalo de convergencia; (b) sin hacer más cuentas con la serie, di si converge en \(x=0\), en \(x=2{,}5\) y en \(x=4\).</p>
+    <details><summary>Pista</summary><div><p>El centro es el número que se resta de \(x\). En el cociente, \(\dfrac{2^{n}}{2^{n+1}}=\dfrac{1}{2}\). En (b), calcula la distancia de cada \(x\) al centro y compárala con el radio.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Centro: \(a=1\). Coeficientes: \(c_{n}=\dfrac{1}{n\cdot 2^{n}}\). Con \(x\ne 1\): \(u_{n}=\dfrac{(x-1)^{n}}{n\cdot 2^{n}}\) y \(u_{n+1}=\dfrac{(x-1)^{n+1}}{(n+1)\cdot 2^{n+1}}\).</li>
+        <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{(x-1)^{n+1}}{(n+1)\cdot 2^{n+1}}\cdot\dfrac{n\cdot 2^{n}}{(x-1)^{n}}\).</li>
+        <li>Se simplifican las potencias: \(\dfrac{(x-1)^{n+1}}{(x-1)^{n}}=x-1\) y \(\dfrac{2^{n}}{2^{n+1}}=\dfrac{1}{2}\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x-1}{2}\cdot\dfrac{n}{n+1}\).</li>
+        <li>Valor absoluto: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=\dfrac{|x-1|}{2}\cdot\dfrac{n}{n+1}\).</li>
+        <li>Límite: \(\dfrac{n}{n+1}\) tiene límite \(1\) (ejemplo 1). Entonces \(L=\dfrac{|x-1|}{2}\cdot 1=\dfrac{|x-1|}{2}\).</li>
+        <li>\(L&lt;1\) es \(\dfrac{|x-1|}{2}&lt;1\); se multiplica por \(2\): \(|x-1|&lt;2\). Ahí converge absolutamente; si \(|x-1|&gt;2\), diverge. Radio: \(R=2\).</li>
+        <li>Sin valor absoluto: \(-2&lt;x-1&lt;2\). Se suma \(1\): \(-1&lt;x&lt;3\). Extremos: \(a-R=1-2=-1\) y \(a+R=1+2=3\).</li>
+        <li>Extremo \(x=3\): \(\dfrac{(3-1)^{n}}{n\cdot 2^{n}}=\dfrac{2^{n}}{n\cdot 2^{n}}=\dfrac{1}{n}\). Queda la serie armónica: diverge (hoja «Series harmónicas y series-p»).</li>
+        <li>Extremo \(x=-1\): \(\dfrac{(-1-1)^{n}}{n\cdot 2^{n}}=\dfrac{(-2)^{n}}{n\cdot 2^{n}}=\dfrac{(-1)^{n}\cdot 2^{n}}{n\cdot 2^{n}}=\dfrac{(-1)^{n}}{n}\). Es la serie alternante del ejemplo 1: converge (criterio de Leibniz).</li>
+        <li>Intervalo de convergencia: \([-1,\ 3)\), es decir, \(-1\le x&lt;3\).</li>
+        <li>(b) \(x=0\): distancia al centro, \(|0-1|=|-1|=1\). Como \(1&lt;2\), converge.</li>
+        <li>\(x=2{,}5\): distancia, \(|2{,}5-1|=1{,}5\). Como \(1{,}5&lt;2\), converge.</li>
+        <li>\(x=4\): distancia, \(|4-1|=3\). Como \(3&gt;2\), diverge.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una fábrica hace latas con \(100\) kg de aluminio. Cuando esas latas se usan, se recicla una fracción \(x\) de su aluminio, con \(0\le x&lt;1\), y con él se hacen latas nuevas; de esas se vuelve a reciclar la misma fracción \(x\), y así sin fin. En este modelo simplificado, el total de aluminio que llega a ser lata es \(T=100+100x+100x^{2}+\cdots=\displaystyle\sum_{n=0}^{\infty}100\,x^{n}\) kg. (a) ¿Qué centro y qué coeficientes tiene esta serie de potencias, y para qué \(x\) converge? (b) Con \(x=0{,}6\), ¿cuánto aluminio se ha usado en las tres primeras tandas, y cuánto en total? (c) ¿Qué fracción hay que reciclar para que el total sea \(500\) kg? (d) ¿Qué dice la serie si se reciclara todo, \(x=1\)?</p>
+    <details><summary>Pista</summary><div><p>Es \(100\) veces la serie \(\displaystyle\sum x^{n}\): geométrica de primer término \(100\) y razón \(x\). Su suma, cuando \(|x|&lt;1\), es \(\dfrac{100}{1-x}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) No se resta nada de \(x\): el centro es \(a=0\). Los coeficientes son todos iguales: \(c_{n}=100\).</li>
+        <li>Con \(x\ne 0\): \(u_{n}=100\,x^{n}\) y \(u_{n+1}=100\,x^{n+1}\). Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{100\,x^{n+1}}{100\,x^{n}}=x\). Valor absoluto: \(|x|\). No depende de \(n\): \(L=|x|\).</li>
+        <li>Si \(|x|&lt;1\) converge absolutamente; si \(|x|&gt;1\) diverge. Radio: \(R=1\).</li>
+        <li>Extremos: en \(x=1\) el término es \(100\cdot 1^{n}=100\); en \(x=-1\) es \(100\cdot(-1)^{n}\), de tamaño \(100\). En los dos, el término no tiende a \(0\): diverge (hoja «Criterio del enésimo término»). Intervalo de convergencia: \((-1,\ 1)\).</li>
+        <li>En el problema \(x\) es una fracción con \(0\le x&lt;1\): todos esos valores están en el intervalo, así que el total existe.</li>
+        <li>(b) Tandas con \(x=0{,}6\): primera, \(100\) kg; segunda, \(100\cdot 0{,}6=60\) kg; tercera, \(60\cdot 0{,}6=36\) kg.</li>
+        <li>Suma parcial: \(100+60=160\); \(160+36=196\). En las tres primeras tandas se usan \(196\) kg.</li>
+        <li>Total: es una serie geométrica de primer término \(100\) y razón \(0{,}6\), con \(|0{,}6|&lt;1\) (hoja «Series geométricas infinitas»): \(T=\dfrac{100}{1-0{,}6}\).</li>
+        <li>Se resta en el denominador: \(1-0{,}6=0{,}4\). Se divide: \(100:0{,}4=1000:4=250\). Total: \(250\) kg.</li>
+        <li>(c) Se pide \(\dfrac{100}{1-x}=500\). Se multiplica cada lado por \(1-x\), que es positivo: \(100=500\,(1-x)\).</li>
+        <li>Se divide por \(500\): \(1-x=\dfrac{100}{500}=\dfrac{1}{5}=0{,}2\).</li>
+        <li>Se despeja \(x\): \(x=1-0{,}2=0{,}8\). Hay que reciclar el \(80\,\%\).</li>
+        <li>Comprobación: \(\dfrac{100}{1-0{,}8}=\dfrac{100}{0{,}2}=\dfrac{1000}{2}=500\). ✓</li>
+        <li>(d) Con \(x=1\) la serie es \(100+100+100+\cdots\) Sus sumas parciales son \(S_{N}=100\,(N+1)\): superan cualquier número. La serie diverge: \(x=1\) es un extremo que queda fuera del intervalo de convergencia.</li>
+        <li>Qué significa: con reciclaje perfecto, el mismo aluminio se usaría una y otra vez sin fin, y no hay un total finito. Para cualquier fracción menor que \(1\), el total es finito y vale \(\dfrac{100}{1-x}\) kg.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<section>
+  <p><b>Lo que sigue.</b> Dentro de su intervalo de convergencia, una serie de potencias define una función de \(x\): su suma. Las hojas siguientes del lote tratan cómo representar funciones como series de potencias y las series de Taylor y de Maclaurin.</p>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H20 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H20 · series de potencias: la misma serie, Σ xⁿ, es una serie numérica distinta para cada x; converge solo en un intervalo centrado en el centro */
+function ci20Seg(S, x0, y0, x1, y1, col, wd, dash, al){ var c = S.ctx; c.globalAlpha = al == null ? 1 : al; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); c.moveTo(S.X(x0), S.Y(y0)); c.lineTo(S.X(x1), S.Y(y1)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+function ci20Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+/* fracción p/q en TeX, ya simplificada por quien llama; el signo va delante */
+function ci20Fr(p, q){ var s = p < 0 ? '-' : ''; p = Math.abs(p); return q === 1 ? s + p : s + '\\dfrac{' + p + '}{' + q + '}'; }
+/* p/q ≥ 0 con dos decimales, redondeo exacto (mitad hacia arriba), con coma */
+function ci20Dec(p, q){ var n = Math.floor((200*p + q)/(2*q)), e = Math.floor(n/100), d = n % 100; return e + ',' + (d < 10 ? '0' : '') + d; }
+/* mitades: k/2 escrito con coma; tex = 1 para TeX */
+function ci20Med(k, tex){ var a = Math.abs(k), s = (k < 0 ? (tex ? '-' : '−') : '') + Math.floor(a/2); return a % 2 ? s + (tex ? '{,}5' : ',5') : s; }
+OA.scene('pot-idea', (function(){
+  var N = 5, DR = 0.11;
+  var COL = [{x:0, s:[1, 1, 1, 1, 1], c:'ink'}, {x:0.5, s:[1, 3/2, 7/4, 15/8, 31/16], c:'sec', lim:2}, {x:-0.5, s:[1, 1/2, 3/4, 5/8, 11/16], c:'alt', lim:2/3}, {x:1, s:[1, 2, 3, 4, 5], c:'rise'}];
+  var PZ = [['C0', 'S_{n}=1', 'Sₙ = 1', 'pt'], ['C1', '\\to 2', '→ 2', 'c-sec'], ['C2', '\\to\\tfrac{2}{3}', '→ 2/3', 'c-alt'],
+    ['CV', '\\text{suma: }\\tfrac{1}{1-x}', 'suma: 1/(1 − x)', 'c-tan'], ['IV', '\\text{converge si }-1<x<1', 'converge si −1 < x < 1', 'c-tan'],
+    ['Q', '\\textstyle\\sum_{n=0}^{\\infty}x^{n}\\quad\\text{¿para qué }x\\text{ converge?}', 'Σ xⁿ ¿para qué x converge?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{solo si }-1<x<1\\text{: centro }0\\text{, radio }1', '⟹ solo si −1 < x < 1: centro 0, radio 1', 'diff'],
+    ['R1', 'x=0\\text{:}\\quad 1,\\ 1,\\ 1,\\ 1,\\ 1\\ \\to 1', 'x = 0: 1, 1, 1, 1, 1 → 1', ''],
+    ['R2', 'x=\\tfrac{1}{2}\\text{:}\\quad 1,\\ \\tfrac{3}{2},\\ \\tfrac{7}{4},\\ \\tfrac{15}{8},\\ \\tfrac{31}{16}\\ \\to 2', 'x = 1/2: 1, 3/2, 7/4, 15/8, 31/16 → 2', ''],
+    ['R3', 'x=-\\tfrac{1}{2}\\text{:}\\quad 1,\\ \\tfrac{1}{2},\\ \\tfrac{3}{4},\\ \\tfrac{5}{8},\\ \\tfrac{11}{16}\\ \\to\\tfrac{2}{3}', 'x = −1/2: 1, 1/2, 3/4, 5/8, 11/16 → 2/3', ''],
+    ['R4', 'x=1\\text{:}\\quad 1,\\ 2,\\ 3,\\ 4,\\ 5\\quad\\text{sin límite}', 'x = 1: 1, 2, 3, 4, 5 sin límite', ''],
+    ['R5', '|x|<1\\ \\Longrightarrow\\ \\textstyle\\sum_{n=0}^{\\infty}x^{n}=\\dfrac{1}{1-x}', '|x| < 1 ⟹ Σ xⁿ = 1/(1 − x)', 'diff']];
+  var TXT = [['En el centro, 0, todas las sumas parciales', 'valen 1: ahí la serie converge.'],
+    ['Azul, en 0,5: las sumas parciales suben cada', 'vez menos y se juntan bajo 2: converge.'],
+    ['Verde, en −0,5: suben y bajan cada vez menos', 'y se juntan cerca de 0,67: converge.'],
+    ['Naranja, en 1: cada suma parcial es 1 más que', 'la anterior. No se juntan: diverge.'],
+    ['Converge solo en la franja burdeo, centrada', 'en 0. La curva es la suma en cada punto.']];
+  function gx(x){ return 2.0 + 2.1*x; } function gy(y){ return 1.0 + y; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.1, y1:8.5}, aspect:12.6/6.6,
+    aria:'Arriba, una franja dice qué muestra: la misma serie, probada en cuatro valores de x, converge solo cerca del centro. Animación en cinco pasos. En horizontal va x, de menos 1 a 1, con el centro, 0, marcado; en vertical, el valor de las sumas parciales, de 0 a 5. La serie es la suma de las potencias de x: 1 más x más x al cuadrado, y así. Sobre cada valor de x probado se dibujan sus cinco primeras sumas parciales, como cinco puntos unidos por una línea fina, de izquierda a derecha. Uno: en x igual a 0, el centro, los cinco puntos están a la misma altura, 1. Dos: en x igual a un medio, puntos azules a las alturas 1, tres medios, siete cuartos, quince octavos y treinta y un dieciseisavos; suben cada vez menos y se juntan bajo una punteada puesta en 2. Tres: en x igual a menos un medio, puntos verdes a las alturas 1, un medio, tres cuartos, cinco octavos y once dieciseisavos; suben y bajan cada vez menos en torno a una punteada puesta en dos tercios. Cuatro: en x igual a 1, puntos naranjas a las alturas 1, 2, 3, 4 y 5; suben siempre lo mismo y no se juntan. Cinco: se sombrea en burdeo la franja vertical entre x igual a menos 1 y x igual a 1, con los extremos marcados con anillos abiertos, y se traza la curva de la suma, 1 dividido por 1 menos x, que pasa por los valores donde se juntan los puntos. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta, solo si x está entre menos 1 y 1, se escribe debajo de ella. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span>puntos negros: sumas parciales en \\(x=0\\), el centro</span><span><i class="sw sec"></i> sumas parciales en \\(x=\\tfrac{1}{2}\\)</span><span><i class="sw alt"></i> sumas parciales en \\(x=-\\tfrac{1}{2}\\)</span><span><i class="sw rise"></i> sumas parciales en \\(x=1\\)</span><span><i class="sw tan"></i> franja donde la serie converge, \\(-1&lt;x&lt;1\\), y curva de la suma, \\(\\tfrac{1}{1-x}\\)</span><span>en cada grupo, los puntos van de izquierda a derecha: \\(S_{0},\\ S_{1},\\ S_{2},\\ S_{3},\\ S_{4}\\)</span>',
+    anim:{run:36000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, j, w, wj, o, col, px, py, qx, qy, ex, ey, xa, xb, n, t;
+      function txt(tx, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(tx, X(x), Y(y)); }
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      function tag(tx, x, y, col, al){ c.font = '600 11.5px ' + F; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(tx, X(x), Y(y)); }
+      function anillo(x, y, col, al){ c.globalAlpha = al; c.beginPath(); c.arc(X(x), Y(y), 3.6, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.strokeStyle = col; c.lineWidth = 1.6; c.setLineDash([]); c.stroke(); c.globalAlpha = 1; }
+      /* paso 5: franja vertical donde la serie converge */
+      if (k === 5) S.poly([[gx(-1), gy(0)], [gx(1), gy(0)], [gx(1), gy(5.2)], [gx(-1), gy(5.2)]], {fill:C.tan, alpha:0.1*u});
+      /* líneas de altura 1…5, para leer el valor de cada punto */
+      for (i = 1; i <= 5; i++) ci20Seg(S, gx(-1.25), gy(i), gx(1.45), gy(i), C.ink, 0.7, [2, 4], 0.22);
+      /* ejes */
+      S.line(gx(-1.25), gy(0), gx(1.45), gy(0), {color:C.ink, width:1.1}); S.line(gx(-1.25), gy(0), gx(-1.25), gy(5.3), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [[-1, '−1'], [-0.5, '−0,5'], [0, '0'], [0.5, '0,5'], [1, '1']].forEach(function(q){ c.beginPath(); c.moveTo(X(gx(q[0])), Y(gy(0)) - 3); c.lineTo(X(gx(q[0])), Y(gy(0)) + 3); c.stroke(); num(q[1], X(gx(q[0])), Y(gy(0)) + 11, 'center'); });
+      for (i = 0; i <= 5; i++){ c.beginPath(); c.moveTo(X(gx(-1.25)) - 3, Y(gy(i))); c.lineTo(X(gx(-1.25)) + 3, Y(gy(i))); c.stroke(); num('' + i, X(gx(-1.25)) - 7, Y(gy(i)), 'right'); }
+      num('x', X(gx(1.45)) + 5, Y(gy(0)), 'left'); num('Sₙ', X(gx(-1.25)) + 6, Y(gy(5.3)) - 2, 'left'); num('centro', X(gx(0)), Y(gy(0)) + 23, 'center');
+      /* paso 5: tramo del eje donde converge, extremos abiertos, y curva de la suma */
+      if (k === 5){ xa = gx(-1); xb = gx(-1) + (gx(1) - gx(-1))*u; ci20Seg(S, xa, gy(0), xb, gy(0), C.tan, 3, null, 0.85);
+        n = 80; c.strokeStyle = C.tan; c.lineWidth = 1.8; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = -1 + 1.8*u*i/n; if (i) c.lineTo(X(gx(t)), Y(gy(1/(1 - t)))); else c.moveTo(X(gx(t)), Y(gy(1/(1 - t)))); } c.stroke();
+        anillo(gx(-1), gy(0), C.tan, 1); if (u > 0.97) anillo(gx(1), gy(0), C.tan, 1); }
+      /* un grupo de cinco puntos por cada x probado: sus sumas parciales S₀…S₄, de izquierda a derecha */
+      for (j = 0; j < 4; j++){ if (k < j + 1) continue; o = COL[j]; col = C[o.c]; wj = k === j + 1 ? u : 1;
+        if (o.lim != null && wj > 0.75) ci20Seg(S, gx(o.x) - 0.1, gy(o.lim), gx(o.x) + 4*DR + 0.14, gy(o.lim), col, 1.1, [4, 3], Math.min(1, (wj - 0.75)*4)*0.85);
+        for (i = 0; i < 5; i++){ w = Math.max(0, Math.min(1, wj*5 - i)); if (w <= 0) break; px = gx(o.x) + DR*i; py = gy(o.s[i]);
+          if (i){ qx = gx(o.x) + DR*(i - 1); qy = gy(o.s[i - 1]); ex = qx + (px - qx)*w; ey = qy + (py - qy)*w; ci20Seg(S, qx, qy, ex, ey, col, 1, null, 0.55); } else { ex = px; ey = py; }
+          c.globalAlpha = i ? 1 : w; c.beginPath(); c.arc(X(ex), Y(ey), 2.7, 0, 6.2832); c.fillStyle = col; c.fill(); c.globalAlpha = 1; }
+        if (wj > 0.9){ if (j === 0) L('C0', gx(0) + 2*DR, gy(0.52), -50); if (j === 1) L('C1', gx(0.5) + 4*DR + 0.1, gy(1.58), 0); if (j === 2) L('C2', gx(-0.5) + 2*DR, gy(1.36), -50); if (j === 3) tag('no se juntan', gx(1) + 2*DR, gy(5.34), C.rise, 'center'); } }
+      /* paso 5: la curva pasa por los valores donde se juntan los puntos */
+      if (k === 5){ if (u > 0.56) anillo(gx(0), gy(1), C.tan, 1); if (u > 0.28) anillo(gx(-0.5), gy(2/3), C.tan, 1); if (u > 0.84) anillo(gx(0.5), gy(2), C.tan, 1);
+        if (u > 0.6){ L('IV', gx(-0.97), gy(4.72), 0); L('CV', gx(0.68), gy(3.95), -100); } }
+      L('Q', -1.2, 7.18, 0); if (k === N && u > 0.5) L('F', -1.2, 6.74, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.2); txt(TXT[k - 1][1], -1.2, 0.2 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(7.18));
+      dtQue(S, 'la misma serie, probada en cuatro', 'valores de x, converge solo cerca del centro.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.15, [6, 36, 66, 96, 128]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', f = function(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }, H = '\\left(' + f(1, 2) + '\\right)', M = '\\left(-' + f(1, 2) + '\\right)', R = [
+      '\\text{Serie: }\\displaystyle\\sum_{n=0}^{\\infty}x^{n}=1+x+x^{2}+x^{3}+\\cdots' + Q + '\\text{Es }\\textstyle\\sum c_{n}(x-a)^{n}\\text{ con centro }a=0\\text{ y }c_{n}=1.' + Q + '\\text{Primer término: }x^{0}=1\\text{ (convención).}' + Q + '\\text{Suma parcial: }S_{n}=1+x+x^{2}+\\cdots+x^{n}' + Q + '\\text{Con sumatoria: }S_{n}=\\displaystyle\\sum_{k=0}^{n}x^{k}'
+        + Q + '\\text{Cada una es la anterior más una potencia:}' + Q + 'S_{n}=S_{n-1}+x^{n}' + Q + '\\text{En el centro, }x=0\\text{: }0^{1}=0,\\ 0^{2}=0,\\ 0^{3}=0,\\ 0^{4}=0' + Q + 'S_{0}=1' + Q + 'S_{1}=S_{0}+0^{1}=1+0=1' + Q + 'S_{2}=S_{1}+0^{2}=1+0=1' + Q + 'S_{3}=S_{2}+0^{3}=1+0=1' + Q + 'S_{4}=S_{3}+0^{4}=1+0=1'
+        + Q + '\\text{Todas valen }1\\text{: su límite es }1.' + Q + '\\text{En }x=0\\text{ la serie converge y suma }1.',
+      '\\text{En }x=' + f(1, 2) + '=0{,}5\\text{. Cada potencia es la anterior}' + Q + '\\text{por }' + f(1, 2) + '\\text{ (se duplica el denominador):}' + Q + H + '^{1}=' + f(1, 2) + ',\\ ' + H + '^{2}=' + f(1, 4) + ',\\ ' + H + '^{3}=' + f(1, 8) + ',\\ ' + H + '^{4}=' + f(1, 16)
+        + Q + 'S_{0}=1' + Q + 'S_{1}=S_{0}+' + f(1, 2) + '=' + f(2, 2) + '+' + f(1, 2) + '=' + f(3, 2) + Q + 'S_{2}=S_{1}+' + f(1, 4) + '=' + f(6, 4) + '+' + f(1, 4) + '=' + f(7, 4) + Q + 'S_{3}=S_{2}+' + f(1, 8) + '=' + f(14, 8) + '+' + f(1, 8) + '=' + f(15, 8) + Q + 'S_{4}=S_{3}+' + f(1, 16) + '=' + f(30, 16) + '+' + f(1, 16) + '=' + f(31, 16)
+        + Q + '\\text{Lo que le falta a }S_{4}\\text{ para llegar a }2\\text{:}' + Q + '2-S_{4}=' + f(32, 16) + '-' + f(31, 16) + '=' + f(1, 16) + Q + '\\text{Es una serie geométrica de razón }' + f(1, 2) + Q + '\\text{(hoja «Series geométricas infinitas»).}' + Q + '\\text{Como }\\left|' + f(1, 2) + '\\right|<1\\text{, converge y suma}'
+        + Q + '\\dfrac{1}{1-\\frac{1}{2}}=\\dfrac{1}{\\frac{1}{2}}=2\\quad\\text{(punteada azul)}',
+      '\\text{En }x=-' + f(1, 2) + '=-0{,}5\\text{. Cada potencia es la anterior}' + Q + '\\text{por }-' + f(1, 2) + '\\text{ (cambia el signo):}' + Q + M + '^{1}=-' + f(1, 2) + ',\\quad ' + M + '^{2}=' + f(1, 4) + Q + M + '^{3}=-' + f(1, 8) + ',\\quad ' + M + '^{4}=' + f(1, 16)
+        + Q + 'S_{0}=1' + Q + 'S_{1}=S_{0}-' + f(1, 2) + '=' + f(2, 2) + '-' + f(1, 2) + '=' + f(1, 2) + Q + 'S_{2}=S_{1}+' + f(1, 4) + '=' + f(2, 4) + '+' + f(1, 4) + '=' + f(3, 4) + Q + 'S_{3}=S_{2}-' + f(1, 8) + '=' + f(6, 8) + '-' + f(1, 8) + '=' + f(5, 8) + Q + 'S_{4}=S_{3}+' + f(1, 16) + '=' + f(10, 16) + '+' + f(1, 16) + '=' + f(11, 16)
+        + Q + '11:16=0{,}6875' + Q + '\\text{Es geométrica de razón }-' + f(1, 2) + '\\text{, y }\\left|-' + f(1, 2) + '\\right|=' + f(1, 2) + '<1\\text{:}' + Q + '\\text{converge y suma}' + Q + '\\dfrac{1}{1-\\left(-\\frac{1}{2}\\right)}=\\dfrac{1}{1+\\frac{1}{2}}=\\dfrac{1}{\\frac{3}{2}}=' + f(2, 3) + '\\approx 0{,}67' + Q + '\\text{(punteada verde).}',
+      '\\text{En }x=1\\text{. Toda potencia de }1\\text{ vale }1\\text{: }1^{n}=1' + Q + 'S_{0}=1' + Q + 'S_{1}=S_{0}+1=1+1=2' + Q + 'S_{2}=S_{1}+1=2+1=3' + Q + 'S_{3}=S_{2}+1=3+1=4' + Q + 'S_{4}=S_{3}+1=4+1=5' + Q + '\\text{En general, }S_{n}=n+1\\text{: supera cualquier}' + Q + '\\text{número. No tiene límite real.}'
+        + Q + '\\text{En }x=1\\text{ la serie diverge.}' + Q + '\\text{(Es geométrica de razón }1\\text{, y }|1|<1\\text{ es falso.)}',
+      '\\text{Para cualquier }x\\text{, es la serie geométrica de}' + Q + '\\text{primer término }1\\text{ y razón }x.' + Q + '\\text{Por la hoja «Series geométricas infinitas»:}' + Q + '\\text{converge exactamente cuando }|x|<1,' + Q + '\\text{es decir, }-1<x<1\\text{ (franja burdeo), y ahí}' + Q + '\\displaystyle\\sum_{n=0}^{\\infty}x^{n}=\\dfrac{1}{1-x}\\quad\\text{(curva burdeo)}'
+        + Q + '\\text{Comprobación con los tres valores:}' + Q + 'x=0\\text{: }\\dfrac{1}{1-0}=\\dfrac{1}{1}=1' + Q + 'x=' + f(1, 2) + '\\text{: }\\dfrac{1}{1-\\frac{1}{2}}=2' + Q + 'x=-' + f(1, 2) + '\\text{: }\\dfrac{1}{1+\\frac{1}{2}}=' + f(2, 3) + Q + '\\text{En }x=1\\text{ y en }x=-1\\text{ se tiene }|x|=1\\text{:}' + Q + '\\text{no se cumple }|x|<1\\text{; la serie diverge.}'
+        + Q + '\\text{La serie converge en el intervalo }(-1,\\,1)\\text{:}' + Q + '\\text{centro }0\\text{, radio }1.'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: en Σ (x − 2)ⁿ/3ⁿ, la distancia de x al centro 2, comparada con el radio 3, decide si la serie converge; las barras son los tamaños de los términos */
+OA.scene('pot-vivo', (function(){
+  var i, PZ = [['A', 'a=2', 'a = 2', 'pt'], ['RL', 'R=3', 'R = 3', 'c-tan'], ['RR', 'R=3', 'R = 3', 'c-tan']];
+  for (i = -8; i <= 8; i++){ PZ.push(['X' + (i + 8), 'x=' + ci20Med(4 + i, 1), 'x = ' + ci20Med(4 + i), 'diff']); PZ.push(['D' + (i + 8), '|x-2|=' + ci20Med(Math.abs(i), 1), '|x − 2| = ' + ci20Med(Math.abs(i)), 'diff']); }
+  function nx(x){ return -0.8 + 0.64*(x + 2.5); }
+  function kk(v){ return Math.max(-8, Math.min(8, Math.round(((v.x == null ? 3.5 : v.x) - 2)*2))); }
+  function est(k){ var a = Math.abs(k); return a === 0 ? 0 : a < 6 ? 1 : a === 6 ? 2 : 3; }
+  var EST = ['x es el centro: solo queda el primer término', 'distancia menor que el radio: la serie converge', 'distancia igual al radio: extremo; aquí diverge', 'distancia mayor que el radio: la serie diverge'];
+  var YL = 5.5, YB = 0.5, HB = 0.72;
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-1.3, y1:8.1}, aspect:9.4/6.6,
+    aria:'Arriba, una franja dice qué muestra: la distancia de x al centro, comparada con el radio, decide si la serie converge. La serie es la suma de x menos 2 elevado a n, dividido por 3 elevado a n, con centro 2 y radio de convergencia 3. Arriba hay una recta numérica de menos 2 a 6. El centro, 2, está marcado; dos cotas burdeo, una a cada lado, marcan el radio, 3, y llegan hasta menos 1 y hasta 5; el tramo entre menos 1 y 5 está pintado burdeo, con anillos abiertos en los extremos. Un deslizador elige x, de menos 2 a 6, de medio en medio. El punto x es naranja y lleva su valor; bajo la recta, una cota naranja marca su distancia al centro, con su valor. Abajo, seis barras muestran el tamaño, sin el signo, de los términos de n igual a 0 hasta n igual a 5, cada una con su valor con dos decimales; son azules si el término es positivo y naranjas si es negativo, y una punteada marca la altura 1. Si x está a menos de 3 del centro, las barras se achican y la serie converge; si x es menos 1 o 5, todas las barras miden 1 y la serie diverge; si x está a más de 3, las barras crecen y la serie diverge; si x es 2, el centro, solo queda la primera barra. Bajo las barras, tres frases dicen la distancia, el radio y la conclusión; más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'x', tex:'x', min:-2, max:6, step:0.5, value:3.5}],
+    legend:'<span><i class="sw rise"></i> el punto \\(x\\) elegido y su distancia al centro, \\(|x-2|\\)</span><span><i class="sw tan"></i> radio de convergencia, \\(R=3\\), y tramo \\(-1&lt;x&lt;5\\) donde la serie converge</span><span><i class="sw sec"></i> barra de un término positivo</span><span><i class="sw rise"></i> barra de un término negativo</span><span>cada barra mide el tamaño del término, sin el signo; el número sobre ella está redondeado a dos decimales</span>',
+    anim:{run:34000, hold:3000, still:1, apply:function(p, v){ v.q = p; v.x = -2 + 0.5*Math.min(16, Math.floor(p*17)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var k = kk(v), a = Math.abs(k), x = 2 + k/2, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', g = ci20Mcd(k, 6), p = k/g, q = 6/g, P = Math.abs(p), e = est(k), j, n, h, pn, qn, bx, y, neg, col, xm;
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* recta numérica, con el tramo donde la serie converge */
+      S.line(nx(-2.5), YL, nx(6.5), YL, {color:C.ink, width:1.1});
+      ci20Seg(S, nx(-1), YL, nx(5), YL, C.tan, 3.2, null, 0.8);
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (j = -2; j <= 6; j++){ c.beginPath(); c.moveTo(X(nx(j)), Y(YL) - 3); c.lineTo(X(nx(j)), Y(YL) + 3); c.stroke(); num(j < 0 ? '−' + (-j) : '' + j, X(nx(j)), Y(YL) + 11, 'center'); }
+      [-1, 5].forEach(function(t){ c.beginPath(); c.arc(X(nx(t)), Y(YL), 3.8, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 1.6; c.stroke(); });
+      /* el radio, a cada lado del centro */
+      ci20Seg(S, nx(-1), YL + 0.7, nx(5), YL + 0.7, C.tan, 1.4); [-1, 2, 5].forEach(function(t){ ci20Seg(S, nx(t), YL + 0.62, nx(t), YL + 0.78, C.tan, 1.4); });
+      ci20Seg(S, nx(-1), YL, nx(-1), YL + 0.7, C.tan, 0.9, [2, 3], 0.7); ci20Seg(S, nx(5), YL, nx(5), YL + 0.7, C.tan, 0.9, [2, 3], 0.7); ci20Seg(S, nx(2), YL, nx(2), YL + 0.7, C.ink, 0.9, [2, 3], 0.6);
+      T.L('RL', nx(0.5), YL + 0.96, -50); T.L('RR', nx(3.5), YL + 0.96, -50); T.L('A', nx(2), YL + 1.0, -50);
+      c.beginPath(); c.arc(X(nx(2)), Y(YL), 3, 0, 6.2832); c.fillStyle = C.ink; c.fill();
+      /* el punto x y su distancia al centro */
+      ci20Seg(S, nx(2), YL, nx(2), YL - 0.62, C.rise, 0.9, [2, 3], 0.7); ci20Seg(S, nx(x), YL, nx(x), YL - 0.62, C.rise, 0.9, [2, 3], 0.7);
+      if (a){ ci20Seg(S, nx(2), YL - 0.62, nx(x), YL - 0.62, C.rise, 1.8); ci20Seg(S, nx(2), YL - 0.7, nx(2), YL - 0.54, C.rise, 1.8); ci20Seg(S, nx(x), YL - 0.7, nx(x), YL - 0.54, C.rise, 1.8); }
+      c.beginPath(); c.arc(X(nx(x)), Y(YL), 4.2, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+      T.L('X' + (k + 8), nx(x), YL + 0.32, -50);
+      xm = Math.max(nx(-0.6), Math.min(nx(4.6), (nx(2) + nx(x))/2)); T.L('D' + (k + 8), xm, YL - 0.95, -50);
+      /* barras: tamaño de los términos n = 0…5, sin el signo */
+      c.font = '600 11.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Tamaño de cada término, sin el signo (n = 0 a 5):', X(-1.2), Y(4.08));
+      S.line(-0.25, YB, 4.9, YB, {color:C.ink, width:1.1}); S.line(-0.25, YB, -0.25, YB + 4.4*HB, {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (j = 0; j <= 4; j++){ c.beginPath(); c.moveTo(X(-0.25) - 3, Y(YB + j*HB)); c.lineTo(X(-0.25) + 3, Y(YB + j*HB)); c.stroke(); num('' + j, X(-0.25) - 7, Y(YB + j*HB), 'right'); }
+      ci20Seg(S, -0.25, YB + HB, 4.9, YB + HB, C.ink, 0.9, [4, 3], 0.45);
+      pn = 1; qn = 1;
+      for (n = 0; n <= 5; n++){ bx = 0.1 + 0.8*n; h = pn/qn; neg = p < 0 && n % 2 === 1; col = neg ? C.rise : C.sec;
+        if (h > 0){ S.poly([[bx, YB], [bx + 0.5, YB], [bx + 0.5, YB + h*HB], [bx, YB + h*HB]], {fill:col, alpha:0.8}); }
+        else ci20Seg(S, bx, YB, bx + 0.5, YB, C.sec, 3, null, 0.8);
+        num(ci20Dec(pn, qn), X(bx + 0.25), Y(YB + h*HB) - 8, 'center', C.ink); num('' + n, X(bx + 0.25), Y(YB) + 11, 'center');
+        pn *= P; qn *= q; }
+      num('n', X(4.9) + 5, Y(YB), 'left');
+      y = Y(YB) + 34;
+      txt('distancia de x al centro: ' + ci20Med(a), X(-1.2), y, 'left', C.rise);
+      txt('radio de convergencia: 3', X(-1.2), y + 21, 'left', C.tan);
+      txt(EST[e], X(-1.2), y + 42, 'left', e === 1 || e === 0 ? C.sec : C.rise);
+      dtQue(S, 'la distancia de x al centro,', 'comparada con el radio, decide si converge.');
+      T.fin();
+    },
+    caption:function(v){ var k = kk(v), a = Math.abs(k); return 'Con x igual a ' + ci20Med(4 + k) + ', la distancia al centro es ' + ci20Med(a) + ' y el radio es 3. ' + ['Es el centro: la serie converge y suma 1.', 'La distancia es menor que el radio: la serie converge.', 'La distancia es igual al radio: es un extremo, y en este extremo la serie diverge.', 'La distancia es mayor que el radio: la serie diverge.'][est(k)]; },
+    readout:function(v){ var k = kk(v), a = Math.abs(k), e = est(k), Q = '\\\\&\\qquad ', fr = ci20Fr, g = ci20Mcd(k, 6), p = k/g, q = 6/g, P = Math.abs(p), xs = ci20Med(4 + k, 1), ds = ci20Med(k, 1), as = ci20Med(a, 1), rs = fr(p, q), L = [], s, n, pn, qn, A, g2, w, g3, l1 = [], l2 = [];
+      L.push('\\text{Datos: la serie }\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{(x-2)^{n}}{3^{n}}' + Q + '\\text{Centro: }a=2.\\quad\\text{Radio: }R=3\\text{ (ejemplo 4).}' + Q + '\\text{Punto elegido: }x=' + xs);
+      L.push('\\text{Distancia de }x\\text{ al centro:}' + Q + 'x-2=' + xs + '-2=' + ds + Q + '|x-2|=' + (k < 0 ? '|' + ds + '|=' : '') + as);
+      L.push('\\text{Comparación con el radio:}' + Q + ['|x-2|=0\\text{: }x\\text{ es el centro.}', as + '<3\\text{: }x\\text{ está dentro del radio.}', as + '=3\\text{: }x\\text{ es un extremo, }' + (k < 0 ? 'a-R=2-3=-1.' : 'a+R=2+3=5.'), as + '>3\\text{: }x\\text{ está fuera del radio.}'][e]);
+      s = '\\text{Cada término es una potencia de un cociente:}' + Q + '\\dfrac{(x-2)^{n}}{3^{n}}=\\left(\\dfrac{x-2}{3}\\right)^{n}=r^{\\,n},\\quad r=\\dfrac{x-2}{3}' + Q + 'r=\\dfrac{' + ds + '}{3}';
+      if (k % 2){ s += '=\\dfrac{' + ds + '\\cdot 2}{3\\cdot 2}=\\dfrac{' + k + '}{6}'; if (g > 1) s += '=' + rs; else if (k < 0) s += '=' + rs; }
+      else if (g > 2 || k === 0) s += '=' + rs; else if (k < 0) s += '=' + rs;
+      L.push(s);
+      if (e === 0) L.push('\\text{Términos (barras): con }r=0,' + Q + 'n=0\\text{: }0^{0}=1\\text{ (convención)}' + Q + 'n\\ge 1\\text{: }0^{n}=0' + Q + '\\text{Tamaños: }1,\\ 0,\\ 0,\\ 0,\\ 0,\\ 0');
+      else if (P === q) L.push('\\text{Tamaño de los términos (barras):}' + Q + '|r|^{n}=1^{n}=1\\text{ para todo }n' + Q + '\\text{Tamaños: }1,\\ 1,\\ 1,\\ 1,\\ 1,\\ 1' + (p < 0 ? Q + '\\text{Como }r=-1\\text{, los signos se alternan:}' + Q + '1-1+1-1+1-1+\\cdots' : Q + '\\text{Como }r=1\\text{, la serie es }1+1+1+1+\\cdots'));
+      else { pn = 1; qn = 1; for (n = 0; n <= 5; n++){ l1.push(n === 0 ? '1' : '\\dfrac{' + pn + '}{' + qn + '}'); l2.push(((100*pn) % qn === 0 ? '' : '\\approx ') + ci20Dec(pn, qn).replace(',', '{,}')); pn *= P; qn *= q; }
+        L.push('\\text{Tamaño de los términos (barras):}' + Q + '|r|^{n}=\\left(\\dfrac{' + P + '}{' + q + '}\\right)^{n}=\\dfrac{' + P + '^{n}}{' + q + '^{n}}' + Q + '\\text{Con }n=0,\\ 1,\\ 2,\\ 3,\\ 4,\\ 5\\text{:}' + Q + l1.slice(0, 3).join(',\\quad ') + ',' + Q + l1.slice(3).join(',\\quad ') + Q + '\\text{Con dos decimales:}' + Q + l2.slice(0, 3).join(';\\quad ') + ';' + Q + l2.slice(3).join(';\\quad ')
+          + Q + (P < q ? '\\text{Cada barra es más baja que la anterior.}' : '\\text{Cada barra es más alta que la anterior.}') + (p < 0 ? Q + '\\text{Como }r<0\\text{, los términos de }n\\text{ impar son}' + Q + '\\text{negativos (barras naranjas).}' : '')); }
+      if (e === 0) L.push('\\text{Sumas parciales: }S_{0}=1,\\ S_{1}=1+0=1,\\ \\ldots' + Q + '\\text{Todas valen }1\\text{: la serie converge y suma }1.' + Q + '\\text{Caso límite: en el centro, toda serie de}' + Q + '\\text{potencias converge y suma }c_{0}\\text{; aquí, }c_{0}=\\dfrac{1}{3^{0}}=1.');
+      else if (e === 1){ A = q - p; g2 = ci20Mcd(q, A); s = '\\text{Es geométrica de razón }r=' + rs + '\\text{, y }|r|=' + fr(P, q) + '<1\\text{:}' + Q + '\\text{converge (hoja «Series geométricas}' + Q + '\\text{infinitas») y su suma es }\\dfrac{1}{1-r}.' + Q + '1-r=1' + (p < 0 ? '-\\left(' + rs + '\\right)=1+' + fr(P, q) : '-' + rs) + '=\\dfrac{' + q + '}{' + q + '}' + (p < 0 ? '+' : '-') + fr(P, q) + '=\\dfrac{' + A + '}{' + q + '}'
+          + Q + '\\dfrac{1}{1-r}=1:\\dfrac{' + A + '}{' + q + '}=' + (A === 1 ? '\\dfrac{' + q + '}{1}=' + q : '\\dfrac{' + q + '}{' + A + '}' + (g2 > 1 ? '=' + fr(q/g2, A/g2) : ''));
+        w = 6 - k; s += Q + '\\text{Comprobación con la suma del ejemplo 4:}' + Q + '\\dfrac{3}{5-x}=\\dfrac{3}{5-' + (4 + k < 0 ? '(' + xs + ')' : xs) + '}=\\dfrac{3}{' + ci20Med(w, 1) + '}';
+        if (w % 2){ s += Q + '\\phantom{\\dfrac{3}{5-x}}=\\dfrac{3\\cdot 2}{' + ci20Med(w, 1) + '\\cdot 2}=\\dfrac{6}{' + w + '}'; g3 = ci20Mcd(6, w); if (w === 1) s += '=6'; else if (g3 > 1) s += '=' + fr(6/g3, w/g3); }
+        else { g3 = ci20Mcd(3, w/2); if (w === 2) s += '=3'; else if (g3 > 1) s += '=' + fr(3/g3, w/2/g3); }
+        L.push(s + '\\ \\checkmark'); }
+      else if (e === 2) L.push(p > 0 ? '\\text{Sumas parciales: }S_{0}=1,\\ S_{1}=1+1=2,' + Q + 'S_{2}=2+1=3,\\ \\ldots\\ \\text{ En general, }S_{n}=n+1.' + Q + '\\text{Superan cualquier número: la serie diverge.}' + Q + '\\text{En un extremo el teorema no dice nada: se}' + Q + '\\text{revisa aparte, como aquí. En }x=5\\text{ diverge.}'
+        : '\\text{Los términos valen }1\\text{ o }-1\\text{: su tamaño es }1' + Q + '\\text{y no tienden a }0.' + Q + '\\text{Por el criterio del enésimo término (hoja}' + Q + '\\text{«Criterio del enésimo término»), la serie}' + Q + '\\text{diverge.}' + Q + '\\text{En un extremo el teorema no dice nada: se}' + Q + '\\text{revisa aparte, como aquí. En }x=-1\\text{ diverge.}');
+      else L.push('\\text{Como }|r|=' + fr(P, q) + '>1\\text{, todos los tamaños son}' + Q + '\\text{mayores o iguales que }1\\text{: los términos no}' + Q + '\\text{tienden a }0.' + Q + '\\text{Por el criterio del enésimo término (hoja}' + Q + '\\text{«Criterio del enésimo término»), la serie}' + Q + '\\text{diverge.}');
+      L.push('\\text{Qué significa: la serie converge cuando}' + Q + '|x-2|<3\\text{, es decir, }-1<x<5\\text{ (tramo burdeo).}' + Q + ['\\text{El centro siempre está en ese tramo.}', '\\text{Este }x\\text{ está en ese tramo.}', '\\text{Este }x\\text{ es un extremo y no entra en el tramo.}', '\\text{Este }x\\text{ queda fuera.}'][e] + Q + '\\text{Intervalo de convergencia: }(-1,\\,5).');
+      return dtPasos(L); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

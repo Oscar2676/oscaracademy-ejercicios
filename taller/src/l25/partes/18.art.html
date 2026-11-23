@@ -1,0 +1,266 @@
+<!--file:H18_convergencia_absoluta_y_condicional.html-->
+<!--title:Convergencia absoluta y condicional-->
+<!--id:ss-absoluta-->
+<!--tab:H18 Convergencia absoluta y condicional-->
+<article class="sheet" id="ss-absoluta" data-hoja="L25 H18">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Convergencia absoluta y condicional</b></li>
+    </ol>
+    <h1>Convergencia absoluta y condicional</h1>
+    <p class="lede">A una serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) se le pueden quitar los signos: queda \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\), la serie de los tamaños de sus términos. Si esa serie sin signos converge, la serie original <b>converge absolutamente</b>, y entonces también converge. Si la serie original converge pero la serie sin signos diverge, <b>converge condicionalmente</b>: converge solo gracias a los signos. \[\sum_{n=1}^{\infty}|a_{n}|\ \text{ converge}\ \Longrightarrow\ \sum_{n=1}^{\infty}a_{n}\ \text{ converge}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}-\dfrac{1}{32}+\cdots\) y sus seis primeras sumas parciales, en cinco pasos. Se muestra por qué, si la serie sin signos converge, la serie con signos también. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes y los puntos naranjas:</b> en horizontal va \(n\); en vertical, el valor de la suma parcial. Los puntos naranjas son \(S_{1},\ \ldots,\ S_{6}\), las sumas parciales con los signos; cada uno lleva su valor y una punteada hasta el eje vertical. Suben y bajan. Arriba queda la pregunta: ¿converge la serie?</li>
+    <li><b>Paso 2, los puntos azules:</b> son \(T_{1},\ \ldots,\ T_{6}\), las sumas parciales de la misma serie sin los signos, \(1+\dfrac{1}{2}+\dfrac{1}{4}+\cdots\) Solo suben, y no pasan de la línea punteada azul, rotulada «tope: 2».</li>
+    <li><b>Paso 3, los puntos verdes:</b> son \(C_{1},\ \ldots,\ C_{6}\), las sumas parciales de una serie nueva: a cada término se le suma su tamaño, \(a_{n}+|a_{n}|\). Cada término nuevo vale el doble del original (si era positivo) o cero (si era negativo): los puntos verdes nunca bajan.</li>
+    <li><b>Paso 4, la línea burdeo:</b> es el tope de los puntos verdes, \(4\), el doble del tope de los azules. Una sucesión que sube y tiene tope tiene límite.</li>
+    <li><b>Paso 5, las dos cotas naranjas, y la cuenta de abajo:</b> junto al último punto, una cota mide la distancia del punto azul al verde, \(C_{6}-T_{6}=\dfrac{21}{32}\), y la otra la altura del punto naranja, \(S_{6}=\dfrac{21}{32}\). Miden lo mismo: cada suma naranja es la verde menos la azul. Como las verdes y las azules tienen límite, las naranjas también: la serie converge. En el registro y en la cuenta de abajo está cada suma parcial calculada, una operación por línea.</li>
+  </ol>
+  <div class="stage" data-scene="abs-idea"></div>
+  <ul class="keys">
+    <li><b>Puntos naranjas, «con los signos»:</b> las sumas parciales \(S_{n}\) de la serie \(\displaystyle\sum a_{n}\). También son naranjas las dos cotas del paso 5.</li>
+    <li><b>Puntos azules, «sin los signos»:</b> las sumas parciales \(T_{n}\) de \(\displaystyle\sum|a_{n}|\). <b>Línea punteada azul:</b> su tope, \(2\).</li>
+    <li><b>Puntos verdes, «cada término más su tamaño»:</b> las sumas parciales \(C_{n}\) de \(\displaystyle\sum\left(a_{n}+|a_{n}|\right)\).</li>
+    <li><b>Línea punteada burdeo:</b> el tope de los puntos verdes, \(4\).</li>
+    <li><b>Punteadas finas:</b> llevan cada punto a su valor en el eje vertical.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie sin signos.</b> Dada \(\displaystyle\sum_{n=1}^{\infty}a_{n}\), su serie de valores absolutos es \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\). El número \(|a_{n}|\) es el tamaño del término: vale \(a_{n}\) si \(a_{n}\ge 0\) y vale \(-a_{n}\) si \(a_{n}&lt;0\). Nunca es negativo.</li>
+      <li><b>Convergencia absoluta.</b> \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) <b>converge absolutamente</b> si \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge.</li>
+      <li><b>Convergencia condicional.</b> \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) <b>converge condicionalmente</b> si \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge y \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) diverge.</li>
+      <li><b>Si todos los términos son mayores o iguales que cero,</b> \(|a_{n}|=a_{n}\) y las dos series son la misma: para esas series, converger y converger absolutamente es lo mismo. La distinción importa cuando hay términos positivos y negativos.</li>
+    </ol>
+    <p><b>Notación de esta hoja.</b> \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\) es la suma parcial con los signos, y \(T_{n}=|a_{1}|+|a_{2}|+\cdots+|a_{n}|=\displaystyle\sum_{k=1}^{n}|a_{k}|\), la suma parcial sin los signos. Una serie converge cuando sus sumas parciales tienen límite real (hoja «Series infinitas convergentes y divergentes»).</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) las propiedades del valor absoluto: \(|x|\ge 0\); \(|x\cdot y|=|x|\cdot|y|\); \(|(-1)^{k}|=1\) para todo entero \(k\); (2) que una sucesión creciente y acotada por arriba tiene límite real, y que si una sucesión creciente tiene límite \(L\), todos sus términos son menores o iguales que \(L\) (hoja «Sucesiones monótonas acotadas»); (3) el álgebra de límites: el límite de una resta es la resta de los límites, y el de una constante por una sucesión es la constante por el límite, cuando los límites existen; (4) que desigualdades del mismo sentido se pueden sumar término a término, y que en una suma de una cantidad finita de números los sumandos se pueden reordenar y agrupar; (5) de la hoja «Series geométricas infinitas», donde se demuestra: \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) converge a \(\dfrac{a}{1-r}\) si \(|r|&lt;1\); (6) de la hoja «Series harmónicas y series-p», donde se demuestra: la serie \(\displaystyle\sum\dfrac{1}{n^{p}}\) converge si \(p&gt;1\) y diverge si \(p\le 1\); las sumas parciales de la armónica superan cualquier número; y, sin demostrar, que una sucesión que supera cualquier número no tiene límite real; (7) de la hoja «Criterio de Leibniz», donde se demuestra: si \(b_{n}&gt;0\), \(b_{n+1}\le b_{n}\) y \(\displaystyle\lim_{n\to\infty}b_{n}=0\), la serie \(\displaystyle\sum(-1)^{n+1}b_{n}\) converge; (8) de la hoja «Criterio del enésimo término», donde se demuestra: si \(a_{n}\) no tiene límite \(0\), la serie \(\displaystyle\sum a_{n}\) diverge; y, sin demostrar, que una sucesión cuyos términos, sin el signo, son todos mayores o iguales que un mismo número positivo no tiene límite \(0\); (9) los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{\sqrt{n}}=0\); que si \(0&lt;c_{n}\le d_{n}\) y \(d_{n}\) tiene límite \(0\), entonces \(c_{n}\) tiene límite \(0\); que el orden entre números positivos se invierte al tomar inversos y se conserva al sacar raíz cuadrada; y que \(\sqrt{n}=n^{1/2}\); (10) el valor \(\ln 2\) de la suma de la armónica alternada, y los dos enunciados sobre reordenar los términos del recuadro «Cómo clasificar una serie», que solo se enuncian. El criterio de comparación todavía no tiene hoja: aquí no se usa; cada cota entre sumas parciales se demuestra en el lugar donde aparece.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Teorema: si converge absolutamente, converge. Demostración paso a paso</h3>
+    <p><b>Teorema.</b> Si \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge, entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge.</p>
+    <ol class="steps">
+      <li><b>Una serie auxiliar.</b> Para cada \(n\) se define \(c_{n}=a_{n}+|a_{n}|\): a cada término se le suma su tamaño.</li>
+      <li><b>Si \(a_{n}\ge 0\):</b> \(|a_{n}|=a_{n}\). Entonces \(c_{n}=a_{n}+a_{n}=2\,a_{n}=2\,|a_{n}|\), que es mayor o igual que \(0\).</li>
+      <li><b>Si \(a_{n}&lt;0\):</b> \(|a_{n}|=-a_{n}\). Entonces \(c_{n}=a_{n}+(-a_{n})=0\), y \(2\,|a_{n}|&gt;0\).</li>
+      <li>En los dos casos: \(0\le c_{n}\le 2\,|a_{n}|\), es decir, \[0\le a_{n}+|a_{n}|\le 2\,|a_{n}|\]</li>
+      <li><b>Las sumas parciales sin signos crecen.</b> \(T_{n+1}=T_{n}+|a_{n+1}|\). Se resta \(T_{n}\) a cada lado: \(T_{n+1}-T_{n}=|a_{n+1}|\ge 0\). Entonces \(T_{n+1}\ge T_{n}\).</li>
+      <li>Por hipótesis, \(\displaystyle\sum|a_{n}|\) converge: las \(T_{n}\) tienen límite real. Se llama \(T\). Como las \(T_{n}\) crecen y tienen límite \(T\): \(T_{n}\le T\) para todo \(n\) (aviso de rigor, 2).</li>
+      <li><b>Las sumas parciales de la serie auxiliar crecen.</b> Sea \(C_{n}=c_{1}+c_{2}+\cdots+c_{n}=\displaystyle\sum_{k=1}^{n}c_{k}\). Como antes, \(C_{n+1}-C_{n}=c_{n+1}\), y \(c_{n+1}\ge 0\) por el paso 4. Entonces \(C_{n+1}\ge C_{n}\).</li>
+      <li><b>Están acotadas.</b> Se suma la desigualdad \(c_{k}\le 2\,|a_{k}|\) del paso 4 desde \(k=1\) hasta \(k=n\) (aviso, 4): \(\displaystyle\sum_{k=1}^{n}c_{k}\le\sum_{k=1}^{n}2\,|a_{k}|\). Se saca el factor común \(2\): \(C_{n}\le 2\,T_{n}\).</li>
+      <li>Por el paso 6, \(T_{n}\le T\). Se multiplica por \(2\), que es positivo: \(2\,T_{n}\le 2\,T\). Entonces \(C_{n}\le 2\,T\) para todo \(n\).</li>
+      <li>Las \(C_{n}\) son crecientes y acotadas por arriba: tienen límite real (aviso, 2). Se llama \(C\).</li>
+      <li><b>Se vuelve a la serie original.</b> De \(c_{k}=a_{k}+|a_{k}|\), restando \(|a_{k}|\) a cada lado: \(a_{k}=c_{k}-|a_{k}|\).</li>
+      <li>Se suma desde \(k=1\) hasta \(k=n\) y se agrupan los sumandos (aviso, 4): \(\displaystyle\sum_{k=1}^{n}a_{k}=\sum_{k=1}^{n}c_{k}-\sum_{k=1}^{n}|a_{k}|\), es decir, \(S_{n}=C_{n}-T_{n}\).</li>
+      <li>Límite de una resta (aviso, 3): \(\displaystyle\lim_{n\to\infty}S_{n}=C-T\). Las sumas parciales \(S_{n}\) tienen límite real: la serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge.</li>
+    </ol>
+    <p><b>Dicho al revés.</b> Si \(\displaystyle\sum a_{n}\) diverge, entonces \(\displaystyle\sum|a_{n}|\) también diverge: si convergiera, por el teorema \(\displaystyle\sum a_{n}\) convergería.</p>
+    <p><b>El teorema asegura que la suma existe; no la calcula.</b> Y no dice que las dos series sumen lo mismo: en la animación, la serie con signos suma \(\dfrac{2}{3}\) y la serie sin signos suma \(2\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>El recíproco es falso, y cómo clasificar una serie</h3>
+    <p><b>Que \(\displaystyle\sum a_{n}\) converja no asegura que \(\displaystyle\sum|a_{n}|\) converja.</b> El ejemplo es la armónica alternada, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}=1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\)</p>
+    <ol class="steps">
+      <li><b>Con los signos, converge.</b> Es alternante con \(b_{n}=\dfrac{1}{n}\), que es positivo, decrece y tiene límite \(0\): converge por el criterio de Leibniz (hoja «Criterio de Leibniz», ejemplo 1).</li>
+      <li><b>Sin los signos, diverge.</b> Por el aviso de rigor (1), \(\left|\dfrac{(-1)^{n+1}}{n}\right|=|(-1)^{n+1}|\cdot\dfrac{1}{n}=1\cdot\dfrac{1}{n}=\dfrac{1}{n}\). La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\), la armónica, que diverge (hoja «Series harmónicas y series-p»).</li>
+      <li>Converge, y su serie sin signos diverge: la armónica alternada <b>converge condicionalmente</b>.</li>
+    </ol>
+    <p><b>Toda serie está en exactamente uno de tres casos:</b></p>
+    <ol class="steps">
+      <li><b>Converge absolutamente:</b> \(\displaystyle\sum|a_{n}|\) converge (y entonces \(\displaystyle\sum a_{n}\) converge, por el teorema).</li>
+      <li><b>Converge condicionalmente:</b> \(\displaystyle\sum a_{n}\) converge y \(\displaystyle\sum|a_{n}|\) diverge.</li>
+      <li><b>Diverge:</b> \(\displaystyle\sum a_{n}\) diverge (y entonces \(\displaystyle\sum|a_{n}|\) también diverge).</li>
+    </ol>
+    <p><b>Cómo clasificar, en orden:</b></p>
+    <ol class="steps">
+      <li>Escribe \(|a_{n}|\): el término sin el signo.</li>
+      <li>Estudia \(\displaystyle\sum|a_{n}|\). Sus términos no son negativos; sirven los criterios ya vistos: serie geométrica, series \(p\), criterio de la integral. <b>Si converge:</b> la serie converge absolutamente, y se terminó.</li>
+      <li><b>Si \(\displaystyle\sum|a_{n}|\) diverge,</b> estudia \(\displaystyle\sum a_{n}\) con sus signos. Primero el criterio del enésimo término: si \(a_{n}\) no tiene límite \(0\), la serie diverge. Si es alternante y cumple las tres condiciones del criterio de Leibniz, converge, y entonces converge condicionalmente.</li>
+    </ol>
+    <p><b>Por qué importa la diferencia (solo enunciado, sin demostrar).</b> En una serie que converge absolutamente, los términos se pueden reordenar de cualquier manera y la suma no cambia. En una serie que converge condicionalmente, no: reordenando sus términos se puede obtener cualquier número real como suma, y también una serie divergente (teorema de reordenamiento de Riemann). Ninguno de los dos enunciados se demuestra ni se usa en esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Número ↔ figura: con signos y sin signos</h2>
+  <p>La armónica alternada, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}\), y su serie sin signos, la armónica \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\). Los términos tienen los mismos tamaños; solo cambian los signos. Tú eliges cuántos términos sumar.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los dos puntos grandes, con nombre:</b> el naranja es \(S_{n}\), la suma de los \(n\) primeros términos con los signos; el azul es \(T_{n}\), la suma de los mismos términos sin los signos. Los puntos chicos son las sumas parciales anteriores. Cada punto tiene su punteada hasta el eje vertical.</li>
+    <li><b>Mira después la franja burdeo,</b> que va de \(\dfrac{1}{2}\) a \(1\): los puntos naranjas van en zigzag y nunca salen de ella.</li>
+    <li><b>Mira las dos líneas punteadas verdes,</b> a las alturas \(2\) y \(3\): los puntos azules solo suben; pasan de \(2\) con \(4\) términos y de \(3\) con \(11\) términos.</li>
+    <li><b>Mueve el deslizador \(n\)</b> de \(1\) a \(12\). Con \(n=1\) (caso límite) los dos puntos coinciden: \(S_{1}=T_{1}=1\). Desde \(n=2\) se separan, y la distancia entre ellos crece.</li>
+    <li><b>Cuenta de abajo:</b> datos; \(S_{n}\) y \(T_{n}\), cada una calculada desde la suma parcial anterior, como fracción exacta y con tres decimales; por qué las naranjas quedan en la franja; por qué las azules no tienen tope; y qué significa: la serie con signos converge y la serie sin signos diverge. Los valores con «\(\approx\)» están redondeados a tres decimales.</li>
+  </ol>
+  <div class="stage" data-scene="abs-cond"></div>
+  <ul class="keys">
+    <li><b>Puntos naranjas:</b> las sumas parciales con los signos, \(S_{n}\), de \(1-\dfrac{1}{2}+\dfrac{1}{3}-\cdots\)</li>
+    <li><b>Puntos azules:</b> las sumas parciales sin los signos, \(T_{n}\), de \(1+\dfrac{1}{2}+\dfrac{1}{3}+\cdots\)</li>
+    <li><b>Franja burdeo:</b> de \(\dfrac{1}{2}\) a \(1\); ahí quedan todas las naranjas.</li>
+    <li><b>Líneas punteadas verdes:</b> las alturas \(2\) y \(3\), que las azules pasan.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: converge absolutamente. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n^{2}}=1-\dfrac{1}{4}+\dfrac{1}{9}-\dfrac{1}{16}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe el término sin el signo (aviso de rigor, 1): \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{1}{n^{2}}=1\cdot\dfrac{1}{n^{2}}=\dfrac{1}{n^{2}}\).</li>
+    <li>La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}=1+\dfrac{1}{4}+\dfrac{1}{9}+\dfrac{1}{16}+\cdots\): una serie \(p\) con \(p=2\).</li>
+    <li>Como \(2&gt;1\), esa serie converge (hoja «Series harmónicas y series-p»).</li>
+    <li>\(\displaystyle\sum|a_{n}|\) converge: la serie <b>converge absolutamente</b>.</li>
+    <li>Por el teorema, la serie con signos converge. No hizo falta el criterio de Leibniz (que también la resuelve: hoja «Criterio de Leibniz», ejemplo 3).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: converge condicionalmente. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{\sqrt{n}}=1-\dfrac{1}{\sqrt{2}}+\dfrac{1}{\sqrt{3}}-\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe el término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{1}{\sqrt{n}}=\dfrac{1}{\sqrt{n}}\).</li>
+    <li>Se escribe la raíz como potencia: \(\sqrt{n}=n^{1/2}\). La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{1/2}}\): una serie \(p\) con \(p=\dfrac{1}{2}\).</li>
+    <li>Como \(\dfrac{1}{2}\le 1\), esa serie diverge (hoja «Series harmónicas y series-p»). La serie <b>no</b> converge absolutamente.</li>
+    <li>Se estudia la serie con sus signos. Es alternante, con \(b_{n}=\dfrac{1}{\sqrt{n}}\). Condición (1) de Leibniz: \(\sqrt{n}\ge 1&gt;0\), así que \(b_{n}&gt;0\). ✓</li>
+    <li>Condición (2): como \(n&lt;n+1\), al sacar raíz el orden se conserva, \(\sqrt{n}&lt;\sqrt{n+1}\); al invertir números positivos se da vuelta: \(\dfrac{1}{\sqrt{n+1}}&lt;\dfrac{1}{\sqrt{n}}\), es decir, \(b_{n+1}\le b_{n}\) (aviso, 9). ✓</li>
+    <li>Condición (3): \(\displaystyle\lim_{n\to\infty}\dfrac{1}{\sqrt{n}}=0\) (aviso, 9). ✓</li>
+    <li>Se cumplen las tres: por el criterio de Leibniz, \(\displaystyle\sum a_{n}\) converge.</li>
+    <li>\(\displaystyle\sum a_{n}\) converge y \(\displaystyle\sum|a_{n}|\) diverge: la serie <b>converge condicionalmente</b>.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: signos que no alternan. \(\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}+\dfrac{1}{32}-\dfrac{1}{64}+\cdots\)</h3>
+  <div class="body">
+  <p>Con sumatoria: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{s_{n}}{2^{n}}\), con \(s_{n}=-1\) si \(n\) es múltiplo de \(3\) y \(s_{n}=1\) si no lo es. Los signos van de a tres: más, más, menos.</p>
+  <ol class="steps">
+    <li>La serie no es alternante: los dos primeros términos son positivos. El criterio de Leibniz no se puede aplicar.</li>
+    <li>Se escribe el término sin el signo: \(s_{n}\) vale \(1\) o \(-1\), así que \(|s_{n}|=1\) y \(|a_{n}|=|s_{n}|\cdot\dfrac{1}{2^{n}}=\dfrac{1}{2^{n}}\).</li>
+    <li>Se separa un factor: \(\dfrac{1}{2^{n}}=\dfrac{1}{2}\cdot\dfrac{1}{2^{\,n-1}}=\dfrac{1}{2}\left(\dfrac{1}{2}\right)^{n-1}\). La serie sin signos es geométrica, con primer término \(a=\dfrac{1}{2}\) y razón \(r=\dfrac{1}{2}\).</li>
+    <li>Como \(|r|=\dfrac{1}{2}&lt;1\), converge (hoja «Series geométricas infinitas»). Su suma: se resta, \(1-r=1-\dfrac{1}{2}=\dfrac{1}{2}\); se divide, \(\dfrac{a}{1-r}=\dfrac{1}{2}:\dfrac{1}{2}=1\).</li>
+    <li>\(\displaystyle\sum|a_{n}|\) converge: la serie <b>converge absolutamente</b>, y por el teorema, converge.</li>
+    <li>Una suma parcial, para ver el tamaño. Denominador común \(64\): \(\dfrac{1}{2}=\dfrac{32}{64}\), \(\dfrac{1}{4}=\dfrac{16}{64}\), \(\dfrac{1}{8}=\dfrac{8}{64}\), \(\dfrac{1}{16}=\dfrac{4}{64}\), \(\dfrac{1}{32}=\dfrac{2}{64}\).</li>
+    <li>Con los signos, numeradores en orden: \(32+16=48\), \(48-8=40\), \(40+4=44\), \(44+2=46\), \(46-1=45\). Entonces \(S_{6}=\dfrac{45}{64}\approx 0{,}703\).</li>
+    <li>Sin los signos: \(32+16=48\), \(48+8=56\), \(56+4=60\), \(60+2=62\), \(62+1=63\). Entonces \(T_{6}=\dfrac{63}{64}\approx 0{,}984\), menor que la suma \(1\) de la serie sin signos.</li>
+    <li>El teorema asegura que la serie converge; no dice cuánto suma.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: diverge. \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{n}{n+1}=\dfrac{1}{2}-\dfrac{2}{3}+\dfrac{3}{4}-\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe el término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{n}{n+1}=\dfrac{n}{n+1}\).</li>
+    <li>Una cota: \(\dfrac{n}{n+1}\ge\dfrac{1}{2}\) para todo \(n\ge 1\). En efecto, de \(n\ge 1\), sumando \(n\) a cada lado: \(2n\ge n+1\).</li>
+    <li>Se divide por \(2\,(n+1)\), que es positivo: \(\dfrac{2n}{2\,(n+1)}\ge\dfrac{n+1}{2\,(n+1)}\). Se simplifica cada lado: \(\dfrac{n}{n+1}\ge\dfrac{1}{2}\).</li>
+    <li>Ningún \(|a_{n}|\) está a menos de \(\dfrac{1}{2}\) de \(0\): \(|a_{n}|\) no tiene límite \(0\) (aviso, 8). Por el criterio del enésimo término, \(\displaystyle\sum|a_{n}|\) diverge: la serie no converge absolutamente.</li>
+    <li>Se estudia la serie con sus signos. El término \(a_{n}\) vale \(\dfrac{n}{n+1}\) o \(-\dfrac{n}{n+1}\): sin el signo, su tamaño es mayor o igual que \(\dfrac{1}{2}\). Entonces \(a_{n}\) tampoco tiene límite \(0\) (aviso, 8).</li>
+    <li>Por el criterio del enésimo término (hoja «Criterio del enésimo término»), \(\displaystyle\sum a_{n}\) diverge.</li>
+    <li>La serie <b>diverge</b>: no converge ni absoluta ni condicionalmente. Los signos alternados no bastan cuando los términos no tienden a \(0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que «condicional» quiere decir «converge a medias»: una serie que converge condicionalmente converge, con una suma bien definida; lo que diverge es su serie sin signos. Concluir que \(\displaystyle\sum a_{n}\) diverge porque \(\displaystyle\sum|a_{n}|\) diverge: el teorema va en un solo sentido; cuando \(\displaystyle\sum|a_{n}|\) diverge, falta estudiar la serie con sus signos (ejemplo 2). Creer que las dos series suman lo mismo: \(1-\dfrac{1}{2}+\dfrac{1}{4}-\cdots\) suma \(\dfrac{2}{3}\), y sin los signos suma \(2\). Sacar mal el valor absoluto: \(|a_{n}|\) se obtiene quitando el signo a cada término, no a la suma; y \(|(-1)^{n+1}|=1\), no \(-1\). Y decir «converge absolutamente» sin haber mostrado por qué \(\displaystyle\sum|a_{n}|\) converge: hay que nombrar el criterio (geométrica con \(|r|&lt;1\), serie \(p\) con \(p&gt;1\), etc.).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Clasifica cada serie: converge absolutamente, converge condicionalmente o diverge. (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n^{3}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{2n-1}\); (c) \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{2n+1}{n}\).</p>
+    <details><summary>Pista</summary><div><p>Escribe primero \(|a_{n}|\) y estudia la serie sin signos. En (b), compara \(\dfrac{1}{2k-1}\) con \(\dfrac{1}{2k}=\dfrac{1}{2}\cdot\dfrac{1}{k}\) y suma. En (c), separa la fracción: \(\dfrac{2n+1}{n}=2+\dfrac{1}{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{1}{n^{3}}=\dfrac{1}{n^{3}}\).</li>
+        <li>La serie sin signos, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}}\), es una serie \(p\) con \(p=3\). Como \(3&gt;1\), converge (hoja «Series harmónicas y series-p»).</li>
+        <li>\(\displaystyle\sum|a_{n}|\) converge: la serie <b>converge absolutamente</b>.</li>
+        <li>(b) Término sin el signo: \(|a_{n}|=\dfrac{1}{2n-1}\). La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n-1}=1+\dfrac{1}{3}+\dfrac{1}{5}+\cdots\)</li>
+        <li>Como \(0&lt;2k-1&lt;2k\), al invertir: \(\dfrac{1}{2k-1}&gt;\dfrac{1}{2k}=\dfrac{1}{2}\cdot\dfrac{1}{k}\).</li>
+        <li>Se suma desde \(k=1\) hasta \(k=n\): \(\displaystyle\sum_{k=1}^{n}\dfrac{1}{2k-1}&gt;\dfrac{1}{2}\sum_{k=1}^{n}\dfrac{1}{k}=\dfrac{1}{2}H_{n}\), con \(H_{n}\) la suma parcial de la armónica.</li>
+        <li>Las \(H_{n}\) superan cualquier número (aviso de rigor, 6): dado \(M\), hay un \(n\) con \(H_{n}&gt;2M\), y entonces \(\dfrac{1}{2}H_{n}&gt;\dfrac{2M}{2}=M\). Las sumas parciales de la serie sin signos superan cualquier número: \(\displaystyle\sum|a_{n}|\) diverge.</li>
+        <li>Con los signos: es alternante con \(b_{n}=\dfrac{1}{2n-1}\). Condición (1): \(2n-1\ge 2\cdot 1-1=1&gt;0\), así que \(b_{n}&gt;0\). ✓</li>
+        <li>Condición (2): \(b_{n+1}=\dfrac{1}{2(n+1)-1}=\dfrac{1}{2n+1}\). Como \(0&lt;2n-1&lt;2n+1\), al invertir: \(\dfrac{1}{2n+1}&lt;\dfrac{1}{2n-1}\). ✓</li>
+        <li>Condición (3): de \(n\ge 1\), sumando \(n-1\) a cada lado: \(2n-1\ge n\). Al invertir: \(0&lt;\dfrac{1}{2n-1}\le\dfrac{1}{n}\), y \(\dfrac{1}{n}\) tiene límite \(0\); entonces \(\displaystyle\lim_{n\to\infty}b_{n}=0\) (aviso, 9). ✓</li>
+        <li>Por el criterio de Leibniz, \(\displaystyle\sum a_{n}\) converge. Como \(\displaystyle\sum|a_{n}|\) diverge, la serie <b>converge condicionalmente</b>.</li>
+        <li>(c) Término sin el signo: \(|a_{n}|=\dfrac{2n+1}{n}\). Se separa la fracción: \(\dfrac{2n+1}{n}=\dfrac{2n}{n}+\dfrac{1}{n}=2+\dfrac{1}{n}\).</li>
+        <li>Como \(\dfrac{1}{n}&gt;0\): \(|a_{n}|=2+\dfrac{1}{n}&gt;2\). Ningún término está a menos de \(2\) de \(0\): \(a_{n}\) no tiene límite \(0\) (aviso, 8).</li>
+        <li>Por el criterio del enésimo término, \(\displaystyle\sum a_{n}\) diverge. La serie <b>diverge</b> (y \(\displaystyle\sum|a_{n}|\) también).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(a_{n}=(-1)^{n+1}\left(\dfrac{2}{3}\right)^{n}\). (a) Muestra que \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge y calcula su suma. (b) ¿Qué se concluye de \(\displaystyle\sum_{n=1}^{\infty}a_{n}\)? Calcula su suma. (c) Con \(c_{n}=a_{n}+|a_{n}|\), calcula \(S_{4}\), \(T_{4}\) y \(C_{4}\), y comprueba que \(S_{4}=C_{4}-T_{4}\) y que \(C_{4}\le 2\,T_{4}\).</p>
+    <details><summary>Pista</summary><div><p>Las dos series son geométricas: la sin signos tiene razón \(\dfrac{2}{3}\) y la con signos, \(-\dfrac{2}{3}\); en las dos el primer término es \(\dfrac{2}{3}\). En (c), usa denominador común \(81\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\left(\dfrac{2}{3}\right)^{n}=\left(\dfrac{2}{3}\right)^{n}\).</li>
+        <li>Se separa un factor: \(\left(\dfrac{2}{3}\right)^{n}=\dfrac{2}{3}\left(\dfrac{2}{3}\right)^{n-1}\). Es una serie geométrica con \(a=\dfrac{2}{3}\) y \(r=\dfrac{2}{3}\).</li>
+        <li>Como \(|r|=\dfrac{2}{3}&lt;1\), converge (hoja «Series geométricas infinitas»). Se resta: \(1-r=1-\dfrac{2}{3}=\dfrac{3}{3}-\dfrac{2}{3}=\dfrac{1}{3}\).</li>
+        <li>Se divide: \(\dfrac{a}{1-r}=\dfrac{2}{3}:\dfrac{1}{3}=\dfrac{2}{3}\cdot\dfrac{3}{1}=\dfrac{6}{3}=2\). Entonces \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|=2\).</li>
+        <li>(b) \(\displaystyle\sum|a_{n}|\) converge: \(\displaystyle\sum a_{n}\) <b>converge absolutamente</b> y, por el teorema, converge.</li>
+        <li>Su suma: como \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\), se escribe \(a_{n}=\dfrac{2}{3}\cdot(-1)^{n-1}\left(\dfrac{2}{3}\right)^{n-1}=\dfrac{2}{3}\left(-\dfrac{2}{3}\right)^{n-1}\). Es geométrica con \(a=\dfrac{2}{3}\) y \(r=-\dfrac{2}{3}\).</li>
+        <li>Se resta: \(1-r=1-\left(-\dfrac{2}{3}\right)=1+\dfrac{2}{3}=\dfrac{3}{3}+\dfrac{2}{3}=\dfrac{5}{3}\).</li>
+        <li>Se divide: \(\dfrac{a}{1-r}=\dfrac{2}{3}:\dfrac{5}{3}=\dfrac{2}{3}\cdot\dfrac{3}{5}=\dfrac{6}{15}=\dfrac{2}{5}\). Entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}=\dfrac{2}{5}\), distinta de la suma sin signos, \(2\).</li>
+        <li>(c) Potencias: \(\left(\dfrac{2}{3}\right)^{1}=\dfrac{2}{3}\), \(\left(\dfrac{2}{3}\right)^{2}=\dfrac{4}{9}\), \(\left(\dfrac{2}{3}\right)^{3}=\dfrac{8}{27}\), \(\left(\dfrac{2}{3}\right)^{4}=\dfrac{16}{81}\). Términos: \(a_{1}=\dfrac{2}{3}\), \(a_{2}=-\dfrac{4}{9}\), \(a_{3}=\dfrac{8}{27}\), \(a_{4}=-\dfrac{16}{81}\).</li>
+        <li>Denominador común \(81\): \(\dfrac{2}{3}=\dfrac{2\cdot 27}{3\cdot 27}=\dfrac{54}{81}\), \(\dfrac{4}{9}=\dfrac{4\cdot 9}{9\cdot 9}=\dfrac{36}{81}\), \(\dfrac{8}{27}=\dfrac{8\cdot 3}{27\cdot 3}=\dfrac{24}{81}\).</li>
+        <li>\(S_{4}=\dfrac{54}{81}-\dfrac{36}{81}+\dfrac{24}{81}-\dfrac{16}{81}\). Numeradores: \(54-36=18\), \(18+24=42\), \(42-16=26\). Entonces \(S_{4}=\displaystyle\sum_{k=1}^{4}a_{k}=\dfrac{26}{81}\).</li>
+        <li>\(T_{4}=\dfrac{54}{81}+\dfrac{36}{81}+\dfrac{24}{81}+\dfrac{16}{81}\). Numeradores: \(54+36=90\), \(90+24=114\), \(114+16=130\). Entonces \(T_{4}=\displaystyle\sum_{k=1}^{4}|a_{k}|=\dfrac{130}{81}\).</li>
+        <li>Serie auxiliar: \(c_{1}=a_{1}+|a_{1}|=\dfrac{2}{3}+\dfrac{2}{3}=\dfrac{4}{3}\); \(c_{2}=-\dfrac{4}{9}+\dfrac{4}{9}=0\); \(c_{3}=\dfrac{8}{27}+\dfrac{8}{27}=\dfrac{16}{27}\); \(c_{4}=-\dfrac{16}{81}+\dfrac{16}{81}=0\).</li>
+        <li>\(C_{4}=\displaystyle\sum_{k=1}^{4}c_{k}=\dfrac{4}{3}+0+\dfrac{16}{27}+0\). Denominador común \(27\): \(\dfrac{4\cdot 9}{3\cdot 9}+\dfrac{16}{27}=\dfrac{36}{27}+\dfrac{16}{27}=\dfrac{52}{27}\).</li>
+        <li>Se lleva a denominador \(81\): \(C_{4}=\dfrac{52\cdot 3}{27\cdot 3}=\dfrac{156}{81}\). Se resta: \(C_{4}-T_{4}=\dfrac{156}{81}-\dfrac{130}{81}=\dfrac{26}{81}=S_{4}\). ✓</li>
+        <li>Se multiplica: \(2\,T_{4}=2\cdot\dfrac{130}{81}=\dfrac{260}{81}\). Como \(156\le 260\): \(C_{4}\le 2\,T_{4}\). ✓ Además \(T_{4}=\dfrac{130}{81}\approx 1{,}605\), menor que la suma \(2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En una bodega, Camila prueba dos carros robot sobre un riel recto. Cada carro parte del punto \(0\) y hace movimientos alternados: el primero hacia la derecha, el segundo hacia la izquierda, el tercero hacia la derecha, y así. El <b>carro 1</b> avanza \(60\) cm y cada movimiento mide la mitad del anterior: \(60\), \(30\), \(15\), \(7{,}5\) cm… El <b>carro 2</b> hace el movimiento \(n\) de \(\dfrac{60}{n}\) cm: \(60\), \(30\), \(20\), \(15\) cm… (a) Para cada carro, calcula su posición y la distancia total recorrida después de \(4\) movimientos. (b) Si el carro 1 siguiera sin fin, ¿la distancia total recorrida tendría tope? ¿A qué posición se acercaría? (c) ¿Y el carro 2? (d) ¿Qué tipo de convergencia tiene la serie de las posiciones de cada carro?</p>
+    <details><summary>Pista</summary><div><p>La posición es la suma con los signos (derecha positivo, izquierda negativo); la distancia recorrida es la suma sin los signos. Carro 1: series geométricas con razón \(-\dfrac{1}{2}\) y \(\dfrac{1}{2}\). Carro 2: \(60\) veces la armónica alternada y \(60\) veces la armónica.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se pone signo a cada movimiento: positivo hacia la derecha, negativo hacia la izquierda. La posición después de \(n\) movimientos es la suma parcial con signos, \(P_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\); la distancia recorrida es la suma parcial sin signos, \(D_{n}=\displaystyle\sum_{k=1}^{n}|a_{k}|\).</li>
+        <li>(a) Carro 1, posición: \(P_{4}=60-30+15-7{,}5\). En orden: \(60-30=30\); \(30+15=45\); \(45-7{,}5=37{,}5\). Queda a \(37{,}5\) cm a la derecha del punto \(0\).</li>
+        <li>Carro 1, distancia: \(D_{4}=60+30+15+7{,}5\). En orden: \(60+30=90\); \(90+15=105\); \(105+7{,}5=112{,}5\) cm.</li>
+        <li>Carro 2, posición: \(P_{4}=60-30+20-15\). En orden: \(60-30=30\); \(30+20=50\); \(50-15=35\) cm.</li>
+        <li>Carro 2, distancia: \(D_{4}=60+30+20+15\). En orden: \(60+30=90\); \(90+20=110\); \(110+15=125\) cm.</li>
+        <li>(b) Carro 1, distancia: \(\displaystyle\sum_{n=1}^{\infty}60\left(\dfrac{1}{2}\right)^{n-1}\) es geométrica con \(a=60\) y \(r=\dfrac{1}{2}\). Como \(|r|&lt;1\), converge. Se resta: \(1-\dfrac{1}{2}=\dfrac{1}{2}\). Se divide: \(60:\dfrac{1}{2}=60\cdot 2=120\).</li>
+        <li>La distancia total recorrida tiene tope: se acerca a \(120\) cm y nunca los pasa.</li>
+        <li>Carro 1, posición: \(\displaystyle\sum_{n=1}^{\infty}60\left(-\dfrac{1}{2}\right)^{n-1}\) es geométrica con \(a=60\) y \(r=-\dfrac{1}{2}\). Como \(|r|=\dfrac{1}{2}&lt;1\), converge. Se resta: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{3}{2}\).</li>
+        <li>Se divide: \(60:\dfrac{3}{2}=60\cdot\dfrac{2}{3}=\dfrac{120}{3}=40\). El carro 1 se acerca al punto que está \(40\) cm a la derecha del \(0\).</li>
+        <li>(c) Carro 2, distancia: se saca el factor común \(60\): \(D_{n}=\displaystyle\sum_{k=1}^{n}\dfrac{60}{k}=60\sum_{k=1}^{n}\dfrac{1}{k}=60\,H_{n}\), con \(H_{n}\) la suma parcial de la armónica.</li>
+        <li>Las \(H_{n}\) superan cualquier número (aviso de rigor, 6): dado \(M&gt;0\), hay un \(n\) con \(H_{n}&gt;\dfrac{M}{60}\), y entonces \(60\,H_{n}&gt;M\). La distancia recorrida no tiene tope: con suficientes movimientos pasa de cualquier cantidad de centímetros.</li>
+        <li>Carro 2, posición: \(P_{n}=\displaystyle\sum_{k=1}^{n}(-1)^{k+1}\dfrac{60}{k}=60\,S_{n}\), con \(S_{n}\) la suma parcial de la armónica alternada. Esa serie converge por el criterio de Leibniz: \(S_{n}\) tiene límite \(S\), y \(P_{n}=60\,S_{n}\) tiene límite \(60\,S\) (aviso, 3). El carro 2 sí se acerca a un punto.</li>
+        <li>Dónde queda ese punto: en la hoja «Criterio de Leibniz» se muestra que \(S_{4}\le S\le S_{5}\), con \(S_{4}=\dfrac{7}{12}\) y \(S_{5}=\dfrac{47}{60}\). Se multiplica por \(60\), que es positivo: \(60\cdot\dfrac{7}{12}=\dfrac{420}{12}=35\) y \(60\cdot\dfrac{47}{60}=47\).</li>
+        <li>El punto está entre \(35\) cm y \(47\) cm a la derecha del \(0\). Su valor exacto es \(60\ln 2\approx 41{,}59\) cm (el valor \(\ln 2\) se enuncia sin demostrar).</li>
+        <li>(d) Carro 1: la serie sin signos converge (suma \(120\)): la serie de las posiciones <b>converge absolutamente</b>. El carro llega cerca de un punto habiendo recorrido una distancia con tope.</li>
+        <li>Carro 2: la serie con signos converge y la serie sin signos diverge: <b>converge condicionalmente</b>. El carro se acerca a un punto, pero para eso recorre una distancia que no tiene tope.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H18 · v001 · Pendiente de APR</span>
+</footer>
+</article>

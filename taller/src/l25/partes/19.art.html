@@ -1,0 +1,276 @@
+<!--file:H19_criterio_del_cociente_para_la_convergencia.html-->
+<!--title:Criterio del cociente para la convergencia-->
+<!--id:ss-cociente-->
+<!--tab:H19 Criterio del cociente para la convergencia-->
+<article class="sheet" id="ss-cociente" data-hoja="L25 H19">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Criterio del cociente para la convergencia</b></li>
+    </ol>
+    <h1>Criterio del cociente para la convergencia</h1>
+    <p class="lede">Para saber si una serie converge, se divide cada término por el anterior, sin los signos, y se mira a qué número \(L\) se acercan esos cocientes. Si \(L&lt;1\), los términos terminan achicándose al menos tan rápido como los de una serie geométrica, y la serie converge. Si \(L&gt;1\), terminan creciendo, y la serie diverge. Si \(L=1\), el criterio no decide. \[L=\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_{n}}\right|\qquad\begin{cases}L&lt;1: &amp; \text{converge absolutamente}\\ L&gt;1: &amp; \text{diverge}\\ L=1: &amp; \text{no decide}\end{cases}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{2^{n}}=\dfrac{1}{2}+\dfrac{2}{4}+\dfrac{3}{8}+\dfrac{4}{16}+\cdots\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la gráfica de arriba:</b> en horizontal va \(n\); en vertical, el término \(a_{n}\). Cada punto azul es un término, y una punteada lo une con su valor en el eje vertical: \(\dfrac{1}{2},\ \dfrac{1}{2},\ \dfrac{3}{8},\ \dfrac{1}{4},\ \dfrac{5}{32},\ \dfrac{3}{32}\). Arriba queda la pregunta: ¿converge la serie?</li>
+    <li><b>Paso 2, la gráfica de abajo:</b> cada punto naranja es un cociente, el término que sigue dividido por el término: \(\dfrac{a_{n+1}}{a_{n}}\). Lleva su valor escrito encima: \(1,\ \dfrac{3}{4},\ \dfrac{2}{3},\ \dfrac{5}{8},\ \dfrac{3}{5}\). Su eje vertical empieza en \(0{,}4\), no en \(0\), para que se vea cómo bajan.</li>
+    <li><b>Paso 3, tres líneas horizontales en la gráfica de abajo:</b> la burdeo es \(L=\dfrac{1}{2}\), el número al que se acercan los cocientes; la gris es \(1\); la verde es \(r=\dfrac{3}{4}\), un número elegido entre \(L\) y \(1\). Desde el segundo punto naranja, ninguno queda sobre la verde.</li>
+    <li><b>Pasos 4 y 5, de vuelta arriba:</b> la curva verde con anillos es la cota geométrica \(\dfrac{1}{2}\left(\dfrac{3}{4}\right)^{n-2}\). Desde \(n=2\), cada punto azul queda en la curva o debajo de ella. En el paso 5 se sombrea lo que hay bajo la curva y se escribe la cota de las sumas parciales, \(S_{n}\le\dfrac{5}{2}\).</li>
+    <li><b>Registro y cuenta de abajo:</b> ahí está cada término, cada cociente, el límite \(L\), la elección de \(r\), cada cota comparada con su término y la suma de la geométrica. Conclusión: las sumas parciales crecen y ninguna pasa de \(\dfrac{5}{2}\); la serie converge.</li>
+  </ol>
+  <div class="stage" data-scene="coc-idea"></div>
+  <ul class="keys">
+    <li><b>Puntos azules (gráfica de arriba):</b> los términos \(a_{1},\ \ldots,\ a_{6}\), cada uno con su punteada hasta el eje \(a_{n}\).</li>
+    <li><b>Puntos naranjas (gráfica de abajo):</b> los cocientes \(\dfrac{a_{n+1}}{a_{n}}\), para \(n=1,\ \ldots,\ 5\).</li>
+    <li><b>Línea burdeo:</b> \(L=\dfrac{1}{2}\), el límite de los cocientes. <b>Línea gris:</b> el \(1\), contra el que se compara \(L\).</li>
+    <li><b>Verde:</b> el número \(r=\dfrac{3}{4}\), elegido entre \(L\) y \(1\) (línea de abajo), y la cota geométrica de razón \(r\) (curva con anillos, arriba). Lo sombreado bajo la curva recuerda que esa geométrica tiene suma finita.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Teorema: criterio del cociente (o criterio de la razón, o de D'Alembert)</h3>
+    <p>Sea \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) una serie con \(a_{n}\ne 0\) para todo \(n\). El <b>cociente</b> es el tamaño de un término dividido por el tamaño del anterior: \(\left|\dfrac{a_{n+1}}{a_{n}}\right|=\dfrac{|a_{n+1}|}{|a_{n}|}\). Es un número positivo. Hace falta \(a_{n}\ne 0\) para poder dividir.</p>
+    <ol class="steps">
+      <li><b>Si \(\displaystyle\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_{n}}\right|=L\) y \(L&lt;1\):</b> la serie \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge. Eso se llama <b>converger absolutamente</b>, y entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) también converge (hoja «Convergencia absoluta y condicional», H18).</li>
+      <li><b>Si \(\displaystyle\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_{n}}\right|=L\) y \(L&gt;1\), o si los cocientes crecen sin tope:</b> la serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) diverge. «Crecen sin tope» quiere decir: para cada número \(M\), desde algún \(n\) en adelante todos los cocientes son mayores que \(M\). Se escribe \(\displaystyle\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_{n}}\right|=\infty\).</li>
+      <li><b>Si \(L=1\):</b> el criterio no decide. Hay series con \(L=1\) que convergen y series con \(L=1\) que divergen (recuadro «Cuando \(L=1\)»).</li>
+    </ol>
+    <p><b>Si los cocientes no tienen límite</b> y tampoco crecen sin tope, el criterio, tal como está enunciado aquí, no se puede aplicar.</p>
+    <p><b>Si \(a_{n}\ne 0\) solo desde algún \(n\) en adelante,</b> el criterio vale igual: en la demostración se usan únicamente los términos desde un \(N\) en adelante, y ese \(N\) se puede tomar después del último término nulo.</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) que si una sucesión tiene límite \(L\) y \(r\) es un número mayor que \(L\), desde algún \(N\) en adelante todos sus términos son menores que \(r\); y que si \(s\) es un número menor que \(L\), desde algún \(N\) en adelante todos son mayores que \(s\) (es lo que dice la definición de límite); (2) que una sucesión creciente y acotada por arriba tiene límite real, y que ese límite no pasa de la cota (hoja «Sucesiones monótonas acotadas»); (3) el álgebra de límites: el límite de una suma es la suma de los límites, el de una constante por una sucesión es la constante por el límite, el de un producto es el producto de los límites y el de un cociente es el cociente de los límites cuando el del denominador no es \(0\); y los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\); (4) que una sucesión cuyos términos, sin el signo, son desde algún \(N\) en adelante todos mayores o iguales que un mismo número positivo no tiene límite \(0\); (5) el teorema «si \(\displaystyle\sum|a_{n}|\) converge, entonces \(\displaystyle\sum a_{n}\) converge», que se demuestra en la hoja «Convergencia absoluta y condicional» (H18); (6) las propiedades del valor absoluto: \(|a\cdot b|=|a|\cdot|b|\), \(\left|\dfrac{a}{b}\right|=\dfrac{|a|}{|b|}\) y \(|(-1)^{n}|=1\); (7) el orden entre números positivos: se conserva al multiplicar los dos lados por un número positivo y se invierte al tomar inversos; (8) el paso «se repite \(k\) veces» de la demostración: el argumento formal es por inducción, y aquí se escribe el paso que se repite. De hojas anteriores se usan, ya demostrados: la suma parcial de una serie geométrica (hoja «Series geométricas infinitas»), el criterio del enésimo término (hoja «Criterio del enésimo término») y que \(\displaystyle\sum\dfrac{1}{n}\) diverge y \(\displaystyle\sum\dfrac{1}{n^{2}}\), \(\displaystyle\sum\dfrac{1}{n^{3}}\) convergen (hoja «Series harmónicas y series-p»). El criterio de comparación no se usa: lo que haría falta de él se demuestra aquí directamente, con sumas parciales crecientes y acotadas. El criterio dice si la serie converge; no calcula su suma.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso</h3>
+    <p><b>Caso \(L&lt;1\): la serie converge absolutamente.</b></p>
+    <ol class="steps">
+      <li><b>Se elige un número \(r\) entre \(L\) y \(1\).</b> Por ejemplo el punto medio, \(r=\dfrac{L+1}{2}\): como \(L&lt;1\), se cumple \(L&lt;\dfrac{L+1}{2}&lt;1\). Queda \(L&lt;r&lt;1\).</li>
+      <li>Los cocientes tienen límite \(L\) y \(r&gt;L\): desde algún \(N\) en adelante todos son menores que \(r\) (aviso de rigor, 1). Para todo \(n\ge N\): \(\dfrac{|a_{n+1}|}{|a_{n}|}\le r\). Como los cocientes son positivos, también \(r&gt;0\).</li>
+      <li>Se multiplica cada lado por \(|a_{n}|\), que es positivo (aviso, 7): \(|a_{n+1}|\le r\,|a_{n}|\), para todo \(n\ge N\). Cada término, sin el signo, es a lo más \(r\) veces el anterior.</li>
+      <li><b>Se encadena desde \(N\).</b> Con \(n=N\): \(|a_{N+1}|\le r\,|a_{N}|\).</li>
+      <li>Con \(n=N+1\): \(|a_{N+2}|\le r\,|a_{N+1}|\). Se reemplaza la cota del paso anterior: \(|a_{N+2}|\le r\cdot r\,|a_{N}|=r^{2}\,|a_{N}|\).</li>
+      <li>El paso que se repite: si \(|a_{N+k}|\le|a_{N}|\,r^{k}\), entonces \(|a_{N+k+1}|\le r\,|a_{N+k}|\le r\cdot|a_{N}|\,r^{k}=|a_{N}|\,r^{k+1}\). Para todo \(k\ge 0\) (aviso, 8): \[|a_{N+k}|\le|a_{N}|\,r^{k}\]</li>
+      <li><b>Sumas parciales de la serie sin signos:</b> \(T_{n}=\displaystyle\sum_{j=1}^{n}|a_{j}|=|a_{1}|+|a_{2}|+\cdots+|a_{n}|\). Son crecientes: \(T_{n+1}-T_{n}=|a_{n+1}|&gt;0\).</li>
+      <li><b>Están acotadas.</b> Para \(m\ge 0\), se separan los términos anteriores a \(N\): \(T_{N+m}=T_{N-1}+\displaystyle\sum_{k=0}^{m}|a_{N+k}|\) (si \(N=1\), se toma \(T_{0}=0\)).</li>
+      <li>Se acota cada término de esa suma con el paso 6: \(\displaystyle\sum_{k=0}^{m}|a_{N+k}|\le\sum_{k=0}^{m}|a_{N}|\,r^{k}=|a_{N}|+|a_{N}|\,r+\cdots+|a_{N}|\,r^{m}\).</li>
+      <li>Lo de la derecha es la suma parcial de una serie geométrica con primer término \(|a_{N}|\), razón \(r\ne 1\) y \(m+1\) términos (hoja «Series geométricas infinitas»): \(\displaystyle\sum_{k=0}^{m}|a_{N}|\,r^{k}=\dfrac{|a_{N}|\,(1-r^{\,m+1})}{1-r}\).</li>
+      <li>Como \(0&lt;r&lt;1\): \(r^{\,m+1}&gt;0\), así que \(1-r^{\,m+1}&lt;1\); y \(1-r&gt;0\). Entonces \(\dfrac{|a_{N}|\,(1-r^{\,m+1})}{1-r}&lt;\dfrac{|a_{N}|}{1-r}\).</li>
+      <li>Se junta: para todo \(m\ge 0\), \(T_{N+m}\le T_{N-1}+\dfrac{|a_{N}|}{1-r}\). Ese número, que se llama \(M\), no depende de \(m\). Las sumas anteriores, \(T_{1},\ \ldots,\ T_{N-1}\), son menores que \(T_{N}\) porque la sucesión crece. Entonces \(T_{n}\le M\) para todo \(n\).</li>
+      <li>La sucesión \(T_{n}\) es creciente y acotada por arriba: tiene límite real (aviso, 2). Es decir, \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge: la serie converge absolutamente.</li>
+      <li>Por el teorema de la hoja «Convergencia absoluta y condicional» (H18; aviso, 5), \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) también converge.</li>
+    </ol>
+    <p><b>Caso \(L&gt;1\), o cocientes que crecen sin tope: la serie diverge.</b></p>
+    <ol class="steps">
+      <li>Si los cocientes tienen límite \(L&gt;1\): como \(1&lt;L\), desde algún \(N\) en adelante todos son mayores que \(1\) (aviso, 1, con \(s=1\)). Si crecen sin tope: por la definición, con \(M=1\), desde algún \(N\) en adelante todos son mayores que \(1\). En los dos casos, para todo \(n\ge N\): \(\dfrac{|a_{n+1}|}{|a_{n}|}&gt;1\).</li>
+      <li>Se multiplica cada lado por \(|a_{n}|\), que es positivo: \(|a_{n+1}|&gt;|a_{n}|\), para todo \(n\ge N\). Desde \(N\), cada término es más grande, sin el signo, que el anterior.</li>
+      <li>Se encadena: \(|a_{N}|&lt;|a_{N+1}|&lt;|a_{N+2}|&lt;\cdots\) Entonces \(|a_{n}|\ge|a_{N}|\) para todo \(n\ge N\), y \(|a_{N}|&gt;0\) porque \(a_{N}\ne 0\).</li>
+      <li>Desde \(N\) en adelante ningún término está a menos de \(|a_{N}|\) de \(0\): la sucesión \(a_{n}\) no tiene límite \(0\) (aviso, 4).</li>
+      <li>Por el criterio del enésimo término (hoja «Criterio del enésimo término»), \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) diverge.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Cuando \(L=1\), el criterio no decide. Y cuándo conviene usarlo</h3>
+    <p><b>Dos series con el mismo \(L=1\) y resultados opuestos.</b></p>
+    <ol class="steps">
+      <li><b>La armónica, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\).</b> Cociente: \(\dfrac{1}{n+1}:\dfrac{1}{n}=\dfrac{1}{n+1}\cdot\dfrac{n}{1}=\dfrac{n}{n+1}\).</li>
+      <li>Se escribe el numerador como \(n=(n+1)-1\) y se separa la fracción: \(\dfrac{n}{n+1}=\dfrac{n+1}{n+1}-\dfrac{1}{n+1}=1-\dfrac{1}{n+1}\).</li>
+      <li>Como \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\): \(L=1-0=1\). Y la armónica <b>diverge</b> (hoja «Series harmónicas y series-p»).</li>
+      <li><b>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\).</b> Cociente: \(\dfrac{1}{(n+1)^{2}}:\dfrac{1}{n^{2}}=\dfrac{1}{(n+1)^{2}}\cdot\dfrac{n^{2}}{1}=\dfrac{n^{2}}{(n+1)^{2}}=\left(\dfrac{n}{n+1}\right)^{2}\).</li>
+      <li>Por el paso 3, \(\dfrac{n}{n+1}\) tiene límite \(1\). Límite de un producto (aviso de rigor, 3): \(L=1\cdot 1=1\). Y esta serie <b>converge</b> (serie \(p\) con \(p=2\), hoja «Series harmónicas y series-p»).</li>
+      <li>Las dos tienen \(L=1\); una diverge y la otra converge. Saber que \(L=1\) no permite concluir nada: hay que usar otro criterio.</li>
+    </ol>
+    <p><b>Atención:</b> en la armónica todos los cocientes son menores que \(1\), porque \(\dfrac{n}{n+1}&lt;1\), y aun así diverge. El criterio no pide que los cocientes sean menores que \(1\): pide que su <b>límite</b> sea menor que \(1\).</p>
+    <p><b>Cuándo conviene.</b></p>
+    <ol class="steps">
+      <li><b>Con factoriales</b> (\(n!\)): al dividir, casi todo se simplifica, porque \((n+1)!=(n+1)\cdot n!\). Ejemplos 1 y 2.</li>
+      <li><b>Con potencias de exponente \(n\)</b> (\(2^{n}\), \(3^{n}\), \(10^{n}\)): al dividir queda la base, porque \(c^{\,n+1}=c\cdot c^{\,n}\). Ejemplos 1, 2 y 3.</li>
+      <li><b>No sirve</b> cuando el término solo tiene potencias fijas de \(n\), como \(\dfrac{1}{n}\) o \(\dfrac{1}{n^{2}}\): ahí sale \(L=1\), como se acaba de ver. Para esas series están las series \(p\) y el criterio de la integral (hojas «Series harmónicas y series-p» y «Criterio de la integral»).</li>
+    </ol>
+    <p>La hoja que sigue, «Series de potencias», usa este criterio para averiguar para qué valores de \(x\) converge una serie como \(\displaystyle\sum n\,x^{n}\). La segunda animación de esta hoja lo adelanta con siete valores de \(x\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Número ↔ figura: el límite de los cocientes decide</h2>
+  <p>Ahora la serie es \(\displaystyle\sum_{n=1}^{\infty}n\,x^{n}=x+2x^{2}+3x^{3}+\cdots\), y el número \(x\) lo eliges tú, entre \(0\) y \(1{,}5\). La figura muestra cómo, al cambiar \(x\), cambian los cocientes, su límite \(L\) y el comportamiento de los términos.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la gráfica de arriba:</b> los puntos naranjas son los cocientes \(\dfrac{a_{n+1}}{a_{n}}\) para \(n=1,\ \ldots,\ 8\). El primero y el último llevan su valor. Bajan hacia la línea burdeo, que es su límite \(L\); en esta serie, \(L=x\).</li>
+    <li><b>Compara la línea burdeo con la línea gris, que es el \(1\):</b> la zona sombreada sobre el \(1\) es donde la serie diverge. Si la burdeo queda bajo la gris, la serie converge; si queda sobre ella, diverge; si coinciden, el criterio no decide.</li>
+    <li><b>Mira después la gráfica de abajo:</b> los puntos azules son los términos \(a_{n}=n\,x^{n}\). Cuando \(L&lt;1\) terminan bajando hacia \(0\), aunque al principio suban. Cuando \(L\ge 1\) suben: los que pasan de \(3\) se indican con una flecha en el borde, porque se salen de la gráfica.</li>
+    <li><b>Mueve el deslizador \(x\)</b> de \(0\) a \(1{,}5\), de \(0{,}25\) en \(0{,}25\). Con \(x=0\) (caso límite) todos los términos son \(0\) y no hay cocientes: no se puede dividir por \(0\).</li>
+    <li><b>Cuenta de abajo:</b> datos; la fórmula del cociente y de dónde sale; el reemplazo para \(n=1,\ 2,\ 3\) y \(8\); el límite \(L\); la comparación con \(1\); los tres primeros términos; y qué significa.</li>
+  </ol>
+  <div class="stage" data-scene="coc-vivo"></div>
+  <ul class="keys">
+    <li><b>Puntos naranjas:</b> los cocientes \(\dfrac{a_{n+1}}{a_{n}}=x\cdot\dfrac{n+1}{n}\), cada uno con su punteada hasta el eje.</li>
+    <li><b>Línea burdeo:</b> el límite de los cocientes, \(L=x\). <b>Línea gris:</b> el \(1\). <b>Zona sombreada:</b> valores mayores que \(1\); si \(L\) cae ahí, la serie diverge.</li>
+    <li><b>Puntos azules:</b> los términos \(a_{n}=n\,x^{n}\), cada uno con su punteada hasta el eje. <b>Flechas azules en el borde:</b> términos mayores que \(3\), que no caben en la gráfica.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: potencia y factorial. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{2^{n}}{n!}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Término: \(a_{n}=\dfrac{2^{n}}{n!}\). Es positivo, así que \(a_{n}\ne 0\) y \(|a_{n}|=a_{n}\).</li>
+    <li>Término que sigue: se reemplaza \(n\) por \(n+1\): \(a_{n+1}=\dfrac{2^{\,n+1}}{(n+1)!}\).</li>
+    <li>Cociente. Dividir es multiplicar por el inverso: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{2^{\,n+1}}{(n+1)!}\cdot\dfrac{n!}{2^{n}}\).</li>
+    <li>Se ordenan los factores, potencias con potencias y factoriales con factoriales: \(\dfrac{2^{\,n+1}}{2^{n}}\cdot\dfrac{n!}{(n+1)!}\).</li>
+    <li>Potencias: \(2^{\,n+1}=2\cdot 2^{n}\). Se simplifica \(2^{n}\): \(\dfrac{2^{\,n+1}}{2^{n}}=2\).</li>
+    <li>Factoriales: \((n+1)!=(n+1)\cdot n!\). Se simplifica \(n!\): \(\dfrac{n!}{(n+1)!}=\dfrac{1}{n+1}\).</li>
+    <li>Se multiplica: \(\dfrac{a_{n+1}}{a_{n}}=2\cdot\dfrac{1}{n+1}=\dfrac{2}{n+1}\).</li>
+    <li>Límite: como \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\), una constante por esa sucesión tiene límite \(2\cdot 0=0\). Entonces \(L=0\).</li>
+    <li>\(L=0&lt;1\): por el criterio del cociente, la serie converge absolutamente. Como sus términos son positivos, eso es lo mismo que decir que converge.</li>
+    <li>Comprobación de la fórmula con los primeros términos: \(a_{1}=\dfrac{2}{1}=2\), \(a_{2}=\dfrac{4}{2}=2\), \(a_{3}=\dfrac{8}{6}=\dfrac{4}{3}\). Cocientes: \(\dfrac{a_{2}}{a_{1}}=\dfrac{2}{2}=1\) y la fórmula da \(\dfrac{2}{1+1}=1\) ✓; \(\dfrac{a_{3}}{a_{2}}=\dfrac{4}{3}:2=\dfrac{4}{6}=\dfrac{2}{3}\) y la fórmula da \(\dfrac{2}{2+1}=\dfrac{2}{3}\) ✓.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: los primeros términos engañan. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n!}{10^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Término: \(a_{n}=\dfrac{n!}{10^{n}}\), positivo. Término que sigue: \(a_{n+1}=\dfrac{(n+1)!}{10^{\,n+1}}\).</li>
+    <li>Cociente, multiplicando por el inverso: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{(n+1)!}{10^{\,n+1}}\cdot\dfrac{10^{n}}{n!}\).</li>
+    <li>Se ordenan los factores: \(\dfrac{(n+1)!}{n!}\cdot\dfrac{10^{n}}{10^{\,n+1}}\).</li>
+    <li>Factoriales: \((n+1)!=(n+1)\cdot n!\). Se simplifica \(n!\): \(\dfrac{(n+1)!}{n!}=n+1\).</li>
+    <li>Potencias: \(10^{\,n+1}=10\cdot 10^{n}\). Se simplifica \(10^{n}\): \(\dfrac{10^{n}}{10^{\,n+1}}=\dfrac{1}{10}\).</li>
+    <li>Se multiplica: \(\dfrac{a_{n+1}}{a_{n}}=(n+1)\cdot\dfrac{1}{10}=\dfrac{n+1}{10}\).</li>
+    <li>Los cocientes crecen sin tope: dado un número \(M\), se cumple \(\dfrac{n+1}{10}&gt;M\) cuando \(n+1&gt;10M\), es decir, para todo \(n&gt;10M-1\).</li>
+    <li>Por el criterio del cociente, la serie diverge.</li>
+    <li>Los primeros términos parecen decir lo contrario: \(a_{1}=\dfrac{1}{10}=0{,}1\); \(a_{2}=\dfrac{2}{100}=0{,}02\); \(a_{3}=\dfrac{6}{1000}=0{,}006\). Bajan, porque mientras \(n+1&lt;10\) el cociente \(\dfrac{n+1}{10}\) es menor que \(1\).</li>
+    <li>Con \(n=9\) el cociente es \(\dfrac{9+1}{10}=1\): \(a_{10}=a_{9}\). Desde \(n=10\) el cociente es mayor que \(1\), porque \(n+1\ge 11&gt;10\): los términos crecen. Por ejemplo, con calculadora, \(a_{30}=\dfrac{30!}{10^{30}}\approx 265{,}25\).</li>
+    <li>Lo que decide es el comportamiento de los cocientes cuando \(n\) crece, no los primeros términos.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: con signos. \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\,\dfrac{n^{2}}{3^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Término: \(a_{n}=(-1)^{n}\,\dfrac{n^{2}}{3^{n}}\); no es \(0\), porque \(n^{2}\ge 1\). Sin el signo (aviso de rigor, 6): \(|a_{n}|=|(-1)^{n}|\cdot\dfrac{n^{2}}{3^{n}}=1\cdot\dfrac{n^{2}}{3^{n}}=\dfrac{n^{2}}{3^{n}}\).</li>
+    <li>Término que sigue, sin el signo: \(|a_{n+1}|=\dfrac{(n+1)^{2}}{3^{\,n+1}}\).</li>
+    <li>Cociente, multiplicando por el inverso: \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{(n+1)^{2}}{3^{\,n+1}}\cdot\dfrac{3^{n}}{n^{2}}\).</li>
+    <li>Se ordenan los factores: \(\dfrac{3^{n}}{3^{\,n+1}}\cdot\dfrac{(n+1)^{2}}{n^{2}}\).</li>
+    <li>Potencias: \(3^{\,n+1}=3\cdot 3^{n}\). Se simplifica \(3^{n}\): \(\dfrac{3^{n}}{3^{\,n+1}}=\dfrac{1}{3}\).</li>
+    <li>Cuadrados: \(\dfrac{(n+1)^{2}}{n^{2}}=\left(\dfrac{n+1}{n}\right)^{2}\). Se separa la fracción de adentro: \(\dfrac{n+1}{n}=\dfrac{n}{n}+\dfrac{1}{n}=1+\dfrac{1}{n}\).</li>
+    <li>Queda \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{1}{3}\left(1+\dfrac{1}{n}\right)^{2}\).</li>
+    <li>Límite: \(1+\dfrac{1}{n}\) tiene límite \(1+0=1\); su cuadrado, \(1\cdot 1=1\) (límite de un producto); y por la constante, \(L=\dfrac{1}{3}\cdot 1=\dfrac{1}{3}\).</li>
+    <li>\(L=\dfrac{1}{3}&lt;1\): la serie converge absolutamente, es decir, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n^{2}}{3^{n}}\) converge. Por el teorema de la hoja «Convergencia absoluta y condicional» (H18), la serie con signos también converge.</li>
+    <li>Comprobación con \(n=1\): \(|a_{1}|=\dfrac{1}{3}\) y \(|a_{2}|=\dfrac{4}{9}\); el cociente es \(\dfrac{4}{9}:\dfrac{1}{3}=\dfrac{4}{9}\cdot 3=\dfrac{12}{9}=\dfrac{4}{3}\), y la fórmula da \(\dfrac{1}{3}\left(1+\dfrac{1}{1}\right)^{2}=\dfrac{1}{3}\cdot 4=\dfrac{4}{3}\) ✓. Ese primer cociente es mayor que \(1\) y no importa: decide el límite.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(L=1\), el criterio no decide. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Término: \(a_{n}=\dfrac{(-1)^{n+1}}{n}\ne 0\). Sin el signo: \(|a_{n}|=\dfrac{1}{n}\). Término que sigue, sin el signo: \(|a_{n+1}|=\dfrac{1}{n+1}\).</li>
+    <li>Cociente, multiplicando por el inverso: \(\dfrac{|a_{n+1}|}{|a_{n}|}=\dfrac{1}{n+1}\cdot\dfrac{n}{1}=\dfrac{n}{n+1}\).</li>
+    <li>Se escribe \(n=(n+1)-1\) y se separa la fracción: \(\dfrac{n}{n+1}=\dfrac{n+1}{n+1}-\dfrac{1}{n+1}=1-\dfrac{1}{n+1}\).</li>
+    <li>Límite: como \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\), queda \(L=1-0=1\).</li>
+    <li>\(L=1\): el criterio del cociente no decide. Hay que usar otro camino.</li>
+    <li>Otro camino: es la serie armónica alternada, que converge por el criterio de Leibniz (hoja «Criterio de Leibniz», ejemplo 1).</li>
+    <li>Sin los signos es la armónica, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\), que diverge (hoja «Series harmónicas y series-p»).</li>
+    <li>Conclusión: la serie converge, pero no absolutamente. La hoja «Convergencia absoluta y condicional» (H18) estudia ese caso. El criterio del cociente nunca lo detecta: cuando da convergencia, es convergencia absoluta.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Concluir algo cuando \(L=1\): con \(L=1\) la serie puede converger o divergir, y hay que usar otro criterio. Creer que basta con que los cocientes sean menores que \(1\): en la armónica todos lo son, \(\dfrac{n}{n+1}&lt;1\), y diverge; lo que se pide es que el <b>límite</b> sea menor que \(1\). Armar el cociente al revés, \(\dfrac{a_{n}}{a_{n+1}}\): va el término que sigue arriba y el término abajo. Olvidar el valor absoluto cuando hay signos: los cocientes se calculan con los tamaños \(|a_{n}|\). Simplificar mal los factoriales: \((n+1)!=(n+1)\cdot n!\), y \((2n)!\) no es \(2\cdot n!\). Y juzgar por los primeros términos: en el ejemplo 2 bajan durante nueve lugares y la serie diverge.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Aplica el criterio del cociente a cada serie y di si converge, diverge o si el criterio no decide: (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3^{n}}{n!}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{2^{n}}{n^{2}}\); (c) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}}\).</p>
+    <details><summary>Pista</summary><div><p>Escribe \(a_{n+1}\), multiplica por el inverso de \(a_{n}\) y simplifica con \(c^{\,n+1}=c\cdot c^{\,n}\) y \((n+1)!=(n+1)\cdot n!\). Recuerda que \(\dfrac{n}{n+1}=1-\dfrac{1}{n+1}\) tiene límite \(1\). Si sale \(L=1\), busca la serie en otra hoja.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Término: \(a_{n}=\dfrac{3^{n}}{n!}\), positivo. Término que sigue: \(a_{n+1}=\dfrac{3^{\,n+1}}{(n+1)!}\).</li>
+        <li>Cociente, multiplicando por el inverso: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{3^{\,n+1}}{(n+1)!}\cdot\dfrac{n!}{3^{n}}\).</li>
+        <li>Potencias: \(3^{\,n+1}=3\cdot 3^{n}\), así que \(\dfrac{3^{\,n+1}}{3^{n}}=3\). Factoriales: \((n+1)!=(n+1)\cdot n!\), así que \(\dfrac{n!}{(n+1)!}=\dfrac{1}{n+1}\).</li>
+        <li>Se multiplica: \(\dfrac{a_{n+1}}{a_{n}}=3\cdot\dfrac{1}{n+1}=\dfrac{3}{n+1}\).</li>
+        <li>Límite: \(L=3\cdot 0=0\), porque \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\). Como \(L=0&lt;1\), la serie converge (absolutamente).</li>
+        <li>(b) Término: \(a_{n}=\dfrac{2^{n}}{n^{2}}\), positivo. Término que sigue: \(a_{n+1}=\dfrac{2^{\,n+1}}{(n+1)^{2}}\).</li>
+        <li>Cociente, multiplicando por el inverso: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{2^{\,n+1}}{(n+1)^{2}}\cdot\dfrac{n^{2}}{2^{n}}\).</li>
+        <li>Potencias: \(\dfrac{2^{\,n+1}}{2^{n}}=2\). Cuadrados: \(\dfrac{n^{2}}{(n+1)^{2}}=\left(\dfrac{n}{n+1}\right)^{2}\). Queda \(\dfrac{a_{n+1}}{a_{n}}=2\left(\dfrac{n}{n+1}\right)^{2}\).</li>
+        <li>Límite: \(\dfrac{n}{n+1}=1-\dfrac{1}{n+1}\) tiene límite \(1-0=1\); su cuadrado, \(1\cdot 1=1\); por la constante, \(L=2\cdot 1=2\).</li>
+        <li>\(L=2&gt;1\): la serie diverge.</li>
+        <li>(c) Término: \(a_{n}=\dfrac{1}{n^{3}}\), positivo. Cociente: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{1}{(n+1)^{3}}\cdot\dfrac{n^{3}}{1}=\dfrac{n^{3}}{(n+1)^{3}}=\left(\dfrac{n}{n+1}\right)^{3}\).</li>
+        <li>Límite: \(\dfrac{n}{n+1}\) tiene límite \(1\); su cubo, \(1\cdot 1\cdot 1=1\). Entonces \(L=1\): el criterio del cociente no decide.</li>
+        <li>Otro camino: es una serie \(p\) con \(p=3&gt;1\), que converge (hoja «Series harmónicas y series-p»).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Decide si \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(2n)!}{(n!)^{2}}\) converge o diverge. (b) Para \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{3^{n}}\): calcula \(L\); después demuestra, como en la demostración del criterio, que el cociente no pasa de \(\dfrac{2}{3}\) para ningún \(n\ge 1\) y que ninguna suma parcial pasa de \(1\).</p>
+    <details><summary>Pista</summary><div><p>En (a): \((2(n+1))!=(2n+2)!=(2n+2)(2n+1)\cdot(2n)!\) y \(((n+1)!)^{2}=(n+1)^{2}\,(n!)^{2}\). En (b): con \(r=\dfrac{2}{3}\) y \(N=1\), la cota es \(a_{1+k}\le a_{1}\,r^{k}\); después, la suma de la geométrica.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Término: \(a_{n}=\dfrac{(2n)!}{(n!)^{2}}\), positivo. Término que sigue: se reemplaza \(n\) por \(n+1\); como \(2(n+1)=2n+2\), queda \(a_{n+1}=\dfrac{(2n+2)!}{((n+1)!)^{2}}\).</li>
+        <li>Cociente, multiplicando por el inverso: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{(2n+2)!}{((n+1)!)^{2}}\cdot\dfrac{(n!)^{2}}{(2n)!}\).</li>
+        <li>Factorial de arriba: \((2n+2)!=(2n+2)(2n+1)\cdot(2n)!\). Se simplifica \((2n)!\): \(\dfrac{(2n+2)!}{(2n)!}=(2n+2)(2n+1)\).</li>
+        <li>Factorial de abajo: \((n+1)!=(n+1)\cdot n!\); al cuadrado, \(((n+1)!)^{2}=(n+1)^{2}\,(n!)^{2}\). Se simplifica \((n!)^{2}\): \(\dfrac{(n!)^{2}}{((n+1)!)^{2}}=\dfrac{1}{(n+1)^{2}}\).</li>
+        <li>Se multiplica: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{(2n+2)(2n+1)}{(n+1)^{2}}\).</li>
+        <li>Factor común: \(2n+2=2\,(n+1)\). Se simplifica un factor \(n+1\): \(\dfrac{2\,(n+1)(2n+1)}{(n+1)^{2}}=\dfrac{2\,(2n+1)}{n+1}=\dfrac{4n+2}{n+1}\).</li>
+        <li>Se dividen el numerador y el denominador por \(n\): \(\dfrac{4n+2}{n+1}=\dfrac{4+\frac{2}{n}}{1+\frac{1}{n}}\).</li>
+        <li>Límite: el numerador tiene límite \(4+2\cdot 0=4\) y el denominador, \(1+0=1\). Límite de un cociente: \(L=\dfrac{4}{1}=4\).</li>
+        <li>\(L=4&gt;1\): la serie diverge.</li>
+        <li>Comprobación de la fórmula: \(a_{1}=\dfrac{2!}{(1!)^{2}}=\dfrac{2}{1}=2\) y \(a_{2}=\dfrac{4!}{(2!)^{2}}=\dfrac{24}{4}=6\); el cociente es \(\dfrac{6}{2}=3\), y la fórmula da \(\dfrac{4\cdot 1+2}{1+1}=\dfrac{6}{2}=3\) ✓.</li>
+        <li>(b) Término: \(a_{n}=\dfrac{n}{3^{n}}\), positivo. Cociente: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{3^{\,n+1}}\cdot\dfrac{3^{n}}{n}\). Como \(3^{\,n+1}=3\cdot 3^{n}\), se simplifica \(3^{n}\): \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{3n}\).</li>
+        <li>Se separa la fracción: \(\dfrac{n+1}{3n}=\dfrac{n}{3n}+\dfrac{1}{3n}=\dfrac{1}{3}+\dfrac{1}{3}\cdot\dfrac{1}{n}\). Límite: \(L=\dfrac{1}{3}+\dfrac{1}{3}\cdot 0=\dfrac{1}{3}\). Como \(L&lt;1\), la serie converge.</li>
+        <li>El cociente no pasa de \(\dfrac{2}{3}\): de \(n\ge 1\), sumando \(n\) a cada lado, \(2n\ge n+1\). Se divide por \(3n\), que es positivo: \(\dfrac{2n}{3n}\ge\dfrac{n+1}{3n}\). Se simplifica el lado izquierdo: \(\dfrac{n+1}{3n}\le\dfrac{2}{3}\), para todo \(n\ge 1\).</li>
+        <li>Se multiplica por \(a_{n}&gt;0\): \(a_{n+1}\le\dfrac{2}{3}\,a_{n}\) para todo \(n\ge 1\). Encadenando desde \(a_{1}=\dfrac{1}{3}\), como en la demostración (con \(N=1\) y \(r=\dfrac{2}{3}\)): \(a_{1+k}\le\dfrac{1}{3}\left(\dfrac{2}{3}\right)^{k}\).</li>
+        <li>Suma parcial: \(S_{n}=\displaystyle\sum_{k=0}^{n-1}a_{1+k}\le\sum_{k=0}^{n-1}\dfrac{1}{3}\left(\dfrac{2}{3}\right)^{k}\). Suma parcial de una geométrica con primer término \(\dfrac{1}{3}\), razón \(\dfrac{2}{3}\) y \(n\) términos: \(\dfrac{\frac{1}{3}\left(1-\left(\frac{2}{3}\right)^{n}\right)}{1-\frac{2}{3}}\).</li>
+        <li>Como \(1-\left(\dfrac{2}{3}\right)^{n}&lt;1\), eso es menor que \(\dfrac{\frac{1}{3}}{1-\frac{2}{3}}\). Se resta en el denominador: \(1-\dfrac{2}{3}=\dfrac{1}{3}\). Se divide: \(\dfrac{1}{3}:\dfrac{1}{3}=1\).</li>
+        <li>Entonces \(S_{n}\le 1\) para todo \(n\). Comprobación con \(n=3\): \(S_{3}=\dfrac{1}{3}+\dfrac{2}{9}+\dfrac{3}{27}=\dfrac{3}{9}+\dfrac{2}{9}+\dfrac{1}{9}=\dfrac{6}{9}=\dfrac{2}{3}\le 1\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Catalina sube a internet un video de su banda. Un modelo estima que en la semana \(n\) el video recibe \(v_{n}=12\,000\cdot\dfrac{n}{2^{n}}\) visitas. (a) ¿Cuántas visitas estima el modelo para cada una de las cuatro primeras semanas, y cuántas en total en esas cuatro semanas? (b) Si el video quedara publicado para siempre, ¿el total de visitas crecería sin tope o se acercaría a un valor? (c) Según el modelo, ¿puede el total de visitas pasar de \(30\,000\)?</p>
+    <details><summary>Pista</summary><div><p>El total después de \(n\) semanas es \(12\,000\cdot S_{n}\), con \(S_{n}\) la suma parcial de \(\displaystyle\sum\dfrac{n}{2^{n}}\), la serie de la primera animación. Para (c), usa la cota \(S_{n}\le\dfrac{5}{2}\) que se obtiene en el paso 5 de esa animación.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Semana 1: \(\dfrac{1}{2^{1}}=\dfrac{1}{2}\); \(v_{1}=12\,000\cdot\dfrac{1}{2}=6\,000\) visitas.</li>
+        <li>Semana 2: \(\dfrac{2}{2^{2}}=\dfrac{2}{4}=\dfrac{1}{2}\); \(v_{2}=12\,000\cdot\dfrac{1}{2}=6\,000\) visitas.</li>
+        <li>Semana 3: \(\dfrac{3}{2^{3}}=\dfrac{3}{8}\); \(v_{3}=12\,000\cdot\dfrac{3}{8}=\dfrac{36\,000}{8}=4\,500\) visitas.</li>
+        <li>Semana 4: \(\dfrac{4}{2^{4}}=\dfrac{4}{16}=\dfrac{1}{4}\); \(v_{4}=12\,000\cdot\dfrac{1}{4}=3\,000\) visitas.</li>
+        <li>Total de las cuatro semanas, \(\displaystyle\sum_{n=1}^{4}v_{n}\): \(6\,000+6\,000=12\,000\); \(12\,000+4\,500=16\,500\); \(16\,500+3\,000=19\,500\) visitas.</li>
+        <li>(b) El total después de \(n\) semanas es \(V_{n}=\displaystyle\sum_{k=1}^{n}12\,000\cdot\dfrac{k}{2^{k}}\). Se saca el factor común \(12\,000\): \(V_{n}=12\,000\cdot S_{n}\), con \(S_{n}=\displaystyle\sum_{k=1}^{n}\dfrac{k}{2^{k}}\).</li>
+        <li>Cociente de la serie \(\displaystyle\sum\dfrac{n}{2^{n}}\): \(\dfrac{n+1}{2^{\,n+1}}\cdot\dfrac{2^{n}}{n}\). Como \(2^{\,n+1}=2\cdot 2^{n}\), se simplifica \(2^{n}\): \(\dfrac{n+1}{2n}\).</li>
+        <li>Se separa la fracción: \(\dfrac{n+1}{2n}=\dfrac{n}{2n}+\dfrac{1}{2n}=\dfrac{1}{2}+\dfrac{1}{2}\cdot\dfrac{1}{n}\). Límite: \(L=\dfrac{1}{2}+\dfrac{1}{2}\cdot 0=\dfrac{1}{2}\).</li>
+        <li>\(L=\dfrac{1}{2}&lt;1\): la serie converge, es decir, \(S_{n}\) tiene límite \(S\). Una constante por una sucesión con límite tiene límite: \(V_{n}=12\,000\cdot S_{n}\) tiene límite \(12\,000\cdot S\). El total no crece sin tope: se acerca a un valor.</li>
+        <li>(c) En el paso 5 de la primera animación se demuestra que \(S_{n}\le\dfrac{1}{2}+2=\dfrac{5}{2}\) para todo \(n\): desde \(n=2\) cada término no pasa de \(\dfrac{1}{2}\left(\dfrac{3}{4}\right)^{n-2}\), y esa geométrica suma a lo más \(\dfrac{1}{2}:\dfrac{1}{4}=2\).</li>
+        <li>Se multiplica por \(12\,000\), que es positivo: \(V_{n}=12\,000\cdot S_{n}\le 12\,000\cdot\dfrac{5}{2}\).</li>
+        <li>Se calcula: \(12\,000\cdot\dfrac{5}{2}=\dfrac{60\,000}{2}=30\,000\).</li>
+        <li>Respuesta: no. Según el modelo, el total de visitas nunca pasa de \(30\,000\). El criterio asegura que el total se acerca a un valor, y la cota dice que ese valor no pasa de \(30\,000\); ninguno de los dos calcula el valor exacto.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H19 · v001 · Pendiente de APR</span>
+</footer>
+</article>

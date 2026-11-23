@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convergencia absoluta y condicional | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-absoluta" data-hoja="L25 H18">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Convergencia absoluta y condicional</b></li>
+    </ol>
+    <h1>Convergencia absoluta y condicional</h1>
+    <p class="lede">A una serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) se le pueden quitar los signos: queda \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\), la serie de los tamaños de sus términos. Si esa serie sin signos converge, la serie original <b>converge absolutamente</b>, y entonces también converge. Si la serie original converge pero la serie sin signos diverge, <b>converge condicionalmente</b>: converge solo gracias a los signos. \[\sum_{n=1}^{\infty}|a_{n}|\ \text{ converge}\ \Longrightarrow\ \sum_{n=1}^{\infty}a_{n}\ \text{ converge}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}-\dfrac{1}{32}+\cdots\) y sus seis primeras sumas parciales, en cinco pasos. Se muestra por qué, si la serie sin signos converge, la serie con signos también. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes y los puntos naranjas:</b> en horizontal va \(n\); en vertical, el valor de la suma parcial. Los puntos naranjas son \(S_{1},\ \ldots,\ S_{6}\), las sumas parciales con los signos; cada uno lleva su valor y una punteada hasta el eje vertical. Suben y bajan. Arriba queda la pregunta: ¿converge la serie?</li>
+    <li><b>Paso 2, los puntos azules:</b> son \(T_{1},\ \ldots,\ T_{6}\), las sumas parciales de la misma serie sin los signos, \(1+\dfrac{1}{2}+\dfrac{1}{4}+\cdots\) Solo suben, y no pasan de la línea punteada azul, rotulada «tope: 2».</li>
+    <li><b>Paso 3, los puntos verdes:</b> son \(C_{1},\ \ldots,\ C_{6}\), las sumas parciales de una serie nueva: a cada término se le suma su tamaño, \(a_{n}+|a_{n}|\). Cada término nuevo vale el doble del original (si era positivo) o cero (si era negativo): los puntos verdes nunca bajan.</li>
+    <li><b>Paso 4, la línea burdeo:</b> es el tope de los puntos verdes, \(4\), el doble del tope de los azules. Una sucesión que sube y tiene tope tiene límite.</li>
+    <li><b>Paso 5, las dos cotas naranjas, y la cuenta de abajo:</b> junto al último punto, una cota mide la distancia del punto azul al verde, \(C_{6}-T_{6}=\dfrac{21}{32}\), y la otra la altura del punto naranja, \(S_{6}=\dfrac{21}{32}\). Miden lo mismo: cada suma naranja es la verde menos la azul. Como las verdes y las azules tienen límite, las naranjas también: la serie converge. En el registro y en la cuenta de abajo está cada suma parcial calculada, una operación por línea.</li>
+  </ol>
+  <div class="stage" data-scene="abs-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Puntos naranjas, «con los signos»:</b> las sumas parciales \(S_{n}\) de la serie \(\displaystyle\sum a_{n}\). También son naranjas las dos cotas del paso 5.</li>
+    <li><b>Puntos azules, «sin los signos»:</b> las sumas parciales \(T_{n}\) de \(\displaystyle\sum|a_{n}|\). <b>Línea punteada azul:</b> su tope, \(2\).</li>
+    <li><b>Puntos verdes, «cada término más su tamaño»:</b> las sumas parciales \(C_{n}\) de \(\displaystyle\sum\left(a_{n}+|a_{n}|\right)\).</li>
+    <li><b>Línea punteada burdeo:</b> el tope de los puntos verdes, \(4\).</li>
+    <li><b>Punteadas finas:</b> llevan cada punto a su valor en el eje vertical.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie sin signos.</b> Dada \(\displaystyle\sum_{n=1}^{\infty}a_{n}\), su serie de valores absolutos es \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\). El número \(|a_{n}|\) es el tamaño del término: vale \(a_{n}\) si \(a_{n}\ge 0\) y vale \(-a_{n}\) si \(a_{n}&lt;0\). Nunca es negativo.</li>
+      <li><b>Convergencia absoluta.</b> \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) <b>converge absolutamente</b> si \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge.</li>
+      <li><b>Convergencia condicional.</b> \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) <b>converge condicionalmente</b> si \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge y \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) diverge.</li>
+      <li><b>Si todos los términos son mayores o iguales que cero,</b> \(|a_{n}|=a_{n}\) y las dos series son la misma: para esas series, converger y converger absolutamente es lo mismo. La distinción importa cuando hay términos positivos y negativos.</li>
+    </ol>
+    <p><b>Notación de esta hoja.</b> \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\) es la suma parcial con los signos, y \(T_{n}=|a_{1}|+|a_{2}|+\cdots+|a_{n}|=\displaystyle\sum_{k=1}^{n}|a_{k}|\), la suma parcial sin los signos. Una serie converge cuando sus sumas parciales tienen límite real (hoja «Series infinitas convergentes y divergentes»).</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) las propiedades del valor absoluto: \(|x|\ge 0\); \(|x\cdot y|=|x|\cdot|y|\); \(|(-1)^{k}|=1\) para todo entero \(k\); (2) que una sucesión creciente y acotada por arriba tiene límite real, y que si una sucesión creciente tiene límite \(L\), todos sus términos son menores o iguales que \(L\) (hoja «Sucesiones monótonas acotadas»); (3) el álgebra de límites: el límite de una resta es la resta de los límites, y el de una constante por una sucesión es la constante por el límite, cuando los límites existen; (4) que desigualdades del mismo sentido se pueden sumar término a término, y que en una suma de una cantidad finita de números los sumandos se pueden reordenar y agrupar; (5) de la hoja «Series geométricas infinitas», donde se demuestra: \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) converge a \(\dfrac{a}{1-r}\) si \(|r|&lt;1\); (6) de la hoja «Series harmónicas y series-p», donde se demuestra: la serie \(\displaystyle\sum\dfrac{1}{n^{p}}\) converge si \(p&gt;1\) y diverge si \(p\le 1\); las sumas parciales de la armónica superan cualquier número; y, sin demostrar, que una sucesión que supera cualquier número no tiene límite real; (7) de la hoja «Criterio de Leibniz», donde se demuestra: si \(b_{n}&gt;0\), \(b_{n+1}\le b_{n}\) y \(\displaystyle\lim_{n\to\infty}b_{n}=0\), la serie \(\displaystyle\sum(-1)^{n+1}b_{n}\) converge; (8) de la hoja «Criterio del enésimo término», donde se demuestra: si \(a_{n}\) no tiene límite \(0\), la serie \(\displaystyle\sum a_{n}\) diverge; y, sin demostrar, que una sucesión cuyos términos, sin el signo, son todos mayores o iguales que un mismo número positivo no tiene límite \(0\); (9) los límites \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{\sqrt{n}}=0\); que si \(0&lt;c_{n}\le d_{n}\) y \(d_{n}\) tiene límite \(0\), entonces \(c_{n}\) tiene límite \(0\); que el orden entre números positivos se invierte al tomar inversos y se conserva al sacar raíz cuadrada; y que \(\sqrt{n}=n^{1/2}\); (10) el valor \(\ln 2\) de la suma de la armónica alternada, y los dos enunciados sobre reordenar los términos del recuadro «Cómo clasificar una serie», que solo se enuncian. El criterio de comparación todavía no tiene hoja: aquí no se usa; cada cota entre sumas parciales se demuestra en el lugar donde aparece.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Teorema: si converge absolutamente, converge. Demostración paso a paso</h3>
+    <p><b>Teorema.</b> Si \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge, entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge.</p>
+    <ol class="steps">
+      <li><b>Una serie auxiliar.</b> Para cada \(n\) se define \(c_{n}=a_{n}+|a_{n}|\): a cada término se le suma su tamaño.</li>
+      <li><b>Si \(a_{n}\ge 0\):</b> \(|a_{n}|=a_{n}\). Entonces \(c_{n}=a_{n}+a_{n}=2\,a_{n}=2\,|a_{n}|\), que es mayor o igual que \(0\).</li>
+      <li><b>Si \(a_{n}&lt;0\):</b> \(|a_{n}|=-a_{n}\). Entonces \(c_{n}=a_{n}+(-a_{n})=0\), y \(2\,|a_{n}|&gt;0\).</li>
+      <li>En los dos casos: \(0\le c_{n}\le 2\,|a_{n}|\), es decir, \[0\le a_{n}+|a_{n}|\le 2\,|a_{n}|\]</li>
+      <li><b>Las sumas parciales sin signos crecen.</b> \(T_{n+1}=T_{n}+|a_{n+1}|\). Se resta \(T_{n}\) a cada lado: \(T_{n+1}-T_{n}=|a_{n+1}|\ge 0\). Entonces \(T_{n+1}\ge T_{n}\).</li>
+      <li>Por hipótesis, \(\displaystyle\sum|a_{n}|\) converge: las \(T_{n}\) tienen límite real. Se llama \(T\). Como las \(T_{n}\) crecen y tienen límite \(T\): \(T_{n}\le T\) para todo \(n\) (aviso de rigor, 2).</li>
+      <li><b>Las sumas parciales de la serie auxiliar crecen.</b> Sea \(C_{n}=c_{1}+c_{2}+\cdots+c_{n}=\displaystyle\sum_{k=1}^{n}c_{k}\). Como antes, \(C_{n+1}-C_{n}=c_{n+1}\), y \(c_{n+1}\ge 0\) por el paso 4. Entonces \(C_{n+1}\ge C_{n}\).</li>
+      <li><b>Están acotadas.</b> Se suma la desigualdad \(c_{k}\le 2\,|a_{k}|\) del paso 4 desde \(k=1\) hasta \(k=n\) (aviso, 4): \(\displaystyle\sum_{k=1}^{n}c_{k}\le\sum_{k=1}^{n}2\,|a_{k}|\). Se saca el factor común \(2\): \(C_{n}\le 2\,T_{n}\).</li>
+      <li>Por el paso 6, \(T_{n}\le T\). Se multiplica por \(2\), que es positivo: \(2\,T_{n}\le 2\,T\). Entonces \(C_{n}\le 2\,T\) para todo \(n\).</li>
+      <li>Las \(C_{n}\) son crecientes y acotadas por arriba: tienen límite real (aviso, 2). Se llama \(C\).</li>
+      <li><b>Se vuelve a la serie original.</b> De \(c_{k}=a_{k}+|a_{k}|\), restando \(|a_{k}|\) a cada lado: \(a_{k}=c_{k}-|a_{k}|\).</li>
+      <li>Se suma desde \(k=1\) hasta \(k=n\) y se agrupan los sumandos (aviso, 4): \(\displaystyle\sum_{k=1}^{n}a_{k}=\sum_{k=1}^{n}c_{k}-\sum_{k=1}^{n}|a_{k}|\), es decir, \(S_{n}=C_{n}-T_{n}\).</li>
+      <li>Límite de una resta (aviso, 3): \(\displaystyle\lim_{n\to\infty}S_{n}=C-T\). Las sumas parciales \(S_{n}\) tienen límite real: la serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge.</li>
+    </ol>
+    <p><b>Dicho al revés.</b> Si \(\displaystyle\sum a_{n}\) diverge, entonces \(\displaystyle\sum|a_{n}|\) también diverge: si convergiera, por el teorema \(\displaystyle\sum a_{n}\) convergería.</p>
+    <p><b>El teorema asegura que la suma existe; no la calcula.</b> Y no dice que las dos series sumen lo mismo: en la animación, la serie con signos suma \(\dfrac{2}{3}\) y la serie sin signos suma \(2\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>El recíproco es falso, y cómo clasificar una serie</h3>
+    <p><b>Que \(\displaystyle\sum a_{n}\) converja no asegura que \(\displaystyle\sum|a_{n}|\) converja.</b> El ejemplo es la armónica alternada, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}=1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\)</p>
+    <ol class="steps">
+      <li><b>Con los signos, converge.</b> Es alternante con \(b_{n}=\dfrac{1}{n}\), que es positivo, decrece y tiene límite \(0\): converge por el criterio de Leibniz (hoja «Criterio de Leibniz», ejemplo 1).</li>
+      <li><b>Sin los signos, diverge.</b> Por el aviso de rigor (1), \(\left|\dfrac{(-1)^{n+1}}{n}\right|=|(-1)^{n+1}|\cdot\dfrac{1}{n}=1\cdot\dfrac{1}{n}=\dfrac{1}{n}\). La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\), la armónica, que diverge (hoja «Series harmónicas y series-p»).</li>
+      <li>Converge, y su serie sin signos diverge: la armónica alternada <b>converge condicionalmente</b>.</li>
+    </ol>
+    <p><b>Toda serie está en exactamente uno de tres casos:</b></p>
+    <ol class="steps">
+      <li><b>Converge absolutamente:</b> \(\displaystyle\sum|a_{n}|\) converge (y entonces \(\displaystyle\sum a_{n}\) converge, por el teorema).</li>
+      <li><b>Converge condicionalmente:</b> \(\displaystyle\sum a_{n}\) converge y \(\displaystyle\sum|a_{n}|\) diverge.</li>
+      <li><b>Diverge:</b> \(\displaystyle\sum a_{n}\) diverge (y entonces \(\displaystyle\sum|a_{n}|\) también diverge).</li>
+    </ol>
+    <p><b>Cómo clasificar, en orden:</b></p>
+    <ol class="steps">
+      <li>Escribe \(|a_{n}|\): el término sin el signo.</li>
+      <li>Estudia \(\displaystyle\sum|a_{n}|\). Sus términos no son negativos; sirven los criterios ya vistos: serie geométrica, series \(p\), criterio de la integral. <b>Si converge:</b> la serie converge absolutamente, y se terminó.</li>
+      <li><b>Si \(\displaystyle\sum|a_{n}|\) diverge,</b> estudia \(\displaystyle\sum a_{n}\) con sus signos. Primero el criterio del enésimo término: si \(a_{n}\) no tiene límite \(0\), la serie diverge. Si es alternante y cumple las tres condiciones del criterio de Leibniz, converge, y entonces converge condicionalmente.</li>
+    </ol>
+    <p><b>Por qué importa la diferencia (solo enunciado, sin demostrar).</b> En una serie que converge absolutamente, los términos se pueden reordenar de cualquier manera y la suma no cambia. En una serie que converge condicionalmente, no: reordenando sus términos se puede obtener cualquier número real como suma, y también una serie divergente (teorema de reordenamiento de Riemann). Ninguno de los dos enunciados se demuestra ni se usa en esta hoja.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Número ↔ figura: con signos y sin signos</h2>
+  <p>La armónica alternada, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}\), y su serie sin signos, la armónica \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\). Los términos tienen los mismos tamaños; solo cambian los signos. Tú eliges cuántos términos sumar.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los dos puntos grandes, con nombre:</b> el naranja es \(S_{n}\), la suma de los \(n\) primeros términos con los signos; el azul es \(T_{n}\), la suma de los mismos términos sin los signos. Los puntos chicos son las sumas parciales anteriores. Cada punto tiene su punteada hasta el eje vertical.</li>
+    <li><b>Mira después la franja burdeo,</b> que va de \(\dfrac{1}{2}\) a \(1\): los puntos naranjas van en zigzag y nunca salen de ella.</li>
+    <li><b>Mira las dos líneas punteadas verdes,</b> a las alturas \(2\) y \(3\): los puntos azules solo suben; pasan de \(2\) con \(4\) términos y de \(3\) con \(11\) términos.</li>
+    <li><b>Mueve el deslizador \(n\)</b> de \(1\) a \(12\). Con \(n=1\) (caso límite) los dos puntos coinciden: \(S_{1}=T_{1}=1\). Desde \(n=2\) se separan, y la distancia entre ellos crece.</li>
+    <li><b>Cuenta de abajo:</b> datos; \(S_{n}\) y \(T_{n}\), cada una calculada desde la suma parcial anterior, como fracción exacta y con tres decimales; por qué las naranjas quedan en la franja; por qué las azules no tienen tope; y qué significa: la serie con signos converge y la serie sin signos diverge. Los valores con «\(\approx\)» están redondeados a tres decimales.</li>
+  </ol>
+  <div class="stage" data-scene="abs-cond"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Puntos naranjas:</b> las sumas parciales con los signos, \(S_{n}\), de \(1-\dfrac{1}{2}+\dfrac{1}{3}-\cdots\)</li>
+    <li><b>Puntos azules:</b> las sumas parciales sin los signos, \(T_{n}\), de \(1+\dfrac{1}{2}+\dfrac{1}{3}+\cdots\)</li>
+    <li><b>Franja burdeo:</b> de \(\dfrac{1}{2}\) a \(1\); ahí quedan todas las naranjas.</li>
+    <li><b>Líneas punteadas verdes:</b> las alturas \(2\) y \(3\), que las azules pasan.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: converge absolutamente. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n^{2}}=1-\dfrac{1}{4}+\dfrac{1}{9}-\dfrac{1}{16}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe el término sin el signo (aviso de rigor, 1): \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{1}{n^{2}}=1\cdot\dfrac{1}{n^{2}}=\dfrac{1}{n^{2}}\).</li>
+    <li>La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}=1+\dfrac{1}{4}+\dfrac{1}{9}+\dfrac{1}{16}+\cdots\): una serie \(p\) con \(p=2\).</li>
+    <li>Como \(2&gt;1\), esa serie converge (hoja «Series harmónicas y series-p»).</li>
+    <li>\(\displaystyle\sum|a_{n}|\) converge: la serie <b>converge absolutamente</b>.</li>
+    <li>Por el teorema, la serie con signos converge. No hizo falta el criterio de Leibniz (que también la resuelve: hoja «Criterio de Leibniz», ejemplo 3).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: converge condicionalmente. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{\sqrt{n}}=1-\dfrac{1}{\sqrt{2}}+\dfrac{1}{\sqrt{3}}-\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe el término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{1}{\sqrt{n}}=\dfrac{1}{\sqrt{n}}\).</li>
+    <li>Se escribe la raíz como potencia: \(\sqrt{n}=n^{1/2}\). La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{1/2}}\): una serie \(p\) con \(p=\dfrac{1}{2}\).</li>
+    <li>Como \(\dfrac{1}{2}\le 1\), esa serie diverge (hoja «Series harmónicas y series-p»). La serie <b>no</b> converge absolutamente.</li>
+    <li>Se estudia la serie con sus signos. Es alternante, con \(b_{n}=\dfrac{1}{\sqrt{n}}\). Condición (1) de Leibniz: \(\sqrt{n}\ge 1&gt;0\), así que \(b_{n}&gt;0\). ✓</li>
+    <li>Condición (2): como \(n&lt;n+1\), al sacar raíz el orden se conserva, \(\sqrt{n}&lt;\sqrt{n+1}\); al invertir números positivos se da vuelta: \(\dfrac{1}{\sqrt{n+1}}&lt;\dfrac{1}{\sqrt{n}}\), es decir, \(b_{n+1}\le b_{n}\) (aviso, 9). ✓</li>
+    <li>Condición (3): \(\displaystyle\lim_{n\to\infty}\dfrac{1}{\sqrt{n}}=0\) (aviso, 9). ✓</li>
+    <li>Se cumplen las tres: por el criterio de Leibniz, \(\displaystyle\sum a_{n}\) converge.</li>
+    <li>\(\displaystyle\sum a_{n}\) converge y \(\displaystyle\sum|a_{n}|\) diverge: la serie <b>converge condicionalmente</b>.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: signos que no alternan. \(\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}+\dfrac{1}{32}-\dfrac{1}{64}+\cdots\)</h3>
+  <div class="body">
+  <p>Con sumatoria: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{s_{n}}{2^{n}}\), con \(s_{n}=-1\) si \(n\) es múltiplo de \(3\) y \(s_{n}=1\) si no lo es. Los signos van de a tres: más, más, menos.</p>
+  <ol class="steps">
+    <li>La serie no es alternante: los dos primeros términos son positivos. El criterio de Leibniz no se puede aplicar.</li>
+    <li>Se escribe el término sin el signo: \(s_{n}\) vale \(1\) o \(-1\), así que \(|s_{n}|=1\) y \(|a_{n}|=|s_{n}|\cdot\dfrac{1}{2^{n}}=\dfrac{1}{2^{n}}\).</li>
+    <li>Se separa un factor: \(\dfrac{1}{2^{n}}=\dfrac{1}{2}\cdot\dfrac{1}{2^{\,n-1}}=\dfrac{1}{2}\left(\dfrac{1}{2}\right)^{n-1}\). La serie sin signos es geométrica, con primer término \(a=\dfrac{1}{2}\) y razón \(r=\dfrac{1}{2}\).</li>
+    <li>Como \(|r|=\dfrac{1}{2}&lt;1\), converge (hoja «Series geométricas infinitas»). Su suma: se resta, \(1-r=1-\dfrac{1}{2}=\dfrac{1}{2}\); se divide, \(\dfrac{a}{1-r}=\dfrac{1}{2}:\dfrac{1}{2}=1\).</li>
+    <li>\(\displaystyle\sum|a_{n}|\) converge: la serie <b>converge absolutamente</b>, y por el teorema, converge.</li>
+    <li>Una suma parcial, para ver el tamaño. Denominador común \(64\): \(\dfrac{1}{2}=\dfrac{32}{64}\), \(\dfrac{1}{4}=\dfrac{16}{64}\), \(\dfrac{1}{8}=\dfrac{8}{64}\), \(\dfrac{1}{16}=\dfrac{4}{64}\), \(\dfrac{1}{32}=\dfrac{2}{64}\).</li>
+    <li>Con los signos, numeradores en orden: \(32+16=48\), \(48-8=40\), \(40+4=44\), \(44+2=46\), \(46-1=45\). Entonces \(S_{6}=\dfrac{45}{64}\approx 0{,}703\).</li>
+    <li>Sin los signos: \(32+16=48\), \(48+8=56\), \(56+4=60\), \(60+2=62\), \(62+1=63\). Entonces \(T_{6}=\dfrac{63}{64}\approx 0{,}984\), menor que la suma \(1\) de la serie sin signos.</li>
+    <li>El teorema asegura que la serie converge; no dice cuánto suma.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: diverge. \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{n}{n+1}=\dfrac{1}{2}-\dfrac{2}{3}+\dfrac{3}{4}-\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se escribe el término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{n}{n+1}=\dfrac{n}{n+1}\).</li>
+    <li>Una cota: \(\dfrac{n}{n+1}\ge\dfrac{1}{2}\) para todo \(n\ge 1\). En efecto, de \(n\ge 1\), sumando \(n\) a cada lado: \(2n\ge n+1\).</li>
+    <li>Se divide por \(2\,(n+1)\), que es positivo: \(\dfrac{2n}{2\,(n+1)}\ge\dfrac{n+1}{2\,(n+1)}\). Se simplifica cada lado: \(\dfrac{n}{n+1}\ge\dfrac{1}{2}\).</li>
+    <li>Ningún \(|a_{n}|\) está a menos de \(\dfrac{1}{2}\) de \(0\): \(|a_{n}|\) no tiene límite \(0\) (aviso, 8). Por el criterio del enésimo término, \(\displaystyle\sum|a_{n}|\) diverge: la serie no converge absolutamente.</li>
+    <li>Se estudia la serie con sus signos. El término \(a_{n}\) vale \(\dfrac{n}{n+1}\) o \(-\dfrac{n}{n+1}\): sin el signo, su tamaño es mayor o igual que \(\dfrac{1}{2}\). Entonces \(a_{n}\) tampoco tiene límite \(0\) (aviso, 8).</li>
+    <li>Por el criterio del enésimo término (hoja «Criterio del enésimo término»), \(\displaystyle\sum a_{n}\) diverge.</li>
+    <li>La serie <b>diverge</b>: no converge ni absoluta ni condicionalmente. Los signos alternados no bastan cuando los términos no tienden a \(0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que «condicional» quiere decir «converge a medias»: una serie que converge condicionalmente converge, con una suma bien definida; lo que diverge es su serie sin signos. Concluir que \(\displaystyle\sum a_{n}\) diverge porque \(\displaystyle\sum|a_{n}|\) diverge: el teorema va en un solo sentido; cuando \(\displaystyle\sum|a_{n}|\) diverge, falta estudiar la serie con sus signos (ejemplo 2). Creer que las dos series suman lo mismo: \(1-\dfrac{1}{2}+\dfrac{1}{4}-\cdots\) suma \(\dfrac{2}{3}\), y sin los signos suma \(2\). Sacar mal el valor absoluto: \(|a_{n}|\) se obtiene quitando el signo a cada término, no a la suma; y \(|(-1)^{n+1}|=1\), no \(-1\). Y decir «converge absolutamente» sin haber mostrado por qué \(\displaystyle\sum|a_{n}|\) converge: hay que nombrar el criterio (geométrica con \(|r|&lt;1\), serie \(p\) con \(p&gt;1\), etc.).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Clasifica cada serie: converge absolutamente, converge condicionalmente o diverge. (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n^{3}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{2n-1}\); (c) \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\dfrac{2n+1}{n}\).</p>
+    <details><summary>Pista</summary><div><p>Escribe primero \(|a_{n}|\) y estudia la serie sin signos. En (b), compara \(\dfrac{1}{2k-1}\) con \(\dfrac{1}{2k}=\dfrac{1}{2}\cdot\dfrac{1}{k}\) y suma. En (c), separa la fracción: \(\dfrac{2n+1}{n}=2+\dfrac{1}{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\dfrac{1}{n^{3}}=\dfrac{1}{n^{3}}\).</li>
+        <li>La serie sin signos, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}}\), es una serie \(p\) con \(p=3\). Como \(3&gt;1\), converge (hoja «Series harmónicas y series-p»).</li>
+        <li>\(\displaystyle\sum|a_{n}|\) converge: la serie <b>converge absolutamente</b>.</li>
+        <li>(b) Término sin el signo: \(|a_{n}|=\dfrac{1}{2n-1}\). La serie sin signos es \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n-1}=1+\dfrac{1}{3}+\dfrac{1}{5}+\cdots\)</li>
+        <li>Como \(0&lt;2k-1&lt;2k\), al invertir: \(\dfrac{1}{2k-1}&gt;\dfrac{1}{2k}=\dfrac{1}{2}\cdot\dfrac{1}{k}\).</li>
+        <li>Se suma desde \(k=1\) hasta \(k=n\): \(\displaystyle\sum_{k=1}^{n}\dfrac{1}{2k-1}&gt;\dfrac{1}{2}\sum_{k=1}^{n}\dfrac{1}{k}=\dfrac{1}{2}H_{n}\), con \(H_{n}\) la suma parcial de la armónica.</li>
+        <li>Las \(H_{n}\) superan cualquier número (aviso de rigor, 6): dado \(M\), hay un \(n\) con \(H_{n}&gt;2M\), y entonces \(\dfrac{1}{2}H_{n}&gt;\dfrac{2M}{2}=M\). Las sumas parciales de la serie sin signos superan cualquier número: \(\displaystyle\sum|a_{n}|\) diverge.</li>
+        <li>Con los signos: es alternante con \(b_{n}=\dfrac{1}{2n-1}\). Condición (1): \(2n-1\ge 2\cdot 1-1=1&gt;0\), así que \(b_{n}&gt;0\). ✓</li>
+        <li>Condición (2): \(b_{n+1}=\dfrac{1}{2(n+1)-1}=\dfrac{1}{2n+1}\). Como \(0&lt;2n-1&lt;2n+1\), al invertir: \(\dfrac{1}{2n+1}&lt;\dfrac{1}{2n-1}\). ✓</li>
+        <li>Condición (3): de \(n\ge 1\), sumando \(n-1\) a cada lado: \(2n-1\ge n\). Al invertir: \(0&lt;\dfrac{1}{2n-1}\le\dfrac{1}{n}\), y \(\dfrac{1}{n}\) tiene límite \(0\); entonces \(\displaystyle\lim_{n\to\infty}b_{n}=0\) (aviso, 9). ✓</li>
+        <li>Por el criterio de Leibniz, \(\displaystyle\sum a_{n}\) converge. Como \(\displaystyle\sum|a_{n}|\) diverge, la serie <b>converge condicionalmente</b>.</li>
+        <li>(c) Término sin el signo: \(|a_{n}|=\dfrac{2n+1}{n}\). Se separa la fracción: \(\dfrac{2n+1}{n}=\dfrac{2n}{n}+\dfrac{1}{n}=2+\dfrac{1}{n}\).</li>
+        <li>Como \(\dfrac{1}{n}&gt;0\): \(|a_{n}|=2+\dfrac{1}{n}&gt;2\). Ningún término está a menos de \(2\) de \(0\): \(a_{n}\) no tiene límite \(0\) (aviso, 8).</li>
+        <li>Por el criterio del enésimo término, \(\displaystyle\sum a_{n}\) diverge. La serie <b>diverge</b> (y \(\displaystyle\sum|a_{n}|\) también).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(a_{n}=(-1)^{n+1}\left(\dfrac{2}{3}\right)^{n}\). (a) Muestra que \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge y calcula su suma. (b) ¿Qué se concluye de \(\displaystyle\sum_{n=1}^{\infty}a_{n}\)? Calcula su suma. (c) Con \(c_{n}=a_{n}+|a_{n}|\), calcula \(S_{4}\), \(T_{4}\) y \(C_{4}\), y comprueba que \(S_{4}=C_{4}-T_{4}\) y que \(C_{4}\le 2\,T_{4}\).</p>
+    <details><summary>Pista</summary><div><p>Las dos series son geométricas: la sin signos tiene razón \(\dfrac{2}{3}\) y la con signos, \(-\dfrac{2}{3}\); en las dos el primer término es \(\dfrac{2}{3}\). En (c), usa denominador común \(81\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Término sin el signo: \(|a_{n}|=|(-1)^{n+1}|\cdot\left(\dfrac{2}{3}\right)^{n}=\left(\dfrac{2}{3}\right)^{n}\).</li>
+        <li>Se separa un factor: \(\left(\dfrac{2}{3}\right)^{n}=\dfrac{2}{3}\left(\dfrac{2}{3}\right)^{n-1}\). Es una serie geométrica con \(a=\dfrac{2}{3}\) y \(r=\dfrac{2}{3}\).</li>
+        <li>Como \(|r|=\dfrac{2}{3}&lt;1\), converge (hoja «Series geométricas infinitas»). Se resta: \(1-r=1-\dfrac{2}{3}=\dfrac{3}{3}-\dfrac{2}{3}=\dfrac{1}{3}\).</li>
+        <li>Se divide: \(\dfrac{a}{1-r}=\dfrac{2}{3}:\dfrac{1}{3}=\dfrac{2}{3}\cdot\dfrac{3}{1}=\dfrac{6}{3}=2\). Entonces \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|=2\).</li>
+        <li>(b) \(\displaystyle\sum|a_{n}|\) converge: \(\displaystyle\sum a_{n}\) <b>converge absolutamente</b> y, por el teorema, converge.</li>
+        <li>Su suma: como \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\), se escribe \(a_{n}=\dfrac{2}{3}\cdot(-1)^{n-1}\left(\dfrac{2}{3}\right)^{n-1}=\dfrac{2}{3}\left(-\dfrac{2}{3}\right)^{n-1}\). Es geométrica con \(a=\dfrac{2}{3}\) y \(r=-\dfrac{2}{3}\).</li>
+        <li>Se resta: \(1-r=1-\left(-\dfrac{2}{3}\right)=1+\dfrac{2}{3}=\dfrac{3}{3}+\dfrac{2}{3}=\dfrac{5}{3}\).</li>
+        <li>Se divide: \(\dfrac{a}{1-r}=\dfrac{2}{3}:\dfrac{5}{3}=\dfrac{2}{3}\cdot\dfrac{3}{5}=\dfrac{6}{15}=\dfrac{2}{5}\). Entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}=\dfrac{2}{5}\), distinta de la suma sin signos, \(2\).</li>
+        <li>(c) Potencias: \(\left(\dfrac{2}{3}\right)^{1}=\dfrac{2}{3}\), \(\left(\dfrac{2}{3}\right)^{2}=\dfrac{4}{9}\), \(\left(\dfrac{2}{3}\right)^{3}=\dfrac{8}{27}\), \(\left(\dfrac{2}{3}\right)^{4}=\dfrac{16}{81}\). Términos: \(a_{1}=\dfrac{2}{3}\), \(a_{2}=-\dfrac{4}{9}\), \(a_{3}=\dfrac{8}{27}\), \(a_{4}=-\dfrac{16}{81}\).</li>
+        <li>Denominador común \(81\): \(\dfrac{2}{3}=\dfrac{2\cdot 27}{3\cdot 27}=\dfrac{54}{81}\), \(\dfrac{4}{9}=\dfrac{4\cdot 9}{9\cdot 9}=\dfrac{36}{81}\), \(\dfrac{8}{27}=\dfrac{8\cdot 3}{27\cdot 3}=\dfrac{24}{81}\).</li>
+        <li>\(S_{4}=\dfrac{54}{81}-\dfrac{36}{81}+\dfrac{24}{81}-\dfrac{16}{81}\). Numeradores: \(54-36=18\), \(18+24=42\), \(42-16=26\). Entonces \(S_{4}=\displaystyle\sum_{k=1}^{4}a_{k}=\dfrac{26}{81}\).</li>
+        <li>\(T_{4}=\dfrac{54}{81}+\dfrac{36}{81}+\dfrac{24}{81}+\dfrac{16}{81}\). Numeradores: \(54+36=90\), \(90+24=114\), \(114+16=130\). Entonces \(T_{4}=\displaystyle\sum_{k=1}^{4}|a_{k}|=\dfrac{130}{81}\).</li>
+        <li>Serie auxiliar: \(c_{1}=a_{1}+|a_{1}|=\dfrac{2}{3}+\dfrac{2}{3}=\dfrac{4}{3}\); \(c_{2}=-\dfrac{4}{9}+\dfrac{4}{9}=0\); \(c_{3}=\dfrac{8}{27}+\dfrac{8}{27}=\dfrac{16}{27}\); \(c_{4}=-\dfrac{16}{81}+\dfrac{16}{81}=0\).</li>
+        <li>\(C_{4}=\displaystyle\sum_{k=1}^{4}c_{k}=\dfrac{4}{3}+0+\dfrac{16}{27}+0\). Denominador común \(27\): \(\dfrac{4\cdot 9}{3\cdot 9}+\dfrac{16}{27}=\dfrac{36}{27}+\dfrac{16}{27}=\dfrac{52}{27}\).</li>
+        <li>Se lleva a denominador \(81\): \(C_{4}=\dfrac{52\cdot 3}{27\cdot 3}=\dfrac{156}{81}\). Se resta: \(C_{4}-T_{4}=\dfrac{156}{81}-\dfrac{130}{81}=\dfrac{26}{81}=S_{4}\). ✓</li>
+        <li>Se multiplica: \(2\,T_{4}=2\cdot\dfrac{130}{81}=\dfrac{260}{81}\). Como \(156\le 260\): \(C_{4}\le 2\,T_{4}\). ✓ Además \(T_{4}=\dfrac{130}{81}\approx 1{,}605\), menor que la suma \(2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> En una bodega, Camila prueba dos carros robot sobre un riel recto. Cada carro parte del punto \(0\) y hace movimientos alternados: el primero hacia la derecha, el segundo hacia la izquierda, el tercero hacia la derecha, y así. El <b>carro 1</b> avanza \(60\) cm y cada movimiento mide la mitad del anterior: \(60\), \(30\), \(15\), \(7{,}5\) cm… El <b>carro 2</b> hace el movimiento \(n\) de \(\dfrac{60}{n}\) cm: \(60\), \(30\), \(20\), \(15\) cm… (a) Para cada carro, calcula su posición y la distancia total recorrida después de \(4\) movimientos. (b) Si el carro 1 siguiera sin fin, ¿la distancia total recorrida tendría tope? ¿A qué posición se acercaría? (c) ¿Y el carro 2? (d) ¿Qué tipo de convergencia tiene la serie de las posiciones de cada carro?</p>
+    <details><summary>Pista</summary><div><p>La posición es la suma con los signos (derecha positivo, izquierda negativo); la distancia recorrida es la suma sin los signos. Carro 1: series geométricas con razón \(-\dfrac{1}{2}\) y \(\dfrac{1}{2}\). Carro 2: \(60\) veces la armónica alternada y \(60\) veces la armónica.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Se pone signo a cada movimiento: positivo hacia la derecha, negativo hacia la izquierda. La posición después de \(n\) movimientos es la suma parcial con signos, \(P_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\); la distancia recorrida es la suma parcial sin signos, \(D_{n}=\displaystyle\sum_{k=1}^{n}|a_{k}|\).</li>
+        <li>(a) Carro 1, posición: \(P_{4}=60-30+15-7{,}5\). En orden: \(60-30=30\); \(30+15=45\); \(45-7{,}5=37{,}5\). Queda a \(37{,}5\) cm a la derecha del punto \(0\).</li>
+        <li>Carro 1, distancia: \(D_{4}=60+30+15+7{,}5\). En orden: \(60+30=90\); \(90+15=105\); \(105+7{,}5=112{,}5\) cm.</li>
+        <li>Carro 2, posición: \(P_{4}=60-30+20-15\). En orden: \(60-30=30\); \(30+20=50\); \(50-15=35\) cm.</li>
+        <li>Carro 2, distancia: \(D_{4}=60+30+20+15\). En orden: \(60+30=90\); \(90+20=110\); \(110+15=125\) cm.</li>
+        <li>(b) Carro 1, distancia: \(\displaystyle\sum_{n=1}^{\infty}60\left(\dfrac{1}{2}\right)^{n-1}\) es geométrica con \(a=60\) y \(r=\dfrac{1}{2}\). Como \(|r|&lt;1\), converge. Se resta: \(1-\dfrac{1}{2}=\dfrac{1}{2}\). Se divide: \(60:\dfrac{1}{2}=60\cdot 2=120\).</li>
+        <li>La distancia total recorrida tiene tope: se acerca a \(120\) cm y nunca los pasa.</li>
+        <li>Carro 1, posición: \(\displaystyle\sum_{n=1}^{\infty}60\left(-\dfrac{1}{2}\right)^{n-1}\) es geométrica con \(a=60\) y \(r=-\dfrac{1}{2}\). Como \(|r|=\dfrac{1}{2}&lt;1\), converge. Se resta: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{3}{2}\).</li>
+        <li>Se divide: \(60:\dfrac{3}{2}=60\cdot\dfrac{2}{3}=\dfrac{120}{3}=40\). El carro 1 se acerca al punto que está \(40\) cm a la derecha del \(0\).</li>
+        <li>(c) Carro 2, distancia: se saca el factor común \(60\): \(D_{n}=\displaystyle\sum_{k=1}^{n}\dfrac{60}{k}=60\sum_{k=1}^{n}\dfrac{1}{k}=60\,H_{n}\), con \(H_{n}\) la suma parcial de la armónica.</li>
+        <li>Las \(H_{n}\) superan cualquier número (aviso de rigor, 6): dado \(M&gt;0\), hay un \(n\) con \(H_{n}&gt;\dfrac{M}{60}\), y entonces \(60\,H_{n}&gt;M\). La distancia recorrida no tiene tope: con suficientes movimientos pasa de cualquier cantidad de centímetros.</li>
+        <li>Carro 2, posición: \(P_{n}=\displaystyle\sum_{k=1}^{n}(-1)^{k+1}\dfrac{60}{k}=60\,S_{n}\), con \(S_{n}\) la suma parcial de la armónica alternada. Esa serie converge por el criterio de Leibniz: \(S_{n}\) tiene límite \(S\), y \(P_{n}=60\,S_{n}\) tiene límite \(60\,S\) (aviso, 3). El carro 2 sí se acerca a un punto.</li>
+        <li>Dónde queda ese punto: en la hoja «Criterio de Leibniz» se muestra que \(S_{4}\le S\le S_{5}\), con \(S_{4}=\dfrac{7}{12}\) y \(S_{5}=\dfrac{47}{60}\). Se multiplica por \(60\), que es positivo: \(60\cdot\dfrac{7}{12}=\dfrac{420}{12}=35\) y \(60\cdot\dfrac{47}{60}=47\).</li>
+        <li>El punto está entre \(35\) cm y \(47\) cm a la derecha del \(0\). Su valor exacto es \(60\ln 2\approx 41{,}59\) cm (el valor \(\ln 2\) se enuncia sin demostrar).</li>
+        <li>(d) Carro 1: la serie sin signos converge (suma \(120\)): la serie de las posiciones <b>converge absolutamente</b>. El carro llega cerca de un punto habiendo recorrido una distancia con tope.</li>
+        <li>Carro 2: la serie con signos converge y la serie sin signos diverge: <b>converge condicionalmente</b>. El carro se acerca a un punto, pero para eso recorre una distancia que no tiene tope.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H18 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H18 · convergencia absoluta y condicional: si la serie sin signos converge, la serie con signos también; la demostración, hecha con 1 − 1/2 + 1/4 − 1/8 + … */
+function ci18Seg(S, x0, y0, x1, y1, col, wd, dash, al){ var c = S.ctx; c.globalAlpha = al == null ? 1 : al; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); c.moveTo(S.X(x0), S.Y(y0)); c.lineTo(S.X(x1), S.Y(y1)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+function ci18Fr(a, b){ return b === 1 ? '' + a : '\\dfrac{' + a + '}{' + b + '}'; }
+OA.scene('abs-idea', (function(){
+  var N = 5, NP = 6, SV = [1, 1/2, 3/4, 5/8, 11/16, 21/32], TV = [1, 3/2, 7/4, 15/8, 31/16, 63/32], CV = [2, 2, 5/2, 5/2, 21/8, 21/8];
+  var PZ = [['S1', 'S_{1}=1', 'S₁ = 1', 'diff'], ['S2', '\\tfrac{1}{2}', '1/2', 'diff'], ['S3', '\\tfrac{3}{4}', '3/4', 'diff'], ['S4', '\\tfrac{5}{8}', '5/8', 'diff'], ['S5', '\\tfrac{11}{16}', '11/16', 'diff'], ['S6', '\\tfrac{21}{32}', '21/32', 'diff'],
+    ['T1', 'T_{1}=1', 'T₁ = 1', 'c-sec'], ['T2', '\\tfrac{3}{2}', '3/2', 'c-sec'], ['T3', '\\tfrac{7}{4}', '7/4', 'c-sec'], ['T4', '\\tfrac{15}{8}', '15/8', 'c-sec'], ['T5', '\\tfrac{31}{16}', '31/16', 'c-sec'], ['T6', '\\tfrac{63}{32}', '63/32', 'c-sec'],
+    ['C1', 'C_{1}=2', 'C₁ = 2', 'c-alt'], ['C2', '2', '2', 'c-alt'], ['C3', '\\tfrac{5}{2}', '5/2', 'c-alt'], ['C4', '\\tfrac{5}{2}', '5/2', 'c-alt'], ['C5', '\\tfrac{21}{8}', '21/8', 'c-alt'], ['C6', '\\tfrac{21}{8}', '21/8', 'c-alt'],
+    ['W1', 'C_{6}-T_{6}=\\tfrac{21}{32}', 'C₆ − T₆ = 21/32', 'diff'], ['W2', 'S_{6}=\\tfrac{21}{32}', 'S₆ = 21/32', 'diff'],
+    ['Q', '1-\\tfrac{1}{2}+\\tfrac{1}{4}-\\tfrac{1}{8}+\\cdots\\quad\\text{¿converge?}', '1 − 1/2 + 1/4 − 1/8 + … ¿converge?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{sí: converge absolutamente}', '⟹ sí: converge absolutamente', 'diff'],
+    ['R1', 'S_{6}=1-\\tfrac{1}{2}+\\tfrac{1}{4}-\\tfrac{1}{8}+\\tfrac{1}{16}-\\tfrac{1}{32}=\\tfrac{21}{32}', 'S₆ = 1 − 1/2 + 1/4 − 1/8 + 1/16 − 1/32 = 21/32', ''],
+    ['R2', 'T_{6}=1+\\tfrac{1}{2}+\\tfrac{1}{4}+\\tfrac{1}{8}+\\tfrac{1}{16}+\\tfrac{1}{32}=\\tfrac{63}{32}\\le 2', 'T₆ = 1 + 1/2 + 1/4 + 1/8 + 1/16 + 1/32 = 63/32 ≤ 2', ''],
+    ['R3', 'C_{6}=2+0+\\tfrac{1}{2}+0+\\tfrac{1}{8}+0=\\tfrac{21}{8}', 'C₆ = 2 + 0 + 1/2 + 0 + 1/8 + 0 = 21/8', ''],
+    ['R4', '0\\le a_{n}+|a_{n}|\\le 2|a_{n}|\\ \\Longrightarrow\\ C_{n}\\le 2\\,T_{n}\\le 4', '0 ≤ aₙ + |aₙ| ≤ 2|aₙ|, de donde Cₙ ≤ 2Tₙ ≤ 4', ''],
+    ['R5', 'S_{6}=C_{6}-T_{6}=\\tfrac{84}{32}-\\tfrac{63}{32}=\\tfrac{21}{32}\\ \\Longrightarrow\\ \\text{converge}', 'S₆ = C₆ − T₆ = 84/32 − 63/32 = 21/32, de donde converge', 'diff']];
+  var TXT = [['Naranja: las sumas parciales con los signos.', 'Suben y bajan: ¿tienen límite?'],
+    ['Azul: las mismas sumas, sin los signos.', 'Solo suben, y no pasan de 2.'],
+    ['Verde: se suma cada término más su tamaño.', 'Eso da el doble o cero: nunca bajan.'],
+    ['Las verdes no pasan del doble de las azules:', 'su tope es 4. Suben con tope: tienen límite.'],
+    ['De azul a verde hay lo mismo que en naranja.', 'Verde y azul tienen límite: naranja también.']];
+  function gx(n){ return -0.7 + 0.72*n; } function gy(y){ return 1.0 + 1.1*y; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:7.9}, aspect:12.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: si la serie sin signos converge, la serie con signos también converge. Animación en cinco pasos con una gráfica de sumas parciales de la serie 1 menos un medio más un cuarto menos un octavo más un dieciseisavo menos un treintaidosavo. En horizontal va n, de 1 a 6; en vertical, el valor de la suma parcial, de 0 a 4. Uno: aparecen en naranja las seis sumas parciales con los signos: 1, un medio, tres cuartos, cinco octavos, once dieciseisavos y veintiún treintaidosavos; suben y bajan. Dos: aparecen en azul las sumas parciales sin los signos: 1, tres medios, siete cuartos, quince octavos, treinta y un dieciseisavos y sesenta y tres treintaidosavos; solo suben, bajo una línea punteada azul a la altura 2, rotulada tope 2. Tres: aparecen en verde las sumas parciales de la serie que se obtiene al sumar a cada término su tamaño: 2, 2, cinco medios, cinco medios, veintiún octavos y veintiún octavos; nunca bajan. Cuatro: una línea punteada burdeo a la altura 4 marca el tope de las verdes, el doble del tope de las azules. Cinco: junto al último punto, una cota naranja mide la distancia entre el punto azul y el verde, veintiún treintaidosavos, y otra cota naranja mide la altura del punto naranja, también veintiún treintaidosavos: la suma con signos es la verde menos la azul. Cada punto lleva su valor y una punteada hasta el eje vertical. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta, sí, converge absolutamente, se escribe debajo de ella. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> \\(S_{n}\\): sumas parciales con los signos</span><span><i class="sw sec"></i> \\(T_{n}\\): sumas parciales sin los signos, y su tope, \\(2\\)</span><span><i class="sw alt"></i> \\(C_{n}\\): sumas parciales de \\(a_{n}+|a_{n}|\\)</span><span><i class="sw tan"></i> tope de las verdes: \\(4\\)</span><span>líneas punteadas finas: llevan cada suma parcial a su valor en el eje vertical</span>',
+    anim:{run:36000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, a, b, e, xb = gx(6) + 0.36, xr = gx(6.5);
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(t, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function tag(t, px, py, col, al){ c.font = '600 11.5px ' + F; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* una serie de puntos: aparecen de a uno, con su punteada al eje, una línea fina que los une y su valor */
+      function serie(V, col, id, kk, dy){ var j, ww, m;
+        if (k < kk) return;
+        c.strokeStyle = col; c.globalAlpha = 0.45; c.lineWidth = 1; c.setLineDash([]); c.beginPath();
+        for (j = 1; j <= NP; j++){ ww = k === kk ? Math.max(0, Math.min(1, u*NP - (j - 1))) : 1; if (ww <= 0) break; if (j === 1) c.moveTo(X(gx(1)), Y(gy(V[0]))); else c.lineTo(X(gx(j - 1) + 0.72*ww), Y(gy(V[j - 2] + (V[j - 1] - V[j - 2])*ww))); } c.stroke(); c.globalAlpha = 1;
+        for (j = 1; j <= NP; j++){ ww = k === kk ? Math.max(0, Math.min(1, u*NP - (j - 1))) : 1; if (ww <= 0) continue;
+          ci18Seg(S, gx(j), gy(V[j - 1]), gx(j) - (gx(j) - gx(0))*ww, gy(V[j - 1]), col, 0.8, [3, 3], 0.3);
+          if (ww >= 1){ c.globalAlpha = 0.6; c.beginPath(); c.arc(X(gx(0)), Y(gy(V[j - 1])), 1.8, 0, 6.2832); c.fillStyle = col; c.fill(); c.globalAlpha = 1; }
+          c.globalAlpha = ww; c.beginPath(); c.arc(X(gx(j)), Y(gy(V[j - 1])), 3.2, 0, 6.2832); c.fillStyle = col; c.fill(); c.globalAlpha = 1;
+          if (ww >= 1){ m = typeof dy === 'function' ? dy(j) : dy; if (id === 'T' && j === 2) L('T2', gx(2), gy(V[1]), 0, 7, 9); else L(id + j, gx(j), gy(V[j - 1]), -50, j === 1 ? 4 : 0, m); } } }
+      /* ejes */
+      S.line(gx(0), gy(0), xr, gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(4.25), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= NP; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0)) - 3); c.lineTo(X(gx(i)), Y(gy(0)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0)) + 11, 'center'); }
+      [0, 1, 2, 3, 4].forEach(function(q){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(q))); c.lineTo(X(gx(0)) + 3, Y(gy(q))); c.stroke(); num('' + q, X(gx(0)) - 7, Y(gy(q)), 'right'); });
+      num('n', X(xr) + 6, Y(gy(0)), 'left'); num('suma parcial', X(gx(0)) + 6, Y(gy(4.25)) - 2, 'left');
+      /* paso 2 en adelante: tope de las azules */
+      if (k >= 2){ w = k === 2 ? u : 1; ci18Seg(S, gx(0), gy(2), gx(0) + (xr - gx(0))*w, gy(2), C.sec, 1.1, [5, 4], 0.85); if (w > 0.6) tag('tope: 2', X(xr) + 5, Y(gy(2)) + 11, C.sec); }
+      /* paso 4 en adelante: tope de las verdes */
+      if (k >= 4){ w = k === 4 ? u : 1; ci18Seg(S, gx(0), gy(4), gx(0) + (xr - gx(0))*w, gy(4), C.tan, 1.1, [5, 4], 0.85); if (w > 0.6) tag('tope de las verdes: 4, el doble de 2', X(gx(1.9)), Y(gy(4)) - 10, C.tan); }
+      /* paso 3: sumas parciales de aₙ + |aₙ| */
+      serie(CV, C.alt, 'C', 3, -15); if (k > 3 || (k === 3 && u > 0.6)) tag('cada término más su tamaño', X(gx(0.25)), Y(gy(3.28)), C.alt);
+      /* paso 2: sumas parciales sin los signos */
+      serie(TV, C.sec, 'T', 2, function(j){ return j === 1 ? -15 : 15; }); if (k > 2 || (k === 2 && u > 0.6)) tag('sin los signos', X(gx(3.7)), Y(gy(1.33)), C.sec);
+      /* paso 1: sumas parciales con los signos */
+      serie(SV, C.rise, 'S', 1, 15); if (k > 1 || u > 0.6) tag('con los signos', X(gx(3.7)), Y(gy(0.95)), C.rise);
+      /* paso 5: dos cotas del mismo largo: de la azul a la verde, y del eje a la naranja */
+      if (k === 5){ a = gy(TV[5]); b = gy(CV[5]); e = a + (b - a)*u;
+        ci18Seg(S, gx(6), a, xb, a, C.rise, 0.9, [2, 3], 0.8*u); ci18Seg(S, gx(6), b, xb, b, C.rise, 0.9, [2, 3], 0.8*u);
+        ci18Seg(S, xb, a, xb, e, C.rise, 1.7); ci18Seg(S, xb - 0.07, a, xb + 0.07, a, C.rise, 1.7); if (u > 0.95) ci18Seg(S, xb - 0.07, b, xb + 0.07, b, C.rise, 1.7);
+        a = gy(0); b = gy(SV[5]); e = a + (b - a)*u;
+        ci18Seg(S, gx(6), b, xb, b, C.rise, 0.9, [2, 3], 0.8*u);
+        ci18Seg(S, xb, a, xb, e, C.rise, 1.7); ci18Seg(S, xb - 0.07, a, xb + 0.07, a, C.rise, 1.7); if (u > 0.95) ci18Seg(S, xb - 0.07, b, xb + 0.07, b, C.rise, 1.7);
+        if (u > 0.6){ L('W1', 5.27, gy(3.3), -100); L('W2', xb, gy(SV[5]/2), 0, 7, 0); ci18Seg(S, xb + 0.25, gy(3.12), xb + 0.03, gy(2.5), C.rise, 0.9, [2, 2], 0.8); } }
+      L('Q', -1.2, 6.62, 0); if (k === N && u > 0.5) L('F', -1.2, 6.14, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.36); txt(TXT[k - 1][1], -1.2, 0.36 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(6.62));
+      dtQue(S, 'si la serie sin signos converge,', 'la serie con signos también converge.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.0, [6, 36, 66, 96, 126]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', f = function(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }, R = [
+      '\\text{Serie: }1-' + f(1, 2) + '+' + f(1, 4) + '-' + f(1, 8) + '+' + f(1, 16) + '-' + f(1, 32) + '+\\cdots' + Q + '\\text{Con sumatoria: }\\displaystyle\\sum_{n=1}^{\\infty}a_{n},\\quad a_{n}=\\left(-' + f(1, 2) + '\\right)^{n-1}'
+        + Q + '\\text{Sumas parciales con los signos (naranja):}' + Q + 'S_{1}=1' + Q + 'S_{2}=S_{1}-' + f(1, 2) + '=' + f(2, 2) + '-' + f(1, 2) + '=' + f(1, 2) + Q + 'S_{3}=S_{2}+' + f(1, 4) + '=' + f(2, 4) + '+' + f(1, 4) + '=' + f(3, 4)
+        + Q + 'S_{4}=S_{3}-' + f(1, 8) + '=' + f(6, 8) + '-' + f(1, 8) + '=' + f(5, 8) + Q + 'S_{5}=S_{4}+' + f(1, 16) + '=' + f(10, 16) + '+' + f(1, 16) + '=' + f(11, 16) + Q + 'S_{6}=S_{5}-' + f(1, 32) + '=' + f(22, 32) + '-' + f(1, 32) + '=' + f(21, 32)
+        + Q + '\\text{Suben y bajan. ¿Tienen límite?}',
+      '\\text{Tamaño de cada término, sin el signo:}' + Q + '|a_{n}|=' + f(1, '2^{\\,n-1}') + '\\text{: }\\ 1,\\ ' + f(1, 2) + ',\\ ' + f(1, 4) + ',\\ ' + f(1, 8) + ',\\ ' + f(1, 16) + ',\\ ' + f(1, 32) + Q + '\\text{Sumas parciales sin los signos (azul):}' + Q + 'T_{1}=1'
+        + Q + 'T_{2}=T_{1}+' + f(1, 2) + '=' + f(2, 2) + '+' + f(1, 2) + '=' + f(3, 2) + Q + 'T_{3}=T_{2}+' + f(1, 4) + '=' + f(6, 4) + '+' + f(1, 4) + '=' + f(7, 4) + Q + 'T_{4}=T_{3}+' + f(1, 8) + '=' + f(14, 8) + '+' + f(1, 8) + '=' + f(15, 8)
+        + Q + 'T_{5}=T_{4}+' + f(1, 16) + '=' + f(30, 16) + '+' + f(1, 16) + '=' + f(31, 16) + Q + 'T_{6}=T_{5}+' + f(1, 32) + '=' + f(62, 32) + '+' + f(1, 32) + '=' + f(63, 32)
+        + Q + '\\text{Es una serie geométrica: }a=1,\\ r=' + f(1, 2) + Q + '\\text{Como }|r|<1\\text{, converge, y su suma es}' + Q + f('a', '1-r') + '=' + f(1, '1-\\frac{1}{2}') + '=' + f(1, '\\frac{1}{2}') + '=2' + Q + '\\text{(hoja «Series geométricas infinitas»).}'
+        + Q + '\\text{Las azules suben y su límite es }2\\text{: }T_{n}\\le 2.',
+      '\\text{Serie nueva: a cada término se le suma}' + Q + '\\text{su tamaño: }c_{n}=a_{n}+|a_{n}|' + Q + '\\text{Si }a_{n}>0\\text{: }|a_{n}|=a_{n},\\ \\ c_{n}=a_{n}+a_{n}=2\\,a_{n}' + Q + '\\text{Si }a_{n}<0\\text{: }|a_{n}|=-a_{n},\\ \\ c_{n}=a_{n}-a_{n}=0'
+        + Q + 'c_{1}=2\\cdot 1=2,\\qquad c_{2}=0' + Q + 'c_{3}=2\\cdot' + f(1, 4) + '=' + f(2, 4) + '=' + f(1, 2) + ',\\qquad c_{4}=0' + Q + 'c_{5}=2\\cdot' + f(1, 16) + '=' + f(2, 16) + '=' + f(1, 8) + ',\\qquad c_{6}=0'
+        + Q + '\\text{Sus sumas parciales (verde):}' + Q + 'C_{1}=2,\\qquad C_{2}=2+0=2' + Q + 'C_{3}=2+' + f(1, 2) + '=' + f(4, 2) + '+' + f(1, 2) + '=' + f(5, 2) + Q + 'C_{4}=' + f(5, 2) + '+0=' + f(5, 2) + Q + 'C_{5}=' + f(5, 2) + '+' + f(1, 8) + '=' + f(20, 8) + '+' + f(1, 8) + '=' + f(21, 8)
+        + Q + 'C_{6}=' + f(21, 8) + '+0=' + f(21, 8) + Q + '\\text{Ningún }c_{n}\\text{ es negativo: las verdes no bajan.}',
+      '\\text{Cada }c_{n}\\text{ vale }2\\,|a_{n}|\\text{ o }0\\text{: }\\ 0\\le c_{n}\\le 2\\,|a_{n}|' + Q + '\\text{Se suma desde }1\\text{ hasta }n\\text{: }\\ C_{n}\\le 2\\,T_{n}' + Q + '\\text{Comprobación con }n=6\\text{:}' + Q + '2\\,T_{6}=2\\cdot' + f(63, 32) + '=' + f(126, 32) + Q + 'C_{6}=' + f(21, 8) + '=' + f('21\\cdot 4', '8\\cdot 4') + '=' + f(84, 32)
+        + Q + '84\\le 126\\ \\checkmark' + Q + '\\text{Como }T_{n}\\le 2\\text{: }\\ C_{n}\\le 2\\cdot 2=4' + Q + '\\text{Las verdes suben y no pasan de }4\\text{: una}' + Q + '\\text{sucesión creciente y acotada por arriba}' + Q + '\\text{tiene límite. Se llama }C.',
+      '\\text{De }c_{n}=a_{n}+|a_{n}|\\text{ se despeja }a_{n}\\text{:}' + Q + 'a_{n}=c_{n}-|a_{n}|' + Q + '\\text{Se suma desde }1\\text{ hasta }n\\text{: }\\ S_{n}=C_{n}-T_{n}' + Q + '\\text{Comprobación con }n=6\\text{:}' + Q + 'C_{6}-T_{6}=' + f(21, 8) + '-' + f(63, 32) + '=' + f(84, 32) + '-' + f(63, 32) + Q + '\\phantom{C_{6}-T_{6}}=' + f(21, 32) + '=S_{6}\\ \\checkmark'
+        + Q + '\\text{Las verdes tienen límite }C\\text{; las azules, }2.' + Q + '\\text{Límite de una resta: }S_{n}\\text{ tiene límite }C-2.' + Q + '\\text{La serie con signos converge.}' + Q + '\\text{Converge también sin los signos:}' + Q + '\\text{converge absolutamente.}'
+        + Q + '\\text{Aquí la suma se puede calcular: es}' + Q + '\\text{geométrica con }a=1,\\ r=-' + f(1, 2) + '\\text{:}' + Q + 'S=' + f(1, '1-\\left(-\\frac{1}{2}\\right)') + '=' + f(1, '1+\\frac{1}{2}') + '=' + f(1, '\\frac{3}{2}') + '=' + f(2, 3)];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: la armónica alternada con signos (atrapada entre 1/2 y 1) y sin signos (la armónica: pasa de 2, de 3, de cualquier número): convergencia condicional */
+OA.scene('abs-cond', (function(){
+  var NM = 12, i, PZ = [];
+  /* tablas exactas: [n, numerador y denominador de la suma parcial anterior, denominador común, numerador de la anterior y de 1/n con ese denominador, numerador del resultado, numerador y denominador de la suma parcial ya simplificada] */
+  var TS = [[1, 0, 1, 1, 0, 1, 1, 1, 1], [2, 1, 1, 2, 2, 1, 1, 1, 2], [3, 1, 2, 6, 3, 2, 5, 5, 6], [4, 5, 6, 12, 10, 3, 7, 7, 12], [5, 7, 12, 60, 35, 12, 47, 47, 60], [6, 47, 60, 60, 47, 10, 37, 37, 60], [7, 37, 60, 420, 259, 60, 319, 319, 420], [8, 319, 420, 840, 638, 105, 533, 533, 840], [9, 533, 840, 2520, 1599, 280, 1879, 1879, 2520], [10, 1879, 2520, 2520, 1879, 252, 1627, 1627, 2520], [11, 1627, 2520, 27720, 17897, 2520, 20417, 20417, 27720], [12, 20417, 27720, 27720, 20417, 2310, 18107, 18107, 27720]];
+  var TT = [[1, 0, 1, 1, 0, 1, 1, 1, 1], [2, 1, 1, 2, 2, 1, 3, 3, 2], [3, 3, 2, 6, 9, 2, 11, 11, 6], [4, 11, 6, 12, 22, 3, 25, 25, 12], [5, 25, 12, 60, 125, 12, 137, 137, 60], [6, 137, 60, 60, 137, 10, 147, 49, 20], [7, 49, 20, 140, 343, 20, 363, 363, 140], [8, 363, 140, 280, 726, 35, 761, 761, 280], [9, 761, 280, 2520, 6849, 280, 7129, 7129, 2520], [10, 7129, 2520, 2520, 7129, 252, 7381, 7381, 2520], [11, 7381, 2520, 27720, 81191, 2520, 83711, 83711, 27720], [12, 83711, 27720, 27720, 83711, 2310, 86021, 86021, 27720]];
+  for (i = 1; i <= NM; i++) PZ.push(['A' + i, 'S_{' + i + '}', 'S' + ssSub(i), 'diff']);
+  for (i = 1; i <= NM; i++) PZ.push(['B' + i, 'T_{' + i + '}', 'T' + ssSub(i), 'c-sec']);
+  function gx(n){ return -0.9 + 0.385*n; } function gy(y){ return 0.9 + 1.25*y; }
+  function sv(n){ return TS[n - 1][7]/TS[n - 1][8]; } function tv(n){ return TT[n - 1][7]/TT[n - 1][8]; }
+  function nn(v){ return Math.max(1, Math.min(NM, Math.round(v.n || 1))); }
+  function donde(n){ return n < 4 ? 'todavía no pasa de 2' : n < 11 ? 'ya pasó de 2' : 'ya pasó de 3'; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-1.35, y1:6.6}, aspect:7.95/6.6,
+    aria:'Arriba, una franja dice qué muestra: los mismos tamaños, con signos alternados la suma queda atrapada; sin signos, crece sin tope. Gráfica de puntos con dos sucesiones de sumas parciales. Un deslizador elige n, la cantidad de términos sumados, de 1 a 12. En naranja, las sumas parciales de la serie armónica alternada, 1 menos un medio más un tercio menos un cuarto, y así: van en zigzag dentro de una franja burdeo que va de un medio a 1. En azul, las sumas parciales de la serie armónica, 1 más un medio más un tercio más un cuarto, y así: solo suben. Dos líneas punteadas verdes marcan las alturas 2 y 3: la azul pasa de 2 con cuatro términos y de 3 con once términos. Los dos puntos del valor de n elegido van más grandes y con su nombre; cada punto tiene una línea punteada hasta su valor en el eje vertical. Con n igual a 1 los dos puntos coinciden a la altura 1. Bajo el dibujo, cuatro frases dicen cuántos términos se sumaron, que la naranja no sale de la franja, por dónde va la azul, y que la naranja tiene límite y la azul no tiene tope; más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'n', tex:'n', min:1, max:NM, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> \\(S_{n}\\): sumas parciales con los signos, \\(1-\\tfrac{1}{2}+\\tfrac{1}{3}-\\cdots\\)</span><span><i class="sw sec"></i> \\(T_{n}\\): sumas parciales sin los signos, \\(1+\\tfrac{1}{2}+\\tfrac{1}{3}+\\cdots\\)</span><span><i class="sw tan"></i> franja de \\(\\tfrac{1}{2}\\) a \\(1\\): de ahí no salen las naranjas</span><span><i class="sw alt"></i> alturas \\(2\\) y \\(3\\): las azules las pasan</span><span>líneas punteadas finas: llevan cada suma parcial a su valor en el eje vertical</span>',
+    anim:{run:30000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(NM, 1 + Math.floor(p*NM)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var n = nn(v), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', xr = gx(12.7), j, y, col;
+      function num(t, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function tag(t, px, py, col, al){ c.font = '600 11.5px ' + F; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* franja de 1/2 a 1: ahí quedan las sumas parciales con signos */
+      S.poly([[gx(0), gy(0.5)], [xr, gy(0.5)], [xr, gy(1)], [gx(0), gy(1)]], {fill:C.tan, alpha:0.14});
+      ci18Seg(S, gx(0), gy(0.5), xr, gy(0.5), C.tan, 0.9, [4, 3], 0.7); ci18Seg(S, gx(0), gy(1), xr, gy(1), C.tan, 0.9, [4, 3], 0.7);
+      
+      /* alturas 2 y 3 */
+      ci18Seg(S, gx(0), gy(2), xr, gy(2), C.alt, 1, [5, 4], 0.8); ci18Seg(S, gx(0), gy(3), xr, gy(3), C.alt, 1, [5, 4], 0.8);
+      
+      
+      /* ejes */
+      S.line(gx(0), gy(0), xr, gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(3.55), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (j = 1; j <= NM; j++){ c.beginPath(); c.moveTo(X(gx(j)), Y(gy(0)) - 3); c.lineTo(X(gx(j)), Y(gy(0)) + 3); c.stroke(); num('' + j, X(gx(j)), Y(gy(0)) + 11, 'center'); }
+      [[0, '0'], [0.5, '0,5'], [1, '1'], [2, '2'], [3, '3']].forEach(function(q){ c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(q[0]))); c.lineTo(X(gx(0)) + 3, Y(gy(q[0]))); c.stroke(); num(q[1], X(gx(0)) - 7, Y(gy(q[0])), 'right'); });
+      num('n', X(xr) + 5, Y(gy(0)) + 11, 'center'); num('suma parcial', X(gx(0)) + 6, Y(gy(3.55)) - 4, 'left');
+      /* líneas finas que unen cada sucesión de sumas parciales */
+      [[sv, C.rise], [tv, C.sec]].forEach(function(q){ c.strokeStyle = q[1]; c.globalAlpha = 0.4; c.lineWidth = 1; c.beginPath(); for (j = 1; j <= n; j++){ if (j === 1) c.moveTo(X(gx(j)), Y(gy(q[0](j)))); else c.lineTo(X(gx(j)), Y(gy(q[0](j)))); } c.stroke(); c.globalAlpha = 1; });
+      /* puntos con su punteada al eje; los del n elegido, más grandes */
+      [[tv, C.sec], [sv, C.rise]].forEach(function(q){ for (j = 1; j <= n; j++){ y = q[0](j); col = q[1];
+        ci18Seg(S, gx(j), gy(y), gx(0), gy(y), col, 0.9, [3, 3], j === n ? 0.95 : 0.3); c.globalAlpha = j === n ? 1 : 0.5; c.beginPath(); c.arc(X(gx(0)), Y(gy(y)), 2, 0, 6.2832); c.fillStyle = col; c.fill();
+        c.globalAlpha = j === n ? 1 : 0.55; c.beginPath(); c.arc(X(gx(j)), Y(gy(y)), j === n ? 4 : 2.8, 0, 6.2832); c.fillStyle = col; c.fill(); c.globalAlpha = 1; } });
+      txt('franja: de 0,5 a 1', X(xr), Y(gy(1)) - 11, 'right', C.tan); txt('altura 2: la azul la pasa con 4 términos', X(xr), Y(gy(2)) + 12, 'right', C.alt); txt('altura 3: la azul la pasa con 11 términos', X(gx(0)) + 9, Y(gy(3)) - 22, 'left', C.alt);
+      /* nombres de los dos puntos del n elegido */
+      T.L('A' + n, gx(n), gy(sv(n)), -50, n === 1 ? 4 : 0, n % 2 && n > 1 ? -15 : 15);
+      T.L('B' + n, gx(n), gy(tv(n)), -50, n === 1 ? 4 : 0, -15);
+      y = Y(gy(0)) + 34;
+      txt(n === 1 ? 'se sumó 1 término de cada serie' : 'se sumaron ' + n + ' términos de cada serie', X(-1.2), y, 'left', C.ink);
+      txt('naranja, con signos: no sale de la franja', X(-1.2), y + 21, 'left', C.rise);
+      txt('azul, sin signos: ' + donde(n), X(-1.2), y + 42, 'left', C.sec);
+      txt('la naranja tiene límite; la azul no tiene tope', X(-1.2), y + 63, 'left', C.tan);
+      dtQue(S, 'mismos tamaños; con signos la suma', 'queda atrapada; sin signos crece sin tope.');
+      T.fin();
+    },
+    caption:function(v){ var n = nn(v); return 'Con ' + n + (n === 1 ? ' término' : ' términos') + ': la suma parcial con signos queda entre 0,5 y 1; la suma parcial sin signos ' + donde(n) + '. La serie con signos converge y la serie sin signos diverge: convergencia condicional.'; },
+    readout:function(v){ var n = nn(v), t = TS[n - 1], h = TT[n - 1], num = OA.num, fr = ci18Fr, Q = '\\\\&\\qquad ', sg = n % 2 ? '+' : '-', L = [], s, g;
+      function ap(a, b){ return (1000*a % b === 0 ? '=' : '\\approx ') + num(a/b, 3); }
+      L.push('\\text{Datos. Con signos: }\\displaystyle\\sum_{k=1}^{\\infty}\\dfrac{(-1)^{k+1}}{k}=1-\\dfrac{1}{2}+\\dfrac{1}{3}-\\cdots' + Q + '\\text{Sin signos: }\\displaystyle\\sum_{k=1}^{\\infty}\\dfrac{1}{k}=1+\\dfrac{1}{2}+\\dfrac{1}{3}+\\cdots' + Q + '\\text{(la serie armónica). De cada una se}' + Q + (n === 1 ? '\\text{suma }n=1\\text{ término.}' : '\\text{suman }n=' + n + '\\text{ términos.}'));
+      if (n === 1){ L.push('\\text{Con signos (punto naranja): }S_{1}=\\dfrac{1}{1}=1'); L.push('\\text{Sin signos (punto azul): }T_{1}=\\dfrac{1}{1}=1'); }
+      else { s = '\\text{Con signos (punto naranja): a la anterior,}' + Q + 'S_{' + (n - 1) + '}=' + fr(t[1], t[2]) + '\\text{, se le ' + (n % 2 ? 'suma' : 'resta') + ' }\\dfrac{1}{' + n + '}\\text{ (}n\\text{ ' + (n % 2 ? 'impar' : 'par') + ').}' + Q + 'S_{' + n + '}=' + fr(t[1], t[2]) + sg + '\\dfrac{1}{' + n + '}';
+        if (!(t[3] === t[2] && t[5] === 1)) s += Q + '\\text{Denominador común }' + t[3] + '\\text{:}' + Q + '\\phantom{S_{' + n + '}}=' + fr(t[4], t[3]) + sg + fr(t[5], t[3]);
+        s += Q + '\\phantom{S_{' + n + '}}=' + fr(t[6], t[3]) + ap(t[7], t[8]) + Q + '\\text{(}S_{' + (n - 1) + '}\\text{ se calcula igual: pon }n=' + (n - 1) + '\\text{.)}'; L.push(s);
+        s = '\\text{Sin signos (punto azul): a la anterior,}' + Q + 'T_{' + (n - 1) + '}=' + fr(h[1], h[2]) + '\\text{, se le suma }\\dfrac{1}{' + n + '}\\text{.}' + Q + 'T_{' + n + '}=' + fr(h[1], h[2]) + '+\\dfrac{1}{' + n + '}';
+        if (!(h[3] === h[2] && h[5] === 1)) s += Q + '\\text{Denominador común }' + h[3] + '\\text{:}' + Q + '\\phantom{T_{' + n + '}}=' + fr(h[4], h[3]) + '+' + fr(h[5], h[3]);
+        s += Q + '\\phantom{T_{' + n + '}}=' + fr(h[6], h[3]);
+        if (h[6] !== h[7]){ g = h[6]/h[7]; s += Q + '\\text{Se simplifica por }' + g + '\\text{:}' + Q + '\\phantom{T_{' + n + '}}=' + fr(h[7], h[8]); }
+        s += ap(h[7], h[8]) + Q + '\\text{(}T_{' + (n - 1) + '}\\text{ se calcula igual: pon }n=' + (n - 1) + '\\text{.)}'; L.push(s); }
+      L.push('\\text{Con signos: las sumas parciales de índice}' + Q + '\\text{par suben desde }S_{2}=\\tfrac{1}{2}\\text{; las de índice}' + Q + '\\text{impar bajan desde }S_{1}=1\\text{; y cada par}' + Q + '\\text{queda bajo cada impar (hoja «Criterio}' + Q + '\\text{de Leibniz»). Por eso, para todo }n\\text{:}' + Q + '\\dfrac{1}{2}\\le S_{n}\\le 1' + Q + '\\text{Aquí: }0{,}5\\le ' + num(t[7]/t[8], 3) + '\\le 1\\ \\checkmark'
+        + Q + '\\text{La serie con signos converge (criterio}' + Q + '\\text{de Leibniz).}');
+      L.push('\\text{Sin signos: las sumas parciales solo suben.}' + Q + 'T_{4}=\\dfrac{25}{12}\\approx 2{,}083>2' + Q + 'T_{11}=\\dfrac{83711}{27720}\\approx 3{,}020>3' + Q + '\\text{Aquí: }T_{' + n + '}' + ap(h[7], h[8]) + '\\text{: ' + donde(n) + '.}' + Q + '\\text{Y no hay tope: }T_{2^{m}}\\ge 1+\\dfrac{m}{2}\\text{ para todo}' + Q + 'm\\ge 1\\text{ (hoja «Series harmónicas y}' + Q + '\\text{series-p»). Superan cualquier número:}' + Q + '\\text{la serie sin signos diverge.}');
+      L.push('\\text{Qué significa: }\\displaystyle\\sum a_{k}\\text{ converge y }\\sum|a_{k}|' + Q + '\\text{diverge. La serie armónica alternada}' + Q + '\\text{converge condicionalmente: converge}' + Q + '\\text{gracias a los signos.}'
+        + (n === 1 ? Q + '\\text{Caso límite: con }n=1\\text{ los dos puntos}' + Q + '\\text{coinciden, }S_{1}=T_{1}=1\\text{; la diferencia}' + Q + '\\text{aparece desde el segundo término.}' : Q + '\\text{Distancia entre los dos puntos:}' + Q + 'T_{' + n + '}-S_{' + n + '}\\approx ' + num(h[7]/h[8], 3) + '-' + num(t[7]/t[8], 3) + '=' + num(Math.round(h[7]/h[8]*1000)/1000 - Math.round(t[7]/t[8]*1000)/1000, 3)));
+      return dtPasos(L); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
