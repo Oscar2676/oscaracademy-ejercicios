@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identificar una serie geométrica infinita | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-identificar-geo" data-hoja="L25 H23">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Identificar una serie geométrica infinita</b></li>
+    </ol>
+    <h1>Identificar una serie geométrica infinita</h1>
+    <p class="lede">Una serie geométrica infinita es la suma indicada de todos los términos de una progresión geométrica. Identificarla es responder tres preguntas: ¿es geométrica?, ¿cuál es su primer término \(a\)?, ¿cuál es su razón \(r\)? La prueba es una sola: en una serie de términos distintos de cero, se divide cada término por el anterior; la serie es geométrica exactamente cuando ese cociente vale lo mismo para <b>todo</b> \(n\). \[\dfrac{a_{n+1}}{a_{n}}=r\ \text{ para todo }n\quad\Longleftrightarrow\quad\sum_{n=1}^{\infty}a_{n}=\sum_{n=1}^{\infty}a\,r^{\,n-1},\ \text{ con }a=a_{1}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{18}{3^{n}}=6+2+\dfrac{2}{3}+\dfrac{2}{9}+\cdots\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las cuatro barras azules (paso 1):</b> cada una es un término, y su largo es su valor: \(a_{1}=6\), \(a_{2}=2\), \(a_{3}=\dfrac{2}{3}\), \(a_{4}=\dfrac{2}{9}\). Arriba queda la pregunta: ¿es geométrica?, ¿cuánto valen \(a\) y \(r\)?</li>
+    <li><b>Paso 2, en naranja:</b> cada barra se parte en tres trozos iguales, y una punteada sube desde el extremo de la barra de abajo: la barra de abajo mide justo un trozo. Entre las dos barras queda escrito el cociente: los tres valen \(\dfrac{1}{3}\).</li>
+    <li><b>Paso 3, las dos barras de más abajo:</b> son un término cualquiera, \(a_{n}\), y el que le sigue, \(a_{n+1}\). Con el término general se calcula el cociente una sola vez, para todo \(n\), y también da \(\dfrac{1}{3}\). Tres cocientes iguales no bastaban; esto sí.</li>
+    <li><b>Pasos 4 y 5:</b> en burdeo, el primer término, \(a=6\), y la razón, \(r=\dfrac{1}{3}\). En verde, a la derecha de cada barra, el mismo término escrito como \(6\) por una potencia de \(\dfrac{1}{3}\). La respuesta se escribe bajo la pregunta.</li>
+    <li><b>Registro y cuenta de abajo:</b> cada paso queda escrito, numerado, uno bajo el otro: los cuatro términos, los tres cocientes, el cociente general, \(a\) y \(r\), y la serie en la forma \(\displaystyle\sum_{n=1}^{\infty}6\left(\dfrac{1}{3}\right)^{n-1}\). Conclusión: es geométrica, con \(a=6\) (no \(18\)) y \(r=\dfrac{1}{3}\).</li>
+  </ol>
+  <div class="stage" data-scene="idg-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Barras azules:</b> los términos \(a_{1},\ a_{2},\ a_{3},\ a_{4}\); el largo de cada barra es el valor del término.</li>
+    <li><b>Naranja:</b> el primer tercio de cada barra, la punteada que lo une con la barra siguiente y el cociente entre los dos términos vecinos.</li>
+    <li><b>Dos barras de abajo:</b> un término cualquiera, \(a_{n}\), y el siguiente, \(a_{n+1}\): el cociente general.</li>
+    <li><b>Burdeo:</b> lo que se busca: el primer término \(a\) y la razón \(r\).</li>
+    <li><b>Verde:</b> cada término escrito en la forma \(a\,r^{\,n-1}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Progresión geométrica</b> (hoja «Determinar la razón r de una progresión geométrica»): una sucesión en que cada término es el anterior multiplicado por un mismo número \(r\), la razón: \(a_{n+1}=a_{n}\cdot r\), con \(a_{1}\neq 0\) y \(r\neq 0\).</li>
+      <li><b>Serie geométrica infinita</b> (hoja «Series geométricas infinitas»): la suma indicada de todos los términos de una progresión geométrica, \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+ar^{3}+\cdots\), con \(a\neq 0\). El número \(a\) es el <b>primer término</b> y \(r\) es la <b>razón</b>.</li>
+      <li><b>En esta hoja, \(r\neq 0\).</b> Con \(a\neq 0\) y \(r\neq 0\), cada término \(a\,r^{\,n-1}\) es un producto de números distintos de cero, así que es distinto de cero: se puede dividir por cualquier término. (La hoja «Series geométricas infinitas» también llama geométrica a \(a+0+0+\cdots\), con \(r=0\). Esa se reconoce a simple vista, y en ella no se pueden formar los cocientes, porque no se divide por \(0\).)</li>
+      <li><b>Identificar</b> una serie es: decidir si es geométrica y, si lo es, dar \(a\) y \(r\) y escribirla en la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\).</li>
+      <li><b>Para qué sirve:</b> en la hoja «Series geométricas infinitas» se demuestra que la serie converge exactamente cuando \(|r|&lt;1\), y que entonces su suma es \(\dfrac{a}{1-r}\). Para usar ese resultado hay que tener \(a\) y \(r\). En esta hoja no se suma: eso se hace en la hoja «Suma de una serie geométrica infinita».</li>
+    </ol>
+    <p><b>Procedimiento.</b></p>
+    <ol class="steps">
+      <li><b>Se escriben los primeros términos,</b> reemplazando el índice. El primer término es el que resulta al reemplazar el <b>primer</b> índice de la suma, sea \(1\), \(0\) u otro.</li>
+      <li><b>Se calcula el cociente general</b> \(\dfrac{a_{n+1}}{a_{n}}\): el término siguiente (se reemplaza \(n\) por \(n+1\)) dividido por el término, y se simplifica con las leyes de las potencias.</li>
+      <li><b>Se mira si el resultado depende de \(n\).</b> Si no depende, la serie es geométrica: \(r\) es ese cociente y \(a\) es el primer término. Si depende, no es geométrica; para dejarlo demostrado basta mostrar dos cocientes distintos.</li>
+      <li><b>Se reescribe</b> en la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) y se comprueba con un término.</li>
+    </ol>
+    <p><b>Si la suma empieza en otro índice.</b> Sea \(\displaystyle\sum_{n=m}^{\infty}c\,q^{\,n}\), con \(c\neq 0\), \(q\neq 0\) y \(m\) un entero mayor o igual que \(0\). Su primer término es \(c\,q^{\,m}\) (se reemplaza \(n=m\)) y su razón es \(q\): \(\dfrac{c\,q^{\,n+1}}{c\,q^{\,n}}=q\), al simplificar por \(c\) y por \(q^{\,n}\). Entonces \(\displaystyle\sum_{n=m}^{\infty}c\,q^{\,n}=\sum_{n=1}^{\infty}\left(c\,q^{\,m}\right)q^{\,n-1}\). Las dos sumas tienen los mismos términos en el mismo orden: el término \(n\) de la segunda es \(c\,q^{\,m}\cdot q^{\,n-1}=c\,q^{\,m+n-1}\) (producto de potencias de igual base), que con \(n=1,\ 2,\ 3,\ \ldots\) da \(c\,q^{\,m},\ c\,q^{\,m+1},\ c\,q^{\,m+2},\ \ldots\)</p>
+    <p><b>Aviso de rigor.</b> Se usan sin demostrar: (1) las leyes de las potencias de exponente entero: \(x^{0}=1\), \(x^{n+1}=x^{n}\cdot x\), \(x^{m}\cdot x^{n}=x^{m+n}\) y \(\dfrac{x^{n}}{y^{n}}=\left(\dfrac{x}{y}\right)^{n}\), con \(x\neq 0\), \(y\neq 0\); (2) que un producto de números distintos de cero es distinto de cero; (3) el principio de inducción (la demostración del recuadro siguiente es por inducción, con sus dos partes escritas); (4) que un decimal periódico como \(0{,}777\ldots\) es, por lo que significa la escritura decimal, la suma \(\dfrac{7}{10}+\dfrac{7}{100}+\dfrac{7}{1000}+\cdots\) De la hoja «Series geométricas infinitas» se cita, ya demostrado allí con su propio aviso de rigor, cuándo converge una serie geométrica y cuánto suma; aquí solo se menciona. En el ejercicio C, el rebote de la pelota es un modelo declarado, no un dato medido.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>El criterio, demostrado en los dos sentidos</h3>
+    <p><b>Teorema.</b> Sea \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) una serie con \(a_{n}\neq 0\) para todo \(n\). Estas dos afirmaciones dicen lo mismo:</p>
+    <ol class="steps">
+      <li><b>(G)</b> La serie es geométrica: hay números \(a\neq 0\) y \(r\neq 0\) tales que \(a_{n}=a\,r^{\,n-1}\) para todo \(n\ge 1\).</li>
+      <li><b>(C)</b> El cociente entre cada término y el anterior es constante: hay un número \(r\) tal que \(\dfrac{a_{n+1}}{a_{n}}=r\) para todo \(n\ge 1\).</li>
+    </ol>
+    <p>Y cuando se cumplen, \(a=a_{1}\) y la razón es ese cociente.</p>
+    <p><b>Primera parte: si es geométrica (G), el cociente es constante (C).</b></p>
+    <ol class="steps">
+      <li>Por (G), \(a_{n}=a\,r^{\,n-1}\). El término siguiente se obtiene reemplazando \(n\) por \(n+1\): el exponente es \((n+1)-1=n\), y queda \(a_{n+1}=a\,r^{\,n}\).</li>
+      <li>Cociente: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{a\,r^{\,n}}{a\,r^{\,n-1}}\).</li>
+      <li>Se simplifica por \(a\), que es distinto de cero: \(\dfrac{r^{\,n}}{r^{\,n-1}}\).</li>
+      <li>Ley de las potencias: \(r^{\,n}=r^{\,n-1}\cdot r\). Queda \(\dfrac{r^{\,n-1}\cdot r}{r^{\,n-1}}\).</li>
+      <li>Se simplifica por \(r^{\,n-1}\), que es distinto de cero porque \(r\neq 0\): el cociente vale \(r\).</li>
+      <li>El resultado, \(r\), no depende de \(n\): se cumple (C). Además, con \(n=1\): \(a_{1}=a\,r^{\,0}=a\cdot 1=a\).</li>
+    </ol>
+    <p><b>Segunda parte: si el cociente es constante (C), es geométrica (G).</b></p>
+    <ol class="steps">
+      <li>Por (C), \(\dfrac{a_{n+1}}{a_{n}}=r\) para todo \(n\). Se multiplica cada lado por \(a_{n}\): \(a_{n+1}=r\,a_{n}\), para todo \(n\ge 1\).</li>
+      <li><b>\(r\neq 0\):</b> si fuera \(r=0\), sería \(a_{2}=0\cdot a_{1}=0\), y todos los términos son distintos de cero.</li>
+      <li>Se llama \(a\) al primer término: \(a=a_{1}\). Es distinto de cero, porque todos los términos lo son.</li>
+      <li><b>Inducción, primer caso (\(n=1\)):</b> \(a\,r^{\,1-1}=a\,r^{\,0}=a\cdot 1=a=a_{1}\). La fórmula \(a_{n}=a\,r^{\,n-1}\) vale para \(n=1\).</li>
+      <li><b>Inducción, paso de \(n\) a \(n+1\):</b> si \(a_{n}=a\,r^{\,n-1}\), entonces, por el paso 1, \(a_{n+1}=r\,a_{n}=r\cdot a\,r^{\,n-1}\). Se ordena el producto y se usa \(r^{\,n-1}\cdot r=r^{\,n}\): \(a_{n+1}=a\,r^{\,n}=a\,r^{\,(n+1)-1}\). La fórmula vale para \(n+1\).</li>
+      <li>Por inducción, \(a_{n}=a\,r^{\,n-1}\) para todo \(n\ge 1\), con \(a\neq 0\) y \(r\neq 0\): se cumple (G). (Es el término general que se estudia en la hoja «Término enésimo de una sucesión geométrica».)</li>
+    </ol>
+    <p><b>Por qué no basta con probar los primeros cocientes.</b> La afirmación (C) pide el mismo cociente para <b>todo</b> \(n\), y eso solo se puede comprobar con el término general.</p>
+    <ol class="steps">
+      <li>La lista \(1+2+4+\cdots\) no dice qué sigue. Si el término general es \(2^{\,n-1}\), sigue \(8\). Si es \(\dfrac{n^{2}-n+2}{2}\), sigue \(7\) (ejemplo 4). Las dos listas empiezan igual.</li>
+      <li>Con una lista sin fórmula solo se puede decir «parece geométrica», o bien «si sigue con el mismo patrón, es geométrica con \(a=1\) y \(r=2\)».</li>
+      <li>Con el término general se calcula \(\dfrac{a_{n+1}}{a_{n}}\) una sola vez, con la letra \(n\), y el resultado vale para todos los \(n\): eso es una demostración.</li>
+      <li>Al revés es más fácil: para demostrar que una serie <b>no</b> es geométrica bastan dos cocientes distintos, porque entonces (C) no se cumple.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>¿Geométrica o no? Número ↔ figura</h3>
+    <p>Siete series, cada una dada por su término general. El deslizador elige la serie; el dibujo muestra sus cinco primeros términos y los cuatro cocientes entre vecinos.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la fila de arriba:</b> la serie elegida y, debajo, sus cinco primeros términos, \(a_{1}\) a \(a_{5}\), en azul.</li>
+      <li><b>Mira después la fila naranja:</b> bajo cada par de términos vecinos está su cociente, el de la derecha dividido por el de la izquierda.</li>
+      <li><b>Mira la gráfica:</b> en horizontal va \(n\); en vertical, el cociente \(\dfrac{a_{n+1}}{a_{n}}\). Cada punto naranja es un cociente, con su valor escrito y una punteada hasta el eje. Si los cuatro puntos están a la misma altura, una recta burdeo horizontal pasa por ellos: su altura es la razón \(r\). Si están a alturas distintas, no hay recta.</li>
+      <li><b>Mueve el deslizador «serie»:</b> las series 1, 3 y 5 son geométricas (razón positiva, negativa y mayor que \(1\)); las series 2, 4 y 6 no lo son; la serie 7 es el caso límite: todos los términos iguales, razón \(1\).</li>
+      <li><b>Cuenta de abajo:</b> para la serie elegida, los términos por reemplazo, dos cocientes calculados, el cociente general simplificado y la conclusión. Si es geométrica: \(a\), \(r\), la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) y una comprobación. Los cuatro puntos del dibujo solo muestran; lo que demuestra es el cociente general.</li>
+    </ol>
+    <div class="stage" data-scene="idg-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+    <ul class="keys">
+      <li><b>Azul:</b> los cinco primeros términos de la serie elegida.</li>
+      <li><b>Naranja:</b> los cocientes entre términos vecinos, en la fila y como puntos de la gráfica, cada punto con su punteada hasta el eje.</li>
+      <li><b>Recta burdeo horizontal:</b> aparece solo cuando los cocientes son iguales; su altura es la razón \(r\).</li>
+      <li><b>Caso límite (serie 7):</b> \(2+2+2+\cdots\) Los cocientes valen \(1\): es geométrica con \(r=1\) (y también aritmética, con diferencia \(0\)).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: una serie disfrazada. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3\cdot 2^{n}}{5^{n+1}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primer término, con \(n=1\): \(\dfrac{3\cdot 2^{1}}{5^{2}}=\dfrac{3\cdot 2}{25}=\dfrac{6}{25}\).</li>
+    <li>Segundo término, con \(n=2\): \(\dfrac{3\cdot 2^{2}}{5^{3}}=\dfrac{3\cdot 4}{125}=\dfrac{12}{125}\).</li>
+    <li>Tercer término, con \(n=3\): \(\dfrac{3\cdot 2^{3}}{5^{4}}=\dfrac{3\cdot 8}{625}=\dfrac{24}{625}\).</li>
+    <li>Término siguiente: se reemplaza \(n\) por \(n+1\). El exponente de abajo es \((n+1)+1=n+2\): \(a_{n+1}=\dfrac{3\cdot 2^{n+1}}{5^{n+2}}\).</li>
+    <li>Cociente general. Dividir por una fracción es multiplicar por su inversa: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{3\cdot 2^{n+1}}{5^{n+2}}\cdot\dfrac{5^{n+1}}{3\cdot 2^{n}}=\dfrac{3\cdot 2^{n+1}\cdot 5^{n+1}}{3\cdot 2^{n}\cdot 5^{n+2}}\).</li>
+    <li>Se simplifica por \(3\): \(\dfrac{2^{n+1}\cdot 5^{n+1}}{2^{n}\cdot 5^{n+2}}\).</li>
+    <li>Como \(2^{n+1}=2^{n}\cdot 2\), se simplifica por \(2^{n}\): \(\dfrac{2\cdot 5^{n+1}}{5^{n+2}}\).</li>
+    <li>Como \(5^{n+2}=5^{n+1}\cdot 5\), se simplifica por \(5^{n+1}\): \(\dfrac{2}{5}\).</li>
+    <li>El cociente, \(\dfrac{2}{5}\), no depende de \(n\): la serie es geométrica, con razón \(r=\dfrac{2}{5}\).</li>
+    <li>Primer término: \(a=\dfrac{6}{25}\), el del paso 1 (no es \(3\)).</li>
+    <li>Forma pedida: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3\cdot 2^{n}}{5^{n+1}}=\sum_{n=1}^{\infty}\dfrac{6}{25}\left(\dfrac{2}{5}\right)^{n-1}\).</li>
+    <li>Comprobación con \(n=3\). Potencia: \(\left(\dfrac{2}{5}\right)^{2}=\dfrac{4}{25}\). Producto: \(\dfrac{6}{25}\cdot\dfrac{4}{25}=\dfrac{24}{625}\), el tercer término. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: empieza en \(n=0\) y cambia de signo. \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El primer índice es \(0\). Primer término, con \(n=0\): \(\dfrac{(-1)^{0}}{2^{0}}=\dfrac{1}{1}=1\).</li>
+    <li>Con \(n=1\): \(\dfrac{(-1)^{1}}{2^{1}}=\dfrac{-1}{2}=-\dfrac{1}{2}\). Con \(n=2\): \(\dfrac{(-1)^{2}}{2^{2}}=\dfrac{1}{4}\). La serie es \(1-\dfrac{1}{2}+\dfrac{1}{4}-\cdots\)</li>
+    <li>Término siguiente: \(a_{n+1}=\dfrac{(-1)^{n+1}}{2^{n+1}}\).</li>
+    <li>Cociente general: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{(-1)^{n+1}}{2^{n+1}}\cdot\dfrac{2^{n}}{(-1)^{n}}=\dfrac{(-1)^{n+1}\cdot 2^{n}}{(-1)^{n}\cdot 2^{n+1}}\).</li>
+    <li>Como \((-1)^{n+1}=(-1)^{n}\cdot(-1)\), se simplifica por \((-1)^{n}\): \(\dfrac{(-1)\cdot 2^{n}}{2^{n+1}}\).</li>
+    <li>Como \(2^{n+1}=2^{n}\cdot 2\), se simplifica por \(2^{n}\): \(\dfrac{-1}{2}=-\dfrac{1}{2}\).</li>
+    <li>El cociente no depende de \(n\): la serie es geométrica, con \(r=-\dfrac{1}{2}\). La razón negativa es la que hace alternar los signos.</li>
+    <li>Primer término: \(a=1\), el de \(n=0\) (paso 1).</li>
+    <li>Forma pedida, con el índice desde \(1\): \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{n}}=\sum_{n=1}^{\infty}1\cdot\left(-\dfrac{1}{2}\right)^{n-1}\).</li>
+    <li>Comprobación con \(n=3\) en la forma nueva: \(\left(-\dfrac{1}{2}\right)^{2}=\dfrac{1}{4}\), y \(1\cdot\dfrac{1}{4}=\dfrac{1}{4}\). Es el tercer término de la serie, el de \(n=2\) en la escritura original. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un decimal periódico. \(0{,}777\ldots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se separan las cifras decimales: \(0{,}777\ldots=0{,}7+0{,}07+0{,}007+\cdots\)</li>
+    <li>Cada sumando, como fracción: \(\dfrac{7}{10}+\dfrac{7}{100}+\dfrac{7}{1000}+\cdots=\dfrac{7}{10^{1}}+\dfrac{7}{10^{2}}+\dfrac{7}{10^{3}}+\cdots=\displaystyle\sum_{n=1}^{\infty}\dfrac{7}{10^{n}}\).</li>
+    <li>Término siguiente: \(a_{n+1}=\dfrac{7}{10^{n+1}}\).</li>
+    <li>Cociente general: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{7}{10^{n+1}}\cdot\dfrac{10^{n}}{7}=\dfrac{7\cdot 10^{n}}{7\cdot 10^{n+1}}\).</li>
+    <li>Se simplifica por \(7\): \(\dfrac{10^{n}}{10^{n+1}}\). Como \(10^{n+1}=10^{n}\cdot 10\), se simplifica por \(10^{n}\): \(\dfrac{1}{10}\).</li>
+    <li>El cociente no depende de \(n\): es geométrica, con \(r=\dfrac{1}{10}\).</li>
+    <li>Primer término, con \(n=1\): \(a=\dfrac{7}{10^{1}}=\dfrac{7}{10}\) (no es \(7\)).</li>
+    <li>Forma pedida: \(0{,}777\ldots=\displaystyle\sum_{n=1}^{\infty}\dfrac{7}{10}\left(\dfrac{1}{10}\right)^{n-1}\).</li>
+    <li>Comprobación con \(n=3\). Potencia: \(\left(\dfrac{1}{10}\right)^{2}=\dfrac{1}{100}\). Producto: \(\dfrac{7}{10}\cdot\dfrac{1}{100}=\dfrac{7}{1000}=0{,}007\), el tercer sumando. ✓</li>
+    <li>Para qué sirve: como \(|r|=\dfrac{1}{10}&lt;1\), la serie converge (hoja «Series geométricas infinitas»). Con \(a\) y \(r\) se calcula la fracción en la hoja «Suma de una serie geométrica infinita».</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: tres series que no son geométricas</h3>
+  <div class="body">
+  <p><b>(a)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\)</p>
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{1^{2}}=1\), \(a_{2}=\dfrac{1}{2^{2}}=\dfrac{1}{4}\), \(a_{3}=\dfrac{1}{3^{2}}=\dfrac{1}{9}\).</li>
+    <li>Primer cociente: \(\dfrac{a_{2}}{a_{1}}=\dfrac{1}{4}\div 1=\dfrac{1}{4}\).</li>
+    <li>Segundo cociente: \(\dfrac{a_{3}}{a_{2}}=\dfrac{1}{9}\cdot\dfrac{4}{1}=\dfrac{4}{9}\).</li>
+    <li>Se comparan multiplicando en cruz: \(1\cdot 9=9\) y \(4\cdot 4=16\). Como \(9\neq 16\), \(\dfrac{1}{4}\neq\dfrac{4}{9}\).</li>
+    <li>Hay dos cocientes distintos: la serie no es geométrica. (Cociente general: \(\dfrac{1}{(n+1)^{2}}\cdot\dfrac{n^{2}}{1}=\dfrac{n^{2}}{(n+1)^{2}}\), que depende de \(n\).)</li>
+  </ol>
+  <p><b>(b)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{2^{n}}\)</p>
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{2^{1}}=\dfrac{1}{2}\), \(a_{2}=\dfrac{2}{2^{2}}=\dfrac{2}{4}=\dfrac{1}{2}\), \(a_{3}=\dfrac{3}{2^{3}}=\dfrac{3}{8}\).</li>
+    <li>Primer cociente: \(\dfrac{a_{2}}{a_{1}}=\dfrac{1}{2}\cdot\dfrac{2}{1}=\dfrac{2}{2}=1\).</li>
+    <li>Segundo cociente: \(\dfrac{a_{3}}{a_{2}}=\dfrac{3}{8}\cdot\dfrac{2}{1}=\dfrac{6}{8}=\dfrac{3}{4}\).</li>
+    <li>Como \(1\neq\dfrac{3}{4}\), hay dos cocientes distintos: la serie no es geométrica.</li>
+    <li>Cociente general: \(\dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^{n}}{n}=\dfrac{(n+1)\cdot 2^{n}}{n\cdot 2^{n+1}}\). Como \(2^{n+1}=2^{n}\cdot 2\), se simplifica por \(2^{n}\): \(\dfrac{n+1}{2n}\). Depende de \(n\). Tener \(2^{n}\) en el denominador no basta: el numerador \(n\) cambia el cociente.</li>
+  </ol>
+  <p><b>(c)</b> Tres términos que engañan: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n^{2}-n+2}{2}\)</p>
+  <ol class="steps">
+    <li>\(a_{1}=\dfrac{1^{2}-1+2}{2}=\dfrac{1-1+2}{2}=\dfrac{2}{2}=1\).</li>
+    <li>\(a_{2}=\dfrac{2^{2}-2+2}{2}=\dfrac{4-2+2}{2}=\dfrac{4}{2}=2\).</li>
+    <li>\(a_{3}=\dfrac{3^{2}-3+2}{2}=\dfrac{9-3+2}{2}=\dfrac{8}{2}=4\).</li>
+    <li>Cocientes: \(\dfrac{a_{2}}{a_{1}}=\dfrac{2}{1}=2\) y \(\dfrac{a_{3}}{a_{2}}=\dfrac{4}{2}=2\). Hasta aquí, parece geométrica de razón \(2\).</li>
+    <li>\(a_{4}=\dfrac{4^{2}-4+2}{2}=\dfrac{16-4+2}{2}=\dfrac{14}{2}=7\).</li>
+    <li>Tercer cociente: \(\dfrac{a_{4}}{a_{3}}=\dfrac{7}{4}\). Como \(\dfrac{7}{4}\neq 2\) (porque \(2=\dfrac{8}{4}\)), la serie no es geométrica.</li>
+    <li>La serie empieza \(1+2+4\), igual que la geométrica \(\displaystyle\sum_{n=1}^{\infty}2^{\,n-1}\), y sigue con \(7\) en vez de \(8\). Tres términos no alcanzan para decidir.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Tomar como \(a\) el número que acompaña a la potencia: en \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3\cdot 2^{n}}{5^{n+1}}\), \(a\) es \(\dfrac{6}{25}\), no \(3\) (ejemplo 1). Olvidar que el primer término es el del primer índice: si la suma parte en \(n=0\), se reemplaza \(n=0\) (ejemplo 2). Dar por geométrica una serie porque sus dos o tres primeros cocientes coinciden (ejemplo 4 c). Creer que «geométrica» quiere decir «convergente»: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3^{n}}{2^{n+1}}\) es geométrica, con \(r=\dfrac{3}{2}\), y diverge porque \(|r|\ge 1\) (hoja «Series geométricas infinitas»). Restar en vez de dividir: la resta constante es la marca de una sucesión aritmética; la de una geométrica es el cociente constante. Y perder el signo: con \((-1)^{n}\) en el término general, la razón es negativa.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si cada serie es geométrica. Si lo es, da \(a\) y \(r\) y escríbela en la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\): (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{5}{4^{n}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\); (c) \(\displaystyle\sum_{n=0}^{\infty}\dfrac{2\cdot 3^{n}}{7^{n}}\); (d) \(\displaystyle\sum_{n=1}^{\infty}(2n+1)\).</p>
+    <details><summary>Pista</summary><div><p>Escribe los primeros términos y calcula \(\dfrac{a_{n+1}}{a_{n}}\). En (c), el primer término es el de \(n=0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Primer término, con \(n=1\): \(\dfrac{5}{4^{1}}=\dfrac{5}{4}\). Término siguiente: \(a_{n+1}=\dfrac{5}{4^{n+1}}\).</li>
+        <li>(a) Cociente general: \(\dfrac{5}{4^{n+1}}\cdot\dfrac{4^{n}}{5}=\dfrac{5\cdot 4^{n}}{5\cdot 4^{n+1}}\). Se simplifica por \(5\) y, como \(4^{n+1}=4^{n}\cdot 4\), por \(4^{n}\): \(\dfrac{1}{4}\).</li>
+        <li>(a) No depende de \(n\): es geométrica, con \(a=\dfrac{5}{4}\) y \(r=\dfrac{1}{4}\). Forma: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{5}{4}\left(\dfrac{1}{4}\right)^{n-1}\). Comprobación con \(n=2\): \(\dfrac{5}{4}\cdot\dfrac{1}{4}=\dfrac{5}{16}=\dfrac{5}{4^{2}}\). ✓</li>
+        <li>(b) Primeros términos: \(1,\ \dfrac{1}{2},\ \dfrac{1}{3}\). Cocientes: \(\dfrac{a_{2}}{a_{1}}=\dfrac{1}{2}\div 1=\dfrac{1}{2}\) y \(\dfrac{a_{3}}{a_{2}}=\dfrac{1}{3}\cdot\dfrac{2}{1}=\dfrac{2}{3}\).</li>
+        <li>(b) En cruz: \(1\cdot 3=3\) y \(2\cdot 2=4\); como \(3\neq 4\), \(\dfrac{1}{2}\neq\dfrac{2}{3}\). No es geométrica. (Cociente general: \(\dfrac{1}{n+1}\cdot\dfrac{n}{1}=\dfrac{n}{n+1}\), que depende de \(n\).)</li>
+        <li>(c) Primer término, con \(n=0\): \(\dfrac{2\cdot 3^{0}}{7^{0}}=\dfrac{2\cdot 1}{1}=2\). Término siguiente: \(a_{n+1}=\dfrac{2\cdot 3^{n+1}}{7^{n+1}}\).</li>
+        <li>(c) Cociente general: \(\dfrac{2\cdot 3^{n+1}}{7^{n+1}}\cdot\dfrac{7^{n}}{2\cdot 3^{n}}=\dfrac{2\cdot 3^{n+1}\cdot 7^{n}}{2\cdot 3^{n}\cdot 7^{n+1}}\). Se simplifica por \(2\); por \(3^{n}\) (queda \(3\) arriba, porque \(3^{n+1}=3^{n}\cdot 3\)); y por \(7^{n}\) (queda \(7\) abajo, porque \(7^{n+1}=7^{n}\cdot 7\)): \(\dfrac{3}{7}\).</li>
+        <li>(c) No depende de \(n\): es geométrica, con \(a=2\) y \(r=\dfrac{3}{7}\). Forma: \(\displaystyle\sum_{n=1}^{\infty}2\left(\dfrac{3}{7}\right)^{n-1}\). Comprobación con \(n=2\): \(2\cdot\dfrac{3}{7}=\dfrac{6}{7}\), y en la escritura original, con \(n=1\): \(\dfrac{2\cdot 3}{7}=\dfrac{6}{7}\). ✓</li>
+        <li>(d) Primeros términos: \(2\cdot 1+1=3\), \(2\cdot 2+1=5\), \(2\cdot 3+1=7\). Cocientes: \(\dfrac{5}{3}\) y \(\dfrac{7}{5}\).</li>
+        <li>(d) En cruz: \(5\cdot 5=25\) y \(3\cdot 7=21\); como \(25\neq 21\), \(\dfrac{5}{3}\neq\dfrac{7}{5}\). No es geométrica. Lo que sí es constante es la resta: \(5-3=2\) y \(7-5=2\). Es la serie de una sucesión aritmética de diferencia \(2\) (hoja «Sucesiones aritméticas»).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Dos series empiezan igual, \(2+6+18+\cdots\) Una tiene término general \(a_{n}=2\cdot 3^{\,n-1}\); la otra, \(b_{n}=4n^{2}-8n+6\). (a) Comprueba que sus tres primeros términos coinciden. (b) Demuestra que la primera es geométrica y da \(a\) y \(r\). (c) Demuestra que la segunda no lo es.</p>
+    <details><summary>Pista</summary><div><p>Para (b) hace falta el cociente general. Para (c) basta encontrar dos cocientes distintos: calcula \(b_{4}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Primera serie: \(a_{1}=2\cdot 3^{0}=2\cdot 1=2\), \(a_{2}=2\cdot 3^{1}=6\), \(a_{3}=2\cdot 3^{2}=2\cdot 9=18\).</li>
+        <li>(a) Segunda serie, con \(n=1\): \(b_{1}=4\cdot 1-8\cdot 1+6=4-8+6=2\).</li>
+        <li>(a) Con \(n=2\): \(b_{2}=4\cdot 4-8\cdot 2+6=16-16+6=6\). Con \(n=3\): \(b_{3}=4\cdot 9-8\cdot 3+6=36-24+6=18\). Coinciden: \(2,\ 6,\ 18\).</li>
+        <li>(b) Término siguiente: se reemplaza \(n\) por \(n+1\); el exponente es \((n+1)-1=n\): \(a_{n+1}=2\cdot 3^{\,n}\).</li>
+        <li>(b) Cociente general: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{2\cdot 3^{\,n}}{2\cdot 3^{\,n-1}}\). Se simplifica por \(2\) y, como \(3^{\,n}=3^{\,n-1}\cdot 3\), por \(3^{\,n-1}\): queda \(3\).</li>
+        <li>(b) No depende de \(n\): es geométrica, con \(a=a_{1}=2\) y \(r=3\). Ya está en la forma pedida: \(\displaystyle\sum_{n=1}^{\infty}2\cdot 3^{\,n-1}\). (Es geométrica aunque \(|r|=3\ge 1\); por eso mismo diverge, según la hoja «Series geométricas infinitas».)</li>
+        <li>(c) Cuarto término: \(b_{4}=4\cdot 16-8\cdot 4+6=64-32+6=38\).</li>
+        <li>(c) Cocientes: \(\dfrac{b_{2}}{b_{1}}=\dfrac{6}{2}=3\) y \(\dfrac{b_{4}}{b_{3}}=\dfrac{38}{18}=\dfrac{19}{9}\) (se simplifica por \(2\)).</li>
+        <li>(c) Como \(3=\dfrac{27}{9}\) y \(\dfrac{27}{9}\neq\dfrac{19}{9}\), hay dos cocientes distintos: la segunda serie no es geométrica. La geométrica sigue con \(a_{4}=2\cdot 3^{3}=2\cdot 27=54\); esta, con \(38\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una pelota se deja caer desde \(10\) metros. Modelo: en cada rebote sube \(\dfrac{3}{5}\) de la altura desde la que cayó, y los rebotes no terminan (una pelota real deja de rebotar; es un modelo). No hay que sumar nada: solo identificar. (a) Las <b>bajadas</b> forman la serie \(10+6+\dfrac{18}{5}+\cdots\) ¿Es geométrica? Da \(a\) y \(r\). (b) Cada rebote completo es una subida y la bajada que le sigue. ¿Es geométrica la serie de los rebotes completos? Da \(a\) y \(r\). (c) La distancia total es la primera bajada más todos los rebotes completos: \(10+12+\dfrac{36}{5}+\cdots\) ¿Es geométrica esa serie?</p>
+    <details><summary>Pista</summary><div><p>La bajada número \(n\) mide \(10\left(\dfrac{3}{5}\right)^{n-1}\) metros. El rebote completo número \(k\) mide el doble de la subida número \(k\). En (c), compara los dos primeros cocientes.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) La pelota baja desde la altura a la que subió, y según el modelo sube \(\dfrac{3}{5}\) de la bajada anterior: cada bajada es la anterior multiplicada por \(\dfrac{3}{5}\). Con \(d_{n}\) la bajada número \(n\): \(d_{n+1}=\dfrac{3}{5}\,d_{n}\) para todo \(n\).</li>
+        <li>(a) Comprobación con los datos: \(\dfrac{3}{5}\cdot 10=\dfrac{30}{5}=6\) y \(\dfrac{3}{5}\cdot 6=\dfrac{18}{5}\). ✓</li>
+        <li>(a) Se divide por \(d_{n}\), que es distinto de cero: \(\dfrac{d_{n+1}}{d_{n}}=\dfrac{3}{5}\) para todo \(n\). Por el criterio, la serie de las bajadas es geométrica, con \(a=10\) y \(r=\dfrac{3}{5}\): \(\displaystyle\sum_{n=1}^{\infty}10\left(\dfrac{3}{5}\right)^{n-1}\).</li>
+        <li>(b) La subida número \(k\) mide lo mismo que la bajada número \(k+1\): \(10\left(\dfrac{3}{5}\right)^{k}\). El rebote completo número \(k\) es esa subida y una bajada igual: \(c_{k}=2\cdot 10\left(\dfrac{3}{5}\right)^{k}=20\left(\dfrac{3}{5}\right)^{k}\), con \(k\ge 1\).</li>
+        <li>(b) Primer término, con \(k=1\): \(20\cdot\dfrac{3}{5}=\dfrac{60}{5}=12\). Segundo, con \(k=2\): \(20\cdot\dfrac{9}{25}=\dfrac{180}{25}=\dfrac{36}{5}\).</li>
+        <li>(b) Cociente general: \(\dfrac{c_{k+1}}{c_{k}}=\dfrac{20\left(\frac{3}{5}\right)^{k+1}}{20\left(\frac{3}{5}\right)^{k}}\). Se simplifica por \(20\) y, como \(\left(\dfrac{3}{5}\right)^{k+1}=\left(\dfrac{3}{5}\right)^{k}\cdot\dfrac{3}{5}\), por \(\left(\dfrac{3}{5}\right)^{k}\): queda \(\dfrac{3}{5}\).</li>
+        <li>(b) No depende de \(k\): es geométrica, con \(a=12\) y \(r=\dfrac{3}{5}\): \(\displaystyle\sum_{k=1}^{\infty}12\left(\dfrac{3}{5}\right)^{k-1}\).</li>
+        <li>(c) Primer cociente: \(\dfrac{12}{10}=\dfrac{6}{5}\) (se simplifica por \(2\)).</li>
+        <li>(c) Segundo cociente: \(\dfrac{36}{5}\div 12=\dfrac{36}{5}\cdot\dfrac{1}{12}=\dfrac{36}{60}=\dfrac{3}{5}\) (se simplifica por \(12\)).</li>
+        <li>(c) Como \(\dfrac{6}{5}\neq\dfrac{3}{5}\), hay dos cocientes distintos: la serie completa <b>no</b> es geométrica. La primera bajada se recorre una sola vez y las demás alturas, dos veces.</li>
+        <li>(c) Lo que sí se puede decir: la distancia total es \(10\) más una serie geométrica, la de (b), con \(a=12\) y \(r=\dfrac{3}{5}\). Como \(|r|=\dfrac{3}{5}&lt;1\), esa serie converge (hoja «Series geométricas infinitas»); sumarla es tarea de la hoja «Suma de una serie geométrica infinita».</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H23 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H23 · identificar una serie geométrica: en Σ 18/3ⁿ cada término es un tercio del anterior; el cociente general lo prueba para todo n; a = 6, r = 1/3 */
+function ig23Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a; }
+function ig23Red(a, b){ var g = ig23Mcd(a, b) || 1; if (b < 0){ a = -a; b = -b; } return [a/g, b/g]; }
+function ig23Tex(f, d){ var s = f[0] < 0 ? '-' : '', a = Math.abs(f[0]); return f[1] === 1 ? s + a : s + '\\' + (d ? 'd' : 't') + 'frac{' + a + '}{' + f[1] + '}'; }
+function ig23Pl(f){ var s = f[0] < 0 ? '−' : '', a = Math.abs(f[0]); return f[1] === 1 ? s + a : s + a + '/' + f[1]; }
+function ig23Cl(t){ return Math.max(0, Math.min(1, t)); }
+OA.scene('idg-idea', (function(){
+  var N = 5, U = 0.44, BX = 0, BH = 0.2, RY = [6.7, 5.55, 4.4, 3.25], VAL = [6, 2, 2/3, 2/9], GA = 1.85, GB = 0.85, GL = 1.8, FX = 3.3;
+  var PZ = [['A1', 'a_{1}=6', 'a₁ = 6', 'c-sec'], ['A2', 'a_{2}=2', 'a₂ = 2', 'c-sec'], ['A3', 'a_{3}=\\tfrac{2}{3}', 'a₃ = 2/3', 'c-sec'], ['A4', 'a_{4}=\\tfrac{2}{9}', 'a₄ = 2/9', 'c-sec'],
+    ['C1', '\\tfrac{a_{2}}{a_{1}}=\\tfrac{2}{6}=\\tfrac{1}{3}', 'a₂/a₁ = 2/6 = 1/3', 'diff'], ['C2', '\\tfrac{a_{3}}{a_{2}}=\\tfrac{2}{3}:2=\\tfrac{1}{3}', 'a₃/a₂ = 2/3 : 2 = 1/3', 'diff'], ['C3', '\\tfrac{a_{4}}{a_{3}}=\\tfrac{2}{9}:\\tfrac{2}{3}=\\tfrac{1}{3}', 'a₄/a₃ = 2/9 : 2/3 = 1/3', 'diff'],
+    ['GN', 'a_{n}', 'aₙ', 'c-sec'], ['GM', 'a_{n+1}', 'aₙ₊₁', 'c-sec'], ['CG', '\\tfrac{a_{n+1}}{a_{n}}=\\tfrac{1}{3}\\ \\text{para todo }n', 'aₙ₊₁/aₙ = 1/3 para todo n', 'diff'],
+    ['AA', 'a=6', 'a = 6', 'c-tan'], ['RR', 'r=\\tfrac{1}{3}', 'r = 1/3', 'c-tan'],
+    ['HD', 'a\\,r^{\\,n-1}\\text{:}', 'a·rⁿ⁻¹:', 'c-alt'], ['F1', '6\\left(\\tfrac{1}{3}\\right)^{0}', '6·(1/3)⁰', 'c-alt'], ['F2', '6\\left(\\tfrac{1}{3}\\right)^{1}', '6·(1/3)¹', 'c-alt'], ['F3', '6\\left(\\tfrac{1}{3}\\right)^{2}', '6·(1/3)²', 'c-alt'], ['F4', '6\\left(\\tfrac{1}{3}\\right)^{3}', '6·(1/3)³', 'c-alt'],
+    ['Q', '\\sum\\nolimits_{n=1}^{\\infty}\\tfrac{18}{3^{n}}\\text{: ¿es geométrica? ¿}a\\text{ y }r\\text{?}', 'Σ 18/3ⁿ (n ≥ 1): ¿es geométrica? ¿a y r?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{sí: }a=6,\\ \\ r=\\tfrac{1}{3}', '⟹ sí: a = 6, r = 1/3', 'diff'],
+    ['R1', 'a_{n}=\\tfrac{18}{3^{n}}:\\quad 6,\\ 2,\\ \\tfrac{2}{3},\\ \\tfrac{2}{9},\\ \\ldots', 'aₙ = 18/3ⁿ: 6, 2, 2/3, 2/9, …', ''],
+    ['R2', '\\tfrac{a_{2}}{a_{1}}=\\tfrac{a_{3}}{a_{2}}=\\tfrac{a_{4}}{a_{3}}=\\tfrac{1}{3}', 'a₂/a₁ = a₃/a₂ = a₄/a₃ = 1/3', ''],
+    ['R3', '\\tfrac{a_{n+1}}{a_{n}}=\\tfrac{18}{3^{n+1}}\\cdot\\tfrac{3^{n}}{18}=\\tfrac{1}{3}\\ \\text{(todo }n\\text{)}', 'aₙ₊₁/aₙ = (18/3ⁿ⁺¹)·(3ⁿ/18) = 1/3 (todo n)', ''],
+    ['R4', '\\text{geométrica: }a=a_{1}=6,\\quad r=\\tfrac{1}{3}', 'geométrica: a = a₁ = 6, r = 1/3', ''],
+    ['R5', '\\sum\\nolimits_{n=1}^{\\infty}\\tfrac{18}{3^{n}}=\\sum\\nolimits_{n=1}^{\\infty}6\\left(\\tfrac{1}{3}\\right)^{n-1}', 'Σ 18/3ⁿ = Σ 6·(1/3)ⁿ⁻¹ (n ≥ 1)', 'diff']];
+  var TXT = [['Se reemplaza n por 1, 2, 3 y 4: cada barra', 'es un término; su largo es su valor.'],
+    ['Cada barra mide un tercio de la de arriba:', 'los tres cocientes valen un tercio.'],
+    ['Con el término general se prueba para todo n:', 'el cociente no depende de n.'],
+    ['Entonces es geométrica. Primer término: 6.', 'Razón: el cociente, un tercio.'],
+    ['Cada término se escribe como 6 por una', 'potencia de un tercio: la forma buscada.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.3, y1:9.6}, aspect:13.9/6.6,
+    aria:'Arriba, una franja dice qué muestra: una serie es geométrica si el cociente entre vecinos es el mismo para todo n. Animación en cinco pasos con la serie de término general 18 dividido por 3 elevado a n. Uno: cuatro barras azules horizontales, una bajo la otra, son los cuatro primeros términos: 6, 2, dos tercios y dos novenos; el largo de cada barra es su valor. Dos: cada barra se parte en tres trozos iguales, el primero pintado de naranja, y una línea punteada sube desde el extremo de la barra de abajo hasta el final de ese primer trozo: cada barra mide un tercio de la de arriba; entre cada par de barras queda escrito su cociente, y los tres valen un tercio. Tres: más abajo aparecen dos barras, un término cualquiera y el que le sigue, con la misma marca de un tercio; el cociente general vale un tercio para todo n. Cuatro: la primera barra se remarca en burdeo con el rótulo a igual a 6, y junto a las barras de abajo se escribe r igual a un tercio. Cinco: a la derecha de cada barra se escribe, en verde, el mismo término como 6 por una potencia de un tercio, con exponentes 0, 1, 2 y 3. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta, sí, con a igual a 6 y r igual a un tercio, se escribe debajo de ella. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> los términos (el largo es el valor)</span><span><i class="sw rise"></i> un tercio de cada barra y el cociente entre vecinos</span><span><i class="sw tan"></i> primer término \\(a\\) y razón \\(r\\)</span><span><i class="sw alt"></i> cada término en la forma \\(a\\,r^{\\,n-1}\\)</span>',
+    anim:{run:36000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w;
+      function txt(t, x, y, al){ c.globalAlpha = al == null ? 1 : al; c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function barra(len, yc, col, fa){ var px = X(BX), pw = len*s, py = Y(yc + BH), ph = 2*BH*s; if (pw < 0.4) return; c.globalAlpha = fa; c.fillStyle = col; c.fillRect(px, py, pw, ph); c.globalAlpha = 1; c.strokeStyle = col; c.lineWidth = 1; c.setLineDash([]); c.strokeRect(px + 0.5, py + 0.5, Math.max(1, pw - 1), ph - 1); }
+      /* un tercio de la barra de arriba (largo len, centro yc) y la punteada que sube desde el extremo de la barra de abajo (centro yd) */
+      function tercio(len, yc, yd, w){ var px = X(BX), pw = len*s/3, py = Y(yc + BH), ph = 2*BH*s, j, xx;
+        c.globalAlpha = 0.55*w; c.fillStyle = C.rise; c.fillRect(px, py, pw, ph); c.globalAlpha = w; c.strokeStyle = C.rise; c.lineWidth = 1;
+        for (j = 1; j <= 2; j++){ xx = px + pw*j; c.beginPath(); c.moveTo(xx, py); c.lineTo(xx, py + ph); c.stroke(); }
+        c.setLineDash([3, 3]); c.beginPath(); c.moveTo(px + pw, Y(yd + BH)); c.lineTo(px + pw, Y(yd + BH) + (Y(yc - BH) - Y(yd + BH))*w); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+      /* paso 1: los cuatro términos, uno tras otro */
+      for (i = 0; i < 4; i++){ w = k === 1 ? ig23Cl(u*4 - i) : 1; if (w > 0) barra(VAL[i]*U*w, RY[i], C.sec, 0.28); if (w > 0.5) L('A' + (i + 1), -1.2, RY[i], 0); }
+      /* paso 2: cada barra mide un tercio de la de arriba */
+      if (k >= 2) for (i = 0; i < 3; i++){ w = k === 2 ? ig23Cl(u*3 - i) : 1; if (w > 0) tercio(VAL[i]*U, RY[i], RY[i + 1], w); if (w > 0.6) L('C' + (i + 1), 1.25, (RY[i] + RY[i + 1])/2, 0); }
+      /* paso 3: un término cualquiera y el que le sigue */
+      if (k >= 3){ w = k === 3 ? u : 1; txt('un término cualquiera y el que le sigue:', -1.2, 2.5, Math.min(1, 2*w));
+        barra(GL*w, GA, C.sec, 0.28); barra(GL*w/3, GB, C.sec, 0.28); if (w > 0.3){ L('GN', -1.2, GA, 0); L('GM', -1.2, GB, 0); }
+        if (w > 0.5) tercio(GL, GA, GB, ig23Cl(2*w - 1)); if (w > 0.8) L('CG', 0.95, (GA + GB)/2, 0); }
+      /* paso 4: primer término y razón, en burdeo */
+      if (k >= 4){ w = k === 4 ? u : 1; c.globalAlpha = w; c.strokeStyle = C.tan; c.lineWidth = 1 + 1.2*w; c.setLineDash([]); c.strokeRect(X(BX) - 2, Y(RY[0] + BH) - 2, VAL[0]*U*s + 4, 2*BH*s + 4); c.globalAlpha = 1;
+        if (w > 0.4) L('AA', BX + VAL[0]*U*2/3, RY[0], -50); if (w > 0.7) L('RR', 3.85, (GA + GB)/2, 0); }
+      /* paso 5: cada término en la forma a·rⁿ⁻¹ */
+      if (k === 5){ L('HD', FX, 7.32, 0); for (i = 0; i < 4; i++) if (u*4.4 > i + 0.4) L('F' + (i + 1), FX, RY[i], 0); }
+      L('Q', -1.2, 8.2, 0); if (k === N && u > 0.5) L('F', -1.2, 7.62, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.05); txt(TXT[k - 1][1], -1.2, 0.05 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.2));
+      dtQue(S, 'una serie es geométrica si el cociente', 'entre vecinos es el mismo para todo n.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.35, [6, 36, 66, 96, 126]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['\\text{Dato: término general }a_{n}=\\dfrac{18}{3^{n}},\\ n\\ge 1' + Q + '\\text{Se reemplaza }n\\text{ por }1,\\ 2,\\ 3\\text{ y }4\\text{:}' + Q + 'a_{1}=\\dfrac{18}{3^{1}}=\\dfrac{18}{3}=6,\\qquad a_{2}=\\dfrac{18}{3^{2}}=\\dfrac{18}{9}=2' + Q + 'a_{3}=\\dfrac{18}{3^{3}}=\\dfrac{18}{27}=\\dfrac{2}{3}\\ \\text{(se simplifica por }9)' + Q + 'a_{4}=\\dfrac{18}{3^{4}}=\\dfrac{18}{81}=\\dfrac{2}{9}\\ \\text{(se simplifica por }9)' + Q + '\\text{Serie: }6+2+\\dfrac{2}{3}+\\dfrac{2}{9}+\\cdots',
+      '\\text{Cociente: cada término dividido por el anterior.}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{2}{6}=\\dfrac{1}{3}\\ \\text{(se simplifica por }2)' + Q + '\\dfrac{a_{3}}{a_{2}}=\\dfrac{2}{3}:2=\\dfrac{2}{3}\\cdot\\dfrac{1}{2}=\\dfrac{2}{6}=\\dfrac{1}{3}' + Q + '\\dfrac{a_{4}}{a_{3}}=\\dfrac{2}{9}:\\dfrac{2}{3}=\\dfrac{2}{9}\\cdot\\dfrac{3}{2}=\\dfrac{6}{18}=\\dfrac{1}{3}' + Q + '\\text{Los tres son iguales: parece geométrica.}',
+      '\\text{Falta probarlo para todo }n.' + Q + '\\text{Término siguiente: }a_{n+1}=\\dfrac{18}{3^{n+1}}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{18}{3^{n+1}}\\cdot\\dfrac{3^{n}}{18}=\\dfrac{18\\cdot 3^{n}}{18\\cdot 3^{n+1}}' + Q + '\\text{Se simplifica por }18\\text{: }\\dfrac{3^{n}}{3^{n+1}}' + Q + '\\text{Como }3^{n+1}=3^{n}\\cdot 3\\text{, se simplifica por }3^{n}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{1}{3}',
+      '\\dfrac{1}{3}\\text{ no depende de }n\\text{: la serie es geométrica.}' + Q + '\\text{Razón: el cociente, }r=\\dfrac{1}{3}' + Q + '\\text{Primer término: }a=a_{1}=6\\ \\ (\\text{no es }18)',
+      '\\text{Forma }a\\,r^{\\,n-1}\\text{, con }a=6\\text{ y }r=\\dfrac{1}{3}\\text{:}' + Q + '\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{18}{3^{n}}=\\sum_{n=1}^{\\infty}6\\left(\\dfrac{1}{3}\\right)^{n-1}' + Q + '\\text{Comprobación con }n=4\\text{:}' + Q + '\\left(\\dfrac{1}{3}\\right)^{3}=\\dfrac{1}{27},\\qquad 6\\cdot\\dfrac{1}{27}=\\dfrac{6}{27}=\\dfrac{2}{9}=a_{4}' + Q + '\\text{Para qué sirve: }|r|=\\dfrac{1}{3}<1\\text{, y entonces}' + Q + '\\text{la serie converge (hoja «Series geométricas}' + Q + '\\text{infinitas»). Aquí no se suma.}'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: siete series por su término general; cinco términos, cuatro cocientes entre vecinos y su gráfica */
+OA.scene('idg-vivo', (function(){
+  var NS = 7, Q = '\\\\&\\qquad ', SU = '\\displaystyle\\sum_{n=1}^{\\infty}', NO = '\\text{No hay un número }r\\text{ que sirva para todo }n\\text{:}' + Q + '\\text{la serie no se puede escribir como }' + SU + 'a\\,r^{\\,n-1}.';
+  /* cada serie: término general (TeX y respaldo), función n ↦ [numerador, denominador], si es geométrica, frase de apoyo y lectura completa */
+  var SER = [
+    {tx:'\\tfrac{5}{2^{n}}', pl:'5/2ⁿ', f:function(n){ return [5, Math.pow(2, n)]; }, geo:1, nota:'razón entre 0 y 1: los términos se achican',
+      vt:'a=\\tfrac{5}{2},\\ \\ r=\\tfrac{1}{2}:\\quad\\sum\\nolimits_{n=1}^{\\infty}\\tfrac{5}{2}\\left(\\tfrac{1}{2}\\right)^{n-1}', vp:'a = 5/2, r = 1/2: Σ (5/2)·(1/2)ⁿ⁻¹',
+      R:['\\text{Dato: término general }a_{n}=\\dfrac{5}{2^{n}},\\ n\\ge 1',
+        '\\text{Primeros términos (se reemplaza }n\\text{):}' + Q + 'a_{1}=\\dfrac{5}{2^{1}}=\\dfrac{5}{2},\\quad a_{2}=\\dfrac{5}{2^{2}}=\\dfrac{5}{4},\\quad a_{3}=\\dfrac{5}{2^{3}}=\\dfrac{5}{8}',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{5}{4}\\cdot\\dfrac{2}{5}=\\dfrac{10}{20}=\\dfrac{1}{2}' + Q + '\\dfrac{a_{3}}{a_{2}}=\\dfrac{5}{8}\\cdot\\dfrac{4}{5}=\\dfrac{20}{40}=\\dfrac{1}{2}',
+        '\\text{Cociente general, con }a_{n+1}=\\dfrac{5}{2^{n+1}}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{5}{2^{n+1}}\\cdot\\dfrac{2^{n}}{5}=\\dfrac{5\\cdot 2^{n}}{5\\cdot 2^{n+1}}' + Q + '\\text{Se simplifica por }5\\text{ y, como }2^{n+1}=2^{n}\\cdot 2,' + Q + '\\text{por }2^{n}\\text{: queda }\\dfrac{1}{2}',
+        '\\dfrac{1}{2}\\text{ no depende de }n\\text{: la serie es geométrica.}' + Q + '\\text{(En el dibujo: los puntos, en una recta horizontal.)}',
+        'a=a_{1}=\\dfrac{5}{2},\\qquad r=\\dfrac{1}{2}' + Q + SU + '\\dfrac{5}{2^{n}}=' + SU + '\\dfrac{5}{2}\\left(\\dfrac{1}{2}\\right)^{n-1}' + Q + '\\text{Comprobación con }n=3\\text{:}' + Q + '\\left(\\dfrac{1}{2}\\right)^{2}=\\dfrac{1}{4},\\qquad\\dfrac{5}{2}\\cdot\\dfrac{1}{4}=\\dfrac{5}{8}=a_{3}']},
+    {tx:'\\tfrac{1}{n}', pl:'1/n', f:function(n){ return [1, n]; }, geo:0, nota:'el cociente depende de n: no hay razón',
+      R:['\\text{Dato: término general }a_{n}=\\dfrac{1}{n},\\ n\\ge 1',
+        '\\text{Primeros términos (se reemplaza }n\\text{):}' + Q + 'a_{1}=\\dfrac{1}{1}=1,\\quad a_{2}=\\dfrac{1}{2},\\quad a_{3}=\\dfrac{1}{3}',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{1}{2}:1=\\dfrac{1}{2}' + Q + '\\dfrac{a_{3}}{a_{2}}=\\dfrac{1}{3}\\cdot\\dfrac{2}{1}=\\dfrac{2}{3}',
+        '\\text{Cociente general, con }a_{n+1}=\\dfrac{1}{n+1}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{1}{n+1}\\cdot\\dfrac{n}{1}=\\dfrac{n}{n+1}',
+        '\\dfrac{n}{n+1}\\text{ depende de }n\\text{: con }n=1\\text{ vale }\\dfrac{1}{2}\\text{;}' + Q + '\\text{con }n=2\\text{ vale }\\dfrac{2}{3}.\\ \\text{En cruz: }1\\cdot 3=3,\\ 2\\cdot 2=4.' + Q + '3\\neq 4\\text{: son distintos. No es geométrica.}',
+        NO + Q + '\\text{(Es la serie armónica, de la hoja}' + Q + '\\text{«Series harmónicas y series-p».)}']},
+    {tx:'\\tfrac{(-1)^{n}\\cdot 2}{3^{n}}', pl:'(−1)ⁿ·2/3ⁿ', f:function(n){ return [(n % 2 ? -2 : 2), Math.pow(3, n)]; }, geo:1, nota:'razón negativa: los signos se alternan',
+      vt:'a=-\\tfrac{2}{3},\\ \\ r=-\\tfrac{1}{3}:\\quad\\sum\\nolimits_{n=1}^{\\infty}\\left(-\\tfrac{2}{3}\\right)\\left(-\\tfrac{1}{3}\\right)^{n-1}', vp:'a = −2/3, r = −1/3: Σ (−2/3)·(−1/3)ⁿ⁻¹',
+      R:['\\text{Dato: término general }a_{n}=\\dfrac{(-1)^{n}\\cdot 2}{3^{n}},\\ n\\ge 1',
+        '\\text{Primeros términos (se reemplaza }n\\text{):}' + Q + 'a_{1}=\\dfrac{(-1)^{1}\\cdot 2}{3^{1}}=\\dfrac{-2}{3}=-\\dfrac{2}{3}' + Q + 'a_{2}=\\dfrac{(-1)^{2}\\cdot 2}{3^{2}}=\\dfrac{2}{9},\\qquad a_{3}=\\dfrac{(-1)^{3}\\cdot 2}{3^{3}}=-\\dfrac{2}{27}',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{2}{9}\\cdot\\left(-\\dfrac{3}{2}\\right)=-\\dfrac{6}{18}=-\\dfrac{1}{3}' + Q + '\\dfrac{a_{3}}{a_{2}}=-\\dfrac{2}{27}\\cdot\\dfrac{9}{2}=-\\dfrac{18}{54}=-\\dfrac{1}{3}',
+        '\\text{Cociente general, con }a_{n+1}=\\dfrac{(-1)^{n+1}\\cdot 2}{3^{n+1}}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{(-1)^{n+1}\\cdot 2\\cdot 3^{n}}{(-1)^{n}\\cdot 2\\cdot 3^{n+1}}' + Q + '(-1)^{n+1}=(-1)^{n}\\cdot(-1),\\qquad 3^{n+1}=3^{n}\\cdot 3' + Q + '\\text{Se simplifica por }(-1)^{n}\\text{, por }2\\text{ y por }3^{n}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{-1}{3}=-\\dfrac{1}{3}',
+        '-\\dfrac{1}{3}\\text{ no depende de }n\\text{: la serie es geométrica.}' + Q + '\\text{La razón es negativa: los signos se alternan.}',
+        'a=a_{1}=-\\dfrac{2}{3},\\qquad r=-\\dfrac{1}{3}' + Q + SU + '\\dfrac{(-1)^{n}\\cdot 2}{3^{n}}=' + SU + '\\left(-\\dfrac{2}{3}\\right)\\left(-\\dfrac{1}{3}\\right)^{n-1}' + Q + '\\text{Comprobación con }n=3\\text{:}' + Q + '\\left(-\\dfrac{1}{3}\\right)^{2}=\\dfrac{1}{9},\\qquad-\\dfrac{2}{3}\\cdot\\dfrac{1}{9}=-\\dfrac{2}{27}=a_{3}']},
+    {tx:'\\tfrac{n}{2^{n}}', pl:'n/2ⁿ', f:function(n){ return [n, Math.pow(2, n)]; }, geo:0, nota:'el cociente depende de n: no hay razón',
+      R:['\\text{Dato: término general }a_{n}=\\dfrac{n}{2^{n}},\\ n\\ge 1',
+        '\\text{Primeros términos (se reemplaza }n\\text{):}' + Q + 'a_{1}=\\dfrac{1}{2^{1}}=\\dfrac{1}{2},\\qquad a_{2}=\\dfrac{2}{2^{2}}=\\dfrac{2}{4}=\\dfrac{1}{2}' + Q + 'a_{3}=\\dfrac{3}{2^{3}}=\\dfrac{3}{8}',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{1}{2}\\cdot\\dfrac{2}{1}=\\dfrac{2}{2}=1' + Q + '\\dfrac{a_{3}}{a_{2}}=\\dfrac{3}{8}\\cdot\\dfrac{2}{1}=\\dfrac{6}{8}=\\dfrac{3}{4}',
+        '\\text{Cociente general, con }a_{n+1}=\\dfrac{n+1}{2^{n+1}}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{n+1}{2^{n+1}}\\cdot\\dfrac{2^{n}}{n}=\\dfrac{(n+1)\\cdot 2^{n}}{n\\cdot 2^{n+1}}' + Q + '\\text{Como }2^{n+1}=2^{n}\\cdot 2\\text{, se simplifica por }2^{n}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{n+1}{2n}',
+        '\\dfrac{n+1}{2n}\\text{ depende de }n\\text{: con }n=1\\text{ vale }\\dfrac{2}{2}=1\\text{;}' + Q + '\\text{con }n=2\\text{ vale }\\dfrac{3}{4}.\\ \\text{Como }1\\neq\\dfrac{3}{4}\\text{,}' + Q + '\\text{no es geométrica.}',
+        NO + Q + '\\text{Tener }2^{n}\\text{ abajo no basta: el }n\\text{ de arriba}' + Q + '\\text{cambia el cociente.}']},
+    {tx:'\\tfrac{3^{n}}{2^{n+1}}', pl:'3ⁿ/2ⁿ⁺¹', f:function(n){ return [Math.pow(3, n), Math.pow(2, n + 1)]; }, geo:1, nota:'razón mayor que 1: geométrica igual (diverge)',
+      vt:'a=\\tfrac{3}{4},\\ \\ r=\\tfrac{3}{2}:\\quad\\sum\\nolimits_{n=1}^{\\infty}\\tfrac{3}{4}\\left(\\tfrac{3}{2}\\right)^{n-1}', vp:'a = 3/4, r = 3/2: Σ (3/4)·(3/2)ⁿ⁻¹',
+      R:['\\text{Dato: término general }a_{n}=\\dfrac{3^{n}}{2^{n+1}},\\ n\\ge 1',
+        '\\text{Primeros términos (se reemplaza }n\\text{):}' + Q + 'a_{1}=\\dfrac{3^{1}}{2^{2}}=\\dfrac{3}{4},\\qquad a_{2}=\\dfrac{3^{2}}{2^{3}}=\\dfrac{9}{8}' + Q + 'a_{3}=\\dfrac{3^{3}}{2^{4}}=\\dfrac{27}{16}',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{9}{8}\\cdot\\dfrac{4}{3}=\\dfrac{36}{24}=\\dfrac{3}{2}' + Q + '\\dfrac{a_{3}}{a_{2}}=\\dfrac{27}{16}\\cdot\\dfrac{8}{9}=\\dfrac{216}{144}=\\dfrac{3}{2}',
+        '\\text{Cociente general, con }a_{n+1}=\\dfrac{3^{n+1}}{2^{n+2}}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{3^{n+1}}{2^{n+2}}\\cdot\\dfrac{2^{n+1}}{3^{n}}=\\dfrac{3^{n+1}\\cdot 2^{n+1}}{3^{n}\\cdot 2^{n+2}}' + Q + '3^{n+1}=3^{n}\\cdot 3,\\qquad 2^{n+2}=2^{n+1}\\cdot 2' + Q + '\\text{Se simplifica por }3^{n}\\text{ y por }2^{n+1}\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{3}{2}',
+        '\\dfrac{3}{2}\\text{ no depende de }n\\text{: la serie es geométrica.}',
+        'a=a_{1}=\\dfrac{3}{4},\\qquad r=\\dfrac{3}{2}' + Q + SU + '\\dfrac{3^{n}}{2^{n+1}}=' + SU + '\\dfrac{3}{4}\\left(\\dfrac{3}{2}\\right)^{n-1}' + Q + '\\text{Comprobación con }n=3\\text{:}' + Q + '\\left(\\dfrac{3}{2}\\right)^{2}=\\dfrac{9}{4},\\qquad\\dfrac{3}{4}\\cdot\\dfrac{9}{4}=\\dfrac{27}{16}=a_{3}' + Q + '\\text{Es geométrica aunque }|r|=\\dfrac{3}{2}\\ge 1\\text{; por eso}' + Q + '\\text{diverge (hoja «Series geométricas infinitas»).}']},
+    {tx:'(2n+1)', pl:'(2n + 1)', f:function(n){ return [2*n + 1, 1]; }, geo:0, nota:'es aritmética: lo constante es la resta',
+      R:['\\text{Dato: término general }a_{n}=2n+1,\\ n\\ge 1',
+        '\\text{Primeros términos (se reemplaza }n\\text{):}' + Q + 'a_{1}=2\\cdot 1+1=3,\\qquad a_{2}=2\\cdot 2+1=5' + Q + 'a_{3}=2\\cdot 3+1=7',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{5}{3},\\qquad\\dfrac{a_{3}}{a_{2}}=\\dfrac{7}{5}',
+        '\\text{Cociente general. Término siguiente:}' + Q + 'a_{n+1}=2(n+1)+1=2n+2+1=2n+3' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{2n+3}{2n+1}',
+        '\\dfrac{2n+3}{2n+1}\\text{ depende de }n\\text{: con }n=1\\text{ vale }\\dfrac{5}{3}\\text{;}' + Q + '\\text{con }n=2\\text{ vale }\\dfrac{7}{5}.\\ \\text{En cruz: }5\\cdot 5=25,\\ 3\\cdot 7=21.' + Q + '25\\neq 21\\text{: son distintos. No es geométrica.}',
+        NO + Q + '\\text{Lo constante aquí es la resta: }5-3=2,\\ 7-5=2.' + Q + '\\text{Es aritmética, de diferencia }2\\text{ (hoja}' + Q + '\\text{«Sucesiones aritméticas»).}']},
+    {tx:'2', pl:'2', f:function(n){ return [2, 1]; }, geo:1, nota:'caso límite: razón 1, todos los términos iguales',
+      vt:'a=2,\\ \\ r=1:\\quad\\sum\\nolimits_{n=1}^{\\infty}2\\cdot 1^{\\,n-1}', vp:'a = 2, r = 1: Σ 2·1ⁿ⁻¹',
+      R:['\\text{Dato: término general }a_{n}=2\\text{ (constante)},\\ n\\ge 1',
+        '\\text{Primeros términos: no hay }n\\text{ que reemplazar.}' + Q + 'a_{1}=2,\\qquad a_{2}=2,\\qquad a_{3}=2',
+        '\\text{Cocientes entre vecinos:}' + Q + '\\dfrac{a_{2}}{a_{1}}=\\dfrac{2}{2}=1,\\qquad\\dfrac{a_{3}}{a_{2}}=\\dfrac{2}{2}=1',
+        '\\text{Cociente general, con }a_{n+1}=2\\text{:}' + Q + '\\dfrac{a_{n+1}}{a_{n}}=\\dfrac{2}{2}=1',
+        '1\\text{ no depende de }n\\text{: la serie es geométrica.}',
+        'a=a_{1}=2,\\qquad r=1' + Q + SU + '2=' + SU + '2\\cdot 1^{\\,n-1}' + Q + '\\text{Comprobación: }1^{\\,n-1}=1\\text{, y }2\\cdot 1=2.' + Q + '\\text{Caso límite: razón }1\\text{, todos los términos}' + Q + '\\text{iguales. También es aritmética, de diferencia }0.' + Q + '\\text{Como }|r|=1\\ge 1\\text{, diverge (hoja «Series}' + Q + '\\text{geométricas infinitas»).}']}];
+  var PZ = [['YB', '\\tfrac{a_{n+1}}{a_{n}}', 'aₙ₊₁/aₙ', 'diff']];
+  SER.forEach(function(e, s){ var i, f, g;
+    e.t = []; e.c = []; for (i = 1; i <= 5; i++){ f = e.f(i); e.t.push(ig23Red(f[0], f[1])); }
+    for (i = 0; i < 4; i++){ f = e.t[i]; g = e.t[i + 1]; e.c.push(ig23Red(g[0]*f[1], g[1]*f[0])); }
+    e.r = e.c[0];
+    PZ.push(['S' + s, '\\sum\\nolimits_{n=1}^{\\infty}' + e.tx, 'Σ ' + e.pl + ' (n ≥ 1)', 'pt']);
+    for (i = 0; i < 5; i++) PZ.push(['T' + s + i, ig23Tex(e.t[i]), ig23Pl(e.t[i]), 'c-sec']);
+    for (i = 0; i < 4; i++){ PZ.push(['K' + s + i, ig23Tex(e.c[i]), ig23Pl(e.c[i]), 'diff']); PZ.push(['P' + s + i, ig23Tex(e.c[i]), ig23Pl(e.c[i]), 'diff']); }
+    if (e.geo){ PZ.push(['V' + s, e.vt, e.vp, 'c-tan']); PZ.push(['L' + s, 'r=' + ig23Tex(e.r), 'r = ' + ig23Pl(e.r), 'c-tan']); } });
+  function gx(n){ return 0.1 + 0.9*n; } function gy(q){ return 1.85 + q; } function tx(i){ return -0.6 + 1.2*i; }
+  function cual(v){ return Math.max(1, Math.min(NS, Math.round(v.s || 1))) - 1; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-1.25, y1:8.6}, aspect:9.85/6.6,
+    aria:'Arriba, una franja dice qué muestra: si los cocientes entre vecinos son iguales, la serie es geométrica. Un deslizador elige una de siete series, cada una dada por su término general. Para la serie elegida se muestran, en una fila azul, sus cinco primeros términos y, en una fila naranja debajo, los cuatro cocientes entre términos vecinos. Más abajo, una gráfica: en horizontal va n, de 1 a 4; en vertical, el cociente entre el término siguiente y el término. Cada cociente es un punto naranja, con su valor escrito y una línea punteada hasta el eje vertical. Cuando los cuatro puntos están a la misma altura, una recta burdeo horizontal pasa por ellos, rotulada con la razón r; cuando están a alturas distintas, no hay recta. Serie 1, 5 dividido por 2 elevado a n: cocientes iguales a un medio, geométrica. Serie 2, 1 dividido por n: cocientes un medio, dos tercios, tres cuartos y cuatro quintos, no es geométrica. Serie 3, menos 1 elevado a n por 2 dividido por 3 elevado a n: cocientes iguales a menos un tercio, geométrica. Serie 4, n dividido por 2 elevado a n: cocientes 1, tres cuartos, dos tercios y cinco octavos, no es geométrica. Serie 5, 3 elevado a n dividido por 2 elevado a n más 1: cocientes iguales a tres medios, geométrica. Serie 6, 2 n más 1: cocientes cinco tercios, siete quintos, nueve séptimos y once novenos, no es geométrica; es aritmética. Serie 7, la constante 2: cocientes iguales a 1, geométrica de razón 1, el caso límite. Bajo el dibujo, frases dicen la conclusión y, más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'s', tex:'\\text{serie}', min:1, max:NS, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> los cinco primeros términos</span><span><i class="sw rise"></i> los cocientes entre vecinos, \\(\\tfrac{a_{n+1}}{a_{n}}\\)</span><span><i class="sw tan"></i> la razón \\(r\\), cuando los cocientes son iguales</span><span>líneas punteadas: llevan cada cociente a su valor en el eje</span>',
+    anim:{run:35000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.s = Math.min(NS, 1 + Math.floor(p*NS)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var s = cual(v), e = SER[s], C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', i, q, xm, col = e.geo ? C.tan : C.rise;
+      function num(t, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* la serie elegida y sus cinco primeros términos */
+      txt('serie ' + (s + 1) + ' de ' + NS + ':', X(-1.2), Y(7.15), 'left', C.ink); T.L('S' + s, 0.45, 7.15, 0);
+      for (i = 0; i < 5; i++){ num('a' + ssSub(i + 1), X(tx(i)), Y(6.62), 'center'); T.L('T' + s + i, tx(i), 6.15, -50); }
+      num('…', X(tx(4) + 0.7), Y(6.15), 'center');
+      /* cocientes entre vecinos: el término de la derecha dividido por el de la izquierda */
+      for (i = 0; i < 4; i++){ xm = (tx(i) + tx(i + 1))/2; c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([]); c.beginPath(); c.moveTo(X(tx(i)), Y(5.84)); c.lineTo(X(xm), Y(5.52)); c.lineTo(X(tx(i + 1)), Y(5.84)); c.stroke(); T.L('K' + s + i, xm, 5.17, -50); }
+      txt('cocientes: cada término dividido por el anterior', X(-1.2), Y(4.74), 'left', C.rise);
+      /* gráfica de los cocientes */
+      S.line(gx(0), gy(-1), gx(4.6), gy(-1), {color:C.ink, width:1.1}); S.line(gx(0), gy(-1), gx(0), gy(2.1), {color:C.ink, width:1.1});
+      c.strokeStyle = C.muted || '#6b6b6b'; c.globalAlpha = 0.5; c.lineWidth = 0.8; c.beginPath(); c.moveTo(X(gx(0)), Y(gy(0))); c.lineTo(X(gx(4.6)), Y(gy(0))); c.stroke(); c.globalAlpha = 1;
+      c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (i = 1; i <= 4; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(-1)) - 3); c.lineTo(X(gx(i)), Y(gy(-1)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(-1)) + 11, 'center'); }
+      [[-1, '−1'], [-0.5, '−0,5'], [0, '0'], [0.5, '0,5'], [1, '1'], [1.5, '1,5'], [2, '2']].forEach(function(m){ c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(m[0]))); c.lineTo(X(gx(0)) + 3, Y(gy(m[0]))); c.stroke(); num(m[1], X(gx(0)) - 7, Y(gy(m[0])), 'right'); });
+      num('n', X(gx(4.6)) + 7, Y(gy(-1)), 'left'); T.L('YB', gx(0), 4.22, -50);
+      if (e.geo){ q = e.r[0]/e.r[1]; c.strokeStyle = C.tan; c.lineWidth = 1.4; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(gx(0)), Y(gy(q))); c.lineTo(X(gx(4.45)), Y(gy(q))); c.stroke(); c.setLineDash([]); T.L('L' + s, gx(4.45), gy(q), 0, 5, 0); }
+      for (i = 0; i < 4; i++){ q = e.c[i][0]/e.c[i][1];
+        c.strokeStyle = C.rise; c.globalAlpha = 0.6; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(gx(i + 1)), Y(gy(q))); c.lineTo(X(gx(0)), Y(gy(q))); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+        c.beginPath(); c.arc(X(gx(0)), Y(gy(q)), 2.2, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.beginPath(); c.arc(X(gx(i + 1)), Y(gy(q)), 3.5, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        T.L('P' + s + i, gx(i + 1), gy(q), -50, 0, (q < 0 || e.c[1][0]*e.c[0][1] > e.c[0][0]*e.c[1][1]) ? 17 : -17); }
+      /* conclusión, junto al dibujo */
+      txt(e.geo ? 'cocientes iguales, en una recta: es geométrica' : 'cocientes distintos, sin recta: no es geométrica', X(-1.2), Y(0.3), 'left', col);
+      if (e.geo){ T.L('V' + s, -1.2, -0.3, 0); txt(e.nota, X(-1.2), Y(-0.9), 'left', C.ink); } else txt(e.nota, X(-1.2), Y(0.3) + 21, 'left', C.ink);
+      dtQue(S, 'si los cocientes entre vecinos son', 'iguales, la serie es geométrica. Mueve «serie».');
+      T.fin();
+    },
+    caption:function(v){ var s = cual(v), e = SER[s]; return 'Serie ' + (s + 1) + ' de ' + NS + ', de término general ' + e.pl + ': ' + (e.geo ? 'los cocientes entre vecinos son iguales; es geométrica, con primer término ' + ig23Pl(e.t[0]) + ' y razón ' + ig23Pl(e.r) + '.' : 'los cocientes entre vecinos cambian; no es geométrica.'); },
+    readout:function(v){ return dtPasos(SER[cual(v)].R); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

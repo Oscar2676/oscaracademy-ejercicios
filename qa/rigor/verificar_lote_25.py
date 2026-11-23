@@ -488,4 +488,158 @@ ok(all(((x-1)**(n+1)/F((n+1)*2**(n+1)))/((x-1)**n/F(n*2**n)) == ((x-1)/2)*F(n,n+
 ok(abs(0-1) == abs(-1) == 1 < 2 and abs(F('2.5')-1) == F('1.5') < 2 and abs(4-1) == 3 > 2 and all(abs(sum(((x-1)/2)**n/n for n in range(1,3000)) + math.log(1-(x-1)/2)) < 1e-9 for x in (0,2.5,-0.9,2.9)), 'H20 B (b) (numérico con −ln(1 − (x − 1)/2))')
 ok(all((100*x**(n+1))/(100*x**n) == x for x in XS20 for n in range(8)) and all(100*1**n == 100 and abs(100*(-1)**n) == 100 for n in range(40)) and 100*F('0.6') == 60 and 60*F('0.6') == 36 and 100+60 == 160 and 160+36 == 196 and sum(100*F('0.6')**n for n in range(3)) == 196 and 1-F('0.6') == F('0.4') and 100/F('0.4') == F(1000,4) == 250 and abs(sum(100*0.6**n for n in range(400)) - 250) < 1e-9, 'H20 C (a) y (b)')
 ok(all((F(100)/(1-x) == 500) == (100 == 500*(1-x)) == (1-x == F(100,500)) == (x == F('0.8')) for x in [F(k,20) for k in range(0,20)]) and F(100,500) == F(1,5) == F('0.2') and 1-F('0.2') == F('0.8') and F('0.8') == F(80,100) and 100/(1-F('0.8')) == 100/F('0.2') == F(1000,2) == 500 and all(sum(100*1**n for n in range(N+1)) == 100*(N+1) for N in range(100)) and all(F(100)/(1-x) > 0 and 1-x > 0 for x in [F(k,20) for k in range(0,20)]), 'H20 C (c) y (d)')
-print('Lote 25 H01–H20:', 'sin errores' if not err else f'{err} errores')
+# H21
+# H21 · determinar la razón r de una progresión geométrica
+A21 = [2, 6, 18, 54]
+ok(F(6,2) == F(18,6) == F(54,18) == 3 and 2*3 == 6 and 6*3 == 18 and 18*3 == 54, 'H21 raz-idea registro R2–R5 y lectura')
+ok([A21[i+1]-A21[i] for i in range(3)] == [4,12,36] and len({4,12,36}) == 3, 'H21 raz-idea restas distintas (no aritmética)')
+ok(all(A21[i+1] == 3*A21[i] for i in range(3)) and all(F(A21[i+1],A21[i]) == 3 for i in range(3)), 'H21 raz-idea bloques: la columna anterior cabe 3 veces')
+def ter21(r, a1=F(4), n=6):
+    a = [a1]
+    for _ in range(n-1): a.append(a[-1]*r)
+    return a
+RS21 = [F(j-6,4) for j in range(13)]
+ok(RS21[0] == F(-3,2) and RS21[12] == F(3,2) and RS21[6] == 0 and all(RS21[j+1]-RS21[j] == F(1,4) for j in range(12)) and [F('1.5')-F(min(12,int(p*13)),4) for p in (0,F(1,10),F(1,2),1)] == [F(3,2),F(5,4),0,F(-3,2)], 'H21 raz-vivo posiciones del deslizador')
+S6_21 = {F(3,2):F(243,8), F(5,4):F(3125,256), F(1):F(4), F(3,4):F(243,256), F(1,2):F(1,8), F(1,4):F(1,256)}
+for r21 in RS21:
+    a21 = ter21(r21)
+    if r21 == 0:
+        ok(a21 == [4,0,0,0,0,0] and 4*0 == 0 and 0*0 == 0, 'H21 raz-vivo r = 0: 4, 0, 0, 0, 0, 0 (sin cocientes)')
+        continue
+    ok(all(a21[n+1] == F(a21[n].numerator*r21.numerator, a21[n].denominator*r21.denominator) for n in range(5)), f'H21 raz-vivo r={r21} cada producto')
+    ok(all(a21[n] == 4*r21**n for n in range(6)) and all(x != 0 for x in a21), f'H21 raz-vivo r={r21} términos')
+    ok(all(a21[n+1]/a21[n] == a21[n+1]*(1/a21[n]) == r21 for n in range(5)), f'H21 raz-vivo r={r21} cocientes entre vecinos = r')
+    ok(a21[5] == (1 if r21 > 0 else -1)*S6_21[abs(r21)] and max(abs(x) for x in a21) <= F(243,8) < 33, f'H21 raz-vivo r={r21} rótulo de a6 y todo cabe en ±33')
+    ok(all(a21[n+1]-a21[n] == a21[n]*(r21-1) for n in range(5)), f'H21 raz-vivo r={r21} resta = a_n(r − 1)')
+    if r21 > 1: ok(all(a21[n+1] > a21[n] > 0 for n in range(5)), f'H21 raz-vivo r={r21} crece')
+    elif r21 == 1: ok(a21 == [4]*6, 'H21 raz-vivo r=1 constante')
+    elif r21 > 0: ok(all(0 < a21[n+1] < a21[n] for n in range(5)), f'H21 raz-vivo r={r21} decrece y sigue positivo')
+    else:
+        ok(all((a21[n] > 0) == (n % 2 == 0) for n in range(6)) and all(abs(a21[n+1]) == abs(a21[n])*(-r21) for n in range(5)), f'H21 raz-vivo r={r21} alterna; tamaños por |r|')
+        ok((r21 > -1 and all(abs(a21[n+1]) < abs(a21[n]) for n in range(5))) or (r21 == -1 and all(abs(x) == 4 for x in a21)) or (r21 < -1 and all(abs(a21[n+1]) > abs(a21[n]) for n in range(5))), f'H21 raz-vivo r={r21} tamaños')
+ok(F(243,8) == F('30.375') and F(1,8) == F('0.125') and F(-243,8) == F('-30.375') and abs(3125/256 - 12.21) < 0.005 and abs(243/256 - 0.9492) < 0.00005 and abs(1/256 - 0.0039) < 0.00005 and all((10000*x.numerator % x.denominator == 0) == (x in (F(243,8), F(1,8))) for x in S6_21.values() if x.denominator != 1), 'H21 raz-vivo decimales de a6')
+ok(F(5,4) == F('1.25') and F(3,4) == F('0.75') and F(1,2) == F('0.5') and F(1,4) == F('0.25') and F(3,2) == F('1.5'), 'H21 raz-vivo r en decimal')
+ok(ter21(F(5,4)) == [4,5,F(25,4),F(125,16),F(625,64),F(3125,256)] and F(20,4) == 5 and F(25,4)/5 == F(25,4)*F(1,5) == F(25,20) == F(5,4) and F(5)/4 == 5*F(1,4), 'H21 raz-vivo lectura con r = 5/4')
+ok(ter21(F(-3,2)) == [4,-6,9,F(-27,2),F(81,4),F(-243,8)] and F(-12,2) == -6 and F(18,2) == 9 and F(-6)/4 == -6*F(1,4) == F(-6,4) == F(-3,2) and F(9)/(-6) == 9*F(-1,6) == F(-9,6) == F(-3,2), 'H21 raz-vivo lectura con r = −3/2')
+ok(ter21(F(1,4)) == [4,1,F(1,4),F(1,16),F(1,64),F(1,256)] and ter21(F(-1)) == [4,-4,4,-4,4,-4] and F(-4)/4 == F(-4,4) == -1 and F(4)/(-4) == 4*F(-1,4) == -1, 'H21 raz-vivo lectura con r = 1/4 y r = −1')
+# ejemplos
+ok(F(6,2) == F(18,6) == F(54,18) == 3 and (6-2, 18-6, 54-18) == (4,12,36), 'H21 e1')
+ok(F(-12,24) == F(6,-12) == F(-3,6) == F(-1,2) and 12//12 == 1 and 24//12 == 2 and 6//6 == 1 and 12//6 == 2 and 3//3 == 1 and 6//3 == 2 and 24*F(-1,2) == F(-24,2) == -12 and -12*F(-1,2) == F(12,2) == 6 and 6*F(-1,2) == F(-6,2) == -3 and -1 < F(-1,2) < 0 and 24 > 12 > 6 > 3, 'H21 e2')
+ok(1/F(2,3) == 1*F(3,2) == F(3,2) and F(3,2)/1 == F(3,2) and F(9,4)/F(3,2) == F(9,4)*F(2,3) == F(18,12) == F(3,2) and 18//6 == 3 and 12//6 == 2, 'H21 e3 (a)')
+ok(F(6,3) == 2 and F(12,6) == 2 and F(21,12) == F(7,4) and 21//3 == 7 and 12//3 == 4 and F(7,4) != 2 and 2 == F(8,4) and 6-3 == 3 and 12-6 == 6, 'H21 e3 (b)')
+ok(5-2 == 3 and F(48,6) == 8 and 2*2 == 4 and 4*2 == 8 and 2**3 == 8 and F(6,2) == 3 and ter21(F(2),F(3),5) == [3,6,12,24,48], 'H21 e4 (a)')
+ok(5-3 == 2 and F(20,5) == 4 and 2*2 == 4 and (-2)*(-2) == 4 and 5*2 == 10 and 10*2 == 20 and 5*(-2) == -10 and -10*(-2) == 20, 'H21 e4 (b)')
+ok(F(2,6) == F(1,3), 'H21 errores frecuentes')
+# ejercicios
+ok(F(15,5) == F(45,15) == F(135,45) == 3 and 45*3 == 135, 'H21 A (a)')
+ok(F(54,81) == F(36,54) == F(24,36) == F(2,3) and (54//27, 81//27) == (2,3) and (36//18, 54//18) == (2,3) and (24//12, 36//12) == (2,3) and 54 % 27 == 81 % 27 == 36 % 18 == 54 % 18 == 24 % 12 == 36 % 12 == 0, 'H21 A (b)')
+ok(F(4,2) == 2 and F(6,4) == F(3,2) != 2 and 2 == F(4,2) and 4-2 == 6-4 == 8-6 == 2, 'H21 A (c)')
+ok(6-3 == 3 and F(-96,12) == -8 and (-2)*(-2) == 4 and 4*(-2) == -8 and 3-1 == 2 and F(12,4) == 3 and ter21(F(-2),F(3),6) == [3,-6,12,-24,48,-96], 'H21 B (a)')
+ok(6-2 == 4 and F(48,3) == 16 and 2*2 == 4 and 4*2 == 8 and 8*2 == 16 and 4*(-2) == -8 and -8*(-2) == 16 and ter21(F(2),F(3,2),6) == [F(3,2),3,6,12,24,48] and F(3,-2) == F(-3,2) and ter21(F(-2),F(-3,2),6) == [F(-3,2),3,-6,12,-24,48], 'H21 B (b)')
+ok(3-1 == 2 and F(-36,4) == -9 and all(x*x >= 0 for x in [F(a,b) for a in range(-12,13) for b in range(1,7)]), 'H21 B (c)')
+ok(F(90,120) == F(3,4) and (90//30, 120//30) == (3,4) and F('67.5')/90 == F(675,900) == F(3,4) and (675//225, 900//225) == (3,4) and 675 % 225 == 900 % 225 == 0 and F(3,4) == F('0.75'), 'H21 C (a)')
+ok(F('67.5')*3 == F('202.5') and F('202.5')/4 == F('50.625') and F('67.5')*F(3,4) == F('50.625') and abs(F('50.625')-F('50.6')) < F(5,100), 'H21 C (b)')
+ok(120/F(3,4) == 120*F(4,3) == F(480,3) == 160 and 160*F(3,4) == F(480,4) == 120, 'H21 C (c)')
+# identidades generales, en rejilla de fracciones
+G21 = [F(a,b) for a in range(-6,7) for b in range(1,5) if a != 0]
+ok(all(ter21(r,a1,8)[k+j] == ter21(r,a1,8)[k]*r**j for a1 in (F(4),F(-3),F(2,3)) for r in G21 for k in range(8) for j in range(8-k)), 'H21 a(k+j) = a(k)·r^j')
+ok(all(ter21(r,a1,8)[m]/ter21(r,a1,8)[k] == r**(m-k) for a1 in (F(4),F(-3),F(2,3)) for r in G21 for k in range(8) for m in range(k+1,8)), 'H21 r^(m−k) = a_m/a_k')
+ok(all(x != 0 for a1 in (F(4),F(-3),F(2,3)) for r in G21 for x in ter21(r,a1,8)) and all(a*r - a == a*(r-1) for a in G21 for r in G21), 'H21 ningún término es 0; resta = a(r − 1)')
+ok(all((a/r)*r == a for a in G21 for r in G21) and all(abs(a*r) == abs(a)*abs(r) for a in G21 for r in G21), 'H21 retroceder; |a·r| = |a|·|r|')
+ok(all((r**p > 0) for r in G21 for p in (2,4,6)) and all(r**(2*q) == (r**q)**2 for r in G21 for q in (1,2,3)), 'H21 potencia par no negativa')
+ok(all(len({x for x in G21 if x**p == c}) == 1 for p in (1,3,5) for c in {r**p for r in G21}) and all({x for x in G21 if x**p == c} == {r,-r} for p in (2,4) for r in G21 for c in [r**p]) and all((r**p > 0) == (r > 0) for r in G21 for p in (1,3,5)), 'H21 cuántas razones (en la rejilla): impar una, par dos opuestas')
+ok(all((r > 1 and a*(r-1) > 0) or (r == 1 and a*r == a) or (0 < r < 1 and a*(r-1) < 0 and a*r > 0) or (r < 0 and a*r < 0) for a in G21 if a > 0 for r in G21) and all((r > 1 and a*(r-1) < 0) or (0 < r < 1 and a*(r-1) > 0) or r == 1 or r < 0 for a in G21 if a < 0 for r in G21), 'H21 comportamiento según r')
+# H22
+# H22 · Término enésimo de una sucesión geométrica
+def geo22(a1, r, n):
+    a = F(a1)
+    for _ in range(n-1): a = a*r
+    return a
+RS22 = [F(p,q) for p in range(-5,6) for q in (1,2,3,4) if p != 0]
+AS22 = [F(p,q) for p in (-7,-3,-1,1,2,5,64,256) for q in (1,3)]
+ok(all(geo22(a,r,n) == a*r**(n-1) for a in AS22 for r in RS22 for n in range(1,13)), 'H22 término enésimo: n − 1 multiplicaciones por r dan a₁·rⁿ⁻¹ (rejilla)')
+ok(all(a*r**(1-1) == a and r**0 == 1 and r**(m+1) == r**m*r and r**(-(m+1)) == 1/r**(m+1) for a in AS22 for r in RS22 for m in range(0,9)), 'H22 k1: r⁰ = 1, r^(m+1) = r^m·r, exponente negativo; n = 1 da a₁')
+ok(all(a*r**(n-1)*r == a*r**n == a*r**((n+1)-1) for a in AS22 for r in RS22 for n in range(1,11)), 'H22 k2: paso inductivo')
+ok(all(a*r == geo22(a,r,2) and a*r*r == a*r**2 == geo22(a,r,3) and a*r**2*r == a*r**3 == geo22(a,r,4) for a in AS22 for r in RS22), 'H22 k2: primeros casos')
+ok(all(geo22(a,r,k) != 0 and geo22(a,r,n)/geo22(a,r,k) == r**(n-1)/r**(k-1) == r**((n-1)-(k-1)) == r**(n-k) and (n-1)-(k-1) == n-1-k+1 == n-k and geo22(a,r,n) == geo22(a,r,k)*r**(n-k) for a in AS22 for r in RS22 for n in range(1,10) for k in range(1,n+1)), 'H22 k3: aₙ = a_k·rⁿ⁻ᵏ con n ≥ k (rejilla)')
+ok(all(geo22(a,r,k) == geo22(a,r,n)*r**(k-n) and geo22(a,r,n) == geo22(a,r,k)/r**(k-n) == geo22(a,r,k)*(1/r**(k-n)) == geo22(a,r,k)*r**(n-k) and F(1)/r**(k-n) == r**(-(k-n)) for a in AS22 for r in RS22 for k in range(2,10) for n in range(1,k)), 'H22 k3: aₙ = a_k·rⁿ⁻ᵏ con n < k (rejilla)')
+# escena eng-idea: 3, 6, 12, 24 con r = 2
+ok([geo22(3,2,n) for n in (1,2,3,4)] == [3,6,12,24] and F(6,3) == F(12,6) == F(24,12) == 2, 'H22 eng-idea: datos y razón')
+ok(3*2 == 6 and 6*2 == 12 and 3*2*2 == 3*2**2 and 2**2 == 2*2 == 4 and 3*4 == 12 and 12*2 == 24 and 3*2**2*2 == 3*2**3 == 3*2*2*2 and 2**3 == 4*2 == 8 and 3*8 == 24, 'H22 eng-idea: registro y lectura, pasos 2 a 4')
+ok([n-1 for n in (2,3,4)] == [1,2,3] and 4-1 == 3 and all(3*2**(n-1) == geo22(3,2,n) for n in range(1,12)) and [A*2 for A in (3,6,12)] == [6,12,24], 'H22 eng-idea: paso 5 y barras (cada una, el doble de la anterior)')
+# escena eng-vivo: a₁ = 64, r = 1/2, n = 1…8 (todas las posiciones del deslizador)
+V22 = [64,32,16,8,4,2,1,F(1,2)]
+ok([geo22(64,F(1,2),n) for n in range(1,9)] == V22 and [64*F(1,2)**(n-1) for n in range(1,9)] == V22 and F(1,2) == F('0.5'), 'H22 eng-vivo: los ocho términos')
+ok(all(F(1,2)**k == F(1,2**k) and 2**k == math.prod([2]*k) and 64*F(1,2**k) == F(64,2**k) == V22[k] and (k > 6 or (64 % 2**k == 0 and 64//2**k == V22[k])) for k in range(0,8)), 'H22 eng-vivo: potencia, denominador y producto para cada n')
+ok(F(1,2)**0 == 1 and 64*1 == 64 and F(1,2)**1 == F(1,2) and F(64,2) == 32 and [2**k for k in range(2,8)] == [4,8,16,32,64,128] and [64//2**k for k in range(2,7)] == [16,8,4,2,1] and 128//64 == 2 and F(64,128) == F(1,2) and all(V22[i+1] == V22[i]*F(1,2) == V22[i]/2 for i in range(7)), 'H22 eng-vivo: casos n = 1, n = 2, n = 8 y casillas (cada una, la mitad)')
+# ejemplos
+ok(10-1 == 9 and [2**k for k in range(1,10)] == [2,4,8,16,32,64,128,256,512] and 3*512 == 1536 == geo22(3,2,10), 'H22 e1')
+ok(F(15,5) == F(45,15) == 3 and 3645 % 5 == 0 and 3645//5 == 729 and [3**k for k in range(1,7)] == [3,9,27,81,243,729] and [k for k in range(0,40) if 3**k == 729] == [6] and all(3**(k+1) == 3*3**k > 3**k for k in range(40)) and 6+1 == 7 and 7-1 == 6 and 5*729 == 3645 == geo22(5,3,7), 'H22 e2')
+ok(6-1 == 5 and [(-2)**k for k in range(1,6)] == [-2,4,-8,16,-32] and F(-96,-32) == 3 and [geo22(3,-2,n) for n in range(1,7)] == [3,-6,12,-24,48,-96] and 3*(-2) == -6 and -6*(-2) == 12 and 12*(-2) == -24 and -24*(-2) == 48 and 48*(-2) == -96, 'H22 e3')
+ok(5-3 == 2 and 108 % 12 == 0 and 108//12 == 9 and all((r*r-9 == (r-3)*(r+3)) and ((r*r == 9) == (r in (3,-3))) for r in [F(p,q) for p in range(-40,41) for q in (1,2,3,5)]) and 3*3 == 9 and (-3)*(-3) == 9 and 3-1 == 2 and F(12,9) == F(4,3), 'H22 e4: r² = 9 y a₁')
+ok(all(F(4,3)*r**2 == 12 and r**2 == 9 and r**4 == 81 and F(4,3)*9 == 12 and F(4,3)*81 == 108 and geo22(F(4,3),r,3) == 12 and geo22(F(4,3),r,5) == 108 for r in (3,-3)) and [geo22(F(4,3),3,n) for n in range(1,6)] == [F(4,3),4,12,36,108] and [geo22(F(4,3),-3,n) for n in range(1,6)] == [F(4,3),-4,12,-36,108], 'H22 e4: las dos progresiones')
+ok(F(-108,12) == -9 and all(r*r >= 0 for r in RS22), 'H22 e4: cuadrado negativo, sin razón real')
+ok(3*2**10 == 3*1024 == 3072 == geo22(3,2,11) and 3*2 == 6 and 6**9 != 3*2**9 and (-2)**5 == -32 and (-2)**4 == 16, 'H22 errores frecuentes')
+# ejercicios
+ok(F(6,2) == F(18,6) == 3 and 8-1 == 7 and [3**k for k in range(1,8)] == [3,9,27,81,243,729,2187] and 2*2187 == 4374 == geo22(2,3,8), 'H22 A (a)')
+ok(F(54,81) == F(36,54) == F(2,3) and 54//27 == 2 and 81//27 == 3 and 36//18 == 2 and 54//18 == 3 and 6-1 == 5 and 2**5 == 32 and 3**5 == 243 and F(2,3)**5 == F(32,243) and 243 == 81*3 and 81*F(32,243) == F(81*32,243) == F(32,3) and [geo22(81,F(2,3),n) for n in range(1,7)] == [81,54,36,24,16,F(32,3)], 'H22 A (b)')
+ok(5-2 == 3 and 162 % 6 == 0 and 162//6 == 27 and 3*3 == 9 and 9*3 == 27 and [r for r in [F(p,q) for p in range(-60,61) for q in (1,2,3,4,5)] if r**3 == 27] == [3]*5 and 6//3 == 2 and 2*3**1 == 6 and 3**4 == 81 and 2*81 == 162 and geo22(2,3,2) == 6 and geo22(2,3,5) == 162, 'H22 B (a) (unicidad de r³ = 27 solo en rejilla de fracciones)')
+ok(1000//2 == 500 and 1000 % 2 == 0 and [3**k for k in range(0,7)] == [1,3,9,27,81,243,729] and 243 < 500 < 729 and all(3**k != 500 for k in range(0,60)) and all(geo22(2,3,n) != 1000 for n in range(1,60)) and 2*243 == 486 == geo22(2,3,6) and 2*729 == 1458 == geo22(2,3,7) and 486 < 1000 < 1458, 'H22 B (b)')
+ok(5-1 == 4 and 3**4 == 81 and 4**4 == 256 and F(3,4)**4 == F(81,256) and 256*F(81,256) == F(256*81,256) == 81 == geo22(256,F(3,4),5), 'H22 C (a)')
+ok(256//4 == 64 and 64*3 == 192 and 192//4 == 48 and 48*3 == 144 and 144//4 == 36 and 36*3 == 108 and 108//4 == 27 and 27*3 == 81 and [geo22(256,F(3,4),n) for n in range(1,6)] == [256,192,144,108,81] and min(192,144,108) > 100 > 81 and all(geo22(256,F(3,4),n+1) < geo22(256,F(3,4),n) for n in range(1,40)) and all(geo22(256,F(3,4),n) < 100 for n in range(5,40)), 'H22 C (b)')
+# H23
+# H23 · Identificar una serie geométrica infinita
+G23 = [F(p,q) for p in range(-6,7) for q in range(1,6) if p != 0]
+ok(all(a*r**n/(a*r**(n-1)) == r and r**n == r**(n-1)*r and a*r**(n-1) != 0 for a in G23 for r in G23 for n in range(1,9)) and all(a*r**0 == a*1 == a for a in G23 for r in G23), 'H23 teorema, primera parte (G ⇒ C) en rejilla de fracciones')
+def rec23(a, r, N):
+    t = [a]
+    for _ in range(N-1): t.append(r*t[-1])
+    return t
+ok(all(rec23(a,r,9)[n-1] == a*r**(n-1) and r*(a*r**(n-1)) == a*r**n == a*r**((n+1)-1) for a in G23[::3] for r in G23 for n in range(1,10)) and all(0*a == 0 for a in G23), 'H23 teorema, segunda parte (C ⇒ G, inducción) en rejilla de fracciones')
+ok(all(c*q**(n+1)/(c*q**n) == q and (c*q**m)*q**(n-1) == c*q**(m+n-1) for c in G23[::4] for q in G23[::3] for m in range(0,5) for n in range(1,7)) and all([(c*q**m)*q**(n-1) for n in (1,2,3)] == [c*q**m, c*q**(m+1), c*q**(m+2)] for c in G23[::5] for q in G23[::5] for m in range(0,4)), 'H23 otro índice: Σ_{n=m} c·qⁿ = Σ_{n=1} (c·qᵐ)·qⁿ⁻¹')
+ok([2**(n-1) for n in (1,2,3,4)] == [1,2,4,8] and [F(n*n-n+2,2) for n in (1,2,3,4)] == [1,2,4,7], 'H23 k2: 1 + 2 + 4 sigue con 8 o con 7')
+# escena idg-idea
+t23 = [F(18,3**n) for n in range(1,5)]
+ok(t23 == [6,2,F(2,3),F(2,9)] and F(18,3) == 6 and F(18,9) == 2 and F(18,27) == F(2,3) and 18 == 9*2 and 27 == 9*3 and F(18,81) == F(2,9) and 81 == 9*9 and 3**3 == 27 and 3**4 == 81, 'H23 idg-idea paso 1 (términos)')
+ok(F(2,6) == F(1,3) and F(2,3)/2 == F(2,3)*F(1,2) == F(2,6) == F(1,3) and F(2,9)/F(2,3) == F(2,9)*F(3,2) == F(6,18) == F(1,3) and all(t23[i+1]/t23[i] == F(1,3) and t23[i]/3 == t23[i+1] for i in range(3)), 'H23 idg-idea paso 2 (tres cocientes y tercios de barra)')
+ok(all(F(18,3**(n+1))*F(3**n,18) == F(18*3**n,18*3**(n+1)) == F(3**n,3**(n+1)) == F(1,3) and 3**(n+1) == 3**n*3 for n in range(1,40)), 'H23 idg-idea paso 3 (cociente general)')
+ok(all(F(18,3**n) == 6*F(1,3)**(n-1) for n in range(1,40)) and [6*F(1,3)**k for k in range(4)] == t23 and F(1,3)**3 == F(1,27) and 6*F(1,27) == F(6,27) == F(2,9) == t23[3] and abs(F(1,3)) < 1 and t23[0] == 6 != 18, 'H23 idg-idea pasos 4 y 5 (a = 6, r = 1/3, forma y comprobación)')
+# escena idg-vivo: las siete posiciones del deslizador
+S23 = [lambda n: F(5,2**n), lambda n: F(1,n), lambda n: F((-1)**n*2,3**n), lambda n: F(n,2**n), lambda n: F(3**n,2**(n+1)), lambda n: F(2*n+1), lambda n: F(2)]
+T23 = [[f(n) for n in range(1,6)] for f in S23]; C23 = [[t[i+1]/t[i] for i in range(4)] for t in T23]
+ok(T23 == [[F(5,2),F(5,4),F(5,8),F(5,16),F(5,32)], [1,F(1,2),F(1,3),F(1,4),F(1,5)], [F(-2,3),F(2,9),F(-2,27),F(2,81),F(-2,243)], [F(1,2),F(1,2),F(3,8),F(1,4),F(5,32)], [F(3,4),F(9,8),F(27,16),F(81,32),F(243,64)], [3,5,7,9,11], [2,2,2,2,2]], 'H23 idg-vivo: cinco términos de cada serie')
+ok(C23 == [[F(1,2)]*4, [F(1,2),F(2,3),F(3,4),F(4,5)], [F(-1,3)]*4, [1,F(3,4),F(2,3),F(5,8)], [F(3,2)]*4, [F(5,3),F(7,5),F(9,7),F(11,9)], [1]*4] and all(-1 < c < 2 for l in C23 for c in l), 'H23 idg-vivo: cuatro cocientes de cada serie (y caben en el eje de −1 a 2)')
+ok([len(set(c)) == 1 for c in C23] == [True,False,True,False,True,False,True], 'H23 idg-vivo: geométricas las series 1, 3, 5 y 7')
+ok(F(5,4)*F(2,5) == F(10,20) == F(1,2) and F(5,8)*F(4,5) == F(20,40) == F(1,2) and all(F(5,2**(n+1))*F(2**n,5) == F(5*2**n,5*2**(n+1)) == F(1,2) and F(5,2**n) == F(5,2)*F(1,2)**(n-1) for n in range(1,40)) and F(1,2)**2 == F(1,4) and F(5,2)*F(1,4) == F(5,8) == T23[0][2], 'H23 idg-vivo serie 1')
+ok(F(1,2)/1 == F(1,2) and F(1,3)*F(2,1) == F(2,3) and all(F(1,n+1)*F(n,1) == F(n,n+1) == S23[1](n+1)/S23[1](n) for n in range(1,60)) and F(1,1+1) == F(1,2) and F(2,2+1) == F(2,3) and 1*3 == 3 and 2*2 == 4 and 3 != 4, 'H23 idg-vivo serie 2')
+ok(F(-2,3) == -F(2,3) and F((-1)**2*2,3**2) == F(2,9) and F((-1)**3*2,3**3) == -F(2,27) and F(2,9)*(-F(3,2)) == -F(6,18) == -F(1,3) and -F(2,27)*F(9,2) == -F(18,54) == -F(1,3) and 1/F(-2,3) == -F(3,2) and all(F((-1)**(n+1)*2*3**n,(-1)**n*2*3**(n+1)) == F(-1,3) == S23[2](n+1)/S23[2](n) and (-1)**(n+1) == (-1)**n*(-1) and S23[2](n) == F(-2,3)*F(-1,3)**(n-1) for n in range(1,40)) and F(-1,3)**2 == F(1,9) and -F(2,3)*F(1,9) == -F(2,27) == T23[2][2], 'H23 idg-vivo serie 3')
+ok(F(2,4) == F(1,2) and F(1,2)*F(2,1) == F(2,2) == 1 and F(3,8)*F(2,1) == F(6,8) == F(3,4) and all(F(n+1,2**(n+1))*F(2**n,n) == F((n+1)*2**n,n*2**(n+1)) == F(n+1,2*n) == S23[3](n+1)/S23[3](n) for n in range(1,60)) and F(1+1,2*1) == F(2,2) == 1 and F(2+1,2*2) == F(3,4) and 1 != F(3,4), 'H23 idg-vivo serie 4')
+ok(F(3,2**2) == F(3,4) and F(3**2,2**3) == F(9,8) and F(3**3,2**4) == F(27,16) and F(9,8)*F(4,3) == F(36,24) == F(3,2) and F(27,16)*F(8,9) == F(216,144) == F(3,2) and all(F(3**(n+1),2**(n+2))*F(2**(n+1),3**n) == F(3**(n+1)*2**(n+1),3**n*2**(n+2)) == F(3,2) and 2**(n+2) == 2**(n+1)*2 and S23[4](n) == F(3,4)*F(3,2)**(n-1) for n in range(1,40)) and F(3,2)**2 == F(9,4) and F(3,4)*F(9,4) == F(27,16) == T23[4][2] and abs(F(3,2)) >= 1, 'H23 idg-vivo serie 5')
+ok([2*1+1, 2*2+1, 2*3+1] == [3,5,7] and all(2*(n+1)+1 == 2*n+2+1 == 2*n+3 and S23[5](n+1)/S23[5](n) == F(2*n+3,2*n+1) for n in range(1,60)) and F(2*1+3,2*1+1) == F(5,3) and F(2*2+3,2*2+1) == F(7,5) and 5*5 == 25 and 3*7 == 21 and 25 != 21 and 5-3 == 2 and 7-5 == 2 and all(S23[5](n+1)-S23[5](n) == 2 for n in range(1,60)), 'H23 idg-vivo serie 6')
+ok(F(2,2) == 1 and all(2*1**(n-1) == 2 and S23[6](n+1)/S23[6](n) == 1 and S23[6](n+1)-S23[6](n) == 0 for n in range(1,60)) and abs(1) >= 1, 'H23 idg-vivo serie 7 (caso límite, r = 1)')
+# ejemplos
+e23 = lambda n: F(3*2**n,5**(n+1))
+ok([e23(1),e23(2),e23(3)] == [F(6,25),F(12,125),F(24,625)] and 3*2 == 6 and 5**2 == 25 and 3*4 == 12 and 5**3 == 125 and 3*8 == 24 and 5**4 == 625 and all(e23(n+1)/e23(n) == F(3*2**(n+1)*5**(n+1),3*2**n*5**(n+2)) == F(2**(n+1)*5**(n+1),2**n*5**(n+2)) == F(2*5**(n+1),5**(n+2)) == F(2,5) and 5**(n+2) == 5**(n+1)*5 and (n+1)+1 == n+2 and e23(n) == F(6,25)*F(2,5)**(n-1) for n in range(1,40)) and F(2,5)**2 == F(4,25) and F(6,25)*F(4,25) == F(24,625), 'H23 e1')
+f23 = lambda n: F((-1)**n,2**n)
+ok([f23(0),f23(1),f23(2)] == [1,-F(1,2),F(1,4)] and (-1)**0 == 1 and 2**0 == 1 and all(f23(n+1)/f23(n) == F((-1)**(n+1)*2**n,(-1)**n*2**(n+1)) == F((-1)*2**n,2**(n+1)) == F(-1,2) and f23(n) == 1*F(-1,2)**((n+1)-1) for n in range(0,40)) and F(-1,2)**2 == F(1,4) and 1*F(1,4) == f23(2), 'H23 e2 (empieza en n = 0)')
+ok(F('0.7') == F(7,10) and F('0.07') == F(7,100) and F('0.007') == F(7,1000) and 10**2 == 100 and 10**3 == 1000 and all(F(7,10**(n+1))*F(10**n,7) == F(7*10**n,7*10**(n+1)) == F(10**n,10**(n+1)) == F(1,10) and F(7,10**n) == F(7,10)*F(1,10)**(n-1) for n in range(1,40)) and F(1,10)**2 == F(1,100) and F(7,10)*F(1,100) == F(7,1000) == F('0.007') and abs(F(1,10)) < 1 and abs(sum(7/10**n for n in range(1,40)) - 7/9) < 1e-12 and abs(sum(F(7,10**n) for n in range(1,13)) - F('0.777777777777')) == 0, 'H23 e3 (0,777…)')
+ok([F(1,n*n) for n in (1,2,3)] == [1,F(1,4),F(1,9)] and F(1,4)/1 == F(1,4) and F(1,9)*F(4,1) == F(4,9) and 1*9 == 9 and 4*4 == 16 and F(1,4) != F(4,9) and all(F(1,(n+1)**2)*F(n*n,1) == F(n*n,(n+1)**2) for n in range(1,60)), 'H23 e4 (a)')
+ok(F(1,2)*F(2,1) == 1 and F(3,8)*F(2,1) == F(6,8) == F(3,4) and 1 != F(3,4) and F(2,2**2) == F(2,4) == F(1,2) and F(3,2**3) == F(3,8), 'H23 e4 (b)')
+g23 = lambda n: F(n*n-n+2,2)
+ok(1-1+2 == 2 and 4-2+2 == 4 and 9-3+2 == 8 and 16-4+2 == 14 and [g23(n) for n in (1,2,3,4)] == [1,2,4,7] and g23(2)/g23(1) == 2 and g23(3)/g23(2) == 2 and g23(4)/g23(3) == F(7,4) != 2 == F(8,4) and [2**(n-1) for n in (1,2,3,4)] == [1,2,4,8], 'H23 e4 (c) tres términos que engañan')
+ok(F(3**1,2**2) == F(3,4) and all(F(3**(n+1),2**(n+2))/F(3**n,2**(n+1)) == F(3,2) for n in range(1,30)) and F(3,2) >= 1, 'H23 errores frecuentes')
+# ejercicios
+ok(F(5,4**1) == F(5,4) and all(F(5,4**(n+1))*F(4**n,5) == F(5*4**n,5*4**(n+1)) == F(1,4) and F(5,4**n) == F(5,4)*F(1,4)**(n-1) for n in range(1,40)) and F(5,4)*F(1,4) == F(5,16) == F(5,4**2), 'H23 A (a)')
+ok(F(1,2)/1 == F(1,2) and F(1,3)*F(2,1) == F(2,3) and 1*3 == 3 and 2*2 == 4 and F(1,2) != F(2,3), 'H23 A (b)')
+h23 = lambda n: F(2*3**n,7**n)
+ok(h23(0) == F(2*1,1) == 2 and all(h23(n+1)/h23(n) == F(2*3**(n+1)*7**n,2*3**n*7**(n+1)) == F(3,7) and h23(n) == 2*F(3,7)**((n+1)-1) for n in range(0,40)) and 2*F(3,7) == F(6,7) == h23(1) == F(2*3,7), 'H23 A (c)')
+ok([2*1+1,2*2+1,2*3+1] == [3,5,7] and 5*5 == 25 and 3*7 == 21 and F(5,3) != F(7,5) and 5-3 == 2 and 7-5 == 2, 'H23 A (d)')
+b23 = lambda n: 4*n*n-8*n+6
+ok([2*3**(n-1) for n in (1,2,3)] == [2,6,18] and 2*9 == 18 and 4-8+6 == 2 and 16-16+6 == 6 and 36-24+6 == 18 and [b23(n) for n in (1,2,3)] == [2,6,18] and 4*4 == 16 and 8*2 == 16 and 4*9 == 36 and 8*3 == 24, 'H23 B (a)')
+ok(all(F(2*3**n,2*3**(n-1)) == 3 and 3**n == 3**(n-1)*3 and (n+1)-1 == n for n in range(1,40)) and 2*3**0 == 2 and abs(3) >= 1, 'H23 B (b)')
+ok(4*16 == 64 and 8*4 == 32 and 64-32+6 == 38 == b23(4) and F(6,2) == 3 and F(38,18) == F(19,9) and 3 == F(27,9) != F(19,9) and 2*3**3 == 2*27 == 54, 'H23 B (c)')
+d23 = lambda n: 10*F(3,5)**(n-1); c23 = lambda k: 20*F(3,5)**k
+ok(F(3,5)*10 == F(30,5) == 6 and F(3,5)*6 == F(18,5) and [d23(1),d23(2),d23(3)] == [10,6,F(18,5)] and all(d23(n+1) == F(3,5)*d23(n) and d23(n+1)/d23(n) == F(3,5) for n in range(1,40)), 'H23 C (a) bajadas: a = 10, r = 3/5')
+ok(all(c23(k) == 2*d23(k+1) == 2*10*F(3,5)**k and c23(k+1)/c23(k) == F(3,5) and c23(k) == 12*F(3,5)**(k-1) and F(3,5)**(k+1) == F(3,5)**k*F(3,5) for k in range(1,40)) and 20*F(3,5) == F(60,5) == 12 and 20*F(9,25) == F(180,25) == F(36,5) and F(3,5)**2 == F(9,25), 'H23 C (b) rebotes completos: a = 12, r = 3/5')
+ok(F(12,10) == F(6,5) and F(36,5)/12 == F(36,5)*F(1,12) == F(36,60) == F(3,5) and F(6,5) != F(3,5) and [10, c23(1), c23(2)] == [10,12,F(36,5)] and abs(F(3,5)) < 1, 'H23 C (c) la serie completa no es geométrica')
+print('Lote 25 H01–H23:', 'sin errores' if not err else f'{err} errores')

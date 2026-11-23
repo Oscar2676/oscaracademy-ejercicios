@@ -1,0 +1,460 @@
+<!--file:H21_determinar_la_razon_r_de_una_progresion_geometrica.html-->
+<!--title:Determinar la razón r de una progresión geométrica-->
+<!--id:ss-razon-->
+<!--tab:H21 Razón de una progresión geométrica-->
+<article class="sheet" id="ss-razon" data-hoja="L25 H21">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Determinar la razón r de una progresión geométrica</b></li>
+    </ol>
+    <h1>Determinar la razón r de una progresión geométrica</h1>
+    <p class="lede">En una progresión geométrica, cada término es el anterior multiplicado por un mismo número, la razón \(r\). Por eso, al dividir cualquier término por el anterior se obtiene siempre ese número. \[r=\dfrac{a_{n+1}}{a_{n}}\qquad\text{para todo entero } n\ge 1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Los términos \(2,\ 6,\ 18,\ 54\), dibujados como columnas, y las divisiones entre vecinos, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las cuatro columnas azules:</b> son los términos \(2,\ 6,\ 18,\ 54\); la altura de cada una es su valor. Arriba queda la pregunta: ¿cuánto vale \(r\)?</li>
+    <li><b>Pasos 2, 3 y 4:</b> una punteada lleva la altura de una columna hasta la siguiente. La columna siguiente se llena con bloques naranjas de esa altura, uno sobre otro. Caben \(3\), justos: ese es el cociente entre ese término y el anterior. Las tres veces da \(3\), y queda escrito sobre la columna.</li>
+    <li><b>Paso 5:</b> bajo las columnas aparece una flecha naranja de cada término al siguiente, con la multiplicación que lo produce: por \(3\). Los bloques y los cocientes no se mueven de sus columnas.</li>
+    <li><b>Registro y cuenta de abajo:</b> cada división queda escrita, numerada, una bajo la otra: \(\dfrac{6}{2}=3\), \(\dfrac{18}{6}=3\), \(\dfrac{54}{18}=3\). Conclusión: \(r=\dfrac{a_{n+1}}{a_{n}}=3\); estos cuatro términos están en progresión geométrica.</li>
+  </ol>
+  <div class="stage" data-scene="raz-idea"></div>
+  <ul class="keys">
+    <li><b>Columnas azules:</b> los términos; la altura de cada una es su valor.</li>
+    <li><b>Bloques naranjas:</b> cada bloque mide lo mismo que la columna anterior. La cantidad de bloques que caben en una columna es el cociente entre ese término y el anterior.</li>
+    <li><b>Flechas naranjas, bajo las columnas:</b> la multiplicación por la razón, que lleva de cada término al siguiente.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, y cómo se calcula \(r\)</h3>
+    <ol class="steps">
+      <li><b>Definición.</b> Una sucesión \(a_{1},\ a_{2},\ a_{3},\ \ldots\) es una <b>progresión geométrica</b> (o sucesión geométrica) si hay un número \(r\), la <b>razón</b>, tal que \[a_{n+1}=a_{n}\cdot r\qquad\text{para todo entero } n\ge 1,\qquad\text{con } a_{1}\ne 0\ \text{ y }\ r\ne 0.\]</li>
+      <li><b>Ningún término es \(0\).</b> \(a_{2}=a_{1}\cdot r\) es el producto de dos números distintos de \(0\): no es \(0\) (aviso de rigor, 1). \(a_{3}=a_{2}\cdot r\), por lo mismo, tampoco. El paso que se repite: si \(a_{n}\ne 0\), entonces \(a_{n+1}=a_{n}\cdot r\ne 0\). Así, \(a_{n}\ne 0\) para todo \(n\) (aviso, 2).</li>
+      <li><b>La razón es el cociente entre vecinos.</b> En \(a_{n+1}=a_{n}\cdot r\) se dividen los dos lados por \(a_{n}\), que no es \(0\): \[r=\dfrac{a_{n+1}}{a_{n}}.\] Se divide en este orden: el término que sigue, dividido por el anterior.</li>
+      <li><b>Para avanzar:</b> \(a_{n+1}=a_{n}\cdot r\). <b>Para retroceder:</b> se dividen los dos lados por \(r\), que no es \(0\): \(a_{n}=\dfrac{a_{n+1}}{r}\).</li>
+    </ol>
+    <p><b>Por qué se piden \(a_{1}\ne 0\) y \(r\ne 0\).</b> Sin ellas no se puede dividir entre vecinos:</p>
+    <ol class="steps">
+      <li><b>Si \(a_{1}=0\):</b> \(a_{2}=0\cdot r=0\), \(a_{3}=0\cdot r=0\), y así todos los términos valen \(0\). El cociente \(\dfrac{a_{2}}{a_{1}}\) sería \(\dfrac{0}{0}\), que no existe. Además, cualquier número \(r\) cumpliría \(0=0\cdot r\): no habría una razón determinada.</li>
+      <li><b>Si \(r=0\)</b> (con \(a_{1}\ne 0\)): \(a_{2}=a_{1}\cdot 0=0\), \(a_{3}=0\cdot 0=0\), y la sucesión es \(a_{1},\ 0,\ 0,\ 0,\ \ldots\) El cociente \(\dfrac{a_{3}}{a_{2}}\) sería \(\dfrac{0}{0}\), que no existe.</li>
+      <li>La hoja «Series geométricas infinitas» escribe la serie \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) con \(a\ne 0\) y admite \(r=0\) (queda \(a+0+0+\cdots\)), porque para sumar no hace falta dividir. En esta hoja, para que la razón sea el cociente entre vecinos, se pide además \(r\ne 0\).</li>
+    </ol>
+    <p><b>La prueba de los cocientes: ¿es geométrica?</b></p>
+    <ol class="steps">
+      <li>Se mira que ningún término sea \(0\). Si alguno es \(0\), no es una progresión geométrica.</li>
+      <li>Se calculan los cocientes entre vecinos: \(\dfrac{a_{2}}{a_{1}},\ \dfrac{a_{3}}{a_{2}},\ \dfrac{a_{4}}{a_{3}},\ \ldots\)</li>
+      <li><b>Si todos dan el mismo número \(r\):</b> de \(\dfrac{a_{n+1}}{a_{n}}=r\), multiplicando los dos lados por \(a_{n}\), sale \(a_{n+1}=a_{n}\cdot r\); y \(r\ne 0\), porque \(a_{n+1}\ne 0\). Es geométrica y su razón es \(r\).</li>
+      <li><b>Si dos de ellos son distintos:</b> no es geométrica, porque en una progresión geométrica todos valen \(r\).</li>
+      <li>Con una lista de pocos términos, la prueba habla solo de esos términos. Que la sucesión siga igual tiene que decirlo el enunciado («es una progresión geométrica») o la regla que la define.</li>
+    </ol>
+    <p><b>Contraste con la aritmética.</b> En una sucesión aritmética lo que se repite es la <b>resta</b> entre vecinos, \(a_{n+1}-a_{n}=d\) (hoja «Diferencia constante de una sucesión o progresión aritmética»). En una geométrica lo que se repite es el <b>cociente</b>, \(\dfrac{a_{n+1}}{a_{n}}=r\). En la primera se avanza sumando; en la segunda, multiplicando.</p>
+    <p><b>Aviso de rigor.</b> Se usan sin demostrar: (1) que el producto de dos números reales distintos de \(0\) es distinto de \(0\), y que no se puede dividir por \(0\); (2) el paso «se repite» de las demostraciones: el argumento formal es por inducción, y aquí se escribe el paso que se repite; (3) las reglas de signos y de orden de los números reales: positivo por positivo es positivo, positivo por negativo es negativo, negativo por negativo es positivo, y un número es mayor que otro cuando la resta entre el primero y el segundo es positiva; (4) las raíces reales: si \(p\) es un entero positivo impar, la ecuación \(x^{p}=c\) tiene exactamente una solución real, \(x=\sqrt[p]{c}\); si \(p\) es par y \(c&gt;0\), tiene exactamente dos, \(x=\sqrt[p]{c}\) y \(x=-\sqrt[p]{c}\); (5) la propiedad \(|x\cdot y|=|x|\cdot|y|\) del valor absoluto; (6) las propiedades de las potencias de exponente entero: \(r^{0}=1\), \(r^{j}\cdot r=r^{\,j+1}\) y \(r^{2q}=\left(r^{q}\right)^{2}\). Lo demás se demuestra en la hoja. Los datos del ejercicio C son inventados y su regla es un modelo.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Con dos términos que no son vecinos: \(r^{\,m-k}=\dfrac{a_{m}}{a_{k}}\), con \(m&gt;k\)</h3>
+    <ol class="steps">
+      <li>Un paso desde \(a_{k}\), por la definición: \(a_{k+1}=a_{k}\cdot r\).</li>
+      <li>Dos pasos: \(a_{k+2}=a_{k+1}\cdot r\). Se reemplaza \(a_{k+1}\): \(a_{k+2}=a_{k}\cdot r\cdot r=a_{k}\cdot r^{2}\).</li>
+      <li>Tres pasos: \(a_{k+3}=a_{k+2}\cdot r\). Se reemplaza \(a_{k+2}\): \(a_{k+3}=a_{k}\cdot r^{2}\cdot r=a_{k}\cdot r^{3}\).</li>
+      <li>El paso que se repite: si \(a_{k+j}=a_{k}\cdot r^{\,j}\), entonces \(a_{k+j+1}=a_{k+j}\cdot r=a_{k}\cdot r^{\,j}\cdot r=a_{k}\cdot r^{\,j+1}\). Y para \(j=0\) se cumple, porque \(a_{k}\cdot r^{0}=a_{k}\cdot 1=a_{k}\). Entonces, para todo entero \(j\ge 0\) (aviso de rigor, 2): \(a_{k+j}=a_{k}\cdot r^{\,j}\).</li>
+      <li>Se toma \(j=m-k\), que es positivo porque \(m&gt;k\). Como \(k+(m-k)=m\): \(a_{m}=a_{k}\cdot r^{\,m-k}\). En palabras: de la posición \(k\) a la \(m\) se multiplica \(m-k\) veces por \(r\).</li>
+      <li>Se dividen los dos lados por \(a_{k}\), que no es \(0\): \[r^{\,m-k}=\dfrac{a_{m}}{a_{k}}.\]</li>
+    </ol>
+    <p>Con \(m=n+1\) y \(k=n\) el exponente es \(1\) y queda la fórmula de los vecinos, \(r=\dfrac{a_{n+1}}{a_{n}}\). Con \(k=1\) queda \(a_{m}=a_{1}\cdot r^{\,m-1}\), la fórmula que estudia la hoja «Término enésimo de una sucesión geométrica».</p>
+    <p><b>Cuántas razones reales hay.</b> Se llama \(p=m-k\) al exponente y \(c=\dfrac{a_{m}}{a_{k}}\) al cociente; \(c\ne 0\), porque \(a_{m}\ne 0\). Hay que resolver \(r^{\,p}=c\):</p>
+    <ol class="steps">
+      <li><b>Si \(p\) es impar:</b> hay exactamente una razón real, \(r=\sqrt[p]{c}\) (aviso de rigor, 4). Tiene el mismo signo que \(c\).</li>
+      <li><b>Si \(p\) es par y \(c&gt;0\):</b> hay exactamente dos razones reales, \(r=\sqrt[p]{c}\) y \(r=-\sqrt[p]{c}\) (aviso, 4). Las dos sirven: son dos progresiones geométricas distintas con esos mismos dos términos. Para elegir hace falta otro dato, por ejemplo el signo de un término intermedio.</li>
+      <li><b>Si \(p\) es par y \(c&lt;0\):</b> no hay ninguna razón real. Con \(p=2q\): \(r^{\,p}=r^{2q}=\left(r^{q}\right)^{2}\), y el cuadrado de un número real no es negativo (positivo por positivo y negativo por negativo dan positivo; \(0\cdot 0=0\)). Ninguna progresión geométrica de números reales tiene esos dos términos en esas posiciones.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Qué hace la progresión según la razón, cuando \(a_{1}&gt;0\)</h3>
+    <ol class="steps">
+      <li><b>Si \(r&gt;0\), todos los términos son positivos.</b> \(a_{2}=a_{1}\cdot r\) es positivo por positivo: positivo. El paso que se repite: si \(a_{n}&gt;0\), entonces \(a_{n+1}=a_{n}\cdot r&gt;0\).</li>
+      <li><b>La resta entre vecinos.</b> \(a_{n+1}-a_{n}=a_{n}\cdot r-a_{n}\). Factor común \(a_{n}\): \(a_{n+1}-a_{n}=a_{n}\,(r-1)\).</li>
+      <li><b>Si \(r&gt;1\):</b> \(r-1&gt;0\) y \(a_{n}&gt;0\), así que \(a_{n}\,(r-1)&gt;0\). Entonces \(a_{n+1}&gt;a_{n}\): cada término es mayor que el anterior. La progresión <b>crece</b>.</li>
+      <li><b>Si \(r=1\):</b> \(a_{n+1}=a_{n}\cdot 1=a_{n}\). Todos los términos valen \(a_{1}\): la progresión es <b>constante</b>. Es también aritmética, con diferencia \(d=0\).</li>
+      <li><b>Si \(0&lt;r&lt;1\):</b> \(r-1&lt;0\) y \(a_{n}&gt;0\), así que \(a_{n}\,(r-1)&lt;0\). Entonces \(a_{n+1}&lt;a_{n}\): cada término es menor que el anterior, y sigue siendo positivo (paso 1). La progresión <b>decrece</b>.</li>
+      <li><b>Si \(r&lt;0\):</b> \(a_{n+1}=a_{n}\cdot r\) tiene el signo contrario al de \(a_{n}\) (positivo por negativo es negativo; negativo por negativo es positivo). Como \(a_{1}&gt;0\): \(a_{2}&lt;0\), \(a_{3}&gt;0\), \(a_{4}&lt;0\), … Los signos <b>se alternan</b>: la progresión ni crece ni decrece.</li>
+      <li><b>Los tamaños, cuando \(r&lt;0\).</b> Sin el signo (aviso de rigor, 5): \(|a_{n+1}|=|a_{n}\cdot r|=|a_{n}|\cdot|r|\). Los tamaños \(|a_{n}|\) forman una progresión geométrica de primer término \(|a_{1}|&gt;0\) y razón \(|r|&gt;0\). Por los pasos 3, 4 y 5: crecen si \(r&lt;-1\), son todos iguales si \(r=-1\) y decrecen si \(-1&lt;r&lt;0\).</li>
+      <li><b>Si \(a_{1}&lt;0\) y \(r&gt;0\):</b> todos los términos son negativos (negativo por positivo es negativo), y en \(a_{n+1}-a_{n}=a_{n}\,(r-1)\) el factor \(a_{n}\) es negativo. Todo se invierte: con \(r&gt;1\) la progresión decrece y con \(0&lt;r&lt;1\) crece.</li>
+    </ol>
+    <p>La animación que sigue muestra estos casos con \(a_{1}=4\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Número ↔ figura: la razón decide cómo se comporta la progresión</h2>
+  <p>Progresión geométrica con \(a_{1}=4\). La razón \(r\) la eliges tú, entre \(-1{,}5\) y \(1{,}5\). La figura muestra los seis primeros términos.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero el punto \(a_{1}=4\):</b> está fijo. Los otros cinco puntos azules son \(a_{2},\ \ldots,\ a_{6}\). En horizontal va \(n\); en vertical, el valor del término. Una punteada lleva cada punto hasta su valor en el eje \(a_{n}\). El sexto lleva escrito su valor.</li>
+    <li><b>Mira después las flechas naranjas:</b> cada una va de un término al siguiente y es una multiplicación por \(r\). Bajo la gráfica, en naranja, está escrita esa multiplicación con el valor de \(r\) elegido.</li>
+    <li><b>Mueve el deslizador \(r\)</b>, de \(0{,}25\) en \(0{,}25\). Con \(r&gt;1\) los puntos suben; con \(r=1\) quedan todos a la altura \(4\); con \(r\) entre \(0\) y \(1\) bajan, sin cruzar el eje; con \(r\) negativa saltan de un lado al otro del eje. Las dos frases bajo la gráfica dicen cuál es el caso.</li>
+    <li><b>Caso límite, \(r=0\):</b> los términos serían \(4,\ 0,\ 0,\ 0,\ 0,\ 0\) (anillos grises sobre el eje). No hay flechas ni cocientes: no se puede dividir por \(0\), y eso ya no es una progresión geométrica.</li>
+    <li><b>Cuenta de abajo:</b> los datos; la regla \(a_{n+1}=a_{n}\cdot r\); cada término, con su producto; dos cocientes entre vecinos, que devuelven \(r\); y qué significa ese valor de \(r\).</li>
+  </ol>
+  <div class="stage" data-scene="raz-vivo"></div>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos \(a_{1}=4,\ a_{2},\ \ldots,\ a_{6}\), cada uno con su punteada hasta el eje \(a_{n}\).</li>
+    <li><b>Flechas naranjas:</b> la multiplicación por \(r\) que lleva de cada término al siguiente.</li>
+    <li><b>Anillos grises (solo con \(r=0\)):</b> los ceros que resultan; con ellos no se pueden calcular cocientes.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la razón de \(2,\ 6,\ 18,\ 54\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Datos: \(a_{1}=2\), \(a_{2}=6\), \(a_{3}=18\), \(a_{4}=54\). Ninguno es \(0\). Se divide cada término por el anterior.</li>
+    <li>\(\dfrac{a_{2}}{a_{1}}=\dfrac{6}{2}=3\), porque \(2\cdot 3=6\).</li>
+    <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{18}{6}=3\), porque \(6\cdot 3=18\).</li>
+    <li>\(\dfrac{a_{4}}{a_{3}}=\dfrac{54}{18}=3\), porque \(18\cdot 3=54\).</li>
+    <li>Los tres cocientes coinciden: los cuatro términos están en progresión geométrica y \(r=3\). Cada término es el anterior multiplicado por \(3\).</li>
+    <li>Contraste con las restas: \(6-2=4\), \(18-6=12\), \(54-18=36\). No coinciden: no es aritmética.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: razón negativa y fraccionaria. \(24,\ -12,\ 6,\ -3\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Datos: \(a_{1}=24\), \(a_{2}=-12\), \(a_{3}=6\), \(a_{4}=-3\). Ninguno es \(0\).</li>
+    <li>\(\dfrac{a_{2}}{a_{1}}=\dfrac{-12}{24}\). Negativo dividido por positivo es negativo, y se simplifica por \(12\): \(-\dfrac{12}{24}=-\dfrac{1}{2}\).</li>
+    <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{6}{-12}\). Positivo dividido por negativo es negativo, y se simplifica por \(6\): \(-\dfrac{6}{12}=-\dfrac{1}{2}\).</li>
+    <li>\(\dfrac{a_{4}}{a_{3}}=\dfrac{-3}{6}\). Negativo dividido por positivo es negativo, y se simplifica por \(3\): \(-\dfrac{3}{6}=-\dfrac{1}{2}\).</li>
+    <li>Los tres cocientes coinciden: \(r=-\dfrac{1}{2}\).</li>
+    <li>Comprobación, avanzando: \(24\cdot\left(-\dfrac{1}{2}\right)=-\dfrac{24}{2}=-12\) ✓; \(-12\cdot\left(-\dfrac{1}{2}\right)=\dfrac{12}{2}=6\) ✓; \(6\cdot\left(-\dfrac{1}{2}\right)=-\dfrac{6}{2}=-3\) ✓.</li>
+    <li>Como \(r&lt;0\), los signos se alternan. Como \(-1&lt;r&lt;0\), los tamaños \(24,\ 12,\ 6,\ 3\) decrecen.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: ¿es geométrica? (a) \(\dfrac{2}{3},\ 1,\ \dfrac{3}{2},\ \dfrac{9}{4}\); (b) \(3,\ 6,\ 12,\ 21\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>(a) Ningún término es \(0\). Dividir por una fracción es multiplicar por su inversa.</li>
+    <li>\(\dfrac{a_{2}}{a_{1}}=1:\dfrac{2}{3}=1\cdot\dfrac{3}{2}=\dfrac{3}{2}\).</li>
+    <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{3}{2}:1=\dfrac{3}{2}\).</li>
+    <li>\(\dfrac{a_{4}}{a_{3}}=\dfrac{9}{4}:\dfrac{3}{2}=\dfrac{9}{4}\cdot\dfrac{2}{3}=\dfrac{18}{12}\). Se simplifica por \(6\): \(\dfrac{18}{12}=\dfrac{3}{2}\).</li>
+    <li>Los tres cocientes coinciden: sí, los cuatro términos están en progresión geométrica, con \(r=\dfrac{3}{2}\).</li>
+    <li>(b) Ningún término es \(0\). \(\dfrac{a_{2}}{a_{1}}=\dfrac{6}{3}=2\).</li>
+    <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{12}{6}=2\).</li>
+    <li>\(\dfrac{a_{4}}{a_{3}}=\dfrac{21}{12}\). Se simplifica por \(3\): \(\dfrac{21}{12}=\dfrac{7}{4}\).</li>
+    <li>\(\dfrac{7}{4}\ne 2\), porque \(2=\dfrac{8}{4}\). Hay dos cocientes distintos: no es geométrica, aunque los dos primeros coincidan.</li>
+    <li>Tampoco es aritmética: \(6-3=3\) y \(12-6=6\) son restas distintas.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: con dos términos que no son vecinos. (a) \(a_{2}=6\) y \(a_{5}=48\); (b) \(a_{3}=5\) y \(a_{5}=20\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>(a) Fórmula con \(m=5\) y \(k=2\): \(r^{\,5-2}=\dfrac{a_{5}}{a_{2}}\).</li>
+    <li>Exponente: \(5-2=3\). Cociente: \(\dfrac{48}{6}=8\). Queda \(r^{3}=8\).</li>
+    <li>El exponente \(3\) es impar: hay una sola razón real. Es \(r=2\), porque \(2\cdot 2=4\) y \(4\cdot 2=8\).</li>
+    <li>Primer término, retrocediendo un paso: \(a_{1}=\dfrac{a_{2}}{r}=\dfrac{6}{2}=3\).</li>
+    <li>Comprobación, avanzando: \(3\cdot 2=6\); \(6\cdot 2=12\); \(12\cdot 2=24\); \(24\cdot 2=48\). La progresión es \(3,\ 6,\ 12,\ 24,\ 48\), con \(a_{2}=6\) y \(a_{5}=48\) ✓.</li>
+    <li>(b) Fórmula con \(m=5\) y \(k=3\): \(r^{\,5-3}=\dfrac{a_{5}}{a_{3}}\).</li>
+    <li>Exponente: \(5-3=2\). Cociente: \(\dfrac{20}{5}=4\). Queda \(r^{2}=4\).</li>
+    <li>El exponente \(2\) es par y el cociente \(4\) es positivo: hay dos razones reales. Son \(r=2\), porque \(2\cdot 2=4\), y \(r=-2\), porque \((-2)\cdot(-2)=4\).</li>
+    <li>Con \(r=2\): \(a_{4}=a_{3}\cdot r=5\cdot 2=10\) y \(a_{5}=10\cdot 2=20\) ✓.</li>
+    <li>Con \(r=-2\): \(a_{4}=5\cdot(-2)=-10\) y \(a_{5}=-10\cdot(-2)=20\) ✓.</li>
+    <li>Las dos progresiones cumplen los datos. Con solo \(a_{3}\) y \(a_{5}\) no se puede elegir: haría falta, por ejemplo, el signo de \(a_{4}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Dividir al revés: en \(2,\ 6,\ 18\) la razón es \(\dfrac{6}{2}=3\), no \(\dfrac{2}{6}=\dfrac{1}{3}\); va el término que sigue arriba y el anterior abajo. Restar en vez de dividir: la resta \(a_{n+1}-a_{n}\) es otra cosa (la diferencia de una sucesión aritmética). Dar la razón con una sola división cuando no se sabe si la lista es geométrica: primero hay que comprobar que todos los cocientes coinciden (ejemplo 3, b). Contar mal los pasos: entre \(a_{2}\) y \(a_{5}\) hay \(5-2=3\) multiplicaciones, no \(5\) ni \(4\). Olvidar la razón negativa cuando el exponente es par: \(r^{2}=4\) tiene dos soluciones, \(2\) y \(-2\). Decir que con razón negativa la progresión «decrece»: no crece ni decrece, alterna de signo. Y aceptar \(r=0\) o un término \(0\): con ellos no se puede dividir entre vecinos, y no hay progresión geométrica.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si los términos de cada lista están en progresión geométrica; si lo están, da la razón: (a) \(5,\ 15,\ 45,\ 135\); (b) \(81,\ 54,\ 36,\ 24\); (c) \(2,\ 4,\ 6,\ 8\).</p>
+    <details><summary>Pista</summary><div><p>El que sigue, dividido por el anterior. Calcula los tres cocientes de cada lista y compáralos. Para simplificar \(\dfrac{54}{81}\), divide arriba y abajo por \(27\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Ningún término es \(0\). \(\dfrac{a_{2}}{a_{1}}=\dfrac{15}{5}=3\).</li>
+        <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{45}{15}=3\).</li>
+        <li>\(\dfrac{a_{4}}{a_{3}}=\dfrac{135}{45}=3\), porque \(45\cdot 3=135\). Los tres cocientes coinciden: sí, con \(r=3\).</li>
+        <li>(b) Ningún término es \(0\). \(\dfrac{a_{2}}{a_{1}}=\dfrac{54}{81}\). Se simplifica por \(27\): \(\dfrac{54}{81}=\dfrac{2}{3}\).</li>
+        <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{36}{54}\). Se simplifica por \(18\): \(\dfrac{36}{54}=\dfrac{2}{3}\).</li>
+        <li>\(\dfrac{a_{4}}{a_{3}}=\dfrac{24}{36}\). Se simplifica por \(12\): \(\dfrac{24}{36}=\dfrac{2}{3}\). Los tres cocientes coinciden: sí, con \(r=\dfrac{2}{3}\). Como \(0&lt;r&lt;1\) y \(a_{1}&gt;0\), decrece.</li>
+        <li>(c) Ningún término es \(0\). \(\dfrac{a_{2}}{a_{1}}=\dfrac{4}{2}=2\).</li>
+        <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{6}{4}\). Se simplifica por \(2\): \(\dfrac{6}{4}=\dfrac{3}{2}\).</li>
+        <li>\(\dfrac{3}{2}\ne 2\), porque \(2=\dfrac{4}{2}\). Hay dos cocientes distintos: no es geométrica.</li>
+        <li>Sí es aritmética: \(4-2=2\), \(6-4=2\), \(8-6=2\); las restas coinciden, con \(d=2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>En cada caso los dos términos son de una progresión geométrica de números reales. Encuentra todas las razones posibles y, si hay alguna, el primer término: (a) \(a_{3}=12\) y \(a_{6}=-96\); (b) \(a_{2}=3\) y \(a_{6}=48\); (c) \(a_{1}=4\) y \(a_{3}=-36\).</p>
+    <details><summary>Pista</summary><div><p>Usa \(r^{\,m-k}=\dfrac{a_{m}}{a_{k}}\). Fíjate si el exponente \(m-k\) es par o impar y en el signo del cociente. Para volver al primer término, divide por \(r\) las veces que haga falta.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Fórmula con \(m=6\) y \(k=3\): \(r^{\,6-3}=\dfrac{a_{6}}{a_{3}}\). Exponente: \(6-3=3\). Cociente: \(\dfrac{-96}{12}=-8\). Queda \(r^{3}=-8\).</li>
+        <li>El exponente \(3\) es impar: hay una sola razón real. Es \(r=-2\), porque \((-2)\cdot(-2)=4\) y \(4\cdot(-2)=-8\).</li>
+        <li>Primer término: de \(a_{1}\) a \(a_{3}\) hay \(3-1=2\) pasos, así que \(a_{3}=a_{1}\cdot r^{2}\). Con \(r^{2}=(-2)\cdot(-2)=4\): \(12=a_{1}\cdot 4\).</li>
+        <li>Se dividen los dos lados por \(4\): \(a_{1}=\dfrac{12}{4}=3\).</li>
+        <li>Comprobación, avanzando: \(3\cdot(-2)=-6\); \(-6\cdot(-2)=12\); \(12\cdot(-2)=-24\); \(-24\cdot(-2)=48\); \(48\cdot(-2)=-96\). Queda \(a_{3}=12\) y \(a_{6}=-96\) ✓.</li>
+        <li>(b) Fórmula con \(m=6\) y \(k=2\): \(r^{\,6-2}=\dfrac{a_{6}}{a_{2}}\). Exponente: \(6-2=4\). Cociente: \(\dfrac{48}{3}=16\). Queda \(r^{4}=16\).</li>
+        <li>El exponente \(4\) es par y el cociente \(16\) es positivo: hay dos razones reales. \(r=2\), porque \(2\cdot 2=4\), \(4\cdot 2=8\) y \(8\cdot 2=16\). Y \(r=-2\), porque \((-2)\cdot(-2)=4\), \(4\cdot(-2)=-8\) y \(-8\cdot(-2)=16\).</li>
+        <li>Con \(r=2\): \(a_{1}=\dfrac{a_{2}}{r}=\dfrac{3}{2}\). Comprobación: \(\dfrac{3}{2}\cdot 2=3\); \(3\cdot 2=6\); \(6\cdot 2=12\); \(12\cdot 2=24\); \(24\cdot 2=48\) ✓.</li>
+        <li>Con \(r=-2\): \(a_{1}=\dfrac{a_{2}}{r}=\dfrac{3}{-2}=-\dfrac{3}{2}\). Comprobación: \(-\dfrac{3}{2}\cdot(-2)=3\); \(3\cdot(-2)=-6\); \(-6\cdot(-2)=12\); \(12\cdot(-2)=-24\); \(-24\cdot(-2)=48\) ✓.</li>
+        <li>Hay dos progresiones: \(\dfrac{3}{2},\ 3,\ 6,\ 12,\ 24,\ 48\) y \(-\dfrac{3}{2},\ 3,\ -6,\ 12,\ -24,\ 48\).</li>
+        <li>(c) Fórmula con \(m=3\) y \(k=1\): \(r^{\,3-1}=\dfrac{a_{3}}{a_{1}}\). Exponente: \(3-1=2\). Cociente: \(\dfrac{-36}{4}=-9\). Queda \(r^{2}=-9\).</li>
+        <li>El exponente \(2\) es par y el cociente \(-9\) es negativo: no hay ninguna razón real, porque el cuadrado de un número real no es negativo. No existe una progresión geométrica de números reales con esos datos.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Renata suelta una pelota y mide hasta dónde sube después de cada bote: \(120\) cm después del primero, \(90\) cm después del segundo y \(67{,}5\) cm después del tercero. (Los datos son inventados para el ejercicio. El modelo es: después de cada bote la pelota sube la misma fracción de la altura anterior. Una pelota real lo cumple solo aproximadamente.) (a) ¿Están esas tres alturas en progresión geométrica? ¿Con qué razón? (b) Según el modelo, ¿hasta dónde sube después del cuarto bote? (c) Si el modelo vale también para el primer bote, ¿desde qué altura la soltó?</p>
+    <details><summary>Pista</summary><div><p>Divide cada altura por la anterior. Para (b) se avanza multiplicando por \(r\); para (c) se retrocede dividiendo por \(r\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Datos: \(a_{1}=120\), \(a_{2}=90\), \(a_{3}=67{,}5\) (en cm). Ninguno es \(0\).</li>
+        <li>\(\dfrac{a_{2}}{a_{1}}=\dfrac{90}{120}\). Se simplifica por \(30\): \(\dfrac{90}{120}=\dfrac{3}{4}\).</li>
+        <li>\(\dfrac{a_{3}}{a_{2}}=\dfrac{67{,}5}{90}\). Se multiplican arriba y abajo por \(10\): \(\dfrac{675}{900}\). Se simplifica por \(225\): \(\dfrac{675}{900}=\dfrac{3}{4}\).</li>
+        <li>Los dos cocientes coinciden: sí, están en progresión geométrica, con \(r=\dfrac{3}{4}=0{,}75\). Después de cada bote la pelota sube tres cuartos de la altura anterior.</li>
+        <li>(b) Se avanza un paso: \(a_{4}=a_{3}\cdot r=67{,}5\cdot\dfrac{3}{4}\).</li>
+        <li>Producto del numerador: \(67{,}5\cdot 3=202{,}5\).</li>
+        <li>División: \(\dfrac{202{,}5}{4}=50{,}625\). Después del cuarto bote sube \(50{,}625\) cm, unos \(50{,}6\) cm.</li>
+        <li>(c) La altura desde la que se soltó es el término anterior a \(a_{1}\); se le llama \(a_{0}\). Por el modelo, \(a_{1}=a_{0}\cdot r\). Se retrocede dividiendo por \(r\): \(a_{0}=\dfrac{a_{1}}{r}=120:\dfrac{3}{4}\).</li>
+        <li>Dividir por una fracción es multiplicar por su inversa: \(120\cdot\dfrac{4}{3}=\dfrac{480}{3}=160\).</li>
+        <li>La soltó desde \(160\) cm. Comprobación: \(160\cdot\dfrac{3}{4}=\dfrac{480}{4}=120\) ✓.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H21 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H21 · razón de una progresión geométrica: se divide cada término por el anterior; si siempre da lo mismo, ese número es r */
+function ci21Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a; }
+function ci21Red(n, d){ var g = ci21Mcd(n, d) || 1; if (d < 0) g = -g; return [n/g, d/g]; }
+/* fracción ya escrita con su signo delante; t = 1: tamaño chico */
+function ci21Cru(n, d, t){ return d === 1 ? '' + n : (n < 0 ? '-' : '') + '\\' + (t ? 't' : 'd') + 'frac{' + Math.abs(n) + '}{' + d + '}'; }
+function ci21Tex(f, t){ var r = ci21Red(f[0], f[1]); return ci21Cru(r[0], r[1], t); }
+function ci21Par(f, t){ var s = ci21Tex(f, t); return f[0]*f[1] < 0 ? '\\left(' + s + '\\right)' : s; }
+function ci21Pl(f){ var r = ci21Red(f[0], f[1]); return (r[0] < 0 ? '−' : '') + Math.abs(r[0]) + (r[1] === 1 ? '' : '/' + r[1]); }
+OA.scene('raz-idea', (function(){
+  var N = 5, A = [2, 6, 18, 54], XC = [-0.6, 0.8, 2.2, 3.6], W = 0.62, YB = 1.6, K = 0.075;
+  var PZ = [['T1', 'a_{1}=2', 'a₁ = 2', 'c-sec'], ['T2', 'a_{2}=6', 'a₂ = 6', 'c-sec'], ['T3', 'a_{3}=18', 'a₃ = 18', 'c-sec'], ['T4', 'a_{4}=54', 'a₄ = 54', 'c-sec'],
+    ['D1', '\\tfrac{6}{2}=3', '6/2 = 3', 'diff'], ['D2', '\\tfrac{18}{6}=3', '18/6 = 3', 'diff'], ['D3', '\\tfrac{54}{18}=3', '54/18 = 3', 'diff'],
+    ['M1', '\\cdot\\,3', '· 3', 'diff'], ['M2', '\\cdot\\,3', '· 3', 'diff'], ['M3', '\\cdot\\,3', '· 3', 'diff'],
+    ['Q', '2,\\ 6,\\ 18,\\ 54\\qquad r=\\ ?', '2, 6, 18, 54   r = ?', 'pt'], ['F', '\\Longrightarrow\\ r=\\tfrac{a_{n+1}}{a_{n}}=3', '⟹ r = aₙ₊₁/aₙ = 3', 'diff'],
+    ['R1', '2,\\ 6,\\ 18,\\ 54', '2, 6, 18, 54', ''],
+    ['R2', '\\tfrac{a_{2}}{a_{1}}=\\tfrac{6}{2}=3', 'a₂/a₁ = 6/2 = 3', ''],
+    ['R3', '\\tfrac{a_{3}}{a_{2}}=\\tfrac{18}{6}=3', 'a₃/a₂ = 18/6 = 3', ''],
+    ['R4', '\\tfrac{a_{4}}{a_{3}}=\\tfrac{54}{18}=3', 'a₄/a₃ = 54/18 = 3', ''],
+    ['R5', 'r=\\tfrac{a_{n+1}}{a_{n}}=3,\\qquad a_{n+1}=a_{n}\\cdot 3', 'r = aₙ₊₁/aₙ = 3,  aₙ₊₁ = aₙ · 3', 'diff']];
+  var TXT = [['Cuatro términos, dibujados como columnas.', '¿Cuántas veces cabe cada uno en el siguiente?'],
+    ['El segundo término, dividido por el primero:', 'la primera columna cabe 3 veces en la segunda.'],
+    ['El tercero, dividido por el segundo:', 'la segunda columna cabe 3 veces en la tercera.'],
+    ['El cuarto, dividido por el tercero:', 'otra vez 3 bloques justos.'],
+    ['Los tres cocientes coinciden: la razón es 3.', 'Cada término es el anterior multiplicado por 3.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.3, y1:7.9}, aspect:12.2/6.6,
+    aria:'Arriba, una franja dice qué muestra: dividir cada término por el anterior da siempre lo mismo, la razón r. Animación en cinco pasos con los términos 2, 6, 18 y 54, dibujados como cuatro columnas azules de esas alturas. Uno: las columnas crecen hasta su altura. Dos: una línea punteada lleva la altura de la primera columna hasta la segunda; la segunda columna se llena con bloques naranjas de esa altura y caben 3; sobre ella se escribe 6 dividido por 2 igual a 3. Tres: lo mismo entre la segunda y la tercera: 18 dividido por 6 igual a 3. Cuatro: entre la tercera y la cuarta: 54 dividido por 18 igual a 3; los bloques van numerados 1, 2 y 3. Cinco: bajo las columnas aparece una flecha naranja de cada término al siguiente, rotulada por 3: la razón es 3. Los bloques naranjas, los cocientes y las punteadas quedan en las columnas hasta el final; la pregunta queda arriba y la respuesta se escribe a su lado. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> los términos</span><span><i class="sw rise"></i> bloques del alto de la columna anterior: los que caben son el cociente; flechas: multiplicar por la razón</span>',
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, b, g, w, wb, h, ya = YB - 0.95, xa, xb;
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function caja(xc, y0, y1, col, a, al){ if (y1 - y0 < 1e-6 || al <= 0) return; S.poly([[xc - W/2, y0], [xc + W/2, y0], [xc + W/2, y1], [xc - W/2, y1]], {fill:col, alpha:a*al});
+        c.globalAlpha = al; c.strokeStyle = col; c.lineWidth = 1; c.setLineDash([]); c.strokeRect(X(xc - W/2) + 0.5, Y(y1) + 0.5, W*s - 1, (y1 - y0)*s - 1); c.globalAlpha = 1; }
+      g = k === 1 ? u : 1;
+      S.line(-1.15, YB, 4.9, YB, {color:C.ink, width:1.1});
+      for (i = 0; i < 4; i++){ caja(XC[i], YB, YB + K*A[i]*g, C.sec, 0.26, 1); if (k > 1 || u > 0.6) L('T' + (i + 1), XC[i], YB, -50, 0, 12); }
+      for (i = 1; i <= 3; i++){ if (k < i + 1) break; w = k === i + 1 ? u : 1; h = K*A[i - 1]; /* bloques naranjas de la columna i + 1: cada uno mide lo que la columna anterior */
+        c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(XC[i - 1] + W/2), Y(YB + h)); c.lineTo(X(XC[i - 1] + W/2 + (XC[i] + W/2 - XC[i - 1] - W/2)*Math.min(1, w*3)), Y(YB + h)); c.stroke(); c.setLineDash([]);
+        for (b = 0; b < 3; b++){ wb = Math.max(0, Math.min(1, w*3 - b)); caja(XC[i], YB + h*b, YB + h*(b + 1), C.rise, b % 2 ? 0.3 : 0.52, wb);
+          if (wb > 0.5 && h*s >= 14){ c.font = '700 10.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (b + 1), X(XC[i]), Y(YB + h*(b + 0.5))); } }
+        if (w > 0.6) L('D' + i, XC[i], YB + K*A[i], -50, 0, -13); }
+      if (k === 5) for (i = 0; i < 3; i++){ xa = XC[i] + 0.22; xb = XC[i + 1] - 0.22; dtFlecha(S, xa, ya, xa + (xb - xa)*u, ya, C.rise, 1.6); if (u > 0.6) L('M' + (i + 1), (xa + xb)/2, ya, -50, 0, -11); }
+      L('Q', -1.2, 6.55, 0); if (k === N && u > 0.5) L('F', 1.55, 6.55, 0); /* la pregunta queda; la respuesta se escribe a su lado */
+      txt(TXT[k - 1][0], -1.2, YB - 1.6); txt(TXT[k - 1][1], -1.2, YB - 1.6 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(5.2));
+      dtQue(S, 'dividir cada término por el', 'anterior da siempre lo mismo: la razón r.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.35, [6, 36, 66, 96, 126]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', f = function(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }, R = [
+      'a_{1}=2,\\quad a_{2}=6,\\quad a_{3}=18,\\quad a_{4}=54' + Q + '\\text{Ninguno es }0\\text{: se puede dividir.}' + Q + '\\text{Cociente entre vecinos: }' + f('a_{n+1}', 'a_{n}'),
+      f('a_{2}', 'a_{1}') + '=' + f(6, 2) + '=3' + Q + '\\text{porque }2\\cdot 3=6',
+      f('a_{3}', 'a_{2}') + '=' + f(18, 6) + '=3' + Q + '\\text{porque }6\\cdot 3=18',
+      f('a_{4}', 'a_{3}') + '=' + f(54, 18) + '=3' + Q + '\\text{porque }18\\cdot 3=54',
+      '\\text{Los tres cocientes dan }3\\text{:}' + Q + 'r=' + f('a_{n+1}', 'a_{n}') + '=3' + Q + '\\text{Cada término es el anterior por }3\\text{:}' + Q + 'a_{n+1}=a_{n}\\cdot 3' + Q + '2\\cdot 3=6,\\quad 6\\cdot 3=18,\\quad 18\\cdot 3=54' + Q + '\\text{Los cuatro términos están en progresión}' + Q + '\\text{geométrica de razón }3\\text{.}' + Q + '\\text{Las restas no coinciden:}' + Q + '6-2=4,\\quad 18-6=12,\\quad 54-18=36' + Q + '\\text{No es aritmética.}'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: a₁ = 4 fijo; al mover r, los seis primeros términos crecen, quedan iguales, decrecen o alternan de signo */
+OA.scene('raz-vivo', (function(){
+  var A1 = 4, NN = 6, KY = 0.14, j, PZ = [['P1', 'a_{1}=4', 'a₁ = 4', 'c-sec'], ['E6', '\\text{con }r=0\\text{:}\\quad 4,\\ 0,\\ 0,\\ 0,\\ 0,\\ 0', 'con r = 0: 4, 0, 0, 0, 0, 0', 'diff']];
+  function raz(j){ return ci21Red(j - 6, 4); }
+  function ter(j){ var r = raz(j), a = [[A1, 1]], n; for (n = 1; n < NN; n++) a.push(ci21Red(a[n - 1][0]*r[0], a[n - 1][1]*r[1])); return a; }
+  for (j = 0; j <= 12; j++) if (j !== 6){
+    PZ.push(['E' + j, '\\text{cada flecha naranja: }a_{n+1}=a_{n}\\cdot' + ci21Par(raz(j), 1), 'cada flecha naranja: aₙ₊₁ = aₙ · ' + (j < 6 ? '(' + ci21Pl(raz(j)) + ')' : ci21Pl(raz(j))), 'diff']);
+    PZ.push(['S' + j, 'a_{6}=' + ci21Tex(ter(j)[5], 1), 'a₆ = ' + ci21Pl(ter(j)[5]), 'c-sec']); }
+  function jj(v){ return Math.max(0, Math.min(12, Math.round(((v.r == null ? 1.5 : +v.r) + 1.5)*4))); }
+  function dec(x){ return oaDec(x, 2).replace(/0$/, '').replace(/,0$/, ''); }
+  function lin(j){
+    if (j > 10) return ['Razón mayor que 1: cada término es mayor', 'que el anterior. La progresión crece.'];
+    if (j === 10) return ['Razón 1: cada término es igual al anterior.', 'Todos valen 4: la progresión es constante.'];
+    if (j > 6) return ['Razón entre 0 y 1: cada término es menor', 'que el anterior, y sigue positivo. Decrece.'];
+    if (j === 6) return ['Ya no es progresión geométrica:', 'no se puede dividir por 0 (no hay cocientes).'];
+    if (j > 2) return ['Razón negativa: los signos se alternan.', 'Sin el signo, los tamaños se achican.'];
+    if (j === 2) return ['Razón −1: los signos se alternan.', 'Sin el signo, todos los tamaños valen 4.'];
+    return ['Razón negativa: los signos se alternan.', 'Sin el signo, los tamaños crecen.']; }
+  return {
+    world:{x0:-1.5, x1:7.9, y0:-7.4, y1:6.8}, aspect:14.2/9.4,
+    aria:'Arriba, una franja dice qué muestra: la razón r decide cómo se comporta la progresión. Gráfica de puntos sueltos con los seis primeros términos de la progresión geométrica de primer término 4 y razón r. Un deslizador elige r entre menos 1,5 y 1,5, de 0,25 en 0,25. En horizontal va n y en vertical el valor del término, de menos 30 a 30. Cada punto azul está unido por una línea punteada con su valor en el eje vertical, y una flecha naranja va de cada punto al siguiente: es la multiplicación por r. El primer punto lleva el rótulo a sub 1 igual a 4 y el sexto lleva su valor. Con r mayor que 1 los puntos suben; con r igual a 1 quedan todos a la altura 4; con r entre 0 y 1 bajan y siguen sobre el eje; con r negativa quedan alternadamente sobre el eje y bajo él. Con r igual a 0, caso límite, solo queda el punto de altura 4 y cinco anillos grises sobre el eje, sin flechas: ya no es progresión geométrica, porque no se puede dividir por 0. Bajo la gráfica, una línea naranja escribe la multiplicación con el valor de r y dos frases dicen cuál es el caso; más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'r', tex:'r', min:-1.5, max:1.5, step:0.25, value:1.5}],
+    legend:'<span><i class="sw sec"></i> los términos \\(a_{1}=4,\\ a_{2},\\ \\ldots,\\ a_{6}\\)</span><span><i class="sw rise"></i> flechas: multiplicar por \\(r\\)</span><span>líneas punteadas: llevan cada término a su valor en el eje \\(a_{n}\\)</span>',
+    anim:{run:39000, hold:3000, still:1, apply:function(p, v){ v.q = p; v.r = 1.5 - Math.min(12, Math.floor(p*13))/4; }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var j = jj(v), a = ter(j).map(function(f){ return f[0]/f[1]; }), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', gris = C.muted || '#6b6b6b', s = X(1) - X(0), i, LN = lin(j), y, ax, ay, bx, by, d;
+      function gy(z){ return KY*z; }
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = gris; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      S.line(-0.3, 0, 7.0, 0, {color:C.ink, width:1.1}); S.line(0, gy(-33), 0, gy(33), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= NN; i++){ c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); }
+      for (i = -30; i <= 30; i += 10){ if (!i) continue; c.beginPath(); c.moveTo(X(0) - 3, Y(gy(i))); c.lineTo(X(0) + 3, Y(gy(i))); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 8, Y(gy(i)), 'right'); }
+      num('n', X(7.0) + 6, Y(0), 'left'); num('aₙ', X(0) + 6, Y(gy(33)) + 2, 'left');
+      /* punteadas: cada término hasta su valor en el eje */
+      for (i = 1; i <= NN; i++){ if (j === 6 && i > 1) break; c.globalAlpha = 0.55; c.strokeStyle = C.sec; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(gy(a[i - 1]))); c.lineTo(X(0), Y(gy(a[i - 1]))); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+        c.beginPath(); c.arc(X(0), Y(gy(a[i - 1])), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); }
+      /* números de n: del lado contrario al punto, sobre fondo blanco para que las punteadas no los crucen */
+      for (i = 1; i <= NN; i++){ y = Y(0) + (a[i - 1] < 0 ? -11 : 11); c.fillStyle = 'rgba(255,255,255,0.92)'; c.fillRect(X(i) - 5, y - 6, 10, 12); num('' + i, X(i), y, 'center'); }
+      /* flechas naranjas: de cada término al siguiente, multiplicando por r */
+      if (j !== 6) for (i = 1; i < NN; i++){ ax = X(i); ay = Y(gy(a[i - 1])); bx = X(i + 1); by = Y(gy(a[i])); d = Math.hypot(bx - ax, by - ay); if (d < 16) continue;
+        dtFlecha(S, i + 6*(bx - ax)/d/s, gy(a[i - 1]) - 6*(by - ay)/d/s, i + 1 - 6*(bx - ax)/d/s, gy(a[i]) + 6*(by - ay)/d/s, C.rise, 1.3); }
+      for (i = 1; i <= NN; i++){ c.beginPath(); c.arc(X(i), Y(gy(a[i - 1])), 3.3, 0, 6.2832);
+        if (j === 6 && i > 1){ c.strokeStyle = gris; c.lineWidth = 1.5; c.stroke(); } else { c.fillStyle = C.sec; c.fill(); } }
+      T.L('P1', 0, gy(A1), -100, -7, 0); /* el valor de a₁, escrito en el eje, donde llega su punteada */
+      if (j !== 6) T.L('S' + j, 6, gy(a[5]), -50, 0, a[5] < 0 ? 16 : -16);
+      y = Y(gy(-33)) + 40;
+      T.L('E' + j, -1.3, gy(-33), 0, 0, 40); txt(LN[0], X(-1.3), y + 23, 'left', C.ink); txt(LN[1], X(-1.3), y + 44, 'left', C.ink);
+      dtQue(S, 'la razón r decide cómo se', 'comporta la progresión. Mueve r.');
+      T.fin();
+    },
+    caption:function(v){ var j = jj(v), a = ter(j), LN = lin(j); return 'Con r = ' + dec((j - 6)/4) + (j === 6 ? ', los términos serían 4, 0, 0, 0, 0, 0. ' : ', el segundo término vale ' + ci21Pl(a[1]) + ' y el sexto, ' + ci21Pl(a[5]) + '. ') + LN[0] + ' ' + LN[1]; },
+    readout:function(v){ var j = jj(v), r = raz(j), a = ter(j), num = OA.num, Q = '\\\\&\\qquad ', rs = ci21Tex(r), rp = ci21Par(r), L = [], n, s, U, V, inv, x, z;
+      function coc(n){ x = a[n]; z = a[n - 1]; inv = z[0] < 0 ? [-z[1], -z[0]] : [z[1], z[0]]; U = ci21Cru(x[0]*inv[0], x[1]*inv[1]); V = ci21Tex([x[0]*inv[0], x[1]*inv[1]]);
+        return '\\dfrac{a_{' + (n + 1) + '}}{a_{' + n + '}}=' + ci21Tex(x) + ':' + ci21Par(z) + '=' + ci21Tex(x) + '\\cdot' + (inv[0] < 0 ? '\\left(' + ci21Cru(inv[0], inv[1]) + '\\right)' : ci21Cru(inv[0], inv[1])) + Q + '\\qquad =' + U + (U === V ? '' : '=' + V) + '=r'; }
+      if (j === 6){
+        L.push('\\text{Datos: }a_{1}=4,\\qquad r=0\\quad\\text{(caso límite).}');
+        L.push('\\text{Regla: cada término es el anterior por }r\\text{:}' + Q + 'a_{n+1}=a_{n}\\cdot r');
+        L.push('\\text{Reemplazo:}' + Q + 'a_{2}=4\\cdot 0=0' + Q + 'a_{3}=0\\cdot 0=0' + Q + '\\text{y así: todos los que siguen valen }0\\text{.}');
+        L.push('\\text{Cociente entre vecinos: }\\dfrac{a_{3}}{a_{2}}\\text{ sería }\\dfrac{0}{0}\\text{.}' + Q + '\\text{No se puede dividir por }0\\text{: no hay}' + Q + '\\text{cocientes, y por eso no hay flechas.}');
+        L.push('\\text{Qué significa: la definición pide }r\\ne 0\\text{.}' + Q + '4,\\ 0,\\ 0,\\ 0,\\ \\ldots\\text{ no es una progresión}' + Q + '\\text{geométrica: no tiene razón.}');
+        return dtPasos(L); }
+      L.push('\\text{Datos: }a_{1}=4,\\qquad r=' + rs + (r[1] === 1 ? '' : '=' + num(r[0]/r[1], 2).replace(/0$/, '')));
+      L.push('\\text{Regla: cada término es el anterior por }r\\text{:}' + Q + 'a_{n+1}=a_{n}\\cdot r');
+      s = '\\text{Reemplazo, un producto cada vez:}';
+      for (n = 1; n < NN; n++){ U = ci21Cru(a[n - 1][0]*r[0], a[n - 1][1]*r[1]); V = ci21Tex(a[n]);
+        s += Q + 'a_{' + (n + 1) + '}=' + ci21Tex(a[n - 1]) + '\\cdot' + rp + '=' + U + (U === V ? '' : '=' + V); }
+      if (a[5][1] !== 1) s += Q + 'a_{6}=' + ci21Tex(a[5]) + (10000*a[5][0] % a[5][1] === 0 ? '=' + num(a[5][0]/a[5][1], 4).replace(/0+$/, '') : '\\approx ' + num(a[5][0]/a[5][1], Math.abs(a[5][0]) < a[5][1] ? 4 : 2));
+      L.push(s);
+      L.push('\\text{Cociente entre vecinos (dividir es multiplicar}' + Q + '\\text{por el inverso):}' + Q + coc(1) + Q + coc(2));
+      if (j > 10) s = 'r=' + rs + '>1\\text{, y los términos son positivos:}' + Q + 'a_{n+1}-a_{n}=a_{n}\\,(r-1)>0' + Q + '\\text{Qué significa: cada término es mayor que}' + Q + '\\text{el anterior. La progresión crece.}';
+      else if (j === 10) s = 'r=1:\\quad a_{n+1}=a_{n}\\cdot 1=a_{n}' + Q + '\\text{Qué significa: todos los términos valen }4\\text{.}' + Q + '\\text{La progresión es constante.}';
+      else if (j > 6) s = '0<r=' + rs + '<1\\text{, y los términos son positivos:}' + Q + 'a_{n+1}-a_{n}=a_{n}\\,(r-1)<0' + Q + '\\text{Qué significa: cada término es menor que}' + Q + '\\text{el anterior y sigue positivo. Decrece.}';
+      else s = 'r=' + rs + '<0\\text{: multiplicar por }r\\text{ cambia el signo.}' + Q + '\\text{Qué significa: los signos se alternan; la}' + Q + '\\text{progresión ni crece ni decrece.}' + Q + '\\text{Sin el signo: }|a_{n+1}|=|a_{n}|\\cdot' + ci21Tex([-r[0], r[1]]) + Q + (j > 2 ? '\\text{Como }' + ci21Tex([-r[0], r[1]]) + '<1\\text{, los tamaños decrecen.}' : j === 2 ? '\\text{Los tamaños valen todos }4\\text{.}' : '\\text{Como }' + ci21Tex([-r[0], r[1]]) + '>1\\text{, los tamaños crecen.}');
+      L.push(s);
+      return dtPasos(L); }
+  };
+})());

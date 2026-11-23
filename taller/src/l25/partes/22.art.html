@@ -1,0 +1,241 @@
+<!--file:H22_termino_enesimo_de_una_sucesion_geometrica.html-->
+<!--title:Término enésimo de una sucesión geométrica-->
+<!--id:ss-enesimo-geo-->
+<!--tab:H22 Término enésimo de una sucesión geométrica-->
+<article class="sheet" id="ss-enesimo-geo" data-hoja="L25 H22">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Término enésimo de una sucesión geométrica</b></li>
+    </ol>
+    <h1>Término enésimo de una sucesión geométrica</h1>
+    <p class="lede">Para llegar al término de la posición \(n\) se parte del primero y se multiplica por la razón \(r\) una vez por cada paso: son \(n-1\) multiplicaciones. \[a_{n}=a_{1}\cdot r^{\,n-1}\qquad\text{para todo entero } n\ge 1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(3,\ 6,\ 12,\ 24,\ \ldots\) dibujada con barras, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la barra azul de arriba:</b> mide \(3\), el primer término, \(a_{1}=3\). Todavía no se multiplica.</li>
+    <li><b>Pasos 2, 3 y 4:</b> en cada paso una flecha naranja «\(\cdot 2\)» baja a la fila siguiente y aparece una barra nueva, el doble de larga que la anterior: \(6\), \(12\), \(24\). La raya blanca del medio la parte en dos mitades, cada una igual a la barra anterior. Las barras anteriores no se borran.</li>
+    <li><b>Mira lo que queda escrito bajo cada barra:</b> el término como el primero multiplicado por \(2\) varias veces, \(3\cdot 2\), \(3\cdot 2\cdot 2=3\cdot 2^{2}\), \(3\cdot 2\cdot 2\cdot 2=3\cdot 2^{3}\), y a su derecha, en naranja, cuántas veces se multiplicó: \(1\), \(2\), \(3\).</li>
+    <li><b>Paso 5:</b> se comparan las posiciones con las multiplicaciones. Para llegar a la posición \(4\) hubo \(4-1=3\) multiplicaciones. La respuesta a la pregunta de arriba se escribe debajo de ella.</li>
+    <li><b>Cuenta de abajo:</b> cada término calculado desde el anterior y también desde el primero, con cada potencia y cada producto. Conclusión: \(a_{n}=a_{1}\cdot r^{\,n-1}\).</li>
+  </ol>
+  <div class="stage" data-scene="eng-idea"></div>
+  <ul class="keys">
+    <li><b>Barras azules:</b> los términos. El largo de cada barra es el valor del término, escrito en blanco en su extremo derecho.</li>
+    <li><b>Raya blanca:</b> marca la mitad de la barra. Cada barra es dos veces la anterior.</li>
+    <li><b>Flechas naranjas «\(\cdot 2\)»:</b> las multiplicaciones por la razón, \(2\). En naranja también, la cantidad de multiplicaciones hechas desde el primer término.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué significa cada letra y cómo se usa</h3>
+    <ol class="steps">
+      <li><b>Definición, recordada</b> (hoja «Determinar la razón r de una progresión geométrica»): una sucesión es geométrica cuando cada término es el anterior multiplicado por un mismo número \(r\), la razón: \(a_{n+1}=a_{n}\cdot r\) para todo entero \(n\ge 1\), con \(a_{1}\ne 0\) y \(r\ne 0\).</li>
+      <li>\(a_{1}\) es el primer término; \(r\), la razón; \(n\), la posición (un entero, \(n\ge 1\)); \(a_{n}\), el término de esa posición.</li>
+      <li><b>Qué es una potencia.</b> Para \(r\ne 0\) se define \(r^{0}=1\) y \(r^{\,m+1}=r^{\,m}\cdot r\) para cada entero \(m\ge 0\). Así \(r^{1}=r^{0}\cdot r=1\cdot r=r\), \(r^{2}=r\cdot r\), \(r^{3}=r\cdot r\cdot r\): \(r^{\,m}\) es el producto de \(m\) factores iguales a \(r\). Para exponentes negativos se define \(r^{-m}=\dfrac{1}{r^{\,m}}\), con \(m\ge 1\).</li>
+      <li><b>El exponente es \(n-1\), no \(n\):</b> entre la posición \(1\) y la posición \(n\) hay \(n-1\) multiplicaciones. Con \(n=1\) la fórmula da \(a_{1}\cdot r^{0}=a_{1}\cdot 1=a_{1}\).</li>
+      <li><b>Por qué se pide \(a_{1}\ne 0\) y \(r\ne 0\):</b> así ningún término vale \(0\) (cada término es un producto de números distintos de cero), se puede dividir por cualquier término y por \(r\), y \(r^{0}=1\) tiene sentido. En la hoja «Series geométricas infinitas» se permite también \(r=0\); aquí no.</li>
+      <li><b>Cuatro cantidades, una igualdad:</b> si se conocen tres de \(a_{n},\ a_{1},\ r,\ n\), se busca la cuarta. Los ejemplos 1 a 4 muestran cómo.</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> En esta hoja se usan sin demostrar: (1) la regla del cociente de potencias de igual base, \(\dfrac{r^{\,m}}{r^{\,p}}=r^{\,m-p}\), para \(r\ne 0\) y enteros \(m\ge p\ge 0\) (se demuestra por inducción a partir de la definición de potencia; no se hace aquí); (2) que un producto de números reales distintos de cero es distinto de cero, y que si un producto vale cero, alguno de sus factores vale cero; (3) que la ecuación \(x^{m}=c\), con \(m\ge 1\) entero, tiene una sola solución real cuando \(m\) es impar, y cuando \(m\) es par tiene dos soluciones reales opuestas si \(c&gt;0\) y ninguna si \(c&lt;0\) (en los ejemplos con cuadrados sí se demuestra, factorizando). El enunciado (3) corresponde al estudio de las raíces. Además se anuncia, sin usarlo, que el exponente se puede despejar con logaritmos (ejemplo 2).</p>
+
+    <p><b>Animación: mueve \(n\).</b> Progresión geométrica con \(a_{1}=64\) y \(r=\dfrac{1}{2}\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la gráfica:</b> en horizontal va la posición \(n\); en vertical, el término \(a_{n}\). Con \(n=1\) hay un solo punto, \(a_{1}=64\), y una punteada lo lleva a su valor en el eje vertical.</li>
+      <li><b>Mueve el deslizador \(n\)</b> (de \(1\) a \(8\)): aparecen los términos hasta la posición \(n\). El último, en naranja, lleva su nombre y su valor marcado en el eje. Cada punto queda a la mitad de la altura del anterior.</li>
+      <li><b>Mira la fila de casillas, bajo la gráfica:</b> cada casilla tiene el valor del término de esa posición, y cada flecha naranja «\(\cdot\tfrac{1}{2}\)» es una multiplicación por la razón. Cuenta las flechas: son \(n-1\).</li>
+      <li><b>Bajo las casillas</b> queda escrito el término como \(64\) por tantos factores \(\tfrac{1}{2}\) como flechas hay, y una frase dice cuántas multiplicaciones van.</li>
+      <li><b>Cuenta de abajo:</b> datos, fórmula, reemplazo, la potencia, el producto y el resultado. Caso límite, \(n=1\): no hay flechas, el exponente es \(0\), \(\left(\tfrac{1}{2}\right)^{0}=1\) y \(a_{1}=64\).</li>
+    </ol>
+    <div class="stage" data-scene="eng-vivo"></div>
+    <ul class="keys">
+      <li><b>Puntos azules:</b> los términos hasta la posición \(n\), cada uno con su punteada hasta el eje \(a_{n}\). <b>Punto naranja:</b> el término de la posición elegida.</li>
+      <li><b>Casillas:</b> los valores \(64,\ 32,\ 16,\ 8,\ 4,\ 2,\ 1,\ 0{,}5\), cada uno bajo su posición.</li>
+      <li><b>Flechas naranjas «\(\cdot\tfrac{1}{2}\)»:</b> las multiplicaciones por la razón. Para llegar a la posición \(n\) hay \(n-1\) flechas.</li>
+    </ul>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale: demostración por inducción</h3>
+    <ol class="steps">
+      <li><b>Los primeros casos, con la definición.</b> \(a_{2}=a_{1}\cdot r\).</li>
+      <li>\(a_{3}=a_{2}\cdot r=a_{1}\cdot r\cdot r=a_{1}\cdot r^{2}\).</li>
+      <li>\(a_{4}=a_{3}\cdot r=a_{1}\cdot r^{2}\cdot r=a_{1}\cdot r^{3}\).</li>
+      <li><b>Lo que se va a demostrar.</b> Los casos anteriores sugieren que, para todo entero \(n\ge 1\), \(a_{n}=a_{1}\cdot r^{\,n-1}\). Un par de casos no basta: se demuestra por inducción.</li>
+      <li><b>Caso base, \(n=1\).</b> El lado derecho es \(a_{1}\cdot r^{\,1-1}=a_{1}\cdot r^{0}\). Por la definición de potencia, \(r^{0}=1\): queda \(a_{1}\cdot 1=a_{1}\). La fórmula vale para \(n=1\). ✓</li>
+      <li><b>Hipótesis de inducción.</b> Se supone que la fórmula vale para un entero \(n\ge 1\): \(a_{n}=a_{1}\cdot r^{\,n-1}\).</li>
+      <li><b>Paso inductivo: se prueba para \(n+1\).</b> Por la definición de sucesión geométrica: \(a_{n+1}=a_{n}\cdot r\).</li>
+      <li>Se reemplaza \(a_{n}\) por la hipótesis de inducción: \(a_{n+1}=a_{1}\cdot r^{\,n-1}\cdot r\).</li>
+      <li>Por la definición de potencia con \(m=n-1\) (que es un entero mayor o igual que \(0\)): \(r^{\,n-1}\cdot r=r^{\,n}\). Queda \(a_{n+1}=a_{1}\cdot r^{\,n}\).</li>
+      <li>Como \(n=(n+1)-1\), eso es \(a_{n+1}=a_{1}\cdot r^{\,(n+1)-1}\): la fórmula para \(n+1\). ✓</li>
+      <li><b>Conclusión.</b> La fórmula vale para \(n=1\) y, cada vez que vale para un \(n\), vale para \(n+1\). Por el principio de inducción, \[a_{n}=a_{1}\cdot r^{\,n-1}\qquad\text{para todo entero } n\ge 1.\]</li>
+      <li><b>Cómo se lee:</b> \(r^{\,n-1}\) es el producto de \(n-1\) factores iguales a \(r\). Al término \(n\) se llega desde \(a_{1}\) con \(n-1\) multiplicaciones por \(r\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Partiendo de otro término: \(a_{n}=a_{k}\cdot r^{\,n-k}\)</h3>
+    <p>Sean \(n\) y \(k\) dos posiciones (enteros mayores o iguales que \(1\)). <b>Primer caso: \(n\ge k\).</b></p>
+    <ol class="steps">
+      <li>Por el término enésimo: \(a_{n}=a_{1}\cdot r^{\,n-1}\) y \(a_{k}=a_{1}\cdot r^{\,k-1}\).</li>
+      <li>\(a_{k}\ne 0\): es el producto de \(a_{1}\ne 0\) por \(r^{\,k-1}\), que es \(1\) o un producto de factores \(r\ne 0\) (aviso de rigor, 2). Se puede dividir por \(a_{k}\).</li>
+      <li>Se divide la primera igualdad por la segunda: \(\dfrac{a_{n}}{a_{k}}=\dfrac{a_{1}\cdot r^{\,n-1}}{a_{1}\cdot r^{\,k-1}}\).</li>
+      <li>Se simplifica \(a_{1}\), que no es \(0\): \(\dfrac{a_{n}}{a_{k}}=\dfrac{r^{\,n-1}}{r^{\,k-1}}\).</li>
+      <li>Cociente de potencias de igual base (aviso de rigor, 1; se puede usar porque \(n-1\ge k-1\ge 0\)): \(\dfrac{r^{\,n-1}}{r^{\,k-1}}=r^{\,(n-1)-(k-1)}\).</li>
+      <li>Se resta en el exponente: \((n-1)-(k-1)=n-1-k+1=n-k\). Queda \(\dfrac{a_{n}}{a_{k}}=r^{\,n-k}\).</li>
+      <li>Se multiplica por \(a_{k}\) en los dos lados: \[a_{n}=a_{k}\cdot r^{\,n-k}\qquad(n\ge k).\]</li>
+    </ol>
+    <p><b>Segundo caso: \(n&lt;k\).</b></p>
+    <ol class="steps">
+      <li>Ahora \(k&gt;n\). El primer caso, con los papeles de \(n\) y \(k\) cambiados, da \(a_{k}=a_{n}\cdot r^{\,k-n}\).</li>
+      <li>Se divide por \(r^{\,k-n}\) en los dos lados (no es \(0\); aviso de rigor, 2): \(a_{n}=\dfrac{a_{k}}{r^{\,k-n}}=a_{k}\cdot\dfrac{1}{r^{\,k-n}}\).</li>
+      <li>Por la definición de exponente negativo, con \(m=k-n\ge 1\): \(\dfrac{1}{r^{\,k-n}}=r^{-(k-n)}=r^{\,n-k}\). Queda \(a_{n}=a_{k}\cdot r^{\,n-k}\).</li>
+    </ol>
+    <p>La fórmula vale para cualquier par de posiciones. Si \(n&gt;k\), se avanza multiplicando \(n-k\) veces por \(r\); si \(n&lt;k\), se retrocede dividiendo \(k-n\) veces por \(r\). Con \(k=1\) queda la fórmula del término enésimo.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: calcular un término. \(a_{1}=3,\ r=2\); ¿cuánto vale \(a_{10}\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Datos: \(a_{1}=3\), \(r=2\), \(n=10\). Fórmula: \(a_{n}=a_{1}\cdot r^{\,n-1}\).</li>
+    <li>Se reemplaza: \(a_{10}=3\cdot 2^{\,10-1}\).</li>
+    <li>Se resta en el exponente, \(10-1=9\): \(a_{10}=3\cdot 2^{9}\).</li>
+    <li>Se calcula la potencia, doblando cada vez: \(2^{1}=2\), \(2^{2}=4\), \(2^{3}=8\), \(2^{4}=16\), \(2^{5}=32\), \(2^{6}=64\), \(2^{7}=128\), \(2^{8}=256\), \(2^{9}=512\).</li>
+    <li>Se multiplica: \(a_{10}=3\cdot 512=1\,536\).</li>
+    <li>Qué significa: desde el \(3\) se multiplica \(9\) veces por \(2\), y se llega a \(1\,536\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: encontrar la posición. En \(5,\ 15,\ 45,\ \ldots\), ¿qué lugar ocupa el \(3\,645\)?</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Razón: \(\dfrac{15}{5}=3\) y \(\dfrac{45}{15}=3\), así que \(r=3\); además \(a_{1}=5\).</li>
+    <li>Fórmula: \(a_{n}=a_{1}\cdot r^{\,n-1}\). Se reemplazan \(a_{n}=3\,645\), \(a_{1}=5\) y \(r=3\): \(3\,645=5\cdot 3^{\,n-1}\).</li>
+    <li>Se divide por \(5\) en los dos lados: \(3^{\,n-1}=3\,645:5=729\).</li>
+    <li>Se buscan las potencias de \(3\), una por una, triplicando cada vez: \(3^{1}=3\), \(3^{2}=9\), \(3^{3}=27\), \(3^{4}=81\), \(3^{5}=243\), \(3^{6}=729\).</li>
+    <li>Entonces \(n-1=6\). No hay otro exponente posible: cada potencia de \(3\) es el triple de la anterior, así que son cada vez mayores y ninguna otra vale \(729\).</li>
+    <li>Se suma \(1\) en los dos lados: \(n=6+1=7\). El \(3\,645\) es el término de la posición \(7\).</li>
+    <li>Comprobación: \(a_{7}=5\cdot 3^{\,7-1}=5\cdot 3^{6}=5\cdot 729=3\,645\). ✓</li>
+  </ol>
+  <p>Aquí el exponente se encontró probando. Más adelante, con logaritmos, se despeja directamente; en esta hoja no se usan.</p>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: encontrar el primer término, con razón negativa. \(r=-2\) y \(a_{6}=-96\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Fórmula con \(n=6\): \(a_{6}=a_{1}\cdot r^{\,6-1}\). Se resta en el exponente, \(6-1=5\): \(a_{6}=a_{1}\cdot r^{5}\).</li>
+    <li>Se reemplazan \(a_{6}=-96\) y \(r=-2\): \(-96=a_{1}\cdot(-2)^{5}\).</li>
+    <li>Se calcula la potencia, multiplicando por \(-2\) cada vez: \((-2)^{1}=-2\), \((-2)^{2}=4\), \((-2)^{3}=-8\), \((-2)^{4}=16\), \((-2)^{5}=-32\).</li>
+    <li>Queda \(-96=a_{1}\cdot(-32)\). Se divide por \(-32\) en los dos lados: \(a_{1}=\dfrac{-96}{-32}=3\).</li>
+    <li>Comprobación, término a término: \(3\), \(3\cdot(-2)=-6\), \(-6\cdot(-2)=12\), \(12\cdot(-2)=-24\), \(-24\cdot(-2)=48\), \(48\cdot(-2)=-96\). El sexto es \(-96\). ✓</li>
+    <li>Con razón negativa los signos se alternan: \(3,\ -6,\ 12,\ -24,\ 48,\ -96,\ \ldots\)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la fórmula a partir de dos términos. \(a_{3}=12\) y \(a_{5}=108\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se parte del término conocido \(a_{3}\) (recuadro «Partiendo de otro término», con \(n=5\) y \(k=3\)): \(a_{5}=a_{3}\cdot r^{\,5-3}\). Se resta en el exponente, \(5-3=2\): \(a_{5}=a_{3}\cdot r^{2}\).</li>
+    <li>Se reemplazan \(a_{5}=108\) y \(a_{3}=12\): \(108=12\cdot r^{2}\).</li>
+    <li>Se divide por \(12\) en los dos lados: \(r^{2}=108:12=9\).</li>
+    <li><b>El exponente es par: hay que buscar todas las soluciones.</b> Se resta \(9\): \(r^{2}-9=0\). Se factoriza la diferencia de cuadrados: \((r-3)(r+3)=0\). Un producto vale cero solo si un factor vale cero: \(r=3\) o \(r=-3\). Las dos sirven: \(3\cdot 3=9\) y \((-3)\cdot(-3)=9\).</li>
+    <li>Primer término. Fórmula con \(n=3\): \(a_{3}=a_{1}\cdot r^{\,3-1}=a_{1}\cdot r^{2}\). Con \(a_{3}=12\) y \(r^{2}=9\) (vale para las dos razones): \(12=a_{1}\cdot 9\). Se divide por \(9\): \(a_{1}=\dfrac{12}{9}=\dfrac{4}{3}\).</li>
+    <li><b>Hay dos progresiones que cumplen los datos:</b> \[a_{n}=\dfrac{4}{3}\cdot 3^{\,n-1}\qquad\text{o}\qquad a_{n}=\dfrac{4}{3}\cdot(-3)^{\,n-1}.\]</li>
+    <li>Comprobación de la primera: \(a_{3}=\dfrac{4}{3}\cdot 3^{2}=\dfrac{4}{3}\cdot 9=12\) ✓; \(3^{4}=81\) y \(a_{5}=\dfrac{4}{3}\cdot 81=108\) ✓. Sus términos: \(\dfrac{4}{3},\ 4,\ 12,\ 36,\ 108,\ \ldots\)</li>
+    <li>Comprobación de la segunda: \((-3)^{2}=9\) y \(a_{3}=\dfrac{4}{3}\cdot 9=12\) ✓; \((-3)^{4}=81\) y \(a_{5}=\dfrac{4}{3}\cdot 81=108\) ✓. Sus términos: \(\dfrac{4}{3},\ -4,\ 12,\ -36,\ 108,\ \ldots\)</li>
+    <li>Sin otro dato (por ejemplo, el signo de \(a_{4}\)) no se puede elegir entre las dos.</li>
+  </ol>
+  <p><b>Y si el cuadrado saliera negativo.</b> Con \(a_{3}=12\) y \(a_{5}=-108\) quedaría \(r^{2}=-108:12=-9\). El cuadrado de un número real nunca es negativo: ninguna progresión geométrica de números reales cumple esos datos.</p>
+  <p><b>Con exponente impar hay una sola razón real</b> (aviso de rigor, 3): ejercicio B.</p>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Elevar a \(n\) en vez de \(n-1\): en el ejemplo 1, \(3\cdot 2^{10}=3\cdot 1\,024=3\,072\) es \(a_{11}\), no \(a_{10}\). Multiplicar antes de elevar: en \(3\cdot 2^{9}\) primero va la potencia; \(3\cdot 2=6\) y \(6^{9}\) es otro número. Perder el signo con razón negativa: \((-2)^{5}=-32\), pero \((-2)^{4}=16\); con exponente par el resultado es positivo. Quedarse con una sola razón cuando el exponente es par: \(r^{2}=9\) da \(r=3\) y también \(r=-3\). Y olvidar que \(n\) tiene que ser un entero positivo: si el número buscado cae entre dos potencias seguidas, no es término de la sucesión.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula: (a) el término \(a_{8}\) de \(2,\ 6,\ 18,\ \ldots\); (b) el término \(a_{6}\) de \(81,\ 54,\ 36,\ \ldots\)</p>
+    <details><summary>Pista</summary><div><p>Primero la razón, dividiendo un término por el anterior; después, \(a_{n}=a_{1}\cdot r^{\,n-1}\). En (b) la razón es una fracción.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Datos: \(a_{1}=2\); razón, \(r=\dfrac{6}{2}=3\) (y \(\dfrac{18}{6}=3\)); \(n=8\).</li>
+        <li>Se reemplaza en \(a_{n}=a_{1}\cdot r^{\,n-1}\): \(a_{8}=2\cdot 3^{\,8-1}\).</li>
+        <li>Se resta, \(8-1=7\): \(a_{8}=2\cdot 3^{7}\).</li>
+        <li>Potencia, triplicando cada vez: \(3^{1}=3\), \(3^{2}=9\), \(3^{3}=27\), \(3^{4}=81\), \(3^{5}=243\), \(3^{6}=729\), \(3^{7}=2\,187\).</li>
+        <li>Se multiplica: \(a_{8}=2\cdot 2\,187=4\,374\).</li>
+        <li>(b) Datos: \(a_{1}=81\); razón, \(r=\dfrac{54}{81}=\dfrac{2}{3}\) (se simplifica por \(27\): \(54:27=2\), \(81:27=3\)); y \(\dfrac{36}{54}=\dfrac{2}{3}\) (se simplifica por \(18\): \(36:18=2\), \(54:18=3\)); \(n=6\).</li>
+        <li>Se reemplaza: \(a_{6}=81\cdot\left(\dfrac{2}{3}\right)^{6-1}\). Se resta, \(6-1=5\): \(a_{6}=81\cdot\left(\dfrac{2}{3}\right)^{5}\).</li>
+        <li>La potencia es el producto de cinco fracciones iguales; se multiplican los numeradores entre sí y los denominadores entre sí. Numerador: \(2\cdot 2\cdot 2\cdot 2\cdot 2=32\). Denominador: \(3\cdot 3\cdot 3\cdot 3\cdot 3=243\). Entonces \(\left(\dfrac{2}{3}\right)^{5}=\dfrac{32}{243}\).</li>
+        <li>Se multiplica: \(a_{6}=81\cdot\dfrac{32}{243}=\dfrac{81\cdot 32}{243}\). Como \(243=81\cdot 3\), se simplifica por \(81\): \(a_{6}=\dfrac{32}{3}\).</li>
+        <li>Comprobación, término a término (cada uno es el anterior por \(\dfrac{2}{3}\)): \(81,\ 54,\ 36,\ 24,\ 16,\ \dfrac{32}{3}\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>En una progresión geométrica, \(a_{2}=6\) y \(a_{5}=162\). (a) Encuentra la razón, el primer término y la fórmula de \(a_{n}\). (b) ¿Es \(1\,000\) uno de sus términos?</p>
+    <details><summary>Pista</summary><div><p>Usa \(a_{5}=a_{2}\cdot r^{\,5-2}\). El exponente es impar: hay una sola razón real. En (b), mira si \(1\,000:2\) es una potencia de \(3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Partiendo de \(a_{2}\) (con \(n=5\) y \(k=2\)): \(a_{5}=a_{2}\cdot r^{\,5-2}\). Se resta, \(5-2=3\): \(a_{5}=a_{2}\cdot r^{3}\).</li>
+        <li>Se reemplazan \(a_{5}=162\) y \(a_{2}=6\): \(162=6\cdot r^{3}\).</li>
+        <li>Se divide por \(6\) en los dos lados: \(r^{3}=162:6=27\).</li>
+        <li>Se busca un número cuyo cubo sea \(27\): \(3\cdot 3=9\) y \(9\cdot 3=27\), así que \(r=3\) sirve. El exponente es impar: es la única solución real (aviso de rigor, 3). \(r=3\).</li>
+        <li>Primer término. Por la definición, \(a_{2}=a_{1}\cdot r\): \(6=a_{1}\cdot 3\). Se divide por \(3\): \(a_{1}=6:3=2\).</li>
+        <li>Fórmula: \(a_{n}=2\cdot 3^{\,n-1}\).</li>
+        <li>Comprobación: \(a_{2}=2\cdot 3^{1}=2\cdot 3=6\) ✓; \(3^{4}=81\) y \(a_{5}=2\cdot 3^{4}=2\cdot 81=162\) ✓.</li>
+        <li>(b) Se plantea \(a_{n}=1\,000\): \(2\cdot 3^{\,n-1}=1\,000\).</li>
+        <li>Se divide por \(2\) en los dos lados: \(3^{\,n-1}=1\,000:2=500\).</li>
+        <li>Potencias de \(3\): \(3^{0}=1\), \(3^{1}=3\), \(3^{2}=9\), \(3^{3}=27\), \(3^{4}=81\), \(3^{5}=243\), \(3^{6}=729\). El \(500\) queda entre \(243\) y \(729\), dos potencias seguidas; como las potencias de \(3\) son cada vez mayores, \(500\) no es ninguna de ellas.</li>
+        <li>No hay entero \(n\) que cumpla la igualdad: \(1\,000\) no es término. Queda entre \(a_{6}=2\cdot 243=486\) y \(a_{7}=2\cdot 729=1\,458\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una pelota se suelta desde \(256\) centímetros de altura. Se usa este modelo: después de cada rebote sube hasta \(\dfrac{3}{4}\) de la altura anterior. (En una pelota real esa proporción no es exactamente constante; es una simplificación.) (a) ¿Hasta qué altura sube después del cuarto rebote? (b) ¿Después de cuál rebote queda por primera vez bajo \(100\) centímetros?</p>
+    <details><summary>Pista</summary><div><p>Las alturas forman una progresión geométrica con \(a_{1}=256\) y \(r=\dfrac{3}{4}\). Ojo con las posiciones: \(a_{1}\) es la altura inicial, así que la altura después del rebote número \(m\) es \(a_{m+1}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Modelo: \(a_{1}=256\) centímetros es la altura inicial y cada altura es la anterior por \(\dfrac{3}{4}\): progresión geométrica con \(r=\dfrac{3}{4}\). \(a_{2}\) es la altura después del primer rebote; \(a_{5}\), después del cuarto.</li>
+        <li>(a) Fórmula \(a_{n}=a_{1}\cdot r^{\,n-1}\) con \(n=5\): \(a_{5}=256\cdot\left(\dfrac{3}{4}\right)^{5-1}\). Se resta, \(5-1=4\): \(a_{5}=256\cdot\left(\dfrac{3}{4}\right)^{4}\).</li>
+        <li>La potencia es el producto de cuatro fracciones iguales. Numerador: \(3\cdot 3\cdot 3\cdot 3=81\). Denominador: \(4\cdot 4\cdot 4\cdot 4=256\). Entonces \(\left(\dfrac{3}{4}\right)^{4}=\dfrac{81}{256}\).</li>
+        <li>Se multiplica: \(a_{5}=256\cdot\dfrac{81}{256}=\dfrac{256\cdot 81}{256}\). Se simplifica por \(256\): \(a_{5}=81\). Después del cuarto rebote sube hasta \(81\) centímetros.</li>
+        <li>(b) Se calculan las alturas una por una, multiplicando por \(\dfrac{3}{4}\) (se divide por \(4\) y se multiplica por \(3\)). \(a_{2}=256\cdot\dfrac{3}{4}\): \(256:4=64\), \(64\cdot 3=192\).</li>
+        <li>\(a_{3}=192\cdot\dfrac{3}{4}\): \(192:4=48\), \(48\cdot 3=144\).</li>
+        <li>\(a_{4}=144\cdot\dfrac{3}{4}\): \(144:4=36\), \(36\cdot 3=108\).</li>
+        <li>\(a_{5}=108\cdot\dfrac{3}{4}\): \(108:4=27\), \(27\cdot 3=81\). Coincide con (a). ✓</li>
+        <li>Se compara con \(100\): \(192\), \(144\) y \(108\) son mayores que \(100\); \(81\) es menor. Queda por primera vez bajo \(100\) centímetros después del cuarto rebote.</li>
+        <li>Desde ahí sigue bajo \(100\): cada altura es \(\dfrac{3}{4}\) de la anterior, que es positiva, así que es menor que la anterior.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H22 · v001 · Pendiente de APR</span>
+</footer>
+</article>

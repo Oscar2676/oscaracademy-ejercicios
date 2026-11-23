@@ -1,0 +1,274 @@
+<!--file:H23_identificar_una_serie_geometrica_infinita.html-->
+<!--title:Identificar una serie geométrica infinita-->
+<!--id:ss-identificar-geo-->
+<!--tab:H23 Identificar una serie geométrica infinita-->
+<article class="sheet" id="ss-identificar-geo" data-hoja="L25 H23">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Identificar una serie geométrica infinita</b></li>
+    </ol>
+    <h1>Identificar una serie geométrica infinita</h1>
+    <p class="lede">Una serie geométrica infinita es la suma indicada de todos los términos de una progresión geométrica. Identificarla es responder tres preguntas: ¿es geométrica?, ¿cuál es su primer término \(a\)?, ¿cuál es su razón \(r\)? La prueba es una sola: en una serie de términos distintos de cero, se divide cada término por el anterior; la serie es geométrica exactamente cuando ese cociente vale lo mismo para <b>todo</b> \(n\). \[\dfrac{a_{n+1}}{a_{n}}=r\ \text{ para todo }n\quad\Longleftrightarrow\quad\sum_{n=1}^{\infty}a_{n}=\sum_{n=1}^{\infty}a\,r^{\,n-1},\ \text{ con }a=a_{1}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{18}{3^{n}}=6+2+\dfrac{2}{3}+\dfrac{2}{9}+\cdots\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las cuatro barras azules (paso 1):</b> cada una es un término, y su largo es su valor: \(a_{1}=6\), \(a_{2}=2\), \(a_{3}=\dfrac{2}{3}\), \(a_{4}=\dfrac{2}{9}\). Arriba queda la pregunta: ¿es geométrica?, ¿cuánto valen \(a\) y \(r\)?</li>
+    <li><b>Paso 2, en naranja:</b> cada barra se parte en tres trozos iguales, y una punteada sube desde el extremo de la barra de abajo: la barra de abajo mide justo un trozo. Entre las dos barras queda escrito el cociente: los tres valen \(\dfrac{1}{3}\).</li>
+    <li><b>Paso 3, las dos barras de más abajo:</b> son un término cualquiera, \(a_{n}\), y el que le sigue, \(a_{n+1}\). Con el término general se calcula el cociente una sola vez, para todo \(n\), y también da \(\dfrac{1}{3}\). Tres cocientes iguales no bastaban; esto sí.</li>
+    <li><b>Pasos 4 y 5:</b> en burdeo, el primer término, \(a=6\), y la razón, \(r=\dfrac{1}{3}\). En verde, a la derecha de cada barra, el mismo término escrito como \(6\) por una potencia de \(\dfrac{1}{3}\). La respuesta se escribe bajo la pregunta.</li>
+    <li><b>Registro y cuenta de abajo:</b> cada paso queda escrito, numerado, uno bajo el otro: los cuatro términos, los tres cocientes, el cociente general, \(a\) y \(r\), y la serie en la forma \(\displaystyle\sum_{n=1}^{\infty}6\left(\dfrac{1}{3}\right)^{n-1}\). Conclusión: es geométrica, con \(a=6\) (no \(18\)) y \(r=\dfrac{1}{3}\).</li>
+  </ol>
+  <div class="stage" data-scene="idg-idea"></div>
+  <ul class="keys">
+    <li><b>Barras azules:</b> los términos \(a_{1},\ a_{2},\ a_{3},\ a_{4}\); el largo de cada barra es el valor del término.</li>
+    <li><b>Naranja:</b> el primer tercio de cada barra, la punteada que lo une con la barra siguiente y el cociente entre los dos términos vecinos.</li>
+    <li><b>Dos barras de abajo:</b> un término cualquiera, \(a_{n}\), y el siguiente, \(a_{n+1}\): el cociente general.</li>
+    <li><b>Burdeo:</b> lo que se busca: el primer término \(a\) y la razón \(r\).</li>
+    <li><b>Verde:</b> cada término escrito en la forma \(a\,r^{\,n-1}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Progresión geométrica</b> (hoja «Determinar la razón r de una progresión geométrica»): una sucesión en que cada término es el anterior multiplicado por un mismo número \(r\), la razón: \(a_{n+1}=a_{n}\cdot r\), con \(a_{1}\neq 0\) y \(r\neq 0\).</li>
+      <li><b>Serie geométrica infinita</b> (hoja «Series geométricas infinitas»): la suma indicada de todos los términos de una progresión geométrica, \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+ar^{3}+\cdots\), con \(a\neq 0\). El número \(a\) es el <b>primer término</b> y \(r\) es la <b>razón</b>.</li>
+      <li><b>En esta hoja, \(r\neq 0\).</b> Con \(a\neq 0\) y \(r\neq 0\), cada término \(a\,r^{\,n-1}\) es un producto de números distintos de cero, así que es distinto de cero: se puede dividir por cualquier término. (La hoja «Series geométricas infinitas» también llama geométrica a \(a+0+0+\cdots\), con \(r=0\). Esa se reconoce a simple vista, y en ella no se pueden formar los cocientes, porque no se divide por \(0\).)</li>
+      <li><b>Identificar</b> una serie es: decidir si es geométrica y, si lo es, dar \(a\) y \(r\) y escribirla en la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\).</li>
+      <li><b>Para qué sirve:</b> en la hoja «Series geométricas infinitas» se demuestra que la serie converge exactamente cuando \(|r|&lt;1\), y que entonces su suma es \(\dfrac{a}{1-r}\). Para usar ese resultado hay que tener \(a\) y \(r\). En esta hoja no se suma: eso se hace en la hoja «Suma de una serie geométrica infinita».</li>
+    </ol>
+    <p><b>Procedimiento.</b></p>
+    <ol class="steps">
+      <li><b>Se escriben los primeros términos,</b> reemplazando el índice. El primer término es el que resulta al reemplazar el <b>primer</b> índice de la suma, sea \(1\), \(0\) u otro.</li>
+      <li><b>Se calcula el cociente general</b> \(\dfrac{a_{n+1}}{a_{n}}\): el término siguiente (se reemplaza \(n\) por \(n+1\)) dividido por el término, y se simplifica con las leyes de las potencias.</li>
+      <li><b>Se mira si el resultado depende de \(n\).</b> Si no depende, la serie es geométrica: \(r\) es ese cociente y \(a\) es el primer término. Si depende, no es geométrica; para dejarlo demostrado basta mostrar dos cocientes distintos.</li>
+      <li><b>Se reescribe</b> en la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) y se comprueba con un término.</li>
+    </ol>
+    <p><b>Si la suma empieza en otro índice.</b> Sea \(\displaystyle\sum_{n=m}^{\infty}c\,q^{\,n}\), con \(c\neq 0\), \(q\neq 0\) y \(m\) un entero mayor o igual que \(0\). Su primer término es \(c\,q^{\,m}\) (se reemplaza \(n=m\)) y su razón es \(q\): \(\dfrac{c\,q^{\,n+1}}{c\,q^{\,n}}=q\), al simplificar por \(c\) y por \(q^{\,n}\). Entonces \(\displaystyle\sum_{n=m}^{\infty}c\,q^{\,n}=\sum_{n=1}^{\infty}\left(c\,q^{\,m}\right)q^{\,n-1}\). Las dos sumas tienen los mismos términos en el mismo orden: el término \(n\) de la segunda es \(c\,q^{\,m}\cdot q^{\,n-1}=c\,q^{\,m+n-1}\) (producto de potencias de igual base), que con \(n=1,\ 2,\ 3,\ \ldots\) da \(c\,q^{\,m},\ c\,q^{\,m+1},\ c\,q^{\,m+2},\ \ldots\)</p>
+    <p><b>Aviso de rigor.</b> Se usan sin demostrar: (1) las leyes de las potencias de exponente entero: \(x^{0}=1\), \(x^{n+1}=x^{n}\cdot x\), \(x^{m}\cdot x^{n}=x^{m+n}\) y \(\dfrac{x^{n}}{y^{n}}=\left(\dfrac{x}{y}\right)^{n}\), con \(x\neq 0\), \(y\neq 0\); (2) que un producto de números distintos de cero es distinto de cero; (3) el principio de inducción (la demostración del recuadro siguiente es por inducción, con sus dos partes escritas); (4) que un decimal periódico como \(0{,}777\ldots\) es, por lo que significa la escritura decimal, la suma \(\dfrac{7}{10}+\dfrac{7}{100}+\dfrac{7}{1000}+\cdots\) De la hoja «Series geométricas infinitas» se cita, ya demostrado allí con su propio aviso de rigor, cuándo converge una serie geométrica y cuánto suma; aquí solo se menciona. En el ejercicio C, el rebote de la pelota es un modelo declarado, no un dato medido.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>El criterio, demostrado en los dos sentidos</h3>
+    <p><b>Teorema.</b> Sea \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) una serie con \(a_{n}\neq 0\) para todo \(n\). Estas dos afirmaciones dicen lo mismo:</p>
+    <ol class="steps">
+      <li><b>(G)</b> La serie es geométrica: hay números \(a\neq 0\) y \(r\neq 0\) tales que \(a_{n}=a\,r^{\,n-1}\) para todo \(n\ge 1\).</li>
+      <li><b>(C)</b> El cociente entre cada término y el anterior es constante: hay un número \(r\) tal que \(\dfrac{a_{n+1}}{a_{n}}=r\) para todo \(n\ge 1\).</li>
+    </ol>
+    <p>Y cuando se cumplen, \(a=a_{1}\) y la razón es ese cociente.</p>
+    <p><b>Primera parte: si es geométrica (G), el cociente es constante (C).</b></p>
+    <ol class="steps">
+      <li>Por (G), \(a_{n}=a\,r^{\,n-1}\). El término siguiente se obtiene reemplazando \(n\) por \(n+1\): el exponente es \((n+1)-1=n\), y queda \(a_{n+1}=a\,r^{\,n}\).</li>
+      <li>Cociente: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{a\,r^{\,n}}{a\,r^{\,n-1}}\).</li>
+      <li>Se simplifica por \(a\), que es distinto de cero: \(\dfrac{r^{\,n}}{r^{\,n-1}}\).</li>
+      <li>Ley de las potencias: \(r^{\,n}=r^{\,n-1}\cdot r\). Queda \(\dfrac{r^{\,n-1}\cdot r}{r^{\,n-1}}\).</li>
+      <li>Se simplifica por \(r^{\,n-1}\), que es distinto de cero porque \(r\neq 0\): el cociente vale \(r\).</li>
+      <li>El resultado, \(r\), no depende de \(n\): se cumple (C). Además, con \(n=1\): \(a_{1}=a\,r^{\,0}=a\cdot 1=a\).</li>
+    </ol>
+    <p><b>Segunda parte: si el cociente es constante (C), es geométrica (G).</b></p>
+    <ol class="steps">
+      <li>Por (C), \(\dfrac{a_{n+1}}{a_{n}}=r\) para todo \(n\). Se multiplica cada lado por \(a_{n}\): \(a_{n+1}=r\,a_{n}\), para todo \(n\ge 1\).</li>
+      <li><b>\(r\neq 0\):</b> si fuera \(r=0\), sería \(a_{2}=0\cdot a_{1}=0\), y todos los términos son distintos de cero.</li>
+      <li>Se llama \(a\) al primer término: \(a=a_{1}\). Es distinto de cero, porque todos los términos lo son.</li>
+      <li><b>Inducción, primer caso (\(n=1\)):</b> \(a\,r^{\,1-1}=a\,r^{\,0}=a\cdot 1=a=a_{1}\). La fórmula \(a_{n}=a\,r^{\,n-1}\) vale para \(n=1\).</li>
+      <li><b>Inducción, paso de \(n\) a \(n+1\):</b> si \(a_{n}=a\,r^{\,n-1}\), entonces, por el paso 1, \(a_{n+1}=r\,a_{n}=r\cdot a\,r^{\,n-1}\). Se ordena el producto y se usa \(r^{\,n-1}\cdot r=r^{\,n}\): \(a_{n+1}=a\,r^{\,n}=a\,r^{\,(n+1)-1}\). La fórmula vale para \(n+1\).</li>
+      <li>Por inducción, \(a_{n}=a\,r^{\,n-1}\) para todo \(n\ge 1\), con \(a\neq 0\) y \(r\neq 0\): se cumple (G). (Es el término general que se estudia en la hoja «Término enésimo de una sucesión geométrica».)</li>
+    </ol>
+    <p><b>Por qué no basta con probar los primeros cocientes.</b> La afirmación (C) pide el mismo cociente para <b>todo</b> \(n\), y eso solo se puede comprobar con el término general.</p>
+    <ol class="steps">
+      <li>La lista \(1+2+4+\cdots\) no dice qué sigue. Si el término general es \(2^{\,n-1}\), sigue \(8\). Si es \(\dfrac{n^{2}-n+2}{2}\), sigue \(7\) (ejemplo 4). Las dos listas empiezan igual.</li>
+      <li>Con una lista sin fórmula solo se puede decir «parece geométrica», o bien «si sigue con el mismo patrón, es geométrica con \(a=1\) y \(r=2\)».</li>
+      <li>Con el término general se calcula \(\dfrac{a_{n+1}}{a_{n}}\) una sola vez, con la letra \(n\), y el resultado vale para todos los \(n\): eso es una demostración.</li>
+      <li>Al revés es más fácil: para demostrar que una serie <b>no</b> es geométrica bastan dos cocientes distintos, porque entonces (C) no se cumple.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>¿Geométrica o no? Número ↔ figura</h3>
+    <p>Siete series, cada una dada por su término general. El deslizador elige la serie; el dibujo muestra sus cinco primeros términos y los cuatro cocientes entre vecinos.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero la fila de arriba:</b> la serie elegida y, debajo, sus cinco primeros términos, \(a_{1}\) a \(a_{5}\), en azul.</li>
+      <li><b>Mira después la fila naranja:</b> bajo cada par de términos vecinos está su cociente, el de la derecha dividido por el de la izquierda.</li>
+      <li><b>Mira la gráfica:</b> en horizontal va \(n\); en vertical, el cociente \(\dfrac{a_{n+1}}{a_{n}}\). Cada punto naranja es un cociente, con su valor escrito y una punteada hasta el eje. Si los cuatro puntos están a la misma altura, una recta burdeo horizontal pasa por ellos: su altura es la razón \(r\). Si están a alturas distintas, no hay recta.</li>
+      <li><b>Mueve el deslizador «serie»:</b> las series 1, 3 y 5 son geométricas (razón positiva, negativa y mayor que \(1\)); las series 2, 4 y 6 no lo son; la serie 7 es el caso límite: todos los términos iguales, razón \(1\).</li>
+      <li><b>Cuenta de abajo:</b> para la serie elegida, los términos por reemplazo, dos cocientes calculados, el cociente general simplificado y la conclusión. Si es geométrica: \(a\), \(r\), la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\) y una comprobación. Los cuatro puntos del dibujo solo muestran; lo que demuestra es el cociente general.</li>
+    </ol>
+    <div class="stage" data-scene="idg-vivo"></div>
+    <ul class="keys">
+      <li><b>Azul:</b> los cinco primeros términos de la serie elegida.</li>
+      <li><b>Naranja:</b> los cocientes entre términos vecinos, en la fila y como puntos de la gráfica, cada punto con su punteada hasta el eje.</li>
+      <li><b>Recta burdeo horizontal:</b> aparece solo cuando los cocientes son iguales; su altura es la razón \(r\).</li>
+      <li><b>Caso límite (serie 7):</b> \(2+2+2+\cdots\) Los cocientes valen \(1\): es geométrica con \(r=1\) (y también aritmética, con diferencia \(0\)).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: una serie disfrazada. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3\cdot 2^{n}}{5^{n+1}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primer término, con \(n=1\): \(\dfrac{3\cdot 2^{1}}{5^{2}}=\dfrac{3\cdot 2}{25}=\dfrac{6}{25}\).</li>
+    <li>Segundo término, con \(n=2\): \(\dfrac{3\cdot 2^{2}}{5^{3}}=\dfrac{3\cdot 4}{125}=\dfrac{12}{125}\).</li>
+    <li>Tercer término, con \(n=3\): \(\dfrac{3\cdot 2^{3}}{5^{4}}=\dfrac{3\cdot 8}{625}=\dfrac{24}{625}\).</li>
+    <li>Término siguiente: se reemplaza \(n\) por \(n+1\). El exponente de abajo es \((n+1)+1=n+2\): \(a_{n+1}=\dfrac{3\cdot 2^{n+1}}{5^{n+2}}\).</li>
+    <li>Cociente general. Dividir por una fracción es multiplicar por su inversa: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{3\cdot 2^{n+1}}{5^{n+2}}\cdot\dfrac{5^{n+1}}{3\cdot 2^{n}}=\dfrac{3\cdot 2^{n+1}\cdot 5^{n+1}}{3\cdot 2^{n}\cdot 5^{n+2}}\).</li>
+    <li>Se simplifica por \(3\): \(\dfrac{2^{n+1}\cdot 5^{n+1}}{2^{n}\cdot 5^{n+2}}\).</li>
+    <li>Como \(2^{n+1}=2^{n}\cdot 2\), se simplifica por \(2^{n}\): \(\dfrac{2\cdot 5^{n+1}}{5^{n+2}}\).</li>
+    <li>Como \(5^{n+2}=5^{n+1}\cdot 5\), se simplifica por \(5^{n+1}\): \(\dfrac{2}{5}\).</li>
+    <li>El cociente, \(\dfrac{2}{5}\), no depende de \(n\): la serie es geométrica, con razón \(r=\dfrac{2}{5}\).</li>
+    <li>Primer término: \(a=\dfrac{6}{25}\), el del paso 1 (no es \(3\)).</li>
+    <li>Forma pedida: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3\cdot 2^{n}}{5^{n+1}}=\sum_{n=1}^{\infty}\dfrac{6}{25}\left(\dfrac{2}{5}\right)^{n-1}\).</li>
+    <li>Comprobación con \(n=3\). Potencia: \(\left(\dfrac{2}{5}\right)^{2}=\dfrac{4}{25}\). Producto: \(\dfrac{6}{25}\cdot\dfrac{4}{25}=\dfrac{24}{625}\), el tercer término. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: empieza en \(n=0\) y cambia de signo. \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El primer índice es \(0\). Primer término, con \(n=0\): \(\dfrac{(-1)^{0}}{2^{0}}=\dfrac{1}{1}=1\).</li>
+    <li>Con \(n=1\): \(\dfrac{(-1)^{1}}{2^{1}}=\dfrac{-1}{2}=-\dfrac{1}{2}\). Con \(n=2\): \(\dfrac{(-1)^{2}}{2^{2}}=\dfrac{1}{4}\). La serie es \(1-\dfrac{1}{2}+\dfrac{1}{4}-\cdots\)</li>
+    <li>Término siguiente: \(a_{n+1}=\dfrac{(-1)^{n+1}}{2^{n+1}}\).</li>
+    <li>Cociente general: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{(-1)^{n+1}}{2^{n+1}}\cdot\dfrac{2^{n}}{(-1)^{n}}=\dfrac{(-1)^{n+1}\cdot 2^{n}}{(-1)^{n}\cdot 2^{n+1}}\).</li>
+    <li>Como \((-1)^{n+1}=(-1)^{n}\cdot(-1)\), se simplifica por \((-1)^{n}\): \(\dfrac{(-1)\cdot 2^{n}}{2^{n+1}}\).</li>
+    <li>Como \(2^{n+1}=2^{n}\cdot 2\), se simplifica por \(2^{n}\): \(\dfrac{-1}{2}=-\dfrac{1}{2}\).</li>
+    <li>El cociente no depende de \(n\): la serie es geométrica, con \(r=-\dfrac{1}{2}\). La razón negativa es la que hace alternar los signos.</li>
+    <li>Primer término: \(a=1\), el de \(n=0\) (paso 1).</li>
+    <li>Forma pedida, con el índice desde \(1\): \(\displaystyle\sum_{n=0}^{\infty}\dfrac{(-1)^{n}}{2^{n}}=\sum_{n=1}^{\infty}1\cdot\left(-\dfrac{1}{2}\right)^{n-1}\).</li>
+    <li>Comprobación con \(n=3\) en la forma nueva: \(\left(-\dfrac{1}{2}\right)^{2}=\dfrac{1}{4}\), y \(1\cdot\dfrac{1}{4}=\dfrac{1}{4}\). Es el tercer término de la serie, el de \(n=2\) en la escritura original. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un decimal periódico. \(0{,}777\ldots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se separan las cifras decimales: \(0{,}777\ldots=0{,}7+0{,}07+0{,}007+\cdots\)</li>
+    <li>Cada sumando, como fracción: \(\dfrac{7}{10}+\dfrac{7}{100}+\dfrac{7}{1000}+\cdots=\dfrac{7}{10^{1}}+\dfrac{7}{10^{2}}+\dfrac{7}{10^{3}}+\cdots=\displaystyle\sum_{n=1}^{\infty}\dfrac{7}{10^{n}}\).</li>
+    <li>Término siguiente: \(a_{n+1}=\dfrac{7}{10^{n+1}}\).</li>
+    <li>Cociente general: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{7}{10^{n+1}}\cdot\dfrac{10^{n}}{7}=\dfrac{7\cdot 10^{n}}{7\cdot 10^{n+1}}\).</li>
+    <li>Se simplifica por \(7\): \(\dfrac{10^{n}}{10^{n+1}}\). Como \(10^{n+1}=10^{n}\cdot 10\), se simplifica por \(10^{n}\): \(\dfrac{1}{10}\).</li>
+    <li>El cociente no depende de \(n\): es geométrica, con \(r=\dfrac{1}{10}\).</li>
+    <li>Primer término, con \(n=1\): \(a=\dfrac{7}{10^{1}}=\dfrac{7}{10}\) (no es \(7\)).</li>
+    <li>Forma pedida: \(0{,}777\ldots=\displaystyle\sum_{n=1}^{\infty}\dfrac{7}{10}\left(\dfrac{1}{10}\right)^{n-1}\).</li>
+    <li>Comprobación con \(n=3\). Potencia: \(\left(\dfrac{1}{10}\right)^{2}=\dfrac{1}{100}\). Producto: \(\dfrac{7}{10}\cdot\dfrac{1}{100}=\dfrac{7}{1000}=0{,}007\), el tercer sumando. ✓</li>
+    <li>Para qué sirve: como \(|r|=\dfrac{1}{10}&lt;1\), la serie converge (hoja «Series geométricas infinitas»). Con \(a\) y \(r\) se calcula la fracción en la hoja «Suma de una serie geométrica infinita».</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: tres series que no son geométricas</h3>
+  <div class="body">
+  <p><b>(a)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\)</p>
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{1^{2}}=1\), \(a_{2}=\dfrac{1}{2^{2}}=\dfrac{1}{4}\), \(a_{3}=\dfrac{1}{3^{2}}=\dfrac{1}{9}\).</li>
+    <li>Primer cociente: \(\dfrac{a_{2}}{a_{1}}=\dfrac{1}{4}\div 1=\dfrac{1}{4}\).</li>
+    <li>Segundo cociente: \(\dfrac{a_{3}}{a_{2}}=\dfrac{1}{9}\cdot\dfrac{4}{1}=\dfrac{4}{9}\).</li>
+    <li>Se comparan multiplicando en cruz: \(1\cdot 9=9\) y \(4\cdot 4=16\). Como \(9\neq 16\), \(\dfrac{1}{4}\neq\dfrac{4}{9}\).</li>
+    <li>Hay dos cocientes distintos: la serie no es geométrica. (Cociente general: \(\dfrac{1}{(n+1)^{2}}\cdot\dfrac{n^{2}}{1}=\dfrac{n^{2}}{(n+1)^{2}}\), que depende de \(n\).)</li>
+  </ol>
+  <p><b>(b)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{2^{n}}\)</p>
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{2^{1}}=\dfrac{1}{2}\), \(a_{2}=\dfrac{2}{2^{2}}=\dfrac{2}{4}=\dfrac{1}{2}\), \(a_{3}=\dfrac{3}{2^{3}}=\dfrac{3}{8}\).</li>
+    <li>Primer cociente: \(\dfrac{a_{2}}{a_{1}}=\dfrac{1}{2}\cdot\dfrac{2}{1}=\dfrac{2}{2}=1\).</li>
+    <li>Segundo cociente: \(\dfrac{a_{3}}{a_{2}}=\dfrac{3}{8}\cdot\dfrac{2}{1}=\dfrac{6}{8}=\dfrac{3}{4}\).</li>
+    <li>Como \(1\neq\dfrac{3}{4}\), hay dos cocientes distintos: la serie no es geométrica.</li>
+    <li>Cociente general: \(\dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^{n}}{n}=\dfrac{(n+1)\cdot 2^{n}}{n\cdot 2^{n+1}}\). Como \(2^{n+1}=2^{n}\cdot 2\), se simplifica por \(2^{n}\): \(\dfrac{n+1}{2n}\). Depende de \(n\). Tener \(2^{n}\) en el denominador no basta: el numerador \(n\) cambia el cociente.</li>
+  </ol>
+  <p><b>(c)</b> Tres términos que engañan: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n^{2}-n+2}{2}\)</p>
+  <ol class="steps">
+    <li>\(a_{1}=\dfrac{1^{2}-1+2}{2}=\dfrac{1-1+2}{2}=\dfrac{2}{2}=1\).</li>
+    <li>\(a_{2}=\dfrac{2^{2}-2+2}{2}=\dfrac{4-2+2}{2}=\dfrac{4}{2}=2\).</li>
+    <li>\(a_{3}=\dfrac{3^{2}-3+2}{2}=\dfrac{9-3+2}{2}=\dfrac{8}{2}=4\).</li>
+    <li>Cocientes: \(\dfrac{a_{2}}{a_{1}}=\dfrac{2}{1}=2\) y \(\dfrac{a_{3}}{a_{2}}=\dfrac{4}{2}=2\). Hasta aquí, parece geométrica de razón \(2\).</li>
+    <li>\(a_{4}=\dfrac{4^{2}-4+2}{2}=\dfrac{16-4+2}{2}=\dfrac{14}{2}=7\).</li>
+    <li>Tercer cociente: \(\dfrac{a_{4}}{a_{3}}=\dfrac{7}{4}\). Como \(\dfrac{7}{4}\neq 2\) (porque \(2=\dfrac{8}{4}\)), la serie no es geométrica.</li>
+    <li>La serie empieza \(1+2+4\), igual que la geométrica \(\displaystyle\sum_{n=1}^{\infty}2^{\,n-1}\), y sigue con \(7\) en vez de \(8\). Tres términos no alcanzan para decidir.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Tomar como \(a\) el número que acompaña a la potencia: en \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3\cdot 2^{n}}{5^{n+1}}\), \(a\) es \(\dfrac{6}{25}\), no \(3\) (ejemplo 1). Olvidar que el primer término es el del primer índice: si la suma parte en \(n=0\), se reemplaza \(n=0\) (ejemplo 2). Dar por geométrica una serie porque sus dos o tres primeros cocientes coinciden (ejemplo 4 c). Creer que «geométrica» quiere decir «convergente»: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3^{n}}{2^{n+1}}\) es geométrica, con \(r=\dfrac{3}{2}\), y diverge porque \(|r|\ge 1\) (hoja «Series geométricas infinitas»). Restar en vez de dividir: la resta constante es la marca de una sucesión aritmética; la de una geométrica es el cociente constante. Y perder el signo: con \((-1)^{n}\) en el término general, la razón es negativa.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si cada serie es geométrica. Si lo es, da \(a\) y \(r\) y escríbela en la forma \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\): (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{5}{4^{n}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\); (c) \(\displaystyle\sum_{n=0}^{\infty}\dfrac{2\cdot 3^{n}}{7^{n}}\); (d) \(\displaystyle\sum_{n=1}^{\infty}(2n+1)\).</p>
+    <details><summary>Pista</summary><div><p>Escribe los primeros términos y calcula \(\dfrac{a_{n+1}}{a_{n}}\). En (c), el primer término es el de \(n=0\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Primer término, con \(n=1\): \(\dfrac{5}{4^{1}}=\dfrac{5}{4}\). Término siguiente: \(a_{n+1}=\dfrac{5}{4^{n+1}}\).</li>
+        <li>(a) Cociente general: \(\dfrac{5}{4^{n+1}}\cdot\dfrac{4^{n}}{5}=\dfrac{5\cdot 4^{n}}{5\cdot 4^{n+1}}\). Se simplifica por \(5\) y, como \(4^{n+1}=4^{n}\cdot 4\), por \(4^{n}\): \(\dfrac{1}{4}\).</li>
+        <li>(a) No depende de \(n\): es geométrica, con \(a=\dfrac{5}{4}\) y \(r=\dfrac{1}{4}\). Forma: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{5}{4}\left(\dfrac{1}{4}\right)^{n-1}\). Comprobación con \(n=2\): \(\dfrac{5}{4}\cdot\dfrac{1}{4}=\dfrac{5}{16}=\dfrac{5}{4^{2}}\). ✓</li>
+        <li>(b) Primeros términos: \(1,\ \dfrac{1}{2},\ \dfrac{1}{3}\). Cocientes: \(\dfrac{a_{2}}{a_{1}}=\dfrac{1}{2}\div 1=\dfrac{1}{2}\) y \(\dfrac{a_{3}}{a_{2}}=\dfrac{1}{3}\cdot\dfrac{2}{1}=\dfrac{2}{3}\).</li>
+        <li>(b) En cruz: \(1\cdot 3=3\) y \(2\cdot 2=4\); como \(3\neq 4\), \(\dfrac{1}{2}\neq\dfrac{2}{3}\). No es geométrica. (Cociente general: \(\dfrac{1}{n+1}\cdot\dfrac{n}{1}=\dfrac{n}{n+1}\), que depende de \(n\).)</li>
+        <li>(c) Primer término, con \(n=0\): \(\dfrac{2\cdot 3^{0}}{7^{0}}=\dfrac{2\cdot 1}{1}=2\). Término siguiente: \(a_{n+1}=\dfrac{2\cdot 3^{n+1}}{7^{n+1}}\).</li>
+        <li>(c) Cociente general: \(\dfrac{2\cdot 3^{n+1}}{7^{n+1}}\cdot\dfrac{7^{n}}{2\cdot 3^{n}}=\dfrac{2\cdot 3^{n+1}\cdot 7^{n}}{2\cdot 3^{n}\cdot 7^{n+1}}\). Se simplifica por \(2\); por \(3^{n}\) (queda \(3\) arriba, porque \(3^{n+1}=3^{n}\cdot 3\)); y por \(7^{n}\) (queda \(7\) abajo, porque \(7^{n+1}=7^{n}\cdot 7\)): \(\dfrac{3}{7}\).</li>
+        <li>(c) No depende de \(n\): es geométrica, con \(a=2\) y \(r=\dfrac{3}{7}\). Forma: \(\displaystyle\sum_{n=1}^{\infty}2\left(\dfrac{3}{7}\right)^{n-1}\). Comprobación con \(n=2\): \(2\cdot\dfrac{3}{7}=\dfrac{6}{7}\), y en la escritura original, con \(n=1\): \(\dfrac{2\cdot 3}{7}=\dfrac{6}{7}\). ✓</li>
+        <li>(d) Primeros términos: \(2\cdot 1+1=3\), \(2\cdot 2+1=5\), \(2\cdot 3+1=7\). Cocientes: \(\dfrac{5}{3}\) y \(\dfrac{7}{5}\).</li>
+        <li>(d) En cruz: \(5\cdot 5=25\) y \(3\cdot 7=21\); como \(25\neq 21\), \(\dfrac{5}{3}\neq\dfrac{7}{5}\). No es geométrica. Lo que sí es constante es la resta: \(5-3=2\) y \(7-5=2\). Es la serie de una sucesión aritmética de diferencia \(2\) (hoja «Sucesiones aritméticas»).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Dos series empiezan igual, \(2+6+18+\cdots\) Una tiene término general \(a_{n}=2\cdot 3^{\,n-1}\); la otra, \(b_{n}=4n^{2}-8n+6\). (a) Comprueba que sus tres primeros términos coinciden. (b) Demuestra que la primera es geométrica y da \(a\) y \(r\). (c) Demuestra que la segunda no lo es.</p>
+    <details><summary>Pista</summary><div><p>Para (b) hace falta el cociente general. Para (c) basta encontrar dos cocientes distintos: calcula \(b_{4}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Primera serie: \(a_{1}=2\cdot 3^{0}=2\cdot 1=2\), \(a_{2}=2\cdot 3^{1}=6\), \(a_{3}=2\cdot 3^{2}=2\cdot 9=18\).</li>
+        <li>(a) Segunda serie, con \(n=1\): \(b_{1}=4\cdot 1-8\cdot 1+6=4-8+6=2\).</li>
+        <li>(a) Con \(n=2\): \(b_{2}=4\cdot 4-8\cdot 2+6=16-16+6=6\). Con \(n=3\): \(b_{3}=4\cdot 9-8\cdot 3+6=36-24+6=18\). Coinciden: \(2,\ 6,\ 18\).</li>
+        <li>(b) Término siguiente: se reemplaza \(n\) por \(n+1\); el exponente es \((n+1)-1=n\): \(a_{n+1}=2\cdot 3^{\,n}\).</li>
+        <li>(b) Cociente general: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{2\cdot 3^{\,n}}{2\cdot 3^{\,n-1}}\). Se simplifica por \(2\) y, como \(3^{\,n}=3^{\,n-1}\cdot 3\), por \(3^{\,n-1}\): queda \(3\).</li>
+        <li>(b) No depende de \(n\): es geométrica, con \(a=a_{1}=2\) y \(r=3\). Ya está en la forma pedida: \(\displaystyle\sum_{n=1}^{\infty}2\cdot 3^{\,n-1}\). (Es geométrica aunque \(|r|=3\ge 1\); por eso mismo diverge, según la hoja «Series geométricas infinitas».)</li>
+        <li>(c) Cuarto término: \(b_{4}=4\cdot 16-8\cdot 4+6=64-32+6=38\).</li>
+        <li>(c) Cocientes: \(\dfrac{b_{2}}{b_{1}}=\dfrac{6}{2}=3\) y \(\dfrac{b_{4}}{b_{3}}=\dfrac{38}{18}=\dfrac{19}{9}\) (se simplifica por \(2\)).</li>
+        <li>(c) Como \(3=\dfrac{27}{9}\) y \(\dfrac{27}{9}\neq\dfrac{19}{9}\), hay dos cocientes distintos: la segunda serie no es geométrica. La geométrica sigue con \(a_{4}=2\cdot 3^{3}=2\cdot 27=54\); esta, con \(38\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una pelota se deja caer desde \(10\) metros. Modelo: en cada rebote sube \(\dfrac{3}{5}\) de la altura desde la que cayó, y los rebotes no terminan (una pelota real deja de rebotar; es un modelo). No hay que sumar nada: solo identificar. (a) Las <b>bajadas</b> forman la serie \(10+6+\dfrac{18}{5}+\cdots\) ¿Es geométrica? Da \(a\) y \(r\). (b) Cada rebote completo es una subida y la bajada que le sigue. ¿Es geométrica la serie de los rebotes completos? Da \(a\) y \(r\). (c) La distancia total es la primera bajada más todos los rebotes completos: \(10+12+\dfrac{36}{5}+\cdots\) ¿Es geométrica esa serie?</p>
+    <details><summary>Pista</summary><div><p>La bajada número \(n\) mide \(10\left(\dfrac{3}{5}\right)^{n-1}\) metros. El rebote completo número \(k\) mide el doble de la subida número \(k\). En (c), compara los dos primeros cocientes.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) La pelota baja desde la altura a la que subió, y según el modelo sube \(\dfrac{3}{5}\) de la bajada anterior: cada bajada es la anterior multiplicada por \(\dfrac{3}{5}\). Con \(d_{n}\) la bajada número \(n\): \(d_{n+1}=\dfrac{3}{5}\,d_{n}\) para todo \(n\).</li>
+        <li>(a) Comprobación con los datos: \(\dfrac{3}{5}\cdot 10=\dfrac{30}{5}=6\) y \(\dfrac{3}{5}\cdot 6=\dfrac{18}{5}\). ✓</li>
+        <li>(a) Se divide por \(d_{n}\), que es distinto de cero: \(\dfrac{d_{n+1}}{d_{n}}=\dfrac{3}{5}\) para todo \(n\). Por el criterio, la serie de las bajadas es geométrica, con \(a=10\) y \(r=\dfrac{3}{5}\): \(\displaystyle\sum_{n=1}^{\infty}10\left(\dfrac{3}{5}\right)^{n-1}\).</li>
+        <li>(b) La subida número \(k\) mide lo mismo que la bajada número \(k+1\): \(10\left(\dfrac{3}{5}\right)^{k}\). El rebote completo número \(k\) es esa subida y una bajada igual: \(c_{k}=2\cdot 10\left(\dfrac{3}{5}\right)^{k}=20\left(\dfrac{3}{5}\right)^{k}\), con \(k\ge 1\).</li>
+        <li>(b) Primer término, con \(k=1\): \(20\cdot\dfrac{3}{5}=\dfrac{60}{5}=12\). Segundo, con \(k=2\): \(20\cdot\dfrac{9}{25}=\dfrac{180}{25}=\dfrac{36}{5}\).</li>
+        <li>(b) Cociente general: \(\dfrac{c_{k+1}}{c_{k}}=\dfrac{20\left(\frac{3}{5}\right)^{k+1}}{20\left(\frac{3}{5}\right)^{k}}\). Se simplifica por \(20\) y, como \(\left(\dfrac{3}{5}\right)^{k+1}=\left(\dfrac{3}{5}\right)^{k}\cdot\dfrac{3}{5}\), por \(\left(\dfrac{3}{5}\right)^{k}\): queda \(\dfrac{3}{5}\).</li>
+        <li>(b) No depende de \(k\): es geométrica, con \(a=12\) y \(r=\dfrac{3}{5}\): \(\displaystyle\sum_{k=1}^{\infty}12\left(\dfrac{3}{5}\right)^{k-1}\).</li>
+        <li>(c) Primer cociente: \(\dfrac{12}{10}=\dfrac{6}{5}\) (se simplifica por \(2\)).</li>
+        <li>(c) Segundo cociente: \(\dfrac{36}{5}\div 12=\dfrac{36}{5}\cdot\dfrac{1}{12}=\dfrac{36}{60}=\dfrac{3}{5}\) (se simplifica por \(12\)).</li>
+        <li>(c) Como \(\dfrac{6}{5}\neq\dfrac{3}{5}\), hay dos cocientes distintos: la serie completa <b>no</b> es geométrica. La primera bajada se recorre una sola vez y las demás alturas, dos veces.</li>
+        <li>(c) Lo que sí se puede decir: la distancia total es \(10\) más una serie geométrica, la de (b), con \(a=12\) y \(r=\dfrac{3}{5}\). Como \(|r|=\dfrac{3}{5}&lt;1\), esa serie converge (hoja «Series geométricas infinitas»); sumarla es tarea de la hoja «Suma de una serie geométrica infinita».</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H23 · v001 · Pendiente de APR</span>
+</footer>
+</article>
