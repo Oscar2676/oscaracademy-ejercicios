@@ -1,0 +1,434 @@
+<!--file:H03_el_limite_y_la_relacion_con_la_grafica.html-->
+<!--title:El límite y la relación con la gráfica-->
+<!--id:lim-graf-->
+<!--tab:H03 El límite y la relación con la gráfica-->
+<article class="sheet" id="lim-graf" data-hoja="L29 H03">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de gráficas</li>
+      <li><b>El límite y la relación con la gráfica</b></li>
+    </ol>
+    <h1>El límite y la relación con la gráfica</h1>
+    <p class="lede">En la gráfica de una función, el límite se ve como una <b>altura</b>: la altura a la que se acerca la curva cuando uno camina sobre ella hacia \(x=a\), por la izquierda y por la derecha.
+    \[\lim_{x\to a}f(x)=L\quad\text{se ve así: por los dos lados de }a\text{, la curva llega a la altura }L\]
+    Sobre \(x=a\) puede haber un punto de la curva, un hueco o un punto fuera de lugar: el límite no cambia, porque no mira lo que pasa <b>en</b> \(a\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función de la animación es \(f(x)=\dfrac{x^{2}}{2}\) para todo \(x\ne 2\), y en \(x=2\) vale \(f(2)=3{,}5\). Su gráfica es una curva con un hueco y, más arriba, un punto suelto. La animación lee en ella \(\displaystyle\lim_{x\to 2}f(x)\), en seis pasos.</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo:</b> sobre \(x=2\) tiene un <b>círculo vacío</b> (un hueco) a la altura \(2\) y un <b>punto lleno</b> a la altura \(3{,}5\).</li>
+    <li><b>Mira los puntos azules</b> (paso 2): caminan sobre la curva hacia \(x=2\) desde la izquierda. Las líneas punteadas llevan cada punto al eje vertical, donde se lee su altura. Después, <b>los naranjas</b> (paso 3), desde la derecha.</li>
+    <li><b>Mira las flechas junto al eje vertical:</b> la azul sube hacia \(2\) y la naranja baja hacia \(2\). Las dos alturas llegan al mismo número.</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra: bajo la figura, el registro numerado guarda lo que se obtiene en cada paso.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada altura con su cálculo, la distancia de las últimas a \(2\), el valor \(f(2)\) (que es otra pregunta) y la conclusión: el límite es \(2\), la altura del hueco.</li>
+  </ol>
+  <div class="stage" data-scene="gra-idea"></div>
+  <ul class="keys">
+    <li><b>Curva burdeo:</b> la gráfica de \(f\). <b>Círculo vacío:</b> el hueco en \((2,2)\); ahí la curva no tiene punto. <b>Punto lleno burdeo:</b> \((2;\,3{,}5)\), el valor \(f(2)=3{,}5\).</li>
+    <li><b>Puntos azules:</b> \(x=1\), \(1{,}5\) y \(1{,}9\) (por la izquierda de \(2\)). <b>Puntos naranjas:</b> \(x=3\), \(2{,}5\) y \(2{,}1\) (por la derecha).</li>
+    <li><b>Líneas punteadas:</b> de cada punto a los dos ejes; en el horizontal se lee \(x\) y en el vertical, la altura \(f(x)\).</li>
+    <li><b>Línea punteada burdeo horizontal:</b> la altura \(2\), a la que llegan los dos lados.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar a partir de una gráfica.</b> Una gráfica dibujada muestra solo una parte de la función y con precisión limitada: <b>leer un límite en una gráfica es estimarlo</b>, no demostrarlo (el recuadro «Caso especial» da un ejemplo con números). En esta hoja cada gráfica viene acompañada de su fórmula, y los límites se justifican con ella. La justificación usa, <b>sin demostrar</b>, cuatro hechos que se demuestran con la definición formal de límite (otra hoja de este lote):</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\), las expresiones \(c\,x+d\) y \(c\,x^{2}\) (con \(c\) y \(d\) números fijos) se acercan al valor que resulta de reemplazar \(x\) por \(a\).</li>
+      <li>Si dos funciones valen lo mismo en todos los \(x\ne a\) cercanos a \(a\), tienen el mismo límite en \(a\) (o ninguna lo tiene).</li>
+      <li>Criterio de los límites laterales: \(\displaystyle\lim_{x\to a}f(x)=L\) si y solo si \(\displaystyle\lim_{x\to a^{-}}f(x)=L\) y \(\displaystyle\lim_{x\to a^{+}}f(x)=L\).</li>
+      <li>Si el límite existe, es uno solo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Cómo se lee un límite en una gráfica</h3>
+    <p>Para leer \(\displaystyle\lim_{x\to a}f(x)\) hace falta que la gráfica tenga curva a los dos lados de \(a\) (que \(f\) esté definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\)).</p>
+    <ol class="steps">
+      <li><b>Ubica \(a\)</b> en el eje horizontal.</li>
+      <li><b>Acércate por la izquierda:</b> camina sobre la curva con \(x\lt a\), hacia \(a\), y mira en el eje vertical a qué altura se va acercando. Esa altura es \(\displaystyle\lim_{x\to a^{-}}f(x)\).</li>
+      <li><b>Acércate por la derecha:</b> lo mismo con \(x\gt a\). Esa altura es \(\displaystyle\lim_{x\to a^{+}}f(x)\).</li>
+      <li><b>Compara las dos alturas.</b> Si son la misma, \(L\), entonces \(\displaystyle\lim_{x\to a}f(x)=L\). Si son distintas, el límite no existe (criterio de los límites laterales).</li>
+      <li><b>No mires el punto que está sobre \(a\).</b> Un punto lleno sobre \(a\) responde otra pregunta: cuánto vale \(f(a)\).</li>
+    </ol>
+    <p>Tres símbolos de una gráfica y lo que dice cada uno:</p>
+    <ol class="steps">
+      <li><b>Círculo vacío (hueco):</b> la curva llega hasta esa altura, pero ese punto no es de la gráfica.</li>
+      <li><b>Punto lleno:</b> ese punto sí es de la gráfica; su altura es el valor de la función.</li>
+      <li><b>Salto:</b> la curva de la izquierda y la de la derecha llegan a alturas distintas.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Cuatro gráficas, cuatro lecturas</h3>
+    <p>Cuatro funciones que se diferencian solo en lo que pasa en \(x=2\) y a su derecha. Sus fórmulas están en los ejemplos 1 a 4.</p>
+    <ol class="steps">
+      <li><b>Mira las cuatro gráficas:</b> en las tres primeras la curva es la misma recta; cambia lo que hay sobre \(x=2\) (punto lleno, hueco, hueco con punto suelto). En la cuarta, el trozo de la derecha está más arriba.</li>
+      <li><b>En cada paso se lee una gráfica:</b> la flecha azul camina sobre la curva hacia \(x=2\) por la izquierda y la naranja, por la derecha. Las líneas punteadas llevan la altura de llegada de cada flecha al eje vertical.</li>
+      <li><b>Lee bajo cada gráfica</b> el resultado: primero el límite, después el valor \(f(2)\).</li>
+      <li><b>Avanza con «paso»</b> o con «Reproducir». Nada se borra: al final quedan las cuatro lecturas a la vista y, abajo, el registro numerado.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea</b>, y compara: en las gráficas 1, 2 y 3 el límite es \(2\) aunque \(f(2)\) sea distinto en cada una; en la 4 no hay límite, porque los dos lados llegan a alturas distintas.</li>
+    </ol>
+    <div class="stage" data-scene="gra-casos"></div>
+    <ul class="keys">
+      <li><b>Flecha azul:</b> acercarse a \(x=2\) por la izquierda. <b>Flecha naranja:</b> por la derecha.</li>
+      <li><b>Líneas punteadas azul y naranja:</b> la altura a la que llega cada lado, llevada al eje vertical. Cuando las dos alturas coinciden, se ve una sola línea con los dos colores.</li>
+      <li><b>Punto lleno:</b> el valor de la función en \(x=2\). <b>Círculo vacío:</b> hueco.</li>
+    </ul>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: lo que una gráfica no alcanza a mostrar</h3>
+    <p>Dos funciones distintas pueden tener gráficas que el ojo no distingue. Por eso una lectura de gráfica es una estimación.</p>
+    <ol class="steps">
+      <li>Sean \(r(x)=\dfrac{x}{2}+1\) y \(t(x)=\dfrac{x}{2}+1{,}01\). Las dos expresiones son de la forma \(c\,x+d\).</li>
+      <li>\(\displaystyle\lim_{x\to 2}r(x)=\dfrac{2}{2}+1=1+1=2\).</li>
+      <li>\(\displaystyle\lim_{x\to 2}t(x)=\dfrac{2}{2}+1{,}01=1+1{,}01=2{,}01\).</li>
+      <li>Para todo \(x\), la distancia vertical entre las dos gráficas es \(t(x)-r(x)=1{,}01-1=0{,}01\).</li>
+      <li>En un dibujo donde cada unidad mide \(3\) centímetros, eso son \(0{,}01\cdot 3=0{,}03\) centímetros, es decir, \(0{,}3\) milímetros: menos que el grosor de la línea.</li>
+      <li>Conclusión: en ese dibujo las dos gráficas se ven iguales y la lectura da «el límite es aproximadamente \(2\)» para las dos. La fórmula distingue \(2\) de \(2{,}01\); la gráfica, no.</li>
+    </ol>
+    <p>Lo mismo pasa con los huecos: un hueco es un solo punto, sin ancho. En una gráfica hecha por computador puede no verse; en las de esta hoja se dibuja a propósito como un círculo vacío.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1 (gráfica 1): una recta sin hueco, \(f_{1}(x)=\dfrac{x}{2}+1\)</h3>
+  <div class="body">
+  <p>Leer \(\displaystyle\lim_{x\to 2}f_{1}(x)\) y compararlo con \(f_{1}(2)\).</p>
+  <ol class="steps">
+    <li>Por la izquierda de \(2\): \(f_{1}(1)=\dfrac{1}{2}+1=0{,}5+1=1{,}5\) y \(f_{1}(1{,}8)=\dfrac{1{,}8}{2}+1=0{,}9+1=1{,}9\). La altura sube hacia \(2\).</li>
+    <li>Por la derecha de \(2\): \(f_{1}(3)=\dfrac{3}{2}+1=1{,}5+1=2{,}5\) y \(f_{1}(2{,}2)=\dfrac{2{,}2}{2}+1=1{,}1+1=2{,}1\). La altura baja hacia \(2\).</li>
+    <li>Con la fórmula: cuando \(x\) se acerca a \(2\), \(\dfrac{x}{2}+1\) se acerca a \(\dfrac{2}{2}+1=1+1=2\) (hecho 1).</li>
+    <li>\(\displaystyle\lim_{x\to 2}f_{1}(x)=2\).</li>
+    <li>El valor: \(f_{1}(2)=\dfrac{2}{2}+1=2\). En la gráfica, el punto \((2,2)\) es un punto lleno de la recta.</li>
+    <li>Aquí el límite y el valor coinciden: la curva llega a la altura \(2\) y ahí mismo está su punto.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2 (gráfica 2): un hueco, \(f_{2}(x)=\dfrac{x^{2}-4}{2x-4}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=2\): numerador \(2^{2}-4=0\) y denominador \(2\cdot 2-4=0\). No se divide por \(0\): \(f_{2}(2)\) no existe. En la gráfica, sobre \(x=2\) hay un círculo vacío.</li>
+    <li>Por la izquierda: \(f_{2}(1{,}8)=\dfrac{1{,}8^{2}-4}{2\cdot 1{,}8-4}=\dfrac{3{,}24-4}{3{,}6-4}=\dfrac{-0{,}76}{-0{,}4}=1{,}9\).</li>
+    <li>Por la derecha: \(f_{2}(2{,}2)=\dfrac{2{,}2^{2}-4}{2\cdot 2{,}2-4}=\dfrac{4{,}84-4}{4{,}4-4}=\dfrac{0{,}84}{0{,}4}=2{,}1\).</li>
+    <li>Diferencia de cuadrados arriba y factor común abajo: \(x^{2}-4=(x-2)(x+2)\) y \(2x-4=2\,(x-2)\).</li>
+    <li>Si \(x\ne 2\): \(\dfrac{(x-2)(x+2)}{2\,(x-2)}=\dfrac{x+2}{2}=\dfrac{x}{2}+1\). Por eso la gráfica 2 es la misma recta de la gráfica 1, sin el punto \((2,2)\).</li>
+    <li>Las dos funciones valen lo mismo para \(x\ne 2\): tienen el mismo límite en \(2\) (hecho 2).</li>
+    <li>\(\displaystyle\lim_{x\to 2}f_{2}(x)=2\), la altura del hueco, aunque \(f_{2}(2)\) no existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3 (gráfica 3): un hueco y un punto fuera de lugar</h3>
+  <div class="body">
+  <p>Sea \(f_{3}(x)=\begin{cases}\dfrac{x}{2}+1&\text{si }x\ne 2\\[4pt] 3{,}5&\text{si }x=2\end{cases}\). Leer \(\displaystyle\lim_{x\to 2}f_{3}(x)\) y compararlo con \(f_{3}(2)\).</p>
+  <ol class="steps">
+    <li>El valor es un dato: \(f_{3}(2)=3{,}5\). En la gráfica es el punto lleno \((2;\,3{,}5)\), separado de la recta.</li>
+    <li>Cerca de \(2\), con \(x\ne 2\), se usa \(\dfrac{x}{2}+1\): \(f_{3}(1{,}8)=0{,}9+1=1{,}9\) y \(f_{3}(2{,}2)=1{,}1+1=2{,}1\).</li>
+    <li>Para \(x\ne 2\), \(f_{3}\) vale lo mismo que \(f_{1}\): tienen el mismo límite en \(2\) (hecho 2).</li>
+    <li>\(\displaystyle\lim_{x\to 2}f_{3}(x)=2\).</li>
+    <li>Comparación: \(2\ne 3{,}5\). La curva llega a la altura \(2\) (el hueco), pero el punto de la función está a la altura \(3{,}5\).</li>
+    <li>Distancia vertical entre el hueco y el punto: \(3{,}5-2=1{,}5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4 (gráfica 4): un salto, el límite no existe</h3>
+  <div class="body">
+  <p>Sea \(f_{4}(x)=\begin{cases}\dfrac{x}{2}+1&\text{si }x\lt 2\\[4pt] \dfrac{x}{2}+2&\text{si }x\ge 2\end{cases}\). ¿Existe \(\displaystyle\lim_{x\to 2}f_{4}(x)\)?</p>
+  <ol class="steps">
+    <li>Por la izquierda (\(x\lt 2\)) se usa \(\dfrac{x}{2}+1\): \(f_{4}(1{,}8)=0{,}9+1=1{,}9\). Cuando \(x\) se acerca a \(2\), se acerca a \(\dfrac{2}{2}+1=2\): \(\displaystyle\lim_{x\to 2^{-}}f_{4}(x)=2\).</li>
+    <li>Por la derecha (\(x\gt 2\)) se usa \(\dfrac{x}{2}+2\): \(f_{4}(2{,}2)=1{,}1+2=3{,}1\). Cuando \(x\) se acerca a \(2\), se acerca a \(\dfrac{2}{2}+2=3\): \(\displaystyle\lim_{x\to 2^{+}}f_{4}(x)=3\).</li>
+    <li>Las dos alturas de llegada son distintas: \(2\ne 3\).</li>
+    <li>Por el criterio de los límites laterales (hecho 3), \(\displaystyle\lim_{x\to 2}f_{4}(x)\) <b>no existe</b>.</li>
+    <li>El valor sí existe: como \(2\ge 2\), \(f_{4}(2)=\dfrac{2}{2}+2=3\) (punto lleno en \((2,3)\)). Que haya valor no arregla el límite.</li>
+    <li>En la gráfica: un salto de altura \(3-2=1\) en \(x=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: <b>responder con la altura del punto lleno</b>. En la gráfica 3 el punto lleno está en \(3{,}5\), pero el límite es \(2\): el límite es la altura a la que llega la curva, no la del punto que está sobre \(a\). Dos: <b>creer que un hueco significa «no hay límite»</b>. El hueco dice que no hay valor; el límite es justamente la altura del hueco (gráfica 2). Tres: <b>mirar un solo lado</b>. En la gráfica 4, quien camine solo por la derecha dirá «\(3\)»; por la izquierda la curva llega a \(2\), y el límite no existe.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>La gráfica de \(p\) es la recta \(y=3-x\) con un círculo vacío en \((1,2)\) y, además, un punto lleno en \((1,4)\). Es decir, \(p(x)=3-x\) si \(x\ne 1\), y \(p(1)=4\). a) ¿Cuánto vale \(p(1)\)? b) Calcula \(\displaystyle\lim_{x\to 1}p(x)\). c) ¿Coinciden?</p>
+    <details><summary>Pista</summary><div><p>El punto lleno responde a). Para b), camina sobre la recta hacia \(x=1\) por los dos lados: calcula \(p(0{,}9)\) y \(p(1{,}1)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) El punto lleno sobre \(x=1\) está a la altura \(4\): \(p(1)=4\).</li>
+        <li>b) Por la izquierda: \(p(0{,}9)=3-0{,}9=2{,}1\) y \(p(0{,}99)=3-0{,}99=2{,}01\).</li>
+        <li>Por la derecha: \(p(1{,}1)=3-1{,}1=1{,}9\) y \(p(1{,}01)=3-1{,}01=1{,}99\).</li>
+        <li>Cuando \(x\) se acerca a \(1\), \(3-x\) se acerca a \(3-1=2\) (hecho 1, con \(c=-1\) y \(d=3\)).</li>
+        <li>\(\displaystyle\lim_{x\to 1}p(x)=2\): la altura del círculo vacío.</li>
+        <li>c) No coinciden: \(2\ne 4\). La curva llega a la altura \(2\) y el punto de la función está \(4-2=2\) unidades más arriba.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>La gráfica de \(q\) tiene dos trozos: para \(x\lt 3\), la recta \(y=x-1\), que termina en un círculo vacío en \((3,2)\); para \(x\ge 3\), la recta \(y=7-x\), que empieza en un punto lleno en \((3,4)\). a) Lee los dos límites laterales en \(x=3\). ¿Existe \(\displaystyle\lim_{x\to 3}q(x)\)? b) Calcula \(\displaystyle\lim_{x\to 5}q(x)\).</p>
+    <details><summary>Pista</summary><div><p>En \(x=3\) cada lado usa su propio trozo. En \(x=5\) los dos lados están sobre el mismo trozo, \(y=7-x\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Por la izquierda de \(3\) se usa \(y=x-1\): \(q(2{,}9)=2{,}9-1=1{,}9\) y \(q(2{,}99)=2{,}99-1=1{,}99\).</li>
+        <li>Cuando \(x\) se acerca a \(3\), \(x-1\) se acerca a \(3-1=2\): \(\displaystyle\lim_{x\to 3^{-}}q(x)=2\) (la altura del círculo vacío).</li>
+        <li>Por la derecha de \(3\) se usa \(y=7-x\): \(q(3{,}1)=7-3{,}1=3{,}9\) y \(q(3{,}01)=7-3{,}01=3{,}99\).</li>
+        <li>Cuando \(x\) se acerca a \(3\), \(7-x\) se acerca a \(7-3=4\): \(\displaystyle\lim_{x\to 3^{+}}q(x)=4\).</li>
+        <li>\(2\ne 4\): por el criterio de los límites laterales, \(\displaystyle\lim_{x\to 3}q(x)\) <b>no existe</b>. Hay un salto de altura \(4-2=2\).</li>
+        <li>b) Cerca de \(5\), a los dos lados, se usa \(y=7-x\): \(q(4{,}9)=7-4{,}9=2{,}1\) y \(q(5{,}1)=7-5{,}1=1{,}9\).</li>
+        <li>Cuando \(x\) se acerca a \(5\), \(7-x\) se acerca a \(7-5=2\): \(\displaystyle\lim_{x\to 5}q(x)=2\), que coincide con \(q(5)=2\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La pantalla de un cargador dibuja la carga de una batería, en porcentaje, según el tiempo \(t\) en minutos. <b>Modelo:</b> la gráfica es la recta \(C(t)=20+2t\), para \(0\le t\le 30\). La pantalla tiene un píxel dañado justo en \(t=10\): ahí la gráfica se ve con un hueco, y ese dato no se puede leer. a) Lee en la gráfica \(\displaystyle\lim_{t\to 10}C(t)\), usando \(t=9\); \(9{,}9\); \(10{,}1\) y \(11\). b) ¿Qué carga tenía la batería a los \(10\) minutos? Di qué supuesto usas.</p>
+    <details><summary>Pista</summary><div><p>El hueco tapa un solo punto. Camina sobre la recta hacia \(t=10\) por los dos lados y mira a qué altura llegas.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Por la izquierda: \(C(9)=20+2\cdot 9=20+18=38\) y \(C(9{,}9)=20+2\cdot 9{,}9=20+19{,}8=39{,}8\).</li>
+        <li>Por la derecha: \(C(11)=20+2\cdot 11=20+22=42\) y \(C(10{,}1)=20+2\cdot 10{,}1=20+20{,}2=40{,}2\).</li>
+        <li>Distancias a \(40\): \(|39{,}8-40|=0{,}2\) y \(|40{,}2-40|=0{,}2\). Por los dos lados la altura se acerca a \(40\).</li>
+        <li>Con la fórmula: cuando \(t\) se acerca a \(10\), \(20+2t\) se acerca a \(20+2\cdot 10=20+20=40\).</li>
+        <li>\(\displaystyle\lim_{t\to 10}C(t)=40\): la altura del hueco es \(40\) %.</li>
+        <li>b) El límite no dice, por sí solo, cuánto vale la función en \(t=10\). Supuesto: la carga de una batería no cambia de golpe, así que su valor en \(t=10\) es la altura a la que llega la gráfica. Con ese supuesto, a los \(10\) minutos tenía \(40\) % de carga.</li>
+        <li>Significado: el límite permite reconstruir el dato tapado a partir de los datos vecinos, siempre que el supuesto de «sin saltos» sea razonable.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H03 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* L29 H03 · el límite y la gráfica: el límite es la altura a la que llega la curva por los dos lados (por pasos); cuatro gráficas, cuatro lecturas (por pasos) */
+OA.scene('gra-idea', (function(){
+  var N = 6, Q = '\\\\&\\qquad ';
+  function f(x){ return x*x/2; } /* la gráfica de f para x ≠ 2; además f(2) = 3,5 (punto suelto) */
+  var IZ = [1, 1.5, 1.9], DE = [3, 2.5, 2.1];
+  var M = lmMarco(-0.75, 0.35, 5.6, 4.0, -0.7, 3.6, -0.4, 5);
+  var PZ = [['Q', '\\lim_{x\\to 2}f(x)=\\ ?', 'lím f(x) cuando x → 2 = ?', 'pt'], ['F', '\\Longrightarrow\\ \\lim_{x\\to 2}f(x)=2', '⟹ lím f(x) = 2', 'diff'],
+    ['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''],
+    ['CF', 'y=f(x)', 'y = f(x)', 'c-tan'], ['HU', '\\text{hueco }(2,\\ 2)', 'hueco (2, 2)', 'c-tan'],
+    ['FV', 'f(2)=3{,}5', 'f(2) = 3,5', 'c-tan'], ['LM', '\\text{límite: }2', 'límite: 2', 'diff'],
+    ['R1', 'a=2:\\ \\ \\text{se mira la curva cerca de }x=2', 'a = 2: se mira la curva cerca de x = 2', ''],
+    ['R2', 'x<2:\\ \\ f(1)=0{,}5;\\ \\ f(1{,}5)=1{,}125;\\ \\ f(1{,}9)=1{,}805', 'x < 2: f(1) = 0,5; f(1,5) = 1,125; f(1,9) = 1,805', 'c-sec'],
+    ['R3', 'x>2:\\ \\ f(3)=4{,}5;\\ \\ f(2{,}5)=3{,}125;\\ \\ f(2{,}1)=2{,}205', 'x > 2: f(3) = 4,5; f(2,5) = 3,125; f(2,1) = 2,205', 'diff'],
+    ['R4', '\\text{las dos alturas llegan a }2\\text{: la altura del hueco}', 'las dos alturas llegan a 2: la altura del hueco', ''],
+    ['R5', 'f(2)=3{,}5\\ \\ \\text{(punto lleno): es otra pregunta}', 'f(2) = 3,5 (punto lleno): es otra pregunta', 'c-tan'],
+    ['R6', '\\lim_{x\\to 2}f(x)=2', 'lím f(x) cuando x → 2 = 2', 'diff']];
+  var TXT = [['Para leer el límite se ubica a en el eje', 'horizontal. Aquí, a = 2. ¿Qué pasa cerca?'],
+    ['Por la izquierda: x avanza hacia 2 y la altura', 'de la curva sube hacia 2.'],
+    ['Por la derecha: x retrocede hacia 2 y la altura', 'de la curva baja hacia 2.'],
+    ['Las dos alturas llegan al mismo número, 2:', 'es la altura del hueco de la curva.'],
+    ['El punto lleno dice cuánto vale la función en 2:', '3,5. Es otra pregunta; el límite no lo usa.'],
+    ['El límite es 2: la altura a la que llega la curva', 'por los dos lados, no la del punto lleno.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-5.5, y1:6.3}, aspect:11.8/6.6,
+    aria:'Arriba, una franja dice qué muestra: el límite es la altura a la que llega la curva por los dos lados de a. Animación en seis pasos sobre la gráfica de una función que vale x al cuadrado dividido por 2 para x distinto de 2, y 3,5 en x igual a 2. Uno: la curva, con un hueco en el punto (2, 2) y un punto lleno en (2; 3,5). Dos: puntos azules sobre la curva en x igual a 1, 1,5 y 1,9, con alturas 0,5, 1,125 y 1,805. Tres: puntos naranjas en x igual a 3, 2,5 y 2,1, con alturas 4,5, 3,125 y 2,205. Cuatro: una línea punteada a la altura 2 une el hueco con el eje vertical. Cinco: otra línea punteada lleva el punto lleno a la altura 3,5: ese es el valor de la función en 2. Seis: el límite es 2, la altura del hueco. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> gráfica de \\(f\\): curva, hueco y punto lleno</span><span><i class="sw sec"></i> \\(x\\) menor que 2 (por la izquierda)</span><span><i class="sw rise"></i> \\(x\\) mayor que 2 (por la derecha)</span>',
+    anim:{run:32000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), a, xm, hx = X(M.gx(2)), hy = Y(M.gy(2));
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      dtQue(S, 'el límite es la altura a la que llega', 'la curva por los dos lados de a.');
+      lmEjes(S, M); lmEtq(T, M, 'EX', 3.6, 0, -50, -2, -11); lmEtq(T, M, 'EY', 0, 5, 0, 8, 5);
+      /* paso 1: la curva y la recta x = 2 */
+      a = ap(1);
+      lmSeg(S, M, 2, 0, 2, 3.5*a, C.muted || '#6b6b6b', 1);
+      lmCurva(S, M, f, -0.7, -0.7 + 3.86*a, C.tan, 2);
+      if (a > 0.3){ lmFondo(S, M, 'CF', 2.6, 4.78, -100); lmEtq(T, M, 'CF', 2.6, 4.78, -100); }
+      /* paso 4: la altura 2, del hueco al eje vertical */
+      a = ap(4);
+      if (a > 0) lmSeg(S, M, 2, 2, 2 - 2*a, 2, C.tan, 1.2, [5, 3]);
+      /* paso 5: el valor f(2) = 3,5, del punto lleno al eje vertical */
+      a = ap(5);
+      if (a > 0){ lmSeg(S, M, 2, 3.5, 2 - 2*a, 3.5, C.tan, 1); if (a > 0.5){ lmFondo(S, M, 'FV', 1.85, 3.5, -100); lmEtq(T, M, 'FV', 1.85, 3.5, -100); lmPunto(S, M, 0, 3.5, C.tan, false, 2.6); } }
+      /* paso 2: por la izquierda */
+      a = ap(2);
+      if (a > 0){ xm = k === 2 ? 0.6 + 1.3*u : 1.9;
+        lmFlecha(S, M, 0.6, 0, Math.min(xm, 1.88), 0, C.sec, 1.8, 0, -7); lmFlecha(S, M, 0, f(0.6), 0, f(Math.min(xm, 1.84)), C.sec, 1.8, 8, 0);
+        IZ.forEach(function(x){ if (xm >= x - 1e-9){ lmGuia(S, M, x, f(x), C.sec); lmPunto(S, M, x, f(x), C.sec, false, 2.8); } });
+        if (k === 2 && u < 1){ lmGuia(S, M, xm, f(xm), C.sec); lmPunto(S, M, xm, f(xm), C.sec, false, 4); } }
+      /* paso 3: por la derecha */
+      a = ap(3);
+      if (a > 0){ xm = k === 3 ? 3.1 - 1.0*u : 2.1;
+        lmFlecha(S, M, 3.1, 0, Math.max(xm, 2.12), 0, C.rise, 1.8, 0, -7); lmFlecha(S, M, 0, f(3.1), 0, f(Math.max(xm, 2.17)), C.rise, 1.8, 8, 0);
+        DE.forEach(function(x){ if (xm <= x + 1e-9){ lmGuia(S, M, x, f(x), C.rise); lmPunto(S, M, x, f(x), C.rise, false, 2.8); } });
+        if (k === 3 && u < 1){ lmGuia(S, M, xm, f(xm), C.rise); lmPunto(S, M, xm, f(xm), C.rise, false, 4); } }
+      /* el hueco y el punto lleno van encima de todo */
+      if (ap(1) > 0.5){ lmPunto(S, M, 2, 2, C.tan, true, 4); lmPunto(S, M, 2, 3.5, C.tan, false, 3.6); lmFondo(S, M, 'HU', 2.22, 1.5, 0); lmEtq(T, M, 'HU', 2.22, 1.5, 0); }
+      /* paso 6: el límite es la altura del hueco */
+      a = ap(6);
+      if (a > 0){ c.strokeStyle = C.rise; c.lineWidth = 1.6; c.globalAlpha = a; c.beginPath(); c.arc(hx, hy, 4 + 5*a, 0, 6.2832); c.stroke(); c.globalAlpha = 1;
+        lmPunto(S, M, 0, 2, C.rise, false, 3); if (a > 0.5){ lmEtq(T, M, 'LM', 0, 2, -100, -17, 0); } }
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 4.86, 0); if (k === N && u > 0.5) T.L('F', 5.2, 4.86, -100);
+      lmTxt(S, TXT[k - 1][0], -1.2, -0.2); lmTxt(S, TXT[k - 1][1], -1.2, -0.2 - 21/(X(1) - X(0)));
+      c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.36));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.75, [0, 34, 68, 102, 137, 172]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      'f(x)=\\dfrac{x^{2}}{2}\\ \\ \\text{si }x\\ne 2;\\qquad f(2)=3{,}5' + Q + '\\text{se mira }x\\text{ cerca de }a=2\\text{, con }x\\ne 2',
+      '\\text{por la izquierda }(x<2):' + Q + 'f(1)=\\tfrac{1^{2}}{2}=\\tfrac{1}{2}=0{,}5' + Q + 'f(1{,}5)=\\tfrac{1{,}5^{2}}{2}=\\tfrac{2{,}25}{2}=1{,}125' + Q + 'f(1{,}9)=\\tfrac{1{,}9^{2}}{2}=\\tfrac{3{,}61}{2}=1{,}805',
+      '\\text{por la derecha }(x>2):' + Q + 'f(3)=\\tfrac{3^{2}}{2}=\\tfrac{9}{2}=4{,}5' + Q + 'f(2{,}5)=\\tfrac{2{,}5^{2}}{2}=\\tfrac{6{,}25}{2}=3{,}125' + Q + 'f(2{,}1)=\\tfrac{2{,}1^{2}}{2}=\\tfrac{4{,}41}{2}=2{,}205',
+      '\\text{distancia a }2:\\ |1{,}805-2|=0{,}195\\ \\text{y}\\ |2{,}205-2|=0{,}205' + Q + '\\text{por los dos lados, la altura se acerca a }2',
+      'f(2)=3{,}5\\ \\ \\text{(dato: el punto lleno)}' + Q + '\\text{el límite usa }x\\ne 2:\\ \\text{no mira ese punto}',
+      '\\text{si }x\\ne 2:\\ f(x)=\\tfrac{x^{2}}{2}\\text{, que se acerca a }\\tfrac{2^{2}}{2}=\\tfrac{4}{2}=2' + Q + '\\displaystyle\\lim_{x\\to 2}f(x)=2\\qquad(\\text{y }f(2)=3{,}5\\ne 2)']; return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* cuatro gráficas que solo se diferencian en x = 2 (y a su derecha, la cuarta); en cada paso se lee una */
+OA.scene('gra-casos', (function(){
+  var N = 5, Q = '\\\\&\\qquad ';
+  function b(x){ return x/2 + 1; } function b4(x){ return x/2 + 2; }
+  /* [marco, título, función a la derecha, altura de llegada por la derecha, puntos sobre x = 2: [y, hueco]] */
+  var G = [[lmMarco(-0.85, 3.35, 2.6, 2.3, -0.4, 4.4, -0.4, 4.4), 'Gráfica 1: recta completa', b, 2, [[2, false]]],
+    [lmMarco(2.5, 3.35, 2.6, 2.3, -0.4, 4.4, -0.4, 4.4), 'Gráfica 2: con un hueco', b, 2, [[2, true]]],
+    [lmMarco(-0.85, -0.3, 2.6, 2.3, -0.4, 4.4, -0.4, 4.4), 'Gráfica 3: punto suelto', b, 2, [[2, true], [3.5, false]]],
+    [lmMarco(2.5, -0.3, 2.6, 2.3, -0.4, 4.4, -0.4, 4.4), 'Gráfica 4: un salto', b4, 3, [[2, true], [3, false]]]];
+  var PZ = [['Q', '\\lim_{x\\to 2}f(x)\\text{ en cada gráfica}=\\ ?', 'lím f(x) cuando x → 2, en cada gráfica = ?', 'pt'], ['F', '\\Longrightarrow\\ 2;\\ 2;\\ 2;\\ \\text{no existe}', '⟹ 2; 2; 2; no existe', 'diff'],
+    ['K1', '\\lim_{x\\to 2}f_{1}(x)=2', 'lím f₁(x) = 2', 'diff'], ['J1', 'f_{1}(2)=2', 'f₁(2) = 2', 'c-tan'],
+    ['K2', '\\lim_{x\\to 2}f_{2}(x)=2', 'lím f₂(x) = 2', 'diff'], ['J2', 'f_{2}(2)\\text{ no existe}', 'f₂(2) no existe', 'c-tan'],
+    ['K3', '\\lim_{x\\to 2}f_{3}(x)=2', 'lím f₃(x) = 2', 'diff'], ['J3', 'f_{3}(2)=3{,}5', 'f₃(2) = 3,5', 'c-tan'],
+    ['K4', '\\lim_{x\\to 2}f_{4}(x)\\text{ no existe}', 'lím f₄(x) no existe', 'diff'], ['J4', 'f_{4}(2)=3', 'f₄(2) = 3', 'c-tan'],
+    ['R1', '\\text{gráfica 1:}\\ \\ \\lim_{x\\to 2}f_{1}(x)=2\\ \\ \\text{y}\\ \\ f_{1}(2)=2', 'gráfica 1: lím f₁(x) = 2 y f₁(2) = 2', ''],
+    ['R2', '\\text{gráfica 2:}\\ \\ \\lim_{x\\to 2}f_{2}(x)=2;\\ \\ f_{2}(2)\\text{ no existe}', 'gráfica 2: lím f₂(x) = 2; f₂(2) no existe', ''],
+    ['R3', '\\text{gráfica 3:}\\ \\ \\lim_{x\\to 2}f_{3}(x)=2;\\ \\ f_{3}(2)=3{,}5', 'gráfica 3: lím f₃(x) = 2; f₃(2) = 3,5', ''],
+    ['R4', '\\text{gráfica 4:}\\ \\ \\text{por la izquierda }2\\text{, por la derecha }3', 'gráfica 4: por la izquierda 2, por la derecha 3', ''],
+    ['R5', '\\text{límite}=\\text{altura a la que llegan los dos lados}', 'límite = altura a la que llegan los dos lados', 'diff']];
+  var TXT = [['Gráfica 1: los dos lados llegan a la altura 2,', 'y ahí está el punto de la recta. Límite 2.'],
+    ['Gráfica 2: los dos lados llegan a la altura 2,', 'donde hay un hueco. El límite igual es 2.'],
+    ['Gráfica 3: los dos lados llegan a la altura 2.', 'El punto lleno está en 3,5; el límite es 2.'],
+    ['Gráfica 4: la izquierda llega a 2 y la derecha', 'llega a 3. Alturas distintas: no hay límite.'],
+    ['En las cuatro se miró lo mismo: a qué altura', 'llega cada lado. Lo que hay sobre x = 2 no cuenta.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-6.1, y1:7.6}, aspect:13.7/6.6,
+    aria:'Arriba, una franja dice qué muestra: el límite en 2 depende de la altura a la que llegan los dos lados, no del punto que hay sobre 2. Cuatro gráficas chicas. La primera es la recta y igual a x medios más 1, completa, con su punto en (2, 2). La segunda es la misma recta con un hueco en (2, 2). La tercera, la misma recta con un hueco en (2, 2) y un punto lleno en (2; 3,5). La cuarta tiene un salto: a la izquierda de 2 la misma recta, que termina en un hueco en (2, 2), y desde 2 hacia la derecha la recta y igual a x medios más 2, que empieza en un punto lleno en (2, 3). En cada paso, una flecha azul por la izquierda y una naranja por la derecha caminan hacia x igual a 2 sobre una gráfica, y bajo ella se escribe el resultado: límite 2 en las tres primeras; en la cuarta, alturas 2 y 3, y el límite no existe. Bajo la figura, un registro numerado guarda cada lectura.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> gráfica: punto lleno o círculo vacío sobre \\(x=2\\)</span><span><i class="sw sec"></i> llegada por la izquierda</span><span><i class="sw rise"></i> llegada por la derecha</span>',
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), dy = 21/(X(1) - X(0)), a5;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      dtQue(S, 'el límite en 2 depende de la altura a la que', 'llegan los dos lados, no del punto sobre 2.');
+      a5 = ap(5);
+      G.forEach(function(g, i){ var M = g[0], fd = g[2], ld = g[3], a = ap(i + 1), xa, xb;
+        lmTxt(S, g[1], M.gx(-0.4), M.gy(4.4) + 0.3, C.ink, 'left', '700');
+        lmEjes(S, M);
+        lmCurva(S, M, b, 0, 2, C.tan, 2); lmCurva(S, M, fd, 2, 4, C.tan, 2);
+        if (a > 0){
+          /* alturas de llegada, llevadas al eje vertical (si coinciden, los dos colores se alternan en una sola línea) */
+          lmSeg(S, M, 2, 2, 2 - 2*a, 2, C.sec, 1.2, [4, 4]);
+          c.lineDashOffset = ld === 2 ? 4 : 0; lmSeg(S, M, 2, ld, 2 - 2*a, ld, C.rise, 1.2, [4, 4]); c.lineDashOffset = 0;
+          if (a > 0.9){ lmPunto(S, M, 0, 2, C.sec, false, 2.6); if (ld !== 2) lmPunto(S, M, 0, ld, C.rise, false, 2.6); }
+          /* las dos flechas caminan sobre la curva hacia x = 2 */
+          xa = 0.35 + 1.3*a; xb = 3.65 - 1.3*a;
+          lmFlecha(S, M, 0.35, b(0.35), xa, b(xa), C.sec, 1.8, -2, -7); lmFlecha(S, M, 3.65, fd(3.65), xb, fd(xb), C.rise, 1.8, 2, 7);
+        }
+        g[4].forEach(function(p){ lmPunto(S, M, 2, p[0], C.tan, p[1], 3.4); });
+        if (a > 0.6){ T.L('K' + (i + 1), M.gx(-0.4), M.gy(-0.4) - 0.33, 0); T.L('J' + (i + 1), M.gx(-0.4), M.gy(-0.4) - 0.68, 0); }
+        /* paso 5: se marca en cada gráfica lo que se miró (las alturas de llegada) */
+        if (a5 > 0){ c.strokeStyle = C.rise; c.lineWidth = 1.5; c.globalAlpha = a5; c.beginPath(); c.arc(X(M.gx(0)), Y(M.gy(2)), 6, 0, 6.2832); c.stroke(); if (ld !== 2){ c.beginPath(); c.arc(X(M.gx(0)), Y(M.gy(ld)), 6, 0, 6.2832); c.stroke(); } c.globalAlpha = 1; }
+      });
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 6.32, 0); if (k === N && u > 0.5) T.L('F', 5.2, 6.32, -100);
+      lmTxt(S, TXT[k - 1][0], -1.2, -1.62); lmTxt(S, TXT[k - 1][1], -1.2, -1.62 - dy);
+      c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-1.18));
+      T.fin();
+      oaReg(S, k, N, -1.2, -3.15, [0, 34, 68, 102, 136]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{gráfica 1: }f_{1}(x)=\\tfrac{x}{2}+1' + Q + '\\text{izquierda: }f_{1}(1{,}8)=\\tfrac{1{,}8}{2}+1=0{,}9+1=1{,}9' + Q + '\\text{derecha: }f_{1}(2{,}2)=\\tfrac{2{,}2}{2}+1=1{,}1+1=2{,}1' + Q + '\\text{los dos lados llegan a }\\tfrac{2}{2}+1=2:\\ \\ \\lim_{x\\to 2}f_{1}(x)=2' + Q + '\\text{y }f_{1}(2)=2\\ \\text{(punto lleno)}',
+      '\\text{gráfica 2: la misma recta, sin el punto }(2,\\ 2)' + Q + '\\text{para }x\\ne 2,\\ f_{2}(x)=\\tfrac{x}{2}+1' + Q + '\\text{los dos lados llegan a }2:\\ \\ \\lim_{x\\to 2}f_{2}(x)=2' + Q + 'f_{2}(2)\\text{ no existe (hueco)}',
+      '\\text{gráfica 3: la misma recta para }x\\ne 2;\\ \\ f_{3}(2)=3{,}5' + Q + '\\text{los dos lados llegan a }2:\\ \\ \\lim_{x\\to 2}f_{3}(x)=2' + Q + '2\\ne 3{,}5:\\ \\text{el límite no es el valor}',
+      '\\text{gráfica 4: }f_{4}(x)=\\tfrac{x}{2}+1\\ (x<2);\\ \\ \\tfrac{x}{2}+2\\ (x\\ge 2)' + Q + '\\text{izquierda: }f_{4}(1{,}8)=0{,}9+1=1{,}9\\ \\to\\ \\tfrac{2}{2}+1=2' + Q + '\\text{derecha: }f_{4}(2{,}2)=1{,}1+2=3{,}1\\ \\to\\ \\tfrac{2}{2}+2=3' + Q + '2\\ne 3:\\ \\ \\lim_{x\\to 2}f_{4}(x)\\text{ no existe;}\\ \\ f_{4}(2)=3',
+      '\\text{gráficas 1, 2 y 3: llegadas }2\\text{ y }2\\ \\Rightarrow\\ \\text{límite }2' + Q + '\\text{gráfica 4: llegadas }2\\text{ y }3\\ \\Rightarrow\\ \\text{no hay límite}' + Q + '\\text{lo que hay sobre }x=2\\text{ no cambia el límite}']; return dtPasos(R.slice(0, k)); }
+  };
+})());

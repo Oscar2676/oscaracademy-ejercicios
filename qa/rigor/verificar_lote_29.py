@@ -194,5 +194,187 @@ ok(not re.search(r'\d\.\d', re.sub(r'<!--.*?-->', '', ART).replace('$1.000', '')
 ok(not re.search(r'[^\\]\\\(|\\\)', '') and ART.count('\\(') == ART.count('\\)') and ART.count('\\[') - ART.count('\\\\[') == ART.count('\\]'), 'H01 delimitadores TeX balanceados')
 ok(not re.search(r'\\\([^)]*?[<>][^)]*?\\\)', ART), 'H01: < o > sueltos dentro de TeX (usar \\lt, \\gt)')
 
+
+# ═════════════════════════ H02, H03 y H04 (agregadas el 23-nov) ═════════════════════════
+import tempfile
+VTEX = RAIZ/'qa'/'rigor'/'verificar_tex.py'
+def vtex(et, ruta):
+    """recalcula con fracciones TODAS las igualdades numéricas de un archivo (verificar_tex.py): ninguna falsa ni sin evaluar"""
+    r = subprocess.run([sys.executable, str(VTEX), str(ruta)], capture_output=True, text=True).stdout
+    m = re.search(r'encontradas: (\d+) · correctas: (\d+) · FALSAS: (\d+) · sin evaluar: (\d+)', r)
+    ok(bool(m) and int(m.group(3)) == 0 and int(m.group(4)) == 0 and int(m.group(1)) == int(m.group(2)) > 0, et + ': igualdades numéricas falsas o sin evaluar (verificar_tex)')
+    return int(m.group(1)) if m else 0
+NUMTEX = r'-?\d+(?:\{,\}\d+)?'
+def valores(et, mates, FUN, minimo):
+    """cada «nombre(número) = … = número» escrito en las fórmulas se compara con la función exacta"""
+    n = 0
+    for mt in mates:
+        for m in re.finditer(r'(?<![A-Za-z\\])([A-Za-z](?:_\{\d\})?)\((' + NUMTEX + r')\)=', mt):
+            nom, arg = m.group(1), D(m.group(2))
+            if nom not in FUN: continue
+            resto = re.split(r';|\\quad|\\qquad|\\ \\ |\\text|\\to|\\ne|\\\\', mt[m.end():])[0]
+            ult = resto.split('=')[-1].strip().rstrip('.,').strip()
+            if not re.fullmatch(NUMTEX, ult): continue
+            n += 1; ok(FUN[nom](arg) == D(ult), '%s: %s(%s) no es %s' % (et, nom, m.group(2), ult))
+    ok(n >= minimo, '%s: se esperaban al menos %d valores de función y se hallaron %d' % (et, minimo, n))
+def mates_de(html): return re.findall(r'\\\((.*?)\\\)', html, re.S) + re.findall(r'\\\[(.*?)\\\]', html, re.S)
+def molde(nn, archivo, titulo, ident, caja, escenas, nque, modelo=True):
+    A = (PARTES/('%s.art.html' % nn)).read_text(encoding='utf-8'); E = (PARTES/('%s.scene.js' % nn)).read_text(encoding='utf-8'); h = 'H' + nn
+    ok(A.startswith('<!--file:%s-->\n<!--title:%s-->\n<!--id:%s-->\n<!--tab:%s %s-->\n<article class="sheet" id="%s" data-hoja="L29 %s">' % (archivo, titulo, ident, h, titulo, ident, h)), h + ' encabezado')
+    ok('<h1>%s</h1>' % titulo in A and '<span class="status">CD-L29-%s · v001 · Pendiente de APR</span>' % h in A and '<li>%s</li>\n      <li><b>%s</b></li>' % (caja, titulo) in A, h + ' título, ruta y pie')
+    ok(re.findall(r'data-scene="([^"]+)"', A) == escenas and re.findall(r"OA\.scene\('([^']+)'", E) == escenas, h + ' escenas')
+    for m in re.finditer(r'<div class="stage"', A): ok(A[:m.start()].rstrip().endswith('</ol>'), h + ': falta «cómo leerla» justo antes de una animación')
+    ok(A.count('<p><b>Cómo leerla:</b></p>') >= 1 and A.count('<ul class="keys">') == len(escenas), h + ' cómo leerla y claves')
+    ok(E.count('hold:3000') == len(escenas) and E.count('dtQue(S,') == len(escenas) and E.count('dtPasos(R.slice(0, k))') == len(escenas) and E.count('oaReg(S, k, N') == len(escenas), h + ' hold, franja, lectura acumulada y registro')
+    ok(all(A.count(z) == 1 for z in ('card k1', 'card k2', 'card k3', 'prop p1', 'prop p2', 'prop p3', 'prop p4')) and A.count('<div class="ex">') == 3 and A.count('<summary>Pista</summary>') == 3 and A.count('<summary>Solución paso a paso</summary>') == 3 and 'De la vida cotidiana' in A and '<b>Modelo:</b>' in A and A.count('class="why"') == 2 and 'Aviso de rigor' in A, h + ' recuadros, ejemplos, ejercicios y avisos')
+    FR = [x for par in re.findall(r"\['([^'\\]*)', '([^'\\]*)'\](?=[,\]])", ''.join(E[m.start():E.index('return {', m.start())] for m in re.finditer(r'var TXT', E))) for x in par] + re.findall(r"frase\('([^']*)'", E)
+    ok(len(FR) >= 10 and all(len(x) <= 50 for x in FR), h + ' frases del lienzo de 50 caracteres o menos: ' + ', '.join(x for x in FR if len(x) > 50))
+    QUE = re.findall(r"dtQue\(S, '([^']*)', '([^']*)'\)", E)
+    ok(len(QUE) == nque and all(len(a) <= 45 and len(b) <= 50 for a, b in QUE), h + ' franjas «Qué muestra»')
+    ok(not re.search(r'\d\.\d', re.sub(r'<!--.*?-->', '', A)) and '\\sin' not in A and '\\sin' not in E, h + ' decimales con coma')
+    ok(A.count('\\(') == A.count('\\)') and A.count('\\[') - A.count('\\\\[') == A.count('\\]'), h + ' delimitadores TeX balanceados')
+    ok(not re.search(r'\\\([^)]*?[<>][^)]*?\\\)', A), h + ': < o > sueltos dentro de TeX (usar \\lt, \\gt)')
+    vtex(h + ' hoja', PARTES/('%s.art.html' % nn))
+    return A, E
+A2, E2 = molde('02', 'H02_introduccion_al_limite.html', 'Introducción al límite', 'lim-vel', 'Límites y continuidad', ['vel-idea'], 1)
+A3, E3 = molde('03', 'H03_el_limite_y_la_relacion_con_la_grafica.html', 'El límite y la relación con la gráfica', 'lim-graf', 'Límites a partir de gráficas', ['gra-idea', 'gra-casos'], 2)
+A4, E4 = molde('04', 'H04_limites_a_partir_de_graficas.html', 'Límites a partir de gráficas', 'lim-grafs', 'Límites a partir de gráficas', ['grf-idea'], 1)
+
+# funciones exactas de cada hoja
+def G4(x):
+    assert 0 <= x <= 8
+    return x + 1 if x < 3 else (Fr(1) if x == 3 else (7 - x if x < 5 else 10 - x))
+def H4(x):
+    assert 0 <= x <= 6
+    return 3 - x if x < 2 else (Fr(3) if x == 2 else (x/2 if x <= 4 else Fr(3)))
+def V4(t):
+    assert 0 <= t <= 6
+    return 2*t if t < 3 else 2*t - 6
+def f3(x): return x*x/2 if x != 2 else Fr(7, 2)
+def f32(x):
+    assert x != 2
+    return (x*x - 4)/(2*x - 4)
+FUN2 = {'s': lambda t: t*t, 'd': lambda t: t*t}
+FUN3 = {'f': f3, 'f_{1}': lambda x: x/2 + 1, 'f_{2}': f32, 'f_{3}': lambda x: x/2 + 1 if x != 2 else Fr(7, 2), 'f_{4}': lambda x: x/2 + 1 if x < 2 else x/2 + 2,
+        'p': lambda x: 3 - x if x != 1 else Fr(4), 'q': lambda x: x - 1 if x < 3 else 7 - x, 'C': lambda t: 20 + 2*t}
+FUN4 = {'G': G4, 'H': H4, 'V': V4}
+valores('H02 hoja', mates_de(A2), FUN2, 3); valores('H03 hoja', mates_de(A3), FUN3, 30); valores('H04 hoja', mates_de(A4), FUN4, 30)
+
+# ───────── H02: velocidad media del carrito, s(t) = t² ─────────
+T2 = re.findall(r'<table class="tbl">(.*?)</table>', A2, re.S); ok(len(T2) == 2, 'H02 n.º de tablas')
+for t, (a, hs) in zip(T2, [(1, ['-0.5', '-0.1', '-0.01', '0', '0.01', '0.1', '0.5']), (3, ['-0.1', '-0.01', '0.01', '0.1'])]):
+    F = filas(t); ok([Fr(x) for x in hs] == [D(r[0].strip('\\() ')) for r in F], 'H02 tabla a=%d: valores de h' % a)
+    for r in F:
+        h = D(r[0].strip('\\() ')); v = [D(z.strip('\\() ')) for z in r[1:4]]
+        ok(v == [a + h, (a + h)**2, (a + h)**2 - a*a], 'H02 tabla a=%d fila h=%s' % (a, h))
+        if h == 0: ok(v[2] == 0 and 'no está definido' in r[4], 'H02 tabla fila h=0')
+        else: ok(D(r[4].strip('\\() ')) == ((a + h)**2 - a*a)/h == 2*a + h and abs(D(r[4].strip('\\() ')) - 2*a) == abs(h), 'H02 tabla a=%d cociente h=%s' % (a, h))
+for a in RJ:
+    for h in RJ:
+        ok((a + h)**2 == a*a + 2*a*h + h*h and (a + h)**2 - a*a == 2*a*h + h*h == h*(2*a + h), 'H02 k2 binomio y factor común')
+        if h != 0: ok(((a + h)**2 - a*a)/h == 2*a + h, 'H02 k2 cociente = 2a + h')
+for x in RJ:
+    ok(x*x + 2*x == x*(x + 2) and x*x - 3*x == x*(x - 3) and (3 + x)**2 == 9 + 6*x + x*x and 6*x + x*x == x*(6 + x) and (2 + x)**2 == 4 + 4*x + x*x and 4*x + x*x == x*(4 + x), 'H02 identidades de ejemplos y ejercicios')
+    ok((Fr(5, 2) + x)**2 == Fr(25, 4) + 5*x + x*x and 5*x + x*x == x*(5 + x) and (1 + x)**2 - 1 == 2*x + x*x == x*(2 + x), 'H02 identidades de C y de la animación')
+    if x != 0: ok((x*x + 2*x)/x == x + 2 and (x*x - 3*x)/x == x - 3 and ((Fr(5, 2) + x)**2 - Fr(25, 4))/x == 5 + x, 'H02 simplificaciones con x ≠ 0')
+# ejemplo 4: 1/x² supera cualquier tope M cerca de 0 (0 < |x| < 1/√M ⟹ 1/x² > M), en rejilla con M cuadrado perfecto
+for r in (1, 2, 5, 10, 100, 1000):
+    Mt = r*r
+    for k in range(1, 60):
+        for x in (Fr(k, 60*r), -Fr(k, 60*r)):
+            ok(0 < abs(x) < Fr(1, r) and x*x < Fr(1, Mt) and 1/(x*x) > Mt, 'H02 ej4 tope M=%d' % Mt)
+ok(1/Fr('0.1')**2 == 100 and 1/Fr('0.01')**2 == 10000 and Fr(1, 100) == Fr('0.01'), 'H02 ej4 valores')
+ok(5*Fr(3600, 1000) == 18 and Fr(3600, 1000) == Fr('3.6') and (Fr('6.76') - Fr('6.25'))/Fr('0.1') == Fr('5.1') == 5 + Fr('0.1'), 'H02 C: 18 km/h y velocidad media')
+# la escena: rectas dibujadas (h y su paso) y cadenas del registro y de la lectura, armadas con fracciones
+ok('var SEC = [[1, 2, 0], [0.5, 3, 0], [0.1, 4, -10], [-0.5, 5, 0], [-0.1, 5, 10]];' in E2 and 'm = 2 + h' in E2 and 'function s(t){ return t*t; }' in E2, 'H02 escena: rectas de pendiente 2 + h')
+for h in (Fr(1), Fr(1, 2), Fr(1, 10), Fr(-1, 2), Fr(-1, 10)):
+    s1 = (1 + h)**2; ok((s1 - 1)/h == 2 + h, 'H02 escena v_m con h=%s' % h)
+    if h > 0 and h != 1:
+        ok('h=%s:\\\\ \\\\ \\\\tfrac{%s-1}{%s}=\\\\tfrac{%s}{%s}=%s\\\\ \\\\text{m/s}' % (tex(h), tex(s1), tex(h), tex(s1 - 1), tex(h), tex(2 + h)) in E2, 'H02 registro h=%s' % h)
+        ok('s(%s)=%s^{2}=%s;\\\\quad %s-1=%s\\\\ \\\\text{m}' % (tex(1 + h), tex(1 + h), tex(s1), tex(s1), tex(s1 - 1)) in E2 and 'v_{m}=\\\\tfrac{%s}{%s}=%s\\\\ \\\\text{m/s}' % (tex(s1 - 1), tex(h), tex(2 + h)) in E2, 'H02 lectura h=%s' % h)
+    if h < 0:
+        ok('s(%s)=%s^{2}=%s;\\\\quad v_{m}=\\\\tfrac{%s-1}{%s}=\\\\tfrac{%s}{%s}=%s' % (tex(1 + h), tex(1 + h), tex(s1), tex(s1), tex(h), tex(s1 - 1), tex(h), tex(2 + h)) in E2, 'H02 lectura h=%s' % h)
+ok('h=-0{,}5:\\\\ 1{,}5\\\\ \\\\text{m/s};\\\\quad h=-0{,}1:\\\\ 1{,}9\\\\ \\\\text{m/s}' in E2 and 'h=1:\\\\ \\\\ \\\\tfrac{4-1}{1}=\\\\tfrac{3}{1}=3\\\\ \\\\text{m/s}' in E2, 'H02 registro R2 y R5')
+
+# ───────── H03: el límite y la gráfica ─────────
+ok('function f(x){ return x*x/2; }' in E3 and 'var IZ = [1, 1.5, 1.9], DE = [3, 2.5, 2.1];' in E3 and "lmPunto(S, M, 2, 2, C.tan, true, 4); lmPunto(S, M, 2, 3.5, C.tan, false, 3.6);" in E3, 'H03 idea: curva, puntos, hueco (2,2) y punto lleno (2; 3,5)')
+IZ3 = [Fr(1), Fr(3, 2), Fr(19, 10)]; DE3 = [Fr(3), Fr(5, 2), Fr(21, 10)]
+for nom, L in (('x<2', IZ3), ('x>2', DE3)):
+    ok(nom + ':\\\\ \\\\ ' + ';\\\\ \\\\ '.join('f(%s)=%s' % (tex(x), tex(f3(x))) for x in L) in E3, 'H03 idea registro ' + nom)
+    for x in L: ok('f(%s)=\\\\tfrac{%s^{2}}{2}=\\\\tfrac{%s}{2}=%s' % (tex(x), tex(x), tex(x*x), tex(f3(x))) in E3, 'H03 idea lectura f(%s)' % x)
+ok(all(f3(x) < 2 for x in IZ3) and all(f3(x) > 2 for x in DE3) and abs(f3(IZ3[2]) - 2) == Fr('0.195') and abs(f3(DE3[2]) - 2) == Fr('0.205') and '|1{,}805-2|=0{,}195' in E3 and '|2{,}205-2|=0{,}205' in E3 and Fr(2*2, 2) == 2, 'H03 idea: se acercan a 2 por los dos lados; distancias')
+ok([abs(f3(x) - 2) for x in IZ3] == sorted([abs(f3(x) - 2) for x in IZ3], reverse=True) and [abs(f3(x) - 2) for x in DE3] == sorted([abs(f3(x) - 2) for x in DE3], reverse=True), 'H03 idea: las alturas se acercan a 2')
+ok("function b(x){ return x/2 + 1; } function b4(x){ return x/2 + 2; }" in E3 and "b, 2, [[2, false]]]" in E3 and "b, 2, [[2, true]]]" in E3 and "b, 2, [[2, true], [3.5, false]]]" in E3 and "b4, 3, [[2, true], [3, false]]]" in E3, 'H03 casos: las cuatro gráficas (función derecha, llegada derecha, puntos sobre x = 2)')
+for x in RJ:
+    ok(x*x - 4 == (x - 2)*(x + 2) and 2*x - 4 == 2*(x - 2) and (x/2 + Fr('1.01')) - (x/2 + 1) == Fr('0.01'), 'H03 identidades (ej. 2 y caso especial)')
+    if x != 2: ok(f32(x) == (x + 2)/2 == x/2 + 1, 'H03 ej2: f₂(x) = x/2 + 1 si x ≠ 2')
+ok(Fr('0.01')*3 == Fr('0.03') and Fr('0.03')*10 == Fr('0.3') and Fr(2, 2) + Fr('1.01') == Fr('2.01'), 'H03 k3: 0,03 cm = 0,3 mm; límite 2,01')
+ok(Fr(2, 2) + 1 == 2 and Fr(2, 2) + 2 == 3 and Fr(7, 2) - 2 == Fr(3, 2) and 3 - 1 == 2 and 7 - 3 == 4 and 3 - 2 == 1 and 7 - 5 == 2 and 20 + 2*10 == 40, 'H03 límites de ejemplos y ejercicios')
+
+# ───────── H04: límites a partir de gráficas ─────────
+ok('function g1(x){ return x + 1; } function g2(x){ return 7 - x; } function g3(x){ return 10 - x; }' in E4 and 'var LEC = [[2, 2, g1, g1, 3, 3, 7], [3, 3, g1, g2, 4, 4, -7], [5, 4, g2, g3, 2, 5, 7]];' in E4, 'H04 escena: trozos y lecturas (a, llegadas)')
+ok("lmPunto(S, M, 0, 1, C.tan, false, 3.2); lmPunto(S, M, 3, 4, C.tan, true, 3.6); lmPunto(S, M, 3, 1, C.tan, false, 3.2); lmPunto(S, M, 5, 2, C.tan, true, 3.6); lmPunto(S, M, 5, 5, C.tan, false, 3.2); lmPunto(S, M, 8, 2, C.tan, false, 3.2);" in E4, 'H04 escena: puntos llenos y huecos')
+ok(G4(Fr(0)) == 1 and G4(Fr(3)) == 1 and G4(Fr(5)) == 5 and G4(Fr(8)) == 2 and G4(Fr(2)) == 3, 'H04 valores de G en los puntos marcados')
+def llegada(F, a, lado, n=6):
+    """valores de F en a ± 10^-k: la sucesión de distancias a la llegada supuesta es 10^-k por el coeficiente del trozo"""
+    return [F(a + lado*Fr(1, 10**k)) for k in range(1, n)]
+for a, li, ld in [(2, 3, 3), (3, 4, 4), (5, 2, 5), (1, 2, 2), (Fr(9, 2), Fr(5, 2), Fr(5, 2)), (6, 4, 4), (Fr(5, 2), Fr(7, 2), Fr(7, 2))]:
+    ok(all(abs(v - li) == Fr(1, 10**k) for k, v in enumerate(llegada(G4, Fr(a), -1), 1)) and all(abs(v - ld) == Fr(1, 10**k) for k, v in enumerate(llegada(G4, Fr(a), 1), 1)), 'H04 llegadas de G en a=%s' % a)
+ok(all(abs(v - 1) == Fr(1, 10**k) for k, v in enumerate(llegada(G4, Fr(0), 1), 1)) and all(abs(v - 2) == Fr(1, 10**k) for k, v in enumerate(llegada(G4, Fr(8), -1), 1)), 'H04 ej3: laterales en los extremos')
+TB = filas(re.findall(r'<table class="tbl">(.*?)</table>', A4, re.S)[0])
+ok([[z.strip('\\() ') for z in r] for r in TB] == [['2', '3', '3', '3', '3'], ['3', '4', '4', '4', '1'], ['5', '2', '5', 'no existe', '5']], 'H04 tabla de lecturas')
+# ejemplo 4: en una rejilla fina de ]0, 8[, las dos llegadas coinciden en todo a salvo a = 5
+for k in range(1, 160):
+    a = Fr(k, 20); iz = a + 1 if a <= 3 else (7 - a if a <= 5 else 10 - a); de = a + 1 if a < 3 else (7 - a if a < 5 else 10 - a)
+    ok(all(abs(G4(a - Fr(1, 10**j)) - iz) == Fr(1, 10**j) for j in (3, 4, 5)) and all(abs(G4(a + Fr(1, 10**j)) - de) == Fr(1, 10**j) for j in (3, 4, 5)), 'H04 ej4 llegadas en a=%s' % a)
+    ok((iz == de) == (a != 5), 'H04 ej4: solo en a = 5 las llegadas difieren (a=%s)' % a)
+ok(5 - 2 == 3, 'H04 ej4 salto')
+for a, li, ld, c1, c2 in [(2, 1, 1, 1, Fr(1, 2)), (4, 2, 3, Fr(1, 2), 0), (5, 3, 3, 0, 0)]:
+    ok(all(abs(v - li) == c1*Fr(1, 10**k) for k, v in enumerate(llegada(H4, Fr(a), -1), 1)) and all(abs(v - ld) == c2*Fr(1, 10**k) for k, v in enumerate(llegada(H4, Fr(a), 1), 1)), 'H04 B llegadas de H en a=%s' % a)
+ok(H4(Fr(0)) == 3 and H4(Fr(2)) == 3 and H4(Fr(4)) == 2 and H4(Fr(6)) == 3 and 3 - 2 == 1 and Fr(2, 2) == 1 and Fr(4, 2) == 2, 'H04 B puntos marcados de H')
+ok(all(abs(v - 6) == 2*Fr(1, 10**k) for k, v in enumerate(llegada(V4, Fr(3), -1), 1)) and all(abs(v - 0) == 2*Fr(1, 10**k) for k, v in enumerate(llegada(V4, Fr(3), 1), 1)) and V4(Fr(3)) == 0 and V4(Fr(0)) == 0 and V4(Fr(6)) == 6 and 2*Fr(3, 2) == 3, 'H04 C estanque: laterales 6 y 0, V(3) = 0')
+
+# ───────── escenas por pasos de H02–H04, con el código real (node) ─────────
+NODO2 = r"""
+const fs = require('fs'), p = process.argv[process.argv.length - 1];
+global.OA = { scenes:{}, scene:function(n, d){ OA.scenes[n] = d; }, num:function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); } };
+(0, eval)(['_txt.js', '_det.js', '_lim.js', '02.scene.js', '03.scene.js', '04.scene.js'].map(function(a){ return fs.readFileSync(p + '/' + a, 'utf8'); }).join('\n'));
+var out = {};
+Object.keys(OA.scenes).forEach(function(n){ var S = OA.scenes[n], N = S.sliders[0].max, k, L = [], C = [], v;
+  for (k = 1; k <= N; k++){ L.push(S.readout({paso: k})[0][1]); C.push(S.caption({paso: k})); }
+  v = {}; S.anim.apply(0.999, v);
+  out[n] = {n: N, id: S.sliders[0].id, min: S.sliders[0].min, step: S.sliders[0].step, hold: S.anim.hold, lect: L, cap: C, fin: v.paso, lab: S.labels, asp: S.aspect, w: S.world}; });
+console.log(JSON.stringify(out));
+"""
+ESPER = {'vel-idea': (7, FUN2), 'gra-idea': (6, FUN3), 'gra-casos': (5, FUN3), 'grf-idea': (5, FUN4)}
+if not SIN_NODO:
+    R2 = json.loads(subprocess.run(['node', '-e', NODO2, str(PARTES)], capture_output=True, text=True, check=True).stdout)
+    ok(sorted(R2) == sorted(ESPER), 'H02–H04: escenas definidas')
+    for esc, (n, FUN) in ESPER.items():
+        E = R2[esc]; et = 'escena ' + esc
+        ok((E['n'], E['id'], E['min'], E['step'], E['hold'], E['fin']) == (n, 'paso', 1, 1, 3000, n), et + ': deslizador «paso», hold 3000 y último paso')
+        ok(abs(E['asp'] - (E['w']['y1'] - E['w']['y0'])/(E['w']['x1'] - E['w']['x0'])) < 1e-9, et + ': aspect = alto/ancho del mundo')
+        ids = [l[0] for l in E['lab']]; ok(all('R%d' % (i + 1) in ids for i in range(n)) and 'R%d' % (n + 1) not in ids and 'Q' in ids and 'F' in ids, et + ': registro R1…RN, pregunta y respuesta')
+        ok(all(len(l) == 4 and l[1] and l[2] for l in E['lab']), et + ': etiquetas con TeX y respaldo')
+        todas = []
+        for k in range(n):
+            t = E['lect'][k]; ok(t.startswith('\\begin{aligned}') and t.endswith('\\end{aligned}'), et + ' lectura: bloque aligned')
+            L = t[len('\\begin{aligned}'):-len('\\end{aligned}')].split('\\\\[5pt]'); ok(len(L) == k + 1, et + ': la lectura del paso %d no es acumulada' % (k + 1))
+            if k: ok(t[:-len('\\end{aligned}')].startswith(E['lect'][k - 1][:-len('\\end{aligned}')]), et + ': el paso %d borra algo del anterior' % (k + 1))
+            ok(E['cap'][k].startswith('Paso %d. ' % (k + 1)), et + ' pie del paso %d' % (k + 1))
+            todas = [z for l in L for z in l.split('\\\\&\\qquad ')]
+        largo = lambda z: len(re.sub(r'\\[a-zA-Z]+|[{}&^_ ]', '', re.sub(r'&\\textbf\{\d+\.\}', '', z)))
+        ok(all(largo(z) <= 60 for z in todas), et + ' línea larga: ' + ' | '.join(z for z in todas if largo(z) > 60))
+        lim = [re.sub(r'&\\textbf\{\d+\.\}\\ \\ ', '', z) for z in todas] + [l[1] for l in E['lab']]
+        valores(et, lim, FUN, 3)
+        with tempfile.TemporaryDirectory() as td:
+            # de cada línea se sacan los trozos puramente numéricos (sin texto ni letras) y se recalculan todos
+            trozos = [w.strip().rstrip(',.').strip() for z in lim for w in re.split(r'\\text\{[^}]*\}|;|:|\\quad|\\qquad|\\ \\ |\\to|\\Rightarrow|\\ne|\\displaystyle|\\ ', z)]
+            sinletras = lambda w: bool(w.strip()) and not re.search(r'[A-Za-z]', re.sub(r'\\(tfrac|dfrac|cdot)', '', w))
+            trozos = ['='.join(l for l in w.split('=') if sinletras(l)) for w in trozos if '=' in w]   # los lados con letras (nombres de función) se revisan en valores()
+            trozos = [w for w in trozos if '=' in w]
+            tp = pathlib.Path(td)/'lectura.html'; tp.write_text('\n'.join('<p>\\(%s\\)</p>' % w for w in trozos), encoding='utf-8')
+            ok(vtex(et, tp) >= 5, et + ': pocas igualdades numéricas evaluadas')
+
 print('%d comprobaciones%s' % (N[0], '; SIN node: las lecturas con deslizador no se evaluaron con el código de la escena (sí su aritmética exacta)' if SIN_NODO else '; lecturas de los deslizadores evaluadas con el código de la escena'))
-print('Lote 29 H01: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
+print('Lote 29 H01–H04: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
