@@ -268,12 +268,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -293,12 +295,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */

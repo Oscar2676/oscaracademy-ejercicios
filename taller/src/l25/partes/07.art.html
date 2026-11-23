@@ -23,8 +23,9 @@
   <ol class="steps">
     <li><b>Mira primero el punto azul del paso 1:</b> es el primer término, \(a_{1}=2\). Una línea punteada lo lleva a su valor, \(2\), en el eje vertical.</li>
     <li><b>Pasos 2, 3 y 4:</b> desde el último punto se avanza una posición (punteada naranja) y se sube \(3\) (flecha naranja «\(+3\)»). Ahí queda el término nuevo, con su valor marcado en el eje: \(5\), \(8\), \(11\). Las tres flechas miden lo mismo.</li>
-    <li><b>Paso 5:</b> una recta burdeo, \(y=3x-1\), pasa por los cuatro puntos, y bajo la pregunta de arriba se escribe la respuesta: \(a_{n}=2+3(n-1)\).</li>
-    <li><b>Cuenta de abajo:</b> en cada paso, la resta entre el término nuevo y el anterior (siempre \(3\)) y el término nuevo como el anterior más \(3\). Conclusión: se suma siempre lo mismo, \(d=3\); eso es una sucesión aritmética.</li>
+    <li><b>Lista de abajo, «Paso a paso»:</b> cada término queda escrito de dos maneras: como el anterior más \(3\), y como el primero más las veces que se ha sumado \(3\). En la posición \(2\) se sumó una vez (\(2+1\cdot 3\)); en la \(3\), dos veces (\(2+2\cdot 3\)); en la \(4\), tres veces (\(2+3\cdot 3\)). Siempre una vez menos que la posición.</li>
+    <li><b>Paso 5:</b> por eso, en la posición \(n\) se ha sumado \(3\) un total de \(n-1\) veces: \(a_{n}=2+(n-1)\cdot 3\). Esa respuesta se escribe bajo la pregunta de arriba. Además aparece una recta burdeo que pasa por los cuatro puntos: es \(y=3x-1\), porque \(2+(n-1)\cdot 3=2+3n-3=3n-1\).</li>
+    <li><b>Cuenta bajo la animación:</b> en cada paso, la resta entre el término nuevo y el anterior (siempre \(3\)), el término nuevo como el anterior más \(3\), y cuántas veces se ha sumado \(3\) desde el primero. Conclusión: se suma siempre lo mismo, \(d=3\); eso es una sucesión aritmética.</li>
   </ol>
   <div class="stage" data-scene="arit-idea"></div>
   <ul class="keys">
@@ -53,9 +54,13 @@
       <li>\(a_{3}=a_{2}+d=a_{1}+d+d=a_{1}+2d\).</li>
       <li>\(a_{4}=a_{3}+d=a_{1}+2d+d=a_{1}+3d\).</li>
       <li>Para llegar desde \(a_{1}\) hasta \(a_{n}\) se suma \(d\) una vez por cada paso, y hay \(n-1\) pasos. Eso sugiere \(a_{n}=a_{1}+(n-1)\,d\).</li>
-      <li><b>Demostración (por inducción).</b> Para \(n=1\): \(a_{1}+(1-1)\,d=a_{1}+0=a_{1}\). ✓</li>
-      <li>Si la fórmula vale para un \(n\), es decir, \(a_{n}=a_{1}+(n-1)\,d\), entonces \(a_{n+1}=a_{n}+d=a_{1}+(n-1)\,d+d=a_{1}+n\,d\), que es la fórmula para \(n+1\). ✓</li>
-      <li>Por lo tanto, \(a_{n}=a_{1}+(n-1)\,d\) para todo entero \(n\ge 1\).</li>
+      <li><b>Qué falta demostrar.</b> La fórmula \(a_{n}=a_{1}+(n-1)\,d\) salió de mirar cuatro casos. Falta asegurar que da el término correcto en <b>todas</b> las posiciones, no solo en esas cuatro.</li>
+      <li><b>Cómo se demuestra: el método de inducción.</b> Tiene dos partes. Parte 1: se comprueba que la fórmula vale en la posición \(1\). Parte 2: se comprueba que, si vale en una posición cualquiera, entonces vale también en la siguiente. Con las dos partes la fórmula vale en la \(1\); por valer en la \(1\), vale en la \(2\); por valer en la \(2\), vale en la \(3\); y así sigue, sin detenerse, por todas las posiciones.</li>
+      <li><b>Parte 1: la posición \(1\).</b> Se reemplaza \(n\) por \(1\) en la fórmula: \[a_{1}+(1-1)\,d=a_{1}+0\cdot d=a_{1}+0=a_{1}.\] Da el primer término: en la posición \(1\) la fórmula vale. ✓</li>
+      <li><b>Parte 2: de una posición a la siguiente.</b> Se supone que la fórmula vale en la posición \(n\): \(a_{n}=a_{1}+(n-1)\,d\). Hay que llegar a la fórmula de la posición \(n+1\).
+        \[\begin{aligned}a_{n+1}&=a_{n}+d&&\text{definición de sucesión aritmética}\\ &=a_{1}+(n-1)\,d+d&&\text{se reemplaza }a_{n}\\ &=a_{1}+\left[(n-1)+1\right]d&&\text{factor común }d\\ &=a_{1}+n\,d&&\text{porque }n-1+1=n\end{aligned}\]</li>
+      <li>Y eso es lo que dice la fórmula al reemplazar \(n\) por \(n+1\): \(a_{1}+\left[(n+1)-1\right]d=a_{1}+n\,d\). Las dos expresiones coinciden: la fórmula vale en la posición \(n+1\). ✓</li>
+      <li><b>Conclusión:</b> por las dos partes, \(a_{n}=a_{1}+(n-1)\,d\) para todo entero \(n\ge 1\).</li>
     </ol>
   </div>
 
@@ -170,6 +175,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H07 · v002 · Pendiente de APR</span>
+  <span class="status">CI-L25-H07 · v003 · Pendiente de APR</span>
 </footer>
 </article>

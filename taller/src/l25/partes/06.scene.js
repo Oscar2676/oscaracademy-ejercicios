@@ -31,6 +31,7 @@ OA.scene('parc-idea', (function(){
         c.globalAlpha = Math.min(1, a*2.2); c.strokeStyle = col; c.lineWidth = 1; c.setLineDash([]); c.strokeRect(X(x) + 0.5, Y(y + CS) + 0.5, CS*s - 1, CS*s - 1); c.globalAlpha = 1; }
       for (n = 1; n <= m; n++){ act = n === k && k <= 4; off = act ? (1 - u)*0.55 : 0; al = act ? u : 1;
         for (i = 0; i < n; i++) for (j = 0; j < n; j++) if (Math.max(i, j) === n - 1) celda(i, j, act ? C.rise : C.sec, (act ? 0.45 : 0.26)*al, off); }
+      for (n = 1; n <= m; n++) if (n < k || u > 0.6){ c.font = '700 12px ' + F; c.fillStyle = n === k && k <= 4 ? C.rise : C.sec; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + A[n - 1], X(GX + (n - 0.5)*CS), Y(GY + (n - 0.5)*CS)); } /* cada escuadra conserva escrito cuántos cuadraditos trae */
       if (k === 5){ /* el borde recorre el cuadrado de 4 por 4 */
         P = [[GX, GY], [GX + 4*CS, GY], [GX + 4*CS, GY + 4*CS], [GX, GY + 4*CS], [GX, GY]]; tot = 4*u;
         c.strokeStyle = C.tan; c.lineWidth = 2; c.setLineDash([]); c.beginPath(); c.moveTo(X(P[0][0]), Y(P[0][1]));
@@ -51,7 +52,7 @@ OA.scene('parc-idea', (function(){
       'a_{2}=2\\cdot 2-1=4-1=3' + Q + 'S_{2}=S_{1}+a_{2}=1+3=4',
       'a_{3}=2\\cdot 3-1=6-1=5' + Q + 'S_{3}=S_{2}+a_{3}=4+5=9',
       'a_{4}=2\\cdot 4-1=8-1=7' + Q + 'S_{4}=S_{3}+a_{4}=9+7=16',
-      'S_{4}=\\displaystyle\\sum_{k=1}^{4}(2k-1)=1+3+5+7=16' + Q + '\\text{Sumas parciales: }1,\\ 4,\\ 9,\\ 16.' + Q + '\\text{Cada una es la anterior más un término.}'];
+      'S_{4}=\\displaystyle\\sum_{k=1}^{4}(2k-1)=1+3+5+7=16' + Q + '\\text{Sumas parciales: }S_{1}=1,\\ S_{2}=4,\\ S_{3}=9,\\ S_{4}=16.' + Q + '\\text{Cada una es la anterior más un término:}' + Q + 'S_{2}=S_{1}+a_{2},\\quad S_{3}=S_{2}+a_{3},\\quad S_{4}=S_{3}+a_{4}.' + Q + '\\text{En general: }S_{n}=S_{n-1}+a_{n}.'];
       return dtPasos(R.slice(0, k)); }
   };
 })());

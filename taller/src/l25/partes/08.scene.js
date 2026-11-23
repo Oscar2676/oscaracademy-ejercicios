@@ -4,11 +4,11 @@ OA.scene('dif-idea', (function(){
   var PZ = [['T1', 'a_{1}=3', 'a₁ = 3', 'c-sec'], ['T2', 'a_{2}=7', 'a₂ = 7', 'c-sec'], ['T3', 'a_{3}=11', 'a₃ = 11', 'c-sec'], ['T4', 'a_{4}=15', 'a₄ = 15', 'c-sec'],
     ['D1', '4', '4', 'diff'], ['D2', '4', '4', 'diff'], ['D3', '4', '4', 'diff'], ['DD', 'd=4', 'd = 4', 'diff'],
     ['Q', '3,\\ 7,\\ 11,\\ 15\\qquad d=\\ ?', '3, 7, 11, 15   d = ?', 'pt'], ['F', '\\Longrightarrow\\ d=a_{n+1}-a_{n}=4', '⟹ d = aₙ₊₁ − aₙ = 4', 'diff'],
-    ['R1', '3,\\ 7,\\ 11,\\ 15', '3, 7, 11, 15', ''],
+    ['R1', 'a_{1}=3,\\ \\ a_{2}=7,\\ \\ a_{3}=11,\\ \\ a_{4}=15', 'a₁ = 3, a₂ = 7, a₃ = 11, a₄ = 15', ''],
     ['R2', 'a_{2}-a_{1}=7-3=4', 'a₂ − a₁ = 7 − 3 = 4', ''],
     ['R3', 'a_{3}-a_{2}=11-7=4', 'a₃ − a₂ = 11 − 7 = 4', ''],
     ['R4', 'a_{4}-a_{3}=15-11=4', 'a₄ − a₃ = 15 − 11 = 4', ''],
-    ['R5', 'd=a_{n+1}-a_{n}=4', 'd = aₙ₊₁ − aₙ = 4', 'diff']];
+    ['R5', '\\text{las tres restas dan }4:\\quad d=a_{n+1}-a_{n}=4', 'las tres restas dan 4:  d = aₙ₊₁ − aₙ = 4', 'diff']];
   var TXT = [['Cuatro términos, dibujados como columnas.', '¿Suben siempre lo mismo?'],
     ['Al segundo término se le resta el primero.', 'La diferencia es el tramo naranja: 4.'],
     ['Al tercero se le resta el segundo.', 'Da 4 también.'],

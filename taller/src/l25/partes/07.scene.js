@@ -3,12 +3,12 @@ OA.scene('arit-idea', (function(){
   var N = 5, A = [2, 5, 8, 11];
   var PZ = [['P1', 'a_{1}', 'a₁', 'c-sec'], ['P2', 'a_{2}', 'a₂', 'c-sec'], ['P3', 'a_{3}', 'a₃', 'c-sec'], ['P4', 'a_{4}', 'a₄', 'c-sec'],
     ['D2', '+3', '+3', 'diff'], ['D3', '+3', '+3', 'diff'], ['D4', '+3', '+3', 'diff'],
-    ['Q', '2,\\ 5,\\ 8,\\ 11,\\ \\ldots\\qquad a_{n}=\\ ?', '2, 5, 8, 11, …   aₙ = ?', 'pt'], ['F', '\\Longrightarrow\\ a_{n}=2+3(n-1)', '⟹ aₙ = 2 + 3(n − 1)', 'diff'], ['RT', 'y=3x-1', 'y = 3x − 1', 'c-tan'],
+    ['Q', '2,\\ 5,\\ 8,\\ 11,\\ \\ldots\\qquad a_{n}=\\ ?', '2, 5, 8, 11, …   aₙ = ?', 'pt'], ['F', '\\Longrightarrow\\ a_{n}=2+(n-1)\\cdot 3', '⟹ aₙ = 2 + (n − 1) · 3', 'diff'], ['RT', 'y=3x-1', 'y = 3x − 1', 'c-tan'],
     ['R1', 'a_{1}=2', 'a₁ = 2', ''],
-    ['R2', 'a_{2}=a_{1}+3=2+3=5', 'a₂ = a₁ + 3 = 2 + 3 = 5', ''],
-    ['R3', 'a_{3}=a_{2}+3=5+3=8', 'a₃ = a₂ + 3 = 5 + 3 = 8', ''],
-    ['R4', 'a_{4}=a_{3}+3=8+3=11', 'a₄ = a₃ + 3 = 8 + 3 = 11', ''],
-    ['R5', 'a_{n+1}=a_{n}+3\\quad\\Longrightarrow\\quad a_{n}=2+3(n-1)', 'aₙ₊₁ = aₙ + 3, de donde aₙ = 2 + 3(n − 1)', 'diff']];
+    ['R2', 'a_{2}=a_{1}+3=2+1\\cdot 3=5', 'a₂ = a₁ + 3 = 2 + 1 · 3 = 5', ''],
+    ['R3', 'a_{3}=a_{2}+3=2+2\\cdot 3=8', 'a₃ = a₂ + 3 = 2 + 2 · 3 = 8', ''],
+    ['R4', 'a_{4}=a_{3}+3=2+3\\cdot 3=11', 'a₄ = a₃ + 3 = 2 + 3 · 3 = 11', ''],
+    ['R5', 'a_{n}=a_{n-1}+3=2+(n-1)\\cdot 3', 'aₙ = aₙ₋₁ + 3 = 2 + (n − 1) · 3', 'diff']];
   var TXT = [['El primer término vale 2.', 'Su valor queda marcado en el eje vertical.'],
     ['Para pasar al término siguiente se suma 3.', 'El segundo término vale 5.'],
     ['Otra vez se suma 3.', 'El tercer término vale 8.'],
@@ -50,11 +50,11 @@ OA.scene('arit-idea', (function(){
       oaReg(S, k, N, -1.2, -1.0, [6, 34, 62, 90, 118]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['\\text{Datos: }2,\\ 5,\\ 8,\\ 11,\\ \\ldots' + Q + '\\text{primer término: }a_{1}=2',
-      '\\text{resta: }a_{2}-a_{1}=5-2=3' + Q + 'a_{2}=a_{1}+3=2+3=5',
-      '\\text{resta: }a_{3}-a_{2}=8-5=3' + Q + 'a_{3}=a_{2}+3=5+3=8',
-      '\\text{resta: }a_{4}-a_{3}=11-8=3' + Q + 'a_{4}=a_{3}+3=8+3=11',
-      '\\text{Las tres restas dan }3:\\ d=3,\\quad a_{n+1}=a_{n}+3' + Q + 'a_{n}=a_{1}+(n-1)\\,d=2+3(n-1)' + Q + '\\text{con }n=4:\\ 2+3\\cdot(4-1)=2+3\\cdot 3=2+9=11' + Q + '\\text{Se suma siempre }3:\\text{ sucesión aritmética.}'];
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['\\text{Datos: }2,\\ 5,\\ 8,\\ 11,\\ \\ldots' + Q + '\\text{primer término: }a_{1}=2\\quad\\text{(todavía no se suma nada)}',
+      '\\text{resta: }a_{2}-a_{1}=5-2=3' + Q + 'a_{2}=a_{1}+3=2+3=5' + Q + '\\text{se sumó }3\\text{ una vez: }a_{2}=2+1\\cdot 3',
+      '\\text{resta: }a_{3}-a_{2}=8-5=3' + Q + 'a_{3}=a_{2}+3=5+3=8' + Q + '\\text{se sumó }3\\text{ dos veces: }a_{3}=2+3+3=2+2\\cdot 3',
+      '\\text{resta: }a_{4}-a_{3}=11-8=3' + Q + 'a_{4}=a_{3}+3=8+3=11' + Q + '\\text{se sumó }3\\text{ tres veces: }a_{4}=2+3+3+3=2+3\\cdot 3',
+      '\\text{Las tres restas dan }3:\\ \\text{la diferencia es }d=3.' + Q + '\\text{Posición }2:\\ 1\\text{ suma.}\\quad\\text{Posición }3:\\ 2\\text{ sumas.}\\quad\\text{Posición }4:\\ 3\\text{ sumas.}' + Q + '\\text{Posición }n:\\ n-1\\text{ sumas de }3:\\quad a_{n}=2+(n-1)\\cdot 3' + Q + '\\text{Comprobación con }n=4:\\ 2+(4-1)\\cdot 3=2+3\\cdot 3=2+9=11\\ \\checkmark' + Q + '\\text{La recta: }2+(n-1)\\cdot 3=2+3n-3=3n-1,\\ \\text{o sea } y=3x-1.' + Q + '\\text{Se suma siempre }3:\\text{ sucesión aritmética.}'];
       return dtPasos(R.slice(0, k)); }
   };
 })());

@@ -1,6 +1,6 @@
 # Producción automática de hojas · guía para la tarea programada (22-nov-2026)
 
-> **PAUSA DE HOJAS NUEVAS (23-nov, 20:50 de Chile).** Óscar revisó L25 H01–H09 y rechazó todo por el mismo motivo (ver «Cuarta ley»). **No producir hojas nuevas** hasta que este aviso se quite. Si en el estado hay «Correcciones de Óscar pendientes» con detalle, aplicarlas (hasta 5 hojas por corrida); si no hay detalle todavía, **la corrida termina sin hacer nada** y anota «Corrida <fecha>: en pausa, 0 hojas».
+> **REVISIÓN GENERAL ANTES QUE HOJAS NUEVAS (23-nov, 21:40 de Chile).** Óscar revisó L25 H01–H09 y rechazó todo por el mismo motivo (ver «Cuarta ley» y su lista de control). **No producir hojas nuevas** hasta que este aviso se quite. Cada corrida corrige **hasta 5 hojas** de la cola «Revisión general (cuarta ley)» del estado, en ese orden, las sube de versión («Pendiente de APR»), republica la tarjeta del lote y anota la corrida. Modelo ya corregido: L25 H01–H09 (v003/v002 del 23-nov).
 
 
 Eres Claude trabajando para Óscar Morales León (oscaracademy.org). Responde y escribe SIEMPRE en español. Esta corrida es desatendida: **no preguntes nada**; decide, anota la decisión en el estado y sigue.
@@ -68,6 +68,18 @@ Palabras de Óscar: «Somos una academia de matemáticas de enseñanza gratuita,
 2. **Ninguna frase del tipo «la animación muestra…» sin el desarrollo.** Lo que la animación muestra se desarrolla escrito, paso por paso, en la hoja y en la lectura.
 3. Se escribe para quien parte de cero: cada término nuevo se explica la primera vez que aparece; ningún paso «evidente» se omite.
 4. Vale para **todas** las hojas ya hechas (Óscar nombró los lotes 20, 21, 22, 23, 24 y 25, y pidió revisar todo). Óscar no va a volver a revisar una por una: la revisión contra las cuatro leyes es responsabilidad de quien produce.
+
+### Lista de control de la cuarta ley (sale de las 16 notas de Óscar a L25 H02–H09, 23-nov)
+Antes de cerrar una hoja, recorrerla entera con estas preguntas. Cada «no» se corrige.
+1. **¿Cada afirmación trae su porqué?** «Infinitos términos pero solo dos valores» → se calculan los términos uno por uno y se explica por qué se repiten (nota: «por qué, explícalo»).
+2. **¿Cada fórmula del encabezado dice de dónde sale?** Casos \(n=1,2,3,4\) escritos uno bajo otro → regularidad → fórmula (nota a H09: «¿por qué? muéstralo paso a paso»).
+3. **¿Cada objeto que se nombra se muestra?** Si se dice «suma parcial \(S_n\)», se escriben \(S_1, S_2, S_3, \ldots, S_{n-1}, S_n\) y un ejemplo con números, y se dice dónde se ve en la animación (notas: «¿dónde está? no la veo», «¿cuáles son S1, S2…?»).
+4. **¿Cada «se despeja», «se resta», «se reemplaza» está hecho, no comentado?** Una línea por operación, con lo que se hizo a la derecha (`aligned` con `&&\text{…}`), y después un ejemplo numérico (notas: «despéjalo y muéstralo», «hazlo, muéstralo, enséñalo, no solo lo comentes», «hacer todo esto paso a paso»).
+5. **¿Cada demostración dice qué se demuestra y cómo funciona el método** antes de empezar? (nota: «¿cuál demostración?»).
+6. **¿Cada símbolo dice cómo se lee**, completo? (nota a la sigma: «se lee sumatoria de los a sub k, desde k igual a…»).
+7. **En las animaciones de sucesiones:** una línea por término, «para \(n=1\): …», «para \(n=2\): …», que **no se borra**, y al final «para \(n=n\): fórmula» (`ssPlot` con `reg`, `regFin`, `que`; ver `l25/partes/01` a `03`). Las fracciones van escritas como fracciones (rótulos TeX), y **todos** los términos llevan su rótulo en la figura, también los chicos (con una línea guía; ver `ss-serie`, `04.scene.js`).
+8. **En la lista «Paso a paso» del lienzo no hay saltos:** nada de «de donde \(a_n=\ldots\)»; se muestra la regularidad en las líneas anteriores (\(2+1\cdot 3\), \(2+2\cdot 3\), \(2+3\cdot 3\)) y recién entonces la general.
+9. Se escribe para quien parte de cero: público de todo estrato, enseñanza gratuita. Frases cortas, un paso por línea.
 
 ## Lote en curso desde el 23-nov 12:30 UTC
 El lote 28 y el lote 25 ya no tienen nada por producir. **El lote en curso es el 29 · Límites** (`taller/src/l29/partes/`, ayudantes `_txt.js _det.js _lim.js`, armado `../NN-lim.html`, `python3 taller/build.py 29 "Límites"`, código `CD-L29-HNN`, carpeta `limites/lote29/`, verificador `qa/rigor/verificar_lote_29.py`, tarjeta https://claude.ai/artifact/CAZhB9evwiS3RLpJuy88qo). Modelo: `l29/partes/01.*`. La línea «Faltan» está en la sección «Lote 29» del estado.

@@ -168,7 +168,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>La sucesión \(a_{n}=\dfrac{1}{n}\). Se dibujan sus primeros 12 términos; después de cada uno siempre viene otro.</p>
+  <p>La sucesión \(a_{n}=\dfrac{1}{n}\). Se dibujan sus primeros 8 términos; después de cada uno siempre viene otro.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la gráfica:</b> en cada paso aparece un punto naranja, el término \(a_{n}=\dfrac{1}{n}\) de la posición \(n\). Los puntos bajan, porque al dividir \(1\) por un número más grande el resultado es más chico.</li>
+    <li><b>Mira después la lista de abajo, «Paso a paso»:</b> cada paso agrega una línea con el término de esa posición: \(a_{1}=1\), \(a_{2}=\dfrac{1}{2}\), \(a_{3}=\dfrac{1}{3}\)… Las líneas anteriores no se borran.</li>
+    <li><b>Última línea:</b> para cualquier posición \(n\) hay un término, \(\dfrac{1}{n}\), y después viene otro, \(\dfrac{1}{n+1}\). Como siempre hay un siguiente, la lista no termina: la sucesión es infinita.</li>
+  </ol>
   <div class="stage" data-scene="ss-infinita"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
   <ul class="keys">
@@ -193,8 +199,15 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="card k1">
     <h3>Infinitos términos no significa infinitos valores</h3>
     <ol class="steps">
-      <li>\(a_{n}=(-1)^{n}\) da \(-1,\ 1,\ -1,\ 1,\dots\): infinitos términos, pero solo dos valores distintos.</li>
-      <li>\(a_{n}=5\) da \(5,\ 5,\ 5,\dots\): una sucesión constante. También es infinita.</li>
+      <li><b>Ejemplo 1: \(a_{n}=(-1)^{n}\).</b> Se calcula término a término, reemplazando \(n\):
+        \[\begin{aligned}n=1:&\quad a_{1}=(-1)^{1}=-1\\ n=2:&\quad a_{2}=(-1)^{2}=(-1)\cdot(-1)=1\\ n=3:&\quad a_{3}=(-1)^{3}=(-1)^{2}\cdot(-1)=1\cdot(-1)=-1\\ n=4:&\quad a_{4}=(-1)^{4}=(-1)^{3}\cdot(-1)=(-1)\cdot(-1)=1\end{aligned}\]
+        La sucesión es \(-1,\ 1,\ -1,\ 1,\dots\)</li>
+      <li><b>Por qué se repiten los valores:</b> cada vez que \(n\) sube en \(1\) se multiplica una vez más por \(-1\), y multiplicar por \(-1\) cambia el signo. Con exponente impar queda \(-1\); con exponente par queda \(1\).</li>
+      <li><b>Por qué igual es infinita:</b> hay un término por cada posición \(n=1,\ 2,\ 3,\dots\), y las posiciones no se acaban. Los términos son infinitos; los valores distintos son solo dos, \(-1\) y \(1\).</li>
+      <li><b>Ejemplo 2: \(a_{n}=5\).</b> En esta fórmula no aparece \(n\): al reemplazar \(n\) por una posición no hay nada que cambiar, y el resultado es siempre \(5\).
+        \[n=1:\ a_{1}=5\qquad n=2:\ a_{2}=5\qquad n=3:\ a_{3}=5\qquad\ldots\]
+        La sucesión es \(5,\ 5,\ 5,\dots\) Se llama <b>sucesión constante</b>, porque todos sus términos valen lo mismo.</li>
+      <li><b>Por qué también es infinita:</b> por la misma razón del ejemplo 1. Hay un término en cada posición \(n\), y hay infinitas posiciones. Que el valor se repita no quita términos: el \(5\) de la posición \(1\) y el \(5\) de la posición \(2\) son dos términos distintos con el mismo valor.</li>
       <li>A veces conviene partir en \(n=0\): \(\{2^{n}\}_{n=0}^{\infty}=1,\ 2,\ 4,\ 8,\dots\) El punto de partida se indica siempre que no sea \(1\).</li>
     </ol>
   </div>
@@ -291,7 +304,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H02 · v002 · APR de Óscar, 22-nov-2026</span>
+  <span class="status">CI-L25-H02 · v003 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -511,12 +524,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -536,21 +551,44 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
-OA.scene('ss-infinita', ssPlot({ guia:2, glab:function(n){ return n === 1 ? '1' : '1/' + n; }, N:12, ymin:0, ymax:1, ystep:0.25, ydec:2, textH:0.72, aspect:1.15, endless:true, L:0, Llab:'',
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+OA.scene('ss-infinita', ssPlot({ guia:2, glab:function(n){ return n === 1 ? '1' : '1/' + n; }, N:8, ymin:0, ymax:1, ystep:0.25, ydec:2, textH:1.62, aspect:2.05, fila:31, endless:true, L:0, Llab:'',
   a:function(n){ return 1/n; },
   aria:'Una gráfica de puntos sueltos de la sucesión uno sobre n. En horizontal va la posición n; en vertical, el término. Los puntos bajan: 1, un medio, un tercio, un cuarto, y siguen acercándose al eje horizontal sin tocarlo. Después del último punto dibujado hay puntos suspensivos: la sucesión no termina, hay un término para cada número natural.',
   labels:[['F', 'a_{n}=\\dfrac{1}{n},\\qquad n=1,\\,2,\\,3,\\,\\dots', 'aₙ = 1/n, para n = 1, 2, 3, …', 'diff']],
   legend:'<span><i class="sw rise"></i> el término que se está agregando</span><span><i class="sw sec"></i> los términos anteriores</span><span>líneas punteadas: llevan cada término a su valor en el eje \\(a_{n}\\)</span>',
-  lines:function(n, fin){ return [['posición n = ' + n + ':  a' + ssSub(n) + ' = 1/' + n + ' ≈ ' + oaDec(1/n, 3), 'rise'], ['siempre hay un término siguiente:  a' + ssSub(n + 1) + ' = 1/' + (n + 1), 'sec']].concat(fin ? [['la lista no termina: 1, 1/2, 1/3, 1/4, …', 'ink'], ['hay primer término, pero no hay último', 'tan']] : []); },
-  caption:function(n, fin){ return fin ? 'Aquí se dibujaron 12 términos, pero la sucesión sigue: para cada natural n hay un término 1/n. Los puntos suspensivos son parte de la notación' : 'El término de la posición ' + n + ' es 1/' + n + '. Y después de él viene el de la posición ' + (n + 1) + ': en una sucesión infinita siempre hay un siguiente'; },
+  que:['después de cada término siempre viene', 'otro: la lista no se acaba nunca.'],
+  reg:function(i){ return ['\\text{para }n=' + i + ':\\quad a_{' + i + '}=\\dfrac{1}{' + i + '}' + (i === 1 ? '=1' : ''), 'para n = ' + i + ':  a' + ssSub(i) + ' = 1/' + i, '\\text{para }n=' + i + ':\\quad a_{' + i + '}=\\dfrac{1}{' + i + '}' + (i === 1 ? '=1' : '') + '\\qquad\\text{y sigue }a_{' + (i + 1) + '}=\\dfrac{1}{' + (i + 1) + '}']; },
+  regFin:['\\text{para cualquier }n:\\quad a_{n}=\\dfrac{1}{n},\\ \\text{y sigue }a_{n+1}=\\dfrac{1}{n+1}', 'para cualquier n:  aₙ = 1/n, y sigue aₙ₊₁ = 1/(n + 1)', '\\text{Para cualquier }n:\\quad a_{n}=\\dfrac{1}{n},\\ \\text{y después viene }a_{n+1}=\\dfrac{1}{n+1}.\\\\&\\qquad\\text{Hay primer término, }a_{1}=1\\text{, pero no hay último.}\\\\&\\qquad\\text{Por eso la sucesión es infinita.}'],
+  caption:function(n, fin){ return fin ? 'Aquí se dibujaron 8 términos, pero la sucesión sigue: para cada natural n hay un término 1/n. Los puntos suspensivos son parte de la notación' : 'El término de la posición ' + n + ' es 1/' + n + '. Y después de él viene el de la posición ' + (n + 1) + ': en una sucesión infinita siempre hay un siguiente'; },
   readout:function(n){ return [['', '\\{a_{n}\\}_{n=1}^{\\infty}=1,\\ \\dfrac{1}{2},\\ \\dfrac{1}{3},\\ \\dfrac{1}{4},\\ \\dots'], ['d', 'a_{' + n + '}=\\dfrac{1}{' + n + '}']]; }
 }));
 OA.boot();

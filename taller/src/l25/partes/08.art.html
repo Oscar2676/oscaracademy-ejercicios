@@ -38,22 +38,35 @@
   <div class="card k1">
     <h3>Cómo se calcula y para qué sirve</h3>
     <ol class="steps">
-      <li><b>Se resta en este orden:</b> el término que sigue menos el anterior, \(d=a_{n+1}-a_{n}\).</li>
+      <li><b>Se resta en este orden:</b> el término que sigue menos el anterior, \(d=a_{n+1}-a_{n}\). Con la sucesión \(5,\ 9,\ 13,\ 17,\dots\):
+        \[\begin{aligned}a_{2}-a_{1}&=9-5=4\\ a_{3}-a_{2}&=13-9=4\\ a_{4}-a_{3}&=17-13=4\end{aligned}\]
+        Las tres restas dan \(4\): la diferencia es \(d=4\).</li>
+      <li><b>Por qué importa el orden:</b> al revés, el anterior menos el que sigue, \(5-9=-4\). Sale el número con el signo contrario, y diría que la sucesión baja de \(4\) en \(4\), cuando en realidad sube.</li>
       <li><b>Para saber si una sucesión es aritmética:</b> se calculan las restas entre vecinos, \(a_{2}-a_{1},\ a_{3}-a_{2},\ a_{4}-a_{3},\ \ldots\) Si todas dan lo mismo, es aritmética y ese número es \(d\). Si dos de ellas son distintas, no lo es.</li>
-      <li><b>Para avanzar:</b> \(a_{n+1}=a_{n}+d\) (se despeja de la definición sumando \(a_{n}\) en los dos lados).</li>
-      <li><b>Para retroceder:</b> \(a_{n}=a_{n+1}-d\) (se resta \(d\) en los dos lados).</li>
+      <li><b>Para avanzar al término siguiente</b> se despeja \(a_{n+1}\) de la definición:
+        \[\begin{aligned}d&=a_{n+1}-a_{n}&&\text{definición}\\ d+a_{n}&=a_{n+1}-a_{n}+a_{n}&&\text{se suma }a_{n}\text{ en los dos lados}\\ d+a_{n}&=a_{n+1}&&\text{porque }-a_{n}+a_{n}=0\\ a_{n+1}&=a_{n}+d&&\text{la misma igualdad, leída al revés}\end{aligned}\]
+        Ejemplo, con \(5,\ 9,\ 13,\ 17\) y \(d=4\): después del \(17\) viene \(17+4=21\).</li>
+      <li><b>Para retroceder al término anterior</b> se despeja \(a_{n}\):
+        \[\begin{aligned}a_{n+1}&=a_{n}+d&&\text{lo recién obtenido}\\ a_{n+1}-d&=a_{n}+d-d&&\text{se resta }d\text{ en los dos lados}\\ a_{n+1}-d&=a_{n}&&\text{porque }d-d=0\\ a_{n}&=a_{n+1}-d\end{aligned}\]
+        Ejemplo: antes del \(9\) está \(9-4=5\).</li>
     </ol>
   </div>
 
   <div class="card k2">
     <h3>Con dos términos cualesquiera: \(d=\dfrac{a_{m}-a_{k}}{m-k}\), con \(m\ne k\)</h3>
     <ol class="steps">
-      <li>Por el término general (demostrado en la hoja «Sucesiones aritméticas»): \(a_{m}=a_{1}+(m-1)\,d\) y \(a_{k}=a_{1}+(k-1)\,d\).</li>
-      <li>Se restan las dos igualdades: \(a_{m}-a_{k}=a_{1}+(m-1)\,d-a_{1}-(k-1)\,d\).</li>
-      <li>Se cancela \(a_{1}\) y se saca factor común \(d\): \(a_{m}-a_{k}=\left[(m-1)-(k-1)\right]d=(m-k)\,d\).</li>
-      <li>Como \(m\ne k\), se puede dividir por \(m-k\): \[d=\dfrac{a_{m}-a_{k}}{m-k}.\]</li>
+      <li><b>De dónde sale el término general</b> (se demuestra en la hoja «Sucesiones aritméticas»; aquí, el resumen). Cada término es el anterior más \(d\): \(a_{2}=a_{1}+d\); \(a_{3}=a_{2}+d=a_{1}+2d\); \(a_{4}=a_{3}+d=a_{1}+3d\). En la posición \(n\) se ha sumado \(d\) un total de \(n-1\) veces: \(a_{n}=a_{1}+(n-1)\,d\).</li>
+      <li>Se escribe esa fórmula para la posición \(m\): \(a_{m}=a_{1}+(m-1)\,d\).</li>
+      <li>Y para la posición \(k\): \(a_{k}=a_{1}+(k-1)\,d\).</li>
+      <li>Se resta la segunda igualdad de la primera, lado por lado: \[a_{m}-a_{k}=\left[a_{1}+(m-1)\,d\right]-\left[a_{1}+(k-1)\,d\right].\]</li>
+      <li>Se quitan los corchetes. El signo menos de adelante cambia el signo de cada sumando del segundo corchete: \[a_{m}-a_{k}=a_{1}+(m-1)\,d-a_{1}-(k-1)\,d.\]</li>
+      <li>\(a_{1}-a_{1}=0\), y queda: \(a_{m}-a_{k}=(m-1)\,d-(k-1)\,d\).</li>
+      <li>Se saca factor común \(d\): \(a_{m}-a_{k}=\left[(m-1)-(k-1)\right]d\).</li>
+      <li>Se calcula el corchete: \((m-1)-(k-1)=m-1-k+1=m-k\). Entonces \(a_{m}-a_{k}=(m-k)\,d\).</li>
+      <li>Como \(m\ne k\), el número \(m-k\) no es cero y se puede dividir por él en los dos lados: \[d=\dfrac{a_{m}-a_{k}}{m-k}.\]</li>
+      <li><b>Comprobación con números:</b> en \(5,\ 9,\ 13,\ 17,\ 21\), con \(m=5\) y \(k=2\): \(a_{5}=21\), \(a_{2}=9\). \[d=\dfrac{21-9}{5-2}=\dfrac{12}{3}=4.\] ✓</li>
     </ol>
-    <p>En palabras: lo que cambia el valor, dividido por la cantidad de pasos que hay entre las dos posiciones. Con \(m=n+1\) y \(k=n\) queda la definición: \(d=\dfrac{a_{n+1}-a_{n}}{1}\).</p>
+    <p>En palabras: lo que cambia el valor, dividido por la cantidad de pasos que hay entre las dos posiciones. Con \(m=n+1\) y \(k=n\) queda la definición: \(d=\dfrac{a_{n+1}-a_{n}}{(n+1)-n}=\dfrac{a_{n+1}-a_{n}}{1}=a_{n+1}-a_{n}\).</p>
   </div>
 
   <div class="card k3">
@@ -188,6 +201,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H08 · v002 · Pendiente de APR</span>
+  <span class="status">CI-L25-H08 · v003 · Pendiente de APR</span>
 </footer>
 </article>
