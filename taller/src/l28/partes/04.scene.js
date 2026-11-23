@@ -18,7 +18,7 @@ OA.scene('prop-idea', (function(){
     ['La segunda columna es la mitad de la primera.', 'Las flechas se alinean y no queda área.'],
     ['Intercambiar, multiplicar, sumar un múltiplo', 'o repetir: cada cambio tiene su regla.']];
   return {
-    world:{x0:-1.3, x1:5.3, y0:-8.6, y1:5.05}, aspect:13.65/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-8.6, y1:6.05}, aspect:14.65/6.6,
     aria:'Animación en seis pasos sobre el paralelogramo que forman las columnas u igual a (2, 1) y v igual a (1, 2), de determinante 3. Uno: el paralelogramo. Dos: se intercambian las columnas; el paralelogramo es el mismo, cambia el sentido de giro de la primera a la segunda y el determinante pasa a menos 3. Tres: la primera columna se multiplica por 2; el paralelogramo dobla su área y el determinante vale 6. Cuatro: a la segunda columna se le suma la primera; el paralelogramo se inclina con la misma base y la misma altura, y el determinante sigue en 3. Cinco: la segunda columna pasa a ser la mitad de la primera; el paralelogramo se aplasta y el determinante vale 0. Seis: resumen de las cuatro reglas. El resultado de cada paso queda guardado en una fila de cinco figuras chicas, cada una con su determinante: 3, menos 3, 6, 3 y 0. Bajo ellas, un registro numerado guarda la cuenta de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -77,6 +77,7 @@ OA.scene('prop-idea', (function(){
       L('Q', -1.2, 4.75, 0); if (k === 6 && u > 0.5) L('F', -1.2, 4.28, 0);
       txt(TXT[k - 1][0], -1.2, -2.95); txt(TXT[k - 1][1], -1.2, -2.95 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-0.68));
+      dtQue(S, 'cómo cambia el determinante al', 'cambiar las columnas. Cada paso muestra una regla.');
       T.fin();
       oaReg(S, k, N, -1.2, -4.35, [0, 40, 80, 120, 160, 196]);
     },
@@ -88,7 +89,7 @@ OA.scene('prop-idea', (function(){
 OA.scene('prop-vivo', (function(){
   var PZ = [['PU', 'k\\,\\vec u', 'k u', 'c-sec'], ['PV', '\\vec v+t\\,\\vec u', 'v + t u', 'diff']];
   return {
-    world:{x0:-3.4, x1:6.2, y0:-2.9, y1:5.3}, aspect:8.2/9.6,
+    world:{x0:-3.4, x1:6.2, y0:-2.9, y1:6.8}, aspect:9.7/9.6,
     aria:'Un paralelogramo formado por dos flechas que salen del origen. La azul es k veces u, con u igual a (2, 1). La naranja es v más t veces u, con v igual a (1, 2). Al mover t, la punta de la flecha naranja se corre por una recta paralela a u y el área no cambia. Al mover k, la flecha azul se alarga, se acorta o se invierte, y el área cambia en la misma proporción. Con k igual a cero el paralelogramo se aplasta; con k negativo es verde. Bajo el dibujo se calcula el determinante, que vale 3 por k para cualquier t.',
     labels:PZ,
     sliders:[{id:'k', tex:'k', min:-1, max:1.5, step:0.1, value:1}, {id:'t', tex:'t', min:-1, max:1, step:0.1, value:0}],
@@ -111,6 +112,8 @@ OA.scene('prop-vivo', (function(){
       if (Math.abs(k) > 0.15) T.L('PU', U[0], U[1], k > 0 ? 0 : -100, k > 0 ? 8 : -8, 12); T.L('PV', V[0], V[1], -50, 0, -13);
       m = Math.abs(D) < 0.05 ? ['Determinante cero: el paralelogramo se aplasta', C.ink] : (D > 0 ? ['Determinante positivo: giro antihorario', C.tan] : ['Determinante negativo: giro horario', C.alt]);
       c.font = '600 12.5px ' + F; c.fillStyle = m[1]; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m[0], X(-3.3), Y(-2.5));
+      c.font = '600 11px ' + F; c.fillStyle = C.rise; c.textAlign = 'right'; c.fillText('por esta recta se mueve la punta naranja', X(6.1), Y(4.75));
+      dtQue(S, 'el área solo responde a k.', 'Mover t inclina la figura, pero no cambia su área.');
       T.fin();
     },
     caption:function(v){ var k = v.k == null ? 1 : +v.k, t = v.t == null ? 0 : +v.t, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ' y t = ' + n(t) + ' el determinante vale ' + n(3*k) + ' y el paralelogramo mide ' + n(Math.abs(3*k)) + ' unidades cuadradas. Mover t no cambia el área; mover k, sí'; },

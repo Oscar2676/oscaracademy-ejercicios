@@ -19,7 +19,7 @@ OA.scene('prod-idea', (function(){
   var SQ = [[1, 0], [0, 1]], PB = [[2, 0], [1, 1]], PAB = [[2, 2], [0, 2]];
   function mez(P, Q, u){ return [[P[0][0] + (Q[0][0] - P[0][0])*u, P[0][1] + (Q[0][1] - P[0][1])*u], [P[1][0] + (Q[1][0] - P[1][0])*u, P[1][1] + (Q[1][1] - P[1][1])*u]]; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.5, y1:4.6}, aspect:9.1/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.5, y1:5.6}, aspect:10.1/6.6,
     aria:'Animación en seis pasos con las matrices A, de filas 1, menos 1 y 1, 1, y B, de filas 2, 1 y 0, 1. Uno: un cuadrado de lado 1, de área 1. Dos: la matriz B lo lleva al paralelogramo azul de sus columnas, (2, 0) y (1, 1), de área 2, que es el determinante de B. Tres: la matriz A lleva ese paralelogramo a otro, naranja, cuyos lados son las columnas del producto AB, (2, 2) y (0, 2). Cuatro: el área del naranja es el determinante de AB, 2 por 2 menos 0 por 2, que es 4. Cinco: el determinante de A es 2. Seis: 4 es 2 por 2, el determinante del producto es el producto de los determinantes. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -55,6 +55,7 @@ OA.scene('prod-idea', (function(){
       L('Q', -1.2, 4.3, 0); if (k === N && u > 0.5) L('F', 0.3, 4.3, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.3));
+      dtQue(S, 'aplicar B y después A multiplica el', 'área dos veces: los determinantes se multiplican.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.15, [0, 28, 56, 84, 112, 140]);
     },
@@ -72,7 +73,7 @@ OA.scene('prod-idea', (function(){
 OA.scene('prod-vivo', (function(){
   var PZ = [['PB', '\\text{columnas de }B', 'columnas de B', 'c-sec'], ['PA', '\\text{columnas de }AB', 'columnas de AB', 'diff']];
   return {
-    world:{x0:-1.0, x1:5.6, y0:-2.6, y1:3.0}, aspect:5.6/6.6,
+    world:{x0:-1.0, x1:5.6, y0:-2.6, y1:4.0}, aspect:6.6/6.6,
     aria:'Dos paralelogramos que salen del origen. El azul, fijo, lo forman las columnas de la matriz B, los vectores (2, 0) y (1, 1); su área es 2. El naranja lo forman las columnas del producto AB, los vectores (2, 0) y (2, k), donde A tiene filas 1, 1 y 0, k. Al mover k el naranja cambia de alto: su área es el valor absoluto de 2 por k. Con k igual a 1 tiene la misma área que el azul. Con k igual a 0 se aplasta sobre el eje y el área es cero. Con k negativo queda bajo el eje. Bajo el dibujo se calculan los tres determinantes.',
     labels:PZ,
     sliders:[{id:'k', tex:'k', min:-1, max:2, step:0.05, value:1.5}],
@@ -94,6 +95,7 @@ OA.scene('prod-vivo', (function(){
       T.L('PB', 0.9, 1, -100, -6, -9); T.L('PA', 4, k, -100, 0, k < 0 ? 11 : -11);
       m = cero ? 'Determinante cero: el naranja se aplasta' : (k < 0 ? 'Determinante negativo: el naranja se da vuelta' : 'El área naranja es la azul por el factor k');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-2.1));
+      dtQue(S, 'al aplicar A, el área azul queda', 'multiplicada por el determinante de A, sin su signo.');
       T.fin();
     },
     caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ', el determinante de A vale ' + n(k) + ', el de B vale 2 y el de AB vale ' + n(2*k) + '. El paralelogramo naranja mide ' + n(Math.abs(2*k)) + ' unidades cuadradas. Con k = 0 se aplasta'; },
@@ -104,6 +106,7 @@ OA.scene('prod-vivo', (function(){
         '\\text{fila 1 de }AB\\text{:}' + Q + '1\\cdot 2+1\\cdot 0=2+0=2;' + Q + '1\\cdot 1+1\\cdot 1=1+1=2' + Q + '\\text{fila 2 de }AB\\text{:}' + Q + '0\\cdot 2+' + K + '\\cdot 0=0+0=0;' + Q + '0\\cdot 1+' + K + '\\cdot 1=0+' + K + '=' + n(k, 2) + Q + 'AB=\\begin{pmatrix}2&2\\\\0&' + n(k, 2) + '\\end{pmatrix}',
         '|AB|=\\begin{vmatrix}2&2\\\\0&' + n(k, 2) + '\\end{vmatrix}=2\\cdot ' + K + '-2\\cdot 0' + Q + '\\text{productos: }2\\cdot ' + K + '=' + n(D, 2) + ';\\qquad 2\\cdot 0=0' + Q + '|AB|=' + n(D, 2) + '-0=' + n(D, 2),
         '|A|\\,|B|=' + K + '\\cdot 2=' + n(D, 2) + '=|AB|',
-        '\\text{área naranja}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2) + (D === 0 ? Q + '\\text{determinante cero: se aplasta}' : '')]); }
+        '\\text{área naranja}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2) + (D === 0 ? Q + '\\text{determinante cero: se aplasta}' : ''),
+        '\\text{área azul}\\cdot|k|=2\\cdot ' + n(Math.abs(k), 2) + '=' + n(Math.abs(D), 2) + Q + '\\text{el área azul quedó multiplicada por }|k|=\\big|\\,|A|\\,\\big|']); }
   };
 })());

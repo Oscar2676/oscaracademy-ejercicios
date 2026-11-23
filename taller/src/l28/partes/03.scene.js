@@ -16,7 +16,7 @@ OA.scene('sarrus-idea', (function(){
     ['Lo que baja, menos lo que sube.', 'La pregunta de arriba ya tiene respuesta.']];
   function cx(q){ return q*0.95; } function cy(r){ return 2.75 - r*0.9; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:3.95}, aspect:8.55/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:4.95}, aspect:9.55/6.6,
     aria:'Animación en cinco pasos. Uno: una matriz de tres por tres con filas a, b, c; d, e, f; g, h, i. Dos: a su derecha se repiten la columna uno, a, d, g, y la columna dos, b, e, h. Tres: tres bandas azules marcan las diagonales que bajan: a, e, i; b, f, g; c, d, h; sus productos llevan signo más. Cuatro: tres bandas burdeo marcan las diagonales que suben: g, e, c; h, f, a; i, d, b; sus productos llevan signo menos. Cinco: el determinante es la suma de los tres primeros productos menos los otros tres. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -39,6 +39,7 @@ OA.scene('sarrus-idea', (function(){
       L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.25, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -0.2); txt(TXT[k - 1][1], -1.2, -0.2 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.22));
+      dtQue(S, 'la regla de Sarrus: seis productos,', 'tres que bajan (suman) y tres que suben (restan).');
       T.fin();
       oaReg(S, k, N, -1.2, -1.75, [0, 30, 60, 90, 120]);
     },

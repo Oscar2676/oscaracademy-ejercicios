@@ -21,6 +21,14 @@
 <section>
   <h2>La idea, en una animación</h2>
   <p>Por qué no cambia el determinante al trasponer, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la matriz \(A\)</b> y, desde el paso 2, su traspuesta \(A^{T}\) a la derecha: cada fila de \(A\) quedó escrita como columna.</li>
+    <li><b>Mira la línea naranja:</b> es la diagonal principal, \(a\), \(e\), \(i\). Esas tres entradas no se mueven; las demás cruzan al otro lado de ella.</li>
+    <li><b>Paso 3:</b> las casillas azules marcan \(b\), \(f\), \(g\) en \(A\). Búscalas en \(A^{T}\): son las mismas tres entradas y también forman un producto que suma.</li>
+    <li><b>Paso 4:</b> las casillas burdeo marcan \(a\), \(f\), \(h\). En \(A^{T}\) están las mismas tres y también forman un producto que resta.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> los seis productos de \(A^{T}\) son los seis de \(A\), con los factores en otro orden. Por eso \(\det A^{T}=\det A\).</li>
+  </ol>
   <div class="stage" data-scene="trasp-idea"></div>
   <ul class="keys">
     <li><b>Línea naranja:</b> la diagonal principal, \(a\), \(e\), \(i\). Al trasponer no se mueve; las demás entradas cruzan al otro lado de ella.</li>
@@ -64,6 +72,14 @@
     <h3>Lo que se gana: filas y columnas valen lo mismo</h3>
     <p>Las columnas de \(A\) son las filas de \(A^{T}\). Entonces, lo que se sabe de las filas se traslada a las columnas: si se intercambian dos columnas, el determinante cambia de signo; si una columna se multiplica por \(k\), queda multiplicado por \(k\); si a una columna se le suma un múltiplo de otra, no cambia; si dos columnas son proporcionales, vale \(0\).</p>
     <p><b>Número ↔ figura.</b> En \(A=\begin{pmatrix}2&b\\1&2\end{pmatrix}\), las columnas forman un paralelogramo y las filas (que son las columnas de \(A^{T}\)) forman otro, de forma distinta. Mueve \(b\): las dos áreas cambian juntas y se anulan a la vez, con \(b=4\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira el paralelogramo azul:</b> lo forman las columnas de \(A\), \((2,1)\) y \((b,2)\).</li>
+      <li><b>Mira el paralelogramo naranja:</b> lo forman las columnas de \(A^{T}\), \((2,b)\) y \((1,2)\), que son las filas de \(A\). Tiene otra forma.</li>
+      <li><b>Mueve \(b\)</b> (o pulsa «Reproducir»): los dos cambian de manera distinta. Con \(b=4\) se aplastan los dos a la vez.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> primero \(\det A\), con sus dos productos y la resta; después \(\det A^{T}\), igual. Compara los dos resultados y el área.</li>
+      <li><b>Conclusión:</b> las figuras son distintas, pero el determinante y el área son los mismos para todo \(b\).</li>
+    </ol>
     <div class="stage" data-scene="trasp-vivo"></div>
     <ul class="keys">
       <li><b>Paralelogramo azul:</b> el de las columnas de \(A\), \((2,1)\) y \((b,2)\).</li>
@@ -172,7 +188,7 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H05 · v002 · Pendiente de APR</span>
+  <span class="status">AL-L28-H05 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -195,6 +211,11 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
 function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L28 H05 · trasponer no cambia el determinante: los seis productos son los mismos */
 OA.scene('trasp-idea', (function(){
   var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
@@ -214,7 +235,7 @@ OA.scene('trasp-idea', (function(){
   var MAS = [1, 5, 6], MEN = [0, 5, 7];
   function xa(q){ return -0.4 + 0.8*q; } function xt(q){ return 3.0 + 0.8*q; } function cy(r){ return 2.75 - 0.8*r; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.2}, aspect:8.4/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:5.2}, aspect:9.4/6.6,
     aria:'Animación en cinco pasos. Uno: una matriz A de tres por tres con filas a, b, c; d, e, f; g, h, i. Dos: a su derecha se arma la traspuesta: cada fila de A pasa a ser una columna, así que sus filas son a, d, g; b, e, h; c, f, i; la diagonal a, e, i queda en su lugar. Tres: en A se marcan en azul las entradas b, f, g, cuyo producto suma; en la traspuesta están las mismas tres entradas, también en una diagonal que baja. Cuatro: en A se marcan en burdeo las entradas a, f, h, cuyo producto resta; en la traspuesta están las mismas tres, también en una diagonal que sube. Cinco: pasa lo mismo con los seis productos, y los dos determinantes son iguales. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -241,6 +262,7 @@ OA.scene('trasp-idea', (function(){
       L('Q', -1.2, 3.97, 0); if (k === 5 && u > 0.5) L('F', 0.45, 3.97, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.25); txt(TXT[k - 1][1], -1.2, 0.25 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(3.97));
+      dtQue(S, 'al trasponer, el determinante no', 'cambia: los seis productos son los mismos.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.3, [0, 30, 60, 90, 120]);
     },
@@ -252,7 +274,7 @@ OA.scene('trasp-idea', (function(){
 OA.scene('trasp-vivo', (function(){
   var PZ = [['PA', '\\text{columnas de }A', 'columnas de A', 'c-sec'], ['PT', '\\text{columnas de }A^{T}', 'columnas de Aᵀ', 'diff']];
   return {
-    world:{x0:-1.0, x1:7.6, y0:-2.2, y1:7.4}, aspect:9.6/8.6,
+    world:{x0:-1.0, x1:7.6, y0:-2.2, y1:8.75}, aspect:10.95/8.6,
     aria:'Dos paralelogramos que salen del origen. El azul lo forman las columnas de la matriz A, los vectores (2, 1) y (b, 2). El naranja lo forman las columnas de la traspuesta, los vectores (2, b) y (1, 2). Al mover b los dos cambian de forma de manera distinta, pero siempre tienen la misma área, el valor absoluto de 4 menos b. Con b igual a 2 los dos coinciden. Con b igual a 4 los dos se aplastan a la vez y el área es cero. Bajo el dibujo se calculan los dos determinantes.',
     labels:PZ,
     sliders:[{id:'b', tex:'b', min:0, max:5, step:0.1, value:1}],
@@ -273,17 +295,19 @@ OA.scene('trasp-vivo', (function(){
       T.L('PA', 2 + b, 3, -100, 0, -11); T.L('PT', 3, b + 2, 0, 7, 0);
       m = Math.abs(D) < 0.05 ? 'Determinante cero: los dos se aplastan a la vez' : 'Formas distintas, la misma área';
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-1.7));
+      dtQue(S, 'A y su traspuesta dan figuras', 'distintas, pero siempre con la misma área.');
       T.fin();
     },
     caption:function(v){ var b = v.b == null ? 1 : +v.b, n = function(z){ return oaDec(z, 2); }; return 'Con b = ' + n(b) + ' los dos determinantes valen ' + n(4 - b) + ' y cada paralelogramo mide ' + n(Math.abs(4 - b)) + ' unidades cuadradas. Con b = 4 los dos se aplastan a la vez'; },
     readout:function(v){ var b = Math.round((v.b == null ? 1 : +v.b)*100)/100, D = Math.round((4 - b)*100)/100, n = OA.num;
-      return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquadb=' + n(b, 2),
+      return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquad b=' + n(b, 2),
         '\\det A=\\begin{vmatrix}2&' + n(b, 2) + '\\\\1&2\\end{vmatrix}=2\\cdot 2-' + n(b, 2) + '\\cdot 1',
         '\\text{productos: }2\\cdot 2=4;\\qquad ' + n(b, 2) + '\\cdot 1=' + n(b, 2),
         '\\det A=4-' + n(b, 2) + '=' + n(D, 2),
         '\\det A^{T}=\\begin{vmatrix}2&1\\\\' + n(b, 2) + '&2\\end{vmatrix}=2\\cdot 2-1\\cdot ' + n(b, 2),
         '\\text{productos: }2\\cdot 2=4;\\qquad 1\\cdot ' + n(b, 2) + '=' + n(b, 2),
         '\\det A^{T}=4-' + n(b, 2) + '=' + n(D, 2) + '=\\det A',
-        '\\text{área de cada uno}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2)]); }
+        '\\text{área de cada uno}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2),
+        '\\text{formas distintas, misma área:}\\\\&\\qquad\\det A^{T}=\\det A\\text{ para este }b' + (D === 0 ? '\\\\&\\qquad\\text{determinante cero: los dos se aplastan}' : '')]); }
   };
 })());

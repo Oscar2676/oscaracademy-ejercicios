@@ -21,6 +21,14 @@
 <section>
   <h2>La idea, en una animación</h2>
   <p>Con \(A=\begin{pmatrix}1&-1\\1&1\end{pmatrix}\) y \(B=\begin{pmatrix}2&1\\0&1\end{pmatrix}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero el cuadrado gris</b> de lado \(1\): su área es \(1\).</li>
+    <li><b>Paso 2:</b> la matriz \(B\) lo convierte en el paralelogramo azul. Su área es \(|B|=2\): el área se multiplicó por \(2\).</li>
+    <li><b>Pasos 3 y 4:</b> la matriz \(A\) convierte el azul en el naranja, que es el paralelogramo de las columnas de \(AB\). Su área es \(|AB|=4\).</li>
+    <li><b>Paso 5:</b> se calcula \(|A|=2\). Es el número por el que \(A\) multiplicó el área: de \(2\) pasó a \(4\).</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada determinante con sus dos productos y su resta, y cada entrada de \(AB\) con su suma. Al final se compara \(|AB|=4\) con \(|A|\,|B|=2\cdot 2=4\).</li>
+  </ol>
   <div class="stage" data-scene="prod-idea"></div>
   <ul class="keys">
     <li><b>Cuadrado gris:</b> el de lados \((1,0)\) y \((0,1)\). Su área es \(1\cdot 1=1\).</li>
@@ -67,6 +75,14 @@
       <li><b>Si \(|A|=0\) o \(|B|=0\)</b>, entonces \(|AB|=0\).</li>
     </ol>
     <p><b>Número ↔ figura.</b> Con \(B=\begin{pmatrix}2&1\\0&1\end{pmatrix}\) fija y \(A=\begin{pmatrix}1&1\\0&k\end{pmatrix}\), mueve \(k\): \(|A|=k\) y el área del paralelogramo de \(AB\) es la del paralelogramo de \(B\) multiplicada por \(|k|\). Con \(k=0\) se aplasta.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira el paralelogramo azul:</b> es el de las columnas de \(B\) y no se mueve. Su área es \(|B|=2\).</li>
+      <li><b>Mira el paralelogramo naranja:</b> es el de las columnas de \(AB\), es decir, el azul después de aplicarle \(A\).</li>
+      <li><b>Mueve \(k\)</b> (o pulsa «Reproducir»): el naranja cambia de alto. Con \(k=1\) mide lo mismo que el azul; con \(k=0\) se aplasta; con \(k\) negativo queda bajo el eje.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> \(|A|\), \(|B|\), las cuatro entradas de \(AB\), \(|AB|\) y la comparación \(|A|\,|B|=|AB|\).</li>
+      <li><b>Conclusión:</b> el área naranja es siempre el área azul multiplicada por \(|k|\), el valor absoluto de \(|A|=k\).</li>
+    </ol>
     <div class="stage" data-scene="prod-vivo"></div>
     <ul class="keys">
       <li><b>Paralelogramo azul:</b> el de las columnas de \(B\), \((2,0)\) y \((1,1)\); no cambia.</li>
@@ -185,7 +201,7 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H06 · v002 · Pendiente de APR</span>
+  <span class="status">AL-L28-H06 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -208,6 +224,11 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
 function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L28 H06 · |AB| = |A| |B|: el cuadrado de área 1 pasa por B y después por A; las áreas se multiplican */
 OA.scene('prod-idea', (function(){
   var N = 6;
@@ -229,7 +250,7 @@ OA.scene('prod-idea', (function(){
   var SQ = [[1, 0], [0, 1]], PB = [[2, 0], [1, 1]], PAB = [[2, 2], [0, 2]];
   function mez(P, Q, u){ return [[P[0][0] + (Q[0][0] - P[0][0])*u, P[0][1] + (Q[0][1] - P[0][1])*u], [P[1][0] + (Q[1][0] - P[1][0])*u, P[1][1] + (Q[1][1] - P[1][1])*u]]; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.5, y1:4.6}, aspect:9.1/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.5, y1:5.6}, aspect:10.1/6.6,
     aria:'Animación en seis pasos con las matrices A, de filas 1, menos 1 y 1, 1, y B, de filas 2, 1 y 0, 1. Uno: un cuadrado de lado 1, de área 1. Dos: la matriz B lo lleva al paralelogramo azul de sus columnas, (2, 0) y (1, 1), de área 2, que es el determinante de B. Tres: la matriz A lleva ese paralelogramo a otro, naranja, cuyos lados son las columnas del producto AB, (2, 2) y (0, 2). Cuatro: el área del naranja es el determinante de AB, 2 por 2 menos 0 por 2, que es 4. Cinco: el determinante de A es 2. Seis: 4 es 2 por 2, el determinante del producto es el producto de los determinantes. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -265,6 +286,7 @@ OA.scene('prod-idea', (function(){
       L('Q', -1.2, 4.3, 0); if (k === N && u > 0.5) L('F', 0.3, 4.3, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.3));
+      dtQue(S, 'aplicar B y después A multiplica el', 'área dos veces: los determinantes se multiplican.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.15, [0, 28, 56, 84, 112, 140]);
     },
@@ -282,7 +304,7 @@ OA.scene('prod-idea', (function(){
 OA.scene('prod-vivo', (function(){
   var PZ = [['PB', '\\text{columnas de }B', 'columnas de B', 'c-sec'], ['PA', '\\text{columnas de }AB', 'columnas de AB', 'diff']];
   return {
-    world:{x0:-1.0, x1:5.6, y0:-2.6, y1:3.0}, aspect:5.6/6.6,
+    world:{x0:-1.0, x1:5.6, y0:-2.6, y1:4.0}, aspect:6.6/6.6,
     aria:'Dos paralelogramos que salen del origen. El azul, fijo, lo forman las columnas de la matriz B, los vectores (2, 0) y (1, 1); su área es 2. El naranja lo forman las columnas del producto AB, los vectores (2, 0) y (2, k), donde A tiene filas 1, 1 y 0, k. Al mover k el naranja cambia de alto: su área es el valor absoluto de 2 por k. Con k igual a 1 tiene la misma área que el azul. Con k igual a 0 se aplasta sobre el eje y el área es cero. Con k negativo queda bajo el eje. Bajo el dibujo se calculan los tres determinantes.',
     labels:PZ,
     sliders:[{id:'k', tex:'k', min:-1, max:2, step:0.05, value:1.5}],
@@ -304,6 +326,7 @@ OA.scene('prod-vivo', (function(){
       T.L('PB', 0.9, 1, -100, -6, -9); T.L('PA', 4, k, -100, 0, k < 0 ? 11 : -11);
       m = cero ? 'Determinante cero: el naranja se aplasta' : (k < 0 ? 'Determinante negativo: el naranja se da vuelta' : 'El área naranja es la azul por el factor k');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-2.1));
+      dtQue(S, 'al aplicar A, el área azul queda', 'multiplicada por el determinante de A, sin su signo.');
       T.fin();
     },
     caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ', el determinante de A vale ' + n(k) + ', el de B vale 2 y el de AB vale ' + n(2*k) + '. El paralelogramo naranja mide ' + n(Math.abs(2*k)) + ' unidades cuadradas. Con k = 0 se aplasta'; },
@@ -314,6 +337,7 @@ OA.scene('prod-vivo', (function(){
         '\\text{fila 1 de }AB\\text{:}' + Q + '1\\cdot 2+1\\cdot 0=2+0=2;' + Q + '1\\cdot 1+1\\cdot 1=1+1=2' + Q + '\\text{fila 2 de }AB\\text{:}' + Q + '0\\cdot 2+' + K + '\\cdot 0=0+0=0;' + Q + '0\\cdot 1+' + K + '\\cdot 1=0+' + K + '=' + n(k, 2) + Q + 'AB=\\begin{pmatrix}2&2\\\\0&' + n(k, 2) + '\\end{pmatrix}',
         '|AB|=\\begin{vmatrix}2&2\\\\0&' + n(k, 2) + '\\end{vmatrix}=2\\cdot ' + K + '-2\\cdot 0' + Q + '\\text{productos: }2\\cdot ' + K + '=' + n(D, 2) + ';\\qquad 2\\cdot 0=0' + Q + '|AB|=' + n(D, 2) + '-0=' + n(D, 2),
         '|A|\\,|B|=' + K + '\\cdot 2=' + n(D, 2) + '=|AB|',
-        '\\text{área naranja}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2) + (D === 0 ? Q + '\\text{determinante cero: se aplasta}' : '')]); }
+        '\\text{área naranja}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2) + (D === 0 ? Q + '\\text{determinante cero: se aplasta}' : ''),
+        '\\text{área azul}\\cdot|k|=2\\cdot ' + n(Math.abs(k), 2) + '=' + n(Math.abs(D), 2) + Q + '\\text{el área azul quedó multiplicada por }|k|=\\big|\\,|A|\\,\\big|']); }
   };
 })());

@@ -17,7 +17,7 @@ OA.scene('trasp-idea', (function(){
   var MAS = [1, 5, 6], MEN = [0, 5, 7];
   function xa(q){ return -0.4 + 0.8*q; } function xt(q){ return 3.0 + 0.8*q; } function cy(r){ return 2.75 - 0.8*r; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.2}, aspect:8.4/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:5.2}, aspect:9.4/6.6,
     aria:'Animación en cinco pasos. Uno: una matriz A de tres por tres con filas a, b, c; d, e, f; g, h, i. Dos: a su derecha se arma la traspuesta: cada fila de A pasa a ser una columna, así que sus filas son a, d, g; b, e, h; c, f, i; la diagonal a, e, i queda en su lugar. Tres: en A se marcan en azul las entradas b, f, g, cuyo producto suma; en la traspuesta están las mismas tres entradas, también en una diagonal que baja. Cuatro: en A se marcan en burdeo las entradas a, f, h, cuyo producto resta; en la traspuesta están las mismas tres, también en una diagonal que sube. Cinco: pasa lo mismo con los seis productos, y los dos determinantes son iguales. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -44,6 +44,7 @@ OA.scene('trasp-idea', (function(){
       L('Q', -1.2, 3.97, 0); if (k === 5 && u > 0.5) L('F', 0.45, 3.97, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.25); txt(TXT[k - 1][1], -1.2, 0.25 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(3.97));
+      dtQue(S, 'al trasponer, el determinante no', 'cambia: los seis productos son los mismos.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.3, [0, 30, 60, 90, 120]);
     },
@@ -55,7 +56,7 @@ OA.scene('trasp-idea', (function(){
 OA.scene('trasp-vivo', (function(){
   var PZ = [['PA', '\\text{columnas de }A', 'columnas de A', 'c-sec'], ['PT', '\\text{columnas de }A^{T}', 'columnas de Aᵀ', 'diff']];
   return {
-    world:{x0:-1.0, x1:7.6, y0:-2.2, y1:7.4}, aspect:9.6/8.6,
+    world:{x0:-1.0, x1:7.6, y0:-2.2, y1:8.75}, aspect:10.95/8.6,
     aria:'Dos paralelogramos que salen del origen. El azul lo forman las columnas de la matriz A, los vectores (2, 1) y (b, 2). El naranja lo forman las columnas de la traspuesta, los vectores (2, b) y (1, 2). Al mover b los dos cambian de forma de manera distinta, pero siempre tienen la misma área, el valor absoluto de 4 menos b. Con b igual a 2 los dos coinciden. Con b igual a 4 los dos se aplastan a la vez y el área es cero. Bajo el dibujo se calculan los dos determinantes.',
     labels:PZ,
     sliders:[{id:'b', tex:'b', min:0, max:5, step:0.1, value:1}],
@@ -76,17 +77,19 @@ OA.scene('trasp-vivo', (function(){
       T.L('PA', 2 + b, 3, -100, 0, -11); T.L('PT', 3, b + 2, 0, 7, 0);
       m = Math.abs(D) < 0.05 ? 'Determinante cero: los dos se aplastan a la vez' : 'Formas distintas, la misma área';
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-1.7));
+      dtQue(S, 'A y su traspuesta dan figuras', 'distintas, pero siempre con la misma área.');
       T.fin();
     },
     caption:function(v){ var b = v.b == null ? 1 : +v.b, n = function(z){ return oaDec(z, 2); }; return 'Con b = ' + n(b) + ' los dos determinantes valen ' + n(4 - b) + ' y cada paralelogramo mide ' + n(Math.abs(4 - b)) + ' unidades cuadradas. Con b = 4 los dos se aplastan a la vez'; },
     readout:function(v){ var b = Math.round((v.b == null ? 1 : +v.b)*100)/100, D = Math.round((4 - b)*100)/100, n = OA.num;
-      return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquadb=' + n(b, 2),
+      return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquad b=' + n(b, 2),
         '\\det A=\\begin{vmatrix}2&' + n(b, 2) + '\\\\1&2\\end{vmatrix}=2\\cdot 2-' + n(b, 2) + '\\cdot 1',
         '\\text{productos: }2\\cdot 2=4;\\qquad ' + n(b, 2) + '\\cdot 1=' + n(b, 2),
         '\\det A=4-' + n(b, 2) + '=' + n(D, 2),
         '\\det A^{T}=\\begin{vmatrix}2&1\\\\' + n(b, 2) + '&2\\end{vmatrix}=2\\cdot 2-1\\cdot ' + n(b, 2),
         '\\text{productos: }2\\cdot 2=4;\\qquad 1\\cdot ' + n(b, 2) + '=' + n(b, 2),
         '\\det A^{T}=4-' + n(b, 2) + '=' + n(D, 2) + '=\\det A',
-        '\\text{área de cada uno}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2)]); }
+        '\\text{área de cada uno}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2),
+        '\\text{formas distintas, misma área:}\\\\&\\qquad\\det A^{T}=\\det A\\text{ para este }b' + (D === 0 ? '\\\\&\\qquad\\text{determinante cero: los dos se aplastan}' : '')]); }
   };
 })());

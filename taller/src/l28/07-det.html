@@ -21,6 +21,14 @@
 <section>
   <h2>La idea, en una animación</h2>
   <p>Cómo se nombra cada elemento de un determinante de tercer orden, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero el determinante:</b> tiene nueve elementos, y cada uno lleva dos subíndices.</li>
+    <li><b>Paso 2:</b> la banda azul marca una fila, la número \(2\) contando desde arriba. Lee sus elementos: todos tienen primer subíndice \(2\).</li>
+    <li><b>Paso 3:</b> la banda verde marca una columna, la número \(3\) contando desde la izquierda. Todos sus elementos tienen segundo subíndice \(3\).</li>
+    <li><b>Paso 4:</b> donde se cruzan las dos bandas queda la casilla naranja: es \(a_{23}\), fila \(2\) y columna \(3\).</li>
+    <li><b>Paso 5 y cuenta de abajo:</b> la línea burdeo recorre la diagonal principal, donde \(i=j\). Abajo queda anotado, paso a paso, qué elementos hay en cada fila, columna, cruce y diagonal.</li>
+  </ol>
   <div class="stage" data-scene="filcol-idea"></div>
   <ul class="keys">
     <li><b>Banda azul:</b> la fila \(i=2\). Todos sus elementos tienen primer subíndice \(2\).</li>
@@ -64,6 +72,13 @@
     <p>A cada posición se le asocia el signo \((-1)^{i+j}\): es \(+\) si \(i+j\) es par y \(-\) si \(i+j\) es impar. Los signos se alternan como en un tablero de ajedrez, y la posición \((1,1)\) lleva \(+\).</p>
     <p>En la primera fila, \(i=1\): los signos son \((-1)^{1+1}=+1\), \((-1)^{1+2}=-1\), \((-1)^{1+3}=+1\). Son los signos \(+,-,+\) del desarrollo por la primera fila.</p>
     <p><b>Número ↔ figura.</b> En \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\), mueve \(i\) y \(j\): se marcan la fila, la columna y el elemento del cruce, con su valor y el signo de su posición.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Elige \(i\) con el primer deslizador:</b> la banda azul marca esa fila.</li>
+      <li><b>Elige \(j\) con el segundo:</b> la banda verde marca esa columna, y la casilla naranja, el elemento \(a_{ij}\) del cruce.</li>
+      <li><b>Mira el signo gris</b> de la esquina de esa casilla: es el signo de la posición, \((-1)^{i+j}\), no el del número.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> los elementos de la fila y de la columna, el del cruce con su valor, la suma \(i+j\), si es par o impar, el signo de la posición y si el elemento está en alguna diagonal.</li>
+    </ol>
     <div class="stage" data-scene="filcol-vivo"></div>
     <ul class="keys">
       <li><b>Banda azul:</b> la fila \(i\) elegida. <b>Banda verde:</b> la columna \(j\) elegida.</li>
@@ -178,7 +193,7 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H07 · v002 · Pendiente de APR</span>
+  <span class="status">AL-L28-H07 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -201,6 +216,11 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
 function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L28 H07 · filas i y columnas j: cada elemento se nombra con su fila y su columna */
 OA.scene('filcol-idea', (function(){
   var N = 5, j0, PZ = [];
@@ -219,7 +239,7 @@ OA.scene('filcol-idea', (function(){
     ['Si fila y columna tienen el mismo número,', 'el elemento está en la diagonal principal.']];
   function cx(q){ return 1.2 + q; } function cy(r){ return 3.0 - 0.85*r; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.95}, aspect:9.15/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:5.95}, aspect:10.15/6.6,
     aria:'Animación en cinco pasos sobre un determinante de tercer orden con elementos a11, a12, a13 en la primera fila; a21, a22, a23 en la segunda; a31, a32, a33 en la tercera. Uno: tiene tres filas y tres columnas, nueve elementos. Dos: se marca en azul la fila 2, la segunda línea horizontal contando desde arriba; sus elementos son a21, a22, a23, todos con primer subíndice 2. Tres: se marca en verde la columna 3, la tercera línea vertical contando desde la izquierda; sus elementos son a13, a23, a33, todos con segundo subíndice 3. Cuatro: en el cruce queda en naranja el elemento a23. Cinco: una línea burdeo recorre la diagonal principal, a11, a22, a33, donde el número de fila y el de columna coinciden. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -247,6 +267,7 @@ OA.scene('filcol-idea', (function(){
       L('Q', -1.2, 4.65, 0); if (k === N && u > 0.5) L('F', -1.2, 4.25, 0); /* la pregunta queda; la respuesta se escribe debajo (al lado no cabe) */
       txt(TXT[k - 1][0], -1.2, 0.25); txt(TXT[k - 1][1], -1.2, 0.25 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.65));
+      dtQue(S, 'cada elemento se nombra con su', 'número de fila (i) y su número de columna (j).');
       T.fin();
       oaReg(S, k, N, -1.2, -1.3, [0, 30, 60, 90, 120]);
     },
@@ -266,7 +287,7 @@ OA.scene('filcol-vivo', (function(){
   for (j0 = 1; j0 <= 3; j0++){ PZ.push(['I' + j0, 'i=' + j0, 'i = ' + j0, 'c-sec']); PZ.push(['J' + j0, 'j=' + j0, 'j = ' + j0, 'c-alt']); }
   function cx(q){ return 1.3 + q; } function cy(r){ return 2.6 - 0.85*r; }
   return {
-    world:{x0:-1.0, x1:5.6, y0:-0.9, y1:3.8}, aspect:4.7/6.6,
+    world:{x0:-1.0, x1:5.6, y0:-0.9, y1:4.8}, aspect:5.7/6.6,
     aria:'Un determinante de tercer orden con filas 2, menos 1, 0; 3, 1, menos 2; menos 1, 4, 5. Dos deslizadores eligen el número de fila i y el número de columna j, de 1 a 3. Una banda azul marca la fila elegida, una banda verde marca la columna elegida y una casilla naranja marca el elemento del cruce. En la esquina de cada casilla hay un signo gris, más o menos, que es el signo de la posición: más si i más j es par, menos si es impar. Bajo el dibujo se escribe el elemento elegido con su valor y el signo de su posición.',
     labels:PZ,
     sliders:[{id:'i', tex:'i', min:1, max:3, step:1, value:2}, {id:'j', tex:'j', min:1, max:3, step:1, value:3}],
@@ -286,6 +307,7 @@ OA.scene('filcol-vivo', (function(){
       for (n = 1; n <= 3; n++){ T.L('I' + n, cx(0) - 0.78, cy(n - 1), -100); T.L('J' + n, cx(n - 1), cy(0) + 0.68); }
       m = 'Fila ' + i + ', columna ' + j + ': posición de signo ' + ((i + j) % 2 ? 'menos' : 'más');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-0.45));
+      dtQue(S, 'elige una fila y una columna:', 'el cruce da el elemento y el signo de su posición.');
       T.fin();
     },
     caption:function(v){ var i = Math.round(v.i || 2), j = Math.round(v.j || 3), a = NUM[3*(i - 1) + j - 1]; return 'El elemento de la fila ' + i + ' y la columna ' + j + ' vale ' + ('' + a).replace('-', '−') + '. El signo de su posición es ' + ((i + j) % 2 ? 'menos' : 'más') + ', porque ' + i + ' + ' + j + ' = ' + (i + j) + ' es ' + ((i + j) % 2 ? 'impar' : 'par'); },
