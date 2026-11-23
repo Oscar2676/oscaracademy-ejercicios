@@ -5,7 +5,7 @@ OA.scene('cramer-idea', (function(){
     ['HX', 'x', 'x', 'c-sec'], ['HY', 'y', 'y', 'c-alt'],
     ['LA', '2x+y=5', '2x + y = 5', 'c-sec'], ['LB', 'x+3y=5', 'x + 3y = 5', 'c-alt'], ['P', '(2,1)', '(2, 1)', 'diff'],
     ['D0', '\\Delta=5', 'Δ = 5', ''], ['DX', '\\Delta_x=10', 'Δx = 10', ''], ['DY', '\\Delta_y=5', 'Δy = 5', ''],
-    ['Q', 'x=\\ ?\\qquad y=\\ ?', 'x = ?   y = ?', 'pt'], ['F', 'x=2,\\qquad y=1', 'x = 2, y = 1', 'diff'],
+    ['Q', 'x=\\ ?\\qquad y=\\ ?', 'x = ?   y = ?', 'pt'], ['F', '\\Longrightarrow\\ x=2,\\quad y=1', '⟹ x = 2, y = 1', 'diff'],
     ['R1', '2x+y=5,\\qquad x+3y=5', '2x + y = 5, x + 3y = 5', ''],
     ['R2', '\\Delta=2\\cdot 3-1\\cdot 1=5', 'Δ = 2·3 − 1·1 = 5', ''],
     ['R3', '\\Delta_x=5\\cdot 3-1\\cdot 5=10', 'Δx = 5·3 − 1·5 = 10', ''],
@@ -23,7 +23,7 @@ OA.scene('cramer-idea', (function(){
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw sec"></i> coeficientes de \\(x\\)</span><span><i class="sw alt"></i> coeficientes de \\(y\\)</span><span><i class="sw rise"></i> términos libres y solución</span>',
-    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, wx_, wy_, g, a, b;
@@ -40,7 +40,7 @@ OA.scene('cramer-idea', (function(){
       if (b > 0) S.line(mx(0), my(5/3), mx(5*b), my(5/3 - 5/3*b), {color:C.alt, width:1.8});
       if (a > 0.6) L('LA', mx(0.55), my(4.5), 0); if (b > 0.6) L('LB', mx(2.6), my(1.45), 0);
       /* paso 5: el punto de corte, con sus punteadas a los ejes */
-      if (k === 5){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2)), Y(my(1 - u))); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2 - 2*u)), Y(my(1))); c.stroke(); c.setLineDash([]);
+      if (k === 5){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([3, 3]); /* último paso: nada que quitar después */ c.beginPath(); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2)), Y(my(1 - u))); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2 - 2*u)), Y(my(1))); c.stroke(); c.setLineDash([]);
         c.globalAlpha = Math.max(u, 0.2); c.fillStyle = C.rise; c.beginPath(); c.arc(X(mx(2)), Y(my(1)), 3.4, 0, 6.2832); c.fill(); c.globalAlpha = 1; if (u > 0.5) L('P', mx(2.35), my(2.45), 0); }
       /* columnas: en su lugar, o cambiadas con la de términos libres */
       wx_ = k === 3 ? u : (k === 4 ? Math.max(0, 1 - 2*u) : 0);      /* naranja en el lugar de la azul */
@@ -52,17 +52,23 @@ OA.scene('cramer-idea', (function(){
       /* barras del determinante: aparecen en el paso 2 y quedan */
       g = k > 2 ? 1 : (k === 2 ? u : 0);
       if (g > 0){ c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(S1 - 0.35), Y(F1 + 0.38)); c.lineTo(X(S1 - 0.35), Y(F1 + 0.38 - 1.46*g)); c.moveTo(X(S2 + 0.35), Y(F1 + 0.38)); c.lineTo(X(S2 + 0.35), Y(F1 + 0.38 - 1.46*g)); c.stroke(); }
-      if ((k === 2 && u > 0.6) || (k === 3 && u < 0.3) || (k === 5 && u > 0.7)) L('D0', 3.5, 1.5);
-      if ((k === 3 && u > 0.75) || (k === 4 && u < 0.15)) L('DX', 3.5, 1.5);
-      if ((k === 4 && u > 0.85) || (k === 5 && u < 0.2)) L('DY', 3.5, 1.5);
-      if (k < N || u < 0.5) L('Q', -1.2, 4.12, 0); else L('F', -1.2, 4.12, 0);
+      /* nada desaparece: cada determinante queda escrito bajo las columnas desde que se obtiene, uno bajo el otro */
+      if (k > 2 || (k === 2 && u > 0.6)) L('D0', 2.9, 1.6, 0);
+      if (k > 3 || (k === 3 && u > 0.75)) L('DX', 2.9, 1.24, 0);
+      if (k > 4 || (k === 4 && u > 0.85)) L('DY', 2.9, 0.88, 0);
+      L('Q', -1.2, 4.12, 0); if (k === N && u > 0.5) L('F', 1.2, 4.12, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.12));
       T.fin();
       oaReg(S, k, N, -1.2, -1.25, [0, 30, 60, 90, 122]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\begin{cases}2x+y=5\\\\x+3y=5\\end{cases}', '\\Delta=\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=2\\cdot 3-1\\cdot 1=5', '\\Delta_x=\\begin{vmatrix}5&1\\\\5&3\\end{vmatrix}=5\\cdot 3-1\\cdot 5=10', '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1=5', 'x=\\dfrac{\\Delta_x}{\\Delta}=\\dfrac{10}{5}=2,\\qquad y=\\dfrac{\\Delta_y}{\\Delta}=\\dfrac{5}{5}=1'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['2x+y=5,\\qquad x+3y=5',
+      '\\Delta=\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=2\\cdot 3-1\\cdot 1' + Q + '\\text{productos: }2\\cdot 3=6;\\qquad 1\\cdot 1=1' + Q + '\\Delta=6-1=5\\neq 0',
+      '\\Delta_x=\\begin{vmatrix}5&1\\\\5&3\\end{vmatrix}=5\\cdot 3-1\\cdot 5' + Q + '\\text{productos: }5\\cdot 3=15;\\qquad 1\\cdot 5=5' + Q + '\\Delta_x=15-5=10',
+      '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1' + Q + '\\text{productos: }2\\cdot 5=10;\\qquad 5\\cdot 1=5' + Q + '\\Delta_y=10-5=5',
+      'x=\\dfrac{\\Delta_x}{\\Delta}=\\dfrac{10}{5}=2,\\qquad y=\\dfrac{\\Delta_y}{\\Delta}=\\dfrac{5}{5}=1' + Q + '\\text{comprobación: }2\\cdot 2+1=4+1=5;' + Q + '2+3\\cdot 1=2+3=5'];
+      return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: 2x + y = 5, x + my = 5; al acercarse el determinante a cero, el corte se aleja */
@@ -97,10 +103,14 @@ OA.scene('cramer-vivo', (function(){
       T.fin();
     },
     caption:function(v){ var m = v.m == null ? 3 : +v.m, D = 2*m - 1, n = function(z){ return oaDec(z, 2); }; return Math.abs(D) < 0.02 ? 'Con m = 0,50 el determinante del sistema vale 0: las rectas son paralelas, no hay punto de corte y la regla de Cramer no se aplica' : 'Con m = ' + n(m) + ' el determinante del sistema vale ' + n(D) + ' y las rectas se cortan en (' + n((5*m - 5)/D) + '; ' + n(5/D) + ')'; },
-    readout:function(v){ var m = v.m == null ? 3 : +v.m, D = 2*m - 1, n = OA.num, f;
-      f = [['', '\\Delta=\\begin{vmatrix}2&1\\\\1&m\\end{vmatrix}=2m-1,\\qquad \\Delta_x=\\begin{vmatrix}5&1\\\\5&m\\end{vmatrix}=5m-5'], ['', '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1=5'], ['d', '\\Delta=2\\cdot ' + n(m, 2) + '-1=' + n(D, 2)]];
-      if (Math.abs(D) < 0.02) f.push(['', '\\Delta=0\\text{: la regla no se aplica (rectas paralelas)}']);
-      else f.push(['', 'x=\\dfrac{5m-5}{2m-1}=' + n((5*m - 5)/D, 2) + ',\\qquad y=\\dfrac{5}{2m-1}=' + n(5/D, 2)]);
-      return f; }
+    readout:function(v){ var m = Math.round((v.m == null ? 3 : +v.m)*100)/100, r2 = function(z){ return Math.round(z*100)/100; }, M2 = r2(2*m), D = r2(M2 - 1), M5 = r2(5*m), DX = r2(M5 - 5), n = OA.num, Q = '\\\\&\\qquad ', f,
+        coc = function(a, b, ta){ var q = a/b, ex = Math.abs(q*100 - Math.round(q*100)) < 1e-7; return '\\dfrac{' + (ta || n(a, 2)) + '}{' + n(b, 2) + '}' + (ex ? '=' : '\\approx ') + n(q, 2); };
+      f = ['2x+y=5,\\qquad x+my=5,\\qquad m=' + n(m, 2),
+        '\\Delta=\\begin{vmatrix}2&1\\\\1&' + n(m, 2) + '\\end{vmatrix}=2\\cdot ' + n(m, 2) + '-1\\cdot 1' + Q + '\\text{productos: }2\\cdot ' + n(m, 2) + '=' + n(M2, 2) + ';\\qquad 1\\cdot 1=1' + Q + '\\Delta=' + n(M2, 2) + '-1=' + n(D, 2),
+        '\\Delta_x=\\begin{vmatrix}5&1\\\\5&' + n(m, 2) + '\\end{vmatrix}=5\\cdot ' + n(m, 2) + '-1\\cdot 5' + Q + '\\text{productos: }5\\cdot ' + n(m, 2) + '=' + n(M5, 2) + ';\\qquad 1\\cdot 5=5' + Q + '\\Delta_x=' + n(M5, 2) + '-5=' + n(DX, 2),
+        '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1' + Q + '\\text{productos: }2\\cdot 5=10;\\qquad 5\\cdot 1=5' + Q + '\\Delta_y=10-5=5'];
+      if (D === 0) f.push('\\Delta=0\\text{: no se puede dividir por }0.' + Q + '\\text{La regla no se aplica (rectas paralelas).}');
+      else f.push('x=\\dfrac{\\Delta_x}{\\Delta}=' + coc(DX, D) + Q + 'y=\\dfrac{\\Delta_y}{\\Delta}=' + coc(5, D, '5'));
+      return dtPasos(f); }
   };
 })());

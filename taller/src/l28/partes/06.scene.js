@@ -1,7 +1,7 @@
 /* L28 H06 · |AB| = |A| |B|: el cuadrado de área 1 pasa por B y después por A; las áreas se multiplican */
 OA.scene('prod-idea', (function(){
   var N = 6;
-  var PZ = [['Q', '|AB|=\\ ?', '|AB| = ?', 'pt'], ['F', '|AB|=|A|\\,|B|', '|AB| = |A| |B|', 'diff'],
+  var PZ = [['Q', '|AB|=\\ ?', '|AB| = ?', 'pt'], ['F', '\\Longrightarrow\\ |AB|=|A|\\,|B|', '⟹ |AB| = |A| |B|', 'diff'],
     ['A1', '\\text{área }1', 'área 1', ''], ['A2', '\\text{área }|B|=2', 'área |B| = 2', 'c-sec'], ['A3', '\\text{área }|AB|=4', 'área |AB| = 4', 'diff'],
     ['R1', '\\text{cuadrado de lados }(1,0)\\text{ y }(0,1)\\text{: área }1', 'cuadrado de lados (1, 0) y (0, 1): área 1', ''],
     ['R2', '|B|=2\\cdot 1-1\\cdot 0=2', '|B| = 2·1 − 1·0 = 2', 'c-sec'],
@@ -24,7 +24,7 @@ OA.scene('prod-idea', (function(){
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw sec"></i> columnas de \\(B\\): área \\(|B|\\)</span><span><i class="sw rise"></i> columnas de \\(AB\\): área \\(|AB|\\)</span>',
-    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, M;
@@ -39,26 +39,33 @@ OA.scene('prod-idea', (function(){
       S.line(wx(-0.5), wy(0), wx(3.6), wy(0), {color:C.ink, width:1}); S.line(wx(0), wy(-0.3), wx(0), wy(4.3), {color:C.ink, width:1});
       c.strokeStyle = C.ink; c.lineWidth = 1;
       for (i = 1; i <= 4; i++){ c.beginPath(); if (i <= 3){ c.moveTo(X(wx(i)), Y(wy(0)) - 3); c.lineTo(X(wx(i)), Y(wy(0)) + 3); } c.moveTo(X(wx(0)) - 3, Y(wy(i))); c.lineTo(X(wx(0)) + 3, Y(wy(i))); c.stroke(); if (i <= 3) num('' + i, X(wx(i)), Y(wy(0)) + 11, 'center'); num('' + i, X(wx(0)) - 7, Y(wy(i)), 'right'); }
-      /* paso 1: el cuadrado; queda su contorno punteado cuando la figura cambia */
-      if (k === 1){ cuerpo(SQ, C.muted || '#6b6b6b', 0.22*Math.max(u, 0.15)); borde(SQ, C.ink, 1.3); }
-      else borde(SQ, C.muted || '#6b6b6b', 1.1, [4, 3]);
-      /* paso 2: el cuadrado se deforma hasta el paralelogramo de las columnas de B */
-      if (k === 2){ M = mez(SQ, PB, u); cuerpo(M, C.sec, 0.26); borde(M, C.sec, 1.3); lados(M, C.sec); }
-      if (k >= 3){ cuerpo(PB, C.sec, 0.14); borde(PB, C.sec, 1.1, [4, 3]); }
-      /* paso 3: el paralelogramo de B se deforma hasta el de las columnas de AB */
-      if (k >= 3){ M = k === 3 ? mez(PB, PAB, u) : PAB; cuerpo(M, C.rise, 0.28); borde(M, C.rise, 1.3); lados(M, C.rise); }
+      /* nada desaparece: el cuadrado gris (paso 1) y el paralelogramo azul (paso 2) quedan enteros, con su relleno y su borde, hasta el final */
+      /* paso 3 en adelante: el paralelogramo naranja sale del azul y se deforma hasta el de las columnas de AB; va debajo para no tapar a los otros */
+      if (k >= 3){ M = k === 3 ? mez(PB, PAB, u) : PAB; cuerpo(M, C.rise, 0.28); borde(M, C.rise, 1.3); }
+      /* paso 2 en adelante: el paralelogramo azul sale del cuadrado y se deforma hasta el de las columnas de B */
+      if (k >= 2){ M = k === 2 ? mez(SQ, PB, u) : PB; cuerpo(M, C.sec, 0.26); borde(M, C.sec, 1.3); }
+      /* paso 1: el cuadrado */
+      cuerpo(SQ, C.muted || '#6b6b6b', k === 1 ? 0.22*Math.max(u, 0.15) : 0.22); borde(SQ, C.ink, 1.3);
+      if (k >= 3) lados(k === 3 ? mez(PB, PAB, u) : PAB, C.rise);
+      if (k >= 2) lados(k === 2 ? mez(SQ, PB, u) : PB, C.sec);
       c.fillStyle = C.ink; c.beginPath(); c.arc(X(wx(0)), Y(wy(0)), 2.4, 0, 6.2832); c.fill();
       L('A1', wx(-0.2), wy(0.55), -100);
       if (k > 2 || (k === 2 && u > 0.7)) L('A2', wx(3.15), wy(0.55), 0);
       if (k > 4 || (k === 4 && u > 0.5)) L('A3', wx(2.2), wy(3.4), 0);
-      if (k < N || u < 0.5) L('Q', -1.2, 4.3, 0); else L('F', -1.2, 4.3, 0);
+      L('Q', -1.2, 4.3, 0); if (k === N && u > 0.5) L('F', 0.3, 4.3, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.3));
       T.fin();
       oaReg(S, k, N, -1.2, -1.15, [0, 28, 56, 84, 112, 140]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['A=\\begin{pmatrix}1&-1\\\\1&1\\end{pmatrix},\\quad B=\\begin{pmatrix}2&1\\\\0&1\\end{pmatrix}', '|B|=\\begin{vmatrix}2&1\\\\0&1\\end{vmatrix}=2\\cdot 1-1\\cdot 0=2', 'AB=\\begin{pmatrix}1\\cdot 2+(-1)\\cdot 0&1\\cdot 1+(-1)\\cdot 1\\\\1\\cdot 2+1\\cdot 0&1\\cdot 1+1\\cdot 1\\end{pmatrix}=\\begin{pmatrix}2&0\\\\2&2\\end{pmatrix}', '|AB|=\\begin{vmatrix}2&0\\\\2&2\\end{vmatrix}=2\\cdot 2-0\\cdot 2=4', '|A|=\\begin{vmatrix}1&-1\\\\1&1\\end{vmatrix}=1\\cdot 1-(-1)\\cdot 1=2', '|AB|=4=2\\cdot 2=|A|\\,|B|'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['A=\\begin{pmatrix}1&-1\\\\1&1\\end{pmatrix},\\quad B=\\begin{pmatrix}2&1\\\\0&1\\end{pmatrix};' + Q + '\\text{cuadrado de lado }1\\text{: área }1\\cdot 1=1',
+      '|B|=\\begin{vmatrix}2&1\\\\0&1\\end{vmatrix}=2\\cdot 1-1\\cdot 0' + Q + '\\text{productos: }2\\cdot 1=2;\\qquad 1\\cdot 0=0' + Q + '|B|=2-0=2',
+      '\\text{fila 1 de }AB\\text{:}' + Q + '1\\cdot 2+(-1)\\cdot 0=2+0=2;' + Q + '1\\cdot 1+(-1)\\cdot 1=1-1=0' + Q + '\\text{fila 2 de }AB\\text{:}' + Q + '1\\cdot 2+1\\cdot 0=2+0=2;' + Q + '1\\cdot 1+1\\cdot 1=1+1=2' + Q + 'AB=\\begin{pmatrix}2&0\\\\2&2\\end{pmatrix}',
+      '|AB|=\\begin{vmatrix}2&0\\\\2&2\\end{vmatrix}=2\\cdot 2-0\\cdot 2' + Q + '\\text{productos: }2\\cdot 2=4;\\qquad 0\\cdot 2=0' + Q + '|AB|=4-0=4',
+      '|A|=\\begin{vmatrix}1&-1\\\\1&1\\end{vmatrix}=1\\cdot 1-(-1)\\cdot 1' + Q + '\\text{productos: }1\\cdot 1=1;\\qquad (-1)\\cdot 1=-1' + Q + '|A|=1-(-1)=1+1=2',
+      '|A|\\,|B|=2\\cdot 2=4' + Q + '|AB|=4=|A|\\,|B|'];
+      return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: B fija, A = (1 1; 0 k); el área del paralelogramo de AB es |k| veces la del de B */
@@ -90,7 +97,13 @@ OA.scene('prod-vivo', (function(){
       T.fin();
     },
     caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ', el determinante de A vale ' + n(k) + ', el de B vale 2 y el de AB vale ' + n(2*k) + '. El paralelogramo naranja mide ' + n(Math.abs(2*k)) + ' unidades cuadradas. Con k = 0 se aplasta'; },
-    readout:function(v){ var k = v.k == null ? 1.5 : +v.k, n = OA.num;
-      return [['', '|A|=\\begin{vmatrix}1&1\\\\0&k\\end{vmatrix}=1\\cdot k-1\\cdot 0=k,\\qquad |B|=\\begin{vmatrix}2&1\\\\0&1\\end{vmatrix}=2'], ['', 'AB=\\begin{pmatrix}1\\cdot 2+1\\cdot 0&1\\cdot 1+1\\cdot 1\\\\0\\cdot 2+k\\cdot 0&0\\cdot 1+k\\cdot 1\\end{pmatrix}=\\begin{pmatrix}2&2\\\\0&k\\end{pmatrix}'], ['', '|AB|=2\\cdot k-2\\cdot 0=2k=|A|\\,|B|'], ['d', '|AB|=2\\cdot\\left(' + n(k, 2) + '\\right)=' + n(2*k, 2)]]; }
+    readout:function(v){ var k = Math.round((v.k == null ? 1.5 : +v.k)*100)/100, D = Math.round(2*k*100)/100, n = OA.num, Q = '\\\\&\\qquad ', K = k < 0 ? '\\left(' + n(k, 2) + '\\right)' : n(k, 2);
+      return dtPasos(['A=\\begin{pmatrix}1&1\\\\0&k\\end{pmatrix},\\quad B=\\begin{pmatrix}2&1\\\\0&1\\end{pmatrix},\\quad k=' + n(k, 2),
+        '|A|=\\begin{vmatrix}1&1\\\\0&' + n(k, 2) + '\\end{vmatrix}=1\\cdot ' + K + '-1\\cdot 0' + Q + '\\text{productos: }1\\cdot ' + K + '=' + n(k, 2) + ';\\qquad 1\\cdot 0=0' + Q + '|A|=' + n(k, 2) + '-0=' + n(k, 2),
+        '|B|=\\begin{vmatrix}2&1\\\\0&1\\end{vmatrix}=2\\cdot 1-1\\cdot 0' + Q + '\\text{productos: }2\\cdot 1=2;\\qquad 1\\cdot 0=0' + Q + '|B|=2-0=2',
+        '\\text{fila 1 de }AB\\text{:}' + Q + '1\\cdot 2+1\\cdot 0=2+0=2;' + Q + '1\\cdot 1+1\\cdot 1=1+1=2' + Q + '\\text{fila 2 de }AB\\text{:}' + Q + '0\\cdot 2+' + K + '\\cdot 0=0+0=0;' + Q + '0\\cdot 1+' + K + '\\cdot 1=0+' + K + '=' + n(k, 2) + Q + 'AB=\\begin{pmatrix}2&2\\\\0&' + n(k, 2) + '\\end{pmatrix}',
+        '|AB|=\\begin{vmatrix}2&2\\\\0&' + n(k, 2) + '\\end{vmatrix}=2\\cdot ' + K + '-2\\cdot 0' + Q + '\\text{productos: }2\\cdot ' + K + '=' + n(D, 2) + ';\\qquad 2\\cdot 0=0' + Q + '|AB|=' + n(D, 2) + '-0=' + n(D, 2),
+        '|A|\\,|B|=' + K + '\\cdot 2=' + n(D, 2) + '=|AB|',
+        '\\text{área naranja}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2) + (D === 0 ? Q + '\\text{determinante cero: se aplasta}' : '')]); }
   };
 })());

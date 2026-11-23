@@ -170,12 +170,12 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El sistema \(2x+y=5\), \(x+3y=5\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p>El sistema \(2x+y=5\), \(x+3y=5\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
   <div class="stage" data-scene="cramer-idea"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
   <ul class="keys">
     <li><b>Columna azul:</b> los coeficientes de \(x\), \(2\) y \(1\). <b>Columna verde:</b> los coeficientes de \(y\), \(1\) y \(3\).</li>
-    <li><b>Columna naranja:</b> los términos libres, \(5\) y \(5\). Entra al lugar de la columna azul para formar \(\Delta_x\), vuelve, y entra al lugar de la verde para formar \(\Delta_y\).</li>
+    <li><b>Columna naranja:</b> los términos libres, \(5\) y \(5\). Entra al lugar de la columna azul para formar \(\Delta_x\), vuelve, y entra al lugar de la verde para formar \(\Delta_y\). Al final vuelve a su lugar. Bajo las columnas quedan escritos \(\Delta\), \(\Delta_x\) y \(\Delta_y\), uno bajo el otro.</li>
     <li><b>Rectas:</b> cada ecuación es una recta; la solución \((2,1)\) es el punto donde se cortan.</li>
   </ul>
 </section>
@@ -207,8 +207,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     </ol>
     <p><b>Esos valores sí son solución.</b> Se reemplazan en el lado izquierdo de cada ecuación.</p>
     <ol class="steps">
-      <li>Primera: \(a\,\dfrac{ed-bf}{\Delta}+b\,\dfrac{af-ec}{\Delta}=\dfrac{aed-abf+abf-bec}{\Delta}=\dfrac{e\,(ad-bc)}{\Delta}=e\).</li>
-      <li>Segunda: \(c\,\dfrac{ed-bf}{\Delta}+d\,\dfrac{af-ec}{\Delta}=\dfrac{ced-bcf+adf-ced}{\Delta}=\dfrac{f\,(ad-bc)}{\Delta}=f\).</li>
+      <li>Primera: \(a\,\dfrac{ed-bf}{\Delta}+b\,\dfrac{af-ec}{\Delta}=\dfrac{aed-abf+abf-bec}{\Delta}=\dfrac{aed-bec}{\Delta}=\dfrac{e\,(ad-bc)}{\Delta}=\dfrac{e\,\Delta}{\Delta}=e\).</li>
+      <li>Segunda: \(c\,\dfrac{ed-bf}{\Delta}+d\,\dfrac{af-ec}{\Delta}=\dfrac{ced-bcf+adf-ced}{\Delta}=\dfrac{adf-bcf}{\Delta}=\dfrac{f\,(ad-bc)}{\Delta}=\dfrac{f\,\Delta}{\Delta}=f\).</li>
     </ol>
   </div>
 
@@ -235,11 +235,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 1: \(\begin{cases}2x+y=5\\x+3y=5\end{cases}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\Delta=\begin{vmatrix}2&1\\1&3\end{vmatrix}=2\cdot 3-1\cdot 1=5\). Como \(\Delta\neq 0\), la regla se aplica.</li>
-    <li>\(\Delta_x=\begin{vmatrix}5&1\\5&3\end{vmatrix}=5\cdot 3-1\cdot 5=10\).</li>
-    <li>\(\Delta_y=\begin{vmatrix}2&5\\1&5\end{vmatrix}=2\cdot 5-5\cdot 1=5\).</li>
-    <li>\(x=\dfrac{10}{5}=2\), \(y=\dfrac{5}{5}=1\).</li>
-    <li>Comprobación: \(2\cdot 2+1=5\) ✓ y \(2+3\cdot 1=5\) ✓.</li>
+    <li>\(\Delta=\begin{vmatrix}2&1\\1&3\end{vmatrix}=2\cdot 3-1\cdot 1=6-1=5\). Como \(\Delta\neq 0\), la regla se aplica.</li>
+    <li>\(\Delta_x=\begin{vmatrix}5&1\\5&3\end{vmatrix}=5\cdot 3-1\cdot 5=15-5=10\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}2&5\\1&5\end{vmatrix}=2\cdot 5-5\cdot 1=10-5=5\).</li>
+    <li>\(x=\dfrac{\Delta_x}{\Delta}=\dfrac{10}{5}=2\), \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{5}{5}=1\).</li>
+    <li>Comprobación: \(2\cdot 2+1=4+1=5\) ✓ y \(2+3\cdot 1=2+3=5\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -248,11 +248,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 2: signos y una solución fraccionaria, \(\begin{cases}3x-2y=4\\5x+4y=3\end{cases}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\Delta=\begin{vmatrix}3&-2\\5&4\end{vmatrix}=3\cdot 4-(-2)\cdot 5=12+10=22\).</li>
-    <li>\(\Delta_x=\begin{vmatrix}4&-2\\3&4\end{vmatrix}=4\cdot 4-(-2)\cdot 3=16+6=22\).</li>
+    <li>\(\Delta=\begin{vmatrix}3&-2\\5&4\end{vmatrix}=3\cdot 4-(-2)\cdot 5=12-(-10)=12+10=22\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}4&-2\\3&4\end{vmatrix}=4\cdot 4-(-2)\cdot 3=16-(-6)=16+6=22\).</li>
     <li>\(\Delta_y=\begin{vmatrix}3&4\\5&3\end{vmatrix}=3\cdot 3-4\cdot 5=9-20=-11\).</li>
-    <li>\(x=\dfrac{22}{22}=1\), \(y=\dfrac{-11}{22}=-\dfrac{1}{2}\).</li>
-    <li>Comprobación: \(3\cdot 1-2\cdot\left(-\frac{1}{2}\right)=3+1=4\) ✓ y \(5\cdot 1+4\cdot\left(-\frac{1}{2}\right)=5-2=3\) ✓.</li>
+    <li>\(x=\dfrac{\Delta_x}{\Delta}=\dfrac{22}{22}=1\), \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{-11}{22}=-\dfrac{1}{2}\) (se simplifica por \(11\)).</li>
+    <li>Comprobación: \(3\cdot 1-2\cdot\left(-\frac{1}{2}\right)=3-(-1)=3+1=4\) ✓ y \(5\cdot 1+4\cdot\left(-\frac{1}{2}\right)=5+(-2)=5-2=3\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -262,12 +262,12 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="body">
   <p>Los cuatro determinantes se calculan por la regla de Sarrus.</p>
   <ol class="steps">
-    <li>\(\Delta=\begin{vmatrix}1&1&1\\2&-1&1\\1&2&-1\end{vmatrix}\). Bajan: \(1\cdot(-1)\cdot(-1)=1\); \(1\cdot 1\cdot 1=1\); \(1\cdot 2\cdot 2=4\); suma \(6\). Suben: \(1\cdot(-1)\cdot 1=-1\); \(2\cdot 1\cdot 1=2\); \((-1)\cdot 2\cdot 1=-2\); suma \(-1\). \(\Delta=6-(-1)=7\neq 0\).</li>
-    <li>\(\Delta_x=\begin{vmatrix}6&1&1\\3&-1&1\\2&2&-1\end{vmatrix}\). Bajan: \(6\cdot(-1)\cdot(-1)=6\); \(1\cdot 1\cdot 2=2\); \(1\cdot 3\cdot 2=6\); suma \(14\). Suben: \(2\cdot(-1)\cdot 1=-2\); \(2\cdot 1\cdot 6=12\); \((-1)\cdot 3\cdot 1=-3\); suma \(7\). \(\Delta_x=14-7=7\).</li>
-    <li>\(\Delta_y=\begin{vmatrix}1&6&1\\2&3&1\\1&2&-1\end{vmatrix}\). Bajan: \(1\cdot 3\cdot(-1)=-3\); \(6\cdot 1\cdot 1=6\); \(1\cdot 2\cdot 2=4\); suma \(7\). Suben: \(1\cdot 3\cdot 1=3\); \(2\cdot 1\cdot 1=2\); \((-1)\cdot 2\cdot 6=-12\); suma \(-7\). \(\Delta_y=7-(-7)=14\).</li>
-    <li>\(\Delta_z=\begin{vmatrix}1&1&6\\2&-1&3\\1&2&2\end{vmatrix}\). Bajan: \(1\cdot(-1)\cdot 2=-2\); \(1\cdot 3\cdot 1=3\); \(6\cdot 2\cdot 2=24\); suma \(25\). Suben: \(1\cdot(-1)\cdot 6=-6\); \(2\cdot 3\cdot 1=6\); \(2\cdot 2\cdot 1=4\); suma \(4\). \(\Delta_z=25-4=21\).</li>
-    <li>\(x=\dfrac{7}{7}=1\), \(y=\dfrac{14}{7}=2\), \(z=\dfrac{21}{7}=3\).</li>
-    <li>Comprobación: \(1+2+3=6\) ✓; \(2\cdot 1-2+3=3\) ✓; \(1+2\cdot 2-3=2\) ✓.</li>
+    <li>\(\Delta=\begin{vmatrix}1&1&1\\2&-1&1\\1&2&-1\end{vmatrix}\). Bajan: \(1\cdot(-1)\cdot(-1)=(-1)\cdot(-1)=1\); \(1\cdot 1\cdot 1=1\); \(1\cdot 2\cdot 2=2\cdot 2=4\); suma \(1+1+4=6\). Suben: \(1\cdot(-1)\cdot 1=(-1)\cdot 1=-1\); \(2\cdot 1\cdot 1=2\); \((-1)\cdot 2\cdot 1=(-2)\cdot 1=-2\); suma \(-1+2+(-2)=-1\). \(\Delta=6-(-1)=6+1=7\neq 0\).</li>
+    <li>\(\Delta_x=\begin{vmatrix}6&1&1\\3&-1&1\\2&2&-1\end{vmatrix}\). Bajan: \(6\cdot(-1)\cdot(-1)=(-6)\cdot(-1)=6\); \(1\cdot 1\cdot 2=2\); \(1\cdot 3\cdot 2=3\cdot 2=6\); suma \(6+2+6=14\). Suben: \(2\cdot(-1)\cdot 1=(-2)\cdot 1=-2\); \(2\cdot 1\cdot 6=2\cdot 6=12\); \((-1)\cdot 3\cdot 1=(-3)\cdot 1=-3\); suma \(-2+12+(-3)=7\). \(\Delta_x=14-7=7\).</li>
+    <li>\(\Delta_y=\begin{vmatrix}1&6&1\\2&3&1\\1&2&-1\end{vmatrix}\). Bajan: \(1\cdot 3\cdot(-1)=3\cdot(-1)=-3\); \(6\cdot 1\cdot 1=6\); \(1\cdot 2\cdot 2=2\cdot 2=4\); suma \(-3+6+4=7\). Suben: \(1\cdot 3\cdot 1=3\); \(2\cdot 1\cdot 1=2\); \((-1)\cdot 2\cdot 6=(-2)\cdot 6=-12\); suma \(3+2+(-12)=-7\). \(\Delta_y=7-(-7)=7+7=14\).</li>
+    <li>\(\Delta_z=\begin{vmatrix}1&1&6\\2&-1&3\\1&2&2\end{vmatrix}\). Bajan: \(1\cdot(-1)\cdot 2=(-1)\cdot 2=-2\); \(1\cdot 3\cdot 1=3\); \(6\cdot 2\cdot 2=12\cdot 2=24\); suma \(-2+3+24=25\). Suben: \(1\cdot(-1)\cdot 6=(-1)\cdot 6=-6\); \(2\cdot 3\cdot 1=6\); \(2\cdot 2\cdot 1=4\); suma \(-6+6+4=4\). \(\Delta_z=25-4=21\).</li>
+    <li>\(x=\dfrac{\Delta_x}{\Delta}=\dfrac{7}{7}=1\), \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{14}{7}=2\), \(z=\dfrac{\Delta_z}{\Delta}=\dfrac{21}{7}=3\).</li>
+    <li>Comprobación: \(1+2+3=6\) ✓; \(2\cdot 1-2+3=2-2+3=3\) ✓; \(1+2\cdot 2-3=1+4-3=2\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -276,8 +276,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 4: cuando \(\Delta=0\), \(\begin{cases}2x+y=5\\4x+2y=7\end{cases}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\Delta=\begin{vmatrix}2&1\\4&2\end{vmatrix}=2\cdot 2-1\cdot 4=0\). La regla de Cramer no se aplica.</li>
-    <li>Otro método: se multiplica la primera ecuación por \(2\): \(4x+2y=10\).</li>
+    <li>\(\Delta=\begin{vmatrix}2&1\\4&2\end{vmatrix}=2\cdot 2-1\cdot 4=4-4=0\). La regla de Cramer no se aplica.</li>
+    <li>Otro método: se multiplica la primera ecuación por \(2\): \(2\cdot 2x+2\cdot y=2\cdot 5\), es decir, \(4x+2y=10\).</li>
     <li>La segunda ecuación dice \(4x+2y=7\). El mismo lado izquierdo no puede valer \(10\) y \(7\) a la vez: el sistema <b>no tiene solución</b> (rectas paralelas).</li>
     <li>Si la segunda ecuación fuera \(4x+2y=10\), sería la primera multiplicada por \(2\): las dos ecuaciones dirían lo mismo y habría <b>infinitas soluciones</b> (la misma recta). También ahí \(\Delta=0\).</li>
   </ol>
@@ -296,11 +296,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Calcula primero \(\Delta\). El término libre de la segunda ecuación es \(0\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\Delta=\begin{vmatrix}4&3\\2&-1\end{vmatrix}=4\cdot(-1)-3\cdot 2=-4-6=-10\neq 0\).</li>
-        <li>\(\Delta_x=\begin{vmatrix}10&3\\0&-1\end{vmatrix}=10\cdot(-1)-3\cdot 0=-10\).</li>
-        <li>\(\Delta_y=\begin{vmatrix}4&10\\2&0\end{vmatrix}=4\cdot 0-10\cdot 2=-20\).</li>
-        <li>\(x=\dfrac{-10}{-10}=1\), \(y=\dfrac{-20}{-10}=2\).</li>
-        <li>Comprobación: \(4\cdot 1+3\cdot 2=10\) ✓ y \(2\cdot 1-2=0\) ✓.</li>
+        <li>\(\Delta=\begin{vmatrix}4&3\\2&-1\end{vmatrix}=4\cdot(-1)-3\cdot 2=-4-6=-10\neq 0\). La regla se aplica.</li>
+        <li>\(\Delta_x=\begin{vmatrix}10&3\\0&-1\end{vmatrix}=10\cdot(-1)-3\cdot 0=-10-0=-10\).</li>
+        <li>\(\Delta_y=\begin{vmatrix}4&10\\2&0\end{vmatrix}=4\cdot 0-10\cdot 2=0-20=-20\).</li>
+        <li>\(x=\dfrac{\Delta_x}{\Delta}=\dfrac{-10}{-10}=1\), \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{-20}{-10}=2\).</li>
+        <li>Comprobación: \(4\cdot 1+3\cdot 2=4+6=10\) ✓ y \(2\cdot 1-2=2-2=0\) ✓.</li>
       </ol>
     </div></details>
   </div>
@@ -313,8 +313,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
         <li>(i) \(k^{2}-1=(k-1)(k+1)\) vale \(0\) solo si \(k=1\) o \(k=-1\). La regla se aplica si \(k\neq 1\) y \(k\neq -1\).</li>
         <li>\(\Delta_x=\begin{vmatrix}1&1\\1&k\end{vmatrix}=1\cdot k-1\cdot 1=k-1\).</li>
         <li>\(\Delta_y=\begin{vmatrix}k&1\\1&1\end{vmatrix}=k\cdot 1-1\cdot 1=k-1\).</li>
-        <li>(ii) \(x=\dfrac{k-1}{(k-1)(k+1)}\). Como \(k\neq 1\), se simplifica por \(k-1\): \(x=\dfrac{1}{k+1}\). Igual, \(y=\dfrac{1}{k+1}\).</li>
-        <li>Comprobación en la primera ecuación: \(\dfrac{k}{k+1}+\dfrac{1}{k+1}=\dfrac{k+1}{k+1}=1\) ✓. La segunda da la misma suma.</li>
+        <li>(ii) \(x=\dfrac{\Delta_x}{\Delta}=\dfrac{k-1}{(k-1)(k+1)}\). Como \(k\neq 1\), se simplifica por \(k-1\): \(x=\dfrac{1}{k+1}\). Del mismo modo, \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{k-1}{(k-1)(k+1)}=\dfrac{1}{k+1}\).</li>
+        <li>Comprobación en la primera ecuación: \(k\cdot\dfrac{1}{k+1}+\dfrac{1}{k+1}=\dfrac{k}{k+1}+\dfrac{1}{k+1}=\dfrac{k+1}{k+1}=1\) ✓. En la segunda: \(\dfrac{1}{k+1}+k\cdot\dfrac{1}{k+1}=\dfrac{1}{k+1}+\dfrac{k}{k+1}=\dfrac{1+k}{k+1}=1\) ✓.</li>
       </ol>
     </div></details>
   </div>
@@ -327,7 +327,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
         <li>\(\Delta=\begin{vmatrix}3&2\\2&5\end{vmatrix}=3\cdot 5-2\cdot 2=15-4=11\neq 0\).</li>
         <li>\(\Delta_m=\begin{vmatrix}5\,400&2\\6\,900&5\end{vmatrix}=5\,400\cdot 5-2\cdot 6\,900=27\,000-13\,800=13\,200\).</li>
         <li>\(\Delta_n=\begin{vmatrix}3&5\,400\\2&6\,900\end{vmatrix}=3\cdot 6\,900-5\,400\cdot 2=20\,700-10\,800=9\,900\).</li>
-        <li>\(m=\dfrac{13\,200}{11}=1\,200\) y \(n=\dfrac{9\,900}{11}=900\).</li>
+        <li>\(m=\dfrac{\Delta_m}{\Delta}=\dfrac{13\,200}{11}=1\,200\), porque \(11\cdot 1\,200=13\,200\); y \(n=\dfrac{\Delta_n}{\Delta}=\dfrac{9\,900}{11}=900\), porque \(11\cdot 900=9\,900\).</li>
         <li>Comprobación: \(3\cdot 1\,200+2\cdot 900=3\,600+1\,800=5\,400\) ✓ y \(2\cdot 1\,200+5\cdot 900=2\,400+4\,500=6\,900\) ✓.</li>
         <li>El kilogramo de manzanas cuesta \(\$1\,200\) y el de naranjas, \(\$900\).</li>
       </ol>
@@ -336,7 +336,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H08 · v001 · Pendiente de APR</span>
+  <span class="status">AL-L28-H08 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -564,6 +564,8 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
     c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
 /* L28 H08 · regla de Cramer: la columna de términos libres entra al lugar de la columna de cada incógnita */
 OA.scene('cramer-idea', (function(){
   var N = 5;
@@ -571,7 +573,7 @@ OA.scene('cramer-idea', (function(){
     ['HX', 'x', 'x', 'c-sec'], ['HY', 'y', 'y', 'c-alt'],
     ['LA', '2x+y=5', '2x + y = 5', 'c-sec'], ['LB', 'x+3y=5', 'x + 3y = 5', 'c-alt'], ['P', '(2,1)', '(2, 1)', 'diff'],
     ['D0', '\\Delta=5', 'Δ = 5', ''], ['DX', '\\Delta_x=10', 'Δx = 10', ''], ['DY', '\\Delta_y=5', 'Δy = 5', ''],
-    ['Q', 'x=\\ ?\\qquad y=\\ ?', 'x = ?   y = ?', 'pt'], ['F', 'x=2,\\qquad y=1', 'x = 2, y = 1', 'diff'],
+    ['Q', 'x=\\ ?\\qquad y=\\ ?', 'x = ?   y = ?', 'pt'], ['F', '\\Longrightarrow\\ x=2,\\quad y=1', '⟹ x = 2, y = 1', 'diff'],
     ['R1', '2x+y=5,\\qquad x+3y=5', '2x + y = 5, x + 3y = 5', ''],
     ['R2', '\\Delta=2\\cdot 3-1\\cdot 1=5', 'Δ = 2·3 − 1·1 = 5', ''],
     ['R3', '\\Delta_x=5\\cdot 3-1\\cdot 5=10', 'Δx = 5·3 − 1·5 = 10', ''],
@@ -589,7 +591,7 @@ OA.scene('cramer-idea', (function(){
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw sec"></i> coeficientes de \\(x\\)</span><span><i class="sw alt"></i> coeficientes de \\(y\\)</span><span><i class="sw rise"></i> términos libres y solución</span>',
-    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, wx_, wy_, g, a, b;
@@ -606,7 +608,7 @@ OA.scene('cramer-idea', (function(){
       if (b > 0) S.line(mx(0), my(5/3), mx(5*b), my(5/3 - 5/3*b), {color:C.alt, width:1.8});
       if (a > 0.6) L('LA', mx(0.55), my(4.5), 0); if (b > 0.6) L('LB', mx(2.6), my(1.45), 0);
       /* paso 5: el punto de corte, con sus punteadas a los ejes */
-      if (k === 5){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2)), Y(my(1 - u))); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2 - 2*u)), Y(my(1))); c.stroke(); c.setLineDash([]);
+      if (k === 5){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([3, 3]); /* último paso: nada que quitar después */ c.beginPath(); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2)), Y(my(1 - u))); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2 - 2*u)), Y(my(1))); c.stroke(); c.setLineDash([]);
         c.globalAlpha = Math.max(u, 0.2); c.fillStyle = C.rise; c.beginPath(); c.arc(X(mx(2)), Y(my(1)), 3.4, 0, 6.2832); c.fill(); c.globalAlpha = 1; if (u > 0.5) L('P', mx(2.35), my(2.45), 0); }
       /* columnas: en su lugar, o cambiadas con la de términos libres */
       wx_ = k === 3 ? u : (k === 4 ? Math.max(0, 1 - 2*u) : 0);      /* naranja en el lugar de la azul */
@@ -618,17 +620,23 @@ OA.scene('cramer-idea', (function(){
       /* barras del determinante: aparecen en el paso 2 y quedan */
       g = k > 2 ? 1 : (k === 2 ? u : 0);
       if (g > 0){ c.strokeStyle = C.ink; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(S1 - 0.35), Y(F1 + 0.38)); c.lineTo(X(S1 - 0.35), Y(F1 + 0.38 - 1.46*g)); c.moveTo(X(S2 + 0.35), Y(F1 + 0.38)); c.lineTo(X(S2 + 0.35), Y(F1 + 0.38 - 1.46*g)); c.stroke(); }
-      if ((k === 2 && u > 0.6) || (k === 3 && u < 0.3) || (k === 5 && u > 0.7)) L('D0', 3.5, 1.5);
-      if ((k === 3 && u > 0.75) || (k === 4 && u < 0.15)) L('DX', 3.5, 1.5);
-      if ((k === 4 && u > 0.85) || (k === 5 && u < 0.2)) L('DY', 3.5, 1.5);
-      if (k < N || u < 0.5) L('Q', -1.2, 4.12, 0); else L('F', -1.2, 4.12, 0);
+      /* nada desaparece: cada determinante queda escrito bajo las columnas desde que se obtiene, uno bajo el otro */
+      if (k > 2 || (k === 2 && u > 0.6)) L('D0', 2.9, 1.6, 0);
+      if (k > 3 || (k === 3 && u > 0.75)) L('DX', 2.9, 1.24, 0);
+      if (k > 4 || (k === 4 && u > 0.85)) L('DY', 2.9, 0.88, 0);
+      L('Q', -1.2, 4.12, 0); if (k === N && u > 0.5) L('F', 1.2, 4.12, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.12));
       T.fin();
       oaReg(S, k, N, -1.2, -1.25, [0, 30, 60, 90, 122]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['\\begin{cases}2x+y=5\\\\x+3y=5\\end{cases}', '\\Delta=\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=2\\cdot 3-1\\cdot 1=5', '\\Delta_x=\\begin{vmatrix}5&1\\\\5&3\\end{vmatrix}=5\\cdot 3-1\\cdot 5=10', '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1=5', 'x=\\dfrac{\\Delta_x}{\\Delta}=\\dfrac{10}{5}=2,\\qquad y=\\dfrac{\\Delta_y}{\\Delta}=\\dfrac{5}{5}=1'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['2x+y=5,\\qquad x+3y=5',
+      '\\Delta=\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=2\\cdot 3-1\\cdot 1' + Q + '\\text{productos: }2\\cdot 3=6;\\qquad 1\\cdot 1=1' + Q + '\\Delta=6-1=5\\neq 0',
+      '\\Delta_x=\\begin{vmatrix}5&1\\\\5&3\\end{vmatrix}=5\\cdot 3-1\\cdot 5' + Q + '\\text{productos: }5\\cdot 3=15;\\qquad 1\\cdot 5=5' + Q + '\\Delta_x=15-5=10',
+      '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1' + Q + '\\text{productos: }2\\cdot 5=10;\\qquad 5\\cdot 1=5' + Q + '\\Delta_y=10-5=5',
+      'x=\\dfrac{\\Delta_x}{\\Delta}=\\dfrac{10}{5}=2,\\qquad y=\\dfrac{\\Delta_y}{\\Delta}=\\dfrac{5}{5}=1' + Q + '\\text{comprobación: }2\\cdot 2+1=4+1=5;' + Q + '2+3\\cdot 1=2+3=5'];
+      return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: 2x + y = 5, x + my = 5; al acercarse el determinante a cero, el corte se aleja */
@@ -663,11 +671,15 @@ OA.scene('cramer-vivo', (function(){
       T.fin();
     },
     caption:function(v){ var m = v.m == null ? 3 : +v.m, D = 2*m - 1, n = function(z){ return oaDec(z, 2); }; return Math.abs(D) < 0.02 ? 'Con m = 0,50 el determinante del sistema vale 0: las rectas son paralelas, no hay punto de corte y la regla de Cramer no se aplica' : 'Con m = ' + n(m) + ' el determinante del sistema vale ' + n(D) + ' y las rectas se cortan en (' + n((5*m - 5)/D) + '; ' + n(5/D) + ')'; },
-    readout:function(v){ var m = v.m == null ? 3 : +v.m, D = 2*m - 1, n = OA.num, f;
-      f = [['', '\\Delta=\\begin{vmatrix}2&1\\\\1&m\\end{vmatrix}=2m-1,\\qquad \\Delta_x=\\begin{vmatrix}5&1\\\\5&m\\end{vmatrix}=5m-5'], ['', '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1=5'], ['d', '\\Delta=2\\cdot ' + n(m, 2) + '-1=' + n(D, 2)]];
-      if (Math.abs(D) < 0.02) f.push(['', '\\Delta=0\\text{: la regla no se aplica (rectas paralelas)}']);
-      else f.push(['', 'x=\\dfrac{5m-5}{2m-1}=' + n((5*m - 5)/D, 2) + ',\\qquad y=\\dfrac{5}{2m-1}=' + n(5/D, 2)]);
-      return f; }
+    readout:function(v){ var m = Math.round((v.m == null ? 3 : +v.m)*100)/100, r2 = function(z){ return Math.round(z*100)/100; }, M2 = r2(2*m), D = r2(M2 - 1), M5 = r2(5*m), DX = r2(M5 - 5), n = OA.num, Q = '\\\\&\\qquad ', f,
+        coc = function(a, b, ta){ var q = a/b, ex = Math.abs(q*100 - Math.round(q*100)) < 1e-7; return '\\dfrac{' + (ta || n(a, 2)) + '}{' + n(b, 2) + '}' + (ex ? '=' : '\\approx ') + n(q, 2); };
+      f = ['2x+y=5,\\qquad x+my=5,\\qquad m=' + n(m, 2),
+        '\\Delta=\\begin{vmatrix}2&1\\\\1&' + n(m, 2) + '\\end{vmatrix}=2\\cdot ' + n(m, 2) + '-1\\cdot 1' + Q + '\\text{productos: }2\\cdot ' + n(m, 2) + '=' + n(M2, 2) + ';\\qquad 1\\cdot 1=1' + Q + '\\Delta=' + n(M2, 2) + '-1=' + n(D, 2),
+        '\\Delta_x=\\begin{vmatrix}5&1\\\\5&' + n(m, 2) + '\\end{vmatrix}=5\\cdot ' + n(m, 2) + '-1\\cdot 5' + Q + '\\text{productos: }5\\cdot ' + n(m, 2) + '=' + n(M5, 2) + ';\\qquad 1\\cdot 5=5' + Q + '\\Delta_x=' + n(M5, 2) + '-5=' + n(DX, 2),
+        '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1' + Q + '\\text{productos: }2\\cdot 5=10;\\qquad 5\\cdot 1=5' + Q + '\\Delta_y=10-5=5'];
+      if (D === 0) f.push('\\Delta=0\\text{: no se puede dividir por }0.' + Q + '\\text{La regla no se aplica (rectas paralelas).}');
+      else f.push('x=\\dfrac{\\Delta_x}{\\Delta}=' + coc(DX, D) + Q + 'y=\\dfrac{\\Delta_y}{\\Delta}=' + coc(5, D, '5'));
+      return dtPasos(f); }
   };
 })());
 OA.boot();

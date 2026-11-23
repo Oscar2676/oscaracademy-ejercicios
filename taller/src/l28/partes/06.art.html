@@ -20,10 +20,10 @@
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Con \(A=\begin{pmatrix}1&-1\\1&1\end{pmatrix}\) y \(B=\begin{pmatrix}2&1\\0&1\end{pmatrix}\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p>Con \(A=\begin{pmatrix}1&-1\\1&1\end{pmatrix}\) y \(B=\begin{pmatrix}2&1\\0&1\end{pmatrix}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
   <div class="stage" data-scene="prod-idea"></div>
   <ul class="keys">
-    <li><b>Cuadrado gris:</b> el de lados \((1,0)\) y \((0,1)\). Su área es \(1\).</li>
+    <li><b>Cuadrado gris:</b> el de lados \((1,0)\) y \((0,1)\). Su área es \(1\cdot 1=1\).</li>
     <li><b>Paralelogramo azul:</b> el de las columnas de \(B\), \((2,0)\) y \((1,1)\). Su área es \(|B|=2\) (hoja «Determinante de segundo orden»).</li>
     <li><b>Paralelogramo naranja:</b> el de las columnas de \(AB\), \((2,2)\) y \((0,2)\). Su área es \(|AB|=4\), que es \(2\cdot 2=|A|\,|B|\).</li>
   </ul>
@@ -83,11 +83,11 @@
   <h3>Ejemplo 1: comprobar con \(A=\begin{pmatrix}1&2\\3&4\end{pmatrix}\) y \(B=\begin{pmatrix}2&0\\1&3\end{pmatrix}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Fila 1 de \(AB\): \(1\cdot 2+2\cdot 1=4\) y \(1\cdot 0+2\cdot 3=6\).</li>
-    <li>Fila 2 de \(AB\): \(3\cdot 2+4\cdot 1=10\) y \(3\cdot 0+4\cdot 3=12\). Entonces \(AB=\begin{pmatrix}4&6\\10&12\end{pmatrix}\).</li>
+    <li>Fila 1 de \(AB\): \(1\cdot 2+2\cdot 1=2+2=4\) y \(1\cdot 0+2\cdot 3=0+6=6\).</li>
+    <li>Fila 2 de \(AB\): \(3\cdot 2+4\cdot 1=6+4=10\) y \(3\cdot 0+4\cdot 3=0+12=12\). Entonces \(AB=\begin{pmatrix}4&6\\10&12\end{pmatrix}\).</li>
     <li>\(|AB|=4\cdot 12-6\cdot 10=48-60=-12\).</li>
     <li>\(|A|=1\cdot 4-2\cdot 3=4-6=-2\).</li>
-    <li>\(|B|=2\cdot 3-0\cdot 1=6\).</li>
+    <li>\(|B|=2\cdot 3-0\cdot 1=6-0=6\).</li>
     <li>\(|A|\,|B|=(-2)\cdot 6=-12\). Coincide con \(|AB|\).</li>
   </ol>
   </div>
@@ -97,8 +97,8 @@
   <h3>Ejemplo 2: \(BA\) es otra matriz, con el mismo determinante</h3>
   <div class="body">
   <ol class="steps">
-    <li>Con las matrices del ejemplo 1, fila 1 de \(BA\): \(2\cdot 1+0\cdot 3=2\) y \(2\cdot 2+0\cdot 4=4\).</li>
-    <li>Fila 2 de \(BA\): \(1\cdot 1+3\cdot 3=10\) y \(1\cdot 2+3\cdot 4=14\). Entonces \(BA=\begin{pmatrix}2&4\\10&14\end{pmatrix}\), distinta de \(AB\).</li>
+    <li>Con las matrices del ejemplo 1, fila 1 de \(BA\): \(2\cdot 1+0\cdot 3=2+0=2\) y \(2\cdot 2+0\cdot 4=4+0=4\).</li>
+    <li>Fila 2 de \(BA\): \(1\cdot 1+3\cdot 3=1+9=10\) y \(1\cdot 2+3\cdot 4=2+12=14\). Entonces \(BA=\begin{pmatrix}2&4\\10&14\end{pmatrix}\), distinta de \(AB\).</li>
     <li>\(|BA|=2\cdot 14-4\cdot 10=28-40=-12\).</li>
     <li>\(|BA|=|AB|=-12\), aunque \(BA\neq AB\).</li>
   </ol>
@@ -111,11 +111,13 @@
   <p>\(A=\begin{pmatrix}1&2&3\\0&4&5\\1&0&6\end{pmatrix}\) y \(B=\begin{pmatrix}2&5&-1\\0&3&4\\0&0&-2\end{pmatrix}\).</p>
   <ol class="steps">
     <li>\(|A|=22\) (hoja «Resolución de determinantes por regla de Sarrus»).</li>
-    <li>\(B\) es triangular: \(|B|=2\cdot 3\cdot(-2)=-12\) (hoja «Propiedades de los determinantes»).</li>
-    <li>\(|AB|=|A|\,|B|=22\cdot(-12)=-264\).</li>
-    <li>Comprobación. Multiplicando: \(AB=\begin{pmatrix}2&11&1\\0&12&6\\2&5&-13\end{pmatrix}\).</li>
-    <li>Regla de Sarrus en \(AB\). Bajan: \(2\cdot 12\cdot(-13)=-312\); \(11\cdot 6\cdot 2=132\); \(1\cdot 0\cdot 5=0\). Suma: \(-180\).</li>
-    <li>Suben: \(2\cdot 12\cdot 1=24\); \(5\cdot 6\cdot 2=60\); \((-13)\cdot 0\cdot 11=0\). Suma: \(84\).</li>
+    <li>\(B\) es triangular: su determinante es el producto de la diagonal principal, \(|B|=2\cdot 3\cdot(-2)=6\cdot(-2)=-12\) (hoja «Propiedades de los determinantes»).</li>
+    <li>\(|AB|=|A|\,|B|=22\cdot(-12)\). Como \(22\cdot 12=264\) y los factores tienen signos distintos, \(|AB|=-264\).</li>
+    <li>Comprobación. Se multiplican las matrices, fila de \(A\) por columna de \(B\). Fila 1 de \(AB\): \(1\cdot 2+2\cdot 0+3\cdot 0=2+0+0=2\); \(1\cdot 5+2\cdot 3+3\cdot 0=5+6+0=11\); \(1\cdot(-1)+2\cdot 4+3\cdot(-2)=-1+8-6=1\).</li>
+    <li>Fila 2 de \(AB\): \(0\cdot 2+4\cdot 0+5\cdot 0=0+0+0=0\); \(0\cdot 5+4\cdot 3+5\cdot 0=0+12+0=12\); \(0\cdot(-1)+4\cdot 4+5\cdot(-2)=0+16-10=6\).</li>
+    <li>Fila 3 de \(AB\): \(1\cdot 2+0\cdot 0+6\cdot 0=2+0+0=2\); \(1\cdot 5+0\cdot 3+6\cdot 0=5+0+0=5\); \(1\cdot(-1)+0\cdot 4+6\cdot(-2)=-1+0-12=-13\). Entonces \(AB=\begin{pmatrix}2&11&1\\0&12&6\\2&5&-13\end{pmatrix}\).</li>
+    <li>Regla de Sarrus en \(AB\). Bajan: \(2\cdot 12\cdot(-13)=24\cdot(-13)=-312\); \(11\cdot 6\cdot 2=66\cdot 2=132\); \(1\cdot 0\cdot 5=0\). Suma: \(-312+132+0=-180\).</li>
+    <li>Suben: \(2\cdot 12\cdot 1=24\cdot 1=24\); \(5\cdot 6\cdot 2=30\cdot 2=60\); \((-13)\cdot 0\cdot 11=0\). Suma: \(24+60+0=84\).</li>
     <li>\(|AB|=-180-84=-264\) ✓.</li>
   </ol>
   </div>
@@ -126,16 +128,16 @@
   <div class="body">
   <ol class="steps">
     <li>\(|A|=3\cdot 4-5\cdot 2=12-10=2\).</li>
-    <li>\(|A^{3}|=|A|^{3}=2^{3}=8\).</li>
+    <li>\(|A^{3}|=|A|^{3}=2^{3}=2\cdot 2\cdot 2=8\).</li>
     <li>Como \(|A|\neq 0\), si \(A\) tiene inversa su determinante es \(\left|A^{-1}\right|=\dfrac{1}{|A|}=\dfrac{1}{2}\).</li>
-    <li>Comprobación. La matriz \(C=\begin{pmatrix}2&-\frac{5}{2}\\-1&\frac{3}{2}\end{pmatrix}\) es la inversa de \(A\), porque \(A\,C=I\): \(3\cdot 2+5\cdot(-1)=1\); \(3\cdot\left(-\frac{5}{2}\right)+5\cdot\frac{3}{2}=0\); \(2\cdot 2+4\cdot(-1)=0\); \(2\cdot\left(-\frac{5}{2}\right)+4\cdot\frac{3}{2}=1\).</li>
-    <li>\(|C|=2\cdot\frac{3}{2}-\left(-\frac{5}{2}\right)\cdot(-1)=3-\frac{5}{2}=\frac{1}{2}\) ✓.</li>
+    <li>Comprobación. La matriz \(C=\begin{pmatrix}2&-\frac{5}{2}\\-1&\frac{3}{2}\end{pmatrix}\) es la inversa de \(A\), porque \(A\,C=I\): \(3\cdot 2+5\cdot(-1)=6-5=1\); \(3\cdot\left(-\frac{5}{2}\right)+5\cdot\frac{3}{2}=-\frac{15}{2}+\frac{15}{2}=0\); \(2\cdot 2+4\cdot(-1)=4-4=0\); \(2\cdot\left(-\frac{5}{2}\right)+4\cdot\frac{3}{2}=-5+6=1\).</li>
+    <li>\(|C|=2\cdot\frac{3}{2}-\left(-\frac{5}{2}\right)\cdot(-1)\). Productos: \(2\cdot\frac{3}{2}=3\); \(\left(-\frac{5}{2}\right)\cdot(-1)=\frac{5}{2}\). \(|C|=3-\frac{5}{2}=\frac{6}{2}-\frac{5}{2}=\frac{1}{2}\) ✓.</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Tres errores frecuentes.</b> Uno: usar la regla con la suma; en general \(|A+B|\neq|A|+|B|\). Por ejemplo, con \(A=B=I\) de segundo orden, \(|A+B|=\begin{vmatrix}2&0\\0&2\end{vmatrix}=4\), y \(|A|+|B|=1+1=2\). Dos: concluir de \(|AB|=|BA|\) que \(AB=BA\); lo que coincide es un número, no las matrices. Tres: aplicarla a matrices que no son cuadradas; una matriz de \(2\times 3\) no tiene determinante, aunque su producto por una de \(3\times 2\) sea una matriz cuadrada.</p>
+    <p><b>Tres errores frecuentes.</b> Uno: usar la regla con la suma; en general \(|A+B|\neq|A|+|B|\). Por ejemplo, con \(A=B=I\) de segundo orden, \(|A+B|=\begin{vmatrix}2&0\\0&2\end{vmatrix}=2\cdot 2-0\cdot 0=4-0=4\), y \(|A|+|B|=1+1=2\). Dos: concluir de \(|AB|=|BA|\) que \(AB=BA\); lo que coincide es un número, no las matrices. Tres: aplicarla a matrices que no son cuadradas; una matriz de \(2\times 3\) no tiene determinante, aunque su producto por una de \(3\times 2\) sea una matriz cuadrada.</p>
   </div>
 </section>
 
@@ -146,10 +148,10 @@
     <details><summary>Pista</summary><div><p>Cada entrada de \(AB\) es una fila de \(A\) por una columna de \(B\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>Fila 1 de \(AB\): \(2\cdot 1+1\cdot 2=4\) y \(2\cdot(-1)+1\cdot 4=2\).</li>
-        <li>Fila 2 de \(AB\): \(1\cdot 1+3\cdot 2=7\) y \(1\cdot(-1)+3\cdot 4=11\). \(AB=\begin{pmatrix}4&2\\7&11\end{pmatrix}\).</li>
+        <li>Fila 1 de \(AB\): \(2\cdot 1+1\cdot 2=2+2=4\) y \(2\cdot(-1)+1\cdot 4=-2+4=2\).</li>
+        <li>Fila 2 de \(AB\): \(1\cdot 1+3\cdot 2=1+6=7\) y \(1\cdot(-1)+3\cdot 4=-1+12=11\). \(AB=\begin{pmatrix}4&2\\7&11\end{pmatrix}\).</li>
         <li>\(|AB|=4\cdot 11-2\cdot 7=44-14=30\).</li>
-        <li>\(|A|=2\cdot 3-1\cdot 1=5\) y \(|B|=1\cdot 4-(-1)\cdot 2=4+2=6\).</li>
+        <li>\(|A|=2\cdot 3-1\cdot 1=6-1=5\) y \(|B|=1\cdot 4-(-1)\cdot 2=4-(-2)=4+2=6\).</li>
         <li>\(|A|\,|B|=5\cdot 6=30=|AB|\) ✓.</li>
       </ol>
     </div></details>
@@ -160,8 +162,8 @@
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
         <li>(i) \(|AB|=|A|\,|B|=3\cdot(-2)=-6\).</li>
-        <li>(ii) \(|A^{2}B|=|A^{2}|\,|B|=|A|^{2}\,|B|=9\cdot(-2)=-18\).</li>
-        <li>(iii) \(2AB\) tiene tres filas, cada una multiplicada por \(2\): \(|2AB|=2^{3}\,|AB|=8\cdot(-6)=-48\) (hoja «Propiedades de los determinantes»).</li>
+        <li>(ii) \(|A^{2}B|=|A^{2}|\,|B|=|A|^{2}\,|B|=3^{2}\cdot(-2)=9\cdot(-2)=-18\).</li>
+        <li>(iii) \(2AB\) tiene tres filas, cada una multiplicada por \(2\): \(|2AB|=2^{3}\,|AB|\). Como \(2^{3}=2\cdot 2\cdot 2=8\) y \(|AB|=-6\) por (i), \(|2AB|=8\cdot(-6)=-48\) (hoja «Propiedades de los determinantes»).</li>
         <li>(iv) \(\left|B^{T}A\right|=\left|B^{T}\right||A|=|B|\,|A|=(-2)\cdot 3=-6\) (hoja de la matriz traspuesta).</li>
       </ol>
     </div></details>
@@ -171,17 +173,18 @@
     <details><summary>Pista</summary><div><p>El área del paralelogramo es el valor absoluto del determinante de la matriz de sus lados. No hace falta multiplicar las tres matrices.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(|B|=4\cdot 3-0\cdot 0=12\); \(|A|=1\cdot 1-\frac{1}{2}\cdot 0=1\); \(|M|=2\cdot 2-0\cdot 0=4\).</li>
-        <li>Se aplica la regla dos veces: \(|MAB|=|M|\,|AB|=|M|\,|A|\,|B|=4\cdot 1\cdot 12=48\).</li>
+        <li>\(|B|=4\cdot 3-0\cdot 0=12-0=12\); \(|A|=1\cdot 1-\frac{1}{2}\cdot 0=1-0=1\); \(|M|=2\cdot 2-0\cdot 0=4-0=4\).</li>
+        <li>Se aplica la regla dos veces: \(|MAB|=|M|\,|AB|=|M|\,|A|\,|B|=4\cdot 1\cdot 12=4\cdot 12=48\).</li>
         <li>La etiqueta final mide \(|48|=48\ \text{cm}^{2}\). Inclinarla no cambió el área (\(|A|=1\)); ampliarla al doble la multiplicó por \(4\).</li>
-        <li>Comprobación: \(AB=\begin{pmatrix}4&\frac{3}{2}\\0&3\end{pmatrix}\), \(MAB=\begin{pmatrix}8&3\\0&6\end{pmatrix}\) y \(8\cdot 6-3\cdot 0=48\) ✓.</li>
-        <li>\(50\cdot 48=2\,400\ \text{cm}^{2}\). Como \(1\ \text{m}^{2}=10\,000\ \text{cm}^{2}\), son \(0{,}24\ \text{m}^{2}\) de vinilo.</li>
+        <li>Comprobación, multiplicando. \(AB\), fila 1: \(1\cdot 4+\frac{1}{2}\cdot 0=4+0=4\) y \(1\cdot 0+\frac{1}{2}\cdot 3=0+\frac{3}{2}=\frac{3}{2}\); fila 2: \(0\cdot 4+1\cdot 0=0+0=0\) y \(0\cdot 0+1\cdot 3=0+3=3\). \(AB=\begin{pmatrix}4&\frac{3}{2}\\0&3\end{pmatrix}\).</li>
+        <li>\(M\,(AB)\), fila 1: \(2\cdot 4+0\cdot 0=8+0=8\) y \(2\cdot\frac{3}{2}+0\cdot 3=3+0=3\); fila 2: \(0\cdot 4+2\cdot 0=0+0=0\) y \(0\cdot\frac{3}{2}+2\cdot 3=0+6=6\). \(MAB=\begin{pmatrix}8&3\\0&6\end{pmatrix}\) y \(|MAB|=8\cdot 6-3\cdot 0=48-0=48\) ✓.</li>
+        <li>\(50\cdot 48=2\,400\ \text{cm}^{2}\). Como \(1\ \text{m}^{2}=10\,000\ \text{cm}^{2}\), son \(2\,400:10\,000=0{,}24\ \text{m}^{2}\) de vinilo.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">AL-L28-H06 · v001 · Pendiente de APR</span>
+  <span class="status">AL-L28-H06 · v002 · Pendiente de APR</span>
 </footer>
 </article>
