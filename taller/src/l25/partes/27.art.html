@@ -1,0 +1,322 @@
+<!--file:H27_sucesiones_monotonas_acotadas.html-->
+<!--title:Sucesiones monótonas acotadas-->
+<!--id:ss-monotonas-->
+<!--tab:H27 Sucesiones monótonas acotadas-->
+<article class="sheet" id="ss-monotonas" data-hoja="L25 H27">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Sucesiones monótonas acotadas</b></li>
+    </ol>
+    <h1>Sucesiones monótonas acotadas</h1>
+    <p class="lede">Una sucesión es <b>monótona</b> si nunca cambia de sentido: o nunca baja (creciente) o nunca sube (decreciente). Es <b>acotada</b> si todos sus términos caben entre dos números. Ninguna de las dos propiedades asegura, sola, que la sucesión tenga límite. Las dos juntas, sí: una sucesión creciente que tiene un techo converge, y su límite es el menor de sus techos, que se llama supremo. \[(a_{n})\text{ creciente y acotada superiormente}\quad\Longrightarrow\quad\lim_{n\to\infty}a_{n}=\sup\{a_{n}:n\ge 1\}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(a_{n}=\dfrac{n}{n+1}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los doce puntos azules (paso 1):</b> en horizontal va la posición \(n\); en vertical, el valor del término. De cada punto sale una punteada hasta su valor en el eje vertical: \(0{,}5\), \(0{,}66\ldots\), \(0{,}75\), \(0{,}8\), y siguen subiendo. Arriba queda la pregunta: ¿por qué tiene límite?</li>
+    <li><b>Paso 2, en naranja:</b> entre cada punto y el siguiente hay un escalón. Su tramo vertical es el salto \(a_{n+1}-a_{n}\): vale \(\dfrac{1}{6}\), después \(\dfrac{1}{12}\), y siempre es positivo. Por eso la sucesión crece.</li>
+    <li><b>Paso 3, en burdeo:</b> la recta horizontal a la altura \(1\) es un techo: ningún término la alcanza. El trazo que sube de cada punto hasta la recta es lo que le falta a ese término para llegar a \(1\), que vale \(\dfrac{1}{n+1}\).</li>
+    <li><b>Pasos 4 y 5:</b> se prueba un techo más bajo, \(0{,}75\) (recta naranja punteada). No sirve: el cuarto término, \(0{,}8\), lo supera (anillo verde). Y como la sucesión crece, desde el cuarto término todos quedan en la franja naranja, entre \(0{,}75\) y \(1\): son los puntos verdes, a la derecha de la línea verde \(N=3\).</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> con una franja más angosta, de \(0{,}9\) a \(1\), pasa lo mismo desde el décimo término (\(N=9\)), y la cuenta de abajo lo hace con la letra \(\varepsilon\), para cualquier franja. Conclusión: ningún número menor que \(1\) es techo, así que \(1\) es el menor techo, y es el límite.</li>
+  </ol>
+  <div class="stage" data-scene="mon-idea"></div>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos \(a_{1},\ \ldots,\ a_{12}\); la punteada lleva cada uno a su valor en el eje vertical.</li>
+    <li><b>Naranja:</b> los saltos \(a_{n+1}-a_{n}\) (tramo vertical de cada escalón), la recta de prueba \(0{,}75\) y las franjas que terminan en \(1\).</li>
+    <li><b>Burdeo:</b> el techo \(1\) (una cota superior) y lo que le falta a cada término para alcanzarlo, \(1-a_{n}\).</li>
+    <li><b>Verde:</b> el término que supera a \(0{,}75\), el número \(N\) de cada franja y los términos posteriores a \(N\), que están todos dentro.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones, en orden</h3>
+    <ol class="steps">
+      <li><b>Sucesión</b> (hoja «Sucesión infinita»): una lista sin fin de números reales, \(a_{1},\ a_{2},\ a_{3},\ \ldots\), con un término \(a_{n}\) para cada natural \(n\ge 1\). La sucesión completa se anota \((a_{n})\).</li>
+      <li><b>Creciente:</b> \(a_{n+1}\ge a_{n}\) para todo \(n\ge 1\). <b>Estrictamente creciente:</b> \(a_{n+1}&gt;a_{n}\) para todo \(n\ge 1\).</li>
+      <li><b>Decreciente:</b> \(a_{n+1}\le a_{n}\) para todo \(n\ge 1\). <b>Estrictamente decreciente:</b> \(a_{n+1}&lt;a_{n}\) para todo \(n\ge 1\).</li>
+      <li><b>Monótona:</b> creciente o decreciente. Una sucesión constante es las dos cosas a la vez, y ninguna de las dos de manera estricta.</li>
+      <li><b>Cota superior:</b> un número \(M\) tal que \(a_{n}\le M\) para todo \(n\). Si existe alguna, la sucesión es <b>acotada superiormente</b>. Una cota superior nunca es única: si \(M\) lo es, todo número mayor que \(M\) también lo es.</li>
+      <li><b>Cota inferior:</b> un número \(m\) tal que \(a_{n}\ge m\) para todo \(n\). Si existe alguna, la sucesión es <b>acotada inferiormente</b>.</li>
+      <li><b>Acotada:</b> acotada superiormente y también inferiormente: \(m\le a_{n}\le M\) para todo \(n\).</li>
+      <li><b>Supremo:</b> la menor de las cotas superiores. Un número \(s\) es el supremo de la sucesión si (1) \(s\) es cota superior y (2) ningún número menor que \(s\) es cota superior. Se escribe \(s=\sup\{a_{n}:n\ge 1\}\). <b>Ínfimo:</b> la mayor de las cotas inferiores.</li>
+      <li><b>Axioma del supremo.</b> Todo conjunto de números reales que no es vacío y tiene alguna cota superior tiene supremo, y ese supremo es un número real. Es una propiedad de los números reales que <b>se toma como base y no se demuestra</b> (un axioma). Con solo números racionales no se cumple.</li>
+    </ol>
+    <p><b>Una sucesión creciente no vuelve a bajar.</b> Si \((a_{n})\) es creciente y \(m\le n\), entonces \(a_{m}\le a_{n}\).</p>
+    <ol class="steps">
+      <li>Se fija \(m\) y se hace inducción sobre \(n\), desde \(n=m\). Primer caso, \(n=m\): \(a_{m}\le a_{m}\). ✓</li>
+      <li>Paso de \(n\) a \(n+1\): se supone \(a_{m}\le a_{n}\). Por ser creciente, \(a_{n}\le a_{n+1}\).</li>
+      <li>Se encadenan las dos desigualdades: \(a_{m}\le a_{n}\le a_{n+1}\). Entonces \(a_{m}\le a_{n+1}\). Por inducción, vale para todo \(n\ge m\).</li>
+      <li>En particular, con \(m=1\): \(a_{n}\ge a_{1}\) para todo \(n\). Una sucesión creciente siempre tiene cota inferior: su primer término. Del mismo modo, una decreciente cumple \(a_{n}\le a_{m}\) si \(m\le n\), y tiene cota superior \(a_{1}\).</li>
+    </ol>
+    <p><b>Cómo se prueba la monotonía.</b> No basta mirar algunos términos: hay que demostrarla para todo \(n\).</p>
+    <ol class="steps">
+      <li><b>Con la resta.</b> Se calcula \(a_{n+1}-a_{n}\) y se estudia su signo. Si \(a_{n+1}-a_{n}\ge 0\) para todo \(n\), sumando \(a_{n}\) a los dos lados queda \(a_{n+1}\ge a_{n}\): creciente. Si \(a_{n+1}-a_{n}\le 0\) para todo \(n\): decreciente.</li>
+      <li><b>Con el cociente, solo si todos los términos son positivos.</b> Si \(a_{n}&gt;0\) para todo \(n\) y \(\dfrac{a_{n+1}}{a_{n}}\ge 1\), se multiplican los dos lados por \(a_{n}\), que es positivo: \(a_{n+1}\ge a_{n}\): creciente. Si \(\dfrac{a_{n+1}}{a_{n}}\le 1\): decreciente. Con términos negativos, multiplicar por \(a_{n}\) invierte la desigualdad: por eso se exige que sean positivos.</li>
+      <li><b>Por inducción</b>, cuando la sucesión está dada por una recurrencia (ejemplo 2).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> Se usan sin demostrar: (1) el <b>axioma del supremo</b>, que es una propiedad de base de los números reales; (2) la <b>propiedad arquimediana</b>: para cada número real \(x\) hay un número natural \(N\) con \(N\ge x\); (3) las propiedades del valor absoluto: \(|-x|=|x|\), \(x\le|x|\), la equivalencia entre \(|x|&lt;\varepsilon\) y \(-\varepsilon&lt;x&lt;\varepsilon\) (y entre \(|x|\le K\) y \(-K\le x\le K\)) y la desigualdad triangular \(|x+y|\le|x|+|y|\); (4) las reglas de las desigualdades: se puede sumar un mismo número a los dos lados; multiplicar o dividir los dos lados por un número positivo; al multiplicar por un número negativo la desigualdad se invierte; y si \(0&lt;x&lt;y\), entonces \(\dfrac{1}{y}&lt;\dfrac{1}{x}\); (5) el principio de inducción; (6) que entre una cantidad finita de números hay uno que es el mayor. De la hoja «Límite de una sucesión» se usan: la definición de límite con \(\varepsilon\) y \(N\), la unicidad del límite, el límite de una suma, el límite de una sucesión constante y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) (demostrados allí), y las reglas «constante por sucesión» y «producto» del álgebra de límites, que allí quedaron <b>enunciadas sin demostrar</b> (en el ejemplo 2 y en los ejercicios B y C, el límite que da la regla de la constante se comprueba además directamente; en el ejemplo 3, y en la recurrencia \(b_{n+1}=2\,b_{n}\) del ejemplo 2, las reglas se usan tal como están enunciadas). Los nombres cambian de un libro a otro: algunos llaman «no decreciente» a lo que aquí es «creciente», y «creciente» a lo que aquí es «estrictamente creciente». En el ejercicio C, los datos del estanque son inventados y el modelo está declarado en el enunciado.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Los teoremas, demostrados paso a paso</h3>
+    <p><b>Teorema 1 (toda sucesión convergente es acotada).</b> Si \(a_{n}\to L\), con \(L\) real, entonces existe un número \(K\) tal que \(|a_{n}|\le K\) para todo \(n\).</p>
+    <ol class="steps">
+      <li>La definición de límite vale para todo \(\varepsilon&gt;0\); en particular para \(\varepsilon=1\): hay un entero \(N\ge 0\) tal que \(|a_{n}-L|&lt;1\) para todo \(n&gt;N\).</li>
+      <li>Para \(n&gt;N\) se suma y se resta \(L\): \(a_{n}=(a_{n}-L)+L\).</li>
+      <li>Desigualdad triangular: \(|a_{n}|\le|a_{n}-L|+|L|\).</li>
+      <li>Por el paso 1: \(|a_{n}|&lt;1+|L|\) para todo \(n&gt;N\).</li>
+      <li>Quedan los términos \(a_{1},\ \ldots,\ a_{N}\), que son una cantidad finita (ninguno, si \(N=0\)). Sea \(K\) el mayor de los números \(|a_{1}|,\ \ldots,\ |a_{N}|\) y \(1+|L|\).</li>
+      <li>Si \(n\le N\), \(|a_{n}|\le K\) porque \(|a_{n}|\) es uno de esos números. Si \(n&gt;N\), \(|a_{n}|&lt;1+|L|\le K\). Entonces \(|a_{n}|\le K\) para todo \(n\).</li>
+      <li>\(|a_{n}|\le K\) equivale a \(-K\le a_{n}\le K\): \(K\) es cota superior y \(-K\) es cota inferior. La sucesión es acotada.</li>
+      <li><b>Leído al revés:</b> si una sucesión no es acotada, no converge. Y el recíproco es falso: \((-1)^{n}\) es acotada y no converge (ejemplo 4).</li>
+    </ol>
+    <p><b>Teorema 2 (convergencia monótona).</b> Si \((a_{n})\) es creciente y acotada superiormente, entonces converge, y su límite es su supremo: \(\displaystyle\lim_{n\to\infty}a_{n}=s\), con \(s=\sup\{a_{n}:n\ge 1\}\).</p>
+    <ol class="steps">
+      <li><b>Existe el supremo.</b> El conjunto de los términos, \(\{a_{1},\ a_{2},\ a_{3},\ \ldots\}\), no es vacío (contiene a \(a_{1}\)) y tiene una cota superior (hipótesis). Por el axioma del supremo, tiene un supremo \(s\), que es un número real.</li>
+      <li>\(s\) es cota superior: \(a_{n}\le s\) para todo \(n\).</li>
+      <li>Sea \(\varepsilon&gt;0\). El número \(s-\varepsilon\) es menor que \(s\), y \(s\) es la <b>menor</b> cota superior: entonces \(s-\varepsilon\) no es cota superior.</li>
+      <li>Que \(s-\varepsilon\) no sea cota superior quiere decir que algún término lo supera: existe un índice \(m\ge 1\) con \(a_{m}&gt;s-\varepsilon\).</li>
+      <li>Sea \(N=m-1\), que es un entero mayor o igual que \(0\). Si \(n&gt;N\), entonces \(n\ge m\).</li>
+      <li><b>Aquí se usa que es creciente:</b> como \(m\le n\), \(a_{m}\le a_{n}\).</li>
+      <li>Se encadenan los pasos 4, 6 y 2: \(s-\varepsilon&lt;a_{m}\le a_{n}\le s\).</li>
+      <li>Como \(\varepsilon&gt;0\), \(s&lt;s+\varepsilon\). Entonces \(s-\varepsilon&lt;a_{n}&lt;s+\varepsilon\).</li>
+      <li>Se resta \(s\) en los tres lugares: \(-\varepsilon&lt;a_{n}-s&lt;\varepsilon\), que es lo mismo que \(|a_{n}-s|&lt;\varepsilon\).</li>
+      <li>Para todo \(n&gt;N\) se cumple \(|a_{n}-s|&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}a_{n}=s\).</li>
+      <li><b>Qué dice y qué no dice.</b> Asegura que el límite existe y que es el supremo. No dice cuánto vale: eso se calcula aparte (ejemplos 1, 2 y 3). Y el límite es la <b>menor</b> cota superior, no cualquiera: \(2\) es cota superior de \(\dfrac{n}{n+1}\), y su límite es \(1\).</li>
+    </ol>
+    <p><b>Teorema 3 (versión decreciente).</b> Si \((a_{n})\) es decreciente y acotada inferiormente, entonces converge, y su límite es su ínfimo.</p>
+    <ol class="steps">
+      <li>Se define \(b_{n}=-a_{n}\). Por ser \((a_{n})\) decreciente, \(a_{n+1}\le a_{n}\). Se multiplica por \(-1\), que invierte la desigualdad: \(-a_{n+1}\ge-a_{n}\), o sea \(b_{n+1}\ge b_{n}\). La sucesión \((b_{n})\) es creciente.</li>
+      <li>Sea \(m\) una cota inferior de \((a_{n})\): \(a_{n}\ge m\). Se multiplica por \(-1\): \(-a_{n}\le-m\), o sea \(b_{n}\le-m\). La sucesión \((b_{n})\) es acotada superiormente.</li>
+      <li>Por el teorema 2, \((b_{n})\) converge a su supremo \(s\): para cada \(\varepsilon&gt;0\) hay un \(N\) tal que \(|b_{n}-s|&lt;\varepsilon\) para todo \(n&gt;N\).</li>
+      <li>Distancia de \(a_{n}\) a \(-s\): \(a_{n}-(-s)=a_{n}+s=-b_{n}+s=-(b_{n}-s)\).</li>
+      <li>Como \(|-x|=|x|\): \(|a_{n}-(-s)|=|b_{n}-s|&lt;\varepsilon\) para todo \(n&gt;N\). El mismo \(N\) sirve: \(\displaystyle\lim_{n\to\infty}a_{n}=-s\).</li>
+      <li><b>\(-s\) es cota inferior de \((a_{n})\):</b> \(b_{n}\le s\) es \(-a_{n}\le s\); se multiplica por \(-1\): \(a_{n}\ge-s\).</li>
+      <li><b>Y es la mayor.</b> Si un número \(t&gt;-s\) fuera cota inferior, \(a_{n}\ge t\) para todo \(n\); multiplicando por \(-1\), \(b_{n}\le-t\): el número \(-t\) sería cota superior de \((b_{n})\). Pero de \(t&gt;-s\) sale \(-t&lt;s\): una cota superior menor que el supremo, lo que es imposible.</li>
+      <li>Entonces \(-s\) es la mayor cota inferior de \((a_{n})\), su ínfimo, y es su límite.</li>
+    </ol>
+    <p><b>Teorema 4 (el término siguiente tiene el mismo límite).</b> Si \(a_{n}\to L\), entonces la sucesión \(a_{2},\ a_{3},\ a_{4},\ \ldots\), cuyo término de lugar \(n\) es \(a_{n+1}\), también tiene límite \(L\). Se usa para hallar el límite de una sucesión dada por recurrencia.</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon&gt;0\). Como \(a_{n}\to L\), hay un \(N\) tal que \(|a_{k}-L|&lt;\varepsilon\) para todo \(k&gt;N\).</li>
+      <li>Si \(n&gt;N\), entonces \(n+1&gt;n&gt;N\).</li>
+      <li>Por el paso 1, con \(k=n+1\): \(|a_{n+1}-L|&lt;\varepsilon\). Sirve el mismo \(N\). Como \(\varepsilon\) era cualquiera, \(a_{n+1}\to L\).</li>
+    </ol>
+    <p><b>Resumen: qué asegura cada propiedad.</b></p>
+    <ol class="steps">
+      <li><b>Monótona y acotada:</b> converge (teoremas 2 y 3). Una creciente necesita solo cota superior, porque la inferior ya la tiene (\(a_{1}\)); una decreciente necesita solo cota inferior.</li>
+      <li><b>Acotada, pero no monótona:</b> puede converger o no. \((-1)^{n}\) no converge; \(\dfrac{(-1)^{n}}{n}\) sí (ejemplo 4).</li>
+      <li><b>Monótona, pero no acotada:</b> no converge, por el teorema 1. Ejemplo: \(a_{n}=n\) (ejemplo 4).</li>
+      <li><b>Convergente:</b> es acotada (teorema 1), pero no tiene por qué ser monótona: \(\dfrac{(-1)^{n}}{n}\) converge a \(0\) saltando de un lado a otro. Ser monótona y acotada <b>basta</b> para converger, pero no es necesario.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Bajo el límite, crece; sobre el límite, decrece. Número ↔ figura</h3>
+    <p>La sucesión del ejemplo 2: cada término es el promedio del anterior y \(6\), es decir, \(a_{n+1}=\dfrac{a_{n}+6}{2}\). El deslizador elige el primer término, \(a_{1}\), entre los enteros de \(0\) a \(12\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los ocho puntos azules:</b> son \(a_{1},\ \ldots,\ a_{8}\), cada uno con su punteada hasta el eje vertical. Arriba del dibujo se leen el primer término elegido y los cuatro primeros valores.</li>
+      <li><b>Mira los escalones naranjas:</b> el tramo vertical entre un punto y el siguiente es el salto \(a_{n+1}-a_{n}\). Junto al primero está su cuenta, \(\dfrac{6-a_{1}}{2}\). Cada salto es la mitad del anterior.</li>
+      <li><b>Mira la recta burdeo y la franja naranja pálida:</b> la recta marca \(6\). La franja va del primer término hasta \(6\): todos los términos están dentro. Sus dos bordes son las cotas, y están anotados en el eje.</li>
+      <li><b>Mueve el deslizador \(a_{1}\):</b> si \(a_{1}&lt;6\), los puntos suben hacia \(6\) (creciente, con techo \(6\)). Si \(a_{1}&gt;6\), bajan hacia \(6\) (decreciente, con piso \(6\)). Con \(a_{1}=6\), caso límite, todos los puntos quedan sobre la recta: la sucesión es constante y todos los saltos valen \(0\).</li>
+      <li><b>Cuenta de abajo:</b> para el \(a_{1}\) elegido, los términos \(a_{2}\), \(a_{3}\) y \(a_{4}\); el salto general y el primero; por qué todos los términos quedan del mismo lado de \(6\); el signo de los saltos; las cotas, y la conclusión: monótona y acotada, converge, y su límite es \(6\).</li>
+    </ol>
+    <div class="stage" data-scene="mon-vivo"></div>
+    <ul class="keys">
+      <li><b>Puntos azules:</b> los términos; la punteada lleva cada uno a su valor en el eje vertical.</li>
+      <li><b>Escalones naranjas:</b> los saltos \(a_{n+1}-a_{n}=\dfrac{6-a_{n}}{2}\): positivos si \(a_{n}&lt;6\), negativos si \(a_{n}&gt;6\).</li>
+      <li><b>Franja naranja pálida:</b> de \(a_{1}\) a \(6\). Son las dos cotas: todos los términos están entre ellas.</li>
+      <li><b>Recta burdeo:</b> el límite, \(6\). Es el supremo cuando la sucesión crece y el ínfimo cuando decrece.</li>
+      <li><b>Caso límite (\(a_{1}=6\)):</b> sucesión constante: \(6,\ 6,\ 6,\ \ldots\) Es creciente y decreciente a la vez, ninguna de las dos de manera estricta, y la franja se reduce a la recta. Es el único caso en que el límite es un término de la sucesión.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(a_{n}=\dfrac{n}{n+1}\), creciente y acotada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{1+1}=\dfrac{1}{2}\); \(a_{2}=\dfrac{2}{2+1}=\dfrac{2}{3}\); \(a_{3}=\dfrac{3}{3+1}=\dfrac{3}{4}\). Parecen crecer; hay que demostrarlo para todo \(n\).</li>
+    <li><b>Monotonía, con la resta.</b> \(a_{n+1}-a_{n}=\dfrac{n+1}{n+2}-\dfrac{n}{n+1}\).</li>
+    <li>Denominador común, \((n+1)(n+2)\): \(a_{n+1}-a_{n}=\dfrac{(n+1)(n+1)-n(n+2)}{(n+1)(n+2)}\).</li>
+    <li>Se desarrollan los dos productos: \((n+1)(n+1)=n^{2}+2n+1\) y \(n(n+2)=n^{2}+2n\).</li>
+    <li>Se restan: \(n^{2}+2n+1-(n^{2}+2n)=1\). Queda \(a_{n+1}-a_{n}=\dfrac{1}{(n+1)(n+2)}\).</li>
+    <li>Signo: para \(n\ge 1\), el numerador y el denominador son positivos. Entonces \(a_{n+1}-a_{n}&gt;0\) para todo \(n\): la sucesión es estrictamente creciente.</li>
+    <li><b>Cota superior.</b> Con \(1=\dfrac{n+1}{n+1}\): \(1-a_{n}=\dfrac{n+1}{n+1}-\dfrac{n}{n+1}=\dfrac{n+1-n}{n+1}=\dfrac{1}{n+1}\), que es positivo. Entonces \(a_{n}&lt;1\) para todo \(n\): \(1\) es cota superior.</li>
+    <li><b>Cota inferior.</b> Por ser creciente, \(a_{n}\ge a_{1}=\dfrac{1}{2}\). La sucesión es acotada: \(\dfrac{1}{2}\le a_{n}&lt;1\).</li>
+    <li><b>Teorema 2:</b> es creciente y acotada superiormente; entonces converge, y su límite es su supremo. El teorema no dice cuánto vale.</li>
+    <li><b>El valor del límite.</b> Candidato: \(1\). Distancia, por el paso 7: \(|a_{n}-1|=\left|-\dfrac{1}{n+1}\right|=\dfrac{1}{n+1}\).</li>
+    <li>Sea \(\varepsilon&gt;0\). Por la propiedad arquimediana, hay un natural \(N\) con \(N\ge\dfrac{1}{\varepsilon}\). Si \(n&gt;N\), entonces \(n+1&gt;n&gt;N\ge\dfrac{1}{\varepsilon}\).</li>
+    <li>De \(n+1&gt;\dfrac{1}{\varepsilon}\): se multiplica por \(\varepsilon\) y se divide por \(n+1\), los dos positivos: \(\varepsilon&gt;\dfrac{1}{n+1}\). Entonces \(|a_{n}-1|&lt;\varepsilon\) para todo \(n&gt;N\): \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\).</li>
+    <li>El límite es único y, por el teorema 2, es el supremo: \(\sup\{a_{n}\}=1\). Ningún término vale \(1\), porque \(1-a_{n}=\dfrac{1}{n+1}&gt;0\): el supremo no tiene por qué ser un término.</li>
+    <li><b>La monotonía, otra vez, ahora con el cociente</b> (se puede: todos los términos son positivos). \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{n+2}\cdot\dfrac{n+1}{n}=\dfrac{(n+1)(n+1)}{n(n+2)}=\dfrac{n^{2}+2n+1}{n^{2}+2n}\).</li>
+    <li>Se separa la fracción: \(\dfrac{n^{2}+2n+1}{n^{2}+2n}=\dfrac{n^{2}+2n}{n^{2}+2n}+\dfrac{1}{n^{2}+2n}=1+\dfrac{1}{n^{2}+2n}\), que es mayor que \(1\). Se multiplica por \(a_{n}&gt;0\): \(a_{n+1}&gt;a_{n}\). Los dos métodos dan lo mismo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: una sucesión dada por recurrencia. \(a_{1}=2\), \(a_{n+1}=\dfrac{a_{n}+6}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{2}=\dfrac{2+6}{2}=\dfrac{8}{2}=4\); \(a_{3}=\dfrac{4+6}{2}=\dfrac{10}{2}=5\); \(a_{4}=\dfrac{5+6}{2}=\dfrac{11}{2}=5{,}5\). Parecen crecer sin pasar de \(6\). No hay fórmula para \(a_{n}\) a la vista: se demuestra por inducción.</li>
+    <li><b>Cota superior: \(a_{n}&lt;6\) para todo \(n\).</b> Primer caso, \(n=1\): \(a_{1}=2\) y \(2&lt;6\). ✓</li>
+    <li>Paso de \(n\) a \(n+1\): se supone \(a_{n}&lt;6\). Se suma \(6\) a los dos lados: \(a_{n}+6&lt;12\).</li>
+    <li>Se dividen los dos lados por \(2\), que es positivo: \(\dfrac{a_{n}+6}{2}&lt;6\). El lado izquierdo es \(a_{n+1}\): \(a_{n+1}&lt;6\). Por inducción, \(a_{n}&lt;6\) para todo \(n\).</li>
+    <li><b>Monotonía, con la resta.</b> Con \(a_{n}=\dfrac{2a_{n}}{2}\): \(a_{n+1}-a_{n}=\dfrac{a_{n}+6}{2}-\dfrac{2a_{n}}{2}=\dfrac{a_{n}+6-2a_{n}}{2}=\dfrac{6-a_{n}}{2}\).</li>
+    <li>Por el paso 4, \(a_{n}&lt;6\): entonces \(6-a_{n}&gt;0\), y su mitad también. \(a_{n+1}-a_{n}&gt;0\) para todo \(n\): estrictamente creciente.</li>
+    <li><b>Teorema 2:</b> es creciente y acotada superiormente; entonces converge. Recién ahora se puede dar nombre a su límite: sea \(L=\displaystyle\lim_{n\to\infty}a_{n}\).</li>
+    <li><b>Límite del lado izquierdo de la recurrencia.</b> Por el teorema 4, \(a_{n+1}\to L\).</li>
+    <li><b>Límite del lado derecho.</b> La sucesión constante \(6\) tiene límite \(6\). Límite de una suma: \(a_{n}+6\to L+6\).</li>
+    <li>Regla «constante por sucesión», con la constante \(\dfrac{1}{2}\): \(\dfrac{a_{n}+6}{2}=\dfrac{1}{2}\,(a_{n}+6)\to\dfrac{1}{2}\,(L+6)=\dfrac{L+6}{2}\).</li>
+    <li>Comprobación directa de ese límite, sin la regla: \(\dfrac{a_{n}+6}{2}-\dfrac{L+6}{2}=\dfrac{a_{n}-L}{2}\), y \(\left|\dfrac{a_{n}-L}{2}\right|=\dfrac{|a_{n}-L|}{2}\le|a_{n}-L|\). Dado \(\varepsilon&gt;0\), el \(N\) que sirve para \(a_{n}\to L\) sirve también aquí.</li>
+    <li><b>Unicidad del límite.</b> Las sucesiones \(a_{n+1}\) y \(\dfrac{a_{n}+6}{2}\) son la misma (eso dice la recurrencia). Una sucesión tiene un solo límite: \(L=\dfrac{L+6}{2}\).</li>
+    <li>Se multiplican los dos lados por \(2\): \(2L=L+6\).</li>
+    <li>Se resta \(L\) a los dos lados: \(L=6\). Entonces \(\displaystyle\lim_{n\to\infty}a_{n}=6\).</li>
+    <li>Comprobación: \(\dfrac{6+6}{2}=\dfrac{12}{2}=6\). ✓ Y los términos siguientes se acercan a \(6\): \(a_{5}=\dfrac{5{,}5+6}{2}=\dfrac{11{,}5}{2}=5{,}75\); \(a_{6}=\dfrac{5{,}75+6}{2}=\dfrac{11{,}75}{2}=5{,}875\).</li>
+    <li>La cuenta de los pasos 8 a 14 no usó el valor de \(a_{1}\): cualquiera sea el primer término, <b>si</b> la sucesión converge, su límite es \(6\). La segunda animación muestra que converge para cada \(a_{1}\) entre \(0\) y \(12\).</li>
+    <li><b>Por qué el orden importa.</b> Otra recurrencia: \(b_{1}=1\), \(b_{n+1}=2\,b_{n}\). Si se despeja sin saber si converge: \(L=2L\), y restando \(L\), \(L=0\). Pero los términos son \(1,\ 2,\ 4,\ 8,\ \ldots\)</li>
+    <li>\(b_{n}\ge 1\) para todo \(n\) (inducción: \(b_{1}=1\); y si \(b_{n}\ge 1\), entonces \(b_{n+1}=2\,b_{n}\ge 2\ge 1\)). Entonces \(|b_{n}-0|\ge 1\) para todo \(n\): la distancia a \(0\) nunca es menor que \(\varepsilon=1\), y \(0\) no es el límite.</li>
+    <li>La cuenta \(L=2L\) solo dice: <b>si</b> hubiera límite, sería \(0\). Como \(0\) no lo es, la sucesión no tiene límite. Primero se demuestra que converge; después se despeja.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una decreciente, con el cociente. \(a_{n}=\dfrac{n}{2^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{2}\); \(a_{2}=\dfrac{2}{4}=\dfrac{1}{2}\); \(a_{3}=\dfrac{3}{8}\); \(a_{4}=\dfrac{4}{16}=\dfrac{1}{4}\); \(a_{5}=\dfrac{5}{32}\).</li>
+    <li>Todos los términos son positivos (\(n&gt;0\) y \(2^{n}&gt;0\)): se puede usar el cociente.</li>
+    <li>Cociente: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^{n}}{n}\).</li>
+    <li>Ley de las potencias: \(2^{n+1}=2\cdot 2^{n}\). Se simplifica \(2^{n}\): \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{2n}\).</li>
+    <li>Se compara con \(1\): \(\dfrac{n+1}{2n}\le 1\) equivale, multiplicando por \(2n\) (positivo), a \(n+1\le 2n\); y restando \(n\), a \(1\le n\). Eso es cierto para todo \(n\ge 1\).</li>
+    <li>Entonces \(\dfrac{a_{n+1}}{a_{n}}\le 1\). Se multiplica por \(a_{n}\), positivo: \(a_{n+1}\le a_{n}\) para todo \(n\). La sucesión es decreciente.</li>
+    <li>No es estrictamente decreciente: con \(n=1\) el cociente vale \(\dfrac{1+1}{2\cdot 1}=\dfrac{2}{2}=1\), y \(a_{2}=a_{1}\). Para \(n\ge 2\) el cociente es menor que \(1\) y los términos bajan.</li>
+    <li><b>Cotas.</b> Inferior: \(0\), porque todos los términos son positivos. Superior: \(a_{1}=\dfrac{1}{2}\), por ser decreciente.</li>
+    <li><b>Teorema 3:</b> es decreciente y acotada inferiormente; entonces converge. Sea \(L\) su límite.</li>
+    <li>Recurrencia: del paso 4, multiplicando por \(a_{n}\): \(a_{n+1}=\dfrac{n+1}{2n}\cdot a_{n}\).</li>
+    <li>Se separa la fracción: \(\dfrac{n+1}{2n}=\dfrac{n}{2n}+\dfrac{1}{2n}=\dfrac{1}{2}+\dfrac{1}{2}\cdot\dfrac{1}{n}\).</li>
+    <li>Como \(\dfrac{1}{n}\to 0\), por la regla «constante por sucesión» \(\dfrac{1}{2}\cdot\dfrac{1}{n}\to\dfrac{1}{2}\cdot 0=0\); y por el límite de una suma, \(\dfrac{1}{2}+\dfrac{1}{2}\cdot\dfrac{1}{n}\to\dfrac{1}{2}+0=\dfrac{1}{2}\).</li>
+    <li>Regla del producto (enunciada sin demostrar en «Límite de una sucesión»): \(\dfrac{n+1}{2n}\cdot a_{n}\to\dfrac{1}{2}\cdot L\).</li>
+    <li>Por el teorema 4, \(a_{n+1}\to L\). Por la unicidad del límite: \(L=\dfrac{L}{2}\).</li>
+    <li>Se resta \(\dfrac{L}{2}\) a los dos lados: \(L-\dfrac{L}{2}=0\), o sea \(\dfrac{L}{2}=0\). Se multiplica por \(2\): \(L=0\).</li>
+    <li>\(\displaystyle\lim_{n\to\infty}\dfrac{n}{2^{n}}=0\), y \(0\) es el ínfimo de la sucesión. Ningún término vale \(0\). Con números: \(a_{10}=\dfrac{10}{2^{10}}=\dfrac{10}{1024}\approx 0{,}0098\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: cuando falta una de las dos propiedades</h3>
+  <div class="body">
+  <p><b>(a)</b> \(a_{n}=(-1)^{n}\): acotada, no monótona, y no converge.</p>
+  <ol class="steps">
+    <li>Términos: \(-1,\ 1,\ -1,\ 1,\ \ldots\) Acotada: \(-1\le a_{n}\le 1\) para todo \(n\).</li>
+    <li>No es creciente: \(a_{2}=1\) y \(a_{3}=-1\), así que \(a_{3}&lt;a_{2}\). No es decreciente: \(a_{1}=-1\) y \(a_{2}=1\), así que \(a_{2}&gt;a_{1}\). No es monótona.</li>
+    <li>No converge: está demostrado en la hoja «Límite de una sucesión» (ejemplo 3). <b>Acotada sola no basta.</b></li>
+  </ol>
+  <p><b>(b)</b> \(a_{n}=n\): monótona, no acotada, y no converge.</p>
+  <ol class="steps">
+    <li>Resta: \(a_{n+1}-a_{n}=(n+1)-n=1\), que es positivo: estrictamente creciente.</li>
+    <li>Tiene cota inferior, \(a_{1}=1\). No tiene cota superior: dado un número \(M\) cualquiera, por la propiedad arquimediana hay un natural \(N\ge M+1\); entonces \(a_{N}=N\ge M+1&gt;M\), y \(M\) no es cota superior.</li>
+    <li>No es acotada; por el teorema 1, no converge. <b>Monótona sola no basta.</b></li>
+  </ol>
+  <p><b>(c)</b> \(a_{n}=\dfrac{(-1)^{n}}{n}\): no monótona, y sin embargo converge.</p>
+  <ol class="steps">
+    <li>Términos: \(-1,\ \dfrac{1}{2},\ -\dfrac{1}{3},\ \dfrac{1}{4},\ \ldots\) No es decreciente: \(a_{2}=\dfrac{1}{2}&gt;a_{1}=-1\). No es creciente: \(a_{3}=-\dfrac{1}{3}&lt;a_{2}=\dfrac{1}{2}\).</li>
+    <li>Es acotada: \(|a_{n}|=\dfrac{1}{n}\le 1\), o sea \(-1\le a_{n}\le 1\).</li>
+    <li>Converge a \(0\): está demostrado en la hoja «Límite de una sucesión» (ejercicio A). Los teoremas 2 y 3 no se pueden aplicar, porque no es monótona, y la sucesión converge igual.</li>
+    <li>Conclusión de los tres casos: «monótona y acotada» asegura la convergencia; si falta una de las dos propiedades, los teoremas 2 y 3 no dicen nada, y hay que estudiar la sucesión de otra manera.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que una cota es el límite: \(2\) es cota superior de \(\dfrac{n}{n+1}\) y el límite es \(1\); el límite es la <b>menor</b> cota superior. Usar el teorema con una sola de las dos propiedades: \(a_{n}=n\) es monótona y no converge; \((-1)^{n}\) es acotada y no converge. Despejar \(L\) de la recurrencia antes de demostrar que la sucesión converge: con \(b_{n+1}=2\,b_{n}\) y \(b_{1}=1\) sale \(L=0\), y la sucesión \(1,\ 2,\ 4,\ 8,\ \ldots\) no tiene límite. Dar por probada la monotonía mirando tres o cuatro términos: se demuestra para todo \(n\), con la resta, con el cociente o por inducción. Usar el cociente cuando hay términos negativos o nulos. Creer que una sucesión que no es monótona no puede converger: \(\dfrac{(-1)^{n}}{n}\) converge a \(0\). Creer que una sucesión creciente y acotada alcanza su supremo: \(\dfrac{n}{n+1}\) nunca vale \(1\). Confundir «creciente» con «estrictamente creciente»: una sucesión constante es creciente. Y confundir «acotada superiormente» con «acotada»: \(a_{n}=-n\) tiene cota superior, \(-1\), y no es acotada.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Para cada sucesión, decide si es monótona y si es acotada, y di si converge. (a) \(a_{n}=2-\dfrac{1}{n}\): halla además su límite. (b) \(b_{n}=\dfrac{5}{n}\): usa el cociente, y halla su límite. (c) \(c_{n}=n^{2}\).</p>
+    <details><summary>Pista</summary><div><p>En (a), la resta \(a_{n+1}-a_{n}\) queda \(\dfrac{1}{n}-\dfrac{1}{n+1}\). En (b), el cociente queda \(\dfrac{n}{n+1}\). En (c), compara \(n^{2}\) con \(n\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Resta: \(a_{n+1}-a_{n}=\left(2-\dfrac{1}{n+1}\right)-\left(2-\dfrac{1}{n}\right)=\dfrac{1}{n}-\dfrac{1}{n+1}\).</li>
+        <li>(a) Denominador común, \(n(n+1)\): \(\dfrac{1}{n}-\dfrac{1}{n+1}=\dfrac{n+1-n}{n(n+1)}=\dfrac{1}{n(n+1)}\), que es positivo. Estrictamente creciente.</li>
+        <li>(a) Cota superior: \(\dfrac{1}{n}&gt;0\), así que \(2-\dfrac{1}{n}&lt;2\). Cota inferior: \(a_{1}=2-1=1\), por ser creciente. Acotada: \(1\le a_{n}&lt;2\).</li>
+        <li>(a) Creciente y acotada superiormente: por el teorema 2, converge.</li>
+        <li>(a) Límite. Distancia a \(2\): \(|a_{n}-2|=\left|-\dfrac{1}{n}\right|=\dfrac{1}{n}\). Dado \(\varepsilon&gt;0\), con un natural \(N\ge\dfrac{1}{\varepsilon}\), si \(n&gt;N\) entonces \(\dfrac{1}{n}&lt;\varepsilon\) (hoja «Límite de una sucesión», ejemplo 1). Luego \(\displaystyle\lim_{n\to\infty}a_{n}=2\), que es su supremo.</li>
+        <li>(b) Todos los términos son positivos. Cociente: \(\dfrac{b_{n+1}}{b_{n}}=\dfrac{5}{n+1}\cdot\dfrac{n}{5}=\dfrac{n}{n+1}\).</li>
+        <li>(b) Como \(n&lt;n+1\), dividiendo por \(n+1\) (positivo): \(\dfrac{n}{n+1}&lt;1\). Se multiplica por \(b_{n}&gt;0\): \(b_{n+1}&lt;b_{n}\). Estrictamente decreciente.</li>
+        <li>(b) Cota inferior: \(0\) (términos positivos). Cota superior: \(b_{1}=5\). Acotada: \(0&lt;b_{n}\le 5\). Decreciente y acotada inferiormente: por el teorema 3, converge.</li>
+        <li>(b) Límite. Distancia a \(0\): \(\left|\dfrac{5}{n}-0\right|=\dfrac{5}{n}\). Dado \(\varepsilon&gt;0\), sea \(N\) un natural con \(N\ge\dfrac{5}{\varepsilon}\). Si \(n&gt;N\): \(n&gt;\dfrac{5}{\varepsilon}\); se multiplica por \(\varepsilon\) y se divide por \(n\), los dos positivos: \(\dfrac{5}{n}&lt;\varepsilon\). Luego \(\displaystyle\lim_{n\to\infty}\dfrac{5}{n}=0\), que es su ínfimo.</li>
+        <li>(c) Resta: \((n+1)^{2}-n^{2}=n^{2}+2n+1-n^{2}=2n+1\), que es positivo. Estrictamente creciente. Tiene cota inferior, \(c_{1}=1\).</li>
+        <li>(c) No tiene cota superior. Como \(n\ge 1\), multiplicando por \(n\) (positivo): \(n^{2}\ge n\). Dado un número \(M\), hay un natural \(N\ge M+1\); entonces \(c_{N}=N^{2}\ge N\ge M+1&gt;M\).</li>
+        <li>(c) Es monótona, pero no acotada: por el teorema 1, no converge.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(a_{1}=10\) y \(a_{n+1}=\dfrac{a_{n}}{2}+1\). (a) Calcula \(a_{2}\), \(a_{3}\), \(a_{4}\) y \(a_{5}\). (b) Demuestra por inducción que \(a_{n}&gt;2\) para todo \(n\). (c) Demuestra que es estrictamente decreciente. (d) Justifica que converge y halla su límite. (e) Demuestra por inducción que \(a_{n}-2=\dfrac{8}{2^{\,n-1}}\) y encuentra desde qué término la distancia al límite es menor que \(0{,}01\).</p>
+    <details><summary>Pista</summary><div><p>En (c), la resta \(a_{n+1}-a_{n}\) queda \(1-\dfrac{a_{n}}{2}\); usa (b) para su signo. En (d), primero el teorema 3; después toma límite a los dos lados de la recurrencia. En (e), \(a_{n+1}-2=\dfrac{a_{n}-2}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(a_{2}=\dfrac{10}{2}+1=5+1=6\); \(a_{3}=\dfrac{6}{2}+1=3+1=4\); \(a_{4}=\dfrac{4}{2}+1=2+1=3\); \(a_{5}=\dfrac{3}{2}+1=1{,}5+1=2{,}5\).</li>
+        <li>(b) Primer caso, \(n=1\): \(a_{1}=10\) y \(10&gt;2\). ✓</li>
+        <li>(b) Paso de \(n\) a \(n+1\): se supone \(a_{n}&gt;2\). Se divide por \(2\), positivo: \(\dfrac{a_{n}}{2}&gt;1\). Se suma \(1\): \(\dfrac{a_{n}}{2}+1&gt;2\), o sea \(a_{n+1}&gt;2\). Por inducción, \(a_{n}&gt;2\) para todo \(n\).</li>
+        <li>(c) Resta: \(a_{n+1}-a_{n}=\dfrac{a_{n}}{2}+1-a_{n}=1-\dfrac{a_{n}}{2}\), porque \(\dfrac{a_{n}}{2}-a_{n}=-\dfrac{a_{n}}{2}\).</li>
+        <li>(c) Por (b), \(a_{n}&gt;2\), y dividiendo por \(2\): \(\dfrac{a_{n}}{2}&gt;1\). Entonces \(1-\dfrac{a_{n}}{2}&lt;0\): \(a_{n+1}&lt;a_{n}\) para todo \(n\). Estrictamente decreciente.</li>
+        <li>(d) Es decreciente y, por (b), acotada inferiormente por \(2\): por el teorema 3, converge. Sea \(L\) su límite.</li>
+        <li>(d) Lado izquierdo: por el teorema 4, \(a_{n+1}\to L\). Lado derecho: por la regla «constante por sucesión», \(\dfrac{a_{n}}{2}=\dfrac{1}{2}\,a_{n}\to\dfrac{L}{2}\); y por el límite de una suma, con la sucesión constante \(1\): \(\dfrac{a_{n}}{2}+1\to\dfrac{L}{2}+1\).</li>
+        <li>(d) Comprobación directa, sin la regla: \(\left(\dfrac{a_{n}}{2}+1\right)-\left(\dfrac{L}{2}+1\right)=\dfrac{a_{n}-L}{2}\), y \(\dfrac{|a_{n}-L|}{2}\le|a_{n}-L|&lt;\varepsilon\) para todo \(n\) mayor que el \(N\) de \(a_{n}\to L\).</li>
+        <li>(d) Unicidad del límite: \(L=\dfrac{L}{2}+1\). Se resta \(\dfrac{L}{2}\): \(\dfrac{L}{2}=1\). Se multiplica por \(2\): \(L=2\). Comprobación: \(\dfrac{2}{2}+1=1+1=2\). ✓</li>
+        <li>(e) Primer caso, \(n=1\): \(a_{1}-2=10-2=8\), y \(\dfrac{8}{2^{\,1-1}}=\dfrac{8}{2^{0}}=\dfrac{8}{1}=8\). ✓</li>
+        <li>(e) Paso de \(n\) a \(n+1\): \(a_{n+1}-2=\dfrac{a_{n}}{2}+1-2=\dfrac{a_{n}}{2}-1=\dfrac{a_{n}-2}{2}\). Con la suposición \(a_{n}-2=\dfrac{8}{2^{\,n-1}}\): \(a_{n+1}-2=\dfrac{8}{2\cdot 2^{\,n-1}}=\dfrac{8}{2^{\,n}}\), que es la fórmula con \(n+1\) en vez de \(n\). Por inducción, vale para todo \(n\).</li>
+        <li>(e) La distancia al límite es \(|a_{n}-2|=\dfrac{8}{2^{\,n-1}}\) (es positiva). Se pide \(\dfrac{8}{2^{\,n-1}}&lt;\dfrac{1}{100}\). Se multiplica por \(100\cdot 2^{\,n-1}\), positivo: \(800&lt;2^{\,n-1}\).</li>
+        <li>(e) Potencias de \(2\): \(2^{9}=512\), que no es mayor que \(800\); \(2^{10}=1024\), que sí lo es. Las siguientes son mayores todavía. Entonces hace falta \(n-1\ge 10\), o sea \(n\ge 11\): desde el término \(11\) (sirve \(N=10\)).</li>
+        <li>(e) Comprobación: \(a_{11}-2=\dfrac{8}{1024}=\dfrac{1}{128}\approx 0{,}0078&lt;0{,}01\). ✓ En cambio \(a_{10}-2=\dfrac{8}{512}=\dfrac{1}{64}\approx 0{,}0156\), que es mayor que \(0{,}01\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Don Hernán riega su huerto con un estanque en el que caben \(150\) litros. Modelo (datos inventados): cada día el riego gasta la cuarta parte del agua que hay en el estanque esa mañana, y cada noche una manguera le agrega \(30\) litros; no se pierde agua de otra manera, y esto se repite todos los días, sin fin. La primera mañana hay \(40\) litros. Sea \(a_{n}\) la cantidad de litros que hay en el estanque la mañana del día \(n\). (a) Escribe la recurrencia y calcula \(a_{2}\), \(a_{3}\) y \(a_{4}\). (b) Demuestra que \(a_{n}&lt;120\) para todo \(n\). ¿Se rebalsa alguna vez el estanque? (c) Demuestra que la sucesión es creciente. (d) Justifica que converge y halla su límite. (e) ¿Qué mañana hay por primera vez más de \(100\) litros? (f) ¿Qué significa el límite?</p>
+    <details><summary>Pista</summary><div><p>Si se gasta la cuarta parte, quedan tres cuartos: \(a_{n+1}=\dfrac{3}{4}\,a_{n}+30\). En (b) usa inducción. En (c), la resta queda \(30-\dfrac{a_{n}}{4}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Después del riego queda \(a_{n}-\dfrac{1}{4}\,a_{n}=\dfrac{3}{4}\,a_{n}\). En la noche entran \(30\) litros: \(a_{n+1}=\dfrac{3}{4}\,a_{n}+30\), con \(a_{1}=40\).</li>
+        <li>(a) \(a_{2}=\dfrac{3}{4}\cdot 40+30=30+30=60\); \(a_{3}=\dfrac{3}{4}\cdot 60+30=45+30=75\); \(a_{4}=\dfrac{3}{4}\cdot 75+30=56{,}25+30=86{,}25\) litros.</li>
+        <li>(b) Primer caso, \(n=1\): \(a_{1}=40\) y \(40&lt;120\). ✓</li>
+        <li>(b) Paso de \(n\) a \(n+1\): se supone \(a_{n}&lt;120\). Se multiplica por \(\dfrac{3}{4}\), positivo: \(\dfrac{3}{4}\,a_{n}&lt;\dfrac{3}{4}\cdot 120=90\). Se suma \(30\): \(\dfrac{3}{4}\,a_{n}+30&lt;90+30=120\), o sea \(a_{n+1}&lt;120\). Por inducción, \(a_{n}&lt;120\) para todo \(n\).</li>
+        <li>(b) En el modelo, el estanque nunca se rebalsa: cada mañana hay menos de \(120\) litros, y \(120&lt;150\).</li>
+        <li>(c) Resta: \(a_{n+1}-a_{n}=\dfrac{3}{4}\,a_{n}+30-a_{n}=30-\dfrac{1}{4}\,a_{n}\), porque \(\dfrac{3}{4}\,a_{n}-a_{n}=-\dfrac{1}{4}\,a_{n}\).</li>
+        <li>(c) Por (b), \(a_{n}&lt;120\); se divide por \(4\): \(\dfrac{a_{n}}{4}&lt;30\). Entonces \(30-\dfrac{a_{n}}{4}&gt;0\): \(a_{n+1}&gt;a_{n}\) para todo \(n\). Estrictamente creciente.</li>
+        <li>(d) Creciente y acotada superiormente por \(120\): por el teorema 2, converge. Sea \(L\) su límite.</li>
+        <li>(d) Lado izquierdo: por el teorema 4, \(a_{n+1}\to L\). Lado derecho: por la regla «constante por sucesión», \(\dfrac{3}{4}\,a_{n}\to\dfrac{3}{4}\,L\); y por el límite de una suma, con la sucesión constante \(30\): \(\dfrac{3}{4}\,a_{n}+30\to\dfrac{3}{4}\,L+30\).</li>
+        <li>(d) Comprobación directa, sin la regla: \(\left(\dfrac{3}{4}\,a_{n}+30\right)-\left(\dfrac{3}{4}\,L+30\right)=\dfrac{3}{4}\,(a_{n}-L)\), y \(\dfrac{3}{4}\,|a_{n}-L|\le|a_{n}-L|&lt;\varepsilon\) para todo \(n\) mayor que el \(N\) de \(a_{n}\to L\).</li>
+        <li>(d) Unicidad del límite: \(L=\dfrac{3}{4}\,L+30\). Se resta \(\dfrac{3}{4}\,L\): \(\dfrac{1}{4}\,L=30\). Se multiplica por \(4\): \(L=120\). Comprobación: \(\dfrac{3}{4}\cdot 120+30=90+30=120\). ✓</li>
+        <li>(e) Se sigue la lista: \(a_{5}=\dfrac{3}{4}\cdot 86{,}25+30=64{,}6875+30=94{,}6875\), que no pasa de \(100\). \(a_{6}=\dfrac{3}{4}\cdot 94{,}6875+30=71{,}015625+30=101{,}015625\), que sí.</li>
+        <li>(e) La mañana del día \(6\) hay por primera vez más de \(100\) litros: unos \(101{,}02\). Y como la sucesión crece, desde ahí siempre hay más de \(100\).</li>
+        <li>(f) El agua de cada mañana aumenta día a día y se acerca tanto como se quiera a \(120\) litros, sin alcanzarlos nunca (porque \(a_{n}&lt;120\)). Con \(120\) litros habría equilibrio: el riego gastaría \(\dfrac{1}{4}\cdot 120=30\) litros, justo lo que entra cada noche. Es un modelo: un huerto real no gasta cada día exactamente la cuarta parte.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H27 · v001 · Pendiente de APR</span>
+</footer>
+</article>

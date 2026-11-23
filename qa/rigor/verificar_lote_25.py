@@ -839,4 +839,263 @@ p26 = lambda n: F(4 + 7*(n-1), n)
 ok(all(4 + sum(7 for k in range(2,n+1)) == 4+7*(n-1) == 4+7*n-7 == 7*n-3 and p26(n) == F(7*n-3,n) for n in range(1,200)) and p26(1) == F(7-3,1) == 4 and p26(2) == F(14-3,2) == F(11,2) == F('5.5') == F(4+7,2), 'H26 C (a) promedio (7n − 3)/n')
 ok(all(p26(n)-7 == F(7*n-3,n)-F(7*n,n) == F(7*n-3-7*n,n) == F(-3,n) and abs(p26(n)-7) == F(3,n) and 7-p26(n) == F(3,n) > 0 and p26(n) < 7 for n in range(1,400)) and all(all(F(3,n) < e for n in range(ce26(3/e)+1, ce26(3/e)+30)) for e in G26), 'H26 C (b)(d) límite 7 y nunca llega')
 ok(3/F('0.1') == 30 and 30*F('0.1') == 3 and all((F(3,n) < F('0.1')) == (n > 30) == (p26(n) > F('6.9')) for n in range(1,400)) and p26(31) == F(7*31-3,31) == F(217-3,31) == F(214,31) and 7*31 == 217 and rd26(F(214,31),3) == F('6.903') and p26(31) > F('6.9') and p26(30) == F(7*30-3,30) == F(207,30) == F('6.9') and 7-p26(30) == F('0.1') and not F('0.1') < F('0.1'), 'H26 C (c) desde la prueba 31')
-print('Lote 25 H01–H26:', 'sin errores' if not err else f'{err} errores')
+# H27 ---- Sucesiones monótonas acotadas
+def rd27(x, d):
+    q = F(x)*10**d; n = q.numerator//q.denominator
+    if q - n >= F(1,2): n += 1
+    return F(n, 10**d)
+def ce27(x): return -((-F(x).numerator)//F(x).denominator)
+def a27(n): return F(n, n+1)
+G27 = [F(p, q) for q in range(1, 41) for p in range(1, 2*q+1)]
+RG27 = range(1, 400)
+# mon-idea, paso 1 (lectura y registro R1)
+ok([a27(n) for n in (1,2,3,4,5,12)] == [F(1,1+1),F(2,2+1),F(3,3+1),F(4,4+1),F(5,5+1),F(12,12+1)] == [F(1,2),F(2,3),F(3,4),F(4,5),F(5,6),F(12,13)], 'H27 mon-idea paso 1: términos')
+ok(F(1,2) == F('0.5') and rd27(F(2,3),2) == F('0.67') and F(3,4) == F('0.75') and F(4,5) == F('0.8') and rd27(F(5,6),2) == F('0.83') and rd27(F(12,13),2) == F('0.92'), 'H27 mon-idea paso 1: decimales')
+# paso 2: el salto
+ok(all(a27(n+1)-a27(n) == F(n+1,n+2)-F(n,n+1) == F((n+1)*(n+1)-n*(n+2), (n+1)*(n+2)) == F(1,(n+1)*(n+2)) > 0 for n in RG27), 'H27 mon-idea paso 2: salto = 1/((n+1)(n+2)) > 0')
+ok(all((n+1)*(n+1) == n**2+2*n+1 and n*(n+2) == n**2+2*n and n**2+2*n+1-(n**2+2*n) == 1 for n in range(-50, 400)), 'H27 mon-idea paso 2: productos y resta')
+ok(a27(2)-a27(1) == F(1,2*3) == F(1,6) and rd27(F(1,6),2) == F('0.17') and a27(3)-a27(2) == F(1,3*4) == F(1,12) and rd27(F(1,12),2) == F('0.08'), 'H27 mon-idea paso 2: saltos 1/6 y 1/12')
+ok(all(a27(n+1) > a27(n) for n in RG27) and all(a27(m) <= a27(n) for m in range(1,40) for n in range(m,80)), 'H27 mon-idea paso 2: creciente (y a_m <= a_n si m <= n)')
+# paso 3: el techo
+ok(all(1-a27(n) == F(n+1,n+1)-F(n,n+1) == F(n+1-n,n+1) == F(1,n+1) > 0 and a27(n) < 1 and a27(n) == 1-F(1,n+1) and a27(n) >= a27(1) == F(1,2) for n in RG27), 'H27 mon-idea paso 3: 1 − a_n = 1/(n+1), cota superior 1, cota inferior 1/2')
+# paso 4: 0,75 no es techo
+ok(1-F(1,4) == F(3,4) == F('0.75') and all((a27(n) > F('0.75')) == (F(1,n+1) < F(1,4)) == (n+1 > 4) == (n > 3) for n in RG27) and a27(3) == F('0.75') and not a27(3) > F('0.75') and a27(4) == F('0.8') > F('0.75'), 'H27 mon-idea paso 4: 0,75 no es cota superior; a_3 justo en la línea')
+# paso 5: N = 3
+ok(all(a27(n) >= a27(4) and F('0.75') < a27(n) < 1 < F('1.25') and 1-F(1,4) < a27(n) < 1+F(1,4) and abs(a27(n)-1) < F(1,4) for n in range(4,400)) and not abs(a27(3)-1) < F(1,4) and 1+F(1,4) == F('1.25'), 'H27 mon-idea paso 5: n > 3 ⟹ |a_n − 1| < 1/4')
+# paso 6: cualquier ε; ε = 1/10 con N = 9
+ok(all((F(1,n+1) < e) == (n+1 > 1/e) for e in G27 for n in range(1,90)) and all(ce27(1/e) >= 1/e and all(1-e < a27(n) < 1 < 1+e and abs(a27(n)-1) < e for n in range(ce27(1/e)+1, ce27(1/e)+50)) for e in G27), 'H27 mon-idea paso 6: N >= 1/ε sirve para todo ε de la rejilla')
+ok(all((F(1,n+1) < F(1,10)) == (n+1 > 10) == (n > 9) == (a27(n) > F('0.9')) for n in RG27) and a27(10) == F(10,11) and rd27(F(10,11),2) == F('0.91') and F(10,11) > F('0.9') and 1-F(1,10) == F('0.9') and not a27(9) > F('0.9') and all(F('0.9') < a27(n) < 1 for n in range(10,400)), 'H27 mon-idea paso 6: ε = 1/10, N = 9')
+ok(all(any(a27(n) > 1-e for n in range(1, ce27(1/e)+2)) for e in G27) and all(a27(n) <= 1 for n in RG27), 'H27 mon-idea paso 6: ningún 1 − ε es cota superior; 1 es el supremo')
+ok([n for n in range(1,13) if n > 3] == list(range(4,13)) and [n for n in range(1,13) if n > 9] == [10,11,12], 'H27 mon-idea: puntos verdes (4 a 12) y anillos (10 a 12)')
+# mon-vivo: a_{n+1} = (a_n + 6)/2, a_1 = c, c = 0..12 (todas las posiciones del deslizador)
+def t27(c, n):
+    x = F(c)
+    for _ in range(n-1): x = (x+6)/2
+    return x
+for c27 in range(0, 13):
+    T27 = [t27(c27, n) for n in range(1, 41)]
+    ok(all(T27[n-1] == 6 + F(c27-6, 2**(n-1)) for n in range(1,41)), f'H27 mon-vivo c={c27}: fórmula cerrada del dibujo')
+    ok(all(T27[i+1] == (T27[i]+6)/2 and (T27[i]*1000).denominator == 1 and ((T27[i]+6)*1000).denominator == 1 for i in range(0,3)) and (T27[3]*1000).denominator == 1, f'H27 mon-vivo c={c27}: a_2, a_3, a_4 exactos con a lo más 3 decimales')
+    ok(F(6-c27,2) == T27[1]-c27 == (F(c27)+6)/2 - F(2*c27,2) and all(T27[i+1]-T27[i] == (T27[i]+6)/2-F(2*T27[i],2) == (6-T27[i])/2 for i in range(39)), f'H27 mon-vivo c={c27}: salto = (6 − a_n)/2 y primer salto')
+    ok(all(T27[i+1]-6 == (T27[i]+6)/2-F(12,2) == (T27[i]-6)/2 for i in range(39)) and F(12,2) == 6 and T27[0]-6 == c27-6, f'H27 mon-vivo c={c27}: a_(n+1) − 6 = (a_n − 6)/2')
+    ok(all(T27[i+2]-T27[i+1] == (T27[i+1]-T27[i])/2 for i in range(38)), f'H27 mon-vivo c={c27}: cada salto es la mitad del anterior')
+    if c27 < 6: ok(c27-6 < 0 and all(c27 <= x < 6 for x in T27) and all(T27[i+1] > T27[i] for i in range(39)), f'H27 mon-vivo c={c27}: creciente, entre c y 6')
+    elif c27 > 6: ok(c27-6 > 0 and all(6 < x <= c27 for x in T27) and all(T27[i+1] < T27[i] for i in range(39)), f'H27 mon-vivo c={c27}: decreciente, entre 6 y c')
+    else: ok(all(x == 6 for x in T27) and F(6-6,2) == 0 == F(0,2), 'H27 mon-vivo c=6: constante')
+    ok(abs(T27[39]-6) == F(abs(c27-6), 2**39) < F(1,10**9), f'H27 mon-vivo c={c27}: se acerca a 6')
+ok([t27(2,n) for n in (1,2,3,4)] == [2,4,5,F('5.5')] and [t27(0,n) for n in (1,2,3,4)] == [0,3,F('4.5'),F('5.25')] and [t27(12,n) for n in (1,2,3,4)] == [12,9,F('7.5'),F('6.75')] and [t27(5,n) for n in (2,3,4)] == [F('5.5'),F('5.75'),F('5.875')] and [t27(7,n) for n in (2,3,4)] == [F('6.5'),F('6.25'),F('6.125')], 'H27 mon-vivo: rótulos de términos vistos en las capturas')
+ok(all((2*L == L+6) == (L == 6) == (L == (L+6)/2) for L in [F(p,4) for p in range(-80,81)]), 'H27 L = (L+6)/2 ⟺ 2L = L+6 ⟺ L = 6')
+# ejemplo 1
+ok(all(a27(n+1)/a27(n) == F(n+1,n+2)*F(n+1,n) == F((n+1)*(n+1), n*(n+2)) == F(n**2+2*n+1, n**2+2*n) == F(n**2+2*n,n**2+2*n)+F(1,n**2+2*n) == 1+F(1,n**2+2*n) > 1 for n in RG27), 'H27 e1: cociente = 1 + 1/(n²+2n) > 1')
+ok(all(abs(a27(n)-1) == abs(-F(1,n+1)) == F(1,n+1) for n in RG27) and all(n+1 > n > ce27(1/e) >= 1/e and e > F(1,n+1) for e in G27 for n in range(ce27(1/e)+1, ce27(1/e)+40)), 'H27 e1: límite 1 con ε–N')
+# ejemplo 2
+E27 = [t27(2,n) for n in range(1,61)]
+ok(E27[:6] == [2, F(2+6,2), F(4+6,2), F(5+6,2), (F('5.5')+6)/2, (F('5.75')+6)/2] == [2, F(8,2), F(10,2), F(11,2), F('11.5')/2, F('11.75')/2] == [2,4,5,F('5.5'),F('5.75'),F('5.875')], 'H27 e2: términos')
+ok(all(x < 6 and x+6 < 12 and (x+6)/2 < 6 for x in E27) and all(E27[i+1]-E27[i] == F(E27[i]+6-2*E27[i],2) == (6-E27[i])/2 > 0 for i in range(59)) and F(6+6,2) == F(12,2) == 6, 'H27 e2: cota 6, creciente, comprobación del límite')
+ok(all((x+6)/2-(L+6)/2 == (x-L)/2 and abs((x-L)/2) == abs(x-L)/2 <= abs(x-L) for x in [F(p,3) for p in range(-30,31)] for L in [F(q,2) for q in range(-20,21)]), 'H27 e2: comprobación directa del límite de (a_n + 6)/2')
+ok(all(2**(n-1) >= 1 and 2*2**(n-1) == 2**n >= 2 for n in range(1,200)) and [2**(n-1) for n in (1,2,3,4)] == [1,2,4,8] and all((L == 2*L) == (L == 0) for L in range(-20,21)), 'H27 e2: b_n = 2·b_(n−1) ≥ 1; L = 2L ⟺ L = 0')
+# ejemplo 3
+def d27(n): return F(n, 2**n)
+ok([d27(n) for n in (1,2,3,4,5)] == [F(1,2),F(2,4),F(3,8),F(4,16),F(5,32)] and F(2,4) == F(1,2) and F(4,16) == F(1,4) and all(d27(n) > 0 for n in RG27), 'H27 e3: términos')
+ok(all(d27(n+1)/d27(n) == F(n+1,2**(n+1))*F(2**n,n) == F(n+1,2*n) and 2**(n+1) == 2*2**n and (F(n+1,2*n) <= 1) == (n+1 <= 2*n) == (1 <= n) and d27(n+1) <= d27(n) and d27(n+1) == F(n+1,2*n)*d27(n) for n in RG27) and F(1+1,2*1) == F(2,2) == 1 and d27(2) == d27(1) and all(F(n+1,2*n) < 1 and d27(n+1) < d27(n) for n in range(2,400)), 'H27 e3: cociente (n+1)/(2n) ≤ 1; decreciente, no estricta en n = 1')
+ok(all(F(n+1,2*n) == F(n,2*n)+F(1,2*n) == F(1,2)+F(1,2)*F(1,n) for n in RG27) and F(1,2)*0 == 0 and F(1,2)+0 == F(1,2) and all((L == L/2) == (L-L/2 == 0) == (L/2 == 0) == (L == 0) for L in [F(p,4) for p in range(-40,41)]) and all(0 < d27(n) <= d27(1) == F(1,2) for n in RG27), 'H27 e3: (n+1)/(2n) = 1/2 + (1/2)(1/n); L = L/2 ⟺ L = 0; cotas')
+ok(d27(10) == F(10,2**10) == F(10,1024) and 2**10 == 1024 and rd27(F(10,1024),4) == F('0.0098') and d27(200) < F(1,10**50), 'H27 e3: a_10 ≈ 0,0098')
+# ejemplo 4
+ok([(-1)**n for n in (1,2,3,4)] == [-1,1,-1,1] and all(-1 <= (-1)**n <= 1 for n in RG27) and (-1)**3 < (-1)**2 and (-1)**2 > (-1)**1, 'H27 e4 (a)')
+ok(all((n+1)-n == 1 > 0 and n >= 1 for n in RG27) and all(ce27(M+1) >= M+1 > M for M in [F(p,7) for p in range(-50,500)]), 'H27 e4 (b): n no tiene cota superior')
+ok([F((-1)**n,n) for n in (1,2,3,4)] == [-1,F(1,2),-F(1,3),F(1,4)] and F(1,2) > -1 and -F(1,3) < F(1,2) and all(abs(F((-1)**n,n)) == F(1,n) <= 1 and -1 <= F((-1)**n,n) <= 1 for n in RG27), 'H27 e4 (c)')
+ok(all(a27(n) <= 2 for n in RG27) and all(-n <= -1 for n in RG27) and all(any(-n < -K for n in range(1, K+3)) for K in range(1,60)), 'H27 errores frecuentes: 2 es cota de n/(n+1); −n tiene cota superior −1 y no inferior')
+# ejercicio A
+ok(all((2-F(1,n+1))-(2-F(1,n)) == F(1,n)-F(1,n+1) == F(n+1-n,n*(n+1)) == F(1,n*(n+1)) > 0 and 1 <= 2-F(1,n) < 2 and abs(2-F(1,n)-2) == abs(-F(1,n)) == F(1,n) for n in RG27) and 2-1 == 1 and all(F(1,n) < e for e in G27 for n in range(ce27(1/e)+1, ce27(1/e)+40)), 'H27 A (a)')
+ok(all(F(5,n+1)/F(5,n) == F(5,n+1)*F(n,5) == F(n,n+1) < 1 and F(5,n+1) < F(5,n) and 0 < F(5,n) <= 5 and abs(F(5,n)-0) == F(5,n) for n in RG27) and all(ce27(5/e) >= 5/e and all(n > 5/e and n*e > 5 and F(5,n) < e for n in range(ce27(5/e)+1, ce27(5/e)+40)) for e in G27), 'H27 A (b)')
+ok(all((n+1)**2-n**2 == n**2+2*n+1-n**2 == 2*n+1 > 0 and n**2 >= n for n in RG27) and all(ce27(M+1)**2 >= ce27(M+1) >= M+1 > M for M in [F(p,7) for p in range(0,500)]), 'H27 A (c)')
+# ejercicio B
+def b27(n):
+    x = F(10)
+    for _ in range(n-1): x = x/2+1
+    return x
+ok([b27(n) for n in (2,3,4,5)] == [F(10,2)+1, F(6,2)+1, F(4,2)+1, F(3,2)+1] == [5+1, 3+1, 2+1, F('1.5')+1] == [6,4,3,F('2.5')] and F(3,2) == F('1.5'), 'H27 B (a)')
+ok(all(b27(n) > 2 and b27(n)/2 > 1 and b27(n)/2+1 > 2 and b27(n+1)-b27(n) == b27(n)/2+1-b27(n) == 1-b27(n)/2 < 0 and b27(n)/2-b27(n) == -b27(n)/2 for n in range(1,80)), 'H27 B (b)(c)')
+ok(all((L == L/2+1) == (L/2 == 1) == (L == 2) for L in [F(p,4) for p in range(-40,41)]) and F(2,2)+1 == 1+1 == 2 and all((x/2+1)-(L/2+1) == (x-L)/2 and abs(x-L)/2 <= abs(x-L) for x in [F(p,3) for p in range(-30,31)] for L in [F(q,2) for q in range(-20,21)]), 'H27 B (d)')
+ok(10-2 == 8 and F(8,2**(1-1)) == F(8,2**0) == F(8,1) == 8 and all(b27(n)-2 == F(8,2**(n-1)) > 0 and b27(n+1)-2 == b27(n)/2+1-2 == b27(n)/2-1 == (b27(n)-2)/2 == F(8,2*2**(n-1)) == F(8,2**n) for n in range(1,80)), 'H27 B (e): a_n − 2 = 8/2^(n−1)')
+ok(all((F(8,2**(n-1)) < F(1,100)) == (800 < 2**(n-1)) == (n-1 >= 10) == (n >= 11) for n in range(1,80)) and 2**9 == 512 and not 512 > 800 and 2**10 == 1024 > 800 and F('0.01') == F(1,100) and b27(11)-2 == F(8,1024) == F(1,128) and rd27(F(1,128),4) == F('0.0078') and F(1,128) < F('0.01') and b27(10)-2 == F(8,512) == F(1,64) and rd27(F(1,64),4) == F('0.0156') and F(1,64) > F('0.01'), 'H27 B (e): desde el término 11')
+# ejercicio C
+def c27f(n):
+    x = F(40)
+    for _ in range(n-1): x = F(3,4)*x+30
+    return x
+ok(all(x-F(1,4)*x == F(3,4)*x for x in range(0,200)) and [c27f(2), c27f(3), c27f(4)] == [F(3,4)*40+30, F(3,4)*60+30, F(3,4)*75+30] == [30+30, 45+30, F('56.25')+30] == [60, 75, F('86.25')] and F(3,4)*40 == 30 and F(3,4)*60 == 45 and F(3,4)*75 == F('56.25'), 'H27 C (a)')
+ok(40 < 120 and F(3,4)*120 == 90 and 90+30 == 120 and 120 < 150 and all(c27f(n) < 120 and F(3,4)*c27f(n) < 90 and c27f(n+1)-c27f(n) == F(3,4)*c27f(n)+30-c27f(n) == 30-F(1,4)*c27f(n) > 0 and c27f(n)/4 < 30 and F(3,4)*c27f(n)-c27f(n) == -F(1,4)*c27f(n) for n in range(1,120)), 'H27 C (b)(c)')
+ok(all((L == F(3,4)*L+30) == (F(1,4)*L == 30) == (L == 120) for L in [F(p,2) for p in range(0,600)]) and F(3,4)*120+30 == 90+30 == 120 and all((F(3,4)*x+30)-(F(3,4)*L+30) == F(3,4)*(x-L) and F(3,4)*abs(x-L) <= abs(x-L) for x in [F(p,3) for p in range(-30,31)] for L in [F(q,2) for q in range(-20,21)]) and 120-c27f(200) < F(1,10**20), 'H27 C (d): L = 120')
+ok(c27f(5) == F(3,4)*F('86.25')+30 == F('64.6875')+30 == F('94.6875') and not c27f(5) > 100 and c27f(6) == F(3,4)*F('94.6875')+30 == F('71.015625')+30 == F('101.015625') > 100 and rd27(c27f(6),2) == F('101.02') and min(n for n in range(1,50) if c27f(n) > 100) == 6 and all(c27f(n) > 100 for n in range(6,120)) and F(1,4)*120 == 30, 'H27 C (e)(f)')
+# H28 · Una función como una serie geométrica: registros y lecturas de fge-idea (7 pasos) y fge-vivo (13 posiciones de x), recuadros, ejemplos 1-4 y ejercicios A, B, C
+def s28(x, N): return sum(x**n for n in range(N+1))
+def g28(a, r, N): return sum(a*r**n for n in range(N+1))
+def f28(x): return 1/(1-x)
+def rd28(v, d): return (1 if v >= 0 else -1)*F(math.floor(abs(v)*10**d + F(1,2)), 10**d)
+def ap28(v): return ('=', v) if 1000 % v.denominator == 0 else ('~', rd28(v, 3 if abs(v) < F(1,10) else 2))
+RJ28 = [F(p,q) for q in (1,2,3,4,5,7) for p in range(-3*q, 3*q+1)]
+AJ28 = [F(1), F(-2), F(3,4), F(1000), F(1,2)]
+# recuadro k2: (1 − x)·sN = 1 − x^(N+1) para todo x; sN = (1 − x^(N+1))/(1 − x) y f − sN = x^(N+1)/(1 − x) si x ≠ 1
+ok(all(x*s28(x,N) == sum(x**n for n in range(1,N+2)) and s28(x,N) - x*s28(x,N) == 1 - x**(N+1) == (1-x)*s28(x,N) for x in RJ28 for N in range(0,9)), 'H28 k2: (1 − x)(1 + x + … + x^N) = 1 − x^(N+1), en rejilla (incluye x = 1)')
+ok(all(s28(x,N) == (1-x**(N+1))/(1-x) == f28(x) - x**(N+1)/(1-x) and f28(x) - s28(x,N) == x**(N+1)/(1-x) == x**(N+1)*f28(x) for x in RJ28 if x != 1 for N in range(0,9)), 'H28 k2: sN = (1 − x^(N+1))/(1 − x) y f − sN = x^(N+1)/(1 − x), x ≠ 1')
+ok(all(abs(f28(x) - s28(x,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(3,4)) and all(abs(f28(x) - s28(x,N+1)) >= abs(f28(x) - s28(x,N)) for x in RJ28 if abs(x) >= 1 and x != 1 for N in range(0,9)), 'H28 k2: con |x| < 1 las sumas parciales se acercan a 1/(1 − x); con |x| ≥ 1 la diferencia no se achica')
+ok(all(abs(x**n) == abs(x)**n and (abs(x)**n >= 1) == (abs(x) >= 1 or n == 0) for x in RJ28 for n in range(0,8)), 'H28 k2 cuarta parte: |xⁿ| = |x|ⁿ ≥ 1 si |x| ≥ 1')
+ok([s28(F(1),N) for N in range(5)] == [1,2,3,4,5] and all(s28(F(1),N) == N+1 for N in range(40)) and 1-1 == 0, 'H28 k2: x = 1, sN = N + 1 y denominador 0')
+ok(f28(F(-1)) == F(1,1-(-1)) == F(1,1+1) == F(1,2) and [s28(F(-1),N) for N in range(6)] == [1,0,1,0,1,0], 'H28 k2: x = −1, f = 1/2 y sumas 1, 0, 1, 0')
+ok(f28(F(2)) == F(1,1-2) == F(1,-1) == -1 and [s28(F(2),N) for N in range(4)] == [1,3,7,15] and [F(2)**n for n in range(4)] == [1,2,4,8], 'H28 k2: x = 2, f = −1 y sumas 1, 3, 7, 15')
+ok(all(a/(1-r) - g28(a,r,N) == a*r**(N+1)/(1-r) == r**(N+1)*(a/(1-r)) and g28(a,r,N) == sum(a*r**(n-1) for n in range(1,N+2)) for a in AJ28 for r in RJ28 if r != 1 for N in range(0,8)), 'H28 k2 quinta parte: a/(1 − r) − Σ a·rⁿ (n ≤ N) = r^(N+1)·a/(1 − r); mismos N + 1 términos que H24')
+ok(all(F(0)/(1-r) == 0 == g28(F(0),r,N) for r in RJ28 if r != 1 for N in range(6)), 'H28 k1: si a = 0, serie y fracción valen 0')
+# fge-idea: lectura y registro, paso por paso
+ok(f28(F(0)) == F(1,1-0) == F(1,1) == 1 and f28(F(-1)) == F(1,2) and 1-F(3,2) == -F(1,2) and f28(F(3,2)) == 1/(-F(1,2)) == -2 and 1-1 == 0, 'H28 idea paso 1: f(0) = 1, f(−1) = 1/2, f(3/2) = −2')
+ok(all(s28(x,0) == x**0 == 1 and s28(x,1) == 1+x for x in RJ28) and s28(F(0),0) == 1 and s28(F(0),1) == 1+0 == 1 == f28(F(0)), 'H28 idea paso 2: s0 = 1, s1 = 1 + x; en 0 valen 1')
+ok(all(s28(x,2) == s28(x,1)+x**2 == 1+x+x**2 and s28(x,3) == s28(x,2)+x**3 == 1+x+x**2+x**3 for x in RJ28), 'H28 idea pasos 3 y 4: s2 y s3')
+ok(F(1,2)**2 == F(1,4) and F(1,2)**3 == F(1,8) and 1+F(1,2) == F(2,2)+F(1,2) == F(3,2) and F(3,2)+F(1,4) == F(6,4)+F(1,4) == F(7,4) and F(7,4)+F(1,8) == F(14,8)+F(1,8) == F(15,8) and [s28(F(1,2),N) for N in range(4)] == [1,F(3,2),F(7,4),F(15,8)] and f28(F(1,2)) == 1/(1-F(1,2)) == 1/F(1,2) == 2, 'H28 idea paso 5 (R5): en 1/2 las sumas 1, 3/2, 7/4, 15/8 y f = 2')
+ok(2-1 == 1 and 2-F(3,2) == F(4,2)-F(3,2) == F(1,2) and 2-F(7,4) == F(8,4)-F(7,4) == F(1,4) and 2-F(15,8) == F(16,8)-F(15,8) == F(1,8) and all(2-s28(F(1,2),N+1) == (2-s28(F(1,2),N))/2 == F(1,2)**(N+2)*2 for N in range(8)), 'H28 idea paso 5: falta 1, 1/2, 1/4, 1/8; cada vez la mitad')
+ok(F(-3,2)**2 == F(9,4) and F(-3,2)**3 == -F(27,8) and 1-F(3,2) == F(2,2)-F(3,2) == -F(1,2) and -F(1,2)+F(9,4) == -F(2,4)+F(9,4) == F(7,4) and F(7,4)-F(27,8) == F(14,8)-F(27,8) == -F(13,8) and [s28(F(-3,2),N) for N in range(4)] == [1,-F(1,2),F(7,4),-F(13,8)] and f28(F(-3,2)) == 1/(1+F(3,2)) == 1/F(5,2) == F(2,5) == F('0.4'), 'H28 idea paso 6 (R6): en −3/2 las sumas 1, −1/2, 7/4, −13/8 y f = 2/5')
+ok(1-F(2,5) == F(5,5)-F(2,5) == F(3,5) == F('0.6') and F(2,5)+F(1,2) == F(4,10)+F(5,10) == F(9,10) == F('0.9') and F(7,4)-F(2,5) == F(35,20)-F(8,20) == F(27,20) == F('1.35') and F(2,5)+F(13,8) == F(16,40)+F(65,40) == F(81,40) == F('2.025') and [abs(s28(F(-3,2),N)-F(2,5)) for N in range(4)] == [F(3,5),F(9,10),F(27,20),F(81,40)] and F(3,5) < F(9,10) < F(27,20) < F(81,40), 'H28 idea paso 6: distancias 3/5, 9/10, 27/20, 81/40, crecientes')
+ok(all((abs(x) < 1) == (-1 < x < 1) for x in RJ28) and abs(F(-3,2)) > 1 and abs(F(1,2)) < 1, 'H28 idea paso 7 (R7): |x| < 1 equivale a −1 < x < 1; 1/2 dentro y −3/2 fuera')
+ok(-1.6 <= -1.5 and all(-2.5 <= float(v) <= 4 for v in [s28(F(-3,2),N) for N in range(4)]+[s28(F(1,2),N) for N in range(4)]+[F(2,5),F(2)]) and abs(sum((-1.6)**n for n in range(4)) - (-2.136)) < 1e-9, 'H28 idea: los valores marcados caben en la gráfica (de −2,5 a 4)')
+# fge-vivo: las 13 posiciones de x (de −3/2 a 3/2, de 1/4 en 1/4), con los valores que escribe la escena
+XS28 = [F(k-6,4) for k in range(13)]
+SV28 = [F(-13,8),F(-41,64),F(0),F(25,64),F(5,8),F(51,64),F(1),F(85,64),F(15,8),F(175,64),F(4),F(369,64),F(65,8)]
+FV28 = [F(2,5),F(4,9),F(1,2),F(4,7),F(2,3),F(4,5),F(1),F(4,3),F(2),F(4),None,F(-4),F(-2)]
+DV28 = [F(81,40),F(625,576),F(1,2),F(81,448),F(1,24),F(1,320),F(0),F(1,192),F(1,8),F(81,64),None,F(-625,64),F(-81,8)]
+ok(XS28[0] == F(-3,2) and XS28[6] == 0 and XS28[10] == 1 and XS28[2] == -1 and XS28[12] == F(3,2) and [s28(x,3) for x in XS28] == SV28, 'H28 vivo: s3(x) en las 13 posiciones')
+ok([None if x == 1 else f28(x) for x in XS28] == FV28 and [None if x == 1 else f28(x)-s28(x,3) for x in XS28] == DV28, 'H28 vivo: f(x) y f(x) − s3(x) en las 13 posiciones')
+ok(all(d == x**4/(1-x) == x**4*fv for x, fv, d in zip(XS28, FV28, DV28) if x != 1), 'H28 vivo: la diferencia es x⁴/(1 − x) = x⁴·f(x)')
+def pasos28(x):
+    q = x.denominator; p2 = x*x; p3 = p2*x; p4 = p3*x; a1 = 1+x; a2 = a1+p2; a3 = a2+p3; w = 1-x; fv = 1/w; d = fv-a3
+    D = fv.denominator*a3.denominator//math.gcd(fv.denominator, a3.denominator)
+    return (p2 == F(x.numerator**2, q**2) and p3 == F(x.numerator**3, q**3) and p4 == F(x.numerator**4, q**4)
+        and a1 == F(q + x.numerator, q) and a1.denominator == q and a2 == F(a1.numerator*q + p2.numerator, q*q) and a2.denominator == q*q and a3 == F(a2.numerator*q + p3.numerator, q**3) and a3.denominator == q**3
+        and w == F(q - x.numerator, q) and fv == F(w.denominator, w.numerator) and d == F(fv.numerator*(D//fv.denominator) - a3.numerator*(D//a3.denominator), D) and d.denominator == D
+        and F(p4.numerator*fv.numerator, p4.denominator*fv.denominator) == d and math.gcd(p4.numerator*fv.numerator, p4.denominator*fv.denominator) == q
+        and d*x == x**5/(1-x) == fv - s28(x,4) and (d*x).denominator == d.denominator*q and ((abs(d*x) < abs(d)) == (abs(x) < 1)))
+ok(all(pasos28(x) for x in XS28 if x.denominator > 1) and len([x for x in XS28 if x.denominator > 1]) == 10, 'H28 vivo: cada línea de la cuenta en las 10 posiciones no enteras (amplificaciones, denominador común, simplificación por q, un término más)')
+ok(F(-5,4)**2 == F(25,16) and F(25,16)*F(-5,4) == -F(125,64) and 1-F(5,4) == -F(1,4) and -F(1,4)+F(25,16) == -F(4,16)+F(25,16) == F(21,16) and F(21,16)-F(125,64) == F(84,64)-F(125,64) == -F(41,64) and 1+F(5,4) == F(9,4) and F(4,9)+F(41,64) == F(256,576)+F(369,576) == F(625,576) and F(625,256)*F(4,9) == F(2500,2304) == F(625,576) and F(625,576)*F(-5,4) == -F(3125,2304), 'H28 vivo x = −5/4, línea por línea')
+ok(F(3,4)**2 == F(9,16) and F(9,16)*F(3,4) == F(27,64) and 1+F(3,4) == F(7,4) and F(7,4)+F(9,16) == F(28,16)+F(9,16) == F(37,16) and F(37,16)+F(27,64) == F(148,64)+F(27,64) == F(175,64) and 1-F(3,4) == F(1,4) and 1/F(1,4) == 4 and 4-F(175,64) == F(256,64)-F(175,64) == F(81,64) and F(27,64)*F(3,4) == F(81,256) and F(81,256)*4 == F(324,256) == F(81,64) and F(81,64)*F(3,4) == F(243,256), 'H28 vivo x = 3/4, línea por línea')
+ok(F(3,2)**2 == F(9,4) and F(9,4)*F(3,2) == F(27,8) and 1+F(3,2) == F(5,2) and F(5,2)+F(9,4) == F(10,4)+F(9,4) == F(19,4) and F(19,4)+F(27,8) == F(38,8)+F(27,8) == F(65,8) and 1-F(3,2) == -F(1,2) and 1/(-F(1,2)) == -2 and -2-F(65,8) == -F(16,8)-F(65,8) == -F(81,8) and F(27,8)*F(3,2) == F(81,16) and F(81,16)*(-2) == -F(162,16) == -F(81,8) and -F(81,8)*F(3,2) == -F(243,16), 'H28 vivo x = 3/2, línea por línea')
+ok([ap28(v) for v in SV28 if v.denominator > 1] == [('=',F('-1.625')),('~',F('-0.64')),('~',F('0.39')),('=',F('0.625')),('~',F('0.80')),('~',F('1.33')),('=',F('1.875')),('~',F('2.73')),('~',F('5.77')),('=',F('8.125'))], 'H28 vivo: decimales de s3 (exactos o redondeados a 2)')
+ok([ap28(v) for v in FV28 if v is not None and v.denominator > 1] == [('=',F('0.4')),('~',F('0.44')),('=',F('0.5')),('~',F('0.57')),('~',F('0.67')),('=',F('0.8')),('~',F('1.33'))], 'H28 vivo: decimales de f')
+ok([ap28(v) for v in DV28 if v is not None and v.denominator > 1] == [('=',F('2.025')),('~',F('1.09')),('=',F('0.5')),('~',F('0.18')),('~',F('0.042')),('~',F('0.003')),('~',F('0.005')),('=',F('0.125')),('~',F('1.27')),('~',F('-9.77')),('=',F('-10.125'))], 'H28 vivo: decimales de la diferencia')
+ok([ap28(d*x) for x, d in zip(XS28, DV28) if x.denominator > 1] == [('~',F('-3.04')),('~',F('-1.36')),('~',F('-0.14')),('~',F('-0.021')),('~',F('-0.001')),('~',F('0.001')),('~',F('0.063')),('~',F('0.95')),('~',F('-12.21')),('~',F('-15.19'))] and [d*x for x, d in zip(XS28, DV28) if x.denominator > 1] == [F(-243,80),F(-3125,2304),F(-243,1792),F(-1,48),F(-1,1280),F(1,768),F(1,16),F(243,256),F(-3125,256),F(-243,16)], 'H28 vivo: la diferencia con un término más y su decimal')
+ok(s28(F(0),3) == 1+0+0+0 == 1 and f28(F(0)) == 1 and 1-1 == 0 and F(0)**4*1 == 0 and abs(F(0)) < 1, 'H28 vivo x = 0: caso límite, diferencia 0')
+ok(1+1 == 2 and 2+1 == 3 and 3+1 == 4 and s28(F(1),3) == 4 and 1-1 == 0 and not abs(F(1)) < 1, 'H28 vivo x = 1: s3 = 4, sin función ni suma')
+ok((-1)*(-1) == 1 and 1*(-1) == -1 and 1-1 == 0 and 0+1 == 1 and s28(F(-1),3) == 0 and 1-(-1) == 1+1 == 2 and f28(F(-1)) == F(1,2) == F('0.5') and F(1,2)-0 == F(1,2) and (-1)**4*F(1,2) == F(1,2) and F(1,2)*(-1) == -F(1,2) and not abs(F(-1)) < 1, 'H28 vivo x = −1: f = 1/2, s3 = 0, la diferencia no se achica')
+ok(all(-4.5 <= float(v) <= 8.5 for v in SV28+[v for v in FV28 if v is not None]) and all(-1.6 <= float(x) <= 1.6 for x in XS28) and [1 if k <= 8 else -1 for k in range(13)].count(1) == 9, 'H28 vivo: todos los valores caben en la gráfica (de −4,5 a 8,5)')
+ok(F(65,8) == F('8.125') and f28(F(3,2)) == -2 and DV28[8] == F(1,8), 'H28 «cómo leer» de fge-vivo: 1/8 en 0,5; −2 y 65/8 en 1,5')
+# ejemplo 1: 1/(1 + x)
+ok(all(F(1)/(1+x) == 1/(1-(-x)) and (-x)**n == (-1)**n*x**n and (abs(-x) < 1) == (abs(x) < 1) == (-1 < x < 1) for x in RJ28 if x != -1 for n in range(7)) and [(-1)**n for n in range(4)] == [1,-1,1,-1], 'H28 e1: forma, (−x)ⁿ = (−1)ⁿxⁿ e intervalo')
+ok(all(abs(F(1)/(1+x) - g28(F(1),-x,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(3,4)), 'H28 e1: la serie se acerca a 1/(1 + x) dentro del intervalo')
+ok(1+F(1,2) == F(2,2)+F(1,2) == F(3,2) and 1/F(3,2) == F(2,3) and g28(F(1),F(-1,2),3) == 1-F(1,2)+F(1,4)-F(1,8) == F(8,8)-F(4,8)+F(2,8)-F(1,8) == F(5,8) and F(-1,2)**4 == F(1,16) and F(1,16)*F(2,3) == F(2,48) == F(1,24) and F(2,3)-F(5,8) == F(16,24)-F(15,24) == F(1,24), 'H28 e1: en 1/2, f = 2/3, s3 = 5/8, diferencia 1/24')
+ok(F(1,1+1) == F(1,2) and [g28(F(1),F(-1),N) for N in range(4)] == [1,0,1,0] and 1+(-1) == 0 and [g28(F(1),F(1),N) for N in range(3)] == [1,2,3], 'H28 e1: extremos')
+# ejemplo 2
+ok(all((2*x)**n == 2**n*x**n and abs(2*x) == 2*abs(x) and (2*abs(x) < 1) == (abs(x) < F(1,2)) == (-F(1,2) < x < F(1,2)) for x in RJ28 for n in range(6)) and [2**n for n in range(4)] == [1,2,4,8] and all(abs(1/(1-2*x) - g28(F(1),2*x,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(1,3)), 'H28 e2a: Σ 2ⁿxⁿ e intervalo |x| < 1/2')
+ok(2*F(1,4) == F(2,4) == F(1,2) and 1-F(1,2) == F(1,2) and 1/F(1,2) == 2 == 1/(1-2*F(1,4)) and g28(F(1),F(1,2),2) == F(4,4)+F(2,4)+F(1,4) == F(7,4) and F(1,2)**3*2 == F(1,8)*2 == F(2,8) == F(1,4) and 2-F(7,4) == F(8,4)-F(7,4) == F(1,4), 'H28 e2a: en 1/4, f = 2, s2 = 7/4, diferencia 1/4')
+ok(all(4+x == 4*(1+x/4) and F(3)/(4+x) == F(3,4)/(1+x/4) == F(3,4)/(1-(-x/4)) and all(F(3,4)*(-x/4)**n == 3*(-1)**n*x**n/4**(n+1) for n in range(7)) and abs(-x/4) == abs(x)/4 and (abs(x)/4 < 1) == (abs(x) < 4) == (-4 < x < 4) for x in RJ28 if x != -4) and [F(3,4**(n+1)) for n in range(4)] == [F(3,4),F(3,16),F(3,64),F(3,256)] and 4*4**3 == 4**4, 'H28 e2b: factor 4, a = 3/4, r = −x/4, términos e intervalo |x| < 4')
+ok(all(abs(F(3)/(4+x) - g28(F(3,4),-x/4,400)) < F(1,10**9) for x in RJ28 if abs(x) <= 3), 'H28 e2b: la serie se acerca a 3/(4 + x) dentro del intervalo')
+ok(-F(2,4) == -F(1,2) and F(3,4+2) == F(3,6) == F(1,2) and F(3*2,16) == F(6,16) == F(3,8) and F(3*4,64) == F(12,64) == F(3,16) and g28(F(3,4),F(-1,2),2) == F(3,4)-F(6,16)+F(12,64) == F(12,16)-F(6,16)+F(3,16) == F(9,16) and F(-1,2)**3*F(1,2) == -F(1,8)*F(1,2) == -F(1,16) and F(1,2)-F(9,16) == F(8,16)-F(9,16) == -F(1,16), 'H28 e2b: en 2, f = 1/2, s2 = 9/16, diferencia −1/16')
+# ejemplo 3: x/(1 + x²)
+ok(all(x/(1+x**2) == x/(1-(-x**2)) and all(x*(-x**2)**n == (-1)**n*x**(2*n+1) and (x**2)**n == x**(2*n) and x*x**(2*n) == x**(2*n+1) for n in range(6)) and abs(-x**2) == abs(x)**2 and (abs(x)**2 < 1) == (abs(x) < 1) and 1+x**2 >= 1 for x in RJ28) and [2*n+1 for n in range(4)] == [1,3,5,7], 'H28 e3: a = x, r = −x², Σ (−1)ⁿx^(2n+1), intervalo |x| < 1')
+ok(all(abs(x/(1+x**2) - g28(x,-x**2,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(3,4)) and F(0)/(1+0) == 0 == g28(F(0),F(0),5), 'H28 e3: la serie se acerca a x/(1 + x²); en x = 0 vale 0')
+ok(-F(1,2)**2 == -F(1,4) and 1+F(1,4) == F(5,4) and F(1,2)/F(5,4) == F(1,2)*F(4,5) == F(4,10) == F(2,5) and g28(F(1,2),F(-1,4),1) == F(1,2)-F(1,2)**3 == F(1,2)-F(1,8) == F(4,8)-F(1,8) == F(3,8) and F(-1,4)**2*F(2,5) == F(1,16)*F(2,5) == F(2,80) == F(1,40) and F(2,5)-F(3,8) == F(16,40)-F(15,40) == F(1,40), 'H28 e3: en 1/2, f = 2/5, s1 = 3/8, diferencia 1/40')
+# ejemplo 4: 1/x alrededor de 1
+ok(all(x == 1+(x-1) and 1/x == 1/(1-(-(x-1))) and all((-(x-1))**n == (-1)**n*(x-1)**n for n in range(6)) and (abs(-(x-1)) < 1) == (abs(x-1) < 1) == (-1 < x-1 < 1) == (0 < x < 2) for x in RJ28 if x != 0) and all(abs(1/x - g28(F(1),-(x-1),300)) < F(1,10**9) for x in RJ28 if F(1,4) <= x <= F(7,4)), 'H28 e4: Σ (−1)ⁿ(x − 1)ⁿ, intervalo 0 < x < 2')
+ok(F(6,5) == F('1.2') and F(6,5)-F(5,5) == F(1,5) and 1/F(6,5) == F(5,6) and g28(F(1),F(-1,5),2) == 1-F(1,5)+F(1,25) == F(25,25)-F(5,25)+F(1,25) == F(21,25) and F(-1,5)**3*F(5,6) == -F(1,125)*F(5,6) == -F(5,750) == -F(1,150) and F(5,6)-F(21,25) == F(125,150)-F(126,150) == -F(1,150), 'H28 e4: en 6/5, f = 5/6, s2 = 21/25, diferencia −1/150')
+ok(-(3-1) == -2 and [(-2)**n for n in range(4)] == [1,-2,4,-8] and -(2-1) == -1 and F(1,3) > 0 and F(1,2) > 0, 'H28 e4: fuera del intervalo, x = 3 y x = 2')
+# recuadro de errores
+ok(all((2*x)**3 == 8*x**3 for x in RJ28) and any((2*x)**3 != 2*x**3 for x in RJ28) and all(f28(x) - s28(x,3) == x**4/(1-x) for x in RJ28 if x != 1) and F(3)/(4+1) != F(3)/(1+1), 'H28 errores frecuentes')
+# ejercicio A
+ok(all(F(1)/(1+3*x) == 1/(1-(-3*x)) and all((-3*x)**n == (-1)**n*3**n*x**n for n in range(6)) and abs(-3*x) == 3*abs(x) and (3*abs(x) < 1) == (abs(x) < F(1,3)) == (-F(1,3) < x < F(1,3)) for x in RJ28 if x != -F(1,3)) and [(-1)**n*3**n for n in range(4)] == [1,-3,9,-27] and all(abs(1/(1+3*x) - g28(F(1),-3*x,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(1,4)), 'H28 A (a): Σ (−1)ⁿ3ⁿxⁿ, |x| < 1/3')
+ok(all(2-x == 2*(1-x/2) and 1/(2-x) == F(1,2)/(1-x/2) and all(F(1,2)*(x/2)**n == x**n/2**(n+1) for n in range(6)) and abs(x/2) == abs(x)/2 and (abs(x)/2 < 1) == (abs(x) < 2) == (-2 < x < 2) for x in RJ28 if x != 2) and [2**(n+1) for n in range(4)] == [2,4,8,16] and all(abs(1/(2-x) - g28(F(1,2),x/2,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(3,2)), 'H28 A (b): Σ xⁿ/2^(n+1), |x| < 2')
+ok(all(all(x**2*x**n == x**(n+2) for n in range(6)) for x in RJ28) and [n+2 for n in range(4)] == [2,3,4,5] and all(abs(x**2/(1-x) - g28(x**2,x,300)) < F(1,10**9) for x in RJ28 if abs(x) <= F(3,4)) and F(0,1) == 0, 'H28 A (c): Σ x^(n+2), |x| < 1')
+# ejercicio B
+ok(all(3-x == 3-1-(x-1) == 2-(x-1) == 2*(1-(x-1)/2) and 1/(3-x) == F(1,2)/(1-(x-1)/2) and all(F(1,2)*((x-1)/2)**n == (x-1)**n/2**(n+1) for n in range(6)) and abs((x-1)/2) == abs(x-1)/2 and (abs(x-1)/2 < 1) == (abs(x-1) < 2) == (-2 < x-1 < 2) == (-1 < x < 3) for x in RJ28 if x != 3) and all(abs(1/(3-x) - g28(F(1,2),(x-1)/2,300)) < F(1,10**9) for x in RJ28 if -F(1,2) <= x <= F(5,2)), 'H28 B (a): Σ (x − 1)ⁿ/2^(n+1), −1 < x < 3')
+ok(1-F(1,3) == F(3,3)-F(1,3) == F(2,3) and 1/F(2,3) == F(3,2) and F(1,3)**2 == F(1,9) and s28(F(1,3),2) == F(9,9)+F(3,9)+F(1,9) == F(13,9) and F(3,2)-F(13,9) == F(27,18)-F(26,18) == F(1,18) and F(1,3)**3 == F(1,27) and F(1,27)*F(3,2) == F(3,54) == F(1,18), 'H28 B (b): en 1/3, f = 3/2, s2 = 13/9, diferencia 1/18')
+ok(F(1,1-2) == -1 and s28(F(2),2) == 1+2+4 == 7 and -1-7 == -8 and F(2**3,1-2) == F(8,-1) == -8 and F(2**4,1-2) == -16 == f28(F(2))-s28(F(2),3) and [s28(F(2),N) for N in range(4)] == [1,3,7,15], 'H28 B (c): en 2, f = −1, s2 = 7, diferencia −8 y después −16')
+# ejercicio C
+ok(all(g28(F(1000),x,N) == 1000*s28(x,N) for x in RJ28 for N in range(5)) and all(abs(1000/(1-x) - g28(F(1000),x,400)) < F(1,10**6) for x in (F(0),F(3,5),F(4,5))), 'H28 C (a): T(x) = Σ 1000xⁿ = 1000/(1 − x)')
+ok(1-F('0.6') == F('0.4') and F(1000)/F('0.4') == F(10000,4) == 2500 and F('0.6')*F('0.6') == F('0.36') and F('0.36')*F('0.6') == F('0.216') and [1000*F('0.6')**n for n in range(4)] == [1000,600,360,216] and 1000+600 == 1600 and 1600+360 == 1960 and 1960+216 == 2176 == g28(F(1000),F(3,5),3) and 2500-2176 == 324, 'H28 C (b)(c): total 2500, fabricado 2176, falta 324')
+ok(F('0.216')*F('0.6') == F('0.1296') == F('0.6')**4 and F('0.1296')*2500 == 324 == F(3,5)**4*(F(1000)/(1-F(3,5))), 'H28 C (c): lo que falta con la fórmula, 324')
+ok(1-F('0.8') == F('0.2') and F(1000)/F('0.2') == F(10000,2) == 5000 == 2*2500 and [g28(F(1000),F(1),N) for N in range(3)] == [1000,2000,3000] and F(1000)/(1-0) == 1000, 'H28 C (d)(e): total 5000 con 0,8; x = 1 sin suma; x = 0 da 1000')
+# H29
+# H29 · Representación de funciones como series de potencias: registros y lecturas de rep-idea (6 pasos) y rep-vivo (6 posiciones de x), reglas 1-3 en rejilla, ejemplos 1-4 y ejercicios A, B, C. El teorema de derivación e integración término a término solo se enuncia en la hoja: aquí se comprueba la derivada/integral formal de los coeficientes, identidades finitas exactas y la cercanía numérica en rejilla; ln y arctan, con tolerancia contra math.
+def rd29(x, d=4):
+    """x (Fraction) redondeado a d decimales, en unidades enteras de 10^-d; mitad hacia arriba en el tamaño"""
+    x = F(x); n = (2*abs(x.numerator)*10**d + x.denominator)//(2*x.denominator); return -n if x < 0 else n
+def sl29(n, x): return sum(F((-1)**(k+1))*F(x)**k/k for k in range(1, n+1))
+def sa29(n, x): return sum(F((-1)**k)*F(x)**(2*k+1)/(2*k+1) for k in range(n))
+G29 = [F(p, 8) for p in range(-7, 8)]
+T29 = 5e-5
+# definición y punto de partida
+ok(F(1, 1-2) == -1 and [2**n for n in range(4)] == [1, 2, 4, 8] and all(2**n >= 1 for n in range(60)), 'H29 k1 en x = 2 la función vale −1 y los términos 2ⁿ no tienden a 0')
+ok(all((1-x)*sum(x**n for n in range(N+1)) == 1 - x**(N+1) for x in G29 for N in range(12)) and all(abs(float(sum(x**n for n in range(400))) - 1/(1-float(x))) < 1e-9 for x in G29), 'H29 k1 geométrica: (1 − x)·Σxⁿ = 1 − x^(N+1)')
+ok(all((-x)**n == (-1)**n*x**n and (-x*x)**n == (-1)**n*x**(2*n) and F(1, 1)/(1-(-x)) == 1/(1+x) and 1/(1-(-x*x)) == 1/(1+x*x) and abs(-x) == abs(x) and abs(-x*x) == x*x and ((x*x < 1) == (abs(x) < 1)) for x in G29 + [F(1), F(-1), F(3, 2), F(-2)] for n in range(9) if x != -1), 'H29 k1 sustituciones r = −x y r = −x²')
+ok(all((1+x)*sum((-1)**n*x**n for n in range(N+1)) == 1 - (-x)**(N+1) and (1+x*x)*sum((-1)**n*x**(2*n) for n in range(N+1)) == 1 - (-x*x)**(N+1) for x in G29 for N in range(12)), 'H29 k1 identidades finitas de 1/(1 + x) y 1/(1 + x²)')
+# reglas 1, 2 y 3 (sumas parciales, rejilla)
+a29 = [F(n+1, n+2) for n in range(9)]; b29 = [F((-1)**n, 2*n+1) for n in range(9)]
+ok(all(sum((a29[n]+b29[n])*x**n for n in range(N)) == sum(a29[n]*x**n for n in range(N)) + sum(b29[n]*x**n for n in range(N)) and sum(c*a29[n]*x**n for n in range(N)) == c*sum(a29[n]*x**n for n in range(N)) and sum(a29[n]*x**(n+m) for n in range(N)) == x**m*sum(a29[n]*x**n for n in range(N)) and sum((a29[n]-b29[n])*x**n for n in range(N)) == sum(a29[n]*x**n for n in range(N)) + (-1)*sum(b29[n]*x**n for n in range(N)) for x in G29 for N in range(1, 10) for c in (F(-1), F(2), F(3, 5)) for m in (1, 2, 3)), 'H29 k2 reglas 1, 2, 3 y resta en sumas parciales')
+ok([(-1)**n for n in range(4)] == [1, -1, 1, -1] and [F((-1)**n, n+1) for n in range(4)] == [1, F(-1, 2), F(1, 3), F(-1, 4)] and all(F(0)**(n+1) == 0 for n in range(9)), 'H29 k2 extremo x = 1 antes y después de integrar; la constante en el centro')
+# rep-idea: registros R1…R6 y lectura acumulada
+ok(all(abs((math.log(1+x+1e-6) - math.log(1+x-1e-6))/2e-6 - 1/(1+x)) < 1e-6 for x in (-0.9, -0.5, 0, 0.5, 1, 2, 5)), 'H29 rep-idea paso 1 (ln(1 + x))′ = 1/(1 + x), derivada numérica')
+ok(all(F((-1)**n, n+1) == F((-1)**(m+1), m) for n in range(60) for m in [n+1]) and [F((-1)**n, n+1) for n in range(4)] == [1, F(-1, 2), F(1, 3), F(-1, 4)] and all((n+1)*F((-1)**n, n+1) == (-1)**n for n in range(60)), 'H29 rep-idea paso 3 integral formal de los coeficientes (y su derivada los devuelve)')
+ok(math.log(1) == 0 and sl29(8, 0) == 0 and F(0)**2/2 == 0 == F(0)**3/3, 'H29 rep-idea paso 4 C = 0')
+ok(F(1, 2)**2 == F(1, 4) and F(1, 2)**3 == F(1, 8) and F(1, 4)/2 == F(1, 8) and F(1, 8)/3 == F(1, 24) and sl29(1, F(1, 2)) == F(1, 2) == F('0.5') and sl29(2, F(1, 2)) == F(1, 2)-F(1, 8) == F(4, 8)-F(1, 8) == F(3, 8) == F('0.375') and sl29(3, F(1, 2)) == F(3, 8)+F(1, 24) == F(9, 24)+F(1, 24) == F(10, 24) == F(5, 12) and rd29(F(5, 12)) == 4167, 'H29 rep-idea paso 5 S₁, S₂, S₃ en x = 1/2')
+ok(round(math.log(1.5)*10**4) == 4055 and abs(math.log(1.5) - 0.4055) < T29 and abs(4055-5000) == 945 and abs(4055-3750) == 305 and abs(4055-4167) == 112 and 945 > 305 > 112, 'H29 rep-idea paso 5 distancias 0,0945; 0,0305; 0,0112')
+ok(all(F((-1)**(n+1), n) == [None, 1, F(-1, 2), F(1, 3), F(-1, 4)][n] for n in (1, 2, 3, 4)) and (-1)**2 == 1 and (-1)**3 == -1, 'H29 rep-idea paso 6 término de lugar n')
+ok(all(abs(float(sl29(n, x)) - math.log(1+float(x))) > abs(float(sl29(n+1, x)) - math.log(1+float(x))) for x in (F(1, 2), F(-1, 2), F(3, 4), F(1, 4)) for n in range(1, 8)) and all(abs(float(sl29(300, x)) - math.log(1+float(x))) < 1e-9 for x in G29 if abs(x) <= F(3, 4)) and abs(float(sl29(8, F(3, 2))) - math.log(2.5)) > 1.8, 'H29 rep-idea dentro se pegan (rejilla, numérico) y fuera S₈ se despega')
+ok(float(sl29(8, F(31, 20))) < -1.4 and all(float(sl29(n, F(-5, 4))) < 0 for n in (1, 2, 3, 8)) and sl29(3, F(3, 2)) == F(3, 2) == sl29(1, F(3, 2)) and math.exp(-2)-1 < -0.86 and 0.9 < math.log(2.55) < 1.5, 'H29 rep-idea posiciones de las curvas en el cuadro')
+# rep-vivo: las 6 posiciones del deslizador, con la cuenta completa
+E29 = {F(-1, 2): (192, [-96, 24, -8, 3], -131, F(-131, 192), -6823, [-63, 26, -11, 5], -6928, -6931, 108, 3, '0.5'),
+       F(1, 2): (192, [96, 24, 8, 3], 77, F(77, 192), 4010, [63, 26, 11, 5], 4053, 4055, 45, 2, '1.5'),
+       F(3, 4): (1024, [768, 288, 144, 81], 543, F(543, 1024), 5303, [475, 297, 191, 125], 5547, 5596, 293, 49, '1.75'),
+       F(1): (12, [12, 6, 4, 3], 7, F(7, 12), 5833, [2000, 1667, 1429, 1250], 6345, 6931, 1098, 586, '2'),
+       F(3, 2): (64, [96, 72, 72, 81], 15, F(15, 64), 2344, [15188, 18984, 24408, 32036], -9080, 9163, 6819, 18243, '2.5')}
+for x29, e29 in E29.items():
+    pw29 = [None] + [x29**k for k in range(1, 9)]; tm29 = [None] + [x29**k/k for k in range(1, 9)]; t29 = 'H29 rep-vivo x = %s ' % x29
+    ok(all(pw29[k] == pw29[k-1]*x29 for k in range(2, 9)) and all(tm29[k] == pw29[k]/k == F(pw29[k].numerator, k*pw29[k].denominator) for k in range(1, 9)), t29 + 'potencias y términos')
+    ok(math.lcm(*[tm29[k].denominator for k in (1, 2, 3, 4)]) == e29[0] and [tm29[k]*e29[0] for k in (1, 2, 3, 4)] == e29[1] and e29[1][0]-e29[1][1]+e29[1][2]-e29[1][3] == e29[2] and F(e29[2], e29[0]) == e29[3] == sl29(4, x29) == x29-tm29[2]+tm29[3]-tm29[4], t29 + 'S₄ con denominador común')
+    ok(rd29(e29[3]) == e29[4] and [rd29(tm29[k]) for k in (5, 6, 7, 8)] == e29[5] and e29[4]+e29[5][0]-e29[5][1]+e29[5][2]-e29[5][3] == e29[6] and abs(F(e29[6], 10**4) - sl29(8, x29)) <= F(5, 2*10**4), t29 + 'redondeos a 4 decimales y S₈ con los valores redondeados')
+    ok(1+x29 == F(e29[10]) and round(math.log(1+x29)*10**4) == e29[7] and abs(math.log(1+x29) - e29[7]/10**4) < T29 and abs(e29[7]-e29[4]) == e29[8] and abs(e29[7]-e29[6]) == e29[9], t29 + 'función (≈, tolerancia 0,00005) y distancias')
+    ok((e29[9] < e29[8]) == (abs(x29) <= 1) and (abs(x29) < 1 or x29 == 1 or e29[9] > e29[8]), t29 + 'la distancia baja dentro y en el extremo, y sube fuera')
+ok([F(10**4*abs(F(1, k)).numerator, F(1, k).denominator).denominator == 1 for k in (5, 6, 7, 8)] == [True, False, False, True] and all(F(10**4)*F(3, 2)**k/k % 1 != 0 for k in (5, 6, 7, 8)), 'H29 rep-vivo signos = y ≈ de los términos 5 a 8 (x = 1 y x = 3/2)')
+ok(all(F(0)**k == 0 for k in range(1, 9)) and sl29(4, 0) == 0 == sl29(8, 0) and math.log(1+0) == 0 and math.exp(0) == 1 and abs(0-0) == 0, 'H29 rep-vivo x = 0, caso límite: todo vale 0')
+ok(all(F(3, 2)**(n+1)/(n+1) >= F(3, 2)**n/n for n in range(2, 80)) and [15188, 18984, 24408, 32036] == sorted([15188, 18984, 24408, 32036]) and all(abs(x)**(n+1)/(n+1)/(abs(x)**n/n) == abs(x)*F(n, n+1) for x in (F(3, 2), F(-2), F(5, 4)) for n in range(1, 30)) and abs(float(F(10**6, 10**6+1)) - 1) < 1e-5, 'H29 rep-vivo y ej. 2 paso 10: fuera, los tamaños crecen; cociente |x|·n/(n + 1)')
+ok(sl29(4, 1) == 1-F(1, 2)+F(1, 3)-F(1, 4) == F(7, 12) and abs(float(sl29(4000, 1)) - math.log(2)) < 2e-4 and abs(math.log(2.5) - 0.9163) < T29, 'H29 rep-vivo x = 1: armónica alternada (ln 2 solo numérico; Abel no se usa)')
+# ejemplo 1
+ok(all((1-x)**2*sum(n*x**(n-1) for n in range(1, N+1)) == 1 - (N+1)*x**N + N*x**(N+1) for x in G29 for N in range(1, 14)) and all(abs(float(sum(n*x**(n-1) for n in range(1, 500))) - 1/(1-float(x))**2) < 1e-9 for x in G29), 'H29 e1 identidad finita exacta de Σ n·xⁿ⁻¹ y cercanía a 1/(1 − x)² en rejilla')
+ok(all(abs(((1-x-1e-6)**-1 - (1-x+1e-6)**-1)/2e-6 - (1-x)**-2) < 1e-4 for x in (-0.9, -0.5, 0, 0.5, 0.8)) and (-1)*(-1) == 1, 'H29 e1 derivada de (1 − x)⁻¹, numérica')
+ok(all(sum(n*x**(n-1) for n in range(1, N+1)) == sum((m+1)*x**m for m in range(0, N)) for x in G29 for N in range(1, 12)), 'H29 e1 cambio de índice m = n − 1')
+ok(1-F(1, 2) == F(1, 2) and F(1, 2)**2 == F(1, 4) and 1/F(1, 4) == 4 and [n*F(1, 2)**(n-1) for n in range(1, 7)] == [1, 1, F('0.75'), F('0.5'), F('0.3125'), F('0.1875')] and [sum(n*F(1, 2)**(n-1) for n in range(1, N+1)) for N in range(1, 7)] == [1, 2, F('2.75'), F('3.25'), F('3.5625'), F('3.75')], 'H29 e1 comprobación con x = 1/2')
+ok(all(abs(n*(-1)**(n-1)) == n == n*1**(n-1) for n in range(1, 50)) and [n*(-1)**(n-1) for n in (1, 2, 3, 4)] == [1, -2, 3, -4], 'H29 e1 extremos: tamaño n, no tiende a 0')
+# ejemplo 2
+ok(all(sum(F((-1)**n)*x**(n+1)/(n+1) for n in range(0, N)) == sum(F((-1)**(m+1))*x**m/m for m in range(1, N+1)) for x in G29 for N in range(1, 12)) and all((-1)**(m-1) == (-1)**(m+1) == (-1)**(m-1)*(-1)**2 for m in range(1, 40)), 'H29 e2 cambio de índice m = n + 1 y signo')
+ok(sl29(4, -1) == -1-F(1, 2)-F(1, 3)-F(1, 4) and all(F((-1)**(n+1))*F(-1)**n/n == F(-1, n) for n in range(1, 40)) and F(1, 2)-F(1, 8)+F(1, 24)-F(1, 64) == F(96-24+8-3, 192) == F(77, 192) and rd29(F(77, 192)) == 4010 and math.lcm(2, 8, 24, 64) == 192, 'H29 e2 extremo x = −1 (opuesto de la armónica) y comprobación 77/192')
+# ejemplo 3
+ok(all(F((-1)**n, 2*n+1)*(2*n+1) == (-1)**n for n in range(60)) and sa29(4, F(1, 3)) == F(1, 3)-F(1, 3)**3/3+F(1, 3)**5/5-F(1, 3)**7/7 and math.atan(0) == 0, 'H29 e3 integral formal de los coeficientes y C = 0')
+ok(all(abs(float(sa29(400, x)) - math.atan(float(x))) < 1e-9 for x in G29) and all(abs((math.atan(x+1e-6) - math.atan(x-1e-6))/2e-6 - 1/(1+x*x)) < 1e-6 for x in (-3, -0.5, 0, 0.5, 2)), 'H29 e3 la serie se acerca a arctan en rejilla; derivada numérica')
+ok(all(F(1, 2*n+3) < F(1, 2*n+1) and F(1, 2*n+1) > 0 for n in range(200)) and all(abs(x)**(2*n+3)/(2*n+3)/(abs(x)**(2*n+1)/(2*n+1)) == x*x*F(2*n+1, 2*n+3) for x in (F(3, 2), F(-2)) for n in range(30)) and abs(float(F(2*10**6+1, 2*10**6+3)) - 1) < 1e-5 and abs(float(sa29(4000, 1)) - math.pi/4) < 2e-4, 'H29 e3 extremos (Leibniz) y cociente fuera; π/4 solo numérico')
+ok(F(1, 2)**3 == F(1, 8) and F(1, 8)/3 == F(1, 24) and F(1, 2)**5 == F(1, 32) and F(1, 32)/5 == F(1, 160) and math.lcm(2, 24, 160) == 480 and F(1, 2) == F(240, 480) and F(1, 24) == F(20, 480) and F(1, 160) == F(3, 480) and sa29(3, F(1, 2)) == F(240-20+3, 480) == F(223, 480) and rd29(F(223, 480)) == 4646 and round(math.atan(0.5)*10**4) == 4636, 'H29 e3 comprobación 223/480 ≈ 0,4646; arctan 0,5 ≈ 0,4636')
+# ejemplo 4
+ok(all(x*sum(n*x**(n-1) for n in range(1, N+1)) == sum(n*x**n for n in range(1, N+1)) for x in G29 for N in range(1, 12)) and (1-F(1, 2))**2 == F(1, 4) and F(1, 2)/F(1, 4) == F(1, 2)*4 == 2 and abs(float(sum(F(n, 2**n) for n in range(1, 200))) - 2) < 1e-12, 'H29 e4 (a) x/(1 − x)² y Σ n/2ⁿ = 2')
+ok(all((-1)**(n+1)*(-1)**n == (-1)**(2*n+1) == -1 and F((-1)**(n+1))*(-x)**n/n == -x**n/n for x in G29 for n in range(1, 20)) and all(F((-1)**(n+1), n)+F(1, n) == F((-1)**(n+1)+1, n) == (0 if n % 2 == 0 else F(2, n)) for n in range(1, 60)), 'H29 e4 (b) serie de ln(1 − x) y coeficientes 0 o 2/n')
+ok(all(sum(F((-1)**(n+1)+1, n)*x**n for n in range(1, 2*K+2)) == sum(2*x**(2*k+1)/(2*k+1) for k in range(0, K+1)) for x in G29 for K in range(8)) and all(abs(float(sum(2*x**(2*k+1)/(2*k+1) for k in range(300))) - math.log((1+float(x))/(1-float(x)))) < 1e-9 for x in G29 if abs(x) <= F(3, 4)), 'H29 e4 (b) solo quedan los impares; cercanía a ln((1 + x)/(1 − x))')
+ok(1+F(1, 3) == F(4, 3) and 1-F(1, 3) == F(2, 3) and F(4, 3)/F(2, 3) == F(4, 3)*F(3, 2) == 2 and F(1, 3)**3 == F(1, 27) and F(1, 27)/3 == F(1, 81) and F(1, 3)**5 == F(1, 243) and F(1, 243)/5 == F(1, 1215) and F(1, 3) == F(405, 1215) and F(1, 81) == F(15, 1215) and F(1, 3)+F(1, 81)+F(1, 1215) == F(421, 1215) and 2*F(421, 1215) == F(842, 1215) and rd29(F(842, 1215)) == 6930 and round(math.log(2)*10**4) == 6931, 'H29 e4 (b) ln 2 con x = 1/3: 842/1215 ≈ 0,6930')
+# ejercicio A
+ok(all((1+x)**2*sum((-1)**(n+1)*n*x**(n-1) for n in range(1, N+1)) == 1 - (N+1)*(-x)**N + N*(-x)**(N+1) for x in G29 for N in range(1, 14)) and all((-1)*(-1)**n == (-1)**(n+1) for n in range(40)) and [(-1)**(n+1)*n for n in (1, 2, 3, 4)] == [1, -2, 3, -4] and all(sum((-1)**(n+1)*n*x**(n-1) for n in range(1, 9)) == sum(n*(-x)**(n-1) for n in range(1, 9)) for x in G29), 'H29 A (a) serie de 1/(1 + x)², identidad finita exacta')
+ok((1+F(1, 2))**2 == F(3, 2)**2 == F(9, 4) and 1/F(9, 4) == F(4, 9) and rd29(F(4, 9)) == 4444 and 1-2*F(1, 2)+3*F(1, 4)-4*F(1, 8) == 1-1+F('0.75')-F('0.5') == F('0.25') and F('0.25')+5*F(1, 16)-6*F(1, 32) == F('0.25')+F('0.3125')-F('0.1875') == F('0.375'), 'H29 A (a) comprobación con x = 1/2')
+ok(all(n*F(1, 3)**(n-1) == F(n, 3**(n-1)) for n in range(1, 30)) and 1-F(1, 3) == F(2, 3) and F(2, 3)**2 == F(4, 9) and 1/F(4, 9) == F(9, 4) == F('2.25') and 1+F(2, 3)+F(3, 9)+F(4, 27) == F(27+18+9+4, 27) == F(58, 27) and rd29(F(58, 27), 3) == 2148 and abs(float(sum(F(n, 3**(n-1)) for n in range(1, 200))) - 2.25) < 1e-12, 'H29 A (b) Σ n/3ⁿ⁻¹ = 9/4')
+ok([n*2**(n-1) for n in (1, 2, 3, 4)] == [1, 4, 12, 32] and F(1, (1-2)**2) == 1 and abs(2) > 1 and all(n*2**(n-1) >= 1 for n in range(1, 60)), 'H29 A (c) x = 2 queda fuera')
+# ejercicio B
+ok(all(x*sum((-1)**n*x**(2*n) for n in range(N)) == sum((-1)**n*x**(2*n+1) for n in range(N)) for x in G29 for N in range(1, 10)) and all(abs((0.5*math.log(1+(x+1e-6)**2) - 0.5*math.log(1+(x-1e-6)**2))/2e-6 - x/(1+x*x)) < 1e-6 for x in (-2, -0.5, 0, 0.5, 3)), 'H29 B (a)(b) x/(1 + x²) y su primitiva, numérico')
+ok(all(2*F(1, 2*n+2) == F(2, 2*(n+1)) == F(1, n+1) and F((-1)**n, 2*n+2)*(2*n+2) == (-1)**n for n in range(60)) and F(1, 2)*math.log(1) == 0 and all(abs(float(sum(F((-1)**n)*x**(2*n+2)/(n+1) for n in range(300))) - math.log(1+float(x)**2)) < 1e-9 for x in G29), 'H29 B (b) serie de ln(1 + x²)')
+ok(all(sum(F((-1)**(n+1))*x**(2*n)/n for n in range(1, N+1)) == sum(F((-1)**m)*x**(2*m+2)/(m+1) for m in range(0, N)) for x in G29 for N in range(1, 10)) and all((-1)**(m+2) == (-1)**m and 2*(m+1) == 2*m+2 for m in range(40)), 'H29 B (c) los dos caminos dan la misma serie')
+ok(1+F(1, 2)**2 == F('1.25') and F(1, 2)**4 == F(1, 16) and F(1, 2)**6 == F(1, 64) and F(1, 16)/2 == F(1, 32) and F(1, 64)/3 == F(1, 192) and F(1, 4)-F(1, 32)+F(1, 192) == F(48-6+1, 192) == F(43, 192) and F(1, 4) == F(48, 192) and F(1, 32) == F(6, 192) and rd29(F(43, 192)) == 2240 and round(math.log(1.25)*10**4) == 2231 and abs(2231-2240) == 9, 'H29 B (d) ln 1,25 con tres términos')
+# ejercicio C
+b29 = lambda k: F(1, 5)**(2*k-1)/(2*k-1)
+ok(F(1, 5)**3 == F(1, 125) and F(1, 5)**5 == F(1, 3125) and F(1, 125)/3 == F(1, 375) and F(1, 3125)/5 == F(1, 15625) and [b29(1), b29(2), b29(3)] == [F(1, 5), F(1, 375), F(1, 15625)] and sa29(2, F(1, 5)) == F(1, 5)-F(1, 375) == F(75, 375)-F(1, 375) == F(74, 375) and rd29(F(74, 375), 5) == 19733, 'H29 C (a) dos términos: 74/375 ≈ 0,19733')
+ok(all(b29(k) > 0 and b29(k+1)/b29(k) == F(1, 5)**2*F(2*k-1, 2*k+1) == F(1, 25)*F(2*k-1, 2*k+1) < 1 and b29(k+1) < b29(k) and F(1, 5)**(2*k-1) <= 1 and 2*k-1 >= k and b29(k) <= F(1, k) for k in range(1, 80)), 'H29 C (b) condiciones de Leibniz en rejilla de k')
+ok(F(1, 15625) == F('0.000064') and abs(math.atan(0.2) - 74/375) <= 1/15625 and 375*125 == 46875 == 15625*3 and 74*125 == 9250 and sa29(3, F(1, 5)) == F(9250, 46875)+F(3, 46875) == F(9253, 46875) and rd29(F(9253, 46875), 5) == 19740 and 74/375 <= math.atan(0.2) <= 9253/46875 and abs(math.atan(0.2) - 0.1973) < 1e-4, 'H29 C (b)(c) cota 1/15625 y S₂ ≤ θ ≤ S₃')
+ok(F('0.1973')*180 == F('35.514') and rd29(F('35.514')/F('3.1416'), 2) == 1130 and abs(math.degrees(math.atan(0.2)) - 11.3) < 0.02 and abs(math.atan(2) - 1.107) < 5e-4 and abs(F(2)) > 1 and all(F(2)**(2*n+3)/(2*n+3) > F(2)**(2*n+1)/(2*n+1) for n in range(40)), 'H29 C (c)(d) grados ≈ 11,30 y la rampa de pendiente 2')
+print('Lote 25 H01–H29:', 'sin errores' if not err else f'{err} errores')

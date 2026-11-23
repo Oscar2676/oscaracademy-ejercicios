@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sucesiones monótonas acotadas | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-monotonas" data-hoja="L25 H27">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Sucesiones monótonas acotadas</b></li>
+    </ol>
+    <h1>Sucesiones monótonas acotadas</h1>
+    <p class="lede">Una sucesión es <b>monótona</b> si nunca cambia de sentido: o nunca baja (creciente) o nunca sube (decreciente). Es <b>acotada</b> si todos sus términos caben entre dos números. Ninguna de las dos propiedades asegura, sola, que la sucesión tenga límite. Las dos juntas, sí: una sucesión creciente que tiene un techo converge, y su límite es el menor de sus techos, que se llama supremo. \[(a_{n})\text{ creciente y acotada superiormente}\quad\Longrightarrow\quad\lim_{n\to\infty}a_{n}=\sup\{a_{n}:n\ge 1\}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(a_{n}=\dfrac{n}{n+1}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los doce puntos azules (paso 1):</b> en horizontal va la posición \(n\); en vertical, el valor del término. De cada punto sale una punteada hasta su valor en el eje vertical: \(0{,}5\), \(0{,}66\ldots\), \(0{,}75\), \(0{,}8\), y siguen subiendo. Arriba queda la pregunta: ¿por qué tiene límite?</li>
+    <li><b>Paso 2, en naranja:</b> entre cada punto y el siguiente hay un escalón. Su tramo vertical es el salto \(a_{n+1}-a_{n}\): vale \(\dfrac{1}{6}\), después \(\dfrac{1}{12}\), y siempre es positivo. Por eso la sucesión crece.</li>
+    <li><b>Paso 3, en burdeo:</b> la recta horizontal a la altura \(1\) es un techo: ningún término la alcanza. El trazo que sube de cada punto hasta la recta es lo que le falta a ese término para llegar a \(1\), que vale \(\dfrac{1}{n+1}\).</li>
+    <li><b>Pasos 4 y 5:</b> se prueba un techo más bajo, \(0{,}75\) (recta naranja punteada). No sirve: el cuarto término, \(0{,}8\), lo supera (anillo verde). Y como la sucesión crece, desde el cuarto término todos quedan en la franja naranja, entre \(0{,}75\) y \(1\): son los puntos verdes, a la derecha de la línea verde \(N=3\).</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> con una franja más angosta, de \(0{,}9\) a \(1\), pasa lo mismo desde el décimo término (\(N=9\)), y la cuenta de abajo lo hace con la letra \(\varepsilon\), para cualquier franja. Conclusión: ningún número menor que \(1\) es techo, así que \(1\) es el menor techo, y es el límite.</li>
+  </ol>
+  <div class="stage" data-scene="mon-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos \(a_{1},\ \ldots,\ a_{12}\); la punteada lleva cada uno a su valor en el eje vertical.</li>
+    <li><b>Naranja:</b> los saltos \(a_{n+1}-a_{n}\) (tramo vertical de cada escalón), la recta de prueba \(0{,}75\) y las franjas que terminan en \(1\).</li>
+    <li><b>Burdeo:</b> el techo \(1\) (una cota superior) y lo que le falta a cada término para alcanzarlo, \(1-a_{n}\).</li>
+    <li><b>Verde:</b> el término que supera a \(0{,}75\), el número \(N\) de cada franja y los términos posteriores a \(N\), que están todos dentro.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones, en orden</h3>
+    <ol class="steps">
+      <li><b>Sucesión</b> (hoja «Sucesión infinita»): una lista sin fin de números reales, \(a_{1},\ a_{2},\ a_{3},\ \ldots\), con un término \(a_{n}\) para cada natural \(n\ge 1\). La sucesión completa se anota \((a_{n})\).</li>
+      <li><b>Creciente:</b> \(a_{n+1}\ge a_{n}\) para todo \(n\ge 1\). <b>Estrictamente creciente:</b> \(a_{n+1}&gt;a_{n}\) para todo \(n\ge 1\).</li>
+      <li><b>Decreciente:</b> \(a_{n+1}\le a_{n}\) para todo \(n\ge 1\). <b>Estrictamente decreciente:</b> \(a_{n+1}&lt;a_{n}\) para todo \(n\ge 1\).</li>
+      <li><b>Monótona:</b> creciente o decreciente. Una sucesión constante es las dos cosas a la vez, y ninguna de las dos de manera estricta.</li>
+      <li><b>Cota superior:</b> un número \(M\) tal que \(a_{n}\le M\) para todo \(n\). Si existe alguna, la sucesión es <b>acotada superiormente</b>. Una cota superior nunca es única: si \(M\) lo es, todo número mayor que \(M\) también lo es.</li>
+      <li><b>Cota inferior:</b> un número \(m\) tal que \(a_{n}\ge m\) para todo \(n\). Si existe alguna, la sucesión es <b>acotada inferiormente</b>.</li>
+      <li><b>Acotada:</b> acotada superiormente y también inferiormente: \(m\le a_{n}\le M\) para todo \(n\).</li>
+      <li><b>Supremo:</b> la menor de las cotas superiores. Un número \(s\) es el supremo de la sucesión si (1) \(s\) es cota superior y (2) ningún número menor que \(s\) es cota superior. Se escribe \(s=\sup\{a_{n}:n\ge 1\}\). <b>Ínfimo:</b> la mayor de las cotas inferiores.</li>
+      <li><b>Axioma del supremo.</b> Todo conjunto de números reales que no es vacío y tiene alguna cota superior tiene supremo, y ese supremo es un número real. Es una propiedad de los números reales que <b>se toma como base y no se demuestra</b> (un axioma). Con solo números racionales no se cumple.</li>
+    </ol>
+    <p><b>Una sucesión creciente no vuelve a bajar.</b> Si \((a_{n})\) es creciente y \(m\le n\), entonces \(a_{m}\le a_{n}\).</p>
+    <ol class="steps">
+      <li>Se fija \(m\) y se hace inducción sobre \(n\), desde \(n=m\). Primer caso, \(n=m\): \(a_{m}\le a_{m}\). ✓</li>
+      <li>Paso de \(n\) a \(n+1\): se supone \(a_{m}\le a_{n}\). Por ser creciente, \(a_{n}\le a_{n+1}\).</li>
+      <li>Se encadenan las dos desigualdades: \(a_{m}\le a_{n}\le a_{n+1}\). Entonces \(a_{m}\le a_{n+1}\). Por inducción, vale para todo \(n\ge m\).</li>
+      <li>En particular, con \(m=1\): \(a_{n}\ge a_{1}\) para todo \(n\). Una sucesión creciente siempre tiene cota inferior: su primer término. Del mismo modo, una decreciente cumple \(a_{n}\le a_{m}\) si \(m\le n\), y tiene cota superior \(a_{1}\).</li>
+    </ol>
+    <p><b>Cómo se prueba la monotonía.</b> No basta mirar algunos términos: hay que demostrarla para todo \(n\).</p>
+    <ol class="steps">
+      <li><b>Con la resta.</b> Se calcula \(a_{n+1}-a_{n}\) y se estudia su signo. Si \(a_{n+1}-a_{n}\ge 0\) para todo \(n\), sumando \(a_{n}\) a los dos lados queda \(a_{n+1}\ge a_{n}\): creciente. Si \(a_{n+1}-a_{n}\le 0\) para todo \(n\): decreciente.</li>
+      <li><b>Con el cociente, solo si todos los términos son positivos.</b> Si \(a_{n}&gt;0\) para todo \(n\) y \(\dfrac{a_{n+1}}{a_{n}}\ge 1\), se multiplican los dos lados por \(a_{n}\), que es positivo: \(a_{n+1}\ge a_{n}\): creciente. Si \(\dfrac{a_{n+1}}{a_{n}}\le 1\): decreciente. Con términos negativos, multiplicar por \(a_{n}\) invierte la desigualdad: por eso se exige que sean positivos.</li>
+      <li><b>Por inducción</b>, cuando la sucesión está dada por una recurrencia (ejemplo 2).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> Se usan sin demostrar: (1) el <b>axioma del supremo</b>, que es una propiedad de base de los números reales; (2) la <b>propiedad arquimediana</b>: para cada número real \(x\) hay un número natural \(N\) con \(N\ge x\); (3) las propiedades del valor absoluto: \(|-x|=|x|\), \(x\le|x|\), la equivalencia entre \(|x|&lt;\varepsilon\) y \(-\varepsilon&lt;x&lt;\varepsilon\) (y entre \(|x|\le K\) y \(-K\le x\le K\)) y la desigualdad triangular \(|x+y|\le|x|+|y|\); (4) las reglas de las desigualdades: se puede sumar un mismo número a los dos lados; multiplicar o dividir los dos lados por un número positivo; al multiplicar por un número negativo la desigualdad se invierte; y si \(0&lt;x&lt;y\), entonces \(\dfrac{1}{y}&lt;\dfrac{1}{x}\); (5) el principio de inducción; (6) que entre una cantidad finita de números hay uno que es el mayor. De la hoja «Límite de una sucesión» se usan: la definición de límite con \(\varepsilon\) y \(N\), la unicidad del límite, el límite de una suma, el límite de una sucesión constante y \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) (demostrados allí), y las reglas «constante por sucesión» y «producto» del álgebra de límites, que allí quedaron <b>enunciadas sin demostrar</b> (en el ejemplo 2 y en los ejercicios B y C, el límite que da la regla de la constante se comprueba además directamente; en el ejemplo 3, y en la recurrencia \(b_{n+1}=2\,b_{n}\) del ejemplo 2, las reglas se usan tal como están enunciadas). Los nombres cambian de un libro a otro: algunos llaman «no decreciente» a lo que aquí es «creciente», y «creciente» a lo que aquí es «estrictamente creciente». En el ejercicio C, los datos del estanque son inventados y el modelo está declarado en el enunciado.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Los teoremas, demostrados paso a paso</h3>
+    <p><b>Teorema 1 (toda sucesión convergente es acotada).</b> Si \(a_{n}\to L\), con \(L\) real, entonces existe un número \(K\) tal que \(|a_{n}|\le K\) para todo \(n\).</p>
+    <ol class="steps">
+      <li>La definición de límite vale para todo \(\varepsilon&gt;0\); en particular para \(\varepsilon=1\): hay un entero \(N\ge 0\) tal que \(|a_{n}-L|&lt;1\) para todo \(n&gt;N\).</li>
+      <li>Para \(n&gt;N\) se suma y se resta \(L\): \(a_{n}=(a_{n}-L)+L\).</li>
+      <li>Desigualdad triangular: \(|a_{n}|\le|a_{n}-L|+|L|\).</li>
+      <li>Por el paso 1: \(|a_{n}|&lt;1+|L|\) para todo \(n&gt;N\).</li>
+      <li>Quedan los términos \(a_{1},\ \ldots,\ a_{N}\), que son una cantidad finita (ninguno, si \(N=0\)). Sea \(K\) el mayor de los números \(|a_{1}|,\ \ldots,\ |a_{N}|\) y \(1+|L|\).</li>
+      <li>Si \(n\le N\), \(|a_{n}|\le K\) porque \(|a_{n}|\) es uno de esos números. Si \(n&gt;N\), \(|a_{n}|&lt;1+|L|\le K\). Entonces \(|a_{n}|\le K\) para todo \(n\).</li>
+      <li>\(|a_{n}|\le K\) equivale a \(-K\le a_{n}\le K\): \(K\) es cota superior y \(-K\) es cota inferior. La sucesión es acotada.</li>
+      <li><b>Leído al revés:</b> si una sucesión no es acotada, no converge. Y el recíproco es falso: \((-1)^{n}\) es acotada y no converge (ejemplo 4).</li>
+    </ol>
+    <p><b>Teorema 2 (convergencia monótona).</b> Si \((a_{n})\) es creciente y acotada superiormente, entonces converge, y su límite es su supremo: \(\displaystyle\lim_{n\to\infty}a_{n}=s\), con \(s=\sup\{a_{n}:n\ge 1\}\).</p>
+    <ol class="steps">
+      <li><b>Existe el supremo.</b> El conjunto de los términos, \(\{a_{1},\ a_{2},\ a_{3},\ \ldots\}\), no es vacío (contiene a \(a_{1}\)) y tiene una cota superior (hipótesis). Por el axioma del supremo, tiene un supremo \(s\), que es un número real.</li>
+      <li>\(s\) es cota superior: \(a_{n}\le s\) para todo \(n\).</li>
+      <li>Sea \(\varepsilon&gt;0\). El número \(s-\varepsilon\) es menor que \(s\), y \(s\) es la <b>menor</b> cota superior: entonces \(s-\varepsilon\) no es cota superior.</li>
+      <li>Que \(s-\varepsilon\) no sea cota superior quiere decir que algún término lo supera: existe un índice \(m\ge 1\) con \(a_{m}&gt;s-\varepsilon\).</li>
+      <li>Sea \(N=m-1\), que es un entero mayor o igual que \(0\). Si \(n&gt;N\), entonces \(n\ge m\).</li>
+      <li><b>Aquí se usa que es creciente:</b> como \(m\le n\), \(a_{m}\le a_{n}\).</li>
+      <li>Se encadenan los pasos 4, 6 y 2: \(s-\varepsilon&lt;a_{m}\le a_{n}\le s\).</li>
+      <li>Como \(\varepsilon&gt;0\), \(s&lt;s+\varepsilon\). Entonces \(s-\varepsilon&lt;a_{n}&lt;s+\varepsilon\).</li>
+      <li>Se resta \(s\) en los tres lugares: \(-\varepsilon&lt;a_{n}-s&lt;\varepsilon\), que es lo mismo que \(|a_{n}-s|&lt;\varepsilon\).</li>
+      <li>Para todo \(n&gt;N\) se cumple \(|a_{n}-s|&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}a_{n}=s\).</li>
+      <li><b>Qué dice y qué no dice.</b> Asegura que el límite existe y que es el supremo. No dice cuánto vale: eso se calcula aparte (ejemplos 1, 2 y 3). Y el límite es la <b>menor</b> cota superior, no cualquiera: \(2\) es cota superior de \(\dfrac{n}{n+1}\), y su límite es \(1\).</li>
+    </ol>
+    <p><b>Teorema 3 (versión decreciente).</b> Si \((a_{n})\) es decreciente y acotada inferiormente, entonces converge, y su límite es su ínfimo.</p>
+    <ol class="steps">
+      <li>Se define \(b_{n}=-a_{n}\). Por ser \((a_{n})\) decreciente, \(a_{n+1}\le a_{n}\). Se multiplica por \(-1\), que invierte la desigualdad: \(-a_{n+1}\ge-a_{n}\), o sea \(b_{n+1}\ge b_{n}\). La sucesión \((b_{n})\) es creciente.</li>
+      <li>Sea \(m\) una cota inferior de \((a_{n})\): \(a_{n}\ge m\). Se multiplica por \(-1\): \(-a_{n}\le-m\), o sea \(b_{n}\le-m\). La sucesión \((b_{n})\) es acotada superiormente.</li>
+      <li>Por el teorema 2, \((b_{n})\) converge a su supremo \(s\): para cada \(\varepsilon&gt;0\) hay un \(N\) tal que \(|b_{n}-s|&lt;\varepsilon\) para todo \(n&gt;N\).</li>
+      <li>Distancia de \(a_{n}\) a \(-s\): \(a_{n}-(-s)=a_{n}+s=-b_{n}+s=-(b_{n}-s)\).</li>
+      <li>Como \(|-x|=|x|\): \(|a_{n}-(-s)|=|b_{n}-s|&lt;\varepsilon\) para todo \(n&gt;N\). El mismo \(N\) sirve: \(\displaystyle\lim_{n\to\infty}a_{n}=-s\).</li>
+      <li><b>\(-s\) es cota inferior de \((a_{n})\):</b> \(b_{n}\le s\) es \(-a_{n}\le s\); se multiplica por \(-1\): \(a_{n}\ge-s\).</li>
+      <li><b>Y es la mayor.</b> Si un número \(t&gt;-s\) fuera cota inferior, \(a_{n}\ge t\) para todo \(n\); multiplicando por \(-1\), \(b_{n}\le-t\): el número \(-t\) sería cota superior de \((b_{n})\). Pero de \(t&gt;-s\) sale \(-t&lt;s\): una cota superior menor que el supremo, lo que es imposible.</li>
+      <li>Entonces \(-s\) es la mayor cota inferior de \((a_{n})\), su ínfimo, y es su límite.</li>
+    </ol>
+    <p><b>Teorema 4 (el término siguiente tiene el mismo límite).</b> Si \(a_{n}\to L\), entonces la sucesión \(a_{2},\ a_{3},\ a_{4},\ \ldots\), cuyo término de lugar \(n\) es \(a_{n+1}\), también tiene límite \(L\). Se usa para hallar el límite de una sucesión dada por recurrencia.</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon&gt;0\). Como \(a_{n}\to L\), hay un \(N\) tal que \(|a_{k}-L|&lt;\varepsilon\) para todo \(k&gt;N\).</li>
+      <li>Si \(n&gt;N\), entonces \(n+1&gt;n&gt;N\).</li>
+      <li>Por el paso 1, con \(k=n+1\): \(|a_{n+1}-L|&lt;\varepsilon\). Sirve el mismo \(N\). Como \(\varepsilon\) era cualquiera, \(a_{n+1}\to L\).</li>
+    </ol>
+    <p><b>Resumen: qué asegura cada propiedad.</b></p>
+    <ol class="steps">
+      <li><b>Monótona y acotada:</b> converge (teoremas 2 y 3). Una creciente necesita solo cota superior, porque la inferior ya la tiene (\(a_{1}\)); una decreciente necesita solo cota inferior.</li>
+      <li><b>Acotada, pero no monótona:</b> puede converger o no. \((-1)^{n}\) no converge; \(\dfrac{(-1)^{n}}{n}\) sí (ejemplo 4).</li>
+      <li><b>Monótona, pero no acotada:</b> no converge, por el teorema 1. Ejemplo: \(a_{n}=n\) (ejemplo 4).</li>
+      <li><b>Convergente:</b> es acotada (teorema 1), pero no tiene por qué ser monótona: \(\dfrac{(-1)^{n}}{n}\) converge a \(0\) saltando de un lado a otro. Ser monótona y acotada <b>basta</b> para converger, pero no es necesario.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Bajo el límite, crece; sobre el límite, decrece. Número ↔ figura</h3>
+    <p>La sucesión del ejemplo 2: cada término es el promedio del anterior y \(6\), es decir, \(a_{n+1}=\dfrac{a_{n}+6}{2}\). El deslizador elige el primer término, \(a_{1}\), entre los enteros de \(0\) a \(12\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los ocho puntos azules:</b> son \(a_{1},\ \ldots,\ a_{8}\), cada uno con su punteada hasta el eje vertical. Arriba del dibujo se leen el primer término elegido y los cuatro primeros valores.</li>
+      <li><b>Mira los escalones naranjas:</b> el tramo vertical entre un punto y el siguiente es el salto \(a_{n+1}-a_{n}\). Junto al primero está su cuenta, \(\dfrac{6-a_{1}}{2}\). Cada salto es la mitad del anterior.</li>
+      <li><b>Mira la recta burdeo y la franja naranja pálida:</b> la recta marca \(6\). La franja va del primer término hasta \(6\): todos los términos están dentro. Sus dos bordes son las cotas, y están anotados en el eje.</li>
+      <li><b>Mueve el deslizador \(a_{1}\):</b> si \(a_{1}&lt;6\), los puntos suben hacia \(6\) (creciente, con techo \(6\)). Si \(a_{1}&gt;6\), bajan hacia \(6\) (decreciente, con piso \(6\)). Con \(a_{1}=6\), caso límite, todos los puntos quedan sobre la recta: la sucesión es constante y todos los saltos valen \(0\).</li>
+      <li><b>Cuenta de abajo:</b> para el \(a_{1}\) elegido, los términos \(a_{2}\), \(a_{3}\) y \(a_{4}\); el salto general y el primero; por qué todos los términos quedan del mismo lado de \(6\); el signo de los saltos; las cotas, y la conclusión: monótona y acotada, converge, y su límite es \(6\).</li>
+    </ol>
+    <div class="stage" data-scene="mon-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+    <ul class="keys">
+      <li><b>Puntos azules:</b> los términos; la punteada lleva cada uno a su valor en el eje vertical.</li>
+      <li><b>Escalones naranjas:</b> los saltos \(a_{n+1}-a_{n}=\dfrac{6-a_{n}}{2}\): positivos si \(a_{n}&lt;6\), negativos si \(a_{n}&gt;6\).</li>
+      <li><b>Franja naranja pálida:</b> de \(a_{1}\) a \(6\). Son las dos cotas: todos los términos están entre ellas.</li>
+      <li><b>Recta burdeo:</b> el límite, \(6\). Es el supremo cuando la sucesión crece y el ínfimo cuando decrece.</li>
+      <li><b>Caso límite (\(a_{1}=6\)):</b> sucesión constante: \(6,\ 6,\ 6,\ \ldots\) Es creciente y decreciente a la vez, ninguna de las dos de manera estricta, y la franja se reduce a la recta. Es el único caso en que el límite es un término de la sucesión.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(a_{n}=\dfrac{n}{n+1}\), creciente y acotada</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{1+1}=\dfrac{1}{2}\); \(a_{2}=\dfrac{2}{2+1}=\dfrac{2}{3}\); \(a_{3}=\dfrac{3}{3+1}=\dfrac{3}{4}\). Parecen crecer; hay que demostrarlo para todo \(n\).</li>
+    <li><b>Monotonía, con la resta.</b> \(a_{n+1}-a_{n}=\dfrac{n+1}{n+2}-\dfrac{n}{n+1}\).</li>
+    <li>Denominador común, \((n+1)(n+2)\): \(a_{n+1}-a_{n}=\dfrac{(n+1)(n+1)-n(n+2)}{(n+1)(n+2)}\).</li>
+    <li>Se desarrollan los dos productos: \((n+1)(n+1)=n^{2}+2n+1\) y \(n(n+2)=n^{2}+2n\).</li>
+    <li>Se restan: \(n^{2}+2n+1-(n^{2}+2n)=1\). Queda \(a_{n+1}-a_{n}=\dfrac{1}{(n+1)(n+2)}\).</li>
+    <li>Signo: para \(n\ge 1\), el numerador y el denominador son positivos. Entonces \(a_{n+1}-a_{n}&gt;0\) para todo \(n\): la sucesión es estrictamente creciente.</li>
+    <li><b>Cota superior.</b> Con \(1=\dfrac{n+1}{n+1}\): \(1-a_{n}=\dfrac{n+1}{n+1}-\dfrac{n}{n+1}=\dfrac{n+1-n}{n+1}=\dfrac{1}{n+1}\), que es positivo. Entonces \(a_{n}&lt;1\) para todo \(n\): \(1\) es cota superior.</li>
+    <li><b>Cota inferior.</b> Por ser creciente, \(a_{n}\ge a_{1}=\dfrac{1}{2}\). La sucesión es acotada: \(\dfrac{1}{2}\le a_{n}&lt;1\).</li>
+    <li><b>Teorema 2:</b> es creciente y acotada superiormente; entonces converge, y su límite es su supremo. El teorema no dice cuánto vale.</li>
+    <li><b>El valor del límite.</b> Candidato: \(1\). Distancia, por el paso 7: \(|a_{n}-1|=\left|-\dfrac{1}{n+1}\right|=\dfrac{1}{n+1}\).</li>
+    <li>Sea \(\varepsilon&gt;0\). Por la propiedad arquimediana, hay un natural \(N\) con \(N\ge\dfrac{1}{\varepsilon}\). Si \(n&gt;N\), entonces \(n+1&gt;n&gt;N\ge\dfrac{1}{\varepsilon}\).</li>
+    <li>De \(n+1&gt;\dfrac{1}{\varepsilon}\): se multiplica por \(\varepsilon\) y se divide por \(n+1\), los dos positivos: \(\varepsilon&gt;\dfrac{1}{n+1}\). Entonces \(|a_{n}-1|&lt;\varepsilon\) para todo \(n&gt;N\): \(\displaystyle\lim_{n\to\infty}\dfrac{n}{n+1}=1\).</li>
+    <li>El límite es único y, por el teorema 2, es el supremo: \(\sup\{a_{n}\}=1\). Ningún término vale \(1\), porque \(1-a_{n}=\dfrac{1}{n+1}&gt;0\): el supremo no tiene por qué ser un término.</li>
+    <li><b>La monotonía, otra vez, ahora con el cociente</b> (se puede: todos los términos son positivos). \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{n+2}\cdot\dfrac{n+1}{n}=\dfrac{(n+1)(n+1)}{n(n+2)}=\dfrac{n^{2}+2n+1}{n^{2}+2n}\).</li>
+    <li>Se separa la fracción: \(\dfrac{n^{2}+2n+1}{n^{2}+2n}=\dfrac{n^{2}+2n}{n^{2}+2n}+\dfrac{1}{n^{2}+2n}=1+\dfrac{1}{n^{2}+2n}\), que es mayor que \(1\). Se multiplica por \(a_{n}&gt;0\): \(a_{n+1}&gt;a_{n}\). Los dos métodos dan lo mismo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: una sucesión dada por recurrencia. \(a_{1}=2\), \(a_{n+1}=\dfrac{a_{n}+6}{2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{2}=\dfrac{2+6}{2}=\dfrac{8}{2}=4\); \(a_{3}=\dfrac{4+6}{2}=\dfrac{10}{2}=5\); \(a_{4}=\dfrac{5+6}{2}=\dfrac{11}{2}=5{,}5\). Parecen crecer sin pasar de \(6\). No hay fórmula para \(a_{n}\) a la vista: se demuestra por inducción.</li>
+    <li><b>Cota superior: \(a_{n}&lt;6\) para todo \(n\).</b> Primer caso, \(n=1\): \(a_{1}=2\) y \(2&lt;6\). ✓</li>
+    <li>Paso de \(n\) a \(n+1\): se supone \(a_{n}&lt;6\). Se suma \(6\) a los dos lados: \(a_{n}+6&lt;12\).</li>
+    <li>Se dividen los dos lados por \(2\), que es positivo: \(\dfrac{a_{n}+6}{2}&lt;6\). El lado izquierdo es \(a_{n+1}\): \(a_{n+1}&lt;6\). Por inducción, \(a_{n}&lt;6\) para todo \(n\).</li>
+    <li><b>Monotonía, con la resta.</b> Con \(a_{n}=\dfrac{2a_{n}}{2}\): \(a_{n+1}-a_{n}=\dfrac{a_{n}+6}{2}-\dfrac{2a_{n}}{2}=\dfrac{a_{n}+6-2a_{n}}{2}=\dfrac{6-a_{n}}{2}\).</li>
+    <li>Por el paso 4, \(a_{n}&lt;6\): entonces \(6-a_{n}&gt;0\), y su mitad también. \(a_{n+1}-a_{n}&gt;0\) para todo \(n\): estrictamente creciente.</li>
+    <li><b>Teorema 2:</b> es creciente y acotada superiormente; entonces converge. Recién ahora se puede dar nombre a su límite: sea \(L=\displaystyle\lim_{n\to\infty}a_{n}\).</li>
+    <li><b>Límite del lado izquierdo de la recurrencia.</b> Por el teorema 4, \(a_{n+1}\to L\).</li>
+    <li><b>Límite del lado derecho.</b> La sucesión constante \(6\) tiene límite \(6\). Límite de una suma: \(a_{n}+6\to L+6\).</li>
+    <li>Regla «constante por sucesión», con la constante \(\dfrac{1}{2}\): \(\dfrac{a_{n}+6}{2}=\dfrac{1}{2}\,(a_{n}+6)\to\dfrac{1}{2}\,(L+6)=\dfrac{L+6}{2}\).</li>
+    <li>Comprobación directa de ese límite, sin la regla: \(\dfrac{a_{n}+6}{2}-\dfrac{L+6}{2}=\dfrac{a_{n}-L}{2}\), y \(\left|\dfrac{a_{n}-L}{2}\right|=\dfrac{|a_{n}-L|}{2}\le|a_{n}-L|\). Dado \(\varepsilon&gt;0\), el \(N\) que sirve para \(a_{n}\to L\) sirve también aquí.</li>
+    <li><b>Unicidad del límite.</b> Las sucesiones \(a_{n+1}\) y \(\dfrac{a_{n}+6}{2}\) son la misma (eso dice la recurrencia). Una sucesión tiene un solo límite: \(L=\dfrac{L+6}{2}\).</li>
+    <li>Se multiplican los dos lados por \(2\): \(2L=L+6\).</li>
+    <li>Se resta \(L\) a los dos lados: \(L=6\). Entonces \(\displaystyle\lim_{n\to\infty}a_{n}=6\).</li>
+    <li>Comprobación: \(\dfrac{6+6}{2}=\dfrac{12}{2}=6\). ✓ Y los términos siguientes se acercan a \(6\): \(a_{5}=\dfrac{5{,}5+6}{2}=\dfrac{11{,}5}{2}=5{,}75\); \(a_{6}=\dfrac{5{,}75+6}{2}=\dfrac{11{,}75}{2}=5{,}875\).</li>
+    <li>La cuenta de los pasos 8 a 14 no usó el valor de \(a_{1}\): cualquiera sea el primer término, <b>si</b> la sucesión converge, su límite es \(6\). La segunda animación muestra que converge para cada \(a_{1}\) entre \(0\) y \(12\).</li>
+    <li><b>Por qué el orden importa.</b> Otra recurrencia: \(b_{1}=1\), \(b_{n+1}=2\,b_{n}\). Si se despeja sin saber si converge: \(L=2L\), y restando \(L\), \(L=0\). Pero los términos son \(1,\ 2,\ 4,\ 8,\ \ldots\)</li>
+    <li>\(b_{n}\ge 1\) para todo \(n\) (inducción: \(b_{1}=1\); y si \(b_{n}\ge 1\), entonces \(b_{n+1}=2\,b_{n}\ge 2\ge 1\)). Entonces \(|b_{n}-0|\ge 1\) para todo \(n\): la distancia a \(0\) nunca es menor que \(\varepsilon=1\), y \(0\) no es el límite.</li>
+    <li>La cuenta \(L=2L\) solo dice: <b>si</b> hubiera límite, sería \(0\). Como \(0\) no lo es, la sucesión no tiene límite. Primero se demuestra que converge; después se despeja.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una decreciente, con el cociente. \(a_{n}=\dfrac{n}{2^{n}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{2}\); \(a_{2}=\dfrac{2}{4}=\dfrac{1}{2}\); \(a_{3}=\dfrac{3}{8}\); \(a_{4}=\dfrac{4}{16}=\dfrac{1}{4}\); \(a_{5}=\dfrac{5}{32}\).</li>
+    <li>Todos los términos son positivos (\(n&gt;0\) y \(2^{n}&gt;0\)): se puede usar el cociente.</li>
+    <li>Cociente: \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^{n}}{n}\).</li>
+    <li>Ley de las potencias: \(2^{n+1}=2\cdot 2^{n}\). Se simplifica \(2^{n}\): \(\dfrac{a_{n+1}}{a_{n}}=\dfrac{n+1}{2n}\).</li>
+    <li>Se compara con \(1\): \(\dfrac{n+1}{2n}\le 1\) equivale, multiplicando por \(2n\) (positivo), a \(n+1\le 2n\); y restando \(n\), a \(1\le n\). Eso es cierto para todo \(n\ge 1\).</li>
+    <li>Entonces \(\dfrac{a_{n+1}}{a_{n}}\le 1\). Se multiplica por \(a_{n}\), positivo: \(a_{n+1}\le a_{n}\) para todo \(n\). La sucesión es decreciente.</li>
+    <li>No es estrictamente decreciente: con \(n=1\) el cociente vale \(\dfrac{1+1}{2\cdot 1}=\dfrac{2}{2}=1\), y \(a_{2}=a_{1}\). Para \(n\ge 2\) el cociente es menor que \(1\) y los términos bajan.</li>
+    <li><b>Cotas.</b> Inferior: \(0\), porque todos los términos son positivos. Superior: \(a_{1}=\dfrac{1}{2}\), por ser decreciente.</li>
+    <li><b>Teorema 3:</b> es decreciente y acotada inferiormente; entonces converge. Sea \(L\) su límite.</li>
+    <li>Recurrencia: del paso 4, multiplicando por \(a_{n}\): \(a_{n+1}=\dfrac{n+1}{2n}\cdot a_{n}\).</li>
+    <li>Se separa la fracción: \(\dfrac{n+1}{2n}=\dfrac{n}{2n}+\dfrac{1}{2n}=\dfrac{1}{2}+\dfrac{1}{2}\cdot\dfrac{1}{n}\).</li>
+    <li>Como \(\dfrac{1}{n}\to 0\), por la regla «constante por sucesión» \(\dfrac{1}{2}\cdot\dfrac{1}{n}\to\dfrac{1}{2}\cdot 0=0\); y por el límite de una suma, \(\dfrac{1}{2}+\dfrac{1}{2}\cdot\dfrac{1}{n}\to\dfrac{1}{2}+0=\dfrac{1}{2}\).</li>
+    <li>Regla del producto (enunciada sin demostrar en «Límite de una sucesión»): \(\dfrac{n+1}{2n}\cdot a_{n}\to\dfrac{1}{2}\cdot L\).</li>
+    <li>Por el teorema 4, \(a_{n+1}\to L\). Por la unicidad del límite: \(L=\dfrac{L}{2}\).</li>
+    <li>Se resta \(\dfrac{L}{2}\) a los dos lados: \(L-\dfrac{L}{2}=0\), o sea \(\dfrac{L}{2}=0\). Se multiplica por \(2\): \(L=0\).</li>
+    <li>\(\displaystyle\lim_{n\to\infty}\dfrac{n}{2^{n}}=0\), y \(0\) es el ínfimo de la sucesión. Ningún término vale \(0\). Con números: \(a_{10}=\dfrac{10}{2^{10}}=\dfrac{10}{1024}\approx 0{,}0098\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: cuando falta una de las dos propiedades</h3>
+  <div class="body">
+  <p><b>(a)</b> \(a_{n}=(-1)^{n}\): acotada, no monótona, y no converge.</p>
+  <ol class="steps">
+    <li>Términos: \(-1,\ 1,\ -1,\ 1,\ \ldots\) Acotada: \(-1\le a_{n}\le 1\) para todo \(n\).</li>
+    <li>No es creciente: \(a_{2}=1\) y \(a_{3}=-1\), así que \(a_{3}&lt;a_{2}\). No es decreciente: \(a_{1}=-1\) y \(a_{2}=1\), así que \(a_{2}&gt;a_{1}\). No es monótona.</li>
+    <li>No converge: está demostrado en la hoja «Límite de una sucesión» (ejemplo 3). <b>Acotada sola no basta.</b></li>
+  </ol>
+  <p><b>(b)</b> \(a_{n}=n\): monótona, no acotada, y no converge.</p>
+  <ol class="steps">
+    <li>Resta: \(a_{n+1}-a_{n}=(n+1)-n=1\), que es positivo: estrictamente creciente.</li>
+    <li>Tiene cota inferior, \(a_{1}=1\). No tiene cota superior: dado un número \(M\) cualquiera, por la propiedad arquimediana hay un natural \(N\ge M+1\); entonces \(a_{N}=N\ge M+1&gt;M\), y \(M\) no es cota superior.</li>
+    <li>No es acotada; por el teorema 1, no converge. <b>Monótona sola no basta.</b></li>
+  </ol>
+  <p><b>(c)</b> \(a_{n}=\dfrac{(-1)^{n}}{n}\): no monótona, y sin embargo converge.</p>
+  <ol class="steps">
+    <li>Términos: \(-1,\ \dfrac{1}{2},\ -\dfrac{1}{3},\ \dfrac{1}{4},\ \ldots\) No es decreciente: \(a_{2}=\dfrac{1}{2}&gt;a_{1}=-1\). No es creciente: \(a_{3}=-\dfrac{1}{3}&lt;a_{2}=\dfrac{1}{2}\).</li>
+    <li>Es acotada: \(|a_{n}|=\dfrac{1}{n}\le 1\), o sea \(-1\le a_{n}\le 1\).</li>
+    <li>Converge a \(0\): está demostrado en la hoja «Límite de una sucesión» (ejercicio A). Los teoremas 2 y 3 no se pueden aplicar, porque no es monótona, y la sucesión converge igual.</li>
+    <li>Conclusión de los tres casos: «monótona y acotada» asegura la convergencia; si falta una de las dos propiedades, los teoremas 2 y 3 no dicen nada, y hay que estudiar la sucesión de otra manera.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que una cota es el límite: \(2\) es cota superior de \(\dfrac{n}{n+1}\) y el límite es \(1\); el límite es la <b>menor</b> cota superior. Usar el teorema con una sola de las dos propiedades: \(a_{n}=n\) es monótona y no converge; \((-1)^{n}\) es acotada y no converge. Despejar \(L\) de la recurrencia antes de demostrar que la sucesión converge: con \(b_{n+1}=2\,b_{n}\) y \(b_{1}=1\) sale \(L=0\), y la sucesión \(1,\ 2,\ 4,\ 8,\ \ldots\) no tiene límite. Dar por probada la monotonía mirando tres o cuatro términos: se demuestra para todo \(n\), con la resta, con el cociente o por inducción. Usar el cociente cuando hay términos negativos o nulos. Creer que una sucesión que no es monótona no puede converger: \(\dfrac{(-1)^{n}}{n}\) converge a \(0\). Creer que una sucesión creciente y acotada alcanza su supremo: \(\dfrac{n}{n+1}\) nunca vale \(1\). Confundir «creciente» con «estrictamente creciente»: una sucesión constante es creciente. Y confundir «acotada superiormente» con «acotada»: \(a_{n}=-n\) tiene cota superior, \(-1\), y no es acotada.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Para cada sucesión, decide si es monótona y si es acotada, y di si converge. (a) \(a_{n}=2-\dfrac{1}{n}\): halla además su límite. (b) \(b_{n}=\dfrac{5}{n}\): usa el cociente, y halla su límite. (c) \(c_{n}=n^{2}\).</p>
+    <details><summary>Pista</summary><div><p>En (a), la resta \(a_{n+1}-a_{n}\) queda \(\dfrac{1}{n}-\dfrac{1}{n+1}\). En (b), el cociente queda \(\dfrac{n}{n+1}\). En (c), compara \(n^{2}\) con \(n\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Resta: \(a_{n+1}-a_{n}=\left(2-\dfrac{1}{n+1}\right)-\left(2-\dfrac{1}{n}\right)=\dfrac{1}{n}-\dfrac{1}{n+1}\).</li>
+        <li>(a) Denominador común, \(n(n+1)\): \(\dfrac{1}{n}-\dfrac{1}{n+1}=\dfrac{n+1-n}{n(n+1)}=\dfrac{1}{n(n+1)}\), que es positivo. Estrictamente creciente.</li>
+        <li>(a) Cota superior: \(\dfrac{1}{n}&gt;0\), así que \(2-\dfrac{1}{n}&lt;2\). Cota inferior: \(a_{1}=2-1=1\), por ser creciente. Acotada: \(1\le a_{n}&lt;2\).</li>
+        <li>(a) Creciente y acotada superiormente: por el teorema 2, converge.</li>
+        <li>(a) Límite. Distancia a \(2\): \(|a_{n}-2|=\left|-\dfrac{1}{n}\right|=\dfrac{1}{n}\). Dado \(\varepsilon&gt;0\), con un natural \(N\ge\dfrac{1}{\varepsilon}\), si \(n&gt;N\) entonces \(\dfrac{1}{n}&lt;\varepsilon\) (hoja «Límite de una sucesión», ejemplo 1). Luego \(\displaystyle\lim_{n\to\infty}a_{n}=2\), que es su supremo.</li>
+        <li>(b) Todos los términos son positivos. Cociente: \(\dfrac{b_{n+1}}{b_{n}}=\dfrac{5}{n+1}\cdot\dfrac{n}{5}=\dfrac{n}{n+1}\).</li>
+        <li>(b) Como \(n&lt;n+1\), dividiendo por \(n+1\) (positivo): \(\dfrac{n}{n+1}&lt;1\). Se multiplica por \(b_{n}&gt;0\): \(b_{n+1}&lt;b_{n}\). Estrictamente decreciente.</li>
+        <li>(b) Cota inferior: \(0\) (términos positivos). Cota superior: \(b_{1}=5\). Acotada: \(0&lt;b_{n}\le 5\). Decreciente y acotada inferiormente: por el teorema 3, converge.</li>
+        <li>(b) Límite. Distancia a \(0\): \(\left|\dfrac{5}{n}-0\right|=\dfrac{5}{n}\). Dado \(\varepsilon&gt;0\), sea \(N\) un natural con \(N\ge\dfrac{5}{\varepsilon}\). Si \(n&gt;N\): \(n&gt;\dfrac{5}{\varepsilon}\); se multiplica por \(\varepsilon\) y se divide por \(n\), los dos positivos: \(\dfrac{5}{n}&lt;\varepsilon\). Luego \(\displaystyle\lim_{n\to\infty}\dfrac{5}{n}=0\), que es su ínfimo.</li>
+        <li>(c) Resta: \((n+1)^{2}-n^{2}=n^{2}+2n+1-n^{2}=2n+1\), que es positivo. Estrictamente creciente. Tiene cota inferior, \(c_{1}=1\).</li>
+        <li>(c) No tiene cota superior. Como \(n\ge 1\), multiplicando por \(n\) (positivo): \(n^{2}\ge n\). Dado un número \(M\), hay un natural \(N\ge M+1\); entonces \(c_{N}=N^{2}\ge N\ge M+1&gt;M\).</li>
+        <li>(c) Es monótona, pero no acotada: por el teorema 1, no converge.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(a_{1}=10\) y \(a_{n+1}=\dfrac{a_{n}}{2}+1\). (a) Calcula \(a_{2}\), \(a_{3}\), \(a_{4}\) y \(a_{5}\). (b) Demuestra por inducción que \(a_{n}&gt;2\) para todo \(n\). (c) Demuestra que es estrictamente decreciente. (d) Justifica que converge y halla su límite. (e) Demuestra por inducción que \(a_{n}-2=\dfrac{8}{2^{\,n-1}}\) y encuentra desde qué término la distancia al límite es menor que \(0{,}01\).</p>
+    <details><summary>Pista</summary><div><p>En (c), la resta \(a_{n+1}-a_{n}\) queda \(1-\dfrac{a_{n}}{2}\); usa (b) para su signo. En (d), primero el teorema 3; después toma límite a los dos lados de la recurrencia. En (e), \(a_{n+1}-2=\dfrac{a_{n}-2}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(a_{2}=\dfrac{10}{2}+1=5+1=6\); \(a_{3}=\dfrac{6}{2}+1=3+1=4\); \(a_{4}=\dfrac{4}{2}+1=2+1=3\); \(a_{5}=\dfrac{3}{2}+1=1{,}5+1=2{,}5\).</li>
+        <li>(b) Primer caso, \(n=1\): \(a_{1}=10\) y \(10&gt;2\). ✓</li>
+        <li>(b) Paso de \(n\) a \(n+1\): se supone \(a_{n}&gt;2\). Se divide por \(2\), positivo: \(\dfrac{a_{n}}{2}&gt;1\). Se suma \(1\): \(\dfrac{a_{n}}{2}+1&gt;2\), o sea \(a_{n+1}&gt;2\). Por inducción, \(a_{n}&gt;2\) para todo \(n\).</li>
+        <li>(c) Resta: \(a_{n+1}-a_{n}=\dfrac{a_{n}}{2}+1-a_{n}=1-\dfrac{a_{n}}{2}\), porque \(\dfrac{a_{n}}{2}-a_{n}=-\dfrac{a_{n}}{2}\).</li>
+        <li>(c) Por (b), \(a_{n}&gt;2\), y dividiendo por \(2\): \(\dfrac{a_{n}}{2}&gt;1\). Entonces \(1-\dfrac{a_{n}}{2}&lt;0\): \(a_{n+1}&lt;a_{n}\) para todo \(n\). Estrictamente decreciente.</li>
+        <li>(d) Es decreciente y, por (b), acotada inferiormente por \(2\): por el teorema 3, converge. Sea \(L\) su límite.</li>
+        <li>(d) Lado izquierdo: por el teorema 4, \(a_{n+1}\to L\). Lado derecho: por la regla «constante por sucesión», \(\dfrac{a_{n}}{2}=\dfrac{1}{2}\,a_{n}\to\dfrac{L}{2}\); y por el límite de una suma, con la sucesión constante \(1\): \(\dfrac{a_{n}}{2}+1\to\dfrac{L}{2}+1\).</li>
+        <li>(d) Comprobación directa, sin la regla: \(\left(\dfrac{a_{n}}{2}+1\right)-\left(\dfrac{L}{2}+1\right)=\dfrac{a_{n}-L}{2}\), y \(\dfrac{|a_{n}-L|}{2}\le|a_{n}-L|&lt;\varepsilon\) para todo \(n\) mayor que el \(N\) de \(a_{n}\to L\).</li>
+        <li>(d) Unicidad del límite: \(L=\dfrac{L}{2}+1\). Se resta \(\dfrac{L}{2}\): \(\dfrac{L}{2}=1\). Se multiplica por \(2\): \(L=2\). Comprobación: \(\dfrac{2}{2}+1=1+1=2\). ✓</li>
+        <li>(e) Primer caso, \(n=1\): \(a_{1}-2=10-2=8\), y \(\dfrac{8}{2^{\,1-1}}=\dfrac{8}{2^{0}}=\dfrac{8}{1}=8\). ✓</li>
+        <li>(e) Paso de \(n\) a \(n+1\): \(a_{n+1}-2=\dfrac{a_{n}}{2}+1-2=\dfrac{a_{n}}{2}-1=\dfrac{a_{n}-2}{2}\). Con la suposición \(a_{n}-2=\dfrac{8}{2^{\,n-1}}\): \(a_{n+1}-2=\dfrac{8}{2\cdot 2^{\,n-1}}=\dfrac{8}{2^{\,n}}\), que es la fórmula con \(n+1\) en vez de \(n\). Por inducción, vale para todo \(n\).</li>
+        <li>(e) La distancia al límite es \(|a_{n}-2|=\dfrac{8}{2^{\,n-1}}\) (es positiva). Se pide \(\dfrac{8}{2^{\,n-1}}&lt;\dfrac{1}{100}\). Se multiplica por \(100\cdot 2^{\,n-1}\), positivo: \(800&lt;2^{\,n-1}\).</li>
+        <li>(e) Potencias de \(2\): \(2^{9}=512\), que no es mayor que \(800\); \(2^{10}=1024\), que sí lo es. Las siguientes son mayores todavía. Entonces hace falta \(n-1\ge 10\), o sea \(n\ge 11\): desde el término \(11\) (sirve \(N=10\)).</li>
+        <li>(e) Comprobación: \(a_{11}-2=\dfrac{8}{1024}=\dfrac{1}{128}\approx 0{,}0078&lt;0{,}01\). ✓ En cambio \(a_{10}-2=\dfrac{8}{512}=\dfrac{1}{64}\approx 0{,}0156\), que es mayor que \(0{,}01\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Don Hernán riega su huerto con un estanque en el que caben \(150\) litros. Modelo (datos inventados): cada día el riego gasta la cuarta parte del agua que hay en el estanque esa mañana, y cada noche una manguera le agrega \(30\) litros; no se pierde agua de otra manera, y esto se repite todos los días, sin fin. La primera mañana hay \(40\) litros. Sea \(a_{n}\) la cantidad de litros que hay en el estanque la mañana del día \(n\). (a) Escribe la recurrencia y calcula \(a_{2}\), \(a_{3}\) y \(a_{4}\). (b) Demuestra que \(a_{n}&lt;120\) para todo \(n\). ¿Se rebalsa alguna vez el estanque? (c) Demuestra que la sucesión es creciente. (d) Justifica que converge y halla su límite. (e) ¿Qué mañana hay por primera vez más de \(100\) litros? (f) ¿Qué significa el límite?</p>
+    <details><summary>Pista</summary><div><p>Si se gasta la cuarta parte, quedan tres cuartos: \(a_{n+1}=\dfrac{3}{4}\,a_{n}+30\). En (b) usa inducción. En (c), la resta queda \(30-\dfrac{a_{n}}{4}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Después del riego queda \(a_{n}-\dfrac{1}{4}\,a_{n}=\dfrac{3}{4}\,a_{n}\). En la noche entran \(30\) litros: \(a_{n+1}=\dfrac{3}{4}\,a_{n}+30\), con \(a_{1}=40\).</li>
+        <li>(a) \(a_{2}=\dfrac{3}{4}\cdot 40+30=30+30=60\); \(a_{3}=\dfrac{3}{4}\cdot 60+30=45+30=75\); \(a_{4}=\dfrac{3}{4}\cdot 75+30=56{,}25+30=86{,}25\) litros.</li>
+        <li>(b) Primer caso, \(n=1\): \(a_{1}=40\) y \(40&lt;120\). ✓</li>
+        <li>(b) Paso de \(n\) a \(n+1\): se supone \(a_{n}&lt;120\). Se multiplica por \(\dfrac{3}{4}\), positivo: \(\dfrac{3}{4}\,a_{n}&lt;\dfrac{3}{4}\cdot 120=90\). Se suma \(30\): \(\dfrac{3}{4}\,a_{n}+30&lt;90+30=120\), o sea \(a_{n+1}&lt;120\). Por inducción, \(a_{n}&lt;120\) para todo \(n\).</li>
+        <li>(b) En el modelo, el estanque nunca se rebalsa: cada mañana hay menos de \(120\) litros, y \(120&lt;150\).</li>
+        <li>(c) Resta: \(a_{n+1}-a_{n}=\dfrac{3}{4}\,a_{n}+30-a_{n}=30-\dfrac{1}{4}\,a_{n}\), porque \(\dfrac{3}{4}\,a_{n}-a_{n}=-\dfrac{1}{4}\,a_{n}\).</li>
+        <li>(c) Por (b), \(a_{n}&lt;120\); se divide por \(4\): \(\dfrac{a_{n}}{4}&lt;30\). Entonces \(30-\dfrac{a_{n}}{4}&gt;0\): \(a_{n+1}&gt;a_{n}\) para todo \(n\). Estrictamente creciente.</li>
+        <li>(d) Creciente y acotada superiormente por \(120\): por el teorema 2, converge. Sea \(L\) su límite.</li>
+        <li>(d) Lado izquierdo: por el teorema 4, \(a_{n+1}\to L\). Lado derecho: por la regla «constante por sucesión», \(\dfrac{3}{4}\,a_{n}\to\dfrac{3}{4}\,L\); y por el límite de una suma, con la sucesión constante \(30\): \(\dfrac{3}{4}\,a_{n}+30\to\dfrac{3}{4}\,L+30\).</li>
+        <li>(d) Comprobación directa, sin la regla: \(\left(\dfrac{3}{4}\,a_{n}+30\right)-\left(\dfrac{3}{4}\,L+30\right)=\dfrac{3}{4}\,(a_{n}-L)\), y \(\dfrac{3}{4}\,|a_{n}-L|\le|a_{n}-L|&lt;\varepsilon\) para todo \(n\) mayor que el \(N\) de \(a_{n}\to L\).</li>
+        <li>(d) Unicidad del límite: \(L=\dfrac{3}{4}\,L+30\). Se resta \(\dfrac{3}{4}\,L\): \(\dfrac{1}{4}\,L=30\). Se multiplica por \(4\): \(L=120\). Comprobación: \(\dfrac{3}{4}\cdot 120+30=90+30=120\). ✓</li>
+        <li>(e) Se sigue la lista: \(a_{5}=\dfrac{3}{4}\cdot 86{,}25+30=64{,}6875+30=94{,}6875\), que no pasa de \(100\). \(a_{6}=\dfrac{3}{4}\cdot 94{,}6875+30=71{,}015625+30=101{,}015625\), que sí.</li>
+        <li>(e) La mañana del día \(6\) hay por primera vez más de \(100\) litros: unos \(101{,}02\). Y como la sucesión crece, desde ahí siempre hay más de \(100\).</li>
+        <li>(f) El agua de cada mañana aumenta día a día y se acerca tanto como se quiera a \(120\) litros, sin alcanzarlos nunca (porque \(a_{n}&lt;120\)). Con \(120\) litros habría equilibrio: el riego gastaría \(\dfrac{1}{4}\cdot 120=30\) litros, justo lo que entra cada noche. Es un modelo: un huerto real no gasta cada día exactamente la cuarta parte.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H27 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H27 · sucesiones monótonas acotadas: aₙ = n/(n + 1) crece y tiene techo 1; el menor techo (supremo) es su límite */
+function mo27Cl(t){ return Math.max(0, Math.min(1, t)); }
+function mo27D(x){ var s = x.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''); return s.replace('.', ',').replace('-', '−'); }
+function mo27T(x){ return mo27D(x).replace(',', '{,}').replace('−', '-'); }
+OA.scene('mon-idea', (function(){
+  var N = 6, M = 12;
+  function a(n){ return n/(n + 1); } function gx(n){ return -0.45 + 0.42*n; } function gy(y){ return 0.9 + (y - 0.4)*8; }
+  var PZ = [['YA', 'a_{n}', 'aₙ', 'c-sec'],
+    ['S1', '\\tfrac{1}{6}', '1/6', 'diff'], ['S2', '\\tfrac{1}{12}', '1/12', 'diff'],
+    ['SA', '\\text{salto: }a_{n+1}-a_{n}=\\tfrac{1}{(n+1)(n+2)}>0', 'salto: aₙ₊₁ − aₙ = 1/((n + 1)(n + 2)) > 0', 'diff'],
+    ['TE', '\\text{techo: }a_{n}<1', 'techo: aₙ < 1', 'c-tan'],
+    ['DD', '\\text{le falta: }1-a_{n}=\\tfrac{1}{n+1}', 'le falta: 1 − aₙ = 1/(n + 1)', 'c-tan'],
+    ['NC', '1-\\tfrac{1}{4}=0{,}75\\text{: no es techo}', '1 − 1/4 = 0,75: no es techo', 'diff'],
+    ['A4', 'a_{4}=0{,}8>0{,}75', 'a₄ = 0,8 > 0,75', 'c-alt'],
+    ['N3', 'N=3', 'N = 3', 'c-alt'],
+    ['B2', '\\varepsilon=\\tfrac{1}{10}\\text{: de }0{,}9\\text{ a }1,\\ \\ N=9', 'ε = 1/10: de 0,9 a 1, N = 9', 'c-alt'],
+    ['Q', 'a_{n}=\\tfrac{n}{n+1}\\text{: ¿por qué tiene límite?}', 'aₙ = n/(n + 1): ¿por qué tiene límite?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{crece y tiene techo: }\\lim\\limits_{n\\to\\infty}a_{n}=1', '⟹ crece y tiene techo: lím aₙ = 1', 'diff'],
+    ['R1', 'a_{n}=\\tfrac{n}{n+1}:\\quad \\tfrac{1}{2},\\ \\tfrac{2}{3},\\ \\tfrac{3}{4},\\ \\tfrac{4}{5},\\ \\ldots', 'aₙ = n/(n + 1): 1/2, 2/3, 3/4, 4/5, …', ''],
+    ['R2', 'a_{n+1}-a_{n}=\\tfrac{1}{(n+1)(n+2)}>0\\text{: creciente}', 'aₙ₊₁ − aₙ = 1/((n + 1)(n + 2)) > 0: creciente', ''],
+    ['R3', '1-a_{n}=\\tfrac{1}{n+1}>0\\text{: cota superior }1', '1 − aₙ = 1/(n + 1) > 0: cota superior 1', ''],
+    ['R4', 'a_{4}=0{,}8>0{,}75\\text{: }0{,}75\\text{ no es cota superior}', 'a₄ = 0,8 > 0,75: 0,75 no es cota superior', ''],
+    ['R5', 'n>3:\\ \\ 0{,}75<a_{4}\\le a_{n}<1\\ \\Rightarrow\\ |a_{n}-1|<\\tfrac{1}{4}', 'n > 3: 0,75 < a₄ ≤ aₙ < 1 ⟹ |aₙ − 1| < 1/4', ''],
+    ['R6', '\\text{todo }\\varepsilon>0\\text{: igual}\\ \\Rightarrow\\ \\lim\\limits_{n\\to\\infty}a_{n}=1=\\sup', 'todo ε > 0: igual ⟹ lím aₙ = 1 = sup', 'diff']];
+  var TXT = [['Cada punto es un término; la punteada lo', 'lleva a su valor en el eje vertical.'],
+    ['Cada salto naranja es positivo: cada término', 'es mayor que el anterior. La sucesión crece.'],
+    ['Ningún término llega a 1: es un techo (cota', 'superior). En burdeo, lo que le falta a cada uno.'],
+    ['Un techo más bajo, 0,75, no sirve: el cuarto', 'término lo supera. El menor techo es 1.'],
+    ['Desde el cuarto, todos quedan entre 0,75 y 1:', 'no bajan (crece) ni pasan de 1 (techo).'],
+    ['Con cualquier franja bajo 1 pasa lo mismo:', 'el límite es 1, el menor techo (supremo).']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.9, y1:9.6}, aspect:14.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: si una sucesión crece y tiene techo, sus términos se aprietan contra el menor techo, que es su límite. Animación en seis pasos con la sucesión de término general n dividido por n más 1. Uno: una gráfica con doce puntos azules, uno por término: un medio, dos tercios, tres cuartos, cuatro quintos, y siguen subiendo cada vez menos; de cada punto sale una línea punteada hasta su valor en el eje vertical. Dos: entre cada punto y el siguiente se dibuja un escalón; el tramo vertical, naranja, es el salto, siempre positivo: un sexto, un doceavo, y cada vez menor. Tres: una recta burdeo horizontal a la altura 1, el techo, y de cada punto sube un trazo burdeo hasta ella: es lo que le falta al término para llegar a 1, que vale 1 dividido por n más 1. Cuatro: una recta naranja punteada a la altura 0,75; el cuarto término, 0,8, queda con un anillo verde porque la supera: 0,75 no es techo. Cinco: una franja naranja entre 0,75 y 1 y una línea verde vertical en n igual a 3, rotulada N igual a 3; los puntos del cuarto en adelante se pintan verdes: están todos dentro de la franja. Seis: una franja más angosta, entre 0,9 y 1, con N igual a 9; los puntos 10, 11 y 12 quedan con un anillo verde; la respuesta, crece y tiene techo, el límite es 1, se escribe bajo la pregunta. Nada de lo que aparece se borra. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> los términos \\(a_{n}\\) (punteadas: llevan cada uno a su valor en el eje)</span><span><i class="sw rise"></i> los saltos \\(a_{n+1}-a_{n}\\), la prueba con \\(0{,}75\\) y la franja</span><span><i class="sw tan"></i> el techo \\(1\\) y lo que le falta a cada término</span><span><i class="sw alt"></i> el número \\(N\\) y los términos que ya quedaron dentro</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, w2, w3, w4, w5, w6, col, xr = gx(12.8);
+      function txt(t, x, y, al, cc){ c.globalAlpha = al == null ? 1 : al; c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function franja(lo, w, al){ c.globalAlpha = al*Math.min(1, 2*w); c.fillStyle = C.rise; c.fillRect(X(gx(0)), Y(gy(1)), X(xr) - X(gx(0)), (Y(gy(lo)) - Y(gy(1)))*w); c.globalAlpha = 1; }
+      function vert(n, w){ c.strokeStyle = C.alt; c.lineWidth = 1.4; c.setLineDash([5, 3]); c.beginPath(); c.moveTo(X(gx(n)), Y(gy(0.4))); c.lineTo(X(gx(n)), Y(gy(0.4 + 0.72*w))); c.stroke(); c.setLineDash([]); }
+      w2 = k > 2 ? 1 : k === 2 ? u : 0; w3 = k > 3 ? 1 : k === 3 ? u : 0; w4 = k > 4 ? 1 : k === 4 ? u : 0; w5 = k > 5 ? 1 : k === 5 ? u : 0; w6 = k === 6 ? u : 0;
+      /* pasos 5 y 6: las franjas, debajo de todo lo demás */
+      if (k >= 5) franja(0.75, w5, 0.14);
+      if (k >= 6) franja(0.9, mo27Cl(1.6*w6), 0.24);
+      /* ejes */
+      S.line(gx(0), gy(0.4), xr, gy(0.4), {color:C.ink, width:1.1}); S.line(gx(0), gy(0.4), gx(0), gy(1.14), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= M; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0.4)) - 3); c.lineTo(X(gx(i)), Y(gy(0.4)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0.4)) + 11, 'center'); }
+      [[0.5, '0,5'], [0.75, '0,75'], [1, '1']].concat(k >= 6 ? [[0.9, '0,9']] : []).forEach(function(m){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(m[0]))); c.lineTo(X(gx(0)) + 3, Y(gy(m[0]))); c.stroke(); num(m[1], X(gx(0)) - 7, Y(gy(m[0])), 'right'); });
+      num('n', X(xr) + 5, Y(gy(0.4)), 'left'); L('YA', gx(0) - 0.12, gy(1.14) - 0.05, -100);
+      /* paso 2: los saltos, como escalones: tramo horizontal fino y tramo vertical naranja */
+      if (k >= 2){ for (i = 1; i < M; i++){ w = mo27Cl(w2*(M + 2) - i); if (w <= 0) continue;
+          c.strokeStyle = C.muted || '#6b6b6b'; c.globalAlpha = 0.6; c.lineWidth = 0.9; c.setLineDash([]); c.beginPath(); c.moveTo(X(gx(i)), Y(gy(a(i)))); c.lineTo(X(gx(i + 1)), Y(gy(a(i)))); c.stroke(); c.globalAlpha = 1;
+          c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.moveTo(X(gx(i + 1)), Y(gy(a(i)))); c.lineTo(X(gx(i + 1)), Y(gy(a(i) + (a(i + 1) - a(i))*w))); c.stroke(); }
+        if (w2 > 0.25) L('S1', gx(2) + 0.07, gy((a(1) + a(2))/2), 0); if (w2 > 0.4) L('S2', gx(3) + 0.07, gy((a(2) + a(3))/2), 0);
+        if (w2 > 0.7) L('SA', xr, 2.47, -100); }
+      /* paso 3: el techo y lo que le falta a cada término */
+      if (k >= 3){ c.strokeStyle = C.tan; c.lineWidth = 1.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(gx(0)), Y(gy(1))); c.lineTo(X(gx(0)) + (X(xr) - X(gx(0)))*mo27Cl(2*w3), Y(gy(1))); c.stroke();
+        for (i = 1; i <= M; i++){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(gx(i)), Y(gy(a(i)))); c.lineTo(X(gx(i)), Y(gy(a(i) + (1 - a(i))*mo27Cl(2*w3 - 0.6)))); c.stroke(); }
+        if (w3 > 0.5) L('TE', xr, gy(1) + 0.3, -100); if (w3 > 0.7) L('DD', xr, 1.95, -100); }
+      /* paso 4: un techo más bajo no sirve */
+      if (k >= 4){ c.strokeStyle = C.rise; c.lineWidth = 1.3; c.setLineDash([6, 4]); c.beginPath(); c.moveTo(X(gx(0)), Y(gy(0.75))); c.lineTo(X(gx(0)) + (X(xr) - X(gx(0)))*mo27Cl(2*w4), Y(gy(0.75))); c.stroke(); c.setLineDash([]);
+        if (w4 > 0.5) L('NC', xr, 3.37, -100);
+        if (w4 > 0.7){ c.strokeStyle = C.alt; c.lineWidth = 1.5; c.beginPath(); c.arc(X(gx(4)), Y(gy(a(4))), 6.5, 0, 6.2832); c.stroke(); L('A4', xr, 2.93, -100); } }
+      /* pasos 5 y 6: el N de cada franja */
+      if (k >= 5){ vert(3, mo27Cl(2*w5)); if (w5 > 0.4) L('N3', gx(3), gy(0.4) + 0.72*8 + 0.25, -50); }
+      if (k >= 6){ vert(9, mo27Cl(2*w6 - 0.6)); if (w6 > 0.5) L('B2', xr, 1.43, -100); }
+      /* paso 1: los términos, uno tras otro, cada uno con su punteada hasta el eje vertical */
+      for (i = 1; i <= M; i++){ w = k === 1 ? mo27Cl(u*M - (i - 1)) : 1; if (w <= 0) continue;
+        col = (i > 3 && w5*10 > i - 3.5) ? C.alt : C.sec;
+        c.globalAlpha = 0.45*w; c.strokeStyle = C.sec; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(gx(i)), Y(gy(a(i)))); c.lineTo(X(gx(i)) + (X(gx(0)) - X(gx(i)))*w, Y(gy(a(i)))); c.stroke(); c.setLineDash([]);
+        c.globalAlpha = 0.7*w; c.beginPath(); c.arc(X(gx(0)), Y(gy(a(i))), 1.8, 0, 6.2832); c.fillStyle = C.sec; c.fill();
+        c.globalAlpha = w; c.beginPath(); c.arc(X(gx(i)), Y(gy(a(i))), 3.2, 0, 6.2832); c.fillStyle = col; c.fill();
+        if (i > 9 && w6 > 0.8){ c.strokeStyle = C.alt; c.lineWidth = 1.2; c.beginPath(); c.arc(X(gx(i)), Y(gy(a(i))), 6, 0, 6.2832); c.stroke(); }
+        c.globalAlpha = 1; }
+      L('Q', -1.2, 8.2, 0); if (k === N && u > 0.5) L('F', -1.2, 7.62, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.05); txt(TXT[k - 1][1], -1.2, 0.05 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.2));
+      dtQue(S, 'si crece y tiene techo, los términos se', 'aprietan contra el menor techo: su límite.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.35, [6, 36, 66, 96, 126, 156]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = [
+      '\\text{Dato: término general }a_{n}=\\dfrac{n}{n+1},\\ n\\ge 1' + Q + '\\text{Se reemplaza }n\\text{:}' + Q + 'a_{1}=\\dfrac{1}{1+1}=\\dfrac{1}{2}=0{,}5' + Q + 'a_{2}=\\dfrac{2}{2+1}=\\dfrac{2}{3}\\approx 0{,}67' + Q + 'a_{3}=\\dfrac{3}{3+1}=\\dfrac{3}{4}=0{,}75' + Q + 'a_{4}=\\dfrac{4}{4+1}=\\dfrac{4}{5}=0{,}8' + Q + 'a_{5}=\\dfrac{5}{5+1}=\\dfrac{5}{6}\\approx 0{,}83' + Q + 'a_{12}=\\dfrac{12}{12+1}=\\dfrac{12}{13}\\approx 0{,}92',
+      '\\text{¿Crece? Se resta cada término del siguiente:}' + Q + 'a_{n+1}-a_{n}=\\dfrac{n+1}{n+2}-\\dfrac{n}{n+1}' + Q + '\\text{Denominador común, }(n+1)(n+2)\\text{:}' + Q + 'a_{n+1}-a_{n}=\\dfrac{(n+1)(n+1)-n(n+2)}{(n+1)(n+2)}' + Q + '\\text{Productos: }(n+1)(n+1)=n^{2}+2n+1' + Q + 'n(n+2)=n^{2}+2n' + Q + '\\text{Resta: }n^{2}+2n+1-(n^{2}+2n)=1' + Q + 'a_{n+1}-a_{n}=\\dfrac{1}{(n+1)(n+2)}>0' + Q + '\\text{(numerador y denominador positivos).}' + Q + 'a_{n+1}>a_{n}\\text{ para todo }n\\text{: crece.}' + Q + '\\text{Primer salto: }a_{2}-a_{1}=\\dfrac{1}{2\\cdot 3}=\\dfrac{1}{6}\\approx 0{,}17' + Q + '\\text{Segundo salto: }a_{3}-a_{2}=\\dfrac{1}{3\\cdot 4}=\\dfrac{1}{12}\\approx 0{,}08',
+      '\\text{¿Tiene techo? Se compara con }1=\\dfrac{n+1}{n+1}\\text{:}' + Q + '1-a_{n}=\\dfrac{n+1}{n+1}-\\dfrac{n}{n+1}' + Q + '\\phantom{1-a_{n}}=\\dfrac{n+1-n}{n+1}=\\dfrac{1}{n+1}' + Q + '\\dfrac{1}{n+1}>0\\text{, así que }a_{n}<1\\text{ para todo }n.' + Q + '1\\text{ es una cota superior (un techo).}' + Q + '\\text{También lo es todo número mayor que }1.',
+      '\\text{¿Hay un techo más bajo? Se prueba}' + Q + '1-\\dfrac{1}{4}=\\dfrac{3}{4}=0{,}75.' + Q + '\\text{Del paso 3: }a_{n}=1-\\dfrac{1}{n+1}.' + Q + 'a_{n}>0{,}75\\iff\\dfrac{1}{n+1}<\\dfrac{1}{4}' + Q + '\\iff n+1>4\\iff n>3.' + Q + 'a_{3}=0{,}75\\text{: no lo supera (justo en la línea).}' + Q + 'a_{4}=0{,}8>0{,}75\\text{: lo supera.}' + Q + '0{,}75\\text{ no es cota superior.}',
+      '\\text{Desde el cuarto término (}n>3\\text{; es decir, }N=3\\text{):}' + Q + 'a_{n}\\ge a_{4}\\quad\\text{(crece: no vuelve a bajar)}' + Q + 'a_{4}=0{,}8>0{,}75' + Q + 'a_{n}<1\\quad\\text{(techo)}' + Q + '\\text{Junto: }0{,}75<a_{n}<1<1{,}25' + Q + '\\text{o sea, }1-\\dfrac{1}{4}<a_{n}<1+\\dfrac{1}{4}\\text{,}' + Q + '\\text{que es lo mismo que }|a_{n}-1|<\\dfrac{1}{4}.',
+      '\\text{Cualquier tolerancia }\\varepsilon>0\\text{:}' + Q + '1-a_{n}=\\dfrac{1}{n+1}<\\varepsilon\\iff n+1>\\dfrac{1}{\\varepsilon}' + Q + '\\text{Hay un natural }N\\ge\\dfrac{1}{\\varepsilon}\\text{ (propiedad}' + Q + '\\text{arquimediana, usada sin demostrar).}' + Q + '\\text{Si }n>N\\text{: }n+1>\\dfrac{1}{\\varepsilon}\\text{, y entonces}' + Q + '1-\\varepsilon<a_{n}<1<1+\\varepsilon.' + Q + '\\text{Ejemplo: }\\varepsilon=\\dfrac{1}{10}\\text{, franja de }0{,}9\\text{ a }1.' + Q + '\\dfrac{1}{n+1}<\\dfrac{1}{10}\\iff n+1>10\\iff n>9' + Q + '\\text{Sirve }N=9\\text{: }a_{10}=\\dfrac{10}{11}\\approx 0{,}91>0{,}9' + Q + '\\text{Ningún número menor que }1\\text{ es techo:}' + Q + '1\\text{ es el menor techo: el supremo.}' + Q + '\\text{Y por definición de límite:}' + Q + '\\displaystyle\\lim_{n\\to\\infty}\\dfrac{n}{n+1}=1'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: aₙ₊₁ = (aₙ + 6)/2; el deslizador elige a₁ de 0 a 12; bajo 6 crece con techo 6, sobre 6 decrece con piso 6; caso límite a₁ = 6: constante */
+OA.scene('mon-vivo', (function(){
+  var M = 8, Q = '\\\\&\\qquad ', j;
+  function a(c, n){ return 6 + (c - 6)/Math.pow(2, n - 1); } function gx(n){ return -0.45 + 0.57*n; } function gy(y){ return 1.55 + y*0.38; }
+  function cual(v){ return Math.max(0, Math.min(12, Math.round(v.c == null ? 2 : v.c))); }
+  var PZ = [['YA', 'a_{n}', 'aₙ', 'c-sec'], ['LL', 'L=6', 'L = 6', 'c-tan'], ['SQ', 'a_{n+1}=\\tfrac{a_{n}+6}{2}\\quad\\text{(el promedio de }a_{n}\\text{ y }6\\text{)}', 'aₙ₊₁ = (aₙ + 6)/2 (el promedio de aₙ y 6)', 'pt']];
+  for (j = 0; j <= 12; j++){
+    PZ.push(['E' + j, 'a_{1}=' + j + ':\\quad ' + [1, 2, 3, 4].map(function(n){ return mo27T(a(j, n)); }).join(',\\ ') + ',\\ \\ldots', 'a₁ = ' + j + ': ' + [1, 2, 3, 4].map(function(n){ return mo27D(a(j, n)); }).join('; ') + '; …', 'c-sec']);
+    PZ.push(['J' + j, '\\text{salto: }\\tfrac{6-' + j + '}{2}=' + mo27T((6 - j)/2), 'salto: (6 − ' + j + ')/2 = ' + mo27D((6 - j)/2), 'diff']); }
+  function lectura(c){ var t = [0, c, a(c, 2), a(c, 3), a(c, 4)], R, i, l;
+    R = ['\\text{Datos: }a_{1}=' + c + ',\\qquad a_{n+1}=\\dfrac{a_{n}+6}{2}'];
+    l = '\\text{Términos, con }a_{n+1}=\\dfrac{a_{n}+6}{2}\\text{:}';
+    for (i = 1; i <= 3; i++) l += Q + 'a_{' + (i + 1) + '}=\\dfrac{' + mo27T(t[i]) + '+6}{2}=\\dfrac{' + mo27T(t[i] + 6) + '}{2}=' + mo27T(t[i + 1]);
+    R.push(l);
+    R.push('\\text{Salto entre dos términos, con }a_{n}=\\dfrac{2a_{n}}{2}\\text{:}' + Q + 'a_{n+1}-a_{n}=\\dfrac{a_{n}+6}{2}-\\dfrac{2a_{n}}{2}=\\dfrac{6-a_{n}}{2}' + Q + '\\text{Primer salto: }\\dfrac{6-' + c + '}{2}=\\dfrac{' + mo27T(6 - c) + '}{2}=' + mo27T((6 - c)/2) + Q + '\\text{Comprobación: }a_{2}-a_{1}=' + mo27T(t[2]) + '-' + c + '=' + mo27T(t[2] - c));
+    l = '\\text{Distancia a }6\\text{, con }6=\\dfrac{12}{2}\\text{:}' + Q + 'a_{n+1}-6=\\dfrac{a_{n}+6}{2}-\\dfrac{12}{2}=\\dfrac{a_{n}-6}{2}';
+    if (c === 6){
+      R.push(l + Q + 'a_{1}-6=6-6=0.' + Q + '\\text{Si }a_{n}-6=0\\text{: }a_{n+1}-6=\\dfrac{0}{2}=0.' + Q + '\\text{Todos cumplen }a_{n}=6\\text{ (inducción).}');
+      R.push('\\text{Todos los saltos: }a_{n+1}-a_{n}=\\dfrac{6-6}{2}=\\dfrac{0}{2}=0.' + Q + '\\text{Vale }a_{n+1}\\ge a_{n}\\text{ y también }a_{n+1}\\le a_{n}\\text{:}' + Q + '\\text{creciente y decreciente a la vez, ninguna}' + Q + '\\text{de las dos estricta.}');
+      R.push('\\text{Cotas: }6\\le a_{n}\\le 6\\text{. Acotada.}');
+      R.push('\\text{Caso límite: sucesión constante.}' + Q + '\\text{Converge a su constante: }\\displaystyle\\lim_{n\\to\\infty}a_{n}=6.' + Q + '\\text{Aquí el supremo, }6\\text{, sí es un término.}');
+      return R; }
+    if (c < 6){
+      R.push(l + Q + 'a_{1}-6=' + c + '-6=' + mo27T(c - 6) + '<0.' + Q + '\\text{Si }a_{n}-6<0\\text{, su mitad también: }a_{n+1}-6<0.' + Q + '\\text{Todos cumplen }a_{n}<6\\text{ (inducción).}');
+      R.push('\\text{Signo de los saltos: como }a_{n}<6\\text{, }6-a_{n}>0\\text{ y}' + Q + 'a_{n+1}-a_{n}=\\dfrac{6-a_{n}}{2}>0.' + Q + '\\text{Estrictamente creciente.}');
+      R.push('\\text{Cotas: }a_{n}\\ge a_{1}=' + c + '\\ \\text{(crece)}\\quad\\text{y}\\quad a_{n}<6.' + Q + '\\text{Acotada: todos los términos entre }' + c + '\\text{ y }6.');
+      R.push('\\text{Creciente y acotada superiormente: converge}' + Q + '\\text{(teorema de la convergencia monótona).}' + Q + '\\text{Su límite }L\\text{ cumple }L=\\dfrac{L+6}{2}\\text{ (ejemplo 2):}' + Q + '2L=L+6,\\qquad L=6.' + Q + '\\displaystyle\\lim_{n\\to\\infty}a_{n}=6' + Q + '\\text{Es el menor techo; ningún término vale }6.');
+      return R; }
+    R.push(l + Q + 'a_{1}-6=' + c + '-6=' + mo27T(c - 6) + '>0.' + Q + '\\text{Si }a_{n}-6>0\\text{, su mitad también: }a_{n+1}-6>0.' + Q + '\\text{Todos cumplen }a_{n}>6\\text{ (inducción).}');
+    R.push('\\text{Signo de los saltos: como }a_{n}>6\\text{, }6-a_{n}<0\\text{ y}' + Q + 'a_{n+1}-a_{n}=\\dfrac{6-a_{n}}{2}<0.' + Q + '\\text{Estrictamente decreciente.}');
+    R.push('\\text{Cotas: }a_{n}\\le a_{1}=' + c + '\\ \\text{(decrece)}\\quad\\text{y}\\quad a_{n}>6.' + Q + '\\text{Acotada: todos los términos entre }6\\text{ y }' + c + '.');
+    R.push('\\text{Decreciente y acotada inferiormente: converge}' + Q + '\\text{(teorema, versión decreciente).}' + Q + '\\text{Su límite }L\\text{ cumple }L=\\dfrac{L+6}{2}\\text{ (ejemplo 2):}' + Q + '2L=L+6,\\qquad L=6.' + Q + '\\displaystyle\\lim_{n\\to\\infty}a_{n}=6' + Q + '\\text{Es el mayor piso; ningún término vale }6.');
+    return R; }
+  function frases(c){ return c < 6 ? ['crece: cada salto es positivo', 'acotada: todos los términos entre ' + c + ' y 6', 'crece y tiene techo: converge a 6'] : c > 6 ? ['decrece: cada salto es negativo', 'acotada: todos los términos entre 6 y ' + c, 'decrece y tiene piso: converge a 6'] : ['caso límite: todos los saltos valen 0', 'constante: todos los términos valen 6', 'crece y decrece a la vez (no estricta); límite 6']; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-0.5, y1:9.0}, aspect:9.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: parta bajo 6 o sobre 6, la sucesión es monótona y acotada, y converge a 6. Una gráfica de la sucesión en que cada término es el promedio del anterior y 6. Un deslizador elige el primer término entre los enteros de 0 a 12. Se dibujan ocho términos, cada uno con una punteada hasta su valor en el eje vertical, y entre cada término y el siguiente un escalón cuyo tramo vertical naranja es el salto; el primer salto lleva escrita su cuenta. Una recta burdeo horizontal marca el 6. Una franja naranja pálida cubre desde el primer término hasta 6: todos los términos están dentro. Si el primer término es menor que 6, los puntos suben hacia 6 sin alcanzarlo: la sucesión crece y 6 es su techo. Si es mayor que 6, bajan hacia 6: decrece y 6 es su piso. Con el primer término igual a 6, caso límite, todos los puntos están sobre la recta: la sucesión es constante, todos los saltos valen cero y es creciente y decreciente a la vez. Bajo el dibujo, tres frases dicen si crece o decrece, entre qué valores está acotada y que converge a 6; más abajo va la cuenta completa.',
+    labels:PZ,
+    sliders:[{id:'c', tex:'a_{1}', min:0, max:12, step:1, value:2}],
+    legend:'<span><i class="sw sec"></i> los términos \\(a_{n}\\) (punteadas: llevan cada uno a su valor en el eje)</span><span><i class="sw rise"></i> los saltos \\(a_{n+1}-a_{n}\\) y la franja entre las dos cotas</span><span><i class="sw tan"></i> el límite, \\(L=6\\)</span>',
+    anim:{run:39000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.c = Math.min(12, Math.floor(p*13)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var cc = cual(v), C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, xr = gx(8.6), fr = frases(cc), py, d;
+      function txt(t, y, col){ c.font = '600 12.5px ' + F; c.fillStyle = col || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(-1.2), Y(y)); }
+      function num(t, px, py, al, col, b){ c.font = (b ? '700' : '500') + ' 10.5px ' + F; c.fillStyle = col || C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* la franja entre las dos cotas: el primer término y 6 */
+      if (cc !== 6){ c.globalAlpha = 0.14; c.fillStyle = C.rise; c.fillRect(X(gx(0)), Y(gy(Math.max(cc, 6))), X(xr) - X(gx(0)), Y(gy(Math.min(cc, 6))) - Y(gy(Math.max(cc, 6)))); c.globalAlpha = 1; }
+      /* ejes */
+      S.line(gx(0), gy(0), xr, gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(12.7), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= M; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0)) - 3); c.lineTo(X(gx(i)), Y(gy(0)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0)) + 11, 'center'); }
+      for (i = 0; i <= 12; i += 2){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(i))); c.lineTo(X(gx(0)) + 3, Y(gy(i))); c.stroke(); if (i !== cc && i !== 6) num('' + i, X(gx(0)) - 7, Y(gy(i)), 'right'); }
+      num('6', X(gx(0)) - 7, Y(gy(6)), 'right', C.tan, 1); if (cc !== 6) num('' + cc, X(gx(0)) - 7, Y(gy(cc)), 'right', C.sec, 1);
+      num('n', X(xr) + 5, Y(gy(0)), 'left'); T.L('YA', gx(0), gy(12.7) + 0.22, -50);
+      /* el límite */
+      c.strokeStyle = C.tan; c.lineWidth = 1.4; c.beginPath(); c.moveTo(X(gx(0)), Y(gy(6))); c.lineTo(X(xr), Y(gy(6))); c.stroke(); T.L('LL', xr + 0.05, gy(6), 0);
+      /* los saltos, como escalones */
+      for (i = 1; i < M; i++){ c.strokeStyle = C.muted || '#6b6b6b'; c.globalAlpha = 0.6; c.lineWidth = 0.9; c.beginPath(); c.moveTo(X(gx(i)), Y(gy(a(cc, i)))); c.lineTo(X(gx(i + 1)), Y(gy(a(cc, i)))); c.stroke(); c.globalAlpha = 1;
+        d = Math.abs(Y(gy(a(cc, i + 1))) - Y(gy(a(cc, i))));
+        if (d > 14) dtFlecha(S, gx(i + 1), gy(a(cc, i)), gx(i + 1), gy(a(cc, i + 1)), C.rise, 2);
+        else if (d > 0){ c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.moveTo(X(gx(i + 1)), Y(gy(a(cc, i)))); c.lineTo(X(gx(i + 1)), Y(gy(a(cc, i + 1)))); c.stroke(); } }
+      /* la cuenta del primer salto, junto a él: cuelga del nivel del segundo término, hacia el lado libre */
+      py = Y(gy(a(cc, 2)));
+      if (cc < 6) S.lab('J' + cc, X(gx(2)) + 7, py + 3, 0, 0, true); else if (cc > 6) S.lab('J' + cc, X(gx(2)) + 7, py - 3, 0, -100, true); else S.lab('J6', X(gx(2)) + 7, py - 5, 0, -100, true);
+      /* los términos: punteada hasta el eje y punto */
+      for (i = 1; i <= M; i++){
+        c.globalAlpha = 0.45; c.strokeStyle = C.sec; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(gx(i)), Y(gy(a(cc, i)))); c.lineTo(X(gx(0)), Y(gy(a(cc, i)))); c.stroke(); c.setLineDash([]);
+        c.globalAlpha = 0.7; c.beginPath(); c.arc(X(gx(0)), Y(gy(a(cc, i))), 1.8, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1;
+        c.beginPath(); c.arc(X(gx(i)), Y(gy(a(cc, i))), 3.3, 0, 6.2832); c.fillStyle = C.sec; c.fill(); }
+      T.L('SQ', -1.2, 7.62, 0); T.L('E' + cc, -1.2, 7.08, 0);
+      /* conclusión, junto al dibujo */
+      txt(fr[0], 0.78, C.rise); txt(fr[1], 0.78 - 21/s, C.sec); txt(fr[2], 0.78 - 42/s, C.ink);
+      dtQue(S, 'parta bajo 6 o sobre 6, es monótona y', 'acotada, y converge a 6. Mueve el deslizador.');
+      PZ.forEach(function(e){ var id = e[0], t = id.charAt(0); if ((t === 'E' || t === 'J') && id.length > 1 && id !== 'E' + cc && id !== 'J' + cc) S.lab(id, 0, 0, 0, 0, false); });
+    },
+    caption:function(v){ var c = cual(v), fr = frases(c); return 'Primer término ' + c + ': ' + [1, 2, 3, 4].map(function(n){ return mo27D(a(c, n)); }).join('; ') + '; … ' + fr[0].charAt(0).toUpperCase() + fr[0].slice(1) + '; ' + fr[1] + '; ' + fr[2] + '.'; },
+    readout:function(v){ return dtPasos(lectura(cual(v))); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

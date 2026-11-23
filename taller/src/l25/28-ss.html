@@ -1,0 +1,577 @@
+<!--file:H28_una_funcion_como_una_serie_geometrica.html-->
+<!--title:Una función como una serie geométrica-->
+<!--id:ss-funcion-geo-->
+<!--tab:H28 Una función como una serie geométrica-->
+<article class="sheet" id="ss-funcion-geo" data-hoja="L25 H28">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Una función como una serie geométrica</b></li>
+    </ol>
+    <h1>Una función como una serie geométrica</h1>
+    <p class="lede">La fórmula de la suma de una serie geométrica se puede leer al revés: en vez de partir de la serie y llegar a la fracción, se parte de la fracción y se llega a la serie. Si \(|r|&lt;1\), la fracción \(\dfrac{a}{1-r}\) es la suma de \(a+ar+ar^{2}+\cdots\) Cuando la razón es \(x\), eso escribe una función como una suma sin fin de potencias de \(x\). La igualdad vale solo en un intervalo: fuera de él la función puede existir, pero la serie no tiene suma. \[\dfrac{1}{1-x}=\sum_{n=0}^{\infty}x^{n}=1+x+x^{2}+x^{3}+\cdots\qquad\text{cuando }|x|&lt;1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función \(f(x)=\dfrac{1}{1-x}\) y las sumas \(1\), \(1+x\), \(1+x+x^{2}\), \(1+x+x^{2}+x^{3}\), dibujadas en una misma gráfica, en siete pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo (paso 1):</b> es la función \(f(x)=\dfrac{1}{1-x}\). Tiene dos ramas, separadas por la punteada gris de \(x=1\), donde la función no existe. Arriba queda la pregunta: ¿se puede escribir \(f(x)\) como una suma de potencias de \(x\)?</li>
+    <li><b>Pasos 2, 3 y 4, las curvas azules:</b> son las sumas parciales \(s_{0}(x)=1\), \(s_{1}(x)=1+x\), \(s_{2}(x)=1+x+x^{2}\) y \(s_{3}(x)=1+x+x^{2}+x^{3}\). Cada una tiene su nombre junto a su extremo izquierdo. Todas pasan por el punto de la curva burdeo en \(x=0\), y cada término nuevo las mantiene junto a ella en un tramo más largo.</li>
+    <li><b>Paso 5, la punteada verde:</b> en \(x=0{,}5\) se marcan los valores de las cuatro sumas: \(1\), \(\dfrac{3}{2}\), \(\dfrac{7}{4}\), \(\dfrac{15}{8}\). Suben hacia el anillo burdeo, \(f\!\left(\dfrac{1}{2}\right)=2\).</li>
+    <li><b>Paso 6, la punteada naranja:</b> en \(x=-1{,}5\) los valores son \(1\), \(-\dfrac{1}{2}\), \(\dfrac{7}{4}\), \(-\dfrac{13}{8}\). Saltan arriba y abajo del anillo burdeo, \(f\!\left(-\dfrac{3}{2}\right)=\dfrac{2}{5}\), cada vez más lejos.</li>
+    <li><b>Paso 7 y cuenta de abajo:</b> la franja verde es el intervalo \(-1&lt;x&lt;1\). Solo dentro de ella las curvas azules se pegan a la burdeo. La respuesta se escribe bajo la pregunta, y en el registro y en la cuenta quedan, numerados, las cuatro sumas, las dos pruebas con todas sus operaciones y la conclusión.</li>
+  </ol>
+  <div class="stage" data-scene="fge-idea"></div>
+  <ul class="keys">
+    <li><b>Burdeo:</b> la función \(f(x)=\dfrac{1}{1-x}\). Los anillos burdeo son sus valores en \(x=0{,}5\) y en \(x=-1{,}5\).</li>
+    <li><b>Azul:</b> las sumas parciales \(s_{0}\), \(s_{1}\), \(s_{2}\), \(s_{3}\) y, como puntos, sus valores en \(x=0{,}5\) y en \(x=-1{,}5\).</li>
+    <li><b>Verde:</b> la prueba en \(x=0{,}5\) y la franja \(-1&lt;x&lt;1\), con los extremos abiertos: ni \(-1\) ni \(1\) pertenecen a ella.</li>
+    <li><b>Naranja:</b> la prueba en \(x=-1{,}5\), fuera de la franja.</li>
+    <li><b>Punteada gris:</b> \(x=1\), donde la función no existe.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La fórmula, leída al revés</h3>
+    <ol class="steps">
+      <li><b>La fórmula</b> (hoja «Suma de una serie geométrica infinita»): si \(a\neq 0\) y \(|r|&lt;1\), entonces \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+\cdots=\dfrac{a}{1-r}\). Si \(a\neq 0\) y \(|r|\ge 1\), la serie no tiene suma.</li>
+      <li><b>La misma serie, con el índice desde \(0\).</b> Sus términos \(a,\ ar,\ ar^{2},\ \ldots\) son \(a\,r^{\,n}\) con \(n=0,\ 1,\ 2,\ \ldots\) Se escribe \(\displaystyle\sum_{n=0}^{\infty}a\,r^{\,n}\). En esta hoja se usa la convención \(r^{0}=1\), también cuando \(r=0\).</li>
+      <li><b>Leída de derecha a izquierda:</b> \(\dfrac{a}{1-r}=\displaystyle\sum_{n=0}^{\infty}a\,r^{\,n}\) cuando \(|r|&lt;1\). Una fracción con la forma «\(a\) dividido por \(1\) menos \(r\)» se convierte en una serie.</li>
+      <li><b>Con una razón que depende de \(x\).</b> Si \(r\) es una expresión \(r(x)\), entonces \(\dfrac{a}{1-r(x)}=\displaystyle\sum_{n=0}^{\infty}a\,\big(r(x)\big)^{n}\) para cada \(x\) con \(|r(x)|&lt;1\). El caso más simple es \(a=1\) y \(r(x)=x\): \[\dfrac{1}{1-x}=\sum_{n=0}^{\infty}x^{n}\qquad\text{cuando }|x|&lt;1\]</li>
+      <li><b>Qué significa la igualdad.</b> Para cada \(x\) del intervalo, la serie numérica que resulta al reemplazar ese \(x\) converge, y su suma es el valor de la función en ese \(x\). La serie \(\displaystyle\sum_{n=0}^{\infty}x^{n}\) es una serie de potencias con centro \(0\) y todos los coeficientes iguales a \(1\) (hoja «Series de potencias»).</li>
+      <li><b>Y solo ahí.</b> Si \(a\neq 0\) y \(|r(x)|\ge 1\), la serie no tiene suma, aunque la fracción \(\dfrac{a}{1-r(x)}\) entregue un número. Por eso el intervalo sale completo de resolver \(|r(x)|&lt;1\): no hay que revisar los extremos por separado, porque en ellos \(|r(x)|=1\) y la serie no tiene suma.</li>
+    </ol>
+    <p><b>Procedimiento.</b></p>
+    <ol class="steps">
+      <li><b>Se lleva la función a la forma \(\dfrac{a}{1-r(x)}\).</b> El denominador tiene que quedar como «\(1\) menos algo». Tres herramientas: escribir una suma como resta del opuesto, \(1+u=1-(-u)\); sacar factor común en el denominador para que empiece con \(1\), como en \(4+x=4\left(1+\dfrac{x}{4}\right)\); y, si se busca una serie centrada en otro número \(c\), escribir \(x=c+(x-c)\).</li>
+      <li><b>Se leen \(a\) y \(r(x)\).</b> El numerador es \(a\), y puede depender de \(x\) (por ejemplo \(a=x\)). Lo que se resta de \(1\) es \(r(x)\).</li>
+      <li><b>Se escribe la serie</b> \(\displaystyle\sum_{n=0}^{\infty}a\,\big(r(x)\big)^{n}\), se simplifican las potencias y se anotan los primeros términos (\(n=0,\ 1,\ 2,\ 3\)).</li>
+      <li><b>Se resuelve \(|r(x)|&lt;1\),</b> paso a paso. La solución es el intervalo donde la función y la serie son iguales.</li>
+      <li><b>Se comprueba en un \(x\) del intervalo:</b> una suma parcial tiene que quedar cerca del valor de la función, y la diferencia tiene que ser la que entrega la fórmula del recuadro siguiente.</li>
+    </ol>
+    <p><b>Si \(a\) depende de \(x\) y vale \(0\) en algún \(x\):</b> en ese \(x\) todos los términos de la serie son \(0\), todas las sumas parciales valen \(0\) y la suma es \(0\). La fracción también vale \(0\) ahí (si \(r(x)\neq 1\)), así que la igualdad se mantiene. En los ejemplos de esta hoja eso pasa solo en \(x=0\), que está dentro del intervalo.</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) que \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\) cuando \(|r|&lt;1\); (2) que el límite de una resta y el de una constante por una sucesión se calculan término a término cuando los límites existen; (3) que si una serie converge, sus términos tienen límite \(0\) (hoja «Criterio del enésimo término»), y que una sucesión cuyos términos, sin el signo, son todos mayores o iguales que un mismo número positivo no tiene límite \(0\); (4) las leyes de las potencias de exponente entero mayor o igual que \(0\), entre ellas \((u\,v)^{n}=u^{n}v^{n}\), \(\left(\dfrac{u}{v}\right)^{n}=\dfrac{u^{n}}{v^{n}}\) con \(v\neq 0\), \((u^{m})^{n}=u^{m\,n}\) y \(u^{m}\cdot u^{n}=u^{m+n}\); (5) las propiedades del valor absoluto: \(|u\cdot v|=|u|\cdot|v|\); \(|-u|=|u|\); \(|u^{n}|=|u|^{n}\); y, con \(R&gt;0\), que \(|u|&lt;R\) equivale a \(-R&lt;u&lt;R\); (6) las reglas de las desigualdades: sumar el mismo número a cada lado, o multiplicar o dividir cada lado por un mismo número positivo, no cambia el sentido; y, para \(t\ge 0\), que \(t^{2}&lt;1\) equivale a \(t&lt;1\); (7) de la hoja «Suma de una serie geométrica infinita» se cita, sin repetir su demostración, el caso general con \(a\) y \(r\) cualesquiera; el caso \(a=1\), \(r=x\) se demuestra aquí, en el recuadro siguiente. Las dos animaciones dibujan solo las sumas parciales hasta \(s_{3}\) y solo los \(x\) entre \(-1{,}6\) y \(1{,}6\): muestran lo que pasa, no lo demuestran. En esta hoja no se deriva ni se integra ninguna serie. En el ejercicio C, el reciclaje es un modelo declarado, con datos inventados.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale y dónde vale, paso a paso</h3>
+    <p><b>Primera parte: la suma parcial.</b> Se llama \(s_{N}(x)\) a la suma de los términos desde \(n=0\) hasta \(n=N\); tiene \(N+1\) sumandos. El truco es el de la hoja «Suma de una serie geométrica infinita»: restarle la misma suma multiplicada por \(x\).</p>
+    <ol class="steps">
+      <li>Suma parcial: \(s_{N}(x)=\displaystyle\sum_{n=0}^{N}x^{n}=1+x+x^{2}+\cdots+x^{N}\).</li>
+      <li>Se multiplica cada lado por \(x\) (distributiva). Cada sumando gana un factor \(x\), porque \(x^{n}\cdot x=x^{n+1}\): \(x\,s_{N}(x)=x+x^{2}+\cdots+x^{N}+x^{N+1}\).</li>
+      <li>Se resta la segunda igualdad de la primera. Los sumandos \(x,\ x^{2},\ \ldots,\ x^{N}\) están en las dos y se cancelan. Queda el primero de la primera, \(1\), y el último de la segunda, \(x^{N+1}\), restando: \(s_{N}(x)-x\,s_{N}(x)=1-x^{N+1}\).</li>
+      <li>Factor común \(s_{N}(x)\) en el lado izquierdo: \((1-x)\,s_{N}(x)=1-x^{N+1}\). Esta igualdad vale para todo número \(x\).</li>
+      <li>Si \(x\neq 1\), entonces \(1-x\neq 0\) y se puede dividir cada lado por \(1-x\): \[s_{N}(x)=\dfrac{1-x^{N+1}}{1-x}\]</li>
+    </ol>
+    <p><b>Segunda parte: lo que le falta a la suma parcial, con \(x\neq 1\).</b></p>
+    <ol class="steps">
+      <li>Se separa en dos fracciones de igual denominador: \(s_{N}(x)=\dfrac{1}{1-x}-\dfrac{x^{N+1}}{1-x}\).</li>
+      <li>Se suma \(\dfrac{x^{N+1}}{1-x}\) a cada lado y se resta \(s_{N}(x)\) a cada lado: \[\dfrac{1}{1-x}-s_{N}(x)=\dfrac{x^{N+1}}{1-x}\]</li>
+      <li>Es una igualdad exacta, para todo \(x\neq 1\), esté dentro o fuera del intervalo: dice cuánto se diferencian la función y la suma parcial.</li>
+    </ol>
+    <p><b>Tercera parte: si \(|x|&lt;1\), la serie suma \(\dfrac{1}{1-x}\).</b></p>
+    <ol class="steps">
+      <li>\(|x|&lt;1\) implica \(x\neq 1\): vale la igualdad de la segunda parte.</li>
+      <li>Al crecer \(N\), \(x^{N+1}\) tiene límite \(0\) (aviso de rigor, punto 1).</li>
+      <li>Constante por sucesión (aviso, punto 2): \(\dfrac{1}{1-x}\cdot x^{N+1}\) tiene límite \(\dfrac{1}{1-x}\cdot 0=0\).</li>
+      <li>Límite de una resta (aviso, punto 2): \(\displaystyle\lim_{N\to\infty}s_{N}(x)=\dfrac{1}{1-x}-0=\dfrac{1}{1-x}\). Esa es la suma de la serie: \(\displaystyle\sum_{n=0}^{\infty}x^{n}=\dfrac{1}{1-x}\).</li>
+    </ol>
+    <p><b>Cuarta parte: si \(|x|\ge 1\), la serie no tiene suma.</b></p>
+    <ol class="steps">
+      <li>El valor absoluto del término \(n\) es \(|x^{n}|=|x|^{n}\) (aviso, punto 5). Como \(|x|\ge 1\), \(|x|^{n}\ge 1\).</li>
+      <li>Los términos no tienen límite \(0\). Si la serie convergiera, lo tendrían (aviso, punto 3). Luego no converge: no tiene suma.</li>
+      <li><b>En \(x=1\)</b> no hay función ni suma. El denominador es \(1-1=0\): el \(1\) no está en el dominio de \(f\). Y la serie es \(1+1+1+\cdots\), con \(s_{N}(1)=N+1\), que crece sin tope.</li>
+      <li><b>En \(x=-1\)</b> hay función, pero no hay suma. \(f(-1)=\dfrac{1}{1-(-1)}=\dfrac{1}{1+1}=\dfrac{1}{2}\). La serie es \(1-1+1-1+\cdots\), con sumas parciales \(1,\ 0,\ 1,\ 0,\ \ldots\), que no se acercan a un solo número.</li>
+      <li><b>En \(x=2\)</b> hay función, pero no hay suma. \(f(2)=\dfrac{1}{1-2}=\dfrac{1}{-1}=-1\). La serie es \(1+2+4+8+\cdots\), con sumas parciales \(1,\ 3,\ 7,\ 15,\ \ldots\), que crecen sin tope. Ese \(-1\) no es la suma de nada.</li>
+    </ol>
+    <p><b>Quinta parte: con \(a\) y \(r\).</b> En la hoja «Suma de una serie geométrica infinita» está la misma cuenta con un primer término \(a\) y una razón \(r\neq 1\). Allí la suma de los primeros \(n\) términos es \(S_{n}\) y lo que falta es \(S-S_{n}=\dfrac{a\,r^{\,n}}{1-r}\). La suma \(s_{N}\) de esta hoja tiene \(N+1\) términos, es decir \(n=N+1\): \[\dfrac{a}{1-r}-\sum_{n=0}^{N}a\,r^{\,n}=\dfrac{a\,r^{\,N+1}}{1-r}=r^{\,N+1}\cdot\dfrac{a}{1-r}\qquad(r\neq 1)\] En palabras: la diferencia es el valor de la función multiplicado por \(r^{\,N+1}\). Con \(a=1\) y \(r=x\) es la igualdad de la segunda parte.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Función, suma parcial y diferencia: número ↔ figura</h3>
+    <p>La función \(f(x)=\dfrac{1}{1-x}\) y su suma parcial de cuatro términos, \(s_{3}(x)=1+x+x^{2}+x^{3}\), comparadas en el \(x\) que se elija, de \(-1{,}5\) a \(1{,}5\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero las dos curvas:</b> la burdeo es la función y la azul es la suma parcial \(s_{3}\). La franja verde es el intervalo \(-1&lt;x&lt;1\). La punteada gris de \(x=1\) marca donde la función no existe.</li>
+      <li><b>Mira después la punteada vertical del \(x\) elegido</b> (el triángulo negro lo marca en la escala de abajo): el anillo burdeo es el valor de la función, \(f(x)\); el punto azul es el valor de la suma parcial, \(s_{3}(x)\); el trazo naranja entre los dos es la diferencia.</li>
+      <li><b>Lee los tres valores bajo la gráfica,</b> cada uno con el color de lo que mide. Los que llevan «\(\approx\)» están redondeados, para ubicarlos en la escala vertical.</li>
+      <li><b>Mueve el deslizador \(x\):</b> en \(x=0\) los dos puntos coinciden y la diferencia es \(0\). Dentro de la franja la diferencia es chica (\(\dfrac{1}{8}\) en \(x=0{,}5\)). Fuera, las curvas se separan (en \(x=1{,}5\) la función vale \(-2\) y la suma parcial \(\dfrac{65}{8}\)). En \(x=-1\) la función vale \(\dfrac{1}{2}\) y la serie no tiene suma; en \(x=1\) no hay función ni suma.</li>
+      <li><b>Cuenta de abajo:</b> con el \(x\) elegido: las potencias, la suma parcial término a término, la función (primero la resta del denominador, después la división), la diferencia, su comprobación con \(\dfrac{x^{4}}{1-x}\), la comparación de \(|x|\) con \(1\) y qué pasa con la diferencia al sumar un término más. Conclusión: dentro del intervalo se achica; fuera, crece.</li>
+    </ol>
+    <div class="stage" data-scene="fge-vivo"></div>
+    <ul class="keys">
+      <li><b>Burdeo:</b> la función \(f(x)=\dfrac{1}{1-x}\) y, como anillo, su valor en el \(x\) elegido.</li>
+      <li><b>Azul:</b> la suma parcial \(s_{3}(x)=1+x+x^{2}+x^{3}\) y, como punto, su valor en el \(x\) elegido.</li>
+      <li><b>Naranja:</b> la diferencia \(f(x)-s_{3}(x)\), que según el recuadro anterior vale \(\dfrac{x^{4}}{1-x}\).</li>
+      <li><b>Verde:</b> la franja \(-1&lt;x&lt;1\), donde la serie completa tiene suma.</li>
+      <li><b>Casos límite:</b> \(x=0\), diferencia \(0\). \(x=-1\), función \(\dfrac{1}{2}\) y serie sin suma. \(x=1\), ni función ni suma.</li>
+    </ul>
+    <p>La diferencia con cuatro términos es \(\dfrac{x^{4}}{1-x}\) y con cinco es \(\dfrac{x^{5}}{1-x}\) (segunda parte del recuadro anterior, con \(N=3\) y \(N=4\)). Como \(x^{5}=x^{4}\cdot x\), cada término que se agrega multiplica la diferencia por \(x\): si \(|x|&lt;1\) se achica y si \(|x|&gt;1\) crece.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: una suma en el denominador. \(f(x)=\dfrac{1}{1+x}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Forma. Sumar es restar el opuesto: \(1+x=1-(-x)\). Entonces \(f(x)=\dfrac{1}{1-(-x)}\).</li>
+    <li>Se leen: \(a=1\), \(r(x)=-x\).</li>
+    <li>Serie: \(\displaystyle\sum_{n=0}^{\infty}1\cdot(-x)^{n}\). Potencia de un producto: \((-x)^{n}=\big((-1)\cdot x\big)^{n}=(-1)^{n}x^{n}\). Queda \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}x^{n}\).</li>
+    <li>Primeros términos. \(n=0\): \((-1)^{0}x^{0}=1\). \(n=1\): \((-1)^{1}x^{1}=-x\). \(n=2\): \((-1)^{2}x^{2}=x^{2}\). \(n=3\): \((-1)^{3}x^{3}=-x^{3}\). La serie es \(1-x+x^{2}-x^{3}+\cdots\)</li>
+    <li>Intervalo. Se resuelve \(|-x|&lt;1\). Como \(|-x|=|x|\), es \(|x|&lt;1\), que equivale a \(-1&lt;x&lt;1\).</li>
+    <li>Resultado: \(\dfrac{1}{1+x}=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}x^{n}\) para \(-1&lt;x&lt;1\).</li>
+    <li>Comprobación en \(x=\dfrac{1}{2}\), donde \(r=-\dfrac{1}{2}\). Función: \(f\!\left(\dfrac{1}{2}\right)=\dfrac{1}{1+\frac{1}{2}}\). Suma del denominador: \(1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\). Dividir por \(\dfrac{3}{2}\) es multiplicar por \(\dfrac{2}{3}\): \(f\!\left(\dfrac{1}{2}\right)=\dfrac{2}{3}\).</li>
+    <li>Suma parcial de cuatro términos: \(s_{3}=1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}\). Denominador común \(8\): \(\dfrac{8}{8}-\dfrac{4}{8}+\dfrac{2}{8}-\dfrac{1}{8}=\dfrac{5}{8}\).</li>
+    <li>Diferencia según el recuadro, \(r^{\,N+1}\cdot\dfrac{a}{1-r}\) con \(N=3\). Potencia: \(\left(-\dfrac{1}{2}\right)^{4}=\dfrac{1}{16}\). Producto por el valor de la función: \(\dfrac{1}{16}\cdot\dfrac{2}{3}=\dfrac{2}{48}=\dfrac{1}{24}\) (se simplifica por \(2\)).</li>
+    <li>Resta directa, con denominador común \(24\): \(\dfrac{2}{3}-\dfrac{5}{8}=\dfrac{16}{24}-\dfrac{15}{24}=\dfrac{1}{24}\). Coincide. ✓</li>
+    <li>Los extremos, mirados uno por uno. En \(x=1\): \(f(1)=\dfrac{1}{1+1}=\dfrac{1}{2}\) existe, pero la serie es \(1-1+1-1+\cdots\) y no tiene suma. En \(x=-1\): el denominador es \(1+(-1)=0\), la función no existe, y la serie es \(1+1+1+\cdots\), que tampoco tiene suma.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: un número acompaña a \(x\), o el denominador no empieza con \(1\)</h3>
+  <div class="body">
+  <p><b>(a)</b> \(f(x)=\dfrac{1}{1-2x}\)</p>
+  <ol class="steps">
+    <li>Ya tiene la forma: \(a=1\), \(r(x)=2x\).</li>
+    <li>Serie: \(\displaystyle\sum_{n=0}^{\infty}(2x)^{n}\). Potencia de un producto: \((2x)^{n}=2^{n}x^{n}\). Queda \(\displaystyle\sum_{n=0}^{\infty}2^{n}x^{n}=1+2x+4x^{2}+8x^{3}+\cdots\)</li>
+    <li>Intervalo. Se resuelve \(|2x|&lt;1\). Valor absoluto de un producto: \(|2x|=|2|\cdot|x|=2\,|x|\). Queda \(2\,|x|&lt;1\).</li>
+    <li>Se divide cada lado por \(2\), que es positivo: \(|x|&lt;\dfrac{1}{2}\), que equivale a \(-\dfrac{1}{2}&lt;x&lt;\dfrac{1}{2}\).</li>
+    <li>Resultado: \(\dfrac{1}{1-2x}=\displaystyle\sum_{n=0}^{\infty}2^{n}x^{n}\) para \(-\dfrac{1}{2}&lt;x&lt;\dfrac{1}{2}\). El intervalo es la mitad de ancho que el de \(\dfrac{1}{1-x}\).</li>
+    <li>Comprobación en \(x=\dfrac{1}{4}\), donde \(r=2\cdot\dfrac{1}{4}=\dfrac{2}{4}=\dfrac{1}{2}\). Función: \(1-\dfrac{1}{2}=\dfrac{1}{2}\) y \(\dfrac{1}{\frac{1}{2}}=2\). Suma parcial de tres términos: \(s_{2}=1+\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{4}{4}+\dfrac{2}{4}+\dfrac{1}{4}=\dfrac{7}{4}\).</li>
+    <li>Diferencia según el recuadro, con \(N=2\): \(\left(\dfrac{1}{2}\right)^{3}\cdot 2=\dfrac{1}{8}\cdot 2=\dfrac{2}{8}=\dfrac{1}{4}\). Resta directa: \(2-\dfrac{7}{4}=\dfrac{8}{4}-\dfrac{7}{4}=\dfrac{1}{4}\). Coincide. ✓</li>
+  </ol>
+  <p><b>(b)</b> \(f(x)=\dfrac{3}{4+x}\)</p>
+  <ol class="steps">
+    <li>El denominador empieza con \(4\), no con \(1\). Factor común \(4\): \(4+x=4\left(1+\dfrac{x}{4}\right)\). (Comprobación, distributiva: \(4\cdot 1+4\cdot\dfrac{x}{4}=4+x\).)</li>
+    <li>Se reemplaza y se separa el factor numérico: \(f(x)=\dfrac{3}{4\left(1+\frac{x}{4}\right)}=\dfrac{\frac{3}{4}}{1+\frac{x}{4}}\).</li>
+    <li>Sumar es restar el opuesto: \(1+\dfrac{x}{4}=1-\left(-\dfrac{x}{4}\right)\). Se leen: \(a=\dfrac{3}{4}\), \(r(x)=-\dfrac{x}{4}\).</li>
+    <li>Serie: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{3}{4}\left(-\dfrac{x}{4}\right)^{n}\). Potencia de un producto y de un cociente: \(\left(-\dfrac{x}{4}\right)^{n}=\dfrac{(-1)^{n}x^{n}}{4^{n}}\).</li>
+    <li>Producto de potencias de igual base en el denominador, \(4\cdot 4^{n}=4^{n+1}\): \(\dfrac{3}{4}\cdot\dfrac{(-1)^{n}x^{n}}{4^{n}}=\dfrac{3\,(-1)^{n}x^{n}}{4^{n+1}}\). Queda \(\displaystyle\sum_{n=0}^{\infty}\dfrac{3\,(-1)^{n}x^{n}}{4^{n+1}}\).</li>
+    <li>Primeros términos. \(n=0\): \(\dfrac{3}{4}\). \(n=1\): \(-\dfrac{3x}{16}\). \(n=2\): \(\dfrac{3x^{2}}{64}\). \(n=3\): \(-\dfrac{3x^{3}}{256}\). La serie es \(\dfrac{3}{4}-\dfrac{3x}{16}+\dfrac{3x^{2}}{64}-\dfrac{3x^{3}}{256}+\cdots\)</li>
+    <li>Intervalo. Se resuelve \(\left|-\dfrac{x}{4}\right|&lt;1\). Valor absoluto de un producto: \(\left|-\dfrac{x}{4}\right|=\left|-\dfrac{1}{4}\right|\cdot|x|=\dfrac{|x|}{4}\). Queda \(\dfrac{|x|}{4}&lt;1\).</li>
+    <li>Se multiplica cada lado por \(4\), que es positivo: \(|x|&lt;4\), que equivale a \(-4&lt;x&lt;4\).</li>
+    <li>Comprobación en \(x=2\), donde \(r=-\dfrac{2}{4}=-\dfrac{1}{2}\). Función: \(f(2)=\dfrac{3}{4+2}=\dfrac{3}{6}=\dfrac{1}{2}\).</li>
+    <li>Suma parcial de tres términos, reemplazando \(x=2\): \(\dfrac{3}{4}-\dfrac{3\cdot 2}{16}+\dfrac{3\cdot 4}{64}=\dfrac{3}{4}-\dfrac{6}{16}+\dfrac{12}{64}\). Se simplifica: \(\dfrac{6}{16}=\dfrac{3}{8}\) y \(\dfrac{12}{64}=\dfrac{3}{16}\). Denominador común \(16\): \(s_{2}=\dfrac{12}{16}-\dfrac{6}{16}+\dfrac{3}{16}=\dfrac{9}{16}\).</li>
+    <li>Diferencia según el recuadro, con \(N=2\): \(\left(-\dfrac{1}{2}\right)^{3}\cdot\dfrac{1}{2}=-\dfrac{1}{8}\cdot\dfrac{1}{2}=-\dfrac{1}{16}\). Resta directa: \(\dfrac{1}{2}-\dfrac{9}{16}=\dfrac{8}{16}-\dfrac{9}{16}=-\dfrac{1}{16}\). Coincide. ✓ El signo menos dice que esta suma parcial quedó sobre el valor de la función.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una potencia de \(x\) en el numerador. \(f(x)=\dfrac{x}{1+x^{2}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Forma. Sumar es restar el opuesto: \(1+x^{2}=1-(-x^{2})\). Entonces \(f(x)=\dfrac{x}{1-(-x^{2})}\).</li>
+    <li>Se leen: \(a=x\), \(r(x)=-x^{2}\). El numerador depende de \(x\); se trata como el primer término.</li>
+    <li>Serie: \(\displaystyle\sum_{n=0}^{\infty}x\,(-x^{2})^{n}\). Potencia de un producto: \((-x^{2})^{n}=(-1)^{n}(x^{2})^{n}\). Potencia de una potencia: \((x^{2})^{n}=x^{2n}\).</li>
+    <li>Producto de potencias de igual base: \(x\cdot x^{2n}=x^{2n+1}\). Queda \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}x^{2n+1}\).</li>
+    <li>Primeros términos. \(n=0\): \(x^{1}=x\). \(n=1\): \(-x^{3}\). \(n=2\): \(x^{5}\). \(n=3\): \(-x^{7}\). La serie es \(x-x^{3}+x^{5}-x^{7}+\cdots\): solo potencias impares.</li>
+    <li>Intervalo. Se resuelve \(|-x^{2}|&lt;1\). Como \(|-x^{2}|=|x^{2}|=|x|^{2}\), es \(|x|^{2}&lt;1\).</li>
+    <li>Con \(t=|x|\ge 0\): \(t^{2}&lt;1\) equivale a \(t&lt;1\) (aviso de rigor, punto 6). Queda \(|x|&lt;1\), que equivale a \(-1&lt;x&lt;1\).</li>
+    <li>El caso \(a=0\): \(a=x\) vale \(0\) solo en \(x=0\). Ahí la serie es \(0+0+0+\cdots\), de suma \(0\), y \(f(0)=\dfrac{0}{1+0}=0\). La igualdad vale también en \(x=0\).</li>
+    <li>Resultado: \(\dfrac{x}{1+x^{2}}=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}x^{2n+1}\) para \(-1&lt;x&lt;1\). Esta función existe para todo número real (su denominador, \(1+x^{2}\), es siempre mayor o igual que \(1\)), pero la serie solo tiene suma en ese intervalo.</li>
+    <li>Comprobación en \(x=\dfrac{1}{2}\), donde \(r=-\left(\dfrac{1}{2}\right)^{2}=-\dfrac{1}{4}\). Función: denominador \(1+\dfrac{1}{4}=\dfrac{5}{4}\); \(f\!\left(\dfrac{1}{2}\right)=\dfrac{\frac{1}{2}}{\frac{5}{4}}=\dfrac{1}{2}\cdot\dfrac{4}{5}=\dfrac{4}{10}=\dfrac{2}{5}\).</li>
+    <li>Suma parcial de dos términos: \(s_{1}=x-x^{3}=\dfrac{1}{2}-\dfrac{1}{8}=\dfrac{4}{8}-\dfrac{1}{8}=\dfrac{3}{8}\).</li>
+    <li>Diferencia según el recuadro, con \(N=1\): \(\left(-\dfrac{1}{4}\right)^{2}\cdot\dfrac{2}{5}=\dfrac{1}{16}\cdot\dfrac{2}{5}=\dfrac{2}{80}=\dfrac{1}{40}\). Resta directa, con denominador común \(40\): \(\dfrac{2}{5}-\dfrac{3}{8}=\dfrac{16}{40}-\dfrac{15}{40}=\dfrac{1}{40}\). Coincide. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: centrada en otro punto. \(f(x)=\dfrac{1}{x}\) alrededor de \(x=1\)</h3>
+  <div class="body">
+  <p>Se busca una serie de potencias de \((x-1)\), no de \(x\). (No se busca en potencias de \(x\): su centro sería \(0\), y \(f\) no existe en \(x=0\).)</p>
+  <ol class="steps">
+    <li>Se escribe \(x\) a partir del centro: \(x=1+(x-1)\). Entonces \(f(x)=\dfrac{1}{1+(x-1)}\).</li>
+    <li>Sumar es restar el opuesto: \(1+(x-1)=1-\big(-(x-1)\big)\). Se leen: \(a=1\), \(r(x)=-(x-1)\).</li>
+    <li>Serie: \(\displaystyle\sum_{n=0}^{\infty}\big(-(x-1)\big)^{n}\). Potencia de un producto: \(\big(-(x-1)\big)^{n}=(-1)^{n}(x-1)^{n}\). Queda \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}\).</li>
+    <li>Primeros términos: \(1-(x-1)+(x-1)^{2}-(x-1)^{3}+\cdots\)</li>
+    <li>Intervalo. Se resuelve \(|-(x-1)|&lt;1\). Como \(|-u|=|u|\), es \(|x-1|&lt;1\), que equivale a \(-1&lt;x-1&lt;1\).</li>
+    <li>Se suma \(1\) a cada parte: \(0&lt;x&lt;2\). Es un intervalo centrado en \(1\), de radio \(1\) (hoja «Series de potencias»).</li>
+    <li>Resultado: \(\dfrac{1}{x}=\displaystyle\sum_{n=0}^{\infty}(-1)^{n}(x-1)^{n}\) para \(0&lt;x&lt;2\).</li>
+    <li>Comprobación en \(x=\dfrac{6}{5}=1{,}2\). Ahí \(x-1=\dfrac{6}{5}-\dfrac{5}{5}=\dfrac{1}{5}\) y \(r=-\dfrac{1}{5}\). Función: \(f\!\left(\dfrac{6}{5}\right)=\dfrac{1}{\frac{6}{5}}=\dfrac{5}{6}\).</li>
+    <li>Suma parcial de tres términos: \(s_{2}=1-\dfrac{1}{5}+\dfrac{1}{25}\). Denominador común \(25\): \(\dfrac{25}{25}-\dfrac{5}{25}+\dfrac{1}{25}=\dfrac{21}{25}\).</li>
+    <li>Diferencia según el recuadro, con \(N=2\): \(\left(-\dfrac{1}{5}\right)^{3}\cdot\dfrac{5}{6}=-\dfrac{1}{125}\cdot\dfrac{5}{6}=-\dfrac{5}{750}=-\dfrac{1}{150}\) (se simplifica por \(5\)).</li>
+    <li>Resta directa, con denominador común \(150\): \(\dfrac{5}{6}-\dfrac{21}{25}=\dfrac{125}{150}-\dfrac{126}{150}=-\dfrac{1}{150}\). Coincide. ✓</li>
+    <li>Fuera del intervalo. En \(x=3\): \(f(3)=\dfrac{1}{3}\) existe, pero \(r=-(3-1)=-2\) y la serie es \(1-2+4-8+\cdots\), sin suma. En \(x=2\): \(f(2)=\dfrac{1}{2}\) y la serie es \(1-1+1-\cdots\), sin suma. En \(x=0\): la función no existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Usar la serie fuera de su intervalo: \(\dfrac{1}{1-x}\) vale \(-1\) en \(x=2\), pero \(1+2+4+8+\cdots\) no tiene suma (cuarta parte del recuadro). Olvidar el intervalo: una serie sin su «para \(|x|&lt;\ldots\)» está incompleta. Leer mal la razón cuando el denominador tiene una suma: en \(\dfrac{1}{1+x}\) la razón es \(-x\), no \(x\) (ejemplo 1). No sacar el factor del denominador: en \(\dfrac{3}{4+x}\) la razón no es \(-x\); primero hay que dejar un \(1\), y entonces \(a=\dfrac{3}{4}\) y \(r=-\dfrac{x}{4}\) (ejemplo 2 b). Sacar el factor solo del denominador y olvidar que también divide al numerador. Elevar solo la letra: \((2x)^{n}\) es \(2^{n}x^{n}\), no \(2x^{n}\) (ejemplo 2 a). Resolver mal la desigualdad: de \(2\,|x|&lt;1\) sale \(|x|&lt;\dfrac{1}{2}\), no \(|x|&lt;2\). Creer que en los extremos «a veces sí»: en una serie geométrica con \(a\neq 0\), si \(|r|=1\) nunca hay suma. Y confundir la suma parcial con la serie completa: \(1+x+x^{2}+x^{3}\) no es \(\dfrac{1}{1-x}\); se diferencian en \(\dfrac{x^{4}}{1-x}\).</p>
+  </div>
+  <p><b>Lo que sigue.</b> Aquí todo se hizo con álgebra y sustitución. Derivando o integrando estas series término a término se obtienen series para muchas otras funciones: es el tema de la hoja «Representación de funciones como series de potencias».</p>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Escribe cada función como una serie geométrica, con \(\Sigma\) y con sus cuatro primeros términos, y da el intervalo donde vale: (a) \(\dfrac{1}{1+3x}\); (b) \(\dfrac{1}{2-x}\); (c) \(\dfrac{x^{2}}{1-x}\).</p>
+    <details><summary>Pista</summary><div><p>(a) \(1+3x=1-(-3x)\). (b) Factor común \(2\) en el denominador: \(2-x=2\left(1-\dfrac{x}{2}\right)\). (c) El numerador es \(a\), y \(x^{2}\cdot x^{n}=x^{n+2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Sumar es restar el opuesto: \(1+3x=1-(-3x)\). Se leen: \(a=1\), \(r(x)=-3x\).</li>
+        <li>(a) Serie: \(\displaystyle\sum_{n=0}^{\infty}(-3x)^{n}\). Potencia de un producto: \((-3x)^{n}=(-1)^{n}3^{n}x^{n}\). Queda \(\displaystyle\sum_{n=0}^{\infty}(-1)^{n}3^{n}x^{n}=1-3x+9x^{2}-27x^{3}+\cdots\)</li>
+        <li>(a) Intervalo: \(|-3x|=|-3|\cdot|x|=3\,|x|\). De \(3\,|x|&lt;1\), dividiendo por \(3\) (positivo): \(|x|&lt;\dfrac{1}{3}\), es decir \(-\dfrac{1}{3}&lt;x&lt;\dfrac{1}{3}\).</li>
+        <li>(b) Factor común \(2\): \(2-x=2\left(1-\dfrac{x}{2}\right)\). Entonces \(\dfrac{1}{2-x}=\dfrac{1}{2\left(1-\frac{x}{2}\right)}=\dfrac{\frac{1}{2}}{1-\frac{x}{2}}\). Se leen: \(a=\dfrac{1}{2}\), \(r(x)=\dfrac{x}{2}\).</li>
+        <li>(b) Serie: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{1}{2}\left(\dfrac{x}{2}\right)^{n}\). Potencia de un cociente: \(\left(\dfrac{x}{2}\right)^{n}=\dfrac{x^{n}}{2^{n}}\). Como \(2\cdot 2^{n}=2^{n+1}\): \(\dfrac{1}{2}\cdot\dfrac{x^{n}}{2^{n}}=\dfrac{x^{n}}{2^{n+1}}\). Queda \(\displaystyle\sum_{n=0}^{\infty}\dfrac{x^{n}}{2^{n+1}}=\dfrac{1}{2}+\dfrac{x}{4}+\dfrac{x^{2}}{8}+\dfrac{x^{3}}{16}+\cdots\)</li>
+        <li>(b) Intervalo: \(\left|\dfrac{x}{2}\right|=\left|\dfrac{1}{2}\right|\cdot|x|=\dfrac{|x|}{2}\). De \(\dfrac{|x|}{2}&lt;1\), multiplicando por \(2\) (positivo): \(|x|&lt;2\), es decir \(-2&lt;x&lt;2\).</li>
+        <li>(c) Ya tiene la forma, con el numerador como primer término: \(a=x^{2}\), \(r(x)=x\).</li>
+        <li>(c) Serie: \(\displaystyle\sum_{n=0}^{\infty}x^{2}\cdot x^{n}\). Producto de potencias de igual base: \(x^{2}\cdot x^{n}=x^{n+2}\). Queda \(\displaystyle\sum_{n=0}^{\infty}x^{n+2}=x^{2}+x^{3}+x^{4}+x^{5}+\cdots\)</li>
+        <li>(c) Intervalo: \(|x|&lt;1\), es decir \(-1&lt;x&lt;1\). (En \(x=0\), \(a=0\): la serie es \(0+0+\cdots\), de suma \(0\), y la función vale \(\dfrac{0}{1}=0\). La igualdad vale también ahí.)</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Escribe \(\dfrac{1}{3-x}\) como una serie de potencias de \((x-1)\) y da su intervalo. (b) Para \(f(x)=\dfrac{1}{1-x}\) y \(x=\dfrac{1}{3}\): calcula \(f\!\left(\dfrac{1}{3}\right)\), la suma parcial \(s_{2}=1+x+x^{2}\) y la diferencia, de dos maneras. (c) Haz lo mismo con \(x=2\). ¿Qué cambia?</p>
+    <details><summary>Pista</summary><div><p>(a) \(3-x=2-(x-1)\), y después factor común \(2\). (b) y (c) La diferencia es \(\dfrac{x^{3}}{1-x}\) (recuadro, con \(N=2\)); vale para todo \(x\neq 1\), haya suma o no.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Se escribe \(x=1+(x-1)\): \(3-x=3-1-(x-1)=2-(x-1)\).</li>
+        <li>(a) Factor común \(2\): \(2-(x-1)=2\left(1-\dfrac{x-1}{2}\right)\). Entonces \(\dfrac{1}{3-x}=\dfrac{\frac{1}{2}}{1-\frac{x-1}{2}}\). Se leen: \(a=\dfrac{1}{2}\), \(r(x)=\dfrac{x-1}{2}\).</li>
+        <li>(a) Serie: \(\displaystyle\sum_{n=0}^{\infty}\dfrac{1}{2}\left(\dfrac{x-1}{2}\right)^{n}=\sum_{n=0}^{\infty}\dfrac{(x-1)^{n}}{2^{n+1}}=\dfrac{1}{2}+\dfrac{x-1}{4}+\dfrac{(x-1)^{2}}{8}+\cdots\) (potencia de un cociente y \(2\cdot 2^{n}=2^{n+1}\)).</li>
+        <li>(a) Intervalo: \(\left|\dfrac{x-1}{2}\right|=\dfrac{|x-1|}{2}\). De \(\dfrac{|x-1|}{2}&lt;1\), multiplicando por \(2\): \(|x-1|&lt;2\), que equivale a \(-2&lt;x-1&lt;2\). Se suma \(1\) a cada parte: \(-1&lt;x&lt;3\).</li>
+        <li>(b) Función: \(1-\dfrac{1}{3}=\dfrac{3}{3}-\dfrac{1}{3}=\dfrac{2}{3}\). Dividir por \(\dfrac{2}{3}\) es multiplicar por \(\dfrac{3}{2}\): \(f\!\left(\dfrac{1}{3}\right)=\dfrac{3}{2}\).</li>
+        <li>(b) Suma parcial: \(\left(\dfrac{1}{3}\right)^{2}=\dfrac{1}{9}\); \(s_{2}=1+\dfrac{1}{3}+\dfrac{1}{9}=\dfrac{9}{9}+\dfrac{3}{9}+\dfrac{1}{9}=\dfrac{13}{9}\).</li>
+        <li>(b) Diferencia, resta directa con denominador común \(18\): \(\dfrac{3}{2}-\dfrac{13}{9}=\dfrac{27}{18}-\dfrac{26}{18}=\dfrac{1}{18}\).</li>
+        <li>(b) Diferencia con la fórmula: \(\left(\dfrac{1}{3}\right)^{3}=\dfrac{1}{27}\); \(\dfrac{1}{27}\cdot\dfrac{3}{2}=\dfrac{3}{54}=\dfrac{1}{18}\) (se simplifica por \(3\)). Coincide. ✓ Como \(\left|\dfrac{1}{3}\right|&lt;1\), con más términos la diferencia sigue achicándose: la serie suma \(\dfrac{3}{2}\).</li>
+        <li>(c) Función: \(f(2)=\dfrac{1}{1-2}=\dfrac{1}{-1}=-1\). Suma parcial: \(s_{2}=1+2+4=7\).</li>
+        <li>(c) Diferencia, resta directa: \(-1-7=-8\). Con la fórmula: \(\dfrac{2^{3}}{1-2}=\dfrac{8}{-1}=-8\). Coincide. ✓</li>
+        <li>(c) Qué cambia: \(|2|=2\ge 1\). La fórmula de la diferencia sigue siendo exacta, pero la diferencia ya no se achica: con un término más es \(\dfrac{2^{4}}{1-2}=-16\). Las sumas parciales \(1,\ 3,\ 7,\ 15,\ \ldots\) crecen sin tope: la serie no tiene suma, aunque \(f(2)=-1\) exista.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una planta fabrica latas con \(1000\) kg de aluminio nuevo. Modelo (los datos son inventados): de todo el aluminio que sale convertido en latas, una fracción \(x\), con \(0\le x&lt;1\), vuelve por reciclaje y se convierte otra vez en latas, sin pérdidas en la fundición, y eso se repite sin fin. El aluminio que pasa por la planta convertido en latas es, en kg, \(1000\) la primera vez, \(1000x\) en la primera vuelta, \(1000x^{2}\) en la segunda, y así. (a) Escribe el total \(T(x)\) con \(\Sigma\) y como una fracción. ¿Para qué \(x\) vale? (b) Calcula el total si vuelve el \(60\ \%\) (\(x=0{,}6\)). (c) Con \(x=0{,}6\): ¿cuánto se ha fabricado tras la primera vez y tres vueltas, y cuánto falta para el total? Calcula lo que falta de dos maneras. (d) ¿Y el total si vuelve el \(80\ \%\)? (e) ¿Qué pasa con la fracción y con la serie en \(x=1\)?</p>
+    <details><summary>Pista</summary><div><p>Es una serie geométrica con \(a=1000\) y \(r=x\). En (c) son cuatro términos, \(n=0\) a \(n=3\); lo que falta es \(r^{4}\cdot\dfrac{a}{1-r}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Los términos son \(1000,\ 1000x,\ 1000x^{2},\ \ldots\): cada uno es el anterior por \(x\). Es una serie geométrica con \(a=1000\) y \(r=x\): \(T(x)=\displaystyle\sum_{n=0}^{\infty}1000\,x^{n}\).</li>
+        <li>(a) Si \(|x|&lt;1\), su suma es \(\dfrac{a}{1-r}\): \(T(x)=\dfrac{1000}{1-x}\). En el modelo \(x\) es una fracción del total, \(0\le x&lt;1\), y ahí \(|x|=x&lt;1\): la igualdad vale para todos los \(x\) del modelo.</li>
+        <li>(b) Resta del denominador: \(1-0{,}6=0{,}4\). División (se amplifica por \(10\)): \(\dfrac{1000}{0{,}4}=\dfrac{10\,000}{4}=2500\). El total es \(2500\) kg.</li>
+        <li>(c) Potencias: \(0{,}6^{2}=0{,}6\cdot 0{,}6=0{,}36\); \(0{,}6^{3}=0{,}36\cdot 0{,}6=0{,}216\).</li>
+        <li>(c) Términos: \(1000\); \(1000\cdot 0{,}6=600\); \(1000\cdot 0{,}36=360\); \(1000\cdot 0{,}216=216\).</li>
+        <li>(c) Suma parcial: \(1000+600=1600\); \(1600+360=1960\); \(1960+216=2176\). Se han fabricado \(2176\) kg de latas.</li>
+        <li>(c) Lo que falta, resta directa: \(2500-2176=324\) kg.</li>
+        <li>(c) Lo que falta, con la fórmula del recuadro (\(N=3\)): \(r^{4}\cdot\dfrac{a}{1-r}\). Potencia: \(0{,}6^{4}=0{,}216\cdot 0{,}6=0{,}1296\). Producto por el total: \(0{,}1296\cdot 2500=324\). Coincide. ✓</li>
+        <li>(d) Resta: \(1-0{,}8=0{,}2\). División (se amplifica por \(10\)): \(\dfrac{1000}{0{,}2}=\dfrac{10\,000}{2}=5000\). El total es \(5000\) kg: subir la fracción de \(0{,}6\) a \(0{,}8\) duplica el total.</li>
+        <li>(e) En \(x=1\) el denominador es \(1-1=0\): la fracción no existe. La serie es \(1000+1000+1000+\cdots\), con sumas parciales \(1000,\ 2000,\ 3000,\ \ldots\), que crecen sin tope: no tiene suma. En el modelo, \(x=1\) sería reciclar todo, siempre, sin perder nada: el mismo aluminio daría latas sin fin. Por eso el modelo pide \(x&lt;1\).</li>
+        <li>Interpretación: con \(x=0\) (nada vuelve) el total es \(\dfrac{1000}{1-0}=1000\) kg, solo el aluminio nuevo. Mientras más cerca de \(1\) está \(x\), mayor es el total. Es un modelo: en una planta real hay pérdidas y las vueltas no son infinitas.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H28 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H28 · una función como una serie geométrica: 1/(1 − x) = Σ xⁿ solo si |x| < 1; las sumas parciales se pegan a la curva dentro de (−1, 1) y se separan fuera */
+function fg28Cl(t){ return Math.max(0, Math.min(1, t)); }
+function fg28Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+/* fracción [p, q] irreducible, con q > 0 */
+function fg28Fr(p, q){ if (q < 0){ p = -p; q = -q; } var g = fg28Mcd(p, q); return [p/g, q/g]; }
+function fg28T(f, ch){ var p = f[0], q = f[1], s = p < 0 ? '-' : ''; p = Math.abs(p); return q === 1 ? s + p : s + (ch ? '\\tfrac{' : '\\dfrac{') + p + '}{' + q + '}'; }
+/* fracción tal como viene, sin simplificar (para mostrar la amplificación) */
+function fg28Raw(p, q){ return (p < 0 ? '-' : '') + '\\dfrac{' + Math.abs(p) + '}{' + q + '}'; }
+function fg28Par(f){ return f[0] < 0 ? '\\left(' + fg28T(f) + '\\right)' : fg28T(f); }
+function fg28Abs(f){ return [Math.abs(f[0]), f[1]]; }
+function fg28P(f){ var p = f[0], q = f[1], s = p < 0 ? '−' : ''; p = Math.abs(p); return q === 1 ? s + p : s + p + '/' + q; }
+/* |p/q| redondeado a d decimales (mitad hacia arriba), con aritmética entera; [texto con punto, ¿exacto?] */
+function fg28Rd(f, d){ var p = Math.abs(f[0]), q = f[1], m = Math.pow(10, d), n = Math.floor((2*p*m + q)/(2*q)), r = '' + (n % m); while (r.length < d) r = '0' + r; return [Math.floor(n/m) + (d ? '.' + r : ''), (p*m) % q === 0]; }
+/* valor decimal para ubicarlo en el eje: exacto si tiene 3 decimales o menos; si no, redondeado a 2 (a 3 si es menor que 0,1). [signo de relación, texto con punto y signo] */
+function fg28Ap(f){ var d, o, sg = f[0] < 0 ? '-' : '';
+  if (f[1] === 1) return null;
+  for (d = 1; d <= 3; d++){ o = fg28Rd(f, d); if (o[1]) return ['=', sg + o[0]]; }
+  o = fg28Rd(f, 10*Math.abs(f[0]) < f[1] ? 3 : 2); return ['\\approx ', sg + o[0]]; }
+function fg28ApT(f){ var o = fg28Ap(f); return o ? o[0] + o[1].replace('.', '{,}') : ''; }
+function fg28ApP(f){ var o = fg28Ap(f); return o ? (o[0] === '=' ? ' = ' : ' ≈ ') + o[1].replace('.', ',').replace('-', '−') : ''; }
+/* A + B paso a paso (el denominador de B es múltiplo del de A): [cadena TeX, resultado] */
+function fg28Suma(A, B){ var D = B[1], m = D/A[1], R = fg28Fr(A[0]*m + B[0], D), op = B[0] < 0 ? '-' : '+', Bt = fg28T(fg28Abs(B)), s = fg28T(A) + op + Bt;
+  if (D > 1 && m > 1) s += '=' + fg28Raw(A[0]*m, D) + op + Bt;
+  return [s + '=' + fg28T(R), R]; }
+function fg28Curva(S, fn, a, b, col, wd, gx, gy){ var c = S.ctx, n = 150, i, t, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash([]); c.beginPath();
+  for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; y = fn(t); if (!isFinite(y) || y > 60 || y < -60){ pen = false; continue; } if (pen) c.lineTo(S.X(gx(t)), S.Y(gy(y))); else c.moveTo(S.X(gx(t)), S.Y(gy(y))); pen = true; } c.stroke(); }
+function fg28F(x){ return 1/(1 - x); }
+function fg28S(n){ return function(x){ var s = 0, p = 1, i; for (i = 0; i <= n; i++){ s += p; p *= x; } return s; }; }
+
+OA.scene('fge-idea', (function(){
+  var N = 7, XA = -1.6, XB = 1.6, YA = -2.5, YB = 4, SN = [fg28S(0), fg28S(1), fg28S(2), fg28S(3)];
+  var PZ = [['LF', 'f', 'f', 'c-tan'], ['LS0', 's_{0}', 's₀', 'c-sec'], ['LS1', 's_{1}', 's₁', 'c-sec'], ['LS2', 's_{2}', 's₂', 'c-sec'], ['LS3', 's_{3}', 's₃', 'c-sec'],
+    ['CV', 'f(x)=\\tfrac{1}{1-x}', 'f(x) = 1/(1 − x)', 'c-tan'], ['A5', 'f\\!\\left(\\tfrac{1}{2}\\right)=2', 'f(1/2) = 2', 'c-tan'], ['IV', '-1<x<1', '−1 < x < 1', 'c-alt'],
+    ['Q', '\\tfrac{1}{1-x}\\ \\text{¿es una suma de potencias de }x\\text{?}', '1/(1 − x) ¿es una suma de potencias de x?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{sí, pero solo si }-1<x<1\\text{: }\\tfrac{1}{1-x}=\\textstyle\\sum_{n=0}^{\\infty}x^{n}', '⟹ sí, pero solo si −1 < x < 1: 1/(1 − x) = Σ xⁿ', 'diff'],
+    ['R1', 'f(x)=\\tfrac{1}{1-x},\\qquad x\\neq 1', 'f(x) = 1/(1 − x), x ≠ 1', ''],
+    ['R2', 's_{0}(x)=1,\\qquad s_{1}(x)=1+x', 's₀(x) = 1, s₁(x) = 1 + x', ''],
+    ['R3', 's_{2}(x)=1+x+x^{2}', 's₂(x) = 1 + x + x²', ''],
+    ['R4', 's_{3}(x)=1+x+x^{2}+x^{3}', 's₃(x) = 1 + x + x² + x³', ''],
+    ['R5', 'x=\\tfrac{1}{2}\\text{:}\\quad 1,\\ \\tfrac{3}{2},\\ \\tfrac{7}{4},\\ \\tfrac{15}{8}\\ \\to 2=f\\!\\left(\\tfrac{1}{2}\\right)', 'x = 1/2: 1, 3/2, 7/4, 15/8 → 2 = f(1/2)', ''],
+    ['R6', 'x=-\\tfrac{3}{2}\\text{:}\\quad 1,\\ -\\tfrac{1}{2},\\ \\tfrac{7}{4},\\ -\\tfrac{13}{8}\\text{; lejos de }f=\\tfrac{2}{5}', 'x = −3/2: 1, −1/2, 7/4, −13/8; lejos de f = 2/5', ''],
+    ['R7', '|x|<1\\ \\Longrightarrow\\ \\tfrac{1}{1-x}=\\textstyle\\sum_{n=0}^{\\infty}x^{n}', '|x| < 1 ⟹ 1/(1 − x) = Σ xⁿ (n ≥ 0)', 'diff']];
+  var TXT = [['Burdeo: la curva de la función. En 1 no existe', '(punteada gris): se dividiría por cero.'],
+    ['Azul: las dos sumas de potencias más cortas.', 'Pasan por el mismo punto que la curva, en 0.'],
+    ['Se suma el término siguiente: la parábola', 'acompaña a la curva en un tramo más largo.'],
+    ['Otro término más: cerca de 0 casi no se', 'distingue de la curva. Lejos de 0, sí.'],
+    ['Verde, en 0,5: las cuatro sumas suben hacia', 'la curva; cada vez les falta la mitad.'],
+    ['Naranja, en −1,5: las sumas saltan arriba y', 'abajo, cada vez más lejos de la curva.'],
+    ['Solo dentro de la franja verde, entre −1 y 1,', 'la serie completa suma lo que vale la curva.']];
+  function gx(x){ return 2.45 + 1.75*x; } function gy(y){ return 3.9 + 0.72*y; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-3.8, y1:9.0}, aspect:12.8/6.6,
+    aria:'Arriba, una franja dice qué muestra: las sumas parciales se pegan a la curva solo entre menos 1 y 1; fuera, se separan. Animación en siete pasos. Es una gráfica: en horizontal va x, de menos 1,6 a 1,6; en vertical, los valores, de menos 2,5 a 4. Uno: se traza en burdeo la curva de la función 1 dividido por 1 menos x; tiene dos ramas, separadas por una punteada gris vertical en x igual a 1, donde la función no existe. Dos: se trazan en azul la recta horizontal de altura 1, que es la suma parcial s sub cero, y la recta inclinada 1 más x, que es s sub uno; las dos pasan por el punto de la curva en x igual a 0. Tres: se traza en azul la parábola 1 más x más x al cuadrado, s sub dos. Cuatro: se traza en azul la curva 1 más x más x al cuadrado más x al cubo, s sub tres; cerca de 0 casi coincide con la curva burdeo. Cinco: una punteada verde vertical en x igual a 0,5 marca con puntos azules los valores de las cuatro sumas parciales, 1, tres medios, siete cuartos y quince octavos, que suben hacia el punto de la curva, de altura 2. Seis: una punteada naranja vertical en x igual a menos 1,5 marca los valores 1, menos un medio, siete cuartos y menos trece octavos, que saltan arriba y abajo y se alejan del punto de la curva, de altura dos quintos. Siete: se sombrea en verde la franja entre x igual a menos 1 y x igual a 1, con anillos abiertos en los extremos; dentro, las curvas azules van pegadas a la burdeo; fuera, se separan. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta se escribe debajo de ella: sí, pero solo si x está entre menos 1 y 1. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> la función \\(f(x)=\\tfrac{1}{1-x}\\)</span><span><i class="sw sec"></i> las sumas parciales \\(s_{0},\\ s_{1},\\ s_{2},\\ s_{3}\\) y sus valores</span><span><i class="sw alt"></i> prueba en \\(x=0{,}5\\) y franja \\(-1&lt;x&lt;1\\), donde la serie tiene suma</span><span><i class="sw rise"></i> prueba en \\(x=-1{,}5\\), fuera de la franja</span><span>punteada gris: \\(x=1\\), donde la función no existe</span>',
+    anim:{run:49000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, otx = oaTxt(S), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, xe, bx = X(gx(XA)), by = Y(gy(YB)), bw = X(gx(XB)) - bx, bh = Y(gy(YA)) - by;
+      function txt(tx, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(tx, X(x), Y(y)); }
+      function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
+      function seg(x0, y0, x1, y1, col, wd, dash, al){ c.globalAlpha = al == null ? 1 : al; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); c.moveTo(X(gx(x0)), Y(gy(y0))); c.lineTo(X(gx(x1)), Y(gy(y1))); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+      function punto(x, y, col, al){ if (al <= 0) return; c.globalAlpha = al; c.beginPath(); c.arc(X(gx(x)), Y(gy(y)), 2.6, 0, 6.2832); c.fillStyle = col; c.fill(); c.globalAlpha = 1; }
+      function anillo(x, y, col, al){ if (al <= 0) return; c.globalAlpha = al; c.beginPath(); c.arc(X(gx(x)), Y(gy(y)), 3.6, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.strokeStyle = col; c.lineWidth = 1.6; c.setLineDash([]); c.stroke(); c.globalAlpha = 1; }
+      /* paso 7: franja donde la serie tiene suma */
+      if (k === 7) S.poly([[gx(-1), gy(YA)], [gx(1), gy(YA)], [gx(1), gy(YB)], [gx(-1), gy(YB)]], {fill:C.alt, alpha:0.12*u});
+      /* marco: escala vertical a la izquierda y escala horizontal abajo; adentro, las rectas x = 0 e y = 0 */
+      seg(XA, 0, XB, 0, C.ink, 0.8, null, 0.45); seg(0, YA, 0, YB, C.ink, 0.8, null, 0.45);
+      S.line(gx(XA), gy(YA), gx(XB), gy(YA), {color:C.ink, width:1.1}); S.line(gx(XA), gy(YA), gx(XA), gy(YB), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [[-1.5, '−1,5'], [-1, '−1'], [-0.5, '−0,5'], [0, '0'], [0.5, '0,5'], [1, '1'], [1.5, '1,5']].forEach(function(q){ c.beginPath(); c.moveTo(X(gx(q[0])), by + bh - 3); c.lineTo(X(gx(q[0])), by + bh + 3); c.stroke(); num(q[1], X(gx(q[0])), by + bh + 11, 'center'); });
+      for (i = -2; i <= 4; i++){ c.beginPath(); c.moveTo(bx - 3, Y(gy(i))); c.lineTo(bx + 3, Y(gy(i))); c.stroke(); num(('' + i).replace('-', '−'), bx - 5, Y(gy(i)), 'right'); }
+      /* curvas, recortadas al marco */
+      c.save(); c.beginPath(); c.rect(bx, by, bw, bh); c.clip();
+      seg(1, YA, 1, YB, C.muted || '#6b6b6b', 1, [4, 4], k === 1 ? u : 1);
+      if (k >= 2){ w = k === 2 ? fg28Cl(u*2) : 1; fg28Curva(S, SN[0], XA, XA + (XB - XA)*w, C.sec, 1.3, gx, gy); w = k === 2 ? fg28Cl(u*2 - 1) : 1; fg28Curva(S, SN[1], XA, XA + (XB - XA)*w, C.sec, 1.3, gx, gy); }
+      if (k >= 3) fg28Curva(S, SN[2], XA, XA + (XB - XA)*(k === 3 ? u : 1), C.sec, 1.3, gx, gy);
+      if (k >= 4) fg28Curva(S, SN[3], XA, XA + (XB - XA)*(k === 4 ? u : 1), C.sec, 1.7, gx, gy);
+      xe = XA + (XB - XA)*(k === 1 ? u : 1); fg28Curva(S, fg28F, XA, Math.min(xe, 0.983), C.tan, 2.1, gx, gy); if (xe > 1.017) fg28Curva(S, fg28F, 1.017, xe, C.tan, 2.1, gx, gy);
+      /* paso 5: prueba dentro, en x = 1/2 */
+      if (k >= 5){ w = k === 5 ? u : 1; seg(0.5, YA, 0.5, 2, C.alt, 1.2, [4, 3], Math.min(1, w*3));
+        for (i = 0; i < 4; i++) punto(0.5, SN[i](0.5), C.sec, fg28Cl(w*5 - i - 0.6)); anillo(0.5, 2, C.tan, fg28Cl(w*5 - 4)); }
+      /* paso 6: prueba fuera, en x = −3/2 */
+      if (k >= 6){ w = k === 6 ? u : 1; seg(-1.5, YA, -1.5, 1.75, C.rise, 1.2, [4, 3], Math.min(1, w*3));
+        for (i = 0; i < 4; i++) punto(-1.5, SN[i](-1.5), C.sec, fg28Cl(w*5 - i - 0.6)); anillo(-1.5, 0.4, C.tan, fg28Cl(w*5 - 4)); }
+      c.restore();
+      /* rótulos de las curvas, junto a su extremo izquierdo */
+      if (k > 1 || u > 0.3) L('LF', gx(XA), gy(fg28F(XA)), -100, -15); if (k > 1 || u > 0.8) L('CV', gx(0.52), gy(3.5), -100);
+      if (k > 2 || (k === 2 && u > 0.2)) L('LS0', gx(XA), gy(1), -100, -15); if (k > 2 || (k === 2 && u > 0.7)) L('LS1', gx(XA), gy(SN[1](XA)), -100, -15);
+      if (k > 3 || (k === 3 && u > 0.3)) L('LS2', gx(XA), gy(SN[2](XA)), -100, -15); if (k > 4 || (k === 4 && u > 0.3)) L('LS3', gx(XA), gy(SN[3](XA)), -100, -15);
+      if (k > 5 || (k === 5 && u > 0.9)) L('A5', gx(0.5), gy(2), -100, -6, -12);
+      /* paso 7: extremos abiertos y nombres de las zonas */
+      if (k === 7){ c.globalAlpha = u; c.strokeStyle = C.alt; c.lineWidth = 3; c.beginPath(); c.moveTo(X(gx(-1)), by + bh); c.lineTo(X(gx(1)), by + bh); c.stroke(); c.globalAlpha = 1; anillo(-1, YA, C.alt, u); anillo(1, YA, C.alt, u);
+        if (u > 0.5){ L('IV', gx(0), gy(-2.05), -50); otx('dentro: se pegan', X(gx(0)), Y(gy(-1.45)), 'center', C.alt); otx('fuera', X(gx(-1.3)), Y(gy(3.6)), 'center', C.rise); otx('fuera', X(gx(1.3)), Y(gy(-0.9)), 'center', C.rise); } }
+      L('Q', -1.2, 7.65, 0); if (k === N && u > 0.5) L('F', -1.2, 7.2, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 1.6); txt(TXT[k - 1][1], -1.2, 1.6 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(7.65));
+      dtQue(S, 'las sumas parciales se pegan a la', 'curva solo entre −1 y 1; fuera, se separan.');
+      T.fin();
+      oaReg(S, k, N, -1.2, 0.35, [6, 36, 66, 96, 126, 156, 186]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', f = function(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }, H = '\\left(' + f(1, 2) + '\\right)', M = '\\left(-' + f(3, 2) + '\\right)', R = [
+      '\\text{Dato: la función }f(x)=\\dfrac{1}{1-x}' + Q + '\\text{En }x=1\\text{ no existe: el denominador es }1-1=0.' + Q + '\\text{Tres valores, para ubicar la curva:}' + Q + 'f(0)=\\dfrac{1}{1-0}=\\dfrac{1}{1}=1' + Q + 'f(-1)=\\dfrac{1}{1-(-1)}=\\dfrac{1}{1+1}=' + f(1, 2) + Q + 'f\\left(' + f(3, 2) + '\\right)=\\dfrac{1}{1-\\frac{3}{2}}=\\dfrac{1}{-\\frac{1}{2}}=-2' + Q + '\\text{Pregunta: ¿se puede escribir }f(x)\\text{ como una}' + Q + '\\text{suma de potencias de }x\\text{?}',
+      '\\text{Se prueba con sumas de potencias de }x.' + Q + '\\text{La más corta: }s_{0}(x)=x^{0}=1' + Q + '\\text{Es constante: una recta horizontal.}' + Q + '\\text{Con un término más: }s_{1}(x)=1+x' + Q + '\\text{Es una recta inclinada.}' + Q + '\\text{En }x=0\\text{: }s_{0}(0)=1,\\qquad s_{1}(0)=1+0=1' + Q + '\\text{Lo mismo que }f(0)=1\\text{: las tres pasan por}' + Q + '\\text{el mismo punto.}',
+      '\\text{Se suma el término siguiente, }x^{2}\\text{:}' + Q + 's_{2}(x)=s_{1}(x)+x^{2}=1+x+x^{2}' + Q + '\\text{Es una parábola. Cerca de }0\\text{ acompaña a la}' + Q + '\\text{curva en un tramo más largo que la recta.}',
+      '\\text{Se suma el término siguiente, }x^{3}\\text{:}' + Q + 's_{3}(x)=s_{2}(x)+x^{3}=1+x+x^{2}+x^{3}' + Q + '\\text{En general, con sumatoria:}' + Q + 's_{N}(x)=\\displaystyle\\sum_{n=0}^{N}x^{n}=1+x+x^{2}+\\cdots+x^{N}' + Q + '\\text{Tiene }N+1\\text{ términos.}',
+      '\\text{Prueba dentro: }x=' + f(1, 2) + '=0{,}5' + Q + '\\text{Potencias: }' + H + '^{2}=' + f(1, 4) + ',\\qquad ' + H + '^{3}=' + f(1, 8) + Q + 's_{0}=1' + Q + 's_{1}=1+' + f(1, 2) + '=' + f(2, 2) + '+' + f(1, 2) + '=' + f(3, 2) + Q + 's_{2}=' + f(3, 2) + '+' + f(1, 4) + '=' + f(6, 4) + '+' + f(1, 4) + '=' + f(7, 4) + Q + 's_{3}=' + f(7, 4) + '+' + f(1, 8) + '=' + f(14, 8) + '+' + f(1, 8) + '=' + f(15, 8)
+        + Q + '\\text{Función: }f\\left(' + f(1, 2) + '\\right)=\\dfrac{1}{1-\\frac{1}{2}}=\\dfrac{1}{\\frac{1}{2}}=2' + Q + '\\text{Lo que le falta a cada suma para llegar a }2\\text{:}' + Q + '2-1=1,\\qquad 2-' + f(3, 2) + '=' + f(4, 2) + '-' + f(3, 2) + '=' + f(1, 2) + Q + '2-' + f(7, 4) + '=' + f(8, 4) + '-' + f(7, 4) + '=' + f(1, 4) + Q + '2-' + f(15, 8) + '=' + f(16, 8) + '-' + f(15, 8) + '=' + f(1, 8) + Q + '\\text{Cada vez falta la mitad: se acercan a }2.',
+      '\\text{Prueba fuera: }x=-' + f(3, 2) + '=-1{,}5' + Q + '\\text{Potencias: }' + M + '^{2}=' + f(9, 4) + ',\\qquad ' + M + '^{3}=-' + f(27, 8) + Q + 's_{0}=1' + Q + 's_{1}=1-' + f(3, 2) + '=' + f(2, 2) + '-' + f(3, 2) + '=-' + f(1, 2) + Q + 's_{2}=-' + f(1, 2) + '+' + f(9, 4) + '=-' + f(2, 4) + '+' + f(9, 4) + '=' + f(7, 4) + Q + 's_{3}=' + f(7, 4) + '-' + f(27, 8) + '=' + f(14, 8) + '-' + f(27, 8) + '=-' + f(13, 8)
+        + Q + '\\text{Función: }f\\left(-' + f(3, 2) + '\\right)=\\dfrac{1}{1+\\frac{3}{2}}=\\dfrac{1}{\\frac{5}{2}}=' + f(2, 5) + Q + '\\text{Distancia de cada suma a }' + f(2, 5) + '\\text{:}' + Q + '1-' + f(2, 5) + '=' + f(5, 5) + '-' + f(2, 5) + '=' + f(3, 5) + Q + f(2, 5) + '+' + f(1, 2) + '=' + f(4, 10) + '+' + f(5, 10) + '=' + f(9, 10) + Q + f(7, 4) + '-' + f(2, 5) + '=' + f(35, 20) + '-' + f(8, 20) + '=' + f(27, 20) + Q + f(2, 5) + '+' + f(13, 8) + '=' + f(16, 40) + '+' + f(65, 40) + '=' + f(81, 40)
+        + Q + '\\text{En decimales: }0{,}6;\\ \\ 0{,}9;\\ \\ 1{,}35;\\ \\ 2{,}025.' + Q + '\\text{Las distancias crecen: se alejan.}',
+      '\\text{Lo que falta, para todo }x\\neq 1\\text{ (recuadro):}' + Q + 'f(x)-s_{N}(x)=\\dfrac{x^{N+1}}{1-x}' + Q + '\\text{Si }|x|<1\\text{, }x^{N+1}\\text{ tiene límite }0' + Q + '\\text{(se usa sin demostrar: aviso de rigor),}' + Q + '\\text{y lo que falta también tiene límite }0.' + Q + '\\text{Respuesta: sí, pero solo si }-1<x<1\\text{:}' + Q + '\\dfrac{1}{1-x}=\\displaystyle\\sum_{n=0}^{\\infty}x^{n}=1+x+x^{2}+x^{3}+\\cdots' + Q + '\\text{Si }|x|\\ge 1\\text{, la serie no tiene suma, aunque}' + Q + '\\text{la función exista (para todo }x\\neq 1\\text{).}' + Q + '\\text{Qué significa: función y serie son iguales}' + Q + '\\text{solo dentro de la franja verde.}'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+
+/* número ↔ figura: se elige x (de −1,5 a 1,5, de cuarto en cuarto); se comparan f(x) = 1/(1 − x) y la suma parcial s₃(x) = 1 + x + x² + x³; la diferencia es x⁴/(1 − x) */
+OA.scene('fge-vivo', (function(){
+  var XA = -1.6, XB = 1.6, YA = -4.5, YB = 8.5, Q = '\\\\&\\qquad ', S3 = fg28S(3), DAT = [], k,
+    PZ = [['MF', 'f(x)', 'f(x)', 'c-tan'], ['MS', 's_{3}(x)', 's₃(x)', 'c-sec']];
+  function gx(x){ return 2.45 + 1.75*x; } function gy(y){ return 4.69 + 0.36*y; }
+  function cual(v){ return Math.max(0, Math.min(12, Math.round(((v.x == null ? 0.5 : v.x) + 1.5)*4))); }
+  for (k = 0; k <= 12; k++) (function(k){
+    var x = fg28Fr(k - 6, 4), e = {k:k, x:(k - 6)/4, X:x}, xt = fg28T(x), xc = fg28T(x, 1), xd = fg28Rd(x, x[1] === 1 ? 0 : x[1] === 2 ? 1 : 2)[0], xdt = (x[0] < 0 ? '-' : '') + xd.replace('.', '{,}'), xdp = (x[0] < 0 ? '−' : '') + xd.replace('.', ','),
+      xs = x[1] === 1 ? 'x=' + xt : 'x=' + xc + '=' + xdt, xsp = x[1] === 1 ? 'x = ' + fg28P(x) : 'x = ' + fg28P(x) + ' = ' + xdp,
+      p2 = fg28Fr(x[0]*x[0], x[1]*x[1]), p3 = fg28Fr(p2[0]*x[0], p2[1]*x[1]), p4 = fg28Fr(p3[0]*x[0], p3[1]*x[1]), a1, a2, a3, s, w, fv, D, d, d2, n1, n2, g, ax = fg28Abs(x), den, inv, R,
+      R0 = '\\text{Dato: }' + (x[1] === 1 ? 'x=' + xt : 'x=' + xt + '=' + xdt) + Q + '\\text{Función: }f(x)=\\dfrac{1}{1-x}' + Q + '\\text{Suma parcial de cuatro términos:}' + Q + 's_{3}(x)=\\displaystyle\\sum_{n=0}^{3}x^{n}=1+x+x^{2}+x^{3}';
+    e.xp = x[1] === 1 ? fg28P(x) : xdp;
+    if (k === 6){ /* x = 0: caso límite */
+      e.s = [1, 1]; e.f = [1, 1]; e.d = [0, 1];
+      PZ.push(['H6', 'x=0\\text{: el centro del intervalo}', 'x = 0: el centro del intervalo', 'pt']);
+      R = [R0, '\\text{Potencias, cada una es la anterior por }x\\text{:}' + Q + 'x^{2}=0\\cdot 0=0' + Q + 'x^{3}=0\\cdot 0=0',
+        '\\text{Suma parcial: }s_{3}(0)=1+0+0+0=1',
+        '\\text{Función. Resta del denominador: }1-0=1' + Q + 'f(0)=\\dfrac{1}{1}=1',
+        '\\text{Diferencia: función menos suma parcial.}' + Q + 'f(0)-s_{3}(0)=1-1=0',
+        '\\text{Comprobación con la fórmula del recuadro:}' + Q + 'f(x)-s_{3}(x)=\\dfrac{x^{4}}{1-x}=x^{4}\\cdot f(x)' + Q + 'x^{4}=0\\cdot 0=0' + Q + '0\\cdot 1=0\\ \\checkmark',
+        '\\text{Se compara }|x|\\text{ con }1\\text{: }|0|=0<1\\text{: dentro.}' + Q + '\\text{Qué significa: caso límite. En }x=0\\text{ todas}' + Q + '\\text{las sumas parciales valen }1\\text{, lo mismo que}' + Q + '\\text{la función: las curvas se tocan y la}' + Q + '\\text{diferencia es }0.'];
+    } else if (k === 10){ /* x = 1: ni función ni suma */
+      e.s = [4, 1]; e.f = null; e.d = null;
+      PZ.push(['H10', 'x=1\\text{: borde del intervalo, }|x|=1', 'x = 1: borde del intervalo, |x| = 1', 'pt']);
+      R = [R0, '\\text{Potencias, cada una es la anterior por }x\\text{:}' + Q + 'x^{2}=1\\cdot 1=1' + Q + 'x^{3}=1\\cdot 1=1',
+        '\\text{Suma parcial, de a un término:}' + Q + '1+x=1+1=2' + Q + '\\text{más }x^{2}\\text{: }2+1=3' + Q + '\\text{más }x^{3}\\text{: }3+1=4' + Q + 's_{3}(1)=4',
+        '\\text{Función. Resta del denominador: }1-1=0' + Q + '\\text{No se puede dividir por }0\\text{: }f(1)\\text{ no existe.}' + Q + '\\text{El }1\\text{ no está en el dominio de }f.',
+        '\\text{Diferencia: no hay, porque no hay }f(1).' + Q + '\\text{La fórmula del recuadro pide }x\\neq 1.',
+        '\\text{La serie en }x=1\\text{ es }1+1+1+1+\\cdots' + Q + '\\text{Sumas parciales: }1,\\ 2,\\ 3,\\ 4,\\ \\ldots' + Q + '\\text{En general }s_{N}(1)=N+1\\text{: crecen sin tope.}' + Q + '\\text{La serie no tiene suma.}',
+        '\\text{Se compara }|x|\\text{ con }1\\text{: }|1|=1\\ge 1\\text{: fuera.}' + Q + '\\text{Qué significa: caso límite, el borde derecho.}' + Q + '\\text{Aquí no hay función ni suma de la serie.}'];
+    } else if (k === 2){ /* x = −1: hay función, no hay suma */
+      e.s = [0, 1]; e.f = [1, 2]; e.d = [1, 2];
+      PZ.push(['H2', 'x=-1\\text{: borde del intervalo, }|x|=1', 'x = −1: borde del intervalo, |x| = 1', 'pt']);
+      R = [R0, '\\text{Potencias, cada una es la anterior por }x\\text{:}' + Q + 'x^{2}=(-1)\\cdot(-1)=1' + Q + 'x^{3}=1\\cdot(-1)=-1',
+        '\\text{Suma parcial, de a un término:}' + Q + '1+x=1-1=0' + Q + '\\text{más }x^{2}\\text{: }0+1=1' + Q + '\\text{más }x^{3}\\text{: }1-1=0' + Q + 's_{3}(-1)=0',
+        '\\text{Función. Resta del denominador:}' + Q + '1-x=1-(-1)=1+1=2' + Q + 'f(-1)=\\dfrac{1}{2}=0{,}5',
+        '\\text{Diferencia: función menos suma parcial.}' + Q + 'f(-1)-s_{3}(-1)=\\dfrac{1}{2}-0=\\dfrac{1}{2}',
+        '\\text{Comprobación con la fórmula del recuadro:}' + Q + 'f(x)-s_{3}(x)=\\dfrac{x^{4}}{1-x}=x^{4}\\cdot f(x)' + Q + 'x^{4}=(-1)\\cdot(-1)=1' + Q + '1\\cdot\\dfrac{1}{2}=\\dfrac{1}{2}\\ \\checkmark',
+        '\\text{Se compara }|x|\\text{ con }1\\text{: }|-1|=1\\ge 1\\text{: fuera.}' + Q + '\\text{La serie es }1-1+1-1+\\cdots' + Q + '\\text{Sumas parciales: }1,\\ 0,\\ 1,\\ 0,\\ \\ldots\\text{ No se}' + Q + '\\text{acercan a un solo número: no tiene suma.}' + Q + '\\text{Con un término más, la diferencia se}' + Q + '\\text{multiplica por }x\\text{: }\\dfrac{1}{2}\\cdot(-1)=-\\dfrac{1}{2}' + Q + '\\text{Qué significa: caso límite. La función}' + Q + '\\text{vale }\\dfrac{1}{2}\\text{, pero la serie no lo entrega:}' + Q + '\\text{la diferencia nunca se achica.}'];
+    } else {
+      a1 = fg28Suma([1, 1], x); a2 = fg28Suma(a1[1], p2); a3 = fg28Suma(a2[1], p3); s = a3[1];
+      w = fg28Fr(x[1] - x[0], x[1]); inv = fg28Fr(w[1], w[0]); fv = inv;
+      D = fv[1]*s[1]/fg28Mcd(fv[1], s[1]); n1 = fv[0]*D/fv[1]; n2 = s[0]*D/s[1]; d = fg28Fr(n1 - n2, D);
+      g = fg28Mcd(p4[0]*fv[0], p4[1]*fv[1]); d2 = fg28Fr(d[0]*x[0], d[1]*x[1]); den = Math.abs(x[0]) < x[1];
+      e.s = s; e.f = fv; e.d = d;
+      PZ.push(['H' + k, xs + (den ? '\\text{: dentro del intervalo, }|x|<1' : '\\text{: fuera del intervalo, }|x|>1'), xsp + (den ? ': dentro del intervalo, |x| < 1' : ': fuera del intervalo, |x| > 1'), 'pt']);
+      R = [R0,
+        '\\text{Potencias, cada una es la anterior por }x\\text{:}' + Q + 'x^{2}=' + fg28Par(x) + '\\cdot' + fg28Par(x) + '=' + fg28T(p2) + Q + 'x^{3}=' + fg28T(p2) + '\\cdot' + fg28Par(x) + '=' + fg28T(p3),
+        '\\text{Suma parcial, de a un término:}' + Q + '1+x=' + a1[0] + Q + '\\text{más }x^{2}\\text{: }' + a2[0] + Q + '\\text{más }x^{3}\\text{: }' + a3[0] + Q + 's_{3}(x)=' + fg28T(s) + fg28ApT(s),
+        '\\text{Función. Resta del denominador:}' + Q + '1-x=' + (x[0] < 0 ? '1-' + fg28Par(x) + '=1+' + fg28T(ax) + '=' + fg28Raw(x[1], x[1]) + '+' + fg28T(ax) : '1-' + xt + '=' + fg28Raw(x[1], x[1]) + '-' + xt) + '=' + fg28T(w) + Q + '\\text{Dividir por una fracción es multiplicar}' + Q + '\\text{por su inverso:}' + Q + 'f(x)=\\dfrac{1}{' + fg28T(w, 1) + '}=1\\cdot' + fg28Par(inv) + '=' + fg28T(fv) + fg28ApT(fv),
+        '\\text{Diferencia: función menos suma parcial.}' + Q + 'f(x)-s_{3}(x)=' + fg28T(fv) + '-' + fg28Par(s) + (s[0] < 0 ? '=' + fg28T(fv) + '+' + fg28T(fg28Abs(s)) : '') + Q + '\\text{Denominador común }' + D + '\\text{:}' + Q + fg28Raw(n1, D) + (n2 < 0 ? '+' : '-') + fg28Raw(Math.abs(n2), D) + '=' + fg28T(d) + fg28ApT(d),
+        '\\text{Comprobación con la fórmula del recuadro:}' + Q + 'f(x)-s_{3}(x)=\\dfrac{x^{4}}{1-x}=x^{4}\\cdot f(x)' + Q + 'x^{4}=' + fg28Par(p3) + '\\cdot' + fg28Par(x) + '=' + fg28T(p4) + Q + fg28T(p4) + '\\cdot' + fg28Par(fv) + '=' + fg28Raw(p4[0]*fv[0], p4[1]*fv[1]) + (g > 1 ? '=' + fg28T(d) : '') + '\\ \\checkmark' + (g > 1 ? Q + '\\text{(se simplifica por }' + g + '\\text{). Coincide.}' : Q + '\\text{Coincide.}'),
+        '\\text{Se compara }|x|\\text{ con }1\\text{: }\\left|' + xt + '\\right|=' + fg28T(ax) + (den ? '<1' : '>1') + '.' + Q + (den ? '\\text{Dentro del intervalo: la serie completa}' + Q + '\\text{suma lo que vale la función, }' + fg28T(fv) + '.' : '\\text{Fuera del intervalo: la serie no tiene suma}' + Q + '\\text{(hoja «Series geométricas infinitas»).}' + Q + '\\text{La función sí existe: vale }' + fg28T(fv) + '.') + Q + '\\text{Con un término más, la diferencia se}' + Q + '\\text{multiplica por }x\\text{ (recuadro, con }N=4\\text{):}' + Q + fg28T(d) + '\\cdot' + fg28Par(x) + '=' + fg28T(d2) + fg28ApT(d2) + Q + (den ? '\\text{Qué significa: queda más cerca de }0\\text{. Con}' + Q + '\\text{más términos, la suma parcial se pega a la}' + Q + '\\text{función.}' : '\\text{Qué significa: queda más lejos de }0\\text{. Con}' + Q + '\\text{más términos, la suma parcial se separa}' + Q + '\\text{más de la función.}')];
+    }
+    PZ.push(['VS' + k, 's_{3}(x)=1+x+x^{2}+x^{3}=' + fg28T(e.s, 1) + fg28ApT(e.s), 's₃(x) = 1 + x + x² + x³ = ' + fg28P(e.s) + fg28ApP(e.s), 'c-sec']);
+    PZ.push(['VF' + k, e.f ? 'f(x)=\\tfrac{1}{1-x}=' + fg28T(e.f, 1) + fg28ApT(e.f) : 'f(1)\\text{ no existe: el denominador es }1-1=0', e.f ? 'f(x) = 1/(1 − x) = ' + fg28P(e.f) + fg28ApP(e.f) : 'f(1) no existe: el denominador es 1 − 1 = 0', 'c-tan']);
+    PZ.push(['VD' + k, e.d ? 'f(x)-s_{3}(x)=' + fg28T(e.d, 1) + fg28ApT(e.d) : '\\text{sin }f(1)\\text{ no hay diferencia que calcular}', e.d ? 'f(x) − s₃(x) = ' + fg28P(e.d) + fg28ApP(e.d) : 'sin f(1) no hay diferencia que calcular', 'diff']);
+    e.R = R; DAT.push(e);
+  })(k);
+  var FR = [['dentro del intervalo: la suma parcial queda', 'cerca, y con más términos se acerca más.'], ['en 0 las dos curvas se tocan: diferencia cero.', 'Caso límite: la suma parcial ya es la función.'],
+    ['fuera del intervalo: la función existe, pero', 'la serie no tiene suma. Las curvas se separan.'], ['en −1 la función vale un medio, pero la serie', 'no tiene suma: sus sumas saltan entre 1 y 0.'],
+    ['en 1 la función no existe (punteada gris) y la', 'serie no tiene suma: sus sumas crecen sin tope.']];
+  function frase(k){ return k === 6 ? FR[1] : k === 2 ? FR[3] : k === 10 ? FR[4] : (k > 2 && k < 10) ? FR[0] : FR[2]; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:0, y1:9.4}, aspect:9.4/6.6,
+    aria:'Arriba, una franja dice qué muestra: en el x elegido, cuánto vale la función, cuánto la suma parcial de cuatro términos y cuánto se diferencian. Un deslizador elige x, de menos 1,5 a 1,5, de 0,25 en 0,25. Es una gráfica: en horizontal x, de menos 1,6 a 1,6; en vertical, los valores, de menos 4,5 a 8,5. En burdeo, la curva de la función 1 dividido por 1 menos x, con dos ramas separadas por una punteada gris vertical en x igual a 1. En azul, la curva de la suma parcial 1 más x más x al cuadrado más x al cubo. Una franja verde clara marca el intervalo entre menos 1 y 1. Una punteada vertical pasa por el x elegido: un anillo burdeo marca el valor de la función, un punto azul el valor de la suma parcial y un trazo naranja entre los dos mide la diferencia. Bajo la gráfica se escriben los tres valores. Con x igual a 0 los dos puntos coinciden y la diferencia es cero. Con x igual a 0,5 la función vale 2, la suma parcial quince octavos y la diferencia un octavo. Con x igual a 0,75 la diferencia es ochenta y uno sesenta y cuatroavos. Con x igual a menos 1 la función vale un medio, la suma parcial 0 y la serie no tiene suma. Con x igual a 1 la función no existe y la serie no tiene suma. Con x igual a 1,5 la función vale menos 2, la suma parcial sesenta y cinco octavos y la serie no tiene suma. Bajo el dibujo, frases dicen la conclusión y, más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'x', tex:'x', min:-1.5, max:1.5, step:0.25, value:0.5}],
+    legend:'<span><i class="sw tan"></i> la función \\(f(x)=\\tfrac{1}{1-x}\\) y su valor en el \\(x\\) elegido</span><span><i class="sw sec"></i> la suma parcial \\(s_{3}(x)=1+x+x^{2}+x^{3}\\) y su valor</span><span><i class="sw rise"></i> la diferencia \\(f(x)-s_{3}(x)\\)</span><span><i class="sw alt"></i> franja \\(-1&lt;x&lt;1\\): donde la serie tiene suma</span><span>punteada gris en \\(x=1\\): la función no existe</span>',
+    anim:{run:52000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.x = -1.5 + 0.25*Math.min(12, Math.floor(p*13)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var k = cual(v), e = DAT[k], x = e.x, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', i, bx = X(gx(XA)), by = Y(gy(YB)), bw = X(gx(XB)) - bx, bh = Y(gy(YA)) - by, px = X(gx(x)), ys = S3(x), yf = e.f ? e.f[0]/e.f[1] : null, lado = k <= 8 ? 1 : -1, gap, ym, fr;
+      function num(t, ax, ay, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, ax, ay); }
+      function seg(x0, y0, x1, y1, col, wd, dash, al){ c.globalAlpha = al == null ? 1 : al; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); c.moveTo(X(gx(x0)), Y(gy(y0))); c.lineTo(X(gx(x1)), Y(gy(y1))); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+      L('H' + k, -1.2, 8.12, 0);
+      /* franja −1 < x < 1 */
+      S.poly([[gx(-1), gy(YA)], [gx(1), gy(YA)], [gx(1), gy(YB)], [gx(-1), gy(YB)]], {fill:C.alt, alpha:0.1});
+      c.font = '600 11px ' + F; c.fillStyle = C.alt; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('dentro del intervalo', X(gx(-0.1)), by + 10);
+      /* marco y escalas */
+      seg(XA, 0, XB, 0, C.ink, 0.8, null, 0.45); seg(0, YA, 0, YB, C.ink, 0.8, null, 0.45);
+      S.line(gx(XA), gy(YA), gx(XB), gy(YA), {color:C.ink, width:1.1}); S.line(gx(XA), gy(YA), gx(XA), gy(YB), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      [[-1.5, '−1,5'], [-1, '−1'], [-0.5, '−0,5'], [0, '0'], [0.5, '0,5'], [1, '1'], [1.5, '1,5']].forEach(function(q){ c.beginPath(); c.moveTo(X(gx(q[0])), by + bh - 3); c.lineTo(X(gx(q[0])), by + bh + 3); c.stroke(); num(q[1], X(gx(q[0])), by + bh + 11, 'center'); });
+      for (i = -4; i <= 8; i += 2){ c.beginPath(); c.moveTo(bx - 3, Y(gy(i))); c.lineTo(bx + 3, Y(gy(i))); c.stroke(); num(('' + i).replace('-', '−'), bx - 5, Y(gy(i)), 'right'); }
+      /* curvas, recortadas al marco */
+      c.save(); c.beginPath(); c.rect(bx, by, bw, bh); c.clip();
+      seg(1, YA, 1, YB, C.muted || '#6b6b6b', 1, [4, 4]);
+      fg28Curva(S, S3, XA, XB, C.sec, 1.6, gx, gy); fg28Curva(S, fg28F, XA, 0.99, C.tan, 2, gx, gy); fg28Curva(S, fg28F, 1.01, XB, C.tan, 2, gx, gy);
+      c.restore();
+      /* el x elegido: punteada vertical y marca en la escala */
+      if (k !== 10) seg(x, YA, x, YB, C.ink, 0.9, [3, 3], 0.6);
+      c.fillStyle = C.ink; c.beginPath(); c.moveTo(px, by + bh - 1); c.lineTo(px - 4, by + bh - 8); c.lineTo(px + 4, by + bh - 8); c.closePath(); c.fill();
+      /* diferencia: trazo naranja entre los dos valores */
+      if (yf != null){ gap = Math.abs(Y(gy(yf)) - Y(gy(ys))); ym = (Y(gy(yf)) + Y(gy(ys)))/2;
+        if (gap > 0.5){ c.strokeStyle = C.rise; c.lineWidth = 2.6; c.setLineDash([]); c.beginPath(); c.moveTo(px, Y(gy(yf))); c.lineTo(px, Y(gy(ys))); c.stroke(); }
+        if (k === 6) txt('diferencia cero', px - 8, ym, 'right', C.rise);
+        else if (gap >= 14) txt('diferencia', px + lado*8, ym, lado > 0 ? 'left' : 'right', C.rise);
+        else if (k === 2) txt('diferencia', px + 50, ym, 'left', C.rise);
+        else txt('diferencia', px - lado*8, ym, lado > 0 ? 'right' : 'left', C.rise); }
+      else txt('la función no existe', px - 7, Y(gy(-2.6)), 'right', C.muted || '#6b6b6b');
+      /* valores: punto azul (suma parcial) y anillo burdeo (función) */
+      c.beginPath(); c.arc(px, Y(gy(ys)), 3.2, 0, 6.2832); c.fillStyle = C.sec; c.fill();
+      if (yf != null){ c.beginPath(); c.arc(px, Y(gy(yf)), 4, 0, 6.2832); c.fillStyle = k === 6 ? 'rgba(255,255,255,0)' : '#fff'; c.fill(); c.strokeStyle = C.tan; c.lineWidth = 1.7; c.stroke(); L('MF', gx(x), gy(yf), lado > 0 ? 0 : -100, lado*7, -12); }
+      L('MS', gx(x), gy(ys), lado > 0 ? 0 : -100, lado*7, 12);
+      /* los tres valores, escritos bajo la gráfica */
+      L('VF' + k, -1.2, 2.3, 0); L('VS' + k, -1.2, 1.82, 0); L('VD' + k, -1.2, 1.34, 0);
+      fr = frase(k); txt(fr[0], X(-1.2), Y(0.78), 'left', k === 6 || (k > 2 && k < 10) ? C.ink : C.tan); txt(fr[1], X(-1.2), Y(0.78) + 21, 'left', k === 6 || (k > 2 && k < 10) ? C.ink : C.tan);
+      dtQue(S, 'función, suma parcial de 4 términos', 'y su diferencia, en el x elegido. Mueve x.');
+      T.fin();
+    },
+    caption:function(v){ var k = cual(v), e = DAT[k], fr = frase(k); return 'Con x = ' + e.xp + ': ' + fr[0] + ' ' + fr[1]; },
+    readout:function(v){ return dtPasos(DAT[cual(v)].R); }
+  };
+})());
