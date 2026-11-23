@@ -1359,4 +1359,155 @@ ok(rd32(F(1, 750), 5) == 133 and F(1, 750) < F('0.0014') and abs(math.sin(0.2) -
 ok(all(t*t/((2*k)*(2*k+1)) <= F(1, 6) and bs32(k, t) <= F(1, k) and abs(math.sin(float(t)) - float(t)) <= float(t**3/6) + 1e-15 for t in [F(j, 20) for j in range(1, 21)] for k in range(1, 30)), 'H32 C (c) para 0 < θ ≤ 1: |sen θ − θ| ≤ θ³/6')
 ok(F('0.01')*6 == F('0.06') and F('0.39')**2 == F('0.1521') and F('0.1521')*F('0.39') == F('0.059319') < F('0.06') and F('0.40')**2 == F('0.16') and F('0.16')*F('0.40') == F('0.064') > F('0.06'), 'H32 C (c) θ³ ≤ 0,06: sirve 0,39 y no 0,40')
 ok(F('0.2')*180 == 36 and rd32(36/F('3.1416'), 2) == 1146 and abs(math.degrees(0.2) - 11.46) < 0.01 and F('0.2')/100 == F('0.002') and F('0.0014') < F('0.002'), 'H32 C (d) 11,46° y el 1 % de 0,2')
-print('Lote 25 H01–H32:', 'sin errores' if not err else f'{err} errores')
+# H33
+# H33 · Demostraciones (sucesiones y series geométricas): registro y lectura de dem33-idea (6 pasos) y de dem33-vivo (6 razones), teoremas 1, 2 y 3 y lemas 1, 2 y 3 en rejilla de fracciones, ejemplos 1-4 y ejercicios A, B, C. Las demostraciones (inducción, ε–N, contradicción) no son comprobables por código: aquí se comprueban sus identidades y desigualdades en rejilla, y todas las cuentas con números.
+G33 = [F(p, q) for p in range(-9, 10) for q in (1, 2, 3, 4, 5, 7) if p != 0]      # razones (≠ 0)
+A33 = [F(-7, 2), F(-2), F(-1, 3), F(1, 5), F(1), F(2), F(8), F(15, 4)]              # primeros términos (≠ 0)
+def pg33(a, r, n):      # los n primeros términos, por la recurrencia a_{k+1} = a_k · r
+    t = [F(a)]
+    while len(t) < n: t.append(t[-1]*r)
+    return t
+def sp33(a, r, n): return sum(pg33(a, r, n))      # suma parcial, sumando uno por uno
+def rd33(x, d=4): return (abs(F(x))*10**d*2 + 1)//2 * (1 if x >= 0 else -1)      # redondeo a d decimales (mitad hacia arriba en el tamaño), como entero
+# teoremas 1 y 2, en rejilla
+ok(all(pg33(a, r, 12)[n-1] == a*r**(n-1) for a in A33 for r in G33 for n in range(1, 13)), 'H33 teorema 1: aₙ = a₁·rⁿ⁻¹ contra la recurrencia')
+ok(all(a*r**(n-1)*r == a*r**n and n == (n+1)-1 for a in A33 for r in G33 for n in range(1, 13)) and all(a*r**0 == a for a in A33 for r in G33), 'H33 teorema 1: caso base y paso inductivo')
+ok(all(sp33(a, r, n) == a*(1-r**n)/(1-r) for a in A33 for r in G33 if r != 1 for n in range(1, 13)), 'H33 teorema 2: Sₙ = a₁(1 − rⁿ)/(1 − r), r ≠ 1')
+ok(all(r*sp33(a, r, n) == sum(a*r**k for k in range(1, n+1)) and sp33(a, r, n) - r*sp33(a, r, n) == a - a*r**n and (1-r)*sp33(a, r, n) == a*(1-r**n) for a in A33 for r in G33 + [F(0)] for n in range(1, 13)), 'H33 teorema 2, 1.ª demostración: r·Sₙ, la resta y (1 − r)·Sₙ = a₁(1 − rⁿ) (también con r = 1)')
+ok(all(a*(1-r)/(1-r) == a and a*(1-r**n)/(1-r) + a*r**n == (a*(1-r**n) + a*r**n*(1-r))/(1-r) and a*(1-r**n) + a*r**n*(1-r) == a - a*r**n + a*r**n - a*r**n*r == a*(1-r**(n+1)) for a in A33 for r in G33 if r != 1 for n in range(1, 13)), 'H33 teorema 2, 2.ª demostración: caso base y paso inductivo')
+ok(all(pg33(a, 1, n) == [a]*n and sp33(a, 1, n) == n*a and n*a + a == (n+1)*a for a in A33 for n in range(1, 30)) and F(1)**0 == 1, 'H33 teorema 2, caso r = 1: Sₙ = n·a₁')
+ok(all(pg33(a, 0, n) == [a] + [0]*(n-1) and sp33(a, 0, n) == a == a*(1-0)/(1-0) == a/(1-0) for a in A33 for n in range(1, 12)), 'H33 k1 caso r = 0: sumas parciales a₁ y fórmulas')
+# lemas 1, 2 y 3
+H33 = [F(p, q) for p in range(1, 12) for q in (1, 2, 3, 5, 9, 20)]
+ok(all((1+h)**n >= 1+n*h and (1+h)**1 == 1+1*h and (1+n*h)*(1+h) == 1+h+n*h+n*h*h == 1+(n+1)*h+n*h*h >= 1+(n+1)*h for h in H33 for n in range(1, 40)), 'H33 lema 1 (Bernoulli) y su paso inductivo')
+R33 = [r for r in G33 if abs(r) < 1]
+def N33(r, e): x = 1/((1/abs(r)-1)*e); return -(-x.numerator//x.denominator)      # menor natural N ≥ 1/(h·ε)
+ok(all(1/abs(r) > 1 and (1/abs(r)-1) > 0 and abs(r) == 1/(1+(1/abs(r)-1)) and abs(r**n) == abs(r)**n == 1/(1+(1/abs(r)-1))**n < 1/(n*(1/abs(r)-1)) for r in R33 for n in range(1, 60)), 'H33 lema 2: h > 0, |r| = 1/(1 + h) y |rⁿ| < 1/(n·h)')
+ok(all(N33(r, e) >= 1/((1/abs(r)-1)*e) and all(n*(1/abs(r)-1)*e > 1 and 1/(n*(1/abs(r)-1)) < e and abs(r**n - 0) < e for n in range(N33(r, e)+1, N33(r, e)+40)) for r in R33 for e in (F(1, 2), F(1, 10), F(1, 100), F(3, 1000))), 'H33 lema 2: con N ≥ 1/(h·ε), n > N ⟹ |rⁿ − 0| < ε')
+ok(1/F(1, 2) - 1 == 2 - 1 == 1 and all(F(1, 2)**n < F(1, n) for n in range(1, 80)) and all(F(0)**n == 0 for n in range(1, 9)), 'H33 lema 2: caso r = 1/2 (h = 1) y caso r = 0')
+ok(all(abs(r)**0 == 1 and abs(r)**m >= 1 and abs(r)**m*abs(r) >= abs(r) >= 1 for r in G33 if abs(r) >= 1 for m in range(0, 30)), 'H33 lema 3: |r|ᵐ ≥ 1 si |r| ≥ 1')
+# teorema 3
+ok(all(a*(1-r**n)/(1-r) - a/(1-r) == (a*(1-r**n) - a)/(1-r) == -a*r**n/(1-r) and abs(sp33(a, r, n) - a/(1-r)) == abs(a)/abs(1-r)*abs(r**n) and abs(a)/abs(1-r) > 0 and a/(1-r) - sp33(a, r, n) == a*r**n/(1-r) for a in A33 for r in R33 for n in range(1, 13)), 'H33 teorema 3, 1.ª parte: Sₙ − S = −a₁rⁿ/(1 − r), |Sₙ − S| = c·|rⁿ|')
+ok(all(all(abs(a*(1-r**n)/(1-r) - a/(1-r)) < e for n in range(N33(r, e/(abs(a)/abs(1-r)))+1, N33(r, e/(abs(a)/abs(1-r)))+25)) for a in A33 for r in R33 for e in (F(1, 10), F(1, 250))), 'H33 teorema 3, 1.ª parte: con el N del lema 2 para ε/c, |Sₙ − S| < ε')
+ok(all(abs(float(sp33(a, r, 400)) - float(a/(1-r))) < 1e-9*max(1, abs(float(a/(1-r)))) for a in A33 for r in R33 if abs(r) <= F(4, 5)), 'H33 teorema 3: las sumas parciales se acercan a a₁/(1 − r), numérico')
+ok(all(abs(a*r**(n-1)) == abs(a)*abs(r)**(n-1) >= abs(a) > 0 and sp33(a, r, n) - sp33(a, r, n-1) == a*r**(n-1) and abs(a)/2 + abs(a)/2 == abs(a) for a in A33 for r in G33 if abs(r) >= 1 for n in range(2, 13)), 'H33 teorema 3, 2.ª parte: |aₙ| ≥ |a₁| y aₙ = Sₙ − Sₙ₋₁')
+# dem33-idea: figura, registro R1…R6 y lectura
+t33 = pg33(8, F(1, 2), 4)
+ok(t33 == [8, 4, 2, 1] and [8*F(1, 2), 4*F(1, 2), 2*F(1, 2)] == [4, 2, 1] and sum(t33) == sp33(8, F(1, 2), 4) == 15 == sum(8*F(1, 2)**(k-1) for k in range(1, 5)), 'H33 idea paso 1 (R1): S₄ = 8 + 4 + 2 + 1')
+ok([F(1, 2)*x for x in t33] == [4, 2, 1, F(1, 2)] and F(1, 2)*15 == 4+2+1+F(1, 2), 'H33 idea paso 2 (R2): ½·S₄ = 4 + 2 + 1 + ½')
+ok(4-4 == 0 == 2-2 == 1-1 and sum(t33) - sum(F(1, 2)*x for x in t33) == 8 - F(1, 2) == F(16, 2) - F(1, 2) == F(15, 2), 'H33 idea paso 3 (R3): S₄ − ½·S₄ = 8 − ½ = 15/2')
+ok(15 - F(1, 2)*15 == (1-F(1, 2))*15 and F(1, 2)**4 == F(1, 2)*F(1, 2)*F(1, 2)*F(1, 2) == F(1, 16) and 8*F(1, 16) == F(8, 16) == F(1, 2) and 8 - F(1, 2) == 8 - 8*F(1, 2)**4 == 8*(1-F(1, 2)**4) == 8*(1-F(1, 16)) and (1-F(1, 2))*15 == 8*(1-F(1, 2)**4), 'H33 idea paso 4 (R4, T4): (1 − ½)·S₄ = 8·(1 − (½)⁴)')
+ok(1-F(1, 2) == F(2, 2)-F(1, 2) == F(1, 2) != 0 and 1-F(1, 16) == F(16, 16)-F(1, 16) == F(15, 16) and 8*F(15, 16) == F(120, 16) == F(15, 2) and F(15, 2)/F(1, 2) == F(15, 2)*2 == F(30, 2) == 15 and 8+4 == 12 and 12+2 == 14 and 14+1 == 15, 'H33 idea paso 5 (R5): S₄ = 15/2 : 1/2 = 15 y comprobación')
+ok(8*(1-F(1, 2)**4)/(1-F(1, 2)) == 15, 'H33 idea paso 6 (R6): la fórmula general da 15')
+b1_33 = [(0, 8), (8, 4), (12, 2), (14, 1)]; b2_33 = [(8, 4), (12, 2), (14, 1), (15, F(1, 2))]
+ok(all(b1_33[i][0] == sum(t33[:i]) and b1_33[i][1] == t33[i] and b2_33[i][0] == 8 + sum(F(1, 2)*x for x in t33[:i]) and b2_33[i][1] == F(1, 2)*t33[i] for i in range(4)) and [b for b in b1_33[1:]] == [b for b in b2_33[:3]] and F(15, 2) == 15*F(1, 2) and 8/F(1, 2) == 16 and F(15, 2)/F(1, 2) == 15 and F(15, 2) + F(1, 2) == 8, 'H33 idea figura: posiciones de los bloques, los tres que coinciden, barra de 7,5 = mitad de 15 = 15 de 16 partes')
+# dem33-vivo: las seis razones (a₁ = 2)
+V33 = [F(-1), F(-1, 2), F(1, 2), F(2, 3), F(1), F(3, 2)]
+S33 = {r: [sp33(2, r, n) for n in range(1, 7)] for r in V33}
+ok(S33[F(-1)] == [2, 0, 2, 0, 2, 0] and S33[F(-1, 2)] == [2, 1, F(3, 2), F(5, 4), F(11, 8), F(21, 16)] and S33[F(1, 2)] == [2, 3, F(7, 2), F(15, 4), F(31, 8), F(63, 16)] and S33[F(2, 3)] == [2, F(10, 3), F(38, 9), F(130, 27), F(422, 81), F(1330, 243)] and S33[F(1)] == [2, 4, 6, 8, 10, 12] and S33[F(3, 2)] == [2, 5, F(19, 2), F(65, 4), F(211, 8), F(665, 16)], 'H33 vivo: S₁…S₆ de las seis razones')
+ok(all(S33[r][n-1] == 2*(1-r**n)/(1-r) for r in V33 if r != 1 for n in range(1, 7)) and all(max(S33[r]) <= ym and min(S33[r]) >= 0 for r, ym in zip(V33, (3, F(5, 2), F(23, 5), 7, 13, 46))), 'H33 vivo: fórmula del teorema 2 y puntos dentro del eje')
+ok([1-r for r in V33] == [2, F(3, 2), F(1, 2), F(1, 3), 0, F(-1, 2)] and 1-F(-1, 2) == 1+F(1, 2) == F(2, 2)+F(1, 2) and 1-F(1, 2) == F(2, 2)-F(1, 2) and 1-F(2, 3) == F(3, 3)-F(2, 3) and 1-F(3, 2) == F(2, 2)-F(3, 2), 'H33 vivo paso 2: denominadores 1 − r')
+ok([[r*r, r*r*r, (r*r*r)*(r*r*r)] for r in V33] == [[1, -1, 1], [F(1, 4), F(-1, 8), F(1, 64)], [F(1, 4), F(1, 8), F(1, 64)], [F(4, 9), F(8, 27), F(64, 729)], [1, 1, 1], [F(9, 4), F(27, 8), F(729, 64)]] and all((r**3)**2 == r**6 for r in V33), 'H33 vivo paso 3: r², r³, r⁶')
+ok([1-r**3 for r in V33] == [2, F(9, 8), F(7, 8), F(19, 27), 0, F(-19, 8)] and [2*(1-r**3) for r in V33] == [4, F(18, 8), F(14, 8), F(38, 27), 0, F(-38, 8)] and [F(18, 8), F(14, 8), F(-38, 8)] == [F(9, 4), F(7, 4), F(-19, 4)] and F(9, 4)*F(2, 3) == F(18, 12) == F(3, 2) and F(7, 4)*2 == F(14, 4) == F(7, 2) and F(38, 27)*3 == F(114, 27) == F(38, 9) and F(-19, 4)*(-2) == F(38, 4) == F(19, 2) and 4/F(2) == 2 and [1/(1-r) for r in V33 if r != 1] == [F(1, 2), F(2, 3), 2, 3, -2], 'H33 vivo paso 4: S₃ por la fórmula, con sus productos')
+ok([[2*r, 2*r*r, 2+2*r, 2+2*r+2*r*r] for r in V33] == [[-2, 2, 0, 2], [-1, F(1, 2), 1, F(3, 2)], [1, F(1, 2), 3, F(7, 2)], [F(4, 3), F(8, 9), F(10, 3), F(38, 9)], [2, 2, 4, 6], [3, F(9, 2), 5, F(19, 2)]] and 2*F(-1, 2) == F(-2, 2) and 2*F(1, 2) == F(2, 2) and 2*F(3, 2) == F(6, 2) and 1+F(1, 2) == F(2, 2)+F(1, 2) and 3+F(1, 2) == F(6, 2)+F(1, 2) and 2+F(4, 3) == F(6, 3)+F(4, 3) and F(10, 3)+F(8, 9) == F(30, 9)+F(8, 9) and 5+F(9, 2) == F(10, 2)+F(9, 2), 'H33 vivo paso 4: comprobación de S₃ sumando uno por uno')
+ok([1-r**6 for r in V33] == [0, F(63, 64), F(63, 64), F(665, 729), 0, F(-665, 64)] and 1-F(729, 64) == F(64, 64)-F(729, 64) and [2*(1-r**6) for r in V33] == [0, F(126, 64), F(126, 64), F(1330, 729), 0, F(-1330, 64)] and F(126, 64) == F(63, 32) and F(-1330, 64) == F(-665, 32) and F(63, 32)*F(2, 3) == F(126, 96) == F(21, 16) and F(63, 32)*2 == F(126, 32) == F(63, 16) and F(1330, 729)*3 == F(3990, 729) == F(1330, 243) and F(-665, 32)*(-2) == F(1330, 32) == F(665, 16) and F(21, 16) == F('1.3125') and F(63, 16) == F('3.9375') and rd33(F(1330, 243)) == 54733 and F(665, 16) == F('41.5625'), 'H33 vivo paso 5: S₆ por la fórmula y sus decimales')
+L33 = {r: 2/(1-r) for r in V33 if abs(r) < 1}
+ok(L33 == {F(-1, 2): F(4, 3), F(1, 2): 4, F(2, 3): 6} and 2*F(2, 3) == F(4, 3) and 2*2 == 4 and 2*3 == 6, 'H33 vivo paso 6: sumas 4/3, 4 y 6')
+ok([[L33[r]-S33[r][2], L33[r]-S33[r][5]] for r in L33] == [[F(-1, 6), F(1, 48)], [F(1, 2), F(1, 16)], [F(16, 9), F(128, 243)]] and F(4, 3)-F(3, 2) == F(8, 6)-F(9, 6) and F(4, 3)-F(21, 16) == F(64, 48)-F(63, 48) and 4-F(7, 2) == F(8, 2)-F(7, 2) and 4-F(63, 16) == F(64, 16)-F(63, 16) and 6-F(38, 9) == F(54, 9)-F(38, 9) and 6-F(1330, 243) == F(1458, 243)-F(1330, 243), 'H33 vivo paso 7: lo que falta, S − S₃ y S − S₆')
+ok(all(2*r**3/(1-r) == L33[r]-S33[r][2] and (L33[r]-S33[r][2])*r**3 == L33[r]-S33[r][5] and all(L33[r]-S33[r][n-1] == 2*r**n/(1-r) for n in range(1, 7)) for r in L33) and [2*r**3 for r in L33] == [F(-2, 8), F(2, 8), F(16, 27)] and F(-1, 4)*F(2, 3) == F(-2, 12) == F(-1, 6) and F(1, 4)*2 == F(2, 4) == F(1, 2) and F(16, 27)*3 == F(48, 27) == F(16, 9), 'H33 vivo pasos 7 y 8: S − Sₙ = a₁rⁿ/(1 − r), y de n = 3 a n = 6 se multiplica por r³')
+ok([rd33(x) for x in (F(1, 6), F(1, 48), F(1, 2), F(1, 16), F(16, 9), F(128, 243))] == [1667, 208, 5000, 625, 17778, 5267] and F(1, 2) == F('0.5') and F(1, 16) == F('0.0625'), 'H33 vivo: decimales de las frases «falta / sobra»')
+ok(1-F(1) == 0 and all(2*F(1)**(n-1) == 2 and S33[F(1)][n-1] == n*2 for n in range(1, 7)) and 2+2 == 4 and 4+2 == 6 and all(2*n > M for M in (1, 7, 100, 1001) for n in range(M//2+1, M//2+20)), 'H33 vivo r = 1: Sₙ = 2n, sin tope')
+ok(1-(-1) == 2 and (-1)*(-1) == 1 and 1*(-1) == -1 and 2*2 == 4 and 4/2 == 2 and 2*(-1) == -2 and (-2)*(-1) == 2 and 2+(-2) == 0 and 2*0 == 0 and all(abs(s-1) == 1 for s in S33[F(-1)]) and F(2, 2) == 1 and abs(2-0) == 2 and all(abs(2*F(-1)**(n-1)) == 2 for n in range(1, 9)), 'H33 vivo r = −1: sumas 2, 0, 2, 0…; |Sₙ − 1| = 1')
+ok(all(abs(2*F(3, 2)**(n-1)) >= 2*1 for n in range(1, 30)) and 2/(1-F(3, 2)) == 2*(-2) == -4 and all(s > 0 for s in S33[F(3, 2)]) and all(S33[F(3, 2)][i] < S33[F(3, 2)][i+1] for i in range(5)), 'H33 vivo r = 3/2: |aₙ| ≥ 2, y a₁/(1 − r) = −4 no es la suma')
+# ejemplo 1
+X33 = [F(p, q) for p in range(-8, 9) for q in (1, 2, 3, 5)]
+ok(all((1-x)*sum(x**k for k in range(n)) == 1-x**n for x in X33 for n in range(1, 12)) and all(sum(x**(k-1) for k in range(1, n+1)) == (1-x**n)/(1-x) for x in X33 if x not in (0, 1) for n in range(1, 12)), 'H33 e1 1 − xⁿ = (1 − x)(1 + x + ⋯ + xⁿ⁻¹), todo x de la rejilla (también 0 y 1)')
+ok(all((1-x)*(1+x) == 1-x*x and (1-x)*(1+x+x*x) == 1+x+x*x-x-x*x-x**3 == 1-x**3 for x in X33) and 1+3 == 4 and 4+9 == 13 and 13+27 == 40 and (1-3)*40 == (-2)*40 == -80 and 3**4 == 81 and 1-81 == -80, 'H33 e1 n = 2, n = 3 y el caso x = 3, n = 4')
+# ejemplo 2
+ok(all(sum(a*r**(k-1) for k in range(m, n+1)) == sp33(a, r, n) - sp33(a, r, m-1) == (a*(1-r**n) - a*(1-r**(m-1)))/(1-r) == (a*r**(m-1) - a*r**n)/(1-r) == a*r**(m-1)*(1-r**(n-m+1))/(1-r) and r**n == r**(m-1)*r**(n-m+1) and n == (m-1)+(n-m+1) for a in A33 for r in G33 if r != 1 for m in range(2, 8) for n in range(m, 11)), 'H33 e2 suma de k = m a n: Sₙ − Sₘ₋₁ = aₘ(1 − rⁿ⁻ᵐ⁺¹)/(1 − r)')
+ok(3*2**3 == 3*8 == 24 and 7-4+1 == 4 and 2**4 == 16 and 1-16 == -15 and 1-2 == -1 and F(24*(-15), -1) == F(-360, -1) == 360 and [3*2**(k-1) for k in range(4, 8)] == [24, 48, 96, 192] and 24+48 == 72 and 72+96 == 168 and 168+192 == 360 and 2**7 == 128 and F(3*(1-128), 1-2) == F(3*(-127), -1) == F(-381, -1) == 381 == sp33(3, 2, 7) and 2**3 == 8 and F(3*(1-8), 1-2) == F(3*(-7), -1) == F(-21, -1) == 21 == sp33(3, 2, 3) and 381-21 == 360, 'H33 e2 con números: 360')
+# ejemplo 3
+ok(1/F(9, 10) == F(10, 9) and F(10, 9)-F(9, 9) == F(1, 9) and 1+F(1, 9) == F(10, 9) and 1/F(10, 9) == F(9, 10) and all(F(10, 9)**n >= 1+F(n, 9) > F(n, 9) and F(9, 10)**n < F(9, n) and 1/(n*F(1, 9)) == F(9, n) for n in range(1, 1200)) and F('0.01') == F(1, 100) and F(1, 9)*F(1, 100) == F(1, 900) and 1/F(1, 900) == 900 == N33(F(9, 10), F(1, 100)) and F(9, 900) == F(1, 100) and all(F(9, n) < F(1, 100) and F(9, 10)**n < F(1, 100) for n in range(901, 1000)), 'H33 e3 h = 1/9, (9/10)ⁿ < 9/n, N = 900')
+ok(rd33(F(9, 10)**43) == 108 and F(9, 10)**43 > F(1, 100) and rd33(F(9, 10)**44) == 97 and F(9, 10)**44 < F(1, 100) and all(F(9, 10)**n < F(1, 100) for n in range(44, 901)) and 0 < F(9, 10) < 1 and F(10, 9)**2 == F(100, 81) and 1+F(2, 9) == F(11, 9) == F(99, 81) and F(100, 81) >= F(99, 81) and F(100, 81)-F(99, 81) == F(1, 81) == 1*F(1, 9)**2, 'H33 e3 también sirve N = 43; lema 1 con n = 2')
+# ejemplo 4
+p33 = pg33(5, -1, 8)
+ok(p33 == [5, -5, 5, -5, 5, -5, 5, -5] == [5*F(-1)**(n-1) for n in range(1, 9)] and all(abs(x) == 5 == 5*abs(F(-1))**n == 5*1**n for n, x in enumerate(p33)) and [sp33(5, -1, n) for n in range(1, 5)] == [5, 0, 5, 0] and 5+(-5) == 0 and 0+5 == 5 and 1-(-1) == 2 and all(sp33(5, -1, n) == F(5*(1-(-1)**n), 2) == (5 if n % 2 else 0) for n in range(1, 30)) and F(5*2, 2) == 5 and F(5*0, 2) == 0, 'H33 e4 términos y sumas parciales de 5 − 5 + 5 − ⋯')
+ok(F(5, 2)+F(5, 2) == 5 and all(abs(sp33(5, -1, n) - sp33(5, -1, n-1)) == 5 for n in range(2, 30)) and not any(all(abs(sp33(5, -1, n) - S) < F(5, 2) for n in (7, 8)) for S in [F(k, 8) for k in range(-80, 121)]) and (5-5)+(5-5) == 0 and 5+(-5+5)+(-5+5) == 5 and F(5, 1-(-1)) == F(5, 2), 'H33 e4 ningún S queda a menos de 5/2 de dos sumas seguidas; los tres «resultados» 0, 5 y 5/2')
+# errores frecuentes
+ok(F(1, 1-2) == -1 and all(sp33(1, 2, n) >= 1 for n in range(1, 20)) and all(F(1)**n == 1 for n in range(9)) and [F(-1)**n for n in range(1, 5)] == [-1, 1, -1, 1], 'H33 errores frecuentes: 1 + 2 + 4 + ⋯ «= −1» es absurdo; rⁿ con r = 1 y r = −1')
+# ejercicio A
+ok(2**0 == 1 and 2**1-1 == 1 and all(sum(2**(k-1) for k in range(1, n+1)) == 2**n-1 and 2**((n+1)-1) == 2**n and 2**n-1+2**n == 2*2**n-1 == 2**(n+1)-1 and F(1*(1-2**n), 1-2) == F(1-2**n, -1) == 2**n-1 for n in range(1, 40)) and 1+2+4+8 == 15 == 2**4-1 == 16-1, 'H33 A (a) 1 + 2 + ⋯ + 2ⁿ⁻¹ = 2ⁿ − 1')
+ok(all(sp33(5, 3, n) == sum(5*3**(k-1) for k in range(1, n+1)) and 3*sp33(5, 3, n) == sum(5*3**k for k in range(1, n+1)) and sp33(5, 3, n)-3*sp33(5, 3, n) == 5-5*3**n and (1-3)*sp33(5, 3, n) == -2*sp33(5, 3, n) == 5*(1-3**n) and sp33(5, 3, n) == F(5*(1-3**n), -2) == F(5*(3**n-1), 2) for n in range(1, 20)) and 3**4 == 81 and 81-1 == 80 and 5*80 == 400 and 400//2 == 200 and pg33(5, 3, 4) == [5, 15, 45, 135] and 5+15 == 20 and 20+45 == 65 and 65+135 == 200, 'H33 A (b) Sₙ = 5(3ⁿ − 1)/2 y S₄ = 200')
+ok(1-1 == 0 and sp33(7, 1, 20) == 20*7 == 140, 'H33 A (c) r = 1: S₂₀ = 140')
+# ejercicio B
+ok(1/F(2, 3) == F(3, 2) and F(3, 2)-F(2, 2) == F(1, 2) and all(F(3, 2)**n >= 1+F(n, 2) > F(n, 2) and F(2, 3)**n < F(2, n) for n in range(1, 2300)) and F('0.001') == F(1, 1000) and F(1, 2)*F(1, 1000) == F(1, 2000) and 1/F(1, 2000) == 2000 == N33(F(2, 3), F(1, 1000)) and F(2, 2000) == F(1, 1000) and all(F(2, n) < F(1, 1000) for n in range(2001, 2100)), 'H33 B (a) h = 1/2, (2/3)ⁿ < 2/n, N = 2000')
+ok(rd33(F(2, 3)**17, 5) == 101 and F(2, 3)**17 > F(1, 1000) and rd33(F(2, 3)**18, 5) == 68 and all(F(2, 3)**n < F(1, 1000) for n in range(18, 2001)), 'H33 B (a) también sirve N = 17')
+ok(F(9, 100)/F(9, 10) == F(9, 100)*F(10, 9) == F(90, 900) == F(1, 10) and pg33(F(9, 10), F(1, 10), 3) == [F(9, 10), F(9, 100), F(9, 1000)] and 1-F(1, 10) == F(10, 10)-F(1, 10) == F(9, 10) and F(9, 10)/F(9, 10) == 1 and all(sp33(F(9, 10), F(1, 10), n) == F(9, 10)*(1-F(1, 10)**n)/F(9, 10) == 1-F(1, 10)**n == F(10**n-1, 10**n) and abs(sp33(F(9, 10), F(1, 10), n)-1) == F(1, 10**n) for n in range(1, 15)) and [sp33(F(9, 10), F(1, 10), n) for n in (1, 2, 3, 4)] == [F('0.9'), F('0.99'), F('0.999'), F('0.9999')], 'H33 B (b) 0,999… = 1: a₁ = 9/10, r = 1/10, Sₙ = 1 − (1/10)ⁿ')
+ok(1000 == 10**3 and not 10**3 > 1000 and 10**4 == 10000 > 1000 and all(F(1, 10**n) < F(1, 1000) for n in range(4, 30)) and not F(1, 10**3) < F(1, 1000) and 1-F('0.9999') == F('0.0001'), 'H33 B (c) desde n = 4 (N = 3)')
+# ejercicio C
+c33 = pg33(1, 3, 10)
+ok(c33 == [1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683] and c33[9] == 1*3**9 == 19683 and 3**10 == 19683*3 == 59049 and 1-59049 == -59048 and 1-3 == -2 and F(-59048, -2) == 29524 == sum(c33), 'H33 C (a)(b) ronda 10: 19 683; total: 29 524')
+ok(all(sp33(1, 3, n) == F(1-3**n, 1-3) == F(1-3**n, -2) == F(3**n-1, 2) == F(3*pg33(1, 3, n)[-1]-1, 2) and 3**n == 3**(n-1)*3 for n in range(1, 30)) and 3*19683 == 59049 and 59049-1 == 59048 and 59048//2 == 29524 and rd33(F(29524, 19683), 5) == 149997 and abs(F(19683, 29524) - F(2, 3)) < F(1, 10000), 'H33 C (c) Sₙ = (3aₙ − 1)/2; 29 524/19 683 ≈ 1,49997')
+ok(abs(3) >= 1 and F(1, 1-3) == F(-1, 2) and 3**22 == 31381059609 and F(31381059609-1, 2) == 15690529804 == sp33(1, 3, 22) and 15690529804 > 15*10**9 > 8*10**9 and all(sp33(1, 3, n) < sp33(1, 3, n+1) for n in range(1, 25)), 'H33 C (d) diverge; a₁/(1 − r) = −1/2; S₂₂ = 15 690 529 804')
+# H34
+rd34 = lambda x, d=4: math.floor(F(x)*10**d + F(1, 2))
+G34 = range(1, 80)
+a34 = lambda n: F(1, 2**n + n)
+S34 = lambda n: sum(a34(k) for k in range(1, n+1))
+T34 = lambda n: sum(F(1, 2**k) for k in range(1, n+1))
+# escena cmp34-idea: registro y lectura, pasos 1 a 6
+ok([a34(n) for n in range(1, 7)] == [F(1, 2+1), F(1, 4+2), F(1, 8+3), F(1, 16+4), F(1, 32+5), F(1, 64+6)] == [F(1, 3), F(1, 6), F(1, 11), F(1, 20), F(1, 37), F(1, 70)], 'H34 idea paso 1: términos a₁…a₆')
+ok(S34(1) == F(1, 3) and S34(2) == F(2, 6)+F(1, 6) == F(3, 6) == F(1, 2) and S34(3) == F(11, 22)+F(2, 22) == F(13, 22) and S34(4) == F(130, 220)+F(11, 220) == F(141, 220) and F(13, 22) == F(130, 220) and F(1, 20) == F(11, 220), 'H34 idea paso 1: S₁…S₄')
+ok(S34(5) == F(5217, 8140)+F(220, 8140) == F(5437, 8140) and F(141, 220) == F(5217, 8140) and F(1, 37) == F(220, 8140) and S34(6) == F(38059, 56980)+F(814, 56980) == F(38873, 56980) and F(5437, 8140) == F(38059, 56980) and F(1, 70) == F(814, 56980), 'H34 idea paso 1: S₅ y S₆')
+ok([rd34(S34(n)) for n in range(1, 7)] == [3333, 5000, 5909, 6409, 6679, 6822] and all(S34(n+1) > S34(n) for n in G34), 'H34 idea paso 1: decimales y sumas crecientes')
+ok(all(2**n + n > 2**n > 0 and 0 < a34(n) < F(1, 2**n) for n in G34) and F(1, 3) < F(1, 2) and F(1, 6) < F(1, 4) and F(1, 11) < F(1, 8) and F(1, 20) < F(1, 16), 'H34 idea paso 2: 1/(2ⁿ+n) < 1/2ⁿ')
+ok([T34(n) for n in range(1, 7)] == [F(1, 2), F(3, 4), F(7, 8), F(15, 16), F(31, 32), F(63, 64)] and F(1, 2)+F(1, 4) == F(3, 4) and F(3, 4)+F(1, 8) == F(7, 8) and F(7, 8)+F(1, 16) == F(15, 16) and F(15, 16)+F(1, 32) == F(31, 32) and F(31, 32)+F(1, 64) == F(63, 64), 'H34 idea paso 2: T₁…T₆')
+ok(all(S34(n) <= T34(n) for n in G34) and [rd34(T34(n)) for n in range(1, 7)] == [5000, 7500, 8750, 9375, 9688, 9844] and all(rd34(S34(n)) <= rd34(T34(n)) for n in range(1, 7)) and T34(3) == F('0.875') and T34(4) == F('0.9375') and T34(2) == F('0.75'), 'H34 idea paso 3: Sₙ ≤ Tₙ y sus decimales')
+ok(all(T34(n) == F(1, 2)*(1-F(1, 2)**n)/(1-F(1, 2)) == 1-F(1, 2**n) < 1 for n in G34) and 1-F(1, 64) == F(63, 64) and F(1, 2)/(1-F(1, 2)) == F(1, 2)/F(1, 2) == 1, 'H34 idea paso 4: Tₙ = 1 − 1/2ⁿ < 1 y suma 1')
+ok(all(S34(n) <= T34(n) < 1 for n in G34) and F('0.6822') <= S34(6) <= 1 and abs(sum(1/(2**n+n) for n in range(1, 200)) - 0.697) < 5e-4, 'H34 idea pasos 5 y 6: techo 1; 0,6822 ≤ S₆; S ≈ 0,697 (numérico)')
+# escena cmp34-vivo: las cuatro posiciones del deslizador c
+r34 = lambda c, n: c + F(3, n)
+for c in (0, 1, 2, 3):
+    ok(all(F(c*n+3, n**3)/F(1, n*n) == F(c*n+3, n**3)*n*n == F((c*n+3)*n*n, n**3) == F(c*n+3, n) == F(c*n, n)+F(3, n) == r34(c, n) for n in G34) and all(F(c*n+3, n**3) > 0 for n in G34), 'H34 vivo c=%d: cociente c + 3/n' % c)
+    ok([r34(c, n) for n in (1, 2, 3, 8)] == [c+3, c+F('1.5'), c+1, c+F('0.375')], 'H34 vivo c=%d: valores en n = 1, 2, 3, 8' % c)
+    ok(all(r34(c, n) > r34(c, n+1) > c for n in G34) and all(abs(r34(c, n) - c) < F(1, 100) for n in range(301, 400)), 'H34 vivo c=%d: el cociente baja hacia L = c' % c)
+for c, N, h, ts, den, dec in ((1, 6, F(1, 2), F(3, 2), 143, False), (2, 3, 1, 3, 275, True), (3, 2, F(3, 2), F(9, 2), 400, True)):
+    ok(F(c, 2) == h and F(3*c, 2) == ts and ts - c == h and F(3)/h == N == F(6, c) and r34(c, N) == c + F(3, N) == ts and rd34(r34(c, N+1), 2) == den and ((300 % (N+1) == 0) == dec) and r34(c, N+1) < ts, 'H34 vivo c=%d: franja, N y comprobaciones' % c)
+    ok(all((h < r34(c, n) < ts) == (n > N) for n in range(1, 200)) and all(r34(c, n) > c > h for n in G34) and all(h*F(1, n*n) < F(c*n+3, n**3) < ts*F(1, n*n) for n in range(N+1, 200)), 'H34 vivo c=%d: dentro de la franja exactamente si n > N' % c)
+ok([6//c + 1 for c in (1, 2, 3)] == [7, 4, 3] and all((F(3, n) < 1) == (n > 3) for n in range(1, 200)) and F(3, 3) == 1 and F(3, 4) == F('0.75') < 1 and all(0 < F(3, n**3) < F(1, n*n) for n in range(4, 200)) and F(3, 2) == F('1.5') and F(3, 8) == F('0.375'), 'H34 vivo c=0: caso límite, cociente < 1 si n > 3; verdes desde el 7.º, 4.º, 3.º y 4.º')
+# lemas y demostraciones (identidades en rejilla)
+ok(all(sum(F(1, k*k) for k in range(1, n+1)) == sum(F(1, k*k) for k in range(1, N)) + sum(F(1, k*k) for k in range(N, N+(n-N+1))) and N+(n-N+1)-1 == n for N in range(2, 7) for n in range(N, 30)) and all(N+m-1 >= m+1 for N in range(2, 9) for m in range(1, 30)), 'H34 lema 3: Sₙ = c + U_m con m = n − N + 1')
+ok(all(-F(L, 2) + L == F(L, 2) and F(L, 2) + L == F(3*L, 2) for L in (F(1, 3), 1, 2, F(7, 2))) and all(sum(c*F(1, k*k) for k in range(1, n+1)) == c*sum(F(1, k*k) for k in range(1, n+1)) for c in (F(3, 2), 4, F(1, 5)) for n in range(1, 20)), 'H34 demostración: franja L/2 … 3L/2 y lema 2 (distributiva)')
+ok(all(F(1, n*n)/F(1, n) == F(1, n) and F(1, n)/1 == F(1, n) and F(1, n)/F(1, n*n) == n and F(1, n*n)/F(1, n**3) == n for n in G34), 'H34 los cuatro ejemplos de «no se puede concluir»: cocientes 1/n, 1/n, n, n')
+# ejemplo 1
+ok(a34(1) == F(1, 3) and a34(2) == F(1, 6) and a34(3) == F(1, 11) and rd34(F(13, 22), 3) == 591 and F(13, 22) <= S34(60) <= 1, 'H34 e1: términos, 13/22 ≈ 0,591 ≤ S ≤ 1')
+# ejemplo 2
+ok([F(1, 2*n-1) for n in (1, 2, 3)] == [1, F(1, 3), F(1, 5)] and all(2*n-1 == n+(n-1) >= n and F(1, 2*n-1) <= F(1, n) and F(1, 2*n-1) > F(1, 2*n) > 0 and F(1, 2*n) == F(1, 2)*F(1, n) for n in G34), 'H34 e2: desigualdades')
+ok(1+F(1, 3)+F(1, 5)+F(1, 7) == F(105+35+21+15, 105) == F(176, 105) and rd34(F(176, 105), 3) == 1676 and F(1, 2)+F(1, 4)+F(1, 6)+F(1, 8) == F(12+6+4+3, 24) == F(25, 24) and rd34(F(25, 24), 3) == 1042 and F(176, 105) >= F(25, 24), 'H34 e2: 176/105 y 25/24')
+# ejemplo 3
+q34 = lambda n: F(3*n+1, n**3+2)/F(1, n*n)
+ok([F(3*n+1, n**3+2) for n in (1, 2, 3)] == [F(4, 3), F(7, 10), F(10, 29)] and all(q34(n) == F(3*n**3+n*n, n**3+2) == (3+F(1, n))/(1+F(2, n**3)) and F(2, n**3) == 2*F(1, n)**3 for n in G34) and abs(q34(10**6) - 3) < 1e-5, 'H34 e3: cociente y límite 3')
+ok(q34(1) == F(3+1, 1+2) == F(4, 3) and rd34(F(4, 3), 2) == 133 and q34(2) == F(24+4, 8+2) == F(28, 10) == F('2.8') and q34(3) == F(81+9, 27+2) == F(90, 29) and rd34(F(90, 29), 2) == 310 and q34(10) == F(3000+100, 1000+2) == F(3100, 1002) and rd34(F(3100, 1002), 2) == 309, 'H34 e3: cocientes en n = 1, 2, 3, 10')
+ok(all(3*n+1 <= 3*n+n == 4*n and F(3*n+1, n**3+2) < F(4*n, n**3) == F(4, n*n) for n in G34), 'H34 e3: comprobación directa aₙ < 4/n²')
+# ejemplo 4
+p34 = lambda n: F(n, n*n+4)/F(1, n)
+ok([F(n, n*n+4) for n in (1, 2, 3)] == [F(1, 5), F(1, 4), F(3, 13)] and F(2, 8) == F(1, 4) and all(F(n, n*n+4) < F(n, n*n) == F(1, n) and p34(n) == F(n*n, n*n+4) == 1/(1+F(4, n*n)) and F(4, n*n) == 4*F(1, n)**2 for n in G34) and abs(p34(10**6) - 1) < 1e-9, 'H34 e4 (a): cociente y límite 1')
+ok(p34(1) == F(1, 5) == F('0.2') and p34(2) == F(4, 8) == F('0.5') and p34(3) == F(9, 13) and rd34(F(9, 13), 2) == 69 and p34(10) == F(100, 104) and rd34(F(100, 104), 2) == 96 and all(p34(n) < p34(n+1) < 1 for n in G34), 'H34 e4 (a): cocientes en n = 1, 2, 3, 10')
+ok(all(4 <= 4*n*n and n*n+4 <= n*n+4*n*n == 5*n*n and F(n, n*n+4) >= F(n, 5*n*n) == F(1, 5*n) == F(1, 5)*F(1, n) for n in G34), 'H34 e4 (a): comprobación directa aₙ ≥ 1/(5n)')
+ok(all(F(1, n*2**n)/F(1, 2**n) == F(1, n) and F(1, n*2**n) <= F(1, 2**n) for n in G34), 'H34 e4 (b): cociente 1/n')
+# errores frecuentes
+ok(all(F(1, n*n) <= F(1, n) and -n <= F(1, n*n) for n in G34), 'H34 errores frecuentes: 1/n² ≤ 1/n; −n ≤ 1/n²')
+# ejercicio A
+ok(all(0 < F(1, n**3+5) < F(1, n**3) for n in G34) and all(F(n+2, n*n) > F(n, n*n) == F(1, n) > 0 for n in G34), 'H34 A (a) y (b): desigualdades')
+ok([F(1, 3**n-2) for n in (1, 2, 3)] == [1, F(1, 7), F(1, 25)] and all(3**n >= 3 > 2 and F(1, 3**n-2)/F(1, 3**n) == F(3**n, 3**n-2) == 1/(1-F(2, 3**n)) and F(2, 3**n) == 2*F(1, 3)**n and F(1, 3**n-2) > F(1, 3**n) for n in G34) and abs(F(3**40, 3**40-2) - 1) < 1e-15 and F(1, 3)/(1-F(1, 3)) == F(1, 2), 'H34 A (c): cociente y límite 1')
+ok(all(3**n - 3**(n-1) == 3*3**(n-1) - 3**(n-1) == 2*3**(n-1) >= 2 and 3**n - 2 >= 3**(n-1) > 0 and 0 < F(1, 3**n-2) <= F(1, 3**(n-1)) for n in G34) and 1/(1-F(1, 3)) == 1/F(2, 3) == F(3, 2) and 1+F(1, 7)+F(1, 25) == F(175+25+7, 175) == F(207, 175) and rd34(F(207, 175), 3) == 1183 and F(207, 175) <= F(3, 2) and sum(F(1, 3**n-2) for n in range(1, 60)) <= F(3, 2), 'H34 A (c): cota 3/2 y S₃ = 207/175')
+# ejercicio B
+ok([F(1, n*n-2) for n in (1, 2, 3)] == [-1, F(1, 2), F(1, 7)] and all(n*n >= 4 and n*n-2 >= 2 > 0 and 2*n*n-4 >= n*n and 2*(n*n-2) >= n*n and 0 < F(1, n*n-2) <= F(2, n*n) for n in range(2, 200)) and F(1, 2) == F(2, 4) and F(1, 7) <= F(2, 9) and 1*9 == 9 <= 14 == 2*7, 'H34 B (a) y (b): términos y 0 < 1/(n²−2) ≤ 2/n² si n ≥ 2')
+ok(all(F(1, n*n-2)/F(1, n*n) == F(n*n, n*n-2) == 1/(1-F(2, n*n)) and F(2, n*n) == 2*F(1, n)**2 and F(1, n*n-2) > F(1, n*n) for n in range(2, 200)) and abs(F(10**12, 10**12-2) - 1) < 1e-11, 'H34 B (c) y (d): cociente, límite 1 y comparación al revés')
+# ejercicio C
+ok(F(600, 1+5) == F(600, 6) == 100 and F(600, 4+5) == F(600, 9) and rd34(F(600, 9), 2) == 6667 and F(600, 9+5) == F(600, 14) and rd34(F(600, 14), 2) == 4286 and F(600, 2+5) == F(600, 7) and rd34(F(600, 7), 2) == 8571 and F(600, 3+5) == F(600, 8) == 75 and all(F(600, (n+1)**2+5) < F(600, n*n+5) and F(600, n+6) < F(600, n+5) for n in G34), 'H34 C (a): entregas de los días 1, 2 y 3')
+ok(all(0 < F(600, n*n+5) < F(600, n*n) for n in G34) and all(sum(F(600, k*k+5) for k in range(1, n+1)) <= 600*sum(F(1, k*k) for k in range(1, n+1)) < 600*2 == 1200 < 1500 for n in range(1, 300)), 'H34 C (b): modelo A, acumulado < 1200 < 1500')
+ok(all(5 <= 5*n and n+5 <= n+5*n == 6*n and F(600, n+5) >= F(600, 6*n) == F(100, n) > 0 for n in G34) and all(sum(F(600, k+5) for k in range(1, n+1)) >= 100*sum(F(1, k) for k in range(1, n+1)) for n in range(1, 200)) and all(sum(F(1, k) for k in range(1, 2**m+1)) >= 1+F(m, 2) for m in range(0, 11)), 'H34 C (c): modelo B, 600/(n+5) ≥ 100/n; armónica S(2^m) ≥ 1 + m/2 (m ≤ 10)')
+ac34 = lambda n: sum(F(600, k+5) for k in range(1, n+1))
+ok(100*(1+F(28, 2)) == 1500 and 100*(1+F(27, 2)) < 1500 and 15-1 == 14 and 14*2 == 28 and 2**28 == 268435456 and ac34(61) < 1500 <= ac34(62) and rd34(ac34(61), 1) == 14947 and rd34(ac34(62), 1) == 15036, 'H34 C (d): m ≥ 28, 2²⁸ = 268 435 456; se llena el día 62')
+print('Lote 25 H01–H34:', 'sin errores' if not err else f'{err} errores')

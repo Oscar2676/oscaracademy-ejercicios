@@ -1,0 +1,307 @@
+<!--file:H34_criterios_de_comparacion_para_la_convergencia.html-->
+<!--title:Criterios de comparación para la convergencia-->
+<!--id:ss-comparacion-->
+<!--tab:H34 Criterios de comparación para la convergencia-->
+<article class="sheet" id="ss-comparacion" data-hoja="L25 H34">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Convergencia y divergencia de series infinitas</li>
+      <li><b>Criterios de comparación para la convergencia</b></li>
+    </ol>
+    <h1>Criterios de comparación para la convergencia</h1>
+    <p class="lede">Para saber si una serie de términos mayores o iguales que cero converge, se la compara con otra que ya se conoce: una geométrica o una serie \(p\). Si queda <b>debajo</b> de una serie que converge, converge. Si queda <b>encima</b> de una serie que diverge, diverge. La comparación se hace término a término (criterio directo) o mirando el límite del cociente de los términos (criterio en el límite). \[0\le a_{n}\le b_{n}\ \text{ desde algún }N:\qquad\sum_{n=1}^{\infty}b_{n}\ \text{ converge}\ \Longrightarrow\ \sum_{n=1}^{\infty}a_{n}\ \text{ converge}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}+n}=\dfrac{1}{3}+\dfrac{1}{6}+\dfrac{1}{11}+\cdots\), comparada con la geométrica \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes y los puntos azules (paso 1):</b> en horizontal va \(n\), cuántos términos se han sumado; en vertical, la suma parcial. Los puntos azules son \(S_{1},\ \ldots,\ S_{6}\), las sumas parciales de la serie dada; la punteada de cada uno lo lleva a su valor en el eje vertical. Suben, porque cada término es positivo. Arriba queda la pregunta: ¿converge?</li>
+    <li><b>Paso 2, puntos verdes:</b> cada término cumple \(\dfrac{1}{2^{n}+n}\le\dfrac{1}{2^{n}}\). Los puntos verdes son \(T_{1},\ \ldots,\ T_{6}\), las sumas parciales de esa serie mayor.</li>
+    <li><b>Paso 3, trazos naranjas:</b> unen cada punto azul con el verde del mismo \(n\). El azul siempre queda abajo: \(S_{n}\le T_{n}\).</li>
+    <li><b>Pasos 4 y 5, línea burdeo punteada:</b> está a la altura \(1\), la suma de la serie mayor. Los puntos verdes no la pasan, y los azules, que están debajo de los verdes, tampoco: es un techo para las sumas azules.</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> una sucesión creciente que tiene techo converge (hoja «Sucesiones monótonas acotadas»). La respuesta se escribe bajo la pregunta, y el corchete naranja marca dónde está la suma \(S\): entre \(S_{6}\) y \(1\). La cuenta de abajo repite cada paso con todas sus operaciones. Conclusión: la serie converge, y su suma no pasa de \(1\).</li>
+  </ol>
+  <div class="stage" data-scene="cmp34-idea"></div>
+  <ul class="keys">
+    <li><b>Azul:</b> las sumas parciales \(S_{n}\) de la serie dada, \(\displaystyle\sum\dfrac{1}{2^{n}+n}\).</li>
+    <li><b>Verde:</b> las sumas parciales \(T_{n}=1-\dfrac{1}{2^{n}}\) de la serie mayor, \(\displaystyle\sum\dfrac{1}{2^{n}}\).</li>
+    <li><b>Naranja:</b> los trazos miden \(T_{n}-S_{n}\), que nunca es negativo; el corchete del paso 6 marca el tramo donde está la suma \(S\).</li>
+    <li><b>Burdeo:</b> la suma de la serie mayor, \(1\). La franja burdeo clara sobre ella es la zona a la que ninguna suma parcial llega.</li>
+    <li><b>Lo que la figura no da:</b> el valor de \(S\). El criterio dice que la serie converge y entrega una cota; no calcula la suma.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Los dos criterios, en orden</h3>
+    <p><b>Notación de esta hoja.</b> \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\) es la suma parcial de \(\displaystyle\sum_{n=1}^{\infty}a_{n}\), y \(T_{n}=b_{1}+b_{2}+\cdots+b_{n}=\displaystyle\sum_{k=1}^{n}b_{k}\), la de \(\displaystyle\sum_{n=1}^{\infty}b_{n}\). Una serie converge cuando sus sumas parciales tienen límite real (hoja «Series infinitas convergentes y divergentes»); «límite» es el de la hoja «Límite de una sucesión», con \(\varepsilon\) y \(N\).</p>
+    <ol class="steps">
+      <li><b>Criterio de comparación directa.</b> Sean \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) y \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) dos series, y \(N\ge 1\) un número natural tal que \[0\le a_{n}\le b_{n}\qquad\text{para todo }n\ge N.\] <b>(a)</b> Si \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) converge, entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge. <b>(b)</b> Si \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) diverge, entonces \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) diverge.</li>
+      <li><b>Lo que el criterio directo no dice.</b> Si la serie mayor, \(\displaystyle\sum b_{n}\), diverge, no se sabe nada de la menor. Si la serie menor, \(\displaystyle\sum a_{n}\), converge, no se sabe nada de la mayor. Estar debajo de una serie divergente, o encima de una convergente, no decide.</li>
+      <li><b>Criterio de comparación en el límite.</b> Sean \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) y \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) dos series, y \(N\ge 1\) un número natural tal que \(a_{n}&gt;0\) y \(b_{n}&gt;0\) para todo \(n\ge N\). Se mira el cociente \(\dfrac{a_{n}}{b_{n}}\), definido para \(n\ge N\). <b>(a)</b> Si \(\displaystyle\lim_{n\to\infty}\dfrac{a_{n}}{b_{n}}=L\), con \(L\) un número real y \(L&gt;0\) (se abrevia \(0&lt;L&lt;\infty\)): las dos series convergen o las dos divergen. <b>(b)</b> Si \(\displaystyle\lim_{n\to\infty}\dfrac{a_{n}}{b_{n}}=0\) y \(\displaystyle\sum b_{n}\) converge, entonces \(\displaystyle\sum a_{n}\) converge. <b>(c)</b> Si \(\displaystyle\lim_{n\to\infty}\dfrac{a_{n}}{b_{n}}=+\infty\) y \(\displaystyle\sum b_{n}\) diverge, entonces \(\displaystyle\sum a_{n}\) diverge.</li>
+      <li><b>Lo que el criterio en el límite no dice.</b> Con \(L=0\) y \(\displaystyle\sum b_{n}\) divergente, no se concluye nada. Con límite \(+\infty\) y \(\displaystyle\sum b_{n}\) convergente, tampoco. Los cuatro ejemplos que lo muestran están al final del recuadro de demostraciones. Y si el cociente no tiene límite ni diverge a \(+\infty\), el criterio, tal como está enunciado aquí, no se puede aplicar.</li>
+      <li><b>Series de referencia.</b> Geométricas (hoja «Series geométricas infinitas»): \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\), con \(a\ne 0\), converge si \(|r|&lt;1\), con suma \(\dfrac{a}{1-r}\), y diverge si \(|r|\ge 1\). Series \(p\) (hoja «Series harmónicas y series-p»): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{p}}\) converge si \(p&gt;1\) y diverge si \(p\le 1\); la armónica, \(\displaystyle\sum\dfrac{1}{n}\), diverge.</li>
+      <li><b>Cómo se elige la serie de referencia.</b> Se mira qué parte del término manda cuando \(n\) es grande. En un cociente de polinomios, la mayor potencia de arriba y la de abajo: para \(\dfrac{3n+1}{n^{3}+2}\) queda \(\dfrac{3n}{n^{3}}=\dfrac{3}{n^{2}}\), y se compara con \(\dfrac{1}{n^{2}}\). En \(\dfrac{1}{2^{n}+n}\) manda \(2^{n}\), y se compara con \(\dfrac{1}{2^{n}}\). Esta elección es solo una guía para buscar: lo que demuestra es la desigualdad o el límite.</li>
+      <li><b>Hacia dónde se compara.</b> Para probar que <b>converge</b> hace falta una serie convergente <b>mayor</b>. Para probar que <b>diverge</b>, una serie divergente <b>menor</b>.</li>
+      <li><b>Con términos de los dos signos</b> los criterios no se aplican a \(\displaystyle\sum a_{n}\). Sí se pueden aplicar a \(\displaystyle\sum|a_{n}|\), cuyos términos no son negativos: si esa converge, la serie converge absolutamente (hoja «Convergencia absoluta y condicional»).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> De la hoja «Límite de una sucesión» se usan, demostrados allí: la definición de límite con \(\varepsilon\) y \(N\), la unicidad del límite (teorema 1), el límite de una suma (teorema 2), que una sucesión constante converge a su constante y que \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) (ejemplo 1); y la definición de \(\displaystyle\lim_{n\to\infty}a_{n}=+\infty\). De la hoja «Sucesiones monótonas acotadas», demostrados allí: toda sucesión convergente es acotada (teorema 1) y toda sucesión creciente y acotada superiormente converge a su supremo (teorema 2); ese teorema descansa en el <b>axioma del supremo</b>, que no se demuestra. Los resultados sobre series geométricas y series \(p\) se demuestran en sus hojas, con los avisos de rigor de cada una. En esta hoja se usan <b>sin demostrar</b>: (1) las reglas de las desigualdades: sumar un mismo número a los dos lados, multiplicar los dos lados por un número positivo, y que si \(0&lt;x\le y\) entonces \(\dfrac{1}{y}\le\dfrac{1}{x}\); las propiedades del valor absoluto \(|x\cdot y|=|x|\cdot|y|\) y la equivalencia entre \(|x|&lt;\varepsilon\) y \(-\varepsilon&lt;x&lt;\varepsilon\); (2) el principio de inducción y la propiedad arquimediana; (3) del álgebra de límites, las reglas «constante por sucesión», «producto» y «cociente», que la hoja «Límite de una sucesión» <b>enuncia sin demostrar</b>: se usan en la segunda animación, en los ejemplos 3 y 4 y en los ejercicios A y B para calcular el límite del cociente (la regla de la constante que necesitan las demostraciones de esta hoja sí se demuestra aquí, en el lema 2); (4) \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\) si \(|r|&lt;1\), enunciado en esa misma hoja (ejercicio A). En el ejercicio C se usan dos resultados demostrados en la hoja «Series harmónicas y series-p»: que las sumas parciales de \(\displaystyle\sum\dfrac{1}{n^{2}}\) son menores que \(2\), y que las de la armónica cumplen \(S_{2^{m}}\ge 1+\dfrac{m}{2}\). Los valores con «\(\approx\)» son aproximaciones de calculadora. Las sumas numéricas de series que se dan como referencia (por ejemplo \(0{,}697\) en el ejemplo 1) se obtuvieron sumando muchos términos con calculadora: no están demostradas ni hacen falta para las conclusiones. En el ejercicio C, los datos son inventados y el modelo está declarado en el enunciado.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostraciones paso a paso</h3>
+    <p><b>Lema 1 (series de términos mayores o iguales que cero).</b> Si \(a_{n}\ge 0\) para todo \(n\ge 1\), entonces: las sumas parciales \(S_{n}\) son crecientes; si tienen una cota superior \(M\), la serie converge y su suma no pasa de \(M\); y si la serie converge a \(S\), entonces \(S_{n}\le S\) para todo \(n\).</p>
+    <ol class="steps">
+      <li><b>Crecientes.</b> \(S_{n+1}=S_{n}+a_{n+1}\), así que \(S_{n+1}-S_{n}=a_{n+1}\ge 0\). Entonces \(S_{n+1}\ge S_{n}\) para todo \(n\): la sucesión \((S_{n})\) es creciente (definición de la hoja «Sucesiones monótonas acotadas»).</li>
+      <li><b>Si \(S_{n}\le M\) para todo \(n\).</b> \((S_{n})\) es creciente y acotada superiormente: por el teorema 2 de esa hoja, converge, y su límite \(S\) es su supremo, la <b>menor</b> de sus cotas superiores. Como \(M\) es una cota superior, \(S\le M\). La serie converge y \(S\le M\).</li>
+      <li><b>Si la serie converge a \(S\).</b> \((S_{n})\) converge; por el teorema 1 de esa hoja, es acotada. Es creciente (paso 1) y acotada superiormente: por el teorema 2, converge a su supremo \(s\). Una sucesión tiene un solo límite (unicidad): \(S=s\). Y el supremo es cota superior: \(S_{n}\le s=S\) para todo \(n\).</li>
+      <li><b>Leído al revés:</b> una serie de términos mayores o iguales que cero diverge exactamente cuando sus sumas parciales no tienen cota superior, es decir, cuando superan cualquier número.</li>
+    </ol>
+    <p><b>Lema 2 (constante por serie).</b> Si \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) converge a \(T\) y \(c\) es un número real, entonces \(\displaystyle\sum_{n=1}^{\infty}c\,b_{n}\) converge a \(c\,T\). Y si \(c\ne 0\) y \(\displaystyle\sum b_{n}\) diverge, entonces \(\displaystyle\sum c\,b_{n}\) diverge.</p>
+    <ol class="steps">
+      <li>Suma parcial de la serie nueva, con la propiedad distributiva: \(c\,b_{1}+c\,b_{2}+\cdots+c\,b_{n}=c\,(b_{1}+b_{2}+\cdots+b_{n})=c\,T_{n}\).</li>
+      <li>Si \(c=0\): todas las sumas parciales valen \(0\). Una sucesión constante converge a su constante: el límite es \(0=0\cdot T\).</li>
+      <li>Si \(c\ne 0\): sea \(\varepsilon&gt;0\). El número \(\dfrac{\varepsilon}{|c|}\) es positivo. Como \(T_{n}\to T\), hay un \(N\) tal que \(|T_{n}-T|&lt;\dfrac{\varepsilon}{|c|}\) para todo \(n&gt;N\).</li>
+      <li>Para esos \(n\): \(|c\,T_{n}-c\,T|=|c\,(T_{n}-T)|=|c|\cdot|T_{n}-T|&lt;|c|\cdot\dfrac{\varepsilon}{|c|}=\varepsilon\). Como \(\varepsilon\) era cualquiera, \(c\,T_{n}\to c\,T\).</li>
+      <li><b>La segunda parte.</b> Sea \(c\ne 0\) y \(\displaystyle\sum b_{n}\) divergente. Si \(\displaystyle\sum c\,b_{n}\) convergiera, por la primera parte, con la constante \(\dfrac{1}{c}\), también convergería \(\displaystyle\sum\dfrac{1}{c}\cdot c\,b_{n}=\sum b_{n}\): contradicción. Entonces \(\displaystyle\sum c\,b_{n}\) diverge.</li>
+    </ol>
+    <p><b>Lema 3 (la cola decide).</b> Sea \(N\ge 2\). La serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge si y solo si converge su cola \(\displaystyle\sum_{n=N}^{\infty}a_{n}=a_{N}+a_{N+1}+a_{N+2}+\cdots\) Quitar o agregar una cantidad finita de términos no cambia que una serie converja o diverja; sí cambia el valor de la suma.</p>
+    <ol class="steps">
+      <li>Sea \(c=a_{1}+a_{2}+\cdots+a_{N-1}\), un número fijo. Las sumas parciales de la cola son \(U_{m}=a_{N}+a_{N+1}+\cdots+a_{N+m-1}\) (tiene \(m\) términos), con \(m=1,\ 2,\ 3,\ \ldots\)</li>
+      <li>Si \(n\ge N\) y \(m=n-N+1\), entonces \(N+m-1=n\), y \(S_{n}=(a_{1}+\cdots+a_{N-1})+(a_{N}+\cdots+a_{n})=c+U_{m}\).</li>
+      <li><b>Si la cola converge a \(U\).</b> Sea \(\varepsilon&gt;0\). Hay un \(M\) tal que \(|U_{m}-U|&lt;\varepsilon\) para todo \(m&gt;M\). Si \(n&gt;M+N-1\), entonces \(m=n-N+1&gt;M\), y \(|S_{n}-(c+U)|=|c+U_{m}-c-U|=|U_{m}-U|&lt;\varepsilon\). Entonces \(S_{n}\to c+U\): la serie completa converge.</li>
+      <li><b>Si la serie completa converge a \(S\).</b> Sea \(\varepsilon&gt;0\). Hay un \(N'\) tal que \(|S_{n}-S|&lt;\varepsilon\) para todo \(n&gt;N'\). Si \(m&gt;N'\), entonces \(n=N+m-1\ge m+1&gt;N'\) (porque \(N\ge 2\)), y \(|U_{m}-(S-c)|=|S_{n}-c-S+c|=|S_{n}-S|&lt;\varepsilon\). Entonces \(U_{m}\to S-c\): la cola converge.</li>
+      <li>Las dos convergen o ninguna converge: las dos convergen o las dos divergen.</li>
+    </ol>
+    <p><b>Criterio de comparación directa, parte (a), cuando \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\).</b></p>
+    <ol class="steps">
+      <li>Hipótesis: \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\), y \(\displaystyle\sum b_{n}\) converge; sea \(T\) su suma.</li>
+      <li>Como \(b_{n}\ge a_{n}\ge 0\), la serie \(\displaystyle\sum b_{n}\) es de términos mayores o iguales que cero. Por el lema 1 (paso 3): \(T_{n}\le T\) para todo \(n\).</li>
+      <li><b>\(S_{n}\le T_{n}\) para todo \(n\), por inducción.</b> Primer caso: \(S_{1}=a_{1}\le b_{1}=T_{1}\). Paso de \(n\) a \(n+1\): se supone \(S_{n}\le T_{n}\). Se suma \(a_{n+1}\) a los dos lados: \(S_{n}+a_{n+1}\le T_{n}+a_{n+1}\). Y como \(a_{n+1}\le b_{n+1}\): \(T_{n}+a_{n+1}\le T_{n}+b_{n+1}\). Se encadenan: \(S_{n+1}\le T_{n+1}\).</li>
+      <li>Se encadenan los pasos 3 y 2: \(S_{n}\le T_{n}\le T\) para todo \(n\). El número \(T\) es una cota superior de las sumas parciales \(S_{n}\).</li>
+      <li>Como \(a_{n}\ge 0\), por el lema 1 (paso 2, con \(M=T\)): \(\displaystyle\sum a_{n}\) converge, y su suma \(S\) cumple \(S\le T\).</li>
+    </ol>
+    <p><b>Parte (b).</b> Es la parte (a) leída al revés.</p>
+    <ol class="steps">
+      <li>Hipótesis: \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\), y \(\displaystyle\sum a_{n}\) diverge.</li>
+      <li>Si \(\displaystyle\sum b_{n}\) convergiera, por la parte (a) también convergería \(\displaystyle\sum a_{n}\): contradicción con la hipótesis.</li>
+      <li>Entonces \(\displaystyle\sum b_{n}\) no converge: diverge.</li>
+    </ol>
+    <p><b>Cuando la desigualdad vale solo desde un \(N\ge 2\).</b></p>
+    <ol class="steps">
+      <li>Las colas \(\displaystyle\sum_{n=N}^{\infty}a_{n}\) y \(\displaystyle\sum_{n=N}^{\infty}b_{n}\) son dos series cuyos términos, \(a'_{m}=a_{N+m-1}\) y \(b'_{m}=b_{N+m-1}\) con \(m\ge 1\), cumplen \(0\le a'_{m}\le b'_{m}\) para todo \(m\ge 1\), porque \(N+m-1\ge N\).</li>
+      <li>(a) Si \(\displaystyle\sum b_{n}\) converge, su cola converge (lema 3). Por lo ya demostrado, la cola de \(\displaystyle\sum a_{n}\) converge. Por el lema 3, \(\displaystyle\sum a_{n}\) converge.</li>
+      <li>(b) Si \(\displaystyle\sum a_{n}\) diverge, su cola diverge (lema 3). Por lo ya demostrado, la cola de \(\displaystyle\sum b_{n}\) diverge. Por el lema 3, \(\displaystyle\sum b_{n}\) diverge.</li>
+      <li><b>Cuidado con la cota.</b> La desigualdad \(S\le T\) entre las sumas está demostrada solo cuando \(0\le a_{n}\le b_{n}\) vale desde \(n=1\). Si vale desde un \(N\ge 2\), lo que queda acotado es la cola: \(\displaystyle\sum_{n=N}^{\infty}a_{n}\le\sum_{n=N}^{\infty}b_{n}\).</li>
+    </ol>
+    <p><b>Criterio de comparación en el límite, parte (a): \(0&lt;L&lt;\infty\).</b> Se reduce a la comparación directa.</p>
+    <ol class="steps">
+      <li>Hipótesis: \(a_{n}&gt;0\) y \(b_{n}&gt;0\) para todo \(n\ge N\), y \(\dfrac{a_{n}}{b_{n}}\to L\), con \(L\) real y \(L&gt;0\).</li>
+      <li>Como \(L&gt;0\), el número \(\varepsilon=\dfrac{L}{2}\) es positivo y sirve de tolerancia. Por la definición de límite, hay un \(N_{1}\) tal que \(\left|\dfrac{a_{n}}{b_{n}}-L\right|&lt;\dfrac{L}{2}\) para todo \(n&gt;N_{1}\).</li>
+      <li>Sin valor absoluto: \(-\dfrac{L}{2}&lt;\dfrac{a_{n}}{b_{n}}-L&lt;\dfrac{L}{2}\). Se suma \(L\) en los tres lugares: \(\dfrac{L}{2}&lt;\dfrac{a_{n}}{b_{n}}&lt;\dfrac{3L}{2}\).</li>
+      <li>Sea \(N_{2}\) el mayor de \(N\) y \(N_{1}+1\). Para \(n\ge N_{2}\) valen la desigualdad del paso 3 y \(b_{n}&gt;0\). Se multiplican los tres lugares por \(b_{n}\): \[\dfrac{L}{2}\,b_{n}&lt;a_{n}&lt;\dfrac{3L}{2}\,b_{n}\qquad\text{para todo }n\ge N_{2}.\] Desde \(N_{2}\) en adelante, \(a_{n}\) queda entre dos múltiplos positivos de \(b_{n}\).</li>
+      <li><b>Si \(\displaystyle\sum b_{n}\) converge.</b> Por el lema 2, \(\displaystyle\sum\dfrac{3L}{2}\,b_{n}\) converge. Y \(0\le a_{n}\le\dfrac{3L}{2}\,b_{n}\) para todo \(n\ge N_{2}\). Comparación directa, parte (a): \(\displaystyle\sum a_{n}\) converge.</li>
+      <li><b>Si \(\displaystyle\sum b_{n}\) diverge.</b> Por el lema 2, con \(c=\dfrac{L}{2}\ne 0\), \(\displaystyle\sum\dfrac{L}{2}\,b_{n}\) diverge. Y \(0\le\dfrac{L}{2}\,b_{n}\le a_{n}\) para todo \(n\ge N_{2}\). Comparación directa, parte (b), con \(\dfrac{L}{2}\,b_{n}\) en el papel de la serie menor: \(\displaystyle\sum a_{n}\) diverge.</li>
+      <li>Si \(\displaystyle\sum b_{n}\) converge, \(\displaystyle\sum a_{n}\) converge; si \(\displaystyle\sum b_{n}\) diverge, \(\displaystyle\sum a_{n}\) diverge. Las dos series hacen lo mismo.</li>
+      <li><b>Dónde se usó \(L&gt;0\):</b> en el paso 2, para que \(\dfrac{L}{2}\) sirva de tolerancia, y en el paso 6, para que el piso \(\dfrac{L}{2}\,b_{n}\) no sea \(0\). Con \(L=0\) no hay piso.</li>
+    </ol>
+    <p><b>Parte (b): \(L=0\) y \(\displaystyle\sum b_{n}\) converge.</b></p>
+    <ol class="steps">
+      <li>Con la tolerancia \(\varepsilon=1\): hay un \(N_{1}\) tal que \(\left|\dfrac{a_{n}}{b_{n}}-0\right|&lt;1\) para todo \(n&gt;N_{1}\). Para \(n\ge N\) el cociente es positivo: \(\dfrac{a_{n}}{b_{n}}&lt;1\).</li>
+      <li>Sea \(N_{2}\) el mayor de \(N\) y \(N_{1}+1\). Para \(n\ge N_{2}\) se multiplica por \(b_{n}&gt;0\): \(0&lt;a_{n}&lt;b_{n}\).</li>
+      <li>Comparación directa, parte (a): como \(\displaystyle\sum b_{n}\) converge, \(\displaystyle\sum a_{n}\) converge.</li>
+    </ol>
+    <p><b>Parte (c): el cociente tiene límite \(+\infty\) y \(\displaystyle\sum b_{n}\) diverge.</b></p>
+    <ol class="steps">
+      <li>Definición de límite \(+\infty\), con \(M=1\): hay un \(N_{1}\) tal que \(\dfrac{a_{n}}{b_{n}}&gt;1\) para todo \(n&gt;N_{1}\).</li>
+      <li>Sea \(N_{2}\) el mayor de \(N\) y \(N_{1}+1\). Para \(n\ge N_{2}\) se multiplica por \(b_{n}&gt;0\): \(a_{n}&gt;b_{n}&gt;0\), es decir, \(0\le b_{n}\le a_{n}\).</li>
+      <li>Comparación directa, parte (b), con \(b_{n}\) en el papel de la serie menor: como \(\displaystyle\sum b_{n}\) diverge, \(\displaystyle\sum a_{n}\) diverge.</li>
+    </ol>
+    <p><b>Lo que no se puede concluir: cuatro ejemplos.</b> Se usan \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}n=+\infty\) (dado \(M&gt;0\), por la propiedad arquimediana hay un natural \(N\ge M\), y si \(n&gt;N\) entonces \(n&gt;M\)).</p>
+    <ol class="steps">
+      <li><b>\(L=0\), \(\displaystyle\sum b_{n}\) diverge y \(\displaystyle\sum a_{n}\) converge.</b> \(a_{n}=\dfrac{1}{n^{2}}\), \(b_{n}=\dfrac{1}{n}\). Cociente: \(\dfrac{1}{n^{2}}:\dfrac{1}{n}=\dfrac{1}{n^{2}}\cdot n=\dfrac{1}{n}\), con límite \(0\). La armónica diverge y \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge (\(p=2\)).</li>
+      <li><b>\(L=0\), \(\displaystyle\sum b_{n}\) diverge y \(\displaystyle\sum a_{n}\) diverge.</b> \(a_{n}=\dfrac{1}{n}\), \(b_{n}=1\). Cociente: \(\dfrac{1}{n}:1=\dfrac{1}{n}\), con límite \(0\). La serie \(1+1+1+\cdots\) diverge (sus sumas parciales son \(T_{n}=n\)) y la armónica también.</li>
+      <li><b>Límite \(+\infty\), \(\displaystyle\sum b_{n}\) converge y \(\displaystyle\sum a_{n}\) diverge.</b> \(a_{n}=\dfrac{1}{n}\), \(b_{n}=\dfrac{1}{n^{2}}\). Cociente: \(\dfrac{1}{n}:\dfrac{1}{n^{2}}=\dfrac{1}{n}\cdot n^{2}=n\), con límite \(+\infty\).</li>
+      <li><b>Límite \(+\infty\), \(\displaystyle\sum b_{n}\) converge y \(\displaystyle\sum a_{n}\) converge.</b> \(a_{n}=\dfrac{1}{n^{2}}\), \(b_{n}=\dfrac{1}{n^{3}}\). Cociente: \(\dfrac{1}{n^{2}}:\dfrac{1}{n^{3}}=\dfrac{1}{n^{2}}\cdot n^{3}=n\), con límite \(+\infty\). Las dos son series \(p\) con \(p&gt;1\).</li>
+      <li>En los ejemplos 1 y 2 las hipótesis son las mismas (\(L=0\), \(\displaystyle\sum b_{n}\) divergente) y las conclusiones, opuestas. Lo mismo en los ejemplos 3 y 4. Por eso en esos dos casos el criterio no decide: hay que cambiar de serie de referencia.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>La franja de la demostración. Número ↔ figura</h3>
+    <p>La familia de series \(\displaystyle\sum_{n=1}^{\infty}\dfrac{c\,n+3}{n^{3}}\), comparada en el límite con \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\), que converge. El deslizador elige \(c\) entre \(0\), \(1\), \(2\) y \(3\). El cociente es \(\dfrac{a_{n}}{b_{n}}=c+\dfrac{3}{n}\), y su límite, \(L=c\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los ejes y los puntos:</b> en horizontal va \(n\), de \(1\) a \(8\); en vertical, el cociente \(\dfrac{a_{n}}{b_{n}}\). Cada punto es un cociente, y su punteada lo lleva a su valor en el eje vertical. Arriba del dibujo se leen las dos series, el cociente y su límite.</li>
+      <li><b>Mira después la franja burdeo:</b> la línea punteada del medio está a la altura \(L\); los bordes, a las alturas \(\dfrac{L}{2}\) y \(\dfrac{3L}{2}\). Es la franja del paso 3 de la demostración. Los puntos <b>verdes</b> están dentro de la franja; los <b>azules</b>, fuera o justo en el borde, que no cuenta. La línea vertical gris separa unos de otros.</li>
+      <li><b>Mueve el deslizador \(c\):</b> con \(c=1\) los puntos entran a la franja recién desde \(n=7\); con \(c=2\), desde \(n=4\); con \(c=3\), desde \(n=3\). Dentro de la franja, \(a_{n}\) queda entre \(\dfrac{L}{2}\,b_{n}\) y \(\dfrac{3L}{2}\,b_{n}\).</li>
+      <li><b>Caso límite, \(c=0\):</b> el límite es \(L=0\) y la franja se cierra: no hay piso. Queda una sola línea, a la altura \(1\): los puntos verdes son los cocientes menores que \(1\) (desde \(n=4\)), donde \(a_{n}&lt;b_{n}\).</li>
+      <li><b>Cuenta de abajo:</b> los datos, el cociente simplificado, sus valores en \(n=1,\ 2,\ 3\) y \(8\), el límite, los bordes de la franja, desde qué \(n\) los puntos están dentro (con su comprobación) y la conclusión. Conclusión: en los cuatro casos la serie converge, porque \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge.</li>
+    </ol>
+    <div class="stage" data-scene="cmp34-vivo"></div>
+    <ul class="keys">
+      <li><b>Puntos:</b> los cocientes \(\dfrac{a_{n}}{b_{n}}=c+\dfrac{3}{n}\), para \(n=1,\ \ldots,\ 8\), cada uno con su punteada hasta el eje. <b>Verdes:</b> dentro de la franja (o, con \(c=0\), bajo la línea de altura \(1\)). <b>Azules:</b> los demás.</li>
+      <li><b>Burdeo:</b> el límite \(L=c\) (línea punteada) y la franja entre \(\dfrac{L}{2}\) y \(\dfrac{3L}{2}\).</li>
+      <li><b>Línea vertical gris:</b> el número \(N=\dfrac{6}{c}\) de la cuenta: los puntos de su derecha están dentro de la franja.</li>
+      <li><b>Caso límite (\(c=0\)):</b> \(L=0\). La parte (a) del criterio no se aplica; la parte (b), sí, porque la serie de referencia converge.</li>
+      <li><b>Sobre esta familia:</b> aquí \(\dfrac{c\,n+3}{n^{3}}=\dfrac{c}{n^{2}}+\dfrac{3}{n^{3}}\), y la serie también se podría estudiar separándola en dos series \(p\). Se eligió porque su cociente, \(c+\dfrac{3}{n}\), se calcula sin esfuerzo y deja ver la franja. El criterio sirve igual cuando el término no se puede separar (ejemplos 3 y 4).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: comparación directa, converge. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}+n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{2^{1}+1}=\dfrac{1}{3}\); \(a_{2}=\dfrac{1}{2^{2}+2}=\dfrac{1}{4+2}=\dfrac{1}{6}\); \(a_{3}=\dfrac{1}{2^{3}+3}=\dfrac{1}{8+3}=\dfrac{1}{11}\). Todos son positivos: se puede comparar.</li>
+    <li>Serie de referencia. Para \(n\) grande, en el denominador manda \(2^{n}\): se prueba con \(b_{n}=\dfrac{1}{2^{n}}\).</li>
+    <li>La desigualdad. Como \(n\ge 1&gt;0\), se suma \(2^{n}\) a los dos lados de \(n&gt;0\): \(2^{n}+n&gt;2^{n}\). Los dos números son positivos; al tomar inversos el orden se invierte: \(\dfrac{1}{2^{n}+n}&lt;\dfrac{1}{2^{n}}\).</li>
+    <li>Entonces \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\) (aquí \(N=1\)).</li>
+    <li>La serie mayor: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}=\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\cdots\) es geométrica con primer término \(a=\dfrac{1}{2}\) y razón \(r=\dfrac{1}{2}\). Como \(|r|=\dfrac{1}{2}&lt;1\), converge, y su suma es \(\dfrac{a}{1-r}=\dfrac{1}{2}:\left(1-\dfrac{1}{2}\right)=\dfrac{1}{2}:\dfrac{1}{2}=1\).</li>
+    <li>Comparación directa, parte (a): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}+n}\) <b>converge</b>.</li>
+    <li>La cota. Como la desigualdad vale desde \(n=1\), la suma cumple \(S\le 1\).</li>
+    <li>Un piso para \(S\). Sumas parciales: \(S_{2}=\dfrac{1}{3}+\dfrac{1}{6}=\dfrac{2}{6}+\dfrac{1}{6}=\dfrac{3}{6}=\dfrac{1}{2}\); \(S_{3}=\dfrac{1}{2}+\dfrac{1}{11}=\dfrac{11}{22}+\dfrac{2}{22}=\dfrac{13}{22}\approx 0{,}591\). Por el lema 1 (paso 3), \(S_{3}\le S\). Entonces \(\dfrac{13}{22}\le S\le 1\).</li>
+    <li>El criterio no dice cuánto vale \(S\). Sumando muchos términos con calculadora sale \(S\approx 0{,}697\) (valor numérico, no demostrado).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: comparación directa, diverge. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n-1}=1+\dfrac{1}{3}+\dfrac{1}{5}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(\dfrac{1}{2\cdot 1-1}=1\); \(\dfrac{1}{2\cdot 2-1}=\dfrac{1}{3}\); \(\dfrac{1}{2\cdot 3-1}=\dfrac{1}{5}\). Son los inversos de los impares, todos positivos.</li>
+    <li>Un intento que no sirve. Para \(n\ge 1\), \(2n-1=n+(n-1)\ge n\), así que \(\dfrac{1}{2n-1}\le\dfrac{1}{n}\). Es verdad, pero \(\displaystyle\sum\dfrac{1}{n}\) diverge: quedar debajo de una serie divergente no dice nada.</li>
+    <li>Para probar que diverge hace falta una serie divergente <b>menor</b>. Como \(2n-1&lt;2n\) y los dos son positivos, al tomar inversos: \(\dfrac{1}{2n-1}&gt;\dfrac{1}{2n}&gt;0\).</li>
+    <li>La serie menor. \(\dfrac{1}{2n}=\dfrac{1}{2}\cdot\dfrac{1}{n}\). La armónica diverge (hoja «Series harmónicas y series-p») y \(\dfrac{1}{2}\ne 0\): por el lema 2, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n}\) diverge.</li>
+    <li>Se tiene \(0\le\dfrac{1}{2n}\le\dfrac{1}{2n-1}\) para todo \(n\ge 1\), y la serie menor diverge. Comparación directa, parte (b), con \(\dfrac{1}{2n}\) en el papel de \(a_{n}\) y \(\dfrac{1}{2n-1}\) en el de \(b_{n}\): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n-1}\) <b>diverge</b>.</li>
+    <li>Con números, cuatro términos. Serie dada, con denominador común \(105\): \(1+\dfrac{1}{3}+\dfrac{1}{5}+\dfrac{1}{7}=\dfrac{105}{105}+\dfrac{35}{105}+\dfrac{21}{105}+\dfrac{15}{105}=\dfrac{176}{105}\approx 1{,}676\). Serie menor, con denominador común \(24\): \(\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{6}+\dfrac{1}{8}=\dfrac{12}{24}+\dfrac{6}{24}+\dfrac{4}{24}+\dfrac{3}{24}=\dfrac{25}{24}\approx 1{,}042\). Y \(1{,}676\ge 1{,}042\). ✓</li>
+    <li>Qué significa: las sumas parciales de la serie menor superan cualquier número; las de la serie dada, que son mayores, también.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: comparación en el límite, converge. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3n+1}{n^{3}+2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{3\cdot 1+1}{1^{3}+2}=\dfrac{4}{3}\); \(a_{2}=\dfrac{3\cdot 2+1}{2^{3}+2}=\dfrac{7}{10}\); \(a_{3}=\dfrac{3\cdot 3+1}{3^{3}+2}=\dfrac{10}{29}\). Numerador y denominador son positivos para todo \(n\ge 1\): \(a_{n}&gt;0\).</li>
+    <li>Serie de referencia. Mayores potencias: \(\dfrac{3n}{n^{3}}=\dfrac{3}{n^{2}}\). Se toma \(b_{n}=\dfrac{1}{n^{2}}\), que es positivo.</li>
+    <li>Cociente. Dividir por \(\dfrac{1}{n^{2}}\) es multiplicar por \(n^{2}\): \(\dfrac{a_{n}}{b_{n}}=\dfrac{3n+1}{n^{3}+2}\cdot n^{2}=\dfrac{(3n+1)\,n^{2}}{n^{3}+2}=\dfrac{3n^{3}+n^{2}}{n^{3}+2}\).</li>
+    <li>Se dividen numerador y denominador por \(n^{3}\). Arriba: \(\dfrac{3n^{3}}{n^{3}}+\dfrac{n^{2}}{n^{3}}=3+\dfrac{1}{n}\). Abajo: \(\dfrac{n^{3}}{n^{3}}+\dfrac{2}{n^{3}}=1+\dfrac{2}{n^{3}}\). Queda \(\dfrac{a_{n}}{b_{n}}=\dfrac{3+\dfrac{1}{n}}{1+\dfrac{2}{n^{3}}}\).</li>
+    <li>Límites de cada parte. \(\dfrac{1}{n}\to 0\). \(\dfrac{2}{n^{3}}=2\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\to 2\cdot 0\cdot 0\cdot 0=0\) (constante por sucesión y producto). Suma: el numerador tiene límite \(3+0=3\) y el denominador, \(1+0=1\).</li>
+    <li>Cociente de límites (el del denominador es \(1\ne 0\)): \(L=\dfrac{3}{1}=3\).</li>
+    <li>\(L=3\) es un número real y positivo: \(0&lt;L&lt;\infty\). Se aplica la parte (a).</li>
+    <li>La serie de referencia, \(\displaystyle\sum\dfrac{1}{n^{2}}\), es una serie \(p\) con \(p=2&gt;1\): converge.</li>
+    <li>Las dos series hacen lo mismo: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3n+1}{n^{3}+2}\) <b>converge</b>.</li>
+    <li>Algunos cocientes: con \(n=1\), \(\dfrac{3+1}{1+2}=\dfrac{4}{3}\approx 1{,}33\); con \(n=2\), \(\dfrac{24+4}{8+2}=\dfrac{28}{10}=2{,}8\); con \(n=3\), \(\dfrac{81+9}{27+2}=\dfrac{90}{29}\approx 3{,}10\); con \(n=10\), \(\dfrac{3000+100}{1000+2}=\dfrac{3100}{1002}\approx 3{,}09\). Se acercan a \(3\) (no hace falta que lo hagan desde un solo lado).</li>
+    <li>Comprobación con la comparación directa. Como \(1\le n\): \(3n+1\le 3n+n=4n\). Como \(n^{3}+2&gt;n^{3}&gt;0\): \(\dfrac{1}{n^{3}+2}&lt;\dfrac{1}{n^{3}}\). Entonces \(a_{n}=(3n+1)\cdot\dfrac{1}{n^{3}+2}\le 4n\cdot\dfrac{1}{n^{3}+2}&lt;4n\cdot\dfrac{1}{n^{3}}=\dfrac{4}{n^{2}}\). Por el lema 2, \(\displaystyle\sum\dfrac{4}{n^{2}}\) converge; por la parte (a) del criterio directo, la serie converge. Mismo resultado.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: comparación en el límite, diverge; y un caso con \(L=0\)</h3>
+  <div class="body">
+  <p><b>(a)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{n^{2}+4}\).</p>
+  <ol class="steps">
+    <li>Primeros términos: \(\dfrac{1}{1+4}=\dfrac{1}{5}\); \(\dfrac{2}{4+4}=\dfrac{2}{8}=\dfrac{1}{4}\); \(\dfrac{3}{9+4}=\dfrac{3}{13}\). Todos positivos.</li>
+    <li>La comparación que sale sola no sirve. Como \(n^{2}+4&gt;n^{2}\): \(\dfrac{n}{n^{2}+4}&lt;\dfrac{n}{n^{2}}=\dfrac{1}{n}\). La serie queda <b>debajo</b> de la armónica, que diverge: eso no decide.</li>
+    <li>En el límite, con \(b_{n}=\dfrac{1}{n}\) (mayores potencias: \(\dfrac{n}{n^{2}}=\dfrac{1}{n}\)). Dividir por \(\dfrac{1}{n}\) es multiplicar por \(n\): \(\dfrac{a_{n}}{b_{n}}=\dfrac{n}{n^{2}+4}\cdot n=\dfrac{n^{2}}{n^{2}+4}\).</li>
+    <li>Se dividen numerador y denominador por \(n^{2}\): \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{1+\dfrac{4}{n^{2}}}\).</li>
+    <li>Límite. \(\dfrac{4}{n^{2}}=4\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\to 4\cdot 0\cdot 0=0\). El denominador tiene límite \(1+0=1\ne 0\). Cociente de límites: \(L=\dfrac{1}{1}=1\).</li>
+    <li>\(0&lt;L&lt;\infty\), y la armónica diverge. Las dos series hacen lo mismo: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{n^{2}+4}\) <b>diverge</b>.</li>
+    <li>Algunos cocientes: \(n=1\): \(\dfrac{1}{5}=0{,}2\); \(n=2\): \(\dfrac{4}{8}=0{,}5\); \(n=3\): \(\dfrac{9}{13}\approx 0{,}69\); \(n=10\): \(\dfrac{100}{104}\approx 0{,}96\). Suben hacia \(1\).</li>
+    <li>Comprobación con la comparación directa, ahora en el sentido correcto. Como \(n^{2}\ge 1\): \(4\le 4n^{2}\), y \(n^{2}+4\le n^{2}+4n^{2}=5n^{2}\). Al tomar inversos y multiplicar por \(n\): \(\dfrac{n}{n^{2}+4}\ge\dfrac{n}{5n^{2}}=\dfrac{1}{5n}=\dfrac{1}{5}\cdot\dfrac{1}{n}\). Por el lema 2, \(\displaystyle\sum\dfrac{1}{5n}\) diverge; es una serie divergente menor: por la parte (b), la serie diverge. Mismo resultado.</li>
+  </ol>
+  <p><b>(b)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n\cdot 2^{n}}\), comparada con \(b_{n}=\dfrac{1}{2^{n}}\).</p>
+  <ol class="steps">
+    <li>Las dos son de términos positivos. Cociente: \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{n\cdot 2^{n}}\cdot 2^{n}=\dfrac{1}{n}\).</li>
+    <li>Límite: \(L=\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\). No se puede usar la parte (a).</li>
+    <li>Pero \(\displaystyle\sum\dfrac{1}{2^{n}}\) <b>converge</b> (ejemplo 1, paso 5). Parte (b) del criterio: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n\cdot 2^{n}}\) <b>converge</b>.</li>
+    <li>Si la serie de referencia hubiera sido divergente, con \(L=0\) no se habría podido concluir nada.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> <b>Comparar al revés:</b> concluir que una serie diverge porque es menor que una divergente, o que converge porque es mayor que una convergente. \(\dfrac{1}{n^{2}}\le\dfrac{1}{n}\) y la armónica diverge, pero \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge. Para convergencia hace falta una convergente mayor; para divergencia, una divergente menor. <b>Olvidar que los términos deben ser mayores o iguales que cero:</b> \(-n\le\dfrac{1}{n^{2}}\) para todo \(n\), y \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge, pero \(\displaystyle\sum(-n)\) diverge; sin la condición \(0\le a_{n}\) el criterio es falso. <b>Exigir la desigualdad desde \(n=1\):</b> basta desde algún \(N\); los primeros términos no cambian que la serie converja (lema 3). Pero entonces la cota \(S\le T\) entre las sumas ya no está asegurada. <b>Usar la parte (a) del criterio en el límite con \(L=0\) o con límite \(+\infty\):</b> «las dos hacen lo mismo» vale solo con \(L\) real y positivo. Con \(L=0\) solo se concluye algo si la serie de referencia converge; con \(+\infty\), solo si diverge. <b>Creer que \(L\) tiene que ser \(1\):</b> sirve cualquier número real positivo. <b>Creer que \(L\) es la suma</b> o que la suma de la serie es la de la serie de referencia: ninguno de los dos criterios calcula la suma. <b>Tomar el límite de \(a_{n}\) en vez del límite del cociente:</b> que \(a_{n}\to 0\) no decide nada (hoja «Criterio del enésimo término»). <b>Dar por buena la serie de referencia «porque se parece»:</b> la elección por las mayores potencias es una guía; la demostración es la desigualdad o el límite.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si cada serie converge o diverge. (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}+5}\), con la comparación directa. (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n+2}{n^{2}}\), con la comparación directa. (c) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{n}-2}\), con la comparación en el límite; después, acota su suma con la comparación directa.</p>
+    <details><summary>Pista</summary><div><p>En (a), agrandar el denominador achica la fracción: compara con \(\dfrac{1}{n^{3}}\). En (b), achicar el numerador achica la fracción: compara con \(\dfrac{n}{n^{2}}\). En (c), usa \(b_{n}=\dfrac{1}{3^{n}}\) y divide numerador y denominador del cociente por \(3^{n}\); para la cota, muestra que \(3^{n}-2\ge 3^{\,n-1}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Términos positivos: \(n^{3}+5&gt;0\). Como \(n^{3}+5&gt;n^{3}&gt;0\), al tomar inversos: \(0&lt;\dfrac{1}{n^{3}+5}&lt;\dfrac{1}{n^{3}}\), para todo \(n\ge 1\).</li>
+        <li>(a) \(\displaystyle\sum\dfrac{1}{n^{3}}\) es una serie \(p\) con \(p=3&gt;1\): converge. Comparación directa, parte (a): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}+5}\) <b>converge</b>.</li>
+        <li>(b) Términos positivos. Como \(n+2&gt;n\) y \(n^{2}&gt;0\): \(\dfrac{n+2}{n^{2}}&gt;\dfrac{n}{n^{2}}=\dfrac{1}{n}&gt;0\), para todo \(n\ge 1\).</li>
+        <li>(b) La armónica diverge, y es la serie menor: \(0\le\dfrac{1}{n}\le\dfrac{n+2}{n^{2}}\). Comparación directa, parte (b): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n+2}{n^{2}}\) <b>diverge</b>.</li>
+        <li>(c) Términos: \(\dfrac{1}{3-2}=1\); \(\dfrac{1}{9-2}=\dfrac{1}{7}\); \(\dfrac{1}{27-2}=\dfrac{1}{25}\). Como \(3^{n}\ge 3&gt;2\), el denominador es positivo: \(a_{n}&gt;0\).</li>
+        <li>(c) Con \(b_{n}=\dfrac{1}{3^{n}}&gt;0\). Cociente: \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{3^{n}-2}\cdot 3^{n}=\dfrac{3^{n}}{3^{n}-2}\). Se dividen numerador y denominador por \(3^{n}\): \(\dfrac{1}{1-\dfrac{2}{3^{n}}}\).</li>
+        <li>(c) Límite. \(\dfrac{2}{3^{n}}=2\cdot\left(\dfrac{1}{3}\right)^{n}\to 2\cdot 0=0\), porque \(\left|\dfrac{1}{3}\right|&lt;1\) (enunciado de la hoja «Límite de una sucesión»). El denominador tiene límite \(1-0=1\ne 0\): \(L=\dfrac{1}{1}=1\).</li>
+        <li>(c) \(0&lt;L&lt;\infty\). La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{n}}\) es geométrica con \(a=\dfrac{1}{3}\) y \(r=\dfrac{1}{3}\); \(|r|&lt;1\): converge. Entonces \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{n}-2}\) <b>converge</b>.</li>
+        <li>(c) Aquí la comparación directa con \(\dfrac{1}{3^{n}}\) va al revés: \(3^{n}-2&lt;3^{n}\) da \(\dfrac{1}{3^{n}-2}&gt;\dfrac{1}{3^{n}}\), mayor que una convergente, que no decide. Hay que buscar otra.</li>
+        <li>(c) La cota. \(3^{n}-3^{\,n-1}=3\cdot 3^{\,n-1}-3^{\,n-1}=2\cdot 3^{\,n-1}\ge 2\), porque \(3^{\,n-1}\ge 1\). Se suma \(3^{\,n-1}-2\) a los dos lados: \(3^{n}-2\ge 3^{\,n-1}&gt;0\). Al tomar inversos: \(0&lt;\dfrac{1}{3^{n}-2}\le\dfrac{1}{3^{\,n-1}}\), para todo \(n\ge 1\).</li>
+        <li>(c) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{\,n-1}}=\sum_{n=1}^{\infty}\left(\dfrac{1}{3}\right)^{n-1}\) es geométrica con \(a=1\) y \(r=\dfrac{1}{3}\): converge a \(\dfrac{1}{1-\frac{1}{3}}=1:\dfrac{2}{3}=\dfrac{3}{2}\). Como la desigualdad vale desde \(n=1\): \(S\le\dfrac{3}{2}\).</li>
+        <li>(c) Comprobación con tres términos, denominador común \(175\): \(S_{3}=1+\dfrac{1}{7}+\dfrac{1}{25}=\dfrac{175}{175}+\dfrac{25}{175}+\dfrac{7}{175}=\dfrac{207}{175}\approx 1{,}183\), que no pasa de \(1{,}5\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}-2}\). (a) Calcula \(a_{1}\), \(a_{2}\) y \(a_{3}\). ¿Se cumple \(0\le a_{n}\) desde \(n=1\)? (b) Demuestra que \(0&lt;\dfrac{1}{n^{2}-2}\le\dfrac{2}{n^{2}}\) para todo \(n\ge 2\) y concluye con la comparación directa. (c) Llega a lo mismo con la comparación en el límite. (d) ¿Por qué no sirve comparar directamente con \(\dfrac{1}{n^{2}}\)?</p>
+    <details><summary>Pista</summary><div><p>En (b), \(\dfrac{1}{n^{2}-2}\le\dfrac{2}{n^{2}}\) equivale, con denominadores positivos, a \(n^{2}\le 2\,(n^{2}-2)\); despeja \(n^{2}\). El primer término es negativo, pero los criterios piden la condición solo desde algún \(N\). En (c), divide numerador y denominador del cociente por \(n^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(a_{1}=\dfrac{1}{1^{2}-2}=\dfrac{1}{-1}=-1\); \(a_{2}=\dfrac{1}{2^{2}-2}=\dfrac{1}{2}\); \(a_{3}=\dfrac{1}{3^{2}-2}=\dfrac{1}{7}\). El primero es negativo: la condición no vale desde \(n=1\).</li>
+        <li>(a) Para \(n\ge 2\): \(n^{2}\ge 4\), así que \(n^{2}-2\ge 2&gt;0\) y \(a_{n}&gt;0\). La condición vale desde \(N=2\).</li>
+        <li>(b) Para \(n\ge 2\): \(n^{2}\ge 4\). Se resta \(4\) y se suma \(n^{2}\) a los dos lados: \(2n^{2}-4\ge n^{2}\), es decir, \(2\,(n^{2}-2)\ge n^{2}\).</li>
+        <li>(b) Se dividen los dos lados por \(n^{2}\,(n^{2}-2)\), que es positivo: \(\dfrac{2}{n^{2}}\ge\dfrac{1}{n^{2}-2}\). Con el paso 2: \(0&lt;\dfrac{1}{n^{2}-2}\le\dfrac{2}{n^{2}}\) para todo \(n\ge 2\).</li>
+        <li>(b) \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge (serie \(p\), \(p=2\)); por el lema 2, \(\displaystyle\sum\dfrac{2}{n^{2}}\) converge. Comparación directa, parte (a), con \(N=2\): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}-2}\) <b>converge</b>.</li>
+        <li>(b) Comprobación de la desigualdad: \(n=2\): \(\dfrac{1}{2}\le\dfrac{2}{4}=\dfrac{1}{2}\) (igualdad); \(n=3\): \(\dfrac{1}{7}\le\dfrac{2}{9}\), porque \(1\cdot 9=9\le 14=2\cdot 7\). ✓</li>
+        <li>(c) Con \(b_{n}=\dfrac{1}{n^{2}}&gt;0\) y \(a_{n}&gt;0\) para \(n\ge 2\). Cociente: \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{n^{2}-2}\cdot n^{2}=\dfrac{n^{2}}{n^{2}-2}\). Se dividen numerador y denominador por \(n^{2}\): \(\dfrac{1}{1-\dfrac{2}{n^{2}}}\).</li>
+        <li>(c) Límite. \(\dfrac{2}{n^{2}}=2\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\to 2\cdot 0\cdot 0=0\). El denominador tiene límite \(1-0=1\ne 0\): \(L=\dfrac{1}{1}=1\).</li>
+        <li>(c) \(0&lt;L&lt;\infty\) y \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge: la serie <b>converge</b>. Mismo resultado.</li>
+        <li>(d) Para \(n\ge 2\), \(0&lt;n^{2}-2&lt;n^{2}\), y al tomar inversos \(\dfrac{1}{n^{2}-2}&gt;\dfrac{1}{n^{2}}\): la serie queda <b>encima</b> de una convergente, y eso no decide. Por eso en (b) hizo falta el factor \(2\).</li>
+        <li>Sobre la suma: como la desigualdad vale recién desde \(n=2\) y el primer término es negativo, aquí no se puede escribir \(S\le\displaystyle\sum\dfrac{2}{n^{2}}\) sin más; el criterio solo asegura que la serie converge.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un estanque de \(1500\) litros está vacío y recibe agua de una vertiente que se va agotando (datos inventados). Se proponen dos modelos para los litros que entrega la vertiente el día \(n\), con \(n=1,\ 2,\ 3,\ \ldots\): modelo A, \(\dfrac{600}{n^{2}+5}\); modelo B, \(\dfrac{600}{n+5}\). En los dos, el primer día entrega \(100\) litros y después cada día entrega menos. El agua acumulada al terminar el día \(n\) es la suma parcial \(S_{n}\). (a) Calcula lo que entrega cada modelo los días \(1\), \(2\) y \(3\). (b) Con el modelo A, ¿se llena alguna vez el estanque? (c) ¿Y con el modelo B? (d) ¿Dicen los criterios qué día se llena?</p>
+    <details><summary>Pista</summary><div><p>En (b), compara con \(\dfrac{600}{n^{2}}\) y usa que las sumas parciales de \(\displaystyle\sum\dfrac{1}{n^{2}}\) son menores que \(2\) (hoja «Series harmónicas y series-p»). En (c), muestra que \(n+5\le 6n\) y compara con \(\dfrac{100}{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Modelo A: día 1, \(\dfrac{600}{1+5}=\dfrac{600}{6}=100\); día 2, \(\dfrac{600}{4+5}=\dfrac{600}{9}\approx 66{,}67\); día 3, \(\dfrac{600}{9+5}=\dfrac{600}{14}\approx 42{,}86\) litros.</li>
+        <li>(a) Modelo B: día 1, \(\dfrac{600}{1+5}=100\); día 2, \(\dfrac{600}{2+5}=\dfrac{600}{7}\approx 85{,}71\); día 3, \(\dfrac{600}{3+5}=\dfrac{600}{8}=75\) litros.</li>
+        <li>(b) Términos positivos. Como \(n^{2}+5&gt;n^{2}&gt;0\): \(0&lt;\dfrac{600}{n^{2}+5}&lt;\dfrac{600}{n^{2}}\), para todo \(n\ge 1\).</li>
+        <li>(b) Se suman las desigualdades desde \(1\) hasta \(n\) (demostración del criterio directo, paso 3): \(S_{n}\le 600\cdot\left(1+\dfrac{1}{4}+\cdots+\dfrac{1}{n^{2}}\right)\).</li>
+        <li>(b) Las sumas parciales de \(\displaystyle\sum\dfrac{1}{n^{2}}\) son menores que \(2\) (hoja «Series harmónicas y series-p», caso \(p=2\)). Entonces \(S_{n}&lt;600\cdot 2=1200\) para todo \(n\).</li>
+        <li>(b) \(1200&lt;1500\): con el modelo A el estanque <b>no se llena nunca</b>. La serie converge (comparación directa), y el agua acumulada no pasa de \(1200\) litros.</li>
+        <li>(c) Para \(n\ge 1\): \(5\le 5n\), así que \(n+5\le n+5n=6n\). Al tomar inversos y multiplicar por \(600\): \(\dfrac{600}{n+5}\ge\dfrac{600}{6n}=\dfrac{100}{n}&gt;0\).</li>
+        <li>(c) \(\displaystyle\sum\dfrac{100}{n}\) diverge (lema 2, con \(c=100\) y la armónica). Es una serie divergente menor: por la parte (b) del criterio directo, \(\displaystyle\sum\dfrac{600}{n+5}\) diverge.</li>
+        <li>(c) Sus términos son positivos: por el lema 1 (paso 4), las sumas parciales superan cualquier número; en particular, \(1500\). Con el modelo B el estanque <b>se llena</b>.</li>
+        <li>(d) No directamente: dicen si se llena, no cuándo. Una garantía sale de las cotas: \(S_{n}\ge 100\cdot\left(1+\dfrac{1}{2}+\cdots+\dfrac{1}{n}\right)\), y para la armónica la suma parcial hasta \(n=2^{m}\) es al menos \(1+\dfrac{m}{2}\) (hoja «Series harmónicas y series-p»). Se pide \(100\cdot\left(1+\dfrac{m}{2}\right)\ge 1500\): \(1+\dfrac{m}{2}\ge 15\); \(\dfrac{m}{2}\ge 14\); \(m\ge 28\). Queda asegurado, a más tardar, el día \(2^{28}=268\,435\,456\).</li>
+        <li>(d) Esa garantía es muy holgada. Sumando día a día con una planilla, el agua acumulada pasa de \(1500\) litros el día \(62\) (el día \(61\) lleva unos \(1494{,}7\) litros y el día \(62\), unos \(1503{,}6\)).</li>
+        <li>Interpretación: los dos modelos empiezan igual y en los dos la entrega diaria tiende a \(0\), pero uno acumula una cantidad acotada y el otro supera cualquier cantidad. Lo que decide no es que los aportes se achiquen, sino qué tan rápido lo hacen: como \(\dfrac{1}{n^{2}}\) o como \(\dfrac{1}{n}\). Es un modelo: una vertiente real no sigue una fórmula exacta, y ningún estanque espera \(268\) millones de días.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H34 · v001 · Pendiente de APR</span>
+</footer>
+</article>

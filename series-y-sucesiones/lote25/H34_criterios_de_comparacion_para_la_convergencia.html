@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criterios de comparación para la convergencia | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-comparacion" data-hoja="L25 H34">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Convergencia y divergencia de series infinitas</li>
+      <li><b>Criterios de comparación para la convergencia</b></li>
+    </ol>
+    <h1>Criterios de comparación para la convergencia</h1>
+    <p class="lede">Para saber si una serie de términos mayores o iguales que cero converge, se la compara con otra que ya se conoce: una geométrica o una serie \(p\). Si queda <b>debajo</b> de una serie que converge, converge. Si queda <b>encima</b> de una serie que diverge, diverge. La comparación se hace término a término (criterio directo) o mirando el límite del cociente de los términos (criterio en el límite). \[0\le a_{n}\le b_{n}\ \text{ desde algún }N:\qquad\sum_{n=1}^{\infty}b_{n}\ \text{ converge}\ \Longrightarrow\ \sum_{n=1}^{\infty}a_{n}\ \text{ converge}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}+n}=\dfrac{1}{3}+\dfrac{1}{6}+\dfrac{1}{11}+\cdots\), comparada con la geométrica \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes y los puntos azules (paso 1):</b> en horizontal va \(n\), cuántos términos se han sumado; en vertical, la suma parcial. Los puntos azules son \(S_{1},\ \ldots,\ S_{6}\), las sumas parciales de la serie dada; la punteada de cada uno lo lleva a su valor en el eje vertical. Suben, porque cada término es positivo. Arriba queda la pregunta: ¿converge?</li>
+    <li><b>Paso 2, puntos verdes:</b> cada término cumple \(\dfrac{1}{2^{n}+n}\le\dfrac{1}{2^{n}}\). Los puntos verdes son \(T_{1},\ \ldots,\ T_{6}\), las sumas parciales de esa serie mayor.</li>
+    <li><b>Paso 3, trazos naranjas:</b> unen cada punto azul con el verde del mismo \(n\). El azul siempre queda abajo: \(S_{n}\le T_{n}\).</li>
+    <li><b>Pasos 4 y 5, línea burdeo punteada:</b> está a la altura \(1\), la suma de la serie mayor. Los puntos verdes no la pasan, y los azules, que están debajo de los verdes, tampoco: es un techo para las sumas azules.</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> una sucesión creciente que tiene techo converge (hoja «Sucesiones monótonas acotadas»). La respuesta se escribe bajo la pregunta, y el corchete naranja marca dónde está la suma \(S\): entre \(S_{6}\) y \(1\). La cuenta de abajo repite cada paso con todas sus operaciones. Conclusión: la serie converge, y su suma no pasa de \(1\).</li>
+  </ol>
+  <div class="stage" data-scene="cmp34-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Azul:</b> las sumas parciales \(S_{n}\) de la serie dada, \(\displaystyle\sum\dfrac{1}{2^{n}+n}\).</li>
+    <li><b>Verde:</b> las sumas parciales \(T_{n}=1-\dfrac{1}{2^{n}}\) de la serie mayor, \(\displaystyle\sum\dfrac{1}{2^{n}}\).</li>
+    <li><b>Naranja:</b> los trazos miden \(T_{n}-S_{n}\), que nunca es negativo; el corchete del paso 6 marca el tramo donde está la suma \(S\).</li>
+    <li><b>Burdeo:</b> la suma de la serie mayor, \(1\). La franja burdeo clara sobre ella es la zona a la que ninguna suma parcial llega.</li>
+    <li><b>Lo que la figura no da:</b> el valor de \(S\). El criterio dice que la serie converge y entrega una cota; no calcula la suma.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Los dos criterios, en orden</h3>
+    <p><b>Notación de esta hoja.</b> \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\) es la suma parcial de \(\displaystyle\sum_{n=1}^{\infty}a_{n}\), y \(T_{n}=b_{1}+b_{2}+\cdots+b_{n}=\displaystyle\sum_{k=1}^{n}b_{k}\), la de \(\displaystyle\sum_{n=1}^{\infty}b_{n}\). Una serie converge cuando sus sumas parciales tienen límite real (hoja «Series infinitas convergentes y divergentes»); «límite» es el de la hoja «Límite de una sucesión», con \(\varepsilon\) y \(N\).</p>
+    <ol class="steps">
+      <li><b>Criterio de comparación directa.</b> Sean \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) y \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) dos series, y \(N\ge 1\) un número natural tal que \[0\le a_{n}\le b_{n}\qquad\text{para todo }n\ge N.\] <b>(a)</b> Si \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) converge, entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge. <b>(b)</b> Si \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) diverge, entonces \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) diverge.</li>
+      <li><b>Lo que el criterio directo no dice.</b> Si la serie mayor, \(\displaystyle\sum b_{n}\), diverge, no se sabe nada de la menor. Si la serie menor, \(\displaystyle\sum a_{n}\), converge, no se sabe nada de la mayor. Estar debajo de una serie divergente, o encima de una convergente, no decide.</li>
+      <li><b>Criterio de comparación en el límite.</b> Sean \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) y \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) dos series, y \(N\ge 1\) un número natural tal que \(a_{n}&gt;0\) y \(b_{n}&gt;0\) para todo \(n\ge N\). Se mira el cociente \(\dfrac{a_{n}}{b_{n}}\), definido para \(n\ge N\). <b>(a)</b> Si \(\displaystyle\lim_{n\to\infty}\dfrac{a_{n}}{b_{n}}=L\), con \(L\) un número real y \(L&gt;0\) (se abrevia \(0&lt;L&lt;\infty\)): las dos series convergen o las dos divergen. <b>(b)</b> Si \(\displaystyle\lim_{n\to\infty}\dfrac{a_{n}}{b_{n}}=0\) y \(\displaystyle\sum b_{n}\) converge, entonces \(\displaystyle\sum a_{n}\) converge. <b>(c)</b> Si \(\displaystyle\lim_{n\to\infty}\dfrac{a_{n}}{b_{n}}=+\infty\) y \(\displaystyle\sum b_{n}\) diverge, entonces \(\displaystyle\sum a_{n}\) diverge.</li>
+      <li><b>Lo que el criterio en el límite no dice.</b> Con \(L=0\) y \(\displaystyle\sum b_{n}\) divergente, no se concluye nada. Con límite \(+\infty\) y \(\displaystyle\sum b_{n}\) convergente, tampoco. Los cuatro ejemplos que lo muestran están al final del recuadro de demostraciones. Y si el cociente no tiene límite ni diverge a \(+\infty\), el criterio, tal como está enunciado aquí, no se puede aplicar.</li>
+      <li><b>Series de referencia.</b> Geométricas (hoja «Series geométricas infinitas»): \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}\), con \(a\ne 0\), converge si \(|r|&lt;1\), con suma \(\dfrac{a}{1-r}\), y diverge si \(|r|\ge 1\). Series \(p\) (hoja «Series harmónicas y series-p»): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{p}}\) converge si \(p&gt;1\) y diverge si \(p\le 1\); la armónica, \(\displaystyle\sum\dfrac{1}{n}\), diverge.</li>
+      <li><b>Cómo se elige la serie de referencia.</b> Se mira qué parte del término manda cuando \(n\) es grande. En un cociente de polinomios, la mayor potencia de arriba y la de abajo: para \(\dfrac{3n+1}{n^{3}+2}\) queda \(\dfrac{3n}{n^{3}}=\dfrac{3}{n^{2}}\), y se compara con \(\dfrac{1}{n^{2}}\). En \(\dfrac{1}{2^{n}+n}\) manda \(2^{n}\), y se compara con \(\dfrac{1}{2^{n}}\). Esta elección es solo una guía para buscar: lo que demuestra es la desigualdad o el límite.</li>
+      <li><b>Hacia dónde se compara.</b> Para probar que <b>converge</b> hace falta una serie convergente <b>mayor</b>. Para probar que <b>diverge</b>, una serie divergente <b>menor</b>.</li>
+      <li><b>Con términos de los dos signos</b> los criterios no se aplican a \(\displaystyle\sum a_{n}\). Sí se pueden aplicar a \(\displaystyle\sum|a_{n}|\), cuyos términos no son negativos: si esa converge, la serie converge absolutamente (hoja «Convergencia absoluta y condicional»).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> De la hoja «Límite de una sucesión» se usan, demostrados allí: la definición de límite con \(\varepsilon\) y \(N\), la unicidad del límite (teorema 1), el límite de una suma (teorema 2), que una sucesión constante converge a su constante y que \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) (ejemplo 1); y la definición de \(\displaystyle\lim_{n\to\infty}a_{n}=+\infty\). De la hoja «Sucesiones monótonas acotadas», demostrados allí: toda sucesión convergente es acotada (teorema 1) y toda sucesión creciente y acotada superiormente converge a su supremo (teorema 2); ese teorema descansa en el <b>axioma del supremo</b>, que no se demuestra. Los resultados sobre series geométricas y series \(p\) se demuestran en sus hojas, con los avisos de rigor de cada una. En esta hoja se usan <b>sin demostrar</b>: (1) las reglas de las desigualdades: sumar un mismo número a los dos lados, multiplicar los dos lados por un número positivo, y que si \(0&lt;x\le y\) entonces \(\dfrac{1}{y}\le\dfrac{1}{x}\); las propiedades del valor absoluto \(|x\cdot y|=|x|\cdot|y|\) y la equivalencia entre \(|x|&lt;\varepsilon\) y \(-\varepsilon&lt;x&lt;\varepsilon\); (2) el principio de inducción y la propiedad arquimediana; (3) del álgebra de límites, las reglas «constante por sucesión», «producto» y «cociente», que la hoja «Límite de una sucesión» <b>enuncia sin demostrar</b>: se usan en la segunda animación, en los ejemplos 3 y 4 y en los ejercicios A y B para calcular el límite del cociente (la regla de la constante que necesitan las demostraciones de esta hoja sí se demuestra aquí, en el lema 2); (4) \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\) si \(|r|&lt;1\), enunciado en esa misma hoja (ejercicio A). En el ejercicio C se usan dos resultados demostrados en la hoja «Series harmónicas y series-p»: que las sumas parciales de \(\displaystyle\sum\dfrac{1}{n^{2}}\) son menores que \(2\), y que las de la armónica cumplen \(S_{2^{m}}\ge 1+\dfrac{m}{2}\). Los valores con «\(\approx\)» son aproximaciones de calculadora. Las sumas numéricas de series que se dan como referencia (por ejemplo \(0{,}697\) en el ejemplo 1) se obtuvieron sumando muchos términos con calculadora: no están demostradas ni hacen falta para las conclusiones. En el ejercicio C, los datos son inventados y el modelo está declarado en el enunciado.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostraciones paso a paso</h3>
+    <p><b>Lema 1 (series de términos mayores o iguales que cero).</b> Si \(a_{n}\ge 0\) para todo \(n\ge 1\), entonces: las sumas parciales \(S_{n}\) son crecientes; si tienen una cota superior \(M\), la serie converge y su suma no pasa de \(M\); y si la serie converge a \(S\), entonces \(S_{n}\le S\) para todo \(n\).</p>
+    <ol class="steps">
+      <li><b>Crecientes.</b> \(S_{n+1}=S_{n}+a_{n+1}\), así que \(S_{n+1}-S_{n}=a_{n+1}\ge 0\). Entonces \(S_{n+1}\ge S_{n}\) para todo \(n\): la sucesión \((S_{n})\) es creciente (definición de la hoja «Sucesiones monótonas acotadas»).</li>
+      <li><b>Si \(S_{n}\le M\) para todo \(n\).</b> \((S_{n})\) es creciente y acotada superiormente: por el teorema 2 de esa hoja, converge, y su límite \(S\) es su supremo, la <b>menor</b> de sus cotas superiores. Como \(M\) es una cota superior, \(S\le M\). La serie converge y \(S\le M\).</li>
+      <li><b>Si la serie converge a \(S\).</b> \((S_{n})\) converge; por el teorema 1 de esa hoja, es acotada. Es creciente (paso 1) y acotada superiormente: por el teorema 2, converge a su supremo \(s\). Una sucesión tiene un solo límite (unicidad): \(S=s\). Y el supremo es cota superior: \(S_{n}\le s=S\) para todo \(n\).</li>
+      <li><b>Leído al revés:</b> una serie de términos mayores o iguales que cero diverge exactamente cuando sus sumas parciales no tienen cota superior, es decir, cuando superan cualquier número.</li>
+    </ol>
+    <p><b>Lema 2 (constante por serie).</b> Si \(\displaystyle\sum_{n=1}^{\infty}b_{n}\) converge a \(T\) y \(c\) es un número real, entonces \(\displaystyle\sum_{n=1}^{\infty}c\,b_{n}\) converge a \(c\,T\). Y si \(c\ne 0\) y \(\displaystyle\sum b_{n}\) diverge, entonces \(\displaystyle\sum c\,b_{n}\) diverge.</p>
+    <ol class="steps">
+      <li>Suma parcial de la serie nueva, con la propiedad distributiva: \(c\,b_{1}+c\,b_{2}+\cdots+c\,b_{n}=c\,(b_{1}+b_{2}+\cdots+b_{n})=c\,T_{n}\).</li>
+      <li>Si \(c=0\): todas las sumas parciales valen \(0\). Una sucesión constante converge a su constante: el límite es \(0=0\cdot T\).</li>
+      <li>Si \(c\ne 0\): sea \(\varepsilon&gt;0\). El número \(\dfrac{\varepsilon}{|c|}\) es positivo. Como \(T_{n}\to T\), hay un \(N\) tal que \(|T_{n}-T|&lt;\dfrac{\varepsilon}{|c|}\) para todo \(n&gt;N\).</li>
+      <li>Para esos \(n\): \(|c\,T_{n}-c\,T|=|c\,(T_{n}-T)|=|c|\cdot|T_{n}-T|&lt;|c|\cdot\dfrac{\varepsilon}{|c|}=\varepsilon\). Como \(\varepsilon\) era cualquiera, \(c\,T_{n}\to c\,T\).</li>
+      <li><b>La segunda parte.</b> Sea \(c\ne 0\) y \(\displaystyle\sum b_{n}\) divergente. Si \(\displaystyle\sum c\,b_{n}\) convergiera, por la primera parte, con la constante \(\dfrac{1}{c}\), también convergería \(\displaystyle\sum\dfrac{1}{c}\cdot c\,b_{n}=\sum b_{n}\): contradicción. Entonces \(\displaystyle\sum c\,b_{n}\) diverge.</li>
+    </ol>
+    <p><b>Lema 3 (la cola decide).</b> Sea \(N\ge 2\). La serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge si y solo si converge su cola \(\displaystyle\sum_{n=N}^{\infty}a_{n}=a_{N}+a_{N+1}+a_{N+2}+\cdots\) Quitar o agregar una cantidad finita de términos no cambia que una serie converja o diverja; sí cambia el valor de la suma.</p>
+    <ol class="steps">
+      <li>Sea \(c=a_{1}+a_{2}+\cdots+a_{N-1}\), un número fijo. Las sumas parciales de la cola son \(U_{m}=a_{N}+a_{N+1}+\cdots+a_{N+m-1}\) (tiene \(m\) términos), con \(m=1,\ 2,\ 3,\ \ldots\)</li>
+      <li>Si \(n\ge N\) y \(m=n-N+1\), entonces \(N+m-1=n\), y \(S_{n}=(a_{1}+\cdots+a_{N-1})+(a_{N}+\cdots+a_{n})=c+U_{m}\).</li>
+      <li><b>Si la cola converge a \(U\).</b> Sea \(\varepsilon&gt;0\). Hay un \(M\) tal que \(|U_{m}-U|&lt;\varepsilon\) para todo \(m&gt;M\). Si \(n&gt;M+N-1\), entonces \(m=n-N+1&gt;M\), y \(|S_{n}-(c+U)|=|c+U_{m}-c-U|=|U_{m}-U|&lt;\varepsilon\). Entonces \(S_{n}\to c+U\): la serie completa converge.</li>
+      <li><b>Si la serie completa converge a \(S\).</b> Sea \(\varepsilon&gt;0\). Hay un \(N'\) tal que \(|S_{n}-S|&lt;\varepsilon\) para todo \(n&gt;N'\). Si \(m&gt;N'\), entonces \(n=N+m-1\ge m+1&gt;N'\) (porque \(N\ge 2\)), y \(|U_{m}-(S-c)|=|S_{n}-c-S+c|=|S_{n}-S|&lt;\varepsilon\). Entonces \(U_{m}\to S-c\): la cola converge.</li>
+      <li>Las dos convergen o ninguna converge: las dos convergen o las dos divergen.</li>
+    </ol>
+    <p><b>Criterio de comparación directa, parte (a), cuando \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\).</b></p>
+    <ol class="steps">
+      <li>Hipótesis: \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\), y \(\displaystyle\sum b_{n}\) converge; sea \(T\) su suma.</li>
+      <li>Como \(b_{n}\ge a_{n}\ge 0\), la serie \(\displaystyle\sum b_{n}\) es de términos mayores o iguales que cero. Por el lema 1 (paso 3): \(T_{n}\le T\) para todo \(n\).</li>
+      <li><b>\(S_{n}\le T_{n}\) para todo \(n\), por inducción.</b> Primer caso: \(S_{1}=a_{1}\le b_{1}=T_{1}\). Paso de \(n\) a \(n+1\): se supone \(S_{n}\le T_{n}\). Se suma \(a_{n+1}\) a los dos lados: \(S_{n}+a_{n+1}\le T_{n}+a_{n+1}\). Y como \(a_{n+1}\le b_{n+1}\): \(T_{n}+a_{n+1}\le T_{n}+b_{n+1}\). Se encadenan: \(S_{n+1}\le T_{n+1}\).</li>
+      <li>Se encadenan los pasos 3 y 2: \(S_{n}\le T_{n}\le T\) para todo \(n\). El número \(T\) es una cota superior de las sumas parciales \(S_{n}\).</li>
+      <li>Como \(a_{n}\ge 0\), por el lema 1 (paso 2, con \(M=T\)): \(\displaystyle\sum a_{n}\) converge, y su suma \(S\) cumple \(S\le T\).</li>
+    </ol>
+    <p><b>Parte (b).</b> Es la parte (a) leída al revés.</p>
+    <ol class="steps">
+      <li>Hipótesis: \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\), y \(\displaystyle\sum a_{n}\) diverge.</li>
+      <li>Si \(\displaystyle\sum b_{n}\) convergiera, por la parte (a) también convergería \(\displaystyle\sum a_{n}\): contradicción con la hipótesis.</li>
+      <li>Entonces \(\displaystyle\sum b_{n}\) no converge: diverge.</li>
+    </ol>
+    <p><b>Cuando la desigualdad vale solo desde un \(N\ge 2\).</b></p>
+    <ol class="steps">
+      <li>Las colas \(\displaystyle\sum_{n=N}^{\infty}a_{n}\) y \(\displaystyle\sum_{n=N}^{\infty}b_{n}\) son dos series cuyos términos, \(a'_{m}=a_{N+m-1}\) y \(b'_{m}=b_{N+m-1}\) con \(m\ge 1\), cumplen \(0\le a'_{m}\le b'_{m}\) para todo \(m\ge 1\), porque \(N+m-1\ge N\).</li>
+      <li>(a) Si \(\displaystyle\sum b_{n}\) converge, su cola converge (lema 3). Por lo ya demostrado, la cola de \(\displaystyle\sum a_{n}\) converge. Por el lema 3, \(\displaystyle\sum a_{n}\) converge.</li>
+      <li>(b) Si \(\displaystyle\sum a_{n}\) diverge, su cola diverge (lema 3). Por lo ya demostrado, la cola de \(\displaystyle\sum b_{n}\) diverge. Por el lema 3, \(\displaystyle\sum b_{n}\) diverge.</li>
+      <li><b>Cuidado con la cota.</b> La desigualdad \(S\le T\) entre las sumas está demostrada solo cuando \(0\le a_{n}\le b_{n}\) vale desde \(n=1\). Si vale desde un \(N\ge 2\), lo que queda acotado es la cola: \(\displaystyle\sum_{n=N}^{\infty}a_{n}\le\sum_{n=N}^{\infty}b_{n}\).</li>
+    </ol>
+    <p><b>Criterio de comparación en el límite, parte (a): \(0&lt;L&lt;\infty\).</b> Se reduce a la comparación directa.</p>
+    <ol class="steps">
+      <li>Hipótesis: \(a_{n}&gt;0\) y \(b_{n}&gt;0\) para todo \(n\ge N\), y \(\dfrac{a_{n}}{b_{n}}\to L\), con \(L\) real y \(L&gt;0\).</li>
+      <li>Como \(L&gt;0\), el número \(\varepsilon=\dfrac{L}{2}\) es positivo y sirve de tolerancia. Por la definición de límite, hay un \(N_{1}\) tal que \(\left|\dfrac{a_{n}}{b_{n}}-L\right|&lt;\dfrac{L}{2}\) para todo \(n&gt;N_{1}\).</li>
+      <li>Sin valor absoluto: \(-\dfrac{L}{2}&lt;\dfrac{a_{n}}{b_{n}}-L&lt;\dfrac{L}{2}\). Se suma \(L\) en los tres lugares: \(\dfrac{L}{2}&lt;\dfrac{a_{n}}{b_{n}}&lt;\dfrac{3L}{2}\).</li>
+      <li>Sea \(N_{2}\) el mayor de \(N\) y \(N_{1}+1\). Para \(n\ge N_{2}\) valen la desigualdad del paso 3 y \(b_{n}&gt;0\). Se multiplican los tres lugares por \(b_{n}\): \[\dfrac{L}{2}\,b_{n}&lt;a_{n}&lt;\dfrac{3L}{2}\,b_{n}\qquad\text{para todo }n\ge N_{2}.\] Desde \(N_{2}\) en adelante, \(a_{n}\) queda entre dos múltiplos positivos de \(b_{n}\).</li>
+      <li><b>Si \(\displaystyle\sum b_{n}\) converge.</b> Por el lema 2, \(\displaystyle\sum\dfrac{3L}{2}\,b_{n}\) converge. Y \(0\le a_{n}\le\dfrac{3L}{2}\,b_{n}\) para todo \(n\ge N_{2}\). Comparación directa, parte (a): \(\displaystyle\sum a_{n}\) converge.</li>
+      <li><b>Si \(\displaystyle\sum b_{n}\) diverge.</b> Por el lema 2, con \(c=\dfrac{L}{2}\ne 0\), \(\displaystyle\sum\dfrac{L}{2}\,b_{n}\) diverge. Y \(0\le\dfrac{L}{2}\,b_{n}\le a_{n}\) para todo \(n\ge N_{2}\). Comparación directa, parte (b), con \(\dfrac{L}{2}\,b_{n}\) en el papel de la serie menor: \(\displaystyle\sum a_{n}\) diverge.</li>
+      <li>Si \(\displaystyle\sum b_{n}\) converge, \(\displaystyle\sum a_{n}\) converge; si \(\displaystyle\sum b_{n}\) diverge, \(\displaystyle\sum a_{n}\) diverge. Las dos series hacen lo mismo.</li>
+      <li><b>Dónde se usó \(L&gt;0\):</b> en el paso 2, para que \(\dfrac{L}{2}\) sirva de tolerancia, y en el paso 6, para que el piso \(\dfrac{L}{2}\,b_{n}\) no sea \(0\). Con \(L=0\) no hay piso.</li>
+    </ol>
+    <p><b>Parte (b): \(L=0\) y \(\displaystyle\sum b_{n}\) converge.</b></p>
+    <ol class="steps">
+      <li>Con la tolerancia \(\varepsilon=1\): hay un \(N_{1}\) tal que \(\left|\dfrac{a_{n}}{b_{n}}-0\right|&lt;1\) para todo \(n&gt;N_{1}\). Para \(n\ge N\) el cociente es positivo: \(\dfrac{a_{n}}{b_{n}}&lt;1\).</li>
+      <li>Sea \(N_{2}\) el mayor de \(N\) y \(N_{1}+1\). Para \(n\ge N_{2}\) se multiplica por \(b_{n}&gt;0\): \(0&lt;a_{n}&lt;b_{n}\).</li>
+      <li>Comparación directa, parte (a): como \(\displaystyle\sum b_{n}\) converge, \(\displaystyle\sum a_{n}\) converge.</li>
+    </ol>
+    <p><b>Parte (c): el cociente tiene límite \(+\infty\) y \(\displaystyle\sum b_{n}\) diverge.</b></p>
+    <ol class="steps">
+      <li>Definición de límite \(+\infty\), con \(M=1\): hay un \(N_{1}\) tal que \(\dfrac{a_{n}}{b_{n}}&gt;1\) para todo \(n&gt;N_{1}\).</li>
+      <li>Sea \(N_{2}\) el mayor de \(N\) y \(N_{1}+1\). Para \(n\ge N_{2}\) se multiplica por \(b_{n}&gt;0\): \(a_{n}&gt;b_{n}&gt;0\), es decir, \(0\le b_{n}\le a_{n}\).</li>
+      <li>Comparación directa, parte (b), con \(b_{n}\) en el papel de la serie menor: como \(\displaystyle\sum b_{n}\) diverge, \(\displaystyle\sum a_{n}\) diverge.</li>
+    </ol>
+    <p><b>Lo que no se puede concluir: cuatro ejemplos.</b> Se usan \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\) y \(\displaystyle\lim_{n\to\infty}n=+\infty\) (dado \(M&gt;0\), por la propiedad arquimediana hay un natural \(N\ge M\), y si \(n&gt;N\) entonces \(n&gt;M\)).</p>
+    <ol class="steps">
+      <li><b>\(L=0\), \(\displaystyle\sum b_{n}\) diverge y \(\displaystyle\sum a_{n}\) converge.</b> \(a_{n}=\dfrac{1}{n^{2}}\), \(b_{n}=\dfrac{1}{n}\). Cociente: \(\dfrac{1}{n^{2}}:\dfrac{1}{n}=\dfrac{1}{n^{2}}\cdot n=\dfrac{1}{n}\), con límite \(0\). La armónica diverge y \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge (\(p=2\)).</li>
+      <li><b>\(L=0\), \(\displaystyle\sum b_{n}\) diverge y \(\displaystyle\sum a_{n}\) diverge.</b> \(a_{n}=\dfrac{1}{n}\), \(b_{n}=1\). Cociente: \(\dfrac{1}{n}:1=\dfrac{1}{n}\), con límite \(0\). La serie \(1+1+1+\cdots\) diverge (sus sumas parciales son \(T_{n}=n\)) y la armónica también.</li>
+      <li><b>Límite \(+\infty\), \(\displaystyle\sum b_{n}\) converge y \(\displaystyle\sum a_{n}\) diverge.</b> \(a_{n}=\dfrac{1}{n}\), \(b_{n}=\dfrac{1}{n^{2}}\). Cociente: \(\dfrac{1}{n}:\dfrac{1}{n^{2}}=\dfrac{1}{n}\cdot n^{2}=n\), con límite \(+\infty\).</li>
+      <li><b>Límite \(+\infty\), \(\displaystyle\sum b_{n}\) converge y \(\displaystyle\sum a_{n}\) converge.</b> \(a_{n}=\dfrac{1}{n^{2}}\), \(b_{n}=\dfrac{1}{n^{3}}\). Cociente: \(\dfrac{1}{n^{2}}:\dfrac{1}{n^{3}}=\dfrac{1}{n^{2}}\cdot n^{3}=n\), con límite \(+\infty\). Las dos son series \(p\) con \(p&gt;1\).</li>
+      <li>En los ejemplos 1 y 2 las hipótesis son las mismas (\(L=0\), \(\displaystyle\sum b_{n}\) divergente) y las conclusiones, opuestas. Lo mismo en los ejemplos 3 y 4. Por eso en esos dos casos el criterio no decide: hay que cambiar de serie de referencia.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>La franja de la demostración. Número ↔ figura</h3>
+    <p>La familia de series \(\displaystyle\sum_{n=1}^{\infty}\dfrac{c\,n+3}{n^{3}}\), comparada en el límite con \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}\), que converge. El deslizador elige \(c\) entre \(0\), \(1\), \(2\) y \(3\). El cociente es \(\dfrac{a_{n}}{b_{n}}=c+\dfrac{3}{n}\), y su límite, \(L=c\).</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los ejes y los puntos:</b> en horizontal va \(n\), de \(1\) a \(8\); en vertical, el cociente \(\dfrac{a_{n}}{b_{n}}\). Cada punto es un cociente, y su punteada lo lleva a su valor en el eje vertical. Arriba del dibujo se leen las dos series, el cociente y su límite.</li>
+      <li><b>Mira después la franja burdeo:</b> la línea punteada del medio está a la altura \(L\); los bordes, a las alturas \(\dfrac{L}{2}\) y \(\dfrac{3L}{2}\). Es la franja del paso 3 de la demostración. Los puntos <b>verdes</b> están dentro de la franja; los <b>azules</b>, fuera o justo en el borde, que no cuenta. La línea vertical gris separa unos de otros.</li>
+      <li><b>Mueve el deslizador \(c\):</b> con \(c=1\) los puntos entran a la franja recién desde \(n=7\); con \(c=2\), desde \(n=4\); con \(c=3\), desde \(n=3\). Dentro de la franja, \(a_{n}\) queda entre \(\dfrac{L}{2}\,b_{n}\) y \(\dfrac{3L}{2}\,b_{n}\).</li>
+      <li><b>Caso límite, \(c=0\):</b> el límite es \(L=0\) y la franja se cierra: no hay piso. Queda una sola línea, a la altura \(1\): los puntos verdes son los cocientes menores que \(1\) (desde \(n=4\)), donde \(a_{n}&lt;b_{n}\).</li>
+      <li><b>Cuenta de abajo:</b> los datos, el cociente simplificado, sus valores en \(n=1,\ 2,\ 3\) y \(8\), el límite, los bordes de la franja, desde qué \(n\) los puntos están dentro (con su comprobación) y la conclusión. Conclusión: en los cuatro casos la serie converge, porque \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge.</li>
+    </ol>
+    <div class="stage" data-scene="cmp34-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+    <ul class="keys">
+      <li><b>Puntos:</b> los cocientes \(\dfrac{a_{n}}{b_{n}}=c+\dfrac{3}{n}\), para \(n=1,\ \ldots,\ 8\), cada uno con su punteada hasta el eje. <b>Verdes:</b> dentro de la franja (o, con \(c=0\), bajo la línea de altura \(1\)). <b>Azules:</b> los demás.</li>
+      <li><b>Burdeo:</b> el límite \(L=c\) (línea punteada) y la franja entre \(\dfrac{L}{2}\) y \(\dfrac{3L}{2}\).</li>
+      <li><b>Línea vertical gris:</b> el número \(N=\dfrac{6}{c}\) de la cuenta: los puntos de su derecha están dentro de la franja.</li>
+      <li><b>Caso límite (\(c=0\)):</b> \(L=0\). La parte (a) del criterio no se aplica; la parte (b), sí, porque la serie de referencia converge.</li>
+      <li><b>Sobre esta familia:</b> aquí \(\dfrac{c\,n+3}{n^{3}}=\dfrac{c}{n^{2}}+\dfrac{3}{n^{3}}\), y la serie también se podría estudiar separándola en dos series \(p\). Se eligió porque su cociente, \(c+\dfrac{3}{n}\), se calcula sin esfuerzo y deja ver la franja. El criterio sirve igual cuando el término no se puede separar (ejemplos 3 y 4).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: comparación directa, converge. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}+n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{1}{2^{1}+1}=\dfrac{1}{3}\); \(a_{2}=\dfrac{1}{2^{2}+2}=\dfrac{1}{4+2}=\dfrac{1}{6}\); \(a_{3}=\dfrac{1}{2^{3}+3}=\dfrac{1}{8+3}=\dfrac{1}{11}\). Todos son positivos: se puede comparar.</li>
+    <li>Serie de referencia. Para \(n\) grande, en el denominador manda \(2^{n}\): se prueba con \(b_{n}=\dfrac{1}{2^{n}}\).</li>
+    <li>La desigualdad. Como \(n\ge 1&gt;0\), se suma \(2^{n}\) a los dos lados de \(n&gt;0\): \(2^{n}+n&gt;2^{n}\). Los dos números son positivos; al tomar inversos el orden se invierte: \(\dfrac{1}{2^{n}+n}&lt;\dfrac{1}{2^{n}}\).</li>
+    <li>Entonces \(0\le a_{n}\le b_{n}\) para todo \(n\ge 1\) (aquí \(N=1\)).</li>
+    <li>La serie mayor: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}=\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\cdots\) es geométrica con primer término \(a=\dfrac{1}{2}\) y razón \(r=\dfrac{1}{2}\). Como \(|r|=\dfrac{1}{2}&lt;1\), converge, y su suma es \(\dfrac{a}{1-r}=\dfrac{1}{2}:\left(1-\dfrac{1}{2}\right)=\dfrac{1}{2}:\dfrac{1}{2}=1\).</li>
+    <li>Comparación directa, parte (a): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}+n}\) <b>converge</b>.</li>
+    <li>La cota. Como la desigualdad vale desde \(n=1\), la suma cumple \(S\le 1\).</li>
+    <li>Un piso para \(S\). Sumas parciales: \(S_{2}=\dfrac{1}{3}+\dfrac{1}{6}=\dfrac{2}{6}+\dfrac{1}{6}=\dfrac{3}{6}=\dfrac{1}{2}\); \(S_{3}=\dfrac{1}{2}+\dfrac{1}{11}=\dfrac{11}{22}+\dfrac{2}{22}=\dfrac{13}{22}\approx 0{,}591\). Por el lema 1 (paso 3), \(S_{3}\le S\). Entonces \(\dfrac{13}{22}\le S\le 1\).</li>
+    <li>El criterio no dice cuánto vale \(S\). Sumando muchos términos con calculadora sale \(S\approx 0{,}697\) (valor numérico, no demostrado).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: comparación directa, diverge. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n-1}=1+\dfrac{1}{3}+\dfrac{1}{5}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(\dfrac{1}{2\cdot 1-1}=1\); \(\dfrac{1}{2\cdot 2-1}=\dfrac{1}{3}\); \(\dfrac{1}{2\cdot 3-1}=\dfrac{1}{5}\). Son los inversos de los impares, todos positivos.</li>
+    <li>Un intento que no sirve. Para \(n\ge 1\), \(2n-1=n+(n-1)\ge n\), así que \(\dfrac{1}{2n-1}\le\dfrac{1}{n}\). Es verdad, pero \(\displaystyle\sum\dfrac{1}{n}\) diverge: quedar debajo de una serie divergente no dice nada.</li>
+    <li>Para probar que diverge hace falta una serie divergente <b>menor</b>. Como \(2n-1&lt;2n\) y los dos son positivos, al tomar inversos: \(\dfrac{1}{2n-1}&gt;\dfrac{1}{2n}&gt;0\).</li>
+    <li>La serie menor. \(\dfrac{1}{2n}=\dfrac{1}{2}\cdot\dfrac{1}{n}\). La armónica diverge (hoja «Series harmónicas y series-p») y \(\dfrac{1}{2}\ne 0\): por el lema 2, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n}\) diverge.</li>
+    <li>Se tiene \(0\le\dfrac{1}{2n}\le\dfrac{1}{2n-1}\) para todo \(n\ge 1\), y la serie menor diverge. Comparación directa, parte (b), con \(\dfrac{1}{2n}\) en el papel de \(a_{n}\) y \(\dfrac{1}{2n-1}\) en el de \(b_{n}\): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2n-1}\) <b>diverge</b>.</li>
+    <li>Con números, cuatro términos. Serie dada, con denominador común \(105\): \(1+\dfrac{1}{3}+\dfrac{1}{5}+\dfrac{1}{7}=\dfrac{105}{105}+\dfrac{35}{105}+\dfrac{21}{105}+\dfrac{15}{105}=\dfrac{176}{105}\approx 1{,}676\). Serie menor, con denominador común \(24\): \(\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{6}+\dfrac{1}{8}=\dfrac{12}{24}+\dfrac{6}{24}+\dfrac{4}{24}+\dfrac{3}{24}=\dfrac{25}{24}\approx 1{,}042\). Y \(1{,}676\ge 1{,}042\). ✓</li>
+    <li>Qué significa: las sumas parciales de la serie menor superan cualquier número; las de la serie dada, que son mayores, también.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: comparación en el límite, converge. \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3n+1}{n^{3}+2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{3\cdot 1+1}{1^{3}+2}=\dfrac{4}{3}\); \(a_{2}=\dfrac{3\cdot 2+1}{2^{3}+2}=\dfrac{7}{10}\); \(a_{3}=\dfrac{3\cdot 3+1}{3^{3}+2}=\dfrac{10}{29}\). Numerador y denominador son positivos para todo \(n\ge 1\): \(a_{n}&gt;0\).</li>
+    <li>Serie de referencia. Mayores potencias: \(\dfrac{3n}{n^{3}}=\dfrac{3}{n^{2}}\). Se toma \(b_{n}=\dfrac{1}{n^{2}}\), que es positivo.</li>
+    <li>Cociente. Dividir por \(\dfrac{1}{n^{2}}\) es multiplicar por \(n^{2}\): \(\dfrac{a_{n}}{b_{n}}=\dfrac{3n+1}{n^{3}+2}\cdot n^{2}=\dfrac{(3n+1)\,n^{2}}{n^{3}+2}=\dfrac{3n^{3}+n^{2}}{n^{3}+2}\).</li>
+    <li>Se dividen numerador y denominador por \(n^{3}\). Arriba: \(\dfrac{3n^{3}}{n^{3}}+\dfrac{n^{2}}{n^{3}}=3+\dfrac{1}{n}\). Abajo: \(\dfrac{n^{3}}{n^{3}}+\dfrac{2}{n^{3}}=1+\dfrac{2}{n^{3}}\). Queda \(\dfrac{a_{n}}{b_{n}}=\dfrac{3+\dfrac{1}{n}}{1+\dfrac{2}{n^{3}}}\).</li>
+    <li>Límites de cada parte. \(\dfrac{1}{n}\to 0\). \(\dfrac{2}{n^{3}}=2\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\to 2\cdot 0\cdot 0\cdot 0=0\) (constante por sucesión y producto). Suma: el numerador tiene límite \(3+0=3\) y el denominador, \(1+0=1\).</li>
+    <li>Cociente de límites (el del denominador es \(1\ne 0\)): \(L=\dfrac{3}{1}=3\).</li>
+    <li>\(L=3\) es un número real y positivo: \(0&lt;L&lt;\infty\). Se aplica la parte (a).</li>
+    <li>La serie de referencia, \(\displaystyle\sum\dfrac{1}{n^{2}}\), es una serie \(p\) con \(p=2&gt;1\): converge.</li>
+    <li>Las dos series hacen lo mismo: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{3n+1}{n^{3}+2}\) <b>converge</b>.</li>
+    <li>Algunos cocientes: con \(n=1\), \(\dfrac{3+1}{1+2}=\dfrac{4}{3}\approx 1{,}33\); con \(n=2\), \(\dfrac{24+4}{8+2}=\dfrac{28}{10}=2{,}8\); con \(n=3\), \(\dfrac{81+9}{27+2}=\dfrac{90}{29}\approx 3{,}10\); con \(n=10\), \(\dfrac{3000+100}{1000+2}=\dfrac{3100}{1002}\approx 3{,}09\). Se acercan a \(3\) (no hace falta que lo hagan desde un solo lado).</li>
+    <li>Comprobación con la comparación directa. Como \(1\le n\): \(3n+1\le 3n+n=4n\). Como \(n^{3}+2&gt;n^{3}&gt;0\): \(\dfrac{1}{n^{3}+2}&lt;\dfrac{1}{n^{3}}\). Entonces \(a_{n}=(3n+1)\cdot\dfrac{1}{n^{3}+2}\le 4n\cdot\dfrac{1}{n^{3}+2}&lt;4n\cdot\dfrac{1}{n^{3}}=\dfrac{4}{n^{2}}\). Por el lema 2, \(\displaystyle\sum\dfrac{4}{n^{2}}\) converge; por la parte (a) del criterio directo, la serie converge. Mismo resultado.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: comparación en el límite, diverge; y un caso con \(L=0\)</h3>
+  <div class="body">
+  <p><b>(a)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{n^{2}+4}\).</p>
+  <ol class="steps">
+    <li>Primeros términos: \(\dfrac{1}{1+4}=\dfrac{1}{5}\); \(\dfrac{2}{4+4}=\dfrac{2}{8}=\dfrac{1}{4}\); \(\dfrac{3}{9+4}=\dfrac{3}{13}\). Todos positivos.</li>
+    <li>La comparación que sale sola no sirve. Como \(n^{2}+4&gt;n^{2}\): \(\dfrac{n}{n^{2}+4}&lt;\dfrac{n}{n^{2}}=\dfrac{1}{n}\). La serie queda <b>debajo</b> de la armónica, que diverge: eso no decide.</li>
+    <li>En el límite, con \(b_{n}=\dfrac{1}{n}\) (mayores potencias: \(\dfrac{n}{n^{2}}=\dfrac{1}{n}\)). Dividir por \(\dfrac{1}{n}\) es multiplicar por \(n\): \(\dfrac{a_{n}}{b_{n}}=\dfrac{n}{n^{2}+4}\cdot n=\dfrac{n^{2}}{n^{2}+4}\).</li>
+    <li>Se dividen numerador y denominador por \(n^{2}\): \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{1+\dfrac{4}{n^{2}}}\).</li>
+    <li>Límite. \(\dfrac{4}{n^{2}}=4\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\to 4\cdot 0\cdot 0=0\). El denominador tiene límite \(1+0=1\ne 0\). Cociente de límites: \(L=\dfrac{1}{1}=1\).</li>
+    <li>\(0&lt;L&lt;\infty\), y la armónica diverge. Las dos series hacen lo mismo: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n}{n^{2}+4}\) <b>diverge</b>.</li>
+    <li>Algunos cocientes: \(n=1\): \(\dfrac{1}{5}=0{,}2\); \(n=2\): \(\dfrac{4}{8}=0{,}5\); \(n=3\): \(\dfrac{9}{13}\approx 0{,}69\); \(n=10\): \(\dfrac{100}{104}\approx 0{,}96\). Suben hacia \(1\).</li>
+    <li>Comprobación con la comparación directa, ahora en el sentido correcto. Como \(n^{2}\ge 1\): \(4\le 4n^{2}\), y \(n^{2}+4\le n^{2}+4n^{2}=5n^{2}\). Al tomar inversos y multiplicar por \(n\): \(\dfrac{n}{n^{2}+4}\ge\dfrac{n}{5n^{2}}=\dfrac{1}{5n}=\dfrac{1}{5}\cdot\dfrac{1}{n}\). Por el lema 2, \(\displaystyle\sum\dfrac{1}{5n}\) diverge; es una serie divergente menor: por la parte (b), la serie diverge. Mismo resultado.</li>
+  </ol>
+  <p><b>(b)</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n\cdot 2^{n}}\), comparada con \(b_{n}=\dfrac{1}{2^{n}}\).</p>
+  <ol class="steps">
+    <li>Las dos son de términos positivos. Cociente: \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{n\cdot 2^{n}}\cdot 2^{n}=\dfrac{1}{n}\).</li>
+    <li>Límite: \(L=\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\). No se puede usar la parte (a).</li>
+    <li>Pero \(\displaystyle\sum\dfrac{1}{2^{n}}\) <b>converge</b> (ejemplo 1, paso 5). Parte (b) del criterio: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n\cdot 2^{n}}\) <b>converge</b>.</li>
+    <li>Si la serie de referencia hubiera sido divergente, con \(L=0\) no se habría podido concluir nada.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> <b>Comparar al revés:</b> concluir que una serie diverge porque es menor que una divergente, o que converge porque es mayor que una convergente. \(\dfrac{1}{n^{2}}\le\dfrac{1}{n}\) y la armónica diverge, pero \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge. Para convergencia hace falta una convergente mayor; para divergencia, una divergente menor. <b>Olvidar que los términos deben ser mayores o iguales que cero:</b> \(-n\le\dfrac{1}{n^{2}}\) para todo \(n\), y \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge, pero \(\displaystyle\sum(-n)\) diverge; sin la condición \(0\le a_{n}\) el criterio es falso. <b>Exigir la desigualdad desde \(n=1\):</b> basta desde algún \(N\); los primeros términos no cambian que la serie converja (lema 3). Pero entonces la cota \(S\le T\) entre las sumas ya no está asegurada. <b>Usar la parte (a) del criterio en el límite con \(L=0\) o con límite \(+\infty\):</b> «las dos hacen lo mismo» vale solo con \(L\) real y positivo. Con \(L=0\) solo se concluye algo si la serie de referencia converge; con \(+\infty\), solo si diverge. <b>Creer que \(L\) tiene que ser \(1\):</b> sirve cualquier número real positivo. <b>Creer que \(L\) es la suma</b> o que la suma de la serie es la de la serie de referencia: ninguno de los dos criterios calcula la suma. <b>Tomar el límite de \(a_{n}\) en vez del límite del cociente:</b> que \(a_{n}\to 0\) no decide nada (hoja «Criterio del enésimo término»). <b>Dar por buena la serie de referencia «porque se parece»:</b> la elección por las mayores potencias es una guía; la demostración es la desigualdad o el límite.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Decide si cada serie converge o diverge. (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}+5}\), con la comparación directa. (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n+2}{n^{2}}\), con la comparación directa. (c) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{n}-2}\), con la comparación en el límite; después, acota su suma con la comparación directa.</p>
+    <details><summary>Pista</summary><div><p>En (a), agrandar el denominador achica la fracción: compara con \(\dfrac{1}{n^{3}}\). En (b), achicar el numerador achica la fracción: compara con \(\dfrac{n}{n^{2}}\). En (c), usa \(b_{n}=\dfrac{1}{3^{n}}\) y divide numerador y denominador del cociente por \(3^{n}\); para la cota, muestra que \(3^{n}-2\ge 3^{\,n-1}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Términos positivos: \(n^{3}+5&gt;0\). Como \(n^{3}+5&gt;n^{3}&gt;0\), al tomar inversos: \(0&lt;\dfrac{1}{n^{3}+5}&lt;\dfrac{1}{n^{3}}\), para todo \(n\ge 1\).</li>
+        <li>(a) \(\displaystyle\sum\dfrac{1}{n^{3}}\) es una serie \(p\) con \(p=3&gt;1\): converge. Comparación directa, parte (a): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}+5}\) <b>converge</b>.</li>
+        <li>(b) Términos positivos. Como \(n+2&gt;n\) y \(n^{2}&gt;0\): \(\dfrac{n+2}{n^{2}}&gt;\dfrac{n}{n^{2}}=\dfrac{1}{n}&gt;0\), para todo \(n\ge 1\).</li>
+        <li>(b) La armónica diverge, y es la serie menor: \(0\le\dfrac{1}{n}\le\dfrac{n+2}{n^{2}}\). Comparación directa, parte (b): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{n+2}{n^{2}}\) <b>diverge</b>.</li>
+        <li>(c) Términos: \(\dfrac{1}{3-2}=1\); \(\dfrac{1}{9-2}=\dfrac{1}{7}\); \(\dfrac{1}{27-2}=\dfrac{1}{25}\). Como \(3^{n}\ge 3&gt;2\), el denominador es positivo: \(a_{n}&gt;0\).</li>
+        <li>(c) Con \(b_{n}=\dfrac{1}{3^{n}}&gt;0\). Cociente: \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{3^{n}-2}\cdot 3^{n}=\dfrac{3^{n}}{3^{n}-2}\). Se dividen numerador y denominador por \(3^{n}\): \(\dfrac{1}{1-\dfrac{2}{3^{n}}}\).</li>
+        <li>(c) Límite. \(\dfrac{2}{3^{n}}=2\cdot\left(\dfrac{1}{3}\right)^{n}\to 2\cdot 0=0\), porque \(\left|\dfrac{1}{3}\right|&lt;1\) (enunciado de la hoja «Límite de una sucesión»). El denominador tiene límite \(1-0=1\ne 0\): \(L=\dfrac{1}{1}=1\).</li>
+        <li>(c) \(0&lt;L&lt;\infty\). La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{n}}\) es geométrica con \(a=\dfrac{1}{3}\) y \(r=\dfrac{1}{3}\); \(|r|&lt;1\): converge. Entonces \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{n}-2}\) <b>converge</b>.</li>
+        <li>(c) Aquí la comparación directa con \(\dfrac{1}{3^{n}}\) va al revés: \(3^{n}-2&lt;3^{n}\) da \(\dfrac{1}{3^{n}-2}&gt;\dfrac{1}{3^{n}}\), mayor que una convergente, que no decide. Hay que buscar otra.</li>
+        <li>(c) La cota. \(3^{n}-3^{\,n-1}=3\cdot 3^{\,n-1}-3^{\,n-1}=2\cdot 3^{\,n-1}\ge 2\), porque \(3^{\,n-1}\ge 1\). Se suma \(3^{\,n-1}-2\) a los dos lados: \(3^{n}-2\ge 3^{\,n-1}&gt;0\). Al tomar inversos: \(0&lt;\dfrac{1}{3^{n}-2}\le\dfrac{1}{3^{\,n-1}}\), para todo \(n\ge 1\).</li>
+        <li>(c) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{3^{\,n-1}}=\sum_{n=1}^{\infty}\left(\dfrac{1}{3}\right)^{n-1}\) es geométrica con \(a=1\) y \(r=\dfrac{1}{3}\): converge a \(\dfrac{1}{1-\frac{1}{3}}=1:\dfrac{2}{3}=\dfrac{3}{2}\). Como la desigualdad vale desde \(n=1\): \(S\le\dfrac{3}{2}\).</li>
+        <li>(c) Comprobación con tres términos, denominador común \(175\): \(S_{3}=1+\dfrac{1}{7}+\dfrac{1}{25}=\dfrac{175}{175}+\dfrac{25}{175}+\dfrac{7}{175}=\dfrac{207}{175}\approx 1{,}183\), que no pasa de \(1{,}5\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}-2}\). (a) Calcula \(a_{1}\), \(a_{2}\) y \(a_{3}\). ¿Se cumple \(0\le a_{n}\) desde \(n=1\)? (b) Demuestra que \(0&lt;\dfrac{1}{n^{2}-2}\le\dfrac{2}{n^{2}}\) para todo \(n\ge 2\) y concluye con la comparación directa. (c) Llega a lo mismo con la comparación en el límite. (d) ¿Por qué no sirve comparar directamente con \(\dfrac{1}{n^{2}}\)?</p>
+    <details><summary>Pista</summary><div><p>En (b), \(\dfrac{1}{n^{2}-2}\le\dfrac{2}{n^{2}}\) equivale, con denominadores positivos, a \(n^{2}\le 2\,(n^{2}-2)\); despeja \(n^{2}\). El primer término es negativo, pero los criterios piden la condición solo desde algún \(N\). En (c), divide numerador y denominador del cociente por \(n^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(a_{1}=\dfrac{1}{1^{2}-2}=\dfrac{1}{-1}=-1\); \(a_{2}=\dfrac{1}{2^{2}-2}=\dfrac{1}{2}\); \(a_{3}=\dfrac{1}{3^{2}-2}=\dfrac{1}{7}\). El primero es negativo: la condición no vale desde \(n=1\).</li>
+        <li>(a) Para \(n\ge 2\): \(n^{2}\ge 4\), así que \(n^{2}-2\ge 2&gt;0\) y \(a_{n}&gt;0\). La condición vale desde \(N=2\).</li>
+        <li>(b) Para \(n\ge 2\): \(n^{2}\ge 4\). Se resta \(4\) y se suma \(n^{2}\) a los dos lados: \(2n^{2}-4\ge n^{2}\), es decir, \(2\,(n^{2}-2)\ge n^{2}\).</li>
+        <li>(b) Se dividen los dos lados por \(n^{2}\,(n^{2}-2)\), que es positivo: \(\dfrac{2}{n^{2}}\ge\dfrac{1}{n^{2}-2}\). Con el paso 2: \(0&lt;\dfrac{1}{n^{2}-2}\le\dfrac{2}{n^{2}}\) para todo \(n\ge 2\).</li>
+        <li>(b) \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge (serie \(p\), \(p=2\)); por el lema 2, \(\displaystyle\sum\dfrac{2}{n^{2}}\) converge. Comparación directa, parte (a), con \(N=2\): \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}-2}\) <b>converge</b>.</li>
+        <li>(b) Comprobación de la desigualdad: \(n=2\): \(\dfrac{1}{2}\le\dfrac{2}{4}=\dfrac{1}{2}\) (igualdad); \(n=3\): \(\dfrac{1}{7}\le\dfrac{2}{9}\), porque \(1\cdot 9=9\le 14=2\cdot 7\). ✓</li>
+        <li>(c) Con \(b_{n}=\dfrac{1}{n^{2}}&gt;0\) y \(a_{n}&gt;0\) para \(n\ge 2\). Cociente: \(\dfrac{a_{n}}{b_{n}}=\dfrac{1}{n^{2}-2}\cdot n^{2}=\dfrac{n^{2}}{n^{2}-2}\). Se dividen numerador y denominador por \(n^{2}\): \(\dfrac{1}{1-\dfrac{2}{n^{2}}}\).</li>
+        <li>(c) Límite. \(\dfrac{2}{n^{2}}=2\cdot\dfrac{1}{n}\cdot\dfrac{1}{n}\to 2\cdot 0\cdot 0=0\). El denominador tiene límite \(1-0=1\ne 0\): \(L=\dfrac{1}{1}=1\).</li>
+        <li>(c) \(0&lt;L&lt;\infty\) y \(\displaystyle\sum\dfrac{1}{n^{2}}\) converge: la serie <b>converge</b>. Mismo resultado.</li>
+        <li>(d) Para \(n\ge 2\), \(0&lt;n^{2}-2&lt;n^{2}\), y al tomar inversos \(\dfrac{1}{n^{2}-2}&gt;\dfrac{1}{n^{2}}\): la serie queda <b>encima</b> de una convergente, y eso no decide. Por eso en (b) hizo falta el factor \(2\).</li>
+        <li>Sobre la suma: como la desigualdad vale recién desde \(n=2\) y el primer término es negativo, aquí no se puede escribir \(S\le\displaystyle\sum\dfrac{2}{n^{2}}\) sin más; el criterio solo asegura que la serie converge.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un estanque de \(1500\) litros está vacío y recibe agua de una vertiente que se va agotando (datos inventados). Se proponen dos modelos para los litros que entrega la vertiente el día \(n\), con \(n=1,\ 2,\ 3,\ \ldots\): modelo A, \(\dfrac{600}{n^{2}+5}\); modelo B, \(\dfrac{600}{n+5}\). En los dos, el primer día entrega \(100\) litros y después cada día entrega menos. El agua acumulada al terminar el día \(n\) es la suma parcial \(S_{n}\). (a) Calcula lo que entrega cada modelo los días \(1\), \(2\) y \(3\). (b) Con el modelo A, ¿se llena alguna vez el estanque? (c) ¿Y con el modelo B? (d) ¿Dicen los criterios qué día se llena?</p>
+    <details><summary>Pista</summary><div><p>En (b), compara con \(\dfrac{600}{n^{2}}\) y usa que las sumas parciales de \(\displaystyle\sum\dfrac{1}{n^{2}}\) son menores que \(2\) (hoja «Series harmónicas y series-p»). En (c), muestra que \(n+5\le 6n\) y compara con \(\dfrac{100}{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Modelo A: día 1, \(\dfrac{600}{1+5}=\dfrac{600}{6}=100\); día 2, \(\dfrac{600}{4+5}=\dfrac{600}{9}\approx 66{,}67\); día 3, \(\dfrac{600}{9+5}=\dfrac{600}{14}\approx 42{,}86\) litros.</li>
+        <li>(a) Modelo B: día 1, \(\dfrac{600}{1+5}=100\); día 2, \(\dfrac{600}{2+5}=\dfrac{600}{7}\approx 85{,}71\); día 3, \(\dfrac{600}{3+5}=\dfrac{600}{8}=75\) litros.</li>
+        <li>(b) Términos positivos. Como \(n^{2}+5&gt;n^{2}&gt;0\): \(0&lt;\dfrac{600}{n^{2}+5}&lt;\dfrac{600}{n^{2}}\), para todo \(n\ge 1\).</li>
+        <li>(b) Se suman las desigualdades desde \(1\) hasta \(n\) (demostración del criterio directo, paso 3): \(S_{n}\le 600\cdot\left(1+\dfrac{1}{4}+\cdots+\dfrac{1}{n^{2}}\right)\).</li>
+        <li>(b) Las sumas parciales de \(\displaystyle\sum\dfrac{1}{n^{2}}\) son menores que \(2\) (hoja «Series harmónicas y series-p», caso \(p=2\)). Entonces \(S_{n}&lt;600\cdot 2=1200\) para todo \(n\).</li>
+        <li>(b) \(1200&lt;1500\): con el modelo A el estanque <b>no se llena nunca</b>. La serie converge (comparación directa), y el agua acumulada no pasa de \(1200\) litros.</li>
+        <li>(c) Para \(n\ge 1\): \(5\le 5n\), así que \(n+5\le n+5n=6n\). Al tomar inversos y multiplicar por \(600\): \(\dfrac{600}{n+5}\ge\dfrac{600}{6n}=\dfrac{100}{n}&gt;0\).</li>
+        <li>(c) \(\displaystyle\sum\dfrac{100}{n}\) diverge (lema 2, con \(c=100\) y la armónica). Es una serie divergente menor: por la parte (b) del criterio directo, \(\displaystyle\sum\dfrac{600}{n+5}\) diverge.</li>
+        <li>(c) Sus términos son positivos: por el lema 1 (paso 4), las sumas parciales superan cualquier número; en particular, \(1500\). Con el modelo B el estanque <b>se llena</b>.</li>
+        <li>(d) No directamente: dicen si se llena, no cuándo. Una garantía sale de las cotas: \(S_{n}\ge 100\cdot\left(1+\dfrac{1}{2}+\cdots+\dfrac{1}{n}\right)\), y para la armónica la suma parcial hasta \(n=2^{m}\) es al menos \(1+\dfrac{m}{2}\) (hoja «Series harmónicas y series-p»). Se pide \(100\cdot\left(1+\dfrac{m}{2}\right)\ge 1500\): \(1+\dfrac{m}{2}\ge 15\); \(\dfrac{m}{2}\ge 14\); \(m\ge 28\). Queda asegurado, a más tardar, el día \(2^{28}=268\,435\,456\).</li>
+        <li>(d) Esa garantía es muy holgada. Sumando día a día con una planilla, el agua acumulada pasa de \(1500\) litros el día \(62\) (el día \(61\) lleva unos \(1494{,}7\) litros y el día \(62\), unos \(1503{,}6\)).</li>
+        <li>Interpretación: los dos modelos empiezan igual y en los dos la entrega diaria tiende a \(0\), pero uno acumula una cantidad acotada y el otro supera cualquier cantidad. Lo que decide no es que los aportes se achiquen, sino qué tan rápido lo hacen: como \(\dfrac{1}{n^{2}}\) o como \(\dfrac{1}{n}\). Es un modelo: una vertiente real no sigue una fórmula exacta, y ningún estanque espera \(268\) millones de días.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H34 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H34 · criterios de comparación: la serie Σ 1/(2ⁿ + n) queda bajo la geométrica Σ 1/2ⁿ, sus sumas parciales crecen y tienen techo; y la franja (L/2, 3L/2) de la demostración del criterio en el límite, con el caso L = 0 */
+function cmp34Cl(t){ return Math.max(0, Math.min(1, t)); }
+function cmp34A(n){ return 1/(Math.pow(2, n) + n); }
+function cmp34S(n){ var s = 0, k; for (k = 1; k <= n; k++) s += cmp34A(k); return s; }
+function cmp34T(n){ return 1 - 1/Math.pow(2, n); }
+/* decimal con coma, para TeX */
+function cmp34D(x, d){ return x.toFixed(d).replace('.', '{,}'); }
+/* número con a lo más 3 decimales, sin ceros de sobra, para TeX */
+function cmp34N(x){ var s = x.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''); return s.replace('.', '{,}'); }
+OA.scene('cmp34-idea', (function(){
+  var N = 6, M = 6, Q = '\\\\&\\qquad ';
+  function gx(n){ return -0.5 + 0.82*n; } function gy(y){ return 2.6 + 4*y; }
+  var PZ = [['LS', 'S_{n}', 'Sₙ', 'c-sec'], ['LT', 'T_{n}', 'Tₙ', 'c-alt'],
+    ['LU', '\\textstyle\\sum_{n=1}^{\\infty}\\tfrac{1}{2^{n}}=1', 'Σ 1/2ⁿ = 1', 'c-tan'], ['LX', 'S', 'S', 'diff'],
+    ['Q', '\\text{¿Converge }\\textstyle\\sum_{n=1}^{\\infty}\\tfrac{1}{2^{n}+n}\\text{?}', '¿Converge Σ 1/(2ⁿ + n)?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{sí: converge, y su suma }S\\text{ no pasa de }1', '⟹ sí: converge, y su suma S no pasa de 1', 'diff'],
+    ['R1', 'a_{n}=\\tfrac{1}{2^{n}+n}>0\\text{: }\\ S_{1}=\\tfrac{1}{3},\\ S_{2}=\\tfrac{1}{2},\\ S_{3}=\\tfrac{13}{22},\\ \\ldots\\text{ crecen}', 'aₙ = 1/(2ⁿ + n) > 0: S₁ = 1/3, S₂ = 1/2, S₃ = 13/22, … crecen', ''],
+    ['R2', '2^{n}+n>2^{n}\\ \\Longrightarrow\\ \\tfrac{1}{2^{n}+n}<\\tfrac{1}{2^{n}}\\ \\ \\text{(serie mayor)}', '2ⁿ + n > 2ⁿ ⟹ 1/(2ⁿ + n) < 1/2ⁿ (serie mayor)', ''],
+    ['R3', 'S_{n}=a_{1}+\\cdots+a_{n}\\ \\le\\ \\tfrac{1}{2}+\\cdots+\\tfrac{1}{2^{n}}=T_{n}', 'Sₙ = a₁ + ⋯ + aₙ ≤ 1/2 + ⋯ + 1/2ⁿ = Tₙ', ''],
+    ['R4', 'T_{n}=1-\\tfrac{1}{2^{n}}<1,\\qquad\\textstyle\\sum_{n=1}^{\\infty}\\tfrac{1}{2^{n}}=1', 'Tₙ = 1 − 1/2ⁿ < 1, Σ 1/2ⁿ = 1', ''],
+    ['R5', 'S_{n}\\le T_{n}<1\\text{: las }S_{n}\\text{ crecen y tienen techo }1', 'Sₙ ≤ Tₙ < 1: las Sₙ crecen y tienen techo 1', ''],
+    ['R6', '\\textstyle\\sum_{n=1}^{\\infty}\\tfrac{1}{2^{n}+n}\\text{ converge},\\quad S_{6}\\le S\\le 1', 'Σ 1/(2ⁿ + n) converge, S₆ ≤ S ≤ 1', 'diff']];
+  var TXT = [['Puntos azules: sumas parciales de la serie dada.', 'Suben, porque cada término es positivo.'],
+    ['Cada término es menor que el de una geométrica.', 'Puntos verdes: sumas parciales de esa serie mayor.'],
+    ['Trazos naranjas: cada punto azul queda bajo el', 'verde del mismo n. Se suman las desigualdades.'],
+    ['La serie mayor converge: sus sumas parciales', 'se acercan a 1 y ninguna lo pasa.'],
+    ['Las sumas azules crecen y tampoco pasan de 1:', 'tienen techo. Creciente y con techo: converge.'],
+    ['La serie dada converge. Su suma S está en el', 'corchete naranja: entre la última azul y 1.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-3.1, y1:10}, aspect:13.1/6.6,
+    aria:'Arriba, una franja dice qué muestra: una serie que queda bajo otra que converge también converge. Animación en seis pasos sobre una gráfica con n en horizontal, de 1 a 6, y las sumas parciales en vertical, de 0 a 1,2. Uno: aparecen en azul las seis primeras sumas parciales de la serie de término 1 dividido por 2 elevado a n más n: un tercio, un medio, 13 veintidosavos y así, cada una más alta que la anterior, cada una con una línea punteada hasta su valor en el eje vertical. Dos: aparecen en verde las sumas parciales de la serie geométrica de término 1 dividido por 2 elevado a n: un medio, tres cuartos, siete octavos, hasta 63 sesentaicuatroavos, también con sus punteadas. Tres: un trazo naranja une cada punto azul con el verde del mismo n; el azul siempre está abajo. Cuatro: una línea burdeo punteada a la altura 1, la suma de la serie geométrica. Cinco: una franja burdeo clara sobre esa línea, con el rótulo techo: ninguna suma lo pasa. Seis: a la derecha, un corchete naranja entre la altura de la sexta suma azul y la altura 1, con la letra S: ahí está la suma de la serie. Nada de lo que aparece se borra; la pregunta, converge la serie, queda arriba y la respuesta, sí, converge y su suma no pasa de 1, se escribe debajo. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> \\(S_{n}\\), sumas parciales de \\(\\sum\\tfrac{1}{2^{n}+n}\\)</span><span><i class="sw alt"></i> \\(T_{n}\\), sumas parciales de la serie mayor, \\(\\sum\\tfrac{1}{2^{n}}\\)</span><span><i class="sw rise"></i> \\(T_{n}-S_{n}\\), y el tramo donde está la suma \\(S\\)</span><span><i class="sw tan"></i> la suma de la serie mayor, \\(1\\): techo de las sumas azules</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), w, i, al, xa = X(gx(0)), xb = X(gx(6.6)), xc, ya, yb;
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* una sucesión de puntos, cada uno con su punteada hasta su valor en el eje vertical; aparecen de a uno */
+      function serie(f, col, w){ var i, a, px, py; for (i = 1; i <= M; i++){ a = cmp34Cl(w*M - (i - 1)); if (a <= 0) continue; px = X(gx(i)); py = Y(gy(f(i)));
+        c.globalAlpha = 0.5*a; c.strokeStyle = col; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(px, py); c.lineTo(xa, py); c.stroke(); c.setLineDash([]);
+        c.globalAlpha = a; c.fillStyle = col; c.beginPath(); c.arc(xa, py, 2, 0, 6.2832); c.fill(); c.beginPath(); c.arc(px, py, 3, 0, 6.2832); c.fill(); c.globalAlpha = 1; } }
+      /* paso 5: la zona a la que ninguna suma llega */
+      if (k >= 5){ w = k === 5 ? u : 1; c.globalAlpha = 0.12*w; c.fillStyle = C.tan; c.fillRect(xa, Y(gy(1.2)), xb - xa, Y(gy(1)) - Y(gy(1.2))); c.globalAlpha = w; c.font = '600 11px ' + F; c.fillStyle = C.tan; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('techo: ninguna suma lo pasa', xb, Y(gy(1)) - 13); c.globalAlpha = 1; }
+      /* ejes */
+      S.line(gx(0), gy(0), gx(6.6), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(1.2), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= M; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0)) - 3); c.lineTo(X(gx(i)), Y(gy(0)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0)) + 11, 'center'); }
+      [[0.5, '0,5'], [1, '1']].forEach(function(m){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(xa - 3, Y(gy(m[0]))); c.lineTo(xa + 3, Y(gy(m[0]))); c.stroke(); num(m[1], xa - 7, Y(gy(m[0])), 'right'); });
+      num('n', xb + 4, Y(gy(0)), 'left'); num('suma parcial', xa + 6, Y(gy(1.2)) - 5, 'left');
+      /* paso 4: la suma de la serie mayor */
+      if (k >= 4){ w = k === 4 ? u : 1; c.strokeStyle = C.tan; c.lineWidth = 1.3; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(xa, Y(gy(1))); c.lineTo(xa + (xb - xa)*w, Y(gy(1))); c.stroke(); c.setLineDash([]); if (w > 0.5) L('LU', gx(0.3), gy(1), 0, 0, -14); }
+      /* paso 3: cada suma azul queda bajo la verde */
+      if (k >= 3){ w = k === 3 ? u : 1; for (i = 1; i <= M; i++){ al = cmp34Cl(w*M - (i - 1)); if (al <= 0) continue; c.strokeStyle = C.rise; c.lineWidth = 1.6; c.beginPath(); c.moveTo(X(gx(i)), Y(gy(cmp34S(i)))); c.lineTo(X(gx(i)), Y(gy(cmp34S(i) + (cmp34T(i) - cmp34S(i))*al))); c.stroke(); } }
+      /* paso 2: sumas parciales de la serie mayor */
+      if (k >= 2){ w = k === 2 ? u : 1; serie(cmp34T, C.alt, w); if (w > 0.8) L('LT', gx(4.5), gy(0.85), -50); }
+      /* paso 1: sumas parciales de la serie dada */
+      w = k === 1 ? u : 1; serie(cmp34S, C.sec, w); if (w > 0.8) L('LS', gx(4.5), gy(0.57), -50);
+      /* paso 6: dónde está la suma */
+      if (k >= 6){ xc = X(gx(6.45)); ya = Y(gy(cmp34S(6))); yb = ya + (Y(gy(1)) - ya)*u; c.strokeStyle = C.rise; c.lineWidth = 2; c.setLineDash([]); c.beginPath(); c.moveTo(xc - 4, ya); c.lineTo(xc, ya); c.lineTo(xc, yb); c.lineTo(xc - 4, yb); c.stroke(); if (u > 0.5) L('LX', gx(6.45), (gy(cmp34S(6)) + gy(1))/2, 0, 6, 0); }
+      L('Q', -1.2, 8.62, 0); if (k === N && u > 0.5) L('F', -1.2, 8.04, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 1.85); txt(TXT[k - 1][1], -1.2, 1.85 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.62));
+      dtQue(S, 'una serie que queda bajo otra que', 'converge también converge.');
+      T.fin();
+      oaReg(S, k, N, -1.2, 0.45, [6, 36, 66, 96, 126, 156]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{Serie dada: }\\displaystyle\\sum_{n=1}^{\\infty}a_{n},\\quad a_{n}=\\dfrac{1}{2^{n}+n}' + Q + 'a_{1}=\\dfrac{1}{2+1}=\\dfrac{1}{3},\\qquad a_{2}=\\dfrac{1}{4+2}=\\dfrac{1}{6}' + Q + 'a_{3}=\\dfrac{1}{8+3}=\\dfrac{1}{11},\\qquad a_{4}=\\dfrac{1}{16+4}=\\dfrac{1}{20}' + Q + 'a_{5}=\\dfrac{1}{32+5}=\\dfrac{1}{37},\\qquad a_{6}=\\dfrac{1}{64+6}=\\dfrac{1}{70}' + Q + '\\text{Sumas parciales, }S_{n}=a_{1}+\\cdots+a_{n}\\text{:}' + Q + 'S_{1}=\\dfrac{1}{3}\\approx 0{,}3333' + Q + 'S_{2}=\\dfrac{1}{3}+\\dfrac{1}{6}=\\dfrac{2}{6}+\\dfrac{1}{6}=\\dfrac{3}{6}=\\dfrac{1}{2}=0{,}5' + Q + 'S_{3}=\\dfrac{1}{2}+\\dfrac{1}{11}=\\dfrac{11}{22}+\\dfrac{2}{22}=\\dfrac{13}{22}\\approx 0{,}5909' + Q + 'S_{4}=\\dfrac{13}{22}+\\dfrac{1}{20}=\\dfrac{130}{220}+\\dfrac{11}{220}' + Q + '\\phantom{S_{4}}=\\dfrac{141}{220}\\approx 0{,}6409' + Q + 'S_{5}=\\dfrac{141}{220}+\\dfrac{1}{37}=\\dfrac{5217}{8140}+\\dfrac{220}{8140}' + Q + '\\phantom{S_{5}}=\\dfrac{5437}{8140}\\approx 0{,}6679' + Q + 'S_{6}=\\dfrac{5437}{8140}+\\dfrac{1}{70}=\\dfrac{38059}{56980}+\\dfrac{814}{56980}' + Q + '\\phantom{S_{6}}=\\dfrac{38873}{56980}\\approx 0{,}6822' + Q + '\\text{Cada término es positivo: cada suma parcial}' + Q + '\\text{es mayor que la anterior.}',
+      '\\text{Se compara cada término con }b_{n}=\\dfrac{1}{2^{n}}\\text{:}' + Q + 'n>0\\ \\Longrightarrow\\ 2^{n}+n>2^{n}>0' + Q + '\\text{Al tomar inversos, el orden se invierte:}' + Q + '0<\\dfrac{1}{2^{n}+n}<\\dfrac{1}{2^{n}}\\quad\\text{para todo }n\\ge 1' + Q + '\\dfrac{1}{3}<\\dfrac{1}{2},\\quad\\dfrac{1}{6}<\\dfrac{1}{4},\\quad\\dfrac{1}{11}<\\dfrac{1}{8},\\quad\\dfrac{1}{20}<\\dfrac{1}{16}' + Q + '\\text{Sumas parciales de la serie mayor, }T_{n}\\text{:}' + Q + 'T_{1}=\\dfrac{1}{2},\\qquad T_{2}=\\dfrac{1}{2}+\\dfrac{1}{4}=\\dfrac{3}{4}' + Q + 'T_{3}=\\dfrac{3}{4}+\\dfrac{1}{8}=\\dfrac{7}{8},\\qquad T_{4}=\\dfrac{7}{8}+\\dfrac{1}{16}=\\dfrac{15}{16}' + Q + 'T_{5}=\\dfrac{15}{16}+\\dfrac{1}{32}=\\dfrac{31}{32}' + Q + 'T_{6}=\\dfrac{31}{32}+\\dfrac{1}{64}=\\dfrac{63}{64}',
+      '\\text{Se suman las desigualdades, de }1\\text{ a }n\\text{:}' + Q + 'S_{n}=a_{1}+\\cdots+a_{n}\\le b_{1}+\\cdots+b_{n}=T_{n}' + Q + '\\text{Con cuatro decimales:}' + Q + 'S_{1}\\le T_{1}\\text{: }\\ 0{,}3333\\le 0{,}5' + Q + 'S_{2}\\le T_{2}\\text{: }\\ 0{,}5\\le 0{,}75' + Q + 'S_{3}\\le T_{3}\\text{: }\\ 0{,}5909\\le 0{,}875' + Q + 'S_{4}\\le T_{4}\\text{: }\\ 0{,}6409\\le 0{,}9375' + Q + 'S_{5}\\le T_{5}\\text{: }\\ 0{,}6679\\le 0{,}9688' + Q + 'S_{6}\\le T_{6}\\text{: }\\ 0{,}6822\\le 0{,}9844' + Q + '\\text{En cada }n\\text{, el punto azul está bajo el verde.}',
+      '\\text{La serie mayor es geométrica: }a=\\dfrac{1}{2},\\ \\ r=\\dfrac{1}{2}' + Q + 'T_{n}=\\dfrac{a\\,(1-r^{\\,n})}{1-r}=\\dfrac{\\frac{1}{2}\\left(1-\\frac{1}{2^{n}}\\right)}{\\frac{1}{2}}=1-\\dfrac{1}{2^{n}}' + Q + '\\text{Comprobación: }T_{6}=1-\\dfrac{1}{64}=\\dfrac{63}{64}' + Q + '|r|=\\dfrac{1}{2}<1\\text{: converge, y su suma es}' + Q + '\\dfrac{a}{1-r}=\\dfrac{1}{2}:\\left(1-\\dfrac{1}{2}\\right)=\\dfrac{1}{2}:\\dfrac{1}{2}=1' + Q + '\\text{Como }\\dfrac{1}{2^{n}}>0\\text{: }\\ T_{n}=1-\\dfrac{1}{2^{n}}<1\\text{ para todo }n.',
+      '\\text{Se encadenan los pasos 3 y 4:}' + Q + 'S_{n}\\le T_{n}<1\\quad\\text{para todo }n' + Q + '\\text{Las sumas }S_{n}\\text{ son crecientes (paso 1) y}' + Q + '\\text{tienen cota superior }1\\text{. Una sucesión}' + Q + '\\text{creciente y acotada superiormente converge}' + Q + '\\text{(hoja «Sucesiones monótonas acotadas»).}',
+      '\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{2^{n}+n}\\text{ converge. Sea }S\\text{ su suma.}' + Q + '\\text{El límite de una creciente es su menor cota}' + Q + '\\text{superior, y }1\\text{ es una cota: }\\ S\\le 1' + Q + '\\text{Ninguna suma parcial supera al límite: }\\ S_{6}\\le S' + Q + '0{,}6822\\le S\\le 1' + Q + '\\text{Qué significa: el criterio asegura que la}' + Q + '\\text{serie converge y da una cota; no calcula }S.'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: se elige c; a_n = (c·n + 3)/n³ contra b_n = 1/n²; el cociente c + 3/n, su límite L = c y la franja (L/2, 3L/2) de la demostración; caso límite c = 0: L = 0, la franja se cierra y queda solo «cociente < 1» */
+OA.scene('cmp34-vivo', (function(){
+  var Q = '\\\\&\\qquad ', M = 8, YT = 6.3;
+  function gx(n){ return -0.5 + 0.6*n; } function gy(y){ return 1.9 + 0.7*y; }
+  function cual(v){ return Math.max(0, Math.min(3, Math.round(v.c == null ? 1 : v.c))); }
+  function r(c, n){ return c + 3/n; }
+  function NC(c){ return c ? 6/c : 3; } /* desde n > NC(c) el cociente está dentro de la franja (o, con c = 0, bajo 1) */
+  function nm(c){ return c === 0 ? '3' : c === 1 ? 'n+3' : c + 'n+3'; }
+  var ORD = ['', '1.º', '2.º', '3.º', '4.º', '5.º', '6.º', '7.º', '8.º'];
+  var PZ = [['LL', 'L', 'L', 'c-tan'], ['LA', '\\tfrac{3L}{2}', '3L/2', 'c-tan'], ['LB', '\\tfrac{L}{2}', 'L/2', 'c-tan'], ['L0', 'L=0', 'L = 0', 'c-tan'], ['E1', '\\tfrac{a_{n}}{b_{n}}=1', 'aₙ/bₙ = 1', 'pt']];
+  [0, 1, 2, 3].forEach(function(c){ var n = NC(c);
+    PZ.push(['A' + c, 'a_{n}=\\tfrac{' + nm(c) + '}{n^{3}},\\qquad b_{n}=\\tfrac{1}{n^{2}}\\ \\ \\text{(su serie converge)}', 'aₙ = ' + (c ? '(' + nm(c) + ')' : '3') + '/n³, bₙ = 1/n² (su serie converge)', 'pt']);
+    PZ.push(['B' + c, c ? '\\tfrac{a_{n}}{b_{n}}=' + c + '+\\tfrac{3}{n}\\ \\longrightarrow\\ L=' + c : '\\tfrac{a_{n}}{b_{n}}=\\tfrac{3}{n}\\ \\longrightarrow\\ L=0', c ? 'aₙ/bₙ = ' + c + ' + 3/n → L = ' + c : 'aₙ/bₙ = 3/n → L = 0', 'c-tan']);
+    PZ.push(['D' + c, c ? '\\text{franja: de }\\tfrac{L}{2}=' + cmp34N(c/2) + '\\text{ a }\\tfrac{3L}{2}=' + cmp34N(3*c/2) + '\\text{; dentro si }n>' + n : '\\text{caso límite: no hay franja; bajo }1\\text{ si }n>3', c ? 'franja: de L/2 = ' + cmp34N(c/2).replace('{,}', ',') + ' a 3L/2 = ' + cmp34N(3*c/2).replace('{,}', ',') + '; dentro si n > ' + n : 'caso límite: no hay franja; bajo 1 si n > 3', 'pt']);
+    PZ.push(['V' + c, 'n>' + n, 'n > ' + n, 'pt']); });
+  function frases(c){ var n = NC(c); return c ? ['Verdes: dentro de la franja (del ' + ORD[n + 1] + ' en adelante).', 'Ahí la serie queda entre dos múltiplos de la otra.', 'Conclusión: converge, igual que la de referencia.']
+    : ['Caso límite: el cociente baja a 0 y no hay franja.', 'Verdes: cociente menor que 1 (del 4.º en adelante).', 'Conclusión: converge, por comparación directa.']; }
+  function lectura(c){ var n = NC(c), h = c/2, ts = 3*c/2, R = [];
+    R.push('\\text{Datos: }c=' + c + ',\\quad a_{n}=\\dfrac{' + nm(c) + '}{n^{3}}>0,\\quad b_{n}=\\dfrac{1}{n^{2}}>0' + Q + '\\text{Referencia: }\\textstyle\\sum\\tfrac{1}{n^{2}}\\text{, serie }p\\text{ con }p=2>1\\text{:}' + Q + '\\text{converge (hoja «Series harmónicas y series-p»).}');
+    R.push('\\text{Cociente (dividir por }\\tfrac{1}{n^{2}}\\text{ es multiplicar por }n^{2})\\text{:}' + Q + '\\dfrac{a_{n}}{b_{n}}=\\dfrac{' + nm(c) + '}{n^{3}}\\cdot n^{2}=\\dfrac{' + (c ? '(' + nm(c) + ')' : '3') + '\\,n^{2}}{n^{3}}=\\dfrac{' + nm(c) + '}{n}' + (c ? Q + '\\phantom{\\dfrac{a_{n}}{b_{n}}}=\\dfrac{' + (c === 1 ? '' : c) + 'n}{n}+\\dfrac{3}{n}=' + c + '+\\dfrac{3}{n}' : ''));
+    R.push('\\text{Valores del cociente:}' + (c ? Q + 'n=1\\text{: }\\ ' + c + '+\\dfrac{3}{1}=' + c + '+3=' + (c + 3) + Q + 'n=2\\text{: }\\ ' + c + '+\\dfrac{3}{2}=' + c + '+1{,}5=' + cmp34N(c + 1.5) + Q + 'n=3\\text{: }\\ ' + c + '+\\dfrac{3}{3}=' + c + '+1=' + (c + 1) + Q + 'n=8\\text{: }\\ ' + c + '+\\dfrac{3}{8}=' + c + '+0{,}375=' + cmp34N(c + 0.375)
+      : Q + 'n=1\\text{: }\\ \\dfrac{3}{1}=3' + Q + 'n=2\\text{: }\\ \\dfrac{3}{2}=1{,}5' + Q + 'n=3\\text{: }\\ \\dfrac{3}{3}=1' + Q + 'n=8\\text{: }\\ \\dfrac{3}{8}=0{,}375'));
+    R.push('\\text{Límite: }\\dfrac{3}{n}=3\\cdot\\dfrac{1}{n}\\ \\longrightarrow\\ 3\\cdot 0=0' + Q + '\\text{(constante por sucesión, con }\\tfrac{1}{n}\\to 0)' + (c ? Q + 'L=' + c + '+0=' + c + '\\quad\\text{(límite de una suma)}' : Q + 'L=0'));
+    if (c){
+      R.push('0<L<\\infty\\text{: vale la parte (a). Franja:}' + Q + '\\dfrac{L}{2}=\\dfrac{' + c + '}{2}=' + cmp34N(h) + Q + '\\dfrac{3L}{2}=\\dfrac{3\\cdot ' + c + '}{2}=\\dfrac{' + 3*c + '}{2}=' + cmp34N(ts));
+      R.push('\\text{¿Desde qué }n\\text{ el cociente está dentro?}' + Q + '\\text{Piso: }' + c + '+\\dfrac{3}{n}>' + c + '>' + cmp34N(h) + '\\text{, para todo }n.' + Q + '\\text{Techo: }' + c + '+\\dfrac{3}{n}<' + cmp34N(ts) + Q + '\\text{Se resta }' + c + '\\text{: }\\ \\dfrac{3}{n}<' + cmp34N(ts) + '-' + c + '=' + cmp34N(h) + Q + '\\text{Se multiplica por }n\\text{ y se divide por }' + cmp34N(h) + '\\text{:}' + Q + 'n>\\dfrac{3}{' + cmp34N(h) + '}=' + n + Q + '\\text{Borde, }n=' + n + '\\text{: }\\ ' + c + '+\\dfrac{3}{' + n + '}=' + c + '+' + cmp34N(3/n) + '=' + cmp34N(ts) + '\\ \\text{(no cuenta)}' + Q + '\\text{Dentro, }n=' + (n + 1) + '\\text{: }\\ ' + c + '+\\dfrac{3}{' + (n + 1) + '}' + ((300/(n + 1)) % 1 === 0 ? '=' : '\\approx ') + cmp34D(r(c, n + 1), 2) + '<' + cmp34N(ts));
+      R.push('\\text{Para }n>' + n + '\\text{, multiplicando por }b_{n}>0\\text{:}' + Q + cmp34N(h) + '\\cdot b_{n}<a_{n}<' + cmp34N(ts) + '\\cdot b_{n}' + Q + '\\textstyle\\sum b_{n}\\text{ converge}\\ \\Longrightarrow\\ \\sum ' + cmp34N(ts) + '\\cdot b_{n}\\text{ converge}' + Q + '\\text{(lema 2)}\\ \\Longrightarrow\\ \\textstyle\\sum a_{n}\\text{ converge}' + Q + '\\text{(comparación directa, parte (a)).}' + Q + '\\text{Qué significa: desde }n=' + (n + 1) + '\\text{ la serie queda}' + Q + '\\text{entre dos múltiplos de la de referencia;}' + Q + '\\text{por eso las dos hacen lo mismo.}');
+    } else {
+      R.push('L=0\\text{: caso límite. La franja iría de}' + Q + '\\dfrac{L}{2}=0\\text{ a }\\dfrac{3L}{2}=0\\text{: no existe.}' + Q + '\\text{La parte (a) no se aplica.}');
+      R.push('\\text{Parte (b), con tolerancia }1\\text{: }\\ \\dfrac{3}{n}<1' + Q + '\\text{Se multiplica por }n\\text{: }\\ 3<n\\text{, es decir, }n>3' + Q + '\\text{Borde, }n=3\\text{: }\\ \\dfrac{3}{3}=1\\ \\text{(no cuenta)}' + Q + '\\text{Dentro, }n=4\\text{: }\\ \\dfrac{3}{4}=0{,}75<1');
+      R.push('\\text{Para }n>3\\text{, multiplicando por }b_{n}>0\\text{:}' + Q + '0<a_{n}<b_{n}' + Q + '\\textstyle\\sum b_{n}\\text{ converge}\\ \\Longrightarrow\\ \\sum a_{n}\\text{ converge}' + Q + '\\text{(comparación directa, parte (a)).}' + Q + '\\text{Qué significa: con }L=0\\text{ no hay piso. Si la}' + Q + '\\text{serie de referencia divergiera, no se podría}' + Q + '\\text{concluir nada.}');
+    }
+    return R; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-0.5, y1:9.5}, aspect:10/6.6, _lec:lectura, _fr:frases,
+    aria:'Arriba, una franja dice qué muestra: si el cociente de los términos tiene límite L mayor que 0, las dos series hacen lo mismo. Una gráfica con n en horizontal, de 1 a 8, y el cociente entre el término de la serie y el de la serie de referencia en vertical, de 0 a 6. La serie tiene término c por n más 3, dividido por n al cubo; la de referencia, 1 dividido por n al cuadrado, que converge. Un deslizador elige c entre 0, 1, 2 y 3. Los ocho puntos son los cocientes, c más 3 dividido por n, cada uno con una línea punteada hasta su valor en el eje vertical; bajan hacia la línea burdeo punteada de altura L igual a c. Una franja burdeo clara va de la mitad de L a una vez y media L. Los puntos dentro de la franja son verdes y los demás, azules; una línea vertical gris los separa. Con c igual a 1 están dentro desde n igual a 7; con c igual a 2, desde n igual a 4; con c igual a 3, desde n igual a 3. Con c igual a 0, el caso límite, L es 0, no hay franja, y una línea a la altura 1 separa los cocientes menores que 1, que son verdes, desde n igual a 4. Arriba se leen las dos series, el cociente y su límite; bajo el dibujo, frases con la conclusión: la serie converge. Más abajo, la cuenta completa.',
+    labels:PZ,
+    sliders:[{id:'c', tex:'c', min:0, max:3, step:1, value:1}],
+    legend:'<span><i class="sw alt"></i> cocientes \\(\\tfrac{a_{n}}{b_{n}}\\) dentro de la franja</span><span><i class="sw sec"></i> cocientes fuera de la franja, o en su borde</span><span><i class="sw tan"></i> el límite \\(L\\) y la franja de \\(\\tfrac{L}{2}\\) a \\(\\tfrac{3L}{2}\\)</span>',
+    anim:{run:24000, hold:3000, still:1, apply:function(p, v){ v.q = p; v.c = Math.min(3, Math.floor(p*4)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var cc = cual(v), n0 = NC(cc), C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), xa = X(gx(0)), xb = X(gx(8.5)), i, px, py, col, fr = frases(cc), xv;
+      function num(t, px, py, al, col){ c.font = '500 10.5px ' + F; c.fillStyle = col || C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      function hl(y, dash, col, wd){ c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash); c.beginPath(); c.moveTo(xa, Y(gy(y))); c.lineTo(xb, Y(gy(y))); c.stroke(); c.setLineDash([]); }
+      /* la franja de la demostración: de L/2 a 3L/2 */
+      if (cc){ c.globalAlpha = 0.12; c.fillStyle = C.tan; c.fillRect(xa, Y(gy(1.5*cc)), xb - xa, Y(gy(0.5*cc)) - Y(gy(1.5*cc))); c.globalAlpha = 1; hl(1.5*cc, [], C.tan, 0.8); hl(0.5*cc, [], C.tan, 0.8); hl(cc, [5, 4], C.tan, 1.3); }
+      else hl(1, [5, 4], C.ink, 1);
+      /* ejes */
+      S.line(gx(0), gy(0), gx(8.5), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(YT), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= M; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0)) - 3); c.lineTo(X(gx(i)), Y(gy(0)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0)) + 11, 'center'); }
+      for (i = 1; i <= 6; i++){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(xa - 3, Y(gy(i))); c.lineTo(xa + 3, Y(gy(i))); c.stroke(); num('' + i, xa - 7, Y(gy(i)), 'right'); }
+      num('n', xb + 2, Y(gy(0)) + 11, 'left'); num('cociente', xa + 6, Y(gy(YT)) - 5, 'left');
+      /* desde aquí, dentro */
+      xv = X(gx(n0 + 0.5)); c.strokeStyle = C.muted || '#6b6b6b'; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(xv, Y(gy(0))); c.lineTo(xv, Y(gy(YT))); c.stroke(); c.setLineDash([]);
+      T.L('V' + cc, gx(n0 + 0.5), gy(YT), 0, 5, 8);
+      /* los cocientes, cada uno con su punteada hasta su valor en el eje vertical */
+      for (i = 1; i <= M; i++){ px = X(gx(i)); py = Y(gy(r(cc, i))); col = i > n0 ? C.alt : C.sec;
+        c.globalAlpha = 0.5; c.strokeStyle = col; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(px, py); c.lineTo(xa, py); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+        c.fillStyle = col; c.beginPath(); c.arc(xa, py, 2, 0, 6.2832); c.fill(); c.beginPath(); c.arc(px, py, 3.2, 0, 6.2832); c.fill(); }
+      if (cc){ T.L('LL', gx(8.5), gy(cc), 0, 4, 0); T.L('LA', gx(8.5), gy(1.5*cc), 0, 4, -8); T.L('LB', gx(8.5), gy(0.5*cc), 0, 4, 8); }
+      else { T.L('L0', gx(8.5), gy(0), 0, 4, -5); T.L('E1', gx(8.5), gy(1), -100, 0, -13); }
+      T.L('A' + cc, -1.2, 8.14, 0); T.L('B' + cc, -1.2, 7.62, 0); T.L('D' + cc, -1.2, 7.1, 0);
+      c.font = '600 12.5px ' + F; c.textAlign = 'left'; c.textBaseline = 'middle';
+      c.fillStyle = cc ? C.alt : C.ink; c.fillText(fr[0], X(-1.2), Y(1)); c.fillStyle = cc ? C.ink : C.alt; c.fillText(fr[1], X(-1.2), Y(1) + 21); c.fillStyle = C.ink; c.fillText(fr[2], X(-1.2), Y(1) + 42);
+      dtQue(S, 'si el cociente tiene límite positivo,', 'las dos series hacen lo mismo.');
+      T.fin();
+    },
+    caption:function(v){ var c = cual(v), fr = frases(c); return 'c = ' + c + '. Cociente: ' + (c ? c + ' + 3/n' : '3/n') + ', con límite L = ' + c + '. ' + fr.join(' '); },
+    readout:function(v){ return dtPasos(lectura(cual(v))); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

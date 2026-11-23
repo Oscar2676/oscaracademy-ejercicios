@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demostraciones | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-demostraciones" data-hoja="L25 H33">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Demostraciones</b></li>
+    </ol>
+    <h1>Demostraciones</h1>
+    <p class="lede">Esta hoja reúne, con todos sus pasos, las demostraciones de los tres resultados que usan las hojas de sucesiones y series geométricas. En una progresión geométrica de primer término \(a_{1}\neq 0\) y razón \(r\): el término enésimo, la suma de los \(n\) primeros términos y la suma de todos. \[a_{n}=a_{1}\,r^{\,n-1}\qquad\qquad S_{n}=\sum_{k=1}^{n}a_{1}\,r^{\,k-1}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\ \ (r\neq 1)\] \[\sum_{n=1}^{\infty}a_{1}\,r^{\,n-1}=\dfrac{a_{1}}{1-r}\ \ (|r|&lt;1)\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La demostración central de la hoja es la de la suma parcial: a la suma se le resta ella misma multiplicada por la razón, y casi todo se cancela. La animación la muestra en seis pasos con un caso, \(8+4+2+1\), y termina con la fórmula general. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la fila azul (paso 1):</b> es \(S_{4}=8+4+2+1\), la suma de cuatro términos con \(a_{1}=8\) y \(r=\dfrac{1}{2}\). El largo de cada bloque es el valor del término. Arriba queda la pregunta: ¿cuánto suma \(S_{n}\)?</li>
+    <li><b>Paso 2, la fila verde:</b> es la misma suma multiplicada por la razón, \(\dfrac{1}{2}\,S_{4}=4+2+1+\dfrac{1}{2}\). Cada bloque baja reducido a la mitad y queda corrido un lugar: bajo el \(4\), el \(2\) y el \(1\) de arriba quedan un \(4\), un \(2\) y un \(1\) iguales, y al final sobra el \(\dfrac{1}{2}\).</li>
+    <li><b>Paso 3, lo tachado y la barra naranja:</b> al restar la fila verde de la azul, los bloques iguales se cancelan (quedan grises y tachados, unidos por una punteada). Sobreviven el primero de arriba, \(8\), y el último de abajo, \(\dfrac{1}{2}\). La barra naranja es la resta: el \(8\) al que se le sacó, al final, un pedazo de largo \(\dfrac{1}{2}\), que deja su hueco punteado.</li>
+    <li><b>Pasos 4 y 5:</b> la barra naranja aparece dividida en \(16\) partes iguales y le falta una: mide \(8\left(1-\dfrac{1}{16}\right)\). La cota de arriba marca la suma completa, y la punteada vertical muestra que la barra naranja llega justo a la mitad: es \(\left(1-\dfrac{1}{2}\right)S_{4}\). Entonces \(S_{4}\) es el doble: \(15\).</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> la respuesta, con letras, se escribe bajo la pregunta. El registro guarda la expresión de cada paso. La cuenta de abajo repite cada paso con todas sus operaciones. Conclusión: \(S_{n}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\), siempre que \(r\neq 1\).</li>
+  </ol>
+  <div class="stage" data-scene="dem33-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Azul:</b> la suma \(S_{4}=8+4+2+1\). Cada bloque es un término y su largo es su valor.</li>
+    <li><b>Verde:</b> la suma multiplicada por la razón, \(\dfrac{1}{2}\,S_{4}=4+2+1+\dfrac{1}{2}\).</li>
+    <li><b>Gris tachado:</b> los bloques que están en las dos filas. Al restar se cancelan; no se borran, para que se vea cuáles son.</li>
+    <li><b>Naranja:</b> la resta, \(S_{4}-\dfrac{1}{2}\,S_{4}=8-\dfrac{1}{2}\), con el hueco del pedazo que se sacó; la cota de la suma completa, \(S_{4}=15\); y la punteada que marca la mitad.</li>
+    <li><b>Lo que la figura no demuestra:</b> es un caso, con números. La demostración, con letras y para todo \(n\), está en el recuadro del teorema 2.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué se va a demostrar, y con qué</h3>
+    <p><b>Las definiciones de las que se parte.</b></p>
+    <ol class="steps">
+      <li><b>Progresión geométrica</b> (hoja «Determinar la razón r de una progresión geométrica»): una sucesión \(a_{1},\ a_{2},\ a_{3},\ \ldots\) tal que \(a_{n+1}=a_{n}\cdot r\) para todo entero \(n\ge 1\), con \(a_{1}\neq 0\) y \(r\neq 0\). El número \(r\) es la razón. Es una definición <b>por recurrencia</b>: dice cómo pasar de un término al siguiente, no cuánto vale el término \(n\).</li>
+      <li><b>Potencia</b> (hoja «Término enésimo de una sucesión geométrica»): para \(x\neq 0\), \(x^{0}=1\) y \(x^{\,m+1}=x^{\,m}\cdot x\) para cada entero \(m\ge 0\). Así \(x^{1}=x^{0}\cdot x=1\cdot x=x\).</li>
+      <li><b>Suma parcial</b> (hoja «Determinar sumas parciales»): \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\). Dicho por recurrencia: \(S_{1}=a_{1}\) y \(S_{n+1}=S_{n}+a_{n+1}\).</li>
+      <li><b>Límite</b> (hoja «Límite de una sucesión»): \(\displaystyle\lim_{n\to\infty}b_{n}=L\) significa que para todo \(\varepsilon&gt;0\) existe un entero \(N\ge 0\) tal que \(|b_{n}-L|&lt;\varepsilon\) para todo \(n&gt;N\).</li>
+      <li><b>Suma de una serie</b> (hoja «Series infinitas convergentes y divergentes»): la serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) <b>converge</b> si la sucesión de sus sumas parciales tiene como límite un número real \(S\), que es su suma. Si ningún número real es ese límite, <b>diverge</b> y no tiene suma.</li>
+    </ol>
+    <p><b>Los tres teoremas.</b> Sea \(a_{1},\ a_{2},\ a_{3},\ \ldots\) una progresión geométrica de razón \(r\).</p>
+    <ol class="steps">
+      <li><b>Teorema 1 (término enésimo).</b> Para todo entero \(n\ge 1\): \(a_{n}=a_{1}\cdot r^{\,n-1}\).</li>
+      <li><b>Teorema 2 (suma parcial).</b> Para todo entero \(n\ge 1\): si \(r\neq 1\), \(S_{n}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\); si \(r=1\), \(S_{n}=n\cdot a_{1}\).</li>
+      <li><b>Teorema 3 (suma infinita).</b> Si \(|r|&lt;1\), la serie \(\displaystyle\sum_{n=1}^{\infty}a_{1}\,r^{\,n-1}\) converge y su suma es \(\dfrac{a_{1}}{1-r}\). Si \(|r|\ge 1\), la serie diverge.</li>
+    </ol>
+    <p><b>Tres lemas</b> (resultados auxiliares, que se demuestran en el tercer recuadro).</p>
+    <ol class="steps">
+      <li><b>Lema 1 (desigualdad de Bernoulli).</b> Si \(h&gt;0\) y \(n\ge 1\) es entero, \((1+h)^{n}\ge 1+n\,h\).</li>
+      <li><b>Lema 2.</b> Si \(|r|&lt;1\), entonces \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\).</li>
+      <li><b>Lema 3.</b> Si \(|r|\ge 1\), entonces \(|r|^{\,m}\ge 1\) para todo entero \(m\ge 0\).</li>
+    </ol>
+    <p><b>Dónde estaban estas demostraciones y qué agrega esta hoja.</b></p>
+    <ol class="steps">
+      <li><b>Teorema 1.</b> Está demostrado por inducción en la hoja «Término enésimo de una sucesión geométrica» (y, con la letra \(a\) en vez de \(a_{1}\), en «Identificar una serie geométrica infinita»). Aquí se repite completo, por el mismo camino.</li>
+      <li><b>Teorema 2.</b> Está demostrado, restando \(r\,S_{n}\) de \(S_{n}\), en las hojas «Series geométricas infinitas» y «Suma de una serie geométrica infinita». Aquí va esa demostración y, además, una segunda, por inducción, que no necesita puntos suspensivos.</li>
+      <li><b>Teorema 3.</b> Esas dos hojas lo demuestran apoyándose en dos cosas que usan <b>sin demostrar</b>: que \(r^{\,n}\) tiene límite \(0\) cuando \(|r|&lt;1\), y las reglas del límite de una resta y de una constante por una sucesión. Para la divergencia citan el teorema de la hoja «Criterio del enésimo término», que se demuestra allí con la idea intuitiva de límite y con esas mismas reglas. La hoja «Límite de una sucesión» enuncia \(r^{\,n}\to 0\) y solo demuestra el caso \(r=\dfrac{1}{2}\). <b>Aquí se demuestra \(r^{\,n}\to 0\) para todo \(|r|&lt;1\)</b> (lemas 1 y 2), y las dos partes del teorema 3 se demuestran directamente con la definición de límite, sin usar esas reglas ni ese criterio.</li>
+      <li><b>Notación.</b> Las hojas de series escriben \(a\) para el primer término; aquí se escribe \(a_{1}\). Es el mismo número.</li>
+      <li><b>El caso \(r=0\).</b> La definición de progresión geométrica pide \(r\neq 0\). La hoja «Series geométricas infinitas» admite también \(r=0\): la serie es \(a_{1}+0+0+\cdots\), todas sus sumas parciales valen \(a_{1}\) y su suma es \(a_{1}\). Las fórmulas dan lo mismo: \(\dfrac{a_{1}\,(1-0)}{1-0}=a_{1}\) y \(\dfrac{a_{1}}{1-0}=a_{1}\).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> En esta hoja se usan <b>sin demostrar</b>: (1) el <b>principio de inducción</b>: si una afirmación vale para \(n=1\) y, cada vez que vale para un \(n\), vale para \(n+1\), entonces vale para todo entero \(n\ge 1\) (en el lema 3 se usa partiendo de \(m=0\)); (2) la <b>propiedad arquimediana</b>: para cada número real \(x\) hay un número natural \(N\) con \(N\ge x\); (3) las propiedades del valor absoluto: \(|x|\ge 0\), \(|-x|=|x|\), \(|x\cdot y|=|x|\cdot|y|\), \(\left|\dfrac{x}{y}\right|=\dfrac{|x|}{|y|}\) si \(y\neq 0\), y la desigualdad triangular \(|x+y|\le|x|+|y|\); de la tercera, repitiéndola, sale \(|r^{\,n}|=|r|^{\,n}\); (4) las reglas de las desigualdades: se puede sumar un mismo número a los dos lados, multiplicar o dividir los dos lados por un número positivo, y si \(0&lt;x&lt;y\) entonces \(\dfrac{1}{y}&lt;\dfrac{1}{x}\); (5) que un producto de números distintos de cero es distinto de cero; (6) la aritmética de los números reales: conmutativa, asociativa y distributiva (también con una suma de \(n\) sumandos), y la suma y resta de fracciones de igual denominador; (7) las leyes de las potencias \(\left(\dfrac{1}{x}\right)^{n}=\dfrac{1}{x^{\,n}}\) y \(x^{\,p}\cdot x^{\,q}=x^{\,p+q}\), para \(x\neq 0\) y enteros \(p,\ q\ge 0\) (la segunda, solo en el ejemplo 2); (8) en la primera demostración del teorema 2, los puntos suspensivos («se cancelan los de en medio») resumen un argumento que, escrito formalmente, es por inducción: por eso se da la segunda demostración. Las definiciones de límite y de suma de una serie se toman de las hojas citadas. (9) que un decimal periódico como \(0{,}999\ldots\) es, por lo que significa la escritura decimal, la suma \(\dfrac{9}{10}+\dfrac{9}{100}+\dfrac{9}{1000}+\cdots\) (ejercicio B). Los valores con decimales del ejemplo 3 y de los ejercicios B y C son aproximaciones de calculadora y llevan \(\approx\). En el ejercicio C, la cadena de mensajes es un modelo con datos inventados.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Teoremas 1 y 2: el término enésimo y la suma parcial</h3>
+    <p><b>Teorema 1.</b> \(a_{n}=a_{1}\cdot r^{\,n-1}\) para todo entero \(n\ge 1\). Demostración por inducción.</p>
+    <ol class="steps">
+      <li><b>Caso base, \(n=1\).</b> El lado derecho es \(a_{1}\cdot r^{\,1-1}=a_{1}\cdot r^{0}\). Definición de potencia: \(r^{0}=1\). Queda \(a_{1}\cdot 1=a_{1}\), que es el lado izquierdo. ✓</li>
+      <li><b>Hipótesis de inducción.</b> Se supone que la fórmula vale para un entero \(n\ge 1\): \(a_{n}=a_{1}\cdot r^{\,n-1}\).</li>
+      <li><b>Paso inductivo.</b> Definición de progresión geométrica: \(a_{n+1}=a_{n}\cdot r\).</li>
+      <li>Se reemplaza \(a_{n}\) por la hipótesis: \(a_{n+1}=a_{1}\cdot r^{\,n-1}\cdot r\).</li>
+      <li>Definición de potencia, con \(m=n-1\) (entero, \(m\ge 0\)): \(r^{\,n-1}\cdot r=r^{\,n}\). Queda \(a_{n+1}=a_{1}\cdot r^{\,n}\).</li>
+      <li>Como \(n=(n+1)-1\), eso es \(a_{n+1}=a_{1}\cdot r^{\,(n+1)-1}\): la fórmula para \(n+1\). ✓</li>
+      <li><b>Conclusión.</b> Vale para \(n=1\) y, si vale para \(n\), vale para \(n+1\). Por el principio de inducción, vale para todo entero \(n\ge 1\). Queda demostrado.</li>
+    </ol>
+    <p><b>Teorema 2, primera demostración: restar \(r\,S_{n}\), con \(r\neq 1\).</b> Es la de la animación.</p>
+    <ol class="steps">
+      <li>Por el teorema 1, el término \(k\) es \(a_{1}\,r^{\,k-1}\). Suma parcial: \(S_{n}=\displaystyle\sum_{k=1}^{n}a_{1}\,r^{\,k-1}=a_{1}+a_{1}r+a_{1}r^{2}+\cdots+a_{1}r^{\,n-1}\).</li>
+      <li>Se multiplica cada lado por \(r\) (distributiva). Cada sumando gana un factor \(r\): \(a_{1}\,r^{\,k-1}\cdot r=a_{1}\,r^{\,k}\) (definición de potencia). Queda \(r\,S_{n}=a_{1}r+a_{1}r^{2}+\cdots+a_{1}r^{\,n-1}+a_{1}r^{\,n}\).</li>
+      <li>Se resta la segunda igualdad de la primera. Los sumandos \(a_{1}r,\ a_{1}r^{2},\ \ldots,\ a_{1}r^{\,n-1}\) están en las dos y se cancelan. Quedan el primero de la primera y el último de la segunda, restando: \(S_{n}-r\,S_{n}=a_{1}-a_{1}r^{\,n}\). (Si \(n=1\) no hay nada que cancelar: \(S_{1}-r\,S_{1}=a_{1}-a_{1}r\).)</li>
+      <li>Factor común \(S_{n}\) en el lado izquierdo: \((1-r)\,S_{n}=a_{1}-a_{1}r^{\,n}\).</li>
+      <li>Factor común \(a_{1}\) en el lado derecho: \((1-r)\,S_{n}=a_{1}\,(1-r^{\,n})\). <b>Esta igualdad vale para cualquier \(r\)</b>, también para \(r=1\) (dice \(0=0\)).</li>
+      <li>Como \(r\neq 1\), \(1-r\neq 0\) y se puede dividir cada lado por \(1-r\): \[S_{n}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\qquad(r\neq 1)\] Queda demostrado.</li>
+    </ol>
+    <p><b>Teorema 2, segunda demostración: por inducción, con \(r\neq 1\).</b> No usa puntos suspensivos.</p>
+    <ol class="steps">
+      <li><b>Caso base, \(n=1\).</b> Lado izquierdo: \(S_{1}=a_{1}\). Lado derecho: \(\dfrac{a_{1}\,(1-r^{1})}{1-r}=\dfrac{a_{1}\,(1-r)}{1-r}\). Se simplifica por \(1-r\), que no es \(0\): queda \(a_{1}\). ✓</li>
+      <li><b>Hipótesis de inducción.</b> Para un entero \(n\ge 1\): \(S_{n}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\).</li>
+      <li><b>Paso inductivo.</b> Definición de suma parcial: \(S_{n+1}=S_{n}+a_{n+1}\). Teorema 1, con \(n+1\): \(a_{n+1}=a_{1}\,r^{\,n}\).</li>
+      <li>Se reemplaza \(S_{n}\) por la hipótesis: \(S_{n+1}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}+a_{1}\,r^{\,n}\).</li>
+      <li>Se lleva el segundo sumando al mismo denominador, multiplicando y dividiendo por \(1-r\): \(a_{1}\,r^{\,n}=\dfrac{a_{1}\,r^{\,n}\,(1-r)}{1-r}\).</li>
+      <li>Se suman las fracciones: \(S_{n+1}=\dfrac{a_{1}\,(1-r^{\,n})+a_{1}\,r^{\,n}\,(1-r)}{1-r}\).</li>
+      <li>Distributiva en el numerador: \(a_{1}-a_{1}r^{\,n}+a_{1}r^{\,n}-a_{1}r^{\,n}\cdot r\).</li>
+      <li>\(-a_{1}r^{\,n}+a_{1}r^{\,n}=0\), y \(r^{\,n}\cdot r=r^{\,n+1}\) (definición de potencia). El numerador es \(a_{1}-a_{1}r^{\,n+1}=a_{1}\,(1-r^{\,n+1})\).</li>
+      <li>Entonces \(S_{n+1}=\dfrac{a_{1}\,(1-r^{\,n+1})}{1-r}\): la fórmula para \(n+1\). ✓ Por el principio de inducción, vale para todo entero \(n\ge 1\). Queda demostrado.</li>
+    </ol>
+    <p><b>Teorema 2, caso \(r=1\).</b> La fórmula anterior no sirve: pediría dividir por \(1-1=0\).</p>
+    <ol class="steps">
+      <li>Con \(r=1\), la definición da \(a_{n+1}=a_{n}\cdot 1=a_{n}\): cada término es igual al anterior. Todos valen \(a_{1}\). (También por el teorema 1: \(1^{\,n-1}=1\), porque \(1^{0}=1\) y \(1^{\,m+1}=1^{\,m}\cdot 1\).)</li>
+      <li>Caso base: \(S_{1}=a_{1}=1\cdot a_{1}\). ✓</li>
+      <li>Paso inductivo: si \(S_{n}=n\cdot a_{1}\), entonces \(S_{n+1}=S_{n}+a_{n+1}=n\cdot a_{1}+a_{1}=(n+1)\cdot a_{1}\) (factor común \(a_{1}\)). ✓</li>
+      <li>Por inducción, \(S_{n}=n\cdot a_{1}\) para todo entero \(n\ge 1\): es la suma de \(n\) sumandos iguales a \(a_{1}\). Queda demostrado.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Teorema 3: los tres lemas y la suma infinita</h3>
+    <p><b>Lema 1 (desigualdad de Bernoulli).</b> Si \(h&gt;0\) y \(n\ge 1\) es entero, \((1+h)^{n}\ge 1+n\,h\). Por inducción.</p>
+    <ol class="steps">
+      <li><b>Caso base, \(n=1\).</b> \((1+h)^{1}=1+h=1+1\cdot h\). Los dos lados son iguales. ✓</li>
+      <li><b>Hipótesis de inducción.</b> Para un entero \(n\ge 1\): \((1+h)^{n}\ge 1+n\,h\).</li>
+      <li><b>Paso inductivo.</b> Definición de potencia: \((1+h)^{n+1}=(1+h)^{n}\cdot(1+h)\).</li>
+      <li>Se multiplica cada lado de la hipótesis por \(1+h\), que es positivo: \((1+h)^{n}\cdot(1+h)\ge(1+n\,h)\cdot(1+h)\).</li>
+      <li>Distributiva: \((1+n\,h)(1+h)=1+h+n\,h+n\,h^{2}\). Factor común \(h\) en los dos del medio: \(1+(n+1)\,h+n\,h^{2}\).</li>
+      <li>\(n\,h^{2}\ge 0\), porque \(n&gt;0\) y \(h^{2}&gt;0\). Al quitar ese sumando no se agranda: \(1+(n+1)\,h+n\,h^{2}\ge 1+(n+1)\,h\).</li>
+      <li>Se encadenan los pasos 3 a 6: \((1+h)^{n+1}\ge 1+(n+1)\,h\). Es la desigualdad para \(n+1\). ✓ Por inducción, vale para todo entero \(n\ge 1\). Queda demostrado.</li>
+    </ol>
+    <p><b>Lema 2.</b> Si \(|r|&lt;1\), entonces \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\).</p>
+    <ol class="steps">
+      <li><b>Caso \(r=0\).</b> Para \(n\ge 1\), \(0^{\,n}=0\) (un producto con un factor \(0\)). La distancia es \(|0-0|=0\), menor que cualquier \(\varepsilon&gt;0\): sirve \(N=0\).</li>
+      <li><b>Caso \(0&lt;|r|&lt;1\).</b> Como \(0&lt;|r|&lt;1\), los inversos quedan en el orden contrario: \(\dfrac{1}{|r|}&gt;\dfrac{1}{1}=1\). Se llama \(h=\dfrac{1}{|r|}-1\), que es positivo. Entonces \(\dfrac{1}{|r|}=1+h\), y \(|r|=\dfrac{1}{1+h}\).</li>
+      <li>Distancia a \(0\): \(|r^{\,n}-0|=|r^{\,n}|=|r|^{\,n}\) (aviso de rigor, 3).</li>
+      <li>Se reemplaza \(|r|\): \(|r|^{\,n}=\left(\dfrac{1}{1+h}\right)^{n}=\dfrac{1}{(1+h)^{n}}\) (aviso, 7).</li>
+      <li>Lema 1: \((1+h)^{n}\ge 1+n\,h\). Además \(1+n\,h&gt;n\,h\), y \(n\,h&gt;0\). Entonces \((1+h)^{n}&gt;n\,h&gt;0\).</li>
+      <li>Inversos, en el orden contrario: \(\dfrac{1}{(1+h)^{n}}&lt;\dfrac{1}{n\,h}\). Con los pasos 3 y 4: \(|r^{\,n}-0|&lt;\dfrac{1}{n\,h}\), para todo \(n\ge 1\).</li>
+      <li>Sea \(\varepsilon&gt;0\). Propiedad arquimediana: hay un natural \(N\) con \(N\ge\dfrac{1}{h\,\varepsilon}\).</li>
+      <li>Sea \(n&gt;N\). Entonces \(n&gt;\dfrac{1}{h\,\varepsilon}\). Se multiplica cada lado por \(h\,\varepsilon\), que es positivo: \(n\,h\,\varepsilon&gt;1\). Se divide cada lado por \(n\,h\), que es positivo: \(\varepsilon&gt;\dfrac{1}{n\,h}\).</li>
+      <li>Con el paso 6: si \(n&gt;N\), \(|r^{\,n}-0|&lt;\dfrac{1}{n\,h}&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\). Queda demostrado.</li>
+      <li><b>Con \(r=\dfrac{1}{2}\):</b> \(h=\dfrac{1}{1/2}-1=2-1=1\), y el paso 6 dice \(\left(\dfrac{1}{2}\right)^{n}&lt;\dfrac{1}{n}\). Es la cota del ejercicio B de la hoja «Límite de una sucesión».</li>
+    </ol>
+    <p><b>Lema 3.</b> Si \(|r|\ge 1\), entonces \(|r|^{\,m}\ge 1\) para todo entero \(m\ge 0\). Por inducción, partiendo de \(m=0\).</p>
+    <ol class="steps">
+      <li><b>Caso base, \(m=0\).</b> \(|r|^{0}=1\), y \(1\ge 1\). ✓</li>
+      <li><b>Paso inductivo.</b> Se supone \(|r|^{\,m}\ge 1\). Se multiplica cada lado por \(|r|\), que es positivo: \(|r|^{\,m}\cdot|r|\ge 1\cdot|r|=|r|\).</li>
+      <li>Definición de potencia: \(|r|^{\,m}\cdot|r|=|r|^{\,m+1}\). Y \(|r|\ge 1\). Entonces \(|r|^{\,m+1}\ge|r|\ge 1\). ✓ Por inducción, vale para todo entero \(m\ge 0\). Queda demostrado.</li>
+    </ol>
+    <p><b>Teorema 3, primera parte: si \(|r|&lt;1\), la serie converge y su suma es \(\dfrac{a_{1}}{1-r}\).</b></p>
+    <ol class="steps">
+      <li>\(|r|&lt;1\) implica \(r\neq 1\), porque \(|1|=1\). Vale el teorema 2: \(S_{n}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\).</li>
+      <li>El candidato a límite es \(S=\dfrac{a_{1}}{1-r}\). Hay que demostrar que \(|S_{n}-S|\) se hace menor que cualquier \(\varepsilon&gt;0\).</li>
+      <li>Resta de fracciones de igual denominador: \(S_{n}-S=\dfrac{a_{1}\,(1-r^{\,n})-a_{1}}{1-r}\).</li>
+      <li>Distributiva en el numerador: \(a_{1}-a_{1}r^{\,n}-a_{1}=-a_{1}r^{\,n}\). Queda \(S_{n}-S=\dfrac{-a_{1}\,r^{\,n}}{1-r}\).</li>
+      <li>Valor absoluto de un cociente y de un producto: \(|S_{n}-S|=\dfrac{|-a_{1}|\cdot|r^{\,n}|}{|1-r|}=\dfrac{|a_{1}|}{|1-r|}\cdot|r^{\,n}|\).</li>
+      <li>Se llama \(c=\dfrac{|a_{1}|}{|1-r|}\). Es un número positivo que no depende de \(n\): \(|a_{1}|&gt;0\) porque \(a_{1}\neq 0\), y \(|1-r|&gt;0\) porque \(r\neq 1\). Entonces \(|S_{n}-S|=c\cdot|r^{\,n}|\).</li>
+      <li>Sea \(\varepsilon&gt;0\). El número \(\dfrac{\varepsilon}{c}\) también es positivo y se puede usar como tolerancia. Lema 2: hay un \(N\) tal que \(|r^{\,n}-0|=|r^{\,n}|&lt;\dfrac{\varepsilon}{c}\) para todo \(n&gt;N\).</li>
+      <li>Se multiplica cada lado por \(c\), que es positivo: \(c\cdot|r^{\,n}|&lt;\varepsilon\). Con el paso 6: si \(n&gt;N\), \(|S_{n}-S|&lt;\varepsilon\).</li>
+      <li>Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}S_{n}=S\). El límite es un número real: la serie converge y \[\sum_{n=1}^{\infty}a_{1}\,r^{\,n-1}=\dfrac{a_{1}}{1-r}\qquad(|r|&lt;1)\] Queda demostrado.</li>
+      <li><b>Lo que falta.</b> Del paso 4, cambiando el signo de cada lado: \(S-S_{n}=\dfrac{a_{1}\,r^{\,n}}{1-r}\). Es lo que le falta a la suma parcial \(S_{n}\) para llegar a la suma de la serie. La segunda animación lo dibuja.</li>
+    </ol>
+    <p><b>Teorema 3, segunda parte: si \(|r|\ge 1\), la serie diverge.</b> Por contradicción.</p>
+    <ol class="steps">
+      <li>Tamaño de los términos. Teorema 1 y valor absoluto de un producto: \(|a_{n}|=|a_{1}\cdot r^{\,n-1}|=|a_{1}|\cdot|r|^{\,n-1}\).</li>
+      <li>Lema 3, con \(m=n-1\ge 0\): \(|r|^{\,n-1}\ge 1\). Se multiplica cada lado por \(|a_{1}|\), que es positivo: \(|a_{n}|\ge|a_{1}|\), para todo \(n\ge 1\). Ningún término mide menos que el primero.</li>
+      <li>Se supone lo contrario de lo que se quiere demostrar: que la serie converge, es decir, que hay un número real \(S\) con \(\displaystyle\lim_{n\to\infty}S_{n}=S\).</li>
+      <li>Se usa la definición de límite con \(\varepsilon=\dfrac{|a_{1}|}{2}\), que es positivo: hay un \(N\) tal que \(|S_{m}-S|&lt;\dfrac{|a_{1}|}{2}\) para todo \(m&gt;N\).</li>
+      <li>Se toma \(n=N+2\). Entonces \(n&gt;N\) y \(n-1=N+1&gt;N\): la desigualdad del paso 4 vale para \(S_{n}\) y para \(S_{n-1}\).</li>
+      <li>Definición de suma parcial: \(S_{n}=S_{n-1}+a_{n}\), así que \(a_{n}=S_{n}-S_{n-1}\). Se suma y se resta \(S\): \(a_{n}=(S_{n}-S)+(S-S_{n-1})\).</li>
+      <li>Desigualdad triangular: \(|a_{n}|\le|S_{n}-S|+|S-S_{n-1}|\). Y \(|S-S_{n-1}|=|S_{n-1}-S|\).</li>
+      <li>Por el paso 5, cada sumando es menor que \(\dfrac{|a_{1}|}{2}\): \(|a_{n}|&lt;\dfrac{|a_{1}|}{2}+\dfrac{|a_{1}|}{2}=|a_{1}|\).</li>
+      <li>El paso 2 dice \(|a_{n}|\ge|a_{1}|\) y el paso 8 dice \(|a_{n}|&lt;|a_{1}|\): las dos cosas a la vez son imposibles. La suposición del paso 3 es falsa: ningún número real es el límite de las sumas parciales. La serie diverge. Queda demostrado.</li>
+      <li><b>Es la idea del criterio del enésimo término</b> (los términos no se acercan a \(0\), así que la serie no puede converger), escrita aquí directamente con la definición de límite. Incluye \(r=1\) (\(a_{1}+a_{1}+a_{1}+\cdots\)) y \(r=-1\) (\(a_{1}-a_{1}+a_{1}-\cdots\)).</li>
+      <li><b>Cuidado:</b> la expresión \(\dfrac{a_{1}}{1-r}\) entrega un número para cualquier \(r\neq 1\), haya suma o no. Con \(|r|\ge 1\) ese número no es la suma de nada.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Número ↔ figura: la razón decide si hay suma</h2>
+  <p>Serie geométrica con \(a_{1}=2\). La razón la eliges tú entre seis valores: \(-1\), \(-\dfrac{1}{2}\), \(\dfrac{1}{2}\), \(\dfrac{2}{3}\), \(1\) y \(\dfrac{3}{2}\) (posiciones \(1\) a \(6\) del deslizador). La figura muestra las seis primeras sumas parciales.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los puntos azules:</b> son las sumas parciales \(S_{1},\ \ldots,\ S_{6}\). En horizontal va \(n\), el número de términos sumados; en vertical, el valor de la suma. Una punteada lleva cada punto hasta su valor en el eje vertical. \(S_{3}\) y \(S_{6}\) llevan su nombre, y arriba se leen sus valores. La escala vertical cambia con cada razón: mira los números del eje.</li>
+    <li><b>Mira después la recta burdeo punteada:</b> aparece solo si \(|r|&lt;1\) y marca la suma de la serie, \(\dfrac{a_{1}}{1-r}\). Los trazos naranjas unen cada punto con la recta: su largo es lo que falta, \(|S-S_{n}|\).</li>
+    <li><b>Mueve el deslizador:</b> con \(r=\dfrac{1}{2}\) y \(r=\dfrac{2}{3}\) los puntos suben hacia la recta y los trazos naranjas se achican. Con \(r=-\dfrac{1}{2}\) los puntos quedan alternadamente arriba y abajo de la recta, cada vez más cerca; cuando un punto queda arriba, la frase bajo el dibujo dice «sobra» en vez de «falta». Las dos frases naranjas dan lo que falta (o sobra) después de \(3\) y de \(6\) términos.</li>
+    <li><b>Casos límite:</b> con \(r=1\) no hay recta (la fórmula de \(S_{n}\) pediría dividir por \(0\)) y los puntos suben en línea recta, sin tope. Con \(r=-1\) los puntos saltan entre \(2\) y \(0\). Con \(r=\dfrac{3}{2}\) suben cada vez más rápido. En los tres, \(|r|\ge 1\) y no hay suma.</li>
+    <li><b>Cuenta de abajo:</b> para la razón elegida, los datos, la fórmula del teorema 2, el denominador, las potencias, \(S_{3}\) (con su comprobación sumando uno por uno) y \(S_{6}\); si \(|r|&lt;1\), la suma y lo que falta, calculado de dos maneras; si no, por qué no hay suma. Conclusión: las sumas parciales tienen límite exactamente cuando \(|r|&lt;1\).</li>
+  </ol>
+  <div class="stage" data-scene="dem33-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> las sumas parciales \(S_{1},\ \ldots,\ S_{6}\) de la serie con \(a_{1}=2\) y la razón elegida, cada una con su punteada hasta el eje vertical.</li>
+    <li><b>Recta burdeo punteada (solo si \(|r|&lt;1\)):</b> la suma de la serie, \(\dfrac{a_{1}}{1-r}\): \(\dfrac{4}{3}\), \(4\) o \(6\), según la razón.</li>
+    <li><b>Trazos naranjas:</b> lo que le falta a cada suma parcial, \(|S-S_{n}|=\left|\dfrac{a_{1}\,r^{\,n}}{1-r}\right|\) (primera parte del teorema 3, paso 10). Más gruesos en \(n=3\) y \(n=6\).</li>
+    <li><b>Caso límite \(r=1\):</b> es la única razón en que la fórmula de \(S_{n}\) no se puede usar. Vale \(S_{n}=n\cdot a_{1}\): \(2,\ 4,\ 6,\ 8,\ 10,\ 12\).</li>
+    <li><b>Lo que la figura no demuestra:</b> seis puntos no prueban que haya límite. Eso lo prueba el teorema 3, para todo \(n\).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: una consecuencia del teorema 2. \(1-x^{\,n}=(1-x)\left(1+x+x^{2}+\cdots+x^{\,n-1}\right)\)</h3>
+  <div class="body">
+  <p>Se demuestra que la igualdad vale para todo número real \(x\) y todo entero \(n\ge 1\).</p>
+  <ol class="steps">
+    <li>Sea \(x\neq 0\) y \(x\neq 1\). La sucesión \(1,\ x,\ x^{2},\ \ldots\) es una progresión geométrica con \(a_{1}=1\) y \(r=x\): cada término es el anterior por \(x\). Por el teorema 1, \(a_{k}=1\cdot x^{\,k-1}=x^{\,k-1}\).</li>
+    <li>Teorema 2, con \(r=x\neq 1\): \(1+x+x^{2}+\cdots+x^{\,n-1}=\displaystyle\sum_{k=1}^{n}x^{\,k-1}=\dfrac{1\cdot(1-x^{\,n})}{1-x}=\dfrac{1-x^{\,n}}{1-x}\).</li>
+    <li>Se multiplica cada lado por \(1-x\), que no es \(0\): \((1-x)\left(1+x+x^{2}+\cdots+x^{\,n-1}\right)=1-x^{\,n}\).</li>
+    <li><b>Caso \(x=1\).</b> Lado izquierdo: \((1-1)\cdot(\ldots)=0\). Lado derecho: \(1-1^{\,n}=1-1=0\). También vale.</li>
+    <li><b>Caso \(x=0\)</b> (con \(0^{\,k}=0\) para \(k\ge 1\)). Lado izquierdo: \((1-0)\cdot(1+0+\cdots+0)=1\cdot 1=1\). Lado derecho: \(1-0^{\,n}=1-0=1\). También vale. La igualdad vale para todo \(x\) real.</li>
+    <li><b>Con \(n=2\):</b> \((1-x)(1+x)=1-x^{2}\), la diferencia de cuadrados. <b>Con \(n=3\):</b> \((1-x)(1+x+x^{2})=1-x^{3}\).</li>
+    <li>Comprobación de \(n=3\), con la distributiva: \((1-x)(1+x+x^{2})=1+x+x^{2}-x-x^{2}-x^{3}\). Se cancelan \(x-x=0\) y \(x^{2}-x^{2}=0\). Queda \(1-x^{3}\). ✓ Es la misma cancelación de la primera demostración del teorema 2.</li>
+    <li><b>Con números,</b> \(x=3\) y \(n=4\). Suma: \(1+3=4\); \(4+9=13\); \(13+27=40\). Lado izquierdo: \((1-3)\cdot 40=(-2)\cdot 40=-80\). Lado derecho: \(3^{4}=81\) y \(1-81=-80\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: una suma que no parte del primer término. \(\displaystyle\sum_{k=m}^{n}a_{1}\,r^{\,k-1}\), con \(r\neq 1\)</h3>
+  <div class="body">
+  <p>Sean \(m\) y \(n\) enteros con \(2\le m\le n\). Se demuestra que \(\displaystyle\sum_{k=m}^{n}a_{1}\,r^{\,k-1}=\dfrac{a_{m}\,\left(1-r^{\,n-m+1}\right)}{1-r}\), donde \(a_{m}=a_{1}\,r^{\,m-1}\) es el primer sumando.</p>
+  <ol class="steps">
+    <li>La suma de los términos \(m\) a \(n\) es la suma de los \(n\) primeros menos la de los \(m-1\) primeros: \(\displaystyle\sum_{k=m}^{n}a_{k}=S_{n}-S_{m-1}\). (Como \(m\ge 2\), \(m-1\ge 1\) y \(S_{m-1}\) existe.)</li>
+    <li>Teorema 2, dos veces: \(S_{n}=\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\) y \(S_{m-1}=\dfrac{a_{1}\,(1-r^{\,m-1})}{1-r}\).</li>
+    <li>Resta de fracciones de igual denominador: \(S_{n}-S_{m-1}=\dfrac{a_{1}\,(1-r^{\,n})-a_{1}\,(1-r^{\,m-1})}{1-r}\).</li>
+    <li>Distributiva en el numerador: \(a_{1}-a_{1}r^{\,n}-a_{1}+a_{1}r^{\,m-1}\). Se cancela \(a_{1}-a_{1}=0\). Queda \(a_{1}r^{\,m-1}-a_{1}r^{\,n}\).</li>
+    <li>Ley de las potencias (aviso de rigor, 7): \(n=(m-1)+(n-m+1)\), así que \(r^{\,n}=r^{\,m-1}\cdot r^{\,n-m+1}\).</li>
+    <li>Factor común \(a_{1}r^{\,m-1}\): \(a_{1}r^{\,m-1}-a_{1}r^{\,m-1}\cdot r^{\,n-m+1}=a_{1}r^{\,m-1}\left(1-r^{\,n-m+1}\right)\).</li>
+    <li>Por el teorema 1, \(a_{1}r^{\,m-1}=a_{m}\). Entonces \(\displaystyle\sum_{k=m}^{n}a_{1}\,r^{\,k-1}=\dfrac{a_{m}\,\left(1-r^{\,n-m+1}\right)}{1-r}\). Queda demostrado.</li>
+    <li><b>Cómo se lee:</b> es la fórmula del teorema 2 con el primer sumando, \(a_{m}\), en el lugar de \(a_{1}\), y con el número de sumandos, \(n-m+1\), en el exponente. (Con \(m=1\) es el teorema 2 mismo.)</li>
+    <li><b>Con números:</b> \(a_{1}=3\), \(r=2\), de \(k=4\) a \(k=7\). Primer sumando: \(a_{4}=3\cdot 2^{3}=3\cdot 8=24\). Número de sumandos: \(7-4+1=4\). \(2^{4}=16\) y \(1-16=-15\); \(1-2=-1\). Fórmula: \(\dfrac{24\cdot(-15)}{-1}=\dfrac{-360}{-1}=360\).</li>
+    <li>Comprobación, sumando uno por uno: los sumandos son \(24,\ 48,\ 96,\ 192\). \(24+48=72\); \(72+96=168\); \(168+192=360\). ✓</li>
+    <li>Comprobación con el paso 1: \(2^{7}=128\), \(S_{7}=\dfrac{3\cdot(1-128)}{1-2}=\dfrac{3\cdot(-127)}{-1}=\dfrac{-381}{-1}=381\). \(2^{3}=8\), \(S_{3}=\dfrac{3\cdot(1-8)}{1-2}=\dfrac{3\cdot(-7)}{-1}=\dfrac{-21}{-1}=21\). \(381-21=360\). ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: el lema 2 con números. Hallar \(N\) para \(r=\dfrac{9}{10}\) y \(\varepsilon=0{,}01\)</h3>
+  <div class="body">
+  <p>Se busca un \(N\) tal que \(\left(\dfrac{9}{10}\right)^{n}&lt;0{,}01\) para todo \(n&gt;N\), siguiendo los pasos de la demostración.</p>
+  <ol class="steps">
+    <li>\(|r|=\dfrac{9}{10}\), que está entre \(0\) y \(1\). Su inverso: \(\dfrac{1}{|r|}=\dfrac{10}{9}\).</li>
+    <li>\(h=\dfrac{1}{|r|}-1=\dfrac{10}{9}-\dfrac{9}{9}=\dfrac{1}{9}\), positivo. Comprobación: \(1+h=\dfrac{10}{9}\) y \(\dfrac{1}{1+h}=\dfrac{9}{10}=|r|\). ✓</li>
+    <li>Lema 1, con \(h=\dfrac{1}{9}\): \(\left(\dfrac{10}{9}\right)^{n}\ge 1+\dfrac{n}{9}&gt;\dfrac{n}{9}\).</li>
+    <li>Inversos, en el orden contrario: \(\left(\dfrac{9}{10}\right)^{n}&lt;\dfrac{9}{n}\), para todo \(n\ge 1\). Es el paso 6 del lema 2: \(\dfrac{1}{n\,h}=\dfrac{1}{n\cdot\frac{1}{9}}=\dfrac{9}{n}\).</li>
+    <li>\(\varepsilon=0{,}01=\dfrac{1}{100}\). Paso 7 del lema 2: \(\dfrac{1}{h\,\varepsilon}=\dfrac{1}{\frac{1}{9}\cdot\frac{1}{100}}=\dfrac{1}{\frac{1}{900}}=900\). Sirve \(N=900\).</li>
+    <li>Cadena completa: si \(n&gt;900\), entonces \(\dfrac{9}{n}&lt;\dfrac{9}{900}=\dfrac{1}{100}\), y \(\left(\dfrac{9}{10}\right)^{n}&lt;\dfrac{9}{n}&lt;0{,}01\). ✓</li>
+    <li><b>\(N=900\) no es el menor que sirve.</b> Con calculadora: \(0{,}9^{43}\approx 0{,}0108\), mayor que \(0{,}01\); \(0{,}9^{44}\approx 0{,}0097\), menor que \(0{,}01\). Y cada potencia siguiente es la anterior multiplicada por \(0{,}9\), que es positivo y menor que \(1\): es más chica. Entonces también sirve \(N=43\).</li>
+    <li>La definición de límite pide que exista <b>un</b> \(N\) para cada \(\varepsilon\), no el menor. La cota de Bernoulli es holgada, pero funciona para cualquier \(|r|&lt;1\) y cualquier \(\varepsilon\), sin calculadora: por eso sirve para demostrar.</li>
+    <li>Comprobación del lema 1 con \(n=2\): \(\left(\dfrac{10}{9}\right)^{2}=\dfrac{100}{81}\) y \(1+\dfrac{2}{9}=\dfrac{11}{9}=\dfrac{99}{81}\). En efecto \(\dfrac{100}{81}\ge\dfrac{99}{81}\). ✓ La diferencia, \(\dfrac{1}{81}\), es el sumando \(n\,h^{2}=1\cdot\left(\dfrac{1}{9}\right)^{2}\) que se quitó en el paso 6 del lema 1 (al pasar de \(n=1\) a \(n=2\)).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: la segunda parte del teorema 3 con números. \(5-5+5-5+\cdots\) no tiene suma</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es la serie geométrica con \(a_{1}=5\) y \(r=-1\): cada término es el anterior por \(-1\). \(|r|=1\), así que \(|r|\ge 1\).</li>
+    <li>Términos (teorema 1): \(a_{n}=5\cdot(-1)^{n-1}\): \(5,\ -5,\ 5,\ -5,\ \ldots\) Tamaño: \(|a_{n}|=5\cdot|-1|^{\,n-1}=5\cdot 1^{\,n-1}=5\), para todo \(n\).</li>
+    <li>Sumas parciales, una por una: \(S_{1}=5\); \(S_{2}=5+(-5)=0\); \(S_{3}=0+5=5\); \(S_{4}=5+(-5)=0\).</li>
+    <li>Con el teorema 2 (\(r=-1\neq 1\)): \(1-r=1-(-1)=2\), y \(S_{n}=\dfrac{5\,\left(1-(-1)^{n}\right)}{2}\). Si \(n\) es impar, \((-1)^{n}=-1\) y \(S_{n}=\dfrac{5\cdot 2}{2}=5\). Si \(n\) es par, \((-1)^{n}=1\) y \(S_{n}=\dfrac{5\cdot 0}{2}=0\). Coincide con el paso 3.</li>
+    <li>Se supone que hay un número real \(S\) con \(\displaystyle\lim_{n\to\infty}S_{n}=S\). Con \(\varepsilon=\dfrac{|a_{1}|}{2}=\dfrac{5}{2}\) hay un \(N\) tal que \(|S_{m}-S|&lt;\dfrac{5}{2}\) para todo \(m&gt;N\).</li>
+    <li>Con \(n=N+2\): \(|a_{n}|=|S_{n}-S_{n-1}|\le|S_{n}-S|+|S-S_{n-1}|&lt;\dfrac{5}{2}+\dfrac{5}{2}=5\).</li>
+    <li>Pero \(|a_{n}|=5\) (paso 2). Quedaría \(5&lt;5\), que es falso. No existe tal \(S\): la serie diverge.</li>
+    <li><b>Tres «sumas» que no lo son.</b> Agrupando así: \((5-5)+(5-5)+\cdots\) se obtendría \(0+0+\cdots=0\). Agrupando así: \(5+(-5+5)+(-5+5)+\cdots\) se obtendría \(5+0+0+\cdots=5\). Y la expresión \(\dfrac{a_{1}}{1-r}\) da \(\dfrac{5}{2}\). Tres resultados distintos para la misma serie.</li>
+    <li>Ninguno es la suma: la suma de una serie es el límite de sus sumas parciales, y aquí no existe. Agrupar infinitos sumandos y usar \(\dfrac{a_{1}}{1-r}\) solo es válido cuando ya se sabe que la serie converge.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que comprobar algunos casos es demostrar: que la fórmula funcione con \(n=1,\ 2,\ 3\) no dice nada de \(n=100\); para eso está la inducción. Hacer la inducción sin el caso base, o usar en el paso inductivo justo lo que se quiere demostrar. Escribir el exponente \(n\) en vez de \(n-1\) en el término enésimo. En la resta \(S_{n}-r\,S_{n}\), olvidar el último término, \(a_{1}r^{\,n}\), o escribirlo como \(a_{1}r^{\,n-1}\). Usar \(\dfrac{a_{1}\,(1-r^{\,n})}{1-r}\) con \(r=1\): ahí se divide por \(0\), y la suma es \(n\cdot a_{1}\). Usar \(\dfrac{a_{1}}{1-r}\) con \(|r|\ge 1\): entrega un número, pero la serie no tiene suma. Creer que \(r^{\,n}\) tiene límite \(0\) para cualquier \(r\): solo si \(|r|&lt;1\); con \(r=1\) vale siempre \(1\), con \(r=-1\) salta entre \(-1\) y \(1\). Olvidar que \(|r|&lt;1\) incluye las razones negativas, como \(r=-\dfrac{1}{2}\).</p>
+    <p><b>Un razonamiento circular muy común.</b> «Sea \(S=a_{1}+a_{1}r+a_{1}r^{2}+\cdots\) Entonces \(r\,S=a_{1}r+a_{1}r^{2}+\cdots\), y restando, \(S-r\,S=a_{1}\), de donde \(S=\dfrac{a_{1}}{1-r}\).» Esa cuenta <b>supone</b> que la suma \(S\) existe, que es justo lo que hay que demostrar. Con \(a_{1}=1\) y \(r=2\) daría \(1+2+4+8+\cdots=-1\), que es absurdo. Por eso la demostración se hace con las sumas parciales, que son sumas de finitos sumandos, y recién al final se toma el límite.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Demuestra por inducción, sin usar el teorema 2, que \(1+2+4+\cdots+2^{\,n-1}=2^{\,n}-1\) para todo entero \(n\ge 1\). (b) Con el método de la resta, encuentra una fórmula para \(S_{n}=\displaystyle\sum_{k=1}^{n}5\cdot 3^{\,k-1}\) y calcula \(S_{4}\). (c) Una progresión geométrica tiene \(a_{1}=7\) y \(r=1\). ¿Cuánto vale \(S_{20}\)? ¿Por qué no se puede usar la fórmula con \(1-r\) en el denominador?</p>
+    <details><summary>Pista</summary><div><p>En (a), el sumando que se agrega al pasar de \(n\) a \(n+1\) es \(2^{\,n}\), y \(2^{\,n}+2^{\,n}=2\cdot 2^{\,n}=2^{\,n+1}\). En (b), multiplica la suma por \(3\) y resta. En (c), mira cuánto vale \(1-r\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Caso base, \(n=1\). Lado izquierdo: un solo sumando, \(2^{0}=1\). Lado derecho: \(2^{1}-1=2-1=1\). ✓</li>
+        <li>(a) Hipótesis de inducción, para un entero \(n\ge 1\): \(1+2+4+\cdots+2^{\,n-1}=2^{\,n}-1\).</li>
+        <li>(a) Paso inductivo. La suma con \(n+1\) sumandos agrega el término \(2^{\,(n+1)-1}=2^{\,n}\). Se suma \(2^{\,n}\) a cada lado de la hipótesis: \(1+2+\cdots+2^{\,n-1}+2^{\,n}=2^{\,n}-1+2^{\,n}\).</li>
+        <li>(a) \(2^{\,n}+2^{\,n}=2\cdot 2^{\,n}=2^{\,n+1}\) (definición de potencia). El lado derecho es \(2^{\,n+1}-1\): la fórmula para \(n+1\). ✓ Por inducción, vale para todo entero \(n\ge 1\).</li>
+        <li>(a) Comprobación con el teorema 2 (\(a_{1}=1\), \(r=2\)): \(\dfrac{1\cdot(1-2^{\,n})}{1-2}=\dfrac{1-2^{\,n}}{-1}=2^{\,n}-1\). ✓ Y con \(n=4\): \(1+2+4+8=15\) y \(2^{4}-1=16-1=15\). ✓</li>
+        <li>(b) \(S_{n}=5+5\cdot 3+5\cdot 3^{2}+\cdots+5\cdot 3^{\,n-1}\). Es geométrica con \(a_{1}=5\) y \(r=3\).</li>
+        <li>(b) Se multiplica por \(3\): \(3\,S_{n}=5\cdot 3+5\cdot 3^{2}+\cdots+5\cdot 3^{\,n-1}+5\cdot 3^{\,n}\).</li>
+        <li>(b) Se resta. Se cancelan \(5\cdot 3,\ \ldots,\ 5\cdot 3^{\,n-1}\): \(S_{n}-3\,S_{n}=5-5\cdot 3^{\,n}\).</li>
+        <li>(b) Factor común en cada lado: \((1-3)\,S_{n}=5\,(1-3^{\,n})\), es decir, \(-2\,S_{n}=5\,(1-3^{\,n})\).</li>
+        <li>(b) Se divide por \(-2\): \(S_{n}=\dfrac{5\,(1-3^{\,n})}{-2}\). Multiplicando numerador y denominador por \(-1\): \(S_{n}=\dfrac{5\,(3^{\,n}-1)}{2}\).</li>
+        <li>(b) Con \(n=4\): \(3^{4}=81\); \(81-1=80\); \(5\cdot 80=400\); \(400:2=200\). \(S_{4}=200\).</li>
+        <li>(b) Comprobación: los sumandos son \(5,\ 15,\ 45,\ 135\). \(5+15=20\); \(20+45=65\); \(65+135=200\). ✓</li>
+        <li>(c) \(1-r=1-1=0\): la fórmula pediría dividir por \(0\). Con \(r=1\) todos los términos valen \(a_{1}=7\), y por el teorema 2, caso \(r=1\): \(S_{20}=20\cdot 7=140\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Siguiendo los lemas 1 y 2, encuentra un \(N\) tal que \(\left(\dfrac{2}{3}\right)^{n}&lt;0{,}001\) para todo \(n&gt;N\). (b) Demuestra, con una serie geométrica, que \(0{,}999\ldots=1\). (c) En la serie de (b), ¿desde qué \(n\) la suma parcial está a menos de \(0{,}001\) de \(1\)?</p>
+    <details><summary>Pista</summary><div><p>En (a), \(h=\dfrac{1}{|r|}-1\) y sirve cualquier natural \(N\ge\dfrac{1}{h\,\varepsilon}\). En (b), \(0{,}999\ldots=\dfrac{9}{10}+\dfrac{9}{100}+\dfrac{9}{1000}+\cdots\): identifica \(a_{1}\) y \(r\). En (c), calcula \(S_{n}\) con el teorema 2 y mira la distancia \(|S_{n}-1|\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(|r|=\dfrac{2}{3}\). Inverso: \(\dfrac{3}{2}\). \(h=\dfrac{3}{2}-1=\dfrac{3}{2}-\dfrac{2}{2}=\dfrac{1}{2}\).</li>
+        <li>(a) Lema 1: \(\left(\dfrac{3}{2}\right)^{n}\ge 1+\dfrac{n}{2}&gt;\dfrac{n}{2}\). Inversos: \(\left(\dfrac{2}{3}\right)^{n}&lt;\dfrac{2}{n}\).</li>
+        <li>(a) \(\varepsilon=0{,}001=\dfrac{1}{1000}\). \(\dfrac{1}{h\,\varepsilon}=\dfrac{1}{\frac{1}{2}\cdot\frac{1}{1000}}=\dfrac{1}{\frac{1}{2000}}=2000\). Sirve \(N=2000\).</li>
+        <li>(a) Cadena: si \(n&gt;2000\), \(\left(\dfrac{2}{3}\right)^{n}&lt;\dfrac{2}{n}&lt;\dfrac{2}{2000}=\dfrac{1}{1000}\). ✓ (No es el menor: con calculadora, \(\left(\dfrac{2}{3}\right)^{17}\approx 0{,}00101\) y \(\left(\dfrac{2}{3}\right)^{18}\approx 0{,}00068\); también sirve \(N=17\). La definición pide un \(N\), no el menor.)</li>
+        <li>(b) Por lo que significa la escritura decimal (se cita, como en la hoja «Suma de una serie geométrica infinita»): \(0{,}999\ldots=\dfrac{9}{10}+\dfrac{9}{100}+\dfrac{9}{1000}+\cdots\)</li>
+        <li>(b) Primer término: \(a_{1}=\dfrac{9}{10}\). Cociente entre vecinos: \(\dfrac{9}{100}:\dfrac{9}{10}=\dfrac{9}{100}\cdot\dfrac{10}{9}=\dfrac{90}{900}=\dfrac{1}{10}\). En general, el término \(n\) es \(\dfrac{9}{10^{\,n}}\), y \(\dfrac{9}{10^{\,n+1}}:\dfrac{9}{10^{\,n}}=\dfrac{9}{10^{\,n+1}}\cdot\dfrac{10^{\,n}}{9}=\dfrac{10^{\,n}}{10^{\,n+1}}=\dfrac{1}{10}\). Cada término es el anterior por \(\dfrac{1}{10}\): \(r=\dfrac{1}{10}\).</li>
+        <li>(b) \(|r|=\dfrac{1}{10}&lt;1\). Teorema 3: la serie converge y su suma es \(\dfrac{a_{1}}{1-r}\).</li>
+        <li>(b) \(1-r=\dfrac{10}{10}-\dfrac{1}{10}=\dfrac{9}{10}\). Suma: \(\dfrac{9}{10}:\dfrac{9}{10}=1\). Entonces \(0{,}999\ldots=1\).</li>
+        <li>(b) No es «casi \(1\)»: \(0{,}999\ldots\) nombra la suma de la serie, que es el límite de las sumas parciales \(0{,}9;\ 0{,}99;\ 0{,}999;\ \ldots\), y ese límite es exactamente \(1\).</li>
+        <li>(c) Teorema 2: \(S_{n}=\dfrac{\frac{9}{10}\left(1-\left(\frac{1}{10}\right)^{n}\right)}{\frac{9}{10}}=1-\left(\dfrac{1}{10}\right)^{n}\). Por ejemplo, \(S_{3}=1-\dfrac{1}{1000}=0{,}999\).</li>
+        <li>(c) Distancia: \(|S_{n}-1|=\left|-\left(\dfrac{1}{10}\right)^{n}\right|=\dfrac{1}{10^{\,n}}\).</li>
+        <li>(c) Se pide \(\dfrac{1}{10^{\,n}}&lt;\dfrac{1}{1000}\), es decir, \(10^{\,n}&gt;1000=10^{3}\). Con \(n=3\): \(10^{3}=1000\), que no es mayor. Con \(n=4\): \(10^{4}=10\,000&gt;1000\). Y para \(n\) mayores, \(10^{\,n}\) es todavía mayor.</li>
+        <li>(c) Desde \(n=4\) en adelante (sirve \(N=3\)): \(S_{4}=0{,}9999\), a distancia \(0{,}0001\) de \(1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un aviso se reenvía por rondas. En la ronda \(1\) lo recibe \(1\) persona. Cada persona que lo recibe lo reenvía a \(3\) personas nuevas, que forman la ronda siguiente. (Es un modelo, con datos inventados: supone que nadie lo recibe dos veces y que todos lo reenvían.) (a) ¿Cuántas personas lo reciben en la ronda \(10\)? (b) ¿Cuántas lo han recibido en total hasta la ronda \(10\)? (c) Demuestra que, en este modelo, el total hasta la ronda \(n\) es \(S_{n}=\dfrac{3\,a_{n}-1}{2}\), donde \(a_{n}\) es el número de personas de la ronda \(n\). (d) ¿Tiene sentido calcular «el total de todas las rondas» con \(\dfrac{a_{1}}{1-r}\)?</p>
+    <details><summary>Pista</summary><div><p>Las rondas forman una progresión geométrica con \(a_{1}=1\) y \(r=3\). En (a) usa el teorema 1; en (b), el teorema 2. En (c), escribe \(S_{n}=\dfrac{3^{\,n}-1}{2}\) y usa \(3^{\,n}=3\cdot 3^{\,n-1}\). En (d), compara \(|r|\) con \(1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Cada ronda tiene \(3\) veces las personas de la anterior: \(a_{n+1}=a_{n}\cdot 3\), con \(a_{1}=1\). Es una progresión geométrica con \(r=3\).</li>
+        <li>(a) Teorema 1: \(a_{10}=a_{1}\cdot r^{\,9}=1\cdot 3^{9}\). Potencias, cada una de la anterior: \(3^{2}=9\); \(3^{3}=27\); \(3^{4}=81\); \(3^{5}=243\); \(3^{6}=729\); \(3^{7}=2187\); \(3^{8}=6561\); \(3^{9}=19\,683\).</li>
+        <li>(a) En la ronda \(10\) lo reciben \(19\,683\) personas.</li>
+        <li>(b) Teorema 2, con \(r=3\neq 1\): \(S_{10}=\dfrac{a_{1}\,(1-r^{\,10})}{1-r}=\dfrac{1\cdot(1-3^{10})}{1-3}\).</li>
+        <li>(b) \(3^{10}=3^{9}\cdot 3=19\,683\cdot 3=59\,049\). Numerador: \(1-59\,049=-59\,048\). Denominador: \(1-3=-2\).</li>
+        <li>(b) \(S_{10}=\dfrac{-59\,048}{-2}=29\,524\). Hasta la ronda \(10\) lo han recibido \(29\,524\) personas.</li>
+        <li>(c) Teorema 2: \(S_{n}=\dfrac{1-3^{\,n}}{1-3}=\dfrac{1-3^{\,n}}{-2}\). Multiplicando numerador y denominador por \(-1\): \(S_{n}=\dfrac{3^{\,n}-1}{2}\).</li>
+        <li>(c) Definición de potencia: \(3^{\,n}=3^{\,n-1}\cdot 3\). Teorema 1: \(a_{n}=1\cdot 3^{\,n-1}=3^{\,n-1}\). Entonces \(3^{\,n}=3\,a_{n}\), y \(S_{n}=\dfrac{3\,a_{n}-1}{2}\). Queda demostrado.</li>
+        <li>(c) Comprobación con \(n=10\): \(3\cdot 19\,683=59\,049\); \(59\,049-1=59\,048\); \(59\,048:2=29\,524\). ✓ Dice que el total es casi una vez y media la última ronda: \(\dfrac{29\,524}{19\,683}\approx 1{,}49997\). En este modelo, la última ronda sola tiene cerca de dos tercios de todos los que lo han recibido.</li>
+        <li>(d) \(|r|=3\ge 1\). Por el teorema 3, la serie \(1+3+9+27+\cdots\) diverge: no tiene suma. La expresión \(\dfrac{a_{1}}{1-r}=\dfrac{1}{1-3}=-\dfrac{1}{2}\) no significa nada (una cantidad de personas no puede ser negativa ni fraccionaria).</li>
+        <li>(d) Interpretación: los totales \(S_{n}\) crecen sin tope. Con \(n=22\): \(3^{22}=31\,381\,059\,609\) y \(S_{22}=\dfrac{31\,381\,059\,609-1}{2}=15\,690\,529\,804\), más de quince mil millones, más personas que las que hay en el mundo (unos ocho mil millones; dato aproximado, citado). Mucho antes de esa ronda el supuesto de «personas nuevas» deja de cumplirse: el modelo sirve solo para las primeras rondas.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H33 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H33 · demostraciones de las sucesiones y series geométricas: la resta S − r·S que deja la fórmula de la suma parcial (caso 8 + 4 + 2 + 1), y la razón que decide si las sumas parciales tienen límite (seis razones, con a₁ = 2) */
+function dm33Mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+/* fracción p/q simplificada, con q > 0 */
+function dm33F(p, q){ if (q < 0){ p = -p; q = -q; } var g = dm33Mcd(p, q); return [p/g, q/g]; }
+/* fracción en TeX tal como viene (sin simplificar), con el signo delante; t = 1 para tamaño chico */
+function dm33Cr(p, q, t){ if (q < 0){ p = -p; q = -q; } var s = p < 0 ? '-' : '', a = Math.abs(p); return q === 1 ? s + a : s + '\\' + (t ? 't' : 'd') + 'frac{' + a + '}{' + q + '}'; }
+function dm33Tx(f, t){ return dm33Cr(f[0], f[1], t); }
+function dm33Pl(f){ return (f[0] < 0 ? '−' : '') + Math.abs(f[0]) + (f[1] === 1 ? '' : '/' + f[1]); }
+/* paréntesis si es negativo */
+function dm33Pa(s){ return s.charAt(0) === '-' ? '\\left(' + s + '\\right)' : s; }
+function dm33Ig(f, g){ return f[0] === g[0] && f[1] === g[1]; }
+/* producto f·g escrito con su cuenta: f · g = (sin simplificar) = (simplificado); devuelve [TeX, resultado] */
+function dm33Mul(f, g){ var p = f[0]*g[0], q = f[1]*g[1], r = dm33F(p, q), s = dm33Tx(f) + '\\cdot ' + dm33Pa(dm33Tx(g)) + '=' + dm33Cr(p, q); if (!(p === r[0] && q === r[1])) s += '=' + dm33Tx(r); return [s, r]; }
+/* división f : g, hecha como producto por el inverso; devuelve [TeX de «f : g», resultado, TeX del producto con su cuenta] */
+function dm33Div(f, g){ var inv = dm33F(g[1], g[0]), m = dm33Mul(f, inv); return [dm33Tx(f) + ':' + dm33Pa(dm33Tx(g)), m[1], m[0]]; }
+/* suma (sg = 1) o resta (sg = −1) con denominador común, escrita con su cuenta; devuelve [TeX, resultado] */
+function dm33Sum(f, g, sg){ var D = f[1]*g[1]/dm33Mcd(f[1], g[1]), a = f[0]*(D/f[1]), b = g[0]*(D/g[1]), n = a + sg*b, r = dm33F(n, D), op = sg > 0 ? '+' : '-', s = dm33Tx(f) + op + dm33Pa(dm33Tx(g));
+  if (D !== 1 && !(f[1] === D && g[1] === D)) s += '=' + dm33Cr(a, D) + op + dm33Pa(dm33Cr(b, D));
+  if (D !== 1) s += '=' + dm33Cr(n, D); else s += '=' + n;
+  if (D !== 1 && !(n === r[0] && D === r[1])) s += '=' + dm33Tx(r); return [s, r]; }
+/* decimal de una fracción: «= 3,5» si es exacto con 4 decimales o menos; «≈ 4,2222» si hubo que redondear (mitad hacia arriba en el tamaño); '' si es entero */
+function dm33Dc(f, plano){ if (f[1] === 1) return ''; var ex = (10000*Math.abs(f[0])) % f[1] === 0, n = Math.floor((20000*Math.abs(f[0]) + f[1])/(2*f[1])), s = ('0000' + (n % 10000)).slice(-4), e = Math.floor(n/10000); if (ex) s = s.replace(/0+$/, '');
+  return (plano ? (ex ? ' = ' : ' ≈ ') : (ex ? '=' : '\\approx ')) + (f[0] < 0 ? (plano ? '−' : '-') : '') + e + (plano ? ',' : '{,}') + s; }
+OA.scene('dem33-idea', (function(){
+  var N = 6, Q = '\\\\&\\qquad ', U = 0.4, X0 = -1.2, Y1 = 6.5, Y2 = 5.45, Y3 = 4.4, H = 0.5;
+  var B1 = [[0, 8, '8'], [8, 4, '4'], [12, 2, '2'], [14, 1, '1']], B2 = [[8, 4, '4'], [12, 2, '2'], [14, 1, '1'], [15, 0.5, '½']];
+  var PZ = [['T1', 'S_{4}\\text{: suma de 4 términos}', 'S₄: suma de 4 términos', 'c-sec'],
+    ['T2', '\\tfrac{1}{2}\\,S_{4}\\text{: todo a la mitad}', '½·S₄: todo a la mitad', 'c-alt'],
+    ['T3', 'S_{4}-\\tfrac{1}{2}\\,S_{4}=8-\\tfrac{1}{2}', 'S₄ − ½·S₄ = 8 − ½', 'diff'],
+    ['T4', '\\left(1-\\tfrac{1}{2}\\right)S_{4}=8\\left(1-\\tfrac{1}{16}\\right)', '(1 − ½)·S₄ = 8·(1 − 1/16)', 'diff'],
+    ['T5', 'S_{4}=15', 'S₄ = 15', 'diff'],
+    ['Q', '\\text{¿Cuánto suma }S_{n}=a_{1}+a_{1}r+\\cdots+a_{1}r^{\\,n-1}\\text{?}', '¿Cuánto suma Sₙ = a₁ + a₁r + ⋯ + a₁rⁿ⁻¹?', 'pt'],
+    ['F', '\\Longrightarrow\\ S_{n}=\\tfrac{a_{1}\\,(1-r^{\\,n})}{1-r}\\text{, si }r\\neq 1', '⟹ Sₙ = a₁(1 − rⁿ)/(1 − r), si r ≠ 1', 'diff'],
+    ['R1', 'S_{4}=8+4+2+1', 'S₄ = 8 + 4 + 2 + 1', ''],
+    ['R2', '\\tfrac{1}{2}\\,S_{4}=4+2+1+\\tfrac{1}{2}', '½·S₄ = 4 + 2 + 1 + ½', ''],
+    ['R3', 'S_{4}-\\tfrac{1}{2}\\,S_{4}=8-\\tfrac{1}{2}', 'S₄ − ½·S₄ = 8 − ½', ''],
+    ['R4', '\\left(1-\\tfrac{1}{2}\\right)S_{4}=8\\left(1-\\left(\\tfrac{1}{2}\\right)^{4}\\right)', '(1 − ½)·S₄ = 8·(1 − (½)⁴)', ''],
+    ['R5', 'S_{4}=\\tfrac{15}{2}:\\tfrac{1}{2}=\\tfrac{15}{2}\\cdot 2=15', 'S₄ = 15/2 : 1/2 = 15/2 · 2 = 15', ''],
+    ['R6', 'S_{n}=\\dfrac{a_{1}\\,(1-r^{\\,n})}{1-r}\\quad(r\\neq 1)', 'Sₙ = a₁(1 − rⁿ)/(1 − r) (r ≠ 1)', 'diff']];
+  var TXT = [['Se toma un caso: primer término 8, razón ½,', 'cuatro términos. Cada bloque es un término.'],
+    ['Se multiplica la suma por la razón: cada', 'bloque baja a la mitad y queda corrido un lugar.'],
+    ['Se resta: los bloques iguales de arriba y abajo', 'se cancelan. Quedan el primero y el último.'],
+    ['Factor común: a la barra de 8 le falta', 'una de sus 16 partes, la que mide ½.'],
+    ['Se divide por un medio: la resta es la mitad', 'de la suma. La suma completa es 15.'],
+    ['Con letras, la misma cuenta da la fórmula.', 'Solo pide que la razón no sea 1, para dividir.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-2.6, y1:10}, aspect:12.6/6.6,
+    aria:'Arriba, una franja dice qué muestra: restar r por S de S cancela casi todo y deja la fórmula de la suma parcial. Animación en seis pasos con bloques cuyo largo es el valor de cada término. Uno: una fila azul de cuatro bloques, de largos 8, 4, 2 y 1: es la suma de cuatro términos con primer término 8 y razón un medio. Dos: cada bloque baja a una segunda fila, verde, reducido a la mitad, 4, 2, 1 y un medio, y queda corrido un lugar a la derecha, de modo que el 4, el 2 y el 1 de abajo quedan justo bajo el 4, el 2 y el 1 de arriba. Tres: los bloques iguales de las dos filas se tachan y se unen con líneas finas: al restar se cancelan; quedan el 8 de arriba y el medio de abajo, y aparece una tercera barra, naranja, de largo 8 a la que se le ha sacado, al final, un pedazo de largo un medio, que deja su hueco punteado. Cuatro: la barra naranja se divide en 16 partes iguales y le falta una: es 8 por 1 menos un dieciseisavo, y eso es 1 menos un medio, por la suma. Cinco: una cota sobre la primera fila marca la suma completa, 15, y una línea punteada vertical muestra que la barra naranja, de largo 7 y medio, llega justo a la mitad. Seis: junto a la pregunta se escribe la respuesta, la fórmula de la suma parcial, a sub 1 por 1 menos r elevado a n, dividido por 1 menos r, si r es distinto de 1. Nada de lo que aparece se borra. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> \\(S_{4}=8+4+2+1\\): cada bloque es un término</span><span><i class="sw alt"></i> \\(\\tfrac{1}{2}\\,S_{4}=4+2+1+\\tfrac{1}{2}\\): la suma multiplicada por la razón</span><span><i class="sw rise"></i> la resta, \\(S_{4}-\\tfrac{1}{2}\\,S_{4}=8-\\tfrac{1}{2}\\)</span><span>bloques grises tachados: están en las dos filas y se cancelan</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), w, w1, w2, wc, i, b, a, xa, GR = 'rgba(110,110,110,';
+      function cl(t){ return Math.max(0, Math.min(1, t)); }
+      function txt(t, x, y, cc){ c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(t, px, py, al, cc, al2){ c.globalAlpha = al2 == null ? 1 : al2; c.font = '700 11.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); c.globalAlpha = 1; }
+      /* bloque: x e y en unidades del mundo (esquina inferior izquierda), ancho wd, alto H */
+      function blo(x, y, wd, col, al, dash){ var px = X(x), py = Y(y + H), pw = X(x + wd) - px, ph = Y(y) - py; c.globalAlpha = al*0.22; c.fillStyle = col; if (!dash) c.fillRect(px, py, pw, ph); c.globalAlpha = al; c.strokeStyle = col; c.lineWidth = 1.3; c.setLineDash(dash || []); c.strokeRect(px, py, pw, ph); c.setLineDash([]); c.globalAlpha = 1; }
+      function tacha(x, y, wd, al){ var px = X(x), py = Y(y + H), pw = X(x + wd) - px, ph = Y(y) - py; c.globalAlpha = al; c.fillStyle = 'rgba(255,255,255,0.55)'; c.fillRect(px + 1, py + 1, pw - 2, ph - 2); c.strokeStyle = GR + '0.9)'; c.lineWidth = 1.2; c.setLineDash([]); c.beginPath(); c.moveTo(px + 2, py + ph - 2); c.lineTo(px + pw - 2, py + 2); c.stroke(); c.globalAlpha = 1; }
+      function cota(x0, x1, y, col, al){ c.globalAlpha = al; c.strokeStyle = col; c.lineWidth = 1.2; c.setLineDash([]); c.beginPath(); c.moveTo(X(x0), Y(y)); c.lineTo(X(x1), Y(y)); c.moveTo(X(x0), Y(y) - 4); c.lineTo(X(x0), Y(y) + 4); c.moveTo(X(x1), Y(y) - 4); c.lineTo(X(x1), Y(y) + 4); c.stroke(); c.globalAlpha = 1; }
+      /* paso 1: la fila de S₄; cada bloque aparece en su turno */
+      w = k === 1 ? u : 1; wc = k > 3 ? 1 : k === 3 ? cl(2*u) : 0; /* wc: avance de la cancelación; el número de un bloque cancelado pasa, en gris, a su esquina */
+      for (i = 0; i < 4; i++){ b = B1[i]; a = cl(4*w - i); if (a <= 0) continue; blo(X0 + b[0]*U, Y1, b[1]*U, C.sec, a); num(b[2], X(X0 + (b[0] + b[1]/2)*U), Y(Y1 + H/2), 'center', C.sec, a*(i ? 1 - wc : 1)); }
+      if (w > 0.3) L('T1', X0, Y1 + H + 0.45, 0);
+      /* paso 2: cada bloque baja reducido a la mitad y queda corrido un lugar */
+      if (k >= 2){ w = k === 2 ? u : 1;
+        for (i = 0; i < 4; i++){ b = B1[i]; a = cl(2.2*w - 0.3*i); if (a <= 0) continue; xa = X0 + (b[0] + (B2[i][0] - b[0])*a)*U; w1 = b[1]*(1 - a/2)*U; blo(xa, Y1 + (Y2 - Y1)*a, w1, C.alt, 1); if (a > 0.98){ if (i < 3) num(B2[i][2], X(xa + w1/2), Y(Y2 + H/2), 'center', C.alt, 1 - wc); else num('½', X(xa + w1/2), Y(Y2) + 10, 'center', C.alt); } }
+        if (w > 0.6) L('T2', X0, Y2 + H/2, 0); }
+      /* paso 3: los bloques iguales se cancelan (quedan a la vista, tachados y unidos); abajo, la resta: la barra de 8 con el pedazo de ½ sacado, que deja su hueco */
+      if (k >= 3){ w = k === 3 ? u : 1; w1 = cl(2*w); w2 = cl(2*w - 1);
+        for (i = 1; i < 4; i++){ b = B1[i]; tacha(X0 + b[0]*U, Y1, b[1]*U, w1); tacha(X0 + b[0]*U, Y2, b[1]*U, w1); c.globalAlpha = w1; c.strokeStyle = GR + '0.8)'; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(X0 + (b[0] + b[1]/2)*U), Y(Y1)); c.lineTo(X(X0 + (b[0] + b[1]/2)*U), Y(Y2 + H)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; xa = X(X0 + (b[0] + b[1]/2)*U) - (i === 1 ? 14 : i === 2 ? 8 : 4); num(b[2], xa, Y(Y1 + H/2) - 4, 'center', '#555', w1); num(b[2], xa, Y(Y2 + H/2) - 4, 'center', '#555', w1); }
+        if (w2 > 0){ blo(X0, Y3, 7.5*U*w2, C.rise, 1); if (w2 > 0.9){ blo(X0 + 7.5*U, Y3, 0.5*U, C.rise, cl(10*w2 - 9), [3, 2]); L('T3', X0 + 8.4*U, Y3 + H/2, 0); } } }
+      /* paso 4: la barra de 8, en 16 partes de ½: falta una */
+      if (k >= 4){ w = k === 4 ? u : 1; c.globalAlpha = 0.55*w; c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([]); for (i = 1; i < 15; i++){ c.beginPath(); c.moveTo(X(X0 + i*0.5*U), Y(Y3 + H)); c.lineTo(X(X0 + i*0.5*U), Y(Y3)); c.stroke(); } c.globalAlpha = 1;
+        cota(X0, X0 + 7.5*U*w, Y3 - 0.22, C.rise, 1); if (w > 0.6) L('T4', X0, Y3 - 0.62, 0); }
+      /* paso 5: la suma completa; la resta llega justo a la mitad */
+      if (k >= 5){ w = k === 5 ? u : 1; cota(X0, X0 + 15*U*w, Y1 + H + 0.16, C.rise, 1);
+        c.globalAlpha = w; c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(X0 + 7.5*U), Y(Y3 + H)); c.lineTo(X(X0 + 7.5*U), Y(Y3 + H + (Y1 + H + 0.16 - Y3 - H)*w)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+        if (w > 0.7){ L('T5', X0 + 15*U, Y1 + H + 0.45, -100); num('mitad', X(X0 + 7.5*U) + 4, Y(Y2 + H) - 9, 'left', C.rise); } }
+      L('Q', -1.2, 8.62, 0); if (k === N && u > 0.5) L('F', -1.2, 8.08, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 2.75); txt(TXT[k - 1][1], -1.2, 2.75 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.08));
+      dtQue(S, 'restar r·S de S cancela casi todo', 'y deja la fórmula de la suma parcial.');
+      T.fin();
+      oaReg(S, k, N, -1.2, 1.3, [6, 36, 66, 98, 130, 166]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{Datos: }a_{1}=8,\\quad r=\\tfrac{1}{2},\\quad n=4' + Q + '\\text{Cada término es el anterior por }r\\text{:}' + Q + 'a_{1}=8' + Q + 'a_{2}=8\\cdot\\tfrac{1}{2}=4' + Q + 'a_{3}=4\\cdot\\tfrac{1}{2}=2' + Q + 'a_{4}=2\\cdot\\tfrac{1}{2}=1' + Q + '\\text{Por el teorema 1, }a_{k}=8\\left(\\tfrac{1}{2}\\right)^{k-1}\\text{:}' + Q + 'S_{4}=\\displaystyle\\sum_{k=1}^{4}8\\left(\\tfrac{1}{2}\\right)^{k-1}=8+4+2+1',
+      '\\text{Se multiplica cada lado por }r=\\tfrac{1}{2}' + Q + '\\text{(distributiva: cada término por }\\tfrac{1}{2}\\text{):}' + Q + '\\tfrac{1}{2}\\cdot 8=4' + Q + '\\tfrac{1}{2}\\cdot 4=2' + Q + '\\tfrac{1}{2}\\cdot 2=1' + Q + '\\tfrac{1}{2}\\cdot 1=\\tfrac{1}{2}' + Q + '\\tfrac{1}{2}\\,S_{4}=4+2+1+\\tfrac{1}{2}' + Q + '\\text{Son los mismos términos, corridos un lugar,}' + Q + '\\text{y uno nuevo al final: }\\tfrac{1}{2}.',
+      '\\text{Se resta la segunda igualdad de la primera:}' + Q + 'S_{4}-\\tfrac{1}{2}\\,S_{4}=(8+4+2+1)' + Q + '\\phantom{S_{4}-\\tfrac{1}{2}\\,S_{4}=}-\\left(4+2+1+\\tfrac{1}{2}\\right)' + Q + '\\text{Los que están en las dos se cancelan:}' + Q + '4-4=0,\\qquad 2-2=0,\\qquad 1-1=0' + Q + '\\text{Quedan el primero de arriba}' + Q + '\\text{y el último de abajo, restando:}' + Q + 'S_{4}-\\tfrac{1}{2}\\,S_{4}=8-\\tfrac{1}{2}' + Q + '8-\\tfrac{1}{2}=\\tfrac{16}{2}-\\tfrac{1}{2}=\\tfrac{15}{2}',
+      '\\text{Factor común }S_{4}\\text{ a la izquierda:}' + Q + 'S_{4}-\\tfrac{1}{2}\\,S_{4}=\\left(1-\\tfrac{1}{2}\\right)S_{4}' + Q + '\\text{A la derecha, }\\tfrac{1}{2}\\text{ es }8\\text{ por una potencia:}' + Q + '\\left(\\tfrac{1}{2}\\right)^{4}=\\tfrac{1}{2}\\cdot\\tfrac{1}{2}\\cdot\\tfrac{1}{2}\\cdot\\tfrac{1}{2}=\\tfrac{1}{16}' + Q + '8\\cdot\\tfrac{1}{16}=\\tfrac{8}{16}=\\tfrac{1}{2}' + Q + '\\text{Factor común }8\\text{:}' + Q + '8-\\tfrac{1}{2}=8-8\\left(\\tfrac{1}{2}\\right)^{4}=8\\left(1-\\left(\\tfrac{1}{2}\\right)^{4}\\right)' + Q + '\\text{Las dos partes, juntas:}' + Q + '\\left(1-\\tfrac{1}{2}\\right)S_{4}=8\\left(1-\\left(\\tfrac{1}{2}\\right)^{4}\\right)',
+      '1-\\tfrac{1}{2}=\\tfrac{2}{2}-\\tfrac{1}{2}=\\tfrac{1}{2}' + Q + '\\text{No es }0\\text{: se puede dividir cada lado por él.}' + Q + 'S_{4}=\\dfrac{8\\left(1-\\left(\\frac{1}{2}\\right)^{4}\\right)}{1-\\frac{1}{2}}' + Q + '\\text{Numerador: }1-\\tfrac{1}{16}=\\tfrac{16}{16}-\\tfrac{1}{16}=\\tfrac{15}{16}' + Q + '8\\cdot\\tfrac{15}{16}=\\tfrac{120}{16}=\\tfrac{15}{2}' + Q + 'S_{4}=\\tfrac{15}{2}:\\tfrac{1}{2}=\\tfrac{15}{2}\\cdot 2=\\tfrac{30}{2}=15' + Q + '\\text{Comprobación, sumando uno por uno:}' + Q + '8+4=12,\\qquad 12+2=14,\\qquad 14+1=15\\ \\checkmark',
+      '\\text{La misma cuenta, con letras:}' + Q + 'S_{n}=a_{1}+a_{1}r+\\cdots+a_{1}r^{\\,n-1}' + Q + 'r\\,S_{n}=a_{1}r+\\cdots+a_{1}r^{\\,n-1}+a_{1}r^{\\,n}' + Q + 'S_{n}-r\\,S_{n}=a_{1}-a_{1}r^{\\,n}' + Q + '(1-r)\\,S_{n}=a_{1}\\,(1-r^{\\,n})' + Q + '\\text{Si }r\\neq 1\\text{, entonces }1-r\\neq 0\\text{ y se divide:}' + Q + 'S_{n}=\\displaystyle\\sum_{k=1}^{n}a_{1}r^{\\,k-1}=\\dfrac{a_{1}\\,(1-r^{\\,n})}{1-r}' + Q + '\\text{Con }a_{1}=8,\\ r=\\tfrac{1}{2},\\ n=4\\text{ da }15\\text{, lo de antes.}' + Q + '\\text{La demostración completa, con todos sus}' + Q + '\\text{pasos, está en el recuadro del teorema 2.}'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: se elige la razón (a₁ = 2 fijo); la figura dibuja S₁…S₆ y, si |r| < 1, la recta de la suma a₁/(1 − r) y lo que falta; casos límite: r = 1 (la fórmula de Sₙ no se puede usar) y r = −1 (las sumas saltan) */
+OA.scene('dem33-vivo', (function(){
+  var Q = '\\\\&\\qquad ', A = [2, 1], NN = 6;
+  /* r, tope del eje vertical, paso de las marcas, posición de los rótulos S₃ y S₆ (dx, dy en px) */
+  var CS = [{r:[-1, 1], ym:3, st:1, l3:[0, -14], l6:[0, -14]}, {r:[-1, 2], ym:2.5, st:0.5, l3:[0, -14], l6:[0, 15], ll:13}, {r:[1, 2], ym:4.6, st:1, l3:[0, 15], l6:[0, 15]}, {r:[2, 3], ym:7, st:1, l3:[0, 15], l6:[0, 15]}, {r:[1, 1], ym:13, st:2, l3:[-15, -9], l6:[-15, -9]}, {r:[3, 2], ym:46, st:10, l3:[-4, -15], l6:[-17, -7]}], NP = CS.length;
+  function gx(n){ return -0.55 + 0.9*n; }
+  function cual(v){ return Math.max(1, Math.min(NP, Math.round(v.pos || 1))) - 1; }
+  function pot(r, n){ var f = [1, 1], i; for (i = 0; i < n; i++) f = dm33F(f[0]*r[0], f[1]*r[1]); return f; }
+  var DAT = CS.map(function(o){ var r = o.r, n, t, s = [0, 1]; o.x = r[0]/r[1]; o.S = [];
+    for (n = 1; n <= NN; n++){ t = pot(r, n - 1); s = dm33F(s[0]*t[1] + A[0]*t[0]*s[1], s[1]*t[1]); o.S.push(s); } /* sumas parciales, sumando término a término */
+    o.tipo = Math.abs(r[0]) < r[1] ? 'c' : r[0] === r[1] ? 'u' : r[0] === -r[1] ? 'm' : 'd';
+    o.d = dm33F(r[1] - r[0], r[1]); /* 1 − r */
+    if (o.tipo === 'c'){ o.L = dm33F(A[0]*o.d[1], o.d[0]); o.g3 = dm33F(o.L[0]*o.S[2][1] - o.S[2][0]*o.L[1], o.L[1]*o.S[2][1]); o.g6 = dm33F(o.L[0]*o.S[5][1] - o.S[5][0]*o.L[1], o.L[1]*o.S[5][1]); }
+    return o; });
+  /* frase de lo que falta (o sobra, si la suma parcial quedó por encima de la suma) */
+  function falta(g, n){ var a = dm33F(Math.abs(g[0]), g[1]); return 'después de ' + n + ' términos ' + (g[0] < 0 ? 'sobra: ' : 'falta: ') + dm33Pl(a) + dm33Dc(a, 1); }
+  var NOTA = {c:'la razón mide menos que 1: hay suma', u:'caso límite: razón 1, las sumas crecen sin tope', m:'caso límite: razón −1, las sumas saltan', d:'la razón mide más que 1: no hay suma'};
+  var PZ = [['P3', 'S_{3}', 'S₃', 'pt'], ['P6', 'S_{6}', 'S₆', 'pt']];
+  DAT.forEach(function(o, j){ var rt = dm33Tx(o.r, 1), rp = dm33Pl(o.r), ab = dm33F(Math.abs(o.r[0]), o.r[1]), cmp = o.tipo === 'c' ? '<' : o.tipo === 'd' ? '>' : '=';
+    PZ.push(['A' + j, 'a_{1}=2,\\quad r=' + rt + ',\\quad |r|=' + dm33Tx(ab, 1) + (cmp === '=' ? '' : cmp + '1'), 'a₁ = 2, r = ' + rp + ', |r| = ' + dm33Pl(ab) + (cmp === '=' ? '' : ' ' + cmp + ' 1'), 'pt']);
+    PZ.push(['B' + j, 'S_{3}=' + dm33Tx(o.S[2], 1) + ',\\qquad S_{6}=' + dm33Tx(o.S[5], 1), 'S₃ = ' + dm33Pl(o.S[2]) + ', S₆ = ' + dm33Pl(o.S[5]), 'c-sec']);
+    PZ.push(['D' + j, o.tipo === 'c' ? '\\text{suma: }\\tfrac{a_{1}}{1-r}=' + dm33Tx(o.L, 1) : '\\text{no tiene suma}', o.tipo === 'c' ? 'suma: a₁/(1 − r) = ' + dm33Pl(o.L) : 'no tiene suma', 'c-tan']);
+    if (o.tipo === 'c') PZ.push(['L' + j, '\\tfrac{a_{1}}{1-r}=' + dm33Tx(o.L, 1), 'a₁/(1 − r) = ' + dm33Pl(o.L), 'c-tan']); });
+  /* 1 − f, escrito con su cuenta; devuelve [TeX, resultado] */
+  function unoM(f, nom){ var q = f[1], p = f[0], r = dm33F(q - p, q), s = '1-' + nom + '=1-' + dm33Pa(dm33Tx(f));
+    if (q === 1) s += (p < 0 ? '=1+' + (-p) : '') + '=' + (1 - p);
+    else s += (p < 0 ? '=1+' + dm33Cr(-p, q) + Q + '\\phantom{1-' + nom + '}' : '') + '=' + dm33Cr(q, q) + (p < 0 ? '+' + dm33Cr(-p, q) : '-' + dm33Cr(p, q)) + '=' + dm33Cr(q - p, q);
+    return [s, r]; }
+  function lectura(j){ var o = DAT[j], r = o.r, rt = dm33Tx(r), R = [], l, m, m2, r2, r3, r6, u3, u6, n3, n6, a2, a3, s2, ab = dm33F(Math.abs(r[0]), r[1]), FORM = '\\text{Teorema 2 }(r\\neq 1)\\text{:}' + Q + 'S_{n}=\\displaystyle\\sum_{k=1}^{n}a_{1}r^{\\,k-1}=\\dfrac{a_{1}\\,(1-r^{\\,n})}{1-r}';
+    if (o.tipo === 'u') return [
+      '\\text{Datos: }a_{1}=2,\\quad r=1,\\quad |r|=1' + Q + '1-r=1-1=0' + Q + '\\text{La fórmula del teorema 2 pide dividir}' + Q + '\\text{por }1-r\\text{: aquí sería dividir por }0.' + Q + '\\text{No se puede usar.}',
+      '\\text{Términos (teorema 1): }a_{n}=a_{1}\\,r^{\\,n-1}' + Q + 'a_{n}=2\\cdot 1^{\\,n-1}=2\\cdot 1=2' + Q + '\\text{Todos los términos valen }2.',
+      '\\text{Teorema 2, caso }r=1\\text{: suma de }n\\text{ sumandos}' + Q + '\\text{iguales a }a_{1}=2\\text{:}\\quad S_{n}=n\\cdot a_{1}=n\\cdot 2' + Q + 'S_{1}=1\\cdot 2=2,\\quad S_{2}=2\\cdot 2=4,\\quad S_{3}=3\\cdot 2=6' + Q + 'S_{4}=4\\cdot 2=8,\\quad S_{5}=5\\cdot 2=10,\\quad S_{6}=6\\cdot 2=12',
+      '\\text{Comprobación de }S_{3}\\text{, sumando uno por uno:}' + Q + '2+2=4,\\qquad 4+2=6\\ \\checkmark',
+      '\\text{¿Tienen límite? Dado cualquier número }M>0\\text{,}' + Q + 'S_{n}=2n>M\\ \\text{ en cuanto }\\ n>\\tfrac{M}{2}.' + Q + '\\text{Las sumas parciales pasan cualquier tope:}' + Q + '\\text{no tienen límite real.}',
+      '\\text{Teorema 3, caso }|r|\\ge 1\\text{: los términos miden}' + Q + '|a_{n}|=2\\text{ y no se acercan a }0\\text{. La serie}' + Q + '2+2+2+\\cdots\\ \\text{ diverge: no tiene suma.}' + Q + '\\text{Caso límite: es la única razón en que la}' + Q + '\\text{fórmula de }S_{n}\\text{ no se puede ni escribir.}'];
+    if (o.tipo === 'm') return [
+      '\\text{Datos: }a_{1}=2,\\quad r=-1,\\quad |r|=1' + Q + FORM,
+      '\\text{Denominador: }1-r=1-(-1)=1+1=2' + Q + '\\text{No es }0\\text{: se puede dividir.}',
+      '\\text{Potencias, cada una de la anterior:}' + Q + 'r^{2}=(-1)\\cdot(-1)=1' + Q + 'r^{3}=r^{2}\\cdot r=1\\cdot(-1)=-1' + Q + 'r^{6}=r^{3}\\cdot r^{3}=(-1)\\cdot(-1)=1',
+      'n=3\\text{: }\\ 1-r^{3}=1-(-1)=1+1=2' + Q + 'a_{1}\\,(1-r^{3})=2\\cdot 2=4' + Q + 'S_{3}=4:2=2' + Q + '\\text{Comprobación, sumando uno por uno:}' + Q + 'a_{2}=2\\cdot(-1)=-2,\\qquad a_{3}=(-2)\\cdot(-1)=2' + Q + '2+(-2)=0,\\qquad 0+2=2\\ \\checkmark',
+      'n=6\\text{: }\\ 1-r^{6}=1-1=0' + Q + 'a_{1}\\,(1-r^{6})=2\\cdot 0=0' + Q + 'S_{6}=0:2=0',
+      '\\text{Las sumas parciales son }2,\\ 0,\\ 2,\\ 0,\\ 2,\\ 0,\\ \\ldots' + Q + '\\text{Saltan entre dos valores separados por }2\\text{:}' + Q + '\\text{no se acercan a un solo número. No hay límite.}',
+      '\\text{La expresión }\\dfrac{a_{1}}{1-r}=\\dfrac{2}{2}=1\\text{ no es la suma:}' + Q + '|S_{n}-1|=|2-1|=1\\ \\text{ o }\\ |0-1|=1' + Q + '\\text{Ninguna suma parcial se acerca a }1.',
+      '\\text{Teorema 3, caso }|r|\\ge 1\\text{: los términos miden}' + Q + '|a_{n}|=2\\text{ y no se acercan a }0\\text{. La serie}' + Q + '2-2+2-2+\\cdots\\ \\text{ diverge: no tiene suma.}' + Q + '\\text{Caso límite: }|r|=1\\text{ queda fuera de }|r|<1.'];
+    R.push('\\text{Datos: }a_{1}=2,\\quad r=' + rt + ',\\quad |r|=' + dm33Tx(ab) + (o.tipo === 'c' ? '<1' : '>1') + Q + FORM);
+    m = unoM(r, 'r'); R.push('\\text{Denominador:}' + Q + m[0] + Q + '\\text{No es }0\\text{: se puede dividir.}');
+    r2 = dm33Mul(r, r); r3 = dm33Mul(r2[1], r); r6 = dm33Mul(r3[1], r3[1]);
+    R.push('\\text{Potencias, cada una de la anterior:}' + Q + 'r^{2}=r\\cdot r=' + r2[0] + Q + 'r^{3}=r^{2}\\cdot r=' + r3[0] + Q + 'r^{6}=r^{3}\\cdot r^{3}=' + r6[0]);
+    u3 = unoM(r3[1], 'r^{3}'); n3 = dm33Mul(A, u3[1]); m = dm33Div(n3[1], o.d);
+    a2 = dm33Mul(A, r); a3 = dm33Mul(a2[1], r); s2 = dm33Sum(A, a2[1], 1); m2 = dm33Sum(s2[1], a3[1], 1);
+    R.push('n=3\\text{:}' + Q + u3[0] + Q + 'a_{1}\\,(1-r^{3})=' + n3[0] + Q + 'S_{3}=' + m[0] + Q + '\\phantom{S_{3}}=' + m[2] + Q + '\\text{Comprobación, sumando uno por uno:}' + Q + 'a_{2}=a_{1}\\cdot r=' + a2[0] + Q + 'a_{3}=a_{2}\\cdot r=' + a3[0] + Q + 'a_{1}+a_{2}=' + s2[0] + Q + '(a_{1}+a_{2})+a_{3}=' + m2[0] + '\\ \\checkmark');
+    u6 = unoM(r6[1], 'r^{6}'); n6 = dm33Mul(A, u6[1]); m = dm33Div(n6[1], o.d);
+    R.push('n=6\\text{:}' + Q + u6[0] + Q + 'a_{1}\\,(1-r^{6})=' + n6[0] + Q + 'S_{6}=' + m[0] + Q + '\\phantom{S_{6}}=' + m[2] + (dm33Dc(m[1]) ? Q + '\\phantom{S_{6}}' + dm33Dc(m[1]) : ''));
+    if (o.tipo === 'c'){
+      m = dm33Div(A, o.d); R.push('\\text{Teorema 3: como }|r|<1\\text{, la serie converge y}' + Q + 'S=\\displaystyle\\sum_{n=1}^{\\infty}a_{1}r^{\\,n-1}=\\dfrac{a_{1}}{1-r}' + Q + 'S=' + m[0] + '=' + m[2]);
+      m = dm33Sum(o.L, o.S[2], -1); m2 = dm33Sum(o.L, o.S[5], -1); n3 = dm33Mul(A, r3[1]); l = dm33Div(n3[1], o.d);
+      R.push('\\text{Lo que le falta a cada suma parcial:}' + Q + 'S-S_{3}=' + m[0] + (o.g3[0] < 0 ? Q + '\\text{(negativo: }S_{3}\\text{ quedó por encima de }S\\text{;}' + Q + '\\text{sobra }' + dm33Tx(dm33F(-o.g3[0], o.g3[1])) + '\\text{ en vez de faltar)}' : '') + Q + 'S-S_{6}=' + m2[0] + Q + '\\text{Por la fórmula de la demostración,}' + Q + 'S-S_{n}=\\dfrac{a_{1}\\,r^{\\,n}}{1-r}\\text{, con }n=3\\text{:}' + Q + 'a_{1}\\,r^{3}=' + n3[0] + Q + '\\dfrac{a_{1}\\,r^{3}}{1-r}=' + l[0] + Q + '\\phantom{\\dfrac{a_{1}\\,r^{3}}{1-r}}=' + l[2] + '\\ \\checkmark');
+      l = dm33Mul(o.g3, r3[1]);
+      R.push('\\text{De }n=3\\text{ a }n=6\\text{, lo que falta}' + Q + '\\text{se multiplica por }r^{3}\\text{:}' + Q + l[0] + Q + '\\text{Como }|r|<1\\text{, }r^{\\,n}\\text{ tiene límite }0\\text{ (lema 2): lo que}' + Q + '\\text{falta se hace tan chico como se quiera, y las}' + Q + '\\text{sumas parciales tienen límite }S=' + dm33Tx(o.L) + '.');
+    } else {
+      R.push('\\text{Los términos crecen: cada uno es el anterior}' + Q + '\\text{por }' + rt + '\\text{, que mide más que }1\\text{. Por el lema 3,}' + Q + '|a_{n}|=2\\cdot\\left(' + dm33Tx(ab) + '\\right)^{n-1}\\ge 2\\cdot 1=2' + Q + '\\text{No se acercan a }0\\text{: por el teorema 3, caso}' + Q + '|r|\\ge 1\\text{, la serie diverge. No tiene suma.}');
+      m = dm33Div(A, o.d);
+      R.push('\\text{Cuidado: la expresión }\\dfrac{a_{1}}{1-r}\\text{ sí da un número:}' + Q + m[0] + '=' + m[2] + Q + '\\text{No es la suma: las sumas parciales,}' + Q + '2,\\ 5,\\ \\tfrac{19}{2},\\ \\ldots\\text{, son positivas y crecen.}' + Q + '\\text{Ese número no significa nada: la fórmula}' + Q + '\\text{de la suma solo vale si }|r|<1.');
+    }
+    return R; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-0.5, y1:9.5}, aspect:10/6.6, _dat:DAT, _lec:lectura,
+    aria:'Arriba, una franja dice qué muestra: la razón decide si las sumas parciales tienen límite. Una gráfica con el número de términos n en horizontal, de 1 a 6, y la suma parcial en vertical. El primer término es 2, fijo. Un deslizador elige la razón entre seis valores: menos 1, menos un medio, un medio, dos tercios, 1 y tres medios. Para cada una se dibujan los seis puntos azules de las sumas parciales, cada uno con una punteada fina hasta el eje vertical, y se rotulan la tercera y la sexta. Si la razón mide menos que 1, una recta horizontal burdeo punteada marca la suma, 2 dividido por 1 menos la razón, y un trazo naranja une cada punto con esa recta: es lo que falta, y se achica. Con razón un medio la suma es 4; con menos un medio, cuatro tercios, y los puntos quedan alternadamente arriba y abajo de la recta; con dos tercios, 6. Con razón 1 los puntos suben en línea recta, 2, 4, 6, hasta 12, y no hay recta: la fórmula de la suma parcial no se puede usar. Con razón menos 1 los puntos saltan entre 2 y 0. Con razón tres medios los puntos suben cada vez más rápido, hasta 665 dieciseisavos. Bajo el dibujo, frases dicen cuánto falta después de tres y de seis términos, o por qué no hay suma, y más abajo va la cuenta completa.',
+    labels:PZ,
+    sliders:[{id:'pos', tex:'\\text{caso}', min:1, max:NP, step:1, value:3}],
+    legend:'<span><i class="sw sec"></i> sumas parciales \\(S_{1},\\ldots,S_{6}\\), con \\(a_{1}=2\\)</span><span><i class="sw tan"></i> la suma, \\(\\tfrac{a_{1}}{1-r}\\) (solo si \\(|r|&lt;1\\))</span><span><i class="sw rise"></i> lo que falta: \\(S-S_{n}=\\tfrac{a_{1}r^{\\,n}}{1-r}\\)</span><span>casos del deslizador: \\(r=-1,\\ -\\tfrac{1}{2},\\ \\tfrac{1}{2},\\ \\tfrac{2}{3},\\ 1,\\ \\tfrac{3}{2}\\)</span>',
+    anim:{run:30000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.pos = Math.min(NP, 1 + Math.floor(p*NP)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var j = cual(v), o = DAT[j], C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), n, y, px, py, yl, val, YB = 2.3, YH = 4.1;
+      function gy(t){ return YB + YH*t/o.ym; }
+      function txt(t, yy, cc){ c.font = '600 12.5px ' + F; c.fillStyle = cc || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(-1.2), Y(yy)); }
+      function num(t, px, py, al, cc){ c.font = '500 10.5px ' + F; c.fillStyle = cc || C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* ejes */
+      S.line(gx(0), gy(0), gx(6.5), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(o.ym), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (n = 1; n <= NN; n++){ c.beginPath(); c.moveTo(X(gx(n)), Y(gy(0)) - 3); c.lineTo(X(gx(n)), Y(gy(0)) + 3); c.stroke(); num('' + n, X(gx(n)), Y(gy(0)) + 11, 'center'); }
+      for (y = o.st; y <= o.ym + 1e-9; y += o.st){ c.strokeStyle = C.ink; c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(y))); c.lineTo(X(gx(0)) + 3, Y(gy(y))); c.stroke(); num(('' + y).replace('.', ','), X(gx(0)) - 7, Y(gy(y)), 'right'); }
+      num('0', X(gx(0)) - 7, Y(gy(0)), 'right'); num('n', X(gx(6.5)) + 5, Y(gy(0)), 'left'); num('suma parcial', X(gx(0)) + 6, Y(gy(o.ym)) - 2, 'left');
+      /* la suma, si la hay: recta punteada, y lo que falta en cada n */
+      if (o.tipo === 'c'){ yl = Y(gy(o.L[0]/o.L[1])); c.strokeStyle = C.tan; c.lineWidth = 1.3; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(gx(0)), yl); c.lineTo(X(gx(6.5)), yl); c.stroke(); c.setLineDash([]);
+        for (n = 1; n <= NN; n++){ px = X(gx(n)); py = Y(gy(o.S[n - 1][0]/o.S[n - 1][1])); c.strokeStyle = C.rise; c.lineWidth = n === 3 || n === 6 ? 3 : 1.8; c.beginPath(); c.moveTo(px, py); c.lineTo(px, yl); c.stroke(); }
+        T.L('L' + j, gx(0), gy(o.L[0]/o.L[1]), 0, 8, o.ll || -11); }
+      /* puntos de las sumas parciales, con su punteada al eje vertical */
+      for (n = 1; n <= NN; n++){ val = o.S[n - 1][0]/o.S[n - 1][1]; px = X(gx(n)); py = Y(gy(val));
+        c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(px, py); c.lineTo(X(gx(0)), py); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+        c.beginPath(); c.arc(px, py, n === 3 || n === 6 ? 4 : 3, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 1; c.stroke();
+        if (n === 3) T.L('P3', gx(n), gy(val), -50, o.l3[0], o.l3[1]); if (n === 6) T.L('P6', gx(n), gy(val), -50, o.l6[0], o.l6[1]); }
+      T.L('A' + j, -1.2, 8.14, 0); T.L('B' + j, -1.2, 7.62, 0); T.L('D' + j, -1.2, 7.1, 0);
+      if (o.tipo === 'c'){ txt(falta(o.g3, 3), 1.28, C.rise); txt(falta(o.g6, 6), 1.28 - 21/s, C.rise); }
+      else { txt(o.tipo === 'u' ? 'no hay recta: la fórmula pediría dividir por 0' : o.tipo === 'm' ? 'no hay recta: las sumas no se acercan a un número' : 'no hay recta: las sumas crecen sin tope', 1.28, C.rise); txt('los términos no se acercan a 0', 1.28 - 21/s, C.rise); }
+      txt(NOTA[o.tipo], 1.28 - 42/s, C.ink);
+      dtQue(S, 'la razón decide si las sumas', 'parciales tienen límite. Elige la razón.');
+      T.fin();
+    },
+    caption:function(v){ var o = DAT[cual(v)]; return 'Primer término 2 y razón ' + dm33Pl(o.r) + '. Sumas parciales: S₃ = ' + dm33Pl(o.S[2]) + ' y S₆ = ' + dm33Pl(o.S[5]) + '. ' + (o.tipo === 'c' ? 'Suma de la serie: ' + dm33Pl(o.L) + '. ' + falta(o.g3, 3).replace('d', 'D').replace(':', '') + '; ' + falta(o.g6, 6).replace(':', '') + '. ' : 'No tiene suma. ') + NOTA[o.tipo].charAt(0).toUpperCase() + NOTA[o.tipo].slice(1) + '.'; },
+    readout:function(v){ return dtPasos(lectura(cual(v))); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

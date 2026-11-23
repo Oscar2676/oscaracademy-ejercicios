@@ -1,0 +1,255 @@
+<!--file:H01_introduccion_a_los_limites.html-->
+<!--title:Introducción a los límites-->
+<!--id:lim-intro-->
+<!--tab:H01 Introducción a los límites-->
+<article class="sheet" id="lim-intro" data-hoja="L29 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites y continuidad</li>
+      <li><b>Introducción a los límites</b></li>
+    </ol>
+    <h1>Introducción a los límites</h1>
+    <p class="lede">El límite responde una pregunta: ¿a qué número se acercan los valores \(f(x)\) cuando \(x\) se acerca a un número \(a\), sin llegar a valer \(a\)? Si se acercan a un número \(L\) tanto como se quiera, se escribe
+    \[\lim_{x\to a}f(x)=L\]
+    y se lee «el límite de \(f(x)\) cuando \(x\) tiende a \(a\) es \(L\)». Importa lo que pasa <b>cerca</b> de \(a\), no lo que pasa <b>en</b> \(a\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función \(f(x)=\dfrac{x^{2}-1}{x-1}\) no está definida en \(x=1\): ahí el denominador vale \(0\). Aun así se puede preguntar a qué número se acercan sus valores cuando \(x\) se acerca a \(1\). La animación lo responde en seis pasos.</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la gráfica burdeo:</b> es una recta con un <b>hueco</b> (el círculo vacío) en el punto \((1,2)\). El hueco dice que en \(x=1\) la función no tiene valor.</li>
+    <li><b>Mira los puntos azules</b> (paso 2): son valores de \(x\) menores que \(1\), cada vez más cerca de \(1\). Después, <b>los naranjas</b> (paso 3): valores de \(x\) mayores que \(1\).</li>
+    <li><b>Mira el eje vertical</b> (paso 4): las alturas de los puntos azules suben hacia \(2\) y las de los naranjas bajan hacia \(2\).</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra: bajo la figura, el registro numerado guarda lo que se obtiene en cada paso.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada valor de la función con su cálculo, la simplificación (válida solo si \(x\ne 1\)) y la conclusión: el límite es \(2\), la altura del hueco.</li>
+  </ol>
+  <div class="stage" data-scene="lim-idea"></div>
+  <ul class="keys">
+    <li><b>Línea burdeo:</b> la gráfica de \(f(x)=\dfrac{x^{2}-1}{x-1}\). <b>Círculo vacío:</b> el hueco en \((1,2)\); ahí la gráfica no tiene punto.</li>
+    <li><b>Puntos azules:</b> \(x=0{,}5\), \(0{,}9\) y \(0{,}99\) (por la izquierda de \(1\)). <b>Puntos naranjas:</b> \(x=1{,}5\), \(1{,}1\) y \(1{,}01\) (por la derecha). Los de \(0{,}99\) y \(1{,}01\) quedan tan cerca del hueco que en el dibujo se confunden con su borde.</li>
+    <li><b>Flechas sobre los ejes:</b> en el eje horizontal, \(x\) se acerca a \(1\); en el vertical, los valores de la función se acercan a \(2\).</li>
+    <li><b>Brillo verde:</b> la recta \(y=x+1\), que coincide con la gráfica en todos los \(x\ne 1\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se justifica aquí y qué se deja para más adelante.</b> En esta hoja los límites se justifican con <b>tablas de valores</b>, con <b>la gráfica</b> y con <b>álgebra</b> (simplificar, siempre con \(x\ne a\)). Eso muestra a qué número se acercan los valores, pero <b>no es una demostración</b>: una tabla solo revisa una cantidad finita de valores de \(x\). La <b>definición formal</b> de límite (con \(\varepsilon\) y \(\delta\)), con la que sí se demuestra, viene en otra hoja de este lote. Hasta entonces, en esta hoja se usan <b>sin demostrar</b> estos cuatro hechos, que se demuestran con esa definición:</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\), las expresiones \(x+c\), \(c-x\), \(2x+c\) y \(x^{2}\) (con \(c\) un número fijo) se acercan al valor que resulta de reemplazar \(x\) por \(a\); y una función que vale siempre lo mismo a un lado de \(a\) se acerca, por ese lado, a ese valor.</li>
+      <li>Si dos funciones valen lo mismo en todos los \(x\ne a\) cercanos a \(a\), tienen el mismo límite en \(a\) (o ninguna lo tiene).</li>
+      <li>El criterio de los límites laterales, enunciado en el recuadro «Límites laterales, y un límite que no existe».</li>
+      <li>Si el límite existe, es uno solo: los valores no pueden acercarse tanto como se quiera a dos números distintos a la vez.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué significa \(\displaystyle\lim_{x\to a}f(x)=L\)</h3>
+    <p>Sea \(f\) una función definida en todos los \(x\) de un intervalo abierto que contiene a \(a\), salvo quizá en \(a\) mismo. Se dice que <b>el límite de \(f(x)\) cuando \(x\) tiende a \(a\) es \(L\)</b>, y se escribe \(\displaystyle\lim_{x\to a}f(x)=L\), si los valores \(f(x)\) quedan <b>tan cerca de \(L\) como se quiera</b> con tal de tomar \(x\) <b>suficientemente cerca de \(a\)</b>, por cualquiera de los dos lados, pero con \(x\ne a\).</p>
+    <ol class="steps">
+      <li><b>\(x\) nunca vale \(a\).</b> Por eso \(f(a)\) no participa: puede no estar definida (como en la animación) o valer otra cosa (ejemplo 2), y el límite no cambia.</li>
+      <li><b>«Tan cerca como se quiera» es más que «cada vez más cerca».</b> En la animación, los valores \(1{,}5\); \(1{,}9\); \(1{,}99\) también están cada vez más cerca de \(2{,}5\): las distancias son \(|1{,}5-2{,}5|=1\), \(|1{,}9-2{,}5|=0{,}6\) y \(|1{,}99-2{,}5|=0{,}51\). Pero nunca bajan de \(0{,}5\), porque esos valores son menores que \(2\). En cambio, las distancias a \(2\) son \(|1{,}5-2|=0{,}5\), \(|1{,}9-2|=0{,}1\) y \(|1{,}99-2|=0{,}01\), y se pueden hacer tan chicas como se quiera. Por eso el límite es \(2\) y no \(2{,}5\).</li>
+      <li><b>Por los dos lados.</b> Hay que acercarse a \(a\) con valores menores que \(a\) y con valores mayores que \(a\), y en los dos casos los \(f(x)\) deben acercarse al mismo \(L\).</li>
+    </ol>
+    <p><b>La tabla del ejemplo de la animación,</b> \(f(x)=\dfrac{x^{2}-1}{x-1}\) cerca de \(a=1\). Cada fila se calcula igual: \(x^{2}\), se le resta \(1\), y se divide por \(x-1\). Por ejemplo, con \(x=0{,}9\): \(0{,}9^{2}=0{,}81\); \(0{,}81-1=-0{,}19\); \(0{,}9-1=-0{,}1\); \(\dfrac{-0{,}19}{-0{,}1}=1{,}9\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}-1\)</th><th>\(x-1\)</th><th>\(f(x)\)</th></tr>
+      <tr><td>\(0{,}9\)</td><td>\(0{,}81\)</td><td>\(-0{,}19\)</td><td>\(-0{,}1\)</td><td>\(1{,}9\)</td></tr>
+      <tr><td>\(0{,}99\)</td><td>\(0{,}9801\)</td><td>\(-0{,}0199\)</td><td>\(-0{,}01\)</td><td>\(1{,}99\)</td></tr>
+      <tr><td>\(0{,}999\)</td><td>\(0{,}998001\)</td><td>\(-0{,}001999\)</td><td>\(-0{,}001\)</td><td>\(1{,}999\)</td></tr>
+      <tr><td>\(1\)</td><td>\(1\)</td><td>\(0\)</td><td>\(0\)</td><td>no está definida</td></tr>
+      <tr><td>\(1{,}001\)</td><td>\(1{,}002001\)</td><td>\(0{,}002001\)</td><td>\(0{,}001\)</td><td>\(2{,}001\)</td></tr>
+      <tr><td>\(1{,}01\)</td><td>\(1{,}0201\)</td><td>\(0{,}0201\)</td><td>\(0{,}01\)</td><td>\(2{,}01\)</td></tr>
+      <tr><td>\(1{,}1\)</td><td>\(1{,}21\)</td><td>\(0{,}21\)</td><td>\(0{,}1\)</td><td>\(2{,}1\)</td></tr>
+    </table></div>
+    <p><b>Por qué pasa eso (álgebra):</b></p>
+    <ol class="steps">
+      <li>El numerador es una diferencia de cuadrados: \(x^{2}-1=(x-1)(x+1)\).</li>
+      <li>Si \(x\ne 1\), entonces \(x-1\ne 0\) y se puede simplificar ese factor: \(\dfrac{x^{2}-1}{x-1}=\dfrac{(x-1)(x+1)}{x-1}=x+1\).</li>
+      <li>Así, para todo \(x\ne 1\), \(f(x)=x+1\). En el límite \(x\) nunca vale \(1\), de modo que se puede usar esta forma (hecho 2 del aviso de rigor).</li>
+      <li>Cuando \(x\) se acerca a \(1\), \(x+1\) se acerca a \(1+1=2\) (hecho 1 del aviso de rigor).</li>
+      <li>\(\displaystyle\lim_{x\to 1}\dfrac{x^{2}-1}{x-1}=2\), aunque \(f(1)\) no existe.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Acercarse por los dos lados: el número junto con la figura</h3>
+    <p>La misma función, \(f(x)=\dfrac{x^{2}-1}{x-1}\). Ahora tú eliges qué tan cerca de \(1\) está \(x\).</p>
+    <ol class="steps">
+      <li><b>Mira los dos puntos sobre la gráfica:</b> el azul está en \(x=1-d\) (a la izquierda de \(1\)) y el naranja en \(x=1+d\) (a la derecha). Los dos están a la misma distancia \(d\) de \(1\).</li>
+      <li><b>Mira las líneas punteadas:</b> bajan de cada punto al eje horizontal (ahí se lee \(x\)) y van al eje vertical (ahí se lee \(f(x)\)).</li>
+      <li><b>Mueve \(d\)</b> hacia \(0\) (o pulsa «Reproducir»): los dos puntos se acercan al hueco y sus alturas se acercan a la recta punteada \(L=2\).</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> el valor de \(x\) a cada lado, su cuadrado, el numerador, el denominador, la división y la distancia del resultado a \(2\).</li>
+      <li><b>Llega al caso límite, \(d=0\):</b> los dos puntos caerían en \(x=1\), donde no hay punto (\(f(1)\) no está definida). El límite, igual, es \(2\).</li>
+    </ol>
+    <div class="stage" data-scene="lim-vivo"></div>
+    <ul class="keys">
+      <li><b>Punto azul:</b> \(\big(1-d,\ f(1-d)\big)\). <b>Punto naranja:</b> \(\big(1+d,\ f(1+d)\big)\). Los números de colores junto a los ejes son sus coordenadas; bajo el eje horizontal, las palabras «izquierda» y «derecha» dicen de qué lado de \(1\) está cada \(x\).</li>
+      <li><b>Recta punteada horizontal:</b> la altura \(L=2\), el límite. <b>Recta punteada vertical:</b> \(x=1\).</li>
+      <li><b>Círculo vacío:</b> el hueco en \((1,2)\).</li>
+    </ul>
+    <p>En este ejemplo, si \(x\) está a distancia \(d\) de \(1\) (con \(d\gt 0\)), entonces \(f(x)\) está a distancia \(d\) de \(2\): como \(f(x)=x+1\) para \(x\ne 1\), se tiene \(f(x)-2=x+1-2=x-1\). Por eso los valores quedan tan cerca de \(2\) como se quiera: basta tomar \(d\) así de chico.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Límites laterales, y un límite que no existe</h3>
+    <p>Acercarse «por un solo lado» tiene su propia notación. Para el límite por la izquierda basta que \(f\) esté definida en los \(x\) cercanos a \(a\) con \(x\lt a\); para el límite por la derecha, en los cercanos con \(x\gt a\).</p>
+    <ol class="steps">
+      <li><b>Límite por la izquierda:</b> \(\displaystyle\lim_{x\to a^{-}}f(x)=L\) significa que \(f(x)\) queda tan cerca de \(L\) como se quiera con tal de tomar \(x\) suficientemente cerca de \(a\), con \(x\lt a\).</li>
+      <li><b>Límite por la derecha:</b> \(\displaystyle\lim_{x\to a^{+}}f(x)=L\) significa lo mismo, pero con \(x\gt a\).</li>
+      <li><b>Criterio de los límites laterales</b> (se usa aquí sin demostrar; se demuestra con la definición formal):
+        \[\lim_{x\to a}f(x)=L\quad\Longleftrightarrow\quad \lim_{x\to a^{-}}f(x)=L\ \ \text{y}\ \ \lim_{x\to a^{+}}f(x)=L\]
+        Es decir, el límite existe si y solo si los dos límites laterales existen y son iguales.</li>
+      <li><b>Consecuencia:</b> si los dos laterales existen pero son distintos, el límite <b>no existe</b>. En la gráfica se ve como un <b>salto</b>.</li>
+    </ol>
+    <p>Un salto, para mirarlo: la función por tramos
+    \[g(x)=\begin{cases}x+1&\text{si }x\lt 1\\[2pt] 4-x&\text{si }x\ge 1\end{cases}\]</p>
+    <ol class="steps">
+      <li><b>Mira la gráfica burdeo:</b> son dos trozos de recta. El de la izquierda termina en un círculo vacío en \((1,2)\); el de la derecha empieza en un punto lleno en \((1,3)\), porque \(g(1)=4-1=3\).</li>
+      <li><b>Mira los dos puntos:</b> el azul, en \(x=1-d\), va por el trozo de la izquierda; el naranja, en \(x=1+d\), por el de la derecha.</li>
+      <li><b>Mueve \(d\)</b> hacia \(0\): el azul sube hacia la altura \(2\) y el naranja sube hacia la altura \(3\). No van al mismo número.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> qué tramo le toca a cada \(x\), el valor de \(g\), y la distancia de cada valor a \(2\) y a \(3\). Conclusión: los límites laterales son \(2\) y \(3\); como \(2\ne 3\), \(\displaystyle\lim_{x\to 1}g(x)\) no existe, aunque \(g(1)=3\) sí existe.</li>
+    </ol>
+    <div class="stage" data-scene="lim-salto"></div>
+    <ul class="keys">
+      <li><b>Círculo vacío en \((1,2)\):</b> ahí termina el trozo izquierdo, sin incluir el punto. <b>Punto lleno en \((1,3)\):</b> el valor \(g(1)=3\).</li>
+      <li><b>Punto azul:</b> \(\big(1-d,\ g(1-d)\big)\), con \(g(1-d)=(1-d)+1=2-d\). <b>Punto naranja:</b> \(\big(1+d,\ g(1+d)\big)\), con \(g(1+d)=4-(1+d)=3-d\).</li>
+      <li><b>Rectas punteadas horizontales:</b> las alturas \(2\) y \(3\), a las que se acerca cada lado.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: con tabla y con álgebra, \(\displaystyle\lim_{x\to 3}\dfrac{x^{2}-9}{x-3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=3\): numerador \(3^{2}-9=9-9=0\) y denominador \(3-3=0\). No se divide por \(0\): la función no está definida en \(3\). El límite no lo necesita.</li>
+    <li>Tabla, con \(x\) cerca de \(3\) por los dos lados. Cada fila: \(x^{2}\), se le resta \(9\), y se divide por \(x-3\).
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}-9\)</th><th>\(x-3\)</th><th>cociente</th></tr>
+        <tr><td>\(2{,}9\)</td><td>\(8{,}41\)</td><td>\(-0{,}59\)</td><td>\(-0{,}1\)</td><td>\(5{,}9\)</td></tr>
+        <tr><td>\(2{,}99\)</td><td>\(8{,}9401\)</td><td>\(-0{,}0599\)</td><td>\(-0{,}01\)</td><td>\(5{,}99\)</td></tr>
+        <tr><td>\(3{,}01\)</td><td>\(9{,}0601\)</td><td>\(0{,}0601\)</td><td>\(0{,}01\)</td><td>\(6{,}01\)</td></tr>
+        <tr><td>\(3{,}1\)</td><td>\(9{,}61\)</td><td>\(0{,}61\)</td><td>\(0{,}1\)</td><td>\(6{,}1\)</td></tr>
+      </table></div></li>
+    <li>Por la izquierda (\(5{,}9\); \(5{,}99\)) y por la derecha (\(6{,}1\); \(6{,}01\)) los valores se acercan a \(6\). La tabla sugiere el resultado; el álgebra dice por qué.</li>
+    <li>Diferencia de cuadrados: \(x^{2}-9=(x-3)(x+3)\).</li>
+    <li>Si \(x\ne 3\), entonces \(x-3\ne 0\) y se simplifica: \(\dfrac{x^{2}-9}{x-3}=\dfrac{(x-3)(x+3)}{x-3}=x+3\).</li>
+    <li>Cuando \(x\) se acerca a \(3\), \(x+3\) se acerca a \(3+3=6\).</li>
+    <li>\(\displaystyle\lim_{x\to 3}\dfrac{x^{2}-9}{x-3}=6\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el límite no mira \(f(a)\)</h3>
+  <div class="body">
+  <p>Sea \(h(x)=\begin{cases}2x-1&\text{si }x\ne 2\\[2pt] 5&\text{si }x=2\end{cases}\). Calcular \(\displaystyle\lim_{x\to 2}h(x)\) y compararlo con \(h(2)\).</p>
+  <ol class="steps">
+    <li>El valor en el punto es un dato: \(h(2)=5\).</li>
+    <li>Cerca de \(2\), con \(x\ne 2\), se usa \(h(x)=2x-1\). Por la izquierda: \(h(1{,}9)=2\cdot 1{,}9-1=3{,}8-1=2{,}8\) y \(h(1{,}99)=2\cdot 1{,}99-1=3{,}98-1=2{,}98\).</li>
+    <li>Por la derecha: \(h(2{,}1)=2\cdot 2{,}1-1=4{,}2-1=3{,}2\) y \(h(2{,}01)=2\cdot 2{,}01-1=4{,}02-1=3{,}02\).</li>
+    <li>Cuando \(x\) se acerca a \(2\), \(2x-1\) se acerca a \(2\cdot 2-1=4-1=3\), por los dos lados.</li>
+    <li>\(\displaystyle\lim_{x\to 2}h(x)=3\), y \(h(2)=5\). Son distintos: \(3\ne 5\).</li>
+    <li>En la gráfica: la recta \(y=2x-1\) tiene un hueco en \((2,3)\), y el punto \((2,5)\) queda suelto, más arriba. El límite es la altura del hueco, no la del punto suelto.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un salto, \(\displaystyle\lim_{x\to 0}\dfrac{|x|}{x}\) no existe</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La función \(s(x)=\dfrac{|x|}{x}\) no está definida en \(x=0\) (el denominador sería \(0\)).</li>
+    <li>Si \(x\gt 0\), entonces \(|x|=x\) y \(s(x)=\dfrac{x}{x}=1\). Por ejemplo, \(s(0{,}1)=\dfrac{0{,}1}{0{,}1}=1\) y \(s(0{,}01)=\dfrac{0{,}01}{0{,}01}=1\).</li>
+    <li>Si \(x\lt 0\), entonces \(|x|=-x\) y \(s(x)=\dfrac{-x}{x}=-1\). Por ejemplo, \(s(-0{,}1)=\dfrac{0{,}1}{-0{,}1}=-1\) y \(s(-0{,}01)=\dfrac{0{,}01}{-0{,}01}=-1\).</li>
+    <li>A la derecha de \(0\) la función vale siempre \(1\): \(\displaystyle\lim_{x\to 0^{+}}s(x)=1\).</li>
+    <li>A la izquierda de \(0\) vale siempre \(-1\): \(\displaystyle\lim_{x\to 0^{-}}s(x)=-1\).</li>
+    <li>Los límites laterales existen pero son distintos, \(1\ne -1\). Por el criterio de los límites laterales, \(\displaystyle\lim_{x\to 0}\dfrac{|x|}{x}\) <b>no existe</b>.</li>
+    <li>En la gráfica hay un salto de altura \(1-(-1)=2\) en \(x=0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: dos fórmulas distintas y, aun así, hay límite</h3>
+  <div class="body">
+  <p>Sea \(p(x)=\begin{cases}x^{2}&\text{si }x\lt 2\\[2pt] 6-x&\text{si }x\gt 2\end{cases}\) (no está definida en \(x=2\)). Calcular \(\displaystyle\lim_{x\to 2}p(x)\).</p>
+  <ol class="steps">
+    <li>Por la izquierda (\(x\lt 2\)) se usa \(x^{2}\): \(p(1{,}9)=1{,}9^{2}=3{,}61\); \(p(1{,}99)=1{,}99^{2}=3{,}9601\); \(p(1{,}999)=1{,}999^{2}=3{,}996001\).</li>
+    <li>Cuando \(x\) se acerca a \(2\), \(x^{2}\) se acerca a \(2^{2}=4\): \(\displaystyle\lim_{x\to 2^{-}}p(x)=4\).</li>
+    <li>Por la derecha (\(x\gt 2\)) se usa \(6-x\): \(p(2{,}1)=6-2{,}1=3{,}9\); \(p(2{,}01)=6-2{,}01=3{,}99\); \(p(2{,}001)=6-2{,}001=3{,}999\).</li>
+    <li>Cuando \(x\) se acerca a \(2\), \(6-x\) se acerca a \(6-2=4\): \(\displaystyle\lim_{x\to 2^{+}}p(x)=4\).</li>
+    <li>Los dos límites laterales existen y son iguales a \(4\). Por el criterio, \(\displaystyle\lim_{x\to 2}p(x)=4\).</li>
+    <li>Que haya una fórmula distinta a cada lado no impide el límite: lo que importa es que los dos lados se acerquen a la misma altura. Y \(p(2)\) no existe, lo que tampoco importa.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: <b>creer que el límite es \(f(a)\)</b>. En el ejemplo 2, \(h(2)=5\) pero el límite es \(3\); el límite mira los valores cerca de \(a\), no el valor en \(a\). Dos: <b>reemplazar, obtener \(\dfrac{0}{0}\) y decir «no existe»</b>. Que el numerador y el denominador valgan \(0\) solo dice que \(f(a)\) no está definida; del límite no dice nada. Hay que mirar cerca (tabla o gráfica) o simplificar con \(x\ne a\): en el ejemplo 1 el reemplazo da \(0\) y \(0\), y el límite es \(6\). Tres: <b>mirar un solo lado</b>. En el ejemplo 3, por la derecha todos los valores son \(1\); quien mire solo ese lado dirá que el límite es \(1\). Por la izquierda son \(-1\): el límite no existe.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\lim_{x\to 2}\dfrac{x^{2}-4}{x-2}\). Antes de simplificar, calcula el valor de la función en \(x=1{,}9\) y en \(x=2{,}1\).</p>
+    <details><summary>Pista</summary><div><p>Reemplazar \(x=2\) da \(0\) arriba y \(0\) abajo: eso no es la respuesta. El numerador es una diferencia de cuadrados.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x=2\): \(2^{2}-4=0\) y \(2-2=0\). La función no está definida en \(2\).</li>
+        <li>En \(x=1{,}9\): \(1{,}9^{2}=3{,}61\); \(3{,}61-4=-0{,}39\); \(1{,}9-2=-0{,}1\); \(\dfrac{-0{,}39}{-0{,}1}=3{,}9\).</li>
+        <li>En \(x=2{,}1\): \(2{,}1^{2}=4{,}41\); \(4{,}41-4=0{,}41\); \(2{,}1-2=0{,}1\); \(\dfrac{0{,}41}{0{,}1}=4{,}1\).</li>
+        <li>Diferencia de cuadrados: \(x^{2}-4=(x-2)(x+2)\).</li>
+        <li>Si \(x\ne 2\), entonces \(x-2\ne 0\) y \(\dfrac{x^{2}-4}{x-2}=\dfrac{(x-2)(x+2)}{x-2}=x+2\). (Coincide con lo calculado: \(1{,}9+2=3{,}9\) y \(2{,}1+2=4{,}1\).)</li>
+        <li>Cuando \(x\) se acerca a \(2\), \(x+2\) se acerca a \(2+2=4\).</li>
+        <li>\(\displaystyle\lim_{x\to 2}\dfrac{x^{2}-4}{x-2}=4\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(q(x)=\begin{cases}2x+1&\text{si }x\le 1\\[2pt] 5-x&\text{si }x\gt 1\end{cases}\). Calcula \(q(1)\), \(\displaystyle\lim_{x\to 1^{-}}q(x)\) y \(\displaystyle\lim_{x\to 1^{+}}q(x)\). ¿Existe \(\displaystyle\lim_{x\to 1}q(x)\)?</p>
+    <details><summary>Pista</summary><div><p>Para cada lado usa la fórmula de ese lado. El límite existe solo si los dos laterales coinciden.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(q(1)\): como \(1\le 1\), toca la primera fórmula. \(q(1)=2\cdot 1+1=2+1=3\).</li>
+        <li>Por la izquierda (\(x\lt 1\)) se usa \(2x+1\): \(q(0{,}9)=2\cdot 0{,}9+1=1{,}8+1=2{,}8\) y \(q(0{,}99)=2\cdot 0{,}99+1=1{,}98+1=2{,}98\).</li>
+        <li>Cuando \(x\) se acerca a \(1\), \(2x+1\) se acerca a \(2\cdot 1+1=3\): \(\displaystyle\lim_{x\to 1^{-}}q(x)=3\).</li>
+        <li>Por la derecha (\(x\gt 1\)) se usa \(5-x\): \(q(1{,}1)=5-1{,}1=3{,}9\) y \(q(1{,}01)=5-1{,}01=3{,}99\).</li>
+        <li>Cuando \(x\) se acerca a \(1\), \(5-x\) se acerca a \(5-1=4\): \(\displaystyle\lim_{x\to 1^{+}}q(x)=4\).</li>
+        <li>Los laterales son distintos, \(3\ne 4\): por el criterio de los límites laterales, \(\displaystyle\lim_{x\to 1}q(x)\) <b>no existe</b>. Hay un salto de altura \(4-3=1\).</li>
+        <li>Que \(q(1)=3\) coincida con el límite por la izquierda no cambia la respuesta: hacen falta los dos lados.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un estacionamiento cobra $1.000 por cada hora o fracción. <b>Modelo:</b> \(t\) es el tiempo en horas, con \(0\lt t\le 3\), y el precio en pesos es
+    \[P(t)=\begin{cases}1000&\text{si }0\lt t\le 1\\ 2000&\text{si }1\lt t\le 2\\ 3000&\text{si }2\lt t\le 3\end{cases}\]
+    (El modelo supone que el cobro cambia exactamente al pasar la hora, sin minutos de tolerancia.) a) Calcula \(\displaystyle\lim_{t\to 1^{-}}P(t)\) y \(\displaystyle\lim_{t\to 1^{+}}P(t)\). ¿Existe \(\displaystyle\lim_{t\to 1}P(t)\)? b) Calcula \(\displaystyle\lim_{t\to 1{,}5}P(t)\). c) ¿Qué significan los dos resultados para quien estaciona?</p>
+    <details><summary>Pista</summary><div><p>Elige tiempos un poco menores y un poco mayores que \(1\) y mira en qué tramo caen. Haz lo mismo alrededor de \(1{,}5\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Por la izquierda de \(1\): \(t=0{,}9\) y \(t=0{,}99\) cumplen \(0\lt t\le 1\), así que \(P(0{,}9)=1000\) y \(P(0{,}99)=1000\). Para todo \(t\) entre \(0\) y \(1\) el precio es \(1000\): \(\displaystyle\lim_{t\to 1^{-}}P(t)=1000\).</li>
+        <li>Por la derecha de \(1\): \(t=1{,}01\) y \(t=1{,}1\) cumplen \(1\lt t\le 2\), así que \(P(1{,}01)=2000\) y \(P(1{,}1)=2000\). Para todo \(t\) entre \(1\) y \(2\) el precio es \(2000\): \(\displaystyle\lim_{t\to 1^{+}}P(t)=2000\).</li>
+        <li>\(1000\ne 2000\): los laterales son distintos, y \(\displaystyle\lim_{t\to 1}P(t)\) <b>no existe</b>. (El valor \(P(1)=1000\) sí existe.)</li>
+        <li>Alrededor de \(1{,}5\): \(t=1{,}4\) y \(t=1{,}49\) (izquierda), \(t=1{,}51\) y \(t=1{,}6\) (derecha) cumplen todos \(1\lt t\le 2\). El precio es \(2000\) a los dos lados: los dos laterales valen \(2000\).</li>
+        <li>\(\displaystyle\lim_{t\to 1{,}5}P(t)=2000\), que además coincide con \(P(1{,}5)=2000\).</li>
+        <li>Significado: cerca de la hora y media, unos minutos más o menos no cambian el precio. En cambio, justo en la hora hay un salto de \(2000-1000=1000\) pesos: pasarse apenas de \(1\) hora cuesta $1.000 más.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>

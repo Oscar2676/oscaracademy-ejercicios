@@ -1,0 +1,496 @@
+<!--file:H01_introduccion_a_los_limites.html-->
+<!--title:Introducción a los límites-->
+<!--id:lim-intro-->
+<!--tab:H01 Introducción a los límites-->
+<article class="sheet" id="lim-intro" data-hoja="L29 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites y continuidad</li>
+      <li><b>Introducción a los límites</b></li>
+    </ol>
+    <h1>Introducción a los límites</h1>
+    <p class="lede">El límite responde una pregunta: ¿a qué número se acercan los valores \(f(x)\) cuando \(x\) se acerca a un número \(a\), sin llegar a valer \(a\)? Si se acercan a un número \(L\) tanto como se quiera, se escribe
+    \[\lim_{x\to a}f(x)=L\]
+    y se lee «el límite de \(f(x)\) cuando \(x\) tiende a \(a\) es \(L\)». Importa lo que pasa <b>cerca</b> de \(a\), no lo que pasa <b>en</b> \(a\).</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función \(f(x)=\dfrac{x^{2}-1}{x-1}\) no está definida en \(x=1\): ahí el denominador vale \(0\). Aun así se puede preguntar a qué número se acercan sus valores cuando \(x\) se acerca a \(1\). La animación lo responde en seis pasos.</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la gráfica burdeo:</b> es una recta con un <b>hueco</b> (el círculo vacío) en el punto \((1,2)\). El hueco dice que en \(x=1\) la función no tiene valor.</li>
+    <li><b>Mira los puntos azules</b> (paso 2): son valores de \(x\) menores que \(1\), cada vez más cerca de \(1\). Después, <b>los naranjas</b> (paso 3): valores de \(x\) mayores que \(1\).</li>
+    <li><b>Mira el eje vertical</b> (paso 4): las alturas de los puntos azules suben hacia \(2\) y las de los naranjas bajan hacia \(2\).</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra: bajo la figura, el registro numerado guarda lo que se obtiene en cada paso.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada valor de la función con su cálculo, la simplificación (válida solo si \(x\ne 1\)) y la conclusión: el límite es \(2\), la altura del hueco.</li>
+  </ol>
+  <div class="stage" data-scene="lim-idea"></div>
+  <ul class="keys">
+    <li><b>Línea burdeo:</b> la gráfica de \(f(x)=\dfrac{x^{2}-1}{x-1}\). <b>Círculo vacío:</b> el hueco en \((1,2)\); ahí la gráfica no tiene punto.</li>
+    <li><b>Puntos azules:</b> \(x=0{,}5\), \(0{,}9\) y \(0{,}99\) (por la izquierda de \(1\)). <b>Puntos naranjas:</b> \(x=1{,}5\), \(1{,}1\) y \(1{,}01\) (por la derecha). Los de \(0{,}99\) y \(1{,}01\) quedan tan cerca del hueco que en el dibujo se confunden con su borde.</li>
+    <li><b>Flechas sobre los ejes:</b> en el eje horizontal, \(x\) se acerca a \(1\); en el vertical, los valores de la función se acercan a \(2\).</li>
+    <li><b>Brillo verde:</b> la recta \(y=x+1\), que coincide con la gráfica en todos los \(x\ne 1\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se justifica aquí y qué se deja para más adelante.</b> En esta hoja los límites se justifican con <b>tablas de valores</b>, con <b>la gráfica</b> y con <b>álgebra</b> (simplificar, siempre con \(x\ne a\)). Eso muestra a qué número se acercan los valores, pero <b>no es una demostración</b>: una tabla solo revisa una cantidad finita de valores de \(x\). La <b>definición formal</b> de límite (con \(\varepsilon\) y \(\delta\)), con la que sí se demuestra, viene en otra hoja de este lote. Hasta entonces, en esta hoja se usan <b>sin demostrar</b> estos cuatro hechos, que se demuestran con esa definición:</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\), las expresiones \(x+c\), \(c-x\), \(2x+c\) y \(x^{2}\) (con \(c\) un número fijo) se acercan al valor que resulta de reemplazar \(x\) por \(a\); y una función que vale siempre lo mismo a un lado de \(a\) se acerca, por ese lado, a ese valor.</li>
+      <li>Si dos funciones valen lo mismo en todos los \(x\ne a\) cercanos a \(a\), tienen el mismo límite en \(a\) (o ninguna lo tiene).</li>
+      <li>El criterio de los límites laterales, enunciado en el recuadro «Límites laterales, y un límite que no existe».</li>
+      <li>Si el límite existe, es uno solo: los valores no pueden acercarse tanto como se quiera a dos números distintos a la vez.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué significa \(\displaystyle\lim_{x\to a}f(x)=L\)</h3>
+    <p>Sea \(f\) una función definida en todos los \(x\) de un intervalo abierto que contiene a \(a\), salvo quizá en \(a\) mismo. Se dice que <b>el límite de \(f(x)\) cuando \(x\) tiende a \(a\) es \(L\)</b>, y se escribe \(\displaystyle\lim_{x\to a}f(x)=L\), si los valores \(f(x)\) quedan <b>tan cerca de \(L\) como se quiera</b> con tal de tomar \(x\) <b>suficientemente cerca de \(a\)</b>, por cualquiera de los dos lados, pero con \(x\ne a\).</p>
+    <ol class="steps">
+      <li><b>\(x\) nunca vale \(a\).</b> Por eso \(f(a)\) no participa: puede no estar definida (como en la animación) o valer otra cosa (ejemplo 2), y el límite no cambia.</li>
+      <li><b>«Tan cerca como se quiera» es más que «cada vez más cerca».</b> En la animación, los valores \(1{,}5\); \(1{,}9\); \(1{,}99\) también están cada vez más cerca de \(2{,}5\): las distancias son \(|1{,}5-2{,}5|=1\), \(|1{,}9-2{,}5|=0{,}6\) y \(|1{,}99-2{,}5|=0{,}51\). Pero nunca bajan de \(0{,}5\), porque esos valores son menores que \(2\). En cambio, las distancias a \(2\) son \(|1{,}5-2|=0{,}5\), \(|1{,}9-2|=0{,}1\) y \(|1{,}99-2|=0{,}01\), y se pueden hacer tan chicas como se quiera. Por eso el límite es \(2\) y no \(2{,}5\).</li>
+      <li><b>Por los dos lados.</b> Hay que acercarse a \(a\) con valores menores que \(a\) y con valores mayores que \(a\), y en los dos casos los \(f(x)\) deben acercarse al mismo \(L\).</li>
+    </ol>
+    <p><b>La tabla del ejemplo de la animación,</b> \(f(x)=\dfrac{x^{2}-1}{x-1}\) cerca de \(a=1\). Cada fila se calcula igual: \(x^{2}\), se le resta \(1\), y se divide por \(x-1\). Por ejemplo, con \(x=0{,}9\): \(0{,}9^{2}=0{,}81\); \(0{,}81-1=-0{,}19\); \(0{,}9-1=-0{,}1\); \(\dfrac{-0{,}19}{-0{,}1}=1{,}9\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}-1\)</th><th>\(x-1\)</th><th>\(f(x)\)</th></tr>
+      <tr><td>\(0{,}9\)</td><td>\(0{,}81\)</td><td>\(-0{,}19\)</td><td>\(-0{,}1\)</td><td>\(1{,}9\)</td></tr>
+      <tr><td>\(0{,}99\)</td><td>\(0{,}9801\)</td><td>\(-0{,}0199\)</td><td>\(-0{,}01\)</td><td>\(1{,}99\)</td></tr>
+      <tr><td>\(0{,}999\)</td><td>\(0{,}998001\)</td><td>\(-0{,}001999\)</td><td>\(-0{,}001\)</td><td>\(1{,}999\)</td></tr>
+      <tr><td>\(1\)</td><td>\(1\)</td><td>\(0\)</td><td>\(0\)</td><td>no está definida</td></tr>
+      <tr><td>\(1{,}001\)</td><td>\(1{,}002001\)</td><td>\(0{,}002001\)</td><td>\(0{,}001\)</td><td>\(2{,}001\)</td></tr>
+      <tr><td>\(1{,}01\)</td><td>\(1{,}0201\)</td><td>\(0{,}0201\)</td><td>\(0{,}01\)</td><td>\(2{,}01\)</td></tr>
+      <tr><td>\(1{,}1\)</td><td>\(1{,}21\)</td><td>\(0{,}21\)</td><td>\(0{,}1\)</td><td>\(2{,}1\)</td></tr>
+    </table></div>
+    <p><b>Por qué pasa eso (álgebra):</b></p>
+    <ol class="steps">
+      <li>El numerador es una diferencia de cuadrados: \(x^{2}-1=(x-1)(x+1)\).</li>
+      <li>Si \(x\ne 1\), entonces \(x-1\ne 0\) y se puede simplificar ese factor: \(\dfrac{x^{2}-1}{x-1}=\dfrac{(x-1)(x+1)}{x-1}=x+1\).</li>
+      <li>Así, para todo \(x\ne 1\), \(f(x)=x+1\). En el límite \(x\) nunca vale \(1\), de modo que se puede usar esta forma (hecho 2 del aviso de rigor).</li>
+      <li>Cuando \(x\) se acerca a \(1\), \(x+1\) se acerca a \(1+1=2\) (hecho 1 del aviso de rigor).</li>
+      <li>\(\displaystyle\lim_{x\to 1}\dfrac{x^{2}-1}{x-1}=2\), aunque \(f(1)\) no existe.</li>
+    </ol>
+  </div>
+
+  <div class="card k2">
+    <h3>Acercarse por los dos lados: el número junto con la figura</h3>
+    <p>La misma función, \(f(x)=\dfrac{x^{2}-1}{x-1}\). Ahora tú eliges qué tan cerca de \(1\) está \(x\).</p>
+    <ol class="steps">
+      <li><b>Mira los dos puntos sobre la gráfica:</b> el azul está en \(x=1-d\) (a la izquierda de \(1\)) y el naranja en \(x=1+d\) (a la derecha). Los dos están a la misma distancia \(d\) de \(1\).</li>
+      <li><b>Mira las líneas punteadas:</b> bajan de cada punto al eje horizontal (ahí se lee \(x\)) y van al eje vertical (ahí se lee \(f(x)\)).</li>
+      <li><b>Mueve \(d\)</b> hacia \(0\) (o pulsa «Reproducir»): los dos puntos se acercan al hueco y sus alturas se acercan a la recta punteada \(L=2\).</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> el valor de \(x\) a cada lado, su cuadrado, el numerador, el denominador, la división y la distancia del resultado a \(2\).</li>
+      <li><b>Llega al caso límite, \(d=0\):</b> los dos puntos caerían en \(x=1\), donde no hay punto (\(f(1)\) no está definida). El límite, igual, es \(2\).</li>
+    </ol>
+    <div class="stage" data-scene="lim-vivo"></div>
+    <ul class="keys">
+      <li><b>Punto azul:</b> \(\big(1-d,\ f(1-d)\big)\). <b>Punto naranja:</b> \(\big(1+d,\ f(1+d)\big)\). Los números de colores junto a los ejes son sus coordenadas; bajo el eje horizontal, las palabras «izquierda» y «derecha» dicen de qué lado de \(1\) está cada \(x\).</li>
+      <li><b>Recta punteada horizontal:</b> la altura \(L=2\), el límite. <b>Recta punteada vertical:</b> \(x=1\).</li>
+      <li><b>Círculo vacío:</b> el hueco en \((1,2)\).</li>
+    </ul>
+    <p>En este ejemplo, si \(x\) está a distancia \(d\) de \(1\) (con \(d\gt 0\)), entonces \(f(x)\) está a distancia \(d\) de \(2\): como \(f(x)=x+1\) para \(x\ne 1\), se tiene \(f(x)-2=x+1-2=x-1\). Por eso los valores quedan tan cerca de \(2\) como se quiera: basta tomar \(d\) así de chico.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Límites laterales, y un límite que no existe</h3>
+    <p>Acercarse «por un solo lado» tiene su propia notación. Para el límite por la izquierda basta que \(f\) esté definida en los \(x\) cercanos a \(a\) con \(x\lt a\); para el límite por la derecha, en los cercanos con \(x\gt a\).</p>
+    <ol class="steps">
+      <li><b>Límite por la izquierda:</b> \(\displaystyle\lim_{x\to a^{-}}f(x)=L\) significa que \(f(x)\) queda tan cerca de \(L\) como se quiera con tal de tomar \(x\) suficientemente cerca de \(a\), con \(x\lt a\).</li>
+      <li><b>Límite por la derecha:</b> \(\displaystyle\lim_{x\to a^{+}}f(x)=L\) significa lo mismo, pero con \(x\gt a\).</li>
+      <li><b>Criterio de los límites laterales</b> (se usa aquí sin demostrar; se demuestra con la definición formal):
+        \[\lim_{x\to a}f(x)=L\quad\Longleftrightarrow\quad \lim_{x\to a^{-}}f(x)=L\ \ \text{y}\ \ \lim_{x\to a^{+}}f(x)=L\]
+        Es decir, el límite existe si y solo si los dos límites laterales existen y son iguales.</li>
+      <li><b>Consecuencia:</b> si los dos laterales existen pero son distintos, el límite <b>no existe</b>. En la gráfica se ve como un <b>salto</b>.</li>
+    </ol>
+    <p>Un salto, para mirarlo: la función por tramos
+    \[g(x)=\begin{cases}x+1&\text{si }x\lt 1\\[2pt] 4-x&\text{si }x\ge 1\end{cases}\]</p>
+    <ol class="steps">
+      <li><b>Mira la gráfica burdeo:</b> son dos trozos de recta. El de la izquierda termina en un círculo vacío en \((1,2)\); el de la derecha empieza en un punto lleno en \((1,3)\), porque \(g(1)=4-1=3\).</li>
+      <li><b>Mira los dos puntos:</b> el azul, en \(x=1-d\), va por el trozo de la izquierda; el naranja, en \(x=1+d\), por el de la derecha.</li>
+      <li><b>Mueve \(d\)</b> hacia \(0\): el azul sube hacia la altura \(2\) y el naranja sube hacia la altura \(3\). No van al mismo número.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> qué tramo le toca a cada \(x\), el valor de \(g\), y la distancia de cada valor a \(2\) y a \(3\). Conclusión: los límites laterales son \(2\) y \(3\); como \(2\ne 3\), \(\displaystyle\lim_{x\to 1}g(x)\) no existe, aunque \(g(1)=3\) sí existe.</li>
+    </ol>
+    <div class="stage" data-scene="lim-salto"></div>
+    <ul class="keys">
+      <li><b>Círculo vacío en \((1,2)\):</b> ahí termina el trozo izquierdo, sin incluir el punto. <b>Punto lleno en \((1,3)\):</b> el valor \(g(1)=3\).</li>
+      <li><b>Punto azul:</b> \(\big(1-d,\ g(1-d)\big)\), con \(g(1-d)=(1-d)+1=2-d\). <b>Punto naranja:</b> \(\big(1+d,\ g(1+d)\big)\), con \(g(1+d)=4-(1+d)=3-d\).</li>
+      <li><b>Rectas punteadas horizontales:</b> las alturas \(2\) y \(3\), a las que se acerca cada lado.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: con tabla y con álgebra, \(\displaystyle\lim_{x\to 3}\dfrac{x^{2}-9}{x-3}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=3\): numerador \(3^{2}-9=9-9=0\) y denominador \(3-3=0\). No se divide por \(0\): la función no está definida en \(3\). El límite no lo necesita.</li>
+    <li>Tabla, con \(x\) cerca de \(3\) por los dos lados. Cada fila: \(x^{2}\), se le resta \(9\), y se divide por \(x-3\).
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}-9\)</th><th>\(x-3\)</th><th>cociente</th></tr>
+        <tr><td>\(2{,}9\)</td><td>\(8{,}41\)</td><td>\(-0{,}59\)</td><td>\(-0{,}1\)</td><td>\(5{,}9\)</td></tr>
+        <tr><td>\(2{,}99\)</td><td>\(8{,}9401\)</td><td>\(-0{,}0599\)</td><td>\(-0{,}01\)</td><td>\(5{,}99\)</td></tr>
+        <tr><td>\(3{,}01\)</td><td>\(9{,}0601\)</td><td>\(0{,}0601\)</td><td>\(0{,}01\)</td><td>\(6{,}01\)</td></tr>
+        <tr><td>\(3{,}1\)</td><td>\(9{,}61\)</td><td>\(0{,}61\)</td><td>\(0{,}1\)</td><td>\(6{,}1\)</td></tr>
+      </table></div></li>
+    <li>Por la izquierda (\(5{,}9\); \(5{,}99\)) y por la derecha (\(6{,}1\); \(6{,}01\)) los valores se acercan a \(6\). La tabla sugiere el resultado; el álgebra dice por qué.</li>
+    <li>Diferencia de cuadrados: \(x^{2}-9=(x-3)(x+3)\).</li>
+    <li>Si \(x\ne 3\), entonces \(x-3\ne 0\) y se simplifica: \(\dfrac{x^{2}-9}{x-3}=\dfrac{(x-3)(x+3)}{x-3}=x+3\).</li>
+    <li>Cuando \(x\) se acerca a \(3\), \(x+3\) se acerca a \(3+3=6\).</li>
+    <li>\(\displaystyle\lim_{x\to 3}\dfrac{x^{2}-9}{x-3}=6\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el límite no mira \(f(a)\)</h3>
+  <div class="body">
+  <p>Sea \(h(x)=\begin{cases}2x-1&\text{si }x\ne 2\\[2pt] 5&\text{si }x=2\end{cases}\). Calcular \(\displaystyle\lim_{x\to 2}h(x)\) y compararlo con \(h(2)\).</p>
+  <ol class="steps">
+    <li>El valor en el punto es un dato: \(h(2)=5\).</li>
+    <li>Cerca de \(2\), con \(x\ne 2\), se usa \(h(x)=2x-1\). Por la izquierda: \(h(1{,}9)=2\cdot 1{,}9-1=3{,}8-1=2{,}8\) y \(h(1{,}99)=2\cdot 1{,}99-1=3{,}98-1=2{,}98\).</li>
+    <li>Por la derecha: \(h(2{,}1)=2\cdot 2{,}1-1=4{,}2-1=3{,}2\) y \(h(2{,}01)=2\cdot 2{,}01-1=4{,}02-1=3{,}02\).</li>
+    <li>Cuando \(x\) se acerca a \(2\), \(2x-1\) se acerca a \(2\cdot 2-1=4-1=3\), por los dos lados.</li>
+    <li>\(\displaystyle\lim_{x\to 2}h(x)=3\), y \(h(2)=5\). Son distintos: \(3\ne 5\).</li>
+    <li>En la gráfica: la recta \(y=2x-1\) tiene un hueco en \((2,3)\), y el punto \((2,5)\) queda suelto, más arriba. El límite es la altura del hueco, no la del punto suelto.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un salto, \(\displaystyle\lim_{x\to 0}\dfrac{|x|}{x}\) no existe</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La función \(s(x)=\dfrac{|x|}{x}\) no está definida en \(x=0\) (el denominador sería \(0\)).</li>
+    <li>Si \(x\gt 0\), entonces \(|x|=x\) y \(s(x)=\dfrac{x}{x}=1\). Por ejemplo, \(s(0{,}1)=\dfrac{0{,}1}{0{,}1}=1\) y \(s(0{,}01)=\dfrac{0{,}01}{0{,}01}=1\).</li>
+    <li>Si \(x\lt 0\), entonces \(|x|=-x\) y \(s(x)=\dfrac{-x}{x}=-1\). Por ejemplo, \(s(-0{,}1)=\dfrac{0{,}1}{-0{,}1}=-1\) y \(s(-0{,}01)=\dfrac{0{,}01}{-0{,}01}=-1\).</li>
+    <li>A la derecha de \(0\) la función vale siempre \(1\): \(\displaystyle\lim_{x\to 0^{+}}s(x)=1\).</li>
+    <li>A la izquierda de \(0\) vale siempre \(-1\): \(\displaystyle\lim_{x\to 0^{-}}s(x)=-1\).</li>
+    <li>Los límites laterales existen pero son distintos, \(1\ne -1\). Por el criterio de los límites laterales, \(\displaystyle\lim_{x\to 0}\dfrac{|x|}{x}\) <b>no existe</b>.</li>
+    <li>En la gráfica hay un salto de altura \(1-(-1)=2\) en \(x=0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: dos fórmulas distintas y, aun así, hay límite</h3>
+  <div class="body">
+  <p>Sea \(p(x)=\begin{cases}x^{2}&\text{si }x\lt 2\\[2pt] 6-x&\text{si }x\gt 2\end{cases}\) (no está definida en \(x=2\)). Calcular \(\displaystyle\lim_{x\to 2}p(x)\).</p>
+  <ol class="steps">
+    <li>Por la izquierda (\(x\lt 2\)) se usa \(x^{2}\): \(p(1{,}9)=1{,}9^{2}=3{,}61\); \(p(1{,}99)=1{,}99^{2}=3{,}9601\); \(p(1{,}999)=1{,}999^{2}=3{,}996001\).</li>
+    <li>Cuando \(x\) se acerca a \(2\), \(x^{2}\) se acerca a \(2^{2}=4\): \(\displaystyle\lim_{x\to 2^{-}}p(x)=4\).</li>
+    <li>Por la derecha (\(x\gt 2\)) se usa \(6-x\): \(p(2{,}1)=6-2{,}1=3{,}9\); \(p(2{,}01)=6-2{,}01=3{,}99\); \(p(2{,}001)=6-2{,}001=3{,}999\).</li>
+    <li>Cuando \(x\) se acerca a \(2\), \(6-x\) se acerca a \(6-2=4\): \(\displaystyle\lim_{x\to 2^{+}}p(x)=4\).</li>
+    <li>Los dos límites laterales existen y son iguales a \(4\). Por el criterio, \(\displaystyle\lim_{x\to 2}p(x)=4\).</li>
+    <li>Que haya una fórmula distinta a cada lado no impide el límite: lo que importa es que los dos lados se acerquen a la misma altura. Y \(p(2)\) no existe, lo que tampoco importa.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Tres errores frecuentes.</b> Uno: <b>creer que el límite es \(f(a)\)</b>. En el ejemplo 2, \(h(2)=5\) pero el límite es \(3\); el límite mira los valores cerca de \(a\), no el valor en \(a\). Dos: <b>reemplazar, obtener \(\dfrac{0}{0}\) y decir «no existe»</b>. Que el numerador y el denominador valgan \(0\) solo dice que \(f(a)\) no está definida; del límite no dice nada. Hay que mirar cerca (tabla o gráfica) o simplificar con \(x\ne a\): en el ejemplo 1 el reemplazo da \(0\) y \(0\), y el límite es \(6\). Tres: <b>mirar un solo lado</b>. En el ejemplo 3, por la derecha todos los valores son \(1\); quien mire solo ese lado dirá que el límite es \(1\). Por la izquierda son \(-1\): el límite no existe.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula \(\displaystyle\lim_{x\to 2}\dfrac{x^{2}-4}{x-2}\). Antes de simplificar, calcula el valor de la función en \(x=1{,}9\) y en \(x=2{,}1\).</p>
+    <details><summary>Pista</summary><div><p>Reemplazar \(x=2\) da \(0\) arriba y \(0\) abajo: eso no es la respuesta. El numerador es una diferencia de cuadrados.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x=2\): \(2^{2}-4=0\) y \(2-2=0\). La función no está definida en \(2\).</li>
+        <li>En \(x=1{,}9\): \(1{,}9^{2}=3{,}61\); \(3{,}61-4=-0{,}39\); \(1{,}9-2=-0{,}1\); \(\dfrac{-0{,}39}{-0{,}1}=3{,}9\).</li>
+        <li>En \(x=2{,}1\): \(2{,}1^{2}=4{,}41\); \(4{,}41-4=0{,}41\); \(2{,}1-2=0{,}1\); \(\dfrac{0{,}41}{0{,}1}=4{,}1\).</li>
+        <li>Diferencia de cuadrados: \(x^{2}-4=(x-2)(x+2)\).</li>
+        <li>Si \(x\ne 2\), entonces \(x-2\ne 0\) y \(\dfrac{x^{2}-4}{x-2}=\dfrac{(x-2)(x+2)}{x-2}=x+2\). (Coincide con lo calculado: \(1{,}9+2=3{,}9\) y \(2{,}1+2=4{,}1\).)</li>
+        <li>Cuando \(x\) se acerca a \(2\), \(x+2\) se acerca a \(2+2=4\).</li>
+        <li>\(\displaystyle\lim_{x\to 2}\dfrac{x^{2}-4}{x-2}=4\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Sea \(q(x)=\begin{cases}2x+1&\text{si }x\le 1\\[2pt] 5-x&\text{si }x\gt 1\end{cases}\). Calcula \(q(1)\), \(\displaystyle\lim_{x\to 1^{-}}q(x)\) y \(\displaystyle\lim_{x\to 1^{+}}q(x)\). ¿Existe \(\displaystyle\lim_{x\to 1}q(x)\)?</p>
+    <details><summary>Pista</summary><div><p>Para cada lado usa la fórmula de ese lado. El límite existe solo si los dos laterales coinciden.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>\(q(1)\): como \(1\le 1\), toca la primera fórmula. \(q(1)=2\cdot 1+1=2+1=3\).</li>
+        <li>Por la izquierda (\(x\lt 1\)) se usa \(2x+1\): \(q(0{,}9)=2\cdot 0{,}9+1=1{,}8+1=2{,}8\) y \(q(0{,}99)=2\cdot 0{,}99+1=1{,}98+1=2{,}98\).</li>
+        <li>Cuando \(x\) se acerca a \(1\), \(2x+1\) se acerca a \(2\cdot 1+1=3\): \(\displaystyle\lim_{x\to 1^{-}}q(x)=3\).</li>
+        <li>Por la derecha (\(x\gt 1\)) se usa \(5-x\): \(q(1{,}1)=5-1{,}1=3{,}9\) y \(q(1{,}01)=5-1{,}01=3{,}99\).</li>
+        <li>Cuando \(x\) se acerca a \(1\), \(5-x\) se acerca a \(5-1=4\): \(\displaystyle\lim_{x\to 1^{+}}q(x)=4\).</li>
+        <li>Los laterales son distintos, \(3\ne 4\): por el criterio de los límites laterales, \(\displaystyle\lim_{x\to 1}q(x)\) <b>no existe</b>. Hay un salto de altura \(4-3=1\).</li>
+        <li>Que \(q(1)=3\) coincida con el límite por la izquierda no cambia la respuesta: hacen falta los dos lados.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un estacionamiento cobra $1.000 por cada hora o fracción. <b>Modelo:</b> \(t\) es el tiempo en horas, con \(0\lt t\le 3\), y el precio en pesos es
+    \[P(t)=\begin{cases}1000&\text{si }0\lt t\le 1\\ 2000&\text{si }1\lt t\le 2\\ 3000&\text{si }2\lt t\le 3\end{cases}\]
+    (El modelo supone que el cobro cambia exactamente al pasar la hora, sin minutos de tolerancia.) a) Calcula \(\displaystyle\lim_{t\to 1^{-}}P(t)\) y \(\displaystyle\lim_{t\to 1^{+}}P(t)\). ¿Existe \(\displaystyle\lim_{t\to 1}P(t)\)? b) Calcula \(\displaystyle\lim_{t\to 1{,}5}P(t)\). c) ¿Qué significan los dos resultados para quien estaciona?</p>
+    <details><summary>Pista</summary><div><p>Elige tiempos un poco menores y un poco mayores que \(1\) y mira en qué tramo caen. Haz lo mismo alrededor de \(1{,}5\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Por la izquierda de \(1\): \(t=0{,}9\) y \(t=0{,}99\) cumplen \(0\lt t\le 1\), así que \(P(0{,}9)=1000\) y \(P(0{,}99)=1000\). Para todo \(t\) entre \(0\) y \(1\) el precio es \(1000\): \(\displaystyle\lim_{t\to 1^{-}}P(t)=1000\).</li>
+        <li>Por la derecha de \(1\): \(t=1{,}01\) y \(t=1{,}1\) cumplen \(1\lt t\le 2\), así que \(P(1{,}01)=2000\) y \(P(1{,}1)=2000\). Para todo \(t\) entre \(1\) y \(2\) el precio es \(2000\): \(\displaystyle\lim_{t\to 1^{+}}P(t)=2000\).</li>
+        <li>\(1000\ne 2000\): los laterales son distintos, y \(\displaystyle\lim_{t\to 1}P(t)\) <b>no existe</b>. (El valor \(P(1)=1000\) sí existe.)</li>
+        <li>Alrededor de \(1{,}5\): \(t=1{,}4\) y \(t=1{,}49\) (izquierda), \(t=1{,}51\) y \(t=1{,}6\) (derecha) cumplen todos \(1\lt t\le 2\). El precio es \(2000\) a los dos lados: los dos laterales valen \(2000\).</li>
+        <li>\(\displaystyle\lim_{t\to 1{,}5}P(t)=2000\), que además coincide con \(P(1{,}5)=2000\).</li>
+        <li>Significado: cerca de la hora y media, unos minutos más o menos no cambian el precio. En cambio, justo en la hora hay un salto de \(2000-1000=1000\) pesos: pasarse apenas de \(1\) hora cuesta $1.000 más.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* L29 H01 · introducción a los límites: a qué valor se acerca (x² − 1)/(x − 1) cuando x se acerca a 1 (por pasos); acercarse por los dos lados (número ↔ figura); un salto (número ↔ figura) */
+OA.scene('lim-idea', (function(){
+  var N = 6, Q = '\\\\&\\qquad ';
+  function f(x){ return x + 1; } /* la gráfica de (x² − 1)/(x − 1) es la recta y = x + 1 sin el punto (1, 2) */
+  var IZ = [0.5, 0.9, 0.99], DE = [1.5, 1.1, 1.01];
+  var M = lmMarco(-0.75, 0.35, 5.6, 4.0, -0.4, 2.4, -0.4, 3.4);
+  var PZ = [['Q', '\\lim_{x\\to 1}\\tfrac{x^{2}-1}{x-1}=\\ ?', 'lím (x² − 1)/(x − 1) = ?', 'pt'], ['F', '\\Longrightarrow\\ \\lim_{x\\to 1}\\tfrac{x^{2}-1}{x-1}=2', '⟹ lím (x² − 1)/(x − 1) = 2', 'diff'],
+    ['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''],
+    ['CF', 'y=\\tfrac{x^{2}-1}{x-1}', 'y = (x² − 1)/(x − 1)', 'c-tan'], ['HU', '\\text{hueco en }(1,\\ 2)', 'hueco en (1, 2)', 'c-tan'],
+    ['LR', 'y=x+1\\ \\ (x\\ne 1)', 'y = x + 1 (x ≠ 1)', 'c-alt'], ['LM', '\\text{límite: }2', 'límite: 2', 'diff'],
+    ['R1', 'f(x)=\\tfrac{x^{2}-1}{x-1};\\ \\ f(1)\\text{ no está definida}', 'f(x) = (x² − 1)/(x − 1); f(1) no está definida', ''],
+    ['R2', 'x<1:\\ \\ f(0{,}5)=1{,}5;\\ \\ f(0{,}9)=1{,}9;\\ \\ f(0{,}99)=1{,}99', 'x < 1: f(0,5) = 1,5; f(0,9) = 1,9; f(0,99) = 1,99', 'c-sec'],
+    ['R3', 'x>1:\\ \\ f(1{,}5)=2{,}5;\\ \\ f(1{,}1)=2{,}1;\\ \\ f(1{,}01)=2{,}01', 'x > 1: f(1,5) = 2,5; f(1,1) = 2,1; f(1,01) = 2,01', 'diff'],
+    ['R4', '\\text{por los dos lados, }f(x)\\text{ se acerca a }2', 'por los dos lados, f(x) se acerca a 2', ''],
+    ['R5', 'x\\ne 1:\\ \\ \\tfrac{x^{2}-1}{x-1}=\\tfrac{(x-1)(x+1)}{x-1}=x+1', 'x ≠ 1: (x² − 1)/(x − 1) = x + 1', 'c-alt'],
+    ['R6', '\\lim_{x\\to 1}\\tfrac{x^{2}-1}{x-1}=2', 'lím (x² − 1)/(x − 1) = 2', 'diff']];
+  var TXT = [['La gráfica es una recta con un hueco: en x = 1', 'la función no está definida. ¿Qué pasa cerca?'],
+    ['Se toman valores de x menores que 1, cada vez', 'más cerca de 1, y se calcula la función en ellos.'],
+    ['Ahora, valores de x mayores que 1, cada vez', 'más cerca de 1, y se calcula la función otra vez.'],
+    ['Por la izquierda y por la derecha, los valores', 'de la función se acercan al mismo número: 2.'],
+    ['La razón: si x no es 1, la fracción se puede', 'simplificar, y queda la recta de la gráfica.'],
+    ['El límite es 2: la altura del hueco. No importa', 'que la función no esté definida en x = 1.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-5.5, y1:6.3}, aspect:11.8/6.6,
+    aria:'Arriba, una franja dice qué muestra: a qué número se acerca la función cuando x se acerca a 1, sin llegar a 1. Animación en seis pasos sobre la gráfica de y igual a x al cuadrado menos 1, dividido por x menos 1. Uno: la gráfica es una recta con un hueco en el punto (1, 2), porque la función no está definida en x igual a 1. Dos: puntos azules sobre la gráfica en x igual a 0,5, 0,9 y 0,99, con valores 1,5, 1,9 y 1,99. Tres: puntos naranjas en x igual a 1,5, 1,1 y 1,01, con valores 2,5, 2,1 y 2,01. Cuatro: sobre el eje vertical, dos flechas, una desde abajo y otra desde arriba, apuntan a la altura 2. Cinco: para x distinto de 1 la fracción se simplifica a x más 1. Seis: el límite es 2, la altura del hueco. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> gráfica de la función, con su hueco</span><span><i class="sw sec"></i> \\(x\\) menor que 1 (por la izquierda)</span><span><i class="sw rise"></i> \\(x\\) mayor que 1 (por la derecha)</span><span><i class="sw alt"></i> la misma función ya simplificada</span>',
+    anim:{run:32000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), i, a, xm, hx = X(M.gx(1)), hy = Y(M.gy(2));
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      dtQue(S, 'a qué número se acerca la función', 'cuando x se acerca a 1, sin llegar a 1.');
+      lmEjes(S, M); lmEtq(T, M, 'EX', 2.4, 0, -50, -2, -11); lmEtq(T, M, 'EY', 0, 3.4, 0, 8, 5);
+      /* paso 1: la gráfica (recta con hueco) y la recta x = 1 */
+      a = ap(1);
+      lmSeg(S, M, 1, 0, 1, 2*a, C.muted || '#6b6b6b', 1);
+      lmCurva(S, M, f, -0.4, -0.4 + 2.8*a, C.tan, 2);
+      if (a > 0.3){ lmFondo(S, M, 'CF', 1.62, 0.62, 0); lmEtq(T, M, 'CF', 1.62, 0.62, 0); }
+      /* paso 4: los valores se acercan a 2 (recta y = 2 y flechas sobre el eje vertical) */
+      a = ap(4);
+      if (a > 0){ lmSeg(S, M, 0.5, 1.5, 0.5*(1 - a), 1.5, C.sec, 1); lmSeg(S, M, 1.5, 2.5, 1.5*(1 - a), 2.5, C.rise, 1); lmSeg(S, M, 1, 2, 1 - a, 2, C.tan, 1.2, [5, 3]);
+        lmFlecha(S, M, 0, 1.5, 0, 1.5 + 0.44*a, C.sec, 1.8, 8, 0); lmFlecha(S, M, 0, 2.5, 0, 2.5 - 0.44*a, C.rise, 1.8, 8, 0); }
+      /* paso 2: por la izquierda */
+      a = ap(2);
+      if (a > 0){ xm = k === 2 ? 0.2 + 0.79*u : 0.99;
+        lmFlecha(S, M, 0.2, 0, Math.min(xm, 0.94), 0, C.sec, 1.8, 0, -7);
+        IZ.forEach(function(x){ if (xm >= x - 1e-9){ lmSeg(S, M, x, 0, x, f(x), C.sec, 1); lmPunto(S, M, x, f(x), C.sec, false, 2.8); } });
+        if (k === 2 && u < 1) lmPunto(S, M, xm, f(xm), C.sec, false, 4); }
+      /* paso 3: por la derecha */
+      a = ap(3);
+      if (a > 0){ xm = k === 3 ? 1.8 - 0.79*u : 1.01;
+        lmFlecha(S, M, 1.8, 0, Math.max(xm, 1.06), 0, C.rise, 1.8, 0, -7);
+        DE.forEach(function(x){ if (xm <= x + 1e-9){ lmSeg(S, M, x, 0, x, f(x), C.rise, 1); lmPunto(S, M, x, f(x), C.rise, false, 2.8); } });
+        if (k === 3 && u < 1) lmPunto(S, M, xm, f(xm), C.rise, false, 4); }
+      /* paso 5: la recta y = x + 1 */
+      a = ap(5);
+      if (a > 0){ c.globalAlpha = 0.55*a; lmCurva(S, M, f, -0.4, 2.4, C.alt, 4.5); c.globalAlpha = 1; lmCurva(S, M, f, -0.4, 2.4, C.tan, 2); if (a > 0.5) lmEtq(T, M, 'LR', 1.95, 3.2, -100); }
+      /* el hueco va encima de todo: ahí la gráfica no tiene punto */
+      if (ap(1) > 0.5){ lmPunto(S, M, 1, 2, C.tan, true, 4); lmFondo(S, M, 'HU', 0.9, 2.84, -100); lmEtq(T, M, 'HU', 0.9, 2.84, -100); }
+      /* paso 6: el límite es la altura del hueco */
+      a = ap(6);
+      if (a > 0){ c.strokeStyle = C.rise; c.lineWidth = 1.6; c.globalAlpha = a; c.beginPath(); c.arc(hx, hy, 4 + 5*a, 0, 6.2832); c.stroke(); c.globalAlpha = 1;
+        lmPunto(S, M, 0, 2, C.rise, false, 3); if (a > 0.5){ lmEtq(T, M, 'LM', 0, 2, -100, -17, 0); } }
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 4.86, 0); if (k === 6 && u > 0.5) T.L('F', 1.75, 4.86, 0);
+      lmTxt(S, TXT[k - 1][0], -1.2, -0.2); lmTxt(S, TXT[k - 1][1], -1.2, -0.2 - 21/(X(1) - X(0)));
+      c.font = '600 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.36));
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.75, [0, 34, 68, 102, 137, 172]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      'f(x)=\\dfrac{x^{2}-1}{x-1}' + Q + '\\text{en }x=1:\\ \\ 1^{2}-1=0\\ \\ \\text{y}\\ \\ 1-1=0' + Q + '\\text{no se divide por }0:\\ f(1)\\text{ no está definida}',
+      '\\text{por la izquierda }(x<1):' + Q + 'f(0{,}5)=\\tfrac{0{,}5^{2}-1}{0{,}5-1}=\\tfrac{0{,}25-1}{-0{,}5}=\\tfrac{-0{,}75}{-0{,}5}=1{,}5' + Q + 'f(0{,}9)=\\tfrac{0{,}9^{2}-1}{0{,}9-1}=\\tfrac{0{,}81-1}{-0{,}1}=\\tfrac{-0{,}19}{-0{,}1}=1{,}9' + Q + 'f(0{,}99)=\\tfrac{0{,}9801-1}{0{,}99-1}=\\tfrac{-0{,}0199}{-0{,}01}=1{,}99',
+      '\\text{por la derecha }(x>1):' + Q + 'f(1{,}5)=\\tfrac{1{,}5^{2}-1}{1{,}5-1}=\\tfrac{2{,}25-1}{0{,}5}=\\tfrac{1{,}25}{0{,}5}=2{,}5' + Q + 'f(1{,}1)=\\tfrac{1{,}1^{2}-1}{1{,}1-1}=\\tfrac{1{,}21-1}{0{,}1}=\\tfrac{0{,}21}{0{,}1}=2{,}1' + Q + 'f(1{,}01)=\\tfrac{1{,}0201-1}{1{,}01-1}=\\tfrac{0{,}0201}{0{,}01}=2{,}01',
+      '\\text{distancia a }2:\\ |1{,}99-2|=0{,}01\\ \\text{y}\\ |2{,}01-2|=0{,}01' + Q + '\\text{por los dos lados, }f(x)\\text{ se acerca a }2',
+      '\\text{si }x\\ne 1:\\ \\dfrac{x^{2}-1}{x-1}=\\dfrac{(x-1)(x+1)}{x-1}=x+1' + Q + '\\text{y }x+1\\text{ se acerca a }1+1=2\\text{ cuando }x\\text{ se acerca a }1',
+      '\\displaystyle\\lim_{x\\to 1}\\dfrac{x^{2}-1}{x-1}=2\\quad\\text{(aunque }f(1)\\text{ no existe)}']; return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* dibujo común de las dos escenas número ↔ figura: x se acerca a 1 por los dos lados, a distancia d */
+function lm01Dib(S, v, M, T, G){
+  var d = lmR2(v.d == null ? 0.5 : +v.d), C = S.C, c = S.ctx, xi = 1 - d, xd = 1 + d, yi = G.fi(xi), yd = G.fd(xd), mu = C.muted || '#6b6b6b', F = '"Source Sans 3", system-ui, sans-serif';
+  lmEjes(S, M); lmEtq(T, M, 'EX', 2.4, 0, -50, -2, -11); lmEtq(T, M, 'EY', 0, 3.6, -100, -8, 5);
+  lmSeg(S, M, 1, 0, 1, Math.max(G.li, G.ld), mu, 1);
+  lmSeg(S, M, 0, G.li, G.li === G.ld ? 2.4 : 1, G.li, mu, 1, [5, 3]); if (G.li !== G.ld) lmSeg(S, M, 0, G.ld, 1, G.ld, mu, 1, [5, 3]);
+  lmCurva(S, M, G.fi, -0.4, 1, C.tan, 2); lmCurva(S, M, G.fd, 1, 2.4, C.tan, 2);
+  if (d > 0){ lmGuia(S, M, xi, yi, C.sec); lmGuia(S, M, xd, yd, C.rise); lmPunto(S, M, xi, yi, C.sec, false, 3.6); lmPunto(S, M, xd, yd, C.rise, false, 3.6);
+    lmNum(S, M, lmT(xi, 2), xi, 0, -3, 24, C.sec, 'right'); lmNum(S, M, lmT(xd, 2), xd, 0, 3, 24, C.rise, 'left');
+    lmNum(S, M, lmT(yi, 2), 0, yi, -22, 7, C.sec, 'right'); lmNum(S, M, lmT(yd, 2), 0, yd, -22, -7, C.rise, 'right');
+    c.font = '600 11.5px ' + F; c.textBaseline = 'middle';
+    c.fillStyle = C.sec; c.textAlign = 'right'; c.fillText('izquierda', S.X(M.gx(xi)) - 3, S.Y(M.gy(0)) + 37);
+    c.fillStyle = C.rise; c.textAlign = 'left'; c.fillText('derecha', S.X(M.gx(xd)) + 3, S.Y(M.gy(0)) + 37); }
+  G.fin.forEach(function(p){ lmPunto(S, M, p[0], p[1], C.tan, p[2], 4); });
+  if (d === 0){ c.strokeStyle = C.rise; c.lineWidth = 1.6; G.fin.forEach(function(p){ c.beginPath(); c.arc(S.X(M.gx(p[0])), S.Y(M.gy(p[1])), 9, 0, 6.2832); c.stroke(); }); }
+  return d;
+}
+/* número ↔ figura: los dos puntos se acercan al hueco; caso límite d = 0 */
+OA.scene('lim-vivo', (function(){
+  var M = lmMarco(-0.75, 0, 5.6, 4.7, -0.4, 2.4, -0.4, 3.6);
+  var PZ = [['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''], ['VF', 'y=\\tfrac{x^{2}-1}{x-1}', 'y = (x² − 1)/(x − 1)', 'c-tan'], ['VH', '\\text{hueco }(1,\\ 2)', 'hueco (1, 2)', 'c-tan'], ['VL', 'L=2', 'L = 2', '']];
+  var G = {fi:function(x){ return x + 1; }, fd:function(x){ return x + 1; }, li:2, ld:2, fin:[[1, 2, true]]};
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-1.5, y1:6.0}, aspect:7.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: al acercar x a 1 por los dos lados, la función se acerca a 2, y ese es el límite. Gráfica de y igual a x al cuadrado menos 1, dividido por x menos 1: una recta con un hueco en el punto (1, 2). Un punto azul sobre la gráfica, a la izquierda de 1, y uno naranja, a la derecha, están a la misma distancia d de x igual a 1. Al achicar d, los dos puntos se acercan al hueco y sus alturas se acercan a 2. Con d igual a 0 no hay punto: la función no está definida en 1, pero el límite es 2. Bajo el dibujo se calcula el valor de la función en cada punto, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'d', tex:'d', min:0, max:1, step:0.01, value:0.5}],
+    legend:'<span><i class="sw tan"></i> gráfica, con su hueco</span><span><i class="sw sec"></i> \\(x=1-d\\), por la izquierda</span><span><i class="sw rise"></i> \\(x=1+d\\), por la derecha</span>',
+    anim:{run:16000, hold:3000, still:1, apply:function(p, v){ v.q = p; v.d = Math.max(0, 1 - dtSuave(p/0.9)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var T = dtEtq(S, PZ), d;
+      dtQue(S, 'al acercar x a 1 por los dos lados,', 'la función se acerca a 2: ese es el límite.');
+      d = lm01Dib(S, v, M, T, G);
+      lmFondo(S, M, 'VF', 1.62, 0.62, 0); lmEtq(T, M, 'VF', 1.62, 0.62, 0); lmFondo(S, M, 'VH', 1, 2.6, -50); lmEtq(T, M, 'VH', 1, 2.6, -50); lmEtq(T, M, 'VL', 2.4, 2, -100, 0, -10);
+      if (d > 0){ lmTxt(S, 'x está a ' + lmT(d, 2) + ' de 1; la función, a ' + lmT(d, 2) + ' de 2.', -1.2, -0.8); lmTxt(S, 'Acerca x a 1: los dos puntos van hacia el hueco.', -1.2, -0.8 - 21/(S.X(1) - S.X(0))); }
+      else { lmTxt(S, 'Caso límite: en x = 1 no hay punto (hueco).', -1.2, -0.8, S.C.rise); lmTxt(S, 'Igual, el límite es 2: se mira cerca, no en 1.', -1.2, -0.8 - 21/(S.X(1) - S.X(0)), S.C.rise); }
+      T.fin();
+    },
+    caption:function(v){ var d = lmR2(v.d == null ? 0.5 : +v.d); return d > 0 ? 'Con x a ' + lmT(d, 2) + ' de 1, la función vale ' + lmT(2 - d, 2) + ' por la izquierda y ' + lmT(2 + d, 2) + ' por la derecha: los dos valores están a ' + lmT(d, 2) + ' de 2.' : 'Caso límite: en x = 1 la función no está definida, pero el límite es 2.'; },
+    readout:function(v){ var d = lmR2(v.d == null ? 0.5 : +v.d), n = lmN, Q = '\\\\&\\qquad ', xi = lmR2(1 - d), xd = lmR2(1 + d), qi = xi*xi, qd = xd*xd, ni = qi - 1, nd = qd - 1, di = lmR2(xi - 1), dd = lmR2(xd - 1), fi, fd;
+      if (d === 0) return dtPasos(['a=1,\\qquad d=0',
+        'x=1-0=1\\quad\\text{y}\\quad x=1+0=1' + Q + '\\text{los dos puntos llegan a }x=1',
+        '\\text{numerador: }1^{2}-1=0;\\qquad\\text{denominador: }1-1=0',
+        '\\text{no se divide por }0:\\ f(1)\\text{ no está definida (hueco)}',
+        '\\text{el límite no usa }f(1):\\ \\text{si }x\\ne 1,\\ f(x)=x+1' + Q + '\\text{y }x+1\\text{ se acerca a }1+1=2',
+        '\\displaystyle\\lim_{x\\to 1}\\dfrac{x^{2}-1}{x-1}=2']);
+      fi = lmR2(ni/di); fd = lmR2(nd/dd);
+      return dtPasos(['a=1,\\qquad d=' + n(d, 2) + '\\ \\ \\text{(distancia de }x\\text{ a }1)',
+        '\\text{izquierda: }x=1-d=1-' + n(d, 2) + '=' + n(xi, 2),
+        n(xi, 2) + '^{2}=' + n(qi, 4) + ';\\quad ' + n(qi, 4) + '-1=' + n(ni, 4) + Q + n(xi, 2) + '-1=' + n(di, 2),
+        'f(' + n(xi, 2) + ')=\\dfrac{' + n(xi, 2) + '^{2}-1}{' + n(xi, 2) + '-1}=\\dfrac{' + n(ni, 4) + '}{' + n(di, 2) + '}=' + n(fi, 2),
+        '\\text{derecha: }x=1+d=1+' + n(d, 2) + '=' + n(xd, 2),
+        n(xd, 2) + '^{2}=' + n(qd, 4) + ';\\quad ' + n(qd, 4) + '-1=' + n(nd, 4) + Q + n(xd, 2) + '-1=' + n(dd, 2),
+        'f(' + n(xd, 2) + ')=\\dfrac{' + n(xd, 2) + '^{2}-1}{' + n(xd, 2) + '-1}=\\dfrac{' + n(nd, 4) + '}{' + n(dd, 2) + '}=' + n(fd, 2),
+        '\\text{distancia a }2:\\ |' + n(fi, 2) + '-2|=' + n(Math.abs(fi - 2), 2) + ';\\quad |' + n(fd, 2) + '-2|=' + n(Math.abs(fd - 2), 2),
+        '\\text{con }x\\text{ a }' + n(d, 2) + '\\text{ de }1,\\ f(x)\\text{ queda a }' + n(d, 2) + '\\text{ de }2']); }
+  };
+})());
+/* número ↔ figura: un salto; por la izquierda se va hacia 2 y por la derecha hacia 3 */
+OA.scene('lim-salto', (function(){
+  var M = lmMarco(-0.75, 0, 5.6, 4.7, -0.4, 2.4, -0.4, 3.6);
+  var PZ = [['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''], ['SA', 'y=x+1', 'y = x + 1', 'c-tan'], ['SB', 'y=4-x', 'y = 4 − x', 'c-tan'], ['SI', '\\lim_{x\\to 1^{-}}g(x)=2', 'lím x→1⁻ g(x) = 2', 'c-sec'], ['SD', '\\lim_{x\\to 1^{+}}g(x)=3', 'lím x→1⁺ g(x) = 3', 'diff']];
+  var G = {fi:function(x){ return x + 1; }, fd:function(x){ return 4 - x; }, li:2, ld:3, fin:[[1, 2, true], [1, 3, false]]};
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-1.5, y1:6.0}, aspect:7.5/6.6,
+    aria:'Arriba, una franja dice qué muestra: un salto; por la izquierda la función se va hacia 2 y por la derecha hacia 3, así que no hay límite en 1. Gráfica de una función por tramos: para x menor que 1 es la recta y igual a x más 1, que termina en un punto hueco en (1, 2); para x mayor o igual que 1 es la recta y igual a 4 menos x, que empieza en un punto lleno en (1, 3). Un punto azul, a la izquierda de 1, y uno naranja, a la derecha, están a la misma distancia d de x igual a 1. Al achicar d, el azul se acerca a la altura 2 y el naranja a la altura 3. Bajo el dibujo se calcula el valor de la función en cada punto, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'d', tex:'d', min:0, max:1, step:0.01, value:0.5}],
+    legend:'<span><i class="sw tan"></i> gráfica: punto hueco en \\((1,2)\\), punto lleno en \\((1,3)\\)</span><span><i class="sw sec"></i> \\(x=1-d\\), por la izquierda</span><span><i class="sw rise"></i> \\(x=1+d\\), por la derecha</span>',
+    anim:{run:16000, hold:3000, still:1, apply:function(p, v){ v.q = p; v.d = Math.max(0, 1 - dtSuave(p/0.9)); }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var T = dtEtq(S, PZ), d, dy = 21/(S.X(1) - S.X(0));
+      dtQue(S, 'un salto: por la izquierda se va', 'hacia 2 y por la derecha hacia 3. No hay límite.');
+      d = lm01Dib(S, v, M, T, G);
+      lmFondo(S, M, 'SA', 0.12, 0.62, 0, 8, 0); lmEtq(T, M, 'SA', 0.12, 0.62, 0, 8, 0); lmEtq(T, M, 'SB', 1.62, 2.74, 0);
+      lmFondo(S, M, 'SI', 0.92, 2.52, -100); lmEtq(T, M, 'SI', 0.92, 2.52, -100); lmFondo(S, M, 'SD', 0.92, 3.3, -100); lmEtq(T, M, 'SD', 0.92, 3.3, -100);
+      if (d > 0){ lmTxt(S, 'Azul: a ' + lmT(d, 2) + ' de 2. Naranja: a ' + lmT(d, 2) + ' de 3.', -1.2, -0.8); lmTxt(S, 'Los lados van a alturas distintas: no hay límite.', -1.2, -0.8 - dy); }
+      else { lmTxt(S, 'Caso límite: en x = 1 la función vale 3,', -1.2, -0.8, S.C.rise); lmTxt(S, 'pero por la izquierda iba hacia 2: no hay límite.', -1.2, -0.8 - dy, S.C.rise); }
+      T.fin();
+    },
+    caption:function(v){ var d = lmR2(v.d == null ? 0.5 : +v.d); return d > 0 ? 'Con x a ' + lmT(d, 2) + ' de 1, la función vale ' + lmT(2 - d, 2) + ' por la izquierda y ' + lmT(3 - d, 2) + ' por la derecha. Un lado va hacia 2 y el otro hacia 3: no hay límite en 1.' : 'Caso límite: en x = 1 la función vale 3, pero los límites laterales son 2 y 3: el límite no existe.'; },
+    readout:function(v){ var d = lmR2(v.d == null ? 0.5 : +v.d), n = lmN, Q = '\\\\&\\qquad ', xi = lmR2(1 - d), xd = lmR2(1 + d), gi = lmR2(xi + 1), gd = lmR2(4 - xd);
+      if (d === 0) return dtPasos(['a=1,\\qquad d=0',
+        'x=1\\ \\text{está en el tramo }x\\ge 1:' + Q + 'g(1)=4-1=3\\ \\ \\text{(punto lleno)}',
+        '\\text{por la izquierda, }g(x)=x+1\\text{ se acerca a }1+1=2',
+        '\\text{por la derecha, }g(x)=4-x\\text{ se acerca a }4-1=3',
+        '2\\ne 3:\\ \\displaystyle\\lim_{x\\to 1}g(x)\\ \\text{no existe,}' + Q + '\\text{aunque }g(1)=3\\text{ sí existe}']);
+      return dtPasos(['a=1,\\qquad d=' + n(d, 2) + '\\ \\ \\text{(distancia de }x\\text{ a }1)',
+        '\\text{izquierda: }x=1-d=1-' + n(d, 2) + '=' + n(xi, 2) + Q + n(xi, 2) + '<1\\ \\Rightarrow\\ \\text{toca }g(x)=x+1',
+        'g(' + n(xi, 2) + ')=' + n(xi, 2) + '+1=' + n(gi, 2),
+        '\\text{derecha: }x=1+d=1+' + n(d, 2) + '=' + n(xd, 2) + Q + n(xd, 2) + '\\ge 1\\ \\Rightarrow\\ \\text{toca }g(x)=4-x',
+        'g(' + n(xd, 2) + ')=4-' + n(xd, 2) + '=' + n(gd, 2),
+        '\\text{distancias: }|' + n(gi, 2) + '-2|=' + n(Math.abs(gi - 2), 2) + ';\\quad |' + n(gd, 2) + '-3|=' + n(Math.abs(gd - 3), 2),
+        '\\text{por la izquierda hacia }2\\text{; por la derecha hacia }3' + Q + '2\\ne 3:\\ \\text{no existe }\\displaystyle\\lim_{x\\to 1}g(x)']); }
+  };
+})());
