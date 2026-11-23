@@ -20,12 +20,13 @@
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Las reglas, vistas en el paralelogramo que forman las columnas de una matriz de segundo orden, en seis pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrita la cuenta de cada paso.</p>
+  <p>Las reglas, vistas en el paralelogramo que forman las columnas de una matriz de segundo orden, en seis pasos. Avanza con el deslizador o con «Reproducir». El resultado de cada paso queda guardado en una fila de figuras chicas, y bajo ellas queda escrita la cuenta de cada paso.</p>
   <div class="stage" data-scene="prop-idea"></div>
   <ul class="keys">
     <li><b>Flecha azul:</b> la primera columna, \(\vec u=(2,1)\). <b>Flecha naranja:</b> la segunda columna, \(\vec v=(1,2)\).</li>
     <li><b>Paralelogramo burdeo:</b> determinante positivo. <b>Paralelogramo verde:</b> determinante negativo. El área es el valor absoluto del determinante (hoja «Determinante de segundo orden»).</li>
     <li><b>Borde punteado:</b> el paralelogramo del comienzo, para comparar.</li>
+    <li><b>Fila de figuras chicas:</b> lo que dejó cada paso, con su número y su determinante. Nada se borra hasta el final.</li>
   </ul>
   <div class="why">
     <p><b>Alcance.</b> Las propiedades valen para determinantes de cualquier orden. En esta hoja se demuestran para segundo orden y, para tercer orden, se demuestra el intercambio de las filas 1 y 2; los demás casos de tercer orden se enuncian y se comprobaron con la fórmula de los seis productos. Todo lo que se dice de las filas vale igual para las columnas, porque una matriz y su traspuesta tienen el mismo determinante (hoja «El determinante de una matriz A es igual al determinante de la matriz traspuesta de A»).</p>
@@ -92,9 +93,9 @@
   <h3>Ejemplo 1: llevar a forma triangular, \(\begin{vmatrix}1&2&3\\2&5&8\\3&8&14\end{vmatrix}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>A la fila 2 se le resta \(2\) veces la fila 1: \((2,5,8)-2\,(1,2,3)=(0,1,2)\). El determinante no cambia (propiedad 7).</li>
-    <li>A la fila 3 se le resta \(3\) veces la fila 1: \((3,8,14)-3\,(1,2,3)=(0,2,5)\). No cambia. Queda \(\begin{vmatrix}1&2&3\\0&1&2\\0&2&5\end{vmatrix}\).</li>
-    <li>A la fila 3 se le resta \(2\) veces la fila 2: \((0,2,5)-2\,(0,1,2)=(0,0,1)\). No cambia. Queda \(\begin{vmatrix}1&2&3\\0&1&2\\0&0&1\end{vmatrix}\).</li>
+    <li>A la fila 2 se le resta \(2\) veces la fila 1: \((2,5,8)-2\,(1,2,3)=(2,5,8)-(2,4,6)=(0,1,2)\). El determinante no cambia (propiedad 7).</li>
+    <li>A la fila 3 se le resta \(3\) veces la fila 1: \((3,8,14)-3\,(1,2,3)=(3,8,14)-(3,6,9)=(0,2,5)\). No cambia. Queda \(\begin{vmatrix}1&2&3\\0&1&2\\0&2&5\end{vmatrix}\).</li>
+    <li>A la fila 3 se le resta \(2\) veces la fila 2: \((0,2,5)-2\,(0,1,2)=(0,2,5)-(0,2,4)=(0,0,1)\). No cambia. Queda \(\begin{vmatrix}1&2&3\\0&1&2\\0&0&1\end{vmatrix}\).</li>
     <li>La matriz es triangular (propiedad 8): el determinante es \(1\cdot 1\cdot 1=1\).</li>
   </ol>
   </div>
@@ -106,9 +107,9 @@
   <ol class="steps">
     <li>La fila 1 tiene factor común \(3\): \((6,9,12)=3\,(2,3,4)\). Se saca (propiedad 3): \(3\begin{vmatrix}2&3&4\\1&2&3\\2&1&5\end{vmatrix}\).</li>
     <li>Se intercambian las filas 1 y 2 para tener un \(1\) en la esquina. Cambia el signo (propiedad 1): \(-3\begin{vmatrix}1&2&3\\2&3&4\\2&1&5\end{vmatrix}\).</li>
-    <li>Fila 2 menos \(2\) veces la fila 1: \((2,3,4)-2\,(1,2,3)=(0,-1,-2)\). No cambia (propiedad 7).</li>
-    <li>Fila 3 menos \(2\) veces la fila 1: \((2,1,5)-2\,(1,2,3)=(0,-3,-1)\). No cambia.</li>
-    <li>Fila 3 menos \(3\) veces la fila 2: \((0,-3,-1)-3\,(0,-1,-2)=(0,0,5)\). No cambia. Queda \(-3\begin{vmatrix}1&2&3\\0&-1&-2\\0&0&5\end{vmatrix}\).</li>
+    <li>Fila 2 menos \(2\) veces la fila 1: \((2,3,4)-2\,(1,2,3)=(2,3,4)-(2,4,6)=(0,-1,-2)\). No cambia (propiedad 7).</li>
+    <li>Fila 3 menos \(2\) veces la fila 1: \((2,1,5)-2\,(1,2,3)=(2,1,5)-(2,4,6)=(0,-3,-1)\). No cambia.</li>
+    <li>Fila 3 menos \(3\) veces la fila 2: \((0,-3,-1)-3\,(0,-1,-2)=(0,-3,-1)-(0,-3,-6)=(0,0,5)\). No cambia. Queda \(-3\begin{vmatrix}1&2&3\\0&-1&-2\\0&0&5\end{vmatrix}\).</li>
     <li>Triangular: \(-3\cdot\big(1\cdot(-1)\cdot 5\big)=-3\cdot(-5)=15\).</li>
   </ol>
   </div>
@@ -120,7 +121,7 @@
   <ol class="steps">
     <li>\(\begin{vmatrix}2&-1&3\\4&-2&6\\7&0&1\end{vmatrix}\): la fila 2 es \(2\) veces la fila 1, porque \(2\,(2,-1,3)=(4,-2,6)\). Filas proporcionales: vale \(0\) (propiedad 5).</li>
     <li>\(\begin{vmatrix}1&2&3\\4&5&6\\5&7&9\end{vmatrix}\): la fila 3 es la suma de las otras dos, porque \((1,2,3)+(4,5,6)=(5,7,9)\).</li>
-    <li>A la fila 3 se le resta la fila 1: queda \((4,5,6)\). El determinante no cambia (propiedad 7).</li>
+    <li>A la fila 3 se le resta la fila 1: \((5,7,9)-(1,2,3)=(4,5,6)\). El determinante no cambia (propiedad 7).</li>
     <li>Ahora las filas 2 y 3 son iguales: vale \(0\) (propiedad 2).</li>
   </ol>
   </div>
@@ -130,7 +131,7 @@
   <h3>Ejemplo 4: si \(\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=5\), hallar otros tres determinantes</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\begin{vmatrix}2a&2b&2c\\g&h&i\\d&e&f\end{vmatrix}\): la fila 1 quedó multiplicada por \(2\) y las filas 2 y 3 se intercambiaron. Vale \(2\cdot(-1)\cdot 5=-10\) (propiedades 3 y 1).</li>
+    <li>\(\begin{vmatrix}2a&2b&2c\\g&h&i\\d&e&f\end{vmatrix}\): la fila 1 quedó multiplicada por \(2\) y las filas 2 y 3 se intercambiaron. Vale \(2\cdot(-1)\cdot 5=-2\cdot 5=-10\) (propiedades 3 y 1).</li>
     <li>\(\begin{vmatrix}a&b&c\\d+3a&e+3b&f+3c\\g&h&i\end{vmatrix}\): a la fila 2 se le sumó \(3\) veces la fila 1. Vale \(5\) (propiedad 7).</li>
     <li>\(\det(2A)\), con \(A\) la matriz original: tres filas, cada una multiplicada por \(2\). Vale \(2^{3}\cdot 5=8\cdot 5=40\) (propiedad 9).</li>
   </ol>
@@ -149,7 +150,7 @@
     <details><summary>Pista</summary><div><p>Usa la fila 1 para dejar ceros bajo el primer \(1\). A la fila 3 conviene sumarle la fila 1.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>Fila 2 menos \(2\) veces la fila 1: \((2,7,5)-2\,(1,3,2)=(0,1,1)\). No cambia el determinante.</li>
+        <li>Fila 2 menos \(2\) veces la fila 1: \((2,7,5)-2\,(1,3,2)=(2,7,5)-(2,6,4)=(0,1,1)\). No cambia el determinante.</li>
         <li>Fila 3 más la fila 1: \((-1,-2,1)+(1,3,2)=(0,1,3)\). No cambia.</li>
         <li>Fila 3 menos la fila 2: \((0,1,3)-(0,1,1)=(0,0,2)\). No cambia. Queda \(\begin{vmatrix}1&3&2\\0&1&1\\0&0&2\end{vmatrix}\).</li>
         <li>Triangular: \(1\cdot 1\cdot 2=2\).</li>
@@ -163,7 +164,7 @@
       <ol class="steps">
         <li>(i) El intercambio multiplica por \(-1\) (propiedad 1): \(-1\cdot(-4)=4\).</li>
         <li>La fila multiplicada por \(5\) multiplica por \(5\) (propiedad 3): \(5\cdot 4=20\).</li>
-        <li>(ii) \(\det(3A)=3^{3}\det A\) (propiedad 9) \(=27\cdot(-4)=-108\).</li>
+        <li>(ii) \(\det(3A)=3^{3}\det A\) (propiedad 9) \(=27\cdot(-4)=-108\), porque \(3^{3}=3\cdot 3\cdot 3=27\).</li>
       </ol>
     </div></details>
   </div>
@@ -172,9 +173,9 @@
     <details><summary>Pista</summary><div><p>El área es el valor absoluto del determinante de columnas \(\vec u\) y \(\vec v\). En el terreno, cada columna queda multiplicada por \(5\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>En el plano: \(\begin{vmatrix}8&3\\2&6\end{vmatrix}=8\cdot 6-3\cdot 2=42\). Área en el plano: \(42\ \text{cm}^{2}\).</li>
+        <li>En el plano: \(\begin{vmatrix}8&3\\2&6\end{vmatrix}=8\cdot 6-3\cdot 2=48-6=42\). Área en el plano: \(42\ \text{cm}^{2}\).</li>
         <li>En el terreno los lados son \(5\,\vec u=(40,10)\) y \(5\,\vec v=(15,30)\), en metros. Cada columna se multiplicó por \(5\).</li>
-        <li>Por la propiedad 3, una vez por columna: \(\begin{vmatrix}40&15\\10&30\end{vmatrix}=5\cdot 5\cdot 42=1050\).</li>
+        <li>Por la propiedad 3, una vez por columna: \(\begin{vmatrix}40&15\\10&30\end{vmatrix}=5\cdot 5\cdot 42=25\cdot 42=1050\).</li>
         <li>Comprobación directa: \(40\cdot 30-15\cdot 10=1200-150=1050\) ✓.</li>
         <li>El terreno mide \(1050\ \text{m}^{2}\).</li>
       </ol>
@@ -183,6 +184,6 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H04 · v001 · Pendiente de APR</span>
+  <span class="status">AL-L28-H04 · v002 · Pendiente de APR</span>
 </footer>
 </article>

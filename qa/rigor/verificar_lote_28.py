@@ -290,4 +290,26 @@ ok(det2(2, 4, 1, 2) == 0 and all(ap([[2, 4], [1, 2]], (x, y)) == ((x + 2*y)*2, (
 ok(det2(4, 1, 2, 3) == 10 and 10*4 == 40, 'H11 A')
 for k2, dv in ((5, 1), (3, -1), (4, 0)): ok(k2 - 4 == dv, 'H11 B')
 ok(det2(Fr(12, 10), 0, 0, Fr(15, 10)) == Fr(18, 10) == det2(Fr(12, 10), Fr(3, 10), 0, Fr(15, 10)) and Fr(18, 10)*150 == 270 and Fr(12, 10)*10 == 12 and Fr(15, 10)*15 == Fr(45, 2) and 12*Fr(45, 2) == 270, 'H11 C')
+# v002 de H03, H04 y H05 (23-nov): cuentas intermedias agregadas por la ley del paso a paso completo
+ok((-1)*(-2) == 2 and 2*(-1) == -2 and 10 + (-2) + 0 == 8 and 4*(-2) == -8 and -8*2 == -16 and 5*3 == 15 and 15*(-1) == -15 and 0 + (-16) + (-15) == -31, 'H03 v002 ej2')
+ok(Fr(1, 2)*4 == 2 and 2*2 == 4 and 6*Fr(1, 2) == 3 and 0 + 3 + 4 == 7, 'H03 v002 ej3')
+for x in R: ok((2*x*x + 1 + 1) - (x + x + 2) == 2*x*x + 2 - 2*x - 2 == 2*x*x - 2*x == 2*x*(x - 1), 'H03 v002 ej4')
+ok(2*0**2 - 2*0 == 0 and 2*1**2 - 2*1 == 0, 'H03 v002 ej4 comprobación')
+ok(12 + 0 + 4 == 16 and -4*2 == -8 and 16 - (-8) == 24, 'H03 v002 A')
+ok(all(3*k*k - 12 == 0 for k in (2, -2)) and 3*4 - 12 == 0 and 12 // 3 == 4, 'H03 v002 B')
+ok(30*20 == 600 and 600*40 == 24000 and 10*20 == 200 and 200*10 == 2000 and 5*10 == 50 and 50*30 == 1500 and 2000 + 1500 == 3500 and 24000 - 3500 == 20500 and Fr(20500, 1000) == Fr(41, 2), 'H03 v002 C')
+def fila(a, k, b): return tuple(x - k*y for x, y in zip(a, b))
+ok(fila((2, 5, 8), 2, (1, 2, 3)) == (0, 1, 2) and tuple(2*x for x in (1, 2, 3)) == (2, 4, 6) and fila((3, 8, 14), 3, (1, 2, 3)) == (0, 2, 5) and tuple(3*x for x in (1, 2, 3)) == (3, 6, 9) and fila((0, 2, 5), 2, (0, 1, 2)) == (0, 0, 1), 'H04 v002 ej1')
+ok(fila((2, 3, 4), 2, (1, 2, 3)) == (0, -1, -2) and fila((2, 1, 5), 2, (1, 2, 3)) == (0, -3, -1) and tuple(3*x for x in (0, -1, -2)) == (0, -3, -6) and fila((0, -3, -1), 3, (0, -1, -2)) == (0, 0, 5), 'H04 v002 ej2')
+ok(fila((5, 7, 9), 1, (1, 2, 3)) == (4, 5, 6) and 2*(-1)*5 == -10 and tuple(2*x for x in (1, 3, 2)) == (2, 6, 4) and fila((2, 7, 5), 2, (1, 3, 2)) == (0, 1, 1) and 3*3*3 == 27, 'H04 v002 ej3, ej4, A, B')
+ok(8*6 == 48 and 3*2 == 6 and 48 - 6 == 42 and 25*42 == 1050, 'H04 v002 C')
+# H04 · animación prop-idea (lectura y figuras chicas): 3, −3, 6, 3, 0
+ok(det2(2, 1, 1, 2) == 4 - 1 == 3 and det2(1, 2, 2, 1) == 1 - 4 == -3 and det2(4, 1, 2, 2) == 8 - 2 == 6 and det2(2, 3, 1, 3) == 6 - 3 == 3 and det2(2, 1, 1, Fr(1, 2)) == 1 - 1 == 0, 'H04 v002 prop-idea')
+# H04 · prop-vivo: 2k(2+t) = 4k+2kt, (1+2t)k = k+2kt, resta 3k
+for k_ in [Fr(n, 10) for n in range(-10, 16)]:
+    for t_ in [Fr(n, 10) for n in range(-10, 11)]:
+        ok(2*k_*(2 + t_) == 4*k_ + 2*k_*t_ and (1 + 2*t_)*k_ == k_ + 2*k_*t_ and det2(2*k_, 1 + 2*t_, k_, 2 + t_) == 3*k_, 'H04 v002 prop-vivo')
+ok(24 + 0 + 10 == 34 and 4 + 24 + 30 == 58 and 4 + 30 + 24 == 58 and 0 + 6 + (-6) == 0 and 1 + 0 + 12 == 13 and 1 + 12 + 0 == 13, 'H05 v002 sumas')
+ok(30*25 == 750 and 10*20 == 200 and 750 - 200 == 550 and 200*550 == 110000 == 11*10000, 'H05 v002 C')
+for b_ in [Fr(n, 10) for n in range(0, 51)]: ok(det2(2, b_, 1, 2) == 4 - b_ == det2(2, 1, b_, 2), 'H05 v002 trasp-vivo')
 print('Lote 28 H01–H11: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

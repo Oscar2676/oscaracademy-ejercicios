@@ -2,7 +2,7 @@
 OA.scene('trasp-idea', (function(){
   var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
   var PZ = LET.map(function(l, j){ return ['M' + j, l, l, '']; }).concat(LET.map(function(l, j){ return ['T' + j, l, l, '']; })).concat([
-    ['Q', '\\det A^{T}=\\ ?', 'det Aᵀ = ?', 'pt'], ['F', '\\det A^{T}=\\det A', 'det Aᵀ = det A', 'diff'],
+    ['Q', '\\det A^{T}=\\ ?', 'det Aᵀ = ?', 'pt'], ['F', '\\Longrightarrow\\ \\det A^{T}=\\det A', '⟹ det Aᵀ = det A', 'diff'],
     ['TA', 'A', 'A', ''], ['TT', 'A^{T}', 'Aᵀ', ''],
     ['R1', '\\text{filas de }A\\text{: }(a,b,c),\\ (d,e,f),\\ (g,h,i)', 'filas de A: (a, b, c), (d, e, f), (g, h, i)', ''],
     ['R2', '\\text{columnas de }A^{T}\\text{: esas mismas filas}', 'columnas de Aᵀ: esas mismas filas', ''],
@@ -22,7 +22,7 @@ OA.scene('trasp-idea', (function(){
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw rise"></i> diagonal principal: no se mueve</span><span><i class="sw sec"></i> un producto que suma</span><span><i class="sw tan"></i> un producto que resta</span>',
-    anim:{run:26000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:26000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', j, r, q, s = X(1) - X(0), hw = 0.3, e = k > 2 ? 1 : (k === 2 ? u : 0);
@@ -31,24 +31,24 @@ OA.scene('trasp-idea', (function(){
       function casillas(lista, col, al){ if (al <= 0.004) return; lista.forEach(function(j){ var r = Math.floor(j/3), q = j % 3; c.globalAlpha = al; c.fillStyle = col; c.fillRect(X(xa(q) - hw), Y(cy(r) + hw), 2*hw*s, 2*hw*s); c.fillRect(X(xt(r) - hw), Y(cy(q) + hw), 2*hw*s, 2*hw*s); c.globalAlpha = 1; }); }
       function diag(x0, g){ if (g <= 0) return; c.globalAlpha = 0.7; c.strokeStyle = C.rise; c.lineWidth = 1.4; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(x0 - 0.3), Y(cy(0) + 0.3)); c.lineTo(X(x0 - 0.3 + 2.2*g), Y(cy(0) + 0.3 - 2.2*g)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
       barras(-0.85, 1.65, 1); if (e > 0) barras(2.55, 5.05, e);
-      /* casillas de un producto que suma (paso 3) y de uno que resta (paso 4); al final, las dos a la vez, más tenues */
-      if (k === 3) casillas(MAS, C.sec, 0.26*u);
-      if (k === 4) casillas(MEN, C.tan, 0.26*u);
-      if (k === 5){ casillas(MAS, C.sec, 0.16); casillas(MEN, C.tan, 0.16); }
+      /* casillas de un producto que suma (paso 3) y de uno que resta (paso 4) */
+      /* no se borran: las azules quedan desde el paso 3 y las burdeo desde el 4, hasta el final */
+      if (k >= 3) casillas(MAS, C.sec, k === 3 ? 0.26*u : 0.24);
+      if (k >= 4) casillas(MEN, C.tan, k === 4 ? 0.26*u : 0.24);
       diag(xa(0), e); diag(xt(0), k > 2 ? 1 : (k === 2 ? Math.max(0, 2*u - 1) : 0));
       for (j = 0; j < 9; j++){ r = Math.floor(j/3); q = j % 3; L('M' + j, xa(q), cy(r)); }
       /* la traspuesta se arma: cada entrada viaja desde su lugar en A hasta su lugar en la traspuesta */
       if (k >= 2) for (j = 0; j < 9; j++){ r = Math.floor(j/3); q = j % 3; L('T' + j, xa(q) + (xt(r) - xa(q))*e, cy(r) + (cy(q) - cy(r))*e); }
       if (k >= 2) dtFlecha(S, 1.85, 3.42, 1.85 + 0.55*Math.max(e, 0.05), 3.42, C.ink, 1.3);
       L('TA', 0.4, 3.42); if (k > 2 || (k === 2 && u > 0.6)) L('TT', 3.8, 3.42);
-      if (k < 5 || u < 0.5) L('Q', -1.2, 3.97, 0); else L('F', -1.2, 3.97, 0);
+      L('Q', -1.2, 3.97, 0); if (k === 5 && u > 0.5) L('F', 0.45, 3.97, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.25); txt(TXT[k - 1][1], -1.2, 0.25 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(3.97));
       T.fin();
       oaReg(S, k, N, -1.2, -1.3, [0, 30, 60, 90, 120]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['A=\\begin{pmatrix}a&b&c\\\\d&e&f\\\\g&h&i\\end{pmatrix}', 'A^{T}=\\begin{pmatrix}a&d&g\\\\b&e&h\\\\c&f&i\\end{pmatrix}', '\\det A=aei+bfg+cdh-ceg-afh-bdi', '\\det A^{T}=aei+dhc+gbf-ceg-fha-ibd', '\\det A^{T}=aei+bfg+cdh-ceg-afh-bdi=\\det A'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), R = ['A=\\begin{pmatrix}a&b&c\\\\d&e&f\\\\g&h&i\\end{pmatrix}', 'A^{T}=\\begin{pmatrix}a&d&g\\\\b&e&h\\\\c&f&i\\end{pmatrix}', '\\text{suma en }A\\text{: }+\\,b\\cdot f\\cdot g;\\\\&\\qquad\\text{en }A^{T}\\text{: }+\\,g\\cdot b\\cdot f=+\\,bfg', '\\text{resta en }A\\text{: }-\\,a\\cdot f\\cdot h;\\\\&\\qquad\\text{en }A^{T}\\text{: }-\\,f\\cdot h\\cdot a=-\\,afh', '\\det A=aei+bfg+cdh-ceg-afh-bdi\\\\&\\qquad\\det A^{T}=aei+dhc+gbf-ceg-fha-ibd\\\\&\\qquad dhc=cdh,\\ \\ gbf=bfg,\\ \\ fha=afh,\\ \\ ibd=bdi\\\\&\\qquad\\det A^{T}=aei+bfg+cdh-ceg-afh-bdi\\\\&\\qquad\\det A^{T}=\\det A']; return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: el paralelogramo de las columnas de A y el de las columnas de su traspuesta */
@@ -79,7 +79,14 @@ OA.scene('trasp-vivo', (function(){
       T.fin();
     },
     caption:function(v){ var b = v.b == null ? 1 : +v.b, n = function(z){ return oaDec(z, 2); }; return 'Con b = ' + n(b) + ' los dos determinantes valen ' + n(4 - b) + ' y cada paralelogramo mide ' + n(Math.abs(4 - b)) + ' unidades cuadradas. Con b = 4 los dos se aplastan a la vez'; },
-    readout:function(v){ var b = v.b == null ? 1 : +v.b, n = OA.num;
-      return [['', '\\det A=\\begin{vmatrix}2&b\\\\1&2\\end{vmatrix}=2\\cdot 2-b\\cdot 1=4-b'], ['', '\\det A^{T}=\\begin{vmatrix}2&1\\\\b&2\\end{vmatrix}=2\\cdot 2-1\\cdot b=4-b'], ['d', '4-' + n(b, 2) + '=' + n(4 - b, 2)], ['', '\\text{área de cada uno}=\\left|' + n(4 - b, 2) + '\\right|=' + n(Math.abs(4 - b), 2)]]; }
+    readout:function(v){ var b = Math.round((v.b == null ? 1 : +v.b)*100)/100, D = Math.round((4 - b)*100)/100, n = OA.num;
+      return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquadb=' + n(b, 2),
+        '\\det A=\\begin{vmatrix}2&' + n(b, 2) + '\\\\1&2\\end{vmatrix}=2\\cdot 2-' + n(b, 2) + '\\cdot 1',
+        '\\text{productos: }2\\cdot 2=4;\\qquad ' + n(b, 2) + '\\cdot 1=' + n(b, 2),
+        '\\det A=4-' + n(b, 2) + '=' + n(D, 2),
+        '\\det A^{T}=\\begin{vmatrix}2&1\\\\' + n(b, 2) + '&2\\end{vmatrix}=2\\cdot 2-1\\cdot ' + n(b, 2),
+        '\\text{productos: }2\\cdot 2=4;\\qquad 1\\cdot ' + n(b, 2) + '=' + n(b, 2),
+        '\\det A^{T}=4-' + n(b, 2) + '=' + n(D, 2) + '=\\det A',
+        '\\text{área de cada uno}=\\left|' + n(D, 2) + '\\right|=' + n(Math.abs(D), 2)]); }
   };
 })());

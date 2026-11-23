@@ -2,7 +2,7 @@
 OA.scene('sarrus-idea', (function(){
   var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], EX = [0, 1, 3, 4, 6, 7];
   var PZ = LET.map(function(l, j){ return ['M' + j, l, l, '']; }).concat(EX.map(function(j, n){ return ['E' + n, LET[j], LET[j], 'c-alt']; })).concat([
-    ['Q', '\\det A=\\ ?', 'det A = ?', 'pt'], ['F', '\\det A=aei+bfg+cdh-ceg-afh-bdi', 'det A = aei + bfg + cdh − ceg − afh − bdi', 'diff'],
+    ['Q', '\\det A=\\ ?', 'det A = ?', 'pt'], ['F', '\\Longrightarrow\\ aei+bfg+cdh-ceg-afh-bdi', '⟹ aei + bfg + cdh − ceg − afh − bdi', 'diff'],
     ['P0', '+', '+', 'c-sec'], ['P1', '+', '+', 'c-sec'], ['P2', '+', '+', 'c-sec'], ['N0', '-', '−', 'c-tan'], ['N1', '-', '−', 'c-tan'], ['N2', '-', '−', 'c-tan'],
     ['R1', '\\text{matriz de tres filas y tres columnas}', 'matriz de 3 filas y 3 columnas', ''],
     ['R2', '\\text{a la derecha: columnas 1 y 2, repetidas}', 'se repiten las columnas 1 y 2', ''],
@@ -21,7 +21,7 @@ OA.scene('sarrus-idea', (function(){
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw alt"></i> columnas 1 y 2, repetidas</span><span><i class="sw sec"></i> diagonales que bajan: suman</span><span><i class="sw tan"></i> diagonales que suben: restan</span>',
-    anim:{run:26000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:26000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', j, n, q, s = X(1) - X(0), e;
@@ -36,13 +36,13 @@ OA.scene('sarrus-idea', (function(){
       for (j = 0; j < 9; j++) L('M' + j, cx(j % 3), cy(Math.floor(j/3)));
       /* columnas repetidas (paso 2): salen de su columna y se corren a la derecha */
       if (k >= 2) for (n = 0; n < 6; n++){ j = EX[n]; e = ap(2); L('E' + n, cx(j % 3) + 2.85*e, cy(Math.floor(j/3))); }
-      if (k < 5 || u < 0.5) L('Q', -1.2, 3.72, 0); else L('F', -1.2, 3.72, 0);
+      L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.25, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -0.2); txt(TXT[k - 1][1], -1.2, -0.2 - 21/s);
-      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(3.75));
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.22));
       T.fin();
       oaReg(S, k, N, -1.2, -1.75, [0, 30, 60, 90, 120]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['A=\\begin{pmatrix}a&b&c\\\\d&e&f\\\\g&h&i\\end{pmatrix}', '\\begin{array}{ccc|cc}a&b&c&a&b\\\\d&e&f&d&e\\\\g&h&i&g&h\\end{array}', '+\\,(aei+bfg+cdh)', '-\\,(ceg+afh+bdi)', '\\det A=aei+bfg+cdh-ceg-afh-bdi'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), R = ['A=\\begin{pmatrix}a&b&c\\\\d&e&f\\\\g&h&i\\end{pmatrix}', '\\text{se repiten las columnas 1 y 2:}\\\\&\\qquad\\begin{array}{ccc|cc}a&b&c&a&b\\\\d&e&f&d&e\\\\g&h&i&g&h\\end{array}', '\\text{bajan, se suman: }a\\cdot e\\cdot i+b\\cdot f\\cdot g+c\\cdot d\\cdot h', '\\text{suben, se restan: }c\\cdot e\\cdot g+a\\cdot f\\cdot h+b\\cdot d\\cdot i', '\\det A=(aei+bfg+cdh)-(ceg+afh+bdi)\\\\&\\qquad\\ \\,=aei+bfg+cdh-ceg-afh-bdi']; return dtPasos(R.slice(0, k)); }
   };
 })());
