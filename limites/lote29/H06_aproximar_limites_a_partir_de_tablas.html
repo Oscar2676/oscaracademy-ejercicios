@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aproximar límites a partir de tablas | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="lim-tabla" data-hoja="L29 H06">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de tablas</li>
+      <li><b>Aproximar límites a partir de tablas</b></li>
+    </ol>
+    <h1>Aproximar límites a partir de tablas</h1>
+    <p class="lede">Cuando una función viene dada por una fórmula y en \(x=a\) esa fórmula no se puede calcular, una <b>tabla construida por ti</b> permite aproximar \(\displaystyle\lim_{x\to a}f(x)\): se calcula \(f(x)\) en valores de \(x\) cada vez más cercanos a \(a\), por los dos lados, y se mira a qué número \(L\) se acercan los resultados.
+    \[\lim_{x\to a}f(x)\approx L\quad\text{si la distancia }|f(x)-L|\text{ se achica al tomar }x=a\pm 0{,}1;\ \ a\pm 0{,}01;\ \ a\pm 0{,}001\]
+    La tabla <b>aproxima</b> el límite: no lo demuestra. Cuando se puede, el álgebra lo confirma.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La animación construye, en seis pasos, la tabla de
+  \[f(x)=\dfrac{x^{3}-1}{x-1},\qquad x\ne 1,\]
+  alrededor de \(a=1\). En \(x=1\) la fórmula no se puede calcular: arriba queda \(1^{3}-1=0\) y abajo, \(1-1=0\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la columna de \(x\):</b> arriba, en azul, los valores menores que \(1\) (izquierda): \(0{,}9\); \(0{,}99\); \(0{,}999\). Abajo, en naranja, los mayores que \(1\) (derecha): \(1{,}001\); \(1{,}01\); \(1{,}1\). La fila gris del centro es \(x=1\): no se calcula.</li>
+    <li><b>En los pasos 2 y 3 se llena la columna de \(f(x)\),</b> desde las orillas de la tabla hacia el centro. Cada resultado aparece también como un punto en la recta numérica de abajo: los azules avanzan hacia \(3\) desde la izquierda y los naranjas, desde la derecha.</li>
+    <li><b>En el paso 4 aparece el candidato \(3\)</b> (línea verde punteada) y se llena la columna verde, la distancia \(|f(x)-3|\): se achica unas \(10\) veces en cada fila.</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra: la tabla se va llenando y, abajo, el registro numerado guarda lo obtenido en cada paso.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cómo se elige cada \(x\), la cuenta completa de cada fila (cuadrado, cubo, resta y división), las distancias a \(3\), lo que la tabla permite informar («aproximadamente \(3\)») y la confirmación con álgebra («igual a \(3\)»).</li>
+  </ol>
+  <div class="stage" data-scene="tab-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Números azules:</b> los \(x\) menores que \(1\) y sus resultados \(f(x)\). <b>Números naranjas:</b> los \(x\) mayores que \(1\) y sus resultados.</li>
+    <li><b>Fila gris:</b> \(x=1\), donde la fórmula no se puede calcular. No se usa.</li>
+    <li><b>Recta numérica:</b> cada punto es un resultado \(f(x)\) de la tabla. Los dos últimos de cada lado quedan casi encima de \(3\).</li>
+    <li><b>Verde:</b> el candidato \(3\) (línea punteada) y la distancia de cada resultado a \(3\). Los dos trazos sobre la recta son las distancias \(0{,}29\) y \(0{,}31\) de la primera fila de cada lado.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar con una tabla.</b> Una tabla tiene una cantidad finita de filas: muestra qué pasa en seis valores de \(x\), no en todos los cercanos a \(a\). Por eso <b>un límite obtenido de una tabla es una aproximación</b> y se escribe con el signo «aproximadamente igual», \(\lim f(x)\approx L\). En esta hoja cada tabla se confirma después con álgebra. Esa confirmación usa, <b>sin demostrar</b>, tres hechos que se demuestran con la definición formal de límite (otra hoja de este lote):</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\), un polinomio en \(x\) se acerca a su valor en \(a\) (por ejemplo, \(x^{2}+x+1\) se acerca a \(a^{2}+a+1\)). Lo mismo vale para un polinomio dividido por un número fijo distinto de \(0\).</li>
+      <li>Si dos funciones valen lo mismo en todo \(x\ne a\) cercano a \(a\), tienen el mismo límite en \(a\).</li>
+      <li>Si el límite existe, es uno solo.</li>
+    </ol>
+    <p>«Límite» se entiende como en la hoja «Introducción a los límites»: \(f(x)\) queda tan cerca de \(L\) como se quiera con tal de tomar \(x\) suficientemente cerca de \(a\), con \(x\ne a\).</p>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>El procedimiento, en cinco pasos</h3>
+    <ol class="steps">
+      <li><b>Elige los \(x\).</b> Tres por la izquierda, \(a-0{,}1\); \(a-0{,}01\); \(a-0{,}001\), y tres por la derecha, \(a+0{,}1\); \(a+0{,}01\); \(a+0{,}001\): cada uno \(10\) veces más cerca de \(a\) que el anterior. Nunca \(x=a\).</li>
+      <li><b>Calcula \(f(x)\) en cada uno,</b> una operación por columna y con todos los decimales.</li>
+      <li><b>Busca el candidato \(L\)</b> al que se acercan los resultados de los dos lados y mide la distancia \(|f(x)-L|\) en cada fila. Si se achica fila a fila por los dos lados, \(L\) es la aproximación.</li>
+      <li><b>Informa:</b> «\(\displaystyle\lim_{x\to a}f(x)\approx L\)». La tabla aproxima, no demuestra.</li>
+      <li><b>Confirma con álgebra,</b> cuando se pueda: simplifica la fórmula para \(x\ne a\) y obtén el límite de lo que queda.</li>
+    </ol>
+    <p>La tabla completa de la animación, \(f(x)=\dfrac{x^{3}-1}{x-1}\) cerca de \(a=1\). Cada columna es una operación sobre las anteriores:</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{3}\)</th><th>\(x^{3}-1\)</th><th>\(x-1\)</th><th>\(f(x)\)</th><th>\(|f(x)-3|\)</th></tr>
+      <tr><td>\(0{,}9\)</td><td>\(0{,}729\)</td><td>\(-0{,}271\)</td><td>\(-0{,}1\)</td><td>\(2{,}71\)</td><td>\(0{,}29\)</td></tr>
+      <tr><td>\(0{,}99\)</td><td>\(0{,}970299\)</td><td>\(-0{,}029701\)</td><td>\(-0{,}01\)</td><td>\(2{,}9701\)</td><td>\(0{,}0299\)</td></tr>
+      <tr><td>\(0{,}999\)</td><td>\(0{,}997002999\)</td><td>\(-0{,}002997001\)</td><td>\(-0{,}001\)</td><td>\(2{,}997001\)</td><td>\(0{,}002999\)</td></tr>
+      <tr><td>\(1\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(1{,}001\)</td><td>\(1{,}003003001\)</td><td>\(0{,}003003001\)</td><td>\(0{,}001\)</td><td>\(3{,}003001\)</td><td>\(0{,}003001\)</td></tr>
+      <tr><td>\(1{,}01\)</td><td>\(1{,}030301\)</td><td>\(0{,}030301\)</td><td>\(0{,}01\)</td><td>\(3{,}0301\)</td><td>\(0{,}0301\)</td></tr>
+      <tr><td>\(1{,}1\)</td><td>\(1{,}331\)</td><td>\(0{,}331\)</td><td>\(0{,}1\)</td><td>\(3{,}31\)</td><td>\(0{,}31\)</td></tr>
+    </table></div>
+    <p>Lectura: por la izquierda los resultados suben hacia \(3\) y por la derecha bajan hacia \(3\). Las distancias a \(3\) pasan de \(0{,}29\) a \(0{,}002999\) y de \(0{,}31\) a \(0{,}003001\). Informe: \(\displaystyle\lim_{x\to 1}f(x)\approx 3\).</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Por qué funciona en este caso: la cuenta con \(x=1+h\)</h3>
+    <p>Todo \(x\ne 1\) se escribe \(x=1+h\) con \(h\ne 0\); \(h\) es lo que le falta o le sobra a \(x\) para ser \(1\) (en la tabla, \(h=\pm 0{,}1\); \(\pm 0{,}01\); \(\pm 0{,}001\)).</p>
+    <ol class="steps">
+      <li>Cuadrado de un binomio: \((1+h)^{2}=1+2h+h^{2}\).</li>
+      <li>Se multiplica por \(1+h\), término a término: \((1+h)^{3}=(1+2h+h^{2})(1+h)=1+h+2h+2h^{2}+h^{2}+h^{3}\).</li>
+      <li>Se juntan los términos semejantes: \((1+h)^{3}=1+3h+3h^{2}+h^{3}\).</li>
+      <li>Numerador: \((1+h)^{3}-1=3h+3h^{2}+h^{3}\). Factor común \(h\): \(h\,(3+3h+h^{2})\).</li>
+      <li>Denominador: \((1+h)-1=h\).</li>
+      <li>Como \(h\ne 0\), se simplifica \(h\): \(f(1+h)=\dfrac{h\,(3+3h+h^{2})}{h}=3+3h+h^{2}\).</li>
+      <li>Distancia a \(3\): \(|f(1+h)-3|=|3h+h^{2}|=|h|\cdot|3+h|\).</li>
+      <li>Si \(0\lt |h|\le 0{,}1\), entonces \(3+h\) está entre \(2{,}9\) y \(3{,}1\). Por eso la distancia está entre \(2{,}9\,|h|\) y \(3{,}1\,|h|\): es casi \(3\,|h|\).</li>
+      <li>Conclusión: al dividir \(h\) por \(10\), la distancia queda dividida aproximadamente por \(10\), y se hace tan chica como se quiera tomando \(|h|\) chico. Eso es lo que se ve en la tabla.</li>
+      <li>Comprobación con dos filas. Con \(h=-0{,}1\): \(3\cdot(-0{,}1)+(-0{,}1)^{2}=-0{,}3+0{,}01=-0{,}29\), distancia \(0{,}29\). Con \(h=0{,}1\): \(3\cdot 0{,}1+0{,}1^{2}=0{,}3+0{,}01=0{,}31\), distancia \(0{,}31\).</li>
+    </ol>
+    <p>La misma idea, sin \(h\): \((x-1)(x^{2}+x+1)=x^{3}+x^{2}+x-x^{2}-x-1=x^{3}-1\). Entonces, para \(x\ne 1\), \(f(x)=x^{2}+x+1\), que se acerca a \(1^{2}+1+1=3\) (hecho 1 del aviso). Por el hecho 2, \(\displaystyle\lim_{x\to 1}f(x)=3\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Casos especiales: cuántos decimales conservar y lados que no coinciden</h3>
+    <ol class="steps">
+      <li><b>Redondear el resultado esconde la distancia.</b> \(2{,}997001\) y \(3{,}003001\), redondeados a dos decimales, se escriben los dos \(3{,}00\). La tabla parecería «llegar» a \(3\), con distancia \(0\). Es falso: para \(x\ne 1\), \(f(x)=3\) exige \(x^{2}+x+1=3\), es decir \(x^{2}+x-2=0\), o sea \((x-1)(x+2)=0\); la única solución distinta de \(1\) es \(x=-2\). Cerca de \(1\) la función nunca vale \(3\).</li>
+      <li><b>Redondear a mitad de la cuenta es peor.</b> Si \(0{,}999^{3}=0{,}997002999\) se redondea a \(0{,}997\), la resta da \(0{,}997-1=-0{,}003\) y el cociente, \(\dfrac{-0{,}003}{-0{,}001}=3\): se perdió todo lo que distinguía a \(f(0{,}999)\) de \(3\).</li>
+      <li><b>Regla práctica:</b> no redondees dentro de la cuenta. Al restar dos números casi iguales (como \(0{,}997002999\) y \(1\)) las primeras cifras se cancelan y solo quedan las últimas: son las que importan.</li>
+      <li><b>Si los dos lados dan candidatos distintos,</b> no hay un número \(L\) que sirva para ambos y el límite no existe. Ese caso se trata en la hoja «Tablas y límites unilaterales».</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: un candidato negativo, \(g(x)=\dfrac{x^{2}-5x+6}{x-2}\) en \(a=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=2\): arriba, \(2^{2}-5\cdot 2+6=4-10+6=0\); abajo, \(2-2=0\). No se calcula. Se eligen \(x=1{,}9\); \(1{,}99\); \(1{,}999\) y \(x=2{,}1\); \(2{,}01\); \(2{,}001\).</li>
+    <li>Una fila completa, \(x=1{,}9\): \(1{,}9^{2}=3{,}61\); \(5\cdot 1{,}9=9{,}5\); \(3{,}61-9{,}5+6=0{,}11\); \(1{,}9-2=-0{,}1\); \(g(1{,}9)=\dfrac{0{,}11}{-0{,}1}=-1{,}1\).</li>
+    <li>Las demás filas, con las mismas operaciones:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(5x\)</th><th>\(x^{2}-5x+6\)</th><th>\(x-2\)</th><th>\(g(x)\)</th><th>\(|g(x)-(-1)|\)</th></tr>
+      <tr><td>\(1{,}9\)</td><td>\(3{,}61\)</td><td>\(9{,}5\)</td><td>\(0{,}11\)</td><td>\(-0{,}1\)</td><td>\(-1{,}1\)</td><td>\(0{,}1\)</td></tr>
+      <tr><td>\(1{,}99\)</td><td>\(3{,}9601\)</td><td>\(9{,}95\)</td><td>\(0{,}0101\)</td><td>\(-0{,}01\)</td><td>\(-1{,}01\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(1{,}999\)</td><td>\(3{,}996001\)</td><td>\(9{,}995\)</td><td>\(0{,}001001\)</td><td>\(-0{,}001\)</td><td>\(-1{,}001\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(2\)</td><td colspan="6">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(2{,}001\)</td><td>\(4{,}004001\)</td><td>\(10{,}005\)</td><td>\(-0{,}000999\)</td><td>\(0{,}001\)</td><td>\(-0{,}999\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(2{,}01\)</td><td>\(4{,}0401\)</td><td>\(10{,}05\)</td><td>\(-0{,}0099\)</td><td>\(0{,}01\)</td><td>\(-0{,}99\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(2{,}1\)</td><td>\(4{,}41\)</td><td>\(10{,}5\)</td><td>\(-0{,}09\)</td><td>\(0{,}1\)</td><td>\(-0{,}9\)</td><td>\(0{,}1\)</td></tr>
+    </table></div></li>
+    <li>Candidato: \(-1\). Las distancias \(|g(x)-(-1)|\) son \(0{,}1\); \(0{,}01\); \(0{,}001\) por cada lado: se dividen por \(10\) en cada fila.</li>
+    <li>Informe: \(\displaystyle\lim_{x\to 2}g(x)\approx -1\).</li>
+    <li>Confirmación: \((x-2)(x-3)=x^{2}-3x-2x+6=x^{2}-5x+6\). Para \(x\ne 2\), \(g(x)=x-3\), que se acerca a \(2-3=-1\). El límite es \(-1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(a\) con decimales, \(r(x)=\dfrac{x^{2}-0{,}25}{x-0{,}5}\) en \(a=0{,}5\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=0{,}5\): \(0{,}5^{2}-0{,}25=0{,}25-0{,}25=0\) y \(0{,}5-0{,}5=0\). No se calcula.</li>
+    <li>Los \(x\): \(0{,}5-0{,}1=0{,}4\); \(0{,}5-0{,}01=0{,}49\); \(0{,}5-0{,}001=0{,}499\) y \(0{,}5+0{,}1=0{,}6\); \(0{,}5+0{,}01=0{,}51\); \(0{,}5+0{,}001=0{,}501\).</li>
+    <li>Una fila completa, \(x=0{,}49\): \(0{,}49^{2}=0{,}2401\); \(0{,}2401-0{,}25=-0{,}0099\); \(0{,}49-0{,}5=-0{,}01\); \(r(0{,}49)=\dfrac{-0{,}0099}{-0{,}01}=0{,}99\).</li>
+    <li>La tabla:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}-0{,}25\)</th><th>\(x-0{,}5\)</th><th>\(r(x)\)</th><th>\(|r(x)-1|\)</th></tr>
+      <tr><td>\(0{,}4\)</td><td>\(0{,}16\)</td><td>\(-0{,}09\)</td><td>\(-0{,}1\)</td><td>\(0{,}9\)</td><td>\(0{,}1\)</td></tr>
+      <tr><td>\(0{,}49\)</td><td>\(0{,}2401\)</td><td>\(-0{,}0099\)</td><td>\(-0{,}01\)</td><td>\(0{,}99\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(0{,}499\)</td><td>\(0{,}249001\)</td><td>\(-0{,}000999\)</td><td>\(-0{,}001\)</td><td>\(0{,}999\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(0{,}5\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(0{,}501\)</td><td>\(0{,}251001\)</td><td>\(0{,}001001\)</td><td>\(0{,}001\)</td><td>\(1{,}001\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(0{,}51\)</td><td>\(0{,}2601\)</td><td>\(0{,}0101\)</td><td>\(0{,}01\)</td><td>\(1{,}01\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(0{,}6\)</td><td>\(0{,}36\)</td><td>\(0{,}11\)</td><td>\(0{,}1\)</td><td>\(1{,}1\)</td><td>\(0{,}1\)</td></tr>
+    </table></div></li>
+    <li>Candidato: \(1\). Distancias \(0{,}1\); \(0{,}01\); \(0{,}001\) por cada lado. Informe: \(\displaystyle\lim_{x\to 0{,}5}r(x)\approx 1\).</li>
+    <li>Confirmación: \((x-0{,}5)(x+0{,}5)=x^{2}+0{,}5x-0{,}5x-0{,}25=x^{2}-0{,}25\). Para \(x\ne 0{,}5\), \(r(x)=x+0{,}5\), que se acerca a \(0{,}5+0{,}5=1\). El límite es \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un candidato que no es entero, \(w(x)=\dfrac{x^{2}+x-2}{2x-2}\) en \(a=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=1\): \(1^{2}+1-2=0\) y \(2\cdot 1-2=0\). No se calcula.</li>
+    <li>Una fila completa, \(x=0{,}9\): \(0{,}9^{2}=0{,}81\); \(0{,}81+0{,}9-2=-0{,}29\); \(2\cdot 0{,}9-2=1{,}8-2=-0{,}2\); \(w(0{,}9)=\dfrac{-0{,}29}{-0{,}2}=1{,}45\).</li>
+    <li>La tabla, con el candidato \(1{,}5\):
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}+x-2\)</th><th>\(2x-2\)</th><th>\(w(x)\)</th><th>\(|w(x)-1{,}5|\)</th></tr>
+      <tr><td>\(0{,}9\)</td><td>\(0{,}81\)</td><td>\(-0{,}29\)</td><td>\(-0{,}2\)</td><td>\(1{,}45\)</td><td>\(0{,}05\)</td></tr>
+      <tr><td>\(0{,}99\)</td><td>\(0{,}9801\)</td><td>\(-0{,}0299\)</td><td>\(-0{,}02\)</td><td>\(1{,}495\)</td><td>\(0{,}005\)</td></tr>
+      <tr><td>\(0{,}999\)</td><td>\(0{,}998001\)</td><td>\(-0{,}002999\)</td><td>\(-0{,}002\)</td><td>\(1{,}4995\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(1\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(1{,}001\)</td><td>\(1{,}002001\)</td><td>\(0{,}003001\)</td><td>\(0{,}002\)</td><td>\(1{,}5005\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(1{,}01\)</td><td>\(1{,}0201\)</td><td>\(0{,}0301\)</td><td>\(0{,}02\)</td><td>\(1{,}505\)</td><td>\(0{,}005\)</td></tr>
+      <tr><td>\(1{,}1\)</td><td>\(1{,}21\)</td><td>\(0{,}31\)</td><td>\(0{,}2\)</td><td>\(1{,}55\)</td><td>\(0{,}05\)</td></tr>
+    </table></div></li>
+    <li>Las distancias a \(1{,}5\) son \(0{,}05\); \(0{,}005\); \(0{,}0005\) por cada lado: se dividen por \(10\).</li>
+    <li>Prueba con otro candidato, \(1{,}4\), por la izquierda: \(|1{,}45-1{,}4|=0{,}05\); \(|1{,}495-1{,}4|=0{,}095\); \(|1{,}4995-1{,}4|=0{,}0995\). Las distancias no se achican: \(1{,}4\) se descarta.</li>
+    <li>Informe: \(\displaystyle\lim_{x\to 1}w(x)\approx 1{,}5\).</li>
+    <li>Confirmación: \((x-1)(x+2)=x^{2}+2x-x-2=x^{2}+x-2\) y \(2x-2=2\,(x-1)\). Para \(x\ne 1\), \(w(x)=\dfrac{x+2}{2}\), que se acerca a \(\dfrac{1+2}{2}=\dfrac{3}{2}=1{,}5\). El límite es \(1{,}5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: \(a\) negativo, \(u(x)=\dfrac{x^{2}-x-2}{x+1}\) en \(a=-1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=-1\): \((-1)^{2}-(-1)-2=1+1-2=0\) y \(-1+1=0\). No se calcula.</li>
+    <li>Cuidado con los lados: a la izquierda de \(-1\) están los números menores. Izquierda: \(-1-0{,}1=-1{,}1\); \(-1-0{,}01=-1{,}01\); \(-1-0{,}001=-1{,}001\). Derecha: \(-1+0{,}1=-0{,}9\); \(-1+0{,}01=-0{,}99\); \(-1+0{,}001=-0{,}999\).</li>
+    <li>Una fila completa, \(x=-1{,}1\): \((-1{,}1)^{2}=1{,}21\); \(1{,}21-(-1{,}1)-2=1{,}21+1{,}1-2=0{,}31\); \(-1{,}1+1=-0{,}1\); \(u(-1{,}1)=\dfrac{0{,}31}{-0{,}1}=-3{,}1\).</li>
+    <li>La tabla:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{2}-x-2\)</th><th>\(x+1\)</th><th>\(u(x)\)</th><th>\(|u(x)-(-3)|\)</th></tr>
+      <tr><td>\(-1{,}1\)</td><td>\(1{,}21\)</td><td>\(0{,}31\)</td><td>\(-0{,}1\)</td><td>\(-3{,}1\)</td><td>\(0{,}1\)</td></tr>
+      <tr><td>\(-1{,}01\)</td><td>\(1{,}0201\)</td><td>\(0{,}0301\)</td><td>\(-0{,}01\)</td><td>\(-3{,}01\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(-1{,}001\)</td><td>\(1{,}002001\)</td><td>\(0{,}003001\)</td><td>\(-0{,}001\)</td><td>\(-3{,}001\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(-1\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(-0{,}999\)</td><td>\(0{,}998001\)</td><td>\(-0{,}002999\)</td><td>\(0{,}001\)</td><td>\(-2{,}999\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(-0{,}99\)</td><td>\(0{,}9801\)</td><td>\(-0{,}0299\)</td><td>\(0{,}01\)</td><td>\(-2{,}99\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(-0{,}9\)</td><td>\(0{,}81\)</td><td>\(-0{,}29\)</td><td>\(0{,}1\)</td><td>\(-2{,}9\)</td><td>\(0{,}1\)</td></tr>
+    </table></div></li>
+    <li>Candidato: \(-3\). La distancia es \(|u(x)-(-3)|\); en la primera fila, \(|-3{,}1+3|=0{,}1\). Son \(0{,}1\); \(0{,}01\); \(0{,}001\) por cada lado. Informe: \(\displaystyle\lim_{x\to -1}u(x)\approx -3\).</li>
+    <li>Confirmación: \((x+1)(x-2)=x^{2}-2x+x-2=x^{2}-x-2\). Para \(x\ne -1\), \(u(x)=x-2\), que se acerca a \(-1-2=-3\). El límite es \(-3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>poner \(x=a\) en la tabla</b>. Ahí la fórmula da \(0\) dividido por \(0\), que no es un número; y el límite no depende de lo que pase en \(a\). Dos: <b>mirar un solo lado</b>. Hacen falta los dos: si dieran candidatos distintos, no habría límite. Tres: <b>redondear antes de terminar</b> y creer que la función «llega» al candidato. Cuatro: <b>escribir «\(=L\)» solo con la tabla</b>. Con la tabla se escribe «\(\approx L\)»; el signo igual se gana con el álgebra.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Construye la tabla de \(p(x)=\dfrac{x^{2}-3x-4}{x-4}\) cerca de \(a=4\), con tres valores por cada lado. Da el candidato, las distancias y el informe. Después confirma con álgebra.</p>
+    <details><summary>Pista</summary><div><p>Usa \(x=3{,}9\); \(3{,}99\); \(3{,}999\) y \(x=4{,}1\); \(4{,}01\); \(4{,}001\). Columnas: \(x^{2}\), \(3x\), el numerador, el denominador y el cociente. Para confirmar, multiplica \((x-4)(x+1)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x=4\): \(4^{2}-3\cdot 4-4=16-12-4=0\) y \(4-4=0\). No se calcula.</li>
+        <li>Una fila completa, \(x=3{,}9\): \(3{,}9^{2}=15{,}21\); \(3\cdot 3{,}9=11{,}7\); \(15{,}21-11{,}7-4=-0{,}49\); \(3{,}9-4=-0{,}1\); \(p(3{,}9)=\dfrac{-0{,}49}{-0{,}1}=4{,}9\).</li>
+        <li>La tabla:
+        <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(3x\)</th><th>\(x^{2}-3x-4\)</th><th>\(x-4\)</th><th>\(p(x)\)</th><th>\(|p(x)-5|\)</th></tr>
+      <tr><td>\(3{,}9\)</td><td>\(15{,}21\)</td><td>\(11{,}7\)</td><td>\(-0{,}49\)</td><td>\(-0{,}1\)</td><td>\(4{,}9\)</td><td>\(0{,}1\)</td></tr>
+      <tr><td>\(3{,}99\)</td><td>\(15{,}9201\)</td><td>\(11{,}97\)</td><td>\(-0{,}0499\)</td><td>\(-0{,}01\)</td><td>\(4{,}99\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(3{,}999\)</td><td>\(15{,}992001\)</td><td>\(11{,}997\)</td><td>\(-0{,}004999\)</td><td>\(-0{,}001\)</td><td>\(4{,}999\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(4\)</td><td colspan="6">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(4{,}001\)</td><td>\(16{,}008001\)</td><td>\(12{,}003\)</td><td>\(0{,}005001\)</td><td>\(0{,}001\)</td><td>\(5{,}001\)</td><td>\(0{,}001\)</td></tr>
+      <tr><td>\(4{,}01\)</td><td>\(16{,}0801\)</td><td>\(12{,}03\)</td><td>\(0{,}0501\)</td><td>\(0{,}01\)</td><td>\(5{,}01\)</td><td>\(0{,}01\)</td></tr>
+      <tr><td>\(4{,}1\)</td><td>\(16{,}81\)</td><td>\(12{,}3\)</td><td>\(0{,}51\)</td><td>\(0{,}1\)</td><td>\(5{,}1\)</td><td>\(0{,}1\)</td></tr>
+    </table></div></li>
+        <li>Candidato: \(5\). Distancias \(0{,}1\); \(0{,}01\); \(0{,}001\) por cada lado: se dividen por \(10\) en cada fila.</li>
+        <li>Informe: \(\displaystyle\lim_{x\to 4}p(x)\approx 5\).</li>
+        <li>Confirmación: \((x-4)(x+1)=x^{2}+x-4x-4=x^{2}-3x-4\). Para \(x\ne 4\), \(p(x)=x+1\), que se acerca a \(4+1=5\). El límite es \(5\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Construye la tabla de \(q(x)=\dfrac{x^{3}-8}{x-2}\) cerca de \(a=2\). a) Da el candidato y las distancias. b) Si cada resultado se redondeara a un decimal, ¿qué mostraría la tabla en las filas más cercanas a \(2\)? c) Confirma con álgebra.</p>
+    <details><summary>Pista</summary><div><p>Calcula \(x^{3}\) como \(x^{2}\cdot x\), sin redondear. Para c), multiplica \((x-2)(x^{2}+2x+4)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x=2\): \(2^{3}-8=8-8=0\) y \(2-2=0\). No se calcula.</li>
+        <li>Una fila completa, \(x=1{,}9\): \(1{,}9^{2}=3{,}61\); \(1{,}9^{3}=3{,}61\cdot 1{,}9=6{,}859\); \(6{,}859-8=-1{,}141\); \(1{,}9-2=-0{,}1\); \(q(1{,}9)=\dfrac{-1{,}141}{-0{,}1}=11{,}41\).</li>
+        <li>La tabla:
+        <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x^{2}\)</th><th>\(x^{3}\)</th><th>\(x^{3}-8\)</th><th>\(x-2\)</th><th>\(q(x)\)</th><th>\(|q(x)-12|\)</th></tr>
+      <tr><td>\(1{,}9\)</td><td>\(3{,}61\)</td><td>\(6{,}859\)</td><td>\(-1{,}141\)</td><td>\(-0{,}1\)</td><td>\(11{,}41\)</td><td>\(0{,}59\)</td></tr>
+      <tr><td>\(1{,}99\)</td><td>\(3{,}9601\)</td><td>\(7{,}880599\)</td><td>\(-0{,}119401\)</td><td>\(-0{,}01\)</td><td>\(11{,}9401\)</td><td>\(0{,}0599\)</td></tr>
+      <tr><td>\(1{,}999\)</td><td>\(3{,}996001\)</td><td>\(7{,}988005999\)</td><td>\(-0{,}011994001\)</td><td>\(-0{,}001\)</td><td>\(11{,}994001\)</td><td>\(0{,}005999\)</td></tr>
+      <tr><td>\(2\)</td><td colspan="6">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(2{,}001\)</td><td>\(4{,}004001\)</td><td>\(8{,}012006001\)</td><td>\(0{,}012006001\)</td><td>\(0{,}001\)</td><td>\(12{,}006001\)</td><td>\(0{,}006001\)</td></tr>
+      <tr><td>\(2{,}01\)</td><td>\(4{,}0401\)</td><td>\(8{,}120601\)</td><td>\(0{,}120601\)</td><td>\(0{,}01\)</td><td>\(12{,}0601\)</td><td>\(0{,}0601\)</td></tr>
+      <tr><td>\(2{,}1\)</td><td>\(4{,}41\)</td><td>\(9{,}261\)</td><td>\(1{,}261\)</td><td>\(0{,}1\)</td><td>\(12{,}61\)</td><td>\(0{,}61\)</td></tr>
+    </table></div></li>
+        <li>a) Candidato: \(12\). Las distancias son \(0{,}59\); \(0{,}0599\); \(0{,}005999\) por la izquierda y \(0{,}61\); \(0{,}0601\); \(0{,}006001\) por la derecha: se achican unas \(10\) veces en cada fila. Informe: \(\displaystyle\lim_{x\to 2}q(x)\approx 12\).</li>
+        <li>b) Redondeados a un decimal, \(11{,}994001\) y \(12{,}006001\) se escriben los dos \(12{,}0\): la tabla mostraría que la función «vale» \(12\) cerca de \(2\), y no es así. Hay que conservar los decimales.</li>
+        <li>c) \((x-2)(x^{2}+2x+4)=x^{3}+2x^{2}+4x-2x^{2}-4x-8=x^{3}-8\). Para \(x\ne 2\), \(q(x)=x^{2}+2x+4\), que se acerca a \(2^{2}+2\cdot 2+4=4+4+4=12\). El límite es \(12\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una tina se llena con la llave cada vez más abierta. <b>Modelo:</b> a los \(t\) minutos la tina tiene \(V(t)=2t^{2}+3t\) litros, con \(0\le t\le 5\). La rapidez media de llenado entre el minuto \(2\) y el minuto \(t\) es
+    \[m(t)=\dfrac{V(t)-V(2)}{t-2}\ \text{litros por minuto},\qquad t\ne 2.\]
+    a) Calcula \(V(2)\) y construye la tabla de \(m(t)\) cerca de \(t=2\). b) Da el candidato, las distancias y el informe. c) Confirma con álgebra. d) ¿Qué significa el resultado?</p>
+    <details><summary>Pista</summary><div><p>Columnas: \(t^{2}\), \(2t^{2}\), \(3t\), \(V(t)\), \(V(t)-V(2)\), \(t-2\) y el cociente. Para c), multiplica \((t-2)(2t+7)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(V(2)=2\cdot 2^{2}+3\cdot 2=2\cdot 4+6=8+6=14\) litros. Entonces \(m(t)=\dfrac{2t^{2}+3t-14}{t-2}\). En \(t=2\) queda \(14-14=0\) arriba y \(2-2=0\) abajo: no se calcula.</li>
+        <li>Una fila completa, \(t=1{,}9\): \(1{,}9^{2}=3{,}61\); \(2\cdot 3{,}61=7{,}22\); \(3\cdot 1{,}9=5{,}7\); \(V(1{,}9)=7{,}22+5{,}7=12{,}92\); \(12{,}92-14=-1{,}08\); \(1{,}9-2=-0{,}1\); \(m(1{,}9)=\dfrac{-1{,}08}{-0{,}1}=10{,}8\).</li>
+        <li>La tabla:
+        <div class="tblwrap"><table class="tbl">
+      <tr><th>\(t\)</th><th>\(t^{2}\)</th><th>\(2t^{2}\)</th><th>\(3t\)</th><th>\(V(t)\)</th><th>\(V(t)-14\)</th><th>\(t-2\)</th><th>\(m(t)\)</th><th>\(|m(t)-11|\)</th></tr>
+      <tr><td>\(1{,}9\)</td><td>\(3{,}61\)</td><td>\(7{,}22\)</td><td>\(5{,}7\)</td><td>\(12{,}92\)</td><td>\(-1{,}08\)</td><td>\(-0{,}1\)</td><td>\(10{,}8\)</td><td>\(0{,}2\)</td></tr>
+      <tr><td>\(1{,}99\)</td><td>\(3{,}9601\)</td><td>\(7{,}9202\)</td><td>\(5{,}97\)</td><td>\(13{,}8902\)</td><td>\(-0{,}1098\)</td><td>\(-0{,}01\)</td><td>\(10{,}98\)</td><td>\(0{,}02\)</td></tr>
+      <tr><td>\(1{,}999\)</td><td>\(3{,}996001\)</td><td>\(7{,}992002\)</td><td>\(5{,}997\)</td><td>\(13{,}989002\)</td><td>\(-0{,}010998\)</td><td>\(-0{,}001\)</td><td>\(10{,}998\)</td><td>\(0{,}002\)</td></tr>
+      <tr><td>\(2\)</td><td colspan="8">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(2{,}001\)</td><td>\(4{,}004001\)</td><td>\(8{,}008002\)</td><td>\(6{,}003\)</td><td>\(14{,}011002\)</td><td>\(0{,}011002\)</td><td>\(0{,}001\)</td><td>\(11{,}002\)</td><td>\(0{,}002\)</td></tr>
+      <tr><td>\(2{,}01\)</td><td>\(4{,}0401\)</td><td>\(8{,}0802\)</td><td>\(6{,}03\)</td><td>\(14{,}1102\)</td><td>\(0{,}1102\)</td><td>\(0{,}01\)</td><td>\(11{,}02\)</td><td>\(0{,}02\)</td></tr>
+      <tr><td>\(2{,}1\)</td><td>\(4{,}41\)</td><td>\(8{,}82\)</td><td>\(6{,}3\)</td><td>\(15{,}12\)</td><td>\(1{,}12\)</td><td>\(0{,}1\)</td><td>\(11{,}2\)</td><td>\(0{,}2\)</td></tr>
+    </table></div></li>
+        <li>b) Candidato: \(11\). Las distancias son \(0{,}2\); \(0{,}02\); \(0{,}002\) por cada lado: se dividen por \(10\) en cada fila. Informe: \(\displaystyle\lim_{t\to 2}m(t)\approx 11\) litros por minuto.</li>
+        <li>c) \((t-2)(2t+7)=2t^{2}+7t-4t-14=2t^{2}+3t-14\). Para \(t\ne 2\), \(m(t)=2t+7\), que se acerca a \(2\cdot 2+7=4+7=11\). El límite es \(11\) litros por minuto.</li>
+        <li>d) Significado: en intervalos cada vez más cortos alrededor del minuto \(2\), la tina se llena a una rapidez media cada vez más cercana a \(11\) litros por minuto. Ese límite es, por definición, la rapidez de llenado en el instante \(t=2\). Vale para el modelo declarado; una tina real se parecerá a esto solo si la fórmula describe bien su llenado.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H06 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* L29 H06 · aproximar límites a partir de tablas: con f(x) = (x³ − 1)/(x − 1) se construye la tabla alrededor de x = 1, se miden las distancias a 3 y el álgebra confirma (por pasos) */
+/* número exacto n/10^d en TeX (coma decimal, sin ceros de relleno); lm06T, el mismo como texto del lienzo */
+function lm06N(n, d){ var s = String(Math.abs(n)); while (s.length <= d) s = '0' + s; if (d){ s = s.slice(0, s.length - d) + '{,}' + s.slice(s.length - d); s = s.replace(/0+$/, '').replace(/\{,\}$/, ''); } return (n < 0 ? '-' : '') + s; }
+function lm06T(n, d){ return lm06N(n, d).replace('{,}', ',').replace('-', '−'); }
+/* una fila de la tabla, con enteros: x = n/10^k; todo sale exacto (n³ no pasa de 1003003001) */
+function lm06Fila(e){ var n = e[0], k = e[1], D = Math.pow(10, k), n2 = n*n, n3 = n2*n, v = n2 + n*D + D*D;
+  return { x:lm06N(n, k), x2:lm06N(n2, 2*k), x3:lm06N(n3, 3*k), num:lm06N(n3 - D*D*D, 3*k), den:lm06N(n - D, k), f:lm06N(v, 2*k), d:lm06N(Math.abs(v - 3*D*D), 2*k),
+    tx:lm06T(n, k), tf:lm06T(v, 2*k), td:lm06T(Math.abs(v - 3*D*D), 2*k), val:v/(D*D) }; }
+OA.scene('tab-idea', (function(){
+  var N = 6, Q = '\\\\&\\qquad ';
+  /* x = 1 − 0,1; 1 − 0,01; 1 − 0,001 (izquierda) y x = 1 + 0,1; 1 + 0,01; 1 + 0,001 (derecha), como [numerador, cantidad de decimales] */
+  var IZ = [[9, 1], [99, 2], [999, 3]].map(lm06Fila), DE = [[11, 1], [101, 2], [1001, 3]].map(lm06Fila);
+  var PZ = [['Q', '\\lim_{x\\to 1}\\tfrac{x^{3}-1}{x-1}:\\ \\ ?', 'lím (x³ − 1)/(x − 1) cuando x → 1: ?', 'pt'], ['F', '\\approx 3\\ \\ (\\text{álgebra: }=3)', '≈ 3 (álgebra: = 3)', 'diff'],
+    ['HX', 'x', 'x', ''], ['HF', 'f(x)=\\tfrac{x^{3}-1}{x-1}', 'f(x) = (x³ − 1)/(x − 1)', ''], ['HD', '|f(x)-3|', '|f(x) − 3|', 'c-alt'],
+    ['AL', 'x\\ne 1:\\ \\ f(x)=x^{2}+x+1\\ \\to\\ 1^{2}+1+1=3', 'x ≠ 1: f(x) = x² + x + 1 → 1² + 1 + 1 = 3', 'c-alt'],
+    ['R1', 'x:\\ \\ ' + IZ.map(function(r){ return r.x; }).join(';\\ ') + '\\ \\ \\text{y}\\ \\ ' + DE.map(function(r){ return r.x; }).join(';\\ '), 'x: 0,9; 0,99; 0,999 y 1,1; 1,01; 1,001', ''],
+    ['R2', '\\text{izquierda: }f(x)\\text{ vale }' + IZ.map(function(r){ return r.f; }).join(';\\ '), 'izquierda: f(x) vale 2,71; 2,9701; 2,997001', 'c-sec'],
+    ['R3', '\\text{derecha: }f(x)\\text{ vale }' + DE.map(function(r){ return r.f; }).join(';\\ '), 'derecha: f(x) vale 3,31; 3,0301; 3,003001', 'diff'],
+    ['R4', '|f(x)-3|\\ \\text{baja a }' + IZ[2].d + '\\ \\text{ y a }\\ ' + DE[2].d, '|f(x) − 3| baja a 0,002999 y a 0,003001', 'c-alt'],
+    ['R5', '\\text{la tabla sugiere: }\\lim_{x\\to 1}f(x)\\approx 3', 'la tabla sugiere: lím f(x) ≈ 3', ''],
+    ['R6', 'x\\ne 1:\\ f(x)=x^{2}+x+1;\\ \\ \\lim_{x\\to 1}f(x)=1+1+1=3', 'x ≠ 1: f(x) = x² + x + 1; lím f(x) = 1 + 1 + 1 = 3', 'diff']];
+  /* geometría de la tabla (unidades del mundo): filas de arriba abajo = 0,9; 0,99; 0,999; 1; 1,001; 1,01; 1,1 */
+  var YH = 4.12, YR = [3.72, 3.36, 3.0, 2.64, 2.28, 1.92, 1.56], CX = [0.42, 1.97, 4.12], BX = [-0.13, 0.95, 3.0, 5.22];
+  /* recta numérica de los valores de f(x): el valor w se dibuja en GX(w) */
+  var YA = 0.2; function GX(w){ return 2 + (w - 3)*7.6; }
+  var TXT = [['Se eligen x cerca de 1 por los dos lados, cada', 'vez 10 veces más cerca. Nunca se usa x = 1.'],
+    ['Por la izquierda se calcula la función en cada', 'fila. Los valores suben: 2,71; 2,9701; 2,997001.'],
+    ['Por la derecha se calcula igual. Los resultados', 'bajan: 3,31; 3,0301; 3,003001.'],
+    ['Candidato: 3. La distancia a 3 se achica unas', '10 veces en cada fila, por los dos lados.'],
+    ['La tabla sugiere que el límite es cerca de 3.', 'Es una estimación: la tabla no demuestra.'],
+    ['El álgebra confirma: fuera de 1 la función es', 'un polinomio que se acerca a 3. El límite es 3.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-5.9, y1:6.0}, aspect:11.9/6.6,
+    aria:'Arriba, una franja dice qué muestra: una tabla construida con la fórmula aproxima el límite y el álgebra lo confirma. Animación en seis pasos con la función f de x igual a x al cubo menos 1, dividido por x menos 1, cerca de x igual a 1. Uno: se arma la columna de x con 0,9; 0,99; 0,999 por la izquierda y 1,1; 1,01; 1,001 por la derecha; la fila de x igual a 1 no se calcula. Dos: se llenan los valores de la izquierda: 2,71; 2,9701; 2,997001, y aparecen como puntos azules en una recta numérica. Tres: los de la derecha: 3,31; 3,0301; 3,003001, puntos naranjas. Cuatro: el candidato es 3; se llena la columna de distancias a 3: 0,29; 0,0299; 0,002999 y 0,31; 0,0301; 0,003001. Cinco: la tabla sugiere que el límite es aproximadamente 3; es una estimación. Seis: el álgebra confirma: para x distinto de 1 la función vale x al cuadrado más x más 1, que se acerca a 3. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> valores con \\(x\\lt 1\\) (izquierda)</span><span><i class="sw rise"></i> valores con \\(x\\gt 1\\) (derecha)</span><span><i class="sw alt"></i> candidato \\(3\\) y distancias a \\(3\\)</span>',
+    anim:{run:36000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), mu = C.muted || '#6b6b6b', F = '"Source Sans 3", system-ui, sans-serif', p = 1/(X(1) - X(0)), j, a, yy;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      function sq(a, i, n){ return Math.max(0, Math.min(1, a*n - i)); } /* dentro de un paso, las filas aparecen una tras otra */
+      function frase(t, xw, yw, col, al, a, tam){ if (a <= 0) return; c.globalAlpha = Math.min(1, a); c.font = '600 ' + (tam || 11.5) + 'px ' + F; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, X(xw), Y(yw)); c.globalAlpha = 1; }
+      function num(t, xw, yw, col, a, al, tam){ frase(t, xw, yw, col, al, a, tam || 12.5); }
+      function raya(xa, ya, xb, yb, col, w, dash, a){ if (a <= 0) return; c.globalAlpha = Math.min(1, a); c.strokeStyle = col; c.lineWidth = w; c.setLineDash(dash || []); c.beginPath(); c.moveTo(X(xa), Y(ya)); c.lineTo(X(xb), Y(yb)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+      function punto(w, col, a){ if (a <= 0) return; c.globalAlpha = Math.min(1, a); c.fillStyle = col; c.beginPath(); c.arc(X(GX(w)), Y(YA), 3, 0, 6.2832); c.fill(); c.globalAlpha = 1; }
+      dtQue(S, 'una tabla construida con la fórmula', 'aproxima el límite; el álgebra lo confirma.');
+      /* paso 1: la tabla (encabezados de x y de f(x)) y la columna de x; la fila de x = 1 no se calcula */
+      a = ap(1);
+      c.globalAlpha = 0.07*Math.min(1, a*3); c.fillStyle = C.ink; c.fillRect(X(-1.25), Y(YR[3] + 0.18), X(BX[3]) - X(-1.25), Y(YR[3] - 0.18) - Y(YR[3] + 0.18)); c.globalAlpha = 1;
+      raya(-1.25, YH - 0.22, BX[3], YH - 0.22, C.ink, 1, null, a*3); raya(-1.25, YR[6] - 0.2, BX[3], YR[6] - 0.2, C.ink, 1, null, a*3);
+      for (j = 0; j < 3; j++) raya(BX[j], YH + 0.2, BX[j], YR[6] - 0.2, C.grid || 'rgba(0,0,0,0.15)', 1, null, a*3);
+      if (a > 0.05){ T.L('HX', CX[0], YH, -50); T.L('HF', CX[1], YH, -50); }
+      raya(-1.22, YR[0] + 0.15, -1.22, YR[2] - 0.15, C.sec, 3, null, a*3); raya(-1.22, YR[4] + 0.15, -1.22, YR[6] - 0.15, C.rise, 3, null, a*3);
+      frase('izquierda', -1.13, YR[1], C.sec, 'left', a*3); frase('derecha', -1.13, YR[5], C.rise, 'left', a*3);
+      for (j = 0; j < 3; j++){ num(IZ[j].tx, CX[0], YR[j], C.sec, sq(a, j, 3.4)); num(DE[j].tx, CX[0], YR[6 - j], C.rise, sq(a, j, 3.4)); }
+      num('1', CX[0], YR[3], mu, sq(a, 2.4, 3.4)); frase('no se calcula', CX[1], YR[3], mu, 'center', sq(a, 2.4, 3.4));
+      /* pasos 2 y 3: la columna de f(x), por la izquierda y por la derecha; cada valor es también un punto de la recta numérica */
+      a = ap(2);
+      raya(GX(2.62), YA, GX(3.38), YA, C.ink, 1, null, a*3);
+      if (a > 0) for (j = 27; j <= 33; j++){ raya(GX(j/10), YA + 3*p, GX(j/10), YA - 3*p, C.ink, 1, null, a*3); num(lm06T(j, 1), GX(j/10), YA - 11*p, mu, a*3, 'center', 10.5); }
+      for (j = 0; j < 3; j++){ num(IZ[j].tf, CX[1], YR[j], C.sec, sq(a, j, 3.2)); punto(IZ[j].val, C.sec, sq(a, j, 3.2)); }
+      num(IZ[0].tf, GX(IZ[0].val), YA + 12*p, C.sec, sq(a, 0, 3.2), 'center', 10.5); num(IZ[1].tf, GX(IZ[1].val) + 0.06, YA + 12*p, C.sec, sq(a, 1, 3.2), 'right', 10.5);
+      a = ap(3);
+      for (j = 0; j < 3; j++){ num(DE[j].tf, CX[1], YR[6 - j], C.rise, sq(a, j, 3.2)); punto(DE[j].val, C.rise, sq(a, j, 3.2)); }
+      num(DE[0].tf, GX(DE[0].val), YA + 12*p, C.rise, sq(a, 0, 3.2), 'center', 10.5); num(DE[1].tf, GX(DE[1].val) - 0.06, YA + 12*p, C.rise, sq(a, 1, 3.2), 'left', 10.5);
+      /* paso 4: el candidato 3 y la columna de distancias a 3; en la recta, las dos primeras distancias */
+      a = ap(4);
+      if (a > 0.05) T.L('HD', CX[2], YH, -50);
+      raya(GX(3), YA - 3*p, GX(3), YA + 36*p, C.alt, 1.4, [3, 3], a*3); frase('candidato: 3', GX(3), YA + 44*p, C.alt, 'center', a*3);
+      raya(GX(IZ[0].val), YA + 27*p, GX(3) - 2*p, YA + 27*p, C.sec, 1.6, null, sq(a, 0, 3.2)); num(IZ[0].td, (GX(IZ[0].val) + GX(3))/2, YA + 36*p, C.sec, sq(a, 0, 3.2), 'center', 10.5);
+      raya(GX(3) + 2*p, YA + 27*p, GX(DE[0].val), YA + 27*p, C.rise, 1.6, null, sq(a, 0, 3.2)); num(DE[0].td, (GX(DE[0].val) + GX(3))/2, YA + 36*p, C.rise, sq(a, 0, 3.2), 'center', 10.5);
+      for (j = 0; j < 3; j++){ num(IZ[j].td, CX[2], YR[j], C.alt, sq(a, j, 3.2)); num(DE[j].td, CX[2], YR[6 - j], C.alt, sq(a, j, 3.2)); }
+      /* paso 5: lo que la tabla permite informar */
+      frase('la tabla sugiere: el límite es cerca de 3', 2, YA - 31*p, C.alt, 'center', ap(5), 12);
+      /* paso 6: la confirmación con álgebra */
+      yy = YA - 53*p; if (ap(6) > 0.3) T.L('AL', 2, yy, -50);
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 4.66, 0); if (k === N && u > 0.5) T.L('F', 5.2, 4.66, -100);
+      lmTxt(S, TXT[k - 1][0], -1.2, YA - 78*p); lmTxt(S, TXT[k - 1][1], -1.2, YA - 99*p);
+      yy = YA - 148*p;
+      c.font = '600 11px ' + F; c.fillStyle = mu; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(yy) - 26);
+      T.fin();
+      oaReg(S, k, N, -1.2, yy, [0, 31, 62, 93, 124, 155]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1);
+      function cuenta(r){ return 'x=' + r.x + ':\\ \\ ' + r.x + '^{2}=' + r.x2 + Q + r.x + '^{3}=' + r.x2 + '\\cdot ' + r.x + '=' + r.x3 + Q + 'f(' + r.x + ')=\\tfrac{' + r.x3 + '-1}{' + r.x + '-1}=\\tfrac{' + r.num + '}{' + r.den + '}=' + r.f; }
+      function dist(L){ return '|' + L[0].f + '-3|=' + L[0].d + ';\\ \\ |' + L[1].f + '-3|=' + L[1].d + Q + '|' + L[2].f + '-3|=' + L[2].d; }
+      var R = [
+        'f(x)=\\tfrac{x^{3}-1}{x-1};\\quad a=1' + Q + '\\text{en }x=1:\\ \\ 1^{3}-1=0\\ \\text{ y }\\ 1-1=0\\ \\text{ (no se calcula)}' + Q + 'x<1:\\ \\ 1-0{,}1=0{,}9;\\ \\ 1-0{,}01=0{,}99;\\ \\ 1-0{,}001=0{,}999' + Q + 'x>1:\\ \\ 1+0{,}1=1{,}1;\\ \\ 1+0{,}01=1{,}01;\\ \\ 1+0{,}001=1{,}001',
+        '\\text{izquierda, fila por fila:}' + Q + IZ.map(cuenta).join(Q),
+        '\\text{derecha, fila por fila:}' + Q + DE.map(cuenta).join(Q),
+        '\\text{candidato: }3;\\ \\text{distancia de cada valor a }3' + Q + 'x<1:\\ \\ ' + dist(IZ) + Q + 'x>1:\\ \\ ' + dist(DE) + Q + '\\text{cada distancia: unas 10 veces menor que la anterior}',
+        '\\text{la tabla sugiere: }\\lim_{x\\to 1}f(x)\\approx 3' + Q + '\\text{es una estimación: seis valores no demuestran}',
+        'x^{3}-1=(x-1)(x^{2}+x+1)' + Q + 'x\\ne 1:\\ \\ f(x)=\\tfrac{(x-1)(x^{2}+x+1)}{x-1}=x^{2}+x+1' + Q + 'x\\to 1:\\ \\ 1^{2}+1+1=3' + Q + '\\lim_{x\\to 1}f(x)=3\\ \\ \\text{(la tabla acertó)}']; return dtPasos(R.slice(0, k)); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>

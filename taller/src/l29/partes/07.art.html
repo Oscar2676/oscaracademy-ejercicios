@@ -1,0 +1,250 @@
+<!--file:H07_estimar_limites_a_partir_de_tablas.html-->
+<!--title:Estimar límites a partir de tablas-->
+<!--id:lim-estima-->
+<!--tab:H07 Estimar límites a partir de tablas-->
+<article class="sheet" id="lim-estima" data-hoja="L29 H07">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de tablas</li>
+      <li><b>Estimar límites a partir de tablas</b></li>
+    </ol>
+    <h1>Estimar límites a partir de tablas</h1>
+    <p class="lede">A veces la tabla de valores viene <b>dada</b> (en una prueba, o como datos medidos) y no se conoce la fórmula. Para estimar el límite se lee la tabla por los dos lados de \(a\), en el orden en que \(x\) se acerca a \(a\):
+    \[\lim_{x\to a}f(x)\approx L\quad\text{si los valores de la tabla, a los dos lados de }a\text{, se acercan a }L\]
+    La columna \(x=a\) no participa. Y el resultado es una <b>estimación</b>: una tabla tiene pocos valores y no demuestra nada.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Esta es la tabla dada. De la función \(T\) solo se sabe lo que dice la tabla. Se pide estimar \(\displaystyle\lim_{x\to 2}T(x)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(T(x)\)</th><td>\(4{,}9\)</td><td>\(4{,}99\)</td><td>\(4{,}999\)</td><td>\(1\)</td><td>\(5{,}001\)</td><td>\(5{,}01\)</td><td>\(5{,}1\)</td></tr>
+  </table></div>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la tabla completa</b> (paso 1): la fila de arriba son los \(x\); la de abajo, los valores \(T(x)\).</li>
+    <li><b>En el paso 2 la columna \(x=2\) queda rayada:</b> sigue a la vista, pero no se usa. A su izquierda quedan las columnas con \(x\lt 2\) y a su derecha, las de \(x\gt 2\).</li>
+    <li><b>Sigue las flechas</b> (pasos 3 y 4): la azul recorre el lado izquierdo y la naranja, el derecho, siempre hacia \(x=2\). En la recta de abajo, cada valor leído es un punto: los puntos se aprietan contra un número.</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra: todo queda en la figura y, abajo, en el registro numerado.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> los valores de cada lado, sus distancias a \(5\), la estimación y, al final, la fórmula que la confirma.</li>
+  </ol>
+  <div class="stage" data-scene="est-idea"></div>
+  <ul class="keys">
+    <li><b>Tabla:</b> los datos, tal como vienen. <b>Columna rayada:</b> \(x=2\), con \(T(2)=1\); no participa.</li>
+    <li><b>Azul:</b> lado izquierdo (\(x\lt 2\)), leído hacia \(2\): \(4{,}9\); \(4{,}99\); \(4{,}999\).</li>
+    <li><b>Naranja:</b> lado derecho (\(x\gt 2\)), leído hacia \(2\): \(5{,}1\); \(5{,}01\); \(5{,}001\).</li>
+    <li><b>Recta de abajo:</b> esos seis valores como puntos. <b>Círculo burdeo:</b> el número \(5\), al que se acercan los dos lados.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar a partir de una tabla.</b> Una tabla trae pocos valores y nada dice de lo que pasa entre ellos: <b>un límite leído en una tabla es una estimación</b>, no una demostración (el recuadro 2 lo prueba con un ejemplo). En esta hoja, cuando se conoce la fórmula, la estimación se confirma con ella. Esa confirmación usa, <b>sin demostrar</b>, hechos que se demuestran con la definición formal de límite (otra hoja de este lote):</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\), también por un solo lado, \(c\,x+d\) se acerca a \(c\,a+d\), y \((x-a)^{2}\) se acerca a \(0\) (\(c\) y \(d\), números fijos).</li>
+      <li>Un límite en \(a\) depende solo de los valores de la función en los \(x\) cercanos a \(a\), con \(x\ne a\); un límite lateral, solo de los de su lado.</li>
+      <li>Criterio de los límites laterales: el límite existe y vale \(L\) si y solo si los dos límites laterales existen y valen \(L\). Si el límite existe, es uno solo.</li>
+      <li>Una función cuyos valores superan cualquier tope cerca de \(a\) no se acerca a ningún número: su límite en \(a\) no existe.</li>
+    </ol>
+    <p>En los datos medidos hay, además, error de medición: ahí la estimación se informa con «≈» (aproximadamente).</p>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Cómo se lee la tabla: cinco pasos</h3>
+    <ol class="steps">
+      <li><b>Ubica \(a\)</b> en la fila de las \(x\) y separa las columnas: izquierda (\(x\lt a\)) y derecha (\(x\gt a\)). La columna \(x=a\), si viene, se deja aparte, diga un número o «no definida».</li>
+      <li><b>Lee cada lado en el orden en que \(x\) se acerca a \(a\).</b> El lado derecho se lee al revés de como está escrito: desde la última columna hacia \(a\).</li>
+      <li><b>Decide a qué número se acerca cada lado.</b> Propón un candidato \(L\) y calcula las distancias \(|f(x)-L|\): tienen que achicarse hacia \(0\).</li>
+      <li><b>Compara.</b> Si los dos lados se acercan al mismo \(L\), la estimación es \(L\). Si se acercan a números distintos, o los valores crecen sin tope, la estimación es «no existe».</li>
+      <li><b>Informa con honestidad:</b> «\(\displaystyle\lim_{x\to a}f(x)\approx L\)», o «los datos son compatibles con un límite \(L\)».</li>
+    </ol>
+    <p>Tres cosas que <b>no</b> hacen falta: que \(L\) sea uno de los números de la tabla (en la de \(T\), el \(5\) no aparece); que los dos lados se acerquen igual de rápido; y que los \(x\) estén a distancias parejas de \(a\).</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Por qué \(T(2)\) no participa y por qué la tabla solo estima</h3>
+    <ol class="steps">
+      <li><b>La definición mira cerca de \(a\), no en \(a\):</b> \(\displaystyle\lim_{x\to a}f(x)=L\) habla de los \(x\) cercanos a \(a\) con \(x\ne a\). Si en la tabla se cambia \(T(2)=1\) por cualquier otro número, las otras seis columnas quedan iguales y la lectura da lo mismo.</li>
+      <li><b>La tabla es finita:</b> los \(x\) más cercanos a \(2\) son \(1{,}999\) y \(2{,}001\). De lo que pasa con \(1{,}999\lt x\lt 2{,}001\), la tabla no dice nada.</li>
+      <li><b>Dos funciones con la misma tabla.</b> Sea \(T(x)=\dfrac{x^{2}+x-6}{x-2}\) si \(x\ne 2\), con \(T(2)=1\): es la función con que se hizo la tabla. Como \(x^{2}+x-6=(x-2)(x+3)\), para \(x\ne 2\) vale \(T(x)=x+3\). Y sea \(S\) igual a \(T\), salvo muy cerca de \(2\):
+      \[S(x)=\begin{cases}x+3&\text{si }x\le 1{,}999\ \text{ o }\ x\ge 2{,}001\\ 7&\text{si }1{,}999\lt x\lt 2{,}001,\ x\ne 2\\ 1&\text{si }x=2\end{cases}\]</li>
+      <li><b>En los \(x\) de la tabla coinciden.</b> Los seis cumplen \(x\le 1{,}999\) o \(x\ge 2{,}001\), así que en ellos \(S(x)=x+3=T(x)\): \(1{,}9+3=4{,}9\); \(1{,}99+3=4{,}99\); \(1{,}999+3=4{,}999\); \(2{,}001+3=5{,}001\); \(2{,}01+3=5{,}01\); \(2{,}1+3=5{,}1\). Y \(S(2)=1=T(2)\).</li>
+      <li><b>Más cerca de \(2\) se separan:</b> \(T(1{,}9995)=1{,}9995+3=4{,}9995\) y \(T(2{,}0005)=2{,}0005+3=5{,}0005\); en cambio \(S(1{,}9995)=7\) y \(S(2{,}0005)=7\).</li>
+    </ol>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(1{,}9995\)</td><td>\(2{,}0005\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+      <tr><th>\(T(x)\)</th><td>\(4{,}9\)</td><td>\(4{,}99\)</td><td>\(4{,}999\)</td><td>\(4{,}9995\)</td><td>\(5{,}0005\)</td><td>\(5{,}001\)</td><td>\(5{,}01\)</td><td>\(5{,}1\)</td></tr>
+      <tr><th>\(S(x)\)</th><td>\(4{,}9\)</td><td>\(4{,}99\)</td><td>\(4{,}999\)</td><td>\(7\)</td><td>\(7\)</td><td>\(5{,}001\)</td><td>\(5{,}01\)</td><td>\(5{,}1\)</td></tr>
+    </table></div>
+    <ol class="steps" start="6">
+      <li><b>Los límites son distintos.</b> Cerca de \(2\), con \(x\ne 2\), \(T(x)=x+3\), que se acerca a \(2+3=5\): \(\displaystyle\lim_{x\to 2}T(x)=5\). En cambio, para \(0\lt|x-2|\lt 0{,}001\) es \(S(x)=7\): \(\displaystyle\lim_{x\to 2}S(x)=7\).</li>
+      <li><b>Conclusión:</b> la misma tabla sirve a una función de límite \(5\) y a otra de límite \(7\). La tabla sola no decide: con ella se dice «aproximadamente \(5\)» porque es lo más simple que calza con los datos. Solo la fórmula, u otra información sobre la función, lo vuelve exacto.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: tablas en que la estimación es «no existe»</h3>
+    <ol class="steps">
+      <li><b>Cada lado se acerca a un número distinto.</b> Entonces no hay un único \(L\): se informa «no existe» y se anotan los dos números (ejemplo 3). La hoja «Tablas y límites unilaterales», que viene después, les da nombre y notación.</li>
+      <li><b>Los valores crecen sin tope.</b> Esta tabla viene dada, con \(a=4\):</li>
+    </ol>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(4\)</td><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td></tr>
+      <tr><th>\(w(x)\)</th><td>\(200\)</td><td>\(20\,000\)</td><td>\(2\,000\,000\)</td><td>no definida</td><td>\(2\,000\,000\)</td><td>\(20\,000\)</td><td>\(200\)</td></tr>
+    </table></div>
+    <ol class="steps" start="3">
+      <li>Por los dos lados, cada vez que \(x\) queda \(10\) veces más cerca de \(4\), el valor se multiplica por \(100\): \(200\cdot 100=20\,000\) y \(20\,000\cdot 100=2\,000\,000\). No se ve ningún número al que se acerquen: estimación, «no existe».</li>
+      <li><b>Confirmación.</b> La tabla se hizo con \(w(x)=\dfrac{2}{(x-4)^{2}}\), \(x\ne 4\). Por ejemplo, \(3{,}9-4=-0{,}1\), \((-0{,}1)^{2}=0{,}01\) y \(\dfrac{2}{0{,}01}=200\). Si \(n\) es un entero positivo y \(0\lt|x-4|\lt\dfrac{1}{n}\), entonces \((x-4)^{2}\lt\dfrac{1}{n^{2}}\) y \(w(x)\gt 2n^{2}\): los valores superan cualquier tope. El límite no existe.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la tabla trae \(f(a)\), y es un distractor</h3>
+  <div class="body">
+  <p>Estima \(\displaystyle\lim_{x\to 1}f(x)\) con esta tabla.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(0{,}9\)</td><td>\(0{,}99\)</td><td>\(0{,}999\)</td><td>\(1\)</td><td>\(1{,}001\)</td><td>\(1{,}01\)</td><td>\(1{,}1\)</td></tr>
+    <tr><th>\(f(x)\)</th><td>\(2{,}7\)</td><td>\(2{,}97\)</td><td>\(2{,}997\)</td><td>\(6\)</td><td>\(3{,}003\)</td><td>\(3{,}03\)</td><td>\(3{,}3\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=1\). Izquierda: las columnas \(0{,}9\); \(0{,}99\); \(0{,}999\). Derecha: \(1{,}001\); \(1{,}01\); \(1{,}1\). La columna \(x=1\) se deja aparte.</li>
+    <li>Izquierda, hacia \(1\): \(2{,}7\); \(2{,}97\); \(2{,}997\). Candidato: \(3\). Distancias: \(|2{,}7-3|=0{,}3\); \(|2{,}97-3|=0{,}03\); \(|2{,}997-3|=0{,}003\). Se achican.</li>
+    <li>Derecha, hacia \(1\) (de la última columna hacia atrás): \(3{,}3\); \(3{,}03\); \(3{,}003\). Distancias a \(3\): \(|3{,}3-3|=0{,}3\); \(|3{,}03-3|=0{,}03\); \(|3{,}003-3|=0{,}003\). Se achican.</li>
+    <li>Los dos lados se acercan a \(3\): \(\displaystyle\lim_{x\to 1}f(x)\approx 3\).</li>
+    <li>El \(6\) de la columna \(x=1\) es \(f(1)\), el valor de la función en \(1\). No es el límite: \(6\ne 3\).</li>
+    <li>Confirmación: la tabla se hizo con \(f(x)=3x\) si \(x\ne 1\), y \(f(1)=6\). En efecto, \(3\cdot 0{,}9=2{,}7\) y \(3\cdot 1{,}1=3{,}3\). Cuando \(x\) se acerca a \(1\), \(3x\) se acerca a \(3\cdot 1=3\): el límite es \(3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el límite no está en la tabla, y los lados no avanzan parejo</h3>
+  <div class="body">
+  <p>Estima \(\displaystyle\lim_{x\to 4}g(x)\). La tabla no trae columna \(x=4\), ni hace falta.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(3{,}5\)</td><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(4{,}01\)</td><td>\(4{,}2\)</td><td>\(4{,}5\)</td></tr>
+    <tr><th>\(g(x)\)</th><td>\(6\)</td><td>\(6{,}8\)</td><td>\(6{,}98\)</td><td>\(7{,}0001\)</td><td>\(7{,}04\)</td><td>\(7{,}25\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=4\). Izquierda: \(3{,}5\); \(3{,}9\); \(3{,}99\). Derecha: \(4{,}01\); \(4{,}2\); \(4{,}5\). Los \(x\) de un lado no están a las mismas distancias de \(4\) que los del otro; no importa.</li>
+    <li>Izquierda, hacia \(4\): \(6\); \(6{,}8\); \(6{,}98\). Candidato: \(7\). Distancias: \(|6-7|=1\); \(|6{,}8-7|=0{,}2\); \(|6{,}98-7|=0{,}02\). Se achican.</li>
+    <li>Derecha, hacia \(4\): \(7{,}25\); \(7{,}04\); \(7{,}0001\). Distancias a \(7\): \(|7{,}25-7|=0{,}25\); \(|7{,}04-7|=0{,}04\); \(|7{,}0001-7|=0{,}0001\). Se achican, y más rápido que por la izquierda.</li>
+    <li>Los dos lados se acercan a \(7\): \(\displaystyle\lim_{x\to 4}g(x)\approx 7\). El \(7\) no es ninguno de los seis valores de la tabla.</li>
+    <li>Confirmación: la tabla se hizo con \(g(x)=2x-1\) si \(x\lt 4\), y \(g(x)=7+(x-4)^{2}\) si \(x\gt 4\). Por ejemplo, \(2\cdot 3{,}9-1=7{,}8-1=6{,}8\); y \(4{,}2-4=0{,}2\), \(0{,}2^{2}=0{,}04\), \(7+0{,}04=7{,}04\).</li>
+    <li>Por la izquierda, \(2x-1\) se acerca a \(2\cdot 4-1=8-1=7\). Por la derecha, \((x-4)^{2}\) se acerca a \(0\) y \(7+(x-4)^{2}\), a \(7+0=7\). El límite es \(7\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una tabla sin límite</h3>
+  <div class="body">
+  <p>Estima \(\displaystyle\lim_{x\to 1}h(x)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(0{,}9\)</td><td>\(0{,}99\)</td><td>\(0{,}999\)</td><td>\(1\)</td><td>\(1{,}001\)</td><td>\(1{,}01\)</td><td>\(1{,}1\)</td></tr>
+    <tr><th>\(h(x)\)</th><td>\(2{,}1\)</td><td>\(2{,}01\)</td><td>\(2{,}001\)</td><td>\(2\)</td><td>\(5{,}001\)</td><td>\(5{,}01\)</td><td>\(5{,}1\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=1\). La columna \(x=1\), con \(h(1)=2\), se deja aparte.</li>
+    <li>Izquierda, hacia \(1\): \(2{,}1\); \(2{,}01\); \(2{,}001\). Candidato: \(2\). Distancias: \(|2{,}1-2|=0{,}1\); \(|2{,}01-2|=0{,}01\); \(|2{,}001-2|=0{,}001\).</li>
+    <li>Derecha, hacia \(1\): \(5{,}1\); \(5{,}01\); \(5{,}001\). Candidato: \(5\). Distancias: \(|5{,}1-5|=0{,}1\); \(|5{,}01-5|=0{,}01\); \(|5{,}001-5|=0{,}001\).</li>
+    <li>La izquierda se acerca a \(2\) y la derecha, a \(5\). Como \(2\ne 5\), la estimación es: \(\displaystyle\lim_{x\to 1}h(x)\) <b>no existe</b>.</li>
+    <li>Que \(h(1)=2\) coincida con el número de la izquierda no cambia nada: la columna \(x=1\) no participa.</li>
+    <li>Confirmación: la tabla se hizo con \(h(x)=3-x\) si \(x\le 1\), y \(h(x)=4+x\) si \(x\gt 1\). Por la izquierda, \(3-x\) se acerca a \(3-1=2\); por la derecha, \(4+x\) se acerca a \(4+1=5\). No existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: datos medidos</h3>
+  <div class="body">
+  <p>Un termómetro digital, que muestra décimas de grado, mide la temperatura \(M(t)\) del agua de una olla, en °C, a los \(t\) segundos. En \(t=10\) la pantalla parpadeó y no hubo lectura. Estima \(\displaystyle\lim_{t\to 10}M(t)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(t\) (s)</th><td>\(9{,}7\)</td><td>\(9{,}9\)</td><td>\(9{,}95\)</td><td>\(10\)</td><td>\(10{,}05\)</td><td>\(10{,}1\)</td><td>\(10{,}3\)</td></tr>
+    <tr><th>\(M(t)\) (°C)</th><td>\(41{,}4\)</td><td>\(41{,}8\)</td><td>\(41{,}9\)</td><td>sin lectura</td><td>\(42{,}1\)</td><td>\(42{,}2\)</td><td>\(42{,}6\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=10\). Izquierda: \(9{,}7\); \(9{,}9\); \(9{,}95\). Derecha: \(10{,}05\); \(10{,}1\); \(10{,}3\). La columna \(t=10\) no trae dato; no se necesita.</li>
+    <li>Izquierda, hacia \(10\): \(41{,}4\); \(41{,}8\); \(41{,}9\). Candidato: \(42\). Distancias: \(|41{,}4-42|=0{,}6\); \(|41{,}8-42|=0{,}2\); \(|41{,}9-42|=0{,}1\).</li>
+    <li>Derecha, hacia \(10\): \(42{,}6\); \(42{,}2\); \(42{,}1\). Distancias a \(42\): \(|42{,}6-42|=0{,}6\); \(|42{,}2-42|=0{,}2\); \(|42{,}1-42|=0{,}1\).</li>
+    <li>Los dos lados se acercan a \(42\). Estimación: los datos son compatibles con \(L\approx 42\) °C.</li>
+    <li>Aquí no hay fórmula que confirme. Y el termómetro solo da décimas: los valores más cercanos son \(41{,}9\) y \(42{,}1\), y cualquier \(L\) entre ellos calza igual de bien con la tabla. Lo honesto es informar «\(L\approx 42\) °C», no «\(L=42\) °C».</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>responder con el valor de la columna \(x=a\)</b>. En la tabla de \(T\), responder \(1\); la lectura da \(5\). Dos: <b>responder con el último valor de la tabla</b> (\(4{,}999\) o \(5{,}001\)): el límite es el número al que se acercan los valores, y puede no estar en la tabla. Tres: <b>leer un solo lado</b>: en el ejemplo 3 la izquierda sola daría \(2\), y el límite no existe. Cuatro: <b>escribir «=» donde va «≈»</b>: sin fórmula, la tabla solo permite estimar.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Con esta tabla: a) estima \(\displaystyle\lim_{x\to 3}p(x)\); b) di cuánto vale \(p(3)\) y si coincide con tu estimación; c) confirma con la fórmula \(p(x)=\dfrac{x-1}{2}\) si \(x\ne 3\), \(p(3)=4\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(2{,}9\)</td><td>\(2{,}99\)</td><td>\(2{,}999\)</td><td>\(3\)</td><td>\(3{,}001\)</td><td>\(3{,}01\)</td><td>\(3{,}1\)</td></tr>
+      <tr><th>\(p(x)\)</th><td>\(0{,}95\)</td><td>\(0{,}995\)</td><td>\(0{,}9995\)</td><td>\(4\)</td><td>\(1{,}0005\)</td><td>\(1{,}005\)</td><td>\(1{,}05\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Deja aparte la columna \(x=3\). Lee la izquierda de \(2{,}9\) a \(2{,}999\) y la derecha de \(3{,}1\) a \(3{,}001\). ¿A qué número se acercan?</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(3\): \(0{,}95\); \(0{,}995\); \(0{,}9995\). Candidato: \(1\). Distancias: \(|0{,}95-1|=0{,}05\); \(|0{,}995-1|=0{,}005\); \(|0{,}9995-1|=0{,}0005\).</li>
+        <li>Derecha, hacia \(3\): \(1{,}05\); \(1{,}005\); \(1{,}0005\). Distancias a \(1\): \(|1{,}05-1|=0{,}05\); \(|1{,}005-1|=0{,}005\); \(|1{,}0005-1|=0{,}0005\).</li>
+        <li>Los dos lados se acercan a \(1\): \(\displaystyle\lim_{x\to 3}p(x)\approx 1\). El \(1\) no aparece en la tabla.</li>
+        <li>b) La columna \(x=3\) dice \(p(3)=4\). No coincide: \(4\ne 1\). Es el valor de la función, no el límite.</li>
+        <li>c) Con la fórmula, una columna de muestra: \(p(2{,}9)=\dfrac{2{,}9-1}{2}=\dfrac{1{,}9}{2}=0{,}95\).</li>
+        <li>Cuando \(x\) se acerca a \(3\), \(\dfrac{x-1}{2}\) se acerca a \(\dfrac{3-1}{2}=\dfrac{2}{2}=1\): el límite es \(1\), como se estimó.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Estima \(\displaystyle\lim_{x\to 2}q(x)\) con esta tabla. Después confirma con la fórmula: \(q(x)=x-5\) si \(x\lt 2\), y \(q(x)=5-x\) si \(x\gt 2\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+      <tr><th>\(q(x)\)</th><td>\(-3{,}1\)</td><td>\(-3{,}01\)</td><td>\(-3{,}001\)</td><td>\(2{,}999\)</td><td>\(2{,}99\)</td><td>\(2{,}9\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Fíjate en los signos: \(-3\) y \(3\) son números distintos.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Izquierda, hacia \(2\): \(-3{,}1\); \(-3{,}01\); \(-3{,}001\). Candidato: \(-3\). Distancias: \(|-3{,}1-(-3)|=0{,}1\); \(|-3{,}01-(-3)|=0{,}01\); \(|-3{,}001-(-3)|=0{,}001\).</li>
+        <li>Derecha, hacia \(2\): \(2{,}9\); \(2{,}99\); \(2{,}999\). Candidato: \(3\). Distancias: \(|2{,}9-3|=0{,}1\); \(|2{,}99-3|=0{,}01\); \(|2{,}999-3|=0{,}001\).</li>
+        <li>La izquierda se acerca a \(-3\) y la derecha, a \(3\). Como \(-3\ne 3\), la estimación es: el límite <b>no existe</b>.</li>
+        <li>Confirmación, una columna de cada lado: \(q(1{,}9)=1{,}9-5=-3{,}1\) y \(q(2{,}1)=5-2{,}1=2{,}9\).</li>
+        <li>Por la izquierda, \(x-5\) se acerca a \(2-5=-3\). Por la derecha, \(5-x\) se acerca a \(5-2=3\). Dos números distintos: \(\displaystyle\lim_{x\to 2}q(x)\) no existe.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un sensor anota la temperatura de un invernadero. En el minuto \(5\) el registro falló y anotó \(0\). <b>Modelo:</b> en esos minutos la temperatura real fue \(R(t)=18+0{,}4\,t\) °C a los \(t\) minutos (sube \(0{,}4\) °C por minuto), y el sensor la anotó sin error, salvo en \(t=5\). a) Solo con la tabla, estima \(\displaystyle\lim_{t\to 5}R(t)\). b) ¿Sirve el \(0\) de la columna \(t=5\)? c) Confirma con el modelo. d) ¿Qué significa el resultado?</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(t\) (min)</th><td>\(4{,}5\)</td><td>\(4{,}75\)</td><td>\(4{,}95\)</td><td>\(5\)</td><td>\(5{,}05\)</td><td>\(5{,}25\)</td><td>\(5{,}5\)</td></tr>
+      <tr><th>lectura (°C)</th><td>\(19{,}8\)</td><td>\(19{,}9\)</td><td>\(19{,}98\)</td><td>\(0\)</td><td>\(20{,}02\)</td><td>\(20{,}1\)</td><td>\(20{,}2\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>La columna \(t=5\) se deja aparte, diga lo que diga. Candidato para los dos lados: \(20\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(5\): \(19{,}8\); \(19{,}9\); \(19{,}98\). Distancias a \(20\): \(|19{,}8-20|=0{,}2\); \(|19{,}9-20|=0{,}1\); \(|19{,}98-20|=0{,}02\).</li>
+        <li>Derecha, hacia \(5\): \(20{,}2\); \(20{,}1\); \(20{,}02\). Distancias a \(20\): \(|20{,}2-20|=0{,}2\); \(|20{,}1-20|=0{,}1\); \(|20{,}02-20|=0{,}02\).</li>
+        <li>Los dos lados se acercan a \(20\): los datos son compatibles con \(L\approx 20\) °C.</li>
+        <li>b) No. La columna \(t=5\) no participa en el límite; además, aquí es una falla del registro: \(0\ne 20\).</li>
+        <li>c) Con el modelo, una columna de cada lado: \(R(4{,}5)=18+0{,}4\cdot 4{,}5=18+1{,}8=19{,}8\) y \(R(5{,}5)=18+0{,}4\cdot 5{,}5=18+2{,}2=20{,}2\).</li>
+        <li>Cuando \(t\) se acerca a \(5\), \(18+0{,}4\,t\) se acerca a \(18+0{,}4\cdot 5=18+2=20\): \(\displaystyle\lim_{t\to 5}R(t)=20\) °C.</li>
+        <li>d) Significado: justo antes y justo después del minuto \(5\) había casi \(20\) °C. Si la temperatura no dio un salto en ese instante (el modelo lo supone), en el minuto \(5\) había \(20\) °C, y ese es el dato que conviene poner en lugar del \(0\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H07 · v001 · Pendiente de APR</span>
+</footer>
+</article>

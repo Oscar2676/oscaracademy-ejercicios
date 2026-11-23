@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Límites laterales a partir de gráficas. Asíntotas | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="lim-asint" data-hoja="L29 H05">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de gráficas</li>
+      <li><b>Límites laterales a partir de gráficas. Asíntotas</b></li>
+    </ol>
+    <h1>Límites laterales a partir de gráficas. Asíntotas</h1>
+    <p class="lede">A veces, al caminar sobre una gráfica hacia \(a\) por un lado, la curva no llega a ninguna altura: junto a la recta vertical \(x=a\) sube o baja <b>sin tope</b>. Eso se anota con los límites laterales y el símbolo de infinito:
+    \[\lim_{x\to a^{-}}f(x)=-\infty\qquad\text{o}\qquad\lim_{x\to a^{+}}f(x)=+\infty\]
+    (o con los signos al revés). Cuando pasa por al menos un lado, la recta \(x=a\) es una <b>asíntota vertical</b> de la gráfica. Escribir «\(=+\infty\)» no dice que el límite exista: dice de qué manera no existe.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La gráfica de la animación es la de \(f(x)=\dfrac{1}{x-2}\), definida para todo \(x\ne 2\). La notación: \(x\to 2^{-}\) se lee «\(x\) se acerca a \(2\) por la izquierda» (con \(x\lt 2\)) y \(x\to 2^{+}\), «por la derecha» (con \(x\gt 2\)).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo y la recta punteada vertical \(x=2\):</b> la curva tiene dos ramas, una a cada lado de la recta, y sobre la recta no hay punto.</li>
+    <li><b>Pasos 2 y 3, un lado por paso:</b> los puntos azules (izquierda) y naranjas (derecha) llevan una punteada hasta su altura en el eje vertical. El tercer valor de cada lado no cabe en el dibujo: una flecha y una frase avisan que la curva sigue.</li>
+    <li><b>Paso 4, el tope:</b> la recta verde horizontal es un tope a la altura \(5\). La franja verde marca los \(x\) entre \(2\) y \(2{,}2\), donde la curva pasa sobre el tope.</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra: todo queda en la figura y, abajo, en el registro numerado.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada altura con su división, la condición para superar un tope \(M\) cualquiera y la conclusión: límite lateral \(-\infty\) por la izquierda, \(+\infty\) por la derecha, y la recta \(x=2\) es asíntota vertical.</li>
+  </ol>
+  <div class="stage" data-scene="asi-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Línea burdeo:</b> la gráfica de \(f\). El dibujo la corta en las alturas \(-11\) y \(11\); la curva sigue más allá del marco.</li>
+    <li><b>Azul:</b> acercarse a \(2\) por la izquierda. <b>Naranjo:</b> por la derecha. Las punteadas llevan cada punto a su altura en el eje vertical.</li>
+    <li><b>Verde:</b> el tope (altura \(5\)) y la franja \(2\lt x\lt 2{,}2\) en que la curva lo supera.</li>
+    <li><b>Recta punteada vertical:</b> \(x=2\). En el último paso se destaca en negro: es la asíntota vertical.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar a partir de una gráfica.</b> Un dibujo tiene un marco: muestra que la curva sale por arriba o por abajo, pero no puede mostrar que supera <b>cualquier</b> tope. Por eso <b>un límite lateral infinito leído en una gráfica es una estimación</b>, no una demostración. En esta hoja cada lectura se confirma con la fórmula, mostrando que la función supera un tope \(M\) cualquiera. La definición usada es la intuitiva («suficientemente cerca»); la formal viene en otra hoja de este lote. Se usan, <b>sin demostrar</b>:</p>
+    <ol class="steps">
+      <li>Las reglas del orden de los números: multiplicar o dividir los dos lados de una desigualdad por un número positivo la mantiene; por uno negativo, la invierte; y si \(0\lt p\lt q\), entonces \(p^{2}\lt q^{2}\) y \(\dfrac{1}{q}\lt \dfrac{1}{p}\).</li>
+      <li>Cuando \(x\) se acerca a \(a\) (también por un solo lado), \(c\,x+d\) se acerca a \(c\,a+d\).</li>
+      <li>Un límite lateral en \(a\) depende solo de los valores de la función en los \(x\) cercanos a \(a\) de ese lado, con \(x\ne a\).</li>
+      <li>Criterio de los límites laterales: \(\displaystyle\lim_{x\to a}f(x)=L\) si y solo si los dos laterales son iguales al número \(L\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definiciones: límite lateral infinito y asíntota vertical</h3>
+    <p>Se supone que \(f\) está definida en todos los \(x\) cercanos a \(a\) del lado que se mira.</p>
+    <ol class="steps">
+      <li><b>Por la derecha, sin tope hacia arriba.</b> \(\displaystyle\lim_{x\to a^{+}}f(x)=+\infty\) significa: para cualquier tope \(M\gt 0\) se cumple \(f(x)\gt M\) en todos los \(x\) suficientemente cercanos a \(a\) por la derecha (todos los \(x\) con \(a\lt x\lt a+d\), para algún \(d\gt 0\) que depende de \(M\)).</li>
+      <li><b>Sin tope hacia abajo.</b> \(\displaystyle\lim_{x\to a^{+}}f(x)=-\infty\) significa lo mismo con \(f(x)\lt -M\).</li>
+      <li><b>Por la izquierda.</b> \(\displaystyle\lim_{x\to a^{-}}f(x)=+\infty\) o \(-\infty\): igual, con los \(x\) que cumplen \(a-d\lt x\lt a\).</li>
+      <li><b>\(+\infty\) y \(-\infty\) no son números.</b> Un límite lateral «igual a \(+\infty\)» no existe: no hay altura de llegada. La escritura informa cómo se comporta la curva.</li>
+      <li><b>Asíntota vertical.</b> La recta \(x=a\) es asíntota vertical de la gráfica de \(f\) si <b>al menos uno</b> de los dos límites laterales en \(a\) es \(+\infty\) o \(-\infty\).</li>
+    </ol>
+    <p><b>En una gráfica:</b> se ubica la recta vertical \(x=a\), se camina sobre la curva hacia ella por cada lado y se mira si la curva llega a una altura o si sale del marco, hacia arriba o hacia abajo, pegada a la recta. Después se confirma con la fórmula.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Justificación paso a paso: \(\dfrac{1}{x-2}\) supera cualquier tope junto a \(2\)</h3>
+    <ol class="steps">
+      <li>Se elige un tope cualquiera \(M\gt 0\).</li>
+      <li>Se toma \(x\) a la derecha de \(2\), con \(0\lt x-2\lt \dfrac{1}{M}\).</li>
+      <li>Se multiplica \(x-2\lt \dfrac{1}{M}\) por \(M\), que es positivo: \(M\,(x-2)\lt 1\).</li>
+      <li>Se divide por \(x-2\), que es positivo: \(M\lt \dfrac{1}{x-2}\). Es decir, \(f(x)\gt M\).</li>
+      <li>Vale para todos los \(x\) con \(2\lt x\lt 2+\dfrac{1}{M}\), y \(M\) era cualquiera: \(\displaystyle\lim_{x\to 2^{+}}f(x)=+\infty\).</li>
+      <li>A la izquierda se toma \(0\lt 2-x\lt \dfrac{1}{M}\). Con los mismos dos pasos, \(M\lt \dfrac{1}{2-x}\).</li>
+      <li>Como \(\dfrac{1}{x-2}=-\dfrac{1}{2-x}\), se multiplica por \(-1\) y la desigualdad se invierte: \(f(x)\lt -M\). Entonces \(\displaystyle\lim_{x\to 2^{-}}f(x)=-\infty\).</li>
+    </ol>
+    <p>Cuatro topes, cada uno con un \(x\) de prueba dentro del tramo \(0\lt x-2\lt \dfrac{1}{M}\):</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>tope \(M\)</th><th>\(\dfrac{1}{M}\)</th><th>\(x\) de prueba</th><th>\(x-2\)</th><th>\(f(x)\)</th></tr>
+      <tr><td>\(5\)</td><td>\(0{,}2\)</td><td>\(2{,}1\)</td><td>\(0{,}1\)</td><td>\(10\)</td></tr>
+      <tr><td>\(10\)</td><td>\(0{,}1\)</td><td>\(2{,}05\)</td><td>\(0{,}05\)</td><td>\(20\)</td></tr>
+      <tr><td>\(100\)</td><td>\(0{,}01\)</td><td>\(2{,}005\)</td><td>\(0{,}005\)</td><td>\(200\)</td></tr>
+      <tr><td>\(1000\)</td><td>\(0{,}001\)</td><td>\(2{,}0005\)</td><td>\(0{,}0005\)</td><td>\(2000\)</td></tr>
+    </table></div>
+    <p>Fila de muestra, \(M=10\): \(\dfrac{1}{10}=0{,}1\); el valor \(x=2{,}05\) cumple \(2{,}05-2=0{,}05\) y \(0\lt 0{,}05\lt 0{,}1\); \(f(2{,}05)=\dfrac{1}{0{,}05}=20\), y \(20\gt 10\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Casos especiales: lo que define a la asíntota es el límite lateral</h3>
+    <ol class="steps">
+      <li><b>Basta un lado.</b> Un lateral puede ser un número y el otro, \(+\infty\) o \(-\infty\): la recta igual es asíntota vertical (ejemplo 3).</li>
+      <li><b>«No tocar» no es la definición.</b> Sea \(p(x)=\dfrac{1}{x-2}\) si \(x\ne 2\), y \(p(2)=1\). Cerca de \(2\), con \(x\ne 2\), \(p\) es igual a \(f\): sus laterales en \(2\) son \(-\infty\) y \(+\infty\), y \(x=2\) es asíntota vertical. Pero el punto \((2,1)\) es de la gráfica y está sobre esa recta. En los demás ejemplos la curva no toca su asíntota vertical; lo que la define es el límite lateral.</li>
+      <li><b>Dividir por \(0\) no basta.</b> Que el denominador valga \(0\) en \(a\) avisa dónde mirar, no asegura una asíntota: puede haber solo un hueco (ejemplo 4).</li>
+      <li><b>Asíntotas horizontales.</b> No son tema de esta hoja: se tratan con los límites en el infinito.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>Cada ejemplo parte de lo que se ve en la gráfica (una estimación) y lo confirma con la fórmula.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: los dos lados suben, \(q(x)=\dfrac{1}{(x-3)^{2}}\) junto a \(x=3\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En la gráfica: a los dos lados de la recta \(x=3\) la curva sube y sale del marco por arriba. Lectura: los dos laterales serían \(+\infty\).</li>
+    <li>Por la izquierda: \(q(2{,}9)=\dfrac{1}{(2{,}9-3)^{2}}=\dfrac{1}{(-0{,}1)^{2}}=\dfrac{1}{0{,}01}=100\) y \(q(2{,}99)=\dfrac{1}{(-0{,}01)^{2}}=\dfrac{1}{0{,}0001}=10000\).</li>
+    <li>Por la derecha: \(q(3{,}1)=\dfrac{1}{(3{,}1-3)^{2}}=\dfrac{1}{0{,}1^{2}}=\dfrac{1}{0{,}01}=100\) y \(q(3{,}01)=\dfrac{1}{0{,}01^{2}}=\dfrac{1}{0{,}0001}=10000\).</li>
+    <li>Tope \(M\ge 1\) cualquiera: se toma \(x\) con \(0\lt x-3\lt \dfrac{1}{M}\) (derecha) o \(0\lt 3-x\lt \dfrac{1}{M}\) (izquierda). Al elevar al cuadrado, \((x-3)^{2}\lt \dfrac{1}{M^{2}}\).</li>
+    <li>Como \(M\ge 1\), \(M^{2}\ge M\) y por eso \(\dfrac{1}{M^{2}}\le \dfrac{1}{M}\). Entonces \((x-3)^{2}\lt \dfrac{1}{M}\) y, multiplicando por \(M\) y dividiendo por \((x-3)^{2}\) (positivos), \(q(x)\gt M\). Un tope menor que \(1\) queda superado con los mismos \(x\) que el tope \(1\).</li>
+    <li>\(\displaystyle\lim_{x\to 3^{-}}q(x)=+\infty\) y \(\displaystyle\lim_{x\to 3^{+}}q(x)=+\infty\): la recta \(x=3\) es asíntota vertical.</li>
+    <li>Como los dos lados hacen lo mismo, se acostumbra escribir \(\displaystyle\lim_{x\to 3}q(x)=+\infty\). Igual que antes, eso no es un número: el límite no existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: los signos al revés, \(w(x)=\dfrac{3}{4-x}\) junto a \(x=4\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En la gráfica: junto a la recta \(x=4\) la curva sube por la izquierda y baja por la derecha.</li>
+    <li>Por la izquierda: \(w(3{,}9)=\dfrac{3}{4-3{,}9}=\dfrac{3}{0{,}1}=30\) y \(w(3{,}99)=\dfrac{3}{4-3{,}99}=\dfrac{3}{0{,}01}=300\).</li>
+    <li>Por la derecha: \(w(4{,}1)=\dfrac{3}{4-4{,}1}=\dfrac{3}{-0{,}1}=-30\) y \(w(4{,}01)=\dfrac{3}{4-4{,}01}=\dfrac{3}{-0{,}01}=-300\).</li>
+    <li>Tope \(M\gt 0\), izquierda: si \(0\lt 4-x\lt \dfrac{3}{M}\), se multiplica por \(M\): \(M\,(4-x)\lt 3\); se divide por \(4-x\), positivo: \(M\lt \dfrac{3}{4-x}\). Es decir, \(w(x)\gt M\).</li>
+    <li>Derecha: si \(0\lt x-4\lt \dfrac{3}{M}\), del mismo modo \(M\lt \dfrac{3}{x-4}\). Como \(\dfrac{3}{4-x}=-\dfrac{3}{x-4}\), al multiplicar por \(-1\) queda \(w(x)\lt -M\).</li>
+    <li>\(\displaystyle\lim_{x\to 4^{-}}w(x)=+\infty\) y \(\displaystyle\lim_{x\to 4^{+}}w(x)=-\infty\): la recta \(x=4\) es asíntota vertical.</li>
+    <li>Observación: no hay una regla «izquierda, \(-\infty\)». El signo sale del signo del denominador a cada lado: aquí \(4-x\) es positivo a la izquierda de \(4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un lado llega a una altura y el otro no</h3>
+  <div class="body">
+  <p>\[v(x)=\begin{cases}x+1&\text{si }x\le 1\\[2pt] \dfrac{1}{x-1}&\text{si }x\gt 1\end{cases}\]</p>
+  <ol class="steps">
+    <li>En la gráfica: una recta que termina en el punto lleno \((1,2)\); a la derecha de \(x=1\), una rama que viene desde arriba, pegada a la recta \(x=1\).</li>
+    <li>Por la izquierda se usa \(x+1\): \(v(0{,}9)=0{,}9+1=1{,}9\) y \(v(0{,}99)=0{,}99+1=1{,}99\). Cuando \(x\) se acerca a \(1\), \(x+1\) se acerca a \(1+1=2\): \(\displaystyle\lim_{x\to 1^{-}}v(x)=2\).</li>
+    <li>Por la derecha se usa \(\dfrac{1}{x-1}\): \(v(1{,}1)=\dfrac{1}{1{,}1-1}=\dfrac{1}{0{,}1}=10\) y \(v(1{,}01)=\dfrac{1}{1{,}01-1}=\dfrac{1}{0{,}01}=100\).</li>
+    <li>Tope \(M\gt 0\): si \(0\lt x-1\lt \dfrac{1}{M}\), entonces \(M\,(x-1)\lt 1\) y \(M\lt \dfrac{1}{x-1}\). Luego \(\displaystyle\lim_{x\to 1^{+}}v(x)=+\infty\).</li>
+    <li>Un lateral es \(+\infty\): la recta \(x=1\) es asíntota vertical, aunque el otro lateral sea el número \(2\).</li>
+    <li>El valor \(v(1)=1+1=2\) existe: el punto \((1,2)\) de la gráfica está sobre la asíntota.</li>
+    <li>\(\displaystyle\lim_{x\to 1}v(x)\) no existe: uno de los laterales no es un número.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: un hueco no es una asíntota, \(g(x)=\dfrac{x^{2}-4}{x-2}\) frente a \(f(x)=\dfrac{1}{x-2}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Ninguna de las dos está definida en \(x=2\): el denominador vale \(2-2=0\). En \(g\), además, el numerador vale \(2^{2}-4=0\); en \(f\) el numerador es \(1\).</li>
+    <li>Valores cerca de \(2\):
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(g(x)\)</th><th>\(f(x)\)</th></tr>
+      <tr><td>\(1{,}9\)</td><td>\(3{,}9\)</td><td>\(-10\)</td></tr>
+      <tr><td>\(1{,}99\)</td><td>\(3{,}99\)</td><td>\(-100\)</td></tr>
+      <tr><td>\(2{,}01\)</td><td>\(4{,}01\)</td><td>\(100\)</td></tr>
+      <tr><td>\(2{,}1\)</td><td>\(4{,}1\)</td><td>\(10\)</td></tr>
+    </table></div></li>
+    <li>Fila de muestra: \(1{,}99^{2}=3{,}9601\); \(3{,}9601-4=-0{,}0399\); \(1{,}99-2=-0{,}01\); \(g(1{,}99)=\dfrac{-0{,}0399}{-0{,}01}=3{,}99\). Y \(f(1{,}99)=\dfrac{1}{-0{,}01}=-100\).</li>
+    <li>Con álgebra: \(x^{2}-4=(x-2)(x+2)\). Si \(x\ne 2\), \(g(x)=\dfrac{(x-2)(x+2)}{x-2}=x+2\), que se acerca a \(2+2=4\) por los dos lados.</li>
+    <li>\(\displaystyle\lim_{x\to 2^{-}}g(x)=4\) y \(\displaystyle\lim_{x\to 2^{+}}g(x)=4\): la gráfica de \(g\) es una recta con un hueco en \((2,4)\). Ningún lateral es infinito: <b>no hay asíntota</b>.</li>
+    <li>En cambio, los laterales de \(f\) en \(2\) son \(-\infty\) y \(+\infty\) (recuadro de la justificación): la recta \(x=2\) sí es asíntota vertical de la gráfica de \(f\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>creer que «\(=+\infty\)» es un límite que existe</b>. No hay altura de llegada; \(+\infty\) no es un número. Dos: <b>anotar una asíntota cada vez que el denominador vale \(0\)</b>. En el ejemplo 4, \(g\) tiene un hueco y no una asíntota. Tres: <b>definir la asíntota como «la recta que la curva no toca»</b>. La define el límite lateral; la gráfica puede tener un punto sobre ella, como en el ejemplo 3. Cuatro: <b>escribir \(\dfrac{1}{0}=\infty\)</b>. No se divide por \(0\): \(f(2)\) no existe, y el símbolo \(\infty\) solo aparece dentro de la escritura de un límite.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>La gráfica de \(u(x)=\dfrac{4}{x+1}\) tiene dos ramas, una a cada lado de la recta \(x=-1\). a) Calcula \(u(-1{,}1)\), \(u(-1{,}01)\), \(u(-0{,}9)\) y \(u(-0{,}99)\). b) Obtén los dos límites laterales en \(-1\) y di si hay asíntota vertical. c) ¿Qué tan cerca de \(-1\), por la derecha, basta tomar \(x\) para que \(u(x)\gt 1000\)?</p>
+    <details><summary>Pista</summary><div><p>A la izquierda de \(-1\), \(x+1\) es negativo; a la derecha, positivo. Para el tope \(M\), prueba con \(0\lt x+1\lt \dfrac{4}{M}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda: \(u(-1{,}1)=\dfrac{4}{-1{,}1+1}=\dfrac{4}{-0{,}1}=-40\) y \(u(-1{,}01)=\dfrac{4}{-1{,}01+1}=\dfrac{4}{-0{,}01}=-400\).</li>
+        <li>Derecha: \(u(-0{,}9)=\dfrac{4}{-0{,}9+1}=\dfrac{4}{0{,}1}=40\) y \(u(-0{,}99)=\dfrac{4}{-0{,}99+1}=\dfrac{4}{0{,}01}=400\).</li>
+        <li>b) Derecha, tope \(M\gt 0\): si \(0\lt x+1\lt \dfrac{4}{M}\), se multiplica por \(M\): \(M\,(x+1)\lt 4\); se divide por \(x+1\), positivo: \(M\lt \dfrac{4}{x+1}\). Entonces \(\displaystyle\lim_{x\to -1^{+}}u(x)=+\infty\).</li>
+        <li>Izquierda: si \(0\lt -(x+1)\lt \dfrac{4}{M}\), del mismo modo \(M\lt \dfrac{4}{-(x+1)}\). Como \(\dfrac{4}{x+1}=-\dfrac{4}{-(x+1)}\), al multiplicar por \(-1\) queda \(u(x)\lt -M\). Entonces \(\displaystyle\lim_{x\to -1^{-}}u(x)=-\infty\).</li>
+        <li>Hay asíntota vertical: la recta \(x=-1\). El límite \(\displaystyle\lim_{x\to -1}u(x)\) no existe.</li>
+        <li>c) Con \(M=1000\): \(\dfrac{4}{1000}=0{,}004\). Basta \(0\lt x+1\lt 0{,}004\), es decir, \(-1\lt x\lt -0{,}996\), porque \(-1+0{,}004=-0{,}996\).</li>
+        <li>Comprobación con \(x=-0{,}998\): \(-0{,}998+1=0{,}002\) y \(u(-0{,}998)=\dfrac{4}{0{,}002}=2000\), que supera \(1000\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>La gráfica de \(k\) tiene tres trozos: una rama que baja pegada al eje vertical por su izquierda; un segmento desde el punto lleno \((0,1)\) hasta un círculo vacío en \((3,4)\); y una rama que viene desde arriba, pegada a la recta \(x=3\) por su derecha. En fórmulas:
+    \[k(x)=\begin{cases}\dfrac{1}{x}&\text{si }x\lt 0\\[2pt] x+1&\text{si }0\le x\lt 3\\[2pt] \dfrac{2}{(x-3)^{2}}&\text{si }x\gt 3\end{cases}\]
+    a) Obtén los dos laterales en \(0\) y el valor \(k(0)\). b) Obtén los dos laterales en \(3\). c) ¿Cuáles son las asíntotas verticales? ¿Existe el límite en \(0\)? ¿Y en \(3\)?</p>
+    <details><summary>Pista</summary><div><p>En cada lugar, decide qué fórmula se usa a cada lado. Un lado puede llegar a una altura y el otro no.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda de \(0\): \(k(-0{,}1)=\dfrac{1}{-0{,}1}=-10\) y \(k(-0{,}01)=\dfrac{1}{-0{,}01}=-100\). Tope \(M\gt 0\): si \(0\lt -x\lt \dfrac{1}{M}\), entonces \(M\,(-x)\lt 1\) y \(M\lt \dfrac{1}{-x}\); como \(\dfrac{1}{x}=-\dfrac{1}{-x}\), queda \(k(x)\lt -M\). Así, \(\displaystyle\lim_{x\to 0^{-}}k(x)=-\infty\).</li>
+        <li>Derecha de \(0\): \(k(0{,}1)=0{,}1+1=1{,}1\) y \(k(0{,}01)=0{,}01+1=1{,}01\). Cuando \(x\) se acerca a \(0\), \(x+1\) se acerca a \(0+1=1\): \(\displaystyle\lim_{x\to 0^{+}}k(x)=1\). El valor: \(k(0)=0+1=1\).</li>
+        <li>b) Izquierda de \(3\): \(k(2{,}9)=2{,}9+1=3{,}9\) y \(k(2{,}99)=2{,}99+1=3{,}99\). Cuando \(x\) se acerca a \(3\), \(x+1\) se acerca a \(3+1=4\): \(\displaystyle\lim_{x\to 3^{-}}k(x)=4\).</li>
+        <li>Derecha de \(3\): \(k(3{,}1)=\dfrac{2}{(3{,}1-3)^{2}}=\dfrac{2}{0{,}1^{2}}=\dfrac{2}{0{,}01}=200\) y \(k(3{,}01)=\dfrac{2}{0{,}01^{2}}=\dfrac{2}{0{,}0001}=20000\).</li>
+        <li>Tope \(M\ge 1\): si \(0\lt x-3\lt \dfrac{1}{M}\), como en el ejemplo 1, \(\dfrac{1}{(x-3)^{2}}\gt M\); al multiplicar por \(2\), \(k(x)\gt 2M\gt M\). Así, \(\displaystyle\lim_{x\to 3^{+}}k(x)=+\infty\). (\(k(3)\) no está definida.)</li>
+        <li>c) Dos asíntotas verticales: \(x=0\) (el lateral izquierdo es \(-\infty\)) y \(x=3\) (el lateral derecho es \(+\infty\)).</li>
+        <li>Ninguno de los dos límites existe: en cada lugar, uno de los laterales no es un número. En \(x=0\) la gráfica tiene el punto \((0,1)\) sobre la asíntota.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un viaje de \(60\) kilómetros se hace a velocidad constante. <b>Modelo:</b> si la velocidad es \(v\) kilómetros por hora, con \(v\gt 0\), el viaje demora \(T(v)=\dfrac{60}{v}\) horas. (El modelo supone velocidad constante todo el trayecto; con \(v=0\) no hay viaje y \(T(0)\) no está definida.) a) Calcula \(T(60)\), \(T(30)\), \(T(10)\), \(T(1)\) y \(T(0{,}1)\). b) Obtén \(\displaystyle\lim_{v\to 0^{+}}T(v)\). ¿Bajo qué velocidad el viaje demora más de \(1000\) horas? c) ¿Qué significa el resultado? ¿Por qué no se pregunta por \(v\to 0^{-}\)?</p>
+    <details><summary>Pista</summary><div><p>Para un tope de \(M\) horas, prueba con \(0\lt v\lt \dfrac{60}{M}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(T(60)=\dfrac{60}{60}=1\); \(T(30)=\dfrac{60}{30}=2\); \(T(10)=\dfrac{60}{10}=6\); \(T(1)=\dfrac{60}{1}=60\); \(T(0{,}1)=\dfrac{60}{0{,}1}=600\) horas.</li>
+        <li>b) Tope \(M\gt 0\) horas: si \(0\lt v\lt \dfrac{60}{M}\), se multiplica por \(M\): \(M\,v\lt 60\); se divide por \(v\), positivo: \(M\lt \dfrac{60}{v}\). Es decir, \(T(v)\gt M\).</li>
+        <li>Como \(M\) era cualquiera: \(\displaystyle\lim_{v\to 0^{+}}T(v)=+\infty\).</li>
+        <li>Con \(M=1000\): \(\dfrac{60}{1000}=0{,}06\). Con toda velocidad menor que \(0{,}06\) kilómetros por hora (y mayor que \(0\)) el viaje demora más de \(1000\) horas.</li>
+        <li>Comprobación con \(v=0{,}05\): \(T(0{,}05)=\dfrac{60}{0{,}05}=1200\) horas, que supera \(1000\).</li>
+        <li>c) Significado: mientras más lento se viaja, más demora, y no hay un tiempo máximo: cualquier demora se supera yendo suficientemente lento. En la gráfica de \(T\), el eje vertical (la recta \(v=0\)) es una asíntota vertical.</li>
+        <li>El modelo solo tiene velocidades positivas: a la izquierda de \(0\) no hay gráfica, así que solo se puede leer el lateral derecho. Ese lateral basta para que haya asíntota.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H05 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* L29 H05 · límites laterales y asíntotas: junto a la recta x = 2, la gráfica de f(x) = 1/(x − 2) baja sin tope por la izquierda y sube sin tope por la derecha (por pasos) */
+OA.scene('asi-idea', (function(){
+  var N = 6, Q = '\\\\&\\qquad ';
+  function f(x){ return 1/(x - 2); }
+  /* puntos de cada lado que caben en el marco: [x, altura]; el tercero de cada lado (1,99 y 2,01) queda fuera del marco */
+  var IZ = [[1.5, -2], [1.9, -10]], DE = [[2.5, 2], [2.1, 10]], TOPE = 5, ANCHO = 0.2;
+  var M = lmMarco(-0.75, 0.35, 5.7, 4.6, -1, 5, -12, 12);
+  var PZ = [['Q', '\\text{laterales de }f(x)=\\tfrac{1}{x-2}\\text{ en }2:\\ \\ ?', 'laterales de f(x) = 1/(x − 2) en 2: ?', 'pt'], ['F', '\\Longrightarrow\\ -\\infty;\\ \\ +\\infty', '⟹ −∞; +∞', 'diff'],
+    ['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''],
+    ['CF', 'y=\\tfrac{1}{x-2}', 'y = 1/(x − 2)', 'c-tan'],
+    ['LI', '\\lim_{x\\to 2^{-}}f(x)=-\\infty', 'lím f(x) = −∞ si x → 2⁻', 'c-sec'], ['LD', '\\lim_{x\\to 2^{+}}f(x)=+\\infty', 'lím f(x) = +∞ si x → 2⁺', 'diff'],
+    ['AS', '\\text{asíntota vertical: }x=2', 'asíntota vertical: x = 2', ''],
+    ['R1', 'f(x)=\\tfrac{1}{x-2};\\ \\ f(2)\\text{ no está definida}', 'f(x) = 1/(x − 2); f(2) no está definida', ''],
+    ['R2', 'x\\lt 2:\\ \\ f(1{,}5)=-2;\\ \\ f(1{,}9)=-10;\\ \\ f(1{,}99)=-100', 'x < 2: f(1,5) = −2; f(1,9) = −10; f(1,99) = −100', 'c-sec'],
+    ['R3', 'x\\gt 2:\\ \\ f(2{,}5)=2;\\ \\ f(2{,}1)=10;\\ \\ f(2{,}01)=100', 'x > 2: f(2,5) = 2; f(2,1) = 10; f(2,01) = 100', 'diff'],
+    ['R4', '0\\lt x-2\\lt \\tfrac{1}{M}\\ \\Rightarrow\\ f(x)\\gt M', '0 < x − 2 < 1/M ⟹ f(x) > M', 'c-alt'],
+    ['R5', '\\lim_{x\\to 2^{-}}f(x)=-\\infty;\\ \\ \\lim_{x\\to 2^{+}}f(x)=+\\infty', 'lím por la izquierda: −∞; por la derecha: +∞', ''],
+    ['R6', 'x=2\\text{ es asíntota vertical};\\ \\ \\lim_{x\\to 2}f(x)\\text{ no existe}', 'x = 2 es asíntota vertical; lím f(x) no existe', 'diff']];
+  var TXT = [['La curva tiene dos ramas. En x = 2 no hay punto:', 'ahí habría que dividir por 0.'],
+    ['Por la izquierda de 2 las alturas son −2, −10 y', '−100: la curva baja y se sale del marco.'],
+    ['Por la derecha de 2 las alturas son 2, 10 y 100:', 'la curva sube y se sale del marco.'],
+    ['Se pone un tope, 5. Entre 2 y 2,2 la curva queda', 'sobre el tope. Con cualquier otro tope pasa igual.'],
+    ['Eso se escribe con el símbolo de infinito. No es', 'un número: dice que la curva no tiene tope ahí.'],
+    ['La recta punteada es una asíntota vertical. Como', 'ningún lado llega a una altura, no hay límite.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-5.7, y1:6.9}, aspect:12.6/6.6,
+    aria:'Arriba, una franja dice qué muestra: junto a la recta x igual a 2 la curva no llega a una altura, baja o sube sin tope. Animación en seis pasos sobre la gráfica de f de x igual a 1 dividido por x menos 2. Uno: la curva, con dos ramas separadas por la recta punteada vertical x igual a 2, donde la función no está definida. Dos: por la izquierda, los puntos de x igual a 1,5 y 1,9 están a las alturas menos 2 y menos 10, y en 1,99 la altura es menos 100, fuera del marco; una flecha indica que la curva sigue bajando. Tres: por la derecha, los puntos de x igual a 2,5 y 2,1 están a las alturas 2 y 10, y en 2,01 la altura es 100, fuera del marco; la curva sigue subiendo. Cuatro: una recta horizontal verde marca un tope a la altura 5; entre 2 y 2,2 la curva queda sobre ese tope. Cinco: se escribe que el límite por la izquierda es menos infinito y el límite por la derecha es más infinito. Seis: la recta x igual a 2 es una asíntota vertical y el límite en 2 no existe. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> gráfica de \\(f\\)</span><span><i class="sw sec"></i> por la izquierda de 2</span><span><i class="sw rise"></i> por la derecha de 2</span><span><i class="sw alt"></i> tope</span>',
+    anim:{run:36000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), a, mu = C.muted || '#6b6b6b', F = '"Source Sans 3", system-ui, sans-serif', xe = 1/11;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      function frase(t, x, y, dx, dy, col, al){ c.font = '600 11px ' + F; c.textBaseline = 'middle'; c.textAlign = al || 'left'; var w = c.measureText(t).width, px = X(M.gx(x)) + dx, py = Y(M.gy(y)) + dy, l = al === 'right' ? px - w : (al === 'center' ? px - w/2 : px); c.globalAlpha = 0.88; c.fillStyle = C.bg || '#fff'; c.fillRect(l - 2, py - 7, w + 4, 14); c.globalAlpha = 1; c.fillStyle = col; c.fillText(t, px, py); }
+      /* un lado: puntos con su punteada hasta el eje vertical, flecha que camina hacia x = 2 y aviso de que la curva sigue */
+      function lado(P, al, col, s, t1, t2){ if (al <= 0) return;
+        P.forEach(function(q, i){ var b = Math.min(1, Math.max(0, al*2 - i*0.8)); if (b <= 0) return;
+          lmSeg(S, M, q[0], 0, q[0], q[1]*Math.min(1, b*2), col, 1); if (b > 0.5) lmSeg(S, M, q[0], q[1], q[0] - q[0]*(b*2 - 1), q[1], col, 1);
+          if (b > 0.5) lmPunto(S, M, q[0], q[1], col, false, 2.8); if (b >= 1 && i === 0) lmNum(S, M, lmT(q[1], 0), 0, q[1], -7, 0, col, 'right'); });
+        lmFlecha(S, M, P[0][0], P[0][1], P[0][0] + (P[1][0] - P[0][0])*0.8*al, P[0][1] + (P[1][1] - P[0][1])*0.8*al, col, 1.8, s*10, 0);
+        if (al > 0.75){ lmFlecha(S, M, 2 + s*xe, s*11, 2 + s*xe, s*12.4, col, 1.8, 0, 0); frase(t1, s > 0 ? 2.6 : 2.25, s > 0 ? 11.3 : -9.9, 0, 0, col); frase(t2, s > 0 ? 2.6 : 2.25, s > 0 ? 9.9 : -11.3, 0, 0, col); } }
+      dtQue(S, 'junto a la recta punteada la curva no llega', 'a una altura: baja o sube sin tope.');
+      lmEjes(S, M, {dy:5, sx:[2]}); lmNum(S, M, '2', 2, 0, 7, 11); lmEtq(T, M, 'EX', 5, 0, -50, -2, -11); lmEtq(T, M, 'EY', 0, 12, 0, 8, 5);
+      /* paso 1: la recta x = 2 (punteada gris) y las dos ramas de la curva, hasta la altura ±11 */
+      a = ap(1);
+      lmSeg(S, M, 2, -12*Math.min(1, a*3), 2, 12*Math.min(1, a*3), mu, 1, [4, 4]);
+      if (a > 1/3){ lmCurva(S, M, f, -1, -1 + (3 - xe)*Math.min(1, a*3 - 1), C.tan, 2); }
+      if (a > 2/3){ lmCurva(S, M, f, 5 - (3 - xe)*Math.min(1, a*3 - 2), 5, C.tan, 2); }
+      if (a > 0.9) lmEtq(T, M, 'CF', 0.95, 7.5, -50, 0, 0);
+      /* paso 4: el tope (altura 5) y la franja donde la curva lo supera: 2 < x < 2,2 */
+      a = ap(4);
+      if (a > 0){ c.globalAlpha = 0.25*a; c.fillStyle = C.alt; c.fillRect(X(M.gx(2)), Y(M.gy(12)), X(M.gx(2 + ANCHO)) - X(M.gx(2)), Y(M.gy(TOPE)) - Y(M.gy(12))); c.globalAlpha = 1;
+        lmSeg(S, M, -1, TOPE, -1 + 6*a, TOPE, C.alt, 1.4, [5, 3]);
+        if (a > 0.5){ lmSeg(S, M, 2 + ANCHO, 0, 2 + ANCHO, TOPE, C.alt, 1); lmPunto(S, M, 2 + ANCHO, TOPE, C.alt, false, 2.8); frase('tope: 5', 0.15, TOPE, 0, -9, C.alt); frase('entre 2 y 2,2 la curva', 2.7, 7.9, 0, 0, C.alt); frase('pasa sobre el tope', 2.7, 6.5, 0, 0, C.alt); } }
+      /* pasos 2 y 3: los dos lados */
+      lado(IZ, ap(2), C.sec, -1, 'en 1,99 vale −100:', 'sigue bajando');
+      lado(DE, ap(3), C.rise, 1, 'en 2,01 vale 100:', 'sigue subiendo');
+      /* paso 5: la escritura con el símbolo de infinito, una por lado */
+      a = ap(5);
+      if (a > 0.3){ lmFondo(S, M, 'LD', 2.8, 3.2, 0); lmEtq(T, M, 'LD', 2.8, 3.2, 0); }
+      if (a > 0.6){ lmFondo(S, M, 'LI', 2.25, -7, 0); lmEtq(T, M, 'LI', 2.25, -7, 0); }
+      /* paso 6: la recta x = 2, destacada como asíntota vertical */
+      a = ap(6);
+      if (a > 0){ lmSeg(S, M, 2, -12*a, 2, 12*a, C.ink, 1.8, [6, 4]); if (a > 0.5){ lmFondo(S, M, 'AS', 2.25, -3.7, 0); lmEtq(T, M, 'AS', 2.25, -3.7, 0); } }
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 5.56, 0); if (k === N && u > 0.5) T.L('F', 5.2, 5.56, -100);
+      lmTxt(S, TXT[k - 1][0], -1.2, -0.2); lmTxt(S, TXT[k - 1][1], -1.2, -0.2 - 21/(X(1) - X(0)));
+      c.font = '600 11px ' + F; c.fillStyle = mu; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-1.75) - 26);
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.75, [0, 34, 68, 102, 136, 170]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      'f(x)=\\dfrac{1}{x-2}' + Q + '\\text{en }x=2:\\ \\ 2-2=0;\\ \\ \\text{no se divide por }0' + Q + 'f(2)\\text{ no está definida: se mira qué pasa cerca de }2',
+      '\\text{por la izquierda de }2\\text{, con }x\\lt 2:' + Q + 'f(1{,}5)=\\tfrac{1}{1{,}5-2}=\\tfrac{1}{-0{,}5}=-2' + Q + 'f(1{,}9)=\\tfrac{1}{1{,}9-2}=\\tfrac{1}{-0{,}1}=-10' + Q + 'f(1{,}99)=\\tfrac{1}{1{,}99-2}=\\tfrac{1}{-0{,}01}=-100' + Q + '\\text{no se acercan a una altura: bajan sin tope}',
+      '\\text{por la derecha de }2\\text{, con }x\\gt 2:' + Q + 'f(2{,}5)=\\tfrac{1}{2{,}5-2}=\\tfrac{1}{0{,}5}=2' + Q + 'f(2{,}1)=\\tfrac{1}{2{,}1-2}=\\tfrac{1}{0{,}1}=10' + Q + 'f(2{,}01)=\\tfrac{1}{2{,}01-2}=\\tfrac{1}{0{,}01}=100' + Q + '\\text{no se acercan a una altura: suben sin tope}',
+      '\\text{¿supera }f\\text{ cualquier tope }M\\gt 0\\text{ a la derecha de }2?' + Q + '\\text{si }0\\lt x-2\\lt \\tfrac{1}{M}\\text{, entonces }\\tfrac{1}{x-2}\\gt M' + Q + '\\text{tope }5:\\ \\ \\tfrac{1}{5}=0{,}2;\\ \\ \\text{basta }0\\lt x-2\\lt 0{,}2' + Q + '\\text{tope }100:\\ \\ \\tfrac{1}{100}=0{,}01;\\ \\ \\text{basta }0\\lt x-2\\lt 0{,}01' + Q + '\\text{a la izquierda: si }0\\lt 2-x\\lt \\tfrac{1}{M}\\text{, }f(x)\\lt -M',
+      '\\text{a la derecha de }2\\text{, }f\\text{ supera cualquier tope:}' + Q + '\\displaystyle\\lim_{x\\to 2^{+}}f(x)=+\\infty' + Q + '\\text{a la izquierda de }2\\text{, }f\\text{ baja de cualquier tope:}' + Q + '\\displaystyle\\lim_{x\\to 2^{-}}f(x)=-\\infty' + Q + '+\\infty\\text{ y }-\\infty\\text{ no son números: no hay altura de llegada}',
+      '\\text{un lateral es }+\\infty\\text{ o }-\\infty\\text{ (aquí, los dos):}' + Q + '\\text{la recta }x=2\\text{ es asíntota vertical de la gráfica}' + Q + '\\text{ningún lateral es un número:}' + Q + '\\displaystyle\\lim_{x\\to 2}f(x)\\text{ no existe}']; return dtPasos(R.slice(0, k)); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
