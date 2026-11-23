@@ -73,7 +73,7 @@ OA.scene('det2-vivo', (function(){
   var A0 = 3, C0 = 1;
   var PZ = [['PU', '\\vec u=(3,1)', 'u = (3, 1)', 'c-sec'], ['PV', '\\vec v=(b,d)', 'v = (b, d)', 'diff']];
   return {
-    world:{x0:-3.3, x1:5.5, y0:-4.5, y1:4.3}, aspect:1,
+    world:{x0:-3.3, x1:5.5, y0:-4.5, y1:5.5}, aspect:10/8.8,
     aria:'El vector azul u igual a (3, 1) está fijo. El vector naranja v igual a (b, d) gira alrededor del origen. Los dos forman un paralelogramo. Cuando v queda a la izquierda de u, el paralelogramo es burdeo y el determinante es positivo. Cuando v queda sobre la misma recta que u, el paralelogramo se aplasta y el determinante vale cero. Cuando v pasa al otro lado, el paralelogramo es verde y el determinante es negativo. Bajo el dibujo se calcula el determinante, 3 por d menos b por 1, y el área, que es su valor absoluto.',
     labels:PZ,
     sliders:[{id:'b', tex:'b', min:-2.5, max:2.5, step:0.1, value:1}, {id:'d', tex:'d', min:-2.5, max:2.5, step:0.1, value:2}],
@@ -95,6 +95,7 @@ OA.scene('det2-vivo', (function(){
       T.L('PU', A0, C0, 0, 8, 10); T.L('PV', b, d, 0, 8, d >= 0 ? -10 : 12);
       t = Math.abs(D) < 0.05 ? ['Determinante cero: flechas alineadas, sin área', C.ink] : (D > 0 ? ['Determinante positivo: giro antihorario', C.tan] : ['Determinante negativo: giro horario', C.alt]);
       c.font = '600 12.5px ' + F; c.fillStyle = t[1]; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t[0], X(-3.2), Y(-3.6));
+      dtQue(S, 'el determinante es el área pintada,', 'con signo. Gira la flecha naranja y míralo cambiar.');
       T.fin();
     },
     caption:function(v){ var b = v.b == null ? 1 : +v.b, d = v.d == null ? 2 : +v.d, D = A0*d - b*C0, n = function(z){ return oaDec(z, 2); }; return 'Con v = (' + n(b) + '; ' + n(d) + ') el determinante vale ' + n(D) + ' y el paralelogramo mide ' + n(Math.abs(D)) + ' unidades cuadradas. Sobre la recta punteada, la de u, el determinante es 0'; },

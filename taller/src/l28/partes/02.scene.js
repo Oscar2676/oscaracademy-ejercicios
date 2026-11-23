@@ -55,7 +55,7 @@ OA.scene('det3-vol', (function(){
   var PZ = [['PU', '\\vec u', 'u', 'c-sec'], ['PV', '\\vec v', 'v', 'diff'], ['PW', '\\vec w', 'w', 'c-tan'], ['PH', 'h', 'h', 'c-tan']];
   function pr(p){ return [p[0] + 0.55*p[1], p[2] + 0.32*p[1]]; }
   return {
-    world:{x0:-0.9, x1:5.5, y0:-3.6, y1:3.6}, aspect:7.2/6.4,
+    world:{x0:-0.9, x1:5.5, y0:-3.6, y1:4.6}, aspect:8.2/6.4,
     aria:'Un paralelepípedo dibujado en tres dimensiones. Su base, en el suelo, es el paralelogramo de los vectores u igual a (2, 0, 0) y v igual a (1, 2, 0), de área 4. El tercer vector, w igual a (un medio, un medio, h), sube o baja con h. Con h positivo el cuerpo queda sobre el suelo y es burdeo; con h igual a cero se aplasta y no tiene volumen; con h negativo queda bajo el suelo y es verde. Bajo el dibujo se calcula el determinante, 4 por h, y el volumen, su valor absoluto.',
     labels:PZ,
     sliders:[{id:'h', tex:'h', min:-2, max:2.5, step:0.1, value:2}],
@@ -81,6 +81,7 @@ OA.scene('det3-vol', (function(){
       T.L('PU', Q(U)[0], Q(U)[1], -50, 0, 13); T.L('PV', Q(V)[0], Q(V)[1], 0, 8, -4); T.L('PW', w1[0], w1[1], -100, -8, h >= 0 ? -8 : 10); if (Math.abs(h) > 0.35) T.L('PH', w0[0], (w0[1] + w1[1])/2, 0, 6, 0);
       t = Math.abs(h) < 0.05 ? ['Determinante cero: el cuerpo se aplasta, sin volumen', C.ink] : (h > 0 ? ['Determinante positivo: el cuerpo sobre el suelo', C.tan] : ['Determinante negativo: el cuerpo bajo el suelo', C.alt]);
       c.font = '600 12.5px ' + F; c.fillStyle = t[1]; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t[0], X(-0.8), Y(-3.2));
+      dtQue(S, 'el determinante es el volumen del cuerpo,', 'con signo: base (4) por altura (h). Sube y baja h.');
       T.fin();
     },
     caption:function(v){ var h = v.h == null ? 2 : +v.h, n = function(z){ return oaDec(z, 2); }; return 'Con h = ' + n(h) + ' el determinante vale ' + n(4*h) + ' y el cuerpo mide ' + n(Math.abs(4*h)) + ' unidades cúbicas: área de la base, 4, por altura, ' + n(Math.abs(h)); },

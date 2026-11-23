@@ -53,6 +53,12 @@
     <h3>Lo que mide: un volumen</h3>
     <p>Las tres columnas de la matriz, vistas como vectores del espacio, forman un cuerpo de seis caras, todas paralelogramos: un <b>paralelepípedo</b>. Su volumen es el valor absoluto del determinante. Aquí se usa sin demostrarlo; la demostración necesita el producto cruz, que se ve en las hojas de vectores.</p>
     <p>En el dibujo, las dos primeras columnas están fijas en el suelo y la tercera sube o baja con \(h\).</p>
+    <ol class="steps">
+      <li><b>Mira la base:</b> el paralelogramo gris del suelo, formado por \(\vec u\) y \(\vec v\). Su área es \(4\) y no cambia.</li>
+      <li><b>Mira la altura:</b> la línea punteada burdeo, de largo \(h\), que va del suelo a la punta de \(\vec w\).</li>
+      <li><b>Mueve \(h\)</b> (o pulsa «Reproducir»): el cuerpo se estira, se aplasta cuando \(h=0\) y pasa bajo el suelo cuando \(h\lt 0\).</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> el determinante da \(4h\), que es base por altura; su valor absoluto es el volumen y su signo dice de qué lado del suelo quedó el cuerpo.</li>
+    </ol>
     <div class="stage" data-scene="det3-vol"></div>
     <ul class="keys">
       <li><b>Flechas azul y naranja:</b> \(\vec u=(2,0,0)\) y \(\vec v=(1,2,0)\), en el suelo. Su paralelogramo es la base, de área \(4\).</li>
@@ -162,7 +168,7 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H02 · v002 · Pendiente de APR</span>
+  <span class="status">AL-L28-H02 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -185,6 +191,11 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
 function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L28 H02 · desarrollo por la primera fila */
 OA.scene('det3-idea', (function(){
   var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
@@ -242,7 +253,7 @@ OA.scene('det3-vol', (function(){
   var PZ = [['PU', '\\vec u', 'u', 'c-sec'], ['PV', '\\vec v', 'v', 'diff'], ['PW', '\\vec w', 'w', 'c-tan'], ['PH', 'h', 'h', 'c-tan']];
   function pr(p){ return [p[0] + 0.55*p[1], p[2] + 0.32*p[1]]; }
   return {
-    world:{x0:-0.9, x1:5.5, y0:-3.6, y1:3.6}, aspect:7.2/6.4,
+    world:{x0:-0.9, x1:5.5, y0:-3.6, y1:4.6}, aspect:8.2/6.4,
     aria:'Un paralelepípedo dibujado en tres dimensiones. Su base, en el suelo, es el paralelogramo de los vectores u igual a (2, 0, 0) y v igual a (1, 2, 0), de área 4. El tercer vector, w igual a (un medio, un medio, h), sube o baja con h. Con h positivo el cuerpo queda sobre el suelo y es burdeo; con h igual a cero se aplasta y no tiene volumen; con h negativo queda bajo el suelo y es verde. Bajo el dibujo se calcula el determinante, 4 por h, y el volumen, su valor absoluto.',
     labels:PZ,
     sliders:[{id:'h', tex:'h', min:-2, max:2.5, step:0.1, value:2}],
@@ -268,6 +279,7 @@ OA.scene('det3-vol', (function(){
       T.L('PU', Q(U)[0], Q(U)[1], -50, 0, 13); T.L('PV', Q(V)[0], Q(V)[1], 0, 8, -4); T.L('PW', w1[0], w1[1], -100, -8, h >= 0 ? -8 : 10); if (Math.abs(h) > 0.35) T.L('PH', w0[0], (w0[1] + w1[1])/2, 0, 6, 0);
       t = Math.abs(h) < 0.05 ? ['Determinante cero: el cuerpo se aplasta, sin volumen', C.ink] : (h > 0 ? ['Determinante positivo: el cuerpo sobre el suelo', C.tan] : ['Determinante negativo: el cuerpo bajo el suelo', C.alt]);
       c.font = '600 12.5px ' + F; c.fillStyle = t[1]; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t[0], X(-0.8), Y(-3.2));
+      dtQue(S, 'el determinante es el volumen del cuerpo,', 'con signo: base (4) por altura (h). Sube y baja h.');
       T.fin();
     },
     caption:function(v){ var h = v.h == null ? 2 : +v.h, n = function(z){ return oaDec(z, 2); }; return 'Con h = ' + n(h) + ' el determinante vale ' + n(4*h) + ' y el cuerpo mide ' + n(Math.abs(4*h)) + ' unidades cúbicas: área de la base, 4, por altura, ' + n(Math.abs(h)); },

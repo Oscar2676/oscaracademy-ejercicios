@@ -212,6 +212,12 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="card k3">
     <h3>El signo, y cuándo vale cero</h3>
     <p>Mueve la segunda columna y mira el número junto con la figura.</p>
+    <ol class="steps">
+      <li><b>Mira las dos flechas:</b> la azul, \(\vec u=(3,1)\), no se mueve; la naranja, \(\vec v=(b,d)\), es la que cambia.</li>
+      <li><b>Mira el paralelogramo</b> que forman: su área es lo que mide el determinante.</li>
+      <li><b>Mueve \(b\) y \(d\)</b> (o pulsa «Reproducir»): la flecha naranja gira alrededor del origen.</li>
+      <li><b>Lee la cuenta de abajo, línea por línea:</b> cada diagonal por separado, la resta, el área y el signo. Cuando la flecha naranja cruza la recta punteada, el determinante pasa por \(0\) y cambia de signo.</li>
+    </ol>
     <div class="stage" data-scene="det2-vivo"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
     <ul class="keys">
@@ -325,7 +331,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H01 · v002 · Pendiente de APR</span>
+  <span class="status">AL-L28-H01 · v003 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -555,6 +561,11 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
 /* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
 function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L28 H01 · de dónde sale ad − bc: rectángulo que encierra al paralelogramo, menos lo que sobra */
 OA.scene('det2-idea', (function(){
   var N = 6, a = 3, cc = 1, b = 1, d = 2;
@@ -630,7 +641,7 @@ OA.scene('det2-vivo', (function(){
   var A0 = 3, C0 = 1;
   var PZ = [['PU', '\\vec u=(3,1)', 'u = (3, 1)', 'c-sec'], ['PV', '\\vec v=(b,d)', 'v = (b, d)', 'diff']];
   return {
-    world:{x0:-3.3, x1:5.5, y0:-4.5, y1:4.3}, aspect:1,
+    world:{x0:-3.3, x1:5.5, y0:-4.5, y1:5.5}, aspect:10/8.8,
     aria:'El vector azul u igual a (3, 1) está fijo. El vector naranja v igual a (b, d) gira alrededor del origen. Los dos forman un paralelogramo. Cuando v queda a la izquierda de u, el paralelogramo es burdeo y el determinante es positivo. Cuando v queda sobre la misma recta que u, el paralelogramo se aplasta y el determinante vale cero. Cuando v pasa al otro lado, el paralelogramo es verde y el determinante es negativo. Bajo el dibujo se calcula el determinante, 3 por d menos b por 1, y el área, que es su valor absoluto.',
     labels:PZ,
     sliders:[{id:'b', tex:'b', min:-2.5, max:2.5, step:0.1, value:1}, {id:'d', tex:'d', min:-2.5, max:2.5, step:0.1, value:2}],
@@ -652,6 +663,7 @@ OA.scene('det2-vivo', (function(){
       T.L('PU', A0, C0, 0, 8, 10); T.L('PV', b, d, 0, 8, d >= 0 ? -10 : 12);
       t = Math.abs(D) < 0.05 ? ['Determinante cero: flechas alineadas, sin área', C.ink] : (D > 0 ? ['Determinante positivo: giro antihorario', C.tan] : ['Determinante negativo: giro horario', C.alt]);
       c.font = '600 12.5px ' + F; c.fillStyle = t[1]; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t[0], X(-3.2), Y(-3.6));
+      dtQue(S, 'el determinante es el área pintada,', 'con signo. Gira la flecha naranja y míralo cambiar.');
       T.fin();
     },
     caption:function(v){ var b = v.b == null ? 1 : +v.b, d = v.d == null ? 2 : +v.d, D = A0*d - b*C0, n = function(z){ return oaDec(z, 2); }; return 'Con v = (' + n(b) + '; ' + n(d) + ') el determinante vale ' + n(D) + ' y el paralelogramo mide ' + n(Math.abs(D)) + ' unidades cuadradas. Sobre la recta punteada, la de u, el determinante es 0'; },
