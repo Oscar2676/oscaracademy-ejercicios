@@ -236,6 +236,232 @@ ESPER['prop-idea'] = (7, FUN1)
 NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '01.scene.js'].map(function(a){ return fs.readFileSync"); ok("'01.scene.js'" in NODO2, 'H01: la escena no quedó en la lista de node')
 # <<< H01 ESPER
 
+def lat1(et, F, a, lado, Lim, tope=Fr(1, 1000)):
+    """llegada numérica por un lado (lado = -1 izquierda, +1 derecha): las distancias |F(a + lado·10^-k) − Lim|, k = 1…6, no crecen y terminan bajo el tope (no demuestra el límite)"""
+    d = [abs(F(a + lado*Fr(1, 10**k)) - Lim) for k in range(1, 7)]
+    ok(all(d[i + 1] <= d[i] for i in range(5)) and d[5] < tope, '%s: los valores no se acercan a %s por ese lado' % (et, Lim))
+JQ = "' + Q + '"   # así se unen dos líneas de una lectura en el código de la escena
+
+# >>> H02
+# ───────── H02: límites de combinaciones de funciones (2f − 3g con límites leídos en dos gráficas; cociente sin límite; 0/0 no decide) ─────────
+A2, E2 = molde('02', 'H02_limites_de_combinaciones_de_funciones.html', 'Límites de combinaciones de funciones', 'comb-lim', 'Propiedades de límites', ['comb-idea'], 1)
+def f2(x): x = Fr(x); return Fr(4) if x == 3 else x - 1            # animación: f; hueco en (3, 2) y punto lleno en (3, 4)
+def g2(x): x = Fr(x); assert x != 3; return 4 - x                  # animación: g, sin valor en 3
+def h2(x): return 2*f2(x) - 3*g2(x)                                # la combinación; límite 1
+def m2(x): x = Fr(x); return Fr(5) if x == 2 else 2*x - 1          # ejercicio A
+def n2(x): return 6 - Fr(x)                                        # ejercicio A
+def I2(x): return 1500*Fr(x)                                       # ejercicio C: ingreso
+def K2(x): return 20000 + 700*Fr(x)                                # ejercicio C: costo
+def G2(x): return I2(x) - K2(x)                                    # ejercicio C: ganancia
+FUN2 = {'f': f2, 'g': g2, 'h': h2, 'm': m2, 'n': n2, 'I': I2, 'K': K2, 'G': G2}
+valores('H02 hoja', mates_de(A2), FUN2, 12)
+ok("function f(x){ return x === 3 ? 4 : x - 1; }" in E2 and "function g(x){ return 4 - x; }" in E2 and 'var A = 3, L = 2, LM = 1, XS = [2.5, 3.5];' in E2 and 'lmMarco(-0.85, 1.75, 2.6, 3.3, 0, 6, 0, 5), MG = lmMarco(2.55, 1.75, 2.6, 3.3, 0, 6, 0, 5)' in E2, 'H02 escena: funciones, lugar, límites y marcos')
+llega1('H02 escena f', f2, 3, 2); llega1('H02 escena g', g2, 3, 1); llega1('H02 escena h', h2, 3, 1)
+ok(f2(3) == 4 != 2 and 2*2 == 4 and 3*1 == 3 and 4 - 3 == 1 and 2*2 + (-3)*1 == 1 and 3 - 1 == 2 and 4 - 3 == 1, 'H02 escena: límites, múltiplos y resta')
+for x2 in RJ:
+    if x2 != 3:
+        ok(h2(x2) == 5*x2 - 14 and abs(h2(x2) - 1) == 5*abs(x2 - 3) and f2(x2) - 2 == x2 - 3 and g2(x2) - 1 == 3 - x2, 'H02: la combinación fuera de 3')
+        ok((f2(x2) - 2)/(g2(x2) - 1) == -1 and (f2(x2) - 2)**2/(g2(x2) - 1) == -(x2 - 3) == 3 - x2 and (f2(x2) - 2)/(g2(x2) - 1)**2 == 1/(x2 - 3), 'H02 k3: tres cocientes con límites 0 y 0')
+        ok(all(0 <= F2(x2) <= 5 for F2 in (f2, g2)) or not (1 <= x2 <= 4), 'H02 escena: las gráficas caben en la ventana')
+# lectura y registro, armados con Fraction
+for x2 in (Fr('2.5'), Fr('3.5')):
+    ok('f(%s)=%s-1=%s;\\\\ \\\\ g(%s)=4-%s=%s' % (tex(x2), tex(x2), tex(f2(x2)), tex(x2), tex(x2), tex(g2(x2))) in E2, 'H02 lectura: alturas en %s' % tex(x2))
+for x2 in (Fr('2.5'), Fr('3.5'), Fr('2.9'), Fr('3.1'), Fr('2.99'), Fr('3.01')):
+    ok('h(%s)=2\\\\cdot %s-3\\\\cdot %s%s=%s-%s=%s' % (tex(x2), tex(f2(x2)), tex(g2(x2)), JQ, tex(2*f2(x2)), tex(3*g2(x2)), tex(h2(x2))) in E2, 'H02 lectura: h(%s)' % tex(x2))
+ok(abs(h2(Fr('2.99')) - 1) < abs(h2(Fr('2.9')) - 1) < abs(h2(Fr('2.5')) - 1) and abs(h2(Fr('3.01')) - 1) < abs(h2(Fr('3.1')) - 1) < abs(h2(Fr('3.5')) - 1), 'H02 lectura: más cerca de 3, más cerca de 1')
+ok("['R6', 'h(%s)=%s;\\\\ \\\\ h(%s)=%s'" % (tex(Fr('2.9')), tex(h2(Fr('2.9'))), tex(Fr('3.1')), tex(h2(Fr('3.1')))) in E2 and "['R4', '2\\\\cdot 2=4;\\\\ \\\\ 3\\\\cdot 1=3'" in E2 and "['R5', '\\\\lim_{x\\\\to 3}h(x)=4-3=1'" in E2 and "['R2', '\\\\lim_{x\\\\to 3}f(x)=2'" in E2 and "['R3', '\\\\lim_{x\\\\to 3}g(x)=1'" in E2 and "['R7', 'f(3)=4\\\\text{ no se usa}'" in E2 and "['F', '\\\\Longrightarrow\\\\ 1'" in E2, 'H02 registro')
+ok("frase('%s', MF, 2.5, 1.5," % pl(f2(Fr('2.5'))) in E2 and "frase('%s', MF, 3.5, 2.5," % pl(f2(Fr('3.5'))) in E2 and "frase('%s', MG, 2.5, 1.5," % pl(g2(Fr('2.5'))) in E2 and "frase('%s', MG, 3.5, 0.5," % pl(g2(Fr('3.5'))) in E2, 'H02 escena: números junto a los puntos')
+ok("lmPunto(S, MF, A, L, C.sec, true, 3.4); lmPunto(S, MF, A, 4, C.sec, false, 3.2); lmPunto(S, MG, A, LM, C.alt, true, 3.4);" in E2, 'H02 escena: huecos a la altura de los límites y punto lleno en f(3)')
+# k2: la combinación lineal y el cociente sin límite
+for c2 in RJ[::11]:
+    for d2 in RJ[::13]:
+        llega1('H02 k2: c·f + d·g', lambda x: c2*f2(x) + d2*g2(x), 3, c2*2 + d2*1, tope=Fr(1, 100))
+for M2 in (10, 1000, 10**6):
+    for t2 in TS1:
+        x2 = 3 + t2/M2; ok(0 < abs(x2 - 3) < Fr(1, M2) and abs(f2(x2)/(g2(x2) - 1)) > M2 and f2(x2)/(g2(x2) - 1)*(g2(x2) - 1) == f2(x2), 'H02 ej4: el cociente supera el tope %s' % M2)
+        ok(abs(1/(x2 - 3)) > M2, 'H02 k3: 1/(x − 3) supera el tope %s' % M2)
+ok(all(K_*0 == 0 for K_ in RJ) and 2 != 0, 'H02 k2: K · 0 = 0 y L ≠ 0')
+# ejemplos
+ok((2*1, 2 + 4) == (2, 6) and f2(Fr('2.9'))*g2(Fr('2.9')) == Fr('2.09') and Fr('2.09') + 4 == Fr('6.09') and f2(Fr('3.1'))*g2(Fr('3.1')) == Fr('1.89') and Fr('1.89') + 4 == Fr('5.89') and f2(Fr('2.99'))*g2(Fr('2.99')) == Fr('2.0099') and f2(Fr('3.01'))*g2(Fr('3.01')) == Fr('1.9899') and 2*(1 + 4) == 10, 'H02 ej1'); llega1('H02 ej1', lambda x: f2(x)*g2(x) + 4, 3, 6)
+ok((2 + 1, 1**2, Fr(3, 1), Fr(1, 2)) == (3, 1, 3, Fr('0.5')) and 1 != 0 and 2 != 0, 'H02 ej2'); llega1('H02 ej2', lambda x: (f2(x) + 1)/g2(x)**2, 3, 3); llega1('H02 ej2 b', lambda x: g2(x)/f2(x), 3, Fr(1, 2))
+ok((3*(-1), Fr(4, -1), -3 - (-4), -3 + 4, 3**2, 9*(-1), 4 + 5) == (-3, -4, 1, 1, 9, -9, 9) and 3*3 == 9 and -1 != 0, 'H02 ej3')
+for y2 in RJ: ok((abs(y2 - 9) < 9) == (0 < y2 < 18), 'H02 ej3: |y − 9| < 9 equivale a 0 < y < 18')
+ok(1 - 1 == 0 and f2(Fr('2.9'))/(g2(Fr('2.9')) - 1) == Fr('1.9')/Fr('0.1') == 19 and f2(Fr('3.1'))/(g2(Fr('3.1')) - 1) == Fr('2.1')/Fr('-0.1') == -21 and f2(Fr('2.99'))/(g2(Fr('2.99')) - 1) == 199 and f2(Fr('3.01'))/(g2(Fr('3.01')) - 1) == -201, 'H02 ej4')
+ok(1/Fr('0.1') == 10 and 1/Fr('-0.1') == -10 and 1/Fr('0.01') == 100 and 2 - 2 == 0 and 3 - 3 == 0, 'H02 k3: valores')
+# ejercicios
+llega1('H02 A m', m2, 2, 3); llega1('H02 A n', n2, 2, 4); llega1('H02 A b)', lambda x: m2(x) + n2(x), 2, 7); llega1('H02 A c)', lambda x: 3*m2(x) - 2*n2(x), 2, 1); llega1('H02 A d)', lambda x: m2(x)*n2(x), 2, 12); llega1('H02 A e)', lambda x: n2(x)/m2(x), 2, Fr(4, 3))
+ok((2*2 - 1, 6 - 2, 3 + 4, 3*3, 2*4, 9 - 8, 3*4) == (3, 4, 7, 9, 8, 1, 12) and m2(2) + n2(2) == 5 + 4 == 9 != 7 and 3 != 0, 'H02 A')
+ok((4*(-2), -8 + 0, 4 + (-2), Fr(0, 2), 4 - (-2), 4 + 2*(-2), 4 - 4) == (-8, -8, 2, 0, 6, 0, 0) and 6 != 0, 'H02 B')
+ok(I2(50) == 75000 and 700*50 == 35000 and K2(50) == 55000 and G2(50) == 75000 - 55000 == 20000 and Fr(20000, 50) == 400 and I2(25) == 37500 and 700*25 == 17500 and K2(25) == 37500 and G2(25) == 0, 'H02 C a) a d)')
+for x2 in RJ: ok(G2(x2) == 1500*x2 - 20000 - 700*x2 == 800*x2 - 20000 and (G2(x2) == 0) == (x2 == 25), 'H02 C: G(x) = 800x − 20000')
+ok(I2(Fr('25.1')) == 37650 and 700*Fr('25.1') == 17570 and K2(Fr('25.1')) == 37570 and G2(Fr('25.1')) == 80 and K2(Fr('25.1'))/G2(Fr('25.1')) == Fr('469.625') and I2(Fr('24.9')) == 37350 and 700*Fr('24.9') == 17430 and K2(Fr('24.9')) == 37430 and G2(Fr('24.9')) == -80 and K2(Fr('24.9'))/G2(Fr('24.9')) == Fr('-467.875'), 'H02 C d): valores')
+llega1('H02 C G', G2, 50, 20000); llega1('H02 C G/x', lambda x: G2(x)/Fr(x), 50, 400); llega1('H02 C G en 25', G2, 25, 0)
+for z2 in ['\\[\\lim_{x\\to a}[c\\cdot f(x)+d\\cdot g(x)]=c\\cdot L+d\\cdot M\\]', '\\(f(x)=x-1\\) si \\(x\\ne 3\\), con \\(f(3)=4\\); y \\(g(x)=4-x\\) si \\(x\\ne 3\\), sin valor en \\(3\\)', '\\(h(x)=2f(x)-3g(x)\\)', 'sus límites <b>existen</b>: \\(\\lim_{x\\to a}f(x)=L\\) y \\(\\lim_{x\\to a}g(x)=M\\)',
+           '\\(\\lim_{x\\to a}[f(x)\\cdot g(x)+c]=L\\cdot M+c\\)', 'Si \\(M\\ne 0\\): \\(\\lim_{x\\to a}\\dfrac{c\\cdot f(x)}{g(x)}=\\dfrac{c\\cdot L}{M}\\)', '\\(\\lim_{x\\to a}[c\\cdot f(x)]=c\\cdot L\\)', '\\(\\lim_{x\\to a}[d\\cdot g(x)]=d\\cdot M\\)',
+           '\\(\\lim_{x\\to a}f(x)=L\\) con \\(L\\ne 0\\), \\(\\lim_{x\\to a}g(x)=0\\), y \\(g(x)\\ne 0\\) para todo \\(x\\ne a\\) de un intervalo abierto que contiene a \\(a\\)', '\\(f(x)=\\dfrac{f(x)}{g(x)}\\cdot g(x)\\)', '\\(\\lim_{x\\to a}f(x)=K\\cdot 0=0\\)', 'Luego el cociente no tiene límite en \\(a\\)',
+           '\\(\\dfrac{f(x)-2}{g(x)-1}=\\dfrac{(x-1)-2}{(4-x)-1}=\\dfrac{x-3}{3-x}=-1\\)', '\\(\\dfrac{[f(x)-2]^{2}}{g(x)-1}=\\dfrac{(x-3)^{2}}{3-x}=-(x-3)=3-x\\)', '\\(\\dfrac{f(x)-2}{[g(x)-1]^{2}}=\\dfrac{x-3}{(3-x)^{2}}=\\dfrac{1}{x-3}\\)', 'no tiene límite en \\(3\\)',
+           '\\(\\lim_{x\\to 3}[f(x)\\cdot g(x)+4]=2+4=6\\)', '\\(\\lim_{x\\to 3}\\dfrac{f(x)+1}{[g(x)]^{2}}=\\dfrac{3}{1}=3\\)', '\\(\\lim_{x\\to 3}\\dfrac{g(x)}{f(x)}=\\dfrac{1}{2}=0{,}5\\)', '\\(\\lim_{x\\to -2}u(x)=3\\), \\(\\lim_{x\\to -2}v(x)=-1\\) y \\(\\lim_{x\\to -2}w(x)=4\\)', '\\(\\lim_{x\\to -2}\\sqrt{w(x)+5}=\\sqrt{9}=3\\)', '\\(|w(x)+5-9|\\lt 9\\), es decir, \\(0\\lt w(x)+5\\lt 18\\)',
+           '\\(\\lim_{x\\to 3}[g(x)-1]=1-1=0\\)', 'el cociente no tiene límite en \\(3\\)', '\\(g(x)-1=(4-x)-1=3-x\\)', '\\(m(x)=2x-1\\) si \\(x\\ne 2\\), y \\(m(2)=5\\)', '\\(\\lim_{x\\to 2}[m(x)+n(x)]=3+4=7\\)', '\\(\\lim_{x\\to 2}[3m(x)-2n(x)]=9-8=1\\)', '\\(\\lim_{x\\to 2}[m(x)\\cdot n(x)]=3\\cdot 4=12\\)', '\\(\\lim_{x\\to 2}\\dfrac{n(x)}{m(x)}=\\dfrac{4}{3}\\)',
+           '\\(\\lim_{x\\to 0}p(x)=4\\), \\(\\lim_{x\\to 0}q(x)=0\\) y \\(\\lim_{x\\to 0}r(x)=-2\\)', '\\(\\lim_{x\\to 0}[p(x)\\cdot r(x)+q(x)]=-8+0=-8\\)', '\\(\\lim_{x\\to 0}\\dfrac{q(x)}{p(x)+r(x)}=\\dfrac{0}{2}=0\\)', 'con estos datos no se puede decidir si el límite existe',
+           '\\(I(x)=1500\\,x\\)', '\\(K(x)=20000+700\\,x\\)', '\\(G(x)=I(x)-K(x)\\)', '\\(\\lim_{x\\to 50}G(x)=75000-55000=20000\\)', '\\(\\lim_{x\\to 50}\\dfrac{G(x)}{x}=\\dfrac{20000}{50}=400\\)', '\\(\\lim_{x\\to 25}G(x)=37500-37500=0\\)', '\\(G(x)=1500\\,x-20000-700\\,x=800\\,x-20000\\)']:
+    ok(z2 in A2, 'H02: la hoja no trae «%s»' % z2)
+ok(A2.count('no se puede usar') >= 5 and A2.count('sin demostrar') >= 2, 'H02: avisos «no se puede usar» y «sin demostrar»')
+# <<< H02
+
+# >>> H02 ESPER
+ESPER['comb-idea'] = (7, FUN2)
+NODO2 = NODO2.replace("'_lim.js'", "'_lim.js', '_prop.js'"); ok("'_prop.js'" in NODO2, 'H02: el ayudante _prop.js no quedó en la lista de node')
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '02.scene.js'].map(function(a){ return fs.readFileSync"); ok("'02.scene.js'" in NODO2, 'H02: la escena no quedó en la lista de node')
+# <<< H02 ESPER
+
+# >>> H03
+# ───────── H03: límites de funciones combinadas (f y g con salto: la combinación se estudia por cada lado; suma por la izquierda demostrada) ─────────
+A3, E3 = molde('03', 'H03_limites_de_funciones_combinadas.html', 'Límites de funciones combinadas', 'comb-lat', 'Propiedades de límites', ['comblat-idea'], 1)
+def f3(x): x = Fr(x); return x - 1 if x < 2 else x + 1             # animación: laterales 1 y 3 en 2; f(2) = 3
+def g3(x): x = Fr(x); return 6 - x if x <= 2 else 4 - x            # animación: laterales 4 y 2 en 2; g(2) = 4
+def s3(x): return f3(x) + g3(x)                                    # suma: 5 fuera de 2; s(2) = 7
+def p3(x): return f3(x)*g3(x)                                      # producto: laterales 4 y 6
+def m3(x): x = Fr(x); return 2*x if x < 1 else 5 - x               # ejercicio A
+def n3(x): x = Fr(x); return 3 - x if x < 1 else x - 1             # ejercicio A
+def k3(x): x = Fr(x); assert x > 0; return Fr(800) if x < 10 else Fr(700)    # ejercicio C: precio por kilo
+def e3(x): x = Fr(x); assert x > 0; return Fr(0) if x < 10 else Fr(1000)     # ejercicio C: envase
+def T3(x): return k3(x)*Fr(x) + e3(x)                              # ejercicio C: total
+FUN3 = {'f': f3, 'g': g3, 's': s3, 'p': p3, 'm': m3, 'n': n3, 'k': k3, 'e': e3, 'T': T3}
+valores('H03 hoja', mates_de(A3), FUN3, 10)
+ok("function f(x){ return x < 2 ? x - 1 : x + 1; }" in E3 and "function g(x){ return x <= 2 ? 6 - x : 4 - x; }" in E3 and 'var A = 2, FI = 1, FD = 3, GI = 4, GD = 2;' in E3 and 'lmMarco(-0.85, 2.1, 2.6, 2.95, 0, 4.4, 0, 5.5), MG = lmMarco(2.55, 2.1, 2.6, 2.95, 0, 4.4, 0, 5.5)' in E3, 'H03 escena: funciones, lugar, laterales y marcos')
+lat1('H03 f izq', f3, 2, -1, 1); lat1('H03 f der', f3, 2, 1, 3); lat1('H03 g izq', g3, 2, -1, 4); lat1('H03 g der', g3, 2, 1, 2)
+lat1('H03 s izq', s3, 2, -1, 5); lat1('H03 s der', s3, 2, 1, 5); lat1('H03 p izq', p3, 2, -1, 4); lat1('H03 p der', p3, 2, 1, 6)
+ok((1 + 4, 3 + 2, 1*4, 3*2) == (5, 5, 4, 6) and 4 != 6 and 1 != 3 and 4 != 2 and f3(2) == 3 and g3(2) == 4 and s3(2) == 3 + 4 == 7 != 5, 'H03 escena: laterales, suma, producto y valores en 2')
+for x3 in RJ:
+    if x3 != 2: ok(s3(x3) == 5 and (s3(x3) == (x3 - 1) + (6 - x3) if x3 < 2 else s3(x3) == (x3 + 1) + (4 - x3)), 'H03: la suma vale 5 fuera de 2')
+    if 1 <= x3 <= 4: ok(0 <= f3(x3) <= Fr('5.5') and 0 <= g3(x3) <= Fr('5.5'), 'H03 escena: las gráficas caben en la ventana')
+    if x3 < 2: ok(abs(f3(x3) - 1) == abs(x3 - 2) == 2 - x3 and abs(g3(x3) - 4) == abs(2 - x3) == 2 - x3 and (2 - x3 < Fr('0.1')) == (2 - Fr('0.1') < x3), 'H03 k2: distancias por la izquierda')
+    if x3 > 2: ok(g3(x3) - 2 == (4 - x3) - 2 == 2 - x3, 'H03 k3: g(x) − 2 por la derecha')
+for nom3, F3, sg3, fm3 in (('f', f3, -1, '%s-1'), ('g', g3, -1, '6-%s'), ('f', f3, 1, '%s+1'), ('g', g3, 1, '4-%s')):
+    for h3 in (Fr('0.1'), Fr('0.01')):
+        x3 = 2 + sg3*h3; ok('%s(%s)=%s=%s' % (nom3, tex(x3), fm3 % tex(x3), tex(F3(x3))) in E3, 'H03 lectura: %s(%s)' % (nom3, tex(x3)))
+for sg3 in (-1, 1):
+    for h3 in (Fr('0.1'), Fr('0.01')):
+        x3 = 2 + sg3*h3
+        ok('s(%s)=%s+%s=%s' % (tex(x3), tex(f3(x3)), tex(g3(x3)), tex(s3(x3))) in E3 and 'p(%s)=%s\\\\cdot %s=%s' % (tex(x3), tex(f3(x3)), tex(g3(x3)), tex(p3(x3))) in E3, 'H03 lectura: s y p en %s' % tex(x3))
+ok("['R2', '\\\\lim_{x\\\\to 2^{-}}f(x)=1;\\\\ \\\\ \\\\lim_{x\\\\to 2^{-}}g(x)=4'" in E3 and "['R3', '\\\\lim_{x\\\\to 2^{-}}s(x)=1+4=5'" in E3 and "['R4', '\\\\lim_{x\\\\to 2^{+}}f(x)=3;\\\\ \\\\ \\\\lim_{x\\\\to 2^{+}}g(x)=2'" in E3 and "['R5', '\\\\lim_{x\\\\to 2^{+}}s(x)=3+2=5'" in E3 and "['R6', '\\\\lim_{x\\\\to 2}[f(x)+g(x)]=5'" in E3 and "['R7', '1\\\\cdot 4=4\\\\ne 3\\\\cdot 2=6\\\\text{: sin límite}'" in E3 and "['SI', '1+4=5'" in E3 and "['SD', '3+2=5'" in E3 and '\\\\text{en el lugar: }s(2)=3+4=7' in E3, 'H03 registro y rótulos')
+ok("frase('hacia 1', MF, 0, FI," in E3 and "frase('hacia 4', MG, 0, GI," in E3 and "frase('hacia 3', MF, 0, FD," in E3 and "frase('hacia 2', MG, 0, GD," in E3 and "'f va hacia 1 y g va hacia 4.'" in E3 and "'f va hacia 3 y g va hacia 2.'" in E3 and "'4 por la izquierda y 6 por la derecha.'" in E3, 'H03 escena: frases con los laterales')
+# k2: la cadena de la demostración (suma por la izquierda) en rejilla, con δ₁ = δ₂ = ε/2 para estas f y g
+for e3_ in ES1:
+    d3 = min(e3_/2, e3_/2); ok(d3 > 0 and e3_/2 + e3_/2 == e3_, 'H03 k2: δ = mín{δ₁, δ₂}')
+    for t3 in TS1:
+        if t3 > 0:
+            x3 = 2 - t3*d3; ok(2 - d3 < x3 < 2 and abs(f3(x3) - 1) < e3_/2 and abs(g3(x3) - 4) < e3_/2 and s3(x3) - (1 + 4) == (f3(x3) - 1) + (g3(x3) - 4) and abs((f3(x3) - 1) + (g3(x3) - 4)) <= abs(f3(x3) - 1) + abs(g3(x3) - 4) < e3_, 'H03 k2: cadena de la demostración (ε = %s)' % e3_)
+ok(Fr('0.2')/2 == Fr('0.1') and f3(Fr('1.95')) == Fr('0.95') and abs(Fr('0.95') - 1) == Fr('0.05') < Fr('0.1') and g3(Fr('1.95')) == Fr('4.05') and abs(Fr('4.05') - 4) == Fr('0.05') and Fr('0.95') + Fr('4.05') == 5 and 0 < Fr('0.2') and 2 - Fr('0.1') < Fr('1.95') < 2, 'H03 k2: con los números de la animación')
+# k3
+ok(4 - 2 == 2 != 0 and Fr(1, 2) == Fr('0.5') and 2 - 2 == 0 and f3(Fr('2.1'))/(g3(Fr('2.1')) - 2) == Fr('3.1')/Fr('-0.1') == -31 and f3(Fr('2.01'))/(g3(Fr('2.01')) - 2) == Fr('3.01')/Fr('-0.01') == -301, 'H03 k3: cociente por cada lado')
+lat1('H03 k3: cociente por la izquierda', lambda x: f3(x)/(g3(x) - 2), 2, -1, Fr(1, 2))
+for M3 in (10, 1000, 10**6):
+    for t3 in TS1:
+        if t3 > 0: x3 = 2 + t3/M3; ok(abs(f3(x3)/(g3(x3) - 2)) > M3, 'H03 k3: por la derecha el cociente supera el tope %s' % M3)
+for L3 in RJ[::9]:
+    for a3 in RJ[::17]:
+        for b3 in RJ[::19]: ok((L3 + a3 == L3 + b3) == (a3 == b3), 'H03 k3: L + M₁ ≠ L + M₂ si M₁ ≠ M₂')
+# ejemplos
+ok((2 - 1, 6 - 2, 2 + 1, 4 - 2) == (1, 4, 3, 2), 'H03 ej1')
+ok((1 - 4, 3 - 2, 1 - 2, (-1)**2, 1**2) == (-3, 1, -1, 1, 1) and -3 != 1 and (f3(Fr('1.9')) - 2)**2 == Fr('-1.1')**2 == Fr('1.21') == (f3(Fr('2.1')) - 2)**2 == Fr('1.1')**2 and (f3(Fr('1.99')) - 2)**2 == Fr('1.0201') == (f3(Fr('2.01')) - 2)**2, 'H03 ej2')
+lat1('H03 ej2 izq', lambda x: (f3(x) - 2)**2, 2, -1, 1); lat1('H03 ej2 der', lambda x: (f3(x) - 2)**2, 2, 1, 1)
+ok(((-2)*3, 2*(-3), Fr(-2, 3), Fr(2, -3), -2 + 3, 2 + (-3), (-2)**2, 2**2) == (-6, -6, -Fr(2, 3), -Fr(2, 3), 1, -1, 4, 4) and 1 != -1 and 3 != 0 != -3, 'H03 ej3')
+ok((3 + 0, 3 + 2, 3*0, 3*2, 0 - 2, 0*(-2), 2 - 2, 2*0) == (3, 5, 0, 6, -2, 0, 0, 0) and 3 != 5 and 0 != 6, 'H03 ej4')
+# ejercicios
+lat1('H03 A m izq', m3, 1, -1, 2); lat1('H03 A m der', m3, 1, 1, 4); lat1('H03 A n izq', n3, 1, -1, 2); lat1('H03 A n der', n3, 1, 1, 0)
+lat1('H03 A b) izq', lambda x: m3(x) + n3(x), 1, -1, 4); lat1('H03 A b) der', lambda x: m3(x) + n3(x), 1, 1, 4); lat1('H03 A c) izq', lambda x: m3(x)*n3(x), 1, -1, 4); lat1('H03 A c) der', lambda x: m3(x)*n3(x), 1, 1, 0); lat1('H03 A d) izq', lambda x: (m3(x) - 3)**2, 1, -1, 1); lat1('H03 A d) der', lambda x: (m3(x) - 3)**2, 1, 1, 1)
+ok((2*1, 3 - 1, 5 - 1, 1 - 1, 2 + 2, 4 + 0, 2*2, 4*0, 2 - 3, 4 - 3) == (2, 2, 4, 0, 4, 4, 4, 0, -1, 1) and 4 != 0 and 2 != 4 and 2 != 0, 'H03 A')
+ok((5*(-1), (-5)*1, 5 + (-1), -5 + 1, Fr(5, -1), Fr(-5, 1), 5**2, 25 + (-1), (-5)**2, 25 + 1) == (-5, -5, 4, -4, -5, -5, 25, 24, 25, 26) and 4 != -4 and 24 != 26, 'H03 B')
+lat1('H03 C izq', T3, 10, -1, 8000, tope=Fr(1, 100)); lat1('H03 C der', T3, 10, 1, 8000, tope=Fr(1, 100))
+ok((800*10, 8000 + 0, 700*10, 7000 + 1000, 7000 + 500) == (8000, 8000, 7000, 8000, 7500) and T3(Fr('9.9')) == 800*Fr('9.9') + 0 == 7920 and T3(Fr('10.1')) == 7070 + 1000 == 8070 and 700*Fr('10.1') == 7070 and 8000 != 7500 and T3(10) == 8000 and 800 != 700 and 0 != 1000, 'H03 C')
+for z3 in ['\\[\\lim_{x\\to a^{-}}[f(x)+g(x)]=\\lim_{x\\to a^{-}}f(x)+\\lim_{x\\to a^{-}}g(x)\\]', '\\(f(x)=x-1\\) si \\(x\\lt 2\\) y \\(f(x)=x+1\\) si \\(x\\ge 2\\); \\(g(x)=6-x\\) si \\(x\\le 2\\) y \\(g(x)=4-x\\) si \\(x\\gt 2\\)',
+           'para todo \\(\\varepsilon\\gt 0\\) existe \\(\\delta\\gt 0\\) tal que, si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(x)-L|\\lt \\varepsilon\\)', 'la condición es \\(a\\lt x\\lt a+\\delta\\)', '\\(\\lim_{x\\to a}F(x)=L\\) si y solo si los dos límites laterales de \\(F\\) en \\(a\\) existen y los dos valen \\(L\\)',
+           '\\(\\lim_{x\\to a^{-}}[f(x)\\pm g(x)]=L\\pm M\\)', '\\(\\lim_{x\\to a^{-}}[c\\cdot f(x)]=c\\cdot L\\)', '\\(\\lim_{x\\to a^{-}}[f(x)\\cdot g(x)]=L\\cdot M\\)', 'Si además \\(M\\ne 0\\): \\(\\lim_{x\\to a^{-}}\\dfrac{f(x)}{g(x)}=\\dfrac{L}{M}\\)', '\\(\\lim_{x\\to a^{-}}[f(x)]^{n}=L^{n}\\)', '<b>No se mezclan los lados:</b>',
+           'si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(x)+g(x)-(L+M)|\\lt \\varepsilon\\)', 'si \\(a-\\delta_{1}\\lt x\\lt a\\), entonces \\(|f(x)-L|\\lt \\dfrac{\\varepsilon}{2}\\)', 'si \\(a-\\delta_{2}\\lt x\\lt a\\), entonces \\(|g(x)-M|\\lt \\dfrac{\\varepsilon}{2}\\)', '\\(\\delta=\\min\\{\\delta_{1},\\delta_{2}\\}\\)', '\\(a-\\delta_{1}\\le a-\\delta\\) y \\(a-\\delta_{2}\\le a-\\delta\\)',
+           '\\(|(f(x)-L)+(g(x)-M)|\\le |f(x)-L|+|g(x)-M|\\)', '\\(\\lim_{x\\to a^{-}}[f(x)+g(x)]=L+M\\)', '\\(|f(x)-1|=|x-2|=2-x\\) y \\(|g(x)-4|=|2-x|=2-x\\)', 'el producto no tiene límite en \\(2\\)', 'los laterales de la suma son \\(L+M_{1}\\) y \\(L+M_{2}\\), también distintos', 'tampoco hay límite en \\(2\\)',
+           '\\(\\lim_{x\\to 2^{-}}[f(x)+g(x)]=1+4=5\\)', '\\(\\lim_{x\\to 2^{+}}[f(x)+g(x)]=3+2=5\\)', '\\(\\lim_{x\\to 2}[f(x)+g(x)]=5\\)', '\\(s(x)=(x-1)+(6-x)=5\\)', '\\(s(x)=(x+1)+(4-x)=5\\)', 'la resta \\(f(x)-g(x)\\) no tiene límite en \\(2\\)', '\\(\\lim_{x\\to 2}[f(x)-2]^{2}=1\\)',
+           '\\(\\lim_{x\\to 0^{-}}u(x)=-2\\) y \\(\\lim_{x\\to 0^{+}}u(x)=2\\); \\(\\lim_{x\\to 0^{-}}v(x)=3\\) y \\(\\lim_{x\\to 0^{+}}v(x)=-3\\)', '\\(\\lim_{x\\to 0}[u(x)\\cdot v(x)]=-6\\)', '\\(\\lim_{x\\to 0}\\dfrac{u(x)}{v(x)}=-\\dfrac{2}{3}\\)', '\\(\\lim_{x\\to 0}[u(x)]^{2}=4\\)',
+           '\\(\\lim_{x\\to 1}P(x)=3\\); \\(\\lim_{x\\to 1^{-}}J(x)=0\\) y \\(\\lim_{x\\to 1^{+}}J(x)=2\\)', '\\(\\lim_{x\\to 1}\\{J(x)\\cdot[J(x)-2]\\}=0\\)', '\\(m(x)=2x\\) si \\(x\\lt 1\\) y \\(m(x)=5-x\\) si \\(x\\ge 1\\); \\(n(x)=3-x\\) si \\(x\\lt 1\\) y \\(n(x)=x-1\\) si \\(x\\ge 1\\)', '\\(\\lim_{x\\to 1}[m(x)+n(x)]=4\\)', '\\(\\lim_{x\\to 1}[m(x)-3]^{2}=1\\)',
+           '\\(\\lim_{x\\to 3^{-}}F(x)=5\\), \\(\\lim_{x\\to 3^{+}}F(x)=-5\\), \\(\\lim_{x\\to 3^{-}}G(x)=-1\\) y \\(\\lim_{x\\to 3^{+}}G(x)=1\\)', '\\(k(x)=800\\) si \\(x\\lt 10\\) y \\(k(x)=700\\) si \\(x\\ge 10\\)', '\\(e(x)=0\\) si \\(x\\lt 10\\) y \\(e(x)=1000\\) si \\(x\\ge 10\\)', '\\(T(x)=k(x)\\cdot x+e(x)\\)', '\\(\\lim_{x\\to 10}T(x)=8000\\)']:
+    ok(z3 in A3, 'H03: la hoja no trae «%s»' % z3)
+ok(A3.count('no se puede usar') >= 1 and A3.count('sin demostrar') >= 2 and A3.count('no tiene límite') >= 8, 'H03: avisos')
+# <<< H03
+
+# >>> H03 ESPER
+ESPER['comblat-idea'] = (7, FUN3)
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '03.scene.js'].map(function(a){ return fs.readFileSync"); ok("'03.scene.js'" in NODO2, 'H03: la escena no quedó en la lista de node')
+# <<< H03 ESPER
+
+# >>> H04
+# ───────── H04: compuesta cuando el límite interno no existe (interna con salto; regla de la compuesta por un lado, demostrada; se comparan los dos lados) ─────────
+A4, E4 = molde('04', 'H04_limites_de_funciones_compuestas_cuando_el_limite_interno_no_existe.html', 'Límites de funciones compuestas cuando el límite interno no existe', 'comp-int', 'Propiedades de límites', ['compint-idea'], 1)
+def g4(x): x = Fr(x); assert x != 1; return x + 1 if x < 1 else 4 - x    # animación: interna, laterales 2 y 3 en 1
+def f4(u): u = Fr(u); return u*u - 5*u + 8                               # animación: externa; f(2) = f(3) = 2
+def h4(x): return f4(g4(x))                                              # la compuesta; límite 2
+def F4(u): return 2*Fr(u) - 1                                            # k3: externa con laterales distintos
+def S4(u): return Fr(1) if Fr(u) < 2 else Fr(5)                          # k3: externa con salto en 2
+def P4(u): u = Fr(u); return u*u + 1                                     # ejemplo 4
+def Q4(u): u = Fr(u); return u**3 - 4*u                                  # ejemplo 4
+def m4(x): x = Fr(x); assert x != 1; return 2*x if x < 1 else x + 3      # ejercicio A: interna
+def n4(u): u = Fr(u); return u*u - 6*u + 10                              # ejercicio A: externa
+def c4(x): return n4(m4(x))                                              # ejercicio A: compuesta
+def T4(t): t = Fr(t); assert 0 <= t <= 6 and t != 2; return 34 + t if t < 2 else 42 - t   # ejercicio C: temperatura
+def I4(T): return (Fr(T) - 38)**2                                        # ejercicio C: incomodidad
+FUN4 = {'g': g4, 'f': f4, 'h': h4, 'F': F4, 'E': S4, 'P': P4, 'Q': Q4, 'm': m4, 'n': n4, 'c': c4, 'T': T4, 'I': I4}
+valores('H04 hoja', mates_de(A4), FUN4, 20)
+ok("function g(x){ return x < 1 ? x + 1 : 4 - x; }" in E4 and "function f(z){ return z*z - 5*z + 8; }" in E4 and 'var A = 1, GI = 2, GD = 3, K = 2;' in E4 and 'MG = lmMarco(-0.85, 2.1, 2.6, 2.95, 0, 2.2, 0, 4.4), MF = lmMarco(2.55, 2.1, 2.6, 2.95, 0, 5.4, 0, 5.4)' in E4, 'H04 escena: funciones, lugar, laterales y marcos')
+lat1('H04 g izq', g4, 1, -1, 2); lat1('H04 g der', g4, 1, 1, 3); lat1('H04 h izq', h4, 1, -1, 2); lat1('H04 h der', h4, 1, 1, 2); llega1('H04 f en 2', f4, 2, 2); llega1('H04 f en 3', f4, 3, 2)
+ok(f4(2) == 2**2 - 5*2 + 8 == 4 - 10 + 8 == 2 and f4(3) == 3**2 - 5*3 + 8 == 9 - 15 + 8 == 2 and 2 != 3 and 1 + 1 == 2 and 4 - 1 == 3, 'H04 escena: f(2) = f(3) = 2 y laterales de g')
+for u4 in RJ:
+    ok(f4(u4) - 2 == u4*u4 - 5*u4 + 6 == (u4 - 2)*(u4 - 3) and abs(f4(u4) - 2) == abs(u4 - 2)*abs(u4 - 3), 'H04 k2: f(u) − 2 = (u − 2)(u − 3)')
+    if Fr('0.7') <= u4 <= Fr('4.3'): ok(0 <= f4(u4) <= Fr('5.4'), 'H04 escena: la parábola cabe en la ventana')
+    if u4 < 1: ok(g4(u4) == u4 + 1 < 2 and S4(g4(u4)) == 1 and abs(g4(u4) - 2) == abs(u4 + 1 - 2) == 1 - u4, 'H04 k3: por la izquierda, g(x) < 2 y E(g(x)) = 1')
+    if 1 < u4 < 2: ok(2 < g4(u4) < 3 and S4(g4(u4)) == 5, 'H04 k3: por la derecha, 2 < g(x) < 3 y E(g(x)) = 5')
+    if u4 not in (0, 1) and 0 <= u4 <= Fr('2.2'): ok(0 <= g4(u4) <= Fr('4.4'), 'H04 escena: la interna cabe en la ventana')
+for t4 in TS1:   # k2, con los números de la animación: η = 0,25 y δ = 0,25 responden a ε = 0,5
+    u4 = 2 + t4*Fr(1, 4); ok(abs(u4 - 2) < Fr('0.25') and Fr('1.75') < u4 < Fr('2.25') and abs(u4 - 3) < 3 - Fr('1.75') == Fr('1.25') and abs(f4(u4) - 2) < Fr('0.25')*Fr('1.25') == Fr('0.3125') < Fr('0.5'), 'H04 k2: η = 0,25')
+    if t4 > 0: x4 = 1 - t4*Fr(1, 4); ok(1 - Fr('0.25') < x4 < 1 and abs(g4(x4) - 2) < Fr('0.25') and abs(h4(x4) - 2) < Fr('0.5'), 'H04 k2: δ = 0,25')
+ok(g4(Fr('0.9')) == Fr('1.9') and abs(Fr('1.9') - 2) == Fr('0.1') < Fr('0.25') and h4(Fr('0.9')) == f4(Fr('1.9')) == Fr('2.11') and abs(Fr('2.11') - 2) == Fr('0.11') < Fr('0.5'), 'H04 k2: prueba con x = 0,9')
+# lectura y registro, armados con Fraction
+for x4, fm4 in ((Fr('0.9'), '%s+1'), (Fr('0.99'), '%s+1'), (Fr('1.1'), '4-%s'), (Fr('1.01'), '4-%s')):
+    ok('g(%s)=%s=%s' % (tex(x4), fm4 % tex(x4), tex(g4(x4))) in E4, 'H04 lectura: g(%s)' % tex(x4))
+    u4 = g4(x4); ok('=%s-%s+8=%s' % (tex(u4*u4), tex(5*u4), tex(h4(x4))) in E4 and 'h(%s)=f(%s)' % (tex(x4), tex(u4)) in E4, 'H04 lectura: h(%s)' % tex(x4))
+    ok('\\(g(%s)=%s\\) y \\(f(%s)=%s-%s+8=%s\\)' % (tex(x4), tex(u4), tex(u4), tex(u4*u4), tex(5*u4), tex(h4(x4))) in A4, 'H04 ej1: valores en %s' % tex(x4))
+for u4 in (Fr('1.9'), Fr('2.9')): ok('h(%s)=f(%s)=%s^{2}-5\\\\cdot %s+8' % (tex(u4 - 1 if u4 < 2 else 4 - u4), tex(u4), tex(u4), tex(u4)) in E4, 'H04 lectura: reemplazo en f(%s)' % tex(u4))
+ok('f(2)=2^{2}-5\\\\cdot 2+8=4-10+8=2' in E4 and 'f(3)=3^{2}-5\\\\cdot 3+8=9-15+8=2' in E4, 'H04 lectura: f(2) y f(3)')
+ok("['R2', '\\\\lim_{x\\\\to 1^{-}}g(x)=2'" in E4 and "['R3', '\\\\lim_{x\\\\to 1^{-}}f(g(x))=f(2)=2'" in E4 and "['R4', '\\\\lim_{x\\\\to 1^{+}}g(x)=3'" in E4 and "['R5', '\\\\lim_{x\\\\to 1^{+}}f(g(x))=f(3)=2'" in E4 and "['R6', '\\\\lim_{x\\\\to 1}f(g(x))=2'" in E4 and "['F', '\\\\Longrightarrow\\\\ 2'" in E4, 'H04 registro')
+ok("['R7', 'h(%s)=%s;\\\\ \\\\ h(%s)=%s'" % (tex(Fr('0.99')), tex(h4(Fr('0.99'))), tex(Fr('1.01')), tex(h4(Fr('1.01')))) in E4 and "['CM', 'h(%s)=%s;\\\\ \\\\ h(%s)=%s'" % (tex(Fr('0.9')), tex(h4(Fr('0.9'))), tex(Fr('1.1')), tex(h4(Fr('1.1')))) in E4 and "'la compuesta da %s y %s.'" % (pl(h4(Fr('0.9'))), pl(h4(Fr('1.1')))) in E4, 'H04 registro R7, rótulo de valores y frase')
+ok("frase('hacia 2', MG, 0, GI," in E4 and "frase('hacia 3', MG, 0, GD," in E4 and "frase('g salta de 2 a 3'," in E4 and "lmPunto(S, MF, GI, K, C.sec, false, 3.2)" in E4 and "lmPunto(S, MF, GD, K, C.alt, false, 3.2)" in E4, 'H04 escena: frases y puntos')
+# k3 y ejemplos
+ok(F4(2) == 2*2 - 1 == 3 and F4(3) == 2*3 - 1 == 5 and 3 != 5 and S4(2) == 5 and 1 != 5, 'H04 k3'); lat1('H04 k3 F izq', lambda x: F4(g4(x)), 1, -1, 3); lat1('H04 k3 F der', lambda x: F4(g4(x)), 1, 1, 5)
+ok((2**2, 3**2, (2 - 2)*(2 - 3), 0*(-1), (3 - 2)*(3 - 3), 1*0) == (4, 9, 0, 0, 0, 0) and 4 != 9, 'H04 ej2'); lat1('H04 ej2 izq', lambda x: (g4(x) - 2)*(g4(x) - 3), 1, -1, 0); lat1('H04 ej2 der', lambda x: (g4(x) - 2)*(g4(x) - 3), 1, 1, 0)
+for u4 in RJ: ok((u4 - 2)*(u4 - 3) == u4*u4 - 5*u4 + 6 and (u4 - 38)**2 == u4*u4 - 76*u4 + 1444, 'H04: (u − 2)(u − 3) y (T − 38)² son polinomios')
+ok(((-1)**2, 1**2, (-1)**3, 1**3, (-1)**2 + 3*(-1), 1 - 3, 1**2 + 3*1, 1 + 3) == (1, 1, -1, 1, -2, -2, 4, 4) and -1 != 1 and -2 != 4, 'H04 ej3')
+ok(P4(-2) == (-2)**2 + 1 == 4 + 1 == 5 == P4(2) == 2**2 + 1 and Q4(-2) == (-2)**3 - 4*(-2) == -8 + 8 == 0 == Q4(2) == 2**3 - 4*2 == 8 - 8 and (-2 + 1, 2 + 1) == (-1, 3) and -1 != 3, 'H04 ej4')
+# ejercicios
+lat1('H04 A m izq', m4, 1, -1, 2); lat1('H04 A m der', m4, 1, 1, 4); lat1('H04 A c izq', c4, 1, -1, 2); lat1('H04 A c der', c4, 1, 1, 2)
+ok(2*1 == 2 and 1 + 3 == 4 and 2 != 4 and n4(2) == 2**2 - 6*2 + 10 == 4 - 12 + 10 == 2 and n4(4) == 4**2 - 6*4 + 10 == 16 - 24 + 10 == 2 and m4(Fr('0.9')) == 2*Fr('0.9') == Fr('1.8') and n4(Fr('1.8')) == Fr('3.24') - Fr('10.8') + 10 == Fr('2.44') == c4(Fr('0.9')) and m4(Fr('1.1')) == Fr('1.1') + 3 == Fr('4.1') and n4(Fr('4.1')) == Fr('16.81') - Fr('24.6') + 10 == Fr('2.21') == c4(Fr('1.1')) and (2 + 1, 4 + 1) == (3, 5), 'H04 A')
+ok(((-3)**2 - 4, 3**2 - 4, (-3)**3, 3**3, 2*(-3)**2 + (-3), 18 - 3, 2*3**2 + 3, 18 + 3, (-3)**3 - 9*(-3), -27 + 27, 3**3 - 9*3, 27 - 27) == (5, 5, -27, 27, 15, 15, 21, 21, 0, 0, 0, 0) and -27 != 27 and 15 != 21, 'H04 B')
+lat1('H04 C T izq', T4, 2, -1, 36); lat1('H04 C T der', T4, 2, 1, 40); lat1('H04 C I izq', lambda t: I4(T4(t)), 2, -1, 4); lat1('H04 C I der', lambda t: I4(T4(t)), 2, 1, 4)
+ok((34 + 2, 42 - 2, 40 - 36) == (36, 40, 4) and 36 != 40 and I4(36) == (36 - 38)**2 == (-2)**2 == 4 == I4(40) == (40 - 38)**2 == 2**2 and T4(Fr('1.9')) == Fr('35.9') and I4(Fr('35.9')) == Fr('-2.1')**2 == Fr('4.41') and T4(Fr('2.1')) == Fr('39.9') and I4(Fr('39.9')) == Fr('1.9')**2 == Fr('3.61') and (36 - 38, 40 - 38) == (-2, 2) and -2 != 2, 'H04 C')
+for z4 in ['\\[\\lim_{x\\to a^{-}}f(g(x))=f(b)\\]', '\\(g(x)=x+1\\) si \\(x\\lt 1\\) y \\(g(x)=4-x\\) si \\(x\\gt 1\\) (sin valor en \\(1\\))', '\\(f(u)=u^{2}-5u+8\\)', '\\(h(x)=f(g(x))\\)', 'La regla pide \\(\\lim_{u\\to b}f(u)=f(b)\\)',
+           '<li>\\(\\lim_{x\\to a^{-}}g(x)=b\\) (la interna tiene límite \\(b\\) por la izquierda de \\(a\\)),</li>', '<li>\\(f\\) está definida en un intervalo abierto que contiene a \\(b\\), y</li>', '<li>\\(\\lim_{u\\to b}f(u)=f(b)\\),</li>', 'entonces \\(\\lim_{x\\to a^{-}}f(g(x))=f(b)\\)',
+           'si \\(f(b_{1})=f(b_{2})\\), ese número es \\(\\lim_{x\\to a}f(g(x))\\)', 'si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(g(x))-f(b)|\\lt \\varepsilon\\)', 'si \\(0\\lt |u-b|\\lt \\eta\\), entonces \\(|f(u)-f(b)|\\lt \\varepsilon\\)', '\\(|f(b)-f(b)|=0\\)', 'si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|g(x)-b|\\lt \\eta\\)', '\\(\\lim_{x\\to a^{-}}f(g(x))=f(b)\\).',
+           '\\(f(u)-2=u^{2}-5u+6=(u-2)(u-3)\\)', '\\(|f(u)-2|=|u-2|\\cdot|u-3|\\)', '\\(|g(x)-2|=|x+1-2|=1-x\\)', '\\(F(g(x))\\) no tiene límite en \\(1\\)', '\\(E(u)=1\\) si \\(u\\lt 2\\) y \\(E(u)=5\\) si \\(u\\ge 2\\)', '\\(E(g(x))\\) no tiene límite en \\(1\\)', 'No coincide con el valor \\(E(2)=5\\)',
+           '\\(\\lim_{x\\to 1^{-}}g(x)=1+1=2\\)', '\\(\\lim_{x\\to 1^{+}}g(x)=4-1=3\\)', 'el límite interno \\(\\lim_{x\\to 1}g(x)\\) no existe', '\\(\\lim_{x\\to 1^{-}}f(g(x))=2\\)', '\\(\\lim_{x\\to 1^{+}}f(g(x))=2\\)', '\\(\\lim_{x\\to 1}f(g(x))=2\\)', '\\([g(x)]^{2}\\) no tiene límite en \\(1\\)', '\\(\\lim_{x\\to 1}\\{[g(x)-2]\\cdot[g(x)-3]\\}=0\\)',
+           '\\(j(x)=-1\\) si \\(x\\lt 0\\) y \\(j(x)=1\\) si \\(x\\gt 0\\)', '\\(\\lim_{x\\to 0}[j(x)]^{2}=1\\)', '\\(\\lim_{x\\to 3^{-}}G(x)=-2\\) y \\(\\lim_{x\\to 3^{+}}G(x)=2\\)', '\\(P(u)=u^{2}+1\\)', '\\(\\lim_{x\\to 3}P(G(x))=5\\)', '\\(Q(u)=u^{3}-4u\\)', '\\(\\lim_{x\\to 3}Q(G(x))=0\\)',
+           '\\(m(x)=2x\\) si \\(x\\lt 1\\) y \\(m(x)=x+3\\) si \\(x\\gt 1\\)', '\\(n(u)=u^{2}-6u+10\\)', '\\(c(x)=n(m(x))\\)', '\\(\\lim_{x\\to 1}n(m(x))=2\\)', '\\(\\lim_{x\\to 0^{-}}w(x)=-3\\) y \\(\\lim_{x\\to 0^{+}}w(x)=3\\)',
+           '\\(T(t)=34+t\\) si \\(0\\le t\\lt 2\\) y \\(T(t)=42-t\\) si \\(2\\lt t\\le 6\\)', '\\(I(T)=(T-38)^{2}\\)', 'el límite de la incomodidad en \\(t=2\\) es \\(4\\)', 'la temperatura no tiene límite en \\(t=2\\)']:
+    ok(z4 in A4, 'H04: la hoja no trae «%s»' % z4)
+ok(A4.count('no se puede usar') >= 1 and A4.count('sin demostrar') >= 2 and A4.count('no tiene límite') >= 8 and A4.count('criterio de los laterales') >= 3, 'H04: avisos')
+# <<< H04
+
+# >>> H04 ESPER
+ESPER['compint-idea'] = (7, FUN4)
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '04.scene.js'].map(function(a){ return fs.readFileSync"); ok("'04.scene.js'" in NODO2, 'H04: la escena no quedó en la lista de node')
+# <<< H04 ESPER
+
 if not SIN_NODO:
     R2 = json.loads(subprocess.run(['node', '-e', NODO2, str(PARTES)], capture_output=True, text=True, check=True).stdout)
     ok(sorted(R2) == sorted(ESPER), 'escenas definidas: %s' % sorted(R2))
@@ -266,4 +492,4 @@ if not SIN_NODO:
             ok(vtex(et, tp) >= 5, et + ': pocas igualdades numéricas evaluadas')
 
 print('%d comprobaciones%s' % (N[0], '; SIN node: las lecturas de las escenas no se evaluaron con su código (sí su aritmética exacta)' if SIN_NODO else '; lecturas de las escenas evaluadas con su código real'))
-print('Lote 30 H01: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
+print('Lote 30 H01–H04: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

@@ -1,0 +1,217 @@
+<!--file:H04_limites_de_funciones_compuestas_cuando_el_limite_interno_no_existe.html-->
+<!--title:Límites de funciones compuestas cuando el límite interno no existe-->
+<!--id:comp-int-->
+<!--tab:H04 Límites de funciones compuestas cuando el límite interno no existe-->
+<article class="sheet" id="comp-int" data-hoja="L30 H04">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Propiedades de límites</li>
+      <li><b>Límites de funciones compuestas cuando el límite interno no existe</b></li>
+    </ol>
+    <h1>Límites de funciones compuestas cuando el límite interno no existe</h1>
+    <p class="lede">En una función compuesta \(f(g(x))\), primero actúa la función <b>interna</b> \(g\) y su resultado entra en la función <b>externa</b> \(f\). Si \(g\) salta en \(a\), el límite interno \(\lim_{x\to a}g(x)\) no existe; eso <b>no</b> decide nada sobre la compuesta. Se estudia cada lado por separado: si por la izquierda \(g(x)\) se acerca a \(b\), y \(f\) cumple \(\lim_{u\to b}f(u)=f(b)\), entonces
+    \[\lim_{x\to a^{-}}f(g(x))=f(b)\]
+    y lo mismo por la derecha. Si los dos lados dan el mismo número, ese es el límite de la compuesta, aunque el límite interno no exista.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función interna de la animación es \(g(x)=x+1\) si \(x\lt 1\) y \(g(x)=4-x\) si \(x\gt 1\) (sin valor en \(1\)). La externa es \(f(u)=u^{2}-5u+8\). El lugar es \(a=1\) y la compuesta se llama \(h(x)=f(g(x))\). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de la interna, \(u=g(x)\), con un salto sobre \(x=1\). A la derecha, la de la externa, \(y=f(u)\), una parábola. El eje vertical de la primera y el eje horizontal de la segunda son el mismo: \(u\).</li>
+    <li><b>Pasos 2 y 3, el lado izquierdo (azul):</b> por la izquierda de \(1\), lo que entrega \(g\) va hacia \(2\). Ese \(2\) se busca en el eje \(u\) de la parábola: ahí la altura va hacia \(f(2)=2\).</li>
+    <li><b>Pasos 4 y 5, el lado derecho (verde):</b> por la derecha de \(1\), lo que entrega \(g\) va hacia \(3\). En la parábola, cerca de \(u=3\), la altura va hacia \(f(3)=2\).</li>
+    <li><b>Pasos 6 y 7:</b> \(g\) salta de \(2\) a \(3\) y no tiene límite en \(1\), pero la parábola tiene la misma altura en \(u=2\) y en \(u=3\) (punteada naranja). Los dos lados de la compuesta dan \(2\). El último paso lo comprueba con valores. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> los valores de \(g\) a cada lado, sus dos límites laterales, el valor de \(f\) en cada uno y los valores de la compuesta. Conclusión: \(\lim_{x\to 1}f(g(x))=2\).</li>
+  </ol>
+  <div class="stage" data-scene="compint-idea"></div>
+  <ul class="keys">
+    <li><b>Azul:</b> lo que ocurre por la izquierda de \(1\): la flecha sobre \(g\), la punteada de la altura \(2\), la marca \(u=2\) en la parábola y el punto \((2, 2)\).</li>
+    <li><b>Verde:</b> lo que ocurre por la derecha de \(1\): la flecha sobre \(g\), la punteada de la altura \(3\), la marca \(u=3\) en la parábola y el punto \((3, 2)\).</li>
+    <li><b>Naranjo:</b> la altura común \(2\) de la parábola en \(u=2\) y \(u=3\), y el límite de la compuesta.</li>
+    <li><b>Burdeo:</b> el salto de \(g\) sobre \(x=1\), de la altura \(2\) a la altura \(3\).</li>
+    <li><b>Círculos vacíos:</b> \(g\) no tiene valor en \(1\); los dos huecos están a las alturas \(2\) y \(3\), que son sus límites laterales.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra dos gráficas y unos pocos valores: sugiere el resultado, no lo demuestra.</p>
+    <ol class="steps">
+      <li><b>Se demuestra aquí:</b> la regla de la compuesta por un lado, con la definición formal de límite y de límite lateral (recuadro de la demostración).</li>
+      <li><b>Condición sobre la externa.</b> La regla pide \(\lim_{u\to b}f(u)=f(b)\): que el límite de \(f\) en \(b\) exista y sea igual a su valor en \(b\). Esa condición se llama continuidad de \(f\) en \(b\) y se estudia más adelante. Todo polinomio la cumple en todo \(b\) (hoja «Propiedades de límites»); las externas de esta hoja son polinomios, salvo una del recuadro del caso especial.</li>
+      <li><b>Se usa sin demostrar el criterio de los laterales:</b> \(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y los dos valen \(L\).</li>
+      <li><b>También se usa sin demostrar:</b> que cada tramo de las funciones definidas por partes tiene, por su lado, el límite que da el reemplazo en su fórmula (es un polinomio en ese lado); y que una función constante por un lado de \(a\) tiene por ese lado el límite igual a esa constante.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La compuesta, lado por lado</h3>
+    <p><b>Función compuesta.</b> \(h(x)=f(g(x))\) está definida en los \(x\) donde \(g\) está definida y \(g(x)\) pertenece al dominio de \(f\). El orden importa: primero \(g\), después \(f\).</p>
+    <p><b>Regla de la compuesta por un lado.</b> Si</p>
+    <ol class="steps">
+      <li>\(\lim_{x\to a^{-}}g(x)=b\) (la interna tiene límite \(b\) por la izquierda de \(a\)),</li>
+      <li>\(f\) está definida en un intervalo abierto que contiene a \(b\), y</li>
+      <li>\(\lim_{u\to b}f(u)=f(b)\),</li>
+    </ol>
+    <p>entonces \(\lim_{x\to a^{-}}f(g(x))=f(b)\). Lo mismo vale por la derecha, con \(x\to a^{+}\) en las dos partes.</p>
+    <p><b>Procedimiento cuando la interna salta en \(a\):</b></p>
+    <ol class="steps">
+      <li>Hallar los dos límites laterales de la interna: \(b_{1}\) por la izquierda y \(b_{2}\) por la derecha. Como \(b_{1}\ne b_{2}\), el límite interno no existe.</li>
+      <li>Revisar la condición 3 en \(b_{1}\) y en \(b_{2}\). Si \(f\) es un polinomio, se cumple.</li>
+      <li>Aplicar la regla en cada lado: los laterales de la compuesta son \(f(b_{1})\) y \(f(b_{2})\).</li>
+      <li>Comparar (criterio de los laterales): si \(f(b_{1})=f(b_{2})\), ese número es \(\lim_{x\to a}f(g(x))\); si son distintos, la compuesta no tiene límite en \(a\).</li>
+    </ol>
+    <p>El límite de la compuesta existe justo cuando la externa «borra» el salto: cuando toma el mismo valor en los dos números a los que se acerca la interna.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: la regla de la compuesta por la izquierda</h3>
+    <p>Se sabe: \(\lim_{x\to a^{-}}g(x)=b\); \(f\) está definida en un intervalo abierto que contiene a \(b\); \(\lim_{u\to b}f(u)=f(b)\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(a-\delta\lt x\lt a\), entonces \(|f(g(x))-f(b)|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
+      <li>Como \(\lim_{u\to b}f(u)=f(b)\), existe \(\eta\gt 0\) tal que, si \(0\lt |u-b|\lt \eta\), entonces \(|f(u)-f(b)|\lt \varepsilon\). (Se toma \(\eta\) tan chico que esos \(u\) estén en el intervalo donde \(f\) está definida.)</li>
+      <li>Para \(u=b\) también se cumple: \(|f(b)-f(b)|=0\), y \(0\lt \varepsilon\). Entonces: si \(|u-b|\lt \eta\), con \(u=b\) o con \(u\ne b\), se tiene \(|f(u)-f(b)|\lt \varepsilon\).</li>
+      <li>El número \(\eta\) es positivo: sirve como tolerancia para \(g\). Como \(\lim_{x\to a^{-}}g(x)=b\), existe \(\delta\gt 0\) tal que, si \(a-\delta\lt x\lt a\), entonces \(|g(x)-b|\lt \eta\).</li>
+      <li>Se toma un \(x\) cualquiera con \(a-\delta\lt x\lt a\). Por el paso 4, el número \(u=g(x)\) cumple \(|u-b|\lt \eta\). Por el paso 3, \(|f(g(x))-f(b)|\lt \varepsilon\).</li>
+      <li>Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a^{-}}f(g(x))=f(b)\).</li>
+    </ol>
+    <p><b>Dónde se usa la condición sobre \(f\):</b> en el paso 3. Si el valor \(f(b)\) fuera distinto del límite de \(f\) en \(b\), o si \(f\) saltara en \(b\), ese paso fallaría. Son los casos de las hojas que siguen.</p>
+    <p><b>Con los números de la animación</b>, por la izquierda de \(1\) (\(b=2\), \(f(2)=2\)) y la tolerancia \(\varepsilon=0{,}5\). Para todo \(u\): \(f(u)-2=u^{2}-5u+6=(u-2)(u-3)\). Se prueba \(\eta=0{,}25\): si \(|u-2|\lt 0{,}25\), entonces \(u\) está entre \(1{,}75\) y \(2{,}25\), y \(|u-3|\) es menor que \(3-1{,}75=1{,}25\). Luego \(|f(u)-2|=|u-2|\cdot|u-3|\) es menor que \(0{,}25\cdot 1{,}25=0{,}3125\), que es menor que \(0{,}5\). Para \(g\), con \(x\lt 1\): \(|g(x)-2|=|x+1-2|=1-x\), menor que \(0{,}25\) si \(1-0{,}25\lt x\lt 1\); sirve \(\delta=0{,}25\). Prueba con \(x=0{,}9\): \(g(0{,}9)=0{,}9+1=1{,}9\) y \(|1{,}9-2|=0{,}1\), menor que \(0{,}25\); \(h(0{,}9)=f(1{,}9)=2{,}11\) y \(|2{,}11-2|=0{,}11\), menor que \(0{,}5\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: cuando los lados no coinciden, o la externa también salta</h3>
+    <ol class="steps">
+      <li><b>Lados distintos: no hay límite.</b> Con la misma interna \(g\) y la externa \(F(u)=2u-1\): por la izquierda, \(F(2)=2\cdot 2-1=3\); por la derecha, \(F(3)=2\cdot 3-1=5\). Como \(3\ne 5\), \(F(g(x))\) no tiene límite en \(1\). Aquí no existen ni el límite interno ni el de la compuesta.</li>
+      <li><b>«El límite interno no existe» no decide nada.</b> Con la externa \(f\) de la animación la compuesta tiene límite \(2\); con la externa \(F\), no tiene. Hay que hacer la cuenta de los dos lados cada vez.</li>
+      <li><b>Si la externa salta justo en un lateral, la regla no se puede usar.</b> Sea \(E(u)=1\) si \(u\lt 2\) y \(E(u)=5\) si \(u\ge 2\). En \(b=2\), \(E\) no tiene límite: la condición 3 falla por la izquierda de \(x=1\).</li>
+      <li>Se estudia directamente. Para \(x\lt 1\), \(g(x)=x+1\) es menor que \(2\), así que \(E(g(x))=1\): por la izquierda de \(1\) la compuesta es la constante \(1\), y su límite por la izquierda es \(1\). No coincide con el valor \(E(2)=5\).</li>
+      <li>Para \(1\lt x\lt 2\), \(g(x)=4-x\) está entre \(2\) y \(3\), así que \(E(g(x))=5\): el límite por la derecha es \(5\). Como \(1\ne 5\), \(E(g(x))\) no tiene límite en \(1\). Lo que importó fue por qué lado de \(2\) llegan los valores de \(g\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>En cada ejemplo se hallan primero los dos límites laterales de la interna; después se aplica la regla de la compuesta en cada lado (las externas son polinomios, así que la condición 3 se cumple); al final se comparan los dos lados.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la compuesta de la animación, \(\lim_{x\to 1}f(g(x))\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Interna por la izquierda (\(x\lt 1\), \(g(x)=x+1\)): \(\lim_{x\to 1^{-}}g(x)=1+1=2\).</li>
+    <li>Interna por la derecha (\(x\gt 1\), \(g(x)=4-x\)): \(\lim_{x\to 1^{+}}g(x)=4-1=3\).</li>
+    <li>Como \(2\ne 3\), el límite interno \(\lim_{x\to 1}g(x)\) no existe.</li>
+    <li>Externa en \(b_{1}=2\): \(f(2)=2^{2}-5\cdot 2+8=4-10+8=2\). Regla de la compuesta por la izquierda: \(\lim_{x\to 1^{-}}f(g(x))=2\).</li>
+    <li>Externa en \(b_{2}=3\): \(f(3)=3^{2}-5\cdot 3+8=9-15+8=2\). Regla de la compuesta por la derecha: \(\lim_{x\to 1^{+}}f(g(x))=2\).</li>
+    <li>Comparación: los dos laterales de la compuesta valen \(2\). Por el criterio de los laterales, \(\lim_{x\to 1}f(g(x))=2\).</li>
+    <li>Comprobación con valores. \(g(0{,}9)=1{,}9\) y \(f(1{,}9)=3{,}61-9{,}5+8=2{,}11\). \(g(1{,}1)=2{,}9\) y \(f(2{,}9)=8{,}41-14{,}5+8=1{,}91\).</li>
+    <li>Más cerca. \(g(0{,}99)=1{,}99\) y \(f(1{,}99)=3{,}9601-9{,}95+8=2{,}0101\). \(g(1{,}01)=2{,}99\) y \(f(2{,}99)=8{,}9401-14{,}95+8=1{,}9901\). Los valores se acercan a \(2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: la misma interna con otras dos externas</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Los laterales de la interna no cambian: \(2\) por la izquierda de \(1\) y \(3\) por la derecha.</li>
+    <li>Externa \(u^{2}\). Por la izquierda: \(2^{2}=4\). Por la derecha: \(3^{2}=9\).</li>
+    <li>Como \(4\ne 9\), \([g(x)]^{2}\) no tiene límite en \(1\).</li>
+    <li>Externa \((u-2)(u-3)\), que es el polinomio \(u^{2}-5u+6\). Por la izquierda: \((2-2)\cdot(2-3)=0\cdot(-1)=0\).</li>
+    <li>Por la derecha: \((3-2)\cdot(3-3)=1\cdot 0=0\).</li>
+    <li>Los dos laterales valen \(0\): \(\lim_{x\to 1}\{[g(x)-2]\cdot[g(x)-3]\}=0\).</li>
+    <li>Qué distingue a las externas que dan límite: toman el mismo valor en \(2\) y en \(3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una interna que solo toma los valores \(-1\) y \(1\)</h3>
+  <div class="body">
+  <p>Sea \(j(x)=-1\) si \(x\lt 0\) y \(j(x)=1\) si \(x\gt 0\) (sin valor en \(0\)).</p>
+  <ol class="steps">
+    <li>Interna: por la izquierda de \(0\) es la constante \(-1\) y por la derecha, la constante \(1\). Sus laterales son \(-1\) y \(1\): el límite interno en \(0\) no existe.</li>
+    <li>Externa \(u^{2}\). Por la izquierda: \((-1)^{2}=1\). Por la derecha: \(1^{2}=1\). Coinciden: \(\lim_{x\to 0}[j(x)]^{2}=1\).</li>
+    <li>Comprobación directa: para todo \(x\ne 0\), \([j(x)]^{2}=1\). La compuesta es la constante \(1\) fuera de \(0\).</li>
+    <li>Externa \(u^{3}\). Por la izquierda: \((-1)^{3}=-1\). Por la derecha: \(1^{3}=1\). Como \(-1\ne 1\), \([j(x)]^{3}\) no tiene límite en \(0\).</li>
+    <li>Externa \(u^{2}+3u\). Por la izquierda: \((-1)^{2}+3\cdot(-1)=1-3=-2\). Por la derecha: \(1^{2}+3\cdot 1=1+3=4\). Como \(-2\ne 4\), no tiene límite en \(0\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: de la interna solo se conocen los laterales</h3>
+  <div class="body">
+  <p>Datos: \(\lim_{x\to 3^{-}}G(x)=-2\) y \(\lim_{x\to 3^{+}}G(x)=2\). El límite interno en \(3\) no existe.</p>
+  <ol class="steps">
+    <li>Externa \(P(u)=u^{2}+1\). En \(b_{1}=-2\): \(P(-2)=(-2)^{2}+1=4+1=5\).</li>
+    <li>En \(b_{2}=2\): \(P(2)=2^{2}+1=4+1=5\).</li>
+    <li>Los laterales de la compuesta coinciden: \(\lim_{x\to 3}P(G(x))=5\).</li>
+    <li>Externa \(Q(u)=u^{3}-4u\). En \(b_{1}=-2\): \(Q(-2)=(-2)^{3}-4\cdot(-2)=-8+8=0\).</li>
+    <li>En \(b_{2}=2\): \(Q(2)=2^{3}-4\cdot 2=8-8=0\). Coinciden: \(\lim_{x\to 3}Q(G(x))=0\).</li>
+    <li>Externa \(u+1\). Por la izquierda: \(-2+1=-1\). Por la derecha: \(2+1=3\). Como \(-1\ne 3\), \(G(x)+1\) no tiene límite en \(3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>responder «no existe» porque el límite interno no existe</b>. La compuesta puede tener límite: hay que mirar cada lado. Dos: <b>evaluar la externa en \(g(a)\)</b>. El valor de la interna en \(a\) no participa; en la animación ni siquiera existe. Tres: <b>mezclar los lados</b> o revisar uno solo. Cuatro: <b>usar la regla cuando la externa salta en un lateral de la interna</b>. Ahí la condición \(\lim_{u\to b}f(u)=f(b)\) falla y hay que estudiar por qué lado llegan los valores de \(g\) (recuadro del caso especial). Cinco: <b>invertir el orden</b>. \(f(g(x))\) no es \(g(f(x))\): primero actúa la de adentro.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>La interna es \(m(x)=2x\) si \(x\lt 1\) y \(m(x)=x+3\) si \(x\gt 1\). La externa es \(n(u)=u^{2}-6u+10\), y la compuesta, \(c(x)=n(m(x))\). a) Halla los límites laterales de \(m\) en \(1\). ¿Existe el límite interno? b) Halla los límites laterales de la compuesta y decide si existe \(\lim_{x\to 1}n(m(x))\). c) Comprueba con \(c(0{,}9)\) y \(c(1{,}1)\). d) Repite b) con la externa \(u+1\).</p>
+    <details><summary>Pista</summary><div><p>Reemplaza en la externa los dos números a los que se acerca la interna, uno por cada lado, y compara los resultados.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Por la izquierda: \(\lim_{x\to 1^{-}}m(x)=2\cdot 1=2\). Por la derecha: \(\lim_{x\to 1^{+}}m(x)=1+3=4\). Como \(2\ne 4\), el límite interno no existe.</li>
+        <li>b) Externa en \(2\): \(n(2)=2^{2}-6\cdot 2+10=4-12+10=2\). Por la izquierda, la compuesta tiene límite \(2\).</li>
+        <li>Externa en \(4\): \(n(4)=4^{2}-6\cdot 4+10=16-24+10=2\). Por la derecha, la compuesta tiene límite \(2\).</li>
+        <li>Coinciden: \(\lim_{x\to 1}n(m(x))=2\).</li>
+        <li>c) \(m(0{,}9)=2\cdot 0{,}9=1{,}8\) y \(n(1{,}8)=3{,}24-10{,}8+10=2{,}44\): \(c(0{,}9)=2{,}44\).</li>
+        <li>\(m(1{,}1)=1{,}1+3=4{,}1\) y \(n(4{,}1)=16{,}81-24{,}6+10=2{,}21\): \(c(1{,}1)=2{,}21\). Los dos valores están cerca de \(2\).</li>
+        <li>d) Externa \(u+1\). Por la izquierda: \(2+1=3\). Por la derecha: \(4+1=5\). Como \(3\ne 5\), \(m(x)+1\) no tiene límite en \(1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>De una función \(w\) solo se sabe que \(\lim_{x\to 0^{-}}w(x)=-3\) y \(\lim_{x\to 0^{+}}w(x)=3\). Decide si existe cada límite en \(0\) y, si existe, calcúlalo: a) \([w(x)]^{2}-4\); b) \([w(x)]^{3}\); c) \(2[w(x)]^{2}+w(x)\); d) \([w(x)]^{3}-9\,w(x)\).</p>
+    <details><summary>Pista</summary><div><p>Cada expresión es una externa polinómica aplicada a \(w\): \(u^{2}-4\), \(u^{3}\), \(2u^{2}+u\) y \(u^{3}-9u\). Evalúa cada una en \(-3\) y en \(3\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Por la izquierda: \((-3)^{2}-4=9-4=5\). Por la derecha: \(3^{2}-4=9-4=5\). Coinciden: el límite es \(5\).</li>
+        <li>b) Por la izquierda: \((-3)^{3}=-27\). Por la derecha: \(3^{3}=27\). Como \(-27\ne 27\), no tiene límite en \(0\).</li>
+        <li>c) Por la izquierda: \(2\cdot(-3)^{2}+(-3)=18-3=15\). Por la derecha: \(2\cdot 3^{2}+3=18+3=21\). Como \(15\ne 21\), no tiene límite en \(0\).</li>
+        <li>d) Por la izquierda: \((-3)^{3}-9\cdot(-3)=-27+27=0\). Por la derecha: \(3^{3}-9\cdot 3=27-27=0\). Coinciden: el límite es \(0\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Camila abre la ducha y el calefón tarda en estabilizarse. <b>Modelo:</b> la temperatura del agua, en grados Celsius, a los \(t\) minutos es \(T(t)=34+t\) si \(0\le t\lt 2\) y \(T(t)=42-t\) si \(2\lt t\le 6\) (a los \(2\) minutos el calefón sube la llama de golpe; ese instante no se registra). Camila prefiere el agua a \(38\) grados, y su incomodidad se mide con \(I(T)=(T-38)^{2}\). (Fórmulas inventadas para el ejercicio.) a) Halla los límites laterales de la temperatura en \(t=2\). ¿Tiene límite ahí? b) Halla los límites laterales de la incomodidad \(I(T(t))\) en \(t=2\). ¿Tiene límite? c) Comprueba con \(t=1{,}9\) y \(t=2{,}1\). d) Explica el resultado con palabras. e) Repite b) con la diferencia con signo, \(T-38\).</p>
+    <details><summary>Pista</summary><div><p>La interna es la temperatura y la externa, la incomodidad, que es un polinomio en \(T\). Evalúa la incomodidad en los dos números a los que se acerca la temperatura.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Por la izquierda de \(2\), \(T(t)=34+t\): el límite es \(34+2=36\). Por la derecha, \(T(t)=42-t\): el límite es \(42-2=40\). Como \(36\ne 40\), la temperatura no tiene límite en \(t=2\): salta \(4\) grados.</li>
+        <li>b) Externa en \(36\): \(I(36)=(36-38)^{2}=(-2)^{2}=4\). Por la izquierda, la incomodidad tiene límite \(4\).</li>
+        <li>Externa en \(40\): \(I(40)=(40-38)^{2}=2^{2}=4\). Por la derecha, la incomodidad tiene límite \(4\).</li>
+        <li>Coinciden: el límite de la incomodidad en \(t=2\) es \(4\), aunque la temperatura no tiene límite ahí.</li>
+        <li>c) \(T(1{,}9)=34+1{,}9=35{,}9\) e \(I(35{,}9)=(35{,}9-38)^{2}=(-2{,}1)^{2}=4{,}41\). \(T(2{,}1)=42-2{,}1=39{,}9\) e \(I(39{,}9)=(39{,}9-38)^{2}=1{,}9^{2}=3{,}61\). Los dos valores están cerca de \(4\).</li>
+        <li>d) Justo antes de los \(2\) minutos el agua está unos \(2\) grados más fría de lo que Camila prefiere; justo después, unos \(2\) grados más caliente. La incomodidad solo mira la distancia a los \(38\) grados, no el signo: por eso no nota el salto.</li>
+        <li>e) Con la externa \(T-38\). Por la izquierda: \(36-38=-2\). Por la derecha: \(40-38=2\). Como \(-2\ne 2\), la diferencia con signo no tiene límite en \(t=2\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L30-H04 · v001 · Pendiente de APR</span>
+</footer>
+</article>
