@@ -58,3 +58,6 @@ Eres Claude trabajando para Óscar Morales León (oscaracademy.org). Responde y 
 Modelo: `det2-vivo` (L28 H01 v003) y `det3-vol` (L28 H02 v003), con sus `<ol class="steps">` en `01.art.html` y `02.art.html`.
 **Antes de dar por terminada cualquier hoja, pregúntate por cada animación: «¿un alumno que la ve por primera vez entiende, sin adivinar, qué se le quiere mostrar y de dónde sale cada número?». Si la respuesta no es un sí claro, no está terminada.**
 Cuando la corrida es de correcciones (no de hojas nuevas), puede corregir **hasta 5 hojas** en vez de 3.
+
+## Lote en curso desde el 23-nov 12:30 UTC
+El lote 28 y el lote 25 ya no tienen nada por producir. **El lote en curso es el 29 · Límites** (`taller/src/l29/partes/`, ayudantes `_txt.js _det.js _lim.js`, armado `../NN-lim.html`, `python3 taller/build.py 29 "Límites"`, código `CD-L29-HNN`, carpeta `limites/lote29/`, verificador `qa/rigor/verificar_lote_29.py`, tarjeta https://claude.ai/artifact/CAZhB9evwiS3RLpJuy88qo). Modelo: `l29/partes/01.*`. La línea «Faltan» está en la sección «Lote 29» del estado.
