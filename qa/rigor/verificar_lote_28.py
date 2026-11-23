@@ -371,4 +371,47 @@ ok(11*1200 == 13200 and 11*900 == 9900 and 5400*5 == 27000 and 2*6900 == 13800 a
 for a, b, c, d in itertools.product(R, repeat=4):
     for e, f in ((1, 2), (-3, 5)):
         ok(a*e*d - a*b*f + a*b*f - b*e*c == a*e*d - b*e*c == e*(a*d - b*c) and c*e*d - b*c*f + a*d*f - c*e*d == a*d*f - b*c*f == f*(a*d - b*c), 'H08 v002 demostración')
+# H08 v003 · lectura de cramer-vivo: la última línea da el punto de corte, y el aviso «cercano a 0» sale con |Δ| < 1
+for m_ in [Fr(n, 20) for n in range(10, 61)]:
+    D_ = 2*m_ - 1
+    if D_: ok(2*((5*m_ - 5)/D_) + 5/D_ == 5 and ((5*m_ - 5)/D_) + m_*(5/D_) == 5 and (abs(D_) < 1) == (m_ < 1), 'H08 v003 cramer-vivo conclusión')
+# H09 v002 · lectura acumulada de sis-idea, lectura de sis-vivo, ejemplos y ejercicios con todos los pasos
+ok((1*4, 2*2, 4 - 4) == (4, 4, 0) and (4*4, 2*6, 16 - 12) == (16, 12, 4) and (4*4, 2*8, 16 - 16) == (16, 16, 0) and (1*8, 4*2, 8 - 8) == (8, 8, 0) and det2(1, 2, 2, 4) == 0 and det2(4, 2, 6, 4) == 4 and det2(4, 2, 8, 4) == 0 and det2(1, 4, 2, 8) == 0 and (2*1, 2*2, 2*4) == (2, 4, 8), 'H09 v002 sis-idea')
+for m_ in [Fr(n, 10) for n in range(40, 61)]:
+    for f_ in [Fr(n, 2) for n in range(12, 21)]:
+        ok(det2(1, 2, 2, m_) == 1*m_ - 2*2 == m_ - 4 and det2(4, 2, f_, m_) == 4*m_ - 2*f_ and det2(1, 4, 2, f_) == 1*f_ - 4*2 == f_ - 8, 'H09 v002 sis-vivo determinantes')
+        if m_ != 4:
+            x_ = (4*m_ - 2*f_)/(m_ - 4); y_ = (f_ - 8)/(m_ - 4); ok(x_ + 2*y_ == 4 and 2*x_ + m_*y_ == f_, 'H09 v002 sis-vivo solución')
+        else: ok((4*m_ - 2*f_ == 0) == (f_ == 8), 'H09 v002 sis-vivo casos con Δ = 0')
+ok(det2(1, 2, 2, 6) == 2 and det2(4, 2, 10, 6) == 4 and det2(1, 4, 2, 10) == 2 and (Fr(4, 2), Fr(2, 2)) == (2, 1), 'H09 v002 sis-vivo inicio (2, 1)')
+ok(3*2 - (-1)*1 == 6 - (-1) == 6 + 1 == 7 and 5*2 - (-1)*4 == 10 - (-4) == 10 + 4 == 14 and 3*4 - 5*1 == 12 - 5 == 7 and Fr(14, 7) == 2 and Fr(7, 7) == 1 and 3*2 - 1 == 6 - 1 == 5 and 2 + 2*1 == 2 + 2 == 4, 'H09 v002 ej1')
+ok(2*6 - (-3)*(-4) == 12 - 12 == 0 and 1*6 - (-3)*5 == 6 - (-15) == 6 + 15 == 21 and (-2*2, -2*(-3), -2*1) == (-4, 6, -2), 'H09 v002 ej2')
+ok(1*6 - (-3)*(-2) == 6 - 6 == 0 and 2*(-2) - 1*(-4) == -4 - (-4) == -4 + 4 == 0, 'H09 v002 ej3 determinantes')
+for t_ in [Fr(n, 3) for n in range(-12, 13)]:
+    x_ = (1 + 3*t_)/2; ok(2*x_ - 3*t_ == 1 and -4*x_ + 6*t_ == -2*(1 + 3*t_) + 6*t_ == -2 - 6*t_ + 6*t_ == -2, 'H09 v002 ej3 parámetro')
+    x_ = (10 - 4*t_)/6; ok(x_ == (5 - 2*t_)/3 and 6*x_ + 4*t_ == 10 and 9*x_ + 6*t_ == 3*(5 - 2*t_) + 6*t_ == 15, 'H09 v002 A parámetro')
+ok(4 - 2**2 == 0 and 4 - 2*2 == 0 and 2 - 2 == 0 and 4 - (-2)**2 == 0 and 4 - 2*(-2) == 4 - (-4) == 4 + 4 == 8, 'H09 v002 ej4 casos')
+for k_ in [Fr(n, 5) for n in range(-25, 26)]:
+    ok(det2(1, k_, k_, 4) == 4 - k_*k_ == (2 - k_)*(2 + k_) and det2(1, k_, 2, 4) == 4 - 2*k_ == 2*(2 - k_) and det2(1, 1, k_, 2) == 2 - k_, 'H09 v002 ej4')
+    ok(det2(2, k_, k_, 8) == 16 - k_*k_ == (4 - k_)*(4 + k_) and det2(4, k_, 8, 8) == 32 - 8*k_ == 8*(4 - k_) and det2(2, 4, k_, 8) == 16 - 4*k_ == 4*(4 - k_), 'H09 v002 B')
+    if k_ not in (4, -4): ok(2*(8/(4 + k_)) + k_*(4/(4 + k_)) == (16 + 4*k_)/(4 + k_) == 4 and k_*(8/(4 + k_)) + 8*(4/(4 + k_)) == (8*k_ + 32)/(4 + k_) == 8, 'H09 v002 B comprobación')
+ok(16 - 4**2 == 0 and 32 - 8*4 == 0 and 16 - 4*4 == 0 and 16 - (-4)**2 == 0 and 32 - 8*(-4) == 32 - (-32) == 32 + 32 == 64, 'H09 v002 B casos')
+# H10 v002 · lecturas y pasos agregados
+ok((3*4, 1*2, 12 - 2) == (12, 2, 10) and det2(3, 1, 2, 4) == 10 and det2(5, 2, 3, 4) == 20 - 6 == 14, 'H10 v002 nota-idea y ej1')
+for a_ in [Fr(n, 10) for n in range(-20, 41)]:
+    D_ = det2(a_, 1, 2, 4); ok(D_ == a_*4 - 1*2 == 4*a_ - 2 and (D_ == 0) == (a_ == Fr(1, 2)) and (D_ < 0) == (a_ < Fr(1, 2)) and abs(D_) == (D_ if D_ > 0 else -D_), 'H10 v002 nota-vivo')
+ok(det2(3, 5, 0, -1) == -3 - 0 == -3 and det2(0, 5, 0, -1) == 0 - 0 == 0 and det2(0, 3, 0, 0) == 0 and 2*(-3) - 1*0 + 0*0 == -6 - 0 + 0 == -6 == det3([[2, 1, 0], [0, 3, 5], [0, 0, -1]]), 'H10 v002 ej3')
+ok(det2(1, 2, 3, 4) == 4 - 6 == -2 and (3*1, 3*2, 3*3, 3*4) == (3, 6, 9, 12) and det2(3, 6, 9, 12) == 36 - 54 == -18 == 9*(-2), 'H10 v002 ej4')
+ok(det2(-2, 5, 1, 3) == -6 - 5 == -11 and det2(0, 1, 1, 0) == 0 - 1 == -1 and det2(1, 0, 0, 1) == 1 - 0 == 1 and det2(2, 1, 1, 1) == 2 - 1 == 1, 'H10 v002 A y B')
+ok(1800*1400 == 2520000 == 1200*2100 and Fr(2100, 1800) == Fr(7, 6) and 2100 == 7*300 and 1800 == 6*300 and Fr(7, 6)*1800 == 7*300 == 2100 and Fr(7, 6)*1200 == 7*200 == 1400, 'H10 v002 C')
+# H11 v002 · lecturas y pasos agregados
+ok((1 + 0, 2*0) == (1, 0) and (0 + 1, 2*1) == (1, 2) and (1*2, 1*0, 2 - 0) == (2, 0, 2) and det2(1, 1, 0, 2) == 2 and 2 + 2 + 2 == 3*2 == 6 and Fr(6, 3) == 2 and 2*3 == 6, 'H11 v002 esc-idea')
+for k_ in [Fr(n, 20) for n in range(-20, 31)]:
+    ok(det2(2, 0, 0, k_) == 2*k_ - 0*0 == 2*k_ and (2*k_ == 1) == (k_ == Fr(1, 2)), 'H11 v002 esc-vivo')
+ok((3*1 + 1*0, 1*1 + 2*0) == (3, 1) and (3*0 + 1*1, 1*0 + 2*1) == (1, 2) and det2(3, 1, 1, 2) == 6 - 1 == 5, 'H11 v002 ej1')
+ok(det2(2, -1, 1, 1) == 2 - (-1) == 3 and 3*6 == 18 and (2*4 - 1*0, 1*4 + 1*0) == (8 - 0, 4 + 0) == (8, 4) and (2*0 - 1*3, 1*0 + 1*3) == (0 - 3, 0 + 3) == (-3, 3) and 8*3 - (-3)*4 == 24 - (-12) == 24 + 12 == 36 and Fr(36, 2) == 18, 'H11 v002 ej2')
+ok(det2(1, 2, 3, 1) == 1 - 6 == -5 and 5*6 == 30 and (1*2 + 2*0, 3*2 + 1*0) == (2, 6) and (1*0 + 2*3, 3*0 + 1*3) == (6, 3) and 2*3 - 6*6 == 6 - 36 == -30, 'H11 v002 ej3')
+ok(det2(2, 4, 1, 2) == 4 - 4 == 0 and all((2*x_ + 4*y_, x_ + 2*y_) == ((x_ + 2*y_)*2, (x_ + 2*y_)*1) for x_ in R for y_ in R), 'H11 v002 ej4')
+ok(det2(4, 1, 2, 3) == 12 - 2 == 10 and 10*4 == 40 and 5 - 4 == 1 and 3 - 4 == -1 and 2*2 - 4 == 0 == (-2)*(-2) - 4, 'H11 v002 A y B')
+ok(Fr(12, 10)*Fr(15, 10) - 0 == Fr(18, 10) and Fr(12, 10)*Fr(15, 10) - Fr(3, 10)*0 == Fr(18, 10) and Fr(18, 10)*150 == 270 and Fr(12, 10)*10 == 12 and Fr(15, 10)*15 == Fr(45, 2) and 12*Fr(45, 2) == 270, 'H11 v002 C')
 print('Lote 28 H01–H11: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

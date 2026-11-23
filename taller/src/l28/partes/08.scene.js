@@ -18,7 +18,7 @@ OA.scene('cramer-idea', (function(){
     ['Cada incógnita es su determinante dividido', 'por el del sistema. Las rectas se cortan ahí.']];
   var GX = -0.75, GY = 1.05, E = 0.5, S1 = 3.15, S2 = 3.85, S3 = 4.8, F1 = 3.0, F2 = 2.3;
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:4.4}, aspect:8.6/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:5.4}, aspect:9.6/6.6,
     aria:'Animación en cinco pasos para el sistema 2x más y igual a 5, x más 3y igual a 5. A la izquierda, un plano con las dos rectas. A la derecha, tres columnas de números: la de los coeficientes de x, 2 y 1, en azul; la de los coeficientes de y, 1 y 3, en verde; y la de los términos libres, 5 y 5, en naranja. Uno: se dibujan las dos rectas. Dos: las columnas azul y verde forman el determinante del sistema, delta, que vale 2 por 3 menos 1 por 1, 5. Tres: la columna naranja entra al lugar de la azul y se forma delta x, 5 por 3 menos 1 por 5, 10. Cuatro: la columna azul vuelve y la naranja entra al lugar de la verde: delta y, 2 por 5 menos 5 por 1, 5. Cinco: todo vuelve a su lugar; x es 10 dividido en 5, 2; y es 5 dividido en 5, 1; en el plano se marca el punto (2, 1), donde se cortan las rectas. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -59,6 +59,7 @@ OA.scene('cramer-idea', (function(){
       L('Q', -1.2, 4.12, 0); if (k === N && u > 0.5) L('F', 1.2, 4.12, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.3); txt(TXT[k - 1][1], -1.2, 0.3 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.12));
+      dtQue(S, 'cada incógnita es un determinante', 'dividido por el determinante del sistema.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.25, [0, 30, 60, 90, 122]);
     },
@@ -67,7 +68,7 @@ OA.scene('cramer-idea', (function(){
       '\\Delta=\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=2\\cdot 3-1\\cdot 1' + Q + '\\text{productos: }2\\cdot 3=6;\\qquad 1\\cdot 1=1' + Q + '\\Delta=6-1=5\\neq 0',
       '\\Delta_x=\\begin{vmatrix}5&1\\\\5&3\\end{vmatrix}=5\\cdot 3-1\\cdot 5' + Q + '\\text{productos: }5\\cdot 3=15;\\qquad 1\\cdot 5=5' + Q + '\\Delta_x=15-5=10',
       '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1' + Q + '\\text{productos: }2\\cdot 5=10;\\qquad 5\\cdot 1=5' + Q + '\\Delta_y=10-5=5',
-      'x=\\dfrac{\\Delta_x}{\\Delta}=\\dfrac{10}{5}=2,\\qquad y=\\dfrac{\\Delta_y}{\\Delta}=\\dfrac{5}{5}=1' + Q + '\\text{comprobación: }2\\cdot 2+1=4+1=5;' + Q + '2+3\\cdot 1=2+3=5'];
+      'x=\\dfrac{\\Delta_x}{\\Delta}=\\dfrac{10}{5}=2,\\qquad y=\\dfrac{\\Delta_y}{\\Delta}=\\dfrac{5}{5}=1' + Q + '\\text{comprobación: }2\\cdot 2+1=4+1=5;' + Q + '2+3\\cdot 1=2+3=5' + Q + '\\text{Solución: }(2,1)\\text{, el punto donde}' + Q + '\\text{se cortan las dos rectas.}'];
       return dtPasos(R.slice(0, k)); }
   };
 })());
@@ -75,7 +76,7 @@ OA.scene('cramer-idea', (function(){
 OA.scene('cramer-vivo', (function(){
   var PZ = [['LA', '2x+y=5', '2x + y = 5', 'c-sec'], ['LB', 'x+my=5', 'x + my = 5', 'c-alt'], ['P', '\\left(\\tfrac{\\Delta_x}{\\Delta},\\tfrac{\\Delta_y}{\\Delta}\\right)', '(Δx/Δ, Δy/Δ)', 'diff']];
   return {
-    world:{x0:-3.4, x1:7.2, y0:-2.4, y1:7.4}, aspect:9.8/10.6,
+    world:{x0:-3.4, x1:7.2, y0:-2.4, y1:9.0}, aspect:11.4/10.6,
     aria:'Un plano con dos rectas. La azul, fija, es 2x más y igual a 5. La verde es x más m por y igual a 5; pasa siempre por el punto (5, 0) y gira al mover m. Un punto naranja marca donde se cortan, que es la solución del sistema. Con m igual a 3 el corte está en (2, 1). Al bajar m, el determinante 2m menos 1 se acerca a cero, las rectas se parecen cada vez más a dos paralelas y el punto de corte se aleja hasta salir del dibujo. Con m igual a 0,5 el determinante es cero, las rectas son paralelas y no hay punto de corte: la regla de Cramer no se aplica.',
     labels:PZ,
     sliders:[{id:'m', tex:'m', min:0.5, max:3, step:0.05, value:3}],
@@ -100,6 +101,7 @@ OA.scene('cramer-vivo', (function(){
       T.L('LA', 2.9, -0.75, 0, 6, 0); T.L('LB', 5.05, 0.75, 0, 0, 0);
       msg = cero ? 'Determinante cero: rectas paralelas, sin corte' : (dentro ? 'Las rectas se cortan en un solo punto' : 'El punto de corte ya salió del dibujo');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(msg, X(-3.2), Y(-1.8));
+      dtQue(S, 'si el determinante se acerca a cero,', 'el corte se aleja; en cero, no hay corte.');
       T.fin();
     },
     caption:function(v){ var m = v.m == null ? 3 : +v.m, D = 2*m - 1, n = function(z){ return oaDec(z, 2); }; return Math.abs(D) < 0.02 ? 'Con m = 0,50 el determinante del sistema vale 0: las rectas son paralelas, no hay punto de corte y la regla de Cramer no se aplica' : 'Con m = ' + n(m) + ' el determinante del sistema vale ' + n(D) + ' y las rectas se cortan en (' + n((5*m - 5)/D) + '; ' + n(5/D) + ')'; },
@@ -110,7 +112,8 @@ OA.scene('cramer-vivo', (function(){
         '\\Delta_x=\\begin{vmatrix}5&1\\\\5&' + n(m, 2) + '\\end{vmatrix}=5\\cdot ' + n(m, 2) + '-1\\cdot 5' + Q + '\\text{productos: }5\\cdot ' + n(m, 2) + '=' + n(M5, 2) + ';\\qquad 1\\cdot 5=5' + Q + '\\Delta_x=' + n(M5, 2) + '-5=' + n(DX, 2),
         '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1' + Q + '\\text{productos: }2\\cdot 5=10;\\qquad 5\\cdot 1=5' + Q + '\\Delta_y=10-5=5'];
       if (D === 0) f.push('\\Delta=0\\text{: no se puede dividir por }0.' + Q + '\\text{La regla no se aplica (rectas paralelas).}');
-      else f.push('x=\\dfrac{\\Delta_x}{\\Delta}=' + coc(DX, D) + Q + 'y=\\dfrac{\\Delta_y}{\\Delta}=' + coc(5, D, '5'));
+      else { f.push('x=\\dfrac{\\Delta_x}{\\Delta}=' + coc(DX, D) + Q + 'y=\\dfrac{\\Delta_y}{\\Delta}=' + coc(5, D, '5'));
+        f.push('\\text{Las rectas se cortan en }\\left(' + n(DX/D, 2) + ';\\ ' + n(5/D, 2) + '\\right).' + Q + (Math.abs(D) < 1 ? '\\text{Se divide por un número cercano a }0\\text{:}' + Q + '\\text{el punto de corte queda lejos.}' : '\\text{Ese punto es la única solución.}')); }
       return dtPasos(f); }
   };
 })());
