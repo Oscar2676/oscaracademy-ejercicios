@@ -3,7 +3,7 @@ OA.scene('dif-idea', (function(){
   var N = 5, A = [3, 7, 11, 15], XC = [-0.6, 0.5, 1.6, 2.7], W = 0.62, YB = 1.3, K = 0.15, XT = 4.25;
   var PZ = [['T1', 'a_{1}=3', 'a₁ = 3', 'c-sec'], ['T2', 'a_{2}=7', 'a₂ = 7', 'c-sec'], ['T3', 'a_{3}=11', 'a₃ = 11', 'c-sec'], ['T4', 'a_{4}=15', 'a₄ = 15', 'c-sec'],
     ['D1', '4', '4', 'diff'], ['D2', '4', '4', 'diff'], ['D3', '4', '4', 'diff'], ['DD', 'd=4', 'd = 4', 'diff'],
-    ['Q', '3,\\ 7,\\ 11,\\ 15\\qquad d=\\ ?', '3, 7, 11, 15   d = ?', 'pt'], ['F', 'd=a_{n+1}-a_{n}=4', 'd = aₙ₊₁ − aₙ = 4', 'diff'],
+    ['Q', '3,\\ 7,\\ 11,\\ 15\\qquad d=\\ ?', '3, 7, 11, 15   d = ?', 'pt'], ['F', '\\Longrightarrow\\ d=a_{n+1}-a_{n}=4', '⟹ d = aₙ₊₁ − aₙ = 4', 'diff'],
     ['R1', '3,\\ 7,\\ 11,\\ 15', '3, 7, 11, 15', ''],
     ['R2', 'a_{2}-a_{1}=7-3=4', 'a₂ − a₁ = 7 − 3 = 4', ''],
     ['R3', 'a_{3}-a_{2}=11-7=4', 'a₃ − a₂ = 11 − 7 = 4', ''],
@@ -15,12 +15,12 @@ OA.scene('dif-idea', (function(){
     ['Al cuarto se le resta el tercero.', 'Otra vez 4.'],
     ['Los tres tramos coinciden: la sucesión', 'es aritmética y su diferencia es 4.']];
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:4.8}, aspect:9.4/6.6,
-    aria:'Animación en cinco pasos con los términos 3, 7, 11 y 15, dibujados como cuatro columnas azules de esas alturas. Uno: las columnas crecen hasta su altura. Dos: una línea punteada lleva la altura de la primera columna hasta la segunda; el tramo de la segunda que queda por encima se pinta naranja y vale 4. Tres: lo mismo entre la segunda y la tercera: 4. Cuatro: entre la tercera y la cuarta: 4. Cinco: una copia de cada tramo naranja viaja a la derecha y las tres coinciden en un mismo rectángulo: la diferencia es constante, d igual a 4. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:5.8}, aspect:10.4/6.6,
+    aria:'Animación en cinco pasos con los términos 3, 7, 11 y 15, dibujados como cuatro columnas azules de esas alturas. Uno: las columnas crecen hasta su altura. Dos: una línea punteada lleva la altura de la primera columna hasta la segunda; el tramo de la segunda que queda por encima se pinta naranja y vale 4. Tres: lo mismo entre la segunda y la tercera: 4. Cuatro: entre la tercera y la cuarta: 4. Cinco: una copia de cada tramo naranja viaja a la derecha y las tres coinciden en un mismo rectángulo: la diferencia es constante, d igual a 4. Los tramos naranjas, sus valores y las punteadas quedan en las columnas hasta el final; la pregunta queda arriba y la respuesta se escribe a su lado. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw sec"></i> los términos</span><span><i class="sw rise"></i> la diferencia entre un término y el anterior</span>',
-    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, g, w, x, y;
@@ -36,22 +36,28 @@ OA.scene('dif-idea', (function(){
         if (w > 0.5) L('D' + i, XC[i], YB + K*(A[i - 1] + 2), -50); }
       if (k === 5){ for (i = 1; i <= 3; i++){ x = XC[i] + (XT - XC[i])*u; y = YB + K*A[i - 1]*(1 - u); caja(x, y, y + K*4, C.rise, 0.16, 1); }
         if (u > 0.75) L('DD', XT, YB + K*4, -50, 0, -12); }
-      if (k < N || u < 0.5) L('Q', -1.2, 4.5, 0); else L('F', -1.2, 4.5, 0);
+      L('Q', -1.2, 4.5, 0); if (k === N && u > 0.5) L('F', 1.75, 4.5, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
-      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.0));
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.05));
+      dtQue(S, 'restar cada término menos el', 'anterior da siempre lo mismo: la diferencia d.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.0, [6, 34, 62, 90, 118]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['3,\\ 7,\\ 11,\\ 15', 'a_{2}-a_{1}=7-3=4', 'a_{3}-a_{2}=11-7=4', 'a_{4}-a_{3}=15-11=4', 'd=a_{2}-a_{1}=a_{3}-a_{2}=a_{4}-a_{3}=4'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['a_{1}=3,\\quad a_{2}=7,\\quad a_{3}=11,\\quad a_{4}=15' + Q + '\\text{Resta entre vecinos: }a_{n+1}-a_{n}',
+      'a_{2}-a_{1}=7-3=4',
+      'a_{3}-a_{2}=11-7=4',
+      'a_{4}-a_{3}=15-11=4',
+      '\\text{Las tres restas dan }4\\text{:}' + Q + 'd=a_{n+1}-a_{n}=4' + Q + '\\text{La sucesión es aritmética: sube de }4\\text{ en }4.'];
+      return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: a₁ = 4 fijo; al mover d, los seis primeros términos suben, quedan iguales o bajan */
 OA.scene('dif-vivo', (function(){
-  var PZ = [['DL', 'd', 'd', 'diff']], A1 = 4, NN = 6;
+  var PZ = [['DL', 'd', 'd', 'diff'], ['P1', 'a_{1}=4', 'a₁ = 4', 'c-sec'], ['P2', 'a_{2}', 'a₂', 'c-sec'], ['P6', 'a_{6}', 'a₆', 'c-sec']], A1 = 4, NN = 6;
   return {
-    world:{x0:-1.7, x1:7.5, y0:-10.5, y1:16}, aspect:1.0,
-    aria:'Gráfica de puntos sueltos con los seis primeros términos de la sucesión aritmética de primer término 4 y diferencia d. Cada punto está unido por una línea punteada con su valor en el eje vertical. Entre el primer punto y el segundo, un trazo naranja vertical marca la diferencia d. Al mover d, los puntos giran en torno al primero: con d positiva suben, cada uno más que el anterior en la misma cantidad; con d igual a cero quedan todos a la altura 4; con d negativa bajan.',
+    world:{x0:-1.7, x1:7.5, y0:-10.5, y1:20}, aspect:1.13,
+    aria:'Gráfica de puntos sueltos con los seis primeros términos de la sucesión aritmética de primer término 4 y diferencia d. Cada punto está unido por una línea punteada con su valor en el eje vertical. Entre el primer punto y el segundo, un trazo naranja vertical marca la diferencia d. Al mover d, los puntos giran en torno al primero: con d positiva suben, cada uno más que el anterior en la misma cantidad; con d igual a cero quedan todos a la altura 4; con d negativa bajan. El primero, el segundo y el sexto llevan su nombre. Bajo el dibujo se calculan, paso a paso, el segundo término, el sexto y la resta del segundo menos el primero, que da d.',
     labels:PZ,
     sliders:[{id:'d', tex:'d', min:-2, max:2, step:0.25, value:2}],
     legend:'<span><i class="sw sec"></i> los términos \\(a_{n}=4+(n-1)d\\)</span><span><i class="sw rise"></i> la diferencia \\(d\\)</span><span>líneas punteadas: llevan cada término a su valor en el eje \\(a_{n}\\)</span>',
@@ -72,12 +78,19 @@ OA.scene('dif-vivo', (function(){
       if (!cero){ c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(1), Y(A1)); c.lineTo(X(2), Y(A1)); c.stroke(); c.setLineDash([]);
         S.line(2, A1, 2, A1 + d, {color:C.rise, width:2.4}); if (Math.abs(d) > 0.45) T.L('DL', 2, A1 + d/2, 0, 7, 0); }
       for (i = 1; i <= NN; i++){ a = A1 + (i - 1)*d; c.beginPath(); c.arc(X(i), Y(a), 3.4, 0, 6.2832); c.fillStyle = C.sec; c.fill(); }
+      T.L('P1', 1, A1, -50, 0, d >= 0 ? 13 : -13); if (Math.abs(d) > 0.45) T.L('P2', 2, A1 + d, 0, 7, d > 0 ? -9 : 9); T.L('P6', 6, A1 + 5*d, 0, 7, 0);
       m = cero ? 'Diferencia cero: todos los términos son iguales' : (d < 0 ? 'Diferencia negativa: la sucesión decrece' : 'Diferencia positiva: la sucesión crece');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-1.5), Y(-9.3));
+      dtQue(S, 'el signo de d decide si la', 'sucesión crece, queda igual o decrece. Mueve d.');
       T.fin();
     },
-    caption:function(v){ var d = v.d == null ? 2 : +v.d, n = function(z){ return oaDec(z, 2); }; return 'Con d = ' + n(d) + ', los términos van de 4 en adelante sumando ' + n(d) + ' cada vez: el segundo vale ' + n(4 + d) + ' y el sexto, ' + n(4 + 5*d) + '. Con d = 0,00 todos valen 4'; },
-    readout:function(v){ var d = v.d == null ? 2 : +v.d, n = OA.num;
-      return [['', 'a_{n}=a_{1}+(n-1)d=4+(n-1)\\cdot\\left(' + n(d, 2) + '\\right)'], ['d', 'a_{2}=4+1\\cdot\\left(' + n(d, 2) + '\\right)=' + n(4 + d, 2) + '\\qquad a_{6}=4+5\\cdot\\left(' + n(d, 2) + '\\right)=' + n(4 + 5*d, 2)], ['', 'a_{2}-a_{1}=' + n(4 + d, 2) + '-4=' + n(d, 2)]]; }
+    caption:function(v){ var d = Math.round((v.d == null ? 2 : +v.d)*100)/100, n = function(z){ return oaDec(z, 2); }; return 'Con d = ' + n(d) + ', los términos van de 4 en adelante sumando ' + n(d) + ' cada vez: el segundo vale ' + n(4 + d) + ' y el sexto, ' + n(4 + 5*d) + '. Con d = 0,00 todos valen 4'; },
+    readout:function(v){ var d = Math.round((v.d == null ? 2 : +v.d)*100)/100, P = Math.round(5*d*100)/100, A2 = Math.round((4 + d)*100)/100, A6 = Math.round((4 + P)*100)/100, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
+      return dtPasos(['a_{1}=4,\\qquad d=' + n(d, 2),
+        '\\text{término general: }a_{n}=a_{1}+(n-1)\\,d\\\\&\\qquad a_{n}=4+(n-1)\\cdot ' + p(d),
+        'a_{2}=4+(2-1)\\cdot ' + p(d) + '=4+1\\cdot ' + p(d) + '\\\\&\\qquad a_{2}=4+' + p(d) + '=' + n(A2, 2),
+        'a_{6}=4+(6-1)\\cdot ' + p(d) + '=4+5\\cdot ' + p(d) + '\\\\&\\qquad 5\\cdot ' + p(d) + '=' + n(P, 2) + ',\\qquad a_{6}=4+' + p(P) + '=' + n(A6, 2),
+        '\\text{resta entre vecinos: }a_{2}-a_{1}=' + n(A2, 2) + '-4=' + n(d, 2) + '=d',
+        Math.abs(d) < 0.005 ? 'd=0:\\ \\text{todos los términos valen }4\\text{ (constante)}' : (d > 0 ? 'd>0:\\ \\text{cada término es mayor que el anterior; crece}' : 'd<0:\\ \\text{cada término es menor que el anterior; decrece}')]); }
   };
 })());

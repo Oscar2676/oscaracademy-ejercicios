@@ -168,13 +168,21 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>La sucesión \(4,\ 7,\ 10,\ 13,\ \ldots\) sobre una recta numérica, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p>La sucesión \(4,\ 7,\ 10,\ 13,\ \ldots\) sobre una recta numérica, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero el punto azul del \(4\):</b> es el primer término, \(a_{1}=4\). Todavía no hay saltos.</li>
+    <li><b>Pasos 2, 3 y 4:</b> en cada paso un arco naranja «\(+3\)» salta al término siguiente (\(7\), \(10\), \(13\)). Los arcos anteriores no se borran.</li>
+    <li><b>Mira las barras naranjas, bajo la recta:</b> en cada paso aparece una barra nueva, que mide todo lo avanzado desde el \(4\): \(1\cdot 3\), \(2\cdot 3\), \(3\cdot 3\). Las barras anteriores quedan, una bajo la otra, para compararlas.</li>
+    <li><b>Paso 5:</b> los arcos quedan numerados, salto 1, salto 2 y salto 3. Para llegar a la posición \(4\) hubo \(4-1=3\) saltos.</li>
+    <li><b>Cuenta de abajo:</b> cada término calculado como el primero más los saltos por \(3\), con cada producto y cada suma. Conclusión: \(a_{n}=a_{1}+(n-1)\,d\).</li>
+  </ol>
   <div class="stage" data-scene="ene-idea"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
   <ul class="keys">
     <li><b>Puntos azules:</b> los términos, ubicados en la recta numérica según su valor.</li>
     <li><b>Arcos naranjas:</b> los saltos. Cada salto suma la diferencia, \(3\).</li>
-    <li><b>Barra naranja, bajo la recta:</b> todo lo avanzado desde el primer término: la cantidad de saltos por \(3\).</li>
+    <li><b>Barras naranjas, bajo la recta:</b> una por paso. Cada una mide todo lo avanzado desde el primer término hasta ese paso: la cantidad de saltos por \(3\).</li>
   </ul>
 </section>
 
@@ -221,10 +229,12 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 1: calcular un término lejano. \(a_{1}=4,\ d=3\); ¿cuánto vale \(a_{50}\)?</h3>
   <div class="body">
   <ol class="steps">
-    <li>Se reemplaza en la fórmula con \(n=50\): \(a_{50}=4+(50-1)\cdot 3\).</li>
-    <li>Se resta en el paréntesis: \(a_{50}=4+49\cdot 3\).</li>
-    <li>Se multiplica: \(a_{50}=4+147\).</li>
+    <li>Datos: \(a_{1}=4\), \(d=3\), \(n=50\). Fórmula: \(a_{n}=a_{1}+(n-1)\,d\).</li>
+    <li>Se reemplaza: \(a_{50}=4+(50-1)\cdot 3\).</li>
+    <li>Se resta en el paréntesis, \(50-1=49\): \(a_{50}=4+49\cdot 3\).</li>
+    <li>Se multiplica, \(49\cdot 3=147\): \(a_{50}=4+147\).</li>
     <li>Se suma: \(a_{50}=151\).</li>
+    <li>Qué significa: desde el \(4\) se dan \(49\) saltos de \(3\), y se llega al \(151\).</li>
   </ol>
   </div>
   </div>
@@ -234,10 +244,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="body">
   <ol class="steps">
     <li>Diferencia: \(11-7=4\) y \(15-11=4\), así que \(d=4\); además \(a_{1}=7\).</li>
-    <li>Se plantea \(a_{n}=203\): \(7+(n-1)\cdot 4=203\).</li>
-    <li>Se resta \(7\) en los dos lados: \((n-1)\cdot 4=196\).</li>
-    <li>Se divide por \(4\): \(n-1=49\).</li>
-    <li>Se suma \(1\): \(n=50\). El \(203\) es el término de la posición \(50\).</li>
+    <li>Fórmula: \(a_{n}=a_{1}+(n-1)\,d\). Se reemplazan \(a_{n}=203\), \(a_{1}=7\) y \(d=4\): \(203=7+(n-1)\cdot 4\).</li>
+    <li>Se resta \(7\) en los dos lados: \((n-1)\cdot 4=203-7=196\).</li>
+    <li>Se divide por \(4\) en los dos lados: \(n-1=196:4=49\).</li>
+    <li>Se suma \(1\) en los dos lados: \(n=49+1=50\). El \(203\) es el término de la posición \(50\).</li>
+    <li>Comprobación: \(a_{50}=7+(50-1)\cdot 4=7+49\cdot 4=7+196=203\). ✓</li>
   </ol>
   </div>
   </div>
@@ -246,10 +257,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 3: encontrar el primer término. \(d=-2\) y \(a_{10}=5\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Fórmula con \(n=10\): \(a_{10}=a_{1}+9d\).</li>
-    <li>Se reemplaza: \(5=a_{1}+9\cdot(-2)=a_{1}-18\).</li>
-    <li>Se suma \(18\) en los dos lados: \(a_{1}=23\).</li>
-    <li>Comprobación: \(23+9\cdot(-2)=23-18=5\). ✓</li>
+    <li>Fórmula con \(n=10\): \(a_{10}=a_{1}+(10-1)\,d\). Se resta en el paréntesis, \(10-1=9\): \(a_{10}=a_{1}+9d\).</li>
+    <li>Se reemplazan \(a_{10}=5\) y \(d=-2\): \(5=a_{1}+9\cdot(-2)\).</li>
+    <li>Se multiplica, \(9\cdot(-2)=-18\): \(5=a_{1}-18\).</li>
+    <li>Se suma \(18\) en los dos lados: \(a_{1}=5+18=23\).</li>
+    <li>Comprobación: \(a_{10}=23+9\cdot(-2)=23-18=5\). ✓</li>
   </ol>
   </div>
   </div>
@@ -258,17 +270,19 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 4: la fórmula a partir de dos términos. \(a_{4}=11\) y \(a_{10}=29\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Diferencia (hoja «Diferencia constante»): \(d=\dfrac{a_{10}-a_{4}}{10-4}=\dfrac{29-11}{6}=\dfrac{18}{6}=3\).</li>
-    <li>Se parte del término conocido \(a_{4}\): \(a_{n}=a_{4}+(n-4)\,d=11+(n-4)\cdot 3\).</li>
-    <li>Se distribuye: \(a_{n}=11+3n-12\).</li>
-    <li>Se reduce: \(a_{n}=3n-1\).</li>
-    <li>Comprobación: \(a_{4}=3\cdot 4-1=11\) ✓ y \(a_{10}=3\cdot 10-1=29\) ✓. El primer término es \(a_{1}=3\cdot 1-1=2\).</li>
+    <li>Diferencia (hoja «Diferencia constante»): \(d=\dfrac{a_{10}-a_{4}}{10-4}=\dfrac{29-11}{10-4}=\dfrac{18}{6}=3\).</li>
+    <li>Se parte del término conocido \(a_{4}\) (recuadro «Partiendo de otro término», con \(k=4\)): \(a_{n}=a_{4}+(n-4)\,d\).</li>
+    <li>Se reemplazan \(a_{4}=11\) y \(d=3\): \(a_{n}=11+(n-4)\cdot 3\).</li>
+    <li>Se distribuye, \((n-4)\cdot 3=3n-12\): \(a_{n}=11+3n-12\).</li>
+    <li>Se reducen los números, \(11-12=-1\): \(a_{n}=3n-1\).</li>
+    <li>Comprobación: \(a_{4}=3\cdot 4-1=12-1=11\) ✓ y \(a_{10}=3\cdot 10-1=30-1=29\) ✓.</li>
+    <li>El primer término es \(a_{1}=3\cdot 1-1=3-1=2\).</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Errores frecuentes.</b> Multiplicar por \(n\) en vez de \(n-1\): en el ejemplo 1, \(4+50\cdot 3=154\) es \(a_{51}\), no \(a_{50}\). Olvidar que \(n\) tiene que ser un entero positivo: si al despejar \(n\) no sale un entero, el número buscado no es término de la sucesión. Perder el signo cuando \(d\) es negativa: \(9\cdot(-2)=-18\). Y sumar antes de multiplicar: en \(4+49\cdot 3\) primero va el producto.</p>
+    <p><b>Errores frecuentes.</b> Multiplicar por \(n\) en vez de \(n-1\): en el ejemplo 1, \(4+50\cdot 3=4+150=154\) es \(a_{51}\), no \(a_{50}\). Olvidar que \(n\) tiene que ser un entero positivo: si al despejar \(n\) no sale un entero, el número buscado no es término de la sucesión. Perder el signo cuando \(d\) es negativa: \(9\cdot(-2)=-18\). Y sumar antes de multiplicar: en \(4+49\cdot 3\) primero va el producto.</p>
   </div>
 </section>
 
@@ -279,9 +293,14 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Primero la diferencia; después, \(a_{n}=a_{1}+(n-1)\,d\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>(a) \(d=10-6=4\). \(a_{30}=6+29\cdot 4=6+116=122\).</li>
-        <li>(b) \(d=45-50=-5\). \(a_{21}=50+20\cdot(-5)\).</li>
-        <li>\(50-100=-50\).</li>
+        <li>(a) Datos: \(a_{1}=6\); diferencia, \(d=10-6=4\) (y \(14-10=4\)); \(n=30\).</li>
+        <li>Se reemplaza en \(a_{n}=a_{1}+(n-1)\,d\): \(a_{30}=6+(30-1)\cdot 4\).</li>
+        <li>Se resta, \(30-1=29\): \(a_{30}=6+29\cdot 4\).</li>
+        <li>Se multiplica, \(29\cdot 4=116\): \(a_{30}=6+116=122\).</li>
+        <li>(b) Datos: \(a_{1}=50\); diferencia, \(d=45-50=-5\) (y \(40-45=-5\)); \(n=21\).</li>
+        <li>Se reemplaza: \(a_{21}=50+(21-1)\cdot(-5)\).</li>
+        <li>Se resta, \(21-1=20\): \(a_{21}=50+20\cdot(-5)\).</li>
+        <li>Se multiplica, \(20\cdot(-5)=-100\): \(a_{21}=50+(-100)=50-100=-50\).</li>
       </ol>
     </div></details>
   </div>
@@ -290,10 +309,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Plantea \(8+(n-1)\cdot 7=500\) y mira si \(n\) resulta entero.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(d=15-8=7\). Se plantea \(8+(n-1)\cdot 7=500\); restando \(8\): \((n-1)\cdot 7=492\).</li>
-        <li>\(7\cdot 70=490\) y \(7\cdot 71=497\): \(492\) no es múltiplo de \(7\), así que \(n-1\) no es entero. (a) \(500\) no es término.</li>
-        <li>(b) Con \(n-1=70\): \(a_{71}=8+490=498\), menor que \(500\). Con \(n-1=71\): \(a_{72}=8+497=505\).</li>
-        <li>El primer término mayor que \(500\) es \(a_{72}=505\).</li>
+        <li>Datos: \(a_{1}=8\); diferencia, \(d=15-8=7\) (y \(22-15=7\)).</li>
+        <li>(a) Se plantea \(a_{n}=500\) con la fórmula \(a_{n}=a_{1}+(n-1)\,d\): \(8+(n-1)\cdot 7=500\).</li>
+        <li>Se resta \(8\) en los dos lados: \((n-1)\cdot 7=500-8=492\).</li>
+        <li>¿Es \(492\) múltiplo de \(7\)? \(7\cdot 70=490\) y \(7\cdot 71=497\); \(492\) queda entre los dos (\(492-490=2\), sobra \(2\)). No es múltiplo de \(7\), así que \(n-1\) no es entero: \(500\) no es término.</li>
+        <li>(b) Con \(n-1=70\), o sea \(n=71\): \(a_{71}=8+70\cdot 7=8+490=498\), menor que \(500\).</li>
+        <li>Con \(n-1=71\), o sea \(n=72\): \(a_{72}=8+71\cdot 7=8+497=505\), mayor que \(500\).</li>
+        <li>Como \(d=7\) es positiva, la sucesión es creciente (hoja «Diferencia constante»): los términos anteriores a \(a_{71}\) son menores que \(498\). El primer término mayor que \(500\) es \(a_{72}=505\).</li>
       </ol>
     </div></details>
   </div>
@@ -302,17 +324,22 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Las distancias forman una sucesión aritmética con \(a_{1}=800\) y \(d=200\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>Día 20: \(a_{20}=800+19\cdot 200=800+3\,800=4\,600\) metros.</li>
-        <li>Se plantea \(800+(n-1)\cdot 200=5\,000\); restando \(800\): \((n-1)\cdot 200=4\,200\).</li>
-        <li>Se divide por \(200\): \(n-1=21\), de donde \(n=22\).</li>
-        <li>Corre \(5\,000\) metros el día \(22\).</li>
+        <li>Datos: \(a_{1}=800\) metros, \(d=200\) metros. Fórmula: \(a_{n}=a_{1}+(n-1)\,d\).</li>
+        <li>Día 20, se reemplaza \(n=20\): \(a_{20}=800+(20-1)\cdot 200\).</li>
+        <li>Se resta, \(20-1=19\): \(a_{20}=800+19\cdot 200\).</li>
+        <li>Se multiplica, \(19\cdot 200=3\,800\): \(a_{20}=800+3\,800=4\,600\). El día \(20\) corre \(4\,600\) metros.</li>
+        <li>¿Qué día corre \(5\,000\)? Se plantea \(a_{n}=5\,000\): \(800+(n-1)\cdot 200=5\,000\).</li>
+        <li>Se resta \(800\) en los dos lados: \((n-1)\cdot 200=5\,000-800=4\,200\).</li>
+        <li>Se divide por \(200\) en los dos lados: \(n-1=4\,200:200=21\).</li>
+        <li>Se suma \(1\) en los dos lados: \(n=21+1=22\). Corre \(5\,000\) metros el día \(22\).</li>
+        <li>Comprobación: \(a_{22}=800+(22-1)\cdot 200=800+21\cdot 200=800+4\,200=5\,000\). ✓</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">CI-L25-H09 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H09 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -578,17 +605,24 @@ function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 
     c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
     c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
     S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* L25 H09 · término enésimo: desde a₁ se dan n − 1 saltos de d; lo avanzado es (n − 1)·d */
 OA.scene('ene-idea', (function(){
-  var N = 5, A = [4, 7, 10, 13], YL = 2.45, YBAR = 1.5;
+  var N = 5, A = [4, 7, 10, 13], YL = 2.45, YB = [1.5, 1.2, 0.9];
   var PZ = [['T1', 'a_{1}', 'a₁', 'c-sec'], ['T2', 'a_{2}', 'a₂', 'c-sec'], ['T3', 'a_{3}', 'a₃', 'c-sec'], ['T4', 'a_{4}', 'a₄', 'c-sec'],
     ['D1', '+3', '+3', 'diff'], ['D2', '+3', '+3', 'diff'], ['D3', '+3', '+3', 'diff'],
-    ['B2', '1\\cdot 3', '1 · 3', 'diff'], ['B3', '2\\cdot 3', '2 · 3', 'diff'], ['B4', '3\\cdot 3', '3 · 3', 'diff'], ['B5', '(4-1)\\cdot 3', '(4 − 1) · 3', 'diff'],
-    ['Q', '4,\\ 7,\\ 10,\\ 13,\\ \\ldots\\qquad a_{n}=\\ ?', '4, 7, 10, 13, …   aₙ = ?', 'pt'], ['F', 'a_{n}=a_{1}+(n-1)\\,d', 'aₙ = a₁ + (n − 1) d', 'diff'],
+    ['B2', '1\\cdot 3=3', '1 · 3 = 3', 'diff'], ['B3', '2\\cdot 3=6', '2 · 3 = 6', 'diff'], ['B4', '3\\cdot 3=9', '3 · 3 = 9', 'diff'], ['B5', '\\text{posición }4:\\quad 4-1=3\\ \\text{saltos}', 'posición 4:  4 − 1 = 3 saltos', 'diff'],
+    ['Q', '4,\\ 7,\\ 10,\\ 13,\\ \\ldots\\qquad a_{n}=\\ ?', '4, 7, 10, 13, …   aₙ = ?', 'pt'], ['F', '\\Longrightarrow\\ a_{n}=a_{1}+(n-1)\\,d', '⟹ aₙ = a₁ + (n − 1) d', 'diff'],
     ['R1', 'a_{1}=4', 'a₁ = 4', ''],
-    ['R2', 'a_{2}=4+1\\cdot 3=7', 'a₂ = 4 + 1 · 3 = 7', ''],
-    ['R3', 'a_{3}=4+2\\cdot 3=10', 'a₃ = 4 + 2 · 3 = 10', ''],
-    ['R4', 'a_{4}=4+3\\cdot 3=13', 'a₄ = 4 + 3 · 3 = 13', ''],
+    ['R2', 'a_{2}=4+1\\cdot 3=4+3=7', 'a₂ = 4 + 1 · 3 = 4 + 3 = 7', ''],
+    ['R3', 'a_{3}=4+2\\cdot 3=4+6=10', 'a₃ = 4 + 2 · 3 = 4 + 6 = 10', ''],
+    ['R4', 'a_{4}=4+3\\cdot 3=4+9=13', 'a₄ = 4 + 3 · 3 = 4 + 9 = 13', ''],
     ['R5', 'a_{n}=4+(n-1)\\cdot 3', 'aₙ = 4 + (n − 1) · 3', 'diff']];
   var TXT = [['El primer término vale 4.', 'Todavía no se da ningún salto.'],
     ['Un salto de 3 lleva al segundo término.', 'Lo avanzado desde el primero: una vez 3.'],
@@ -597,12 +631,12 @@ OA.scene('ene-idea', (function(){
     ['Los saltos son uno menos que la posición.', 'Al término n se llega con n − 1 saltos.']];
   function gx(a){ return -1.0 + 0.4*a; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:4.8}, aspect:9.4/6.6,
-    aria:'Animación en cinco pasos con la sucesión 4, 7, 10, 13 sobre una recta numérica. Uno: aparece el primer término, en el 4. Dos: un arco naranja rotulado más 3 salta del 4 al 7, el segundo término; bajo la recta, una barra naranja marca lo avanzado desde el primer término: una vez 3. Tres: otro arco lleva al 10; la barra crece a dos veces 3. Cuatro: otro arco lleva al 13; la barra mide tres veces 3. Cinco: los arcos quedan numerados, salto 1, salto 2 y salto 3: para el cuarto término hubo 4 menos 1 saltos; en general, a sub n es igual a a sub 1 más n menos 1 por d. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    world:{x0:-1.3, x1:5.3, y0:-4.4, y1:5.8}, aspect:10.2/6.6,
+    aria:'Animación en cinco pasos con la sucesión 4, 7, 10, 13 sobre una recta numérica. Uno: aparece el primer término, en el 4. Dos: un arco naranja rotulado más 3 salta del 4 al 7, el segundo término; bajo la recta, una barra naranja marca lo avanzado desde el primer término: una vez 3. Tres: otro arco lleva al 10; bajo la primera barra aparece otra, de dos veces 3. Cuatro: otro arco lleva al 13; aparece una tercera barra, de tres veces 3. Las tres barras quedan una bajo la otra. Cinco: los arcos quedan numerados, salto 1, salto 2 y salto 3: para el cuarto término hubo 4 menos 1 saltos; en general, a sub n es igual a a sub 1 más n menos 1 por d; la pregunta de arriba queda y la respuesta se escribe debajo. Nada de lo que aparece se borra. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw sec"></i> los términos</span><span><i class="sw rise"></i> los saltos (cada uno suma la diferencia) y lo avanzado desde el primer término</span>',
-    anim:{run:30000, hold:8000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    anim:{run:30000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
       var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, j, w, m = Math.min(k, 4), xa, xb, xm, r, ang, fin, sal;
@@ -624,20 +658,29 @@ OA.scene('ene-idea', (function(){
       for (i = 1; i <= m; i++){ w = (i === k) ? (i === 1 ? u : Math.max(0, (u - 0.8)/0.2)) : 1; if (w <= 0) continue;
         c.beginPath(); c.arc(X(gx(A[i - 1])), Y(YL), 3.8*w, 0, 6.2832); c.fillStyle = C.sec; c.fill();
         if (w > 0.5){ num('' + A[i - 1], X(gx(A[i - 1])), Y(YL) + 11, C.sec, 1); L('T' + i, gx(A[i - 1]), YL, -50, 0, 27); } }
-      /* barra: lo avanzado desde el primer término */
-      if (k >= 2){ j = Math.min(k, 4); sal = k === 5 ? 3 : (j - 2) + u; xa = gx(4); xb = gx(4 + 3*sal);
-        S.poly([[xa, YBAR - 0.07], [xb, YBAR - 0.07], [xb, YBAR + 0.07], [xa, YBAR + 0.07]], {fill:C.rise, alpha:0.55});
-        c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(xa), Y(YL) + 38); c.lineTo(X(xa), Y(YBAR)); c.moveTo(X(xb), Y(YL) + (u >= 1 || k === 5 ? 38 : 4)); c.lineTo(X(xb), Y(YBAR)); c.stroke(); c.setLineDash([]);
-        for (i = 1; i < Math.floor(sal + 1e-9); i++){ c.strokeStyle = '#fff'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(gx(4 + 3*i)), Y(YBAR + 0.07)); c.lineTo(X(gx(4 + 3*i)), Y(YBAR - 0.07)); c.stroke(); }
-        if (k === 5) L(u < 0.5 ? 'B4' : 'B5', (xa + xb)/2, YBAR, -50, 0, 14); else if (u > 0.6) L('B' + k, (xa + xb)/2, YBAR, -50, 0, 14); else if (k > 2) L('B' + (k - 1), (xa + gx(4 + 3*(k - 2)))/2, YBAR, -50, 0, 14); }
-      if (k < N || u < 0.5) L('Q', -1.2, 4.45, 0); else L('F', -1.2, 4.45, 0);
-      txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
-      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.0));
+      /* barras: lo avanzado desde el primer término; una por paso, y ninguna se borra */
+      xa = gx(4);
+      for (j = 1; j <= 3; j++){ if (m < j + 1) break; w = (j + 1 === k) ? u : 1; sal = (j - 1) + w; xb = gx(4 + 3*sal);
+        S.poly([[xa, YB[j - 1] - 0.07], [xb, YB[j - 1] - 0.07], [xb, YB[j - 1] + 0.07], [xa, YB[j - 1] + 0.07]], {fill:C.rise, alpha:0.55});
+        c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(xb), Y(YL) + (w >= 1 ? 38 : 4)); c.lineTo(X(xb), Y(YB[j - 1])); c.stroke(); c.setLineDash([]);
+        for (i = 1; i < Math.floor(sal + 1e-9); i++){ c.strokeStyle = '#fff'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(gx(4 + 3*i)), Y(YB[j - 1] + 0.07)); c.lineTo(X(gx(4 + 3*i)), Y(YB[j - 1] - 0.07)); c.stroke(); }
+        if (w > 0.6) L('B' + (j + 1), xa, YB[j - 1], -100, -7, 0); }
+      if (k >= 2){ c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(X(xa), Y(YL) + 38); c.lineTo(X(xa), Y(YB[Math.min(k, 4) - 2])); c.stroke(); c.setLineDash([]); }
+      if (k === 5 && u > 0.3) L('B5', -1.2, 0.5, 0);
+      L('Q', -1.2, 4.45, 0); if (k === N && u > 0.5) L('F', -1.2, 4.0, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.05); txt(TXT[k - 1][1], -1.2, 0.05 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.45));
+      dtQue(S, 'al término n se llega desde el primero', 'con n − 1 saltos iguales a la diferencia d.');
       T.fin();
-      oaReg(S, k, N, -1.2, -1.0, [6, 34, 62, 90, 118]);
+      oaReg(S, k, N, -1.2, -1.35, [6, 34, 62, 90, 118]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1); return [['', ['a_{1}=4', 'a_{2}=a_{1}+1\\cdot d=4+1\\cdot 3=7', 'a_{3}=a_{1}+2\\cdot d=4+2\\cdot 3=10', 'a_{4}=a_{1}+3\\cdot d=4+3\\cdot 3=13', 'a_{n}=a_{1}+(n-1)\\,d=4+(n-1)\\cdot 3'][k - 1]]]; }
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['\\text{Datos: }4,\\ 7,\\ 10,\\ 13,\\ \\ldots\\qquad a_{1}=4' + Q + 'd=7-4=3,\\quad 10-7=3,\\quad 13-10=3' + Q + '\\text{saltos dados: }0',
+      '\\text{1 salto: }a_{2}=a_{1}+1\\cdot d=4+1\\cdot 3' + Q + '1\\cdot 3=3,\\qquad a_{2}=4+3=7',
+      '\\text{2 saltos: }a_{3}=a_{1}+2\\cdot d=4+2\\cdot 3' + Q + '2\\cdot 3=6,\\qquad a_{3}=4+6=10',
+      '\\text{3 saltos: }a_{4}=a_{1}+3\\cdot d=4+3\\cdot 3' + Q + '3\\cdot 3=9,\\qquad a_{4}=4+9=13',
+      '\\text{saltos}=\\text{posición}-1:\\quad 1=2-1,\\ \\ 2=3-1,\\ \\ 3=4-1' + Q + 'a_{n}=a_{1}+(n-1)\\,d=4+(n-1)\\cdot 3' + Q + '\\text{Al término }n\\text{ se llega con }n-1\\text{ saltos de }d.'];
+      return dtPasos(R.slice(0, k)); }
   };
 })());
 OA.boot();
