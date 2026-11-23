@@ -1,0 +1,251 @@
+<!--file:H08_tablas_y_limites_unilaterales.html-->
+<!--title:Tablas y límites unilaterales-->
+<!--id:lim-unil-->
+<!--tab:H08 Tablas y límites unilaterales-->
+<article class="sheet" id="lim-unil" data-hoja="L29 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de tablas</li>
+      <li><b>Tablas y límites unilaterales</b></li>
+    </ol>
+    <h1>Tablas y límites unilaterales</h1>
+    <p class="lede">Un límite <b>unilateral</b> (o lateral) mira un solo lado de \(a\). En una tabla, cada lado se lee por separado y da su propia estimación:
+    \[\lim_{x\to a^{-}}f(x)\approx L_{1}\ \ (\text{columnas con }x\lt a)\qquad\qquad\lim_{x\to a^{+}}f(x)\approx L_{2}\ \ (\text{columnas con }x\gt a)\]
+    Después se comparan: el límite por los dos lados existe solo si los dos laterales existen y son el mismo número. La columna \(x=a\) no participa en ninguno.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Esta es la tabla dada de una función \(f\). Se pide estimar, por separado, \(\displaystyle\lim_{x\to 3^{-}}f(x)\) y \(\displaystyle\lim_{x\to 3^{+}}f(x)\), y decidir después si existe \(\displaystyle\lim_{x\to 3}f(x)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(2{,}9\)</td><td>\(2{,}99\)</td><td>\(2{,}999\)</td><td>\(3\)</td><td>\(3{,}001\)</td><td>\(3{,}01\)</td><td>\(3{,}1\)</td></tr>
+    <tr><th>\(f(x)\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(6\)</td><td>\(6{,}002\)</td><td>\(6{,}02\)</td><td>\(6{,}2\)</td></tr>
+  </table></div>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la tabla completa</b> (paso 1): la fila de arriba son los \(x\); la de abajo, los valores \(f(x)\).</li>
+    <li><b>En el paso 2 la tabla queda partida en dos lados:</b> a la izquierda, las columnas con \(x\lt 3\); a la derecha, las de \(x\gt 3\). La columna \(x=3\) queda rayada: sigue a la vista, pero no se usa.</li>
+    <li><b>Sigue una flecha a la vez</b> (pasos 3 y 4): la azul recorre solo el lado izquierdo y la naranja, solo el derecho, siempre hacia \(x=3\). En la recta de abajo, cada valor leído es un punto, y el número al que se acerca cada lado queda en un círculo de su color.</li>
+    <li><b>En el paso 5 se comparan los dos círculos:</b> el trazo burdeo los une para mostrar que son números distintos.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> los valores de cada lado, sus distancias al candidato, los dos límites laterales, la comparación y, al final, la fórmula que confirma. Nada se borra: todo queda en la figura y en el registro numerado.</li>
+  </ol>
+  <div class="stage" data-scene="uni-idea"></div>
+  <ul class="keys">
+    <li><b>Tabla:</b> los datos, tal como vienen. <b>Columna rayada:</b> \(x=3\), con \(f(3)=6\); no participa en ningún límite lateral.</li>
+    <li><b>Azul:</b> lado izquierdo (\(x\lt 3\)), leído hacia \(3\): \(3{,}9\); \(3{,}99\); \(3{,}999\). Su círculo: el \(4\), límite por la izquierda.</li>
+    <li><b>Naranja:</b> lado derecho (\(x\gt 3\)), leído hacia \(3\): \(6{,}2\); \(6{,}02\); \(6{,}002\). Su círculo: el \(6\), límite por la derecha.</li>
+    <li><b>Burdeo:</b> la comparación de los dos laterales (\(4\ne 6\)) y la fórmula con que se hizo la tabla.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar a partir de una tabla.</b> Una tabla trae pocos valores y nada dice de lo que pasa entre ellos: <b>un límite lateral leído en una tabla es una estimación</b>, no una demostración, y por eso se escribe con «≈». En esta hoja, cuando se conoce la fórmula, la estimación se confirma con ella. La definición de límite lateral que se usa es la intuitiva; la formal va en otra hoja de este lote. La confirmación usa, <b>sin demostrar</b>, hechos que se demuestran con esa definición formal:</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\) por un solo lado, \(c\,x+d\) se acerca a \(c\,a+d\) (\(c\) y \(d\), números fijos). Una función constante cerca de \(a\), de ese lado, tiene por límite lateral esa constante.</li>
+      <li>Un límite lateral depende solo de los valores de la función en los \(x\) cercanos a \(a\) de su lado, con \(x\ne a\).</li>
+      <li>Criterio de los límites laterales: \(\displaystyle\lim_{x\to a}f(x)\) existe y vale \(L\) si y solo si los dos límites laterales existen y valen \(L\).</li>
+      <li>Reglas del orden: si \(0\lt p\lt q\), entonces \(\dfrac{1}{q}\lt\dfrac{1}{p}\). Y una función cuyos valores superan cualquier tope cerca de \(a\), por un lado, no se acerca a ningún número por ese lado.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué es un límite lateral y cómo se estima con una tabla</h3>
+    <ol class="steps">
+      <li><b>Por la izquierda.</b> \(x\to a^{-}\) se lee «\(x\) tiende a \(a\) por la izquierda»: \(x\) se acerca a \(a\) con \(x\lt a\). Se escribe \(\displaystyle\lim_{x\to a^{-}}f(x)=L_{1}\) si \(f(x)\) queda tan cerca de \(L_{1}\) como se quiera, con tal de tomar \(x\lt a\) suficientemente cerca de \(a\).</li>
+      <li><b>Por la derecha.</b> \(x\to a^{+}\) se lee «\(x\) tiende a \(a\) por la derecha»: \(x\) se acerca a \(a\) con \(x\gt a\). Se escribe \(\displaystyle\lim_{x\to a^{+}}f(x)=L_{2}\) si \(f(x)\) queda tan cerca de \(L_{2}\) como se quiera, con tal de tomar \(x\gt a\) suficientemente cerca de \(a\).</li>
+      <li><b>El signo va arriba de \(a\), no delante:</b> \(3^{-}\) no es el número \(-3\); es «el \(3\), mirado desde los \(x\) menores que \(3\)».</li>
+      <li><b>En la tabla, un lado a la vez.</b> Para \(x\to a^{-}\) se usan solo las columnas con \(x\lt a\), leídas hacia \(a\); para \(x\to a^{+}\), solo las de \(x\gt a\), leídas hacia \(a\) (desde la última columna hacia atrás).</li>
+      <li><b>Candidato y distancias.</b> Para cada lado se propone un número y se calculan las distancias de los valores a ese número: tienen que achicarse hacia \(0\) (o ser todas \(0\), si los valores no cambian).</li>
+      <li><b>Comparar al final.</b> Si \(L_{1}\) y \(L_{2}\) son el mismo número \(L\), la estimación es \(\displaystyle\lim_{x\to a}f(x)\approx L\). Si son distintos, o algún lado no se acerca a ningún número, \(\displaystyle\lim_{x\to a}f(x)\) no existe.</li>
+    </ol>
+    <p>La columna \(x=a\) no participa en ningún lateral: los dos miran \(x\ne a\). En la tabla de \(f\), que \(f(3)=6\) coincida con el número de la derecha no cambia ninguna lectura.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Por qué cada lateral mira solo su lado: dos funciones con el mismo lado izquierdo</h3>
+    <ol class="steps">
+      <li><b>La tabla de \(f\) se hizo con esta fórmula:</b> \(f(x)=x+1\) si \(x\lt 3\), y \(f(x)=2x\) si \(x\ge 3\). Por ejemplo, \(f(2{,}9)=2{,}9+1=3{,}9\) y \(f(3{,}1)=2\cdot 3{,}1=6{,}2\).</li>
+      <li><b>Otra función:</b> \(r(x)=x+1\) para todo \(x\). A la izquierda de \(3\) es igual a \(f\); a la derecha, no: \(r(3{,}1)=3{,}1+1=4{,}1\).</li>
+    </ol>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(2{,}9\)</td><td>\(2{,}99\)</td><td>\(2{,}999\)</td><td>\(3\)</td><td>\(3{,}001\)</td><td>\(3{,}01\)</td><td>\(3{,}1\)</td></tr>
+      <tr><th>\(f(x)\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(6\)</td><td>\(6{,}002\)</td><td>\(6{,}02\)</td><td>\(6{,}2\)</td></tr>
+      <tr><th>\(r(x)\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(4\)</td><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td></tr>
+    </table></div>
+    <ol class="steps" start="3">
+      <li><b>Lado izquierdo: idéntico.</b> Las tres columnas con \(x\lt 3\) traen lo mismo en las dos filas: \(3{,}9\); \(3{,}99\); \(3{,}999\). Distancias a \(4\): \(|3{,}9-4|=0{,}1\); \(|3{,}99-4|=0{,}01\); \(|3{,}999-4|=0{,}001\). La lectura por la izquierda es la misma: \(\displaystyle\lim_{x\to 3^{-}}f(x)\approx 4\) y \(\displaystyle\lim_{x\to 3^{-}}r(x)\approx 4\).</li>
+      <li><b>Lado derecho: distinto.</b> Para \(r\), hacia \(3\): \(4{,}1\); \(4{,}01\); \(4{,}001\). Distancias a \(4\): \(|4{,}1-4|=0{,}1\); \(|4{,}01-4|=0{,}01\); \(|4{,}001-4|=0{,}001\). Entonces \(\displaystyle\lim_{x\to 3^{+}}r(x)\approx 4\). Para \(f\), hacia \(3\): \(6{,}2\); \(6{,}02\); \(6{,}002\), con distancias a \(6\): \(|6{,}2-6|=0{,}2\); \(|6{,}02-6|=0{,}02\); \(|6{,}002-6|=0{,}002\). Entonces \(\displaystyle\lim_{x\to 3^{+}}f(x)\approx 6\).</li>
+      <li><b>Se compara en cada función.</b> En \(r\): izquierda \(4\), derecha \(4\); el mismo número, así que \(\displaystyle\lim_{x\to 3}r(x)\approx 4\). En \(f\): izquierda \(4\), derecha \(6\); \(4\ne 6\), así que \(\displaystyle\lim_{x\to 3}f(x)\) no existe.</li>
+      <li><b>Confirmación con las fórmulas.</b> Por la izquierda, en las dos, \(x+1\) se acerca a \(3+1=4\). Por la derecha: en \(r\), \(x+1\) se acerca a \(3+1=4\); en \(f\), \(2x\) se acerca a \(2\cdot 3=6\).</li>
+      <li><b>Conclusión:</b> lo que una función hace a la derecha de \(a\) no cambia su límite por la izquierda, y al revés. Por eso un solo lado de la tabla alcanza para estimar <b>ese</b> lateral, pero nunca para decidir el límite por los dos lados: con el mismo lado izquierdo, \(r\) tiene límite en \(3\) y \(f\) no.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: un lado se acerca a un número y el otro crece sin tope</h3>
+    <ol class="steps">
+      <li>Esta tabla viene dada, con \(a=0\). La función \(s\) no está definida en \(0\).</li>
+    </ol>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(-0{,}1\)</td><td>\(-0{,}01\)</td><td>\(-0{,}001\)</td><td>\(0\)</td><td>\(0{,}001\)</td><td>\(0{,}01\)</td><td>\(0{,}1\)</td></tr>
+      <tr><th>\(s(x)\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>no definida</td><td>\(1000\)</td><td>\(100\)</td><td>\(10\)</td></tr>
+    </table></div>
+    <ol class="steps" start="2">
+      <li><b>Izquierda, hacia \(0\):</b> \(1{,}9\); \(1{,}99\); \(1{,}999\). Candidato: \(2\). Distancias: \(|1{,}9-2|=0{,}1\); \(|1{,}99-2|=0{,}01\); \(|1{,}999-2|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 0^{-}}s(x)\approx 2\).</li>
+      <li><b>Derecha, hacia \(0\):</b> \(10\); \(100\); \(1000\). Cada vez que \(x\) queda \(10\) veces más cerca de \(0\), el valor se multiplica por \(10\): \(10\cdot 10=100\) y \(100\cdot 10=1000\). No se ve ningún número al que se acerquen.</li>
+      <li><b>Estimación:</b> el límite por la izquierda es aproximadamente \(2\); el límite por la derecha no existe como número (los valores crecen sin tope; se anota \(\displaystyle\lim_{x\to 0^{+}}s(x)=+\infty\), y \(+\infty\) no es un número). Entonces \(\displaystyle\lim_{x\to 0}s(x)\) no existe.</li>
+      <li><b>Confirmación.</b> La tabla se hizo con \(s(x)=x+2\) si \(x\lt 0\), y \(s(x)=\dfrac{1}{x}\) si \(x\gt 0\). Por la izquierda, \(x+2\) se acerca a \(0+2=2\). Por la derecha: si \(M\gt 0\) y \(0\lt x\lt\dfrac{1}{M}\), entonces \(\dfrac{1}{x}\gt M\) (regla del orden del aviso). Con \(M=1000\): \(\dfrac{1}{1000}=0{,}001\), y para \(0\lt x\lt 0{,}001\) es \(s(x)\gt 1000\); por ejemplo, \(s(0{,}0005)=\dfrac{1}{0{,}0005}=2000\). Los valores superan cualquier tope.</li>
+      <li>Basta que <b>un</b> lateral falle para que el límite por los dos lados no exista, aunque el otro lateral sea un número.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: dos laterales distintos, y \(g(a)\) no es ninguno de los dos</h3>
+  <div class="body">
+  <p>Con esta tabla, estima \(\displaystyle\lim_{x\to 2^{-}}g(x)\) y \(\displaystyle\lim_{x\to 2^{+}}g(x)\), y decide si existe \(\displaystyle\lim_{x\to 2}g(x)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(g(x)\)</th><td>\(5{,}7\)</td><td>\(5{,}97\)</td><td>\(5{,}997\)</td><td>\(4\)</td><td>\(1{,}001\)</td><td>\(1{,}01\)</td><td>\(1{,}1\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=2\). Izquierda: las columnas \(1{,}9\); \(1{,}99\); \(1{,}999\). Derecha: \(2{,}001\); \(2{,}01\); \(2{,}1\). La columna \(x=2\) se deja aparte.</li>
+    <li>Izquierda, hacia \(2\): \(5{,}7\); \(5{,}97\); \(5{,}997\). Candidato: \(6\). Distancias: \(|5{,}7-6|=0{,}3\); \(|5{,}97-6|=0{,}03\); \(|5{,}997-6|=0{,}003\). Se achican: \(\displaystyle\lim_{x\to 2^{-}}g(x)\approx 6\).</li>
+    <li>Derecha, hacia \(2\) (de la última columna hacia atrás): \(1{,}1\); \(1{,}01\); \(1{,}001\). Candidato: \(1\). Distancias: \(|1{,}1-1|=0{,}1\); \(|1{,}01-1|=0{,}01\); \(|1{,}001-1|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 2^{+}}g(x)\approx 1\).</li>
+    <li>Comparación: \(6\ne 1\). Los laterales son distintos: \(\displaystyle\lim_{x\to 2}g(x)\) <b>no existe</b>.</li>
+    <li>El \(4\) de la columna \(x=2\) es \(g(2)\). No es ninguno de los dos laterales (\(4\ne 6\) y \(4\ne 1\)), y no hace falta que lo sea.</li>
+    <li>Confirmación: la tabla se hizo con \(g(x)=3x\) si \(x\lt 2\); \(g(2)=4\); \(g(x)=x-1\) si \(x\gt 2\). En efecto, \(3\cdot 1{,}9=5{,}7\) y \(2{,}1-1=1{,}1\). Por la izquierda, \(3x\) se acerca a \(3\cdot 2=6\); por la derecha, \(x-1\) se acerca a \(2-1=1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: los dos laterales coinciden</h3>
+  <div class="body">
+  <p>Estima los dos límites laterales de \(h\) en \(2\) y decide si existe \(\displaystyle\lim_{x\to 2}h(x)\). La tabla no trae columna \(x=2\): \(h\) no está definida ahí.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(h(x)\)</th><td>\(2{,}1\)</td><td>\(2{,}01\)</td><td>\(2{,}001\)</td><td>\(2{,}003\)</td><td>\(2{,}03\)</td><td>\(2{,}3\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=2\). Izquierda: \(1{,}9\); \(1{,}99\); \(1{,}999\). Derecha: \(2{,}001\); \(2{,}01\); \(2{,}1\).</li>
+    <li>Izquierda, hacia \(2\): \(2{,}1\); \(2{,}01\); \(2{,}001\). Candidato: \(2\). Distancias: \(|2{,}1-2|=0{,}1\); \(|2{,}01-2|=0{,}01\); \(|2{,}001-2|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 2^{-}}h(x)\approx 2\).</li>
+    <li>Derecha, hacia \(2\): \(2{,}3\); \(2{,}03\); \(2{,}003\). Candidato: \(2\). Distancias: \(|2{,}3-2|=0{,}3\); \(|2{,}03-2|=0{,}03\); \(|2{,}003-2|=0{,}003\). Se achican: \(\displaystyle\lim_{x\to 2^{+}}h(x)\approx 2\).</li>
+    <li>Comparación: los dos laterales son el mismo número, \(2\). Por el criterio de los laterales, \(\displaystyle\lim_{x\to 2}h(x)\approx 2\).</li>
+    <li>Fíjate: por la izquierda los valores bajan hacia \(2\) desde arriba, igual que por la derecha. Que \(x\) vaya por la izquierda no obliga a que los valores vayan por debajo.</li>
+    <li>Confirmación: la tabla se hizo con \(h(x)=4-x\) si \(x\lt 2\), y \(h(x)=3x-4\) si \(x\gt 2\). En efecto, \(4-1{,}9=2{,}1\); y \(3\cdot 2{,}1=6{,}3\), \(6{,}3-4=2{,}3\). Por la izquierda, \(4-x\) se acerca a \(4-2=2\); por la derecha, \(3x-4\) se acerca a \(3\cdot 2-4=6-4=2\). El límite es \(2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: la tabla trae un solo lado</h3>
+  <div class="body">
+  <p>De una función \(k\) se tiene solo esta tabla, con \(x\gt 4\). ¿Qué se puede estimar en \(a=4\)?</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td><td>\(4{,}5\)</td></tr>
+    <tr><th>\(k(x)\)</th><td>\(1{,}998\)</td><td>\(1{,}98\)</td><td>\(1{,}8\)</td><td>\(1\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>Todas las columnas tienen \(x\gt 4\): la tabla solo sirve para el límite por la derecha, \(x\to 4^{+}\).</li>
+    <li>Derecha, hacia \(4\) (de la última columna hacia atrás): \(1\); \(1{,}8\); \(1{,}98\); \(1{,}998\). Candidato: \(2\).</li>
+    <li>Distancias a \(2\): \(|1-2|=1\); \(|1{,}8-2|=0{,}2\); \(|1{,}98-2|=0{,}02\); \(|1{,}998-2|=0{,}002\). Se achican: \(\displaystyle\lim_{x\to 4^{+}}k(x)\approx 2\).</li>
+    <li>Del límite por la izquierda la tabla no dice nada: no hay ninguna columna con \(x\lt 4\). Tampoco se puede decidir \(\displaystyle\lim_{x\to 4}k(x)\): faltaría conocer el otro lateral (recuadro 2).</li>
+    <li>Confirmación del lado que se tiene: la tabla se hizo con \(k(x)=10-2x\) para \(x\gt 4\). En efecto, \(2\cdot 4{,}5=9\) y \(10-9=1\). Por la derecha, \(10-2x\) se acerca a \(10-2\cdot 4=10-8=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: los valores de cada lado no cambian</h3>
+  <div class="body">
+  <p>La función \(e\) vale \(1\) si \(1\le x\lt 2\), y vale \(2\) si \(2\le x\lt 3\). Estima sus límites laterales en \(2\) con la tabla.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(e(x)\)</th><td>\(1\)</td><td>\(1\)</td><td>\(1\)</td><td>\(2\)</td><td>\(2\)</td><td>\(2\)</td><td>\(2\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>Izquierda, hacia \(2\): \(1\); \(1\); \(1\). Los valores no cambian. Candidato: \(1\). Distancias: \(|1-1|=0\), las tres veces.</li>
+    <li>«Acercarse» incluye este caso: los valores ya están en el \(1\). Estimación: \(\displaystyle\lim_{x\to 2^{-}}e(x)\approx 1\).</li>
+    <li>Derecha, hacia \(2\): \(2\); \(2\); \(2\). Candidato: \(2\). Distancias: \(|2-2|=0\), las tres veces. Estimación: \(\displaystyle\lim_{x\to 2^{+}}e(x)\approx 2\).</li>
+    <li>Comparación: \(1\ne 2\). El límite \(\displaystyle\lim_{x\to 2}e(x)\) <b>no existe</b>: la función da un salto de \(2-1=1\).</li>
+    <li>Confirmación con la definición de \(e\): para todo \(x\) con \(1\le x\lt 2\) es \(e(x)=1\), así que el límite por la izquierda es exactamente \(1\); para todo \(x\) con \(2\lt x\lt 3\) es \(e(x)=2\), así que el límite por la derecha es exactamente \(2\).</li>
+    <li>Aquí \(e(2)=2\) coincide con el lateral derecho. Es un dato de la función en \(2\); los laterales se obtuvieron sin usarlo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>leer \(3^{-}\) como \(-3\)</b>. El signo de arriba indica el lado desde el que \(x\) se acerca, no un número negativo. Dos: <b>mezclar los lados</b>: para \(x\to a^{-}\) se usan solo las columnas con \(x\lt a\). Tres: <b>usar la columna \(x=a\)</b> para decidir un lateral: en la tabla de \(f\), \(f(3)=6\) no es la razón de que el lateral derecho sea \(6\). Cuatro: <b>concluir el límite por los dos lados con un solo lateral</b>: en el ejemplo 3 solo se pudo estimar el lateral derecho.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Con esta tabla: a) estima \(\displaystyle\lim_{x\to 4^{-}}p(x)\) y \(\displaystyle\lim_{x\to 4^{+}}p(x)\); b) decide si existe \(\displaystyle\lim_{x\to 4}p(x)\); c) confirma con la fórmula \(p(x)=2x-3\) si \(x\le 4\), y \(p(x)=12-x\) si \(x\gt 4\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(4\)</td><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td></tr>
+      <tr><th>\(p(x)\)</th><td>\(4{,}8\)</td><td>\(4{,}98\)</td><td>\(4{,}998\)</td><td>\(5\)</td><td>\(7{,}999\)</td><td>\(7{,}99\)</td><td>\(7{,}9\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Deja aparte la columna \(x=4\). Lee la izquierda de \(3{,}9\) a \(3{,}999\) y, por separado, la derecha de \(4{,}1\) a \(4{,}001\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(4\): \(4{,}8\); \(4{,}98\); \(4{,}998\). Candidato: \(5\). Distancias: \(|4{,}8-5|=0{,}2\); \(|4{,}98-5|=0{,}02\); \(|4{,}998-5|=0{,}002\). Se achican: \(\displaystyle\lim_{x\to 4^{-}}p(x)\approx 5\).</li>
+        <li>Derecha, hacia \(4\): \(7{,}9\); \(7{,}99\); \(7{,}999\). Candidato: \(8\). Distancias: \(|7{,}9-8|=0{,}1\); \(|7{,}99-8|=0{,}01\); \(|7{,}999-8|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 4^{+}}p(x)\approx 8\).</li>
+        <li>b) \(5\ne 8\): los laterales son distintos y \(\displaystyle\lim_{x\to 4}p(x)\) no existe.</li>
+        <li>c) Una columna de cada lado: \(2\cdot 3{,}9=7{,}8\) y \(7{,}8-3=4{,}8\); \(12-4{,}1=7{,}9\).</li>
+        <li>Por la izquierda, \(2x-3\) se acerca a \(2\cdot 4-3=8-3=5\). Por la derecha, \(12-x\) se acerca a \(12-4=8\). Laterales \(5\) y \(8\), como se estimó.</li>
+        <li>La columna \(x=4\) dice \(p(4)=5\): coincide con el lateral izquierdo, pero no se usó para obtenerlo.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Con esta tabla: a) estima los dos límites laterales de \(q\) en \(1\); b) decide si existe \(\displaystyle\lim_{x\to 1}q(x)\) y cuánto vale; c) ¿qué papel juega \(q(1)=7\)?; d) confirma con la fórmula \(q(x)=5x-2\) si \(x\lt 1\), \(q(1)=7\), y \(q(x)=4-x\) si \(x\gt 1\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(0{,}9\)</td><td>\(0{,}99\)</td><td>\(0{,}999\)</td><td>\(1\)</td><td>\(1{,}001\)</td><td>\(1{,}01\)</td><td>\(1{,}1\)</td></tr>
+      <tr><th>\(q(x)\)</th><td>\(2{,}5\)</td><td>\(2{,}95\)</td><td>\(2{,}995\)</td><td>\(7\)</td><td>\(2{,}999\)</td><td>\(2{,}99\)</td><td>\(2{,}9\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Prueba el mismo candidato, \(3\), para los dos lados. No importa que un lado se acerque más rápido que el otro.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(1\): \(2{,}5\); \(2{,}95\); \(2{,}995\). Candidato: \(3\). Distancias: \(|2{,}5-3|=0{,}5\); \(|2{,}95-3|=0{,}05\); \(|2{,}995-3|=0{,}005\). Se achican: \(\displaystyle\lim_{x\to 1^{-}}q(x)\approx 3\).</li>
+        <li>Derecha, hacia \(1\): \(2{,}9\); \(2{,}99\); \(2{,}999\). Candidato: \(3\). Distancias: \(|2{,}9-3|=0{,}1\); \(|2{,}99-3|=0{,}01\); \(|2{,}999-3|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 1^{+}}q(x)\approx 3\).</li>
+        <li>b) Los dos laterales son el mismo número, \(3\): por el criterio de los laterales, \(\displaystyle\lim_{x\to 1}q(x)\approx 3\).</li>
+        <li>c) Ninguno: \(q(1)=7\) es el valor de la función en \(1\), y \(7\ne 3\). Los límites miran \(x\ne 1\).</li>
+        <li>d) Una columna de cada lado: \(5\cdot 0{,}9=4{,}5\) y \(4{,}5-2=2{,}5\); \(4-1{,}1=2{,}9\).</li>
+        <li>Por la izquierda, \(5x-2\) se acerca a \(5\cdot 1-2=5-2=3\). Por la derecha, \(4-x\) se acerca a \(4-1=3\). Los dos laterales valen \(3\): \(\displaystyle\lim_{x\to 1}q(x)=3\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un puesto de feria vende manzanas a granel. <b>Modelo:</b> si se llevan menos de \(5\) kg, el kilogramo cuesta \(1200\) pesos; desde \(5\) kg, todo el pedido se cobra a precio mayorista, \(1000\) pesos el kilogramo. El total a pagar por \(x\) kg es \(P(x)=1200\,x\) si \(0\lt x\lt 5\), y \(P(x)=1000\,x\) si \(x\ge 5\) (la balanza marca hasta milésimas de kilogramo). a) Con la tabla, estima los dos límites laterales de \(P\) en \(5\). b) ¿Existe \(\displaystyle\lim_{x\to 5}P(x)\)? c) Confirma con el modelo. d) ¿Qué significa para quien compra?</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\) (kg)</th><td>\(4{,}9\)</td><td>\(4{,}99\)</td><td>\(4{,}999\)</td><td>\(5\)</td><td>\(5{,}001\)</td><td>\(5{,}01\)</td><td>\(5{,}1\)</td></tr>
+      <tr><th>\(P(x)\) (pesos)</th><td>\(5880\)</td><td>\(5988\)</td><td>\(5998{,}8\)</td><td>\(5000\)</td><td>\(5001\)</td><td>\(5010\)</td><td>\(5100\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Candidato para la izquierda: \(6000\). Candidato para la derecha: \(5000\). La columna \(x=5\) se deja aparte.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(5\): \(5880\); \(5988\); \(5998{,}8\). Candidato: \(6000\). Distancias: \(|5880-6000|=120\); \(|5988-6000|=12\); \(|5998{,}8-6000|=1{,}2\). Se achican: \(\displaystyle\lim_{x\to 5^{-}}P(x)\approx 6000\) pesos.</li>
+        <li>Derecha, hacia \(5\): \(5100\); \(5010\); \(5001\). Candidato: \(5000\). Distancias: \(|5100-5000|=100\); \(|5010-5000|=10\); \(|5001-5000|=1\). Se achican: \(\displaystyle\lim_{x\to 5^{+}}P(x)\approx 5000\) pesos.</li>
+        <li>b) \(6000\ne 5000\): los laterales son distintos y \(\displaystyle\lim_{x\to 5}P(x)\) no existe.</li>
+        <li>c) Una columna de cada lado: \(1200\cdot 4{,}9=5880\) y \(1000\cdot 5{,}1=5100\).</li>
+        <li>Por la izquierda, \(1200\,x\) se acerca a \(1200\cdot 5=6000\). Por la derecha, \(1000\,x\) se acerca a \(1000\cdot 5=5000\). Laterales: \(6000\) y \(5000\) pesos.</li>
+        <li>d) Significado: quien pide un poco menos de \(5\) kg paga casi \(6000\) pesos; quien pide \(5\) kg o un poco más paga \(5000\) pesos o apenas más. En \(5\) kg el total da un salto de \(6000-5000=1000\) pesos hacia abajo: en este modelo conviene pedir \(5\) kg antes que \(4{,}9\) kg (\(5000\lt 5880\)).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>

@@ -1,0 +1,282 @@
+<!--file:H09_usar_tablas_para_aproximar_limites.html-->
+<!--title:Usar tablas para aproximar límites-->
+<!--id:lim-usar-->
+<!--tab:H09 Usar tablas para aproximar límites-->
+<article class="sheet" id="lim-usar" data-hoja="L29 H09">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de tablas</li>
+      <li><b>Usar tablas para aproximar límites</b></li>
+    </ol>
+    <h1>Usar tablas para aproximar límites</h1>
+    <p class="lede">Cuando la fórmula trae una <b>raíz</b>, casi ningún valor de la tabla es un decimal exacto: la calculadora entrega la raíz <b>redondeada</b>. La tabla sigue sirviendo para aproximar \(\displaystyle\lim_{x\to a}f(x)\) con tres cuidados: declarar con cuántos decimales se redondeó, escribir cada valor con «≈» y calcular su <b>margen de error</b>.
+    \[f(x)=\dfrac{\sqrt{x}-c}{x-a},\ \text{ raíz redondeada con error de a lo más }e\quad\Longrightarrow\quad\text{error del valor de la tabla}\le\dfrac{e}{|x-a|}\]
+    La tabla <b>aproxima</b> el límite: no lo demuestra. Cuando se puede, racionalizar lo confirma.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La animación construye, en siete pasos, la tabla de
+  \[f(x)=\dfrac{\sqrt{x}-2}{x-4},\qquad x\ge 0,\ x\ne 4,\]
+  alrededor de \(a=4\). En \(x=4\) la fórmula no se puede calcular: arriba queda \(\sqrt{4}-2=0\) y abajo, \(4-4=0\). Las raíces se redondean a \(6\) decimales.</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la columna de \(x\):</b> arriba, en azul, los valores menores que \(4\) (izquierda): \(3{,}9\); \(3{,}99\); \(3{,}999\). Abajo, en naranja, los mayores que \(4\) (derecha): \(4{,}001\); \(4{,}01\); \(4{,}1\). La fila gris del centro es \(x=4\): no se calcula.</li>
+    <li><b>En el paso 2 aparece la columna de las raíces,</b> redondeadas a \(6\) decimales. Son valores aproximados: por eso el encabezado lleva «≈».</li>
+    <li><b>En los pasos 3 y 4 se llena la columna de \(f(x)\).</b> Cada resultado aparece también como un punto en la recta numérica de abajo: los azules, en la línea de abajo; los naranjas, un poco más arriba.</li>
+    <li><b>En el paso 5 aparece el margen de error de cada valor.</b> En la recta, el trazo con topes muestra dónde puede estar el valor real de las filas más cercanas a \(4\): mientras más cerca de \(4\), más ancho.</li>
+    <li><b>Avanza con el deslizador «paso»</b> o con «Reproducir». Nada se borra. <b>Lee la cuenta de abajo, línea por línea:</b> cómo se elige cada \(x\), cada raíz redondeada, la resta y la división de cada fila, el margen de error, lo que la tabla permite informar («aproximadamente \(0{,}25\)») y la confirmación al racionalizar («igual a \(0{,}25\)»).</li>
+  </ol>
+  <div class="stage" data-scene="usa-idea"></div>
+  <ul class="keys">
+    <li><b>Números azules:</b> los \(x\) menores que \(4\), sus raíces y sus resultados. <b>Números naranjas:</b> los \(x\) mayores que \(4\), sus raíces y sus resultados.</li>
+    <li><b>Fila gris:</b> \(x=4\), donde la fórmula no se puede calcular. No se usa.</li>
+    <li><b>Recta numérica:</b> cada punto es un resultado de la tabla. El <b>trazo con topes</b> es su margen de error: el valor real de la función está dentro del trazo. En las filas lejanas el trazo es tan corto que no se ve.</li>
+    <li><b>Verde:</b> el candidato \(0{,}25\) (línea punteada) y la confirmación con álgebra.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar con una tabla de valores redondeados.</b> Una tabla tiene una cantidad finita de filas y, además, aquí cada valor es aproximado. Por eso <b>un límite obtenido de una tabla es una aproximación</b> y se escribe \(\lim f(x)\approx L\). En esta hoja:</p>
+    <ol class="steps">
+      <li>«Redondear a \(6\) decimales» significa entregar el decimal de \(6\) cifras más cercano. El error es, entonces, de a lo más media unidad del sexto decimal: \(e=0{,}0000005\). Cada raíz redondeada de esta hoja se comprobó por encierro: si \(r\) es la raíz redondeada de \(q\), se cumple \((r-e)^{2}\le q\le (r+e)^{2}\).</li>
+      <li>Las confirmaciones con álgebra usan, <b>sin demostrar</b>, hechos que se demuestran con la definición formal de límite (otra hoja de este lote): cuando \(x\) se acerca a \(a\), con \(a\gt 0\), \(\sqrt{x}\) se acerca a \(\sqrt{a}\) (y lo mismo con \(\sqrt{x+k}\) y \(\sqrt{2x+1}\) cuando lo de adentro se acerca a un número positivo); el límite de una suma es la suma de los límites; el límite de un cociente es el cociente de los límites si el de abajo no es \(0\); si dos funciones valen lo mismo en todo \(x\ne a\) cercano a \(a\), tienen el mismo límite en \(a\); si el límite existe, es uno solo.</li>
+    </ol>
+    <p>«Límite» se entiende como en la hoja «Introducción a los límites»: \(f(x)\) queda tan cerca de \(L\) como se quiera con tal de tomar \(x\) suficientemente cerca de \(a\), con \(x\ne a\).</p>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>El procedimiento, en seis pasos</h3>
+    <ol class="steps">
+      <li><b>Elige los \(x\).</b> Tres por la izquierda, \(a-0{,}1\); \(a-0{,}01\); \(a-0{,}001\), y tres por la derecha, \(a+0{,}1\); \(a+0{,}01\); \(a+0{,}001\). Nunca \(x=a\). Revisa que la raíz exista en todos (lo de adentro no puede ser negativo).</li>
+      <li><b>Calcula cada raíz y declara el redondeo:</b> «a \(6\) decimales», con el signo «≈».</li>
+      <li><b>Termina la cuenta de cada fila</b> con la raíz redondeada, sin volver a redondear: resta y división.</li>
+      <li><b>Calcula el margen de error</b> de cada valor: \(\dfrac{e}{|x-a|}\). El valor real de la función está entre el valor de la tabla menos el margen y el valor de la tabla más el margen.</li>
+      <li><b>Busca el candidato \(L\)</b> al que apuntan los dos lados e informa «\(\displaystyle\lim_{x\to a}f(x)\approx L\)», con los decimales que los márgenes permiten.</li>
+      <li><b>Confirma con álgebra,</b> cuando se pueda: racionaliza y obtén el límite de lo que queda.</li>
+    </ol>
+    <p>La tabla completa de la animación, \(f(x)=\dfrac{\sqrt{x}-2}{x-4}\) cerca de \(a=4\), con raíces a \(6\) decimales (\(e=0{,}0000005\)). Cada columna es una operación sobre las anteriores:</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(\sqrt{x}\approx\)</th><th>\(\sqrt{x}-2\)</th><th>\(x-4\)</th><th>\(f(x)\approx\)</th><th>margen de error</th></tr>
+      <tr><td>\(3{,}9\)</td><td>\(1{,}974842\)</td><td>\(-0{,}025158\)</td><td>\(-0{,}1\)</td><td>\(0{,}25158\)</td><td>\(0{,}000005\)</td></tr>
+      <tr><td>\(3{,}99\)</td><td>\(1{,}997498\)</td><td>\(-0{,}002502\)</td><td>\(-0{,}01\)</td><td>\(0{,}2502\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(3{,}999\)</td><td>\(1{,}99975\)</td><td>\(-0{,}00025\)</td><td>\(-0{,}001\)</td><td>\(0{,}25\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(4\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(4{,}001\)</td><td>\(2{,}00025\)</td><td>\(0{,}00025\)</td><td>\(0{,}001\)</td><td>\(0{,}25\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(4{,}01\)</td><td>\(2{,}002498\)</td><td>\(0{,}002498\)</td><td>\(0{,}01\)</td><td>\(0{,}2498\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(4{,}1\)</td><td>\(2{,}024846\)</td><td>\(0{,}024846\)</td><td>\(0{,}1\)</td><td>\(0{,}24846\)</td><td>\(0{,}000005\)</td></tr>
+    </table></div>
+    <p>Una fila completa, \(x=3{,}9\): \(\sqrt{3{,}9}\approx 1{,}974842\); \(1{,}974842-2=-0{,}025158\); \(3{,}9-4=-0{,}1\); \(\dfrac{-0{,}025158}{-0{,}1}=0{,}25158\); margen: \(\dfrac{0{,}0000005}{0{,}1}=0{,}000005\). Se escribe \(f(3{,}9)\approx 0{,}25158\).</p>
+    <p>Lectura: por la izquierda los valores bajan hacia \(0{,}25\) y por la derecha suben hacia \(0{,}25\). Las filas a \(0{,}01\) de \(4\) dan \(0{,}2502\) y \(0{,}2498\), cada una con margen \(0{,}00005\). Informe: \(\displaystyle\lim_{x\to 4}f(x)\approx 0{,}25\).</p>
+    <p>Ojo con las filas a \(0{,}001\) de \(4\): la tabla muestra \(0{,}25\) justo, pero su margen es \(0{,}0005\). Lo único que se sabe es que el valor real está entre \(0{,}25-0{,}0005=0{,}2495\) y \(0{,}25+0{,}0005=0{,}2505\).</p>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale el margen de error, paso a paso</h3>
+    <p>Sea \(f(x)=\dfrac{\sqrt{x}-c}{x-a}\) con \(x\ne a\). Llama \(v\) al valor real de \(\sqrt{x}\) y \(r\) a la raíz redondeada, con \(|r-v|\le e\).</p>
+    <ol class="steps">
+      <li>Valor real de la función: \(f(x)=\dfrac{v-c}{x-a}\).</li>
+      <li>Valor de la tabla, con la raíz redondeada: \(T=\dfrac{r-c}{x-a}\).</li>
+      <li>Se restan (mismo denominador): \(T-f(x)=\dfrac{(r-c)-(v-c)}{x-a}\).</li>
+      <li>Se quita el paréntesis y \(c\) se cancela: \((r-c)-(v-c)=r-c-v+c=r-v\). Entonces \(T-f(x)=\dfrac{r-v}{x-a}\).</li>
+      <li>Valor absoluto de un cociente: \(|T-f(x)|=\dfrac{|r-v|}{|x-a|}\).</li>
+      <li>Como \(|r-v|\le e\) y \(|x-a|\gt 0\): \(|T-f(x)|\le\dfrac{e}{|x-a|}\). Ese es el margen.</li>
+      <li>Con \(e=0{,}0000005\): a distancia \(0{,}1\), \(\dfrac{0{,}0000005}{0{,}1}=0{,}000005\); a distancia \(0{,}01\), \(\dfrac{0{,}0000005}{0{,}01}=0{,}00005\); a distancia \(0{,}001\), \(\dfrac{0{,}0000005}{0{,}001}=0{,}0005\).</li>
+      <li>Conclusión: cada vez que \(x\) se acerca \(10\) veces más a \(a\), el margen se multiplica por \(10\). Acercarse cuesta un decimal en cada fila. Para acercarse más sin perder precisión hay que calcular la raíz con más decimales.</li>
+    </ol>
+    <p>La cuenta vale igual si adentro de la raíz hay otra expresión (como \(x+1\) o \(2x+1\)): lo único que se usó es que el numerador es «raíz menos un número» y que el denominador \(x-a\) se calcula exacto.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Casos especiales: cuando la tabla engaña</h3>
+    <ol class="steps">
+      <li><b>Redondear demasiado.</b> La misma función, con raíces a solo \(2\) decimales (\(e=0{,}005\)):
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(\sqrt{x}\approx\)</th><th>\(\sqrt{x}-2\)</th><th>\(x-4\)</th><th>\(\text{cociente}\)</th><th>margen de error</th></tr>
+      <tr><td>\(3{,}9\)</td><td>\(1{,}97\)</td><td>\(-0{,}03\)</td><td>\(-0{,}1\)</td><td>\(0{,}3\)</td><td>\(0{,}05\)</td></tr>
+      <tr><td>\(3{,}99\)</td><td>\(2\)</td><td>\(0\)</td><td>\(-0{,}01\)</td><td>\(0\)</td><td>\(0{,}5\)</td></tr>
+      <tr><td>\(3{,}999\)</td><td>\(2\)</td><td>\(0\)</td><td>\(-0{,}001\)</td><td>\(0\)</td><td>\(5\)</td></tr>
+      <tr><td>\(4\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(4{,}001\)</td><td>\(2\)</td><td>\(0\)</td><td>\(0{,}001\)</td><td>\(0\)</td><td>\(5\)</td></tr>
+      <tr><td>\(4{,}01\)</td><td>\(2\)</td><td>\(0\)</td><td>\(0{,}01\)</td><td>\(0\)</td><td>\(0{,}5\)</td></tr>
+      <tr><td>\(4{,}1\)</td><td>\(2{,}02\)</td><td>\(0{,}02\)</td><td>\(0{,}1\)</td><td>\(0{,}2\)</td><td>\(0{,}05\)</td></tr>
+    </table></div>
+      Los valores son \(0{,}3\); \(0\); \(0\) y \(0\); \(0\); \(0{,}2\): la tabla «sugiere» que el límite es \(0\). Es falso. Los márgenes lo delatan: \(\dfrac{0{,}005}{0{,}01}=0{,}5\) y \(\dfrac{0{,}005}{0{,}001}=5\) son mayores que los valores mismos. Esas cuatro filas no informan nada.</li>
+      <li><b>Acercarse demasiado.</b> Con raíces a \(6\) decimales y \(x=4{,}00001\): \(\sqrt{4{,}00001}\approx 2{,}000002\); \(2{,}000002-2=0{,}000002\); \(4{,}00001-4=0{,}00001\); \(\dfrac{0{,}000002}{0{,}00001}=0{,}2\). Con \(x=3{,}99999\): \(\sqrt{3{,}99999}\approx 1{,}999997\); \(1{,}999997-2=-0{,}000003\); \(3{,}99999-4=-0{,}00001\); \(\dfrac{-0{,}000003}{-0{,}00001}=0{,}3\). Los valores \(0{,}3\) y \(0{,}2\) parecen alejarse de \(0{,}25\). No es la función: es el margen, \(\dfrac{0{,}0000005}{0{,}00001}=0{,}05\).</li>
+      <li><b>Regla práctica:</b> una fila sirve solo si su margen es bastante menor que la diferencia que se quiere ver. Al restar dos números casi iguales (como \(2{,}000002\) y \(2\)) las primeras cifras se cancelan y solo quedan las últimas, que son las afectadas por el redondeo.</li>
+      <li><b>La raíz limita los \(x\).</b> \(\sqrt{x}\) existe solo si \(x\ge 0\). Si \(a\) está en el borde de los valores permitidos (por ejemplo, \(\sqrt{x}\) en \(a=0\)), la tabla solo puede hacerse por un lado y lo que aproxima es el límite por ese lado.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la raíz no es de \(x\) solo, \(g(x)=\dfrac{\sqrt{x+1}-1}{x}\) en \(a=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=0\): arriba, \(\sqrt{0+1}-1=0\); abajo, \(0\). No se calcula. La raíz existe si \(x+1\ge 0\): los \(x\) cercanos a \(0\) sirven.</li>
+    <li>Los \(x\): \(-0{,}1\); \(-0{,}01\); \(-0{,}001\) y \(0{,}001\); \(0{,}01\); \(0{,}1\). Raíces a \(6\) decimales, \(e=0{,}0000005\).</li>
+    <li>Una fila completa, \(x=-0{,}1\): \(-0{,}1+1=0{,}9\); \(\sqrt{0{,}9}\approx 0{,}948683\); \(0{,}948683-1=-0{,}051317\); \(\dfrac{-0{,}051317}{-0{,}1}=0{,}51317\); margen: \(\dfrac{0{,}0000005}{0{,}1}=0{,}000005\).</li>
+    <li>La tabla:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x+1\)</th><th>\(\sqrt{x+1}\approx\)</th><th>\(\sqrt{x+1}-1\)</th><th>\(x\)</th><th>\(g(x)\approx\)</th><th>margen de error</th></tr>
+      <tr><td>\(-0{,}1\)</td><td>\(0{,}9\)</td><td>\(0{,}948683\)</td><td>\(-0{,}051317\)</td><td>\(-0{,}1\)</td><td>\(0{,}51317\)</td><td>\(0{,}000005\)</td></tr>
+      <tr><td>\(-0{,}01\)</td><td>\(0{,}99\)</td><td>\(0{,}994987\)</td><td>\(-0{,}005013\)</td><td>\(-0{,}01\)</td><td>\(0{,}5013\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(-0{,}001\)</td><td>\(0{,}999\)</td><td>\(0{,}9995\)</td><td>\(-0{,}0005\)</td><td>\(-0{,}001\)</td><td>\(0{,}5\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(0\)</td><td colspan="6">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(0{,}001\)</td><td>\(1{,}001\)</td><td>\(1{,}0005\)</td><td>\(0{,}0005\)</td><td>\(0{,}001\)</td><td>\(0{,}5\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(0{,}01\)</td><td>\(1{,}01\)</td><td>\(1{,}004988\)</td><td>\(0{,}004988\)</td><td>\(0{,}01\)</td><td>\(0{,}4988\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(0{,}1\)</td><td>\(1{,}1\)</td><td>\(1{,}048809\)</td><td>\(0{,}048809\)</td><td>\(0{,}1\)</td><td>\(0{,}48809\)</td><td>\(0{,}000005\)</td></tr>
+    </table></div></li>
+    <li>Los dos lados apuntan a \(0{,}5\). Las filas a \(0{,}01\) de \(0\) dan \(0{,}5013\) y \(0{,}4988\), con margen \(0{,}00005\). Informe: \(\displaystyle\lim_{x\to 0}g(x)\approx 0{,}5\).</li>
+    <li>Confirmación. Producto por el conjugado: \((\sqrt{x+1}-1)(\sqrt{x+1}+1)=(\sqrt{x+1})^{2}-1^{2}=x+1-1=x\). Para \(x\ne 0\): \(g(x)=\dfrac{\sqrt{x+1}-1}{(\sqrt{x+1}-1)(\sqrt{x+1}+1)}=\dfrac{1}{\sqrt{x+1}+1}\). Cuando \(x\) se acerca a \(0\), \(\sqrt{x+1}\) se acerca a \(\sqrt{1}=1\) y el cociente, a \(\dfrac{1}{1+1}=\dfrac{1}{2}=0{,}5\). El límite es \(0{,}5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: el candidato no es un decimal exacto, \(r(x)=\dfrac{\sqrt{x+5}-3}{x-4}\) en \(a=4\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=4\): \(\sqrt{4+5}-3=\sqrt{9}-3=0\) y \(4-4=0\). No se calcula.</li>
+    <li>Una fila completa, \(x=3{,}9\): \(3{,}9+5=8{,}9\); \(\sqrt{8{,}9}\approx 2{,}983287\); \(2{,}983287-3=-0{,}016713\); \(3{,}9-4=-0{,}1\); \(\dfrac{-0{,}016713}{-0{,}1}=0{,}16713\).</li>
+    <li>La tabla, con raíces a \(6\) decimales:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(x+5\)</th><th>\(\sqrt{x+5}\approx\)</th><th>\(\sqrt{x+5}-3\)</th><th>\(x-4\)</th><th>\(r(x)\approx\)</th><th>margen de error</th></tr>
+      <tr><td>\(3{,}9\)</td><td>\(8{,}9\)</td><td>\(2{,}983287\)</td><td>\(-0{,}016713\)</td><td>\(-0{,}1\)</td><td>\(0{,}16713\)</td><td>\(0{,}000005\)</td></tr>
+      <tr><td>\(3{,}99\)</td><td>\(8{,}99\)</td><td>\(2{,}998333\)</td><td>\(-0{,}001667\)</td><td>\(-0{,}01\)</td><td>\(0{,}1667\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(3{,}999\)</td><td>\(8{,}999\)</td><td>\(2{,}999833\)</td><td>\(-0{,}000167\)</td><td>\(-0{,}001\)</td><td>\(0{,}167\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(4\)</td><td colspan="6">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(4{,}001\)</td><td>\(9{,}001\)</td><td>\(3{,}000167\)</td><td>\(0{,}000167\)</td><td>\(0{,}001\)</td><td>\(0{,}167\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(4{,}01\)</td><td>\(9{,}01\)</td><td>\(3{,}001666\)</td><td>\(0{,}001666\)</td><td>\(0{,}01\)</td><td>\(0{,}1666\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(4{,}1\)</td><td>\(9{,}1\)</td><td>\(3{,}016621\)</td><td>\(0{,}016621\)</td><td>\(0{,}1\)</td><td>\(0{,}16621\)</td><td>\(0{,}000005\)</td></tr>
+    </table></div></li>
+    <li>Las filas a \(0{,}01\) de \(4\) dan \(0{,}1667\) y \(0{,}1666\), con margen \(0{,}00005\). Las filas a \(0{,}001\) dan \(0{,}167\) con margen \(0{,}0005\). Informe: \(\displaystyle\lim_{x\to 4}r(x)\approx 0{,}167\), con tres decimales.</li>
+    <li>Confirmación: \((\sqrt{x+5}-3)(\sqrt{x+5}+3)=(\sqrt{x+5})^{2}-3^{2}=x+5-9=x-4\). Para \(x\ne 4\): \(r(x)=\dfrac{1}{\sqrt{x+5}+3}\). Cuando \(x\) se acerca a \(4\), \(\sqrt{x+5}\) se acerca a \(\sqrt{9}=3\) y el cociente, a \(\dfrac{1}{3+3}=\dfrac{1}{6}\). El límite es \(\dfrac{1}{6}\).</li>
+    <li>Comparación: \(\dfrac{1}{6}\approx 0{,}1667\). La tabla no podía entregar \(\dfrac{1}{6}\): solo decimales cercanos. El valor exacto lo dio el álgebra.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: elegir mal los \(x\), \(q(x)=\dfrac{\sqrt{x^{2}}}{x}\) en \(a=0\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En \(x=0\): \(\sqrt{0^{2}}=0\) arriba y \(0\) abajo. No se calcula. Aquí las raíces salen exactas: no hay redondeo.</li>
+    <li>Una tabla <b>mal hecha</b>, solo con \(x\) positivos. \(x=0{,}1\): \(0{,}1^{2}=0{,}01\); \(\sqrt{0{,}01}=0{,}1\); \(q(0{,}1)=\dfrac{0{,}1}{0{,}1}=1\). \(x=0{,}01\): \(0{,}01^{2}=0{,}0001\); \(\sqrt{0{,}0001}=0{,}01\); \(q(0{,}01)=\dfrac{0{,}01}{0{,}01}=1\). \(x=0{,}001\): \(0{,}001^{2}=0{,}000001\); \(\sqrt{0{,}000001}=0{,}001\); \(q(0{,}001)=\dfrac{0{,}001}{0{,}001}=1\).</li>
+    <li>Esa tabla «sugiere» que el límite es \(1\). Falta el otro lado.</li>
+    <li>Con \(x\) negativos. \(x=-0{,}1\): \((-0{,}1)^{2}=0{,}01\); \(\sqrt{0{,}01}=0{,}1\); \(q(-0{,}1)=\dfrac{0{,}1}{-0{,}1}=-1\). \(x=-0{,}01\): \((-0{,}01)^{2}=0{,}0001\); \(\sqrt{0{,}0001}=0{,}01\); \(q(-0{,}01)=\dfrac{0{,}01}{-0{,}01}=-1\). \(x=-0{,}001\): \((-0{,}001)^{2}=0{,}000001\); \(\sqrt{0{,}000001}=0{,}001\); \(q(-0{,}001)=\dfrac{0{,}001}{-0{,}001}=-1\).</li>
+    <li>Por la derecha los valores son \(1\) y por la izquierda, \(-1\): no hay un número \(L\) que sirva para los dos lados. La tabla completa sugiere que el límite no existe.</li>
+    <li>Confirmación: \(\sqrt{x^{2}}=|x|\) (la raíz nunca es negativa). Si \(x\gt 0\), \(q(x)=\dfrac{x}{x}=1\); si \(x\lt 0\), \(q(x)=\dfrac{-x}{x}=-1\). Los límites laterales son \(1\) y \(-1\): son distintos y el límite no existe (criterio de los límites laterales, hoja «Introducción a los límites»).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: más decimales en la raíz, más decimales creíbles</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>En la tabla del ejemplo 1, las filas \(x=-0{,}001\) y \(x=0{,}001\) muestran \(0{,}5\) justo, con margen \(0{,}0005\). ¿La función vale \(0{,}5\) ahí? Se repiten esas dos filas con raíces a \(8\) decimales: \(e=0{,}000000005\).</li>
+    <li>\(x=0{,}001\): \(0{,}001+1=1{,}001\); \(\sqrt{1{,}001}\approx 1{,}00049988\); \(1{,}00049988-1=0{,}00049988\); \(\dfrac{0{,}00049988}{0{,}001}=0{,}49988\).</li>
+    <li>\(x=-0{,}001\): \(-0{,}001+1=0{,}999\); \(\sqrt{0{,}999}\approx 0{,}99949987\); \(0{,}99949987-1=-0{,}00050013\); \(\dfrac{-0{,}00050013}{-0{,}001}=0{,}50013\).</li>
+    <li>Margen nuevo: \(\dfrac{0{,}000000005}{0{,}001}=0{,}000005\).</li>
+    <li>Entonces el valor real de \(g(0{,}001)\) está entre \(0{,}49988-0{,}000005=0{,}499875\) y \(0{,}49988+0{,}000005=0{,}499885\): no es \(0{,}5\). El \(0{,}5\) de la primera tabla era efecto del redondeo.</li>
+    <li>Se confirma con la forma simplificada: \(g(x)=0{,}5\) exige \(\sqrt{x+1}+1=2\), es decir \(\sqrt{x+1}=1\), o sea \(x=0\). Para \(x\ne 0\) la función nunca vale \(0{,}5\); solo se acerca.</li>
+    <li>Las dos tablas dicen lo mismo sobre el límite: \(\displaystyle\lim_{x\to 0}g(x)\approx 0{,}5\). La de \(8\) decimales lo dice con más precisión.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>escribir «=» donde va «≈»</b>. Una raíz redondeada no es igual a la raíz. Dos: <b>creer todos los decimales que muestra la calculadora</b> sin calcular el margen: cerca de \(a\) se divide por un número muy chico y el error crece. Tres: <b>acercarse «lo más posible»</b>, pensando que así la tabla mejora: con decimales fijos, empeora. Cuatro: <b>simplificar \(\sqrt{x^{2}}\) como \(x\)</b>: es \(|x|\), y por eso los dos lados de una tabla pueden dar resultados distintos.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Construye la tabla de \(p(x)=\dfrac{\sqrt{x}-5}{x-25}\) cerca de \(a=25\), con raíces a \(6\) decimales y tres valores por cada lado. a) Da los valores, los márgenes y el informe. b) La fila \(x=24{,}99\) muestra \(0{,}1\): ¿entre qué números está el valor real? c) Confirma con álgebra.</p>
+    <details><summary>Pista</summary><div><p>Usa \(x=24{,}9\); \(24{,}99\); \(24{,}999\) y \(x=25{,}001\); \(25{,}01\); \(25{,}1\). Margen: \(0{,}0000005\) dividido por la distancia de \(x\) a \(25\). Para c), multiplica \((\sqrt{x}-5)(\sqrt{x}+5)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x=25\): \(\sqrt{25}-5=0\) y \(25-25=0\). No se calcula.</li>
+        <li>Una fila completa, \(x=24{,}9\): \(\sqrt{24{,}9}\approx 4{,}98999\); \(4{,}98999-5=-0{,}01001\); \(24{,}9-25=-0{,}1\); \(\dfrac{-0{,}01001}{-0{,}1}=0{,}1001\); margen: \(\dfrac{0{,}0000005}{0{,}1}=0{,}000005\).</li>
+        <li>La tabla:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(\sqrt{x}\approx\)</th><th>\(\sqrt{x}-5\)</th><th>\(x-25\)</th><th>\(p(x)\approx\)</th><th>margen de error</th></tr>
+      <tr><td>\(24{,}9\)</td><td>\(4{,}98999\)</td><td>\(-0{,}01001\)</td><td>\(-0{,}1\)</td><td>\(0{,}1001\)</td><td>\(0{,}000005\)</td></tr>
+      <tr><td>\(24{,}99\)</td><td>\(4{,}999\)</td><td>\(-0{,}001\)</td><td>\(-0{,}01\)</td><td>\(0{,}1\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(24{,}999\)</td><td>\(4{,}9999\)</td><td>\(-0{,}0001\)</td><td>\(-0{,}001\)</td><td>\(0{,}1\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(25\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(25{,}001\)</td><td>\(5{,}0001\)</td><td>\(0{,}0001\)</td><td>\(0{,}001\)</td><td>\(0{,}1\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(25{,}01\)</td><td>\(5{,}001\)</td><td>\(0{,}001\)</td><td>\(0{,}01\)</td><td>\(0{,}1\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(25{,}1\)</td><td>\(5{,}00999\)</td><td>\(0{,}00999\)</td><td>\(0{,}1\)</td><td>\(0{,}0999\)</td><td>\(0{,}000005\)</td></tr>
+    </table></div></li>
+        <li>a) Los valores son \(0{,}1001\); \(0{,}1\); \(0{,}1\) por la izquierda y \(0{,}0999\); \(0{,}1\); \(0{,}1\) por la derecha (de la fila más lejana a la más cercana). Los dos lados apuntan a \(0{,}1\). Informe: \(\displaystyle\lim_{x\to 25}p(x)\approx 0{,}1\).</li>
+        <li>b) El margen de esa fila es \(0{,}00005\). El valor real está entre \(0{,}1-0{,}00005=0{,}09995\) y \(0{,}1+0{,}00005=0{,}10005\). La tabla no dice que valga \(0{,}1\) justo.</li>
+        <li>c) \((\sqrt{x}-5)(\sqrt{x}+5)=(\sqrt{x})^{2}-5^{2}=x-25\). Para \(x\ne 25\), con \(x\ge 0\): \(p(x)=\dfrac{1}{\sqrt{x}+5}\). Cuando \(x\) se acerca a \(25\), \(\sqrt{x}\) se acerca a \(\sqrt{25}=5\) y el cociente, a \(\dfrac{1}{5+5}=\dfrac{1}{10}=0{,}1\). El límite es \(0{,}1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Construye la tabla de \(w(x)=\dfrac{\sqrt{2x+1}-3}{x-4}\) cerca de \(a=4\), con raíces a \(6\) decimales. a) Da los valores y el informe. b) ¿Con cuántos decimales se puede informar el candidato? c) Confirma con álgebra y compara.</p>
+    <details><summary>Pista</summary><div><p>Agrega una columna para \(2x+1\). Para c), \((\sqrt{2x+1}-3)(\sqrt{2x+1}+3)=2x+1-9\), y \(2x-8=2\,(x-4)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>En \(x=4\): \(2\cdot 4+1=9\); \(\sqrt{9}-3=0\) y \(4-4=0\). No se calcula.</li>
+        <li>Una fila completa, \(x=3{,}9\): \(2\cdot 3{,}9+1=7{,}8+1=8{,}8\); \(\sqrt{8{,}8}\approx 2{,}966479\); \(2{,}966479-3=-0{,}033521\); \(3{,}9-4=-0{,}1\); \(\dfrac{-0{,}033521}{-0{,}1}=0{,}33521\).</li>
+        <li>La tabla:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><th>\(2x+1\)</th><th>\(\sqrt{2x+1}\approx\)</th><th>\(\sqrt{2x+1}-3\)</th><th>\(x-4\)</th><th>\(w(x)\approx\)</th><th>margen de error</th></tr>
+      <tr><td>\(3{,}9\)</td><td>\(8{,}8\)</td><td>\(2{,}966479\)</td><td>\(-0{,}033521\)</td><td>\(-0{,}1\)</td><td>\(0{,}33521\)</td><td>\(0{,}000005\)</td></tr>
+      <tr><td>\(3{,}99\)</td><td>\(8{,}98\)</td><td>\(2{,}996665\)</td><td>\(-0{,}003335\)</td><td>\(-0{,}01\)</td><td>\(0{,}3335\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(3{,}999\)</td><td>\(8{,}998\)</td><td>\(2{,}999667\)</td><td>\(-0{,}000333\)</td><td>\(-0{,}001\)</td><td>\(0{,}333\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(4\)</td><td colspan="6">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(4{,}001\)</td><td>\(9{,}002\)</td><td>\(3{,}000333\)</td><td>\(0{,}000333\)</td><td>\(0{,}001\)</td><td>\(0{,}333\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(4{,}01\)</td><td>\(9{,}02\)</td><td>\(3{,}003331\)</td><td>\(0{,}003331\)</td><td>\(0{,}01\)</td><td>\(0{,}3331\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(4{,}1\)</td><td>\(9{,}2\)</td><td>\(3{,}03315\)</td><td>\(0{,}03315\)</td><td>\(0{,}1\)</td><td>\(0{,}3315\)</td><td>\(0{,}000005\)</td></tr>
+    </table></div></li>
+        <li>a) Por la izquierda: \(0{,}33521\); \(0{,}3335\); \(0{,}333\). Por la derecha (de lejos a cerca): \(0{,}3315\); \(0{,}3331\); \(0{,}333\). Informe: \(\displaystyle\lim_{x\to 4}w(x)\approx 0{,}333\).</li>
+        <li>b) Las filas a \(0{,}01\) de \(4\) dan \(0{,}3335\) y \(0{,}3331\), con margen \(0{,}00005\); las filas a \(0{,}001\) dan \(0{,}333\) con margen \(0{,}0005\). Tres decimales es lo que la tabla permite: \(0{,}333\).</li>
+        <li>c) \((\sqrt{2x+1}-3)(\sqrt{2x+1}+3)=(\sqrt{2x+1})^{2}-3^{2}=2x+1-9=2x-8=2\,(x-4)\). Para \(x\ne 4\): \(w(x)=\dfrac{2\,(x-4)}{(x-4)(\sqrt{2x+1}+3)}=\dfrac{2}{\sqrt{2x+1}+3}\). Cuando \(x\) se acerca a \(4\), \(\sqrt{2x+1}\) se acerca a \(\sqrt{9}=3\) y el cociente, a \(\dfrac{2}{3+3}=\dfrac{2}{6}=\dfrac{1}{3}\). El límite es \(\dfrac{1}{3}\).</li>
+        <li>Comparación: \(\dfrac{1}{3}\approx 0{,}3333\). La tabla acertó en los tres decimales que permitía informar.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Camila va a cubrir con pasto un jardín cuadrado. <b>Modelo:</b> con \(A\) metros cuadrados de pasto, el lado del jardín mide \(\sqrt{A}\) metros (un cuadrado exacto, sin pérdidas). Hoy tiene pasto para \(16\) metros cuadrados: lado \(\sqrt{16}=4\) metros. Lo que gana de lado por cada metro cuadrado adicional, entre \(16\) y \(A\), es
+    \[m(A)=\dfrac{\sqrt{A}-4}{A-16}\ \text{metros de lado por metro cuadrado},\qquad A\ne 16.\]
+    a) Construye la tabla de \(m(A)\) cerca de \(A=16\), con raíces a \(6\) decimales. b) Da el informe. c) Confirma con álgebra. d) ¿Qué significa el resultado?</p>
+    <details><summary>Pista</summary><div><p>Usa \(A=15{,}9\); \(15{,}99\); \(15{,}999\) y \(A=16{,}001\); \(16{,}01\); \(16{,}1\). Para c), multiplica \((\sqrt{A}-4)(\sqrt{A}+4)\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) En \(A=16\): \(\sqrt{16}-4=0\) y \(16-16=0\). No se calcula. Una fila completa, \(A=16{,}1\): \(\sqrt{16{,}1}\approx 4{,}012481\); \(4{,}012481-4=0{,}012481\); \(16{,}1-16=0{,}1\); \(\dfrac{0{,}012481}{0{,}1}=0{,}12481\); margen: \(\dfrac{0{,}0000005}{0{,}1}=0{,}000005\).</li>
+        <li>La tabla:
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(A\)</th><th>\(\sqrt{A}\approx\)</th><th>\(\sqrt{A}-4\)</th><th>\(A-16\)</th><th>\(m(A)\approx\)</th><th>margen de error</th></tr>
+      <tr><td>\(15{,}9\)</td><td>\(3{,}98748\)</td><td>\(-0{,}01252\)</td><td>\(-0{,}1\)</td><td>\(0{,}1252\)</td><td>\(0{,}000005\)</td></tr>
+      <tr><td>\(15{,}99\)</td><td>\(3{,}99875\)</td><td>\(-0{,}00125\)</td><td>\(-0{,}01\)</td><td>\(0{,}125\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(15{,}999\)</td><td>\(3{,}999875\)</td><td>\(-0{,}000125\)</td><td>\(-0{,}001\)</td><td>\(0{,}125\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(16\)</td><td colspan="5">no se calcula: el denominador es \(0\)</td></tr>
+      <tr><td>\(16{,}001\)</td><td>\(4{,}000125\)</td><td>\(0{,}000125\)</td><td>\(0{,}001\)</td><td>\(0{,}125\)</td><td>\(0{,}0005\)</td></tr>
+      <tr><td>\(16{,}01\)</td><td>\(4{,}00125\)</td><td>\(0{,}00125\)</td><td>\(0{,}01\)</td><td>\(0{,}125\)</td><td>\(0{,}00005\)</td></tr>
+      <tr><td>\(16{,}1\)</td><td>\(4{,}012481\)</td><td>\(0{,}012481\)</td><td>\(0{,}1\)</td><td>\(0{,}12481\)</td><td>\(0{,}000005\)</td></tr>
+    </table></div></li>
+        <li>b) Los valores son \(0{,}1252\); \(0{,}125\); \(0{,}125\) por la izquierda y \(0{,}12481\); \(0{,}125\); \(0{,}125\) por la derecha (de lejos a cerca). Informe: \(\displaystyle\lim_{A\to 16}m(A)\approx 0{,}125\) metros de lado por metro cuadrado.</li>
+        <li>c) \((\sqrt{A}-4)(\sqrt{A}+4)=(\sqrt{A})^{2}-4^{2}=A-16\). Para \(A\ne 16\), con \(A\ge 0\): \(m(A)=\dfrac{1}{\sqrt{A}+4}\). Cuando \(A\) se acerca a \(16\), \(\sqrt{A}\) se acerca a \(\sqrt{16}=4\) y el cociente, a \(\dfrac{1}{4+4}=\dfrac{1}{8}=0{,}125\). El límite es \(0{,}125\).</li>
+        <li>d) Significado: cerca de los \(16\) metros cuadrados, el lado crece a razón de \(0{,}125\) metros por cada metro cuadrado adicional, siempre que el aumento sea chico. Comprobación con la tabla: con \(0{,}1\) metros cuadrados más, el lado creció \(0{,}012481\) metros, y la razón predice \(0{,}1\cdot 0{,}125=0{,}0125\) metros: unos \(1{,}25\) centímetros. Vale para el modelo declarado; un jardín real no es un cuadrado exacto.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H09 · v001 · Pendiente de APR</span>
+</footer>
+</article>

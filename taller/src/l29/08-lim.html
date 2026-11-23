@@ -1,0 +1,402 @@
+<!--file:H08_tablas_y_limites_unilaterales.html-->
+<!--title:Tablas y límites unilaterales-->
+<!--id:lim-unil-->
+<!--tab:H08 Tablas y límites unilaterales-->
+<article class="sheet" id="lim-unil" data-hoja="L29 H08">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Límites a partir de tablas</li>
+      <li><b>Tablas y límites unilaterales</b></li>
+    </ol>
+    <h1>Tablas y límites unilaterales</h1>
+    <p class="lede">Un límite <b>unilateral</b> (o lateral) mira un solo lado de \(a\). En una tabla, cada lado se lee por separado y da su propia estimación:
+    \[\lim_{x\to a^{-}}f(x)\approx L_{1}\ \ (\text{columnas con }x\lt a)\qquad\qquad\lim_{x\to a^{+}}f(x)\approx L_{2}\ \ (\text{columnas con }x\gt a)\]
+    Después se comparan: el límite por los dos lados existe solo si los dos laterales existen y son el mismo número. La columna \(x=a\) no participa en ninguno.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Esta es la tabla dada de una función \(f\). Se pide estimar, por separado, \(\displaystyle\lim_{x\to 3^{-}}f(x)\) y \(\displaystyle\lim_{x\to 3^{+}}f(x)\), y decidir después si existe \(\displaystyle\lim_{x\to 3}f(x)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(2{,}9\)</td><td>\(2{,}99\)</td><td>\(2{,}999\)</td><td>\(3\)</td><td>\(3{,}001\)</td><td>\(3{,}01\)</td><td>\(3{,}1\)</td></tr>
+    <tr><th>\(f(x)\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(6\)</td><td>\(6{,}002\)</td><td>\(6{,}02\)</td><td>\(6{,}2\)</td></tr>
+  </table></div>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la tabla completa</b> (paso 1): la fila de arriba son los \(x\); la de abajo, los valores \(f(x)\).</li>
+    <li><b>En el paso 2 la tabla queda partida en dos lados:</b> a la izquierda, las columnas con \(x\lt 3\); a la derecha, las de \(x\gt 3\). La columna \(x=3\) queda rayada: sigue a la vista, pero no se usa.</li>
+    <li><b>Sigue una flecha a la vez</b> (pasos 3 y 4): la azul recorre solo el lado izquierdo y la naranja, solo el derecho, siempre hacia \(x=3\). En la recta de abajo, cada valor leído es un punto, y el número al que se acerca cada lado queda en un círculo de su color.</li>
+    <li><b>En el paso 5 se comparan los dos círculos:</b> el trazo burdeo los une para mostrar que son números distintos.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> los valores de cada lado, sus distancias al candidato, los dos límites laterales, la comparación y, al final, la fórmula que confirma. Nada se borra: todo queda en la figura y en el registro numerado.</li>
+  </ol>
+  <div class="stage" data-scene="uni-idea"></div>
+  <ul class="keys">
+    <li><b>Tabla:</b> los datos, tal como vienen. <b>Columna rayada:</b> \(x=3\), con \(f(3)=6\); no participa en ningún límite lateral.</li>
+    <li><b>Azul:</b> lado izquierdo (\(x\lt 3\)), leído hacia \(3\): \(3{,}9\); \(3{,}99\); \(3{,}999\). Su círculo: el \(4\), límite por la izquierda.</li>
+    <li><b>Naranja:</b> lado derecho (\(x\gt 3\)), leído hacia \(3\): \(6{,}2\); \(6{,}02\); \(6{,}002\). Su círculo: el \(6\), límite por la derecha.</li>
+    <li><b>Burdeo:</b> la comparación de los dos laterales (\(4\ne 6\)) y la fórmula con que se hizo la tabla.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se puede afirmar a partir de una tabla.</b> Una tabla trae pocos valores y nada dice de lo que pasa entre ellos: <b>un límite lateral leído en una tabla es una estimación</b>, no una demostración, y por eso se escribe con «≈». En esta hoja, cuando se conoce la fórmula, la estimación se confirma con ella. La definición de límite lateral que se usa es la intuitiva; la formal va en otra hoja de este lote. La confirmación usa, <b>sin demostrar</b>, hechos que se demuestran con esa definición formal:</p>
+    <ol class="steps">
+      <li>Cuando \(x\) se acerca a \(a\) por un solo lado, \(c\,x+d\) se acerca a \(c\,a+d\) (\(c\) y \(d\), números fijos). Una función constante cerca de \(a\), de ese lado, tiene por límite lateral esa constante.</li>
+      <li>Un límite lateral depende solo de los valores de la función en los \(x\) cercanos a \(a\) de su lado, con \(x\ne a\).</li>
+      <li>Criterio de los límites laterales: \(\displaystyle\lim_{x\to a}f(x)\) existe y vale \(L\) si y solo si los dos límites laterales existen y valen \(L\).</li>
+      <li>Reglas del orden: si \(0\lt p\lt q\), entonces \(\dfrac{1}{q}\lt\dfrac{1}{p}\). Y una función cuyos valores superan cualquier tope cerca de \(a\), por un lado, no se acerca a ningún número por ese lado.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Qué es un límite lateral y cómo se estima con una tabla</h3>
+    <ol class="steps">
+      <li><b>Por la izquierda.</b> \(x\to a^{-}\) se lee «\(x\) tiende a \(a\) por la izquierda»: \(x\) se acerca a \(a\) con \(x\lt a\). Se escribe \(\displaystyle\lim_{x\to a^{-}}f(x)=L_{1}\) si \(f(x)\) queda tan cerca de \(L_{1}\) como se quiera, con tal de tomar \(x\lt a\) suficientemente cerca de \(a\).</li>
+      <li><b>Por la derecha.</b> \(x\to a^{+}\) se lee «\(x\) tiende a \(a\) por la derecha»: \(x\) se acerca a \(a\) con \(x\gt a\). Se escribe \(\displaystyle\lim_{x\to a^{+}}f(x)=L_{2}\) si \(f(x)\) queda tan cerca de \(L_{2}\) como se quiera, con tal de tomar \(x\gt a\) suficientemente cerca de \(a\).</li>
+      <li><b>El signo va arriba de \(a\), no delante:</b> \(3^{-}\) no es el número \(-3\); es «el \(3\), mirado desde los \(x\) menores que \(3\)».</li>
+      <li><b>En la tabla, un lado a la vez.</b> Para \(x\to a^{-}\) se usan solo las columnas con \(x\lt a\), leídas hacia \(a\); para \(x\to a^{+}\), solo las de \(x\gt a\), leídas hacia \(a\) (desde la última columna hacia atrás).</li>
+      <li><b>Candidato y distancias.</b> Para cada lado se propone un número y se calculan las distancias de los valores a ese número: tienen que achicarse hacia \(0\) (o ser todas \(0\), si los valores no cambian).</li>
+      <li><b>Comparar al final.</b> Si \(L_{1}\) y \(L_{2}\) son el mismo número \(L\), la estimación es \(\displaystyle\lim_{x\to a}f(x)\approx L\). Si son distintos, o algún lado no se acerca a ningún número, \(\displaystyle\lim_{x\to a}f(x)\) no existe.</li>
+    </ol>
+    <p>La columna \(x=a\) no participa en ningún lateral: los dos miran \(x\ne a\). En la tabla de \(f\), que \(f(3)=6\) coincida con el número de la derecha no cambia ninguna lectura.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Por qué cada lateral mira solo su lado: dos funciones con el mismo lado izquierdo</h3>
+    <ol class="steps">
+      <li><b>La tabla de \(f\) se hizo con esta fórmula:</b> \(f(x)=x+1\) si \(x\lt 3\), y \(f(x)=2x\) si \(x\ge 3\). Por ejemplo, \(f(2{,}9)=2{,}9+1=3{,}9\) y \(f(3{,}1)=2\cdot 3{,}1=6{,}2\).</li>
+      <li><b>Otra función:</b> \(r(x)=x+1\) para todo \(x\). A la izquierda de \(3\) es igual a \(f\); a la derecha, no: \(r(3{,}1)=3{,}1+1=4{,}1\).</li>
+    </ol>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(2{,}9\)</td><td>\(2{,}99\)</td><td>\(2{,}999\)</td><td>\(3\)</td><td>\(3{,}001\)</td><td>\(3{,}01\)</td><td>\(3{,}1\)</td></tr>
+      <tr><th>\(f(x)\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(6\)</td><td>\(6{,}002\)</td><td>\(6{,}02\)</td><td>\(6{,}2\)</td></tr>
+      <tr><th>\(r(x)\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(4\)</td><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td></tr>
+    </table></div>
+    <ol class="steps" start="3">
+      <li><b>Lado izquierdo: idéntico.</b> Las tres columnas con \(x\lt 3\) traen lo mismo en las dos filas: \(3{,}9\); \(3{,}99\); \(3{,}999\). Distancias a \(4\): \(|3{,}9-4|=0{,}1\); \(|3{,}99-4|=0{,}01\); \(|3{,}999-4|=0{,}001\). La lectura por la izquierda es la misma: \(\displaystyle\lim_{x\to 3^{-}}f(x)\approx 4\) y \(\displaystyle\lim_{x\to 3^{-}}r(x)\approx 4\).</li>
+      <li><b>Lado derecho: distinto.</b> Para \(r\), hacia \(3\): \(4{,}1\); \(4{,}01\); \(4{,}001\). Distancias a \(4\): \(|4{,}1-4|=0{,}1\); \(|4{,}01-4|=0{,}01\); \(|4{,}001-4|=0{,}001\). Entonces \(\displaystyle\lim_{x\to 3^{+}}r(x)\approx 4\). Para \(f\), hacia \(3\): \(6{,}2\); \(6{,}02\); \(6{,}002\), con distancias a \(6\): \(|6{,}2-6|=0{,}2\); \(|6{,}02-6|=0{,}02\); \(|6{,}002-6|=0{,}002\). Entonces \(\displaystyle\lim_{x\to 3^{+}}f(x)\approx 6\).</li>
+      <li><b>Se compara en cada función.</b> En \(r\): izquierda \(4\), derecha \(4\); el mismo número, así que \(\displaystyle\lim_{x\to 3}r(x)\approx 4\). En \(f\): izquierda \(4\), derecha \(6\); \(4\ne 6\), así que \(\displaystyle\lim_{x\to 3}f(x)\) no existe.</li>
+      <li><b>Confirmación con las fórmulas.</b> Por la izquierda, en las dos, \(x+1\) se acerca a \(3+1=4\). Por la derecha: en \(r\), \(x+1\) se acerca a \(3+1=4\); en \(f\), \(2x\) se acerca a \(2\cdot 3=6\).</li>
+      <li><b>Conclusión:</b> lo que una función hace a la derecha de \(a\) no cambia su límite por la izquierda, y al revés. Por eso un solo lado de la tabla alcanza para estimar <b>ese</b> lateral, pero nunca para decidir el límite por los dos lados: con el mismo lado izquierdo, \(r\) tiene límite en \(3\) y \(f\) no.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: un lado se acerca a un número y el otro crece sin tope</h3>
+    <ol class="steps">
+      <li>Esta tabla viene dada, con \(a=0\). La función \(s\) no está definida en \(0\).</li>
+    </ol>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(-0{,}1\)</td><td>\(-0{,}01\)</td><td>\(-0{,}001\)</td><td>\(0\)</td><td>\(0{,}001\)</td><td>\(0{,}01\)</td><td>\(0{,}1\)</td></tr>
+      <tr><th>\(s(x)\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>no definida</td><td>\(1000\)</td><td>\(100\)</td><td>\(10\)</td></tr>
+    </table></div>
+    <ol class="steps" start="2">
+      <li><b>Izquierda, hacia \(0\):</b> \(1{,}9\); \(1{,}99\); \(1{,}999\). Candidato: \(2\). Distancias: \(|1{,}9-2|=0{,}1\); \(|1{,}99-2|=0{,}01\); \(|1{,}999-2|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 0^{-}}s(x)\approx 2\).</li>
+      <li><b>Derecha, hacia \(0\):</b> \(10\); \(100\); \(1000\). Cada vez que \(x\) queda \(10\) veces más cerca de \(0\), el valor se multiplica por \(10\): \(10\cdot 10=100\) y \(100\cdot 10=1000\). No se ve ningún número al que se acerquen.</li>
+      <li><b>Estimación:</b> el límite por la izquierda es aproximadamente \(2\); el límite por la derecha no existe como número (los valores crecen sin tope; se anota \(\displaystyle\lim_{x\to 0^{+}}s(x)=+\infty\), y \(+\infty\) no es un número). Entonces \(\displaystyle\lim_{x\to 0}s(x)\) no existe.</li>
+      <li><b>Confirmación.</b> La tabla se hizo con \(s(x)=x+2\) si \(x\lt 0\), y \(s(x)=\dfrac{1}{x}\) si \(x\gt 0\). Por la izquierda, \(x+2\) se acerca a \(0+2=2\). Por la derecha: si \(M\gt 0\) y \(0\lt x\lt\dfrac{1}{M}\), entonces \(\dfrac{1}{x}\gt M\) (regla del orden del aviso). Con \(M=1000\): \(\dfrac{1}{1000}=0{,}001\), y para \(0\lt x\lt 0{,}001\) es \(s(x)\gt 1000\); por ejemplo, \(s(0{,}0005)=\dfrac{1}{0{,}0005}=2000\). Los valores superan cualquier tope.</li>
+      <li>Basta que <b>un</b> lateral falle para que el límite por los dos lados no exista, aunque el otro lateral sea un número.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: dos laterales distintos, y \(g(a)\) no es ninguno de los dos</h3>
+  <div class="body">
+  <p>Con esta tabla, estima \(\displaystyle\lim_{x\to 2^{-}}g(x)\) y \(\displaystyle\lim_{x\to 2^{+}}g(x)\), y decide si existe \(\displaystyle\lim_{x\to 2}g(x)\).</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(g(x)\)</th><td>\(5{,}7\)</td><td>\(5{,}97\)</td><td>\(5{,}997\)</td><td>\(4\)</td><td>\(1{,}001\)</td><td>\(1{,}01\)</td><td>\(1{,}1\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=2\). Izquierda: las columnas \(1{,}9\); \(1{,}99\); \(1{,}999\). Derecha: \(2{,}001\); \(2{,}01\); \(2{,}1\). La columna \(x=2\) se deja aparte.</li>
+    <li>Izquierda, hacia \(2\): \(5{,}7\); \(5{,}97\); \(5{,}997\). Candidato: \(6\). Distancias: \(|5{,}7-6|=0{,}3\); \(|5{,}97-6|=0{,}03\); \(|5{,}997-6|=0{,}003\). Se achican: \(\displaystyle\lim_{x\to 2^{-}}g(x)\approx 6\).</li>
+    <li>Derecha, hacia \(2\) (de la última columna hacia atrás): \(1{,}1\); \(1{,}01\); \(1{,}001\). Candidato: \(1\). Distancias: \(|1{,}1-1|=0{,}1\); \(|1{,}01-1|=0{,}01\); \(|1{,}001-1|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 2^{+}}g(x)\approx 1\).</li>
+    <li>Comparación: \(6\ne 1\). Los laterales son distintos: \(\displaystyle\lim_{x\to 2}g(x)\) <b>no existe</b>.</li>
+    <li>El \(4\) de la columna \(x=2\) es \(g(2)\). No es ninguno de los dos laterales (\(4\ne 6\) y \(4\ne 1\)), y no hace falta que lo sea.</li>
+    <li>Confirmación: la tabla se hizo con \(g(x)=3x\) si \(x\lt 2\); \(g(2)=4\); \(g(x)=x-1\) si \(x\gt 2\). En efecto, \(3\cdot 1{,}9=5{,}7\) y \(2{,}1-1=1{,}1\). Por la izquierda, \(3x\) se acerca a \(3\cdot 2=6\); por la derecha, \(x-1\) se acerca a \(2-1=1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: los dos laterales coinciden</h3>
+  <div class="body">
+  <p>Estima los dos límites laterales de \(h\) en \(2\) y decide si existe \(\displaystyle\lim_{x\to 2}h(x)\). La tabla no trae columna \(x=2\): \(h\) no está definida ahí.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(h(x)\)</th><td>\(2{,}1\)</td><td>\(2{,}01\)</td><td>\(2{,}001\)</td><td>\(2{,}003\)</td><td>\(2{,}03\)</td><td>\(2{,}3\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>\(a=2\). Izquierda: \(1{,}9\); \(1{,}99\); \(1{,}999\). Derecha: \(2{,}001\); \(2{,}01\); \(2{,}1\).</li>
+    <li>Izquierda, hacia \(2\): \(2{,}1\); \(2{,}01\); \(2{,}001\). Candidato: \(2\). Distancias: \(|2{,}1-2|=0{,}1\); \(|2{,}01-2|=0{,}01\); \(|2{,}001-2|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 2^{-}}h(x)\approx 2\).</li>
+    <li>Derecha, hacia \(2\): \(2{,}3\); \(2{,}03\); \(2{,}003\). Candidato: \(2\). Distancias: \(|2{,}3-2|=0{,}3\); \(|2{,}03-2|=0{,}03\); \(|2{,}003-2|=0{,}003\). Se achican: \(\displaystyle\lim_{x\to 2^{+}}h(x)\approx 2\).</li>
+    <li>Comparación: los dos laterales son el mismo número, \(2\). Por el criterio de los laterales, \(\displaystyle\lim_{x\to 2}h(x)\approx 2\).</li>
+    <li>Fíjate: por la izquierda los valores bajan hacia \(2\) desde arriba, igual que por la derecha. Que \(x\) vaya por la izquierda no obliga a que los valores vayan por debajo.</li>
+    <li>Confirmación: la tabla se hizo con \(h(x)=4-x\) si \(x\lt 2\), y \(h(x)=3x-4\) si \(x\gt 2\). En efecto, \(4-1{,}9=2{,}1\); y \(3\cdot 2{,}1=6{,}3\), \(6{,}3-4=2{,}3\). Por la izquierda, \(4-x\) se acerca a \(4-2=2\); por la derecha, \(3x-4\) se acerca a \(3\cdot 2-4=6-4=2\). El límite es \(2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: la tabla trae un solo lado</h3>
+  <div class="body">
+  <p>De una función \(k\) se tiene solo esta tabla, con \(x\gt 4\). ¿Qué se puede estimar en \(a=4\)?</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td><td>\(4{,}5\)</td></tr>
+    <tr><th>\(k(x)\)</th><td>\(1{,}998\)</td><td>\(1{,}98\)</td><td>\(1{,}8\)</td><td>\(1\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>Todas las columnas tienen \(x\gt 4\): la tabla solo sirve para el límite por la derecha, \(x\to 4^{+}\).</li>
+    <li>Derecha, hacia \(4\) (de la última columna hacia atrás): \(1\); \(1{,}8\); \(1{,}98\); \(1{,}998\). Candidato: \(2\).</li>
+    <li>Distancias a \(2\): \(|1-2|=1\); \(|1{,}8-2|=0{,}2\); \(|1{,}98-2|=0{,}02\); \(|1{,}998-2|=0{,}002\). Se achican: \(\displaystyle\lim_{x\to 4^{+}}k(x)\approx 2\).</li>
+    <li>Del límite por la izquierda la tabla no dice nada: no hay ninguna columna con \(x\lt 4\). Tampoco se puede decidir \(\displaystyle\lim_{x\to 4}k(x)\): faltaría conocer el otro lateral (recuadro 2).</li>
+    <li>Confirmación del lado que se tiene: la tabla se hizo con \(k(x)=10-2x\) para \(x\gt 4\). En efecto, \(2\cdot 4{,}5=9\) y \(10-9=1\). Por la derecha, \(10-2x\) se acerca a \(10-2\cdot 4=10-8=2\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: los valores de cada lado no cambian</h3>
+  <div class="body">
+  <p>La función \(e\) vale \(1\) si \(1\le x\lt 2\), y vale \(2\) si \(2\le x\lt 3\). Estima sus límites laterales en \(2\) con la tabla.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>\(x\)</th><td>\(1{,}9\)</td><td>\(1{,}99\)</td><td>\(1{,}999\)</td><td>\(2\)</td><td>\(2{,}001\)</td><td>\(2{,}01\)</td><td>\(2{,}1\)</td></tr>
+    <tr><th>\(e(x)\)</th><td>\(1\)</td><td>\(1\)</td><td>\(1\)</td><td>\(2\)</td><td>\(2\)</td><td>\(2\)</td><td>\(2\)</td></tr>
+  </table></div>
+  <ol class="steps">
+    <li>Izquierda, hacia \(2\): \(1\); \(1\); \(1\). Los valores no cambian. Candidato: \(1\). Distancias: \(|1-1|=0\), las tres veces.</li>
+    <li>«Acercarse» incluye este caso: los valores ya están en el \(1\). Estimación: \(\displaystyle\lim_{x\to 2^{-}}e(x)\approx 1\).</li>
+    <li>Derecha, hacia \(2\): \(2\); \(2\); \(2\). Candidato: \(2\). Distancias: \(|2-2|=0\), las tres veces. Estimación: \(\displaystyle\lim_{x\to 2^{+}}e(x)\approx 2\).</li>
+    <li>Comparación: \(1\ne 2\). El límite \(\displaystyle\lim_{x\to 2}e(x)\) <b>no existe</b>: la función da un salto de \(2-1=1\).</li>
+    <li>Confirmación con la definición de \(e\): para todo \(x\) con \(1\le x\lt 2\) es \(e(x)=1\), así que el límite por la izquierda es exactamente \(1\); para todo \(x\) con \(2\lt x\lt 3\) es \(e(x)=2\), así que el límite por la derecha es exactamente \(2\).</li>
+    <li>Aquí \(e(2)=2\) coincide con el lateral derecho. Es un dato de la función en \(2\); los laterales se obtuvieron sin usarlo.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>leer \(3^{-}\) como \(-3\)</b>. El signo de arriba indica el lado desde el que \(x\) se acerca, no un número negativo. Dos: <b>mezclar los lados</b>: para \(x\to a^{-}\) se usan solo las columnas con \(x\lt a\). Tres: <b>usar la columna \(x=a\)</b> para decidir un lateral: en la tabla de \(f\), \(f(3)=6\) no es la razón de que el lateral derecho sea \(6\). Cuatro: <b>concluir el límite por los dos lados con un solo lateral</b>: en el ejemplo 3 solo se pudo estimar el lateral derecho.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Con esta tabla: a) estima \(\displaystyle\lim_{x\to 4^{-}}p(x)\) y \(\displaystyle\lim_{x\to 4^{+}}p(x)\); b) decide si existe \(\displaystyle\lim_{x\to 4}p(x)\); c) confirma con la fórmula \(p(x)=2x-3\) si \(x\le 4\), y \(p(x)=12-x\) si \(x\gt 4\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(3{,}9\)</td><td>\(3{,}99\)</td><td>\(3{,}999\)</td><td>\(4\)</td><td>\(4{,}001\)</td><td>\(4{,}01\)</td><td>\(4{,}1\)</td></tr>
+      <tr><th>\(p(x)\)</th><td>\(4{,}8\)</td><td>\(4{,}98\)</td><td>\(4{,}998\)</td><td>\(5\)</td><td>\(7{,}999\)</td><td>\(7{,}99\)</td><td>\(7{,}9\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Deja aparte la columna \(x=4\). Lee la izquierda de \(3{,}9\) a \(3{,}999\) y, por separado, la derecha de \(4{,}1\) a \(4{,}001\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(4\): \(4{,}8\); \(4{,}98\); \(4{,}998\). Candidato: \(5\). Distancias: \(|4{,}8-5|=0{,}2\); \(|4{,}98-5|=0{,}02\); \(|4{,}998-5|=0{,}002\). Se achican: \(\displaystyle\lim_{x\to 4^{-}}p(x)\approx 5\).</li>
+        <li>Derecha, hacia \(4\): \(7{,}9\); \(7{,}99\); \(7{,}999\). Candidato: \(8\). Distancias: \(|7{,}9-8|=0{,}1\); \(|7{,}99-8|=0{,}01\); \(|7{,}999-8|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 4^{+}}p(x)\approx 8\).</li>
+        <li>b) \(5\ne 8\): los laterales son distintos y \(\displaystyle\lim_{x\to 4}p(x)\) no existe.</li>
+        <li>c) Una columna de cada lado: \(2\cdot 3{,}9=7{,}8\) y \(7{,}8-3=4{,}8\); \(12-4{,}1=7{,}9\).</li>
+        <li>Por la izquierda, \(2x-3\) se acerca a \(2\cdot 4-3=8-3=5\). Por la derecha, \(12-x\) se acerca a \(12-4=8\). Laterales \(5\) y \(8\), como se estimó.</li>
+        <li>La columna \(x=4\) dice \(p(4)=5\): coincide con el lateral izquierdo, pero no se usó para obtenerlo.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Con esta tabla: a) estima los dos límites laterales de \(q\) en \(1\); b) decide si existe \(\displaystyle\lim_{x\to 1}q(x)\) y cuánto vale; c) ¿qué papel juega \(q(1)=7\)?; d) confirma con la fórmula \(q(x)=5x-2\) si \(x\lt 1\), \(q(1)=7\), y \(q(x)=4-x\) si \(x\gt 1\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\)</th><td>\(0{,}9\)</td><td>\(0{,}99\)</td><td>\(0{,}999\)</td><td>\(1\)</td><td>\(1{,}001\)</td><td>\(1{,}01\)</td><td>\(1{,}1\)</td></tr>
+      <tr><th>\(q(x)\)</th><td>\(2{,}5\)</td><td>\(2{,}95\)</td><td>\(2{,}995\)</td><td>\(7\)</td><td>\(2{,}999\)</td><td>\(2{,}99\)</td><td>\(2{,}9\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Prueba el mismo candidato, \(3\), para los dos lados. No importa que un lado se acerque más rápido que el otro.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(1\): \(2{,}5\); \(2{,}95\); \(2{,}995\). Candidato: \(3\). Distancias: \(|2{,}5-3|=0{,}5\); \(|2{,}95-3|=0{,}05\); \(|2{,}995-3|=0{,}005\). Se achican: \(\displaystyle\lim_{x\to 1^{-}}q(x)\approx 3\).</li>
+        <li>Derecha, hacia \(1\): \(2{,}9\); \(2{,}99\); \(2{,}999\). Candidato: \(3\). Distancias: \(|2{,}9-3|=0{,}1\); \(|2{,}99-3|=0{,}01\); \(|2{,}999-3|=0{,}001\). Se achican: \(\displaystyle\lim_{x\to 1^{+}}q(x)\approx 3\).</li>
+        <li>b) Los dos laterales son el mismo número, \(3\): por el criterio de los laterales, \(\displaystyle\lim_{x\to 1}q(x)\approx 3\).</li>
+        <li>c) Ninguno: \(q(1)=7\) es el valor de la función en \(1\), y \(7\ne 3\). Los límites miran \(x\ne 1\).</li>
+        <li>d) Una columna de cada lado: \(5\cdot 0{,}9=4{,}5\) y \(4{,}5-2=2{,}5\); \(4-1{,}1=2{,}9\).</li>
+        <li>Por la izquierda, \(5x-2\) se acerca a \(5\cdot 1-2=5-2=3\). Por la derecha, \(4-x\) se acerca a \(4-1=3\). Los dos laterales valen \(3\): \(\displaystyle\lim_{x\to 1}q(x)=3\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un puesto de feria vende manzanas a granel. <b>Modelo:</b> si se llevan menos de \(5\) kg, el kilogramo cuesta \(1200\) pesos; desde \(5\) kg, todo el pedido se cobra a precio mayorista, \(1000\) pesos el kilogramo. El total a pagar por \(x\) kg es \(P(x)=1200\,x\) si \(0\lt x\lt 5\), y \(P(x)=1000\,x\) si \(x\ge 5\) (la balanza marca hasta milésimas de kilogramo). a) Con la tabla, estima los dos límites laterales de \(P\) en \(5\). b) ¿Existe \(\displaystyle\lim_{x\to 5}P(x)\)? c) Confirma con el modelo. d) ¿Qué significa para quien compra?</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>\(x\) (kg)</th><td>\(4{,}9\)</td><td>\(4{,}99\)</td><td>\(4{,}999\)</td><td>\(5\)</td><td>\(5{,}001\)</td><td>\(5{,}01\)</td><td>\(5{,}1\)</td></tr>
+      <tr><th>\(P(x)\) (pesos)</th><td>\(5880\)</td><td>\(5988\)</td><td>\(5998{,}8\)</td><td>\(5000\)</td><td>\(5001\)</td><td>\(5010\)</td><td>\(5100\)</td></tr>
+    </table></div>
+    <details><summary>Pista</summary><div><p>Candidato para la izquierda: \(6000\). Candidato para la derecha: \(5000\). La columna \(x=5\) se deja aparte.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda, hacia \(5\): \(5880\); \(5988\); \(5998{,}8\). Candidato: \(6000\). Distancias: \(|5880-6000|=120\); \(|5988-6000|=12\); \(|5998{,}8-6000|=1{,}2\). Se achican: \(\displaystyle\lim_{x\to 5^{-}}P(x)\approx 6000\) pesos.</li>
+        <li>Derecha, hacia \(5\): \(5100\); \(5010\); \(5001\). Candidato: \(5000\). Distancias: \(|5100-5000|=100\); \(|5010-5000|=10\); \(|5001-5000|=1\). Se achican: \(\displaystyle\lim_{x\to 5^{+}}P(x)\approx 5000\) pesos.</li>
+        <li>b) \(6000\ne 5000\): los laterales son distintos y \(\displaystyle\lim_{x\to 5}P(x)\) no existe.</li>
+        <li>c) Una columna de cada lado: \(1200\cdot 4{,}9=5880\) y \(1000\cdot 5{,}1=5100\).</li>
+        <li>Por la izquierda, \(1200\,x\) se acerca a \(1200\cdot 5=6000\). Por la derecha, \(1000\,x\) se acerca a \(1000\cdot 5=5000\). Laterales: \(6000\) y \(5000\) pesos.</li>
+        <li>d) Significado: quien pide un poco menos de \(5\) kg paga casi \(6000\) pesos; quien pide \(5\) kg o un poco más paga \(5000\) pesos o apenas más. En \(5\) kg el total da un salto de \(6000-5000=1000\) pesos hacia abajo: en este modelo conviene pedir \(5\) kg antes que \(4{,}9\) kg (\(5000\lt 5880\)).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H08 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* L29 H08 · tablas y límites unilaterales: cada lado de la tabla se lee por separado y da su propio límite lateral; después se comparan (por pasos) */
+OA.scene('uni-idea', (function(){
+  var N = 6, Q = '\\\\&\\qquad ';
+  /* la tabla dada: columnas x y f(x); la columna 3 (x = 3) trae f(3) = 6 y no participa en ningún lateral */
+  var XV = [2.9, 2.99, 2.999, 3, 3.001, 3.01, 3.1], TV = [3.9, 3.99, 3.999, 6, 6.002, 6.02, 6.2];
+  var IZ = [0, 1, 2], DE = [6, 5, 4]; /* columnas de cada lado, en el orden en que x se acerca a 3 */
+  var YA = 4.08, YM = 3.62, YB = 3.16, YE = 1.8; /* bordes de las dos filas de la tabla y altura de la recta numérica */
+  function lm08L(i){ return -0.45 + 0.8*i; } /* borde izquierdo de la columna i */
+  function lm08E(val){ return -0.9 + (val - 3.85)*5.8/2.4; } /* un valor de f, puesto en la recta numérica */
+  var PZ = [['Q', '\\lim_{x\\to 3^{-}}f(x)\\ \\text{y}\\ \\lim_{x\\to 3^{+}}f(x)\\approx\\ ?', 'lím por la izquierda y lím por la derecha de 3 ≈ ?', 'pt'], ['F', '\\Longrightarrow\\ 4\\ \\text{y}\\ 6', '⟹ 4 y 6', 'diff'],
+    ['TX', 'x', 'x', ''], ['TT', 'f(x)', 'f(x)', ''],
+    ['LI', '\\lim_{x\\to 3^{-}}f(x)\\approx 4', 'lím x→3⁻ f(x) ≈ 4', 'c-sec'], ['LD', '\\lim_{x\\to 3^{+}}f(x)\\approx 6', 'lím x→3⁺ f(x) ≈ 6', 'diff'],
+    ['FO', 'f(x)=x+1\\ (x<3);\\ \\ 2x\\ (x\\ge 3)', 'f(x) = x + 1 (x < 3); 2x (x ≥ 3)', 'c-tan'],
+    ['R1', '\\text{tabla dada; se lee cada lado de }a=3', 'tabla dada; se lee cada lado de a = 3', ''],
+    ['R2', 'f(3)=6\\text{ no participa en ningún lateral}', 'f(3) = 6 no participa en ningún lateral', ''],
+    ['R3', '\\lim_{x\\to 3^{-}}f(x)\\approx 4\\ \\ (3{,}9;\\ 3{,}99;\\ 3{,}999)', 'lím x→3⁻ f(x) ≈ 4 (3,9; 3,99; 3,999)', 'c-sec'],
+    ['R4', '\\lim_{x\\to 3^{+}}f(x)\\approx 6\\ \\ (6{,}2;\\ 6{,}02;\\ 6{,}002)', 'lím x→3⁺ f(x) ≈ 6 (6,2; 6,02; 6,002)', 'diff'],
+    ['R5', '4\\ne 6:\\ \\lim_{x\\to 3}f(x)\\text{ no existe (estimación)}', '4 ≠ 6: lím x→3 f(x) no existe (estimación)', 'c-tan'],
+    ['R6', '\\text{con la fórmula: laterales }4\\text{ y }6\\text{, exactos}', 'con la fórmula: laterales 4 y 6, exactos', 'c-tan']];
+  var TXT = [['La tabla viene dada. Se pide estimar, por', 'separado, el límite a cada lado de x = 3.'],
+    ['Izquierda: columnas con x menor que 3. Derecha:', 'con x mayor que 3. La columna x = 3 no participa.'],
+    ['Solo la izquierda, hacia 3: 3,9; 3,99; 3,999.', 'Se acercan a 4: ese es el límite por la izquierda.'],
+    ['Solo la derecha, hacia 3: 6,2; 6,02; 6,002.', 'Se acercan a 6: ese es el límite por la derecha.'],
+    ['Se comparan los dos laterales: 4 y 6 no coinciden.', 'El límite por los dos lados no existe.'],
+    ['Confirmación: se revela la fórmula de la tabla.', 'Con ella, los laterales son exactamente 4 y 6.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:6.0}, aspect:10.6/6.6,
+    aria:'Arriba, una franja dice qué muestra: cada lado de la tabla da su propio límite lateral, y después se comparan. Animación en seis pasos. Uno: la tabla dada, con los x 2,9; 2,99; 2,999; 3; 3,001; 3,01 y 3,1, y los valores 3,9; 3,99; 3,999; 6; 6,002; 6,02 y 6,2. Dos: la columna de x igual a 3, que trae el valor 6, queda rayada con el rótulo «no participa»; a su izquierda quedan las columnas con x menor que 3 y a su derecha, las de x mayor que 3. Tres: una flecha azul recorre el lado izquierdo hacia 3; los valores 3,9; 3,99 y 3,999 se acercan a 4 y aparecen como puntos azules en una recta numérica; el 4 queda encerrado en un círculo azul, con el rótulo: límite por la izquierda, aproximadamente 4. Cuatro: una flecha naranja recorre el lado derecho hacia 3; los valores 6,2; 6,02 y 6,002 se acercan a 6 y aparecen como puntos naranjas; el 6 queda encerrado en un círculo naranja, con el rótulo: límite por la derecha, aproximadamente 6. Cinco: un trazo burdeo une el 4 con el 6 en la recta: no coinciden, y el límite por los dos lados no existe. Seis: se revela la fórmula, x más 1 para x menor que 3 y 2x para x mayor o igual que 3, que confirma los laterales 4 y 6. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> lado izquierdo, \\(x\\) menor que 3</span><span><i class="sw rise"></i> lado derecho, \\(x\\) mayor que 3</span><span><i class="sw tan"></i> la comparación de los dos laterales, y la fórmula</span>',
+    anim:{run:32000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), a, a1, a2, a3, a4, a5, i, j, mu = C.muted || '#6b6b6b', F = '"Source Sans 3", system-ui, sans-serif', xa, xb, x0, x1;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      function frase(t, xw, yw, dy, col, al){ c.font = '600 11px ' + F; c.textBaseline = 'middle'; c.textAlign = al || 'center'; c.fillStyle = col; c.fillText(t, X(xw), Y(yw) + (dy || 0)); }
+      function celda(t, i, yw, col, peso, al){ c.globalAlpha = al; c.font = peso + ' 11px ' + F; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = col; c.fillText(t, X(lm08L(i) + 0.4), Y(yw)); c.globalAlpha = 1; }
+      function raya(xw0, yw0, xw1, yw1, col, w, al){ c.globalAlpha = al == null ? 1 : al; c.strokeStyle = col; c.lineWidth = w; c.setLineDash([]); c.beginPath(); c.moveTo(X(xw0), Y(yw0)); c.lineTo(X(xw1), Y(yw1)); c.stroke(); c.globalAlpha = 1; }
+      function aro(val, col, al){ c.globalAlpha = al; c.strokeStyle = col; c.lineWidth = 1.6; c.setLineDash([]); c.beginPath(); c.arc(X(lm08E(val)), Y(YE), 11, 0, 6.2832); c.stroke(); c.globalAlpha = 1; }
+      dtQue(S, 'cada lado de la tabla da su propio', 'límite lateral; después se comparan los dos.');
+      a1 = ap(1); a2 = ap(2); a3 = ap(3); a4 = ap(4); a5 = ap(5);
+      /* paso 2 (va debajo de los números): la columna x = 3 queda rayada, a la vista */
+      if (a2 > 0){ x0 = X(lm08L(3)); x1 = X(lm08L(4));
+        c.save(); c.beginPath(); c.rect(x0, Y(YA), x1 - x0, Y(YB) - Y(YA)); c.clip(); c.globalAlpha = 0.16*a2; c.fillStyle = C.ink; c.fillRect(x0, Y(YA), x1 - x0, Y(YB) - Y(YA));
+        c.globalAlpha = 0.3*a2; c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]); c.beginPath(); for (j = -6; j < 12; j++){ c.moveTo(x0 + j*7, Y(YB)); c.lineTo(x0 + j*7 + (Y(YB) - Y(YA)), Y(YA)); } c.stroke(); c.restore(); c.globalAlpha = 1; }
+      /* paso 1: la tabla dada, columna por columna */
+      raya(-1.2, YA, lm08L(7), YA, C.ink, 1, a1); raya(-1.2, YM, lm08L(7), YM, C.ink, 0.6, a1); raya(-1.2, YB, lm08L(7), YB, C.ink, 1, a1);
+      raya(-1.2, YA, -1.2, YB, C.ink, 1, a1); for (i = 0; i <= 7; i++) raya(lm08L(i), YA, lm08L(i), YB, C.ink, i === 0 || i === 7 ? 1 : 0.5, a1);
+      if (a1 > 0.1){ T.L('TX', -0.825, (YA + YM)/2); T.L('TT', -0.825, (YM + YB)/2); }
+      for (i = 0; i < 7; i++){ a = Math.max(0, Math.min(1, a1*8 - i));
+        j = IZ.indexOf(i) >= 0 ? (a3*3 > IZ.indexOf(i) + 0.5 ? C.sec : C.ink) : (DE.indexOf(i) >= 0 ? (a4*3 > DE.indexOf(i) + 0.5 ? C.rise : C.ink) : (a2 > 0.5 ? mu : C.ink));
+        celda(lmT(XV[i], 3), i, (YA + YM)/2, i === 3 && a2 > 0.5 ? mu : C.ink, '600', a); celda(lmT(TV[i], 3), i, (YM + YB)/2, j, j === C.ink || j === mu ? '600' : '700', a); }
+      /* paso 2: los dos lados y el rótulo de la columna apartada */
+      if (a2 > 0){ raya(lm08L(0), YA, lm08L(3), YA, C.sec, 3, a2); raya(lm08L(4), YA, lm08L(7), YA, C.rise, 3, a2); c.globalAlpha = a2;
+        frase('izquierda de 3', lm08L(0) + 1.2, YA, -11, C.sec); frase('derecha de 3', lm08L(4) + 1.2, YA, -11, C.rise); c.globalAlpha = 1; }
+      if (a2 > 0.5){ c.globalAlpha = (a2 - 0.5)*2; frase('no participa', lm08L(3) + 0.4, YA, -11, C.ink); c.globalAlpha = 1; }
+      /* pasos 3 y 4: cada lado se recorre, solo, hacia x = 3 */
+      if (a3 > 0){ xa = lm08L(0) + 0.1; xb = lm08L(3) - 0.08; dtFlecha(S, xa, YB - 0.2, xa + (xb - xa)*a3, YB - 0.2, C.sec, 1.8); if (a3 > 0.7) frase('se acercan a 4', lm08L(0) + 1.0, YB - 0.2, 14, C.sec); }
+      if (a4 > 0){ xa = lm08L(7) - 0.1; xb = lm08L(4) + 0.08; dtFlecha(S, xa, YB - 0.2, xa + (xb - xa)*a4, YB - 0.2, C.rise, 1.8); if (a4 > 0.7) frase('se acercan a 6', lm08L(7) - 1.0, YB - 0.2, 14, C.rise); }
+      /* la recta numérica: cada valor leído es un punto (azules arriba de la recta, naranjas abajo) */
+      if (a3 > 0){ a = Math.min(1, a3*3); c.globalAlpha = a; frase('valores en una recta:', -1.2, YE, -25, mu, 'left'); c.globalAlpha = 1;
+        raya(-1.1, YE, 5.1, YE, C.ink, 1, a);
+        [4, 5, 6].forEach(function(z){ raya(lm08E(z), YE + 0.07, lm08E(z), YE - 0.07, C.ink, 1, a); c.globalAlpha = a; frase(lmT(z, 0), lm08E(z), YE, 19, z === 4 && a3 > 0.8 ? C.sec : (z === 6 && a4 > 0.8 ? C.rise : mu)); c.globalAlpha = 1; });
+        IZ.forEach(function(ci, n){ if (a3*3 > n + 0.5){ c.fillStyle = C.sec; c.beginPath(); c.arc(X(lm08E(TV[ci])), Y(YE) - 5, 3, 0, 6.2832); c.fill(); } });
+        if (a3 > 0.8){ aro(4, C.sec, (a3 - 0.8)*5); T.L('LI', -1.2, YE, 0, 0, 40); } }
+      if (a4 > 0){ DE.forEach(function(ci, n){ if (a4*3 > n + 0.5){ c.fillStyle = C.rise; c.beginPath(); c.arc(X(lm08E(TV[ci])), Y(YE) + 5, 3, 0, 6.2832); c.fill(); } });
+        if (a4 > 0.8){ aro(6, C.rise, (a4 - 0.8)*5); T.L('LD', 5.2, YE, -100, 0, 40); } }
+      /* paso 5: se comparan los dos laterales; un trazo une el 4 con el 6 */
+      if (a5 > 0){ xa = lm08E(4) + 0.25; xb = lm08E(6) - 0.25; c.globalAlpha = a5; c.strokeStyle = C.tan; c.lineWidth = 1.6; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(xa), Y(YE) - 9); c.lineTo(X(xa + (xb - xa)*a5), Y(YE) - 9); c.stroke(); c.setLineDash([]);
+        if (a5 > 0.6) frase('no coinciden', lm08E(5), YE, 40, C.tan); c.globalAlpha = 1; }
+      /* paso 6: la fórmula con que se hizo la tabla */
+      if (ap(6) > 0.3) T.L('FO', 5.2, YE, -100, 0, -26);
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 4.66, 0); if (k === N && u > 0.5) T.L('F', 5.2, 4.66, -100);
+      lmTxt(S, TXT[k - 1][0], -1.2, 0.55); lmTxt(S, TXT[k - 1][1], -1.2, 0.55 - 21/(X(1) - X(0)));
+      c.font = '600 11px ' + F; c.fillStyle = mu; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-0.9) - 26);
+      T.fin();
+      oaReg(S, k, N, -1.2, -0.9, [0, 34, 68, 102, 136, 170]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{tabla dada de }f\\text{; se estudia }a=3' + Q + 'x:\\ \\ 2{,}9;\\ 2{,}99;\\ 2{,}999;\\ 3;\\ 3{,}001;\\ 3{,}01;\\ 3{,}1' + Q + 'f(x):\\ \\ 3{,}9;\\ 3{,}99;\\ 3{,}999;\\ 6;\\ 6{,}002;\\ 6{,}02;\\ 6{,}2',
+      'x\\to 3^{-}:\\ x\\text{ se acerca a }3\\text{ con }x<3\\ \\text{(izquierda)}' + Q + 'x\\to 3^{+}:\\ x\\text{ se acerca a }3\\text{ con }x>3\\ \\text{(derecha)}' + Q + '\\text{la columna }x=3\\text{ dice }f(3)=6' + Q + '\\text{no participa en ningún límite lateral}',
+      '\\text{izquierda, en el orden en que }x\\text{ se acerca a }3:' + Q + 'f(2{,}9)=3{,}9;\\ \\ f(2{,}99)=3{,}99;\\ \\ f(2{,}999)=3{,}999' + Q + '\\text{candidato: }4.\\ \\text{Distancias a }4:' + Q + '|3{,}9-4|=0{,}1;\\ \\ |3{,}99-4|=0{,}01;\\ \\ |3{,}999-4|=0{,}001' + Q + '\\text{se achican: }\\lim_{x\\to 3^{-}}f(x)\\approx 4',
+      '\\text{derecha, en el orden en que }x\\text{ se acerca a }3:' + Q + 'f(3{,}1)=6{,}2;\\ \\ f(3{,}01)=6{,}02;\\ \\ f(3{,}001)=6{,}002' + Q + '\\text{candidato: }6.\\ \\text{Distancias a }6:' + Q + '|6{,}2-6|=0{,}2;\\ \\ |6{,}02-6|=0{,}02;\\ \\ |6{,}002-6|=0{,}002' + Q + '\\text{se achican: }\\lim_{x\\to 3^{+}}f(x)\\approx 6',
+      '\\text{criterio de los laterales: el límite en }3\\text{ existe}' + Q + '\\text{solo si los dos laterales existen y coinciden}' + Q + '\\text{aquí: izquierda}\\approx 4;\\ \\ \\text{derecha}\\approx 6;\\ \\ 4\\ne 6' + Q + '\\text{distancia entre los dos números: }6-4=2' + Q + '\\text{estimación: }\\lim_{x\\to 3}f(x)\\text{ no existe}',
+      '\\text{confirmación, con la fórmula de la tabla:}' + Q + 'f(x)=x+1\\ \\text{si }x<3;\\ \\ f(x)=2x\\ \\text{si }x\\ge 3' + Q + 'x\\to 3^{-}:\\ \\ x+1\\ \\to\\ 3+1=4' + Q + 'x\\to 3^{+}:\\ \\ 2x\\ \\to\\ 2\\cdot 3=6' + Q + '\\lim_{x\\to 3^{-}}f(x)=4;\\ \\ \\lim_{x\\to 3^{+}}f(x)=6;\\ \\ 4\\ne 6' + Q + '\\lim_{x\\to 3}f(x)\\text{ no existe: la estimación era correcta}']; return dtPasos(R.slice(0, k)); }
+  };
+})());

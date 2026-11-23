@@ -696,7 +696,369 @@ Object.keys(OA.scenes).forEach(function(n){ var S = OA.scenes[n], N = S.sliders[
   out[n] = {n: N, id: S.sliders[0].id, min: S.sliders[0].min, step: S.sliders[0].step, hold: S.anim.hold, lect: L, cap: C, fin: v.paso, lab: S.labels, asp: S.aspect, w: S.world}; });
 console.log(JSON.stringify(out));
 """
+# >>> H08
+# ───────── H08: tablas y límites unilaterales (cada lado de la tabla da su lateral; después se comparan) ─────────
+A8, E8 = molde('08', 'H08_tablas_y_limites_unilaterales.html', 'Tablas y límites unilaterales', 'lim-unil', 'Límites a partir de tablas', ['uni-idea'], 1)
+def f8(x): return x + 1 if x < 3 else 2*x                                        # función ancla: laterales 4 y 6 en a = 3; f(3) = 6
+def r8(x): return x + 1                                                          # k2: mismo lado izquierdo que f, otro lado derecho
+def s8(x):
+    assert x != 0
+    return x + 2 if x < 0 else 1/Fr(x)
+def g8(x): return 3*x if x < 2 else (Fr(4) if x == 2 else x - 1)
+def h8(x):
+    assert x != 2
+    return 4 - x if x < 2 else 3*x - 4
+def k8(x):
+    assert x > 4
+    return 10 - 2*x
+def e8(x):
+    assert 1 <= x < 3
+    return Fr(1) if x < 2 else Fr(2)
+def p8(x): return 2*x - 3 if x <= 4 else 12 - x
+def q8(x): return 5*x - 2 if x < 1 else (Fr(7) if x == 1 else 4 - x)
+def P8(x):
+    assert x > 0
+    return 1200*x if x < 5 else 1000*x
+FUN8 = {'f': f8, 'r': r8, 's': s8, 'g': g8, 'h': h8, 'k': k8, 'e': e8, 'p': p8, 'q': q8, 'P': P8}
+valores('H08 hoja', mates_de(A8), FUN8, 8)
+def celda8(z):
+    z = z.strip()
+    if not z.startswith('\\('): return z                                          # «no definida»
+    return D(z[2:-2].replace('\\,', ''))
+TB8 = [[[celda8(z) for z in re.findall(r'<td>(.*?)</td>', r)] for r in re.findall(r'<tr>(.*?)</tr>', t, re.S)] for t in re.findall(r'<table class="tbl">(.*?)</table>', A8, re.S)]
+ok(len(TB8) == 10, 'H08 n.º de tablas')
+def tabla8(et, t, a, funs, en_a, L, nlado=(3, 3)):
+    """tabla dada: fila de x y una fila por función; columna x = a (si viene) con lo que dice la hoja;
+    L = (lateral izquierdo, lateral derecho) de la primera función; None en un lado = ese lado no se lee con distancias"""
+    xs = t[0]; ok(len(t) == 1 + len(funs) and all(len(r) == len(xs) for r in t) and xs == sorted(xs) and len(set(xs)) == len(xs), et + ': forma de la tabla')
+    ok((a in xs) == (en_a is not None), et + ': columna x = a')
+    ok((len([x for x in xs if x < a]), len([x for x in xs if x > a])) == nlado, et + ': columnas por lado')
+    for i, (F, fila) in enumerate(zip(funs, t[1:])):
+        for x, v in zip(xs, fila):
+            if x == a: ok(v == (en_a[i] if isinstance(en_a, list) else en_a), '%s: la columna x = a dice %s' % (et, v))
+            else: ok(v == F(x), '%s: valor en x = %s' % (et, x))
+    F = funs[0]
+    for lado, Ll in ((-1, L[0]), (1, L[1])):
+        if Ll is None: continue
+        orden = sorted([x for x in xs if (x - a)*lado > 0], key=lambda x: abs(x - a), reverse=True)   # en el orden en que x se acerca a a
+        ds = [abs(F(x) - Ll) for x in orden]
+        ok(ds == sorted(ds, reverse=True) and len(set(ds)) == len(ds) and ds[-1] > 0, '%s: las distancias a %s se achican (lado %d)' % (et, Ll, lado))
+        ok('; '.join('\\(%s\\)' % tex(F(x)) for x in orden) in A8, '%s: la hoja no trae la lectura del lado %d en orden' % (et, lado))
+        for x, d in zip(orden, ds):
+            cad = '|%s-%s|=%s' % (tex(F(x)), tex(Ll), tex(d))
+            ok(cad in A8 or cad.replace('|', '\\|') in E8 or cad in E8, '%s: falta la distancia «%s»' % (et, cad))
+        sg = '-' if lado < 0 else '+'
+        ok(re.search(r'\\lim_\{[a-z]\\to %s\^\{%s\}\}[A-Za-z]\([a-z]\)\\approx %s(?!\d|\{,\})' % (tex(a), re.escape(sg), tex(Ll)), A8) is not None, '%s: falta escribir el lateral %s ≈ %s' % (et, sg, Ll))
+def acerca8(et, F, a, lado, Ll):
+    """con la fórmula: los valores en a ± 10^-k se acercan a Ll (distancias decrecientes, la última menor que 10^-3 por cada unidad de pendiente)"""
+    ds = [abs(F(a + lado*Fr(1, 10**k)) - Ll) for k in range(1, 9)]
+    ok(ds == sorted(ds, reverse=True) and ds[-1] < Fr(1, 10**4) and all(ds[i + 1] <= ds[i]/10 for i in range(7)), '%s: llegada %s por el lado %d' % (et, Ll, lado))
+# animación y tabla ancla
+tabla8('H08 tabla de f', TB8[0], 3, [f8], 6, (4, 6)); acerca8('H08 f', f8, Fr(3), -1, 4); acerca8('H08 f', f8, Fr(3), 1, 6)
+ok(4 != 6 and 6 - 4 == 2 and f8(Fr(3)) == 6 and 3 + 1 == 4 and 2*3 == 6, 'H08: laterales 4 y 6 distintos; f(3) = 6')
+# k2: mismo lado izquierdo, otro lado derecho
+tabla8('H08 k2 tabla de f y r', TB8[1], 3, [f8, r8], [Fr(6), Fr(4)], (4, 6))
+ok(TB8[1][0] == TB8[0][0] and TB8[1][1] == TB8[0][1], 'H08 k2: misma tabla de f que en la animación')
+ok(all(f8(x) == r8(x) for x in TB8[1][0] if x < 3) and all(f8(x) != r8(x) for x in TB8[1][0] if x >= 3), 'H08 k2: f = r a la izquierda de 3 y distintas a la derecha')
+for x in RJ:
+    ok((f8(x) == r8(x)) == (x < 3), 'H08 k2: f(x) = r(x) exactamente cuando x < 3 (x=%s)' % x)
+acerca8('H08 r', r8, Fr(3), -1, 4); acerca8('H08 r', r8, Fr(3), 1, 4)
+ok(all('|%s-4|=%s' % (tex(r8(x)), tex(abs(r8(x) - 4))) in A8 for x in (Fr('3.1'), Fr('3.01'), Fr('3.001'))) and '\\(4{,}1\\); \\(4{,}01\\); \\(4{,}001\\)' in A8, 'H08 k2: lectura derecha de r y distancias a 4')
+ok(Fr('2.9') + 1 == Fr('3.9') and 2*Fr('3.1') == Fr('6.2') and Fr('3.1') + 1 == Fr('4.1'), 'H08 k2: valores de muestra')
+# k3: un lado hacia un número, el otro sin tope
+tabla8('H08 k3 tabla de s', TB8[2], 0, [s8], 'no definida', (2, None)); acerca8('H08 s', s8, Fr(0), -1, 2)
+ok(TB8[2][1][4:] == [1000, 100, 10] and 10*10 == 100 and 100*10 == 1000 and '\\(10\\); \\(100\\); \\(1000\\)' in A8, 'H08 k3: derecha 10; 100; 1000, cada valor 10 veces el anterior')
+ok(Fr(1, 1000) == Fr('0.001') and s8(Fr('0.0005')) == 2000 and 0 + 2 == 2, 'H08 k3: valores de la confirmación')
+for M8 in list(range(1, 60)) + [100, 1000, Fr(1, 2), Fr(7, 3)]:
+    for j8 in range(1, 30):
+        x = Fr(j8, 30)/M8
+        ok(0 < x < Fr(1)/M8 and s8(x) > M8, 'H08 k3: con 0 < x < 1/M, s(x) > M (M=%s)' % M8)
+ok(all(s8(Fr(1, 10**n)) == 10**n for n in range(1, 9)), 'H08 k3: s(10^-n) = 10^n, sin tope')
+# ejemplos
+tabla8('H08 ej1', TB8[3], 2, [g8], 4, (6, 1)); acerca8('H08 ej1', g8, Fr(2), -1, 6); acerca8('H08 ej1', g8, Fr(2), 1, 1)
+ok(g8(Fr(2)) == 4 and 4 != 6 and 4 != 1 and 6 != 1 and 3*Fr('1.9') == Fr('5.7') and Fr('2.1') - 1 == Fr('1.1') and 3*2 == 6 and 2 - 1 == 1, 'H08 ej1')
+tabla8('H08 ej2', TB8[4], 2, [h8], None, (2, 2)); acerca8('H08 ej2', h8, Fr(2), -1, 2); acerca8('H08 ej2', h8, Fr(2), 1, 2)
+ok(all(v > 2 for v in TB8[4][1]) and 4 - Fr('1.9') == Fr('2.1') and 3*Fr('2.1') == Fr('6.3') and Fr('6.3') - 4 == Fr('2.3') and 4 - 2 == 2 and 3*2 - 4 == 6 - 4 == 2, 'H08 ej2: los dos lados bajan hacia 2 desde arriba; confirmación')
+tabla8('H08 ej3', TB8[5], 4, [k8], None, (None, 2), nlado=(0, 4)); acerca8('H08 ej3', k8, Fr(4), 1, 2)
+ok(TB8[5][0] == [Fr(z) for z in ('4.001', '4.01', '4.1', '4.5')] and 2*Fr('4.5') == 9 and 10 - 9 == 1 and 10 - 2*4 == 10 - 8 == 2, 'H08 ej3: solo lado derecho; confirmación')
+tabla8('H08 ej4', TB8[6], 2, [e8], 2, (None, None))
+ok(TB8[6][1] == [1, 1, 1, 2, 2, 2, 2] and e8(Fr(2)) == 2 and 1 != 2 and 2 - 1 == 1, 'H08 ej4: valores constantes a cada lado')
+for j8 in range(1, 400):
+    ok(e8(2 - Fr(j8, 400)) == 1 and e8(2 + Fr(j8, 400)) == 2, 'H08 ej4: e = 1 en [1, 2[ y e = 2 en ]2, 3[')
+# ejercicios
+tabla8('H08 A', TB8[7], 4, [p8], 5, (5, 8)); acerca8('H08 A', p8, Fr(4), -1, 5); acerca8('H08 A', p8, Fr(4), 1, 8)
+ok(5 != 8 and p8(Fr(4)) == 5 and 2*Fr('3.9') == Fr('7.8') and Fr('7.8') - 3 == Fr('4.8') and 12 - Fr('4.1') == Fr('7.9') and 2*4 - 3 == 8 - 3 == 5 and 12 - 4 == 8, 'H08 A')
+tabla8('H08 B', TB8[8], 1, [q8], 7, (3, 3)); acerca8('H08 B', q8, Fr(1), -1, 3); acerca8('H08 B', q8, Fr(1), 1, 3)
+ok(q8(Fr(1)) == 7 != 3 and 5*Fr('0.9') == Fr('4.5') and Fr('4.5') - 2 == Fr('2.5') and 4 - Fr('1.1') == Fr('2.9') and 5*1 - 2 == 5 - 2 == 3 and 4 - 1 == 3, 'H08 B')
+tabla8('H08 C', TB8[9], 5, [P8], 5000, (6000, 5000)); acerca8('H08 C', P8, Fr(5), -1, 6000); acerca8('H08 C', P8, Fr(5), 1, 5000)
+ok(6000 != 5000 and P8(Fr(5)) == 5000 and 1200*Fr('4.9') == 5880 and 1000*Fr('5.1') == 5100 and 1200*5 == 6000 and 1000*5 == 5000 and 6000 - 5000 == 1000 and 5000 < 5880 and all(ndec(x) <= 3 for x in TB8[9][0]), 'H08 C: modelo, laterales 6000 y 5000, salto de 1000')
+# la escena: la tabla dibujada es la de la hoja; registro y lectura armados con fracciones
+ok('var XV = [2.9, 2.99, 2.999, 3, 3.001, 3.01, 3.1], TV = [3.9, 3.99, 3.999, 6, 6.002, 6.02, 6.2];' in E8 and 'var IZ = [0, 1, 2], DE = [6, 5, 4];' in E8, 'H08 escena: tabla dibujada y orden de lectura')
+ok(TB8[0] == [[Fr(z) for z in ('2.9', '2.99', '2.999', '3', '3.001', '3.01', '3.1')], [Fr(z) for z in ('3.9', '3.99', '3.999', '6', '6.002', '6.02', '6.2')]], 'H08 escena: misma tabla que la hoja')
+IZ8 = [x for x in TB8[0][0] if x < 3]; DE8 = [x for x in TB8[0][0] if x > 3][::-1]
+ok('\\\\approx 4\\\\ \\\\ (' + ';\\\\ '.join(tex(f8(x)) for x in IZ8) + ')' in E8 and '\\\\approx 6\\\\ \\\\ (' + ';\\\\ '.join(tex(f8(x)) for x in DE8) + ')' in E8, 'H08 escena: registro R3 y R4')
+for L8, c8 in ((IZ8, 4), (DE8, 6)):
+    ok(';\\\\ \\\\ '.join('f(%s)=%s' % (tex(x), tex(f8(x))) for x in L8) in E8, 'H08 escena: lectura de los valores de un lado')
+    ok(';\\\\ \\\\ '.join('|%s-%d|=%s' % (tex(f8(x)), c8, tex(abs(f8(x) - c8))) for x in L8) in E8, 'H08 escena: distancias al candidato %d' % c8)
+ok([abs(f8(x) - 4) for x in IZ8] == [Fr(1, 10), Fr(1, 100), Fr(1, 1000)] and [abs(f8(x) - 6) for x in DE8] == [Fr(2, 10), Fr(2, 100), Fr(2, 1000)], 'H08 escena: distancias 0,1; 0,01; 0,001 y 0,2; 0,02; 0,002')
+ok('f(x)=x+1\\\\ \\\\text{si }x<3;\\\\ \\\\ f(x)=2x\\\\ \\\\text{si }x\\\\ge 3' in E8 and '3+1=4' in E8 and '2\\\\cdot 3=6' in E8 and '6-4=2' in E8 and "['FO', 'f(x)=x+1\\\\ (x<3);\\\\ \\\\ 2x\\\\ (x\\\\ge 3)'" in E8 and 'f(3)=6' in E8, 'H08 escena: fórmula de confirmación')
+ok('function lm08E(val){ return -0.9 + (val - 3.85)*5.8/2.4; }' in E8 and all(-1.1 < -0.9 + (float(v) - 3.85)*5.8/2.4 < 5.1 for v in TB8[0][1]), 'H08 escena: los valores caben en la recta numérica')
+# <<< H08
+
+# >>> H09
+# ───────── H09: usar tablas para aproximar límites (fórmulas con raíz: valores redondeados, margen de error declarado) ─────────
+A9, E9 = molde('09', 'H09_usar_tablas_para_aproximar_limites.html', 'Usar tablas para aproximar límites', 'lim-usar', 'Límites a partir de tablas', ['usa-idea'], 1)
+import math
+def rex9(q):
+    """raíz exacta de un racional (o None si no es cuadrado perfecto)"""
+    q = Fr(q); n, d = math.isqrt(q.numerator), math.isqrt(q.denominator)
+    return Fr(n, d) if q >= 0 and n*n == q.numerator and d*d == q.denominator else None
+def enc9(q, r, e):
+    """encierro exacto: r aproxima √q con error ≤ e  ⟺  (r − e)² ≤ q ≤ (r + e)², con r − e ≥ 0"""
+    return r - e >= 0 and (r - e)**2 <= q <= (r + e)**2
+def cota9(q, k=30):
+    """dos racionales a distancia 10⁻ᵏ que encierran a √q"""
+    lo = Fr(math.isqrt(Fr(q).numerator*10**(2*k)//Fr(q).denominator), 10**k); assert lo*lo <= q < (lo + Fr(1, 10**k))**2
+    return lo, lo + Fr(1, 10**k)
+# cada función: (lo de adentro de la raíz, número que se resta, denominador, numerador de la forma racionalizada)
+F9 = {'f': (lambda x: x, 2, lambda x: x - 4, 1), 'g': (lambda x: x + 1, 1, lambda x: x, 1), 'r': (lambda x: x + 5, 3, lambda x: x - 4, 1),
+      'p': (lambda x: x, 5, lambda x: x - 25, 1), 'w': (lambda x: 2*x + 1, 3, lambda x: x - 4, 2), 'm': (lambda x: x, 4, lambda x: x - 16, 1)}
+def real9(nom, x):
+    """intervalo (de ancho menor que 10⁻²⁵) que contiene al valor real de la función"""
+    rad, c, den, _ = F9[nom]; lo, hi = cota9(rad(x)); a, b = (lo - c)/den(x), (hi - c)/den(x)
+    return min(a, b), max(a, b)
+def exacta9(nom):
+    def F(x):
+        rad, c, den, _ = F9[nom]; s = rex9(rad(x)); assert s is not None and den(x) != 0, 'H09: %s(%s) no es exacto' % (nom, x)
+        return (s - c)/den(x)
+    return F
+def q9(x):
+    assert x != 0
+    return abs(x)/x                                                     # √(x²)/x = |x|/x
+FUN9 = dict({k: exacta9(k) for k in F9}, q=q9)
+valores('H09 hoja', mates_de(A9), FUN9, 6)
+def comprobar9():
+    """todas las cuentas de H09; va en una función para no pisar nombres globales del verificador"""
+    t9 = lambda z: tex(z, 9); cel9 = lambda s: D(s.replace('\\(', '').replace('\\)', ''))
+    # 1) las siete tablas, casilla por casilla: (función, a, decimales de la raíz, ¿columna de lo de adentro?)
+    TAB9 = [('f', 4, 6, False), ('f', 4, 2, False), ('g', 0, 6, True), ('r', 4, 6, True), ('p', 25, 6, False), ('w', 4, 6, True), ('m', 16, 6, False)]
+    TH9 = re.findall(r'<table class="tbl">(.*?)</table>', A9, re.S); ok(len(TH9) == len(TAB9) == 7, 'H09 n.º de tablas')
+    PROC9 = {}; VAL9 = []
+    for i, (th, (nom, a, nd, crad)) in enumerate(zip(TH9, TAB9)):
+        et = 'H09 tabla %d (%s)' % (i + 1, nom); rad, c, den, _ = F9[nom]; e = Fr(5, 10**(nd + 1)); ncol = 6 + crad
+        ok(len(re.findall(r'<th>', th)) == ncol, et + ': columnas')
+        FL = re.findall(r'<tr>(.*?)</tr>', th, re.S)[1:]; ok(len(FL) == 7, et + ': filas')
+        ok(FL[3] == '<td>\\(%s\\)</td><td colspan="%d">no se calcula: el denominador es \\(0\\)</td>' % (tex(a), ncol - 1), et + ': fila de a')
+        hs = [Fr(-1, 10), Fr(-1, 100), Fr(-1, 1000), None, Fr(1, 1000), Fr(1, 100), Fr(1, 10)]; vs = []
+        for h, fl in zip(hs, FL):
+            if h is None: continue
+            z = [cel9(s) for s in re.findall(r'<td>(.*?)</td>', fl)]; ok(len(z) == ncol, et + ': casillas')
+            if len(z) != ncol: continue
+            x = z[0]; R = z[1] if crad else rad(x); r, num, dn, v, mg = z[-5:]
+            ok(x == a + h, et + ': x = a ± 0,1; 0,01; 0,001'); ok(R == rad(x) and R >= 0, et + ': lo de adentro de la raíz en x = %s' % x)
+            ok(ndec(r) <= nd and enc9(R, r, e), et + ': la raíz de %s no está bien redondeada a %d decimales' % (R, nd))
+            ok(num == r - c, et + ': resta en x = %s' % x); ok(dn == den(x) == h, et + ': denominador en x = %s' % x)
+            ok(v == num/dn, et + ': división en x = %s' % x); ok(mg == e/abs(dn), et + ': margen en x = %s' % x)
+            lo, hi = real9(nom, x); ok(v - mg <= lo and hi <= v + mg, et + ': el valor real en x = %s no queda dentro del margen' % x)
+            PROC9.setdefault((nom, x), set()).add(v); vs.append(v)
+        VAL9.append(vs)
+    f6, f2, g6, r6, p6, w6, m6 = VAL9
+    y9 = lambda *v: ' y '.join('\\(%s\\)' % t9(z) for z in v); pc9 = lambda v: '; '.join('\\(%s\\)' % t9(z) for z in v)
+    # 2) las frases de la hoja que citan valores de las tablas, armadas con las tablas
+    for s in ('dan ' + y9(f6[1], f6[4]) + ', cada una con margen \\(0{,}00005\\)', 'dan ' + y9(g6[1], g6[4]) + ', con margen \\(0{,}00005\\)', 'dan ' + y9(r6[1], r6[4]) + ', con margen \\(0{,}00005\\)',
+              'dan ' + y9(w6[1], w6[4]) + ', con margen \\(0{,}00005\\)', 'Los valores son ' + pc9(f2[:3]) + ' y ' + pc9(f2[3:]) + ':', 'Los valores son ' + pc9(p6[:3]) + ' por la izquierda y ' + pc9(p6[:2:-1]) + ' por la derecha',
+              'Por la izquierda: ' + pc9(w6[:3]) + '. Por la derecha (de lejos a cerca): ' + pc9(w6[:2:-1]) + '.', 'Los valores son ' + pc9(m6[:3]) + ' por la izquierda y ' + pc9(m6[:2:-1]) + ' por la derecha',
+              'Se escribe \\(f(3{,}9)\\approx %s\\)' % t9(f6[0]), 'dan \\(%s\\) con margen \\(0{,}0005\\). Informe: \\(\\displaystyle\\lim_{x\\to 4}r(x)\\approx 0{,}167\\)' % t9(r6[2]), 'dan \\(%s\\) con margen \\(0{,}0005\\). Tres decimales' % t9(w6[2]),
+              'muestran \\(%s\\) justo, con margen \\(0{,}0005\\)' % t9(g6[2]), 'La fila \\(x=24{,}99\\) muestra \\(%s\\)' % t9(p6[1]), 'el lado creció \\(%s\\) metros' % t9(m6[5]*Fr(1, 10))):
+        ok(s in A9, 'H09 frase con valores de tabla: ' + s)
+    ok(f6[2] == f6[3] == Fr(1, 4) and g6[2] == g6[3] == Fr(1, 2) and r6[2] == r6[3] == Fr(167, 1000) and w6[2] == w6[3] == Fr(333, 1000) and m6[2] == m6[3] == Fr(1, 8) and p6[1:5] == [Fr(1, 10)]*4, 'H09: valores de las filas cercanas')
+    ok(f2[1:5] == [0, 0, 0, 0] and all(Fr(5, 1000)/h > abs(v) for h, v in zip((Fr(1, 100), Fr(1, 1000)), (f6[1], f6[2]))), 'H09 k3: con 2 decimales las cuatro filas centrales dan 0 y el margen supera al valor')
+    # 3) cada raíz escrita con ≈ en la hoja (fuera de las tablas) y cada «función(número) ≈ número»
+    n = 0
+    for m in re.finditer(r'\\sqrt\{(%s)\}\\approx (%s)' % (NUMTEX, NUMTEX), A9):
+        q, r = D(m.group(1)), D(m.group(2)); n += 1; ok(enc9(q, r, Fr(5, 10**9) if ndec(r) == 8 else Fr(5, 10**7)), 'H09 hoja: √%s ≈ %s mal redondeada' % (m.group(1), m.group(2)))
+    ok(n == 10, 'H09 hoja: se esperaban 10 raíces con ≈ en el texto y hay %d' % n)
+    def aprox9(et, textos, minimo):
+        k = 0
+        for mt in textos:
+            for m in re.finditer(r'(?<![A-Za-z\\])([a-z])\((%s)\)\\approx ?(%s)' % (NUMTEX, NUMTEX), mt):
+                nom, x, v = m.group(1), D(m.group(2)), D(m.group(3)); lo, hi = real9(nom, x); k += 1
+                ok(v in PROC9.get((nom, x), ()) or (abs(lo - v) <= Fr(5, 10**(ndec(v) + 1)) and abs(hi - v) <= Fr(5, 10**(ndec(v) + 1))), '%s: %s(%s) ≈ %s no sale de la tabla ni es el redondeo del valor real' % (et, nom, m.group(2), m.group(3)))
+        ok(k >= minimo, '%s: se esperaban al menos %d valores aproximados y hay %d' % (et, minimo, k))
+    aprox9('H09 hoja', mates_de(A9), 1)
+    # 4) k3 «acercarse demasiado» y ejemplo 4 (8 decimales): el valor real queda dentro de los márgenes declarados
+    for x, v, mg in ((Fr('4.00001'), Fr(1, 5), Fr(1, 20)), (Fr('3.99999'), Fr(3, 10), Fr(1, 20))):
+        lo, hi = real9('f', x); ok(v - mg <= lo and hi <= v + mg and abs(v - Fr(1, 4)) == mg, 'H09 k3: x = %s' % x)
+    for x, v in ((Fr('0.001'), Fr('0.49988')), (Fr('-0.001'), Fr('0.50013'))):
+        lo, hi = real9('g', x); mg = Fr(5, 10**9)/abs(x); ok(mg == Fr(5, 10**6) and v - mg <= lo and hi <= v + mg and not (v - mg <= Fr(1, 2) <= v + mg), 'H09 ejemplo 4: x = %s' % x)
+    ok('está entre \\(0{,}49988-0{,}000005=0{,}499875\\) y \\(0{,}49988+0{,}000005=0{,}499885\\)' in A9 and 'está entre \\(0{,}25-0{,}0005=0{,}2495\\) y \\(0{,}25+0{,}0005=0{,}2505\\)' in A9 and 'está entre \\(0{,}1-0{,}00005=0{,}09995\\) y \\(0{,}1+0{,}00005=0{,}10005\\)' in A9, 'H09: intervalos declarados')
+    # 5) identidades de la racionalización, en rejilla de raíces exactas s = √(lo de adentro), y los límites
+    RJ9 = [Fr(a, b) for a in range(0, 41) for b in (1, 2, 3, 5, 7, 10)]
+    INV9 = {'f': lambda s: s*s, 'g': lambda s: s*s - 1, 'r': lambda s: s*s - 5, 'p': lambda s: s*s, 'w': lambda s: (s*s - 1)/2, 'm': lambda s: s*s}
+    LIM9 = {'f': (4, Fr(1, 4)), 'g': (0, Fr(1, 2)), 'r': (4, Fr(1, 6)), 'p': (25, Fr(1, 10)), 'w': (4, Fr(1, 3)), 'm': (16, Fr(1, 8))}
+    for nom, (rad, c, den, k) in F9.items():
+        a, L = LIM9[nom]; ok(rex9(rad(Fr(a))) == c and den(Fr(a)) == 0 and Fr(k, 2*c) == L, 'H09: límite de ' + nom)
+        for s in RJ9:
+            x = INV9[nom](s); ok(rad(x) == s*s, 'H09 rejilla ' + nom)
+            if s != c: ok(exacta9(nom)(x) == Fr(k)/(s + c) and (s - c)*(s + c) == (rad(x) - c*c) and k*den(x) == rad(x) - c*c, 'H09: forma racionalizada de %s en x = %s' % (nom, x))
+    ok(all(q9(x) == 1 and q9(-x) == -1 and rex9(x*x) == x for x in RJ9 if x), 'H09 ejemplo 3: √(x²)/x vale 1 o −1')
+    ok(Fr(1, 10)*Fr(1, 8) == Fr('0.0125') and Fr('0.0125')*100 == Fr('1.25') and abs(Fr(1, 6) - Fr('0.1667')) <= Fr(5, 10**5) and abs(Fr(1, 3) - Fr('0.3333')) <= Fr(5, 10**5), 'H09: cuentas sueltas del ejercicio C y comparaciones')
+    for z, mg in (('0{,}1', '0{,}000005'), ('0{,}01', '0{,}00005'), ('0{,}001', '0{,}0005'), ('0{,}00001', '0{,}05')):
+        ok('\\(\\dfrac{0{,}0000005}{%s}=%s\\)' % (z, mg) in A9 and Fr(5, 10**7)/D(z) == D(mg), 'H09 k2: margen a distancia ' + z)
+    # 6) la escena: los datos (x y raíz en millonésimas) y todo lo que se escribe a mano con esos números
+    TR9 = [(int(a), int(b), int(c)) for a, b, c in re.findall(r'\[(\d+), (\d), (\d{7})\]', E9)]; ok(len(TR9) == 6, 'H09 escena: seis filas de datos')
+    XS9 = [Fr(n, 10**k) for n, k, r in TR9]; ok(XS9 == [Fr(4) - Fr(1, 10**k) for k in (1, 2, 3)] + [Fr(4) + Fr(1, 10**k) for k in (1, 2, 3)], 'H09 escena: los x')
+    VS9 = []
+    for (n, k, r), x in zip(TR9, XS9):
+        ok(enc9(x, Fr(r, 10**6), Fr(5, 10**7)), 'H09 escena: raíz de %s' % x); v = (Fr(r, 10**6) - 2)/(x - 4); VS9.append(v)
+        ok(PROC9[('f', x)] >= {v}, 'H09 escena: el valor en x = %s no es el de la tabla de la hoja' % x)
+    c9 = lambda z: t9(z).replace('{,}', ',').replace('-', '−'); li9 = lambda v: '; '.join(c9(z) for z in v)
+    for s in ("'por el denominador: %s.'" % li9(VS9[:3]), "'Resultan %s.'" % li9(VS9[3:]), "'izquierda: f(x) ≈ %s'" % li9(VS9[:3]), "'derecha: f(x) ≈ %s'" % li9(VS9[3:]), "'x: %s y %s'" % (li9(XS9[:3]), li9(XS9[3:])), "'márgenes: 0,000005; 0,00005; 0,0005'",
+              'raíces, redondeadas a seis decimales: %s y %s.' % (li9(Fr(r, 10**6) for n, k, r in TR9[:3]), li9(Fr(r, 10**6) for n, k, r in TR9[:2:-1])), 'izquierda: %s, que' % li9(VS9[:3]), 'derecha: %s, puntos' % li9(VS9[3:]),
+              'num = r - 2000000, den = n - 4*D, V = num*den*D', 'mg:lm09N(5*D, 7)', 'function GX(w){ return 2 + (w - 0.25)*1400; }', "'± 0,0005'", 'world:{x0:-1.3, x1:5.3, y0:-6.75, y1:6.0}, aspect:12.75/6.6'):
+        ok(s in E9, 'H09 escena: ' + s)
+    ok(all(-1.3 < 2 + (float(v) - 0.25)*1400 < 5.3 for v in VS9) and all(-1.3 < 2 + (float(v) + s*0.0005 - 0.25)*1400 < 5.3 for v in (VS9[2], VS9[5]) for s in (-1, 1)), 'H09 escena: puntos y márgenes dentro de la recta numérica')
+    # 7) la lectura real de la escena (node): cada raíz con ≈ y cada f(x) ≈ del último paso
+    if not SIN_NODO:
+        nodo = "const fs = require('fs'), p = process.argv[process.argv.length - 1]; global.OA = { scenes:{}, scene:function(n, d){ OA.scenes[n] = d; } }; (0, eval)(['_txt.js', '_det.js', '_lim.js', '09.scene.js'].map(function(a){ return fs.readFileSync(p + '/' + a, 'utf8'); }).join('\\n')); var S = OA.scenes['usa-idea']; console.log(JSON.stringify({l: S.readout({paso: 7})[0][1], lab: S.labels}));"
+        J = json.loads(subprocess.run(['node', '-e', nodo, str(PARTES)], capture_output=True, text=True, check=True).stdout); L = J['l']
+        RA = re.findall(r'\\sqrt\{(%s)\}\\approx (%s)' % (NUMTEX, NUMTEX), L); ok([(D(a), D(b)) for a, b in RA] == [(x, Fr(r, 10**6)) for (n, k, r), x in zip(TR9, XS9)], 'H09 escena: raíces de la lectura')
+        aprox9('H09 escena (lectura)', [L], 6)
+        ok(all('f(%s)\\approx %s' % (t9(x), t9(v)) in L and '\\tfrac{%s}{%s}=%s' % (t9(v*(x - 4)), t9(x - 4), t9(v)) in L for x, v in zip(XS9, VS9)), 'H09 escena: cuenta de cada fila en la lectura')
+        ok(all('\\tfrac{0{,}0000005}{%s}=%s' % (t9(Fr(1, 10**k)), t9(Fr(5, 10**(7 - k)))) in L for k in (1, 2, 3)) and '0{,}25-0{,}0005=0{,}2495' in L and '0{,}25+0{,}0005=0{,}2505' in L, 'H09 escena: márgenes en la lectura')
+        lab = {l[0]: l for l in J['lab']}
+        ok(lab['R3'][1].endswith(';\\ '.join(t9(v) for v in VS9[:3])) and lab['R4'][1].endswith(';\\ '.join(t9(v) for v in VS9[3:])) and lab['R5'][1].endswith('0{,}000005;\\ 0{,}00005;\\ 0{,}0005'), 'H09 escena: registro R3, R4 y R5')
+comprobar9()
+# <<< H09
+
+# >>> H10
+# ───────── H10: ideas para construir la definición formal de límite (tolerancia ε de la salida, distancia δ de la entrada) ─────────
+A10, E10 = molde('10', 'H10_ideas_para_construir_la_definicion_formal_de_limite.html', 'Ideas para construir la definición formal de límite', 'lim-ideas', 'Definición formal de límite (épsilon-delta)', ['eps-idea'], 1)
+# funciones exactas de la hoja
+def f10(x): return 2*Fr(x) + 1                                  # función ancla: a = 3, L = 7
+def g10(x): return 3*Fr(x) - 2                                  # ejemplo 1: a = 2, L = 4
+def h10(x): return 5 - 4*Fr(x)                                  # ejemplo 2: a = 1, L = 1
+def p10(x): return Fr(10) if x == 3 else 2*Fr(x) + 1            # ejemplo 3: límite 7, p(3) = 10
+def s10(x): return Fr(x) + 1 if x < 2 else Fr(x) + 2            # ejemplo 4: salto en 2
+def u10(x): return 4*Fr(x) - 3                                  # ejercicio A: a = 2, L = 5
+def q10(x): return 6 - Fr(x) if x <= 4 else Fr(x) - 1           # ejercicio B: salto en 4
+def P10(m): return 16*Fr(m)                                     # ejercicio C: 16 pesos el gramo
+FUN10 = {'f': f10, 'g': g10, 'h': h10, 'p': p10, 's': s10, 'u': u10, 'q': q10, 'P': P10}
+valores('H10 hoja', mates_de(A10), FUN10, 22)
+ES10 = [Fr(1), Fr(1, 2), Fr(1, 10), Fr(1, 100), Fr(3, 5), Fr(1, 5), Fr(2, 5), Fr(7, 3), Fr(80), Fr(16), Fr(1, 10**6)]   # tolerancias de prueba
+TS10 = [Fr(j10, 40) for j10 in range(-39, 40) if j10]                                                                  # fracciones del tramo: 0 < |t| < 1
+def implica10(et, F, a, L, d, e, puntos=TS10):
+    """en rejilla: todo x con 0 < |x − a| < d cumple |F(x) − L| < e"""
+    for t in puntos:
+        x = a + t*d; ok(0 < abs(x - a) < d and abs(F(x) - L) < e, '%s: x = %s no cumple' % (et, x))
+
+# 1) la escena: función, lugar, llegada, tolerancias y distancias; franjas, marcas y cadenas armadas con fracciones
+ok('function f(x){ return 2*x + 1; }' in E10 and 'var A = 3, L = 7, EPS = [1, 0.5, 0.1], DEL = [0.5, 0.25, 0.05];' in E10 and f10(3) == 7, 'H10 escena: función, a, L, tolerancias y distancias')
+EP10 = [Fr(1), Fr(1, 2), Fr(1, 10)]; DE10 = [e10/2 for e10 in EP10]
+ok(DE10 == [Fr(1, 2), Fr(1, 4), Fr(1, 20)], 'H10 escena: cada distancia es la mitad de su tolerancia')
+ok('lmMarco(-0.6, 0.55, 5.5, 4.4, 1.8, 4.2, 4.7, 9.3)' in E10 and all(Fr('1.8') < 3 - d10 and 3 + d10 < Fr('4.2') and Fr('4.7') < 7 - e10 and 7 + e10 < Fr('9.3') for e10, d10 in zip(EP10, DE10)) and Fr('4.7') < f10(Fr('1.9')) and f10(Fr('4.1')) < Fr('9.3'), 'H10 escena: las franjas caben en el marco')
+for e10, d10 in zip(EP10, DE10):
+    ok(f10(3 - d10) == 7 - e10 and f10(3 + d10) == 7 + e10, 'H10 escena: la recta pasa por las esquinas del cruce de franjas (ε = %s)' % e10)
+    implica10('H10 escena ε = %s' % e10, f10, 3, 7, d10, e10)
+    ok("'\\\\varepsilon=%s'" % tex(e10) in E10 and "'\\\\delta=%s'" % tex(d10) in E10, 'H10 escena: rótulos de ε = %s y su δ' % e10)
+ok("marca(M.x0, 6, '6', C.alt); marca(M.x0, 8, '8', C.alt)" in E10 and "marca(2.5, M.y0, '2,5', C.sec); marca(3.5, M.y0, '3,5', C.sec)" in E10 and "marca(M.x0, 6.5, '6,5', C.alt); marca(M.x0, 7.5, '7,5', C.alt)" in E10 and "marca(2.75, M.y0, '2,75', C.sec); marca(3.25, M.y0, '3,25', C.sec)" in E10, 'H10 escena: marcas de los bordes de las franjas')
+ok((7 - 1, 7 + 1, 3 - Fr(1, 2), 3 + Fr(1, 2), 7 - Fr(1, 2), 7 + Fr(1, 2), 3 - Fr(1, 4), 3 + Fr(1, 4)) == (6, 8, Fr('2.5'), Fr('3.5'), Fr('6.5'), Fr('7.5'), Fr('2.75'), Fr('3.25')), 'H10 escena: bordes de las franjas')
+ok("['R2', '\\\\varepsilon=1:\\\\ \\\\ 6\\\\lt f(x)\\\\lt 8'" in E10 and "['R3', '\\\\delta=0{,}5:\\\\ \\\\ 2{,}5\\\\lt x\\\\lt 3{,}5\\\\ \\\\Rightarrow\\\\ 6\\\\lt f(x)\\\\lt 8'" in E10 and "['R4', '\\\\varepsilon=0{,}5\\\\ \\\\to\\\\ \\\\delta=0{,}25'" in E10 and "['R5', '\\\\varepsilon=0{,}1\\\\ \\\\to\\\\ \\\\delta=0{,}05'" in E10 and "['R6', '0\\\\lt |x-3|\\\\lt \\\\tfrac{\\\\varepsilon}{2}\\\\ \\\\Rightarrow\\\\ |f(x)-7|\\\\lt \\\\varepsilon'" in E10 and "['F', '\\\\Longrightarrow\\\\ \\\\delta=\\\\tfrac{\\\\varepsilon}{2}'" in E10, 'H10 escena: registro y respuesta')
+for x10 in (Fr('2.9'), Fr('3.1'), Fr('3.4'), Fr('3.2'), Fr('3.04')):
+    ok('f(%s)=2\\\\cdot %s+1=%s' % (tex(x10), tex(x10), tex(f10(x10))) in E10, 'H10 lectura f(%s)' % tex(x10))
+for x10, e10, d10 in ((Fr('3.4'), Fr(1), Fr(1, 2)), (Fr('3.2'), Fr(1, 2), Fr(1, 4)), (Fr('3.04'), Fr(1, 10), Fr(1, 20))):
+    ok(0 < abs(x10 - 3) < d10 and '|%s-7|=%s\\\\lt %s' % (tex(f10(x10)), tex(abs(f10(x10) - 7)), tex(e10)) in E10 and abs(f10(x10) - 7) < e10 and '2\\\\,|x-3|\\\\lt 2\\\\cdot %s=%s' % (tex(d10), tex(e10)) in E10, 'H10 lectura: prueba con x = %s' % tex(x10))
+ok('f(3{,}4)=7{,}8\\\\gt 7{,}5' in E10 and f10(Fr('3.4')) > Fr('7.5') and 0 < abs(Fr('3.4') - 3) < Fr(1, 2), 'H10 lectura: la distancia 0,5 no sirve para la tolerancia 0,5')
+ok('|2{,}9-3|=0{,}1' in E10 and '|6{,}8-7|=0{,}2' in E10 and '\\\\tfrac{1}{2}=0{,}5;\\\\ \\\\ \\\\tfrac{0{,}5}{2}=0{,}25;\\\\ \\\\ \\\\tfrac{0{,}1}{2}=0{,}05' in E10 and '7-0{,}1=6{,}9;\\\\ \\\\ 7+0{,}1=7{,}1' in E10 and '7-0{,}5=6{,}5;\\\\ \\\\ 7+0{,}5=7{,}5' in E10, 'H10 lectura: distancias, bordes y mitades')
+pl10 = lambda z: tex(z).replace('{,}', ',')
+ok("'Respuesta: distancia %s para la entrada. Sobre'" % pl10(DE10[0]) in E10 and "['Tolerancia más exigente: %s. La distancia de', 'antes ya no sirve; con %s, sí.']" % (pl10(EP10[1]), pl10(DE10[1])) in E10 and "'Tolerancia %s: sirve la distancia %s. Las'" % (pl10(EP10[2]), pl10(DE10[2])) in E10 and "'Alguien fija una tolerancia para la salida: 1.'" in E10, 'H10 lienzo: frases con las tolerancias y distancias')
+
+# 2) la implicación general, en rejilla: 0 < |x − a| < ε/|m| ⟹ |F(x) − L| < ε, y la identidad |F(x) − L| = |m|·|x − a|
+for F10, a10, L10, m10, et10 in ((f10, 3, 7, 2, 'k2 f'), (g10, 2, 4, 3, 'ej1 g'), (h10, 1, 1, 4, 'ej2 h'), (p10, 3, 7, 2, 'ej3 p'), (u10, 2, 5, 4, 'A u'), (P10, 250, 4000, 16, 'C P')):
+    for x10 in RJ:
+        if not (F10 is p10 and x10 == 3): ok(abs(F10(x10) - L10) == m10*abs(x10 - a10), 'H10 %s: |F(x) − L| = %d·|x − a|' % (et10, m10))
+    for e10 in ES10:
+        d10 = e10/m10; ok(d10 > 0 and m10*d10 == e10, 'H10 %s: δ = ε/%d' % (et10, m10))
+        implica10('H10 %s, ε = %s' % (et10, e10), F10, a10, L10, d10, e10)
+        ok(abs(F10(a10 + d10) - L10) == e10 == abs(F10(a10 - d10) - L10), 'H10 %s: en el borde de la franja la distancia es exactamente ε' % et10)
+        implica10('H10 %s: una distancia menor también sirve' % et10, F10, a10, L10, d10/2, e10); implica10('H10 %s: una distancia menor también sirve' % et10, F10, a10, L10, d10/10, e10)
+for x10 in RJ:
+    ok(f10(x10) - 7 == 2*x10 + 1 - 7 == 2*x10 - 6 == 2*(x10 - 3) and g10(x10) - 4 == 3*x10 - 2 - 4 == 3*x10 - 6 == 3*(x10 - 2) and h10(x10) - 1 == 5 - 4*x10 - 1 == 4 - 4*x10 == -4*(x10 - 1) and u10(x10) - 5 == 4*x10 - 3 - 5 == 4*x10 - 8 == 4*(x10 - 2) and P10(x10) - 4000 == 16*x10 - 4000 == 16*(x10 - 250), 'H10: diferencias y factor común')
+    for y10 in RJ[::7]:
+        ok(abs(x10*y10) == abs(x10)*abs(y10) and abs(-x10) == abs(x10) and all(abs(x10 - y10) <= abs(x10 - w10) + abs(w10 - y10) for w10 in RJ[::11]), 'H10 aviso: propiedades del valor absoluto y desigualdad triangular')
+    for c10 in (Fr(1, 2), Fr(1), Fr(3)): ok((abs(x10) < c10) == (-c10 < x10 < c10), 'H10 aviso: |u| < c equivale a −c < u < c')
+# 3) tabla del recuadro k2: ε, δ = ε/2, x de prueba, |x − 3|, f(x), |f(x) − 7|
+TB10 = re.findall(r'<table class="tbl">(.*?)</table>', A10, re.S); ok(len(TB10) == 1, 'H10 n.º de tablas')
+FK10 = [[D(z10.strip('\\() ')) for z10 in r10] for r10 in filas(TB10[0])]
+ok([r10[0] for r10 in FK10] == [1, Fr(1, 2), Fr(1, 10), Fr(1, 100)], 'H10 tabla k2: tolerancias')
+for e10, d10, x10, dx10, y10, dy10 in FK10:
+    ok(d10 == e10/2 and dx10 == abs(x10 - 3) and 0 < dx10 < d10 and y10 == f10(x10) and dy10 == abs(y10 - 7) == 2*dx10 and dy10 < e10, 'H10 tabla k2 fila ε=%s' % e10)
+ok(Fr('0.1')/2 == Fr('0.05') and abs(Fr('2.96') - 3) == Fr('0.04') and 0 < Fr('0.04') < Fr('0.05') and 2*Fr('2.96') == Fr('5.92') and f10(Fr('2.96')) == Fr('6.92') and abs(Fr('6.92') - 7) == Fr('0.08') < Fr('0.1'), 'H10 k2 fila de muestra')
+ok(abs(Fr('6.8') - 7) == Fr('0.2') == abs(Fr('7.2') - 7), 'H10 k1: distancias de 6,8 y 7,2 a 7')
+ok(all(s10_ in A10 for s10_ in ['sirven \\(0{,}5\\), \\(0{,}25\\) y \\(0{,}05\\)']) and all(d10 <= Fr(1, 2) for d10 in (Fr(1, 2), Fr(1, 4), Fr(1, 20))), 'H10 k3: distancias que sirven para la tolerancia 1')
+# 4) ejemplos 1 y 2 y ejercicio A: valores, respuesta y prueba
+ok([g10(Fr(x)) for x in ('1.9', '2.1', '2.15')] == [Fr('3.7'), Fr('4.3'), Fr('4.45')] and Fr('0.6')/3 == Fr('0.2') and 3*Fr('0.2') == Fr('0.6') and 0 < abs(Fr('2.15') - 2) == Fr('0.15') < Fr('0.2') and abs(Fr('4.45') - 4) == Fr('0.45') < Fr('0.6'), 'H10 ej1')
+ok([h10(Fr(x)) for x in ('0.9', '1.1', '0.96')] == [Fr('1.4'), Fr('0.6'), Fr('1.16')] and Fr('0.2')/4 == Fr('0.05') and 4*Fr('0.05') == Fr('0.2') and 0 < abs(Fr('0.96') - 1) == Fr('0.04') < Fr('0.05') and abs(Fr('1.16') - 1) == Fr('0.16') < Fr('0.2'), 'H10 ej2')
+ok([u10(Fr(x)) for x in ('1.9', '2.1', '2', '2.05')] == [Fr('4.6'), Fr('5.4'), 5, Fr('5.2')] and Fr('0.4')/4 == Fr('0.1') and 4*Fr('0.1') == Fr('0.4') and 0 < abs(Fr('2.05') - 2) == Fr('0.05') < Fr('0.1') and abs(Fr('5.2') - 5) == Fr('0.2') < Fr('0.4'), 'H10 A')
+implica10('H10 ej1 ε = 0,6', g10, 2, 4, Fr('0.2'), Fr('0.6')); implica10('H10 ej2 ε = 0,2', h10, 1, 1, Fr('0.05'), Fr('0.2')); implica10('H10 A ε = 0,4', u10, 2, 5, Fr('0.1'), Fr('0.4'))
+# 5) ejemplo 3: el «0 <» deja fuera a x = 3; 10 no es el límite
+ok(p10(3) == 10 and abs(p10(3) - 7) == 3 and not 3 < 1 and all(p10(x10) == f10(x10) for x10 in RJ if x10 != 3), 'H10 ej3: p = f fuera de 3 y p(3) = 10')
+for d10 in ES10:
+    ok(abs(3 - 3) < d10 and not abs(p10(3) - 7) < 1, 'H10 ej3: sin el «0 <», x = 3 entra y falla la tolerancia 1')
+    for t10 in TS10:
+        if t10 > 0:
+            t = min(t10*d10, Fr(1, 2)); x10 = 3 + t
+            ok(0 < abs(x10 - 3) <= d10 and p10(x10) == 2*(3 + t) + 1 == 7 + 2*t <= 8 and abs(p10(x10) - 10) == 10 - (7 + 2*t) == 3 - 2*t >= 2 and not abs(p10(x10) - 10) < 1, 'H10 ej3: con L = 10 y ε = 1 ninguna distancia sirve')
+ok(7 + 2*Fr(1, 2) == 8 and 3 - 2*Fr(1, 2) == 2, 'H10 ej3: cotas 8 y 2')
+# 6) ejemplo 4 y ejercicio B: una tolerancia tiene respuesta, otra no (contraejemplo), y ningún L sirve
+ok([s10(Fr(x)) for x in ('1.9', '1.99', '2.1', '2.01')] == [Fr('2.9'), Fr('2.99'), Fr('4.1'), Fr('4.01')] and [q10(Fr(x)) for x in ('3.9', '3.99', '4.1', '4.01', '4')] == [Fr('2.1'), Fr('2.01'), Fr('3.1'), Fr('3.01'), 2], 'H10 ej4 y B: valores')
+implica10('H10 ej4: L = 3,5, ε = 1, δ = 0,5', s10, 2, Fr('3.5'), Fr(1, 2), 1); implica10('H10 B b): L = 2,5, ε = 1, δ = 0,5', q10, 4, Fr('2.5'), Fr(1, 2), 1)
+for t10 in TS10:
+    x10 = 2 + t10*Fr(1, 2)
+    if t10 < 0: ok(Fr('2.5') < s10(x10) < 3 and Fr(1, 2) < Fr('3.5') - s10(x10) < 1, 'H10 ej4 izquierda: distancia a 3,5 entre 0,5 y 1')
+    else: ok(4 < s10(x10) < Fr('4.5') and Fr(1, 2) < s10(x10) - Fr('3.5') < 1, 'H10 ej4 derecha: distancia a 3,5 entre 0,5 y 1')
+    x10 = 4 + t10*Fr(1, 2)
+    if t10 < 0: ok(2 < q10(x10) < Fr('2.5') and 0 < Fr('2.5') - q10(x10) < Fr(1, 2), 'H10 B izquierda: distancia a 2,5 entre 0 y 0,5')
+    else: ok(3 < q10(x10) < Fr('3.5') and Fr(1, 2) < q10(x10) - Fr('2.5') < 1, 'H10 B derecha: distancia a 2,5 entre 0,5 y 1')
+LS10 = [Fr(j10, 8) for j10 in range(0, 49)]   # candidatos a L entre 0 y 6
+for d10 in ES10:
+    for t10 in TS10:
+        if t10 <= 0: continue
+        t = t10*d10
+        ok(s10(2 + t) == 4 + t and abs(s10(2 + t) - Fr('3.5')) == Fr(1, 2) + t > Fr(1, 2), 'H10 ej4: con L = 3,5 y ε = 0,5 falla x = 2 + t')
+        ok(q10(4 + t) == 3 + t and abs(q10(4 + t) - Fr('2.5')) == Fr(1, 2) + t > Fr(1, 2), 'H10 B c): con L = 2,5 y ε = 0,5 falla x = 4 + t')
+        ok(s10(2 + t) - s10(2 - t) == (2 + t + 2) - (2 - t + 1) == 1 + 2*t > 1 and q10(4 - t) == 6 - (4 - t) == 2 + t and q10(4 + t) - q10(4 - t) == 1, 'H10 ej4 y B d): diferencia de salidas a los dos lados')
+        if t10.numerator % 13 == 0:
+            for L10 in LS10:
+                ok(not (abs(s10(2 + t) - L10) < Fr(1, 2) and abs(s10(2 - t) - L10) < Fr(1, 2)) and not (abs(q10(4 + t) - L10) < Fr(1, 2) and abs(q10(4 - t) - L10) < Fr(1, 2)), 'H10 contraejemplo: ningún L queda a menos de 0,5 de las dos salidas')
+ok(Fr(1, 2) + Fr(1, 2) == 1 and 1 + 1 == 2 and Fr('1.5') + 1 == Fr('2.5') and Fr('2.5') + 2 == Fr('4.5'), 'H10 ej4: sumas')
+# 7) ejercicio C: café a 16 pesos el gramo
+ok(P10(250) == 4000 and Fr(80, 16) == 5 and 16*5 == 80 and abs(253 - 250) == 3 < 5 and P10(253) == 4048 and abs(4048 - 4000) == 48 < 80 and Fr(16, 16) == 1, 'H10 C')
+implica10('H10 C ε = 80', P10, 250, 4000, 5, 80); implica10('H10 C ε = 16', P10, 250, 4000, 1, 16)
+# 8) lo que la hoja afirma con palabras o símbolos, escrito tal cual (cuantificadores incluidos)
+for z10 in ['0\\lt |x-a|\\lt \\delta\\ \\Longrightarrow\\ |f(x)-L|\\lt \\varepsilon', '\\text{para todo }\\varepsilon\\gt 0\\text{ existe }\\delta\\gt 0\\text{ tal que, para todo }x,', '\\text{si }0\\lt |x-a|\\lt \\delta\\text{, entonces }|f(x)-L|\\lt \\varepsilon.',
+            '\\delta=\\dfrac{\\varepsilon}{2}', '\\delta=\\dfrac{\\varepsilon}{3}', '\\delta=\\dfrac{\\varepsilon}{4}', '\\delta=\\dfrac{\\varepsilon}{16}', '\\delta=0{,}2', '\\delta=0{,}05', '\\delta=0{,}1', '\\delta=5',
+            'el límite es \\(4\\)', 'el límite es \\(5\\)', 'el límite de \\(p\\) en \\(3\\) es \\(7\\)', '\\(10\\) no es el límite', 'El límite de \\(s\\) en \\(2\\) no existe', 'el límite de \\(q\\) en \\(4\\) no existe',
+            'círculo vacío en \\((3,7)\\)', 'punto lleno suelto en \\((3,10)\\)', 'punto lleno \\((4,2)\\)', 'círculo vacío en \\((4,3)\\)', 'toda distancia positiva menor también sirve', 'sin demostrar', 'Desigualdad triangular', 'pero no de \\(x\\)',
+            '\\lt \\dfrac{0{,}6}{3}=0{,}2', '\\lt \\dfrac{0{,}2}{4}=0{,}05', '\\lt \\dfrac{0{,}4}{4}=0{,}1', '\\lt \\dfrac{80}{16}=5', '\\lt 3\\cdot 0{,}2=0{,}6', '\\lt 4\\cdot 0{,}05=0{,}2', '\\lt 4\\cdot 0{,}1=0{,}4', '\\lt 16\\cdot 5=80', '\\le 7+2\\cdot 0{,}5=8', '\\ge 3-2\\cdot 0{,}5=2',   # igualdades tras una desigualdad, que verificar_tex no evalúa
+            '0\\lt 0{,}04\\lt 0{,}05', '0{,}08\\lt 0{,}1', '0\\lt 0{,}15\\lt 0{,}2', '0{,}45\\lt 0{,}6', '0{,}16\\lt 0{,}2', '0\\lt 0{,}05\\lt 0{,}1', '0{,}2\\lt 0{,}4']:
+    ok(z10 in A10, 'H10: la hoja no trae «%s»' % z10)
+ok(q10(4) == 2 and 4 - 1 == 3 and p10(3) == 10 and 2*3 + 1 == 7, 'H10: puntos marcados de las gráficas descritas')
+# <<< H10
+
 ESPER = {'vel-idea': (7, FUN2), 'gra-idea': (6, FUN3), 'gra-casos': (5, FUN3), 'grf-idea': (5, FUN4), 'asi-idea': (6, FUN5), 'tab-idea': (6, FUN6), 'est-idea': (6, FUN7)}
+# >>> H08 ESPER
+ESPER['uni-idea'] = (6, FUN8)
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '08.scene.js'].map(function(a){ return fs.readFileSync")
+# <<< H08 ESPER
+# >>> H09 ESPER
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '09.scene.js'].map(function(a){ return fs.readFileSync"); ok("'09.scene.js'" in NODO2, 'H09: la escena no quedó en la lista de node')
+ESPER['usa-idea'] = (7, FUN9)
+# <<< H09 ESPER
+# >>> H10 ESPER
+ESPER['eps-idea'] = (6, FUN10)
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '10.scene.js'].map(function(a){ return fs.readFileSync")   # H10 agrega su escena a la lista que carga node
+# <<< H10 ESPER
 if not SIN_NODO:
     R2 = json.loads(subprocess.run(['node', '-e', NODO2, str(PARTES)], capture_output=True, text=True, check=True).stdout)
     ok(sorted(R2) == sorted(ESPER), 'H02–H07: escenas definidas')
@@ -727,4 +1089,4 @@ if not SIN_NODO:
             ok(vtex(et, tp) >= 5, et + ': pocas igualdades numéricas evaluadas')
 
 print('%d comprobaciones%s' % (N[0], '; SIN node: las lecturas con deslizador no se evaluaron con el código de la escena (sí su aritmética exacta)' if SIN_NODO else '; lecturas de los deslizadores evaluadas con el código de la escena'))
-print('Lote 29 H01–H07: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
+print('Lote 29 H01–H10: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
