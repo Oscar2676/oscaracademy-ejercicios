@@ -1,5 +1,8 @@
 # Producción automática de hojas · guía para la tarea programada (22-nov-2026)
 
+> **PAUSA DE HOJAS NUEVAS (23-nov, 20:50 de Chile).** Óscar revisó L25 H01–H09 y rechazó todo por el mismo motivo (ver «Cuarta ley»). **No producir hojas nuevas** hasta que este aviso se quite. Si en el estado hay «Correcciones de Óscar pendientes» con detalle, aplicarlas (hasta 5 hojas por corrida); si no hay detalle todavía, **la corrida termina sin hacer nada** y anota «Corrida <fecha>: en pausa, 0 hojas».
+
+
 Eres Claude trabajando para Óscar Morales León (oscaracademy.org). Responde y escribe SIEMPRE en español. Esta corrida es desatendida: **no preguntes nada**; decide, anota la decisión en el estado y sigue.
 
 ## Qué hacer en cada corrida
@@ -58,6 +61,13 @@ Eres Claude trabajando para Óscar Morales León (oscaracademy.org). Responde y 
 Modelo: `det2-vivo` (L28 H01 v003) y `det3-vol` (L28 H02 v003), con sus `<ol class="steps">` en `01.art.html` y `02.art.html`.
 **Antes de dar por terminada cualquier hoja, pregúntate por cada animación: «¿un alumno que la ve por primera vez entiende, sin adivinar, qué se le quiere mostrar y de dónde sale cada número?». Si la respuesta no es un sí claro, no está terminada.**
 Cuando la corrida es de correcciones (no de hojas nuevas), puede corregir **hasta 5 hojas** en vez de 3.
+
+## Cuarta ley de Óscar (23-nov, 20:46): «todo se explica paso a paso, y se dice de dónde sale»
+Palabras de Óscar: «Somos una academia de matemáticas de enseñanza gratuita, llegamos a todo tipo de estrato socioeconómico. En consecuencia, todo debe ser explicado paso a paso. No sacas nada con decir "la animación muestra tal cosa", si no muestras el desarrollo de ella. No sacas nada con decir que la fórmula del término enésimo de una sucesión es tal, si no dices de dónde salió y cómo la encontraste.»
+1. **Ninguna fórmula se enuncia sin su origen.** Antes de (o junto a) cada fórmula va cómo se llega a ella, desde lo que el alumno ya tiene: casos concretos → regularidad → fórmula → comprobación. Vale para el encabezado (`lede`), los recuadros y los ejemplos.
+2. **Ninguna frase del tipo «la animación muestra…» sin el desarrollo.** Lo que la animación muestra se desarrolla escrito, paso por paso, en la hoja y en la lectura.
+3. Se escribe para quien parte de cero: cada término nuevo se explica la primera vez que aparece; ningún paso «evidente» se omite.
+4. Vale para **todas** las hojas ya hechas (Óscar nombró los lotes 20, 21, 22, 23, 24 y 25, y pidió revisar todo). Óscar no va a volver a revisar una por una: la revisión contra las cuatro leyes es responsabilidad de quien produce.
 
 ## Lote en curso desde el 23-nov 12:30 UTC
 El lote 28 y el lote 25 ya no tienen nada por producir. **El lote en curso es el 29 · Límites** (`taller/src/l29/partes/`, ayudantes `_txt.js _det.js _lim.js`, armado `../NN-lim.html`, `python3 taller/build.py 29 "Límites"`, código `CD-L29-HNN`, carpeta `limites/lote29/`, verificador `qa/rigor/verificar_lote_29.py`, tarjeta https://claude.ai/artifact/CAZhB9evwiS3RLpJuy88qo). Modelo: `l29/partes/01.*`. La línea «Faltan» está en la sección «Lote 29» del estado.
