@@ -1,0 +1,244 @@
+<!--file:H12_uso_de_la_definicion_formal_de_limite.html-->
+<!--title:Uso de la definición formal de límite-->
+<!--id:lim-uso-->
+<!--tab:H12 Uso de la definición formal de límite-->
+<article class="sheet" id="lim-uso" data-hoja="L29 H12">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Definición formal de límite (épsilon-delta)</li>
+      <li><b>Uso de la definición formal de límite</b></li>
+    </ol>
+    <h1>Uso de la definición formal de límite</h1>
+    <p class="lede">Usar la definición formal es responder a un desafío: alguien fija una tolerancia \(\varepsilon\gt 0\) para la salida y hay que entregar una distancia \(\delta\gt 0\) para la entrada, <b>y demostrar que sirve</b>. Cuando la gráfica no es una recta aparecen dos novedades. Una: los \(x\) cuya salida cae dentro de la tolerancia forman una zona \(x_{1}\lt x\lt x_{2}\) que <b>no es simétrica</b> respecto de \(a\), y la distancia no puede pasar de la menor de las dos:
+    \[\delta\le \text{mín}\{a-x_{1},\ x_{2}-a\}\]
+    Dos: para responder a <b>toda</b> tolerancia hay que acotar un factor, y la respuesta toma la forma \(\delta=\text{mín}\left\{1,\ \dfrac{\varepsilon}{c}\right\}\). (\(\text{mín}\{p,\ q\}\) es el menor de los números \(p\) y \(q\).)</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función de la animación es \(f(x)=x^{2}\), el lugar es \(a=1\), el valor de llegada es \(L=1\) y la tolerancia es \(\varepsilon=0{,}96\). Esa tolerancia se eligió para que las cuentas sean exactas: \(1-0{,}96=0{,}04=0{,}2^{2}\) y \(1+0{,}96=1{,}96=1{,}4^{2}\). El dibujo muestra la gráfica para \(x\) entre \(0\) y \(2\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la curva burdeo y el punto \((1,1)\):</b> las punteadas lo unen con \(a=1\) en el borde de abajo y con \(L=1\) en el borde izquierdo.</li>
+    <li><b>Paso 2, la tolerancia:</b> la franja verde reúne las alturas que están a menos de \(0{,}96\) de \(1\), es decir, entre \(0{,}04\) y \(1{,}96\).</li>
+    <li><b>Pasos 3 y 4, la zona de los \(x\):</b> el trozo naranjo de la curva es el que queda dentro de la franja; debajo, sobre el eje, está la zona de sus \(x\), de \(0{,}2\) a \(1{,}4\). Las dos cotas grises miden la distancia de \(1\) a cada extremo: \(0{,}8\) y \(0{,}4\). No son iguales.</li>
+    <li><b>Paso 5, la respuesta:</b> la franja azul marca la distancia \(\delta=0{,}4\), la menor de las dos. El punto negro muestra qué pasa si se elige la mayor: \(x=1{,}7\) está a menos de \(0{,}8\) de \(1\) y su altura sale de la franja verde.</li>
+    <li><b>Pasos 6 y 7, y la cuenta de abajo:</b> una distancia más chica (\(0{,}32\)) también sirve, y sale de una regla que responde a toda tolerancia. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra. Lee la cuenta línea por línea: cada número trae su operación.</li>
+  </ol>
+  <div class="stage" data-scene="uso-idea"></div>
+  <ul class="keys">
+    <li><b>Línea burdeo:</b> la gráfica de \(f(x)=x^{2}\). El punto burdeo es \((1,1)\).</li>
+    <li><b>Verde:</b> la tolerancia de la salida. La franja va de \(1-0{,}96=0{,}04\) a \(1+0{,}96=1{,}96\); la cota verde marca \(\varepsilon\), desde \(1\) hacia arriba.</li>
+    <li><b>Naranjo:</b> el trozo de curva que queda dentro de la franja verde y, sobre el eje, la zona de sus \(x\). Los extremos van huecos porque los bordes no entran: las desigualdades son estrictas.</li>
+    <li><b>Azul:</b> la distancia de la entrada. Cada franja vertical va de \(1-\delta\) a \(1+\delta\); la cota azul marca \(\delta\), desde \(1\) hacia la izquierda.</li>
+    <li><b>Negro:</b> la punteada en \(1{,}8\) marca hasta dónde llegaría la distancia \(0{,}8\) (\(1+0{,}8=1{,}8\)). El punto negro es el punto de la curva sobre \(x=1{,}7\): su altura, \(2{,}89\), está fuera de la franja verde.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué hace esta hoja y qué usa sin demostrar.</b> La definición se estudia en la hoja anterior; aquí se recuerda y se usa. Una figura muestra una sola tolerancia: «para toda tolerancia» no se puede dibujar, se demuestra con álgebra (recuadro de la demostración). Se usan, <b>sin demostrar</b>:</p>
+    <ol class="steps">
+      <li>Valor absoluto: \(|u\cdot v|=|u|\cdot|v|\); \(\left|\dfrac{u}{v}\right|=\dfrac{|u|}{|v|}\) si \(v\ne 0\); \(|-u|=|u|\); para \(c\gt 0\), \(|u|\lt c\) equivale a \(-c\lt u\lt c\).</li>
+      <li>Reglas del orden: sumar el mismo número a los dos lados de una desigualdad la mantiene; multiplicar o dividir los dos lados por un número positivo la mantiene.</li>
+      <li>Cuadrados y raíces: todo número \(u\ge 0\) tiene una única raíz cuadrada \(\sqrt{u}\ge 0\), y \((\sqrt{u})^{2}=u\). Para \(u\ge 0\) y \(v\ge 0\): \(u\lt v\) equivale a \(u^{2}\lt v^{2}\), y también a \(\sqrt{u}\lt \sqrt{v}\).</li>
+      <li>Inversos: si \(0\lt u\lt v\), entonces \(\dfrac{1}{v}\lt \dfrac{1}{u}\).</li>
+      <li>Las raíces que no son exactas se escriben redondeadas, con el signo «≈». Cada una se comprobó por encierro; por ejemplo, \(1{,}2245^{2}=1{,}49940025\) y \(1{,}2255^{2}=1{,}50185025\) encierran a \(1{,}5\), así que \(\sqrt{1{,}5}\approx 1{,}225\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La definición, y cómo se usa cuando la tolerancia es un número</h3>
+    <p><b>Definición (de la hoja anterior).</b> Sea \(f\) definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\). Entonces \(\displaystyle\lim_{x\to a}f(x)=L\) significa: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, para todo \(x\),
+    \[0\lt |x-a|\lt \delta\ \Longrightarrow\ |f(x)-L|\lt \varepsilon\]</p>
+    <p><b>Método para una tolerancia dada</b> (al lado, los números de la animación):</p>
+    <ol class="steps">
+      <li><b>Doble desigualdad.</b> \(|f(x)-L|\lt \varepsilon\) se escribe \(L-\varepsilon\lt f(x)\lt L+\varepsilon\). En la animación: \(0{,}04\lt x^{2}\lt 1{,}96\).</li>
+      <li><b>Se resuelve para \(x\) cerca de \(a\).</b> Resulta una zona \(x_{1}\lt x\lt x_{2}\) que contiene a \(a\). En la animación, con \(x\gt 0\): \(\sqrt{0{,}04}\lt x\lt \sqrt{1{,}96}\), es decir, \(0{,}2\lt x\lt 1{,}4\).</li>
+      <li><b>Dos distancias.</b> De \(a\) al extremo izquierdo, \(a-x_{1}\); de \(a\) al extremo derecho, \(x_{2}-a\). En la animación: \(1-0{,}2=0{,}8\) y \(1{,}4-1=0{,}4\).</li>
+      <li><b>Sirve toda distancia que no pase de la menor.</b> Si \(0\lt \delta\le a-x_{1}\) y \(\delta\le x_{2}-a\), entonces \(x_{1}\le a-\delta\) y \(a+\delta\le x_{2}\). Todo \(x\) con \(0\lt |x-a|\lt \delta\) cumple \(a-\delta\lt x\lt a+\delta\): queda dentro de la zona. En la animación: \(\delta\le 0{,}4\).</li>
+      <li><b>La mayor distancia que sirve es esa menor.</b> En el extremo más cercano la salida está <b>justo</b> a \(\varepsilon\) de \(L\), no a menos. Si \(\delta\) pasa de la menor distancia, ese extremo queda entre los \(x\) revisados y no cumple. En la animación: con \(\delta\gt 0{,}4\) entra \(x=1{,}4\), y \(1{,}4^{2}=1{,}96\) está a \(|1{,}96-1|=0{,}96\) de \(1\); \(0{,}96\) no es menor que \(0{,}96\).</li>
+    </ol>
+    <p>El método responde a <b>una</b> tolerancia. Para demostrar un límite hay que responder a todas: eso hace el recuadro siguiente.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso, en dos fases: \(\displaystyle\lim_{x\to 1}x^{2}=1\)</h3>
+    <p><b>Fase 1, el borrador:</b> se parte de lo que se quiere lograr y se busca \(\delta\).</p>
+    <ol class="steps">
+      <li>Se quiere \(|x^{2}-1|\lt \varepsilon\).</li>
+      <li>Diferencia de cuadrados: \(x^{2}-1=(x-1)(x+1)\).</li>
+      <li>Valor absoluto de un producto: \(|x^{2}-1|=|x-1|\cdot|x+1|\).</li>
+      <li>El factor \(|x-1|\) es la distancia de \(x\) a \(1\): la controla \(\delta\). El factor \(|x+1|\) cambia con \(x\): hay que <b>acotarlo</b>. Para eso se decide que \(\delta\) no pase de \(1\). Primera condición: \(\delta\le 1\). Entonces \(|x-1|\lt 1\).</li>
+      <li>\(|x-1|\lt 1\) equivale a \(-1\lt x-1\lt 1\).</li>
+      <li>Se suma \(2\) a los tres miembros: \(1\lt x+1\lt 3\). Como \(x+1\) es positivo, \(|x+1|=x+1\lt 3\).</li>
+      <li>Se multiplica \(|x+1|\lt 3\) por \(|x-1|\), que es positivo: \(|x-1|\cdot|x+1|\lt 3\,|x-1|\).</li>
+      <li>Para que \(3\,|x-1|\lt \varepsilon\) basta \(|x-1|\lt \dfrac{\varepsilon}{3}\) (se dividió por \(3\), positivo). Segunda condición: \(\delta\le \dfrac{\varepsilon}{3}\).</li>
+      <li>Las dos condiciones a la vez: \(\delta=\text{mín}\left\{1,\ \dfrac{\varepsilon}{3}\right\}\).</li>
+    </ol>
+    <p><b>¿De dónde sale el \(1\)?</b> Es una elección: un tope para \(\delta\) que permite acotar \(|x+1|\). <b>¿De dónde sale el \(3\)?</b> Es la cota de \(|x+1|\) que ese tope produce (paso 6). Con otro tope cambia la cota: si \(\delta\le \dfrac{1}{2}\), entonces \(-\dfrac{1}{2}\lt x-1\lt \dfrac{1}{2}\), se suma \(2\) y queda \(\dfrac{3}{2}\lt x+1\lt \dfrac{5}{2}\); la regla sería \(\delta=\text{mín}\left\{\dfrac{1}{2},\ \dfrac{2\,\varepsilon}{5}\right\}\). Las dos reglas son correctas.</p>
+    <p><b>Fase 2, la demostración:</b> se parte de \(\varepsilon\) y de \(\delta\), y se llega a \(|x^{2}-1|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon\gt 0\) cualquiera. Se define \(\delta=\text{mín}\left\{1,\ \dfrac{\varepsilon}{3}\right\}\). Es positiva, porque es el menor de dos números positivos. Además \(\delta\le 1\) y \(\delta\le \dfrac{\varepsilon}{3}\).</li>
+      <li>Sea \(x\) cualquiera con \(0\lt |x-1|\lt \delta\).</li>
+      <li>Como \(\delta\le 1\): \(|x-1|\lt 1\), y por los pasos 5 y 6 del borrador, \(|x+1|\lt 3\).</li>
+      <li>Como \(\delta\le \dfrac{\varepsilon}{3}\): \(|x-1|\lt \dfrac{\varepsilon}{3}\).</li>
+      <li>Por los pasos 3 y 7 del borrador: \(|x^{2}-1|=|x-1|\cdot|x+1|\lt 3\,|x-1|\).</li>
+      <li>Se multiplica el paso 4 por \(3\), positivo: \(3\,|x-1|\lt 3\cdot\dfrac{\varepsilon}{3}=\varepsilon\).</li>
+      <li>Por los pasos 5 y 6: \(|x^{2}-1|\lt \varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{x\to 1}x^{2}=1\).</li>
+    </ol>
+    <p>Cuatro tolerancias, cada una con un \(x\) de prueba que cumple \(0\lt |x-1|\lt \delta\):</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>tolerancia \(\varepsilon\)</th><th>\(\dfrac{\varepsilon}{3}\)</th><th>\(\delta\): el menor entre \(1\) y \(\dfrac{\varepsilon}{3}\)</th><th>\(x\) de prueba</th><th>\(|x-1|\)</th><th>\(x^{2}\)</th><th>\(|x^{2}-1|\)</th></tr>
+      <tr><td>\(0{,}96\)</td><td>\(0{,}32\)</td><td>\(0{,}32\)</td><td>\(1{,}3\)</td><td>\(0{,}3\)</td><td>\(1{,}69\)</td><td>\(0{,}69\)</td></tr>
+      <tr><td>\(0{,}3\)</td><td>\(0{,}1\)</td><td>\(0{,}1\)</td><td>\(0{,}95\)</td><td>\(0{,}05\)</td><td>\(0{,}9025\)</td><td>\(0{,}0975\)</td></tr>
+      <tr><td>\(0{,}03\)</td><td>\(0{,}01\)</td><td>\(0{,}01\)</td><td>\(1{,}004\)</td><td>\(0{,}004\)</td><td>\(1{,}008016\)</td><td>\(0{,}008016\)</td></tr>
+      <tr><td>\(6\)</td><td>\(2\)</td><td>\(1\)</td><td>\(1{,}9\)</td><td>\(0{,}9\)</td><td>\(3{,}61\)</td><td>\(2{,}61\)</td></tr>
+    </table></div>
+    <p>Fila de muestra, \(\varepsilon=6\): \(\dfrac{6}{3}=2\); el menor entre \(1\) y \(2\) es \(1\), así que \(\delta=1\). El valor \(x=1{,}9\) cumple \(|1{,}9-1|=0{,}9\) y \(0\lt 0{,}9\lt 1\). Su salida: \(1{,}9^{2}=3{,}61\). Su distancia a \(1\): \(|3{,}61-1|=2{,}61\), y \(2{,}61\lt 6\).</p>
+  </div>
+
+  <div class="card k3">
+    <h3>\(\delta\) no es único, y qué pasa cuando se elige mal</h3>
+    <p>Todo con \(f(x)=x^{2}\) en \(a=1\), \(L=1\).</p>
+    <ol class="steps">
+      <li><b>Todo \(\delta\) más chico también sirve.</b> Si \(\delta\) sirve y \(0\lt \delta'\lt \delta\), todo \(x\) con \(0\lt |x-1|\lt \delta'\) cumple también \(0\lt |x-1|\lt \delta\): ya estaba revisado. Para la tolerancia \(0{,}96\) sirven \(0{,}4\), \(0{,}32\), \(0{,}1\) y \(0{,}001\). No hace falta encontrar la mayor: basta una.</li>
+      <li><b>Elegir la mayor de las dos distancias no sirve.</b> Tolerancia \(0{,}96\), distancia \(0{,}8\). Contraejemplo: \(x=1{,}7\) cumple \(|1{,}7-1|=0{,}7\) y \(0\lt 0{,}7\lt 0{,}8\); pero \(1{,}7^{2}=2{,}89\) y \(|2{,}89-1|=1{,}89\), que es mayor que \(0{,}96\).</li>
+      <li><b>Reemplazar \(x\) por \(a\) en el factor que acompaña no sirve.</b> Si en \(|x-1|\cdot|x+1|\) se pone \(|1+1|=2\) en vez de acotar, sale \(\delta=\dfrac{\varepsilon}{2}\). Con la tolerancia \(0{,}5\): \(\dfrac{0{,}5}{2}=0{,}25\). Contraejemplo: \(x=1{,}24\) cumple \(|1{,}24-1|=0{,}24\) y \(0\lt 0{,}24\lt 0{,}25\); pero \(1{,}24^{2}=1{,}5376\) y \(|1{,}5376-1|=0{,}5376\), mayor que \(0{,}5\). El factor \(|x+1|\) pasa de \(2\) cuando \(x\gt 1\).</li>
+      <li><b>Olvidar el «mín» no sirve.</b> Con \(\delta=\dfrac{\varepsilon}{3}\) a secas y la tolerancia \(6\): \(\dfrac{6}{3}=2\). Contraejemplo: \(x=2{,}9\) cumple \(|2{,}9-1|=1{,}9\) y \(0\lt 1{,}9\lt 2\); pero \(2{,}9^{2}=8{,}41\) y \(|8{,}41-1|=7{,}41\), mayor que \(6\). La cota \(|x+1|\lt 3\) solo vale cuando \(|x-1|\lt 1\). Con el menor entre \(1\) y \(2\), que es \(1\), sí sirve (última fila de la tabla).</li>
+      <li><b>Si las raíces no son exactas, \(\delta\) se redondea hacia abajo.</b> Tolerancia \(0{,}5\): la franja es \(0{,}5\lt x^{2}\lt 1{,}5\), y con \(x\gt 0\) la zona es \(\sqrt{0{,}5}\lt x\lt \sqrt{1{,}5}\), con \(\sqrt{0{,}5}\approx 0{,}707\) y \(\sqrt{1{,}5}\approx 1{,}225\). Las distancias son \(1-\sqrt{0{,}5}\approx 0{,}293\) y \(\sqrt{1{,}5}-1\approx 0{,}225\). La mayor distancia que sirve es exactamente \(\sqrt{1{,}5}-1\).</li>
+      <li>La distancia \(0{,}224\) sirve: \(1-0{,}224=0{,}776\) y \(1+0{,}224=1{,}224\), con \(0{,}776^{2}=0{,}602176\), mayor que \(0{,}5\), y \(1{,}224^{2}=1{,}498176\), menor que \(1{,}5\). La distancia \(0{,}225\) <b>no</b> sirve: \(x=1{,}2249\) cumple \(|1{,}2249-1|=0{,}2249\) y \(0\lt 0{,}2249\lt 0{,}225\); pero \(1{,}2249^{2}=1{,}50038001\), mayor que \(1{,}5\). El redondeo \(0{,}225\) quedó por encima del valor exacto.</li>
+      <li>La regla del recuadro anterior evita las raíces: \(\dfrac{0{,}5}{3}=\dfrac{1}{6}\), y el menor entre \(1\) y \(\dfrac{1}{6}\) es \(\dfrac{1}{6}\approx 0{,}167\). Es más chica que \(0{,}224\): sirve, aunque no sea la mayor.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>El ejemplo 1 responde a una tolerancia dada; los otros tres demuestran un límite para toda tolerancia, cada uno con una cota distinta.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: una tolerancia dada, con raíz. \(g(x)=\sqrt{x}\) en \(a=9\), con \(\varepsilon=0{,}5\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Restricción: \(\sqrt{x}\) está definida para \(x\ge 0\). El valor de llegada que se propone es \(L=\sqrt{9}=3\).</li>
+    <li>Doble desigualdad: \(|\sqrt{x}-3|\lt 0{,}5\) equivale a \(3-0{,}5\lt \sqrt{x}\lt 3+0{,}5\), es decir, \(2{,}5\lt \sqrt{x}\lt 3{,}5\).</li>
+    <li>Los tres miembros son positivos o cero: elevar al cuadrado mantiene el orden. \(2{,}5^{2}=6{,}25\) y \(3{,}5^{2}=12{,}25\). La zona es \(6{,}25\lt x\lt 12{,}25\) (todos esos \(x\) son positivos: \(g\) está definida).</li>
+    <li>Dos distancias: \(9-6{,}25=2{,}75\) y \(12{,}25-9=3{,}25\). No son iguales.</li>
+    <li>El menor entre \(2{,}75\) y \(3{,}25\) es \(2{,}75\). La mayor distancia que sirve es \(\delta=2{,}75\): con ella, \(9-2{,}75=6{,}25\) y \(9+2{,}75=11{,}75\), y \(6{,}25\lt x\lt 11{,}75\) queda dentro de la zona.</li>
+    <li>Con la otra distancia, \(3{,}25\), no sirve. Contraejemplo: \(x=6\) cumple \(|6-9|=3\) y \(0\lt 3\lt 3{,}25\). Como \(6\lt 6{,}25\), \(\sqrt{6}\lt 2{,}5\) (\(\sqrt{6}\approx 2{,}449\)). Entonces \(|\sqrt{6}-3|=3-\sqrt{6}\), que es mayor que \(3-2{,}5=0{,}5\).</li>
+    <li>Prueba de \(\delta=2{,}75\) con \(x=7{,}29\): \(|7{,}29-9|=1{,}71\) y \(0\lt 1{,}71\lt 2{,}75\). Su salida: \(g(7{,}29)=\sqrt{7{,}29}=2{,}7\), porque \(2{,}7^{2}=7{,}29\). Su distancia a \(3\): \(|2{,}7-3|=0{,}3\), y \(0{,}3\lt 0{,}5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: dos fases en un lugar negativo. \(\displaystyle\lim_{x\to -3}x^{2}=9\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Valor de llegada: \((-3)^{2}=9\). La distancia de \(x\) al lugar es \(|x-(-3)|=|x+3|\). Se quiere \(|x^{2}-9|\lt \varepsilon\).</li>
+    <li>Borrador. Diferencia de cuadrados: \(x^{2}-9=(x+3)(x-3)\). Valor absoluto de un producto: \(|x^{2}-9|=|x+3|\cdot|x-3|\).</li>
+    <li>Hay que acotar \(|x-3|\). Primera condición: \(\delta\le 1\). Entonces \(|x+3|\lt 1\), que equivale a \(-1\lt x+3\lt 1\).</li>
+    <li>Se resta \(6\) a los tres miembros: \(-7\lt x-3\lt -5\). Como \(-7\lt x-3\lt 7\), se tiene \(|x-3|\lt 7\).</li>
+    <li>Se multiplica por \(|x+3|\), positivo: \(|x+3|\cdot|x-3|\lt 7\,|x+3|\). Para que \(7\,|x+3|\lt \varepsilon\) basta \(|x+3|\lt \dfrac{\varepsilon}{7}\). Segunda condición: \(\delta\le \dfrac{\varepsilon}{7}\).</li>
+    <li>Regla: \(\delta=\text{mín}\left\{1,\ \dfrac{\varepsilon}{7}\right\}\).</li>
+    <li>Demostración. Sea \(\varepsilon\gt 0\) y \(\delta\) el de la regla: es positiva, \(\delta\le 1\) y \(\delta\le \dfrac{\varepsilon}{7}\). Si \(0\lt |x+3|\lt \delta\), entonces \(|x-3|\lt 7\) (pasos 3 y 4) y \(|x+3|\lt \dfrac{\varepsilon}{7}\). Luego \(|x^{2}-9|=|x+3|\cdot|x-3|\lt 7\,|x+3|\), y \(7\,|x+3|\lt 7\cdot\dfrac{\varepsilon}{7}=\varepsilon\).</li>
+    <li>Prueba con \(\varepsilon=0{,}7\): \(\dfrac{0{,}7}{7}=0{,}1\); el menor entre \(1\) y \(0{,}1\) es \(0{,}1\). El valor \(x=-3{,}05\) cumple \(|-3{,}05+3|=|-0{,}05|=0{,}05\) y \(0\lt 0{,}05\lt 0{,}1\). Su salida: \((-3{,}05)^{2}=9{,}3025\). Su distancia a \(9\): \(|9{,}3025-9|=0{,}3025\), y \(0{,}3025\lt 0{,}7\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: un denominador que hay que alejar de cero. \(\displaystyle\lim_{x\to 1}\dfrac{1}{x}=1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Restricción: \(r(x)=\dfrac{1}{x}\) está definida para \(x\ne 0\). Se quiere \(\left|\dfrac{1}{x}-1\right|\lt \varepsilon\).</li>
+    <li>Borrador. Denominador común: \(\dfrac{1}{x}-1=\dfrac{1-x}{x}\).</li>
+    <li>Valor absoluto de un cociente, y \(|1-x|=|x-1|\): \(\left|\dfrac{1}{x}-1\right|=\dfrac{|x-1|}{|x|}=|x-1|\cdot\dfrac{1}{|x|}\).</li>
+    <li>Hay que acotar \(\dfrac{1}{|x|}\) por arriba: para eso \(|x|\) necesita una cota <b>inferior</b> positiva. El tope \(\delta\le 1\) no la da: de \(|x-1|\lt 1\) sale \(0\lt x\lt 2\), y \(x\) puede estar tan cerca de \(0\) como se quiera; por ejemplo \(r(0{,}01)=\dfrac{1}{0{,}01}=100\).</li>
+    <li>Primera condición: \(\delta\le \dfrac{1}{2}\). Entonces \(|x-1|\lt \dfrac{1}{2}\), que equivale a \(-\dfrac{1}{2}\lt x-1\lt \dfrac{1}{2}\). Se suma \(1\): \(\dfrac{1}{2}\lt x\lt \dfrac{3}{2}\).</li>
+    <li>Entonces \(x\gt \dfrac{1}{2}\): \(x\) es positivo (en particular \(x\ne 0\)) y \(|x|=x\gt \dfrac{1}{2}\). Por la regla de los inversos: \(\dfrac{1}{|x|}\lt 2\).</li>
+    <li>Se multiplica por \(|x-1|\), positivo: \(|x-1|\cdot\dfrac{1}{|x|}\lt 2\,|x-1|\). Para que \(2\,|x-1|\lt \varepsilon\) basta \(|x-1|\lt \dfrac{\varepsilon}{2}\). Regla: \(\delta=\text{mín}\left\{\dfrac{1}{2},\ \dfrac{\varepsilon}{2}\right\}\).</li>
+    <li>Demostración. Sea \(\varepsilon\gt 0\) y \(\delta\) el de la regla: es positiva, \(\delta\le \dfrac{1}{2}\) y \(\delta\le \dfrac{\varepsilon}{2}\). Si \(0\lt |x-1|\lt \delta\), entonces \(\dfrac{1}{|x|}\lt 2\) (pasos 5 y 6) y \(|x-1|\lt \dfrac{\varepsilon}{2}\). Luego \(\left|\dfrac{1}{x}-1\right|=|x-1|\cdot\dfrac{1}{|x|}\lt 2\,|x-1|\), y \(2\,|x-1|\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\).</li>
+    <li>Prueba con \(\varepsilon=0{,}5\): \(\dfrac{0{,}5}{2}=0{,}25\); el menor entre \(0{,}5\) y \(0{,}25\) es \(0{,}25\). El valor \(x=0{,}8\) cumple \(|0{,}8-1|=0{,}2\) y \(0\lt 0{,}2\lt 0{,}25\). Su salida: \(r(0{,}8)=\dfrac{1}{0{,}8}=1{,}25\). Su distancia a \(1\): \(|1{,}25-1|=0{,}25\), y \(0{,}25\lt 0{,}5\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: una raíz, para toda tolerancia. \(\displaystyle\lim_{x\to 9}\sqrt{x}=3\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Restricción: \(x\ge 0\). Se quiere \(|\sqrt{x}-3|\lt \varepsilon\).</li>
+    <li>Borrador. Suma por diferencia: \((\sqrt{x}-3)(\sqrt{x}+3)=(\sqrt{x})^{2}-3^{2}=x-9\).</li>
+    <li>Como \(\sqrt{x}\ge 0\), el factor \(\sqrt{x}+3\) es mayor o igual que \(3\): no es cero y se puede dividir por él. \(\sqrt{x}-3=\dfrac{x-9}{\sqrt{x}+3}\).</li>
+    <li>Valor absoluto de un cociente, con denominador positivo: \(|\sqrt{x}-3|=\dfrac{|x-9|}{\sqrt{x}+3}\).</li>
+    <li>Cota inferior del denominador: \(\sqrt{x}+3\ge 3\). Por la regla de los inversos, \(\dfrac{1}{\sqrt{x}+3}\le \dfrac{1}{3}\). Entonces \(|\sqrt{x}-3|\le \dfrac{|x-9|}{3}\).</li>
+    <li>Para que \(\dfrac{|x-9|}{3}\lt \varepsilon\) basta \(|x-9|\lt 3\,\varepsilon\) (se multiplicó por \(3\), positivo). Condición: \(\delta\le 3\,\varepsilon\).</li>
+    <li>Falta asegurar la restricción. Otra condición: \(\delta\le 9\). Entonces \(|x-9|\lt 9\), que equivale a \(-9\lt x-9\lt 9\); se suma \(9\): \(0\lt x\lt 18\). Todos esos \(x\) son positivos. Regla: \(\delta=\text{mín}\{9,\ 3\,\varepsilon\}\).</li>
+    <li>Demostración. Sea \(\varepsilon\gt 0\) y \(\delta\) el de la regla: es positiva, \(\delta\le 9\) y \(\delta\le 3\,\varepsilon\). Si \(0\lt |x-9|\lt \delta\), entonces \(x\gt 0\) (paso 7) y \(|x-9|\lt 3\,\varepsilon\). Luego \(|\sqrt{x}-3|\le \dfrac{|x-9|}{3}\), y \(\dfrac{|x-9|}{3}\lt \dfrac{3\,\varepsilon}{3}=\varepsilon\).</li>
+    <li>Comparación con el ejemplo 1, \(\varepsilon=0{,}5\): \(3\cdot 0{,}5=1{,}5\); el menor entre \(9\) y \(1{,}5\) es \(1{,}5\). La regla entrega \(\delta=1{,}5\), más chica que la mayor posible, \(2{,}75\). Sirve igual: no hace falta la mayor.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>suponer que la zona es simétrica</b> y quedarse con cualquiera de las dos distancias. Sirve la menor; con la mayor hay contraejemplo. Dos: <b>reemplazar \(x\) por \(a\) en el factor que acompaña</b> en vez de acotarlo. Tres: <b>olvidar el «mín»</b>: la cota del factor solo vale cerca de \(a\). Cuatro: <b>dejar que \(\delta\) dependa de \(x\)</b>, como en \(\delta=\dfrac{\varepsilon}{|x+1|}\). La distancia depende de \(\varepsilon\) y de \(a\), nunca de \(x\). Cinco: <b>entregar el borrador como demostración</b>. El borrador parte de lo que se quiere y busca \(\delta\); la demostración parte de \(\varepsilon\) y de \(\delta\) y llega a \(|f(x)-L|\lt \varepsilon\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Sea \(r(x)=\dfrac{1}{x}\), el lugar \(a=4\) y la tolerancia \(\varepsilon=0{,}05\). a) Propón el valor de llegada \(L\) y escribe la doble desigualdad. b) Resuélvela para \(x\) cerca de \(4\) y calcula las dos distancias. c) ¿Cuál es la mayor distancia \(\delta\) que sirve? Pruébala con \(x=3{,}5\). d) Muestra con \(x=3{,}2\) que la distancia \(1\) no sirve.</p>
+    <details><summary>Pista</summary><div><p>Cerca de \(4\) todo es positivo: al tomar inversos, la desigualdad se da vuelta. Escribe \(4\) como \(\dfrac{12}{3}\) para restar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(L=\dfrac{1}{4}=0{,}25\). Se pide \(\left|\dfrac{1}{x}-0{,}25\right|\lt 0{,}05\), es decir, \(0{,}25-0{,}05\lt \dfrac{1}{x}\lt 0{,}25+0{,}05\): \(0{,}2\lt \dfrac{1}{x}\lt 0{,}3\).</li>
+        <li>b) Los tres miembros son positivos; por la regla de los inversos el orden se da vuelta: \(\dfrac{1}{0{,}3}\lt x\lt \dfrac{1}{0{,}2}\). Como \(\dfrac{1}{0{,}3}=\dfrac{10}{3}\) y \(\dfrac{1}{0{,}2}=5\), la zona es \(\dfrac{10}{3}\lt x\lt 5\).</li>
+        <li>Dos distancias: \(4-\dfrac{10}{3}=\dfrac{12}{3}-\dfrac{10}{3}=\dfrac{2}{3}\) y \(5-4=1\).</li>
+        <li>c) El menor entre \(\dfrac{2}{3}\) y \(1\) es \(\dfrac{2}{3}\): la mayor distancia que sirve es \(\delta=\dfrac{2}{3}\) (\(\dfrac{2}{3}\approx 0{,}667\); si se quiere un decimal, se redondea hacia abajo: \(0{,}66\)).</li>
+        <li>Prueba con \(x=3{,}5\): \(|3{,}5-4|=0{,}5\), menor que \(\dfrac{2}{3}\). Su salida: \(\dfrac{1}{3{,}5}=\dfrac{2}{7}\). Su distancia a \(\dfrac{1}{4}\): \(\dfrac{2}{7}-\dfrac{1}{4}=\dfrac{8}{28}-\dfrac{7}{28}=\dfrac{1}{28}\), y \(\dfrac{1}{28}\lt \dfrac{1}{20}=0{,}05\).</li>
+        <li>d) \(x=3{,}2\) cumple \(|3{,}2-4|=0{,}8\) y \(0\lt 0{,}8\lt 1\). Su salida: \(r(3{,}2)=\dfrac{1}{3{,}2}=0{,}3125\), mayor que \(0{,}3\). Su distancia a \(0{,}25\): \(|0{,}3125-0{,}25|=0{,}0625\), mayor que \(0{,}05\). La distancia \(1\) no sirve.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Demuestra con la definición que \(\displaystyle\lim_{x\to 2}\dfrac{1}{x}=\dfrac{1}{2}\). a) Escribe \(\dfrac{1}{x}-\dfrac{1}{2}\) como una sola fracción. b) Con el tope \(\delta\le 1\), acota lo que haga falta y llega a una regla para \(\delta\). c) Escribe la demostración. d) Para \(\varepsilon=0{,}25\), calcula \(\delta\) y pruébala con \(x=1{,}6\).</p>
+    <details><summary>Pista</summary><div><p>Con \(|x-2|\lt 1\) queda \(1\lt x\lt 3\): eso da una cota inferior para \(|x|\). Aquí el tope \(1\) sí alcanza, porque el lugar está a distancia \(2\) del cero.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Denominador común: \(\dfrac{1}{x}-\dfrac{1}{2}=\dfrac{2-x}{2x}\). Restricción: \(x\ne 0\).</li>
+        <li>b) Valor absoluto de un cociente, y \(|2-x|=|x-2|\): \(\left|\dfrac{1}{x}-\dfrac{1}{2}\right|=\dfrac{|x-2|}{2\,|x|}=\dfrac{|x-2|}{2}\cdot\dfrac{1}{|x|}\).</li>
+        <li>Primera condición: \(\delta\le 1\). Entonces \(-1\lt x-2\lt 1\); se suma \(2\): \(1\lt x\lt 3\). Luego \(x\) es positivo, \(|x|=x\gt 1\) y, por la regla de los inversos, \(\dfrac{1}{|x|}\lt 1\).</li>
+        <li>Se multiplica por \(\dfrac{|x-2|}{2}\), positivo: \(\dfrac{|x-2|}{2}\cdot\dfrac{1}{|x|}\lt \dfrac{|x-2|}{2}\). Para que \(\dfrac{|x-2|}{2}\lt \varepsilon\) basta \(|x-2|\lt 2\,\varepsilon\). Regla: \(\delta=\text{mín}\{1,\ 2\,\varepsilon\}\).</li>
+        <li>c) Sea \(\varepsilon\gt 0\) y \(\delta\) el de la regla: es positiva, \(\delta\le 1\) y \(\delta\le 2\,\varepsilon\). Si \(0\lt |x-2|\lt \delta\), entonces \(\dfrac{1}{|x|}\lt 1\) (paso 3) y \(|x-2|\lt 2\,\varepsilon\). Luego \(\left|\dfrac{1}{x}-\dfrac{1}{2}\right|\lt \dfrac{|x-2|}{2}\), y \(\dfrac{|x-2|}{2}\lt \dfrac{2\,\varepsilon}{2}=\varepsilon\).</li>
+        <li>d) \(2\cdot 0{,}25=0{,}5\); el menor entre \(1\) y \(0{,}5\) es \(0{,}5\): \(\delta=0{,}5\). El valor \(x=1{,}6\) cumple \(|1{,}6-2|=0{,}4\) y \(0\lt 0{,}4\lt 0{,}5\). Su salida: \(r(1{,}6)=\dfrac{1}{1{,}6}=0{,}625\). Su distancia a \(0{,}5\): \(|0{,}625-0{,}5|=0{,}125\), y \(0{,}125\lt 0{,}25\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una fábrica corta baldosas cuadradas de \(30\) centímetros de lado. <b>Modelo:</b> la baldosa es un cuadrado perfecto de lado \(x\) centímetros y su área es \(A(x)=x^{2}\) centímetros cuadrados. (El modelo supone que el lado puede medir cualquier número cercano a \(30\).) a) ¿Cuál es el área de una baldosa de lado exacto? b) El control de calidad acepta una baldosa si su área se aleja menos de \(6{,}1\) centímetros cuadrados de esa. Demuestra que basta con que el lado se aleje menos de \(0{,}1\) centímetros (un milímetro) de \(30\), y prueba con un lado de \(30{,}09\). c) Da una regla para una tolerancia de \(\varepsilon\) centímetros cuadrados. d) Un operario propone: «divide la tolerancia por \(60\), el doble del lado». Para la tolerancia \(6\) eso da \(0{,}1\). Muestra con \(x=30{,}0999\) que no sirve. e) ¿Qué dice esto en palabras de límite?</p>
+    <details><summary>Pista</summary><div><p>La salida es el área y la entrada es el lado. Factoriza \(x^{2}-900\) y acota el factor \(|x+30|\) con el tope \(\delta\le 1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(A(30)=30^{2}=900\) centímetros cuadrados.</li>
+        <li>b) Diferencia de cuadrados: \(A(x)-900=x^{2}-900=(x-30)(x+30)\). Valor absoluto de un producto: \(|A(x)-900|=|x-30|\cdot|x+30|\).</li>
+        <li>Si \(|x-30|\lt 1\): \(-1\lt x-30\lt 1\); se suma \(60\): \(59\lt x+30\lt 61\). Luego \(|x+30|\lt 61\).</li>
+        <li>Sea \(x\ne 30\) con \(|x-30|\lt 0{,}1\) (que es menos que \(1\)). Se multiplica \(|x+30|\lt 61\) por \(|x-30|\), positivo: \(|A(x)-900|\lt 61\,|x-30|\). Se multiplica \(|x-30|\lt 0{,}1\) por \(61\): \(61\,|x-30|\lt 61\cdot 0{,}1=6{,}1\). Luego \(|A(x)-900|\lt 6{,}1\). (Si \(x=30\), el área es \(900\) justo.)</li>
+        <li>Prueba con \(x=30{,}09\): \(|30{,}09-30|=0{,}09\), menor que \(0{,}1\). Su área: \(30{,}09^{2}=905{,}4081\). Su distancia a \(900\): \(|905{,}4081-900|=5{,}4081\), menor que \(6{,}1\).</li>
+        <li>c) Regla: \(\delta=\text{mín}\left\{1,\ \dfrac{\varepsilon}{61}\right\}\) centímetros. Con \(\varepsilon=6{,}1\): \(\dfrac{6{,}1}{61}=0{,}1\).</li>
+        <li>d) \(\dfrac{6}{60}=0{,}1\). El lado \(x=30{,}0999\) cumple \(|30{,}0999-30|=0{,}0999\), menor que \(0{,}1\). Su área: \(30{,}0999^{2}=906{,}00398001\). Su distancia a \(900\): \(|906{,}00398001-900|=6{,}00398001\), mayor que \(6\). No sirve: el factor \(|x+30|\) pasa de \(60\) cuando \(x\gt 30\).</li>
+        <li>e) Toda tolerancia en el área, por chica que sea, se garantiza con un lado suficientemente cercano a \(30\) centímetros: en el modelo, \(\displaystyle\lim_{x\to 30}A(x)=900\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H12 · v001 · Pendiente de APR</span>
+</footer>
+</article>

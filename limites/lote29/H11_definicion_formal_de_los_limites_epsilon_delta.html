@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Definición formal de los límites (épsilon-delta) | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="lim-formal" data-hoja="L29 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Definición formal de límite (épsilon-delta)</li>
+      <li><b>Definición formal de los límites (épsilon-delta)</b></li>
+    </ol>
+    <h1>Definición formal de los límites (épsilon-delta)</h1>
+    <p class="lede">«El límite de \(f(x)\) cuando \(x\) tiende a \(a\) es \(L\)» tiene una definición exacta, hecha solo con desigualdades:
+    \[\lim_{x\to a}f(x)=L\quad\text{significa:}\quad\text{para todo }\varepsilon\gt 0\text{ existe }\delta\gt 0\text{ tal que, para todo }x,\]
+    \[0\lt |x-a|\lt \delta\ \Longrightarrow\ |f(x)-L|\lt \varepsilon\]
+    Esta hoja la estudia pieza por pieza: qué dice cada símbolo, por qué van en ese orden, cómo se demuestra con ella un límite (el método de dos fases) y cómo se niega, para demostrar que un número <b>no</b> es el límite. (\(\varepsilon\) es la letra griega épsilon y \(\delta\), la letra griega delta.)</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función de la animación es \(f(x)=5x-2\) para \(x\ne 1\); en \(x=1\) no está definida, y su gráfica es una recta con un hueco en \((1,3)\). El lugar es \(a=1\) y el valor de llegada es \(L=3\). El dibujo es una vista ampliada: muestra solo la zona cercana al hueco, con \(x\) entre \(0{,}6\) y \(1{,}4\) y alturas entre \(1\) y \(5\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la recta burdeo y su hueco en \((1,3)\):</b> ahí la gráfica no tiene punto. Las punteadas unen el hueco con \(a=1\) en el borde de abajo y con \(L=3\) en el borde izquierdo.</li>
+    <li><b>Pasos 2 y 3, las dos primeras piezas de la frase:</b> la franja verde es «para todo \(\varepsilon\gt 0\)», dibujada con \(\varepsilon=1\) (alturas entre \(2\) y \(4\)); la franja azul es «existe \(\delta\gt 0\)», con \(\delta=0{,}2\) (entradas entre \(0{,}8\) y \(1{,}2\)).</li>
+    <li><b>Pasos 4 y 5, las otras dos:</b> el tramo azul grueso del borde de abajo reúne todos los \(x\) con \(0\lt |x-1|\lt 0{,}2\); tiene un hueco en \(1\). Sobre ellos está el trozo naranjo de la recta. El tramo naranjo grueso del borde izquierdo reúne sus salidas: todas quedan dentro de la franja verde, es decir, \(|f(x)-3|\lt 1\).</li>
+    <li><b>Pasos 6 y 7:</b> las cuatro piezas se repiten con \(\varepsilon=0{,}5\) y \(\delta=0{,}1\), y aparece la regla \(\delta=\dfrac{\varepsilon}{5}\). Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada pieza con su traducción a desigualdades, el borrador que encuentra \(\delta\), la demostración y un valor de prueba. Conclusión: toda tolerancia tiene respuesta, así que el límite es \(3\), aunque \(f(1)\) no exista.</li>
+  </ol>
+  <div class="stage" data-scene="formal-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Línea burdeo:</b> la gráfica de \(f\), vista de cerca. El círculo vacío en \((1,3)\) es el hueco: \(f(1)\) no está definida.</li>
+    <li><b>Verde:</b> «para todo \(\varepsilon\gt 0\)». Cada franja horizontal va de \(3-\varepsilon\) a \(3+\varepsilon\); la cota verde marca \(\varepsilon\), desde \(3\) hacia arriba.</li>
+    <li><b>Azul:</b> «existe \(\delta\gt 0\)» y «para todo \(x\) con \(0\lt |x-1|\lt \delta\)». Cada franja vertical va de \(1-\delta\) a \(1+\delta\); la cota azul marca \(\delta\), desde \(1\) hacia la derecha. El tramo grueso del borde de abajo son las entradas que se revisan.</li>
+    <li><b>Naranjo:</b> «entonces \(|f(x)-3|\lt \varepsilon\)». El trozo de recta que está sobre las entradas, y en el borde izquierdo, el tramo grueso de sus salidas. Los círculos vacíos chicos marcan valores que no entran: los bordes de las franjas (las desigualdades son estrictas), la entrada \(1\) y la salida \(3\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué se usa sin demostrar.</b> Con la definición se demuestran aquí los límites de las funciones lineales y constantes, que un número dado no es el límite, y que el límite, si existe, es único. Las funciones no lineales van en la hoja siguiente, «Uso de la definición formal de límite». Una figura muestra dos tolerancias: «para todo \(\varepsilon\)» no se puede dibujar, se demuestra con álgebra (segundo recuadro). En la frase, «para todo \(x\)» se refiere a los \(x\) en que \(f\) está definida; todas las funciones de esta hoja están definidas en toda la recta, salvo quizá en \(a\). Si no fuera así, \(\delta\) se elige además tan chica que todos los \(x\) con \(0\lt |x-a|\lt \delta\) queden donde \(f\) está definida. Se usan, <b>sin demostrar</b>:</p>
+    <ol class="steps">
+      <li>Propiedades del valor absoluto: \(|u-v|\) es la distancia entre \(u\) y \(v\) en la recta numérica; \(|u\cdot v|=|u|\cdot|v|\); \(|-u|=|u|\); \(|u|\ge 0\), y \(|u|=0\) solo cuando \(u=0\).</li>
+      <li>Para \(c\gt 0\): \(|u|\lt c\) equivale a \(-c\lt u\lt c\).</li>
+      <li>Desigualdad triangular: \(|u-v|\le |u-w|+|w-v|\).</li>
+      <li>Reglas del orden de los números: multiplicar o dividir los dos lados de una desigualdad por un número positivo la mantiene; sumar el mismo número a los dos lados la mantiene; dos desigualdades del mismo sentido se pueden sumar lado a lado; si \(u\le v\) y \(v\lt w\), entonces \(u\lt w\).</li>
+      <li>Reglas de la lógica para negar una frase: lo contrario de «para todo… se cumple» es «existe uno que no cumple»; lo contrario de «existe uno que cumple» es «ninguno cumple»; lo contrario de «si \(P\), entonces \(Q\)» es «\(P\) y no \(Q\)».</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La definición, completa y exacta, y qué dice cada pieza</h3>
+    <p><b>Definición.</b> Sea \(f\) una función definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\), y sea \(L\) un número real. Se dice que \(\displaystyle\lim_{x\to a}f(x)=L\) cuando:</p>
+    <p>\[\text{para todo }\varepsilon\gt 0\text{ existe }\delta\gt 0\text{ tal que, para todo }x,\quad\text{si }0\lt |x-a|\lt \delta\text{, entonces }|f(x)-L|\lt \varepsilon.\]</p>
+    <p>Con los símbolos \(\forall\) («para todo») y \(\exists\) («existe»), la misma frase se escribe \(\forall\,\varepsilon\gt 0\ \ \exists\,\delta\gt 0\ \ \forall\,x:\ \ 0\lt |x-a|\lt \delta\ \Longrightarrow\ |f(x)-L|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li><b>El supuesto.</b> \(f\) debe estar definida a los dos lados de \(a\), cerca de \(a\). En \(a\) puede no estarlo: en la animación, \(f(1)\) no existe.</li>
+      <li><b>«Para todo \(\varepsilon\gt 0\)».</b> \(\varepsilon\) es la tolerancia de la salida: cuán cerca de \(L\) se exige \(f(x)\). La frase debe cumplirse con <b>cada</b> número positivo, por chico que sea.</li>
+      <li><b>«Existe \(\delta\gt 0\)».</b> \(\delta\) es la distancia de la entrada: cuán cerca de \(a\) hay que tomar \(x\). Basta que haya una. Va después de \(\varepsilon\): se elige conociendo \(\varepsilon\), y por eso puede depender de \(\varepsilon\).</li>
+      <li><b>«Para todo \(x\)».</b> Va después de \(\delta\): la distancia se elige <b>antes</b> de conocer \(x\), y por eso no puede depender de \(x\). Una misma \(\delta\) tiene que servir para todos los \(x\) de la franja a la vez.</li>
+      <li><b>«\(0\lt |x-a|\lt \delta\)».</b> Son dos condiciones. \(|x-a|\lt \delta\): la distancia de \(x\) a \(a\) es menor que \(\delta\). \(0\lt |x-a|\): esa distancia no es cero, es decir, \(x\ne a\).</li>
+      <li><b>«\(|f(x)-L|\lt \varepsilon\)».</b> La distancia de la salida a \(L\) es menor que la tolerancia.</li>
+      <li><b>La flecha \(\Longrightarrow\)</b> se lee «si…, entonces…». Obliga solo a los \(x\) que cumplen la condición de la izquierda; de los demás \(x\) no dice nada. Tampoco dice lo recíproco: puede haber \(x\) más lejanos cuya salida también quede dentro de la tolerancia.</li>
+    </ol>
+    <p><b>Traducción a desigualdades sin valor absoluto y a intervalos.</b> La última columna usa los números de la animación: \(a=1\), \(\delta=0{,}2\), \(L=3\) y \(\varepsilon=1\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>con valor absoluto</th><th>sin valor absoluto</th><th>dónde está</th><th>en la animación</th></tr>
+      <tr><td>\(0\lt |x-a|\lt \delta\)</td><td>\(a-\delta\lt x\lt a+\delta\) y \(x\ne a\)</td><td>\(x\) está en \((a-\delta,\,a)\cup(a,\,a+\delta)\)</td><td>\(0{,}8\lt x\lt 1{,}2\) y \(x\ne 1\)</td></tr>
+      <tr><td>\(|f(x)-L|\lt \varepsilon\)</td><td>\(L-\varepsilon\lt f(x)\lt L+\varepsilon\)</td><td>\(f(x)\) está en \((L-\varepsilon,\,L+\varepsilon)\)</td><td>\(2\lt f(x)\lt 4\)</td></tr>
+    </table></div>
+    <p>Las cuentas de la última columna: \(1-0{,}2=0{,}8\) y \(1+0{,}2=1{,}2\); \(3-1=2\) y \(3+1=4\). La primera fila sale de la propiedad «\(|u|\lt c\) equivale a \(-c\lt u\lt c\)» con \(u=x-a\) y \(c=\delta\): queda \(-\delta\lt x-a\lt \delta\), y al sumar \(a\) a los tres lados, \(a-\delta\lt x\lt a+\delta\). La segunda fila sale igual, con \(u=f(x)-L\) y \(c=\varepsilon\).</p>
+    <p><b>Por qué en ese orden.</b> Si se invierten las dos primeras piezas queda «existe \(\delta\gt 0\) tal que, para todo \(\varepsilon\gt 0\), …»: una sola distancia que sirva para <b>todas</b> las tolerancias a la vez. Es otra frase, mucho más exigente. Con \(f(x)=5x-2\) y \(L=3\) ninguna distancia la cumple: dada \(\delta\gt 0\), la entrada \(x=1+\dfrac{\delta}{2}\) está en la franja y \(|f(x)-3|=5\cdot\dfrac{\delta}{2}=2{,}5\,\delta\); esa distancia no es menor que la tolerancia \(\varepsilon=2{,}5\,\delta\). En la definición correcta, en cambio, cada tolerancia recibe su propia distancia.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso, en dos fases: si \(m\ne 0\), entonces \(\displaystyle\lim_{x\to a}(mx+b)=ma+b\), con \(\delta=\dfrac{\varepsilon}{|m|}\)</h3>
+    <p>Sea \(f(x)=mx+b\) con \(m\ne 0\), y \(L=ma+b\). <b>Fase 1, el borrador:</b> se parte de lo que se quiere lograr, \(|f(x)-L|\lt \varepsilon\), para descubrir qué \(\delta\) sirve. No es parte de la demostración.</p>
+    <ol class="steps">
+      <li>La diferencia: \(f(x)-L=mx+b-(ma+b)\).</li>
+      <li>Se quita el paréntesis: \(mx+b-ma-b\). Se cancelan \(b\) y \(-b\): queda \(mx-ma\).</li>
+      <li>Factor común \(m\): \(mx-ma=m\,(x-a)\).</li>
+      <li>Valor absoluto de un producto: \(|f(x)-L|=|m|\cdot|x-a|\).</li>
+      <li>Se quiere \(|m|\cdot|x-a|\lt \varepsilon\). Como \(m\ne 0\), \(|m|\) es positivo y se puede dividir por él: \(|x-a|\lt \dfrac{\varepsilon}{|m|}\). Candidata: \(\delta=\dfrac{\varepsilon}{|m|}\).</li>
+    </ol>
+    <p><b>Fase 2, la demostración:</b> se escribe en el orden de la definición. Se parte de \(0\lt |x-a|\lt \delta\) y se llega a \(|f(x)-L|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon\gt 0\) cualquiera.</li>
+      <li>Se elige \(\delta=\dfrac{\varepsilon}{|m|}\). Es positiva: cociente de dos números positivos.</li>
+      <li>Sea \(x\) cualquiera con \(0\lt |x-a|\lt \delta\), es decir, \(|x-a|\lt \dfrac{\varepsilon}{|m|}\).</li>
+      <li>Se multiplican los dos lados por \(|m|\), positivo: \(|m|\cdot|x-a|\lt |m|\cdot\dfrac{\varepsilon}{|m|}=\varepsilon\).</li>
+      <li>Por el paso 4 del borrador, que es una igualdad válida para todo \(x\): \(|f(x)-L|=|m|\cdot|x-a|\lt \varepsilon\).</li>
+      <li>Como \(\varepsilon\) era cualquiera, la definición se cumple: \(\displaystyle\lim_{x\to a}(mx+b)=ma+b\).</li>
+    </ol>
+    <p>La regla \(\delta=\dfrac{\varepsilon}{|m|}\) en cinco rectas, y la distancia que da para la tolerancia \(\varepsilon=0{,}6\):</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>función</th><th>\(m\)</th><th>\(|m|\)</th><th>regla</th><th>con \(\varepsilon=0{,}6\)</th></tr>
+      <tr><td>\(5x-2\)</td><td>\(5\)</td><td>\(5\)</td><td>\(\delta=\dfrac{\varepsilon}{5}\)</td><td>\(\dfrac{0{,}6}{5}=0{,}12\)</td></tr>
+      <tr><td>\(6x+1\)</td><td>\(6\)</td><td>\(6\)</td><td>\(\delta=\dfrac{\varepsilon}{6}\)</td><td>\(\dfrac{0{,}6}{6}=0{,}1\)</td></tr>
+      <tr><td>\(9-2x\)</td><td>\(-2\)</td><td>\(2\)</td><td>\(\delta=\dfrac{\varepsilon}{2}\)</td><td>\(\dfrac{0{,}6}{2}=0{,}3\)</td></tr>
+      <tr><td>\(\dfrac{x}{4}+2\)</td><td>\(\dfrac{1}{4}\)</td><td>\(\dfrac{1}{4}\)</td><td>\(\delta=4\,\varepsilon\)</td><td>\(4\cdot 0{,}6=2{,}4\)</td></tr>
+      <tr><td>\(x\)</td><td>\(1\)</td><td>\(1\)</td><td>\(\delta=\varepsilon\)</td><td>\(0{,}6\)</td></tr>
+    </table></div>
+    <p>En la cuarta fila, dividir por \(\dfrac{1}{4}\) es multiplicar por \(4\): \(\dfrac{\varepsilon}{1/4}=4\,\varepsilon\). La quinta es la función identidad, \(f(x)=x\): ahí \(m=1\), \(b=0\) y \(\displaystyle\lim_{x\to a}x=a\), con \(\delta=\varepsilon\).</p>
+    <p><b>El caso \(m=0\): la función constante \(f(x)=c\).</b> La regla no se puede usar, porque \(|0|=0\) y no se divide por cero. La demostración es más corta:</p>
+    <ol class="steps">
+      <li>Para todo \(x\): \(f(x)-c=c-c=0\), así que \(|f(x)-c|=|0|=0\).</li>
+      <li>Sea \(\varepsilon\gt 0\) cualquiera. Como \(0\lt \varepsilon\), todo \(x\) cumple \(|f(x)-c|\lt \varepsilon\).</li>
+      <li>Entonces <b>cualquier</b> \(\delta\gt 0\) sirve, por ejemplo \(\delta=1\): los \(x\) con \(0\lt |x-a|\lt 1\) cumplen la conclusión, porque la cumplen todos. Así, \(\displaystyle\lim_{x\to a}c=c\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>La negación y la unicidad: cuándo \(L\) no es el límite, y por qué no puede haber dos límites</h3>
+    <p><b>Cómo se niega la definición.</b> Se niega pieza por pieza, de izquierda a derecha:</p>
+    <ol class="steps">
+      <li>Lo contrario de «para todo \(\varepsilon\gt 0\) pasa algo» es «existe un \(\varepsilon\gt 0\) con el que no pasa».</li>
+      <li>Lo que no pasa es «existe \(\delta\gt 0\) que sirve». Su contrario: «ninguna \(\delta\gt 0\) sirve», es decir, «para todo \(\delta\gt 0\), esa \(\delta\) falla».</li>
+      <li>Una \(\delta\) falla cuando «para todo \(x\), si \(0\lt |x-a|\lt \delta\), entonces \(|f(x)-L|\lt \varepsilon\)» es falso: hay al menos un \(x\) que cumple la condición y no cumple la conclusión.</li>
+      <li>No cumplir \(|f(x)-L|\lt \varepsilon\) es cumplir \(|f(x)-L|\ge \varepsilon\).</li>
+    </ol>
+    <p>\[L\text{ no es el límite de }f\text{ en }a\quad\text{significa:}\quad\text{existe }\varepsilon\gt 0\text{ tal que, para todo }\delta\gt 0\text{, hay un }x\text{ con}\]
+    \[0\lt |x-a|\lt \delta\quad\text{y}\quad|f(x)-L|\ge \varepsilon.\]</p>
+    <p>Los papeles se invierten: quien niega elige <b>una</b> tolerancia. Después, para <b>cada</b> \(\delta\) debe mostrar un \(x\) de la franja cuya salida quede a \(\varepsilon\) o más de \(L\); ese \(x\) puede depender de \(\delta\) (ejemplo 3). «El límite no existe» significa que la negación vale para <b>todo</b> número \(L\) (ejemplo 4).</p>
+    <p><b>Unicidad del límite.</b> Si \(\displaystyle\lim_{x\to a}f(x)=L_{1}\) y \(\displaystyle\lim_{x\to a}f(x)=L_{2}\), entonces \(L_{1}=L_{2}\). Demostración: se supone que \(L_{1}\ne L_{2}\) y se llega a una contradicción.</p>
+    <ol class="steps">
+      <li>Se elige la tolerancia \(\varepsilon=\dfrac{|L_{1}-L_{2}|}{2}\). Es positiva, porque \(L_{1}-L_{2}\ne 0\).</li>
+      <li>Por la definición con \(L_{1}\), existe \(\delta_{1}\gt 0\) tal que \(0\lt |x-a|\lt \delta_{1}\) obliga a \(|f(x)-L_{1}|\lt \varepsilon\).</li>
+      <li>Por la definición con \(L_{2}\), existe \(\delta_{2}\gt 0\) tal que \(0\lt |x-a|\lt \delta_{2}\) obliga a \(|f(x)-L_{2}|\lt \varepsilon\).</li>
+      <li>Sea \(\delta\) la menor de \(\delta_{1}\) y \(\delta_{2}\), y sea \(x\) un número con \(0\lt |x-a|\lt \delta\) en que \(f\) esté definida. Existe, porque \(f\) está definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\).</li>
+      <li>Ese \(x\) cumple las dos condiciones, porque \(\delta\le \delta_{1}\) y \(\delta\le \delta_{2}\). Entonces \(|f(x)-L_{1}|\lt \varepsilon\) y \(|f(x)-L_{2}|\lt \varepsilon\).</li>
+      <li>Desigualdad triangular, pasando por \(f(x)\): \(|L_{1}-L_{2}|\le |L_{1}-f(x)|+|f(x)-L_{2}|\).</li>
+      <li>Como \(|-u|=|u|\): \(|L_{1}-f(x)|=|f(x)-L_{1}|\), que es menor que \(\varepsilon\).</li>
+      <li>Se suman las dos desigualdades del paso 5: \(|L_{1}-f(x)|+|f(x)-L_{2}|\lt \varepsilon+\varepsilon=2\,\varepsilon\).</li>
+      <li>Se reemplaza la tolerancia elegida: \(2\,\varepsilon=2\cdot\dfrac{|L_{1}-L_{2}|}{2}=|L_{1}-L_{2}|\).</li>
+      <li>Por los pasos 6, 8 y 9: \(|L_{1}-L_{2}|\lt |L_{1}-L_{2}|\). Un número no es menor que sí mismo: contradicción. Luego \(L_{1}=L_{2}\).</li>
+    </ol>
+    <p>Consecuencia: una vez demostrado que el límite es \(L\), ningún otro número puede serlo.</p>
+  </div>
+
+  <div class="def">
+    <h3>Los límites laterales, con la misma frase</h3>
+    <p>Solo cambia la condición sobre \(x\): en vez de los dos lados de \(a\), se revisa uno.</p>
+    <p><b>Por la izquierda.</b> \(\displaystyle\lim_{x\to a^{-}}f(x)=L\) significa: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, para todo \(x\), si \(a-\delta\lt x\lt a\), entonces \(|f(x)-L|\lt \varepsilon\). (Se supone \(f\) definida en un intervalo abierto cuyo extremo derecho es \(a\).)</p>
+    <p><b>Por la derecha.</b> \(\displaystyle\lim_{x\to a^{+}}f(x)=L\) significa: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, para todo \(x\), si \(a\lt x\lt a+\delta\), entonces \(|f(x)-L|\lt \varepsilon\). (Se supone \(f\) definida en un intervalo abierto cuyo extremo izquierdo es \(a\).)</p>
+    <p>La condición \(0\lt |x-a|\lt \delta\) reúne las dos: \(a-\delta\lt x\lt a\) o \(a\lt x\lt a+\delta\). Por eso el límite es \(L\) exactamente cuando los dos laterales son \(L\): si una \(\delta\) sirve para el límite, la misma sirve para cada lateral; y si \(\delta_{1}\) sirve por la izquierda y \(\delta_{2}\) por la derecha, la menor de las dos sirve para el límite. Se usan en el ejemplo 4 y en el ejercicio B.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>Los dos primeros ejemplos demuestran un límite con las dos fases; los dos últimos usan la negación.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: las dos fases, con \(a\) y \(L\) negativos. Demostrar que \(\displaystyle\lim_{x\to -1}(6x+1)=-5\)</h3>
+  <div class="body">
+  <p>Sea \(g(x)=6x+1\). Aquí \(a=-1\) y \(L=-5\), así que \(x-a=x-(-1)=x+1\) y \(g(x)-L=g(x)-(-5)=g(x)+5\).</p>
+  <ol class="steps">
+    <li><b>Borrador.</b> La diferencia: \(g(x)+5=6x+1+5=6x+6\).</li>
+    <li>Factor común: \(6x+6=6\,(x+1)\).</li>
+    <li>Valor absoluto de un producto: \(|g(x)+5|=|6|\cdot|x+1|=6\,|x+1|\).</li>
+    <li>Se quiere \(6\,|x+1|\lt \varepsilon\). Al dividir por \(6\), positivo: \(|x+1|\lt \dfrac{\varepsilon}{6}\). Candidata: \(\delta=\dfrac{\varepsilon}{6}\).</li>
+    <li><b>Demostración.</b> Sea \(\varepsilon\gt 0\) cualquiera. Se elige \(\delta=\dfrac{\varepsilon}{6}\), que es positiva.</li>
+    <li>Sea \(x\) cualquiera con \(0\lt |x+1|\lt \dfrac{\varepsilon}{6}\).</li>
+    <li>Se multiplica por \(6\), positivo: \(6\,|x+1|\lt 6\cdot\dfrac{\varepsilon}{6}=\varepsilon\).</li>
+    <li>Por el paso 3: \(|g(x)+5|=6\,|x+1|\lt \varepsilon\). La definición se cumple: el límite es \(-5\).</li>
+    <li><b>Control con números</b> (no es parte de la demostración). Con \(\varepsilon=0{,}3\): \(\delta=\dfrac{0{,}3}{6}=0{,}05\). En intervalos: \(-1-0{,}05=-1{,}05\) y \(-1+0{,}05=-0{,}95\), así que se revisan los \(x\) con \(-1{,}05\lt x\lt -0{,}95\) y \(x\ne -1\).</li>
+    <li>Prueba con \(x=-1{,}04\): \(|-1{,}04+1|=|-0{,}04|=0{,}04\) y \(0\lt 0{,}04\lt 0{,}05\). Su salida: \(6\cdot(-1{,}04)=-6{,}24\) y \(g(-1{,}04)=-6{,}24+1=-5{,}24\). Su distancia a \(-5\): \(|-5{,}24+5|=|-0{,}24|=0{,}24\), y \(0{,}24\lt 0{,}3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: una pendiente menor que \(1\) da \(\delta\) mayor que \(\varepsilon\). Demostrar que \(\displaystyle\lim_{x\to 8}\left(\dfrac{x}{4}+2\right)=4\)</h3>
+  <div class="body">
+  <p>Sea \(h(x)=\dfrac{x}{4}+2\), con \(a=8\) y \(L=4\).</p>
+  <ol class="steps">
+    <li><b>Borrador.</b> La diferencia: \(h(x)-4=\dfrac{x}{4}+2-4=\dfrac{x}{4}-2\).</li>
+    <li>Factor común \(\dfrac{1}{4}\): \(\dfrac{x}{4}-2=\dfrac{1}{4}\,(x-8)\), porque \(\dfrac{1}{4}\cdot 8=2\).</li>
+    <li>Valor absoluto de un producto: \(|h(x)-4|=\left|\dfrac{1}{4}\right|\cdot|x-8|=\dfrac{1}{4}\,|x-8|\).</li>
+    <li>Se quiere \(\dfrac{1}{4}\,|x-8|\lt \varepsilon\). Al multiplicar por \(4\), positivo: \(|x-8|\lt 4\,\varepsilon\). Candidata: \(\delta=4\,\varepsilon\).</li>
+    <li><b>Demostración.</b> Sea \(\varepsilon\gt 0\) cualquiera. Se elige \(\delta=4\,\varepsilon\), que es positiva: producto de dos números positivos.</li>
+    <li>Sea \(x\) cualquiera con \(0\lt |x-8|\lt 4\,\varepsilon\).</li>
+    <li>Se multiplica por \(\dfrac{1}{4}\), positivo: \(\dfrac{1}{4}\,|x-8|\lt \dfrac{1}{4}\cdot 4\,\varepsilon=\varepsilon\).</li>
+    <li>Por el paso 3: \(|h(x)-4|=\dfrac{1}{4}\,|x-8|\lt \varepsilon\). La definición se cumple: el límite es \(4\).</li>
+    <li><b>Control con números.</b> Con \(\varepsilon=0{,}5\): \(\delta=4\cdot 0{,}5=2\). En intervalos: \(8-2=6\) y \(8+2=10\), así que se revisan los \(x\) con \(6\lt x\lt 10\) y \(x\ne 8\). Prueba con \(x=9{,}6\): \(|9{,}6-8|=1{,}6\) y \(0\lt 1{,}6\lt 2\). Su salida: \(\dfrac{9{,}6}{4}=2{,}4\) y \(h(9{,}6)=2{,}4+2=4{,}4\). Su distancia a \(4\): \(|4{,}4-4|=0{,}4\), y \(0{,}4\lt 0{,}5\).</li>
+    <li>Aquí \(\delta=2\) es mayor que \(\varepsilon=0{,}5\). La definición no pide que \(\delta\) sea menor que \(\varepsilon\): solo pide que sea positiva y que sirva. Con una pendiente chica, la salida se mueve menos que la entrada.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: la negación en una recta. Demostrar que \(8\) <b>no</b> es el límite de \(r(x)=3x+1\) en \(a=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Qué hay que mostrar</b> (la negación, con \(a=2\) y \(L=8\)): una tolerancia \(\varepsilon\gt 0\) tal que, para toda \(\delta\gt 0\), haya un \(x\) con \(0\lt |x-2|\lt \delta\) y \(|r(x)-8|\ge \varepsilon\).</li>
+    <li><b>Exploración.</b> \(3\cdot 1{,}9=5{,}7\) y \(r(1{,}9)=5{,}7+1=6{,}7\); \(3\cdot 1{,}99=5{,}97\) y \(r(1{,}99)=5{,}97+1=6{,}97\). A la izquierda de \(2\) las salidas son menores que \(7\): quedan a más de \(1\) de \(8\). Se elige \(\varepsilon=1\).</li>
+    <li>Sea \(\delta\gt 0\) cualquiera. Se propone la entrada \(x=2-\dfrac{\delta}{2}\).</li>
+    <li>Está en la franja: \(|x-2|=\left|-\dfrac{\delta}{2}\right|=\dfrac{\delta}{2}\), y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+    <li>Su salida: \(r(x)=3\left(2-\dfrac{\delta}{2}\right)+1=6-\dfrac{3\,\delta}{2}+1=7-\dfrac{3\,\delta}{2}\).</li>
+    <li>La diferencia con \(8\): \(r(x)-8=7-\dfrac{3\,\delta}{2}-8=-1-\dfrac{3\,\delta}{2}\). Es negativa, así que \(|r(x)-8|=1+\dfrac{3\,\delta}{2}\).</li>
+    <li>Como \(\dfrac{3\,\delta}{2}\gt 0\): \(|r(x)-8|\gt 1\), y con mayor razón \(|r(x)-8|\ge 1=\varepsilon\). Toda \(\delta\) falla: \(8\) no es el límite.</li>
+    <li><b>Una tolerancia grande sí tiene respuesta</b>, aunque \(8\) no sea el límite. Con \(\varepsilon=3\) y \(\delta=0{,}5\): los \(x\) de la franja cumplen \(1{,}5\lt x\lt 2{,}5\); como \(3\cdot 1{,}5+1=4{,}5+1=5{,}5\) y \(3\cdot 2{,}5+1=7{,}5+1=8{,}5\), sus salidas cumplen \(5{,}5\lt r(x)\lt 8{,}5\). Por abajo, la distancia a \(8\) es menor que \(8-5{,}5=2{,}5\); por arriba, menor que \(8{,}5-8=0{,}5\). En los dos casos es menor que \(3\). Por eso la negación necesita solo <b>una</b> tolerancia sin respuesta, y la definición las exige todas.</li>
+    <li>El límite verdadero es \(3\cdot 2+1=6+1=7\), por el segundo recuadro con \(m=3\) y \(b=1\) (sirve \(\delta=\dfrac{\varepsilon}{3}\)). Y por la unicidad, ningún otro número puede serlo: otra demostración de que \(8\) no lo es.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: un escalón. Ningún número \(L\) es el límite</h3>
+  <div class="body">
+  <p>\[e(x)=\begin{cases}2&\text{si }x\lt 3\\[2pt] 5&\text{si }x\ge 3\end{cases}\]</p>
+  <ol class="steps">
+    <li>La gráfica: una semirrecta horizontal a la altura \(2\), que termina en un círculo vacío en \((3,2)\), y otra a la altura \(5\), que parte del punto lleno \((3,5)\). El salto mide \(5-2=3\).</li>
+    <li>Sea \(L\) un número cualquiera. Se elige la mitad del salto como tolerancia: \(\varepsilon=\dfrac{3}{2}=1{,}5\). El número que está justo al medio de \(2\) y \(5\) es \(2+1{,}5=3{,}5\).</li>
+    <li>Sea \(\delta\gt 0\) cualquiera. Hay dos entradas a mano, una a cada lado: \(x_{1}=3-\dfrac{\delta}{2}\) y \(x_{2}=3+\dfrac{\delta}{2}\). Las dos están en la franja, porque su distancia a \(3\) es \(\dfrac{\delta}{2}\), y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+    <li>Sus salidas: como \(x_{1}\lt 3\), \(e(x_{1})=2\); como \(x_{2}\ge 3\), \(e(x_{2})=5\).</li>
+    <li><b>Caso \(L\ge 3{,}5\):</b> se usa \(x_{1}\). Como \(L\gt 2\), \(|e(x_{1})-L|=L-2\), y \(L-2\ge 3{,}5-2=1{,}5\).</li>
+    <li><b>Caso \(L\lt 3{,}5\):</b> se usa \(x_{2}\). Como \(L\lt 5\), \(|e(x_{2})-L|=5-L\), y \(5-L\gt 5-3{,}5=1{,}5\).</li>
+    <li>En los dos casos hay un \(x\) de la franja con \(|e(x)-L|\ge 1{,}5\). Vale para toda \(\delta\) y para todo \(L\): el límite de \(e\) en \(3\) no existe.</li>
+    <li><b>Los laterales sí existen.</b> Por la izquierda: si \(3-\delta\lt x\lt 3\), entonces \(e(x)=2\) y \(|e(x)-2|=|2-2|=0\), menor que todo \(\varepsilon\gt 0\). Cualquier \(\delta\gt 0\) sirve: \(\displaystyle\lim_{x\to 3^{-}}e(x)=2\). Por la derecha: si \(3\lt x\lt 3+\delta\), entonces \(e(x)=5\) y \(|e(x)-5|=|5-5|=0\): \(\displaystyle\lim_{x\to 3^{+}}e(x)=5\). Como \(2\ne 5\), se confirma que el límite no existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>presentar el borrador como demostración</b>. El borrador parte de \(|f(x)-L|\lt \varepsilon\), que es justo lo que hay que probar; la demostración parte de \(0\lt |x-a|\lt \delta\). Dos: <b>una \(\delta\) que depende de \(x\)</b>. Puede depender de \(\varepsilon\), nunca de \(x\). Tres: <b>olvidar el valor absoluto de la pendiente</b>. Con \(m=-2\) la regla es \(\delta=\dfrac{\varepsilon}{2}\); dividir por \(-2\) daría una \(\delta\) negativa. Cuatro: <b>negar mal</b>. Lo contrario de «para todo \(\varepsilon\) existe \(\delta\)…» no es «para todo \(\varepsilon\) no existe \(\delta\)»: basta <b>una</b> tolerancia sin respuesta. Cinco: <b>creer que una tolerancia con respuesta prueba el límite</b>. En el ejemplo 3 la tolerancia \(3\) tiene respuesta con \(L=8\), y \(8\) no es el límite.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Sea \(k(x)=9-2x\), con \(a=4\) y \(L=1\). a) Escribe sin valor absoluto las condiciones \(0\lt |x-4|\lt 0{,}05\) y \(|k(x)-1|\lt 0{,}1\). b) Haz el borrador: ¿qué \(\delta\) sirve para una tolerancia \(\varepsilon\gt 0\) cualquiera? c) Escribe la demostración de que \(\displaystyle\lim_{x\to 4}(9-2x)=1\). d) Controla con \(\varepsilon=0{,}1\) y la entrada \(x=4{,}03\).</p>
+    <details><summary>Pista</summary><div><p>En el borrador, escribe \(k(x)-1\) y saca factor común \(-2\): debe aparecer \(x-4\). Recuerda que \(|-2|=2\). La demostración parte de \(0\lt |x-4|\lt \delta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(4-0{,}05=3{,}95\) y \(4+0{,}05=4{,}05\): la primera es \(3{,}95\lt x\lt 4{,}05\) y \(x\ne 4\). \(1-0{,}1=0{,}9\) y \(1+0{,}1=1{,}1\): la segunda es \(0{,}9\lt k(x)\lt 1{,}1\).</li>
+        <li>b) La diferencia: \(k(x)-1=9-2x-1=8-2x\). Factor común: \(8-2x=-2\,(x-4)\).</li>
+        <li>Valor absoluto de un producto: \(|k(x)-1|=|-2|\cdot|x-4|=2\,|x-4|\).</li>
+        <li>Se quiere \(2\,|x-4|\lt \varepsilon\). Al dividir por \(2\), positivo: \(|x-4|\lt \dfrac{\varepsilon}{2}\). Candidata: \(\delta=\dfrac{\varepsilon}{2}\).</li>
+        <li>c) Sea \(\varepsilon\gt 0\) cualquiera. Se elige \(\delta=\dfrac{\varepsilon}{2}\), que es positiva. Sea \(x\) cualquiera con \(0\lt |x-4|\lt \dfrac{\varepsilon}{2}\).</li>
+        <li>Se multiplica por \(2\), positivo: \(2\,|x-4|\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\). Por el paso 3: \(|k(x)-1|=2\,|x-4|\lt \varepsilon\). La definición se cumple: el límite es \(1\).</li>
+        <li>d) \(\delta=\dfrac{0{,}1}{2}=0{,}05\). La entrada: \(|4{,}03-4|=0{,}03\) y \(0\lt 0{,}03\lt 0{,}05\). Su salida: \(2\cdot 4{,}03=8{,}06\) y \(k(4{,}03)=9-8{,}06=0{,}94\). Su distancia a \(1\): \(|0{,}94-1|=|-0{,}06|=0{,}06\), y \(0{,}06\lt 0{,}1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>La gráfica de \(j\) tiene dos trozos: una semirrecta que sube hasta un círculo vacío en \((0,-1)\) y otra que sube desde el punto lleno \((0,1)\). En fórmulas:
+    \[j(x)=\begin{cases}x-1&\text{si }x\lt 0\\[2pt] 2x+1&\text{si }x\ge 0\end{cases}\]
+    a) Calcula \(j(-0{,}1)\), \(j(-0{,}01)\), \(j(0{,}1)\) y \(j(0{,}01)\). b) Escribe la negación de «\(L\) es el límite de \(j\) en \(0\)». c) Con la tolerancia \(\varepsilon=1\), demuestra que ningún número \(L\) es el límite de \(j\) en \(0\). d) Con las definiciones de los límites laterales, demuestra que \(\displaystyle\lim_{x\to 0^{-}}j(x)=-1\) y \(\displaystyle\lim_{x\to 0^{+}}j(x)=1\).</p>
+    <details><summary>Pista</summary><div><p>Para c), separa en dos casos: si \(L\ge 0\), usa la entrada \(x=-\dfrac{\delta}{2}\); si \(L\lt 0\), usa \(x=\dfrac{\delta}{2}\). Para d), por la izquierda sirve \(\delta=\varepsilon\) y por la derecha, \(\delta=\dfrac{\varepsilon}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda: \(j(-0{,}1)=-0{,}1-1=-1{,}1\) y \(j(-0{,}01)=-0{,}01-1=-1{,}01\). Derecha: \(2\cdot 0{,}1=0{,}2\) y \(j(0{,}1)=0{,}2+1=1{,}2\); \(2\cdot 0{,}01=0{,}02\) y \(j(0{,}01)=0{,}02+1=1{,}02\).</li>
+        <li>b) Existe \(\varepsilon\gt 0\) tal que, para todo \(\delta\gt 0\), hay un \(x\) con \(0\lt |x|\lt \delta\) y \(|j(x)-L|\ge \varepsilon\). (Aquí \(a=0\), y \(|x-0|=|x|\).)</li>
+        <li>c) Sea \(L\) cualquiera, \(\varepsilon=1\) y \(\delta\gt 0\) cualquiera. <b>Caso \(L\ge 0\):</b> se usa \(x=-\dfrac{\delta}{2}\). Está en la franja: \(|x|=\dfrac{\delta}{2}\), y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+        <li>Como \(x\lt 0\): \(j(x)=-\dfrac{\delta}{2}-1\). La diferencia: \(L-j(x)=L+\dfrac{\delta}{2}+1\). Como \(L\ge 0\) y \(\dfrac{\delta}{2}\gt 0\), esa diferencia es mayor que \(1\). Entonces \(|j(x)-L|\ge 1\).</li>
+        <li><b>Caso \(L\lt 0\):</b> se usa \(x=\dfrac{\delta}{2}\), que también está en la franja. Como \(x\ge 0\): \(j(x)=2\cdot\dfrac{\delta}{2}+1=\delta+1\).</li>
+        <li>La diferencia: \(j(x)-L=\delta+1-L\). Como \(\delta\gt 0\) y \(-L\gt 0\), es mayor que \(1\). Entonces \(|j(x)-L|\ge 1\). En los dos casos toda \(\delta\) falla: ningún \(L\) es el límite, el límite no existe.</li>
+        <li>d) Por la izquierda. Sea \(\varepsilon\gt 0\) y \(\delta=\varepsilon\). Si \(-\delta\lt x\lt 0\): \(j(x)-(-1)=x-1+1=x\), así que \(|j(x)-(-1)|=|x|\). Como \(x\) es negativo, \(|x|=-x\), y de \(-\delta\lt x\) sale \(-x\lt \delta=\varepsilon\). Luego \(\displaystyle\lim_{x\to 0^{-}}j(x)=-1\).</li>
+        <li>Por la derecha. Sea \(\varepsilon\gt 0\) y \(\delta=\dfrac{\varepsilon}{2}\). Si \(0\lt x\lt \delta\): \(j(x)-1=2x+1-1=2x\), así que \(|j(x)-1|=|2x|=2x\), porque \(x\) es positivo. Al multiplicar \(x\lt \dfrac{\varepsilon}{2}\) por \(2\): \(2x\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\). Luego \(\displaystyle\lim_{x\to 0^{+}}j(x)=1\).</li>
+        <li>Los laterales existen y son distintos, \(-1\ne 1\): coincide con lo demostrado en c).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una receta está escrita en grados Fahrenheit y el horno marca grados Celsius. <b>Modelo:</b> la conversión entre las dos escalas es exacta, \(F(c)=1{,}8\,c+32\), donde \(c\) es la temperatura en grados Celsius y \(F(c)\) es la misma temperatura en grados Fahrenheit. (Se supone que la perilla del horno puede fijarse en cualquier temperatura, no solo en sus marcas.) La receta pide \(356\) grados Fahrenheit. a) Comprueba que corresponden a \(180\) grados Celsius. b) La receta tolera que la temperatura se aleje menos de \(9\) grados Fahrenheit de la pedida. ¿A qué distancia de \(180\) grados Celsius puede quedar la perilla? Prueba con \(183\). c) Da la regla para una tolerancia de \(\varepsilon\) grados Fahrenheit y demuéstrala. d) Alguien afirma que, cerca de \(180\) grados Celsius, la temperatura en Fahrenheit «se acerca a \(360\)». Muestra una tolerancia que no tiene respuesta.</p>
+    <details><summary>Pista</summary><div><p>La entrada es \(c\) y la salida es \(F(c)\). Escribe \(F(c)-356\) y saca factor común \(1{,}8\). Para d), usa la negación con la entrada \(c=180-\dfrac{\delta}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(1{,}8\cdot 180=324\) y \(F(180)=324+32=356\).</li>
+        <li>b) La diferencia: \(F(c)-356=1{,}8\,c+32-356=1{,}8\,c-324\). Factor común: \(1{,}8\,c-324=1{,}8\,(c-180)\), porque \(1{,}8\cdot 180=324\).</li>
+        <li>Valor absoluto de un producto: \(|F(c)-356|=|1{,}8|\cdot|c-180|=1{,}8\,|c-180|\).</li>
+        <li>Se quiere \(1{,}8\,|c-180|\lt 9\). Al dividir por \(1{,}8\), positivo: \(|c-180|\lt \dfrac{9}{1{,}8}=5\). Respuesta: \(\delta=5\) grados Celsius.</li>
+        <li>La respuesta sirve: si \(|c-180|\lt 5\), entonces \(1{,}8\,|c-180|\lt 1{,}8\cdot 5=9\).</li>
+        <li>Prueba con \(c=183\): \(|183-180|=3\), menor que \(5\). En Fahrenheit: \(1{,}8\cdot 183=329{,}4\) y \(F(183)=329{,}4+32=361{,}4\). Su distancia a \(356\): \(|361{,}4-356|=5{,}4\), menor que \(9\).</li>
+        <li>c) Regla: \(\delta=\dfrac{\varepsilon}{1{,}8}\). Demostración: sea \(\varepsilon\gt 0\) cualquiera y \(\delta=\dfrac{\varepsilon}{1{,}8}\), positiva. Si \(0\lt |c-180|\lt \dfrac{\varepsilon}{1{,}8}\), al multiplicar por \(1{,}8\): \(1{,}8\,|c-180|\lt 1{,}8\cdot\dfrac{\varepsilon}{1{,}8}=\varepsilon\). Por el paso 3, \(|F(c)-356|\lt \varepsilon\). En el modelo, \(\displaystyle\lim_{c\to 180}F(c)=356\).</li>
+        <li>d) La distancia entre \(360\) y \(356\) es \(360-356=4\). Se elige \(\varepsilon=4\). Sea \(\delta\gt 0\) cualquiera y \(c=180-\dfrac{\delta}{2}\): está en la franja, porque \(|c-180|=\dfrac{\delta}{2}\) y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+        <li>Su salida: \(F(c)=1{,}8\left(180-\dfrac{\delta}{2}\right)+32=324-0{,}9\,\delta+32=356-0{,}9\,\delta\), porque \(\dfrac{1{,}8}{2}=0{,}9\).</li>
+        <li>La diferencia con \(360\): \(F(c)-360=356-0{,}9\,\delta-360=-4-0{,}9\,\delta\). Es negativa, así que \(|F(c)-360|=4+0{,}9\,\delta\), que es mayor que \(4\). Toda \(\delta\) falla con la tolerancia \(4\): \(360\) no es el límite. Cerca de \(180\) grados Celsius la temperatura se acerca a \(356\) grados Fahrenheit, y a ningún otro número.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H11 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* utilidades del lote 29 (límites): gráficas de funciones dentro de un marco del lienzo */
+/* marco: el rectángulo del mundo [wx, wx+ww] × [wy, wy+wh] muestra la ventana matemática [x0, x1] × [y0, y1] */
+function lmMarco(wx, wy, ww, wh, x0, x1, y0, y1){ return { x0:x0, x1:x1, y0:y0, y1:y1, gx:function(x){ return wx + (x - x0)*ww/(x1 - x0); }, gy:function(y){ return wy + (y - y0)*wh/(y1 - y0); } }; }
+/* redondeo a 2 decimales (los datos de una lectura numérica se redondean primero y se calcula con esos) */
+function lmR2(z){ return Math.round(z*100)/100; }
+/* número en TeX con coma decimal y sin ceros de relleno (hasta d decimales); lmP lo pone entre paréntesis si es negativo */
+function lmN(z, d){ var s = (Math.round(z*Math.pow(10, d == null ? 2 : d))/Math.pow(10, d == null ? 2 : d)).toFixed(d == null ? 2 : d); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (Number(s) === 0) s = '0'; return s.replace('.', '{,}'); }
+function lmP(z, d){ var s = lmN(z, d); return s.charAt(0) === '-' ? '(' + s + ')' : s; }
+/* el mismo número como texto plano para el lienzo (coma decimal, signo menos tipográfico) */
+function lmT(z, d){ return lmN(z, d).replace('{,}', ',').replace('-', '−'); }
+/* frase en el lienzo (solo frases y números; las expresiones van como etiquetas TeX) */
+function lmTxt(S, t, xw, yw, col, al, peso){ var c = S.ctx; c.font = (peso || '600') + ' 12.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.ink; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, S.X(xw), S.Y(yw)); }
+/* número chico junto a un eje, en coordenadas del marco, corrido (dx, dy) píxeles */
+function lmNum(S, M, t, x, y, dx, dy, col, al){ var c = S.ctx; c.font = '600 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = col || S.C.muted || '#6b6b6b'; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(t, S.X(M.gx(x)) + (dx || 0), S.Y(M.gy(y)) + (dy || 0)); }
+/* ejes finos con marcas y números; o = {dx, dy: paso de las marcas (1 por defecto), sx, sy: listas de valores que NO se numeran} */
+function lmEjes(S, M, o){ o = o || {}; var c = S.ctx, C = S.C, dx = o.dx || 1, dy = o.dy || 1, i, sx = o.sx || [], sy = o.sy || [], X0 = S.X(M.gx(M.x0)), X1 = S.X(M.gx(M.x1)), Y0 = S.Y(M.gy(M.y0)), Y1 = S.Y(M.gy(M.y1)), ox = S.X(M.gx(0)), oy = S.Y(M.gy(0));
+  c.setLineDash([]); c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X0, oy); c.lineTo(X1, oy); c.moveTo(ox, Y0); c.lineTo(ox, Y1); c.stroke();
+  c.fillStyle = C.ink; c.beginPath(); c.moveTo(X1 + 5, oy); c.lineTo(X1 - 2, oy - 3); c.lineTo(X1 - 2, oy + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(ox, Y1 - 5); c.lineTo(ox - 3, Y1 + 2); c.lineTo(ox + 3, Y1 + 2); c.closePath(); c.fill();
+  for (i = Math.ceil(M.x0/dx - 1e-9); i*dx <= M.x1 - dx*0.2; i++) if (i){ c.beginPath(); c.moveTo(S.X(M.gx(i*dx)), oy - 3); c.lineTo(S.X(M.gx(i*dx)), oy + 3); c.stroke(); if (sx.indexOf(i*dx) < 0) lmNum(S, M, lmT(i*dx, 2), i*dx, 0, 0, 11); }
+  for (i = Math.ceil(M.y0/dy - 1e-9); i*dy <= M.y1 - dy*0.2; i++) if (i){ c.beginPath(); c.moveTo(ox - 3, S.Y(M.gy(i*dy))); c.lineTo(ox + 3, S.Y(M.gy(i*dy))); c.stroke(); if (sy.indexOf(i*dy) < 0) lmNum(S, M, lmT(i*dy, 2), 0, i*dy, -7, 0, null, 'right'); } }
+/* curva y = f(x) entre a y b, recortada al marco; dash opcional */
+function lmCurva(S, M, f, a, b, col, w, dash){ var c = S.ctx, i, n = 200, x, y, pen = false; if (b <= a) return; c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash(dash || []); c.beginPath();
+  for (i = 0; i <= n; i++){ x = a + (b - a)*i/n; y = f(x); if (!isFinite(y) || y < M.y0 - 1e-9 || y > M.y1 + 1e-9){ pen = false; continue; } if (pen) c.lineTo(S.X(M.gx(x)), S.Y(M.gy(y))); else { c.moveTo(S.X(M.gx(x)), S.Y(M.gy(y))); pen = true; } }
+  c.stroke(); c.setLineDash([]); }
+/* punto de la gráfica: lleno (la función vale eso) o hueco (ahí la gráfica no tiene punto); r en píxeles */
+function lmPunto(S, M, x, y, col, hueco, r){ var c = S.ctx; c.setLineDash([]); c.beginPath(); c.arc(S.X(M.gx(x)), S.Y(M.gy(y)), r || 3.2, 0, 6.2832); if (hueco){ c.fillStyle = S.C.bg || '#fff'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = col; c.stroke(); } else { c.fillStyle = col; c.fill(); } }
+/* segmento punteado en coordenadas del marco (guías hacia los ejes, rectas x = a, y = L) */
+function lmSeg(S, M, xa, ya, xb, yb, col, w, dash){ var c = S.ctx; c.strokeStyle = col; c.lineWidth = w || 1; c.setLineDash(dash === 0 ? [] : (dash || [3, 3])); c.beginPath(); c.moveTo(S.X(M.gx(xa)), S.Y(M.gy(ya))); c.lineTo(S.X(M.gx(xb)), S.Y(M.gy(yb))); c.stroke(); c.setLineDash([]); }
+/* guías punteadas de un punto (x, y) a los dos ejes; al = cuánto han aparecido (0 a 1) */
+function lmGuia(S, M, x, y, col, al){ al = al == null ? 1 : al; if (al <= 0) return; lmSeg(S, M, x, 0, x, y*al, col, 1); if (al >= 1) lmSeg(S, M, x, y, 0, y, col, 1); }
+/* flecha en coordenadas del marco, corrida (dx, dy) píxeles (para «acercarse» a lo largo de un eje) */
+function lmFlecha(S, M, xa, ya, xb, yb, col, w, dx, dy){ var kx = (S.W.x1 - S.W.x0)/S.w, ky = (S.W.y1 - S.W.y0)/S.h; dx = (dx || 0)*kx; dy = -(dy || 0)*ky; dtFlecha(S, M.gx(xa) + dx, M.gy(ya) + dy, M.gx(xb) + dx, M.gy(yb) + dy, col, w || 1.6); }
+/* etiqueta TeX en coordenadas del marco (T = dtEtq(S, PZ)) */
+function lmEtq(T, M, id, x, y, ax, dx, dy){ T.L(id, M.gx(x), M.gy(y), ax, dx, dy); }
+/* fondo bajo una etiqueta TeX (tapa las guías que le pasen por detrás); mismos argumentos que lmEtq, se llama antes */
+function lmFondo(S, M, id, x, y, ax, dx, dy){ var c = S.ctx, w = S.labW(id), px = S.X(M.gx(x)) + (dx || 0), py = S.Y(M.gy(y)) + (dy || 0), l = px + (ax == null ? -50 : ax)/100*w; if (!w) return; c.globalAlpha = 0.88; c.fillStyle = S.C.bg || '#fff'; c.fillRect(l - 3, py - 9, w + 6, 18); c.globalAlpha = 1; }
+/* L29 H11 · la definición formal, pieza por pieza: sobre f(x) = 5x − 2 con x ≠ 1 (hueco en (1, 3)), cada paso pone en la figura una pieza de la frase «para todo ε > 0 existe δ > 0 tal que, para todo x, 0 < |x − 1| < δ ⟹ |f(x) − 3| < ε» (por pasos) */
+OA.scene('formal-idea', (function(){
+  var N = 7, Q = '\\\\&\\qquad ';
+  function f(x){ return 5*x - 2; }
+  /* lugar (ahí f no está definida), valor de llegada, las dos tolerancias y la distancia con que se responde a cada una (la quinta parte) */
+  var A = 1, L = 3, EPS = [1, 0.5], DEL = [0.2, 0.1];
+  /* el marco muestra solo la zona cercana al hueco (1, 3): 0,6 ≤ x ≤ 1,4 y 1 ≤ y ≤ 5 */
+  var M = lmMarco(-0.6, 0.55, 5.5, 4.4, 0.6, 1.4, 1, 5);
+  var PZ = [['Q', '\\text{¿por qué el límite en }1\\text{ es }3\\text{?}', '¿por qué el límite en 1 es 3?', 'pt'], ['F', '\\Longrightarrow\\ \\delta=\\tfrac{\\varepsilon}{5}\\text{ sirve siempre}', '⟹ δ = ε/5 sirve siempre', 'diff'],
+    ['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''],
+    ['CF', 'y=5x-2', 'y = 5x − 2', 'c-tan'], ['LA', 'a=1', 'a = 1', ''], ['LL', 'L=3', 'L = 3', ''],
+    ['E1', '\\varepsilon=1', 'ε = 1', 'c-alt'], ['E2', '\\varepsilon=0{,}5', 'ε = 0,5', 'c-alt'],
+    ['D1', '\\delta=0{,}2', 'δ = 0,2', 'c-sec'], ['D2', '\\delta=0{,}1', 'δ = 0,1', 'c-sec'],
+    ['NX', '\\text{entradas, }x\\ne 1', 'entradas, x ≠ 1', 'c-sec'],
+    ['GEN', '\\text{regla: }\\delta=\\tfrac{\\varepsilon}{5}', 'regla: δ = ε/5', 'diff'],
+    ['R1', 'f(x)=5x-2,\\ x\\ne 1;\\ \\ a=1;\\ \\ L=3', 'f(x) = 5x − 2, x ≠ 1; a = 1; L = 3', ''],
+    ['R2', '\\text{para todo }\\varepsilon\\gt 0\\ \\ (\\text{aquí }\\varepsilon=1)', 'para todo ε > 0 (aquí ε = 1)', 'c-alt'],
+    ['R3', '\\text{existe }\\delta\\gt 0\\ \\ (\\text{aquí }\\delta=0{,}2)', 'existe δ > 0 (aquí δ = 0,2)', 'c-sec'],
+    ['R4', '\\text{para todo }x\\text{ con }0\\lt |x-1|\\lt 0{,}2', 'para todo x con 0 < |x − 1| < 0,2', 'c-sec'],
+    ['R5', '\\text{se cumple }|f(x)-3|\\lt 1', 'se cumple |f(x) − 3| < 1', 'diff'],
+    ['R6', '\\varepsilon=0{,}5\\ \\to\\ \\delta=0{,}1', 'ε = 0,5 → δ = 0,1', ''],
+    ['R7', '0\\lt |x-1|\\lt \\tfrac{\\varepsilon}{5}\\ \\Rightarrow\\ |f(x)-3|\\lt \\varepsilon', '0 < |x − 1| < ε/5 ⟹ |f(x) − 3| < ε', 'diff']];
+  var TXT = [['La gráfica de f es una recta con un hueco: f', 'no está definida en 1. Cerca de 1, llega a 3.'],
+    ['Pieza 1, «para toda tolerancia»: se elige', 'una, aquí 1. Franja verde: alturas de 2 a 4.'],
+    ['Pieza 2, «existe una distancia»: se responde', 'con 0,2. Franja azul: entradas de 0,8 a 1,2.'],
+    ['Pieza 3, «para toda entrada de la franja,', 'salvo 1»: tramo azul del borde, con su hueco.'],
+    ['Pieza 4, «entonces la salida cumple»: todas', 'las salidas (naranjo) caen en la franja verde.'],
+    ['Otra tolerancia, 0,5: la distancia 0,2 ya no', 'sirve; con 0,1, sí. Las cuatro piezas otra vez.'],
+    ['Regla: la quinta parte de la tolerancia. Sirve', 'para toda tolerancia: el límite es 3.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-6.4, y1:6.9}, aspect:13.3/6.6,
+    aria:'Arriba, una franja dice qué muestra: la definición formal de límite, pieza por pieza, sobre una recta con un hueco. Animación en siete pasos sobre la gráfica de f de x igual a 5x menos 2 con x distinto de 1, vista de cerca alrededor del hueco de coordenadas 1 y 3. Uno: la recta, el hueco, y las punteadas hacia a igual a 1 en el borde de abajo y L igual a 3 en el borde izquierdo. Dos: la pieza «para todo épsilon mayor que cero»: una franja verde horizontal entre las alturas 2 y 4 marca la tolerancia épsilon igual a 1. Tres: la pieza «existe delta mayor que cero»: una franja azul vertical entre 0,8 y 1,2 marca la distancia delta igual a 0,2. Cuatro: la pieza «para todo x con cero menor que la distancia de x a 1, menor que delta»: un tramo azul grueso en el borde de abajo, entre 0,8 y 1,2, con un hueco en 1 y los extremos huecos, y sobre él el trozo de recta en naranjo. Cinco: la pieza «entonces la distancia de f de x a 3 es menor que épsilon»: un tramo naranjo grueso en el borde izquierdo, entre 2 y 4, con un hueco en 3, reúne las salidas; todas quedan dentro de la franja verde. Seis: las cuatro piezas otra vez con épsilon igual a 0,5 y delta igual a 0,1. Siete: la regla, delta igual a épsilon dividido por 5, que sirve para toda tolerancia; el límite es 3. Bajo la figura, un registro numerado guarda la pieza de cada paso, sin borrar lo anterior.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> gráfica de \\(f\\), con hueco en \\((1,3)\\)</span><span><i class="sw alt"></i> tolerancia de la salida, \\(\\varepsilon\\)</span><span><i class="sw sec"></i> distancia de la entrada, \\(\\delta\\), y entradas que se revisan</span><span><i class="sw rise"></i> trozo de recta y salidas que resultan</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), a, b, mu = C.muted || '#6b6b6b', F = '"Source Sans 3", system-ui, sans-serif';
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; nada se borra después */
+      function frase(t, x, y, dx, dy, col, al){ c.font = '600 11px ' + F; c.textBaseline = 'middle'; c.textAlign = al || 'left'; var w = c.measureText(t).width, px = X(M.gx(x)) + dx, py = Y(M.gy(y)) + dy, l = al === 'right' ? px - w : (al === 'center' ? px - w/2 : px); c.globalAlpha = 0.88; c.fillStyle = C.bg || '#fff'; c.fillRect(l - 2, py - 7, w + 4, 14); c.globalAlpha = 1; c.fillStyle = col; c.fillText(t, px, py); }
+      function rect(xa, ya, xb, yb, col, al){ if (xb <= xa || yb <= ya) return; c.globalAlpha = al; c.fillStyle = col; c.fillRect(X(M.gx(xa)), Y(M.gy(yb)), X(M.gx(xb)) - X(M.gx(xa)), Y(M.gy(ya)) - Y(M.gy(yb))); c.globalAlpha = 1; }
+      /* cota: segmento fino con topes en los extremos (marca la tolerancia o la distancia, desde 3 o desde 1) */
+      function cota(xa, ya, xb, yb, col){ var hx = ya === yb ? 0 : 3, hy = ya === yb ? 3 : 0; lmSeg(S, M, xa, ya, xb, yb, col, 1.4, 0); c.strokeStyle = col; c.lineWidth = 1.4; c.beginPath(); c.moveTo(X(M.gx(xa)) - hx, Y(M.gy(ya)) - hy); c.lineTo(X(M.gx(xa)) + hx, Y(M.gy(ya)) + hy); c.moveTo(X(M.gx(xb)) - hx, Y(M.gy(yb)) - hy); c.lineTo(X(M.gx(xb)) + hx, Y(M.gy(yb)) + hy); c.stroke(); }
+      /* franja verde de la tolerancia e (horizontal), que crece de izquierda a derecha, con sus bordes punteados */
+      function verde(e, al){ if (al <= 0) return; var xb = M.x0 + (M.x1 - M.x0)*al; rect(M.x0, L - e, xb, L + e, C.alt, 0.15); lmSeg(S, M, M.x0, L - e, xb, L - e, C.alt, 1, [4, 3]); lmSeg(S, M, M.x0, L + e, xb, L + e, C.alt, 1, [4, 3]); }
+      /* franja azul de la distancia d (vertical), que crece de abajo hacia arriba, con sus bordes punteados */
+      function azul(d, al){ if (al <= 0) return; var yb = M.y0 + (M.y1 - M.y0)*al; rect(A - d, M.y0, A + d, yb, C.sec, 0.13); lmSeg(S, M, A - d, M.y0, A - d, yb, C.sec, 1, [4, 3]); lmSeg(S, M, A + d, M.y0, A + d, yb, C.sec, 1, [4, 3]); }
+      /* punto hueco chico, corrido (dx, dy) píxeles: un valor que NO entra (bordes de las franjas, y el lugar a o el valor L) */
+      function hueco(x, y, dx, dy, col){ c.setLineDash([]); c.beginPath(); c.arc(X(M.gx(x)) + dx, Y(M.gy(y)) + dy, 2.6, 0, 6.2832); c.fillStyle = C.bg || '#fff'; c.fill(); c.lineWidth = 1.4; c.strokeStyle = col; c.stroke(); }
+      /* entradas que se revisan: tramo azul grueso en el borde de abajo, de a − d a a + d, sin a ni los extremos; dy lo corre hacia adentro */
+      function entradas(d, al, dy){ if (al <= 0) return; c.strokeStyle = C.sec; c.lineWidth = 3.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(M.gx(A - d*al)), Y(M.gy(M.y0)) + dy); c.lineTo(X(M.gx(A + d*al)), Y(M.gy(M.y0)) + dy); c.stroke(); hueco(A, M.y0, 0, dy, C.sec); if (al >= 1){ hueco(A - d, M.y0, 0, dy, C.sec); hueco(A + d, M.y0, 0, dy, C.sec); } }
+      /* trozo de recta sobre esas entradas (naranjo), con los extremos huecos; el hueco de (1, 3) se dibuja al final, encima */
+      function trozo(d, al){ if (al <= 0) return; lmCurva(S, M, f, A - d*al, A + d*al, C.rise, 3.2); if (al >= 1){ lmPunto(S, M, A - d, f(A - d), C.rise, true, 2.6); lmPunto(S, M, A + d, f(A + d), C.rise, true, 2.6); } }
+      /* salidas que resultan: tramo naranjo grueso en el borde izquierdo, de f(a − d) a f(a + d), sin L ni los extremos; dx lo corre hacia adentro */
+      function salidas(d, al, dx){ if (al <= 0) return; var e = f(A + d) - L; c.strokeStyle = C.rise; c.lineWidth = 3.4; c.setLineDash([]); c.beginPath(); c.moveTo(X(M.gx(M.x0)) + dx, Y(M.gy(L - e*al))); c.lineTo(X(M.gx(M.x0)) + dx, Y(M.gy(L + e*al))); c.stroke(); hueco(M.x0, L, dx, 0, C.rise); if (al >= 1){ hueco(M.x0, L - e, dx, 0, C.rise); hueco(M.x0, L + e, dx, 0, C.rise); } }
+      /* marca con su número: en el borde de abajo, o en el borde izquierdo si iz vale 1 */
+      function marca(x, y, t, col, iz){ var px = X(M.gx(x)), py = Y(M.gy(y)); c.strokeStyle = col; c.lineWidth = 1; c.setLineDash([]); c.beginPath(); if (!iz){ c.moveTo(px, py); c.lineTo(px, py + 4); c.stroke(); lmNum(S, M, t, x, y, 0, 11, col); } else { c.moveTo(px, py); c.lineTo(px - 4, py); c.stroke(); lmNum(S, M, t, x, y, -7, 0, col, 'right'); } }
+      dtQue(S, 'la definición formal, pieza por pieza,', 'sobre una recta con hueco: qué pide cada una.');
+      /* franjas (al fondo): pasos 2, 3 y 6 */
+      verde(EPS[0], ap(2)); azul(DEL[0], ap(3));
+      a = ap(6); verde(EPS[1], Math.min(1, a*3)); azul(DEL[1], Math.max(0, Math.min(1, a*3 - 1)));
+      /* marco de la vista ampliada, con sus marcas y números */
+      c.setLineDash([]); c.strokeStyle = mu; c.lineWidth = 1; c.strokeRect(X(M.gx(M.x0)), Y(M.gy(M.y1)), X(M.gx(M.x1)) - X(M.gx(M.x0)), Y(M.gy(M.y0)) - Y(M.gy(M.y1)));
+      [0.6, 0.8, 1, 1.2, 1.4].forEach(function(x){ marca(x, M.y0, lmT(x, 2), x === 1 ? C.ink : mu); }); [1, 2, 3, 4, 5].forEach(function(y){ marca(M.x0, y, lmT(y, 2), y === 3 ? C.ink : mu, 1); });
+      lmEtq(T, M, 'EX', M.x1, M.y0, 0, 7, 0); lmEtq(T, M, 'EY', M.x0, M.y1, -100, -3, -13);
+      /* paso 1: la recta y las punteadas desde el hueco hacia a = 1 y L = 3 */
+      a = ap(1);
+      lmCurva(S, M, f, M.x0, M.x0 + (M.x1 - M.x0)*Math.min(1, a*2), C.tan, 2);
+      if (a > 0.5){ b = Math.min(1, a*2 - 1); lmSeg(S, M, A, L, A, L - (L - M.y0)*b, mu, 1); lmSeg(S, M, A, L, A - (A - M.x0)*b, L, mu, 1); }
+      if (a > 0.9){ lmEtq(T, M, 'CF', 1.325, 4.8, -100); lmFondo(S, M, 'LA', 0.99, 1.6, -100); lmEtq(T, M, 'LA', 0.99, 1.6, -100); lmFondo(S, M, 'LL', M.x0, 3.2, 0, 13, 0); lmEtq(T, M, 'LL', M.x0, 3.2, 0, 13, 0); frase('hueco: ahí f no', 1.03, 2.76, 0, 0, C.tan); frase('está definida', 1.03, 2.5, 0, 0, C.tan); }
+      /* paso 2: «para todo ε > 0», con la tolerancia 1 (cota de 3 a 4) */
+      a = ap(2);
+      if (a > 0.6){ marca(M.x0, 2, '2', C.alt, 1); marca(M.x0, 4, '4', C.alt, 1); cota(1.385, L, 1.385, L + EPS[0], C.alt); lmEtq(T, M, 'E1', 1.375, 3.84, -100); }
+      /* paso 3: «existe δ > 0», con la distancia 0,2 (cota de 1 a 1,2) */
+      a = ap(3);
+      if (a > 0.6){ marca(0.8, M.y0, '0,8', C.sec); marca(1.2, M.y0, '1,2', C.sec); cota(A, 1.3, A + DEL[0], 1.3, C.sec); lmFondo(S, M, 'D1', 1.21, 1.3, 0); lmEtq(T, M, 'D1', 1.21, 1.3, 0); }
+      /* paso 4: «para todo x con 0 < |x − 1| < δ»: las entradas (borde de abajo) y el trozo de recta sobre ellas */
+      a = ap(4); entradas(DEL[0], Math.min(1, a*2), -2); trozo(DEL[0], Math.max(0, a*2 - 1));
+      if (a > 0.5){ lmFondo(S, M, 'NX', 0.985, 1.3, -100); lmEtq(T, M, 'NX', 0.985, 1.3, -100); }
+      /* paso 5: «entonces |f(x) − 3| < ε»: las salidas (borde izquierdo) caen dentro de la franja verde */
+      a = ap(5); salidas(DEL[0], a, 2);
+      if (a > 0.5){ frase('salidas: dentro', 0.615, 3.86, 6, 0, C.rise); frase('de la franja verde', 0.615, 3.62, 6, 0, C.rise); }
+      /* paso 6: las cuatro piezas otra vez, con la tolerancia 0,5 y la distancia 0,1 */
+      a = ap(6); entradas(DEL[1], Math.max(0, Math.min(1, a*3 - 1)), -7); trozo(DEL[1], Math.max(0, Math.min(1, a*3 - 2))); salidas(DEL[1], Math.max(0, Math.min(1, a*3 - 2)), 7);
+      if (a > 0.3){ marca(M.x0, 2.5, '2,5', C.alt, 1); marca(M.x0, 3.5, '3,5', C.alt, 1); cota(1.25, L, 1.25, L + EPS[1], C.alt); lmEtq(T, M, 'E2', 1.262, 3.25, 0); }
+      if (a > 0.6){ marca(0.9, M.y0, '0,9', C.sec); marca(1.1, M.y0, '1,1', C.sec); cota(A, 1.6, A + DEL[1], 1.6, C.sec); lmFondo(S, M, 'D2', 1.11, 1.6, 0); lmEtq(T, M, 'D2', 1.11, 1.6, 0); }
+      /* el hueco (1, 3), sobre todo lo demás: la gráfica no tiene punto ahí */
+      if (ap(1) > 0.5) lmPunto(S, M, A, L, C.tan, true, 3.2);
+      /* paso 7: la regla general */
+      a = ap(7);
+      if (a > 0.3){ lmEtq(T, M, 'GEN', 0.625, 4.76, 0); }
+      if (a > 0.6){ frase('la quinta parte de la tolerancia', 0.625, 4.47, 0, 0, C.rise); frase('sirve siempre: el límite es 3', 0.625, 4.21, 0, 0, C.rise); }
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      T.L('Q', -1.2, 5.56, 0); if (k === N && u > 0.5) T.L('F', 5.2, 5.56, -100);
+      lmTxt(S, TXT[k - 1][0], -1.2, -0.2); lmTxt(S, TXT[k - 1][1], -1.2, -0.2 - 21/(X(1) - X(0)));
+      c.font = '600 11px ' + F; c.fillStyle = mu; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-1.75) - 26);
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.75, [0, 34, 68, 102, 136, 170, 204]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      'f(x)=5x-2\\text{ si }x\\ne 1;\\ \\ a=1;\\ \\ L=3' + Q + 'f(1)\\text{ no está definida: hueco en }(1,3)' + Q + '\\text{cerca de }1:\\ \\ 5\\cdot 0{,}9=4{,}5;\\ \\ f(0{,}9)=4{,}5-2=2{,}5' + Q + '5\\cdot 1{,}1=5{,}5;\\ \\ f(1{,}1)=5{,}5-2=3{,}5' + Q + '\\text{distancias a }3:\\ \\ |2{,}5-3|=0{,}5;\\ \\ |3{,}5-3|=0{,}5' + Q + '\\text{se propone }L=3\\text{; hay que demostrarlo}',
+      '\\text{pieza 1: «para todo }\\varepsilon\\gt 0\\text{»}' + Q + '\\text{alguien elige la tolerancia; aquí }\\varepsilon=1' + Q + '\\text{se pedirá }|f(x)-3|\\lt 1' + Q + '\\text{es decir: }3-1\\lt f(x)\\lt 3+1' + Q + '3-1=2;\\ \\ 3+1=4' + Q + '\\text{franja verde: }2\\lt f(x)\\lt 4',
+      '\\text{pieza 2: «existe }\\delta\\gt 0\\text{»; borrador para hallarla:}' + Q + 'f(x)-3=5x-2-3=5x-5' + Q + '\\text{factor común: }5x-5=5\\,(x-1)' + Q + '|f(x)-3|=|5|\\cdot|x-1|=5\\,|x-1|' + Q + '\\text{se quiere }5\\,|x-1|\\lt 1' + Q + '\\text{se divide por }5:\\ \\ |x-1|\\lt \\tfrac{1}{5}=0{,}2' + Q + '\\text{respuesta: }\\delta=0{,}2',
+      '\\text{pieza 3: «para todo }x\\text{ con }0\\lt |x-1|\\lt 0{,}2\\text{»}' + Q + '|x-1|\\lt 0{,}2:\\ \\ 1-0{,}2\\lt x\\lt 1+0{,}2' + Q + '1-0{,}2=0{,}8;\\ \\ 1+0{,}2=1{,}2' + Q + '0\\lt |x-1|:\\ \\ x\\ne 1' + Q + '\\text{entradas: }0{,}8\\lt x\\lt 1{,}2,\\ x\\ne 1' + Q + '\\text{son todas, no algunas}',
+      '\\text{pieza 4: «entonces }|f(x)-3|\\lt 1\\text{»; demostración:}' + Q + '\\text{se parte de }|x-1|\\lt 0{,}2' + Q + '\\text{se multiplica por }5:\\ \\ 5\\,|x-1|\\lt 5\\cdot 0{,}2=1' + Q + '\\text{como }|f(x)-3|=5\\,|x-1|:\\ \\ |f(x)-3|\\lt 1' + Q + '\\text{prueba: }5\\cdot 1{,}15=5{,}75;\\ \\ f(1{,}15)=5{,}75-2=3{,}75' + Q + '|1{,}15-1|=0{,}15\\lt 0{,}2;\\ \\ |3{,}75-3|=0{,}75\\lt 1' + Q + '\\text{salidas: }2\\lt f(x)\\lt 4,\\ f(x)\\ne 3',
+      '\\text{otra tolerancia: }\\varepsilon=0{,}5' + Q + '3-0{,}5=2{,}5;\\ \\ 3+0{,}5=3{,}5' + Q + '\\delta=0{,}2\\text{ ya no sirve: }f(1{,}15)=3{,}75\\gt 3{,}5' + Q + '\\text{nueva respuesta: }\\tfrac{0{,}5}{5}=0{,}1;\\ \\ \\delta=0{,}1' + Q + '1-0{,}1=0{,}9;\\ \\ 1+0{,}1=1{,}1' + Q + '5\\,|x-1|\\lt 5\\cdot 0{,}1=0{,}5' + Q + '\\text{prueba: }5\\cdot 0{,}94=4{,}7;\\ \\ f(0{,}94)=4{,}7-2=2{,}7' + Q + '|0{,}94-1|=0{,}06\\lt 0{,}1;\\ \\ |2{,}7-3|=0{,}3\\lt 0{,}5',
+      '\\text{las dos respuestas siguen la regla }\\delta=\\tfrac{\\varepsilon}{5}:' + Q + '\\tfrac{1}{5}=0{,}2;\\ \\ \\tfrac{0{,}5}{5}=0{,}1' + Q + '\\text{para cualquier }\\varepsilon\\gt 0\\text{: si }0\\lt |x-1|\\lt \\tfrac{\\varepsilon}{5},' + Q + '|f(x)-3|=5\\,|x-1|\\lt 5\\cdot \\tfrac{\\varepsilon}{5}=\\varepsilon' + Q + '\\text{la frase completa se cumple: el límite es }3' + Q + 'f(1)\\text{ no se usó en ningún paso}']; return dtPasos(R.slice(0, k)); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
