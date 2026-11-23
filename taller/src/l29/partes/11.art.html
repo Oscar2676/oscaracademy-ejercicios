@@ -1,0 +1,291 @@
+<!--file:H11_definicion_formal_de_los_limites_epsilon_delta.html-->
+<!--title:Definición formal de los límites (épsilon-delta)-->
+<!--id:lim-formal-->
+<!--tab:H11 Definición formal de los límites (épsilon-delta)-->
+<article class="sheet" id="lim-formal" data-hoja="L29 H11">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Definición formal de límite (épsilon-delta)</li>
+      <li><b>Definición formal de los límites (épsilon-delta)</b></li>
+    </ol>
+    <h1>Definición formal de los límites (épsilon-delta)</h1>
+    <p class="lede">«El límite de \(f(x)\) cuando \(x\) tiende a \(a\) es \(L\)» tiene una definición exacta, hecha solo con desigualdades:
+    \[\lim_{x\to a}f(x)=L\quad\text{significa:}\quad\text{para todo }\varepsilon\gt 0\text{ existe }\delta\gt 0\text{ tal que, para todo }x,\]
+    \[0\lt |x-a|\lt \delta\ \Longrightarrow\ |f(x)-L|\lt \varepsilon\]
+    Esta hoja la estudia pieza por pieza: qué dice cada símbolo, por qué van en ese orden, cómo se demuestra con ella un límite (el método de dos fases) y cómo se niega, para demostrar que un número <b>no</b> es el límite. (\(\varepsilon\) es la letra griega épsilon y \(\delta\), la letra griega delta.)</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La función de la animación es \(f(x)=5x-2\) para \(x\ne 1\); en \(x=1\) no está definida, y su gráfica es una recta con un hueco en \((1,3)\). El lugar es \(a=1\) y el valor de llegada es \(L=3\). El dibujo es una vista ampliada: muestra solo la zona cercana al hueco, con \(x\) entre \(0{,}6\) y \(1{,}4\) y alturas entre \(1\) y \(5\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero la recta burdeo y su hueco en \((1,3)\):</b> ahí la gráfica no tiene punto. Las punteadas unen el hueco con \(a=1\) en el borde de abajo y con \(L=3\) en el borde izquierdo.</li>
+    <li><b>Pasos 2 y 3, las dos primeras piezas de la frase:</b> la franja verde es «para todo \(\varepsilon\gt 0\)», dibujada con \(\varepsilon=1\) (alturas entre \(2\) y \(4\)); la franja azul es «existe \(\delta\gt 0\)», con \(\delta=0{,}2\) (entradas entre \(0{,}8\) y \(1{,}2\)).</li>
+    <li><b>Pasos 4 y 5, las otras dos:</b> el tramo azul grueso del borde de abajo reúne todos los \(x\) con \(0\lt |x-1|\lt 0{,}2\); tiene un hueco en \(1\). Sobre ellos está el trozo naranjo de la recta. El tramo naranjo grueso del borde izquierdo reúne sus salidas: todas quedan dentro de la franja verde, es decir, \(|f(x)-3|\lt 1\).</li>
+    <li><b>Pasos 6 y 7:</b> las cuatro piezas se repiten con \(\varepsilon=0{,}5\) y \(\delta=0{,}1\), y aparece la regla \(\delta=\dfrac{\varepsilon}{5}\). Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada pieza con su traducción a desigualdades, el borrador que encuentra \(\delta\), la demostración y un valor de prueba. Conclusión: toda tolerancia tiene respuesta, así que el límite es \(3\), aunque \(f(1)\) no exista.</li>
+  </ol>
+  <div class="stage" data-scene="formal-idea"></div>
+  <ul class="keys">
+    <li><b>Línea burdeo:</b> la gráfica de \(f\), vista de cerca. El círculo vacío en \((1,3)\) es el hueco: \(f(1)\) no está definida.</li>
+    <li><b>Verde:</b> «para todo \(\varepsilon\gt 0\)». Cada franja horizontal va de \(3-\varepsilon\) a \(3+\varepsilon\); la cota verde marca \(\varepsilon\), desde \(3\) hacia arriba.</li>
+    <li><b>Azul:</b> «existe \(\delta\gt 0\)» y «para todo \(x\) con \(0\lt |x-1|\lt \delta\)». Cada franja vertical va de \(1-\delta\) a \(1+\delta\); la cota azul marca \(\delta\), desde \(1\) hacia la derecha. El tramo grueso del borde de abajo son las entradas que se revisan.</li>
+    <li><b>Naranjo:</b> «entonces \(|f(x)-3|\lt \varepsilon\)». El trozo de recta que está sobre las entradas, y en el borde izquierdo, el tramo grueso de sus salidas. Los círculos vacíos chicos marcan valores que no entran: los bordes de las franjas (las desigualdades son estrictas), la entrada \(1\) y la salida \(3\).</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué se usa sin demostrar.</b> Con la definición se demuestran aquí los límites de las funciones lineales y constantes, que un número dado no es el límite, y que el límite, si existe, es único. Las funciones no lineales van en la hoja siguiente, «Uso de la definición formal de límite». Una figura muestra dos tolerancias: «para todo \(\varepsilon\)» no se puede dibujar, se demuestra con álgebra (segundo recuadro). En la frase, «para todo \(x\)» se refiere a los \(x\) en que \(f\) está definida; todas las funciones de esta hoja están definidas en toda la recta, salvo quizá en \(a\). Si no fuera así, \(\delta\) se elige además tan chica que todos los \(x\) con \(0\lt |x-a|\lt \delta\) queden donde \(f\) está definida. Se usan, <b>sin demostrar</b>:</p>
+    <ol class="steps">
+      <li>Propiedades del valor absoluto: \(|u-v|\) es la distancia entre \(u\) y \(v\) en la recta numérica; \(|u\cdot v|=|u|\cdot|v|\); \(|-u|=|u|\); \(|u|\ge 0\), y \(|u|=0\) solo cuando \(u=0\).</li>
+      <li>Para \(c\gt 0\): \(|u|\lt c\) equivale a \(-c\lt u\lt c\).</li>
+      <li>Desigualdad triangular: \(|u-v|\le |u-w|+|w-v|\).</li>
+      <li>Reglas del orden de los números: multiplicar o dividir los dos lados de una desigualdad por un número positivo la mantiene; sumar el mismo número a los dos lados la mantiene; dos desigualdades del mismo sentido se pueden sumar lado a lado; si \(u\le v\) y \(v\lt w\), entonces \(u\lt w\).</li>
+      <li>Reglas de la lógica para negar una frase: lo contrario de «para todo… se cumple» es «existe uno que no cumple»; lo contrario de «existe uno que cumple» es «ninguno cumple»; lo contrario de «si \(P\), entonces \(Q\)» es «\(P\) y no \(Q\)».</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La definición, completa y exacta, y qué dice cada pieza</h3>
+    <p><b>Definición.</b> Sea \(f\) una función definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\), y sea \(L\) un número real. Se dice que \(\displaystyle\lim_{x\to a}f(x)=L\) cuando:</p>
+    <p>\[\text{para todo }\varepsilon\gt 0\text{ existe }\delta\gt 0\text{ tal que, para todo }x,\quad\text{si }0\lt |x-a|\lt \delta\text{, entonces }|f(x)-L|\lt \varepsilon.\]</p>
+    <p>Con los símbolos \(\forall\) («para todo») y \(\exists\) («existe»), la misma frase se escribe \(\forall\,\varepsilon\gt 0\ \ \exists\,\delta\gt 0\ \ \forall\,x:\ \ 0\lt |x-a|\lt \delta\ \Longrightarrow\ |f(x)-L|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li><b>El supuesto.</b> \(f\) debe estar definida a los dos lados de \(a\), cerca de \(a\). En \(a\) puede no estarlo: en la animación, \(f(1)\) no existe.</li>
+      <li><b>«Para todo \(\varepsilon\gt 0\)».</b> \(\varepsilon\) es la tolerancia de la salida: cuán cerca de \(L\) se exige \(f(x)\). La frase debe cumplirse con <b>cada</b> número positivo, por chico que sea.</li>
+      <li><b>«Existe \(\delta\gt 0\)».</b> \(\delta\) es la distancia de la entrada: cuán cerca de \(a\) hay que tomar \(x\). Basta que haya una. Va después de \(\varepsilon\): se elige conociendo \(\varepsilon\), y por eso puede depender de \(\varepsilon\).</li>
+      <li><b>«Para todo \(x\)».</b> Va después de \(\delta\): la distancia se elige <b>antes</b> de conocer \(x\), y por eso no puede depender de \(x\). Una misma \(\delta\) tiene que servir para todos los \(x\) de la franja a la vez.</li>
+      <li><b>«\(0\lt |x-a|\lt \delta\)».</b> Son dos condiciones. \(|x-a|\lt \delta\): la distancia de \(x\) a \(a\) es menor que \(\delta\). \(0\lt |x-a|\): esa distancia no es cero, es decir, \(x\ne a\).</li>
+      <li><b>«\(|f(x)-L|\lt \varepsilon\)».</b> La distancia de la salida a \(L\) es menor que la tolerancia.</li>
+      <li><b>La flecha \(\Longrightarrow\)</b> se lee «si…, entonces…». Obliga solo a los \(x\) que cumplen la condición de la izquierda; de los demás \(x\) no dice nada. Tampoco dice lo recíproco: puede haber \(x\) más lejanos cuya salida también quede dentro de la tolerancia.</li>
+    </ol>
+    <p><b>Traducción a desigualdades sin valor absoluto y a intervalos.</b> La última columna usa los números de la animación: \(a=1\), \(\delta=0{,}2\), \(L=3\) y \(\varepsilon=1\).</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>con valor absoluto</th><th>sin valor absoluto</th><th>dónde está</th><th>en la animación</th></tr>
+      <tr><td>\(0\lt |x-a|\lt \delta\)</td><td>\(a-\delta\lt x\lt a+\delta\) y \(x\ne a\)</td><td>\(x\) está en \((a-\delta,\,a)\cup(a,\,a+\delta)\)</td><td>\(0{,}8\lt x\lt 1{,}2\) y \(x\ne 1\)</td></tr>
+      <tr><td>\(|f(x)-L|\lt \varepsilon\)</td><td>\(L-\varepsilon\lt f(x)\lt L+\varepsilon\)</td><td>\(f(x)\) está en \((L-\varepsilon,\,L+\varepsilon)\)</td><td>\(2\lt f(x)\lt 4\)</td></tr>
+    </table></div>
+    <p>Las cuentas de la última columna: \(1-0{,}2=0{,}8\) y \(1+0{,}2=1{,}2\); \(3-1=2\) y \(3+1=4\). La primera fila sale de la propiedad «\(|u|\lt c\) equivale a \(-c\lt u\lt c\)» con \(u=x-a\) y \(c=\delta\): queda \(-\delta\lt x-a\lt \delta\), y al sumar \(a\) a los tres lados, \(a-\delta\lt x\lt a+\delta\). La segunda fila sale igual, con \(u=f(x)-L\) y \(c=\varepsilon\).</p>
+    <p><b>Por qué en ese orden.</b> Si se invierten las dos primeras piezas queda «existe \(\delta\gt 0\) tal que, para todo \(\varepsilon\gt 0\), …»: una sola distancia que sirva para <b>todas</b> las tolerancias a la vez. Es otra frase, mucho más exigente. Con \(f(x)=5x-2\) y \(L=3\) ninguna distancia la cumple: dada \(\delta\gt 0\), la entrada \(x=1+\dfrac{\delta}{2}\) está en la franja y \(|f(x)-3|=5\cdot\dfrac{\delta}{2}=2{,}5\,\delta\); esa distancia no es menor que la tolerancia \(\varepsilon=2{,}5\,\delta\). En la definición correcta, en cambio, cada tolerancia recibe su propia distancia.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso, en dos fases: si \(m\ne 0\), entonces \(\displaystyle\lim_{x\to a}(mx+b)=ma+b\), con \(\delta=\dfrac{\varepsilon}{|m|}\)</h3>
+    <p>Sea \(f(x)=mx+b\) con \(m\ne 0\), y \(L=ma+b\). <b>Fase 1, el borrador:</b> se parte de lo que se quiere lograr, \(|f(x)-L|\lt \varepsilon\), para descubrir qué \(\delta\) sirve. No es parte de la demostración.</p>
+    <ol class="steps">
+      <li>La diferencia: \(f(x)-L=mx+b-(ma+b)\).</li>
+      <li>Se quita el paréntesis: \(mx+b-ma-b\). Se cancelan \(b\) y \(-b\): queda \(mx-ma\).</li>
+      <li>Factor común \(m\): \(mx-ma=m\,(x-a)\).</li>
+      <li>Valor absoluto de un producto: \(|f(x)-L|=|m|\cdot|x-a|\).</li>
+      <li>Se quiere \(|m|\cdot|x-a|\lt \varepsilon\). Como \(m\ne 0\), \(|m|\) es positivo y se puede dividir por él: \(|x-a|\lt \dfrac{\varepsilon}{|m|}\). Candidata: \(\delta=\dfrac{\varepsilon}{|m|}\).</li>
+    </ol>
+    <p><b>Fase 2, la demostración:</b> se escribe en el orden de la definición. Se parte de \(0\lt |x-a|\lt \delta\) y se llega a \(|f(x)-L|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon\gt 0\) cualquiera.</li>
+      <li>Se elige \(\delta=\dfrac{\varepsilon}{|m|}\). Es positiva: cociente de dos números positivos.</li>
+      <li>Sea \(x\) cualquiera con \(0\lt |x-a|\lt \delta\), es decir, \(|x-a|\lt \dfrac{\varepsilon}{|m|}\).</li>
+      <li>Se multiplican los dos lados por \(|m|\), positivo: \(|m|\cdot|x-a|\lt |m|\cdot\dfrac{\varepsilon}{|m|}=\varepsilon\).</li>
+      <li>Por el paso 4 del borrador, que es una igualdad válida para todo \(x\): \(|f(x)-L|=|m|\cdot|x-a|\lt \varepsilon\).</li>
+      <li>Como \(\varepsilon\) era cualquiera, la definición se cumple: \(\displaystyle\lim_{x\to a}(mx+b)=ma+b\).</li>
+    </ol>
+    <p>La regla \(\delta=\dfrac{\varepsilon}{|m|}\) en cinco rectas, y la distancia que da para la tolerancia \(\varepsilon=0{,}6\):</p>
+    <div class="tblwrap"><table class="tbl">
+      <tr><th>función</th><th>\(m\)</th><th>\(|m|\)</th><th>regla</th><th>con \(\varepsilon=0{,}6\)</th></tr>
+      <tr><td>\(5x-2\)</td><td>\(5\)</td><td>\(5\)</td><td>\(\delta=\dfrac{\varepsilon}{5}\)</td><td>\(\dfrac{0{,}6}{5}=0{,}12\)</td></tr>
+      <tr><td>\(6x+1\)</td><td>\(6\)</td><td>\(6\)</td><td>\(\delta=\dfrac{\varepsilon}{6}\)</td><td>\(\dfrac{0{,}6}{6}=0{,}1\)</td></tr>
+      <tr><td>\(9-2x\)</td><td>\(-2\)</td><td>\(2\)</td><td>\(\delta=\dfrac{\varepsilon}{2}\)</td><td>\(\dfrac{0{,}6}{2}=0{,}3\)</td></tr>
+      <tr><td>\(\dfrac{x}{4}+2\)</td><td>\(\dfrac{1}{4}\)</td><td>\(\dfrac{1}{4}\)</td><td>\(\delta=4\,\varepsilon\)</td><td>\(4\cdot 0{,}6=2{,}4\)</td></tr>
+      <tr><td>\(x\)</td><td>\(1\)</td><td>\(1\)</td><td>\(\delta=\varepsilon\)</td><td>\(0{,}6\)</td></tr>
+    </table></div>
+    <p>En la cuarta fila, dividir por \(\dfrac{1}{4}\) es multiplicar por \(4\): \(\dfrac{\varepsilon}{1/4}=4\,\varepsilon\). La quinta es la función identidad, \(f(x)=x\): ahí \(m=1\), \(b=0\) y \(\displaystyle\lim_{x\to a}x=a\), con \(\delta=\varepsilon\).</p>
+    <p><b>El caso \(m=0\): la función constante \(f(x)=c\).</b> La regla no se puede usar, porque \(|0|=0\) y no se divide por cero. La demostración es más corta:</p>
+    <ol class="steps">
+      <li>Para todo \(x\): \(f(x)-c=c-c=0\), así que \(|f(x)-c|=|0|=0\).</li>
+      <li>Sea \(\varepsilon\gt 0\) cualquiera. Como \(0\lt \varepsilon\), todo \(x\) cumple \(|f(x)-c|\lt \varepsilon\).</li>
+      <li>Entonces <b>cualquier</b> \(\delta\gt 0\) sirve, por ejemplo \(\delta=1\): los \(x\) con \(0\lt |x-a|\lt 1\) cumplen la conclusión, porque la cumplen todos. Así, \(\displaystyle\lim_{x\to a}c=c\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>La negación y la unicidad: cuándo \(L\) no es el límite, y por qué no puede haber dos límites</h3>
+    <p><b>Cómo se niega la definición.</b> Se niega pieza por pieza, de izquierda a derecha:</p>
+    <ol class="steps">
+      <li>Lo contrario de «para todo \(\varepsilon\gt 0\) pasa algo» es «existe un \(\varepsilon\gt 0\) con el que no pasa».</li>
+      <li>Lo que no pasa es «existe \(\delta\gt 0\) que sirve». Su contrario: «ninguna \(\delta\gt 0\) sirve», es decir, «para todo \(\delta\gt 0\), esa \(\delta\) falla».</li>
+      <li>Una \(\delta\) falla cuando «para todo \(x\), si \(0\lt |x-a|\lt \delta\), entonces \(|f(x)-L|\lt \varepsilon\)» es falso: hay al menos un \(x\) que cumple la condición y no cumple la conclusión.</li>
+      <li>No cumplir \(|f(x)-L|\lt \varepsilon\) es cumplir \(|f(x)-L|\ge \varepsilon\).</li>
+    </ol>
+    <p>\[L\text{ no es el límite de }f\text{ en }a\quad\text{significa:}\quad\text{existe }\varepsilon\gt 0\text{ tal que, para todo }\delta\gt 0\text{, hay un }x\text{ con}\]
+    \[0\lt |x-a|\lt \delta\quad\text{y}\quad|f(x)-L|\ge \varepsilon.\]</p>
+    <p>Los papeles se invierten: quien niega elige <b>una</b> tolerancia. Después, para <b>cada</b> \(\delta\) debe mostrar un \(x\) de la franja cuya salida quede a \(\varepsilon\) o más de \(L\); ese \(x\) puede depender de \(\delta\) (ejemplo 3). «El límite no existe» significa que la negación vale para <b>todo</b> número \(L\) (ejemplo 4).</p>
+    <p><b>Unicidad del límite.</b> Si \(\displaystyle\lim_{x\to a}f(x)=L_{1}\) y \(\displaystyle\lim_{x\to a}f(x)=L_{2}\), entonces \(L_{1}=L_{2}\). Demostración: se supone que \(L_{1}\ne L_{2}\) y se llega a una contradicción.</p>
+    <ol class="steps">
+      <li>Se elige la tolerancia \(\varepsilon=\dfrac{|L_{1}-L_{2}|}{2}\). Es positiva, porque \(L_{1}-L_{2}\ne 0\).</li>
+      <li>Por la definición con \(L_{1}\), existe \(\delta_{1}\gt 0\) tal que \(0\lt |x-a|\lt \delta_{1}\) obliga a \(|f(x)-L_{1}|\lt \varepsilon\).</li>
+      <li>Por la definición con \(L_{2}\), existe \(\delta_{2}\gt 0\) tal que \(0\lt |x-a|\lt \delta_{2}\) obliga a \(|f(x)-L_{2}|\lt \varepsilon\).</li>
+      <li>Sea \(\delta\) la menor de \(\delta_{1}\) y \(\delta_{2}\), y sea \(x\) un número con \(0\lt |x-a|\lt \delta\) en que \(f\) esté definida. Existe, porque \(f\) está definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\).</li>
+      <li>Ese \(x\) cumple las dos condiciones, porque \(\delta\le \delta_{1}\) y \(\delta\le \delta_{2}\). Entonces \(|f(x)-L_{1}|\lt \varepsilon\) y \(|f(x)-L_{2}|\lt \varepsilon\).</li>
+      <li>Desigualdad triangular, pasando por \(f(x)\): \(|L_{1}-L_{2}|\le |L_{1}-f(x)|+|f(x)-L_{2}|\).</li>
+      <li>Como \(|-u|=|u|\): \(|L_{1}-f(x)|=|f(x)-L_{1}|\), que es menor que \(\varepsilon\).</li>
+      <li>Se suman las dos desigualdades del paso 5: \(|L_{1}-f(x)|+|f(x)-L_{2}|\lt \varepsilon+\varepsilon=2\,\varepsilon\).</li>
+      <li>Se reemplaza la tolerancia elegida: \(2\,\varepsilon=2\cdot\dfrac{|L_{1}-L_{2}|}{2}=|L_{1}-L_{2}|\).</li>
+      <li>Por los pasos 6, 8 y 9: \(|L_{1}-L_{2}|\lt |L_{1}-L_{2}|\). Un número no es menor que sí mismo: contradicción. Luego \(L_{1}=L_{2}\).</li>
+    </ol>
+    <p>Consecuencia: una vez demostrado que el límite es \(L\), ningún otro número puede serlo.</p>
+  </div>
+
+  <div class="def">
+    <h3>Los límites laterales, con la misma frase</h3>
+    <p>Solo cambia la condición sobre \(x\): en vez de los dos lados de \(a\), se revisa uno.</p>
+    <p><b>Por la izquierda.</b> \(\displaystyle\lim_{x\to a^{-}}f(x)=L\) significa: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, para todo \(x\), si \(a-\delta\lt x\lt a\), entonces \(|f(x)-L|\lt \varepsilon\). (Se supone \(f\) definida en un intervalo abierto cuyo extremo derecho es \(a\).)</p>
+    <p><b>Por la derecha.</b> \(\displaystyle\lim_{x\to a^{+}}f(x)=L\) significa: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, para todo \(x\), si \(a\lt x\lt a+\delta\), entonces \(|f(x)-L|\lt \varepsilon\). (Se supone \(f\) definida en un intervalo abierto cuyo extremo izquierdo es \(a\).)</p>
+    <p>La condición \(0\lt |x-a|\lt \delta\) reúne las dos: \(a-\delta\lt x\lt a\) o \(a\lt x\lt a+\delta\). Por eso el límite es \(L\) exactamente cuando los dos laterales son \(L\): si una \(\delta\) sirve para el límite, la misma sirve para cada lateral; y si \(\delta_{1}\) sirve por la izquierda y \(\delta_{2}\) por la derecha, la menor de las dos sirve para el límite. Se usan en el ejemplo 4 y en el ejercicio B.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>Los dos primeros ejemplos demuestran un límite con las dos fases; los dos últimos usan la negación.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: las dos fases, con \(a\) y \(L\) negativos. Demostrar que \(\displaystyle\lim_{x\to -1}(6x+1)=-5\)</h3>
+  <div class="body">
+  <p>Sea \(g(x)=6x+1\). Aquí \(a=-1\) y \(L=-5\), así que \(x-a=x-(-1)=x+1\) y \(g(x)-L=g(x)-(-5)=g(x)+5\).</p>
+  <ol class="steps">
+    <li><b>Borrador.</b> La diferencia: \(g(x)+5=6x+1+5=6x+6\).</li>
+    <li>Factor común: \(6x+6=6\,(x+1)\).</li>
+    <li>Valor absoluto de un producto: \(|g(x)+5|=|6|\cdot|x+1|=6\,|x+1|\).</li>
+    <li>Se quiere \(6\,|x+1|\lt \varepsilon\). Al dividir por \(6\), positivo: \(|x+1|\lt \dfrac{\varepsilon}{6}\). Candidata: \(\delta=\dfrac{\varepsilon}{6}\).</li>
+    <li><b>Demostración.</b> Sea \(\varepsilon\gt 0\) cualquiera. Se elige \(\delta=\dfrac{\varepsilon}{6}\), que es positiva.</li>
+    <li>Sea \(x\) cualquiera con \(0\lt |x+1|\lt \dfrac{\varepsilon}{6}\).</li>
+    <li>Se multiplica por \(6\), positivo: \(6\,|x+1|\lt 6\cdot\dfrac{\varepsilon}{6}=\varepsilon\).</li>
+    <li>Por el paso 3: \(|g(x)+5|=6\,|x+1|\lt \varepsilon\). La definición se cumple: el límite es \(-5\).</li>
+    <li><b>Control con números</b> (no es parte de la demostración). Con \(\varepsilon=0{,}3\): \(\delta=\dfrac{0{,}3}{6}=0{,}05\). En intervalos: \(-1-0{,}05=-1{,}05\) y \(-1+0{,}05=-0{,}95\), así que se revisan los \(x\) con \(-1{,}05\lt x\lt -0{,}95\) y \(x\ne -1\).</li>
+    <li>Prueba con \(x=-1{,}04\): \(|-1{,}04+1|=|-0{,}04|=0{,}04\) y \(0\lt 0{,}04\lt 0{,}05\). Su salida: \(6\cdot(-1{,}04)=-6{,}24\) y \(g(-1{,}04)=-6{,}24+1=-5{,}24\). Su distancia a \(-5\): \(|-5{,}24+5|=|-0{,}24|=0{,}24\), y \(0{,}24\lt 0{,}3\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: una pendiente menor que \(1\) da \(\delta\) mayor que \(\varepsilon\). Demostrar que \(\displaystyle\lim_{x\to 8}\left(\dfrac{x}{4}+2\right)=4\)</h3>
+  <div class="body">
+  <p>Sea \(h(x)=\dfrac{x}{4}+2\), con \(a=8\) y \(L=4\).</p>
+  <ol class="steps">
+    <li><b>Borrador.</b> La diferencia: \(h(x)-4=\dfrac{x}{4}+2-4=\dfrac{x}{4}-2\).</li>
+    <li>Factor común \(\dfrac{1}{4}\): \(\dfrac{x}{4}-2=\dfrac{1}{4}\,(x-8)\), porque \(\dfrac{1}{4}\cdot 8=2\).</li>
+    <li>Valor absoluto de un producto: \(|h(x)-4|=\left|\dfrac{1}{4}\right|\cdot|x-8|=\dfrac{1}{4}\,|x-8|\).</li>
+    <li>Se quiere \(\dfrac{1}{4}\,|x-8|\lt \varepsilon\). Al multiplicar por \(4\), positivo: \(|x-8|\lt 4\,\varepsilon\). Candidata: \(\delta=4\,\varepsilon\).</li>
+    <li><b>Demostración.</b> Sea \(\varepsilon\gt 0\) cualquiera. Se elige \(\delta=4\,\varepsilon\), que es positiva: producto de dos números positivos.</li>
+    <li>Sea \(x\) cualquiera con \(0\lt |x-8|\lt 4\,\varepsilon\).</li>
+    <li>Se multiplica por \(\dfrac{1}{4}\), positivo: \(\dfrac{1}{4}\,|x-8|\lt \dfrac{1}{4}\cdot 4\,\varepsilon=\varepsilon\).</li>
+    <li>Por el paso 3: \(|h(x)-4|=\dfrac{1}{4}\,|x-8|\lt \varepsilon\). La definición se cumple: el límite es \(4\).</li>
+    <li><b>Control con números.</b> Con \(\varepsilon=0{,}5\): \(\delta=4\cdot 0{,}5=2\). En intervalos: \(8-2=6\) y \(8+2=10\), así que se revisan los \(x\) con \(6\lt x\lt 10\) y \(x\ne 8\). Prueba con \(x=9{,}6\): \(|9{,}6-8|=1{,}6\) y \(0\lt 1{,}6\lt 2\). Su salida: \(\dfrac{9{,}6}{4}=2{,}4\) y \(h(9{,}6)=2{,}4+2=4{,}4\). Su distancia a \(4\): \(|4{,}4-4|=0{,}4\), y \(0{,}4\lt 0{,}5\).</li>
+    <li>Aquí \(\delta=2\) es mayor que \(\varepsilon=0{,}5\). La definición no pide que \(\delta\) sea menor que \(\varepsilon\): solo pide que sea positiva y que sirva. Con una pendiente chica, la salida se mueve menos que la entrada.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: la negación en una recta. Demostrar que \(8\) <b>no</b> es el límite de \(r(x)=3x+1\) en \(a=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li><b>Qué hay que mostrar</b> (la negación, con \(a=2\) y \(L=8\)): una tolerancia \(\varepsilon\gt 0\) tal que, para toda \(\delta\gt 0\), haya un \(x\) con \(0\lt |x-2|\lt \delta\) y \(|r(x)-8|\ge \varepsilon\).</li>
+    <li><b>Exploración.</b> \(3\cdot 1{,}9=5{,}7\) y \(r(1{,}9)=5{,}7+1=6{,}7\); \(3\cdot 1{,}99=5{,}97\) y \(r(1{,}99)=5{,}97+1=6{,}97\). A la izquierda de \(2\) las salidas son menores que \(7\): quedan a más de \(1\) de \(8\). Se elige \(\varepsilon=1\).</li>
+    <li>Sea \(\delta\gt 0\) cualquiera. Se propone la entrada \(x=2-\dfrac{\delta}{2}\).</li>
+    <li>Está en la franja: \(|x-2|=\left|-\dfrac{\delta}{2}\right|=\dfrac{\delta}{2}\), y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+    <li>Su salida: \(r(x)=3\left(2-\dfrac{\delta}{2}\right)+1=6-\dfrac{3\,\delta}{2}+1=7-\dfrac{3\,\delta}{2}\).</li>
+    <li>La diferencia con \(8\): \(r(x)-8=7-\dfrac{3\,\delta}{2}-8=-1-\dfrac{3\,\delta}{2}\). Es negativa, así que \(|r(x)-8|=1+\dfrac{3\,\delta}{2}\).</li>
+    <li>Como \(\dfrac{3\,\delta}{2}\gt 0\): \(|r(x)-8|\gt 1\), y con mayor razón \(|r(x)-8|\ge 1=\varepsilon\). Toda \(\delta\) falla: \(8\) no es el límite.</li>
+    <li><b>Una tolerancia grande sí tiene respuesta</b>, aunque \(8\) no sea el límite. Con \(\varepsilon=3\) y \(\delta=0{,}5\): los \(x\) de la franja cumplen \(1{,}5\lt x\lt 2{,}5\); como \(3\cdot 1{,}5+1=4{,}5+1=5{,}5\) y \(3\cdot 2{,}5+1=7{,}5+1=8{,}5\), sus salidas cumplen \(5{,}5\lt r(x)\lt 8{,}5\). Por abajo, la distancia a \(8\) es menor que \(8-5{,}5=2{,}5\); por arriba, menor que \(8{,}5-8=0{,}5\). En los dos casos es menor que \(3\). Por eso la negación necesita solo <b>una</b> tolerancia sin respuesta, y la definición las exige todas.</li>
+    <li>El límite verdadero es \(3\cdot 2+1=6+1=7\), por el segundo recuadro con \(m=3\) y \(b=1\) (sirve \(\delta=\dfrac{\varepsilon}{3}\)). Y por la unicidad, ningún otro número puede serlo: otra demostración de que \(8\) no lo es.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: un escalón. Ningún número \(L\) es el límite</h3>
+  <div class="body">
+  <p>\[e(x)=\begin{cases}2&\text{si }x\lt 3\\[2pt] 5&\text{si }x\ge 3\end{cases}\]</p>
+  <ol class="steps">
+    <li>La gráfica: una semirrecta horizontal a la altura \(2\), que termina en un círculo vacío en \((3,2)\), y otra a la altura \(5\), que parte del punto lleno \((3,5)\). El salto mide \(5-2=3\).</li>
+    <li>Sea \(L\) un número cualquiera. Se elige la mitad del salto como tolerancia: \(\varepsilon=\dfrac{3}{2}=1{,}5\). El número que está justo al medio de \(2\) y \(5\) es \(2+1{,}5=3{,}5\).</li>
+    <li>Sea \(\delta\gt 0\) cualquiera. Hay dos entradas a mano, una a cada lado: \(x_{1}=3-\dfrac{\delta}{2}\) y \(x_{2}=3+\dfrac{\delta}{2}\). Las dos están en la franja, porque su distancia a \(3\) es \(\dfrac{\delta}{2}\), y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+    <li>Sus salidas: como \(x_{1}\lt 3\), \(e(x_{1})=2\); como \(x_{2}\ge 3\), \(e(x_{2})=5\).</li>
+    <li><b>Caso \(L\ge 3{,}5\):</b> se usa \(x_{1}\). Como \(L\gt 2\), \(|e(x_{1})-L|=L-2\), y \(L-2\ge 3{,}5-2=1{,}5\).</li>
+    <li><b>Caso \(L\lt 3{,}5\):</b> se usa \(x_{2}\). Como \(L\lt 5\), \(|e(x_{2})-L|=5-L\), y \(5-L\gt 5-3{,}5=1{,}5\).</li>
+    <li>En los dos casos hay un \(x\) de la franja con \(|e(x)-L|\ge 1{,}5\). Vale para toda \(\delta\) y para todo \(L\): el límite de \(e\) en \(3\) no existe.</li>
+    <li><b>Los laterales sí existen.</b> Por la izquierda: si \(3-\delta\lt x\lt 3\), entonces \(e(x)=2\) y \(|e(x)-2|=|2-2|=0\), menor que todo \(\varepsilon\gt 0\). Cualquier \(\delta\gt 0\) sirve: \(\displaystyle\lim_{x\to 3^{-}}e(x)=2\). Por la derecha: si \(3\lt x\lt 3+\delta\), entonces \(e(x)=5\) y \(|e(x)-5|=|5-5|=0\): \(\displaystyle\lim_{x\to 3^{+}}e(x)=5\). Como \(2\ne 5\), se confirma que el límite no existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>presentar el borrador como demostración</b>. El borrador parte de \(|f(x)-L|\lt \varepsilon\), que es justo lo que hay que probar; la demostración parte de \(0\lt |x-a|\lt \delta\). Dos: <b>una \(\delta\) que depende de \(x\)</b>. Puede depender de \(\varepsilon\), nunca de \(x\). Tres: <b>olvidar el valor absoluto de la pendiente</b>. Con \(m=-2\) la regla es \(\delta=\dfrac{\varepsilon}{2}\); dividir por \(-2\) daría una \(\delta\) negativa. Cuatro: <b>negar mal</b>. Lo contrario de «para todo \(\varepsilon\) existe \(\delta\)…» no es «para todo \(\varepsilon\) no existe \(\delta\)»: basta <b>una</b> tolerancia sin respuesta. Cinco: <b>creer que una tolerancia con respuesta prueba el límite</b>. En el ejemplo 3 la tolerancia \(3\) tiene respuesta con \(L=8\), y \(8\) no es el límite.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Sea \(k(x)=9-2x\), con \(a=4\) y \(L=1\). a) Escribe sin valor absoluto las condiciones \(0\lt |x-4|\lt 0{,}05\) y \(|k(x)-1|\lt 0{,}1\). b) Haz el borrador: ¿qué \(\delta\) sirve para una tolerancia \(\varepsilon\gt 0\) cualquiera? c) Escribe la demostración de que \(\displaystyle\lim_{x\to 4}(9-2x)=1\). d) Controla con \(\varepsilon=0{,}1\) y la entrada \(x=4{,}03\).</p>
+    <details><summary>Pista</summary><div><p>En el borrador, escribe \(k(x)-1\) y saca factor común \(-2\): debe aparecer \(x-4\). Recuerda que \(|-2|=2\). La demostración parte de \(0\lt |x-4|\lt \delta\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(4-0{,}05=3{,}95\) y \(4+0{,}05=4{,}05\): la primera es \(3{,}95\lt x\lt 4{,}05\) y \(x\ne 4\). \(1-0{,}1=0{,}9\) y \(1+0{,}1=1{,}1\): la segunda es \(0{,}9\lt k(x)\lt 1{,}1\).</li>
+        <li>b) La diferencia: \(k(x)-1=9-2x-1=8-2x\). Factor común: \(8-2x=-2\,(x-4)\).</li>
+        <li>Valor absoluto de un producto: \(|k(x)-1|=|-2|\cdot|x-4|=2\,|x-4|\).</li>
+        <li>Se quiere \(2\,|x-4|\lt \varepsilon\). Al dividir por \(2\), positivo: \(|x-4|\lt \dfrac{\varepsilon}{2}\). Candidata: \(\delta=\dfrac{\varepsilon}{2}\).</li>
+        <li>c) Sea \(\varepsilon\gt 0\) cualquiera. Se elige \(\delta=\dfrac{\varepsilon}{2}\), que es positiva. Sea \(x\) cualquiera con \(0\lt |x-4|\lt \dfrac{\varepsilon}{2}\).</li>
+        <li>Se multiplica por \(2\), positivo: \(2\,|x-4|\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\). Por el paso 3: \(|k(x)-1|=2\,|x-4|\lt \varepsilon\). La definición se cumple: el límite es \(1\).</li>
+        <li>d) \(\delta=\dfrac{0{,}1}{2}=0{,}05\). La entrada: \(|4{,}03-4|=0{,}03\) y \(0\lt 0{,}03\lt 0{,}05\). Su salida: \(2\cdot 4{,}03=8{,}06\) y \(k(4{,}03)=9-8{,}06=0{,}94\). Su distancia a \(1\): \(|0{,}94-1|=|-0{,}06|=0{,}06\), y \(0{,}06\lt 0{,}1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>La gráfica de \(j\) tiene dos trozos: una semirrecta que sube hasta un círculo vacío en \((0,-1)\) y otra que sube desde el punto lleno \((0,1)\). En fórmulas:
+    \[j(x)=\begin{cases}x-1&\text{si }x\lt 0\\[2pt] 2x+1&\text{si }x\ge 0\end{cases}\]
+    a) Calcula \(j(-0{,}1)\), \(j(-0{,}01)\), \(j(0{,}1)\) y \(j(0{,}01)\). b) Escribe la negación de «\(L\) es el límite de \(j\) en \(0\)». c) Con la tolerancia \(\varepsilon=1\), demuestra que ningún número \(L\) es el límite de \(j\) en \(0\). d) Con las definiciones de los límites laterales, demuestra que \(\displaystyle\lim_{x\to 0^{-}}j(x)=-1\) y \(\displaystyle\lim_{x\to 0^{+}}j(x)=1\).</p>
+    <details><summary>Pista</summary><div><p>Para c), separa en dos casos: si \(L\ge 0\), usa la entrada \(x=-\dfrac{\delta}{2}\); si \(L\lt 0\), usa \(x=\dfrac{\delta}{2}\). Para d), por la izquierda sirve \(\delta=\varepsilon\) y por la derecha, \(\delta=\dfrac{\varepsilon}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Izquierda: \(j(-0{,}1)=-0{,}1-1=-1{,}1\) y \(j(-0{,}01)=-0{,}01-1=-1{,}01\). Derecha: \(2\cdot 0{,}1=0{,}2\) y \(j(0{,}1)=0{,}2+1=1{,}2\); \(2\cdot 0{,}01=0{,}02\) y \(j(0{,}01)=0{,}02+1=1{,}02\).</li>
+        <li>b) Existe \(\varepsilon\gt 0\) tal que, para todo \(\delta\gt 0\), hay un \(x\) con \(0\lt |x|\lt \delta\) y \(|j(x)-L|\ge \varepsilon\). (Aquí \(a=0\), y \(|x-0|=|x|\).)</li>
+        <li>c) Sea \(L\) cualquiera, \(\varepsilon=1\) y \(\delta\gt 0\) cualquiera. <b>Caso \(L\ge 0\):</b> se usa \(x=-\dfrac{\delta}{2}\). Está en la franja: \(|x|=\dfrac{\delta}{2}\), y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+        <li>Como \(x\lt 0\): \(j(x)=-\dfrac{\delta}{2}-1\). La diferencia: \(L-j(x)=L+\dfrac{\delta}{2}+1\). Como \(L\ge 0\) y \(\dfrac{\delta}{2}\gt 0\), esa diferencia es mayor que \(1\). Entonces \(|j(x)-L|\ge 1\).</li>
+        <li><b>Caso \(L\lt 0\):</b> se usa \(x=\dfrac{\delta}{2}\), que también está en la franja. Como \(x\ge 0\): \(j(x)=2\cdot\dfrac{\delta}{2}+1=\delta+1\).</li>
+        <li>La diferencia: \(j(x)-L=\delta+1-L\). Como \(\delta\gt 0\) y \(-L\gt 0\), es mayor que \(1\). Entonces \(|j(x)-L|\ge 1\). En los dos casos toda \(\delta\) falla: ningún \(L\) es el límite, el límite no existe.</li>
+        <li>d) Por la izquierda. Sea \(\varepsilon\gt 0\) y \(\delta=\varepsilon\). Si \(-\delta\lt x\lt 0\): \(j(x)-(-1)=x-1+1=x\), así que \(|j(x)-(-1)|=|x|\). Como \(x\) es negativo, \(|x|=-x\), y de \(-\delta\lt x\) sale \(-x\lt \delta=\varepsilon\). Luego \(\displaystyle\lim_{x\to 0^{-}}j(x)=-1\).</li>
+        <li>Por la derecha. Sea \(\varepsilon\gt 0\) y \(\delta=\dfrac{\varepsilon}{2}\). Si \(0\lt x\lt \delta\): \(j(x)-1=2x+1-1=2x\), así que \(|j(x)-1|=|2x|=2x\), porque \(x\) es positivo. Al multiplicar \(x\lt \dfrac{\varepsilon}{2}\) por \(2\): \(2x\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\). Luego \(\displaystyle\lim_{x\to 0^{+}}j(x)=1\).</li>
+        <li>Los laterales existen y son distintos, \(-1\ne 1\): coincide con lo demostrado en c).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una receta está escrita en grados Fahrenheit y el horno marca grados Celsius. <b>Modelo:</b> la conversión entre las dos escalas es exacta, \(F(c)=1{,}8\,c+32\), donde \(c\) es la temperatura en grados Celsius y \(F(c)\) es la misma temperatura en grados Fahrenheit. (Se supone que la perilla del horno puede fijarse en cualquier temperatura, no solo en sus marcas.) La receta pide \(356\) grados Fahrenheit. a) Comprueba que corresponden a \(180\) grados Celsius. b) La receta tolera que la temperatura se aleje menos de \(9\) grados Fahrenheit de la pedida. ¿A qué distancia de \(180\) grados Celsius puede quedar la perilla? Prueba con \(183\). c) Da la regla para una tolerancia de \(\varepsilon\) grados Fahrenheit y demuéstrala. d) Alguien afirma que, cerca de \(180\) grados Celsius, la temperatura en Fahrenheit «se acerca a \(360\)». Muestra una tolerancia que no tiene respuesta.</p>
+    <details><summary>Pista</summary><div><p>La entrada es \(c\) y la salida es \(F(c)\). Escribe \(F(c)-356\) y saca factor común \(1{,}8\). Para d), usa la negación con la entrada \(c=180-\dfrac{\delta}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) \(1{,}8\cdot 180=324\) y \(F(180)=324+32=356\).</li>
+        <li>b) La diferencia: \(F(c)-356=1{,}8\,c+32-356=1{,}8\,c-324\). Factor común: \(1{,}8\,c-324=1{,}8\,(c-180)\), porque \(1{,}8\cdot 180=324\).</li>
+        <li>Valor absoluto de un producto: \(|F(c)-356|=|1{,}8|\cdot|c-180|=1{,}8\,|c-180|\).</li>
+        <li>Se quiere \(1{,}8\,|c-180|\lt 9\). Al dividir por \(1{,}8\), positivo: \(|c-180|\lt \dfrac{9}{1{,}8}=5\). Respuesta: \(\delta=5\) grados Celsius.</li>
+        <li>La respuesta sirve: si \(|c-180|\lt 5\), entonces \(1{,}8\,|c-180|\lt 1{,}8\cdot 5=9\).</li>
+        <li>Prueba con \(c=183\): \(|183-180|=3\), menor que \(5\). En Fahrenheit: \(1{,}8\cdot 183=329{,}4\) y \(F(183)=329{,}4+32=361{,}4\). Su distancia a \(356\): \(|361{,}4-356|=5{,}4\), menor que \(9\).</li>
+        <li>c) Regla: \(\delta=\dfrac{\varepsilon}{1{,}8}\). Demostración: sea \(\varepsilon\gt 0\) cualquiera y \(\delta=\dfrac{\varepsilon}{1{,}8}\), positiva. Si \(0\lt |c-180|\lt \dfrac{\varepsilon}{1{,}8}\), al multiplicar por \(1{,}8\): \(1{,}8\,|c-180|\lt 1{,}8\cdot\dfrac{\varepsilon}{1{,}8}=\varepsilon\). Por el paso 3, \(|F(c)-356|\lt \varepsilon\). En el modelo, \(\displaystyle\lim_{c\to 180}F(c)=356\).</li>
+        <li>d) La distancia entre \(360\) y \(356\) es \(360-356=4\). Se elige \(\varepsilon=4\). Sea \(\delta\gt 0\) cualquiera y \(c=180-\dfrac{\delta}{2}\): está en la franja, porque \(|c-180|=\dfrac{\delta}{2}\) y \(0\lt \dfrac{\delta}{2}\lt \delta\).</li>
+        <li>Su salida: \(F(c)=1{,}8\left(180-\dfrac{\delta}{2}\right)+32=324-0{,}9\,\delta+32=356-0{,}9\,\delta\), porque \(\dfrac{1{,}8}{2}=0{,}9\).</li>
+        <li>La diferencia con \(360\): \(F(c)-360=356-0{,}9\,\delta-360=-4-0{,}9\,\delta\). Es negativa, así que \(|F(c)-360|=4+0{,}9\,\delta\), que es mayor que \(4\). Toda \(\delta\) falla con la tolerancia \(4\): \(360\) no es el límite. Cerca de \(180\) grados Celsius la temperatura se acerca a \(356\) grados Fahrenheit, y a ningún otro número.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L29-H11 · v001 · Pendiente de APR</span>
+</footer>
+</article>
