@@ -35,6 +35,45 @@ def leer_hojas():
 
 def norm(u): return urllib.parse.unquote(u or '').rstrip('/').lower().replace('http://', 'https://')
 
+MESES = {'ene':1,'feb':2,'mar':3,'abr':4,'may':5,'jun':6,'jul':7,'ago':8,'sep':9,'oct':10,'nov':11,'dic':12}
+def produccion():
+    """Lee el registro de corridas de la tarea programada (líneas «- Corrida …» del estado del pedido)."""
+    f = REPO / 'taller' / 'pedidos' / 'ESTADO-pedido-20-nov.md'
+    if not f.is_file(): return None
+    R = []
+    for l in f.read_text(encoding='utf-8').splitlines():
+        if not l.startswith('- Corrida '): continue
+        m = re.match(r'- Corrida (\d{1,2})-(\w{3})-(\d{4})', l)
+        if not m or m.group(2) not in MESES: continue
+        dia = datetime.datetime(int(m.group(3)), MESES[m.group(2)], int(m.group(1)))
+        t = re.search(r'(\d{1,2}):(\d{2})[–-](\d{1,2}):(\d{2}) UTC', l); h = re.search(r'hasta las (\d{1,2}):(\d{2}) UTC', l)
+        ini = fin = None
+        if t:
+            ini = dia + datetime.timedelta(hours=int(t.group(1)), minutes=int(t.group(2))); fin = dia + datetime.timedelta(hours=int(t.group(3)), minutes=int(t.group(4)))
+            if fin < ini: fin += datetime.timedelta(days=1)
+        elif h: fin = dia + datetime.timedelta(hours=int(h.group(1)), minutes=int(h.group(2)))
+        k = re.search(r'(\d+) hojas nuevas', l) or re.search(r'\. (\d+) hojas[;.]', l)
+        nuevas = int(k.group(1)) if k else 0
+        corr = l.split('0 hojas nuevas')[0].count('«') if nuevas == 0 else 0
+        R.append({'ini': ini, 'fin': fin, 'nuevas': nuevas, 'corr': corr})
+    if not R: return None
+    N = [r for r in R if r['nuevas']]; C = [r for r in R if r['corr']]
+    mins = lambda r: (r['fin'] - r['ini']).total_seconds() / 60
+    Nd = [r for r in N if r['ini']]; Cd = [r for r in C if r['ini']]
+    fines = sorted(r['fin'] for r in R if r['fin']); inis = sorted(r['ini'] for r in R if r['ini'])
+    cl = lambda d: (d - datetime.timedelta(hours=3)).strftime('%d-%m %H:%M')
+    # ritmo actual: separación entre los finales de las últimas corridas
+    ult = fines[-4:]; sep = [(b - a).total_seconds() / 3600 for a, b in zip(ult, ult[1:])]
+    return {
+        'corridas': len(N), 'hojas': sum(r['nuevas'] for r in N),
+        'min_corrida': (sum(map(mins, Nd)) / len(Nd)) if Nd else 0, 'min_min': min(map(mins, Nd)) if Nd else 0, 'min_max': max(map(mins, Nd)) if Nd else 0,
+        'min_hoja': (sum(map(mins, Nd)) / sum(r['nuevas'] for r in Nd)) if Nd else 0,
+        'corr_corridas': len(C), 'corr_hojas': sum(r['corr'] for r in C), 'min_corr': (sum(map(mins, Cd)) / sum(r['corr'] for r in Cd)) if Cd else 0,
+        'horas_reloj': ((fines[-1] - inis[0]).total_seconds() / 3600) if fines and inis else 0,
+        'desde': cl(inis[0]) if inis else '—', 'hasta': cl(fines[-1]) if fines else '—',
+        'sep_h': (sum(sep) / len(sep)) if sep else 0, 'hojas_corrida': (sum(r['nuevas'] for r in N) / len(N)) if N else 0,
+    }
+
 def main():
     hojas = leer_hojas()
     en = json.loads((AQUI / 'enlaces.json').read_text(encoding='utf-8')) if (AQUI / 'enlaces.json').is_file() else {'hojas': [], 'actualizado': '—'}
@@ -90,6 +129,18 @@ def main():
     filas_c = ''.join(f"<tr><td><a href='{e(u)}' target='_blank' rel='noopener'>{e(t)}</a></td><td class='num'>{k}</td><td class='num'>{tt}</td><td>{meter(k, tt)}</td><td class='num'>{pct(k, tt):.1f} %</td></tr>" for t, k, tt, u in cob_top)
     filas_h = ''.join(f"<tr><td class='num'>{h['lote']:02d}</td><td><a href='{BASE}{e(h['archivo'])}' target='_blank' rel='noopener'>{e(h['nombre'])}</a></td><td>{e(h['tema'])}</td><td class='num'>{fch(h['apr'])}</td><td>{'✓ ' + str(len(h['tit'])) + (' título' if len(h['tit']) == 1 else ' títulos') if h['tit'] else '✗ sin enlazar'}</td></tr>" for h in sorted(hojas, key=lambda x: (x['lote'], x['archivo'])))
     sin_pag = len([c for c in cob if not c[1]])
+    # producción programada
+    pr = produccion(); prod = ''
+    if pr and pr['hojas']:
+        nm = lambda x, d=1: f'{x:.{d}f}'.replace('.', ',')
+        tph = (tit_con / enlaz) if enlaz else 0
+        ocup_h = 60 / pr['min_hoja'] if pr['min_hoja'] else 0
+        cada = plan.get('corridas_cada_horas') or pr['sep_h']; cor_dia = 24 / cada if cada else 0; hoj_dia = cor_dia * pr['hojas_corrida']
+        techo = plan.get('techo_hojas_semana', 150); pend = n - con_apr
+        falta = tot_tit - tit_con; dias_sitio = falta / (hoj_dia * tph) if hoj_dia and tph else 0
+        fp = lambda a, b: f"<tr><td>{e(a)}</td><td class='num'><b>{e(b)}</b></td></tr>"
+        prod = '<h2>Producción programada</h2>\n<div class="tiles">' + tile(pr['hojas'], 'Hojas nuevas por tarea programada', f"{pr['corridas']} corridas · {pr['desde']} a {pr['hasta']}") + tile(nm(pr['min_hoja'], 0) + ' min', 'Tiempo ocupado por hoja', f"corrida de {nm(pr['hojas_corrida'], 0)} hojas: {nm(pr['min_corrida'], 0)} min (de {nm(pr['min_min'], 0)} a {nm(pr['min_max'], 0)})") + tile(nm(hoj_dia, 0), 'Hojas por día al ritmo actual', f"una corrida cada {nm(cada, 0) if cada == int(cada) else nm(cada)} h, {nm(pr['hojas_corrida'], 0)} hojas por corrida") + tile(nm(hoj_dia * tph, 0), 'Títulos por día (estimado)', f"{nm(tph, 2)} títulos por hoja enlazada, histórico") + tile(pend, 'Hojas esperando APR', 'la revisión de Óscar marca el ritmo real') + '</div>\n'
+        prod += '<div class="scroll"><table><thead><tr><th>Indicador</th><th>Valor</th></tr></thead><tbody>' + fp('Hojas por hora de trabajo del modelo (tiempo ocupado)', nm(ocup_h)) + fp('Títulos por hora de trabajo del modelo (estimado)', nm(ocup_h * tph)) + fp('Hojas por hora de reloj al ritmo actual (tiempo continuo)', nm(hoj_dia / 24, 2)) + fp('Títulos por hora de reloj al ritmo actual (estimado)', nm(hoj_dia * tph / 24, 2)) + fp('Hojas por semana al ritmo actual', nm(hoj_dia * 7, 0)) + fp('Techo semanal por cuota del plan (medido: cerca de 1 % semanal por 3 hojas)', f'{techo} hojas') + fp('Correcciones tras rechazo: hojas corregidas · minutos por hoja', f"{pr['corr_hojas']} · {nm(pr['min_corr'])}") + fp('Horas de reloj desde la primera corrida registrada', nm(pr['horas_reloj'])) + fp('Días para cubrir los ' + f'{falta:,}'.replace(',', '.') + ' títulos que faltan, a este ritmo (estimado)', nm(dias_sitio, 0)) + '</tbody></table></div>\n<p class="sub">Tiempo ocupado: lo que el modelo trabaja. Tiempo continuo: lo que pasa en el reloj, con las esperas entre corridas. Los títulos son una estimación: se confirman cuando la hoja se enlaza después del APR. Fuente: registro de corridas en <code>taller/pedidos/ESTADO-pedido-20-nov.md</code>.</p>\n'
     doc = f'''<!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tablero · Oscar Academy</title>
@@ -128,7 +179,7 @@ details{{margin-top:8px}} summary{{cursor:pointer;font-weight:600;padding:6px 0}
 <section class="col c2"><h2>◐ Dónde estoy <span class="tag">· en curso y pendiente</span></h2><ul>{col2}</ul></section>
 <section class="col c3"><h2>→ Adónde voy <span class="tag">· lo que sigue</span></h2><ul>{col3}</ul></section>
 </div>
-<h2>Hojas aprobadas por día</h2>
+{prod}<h2>Hojas aprobadas por día</h2>
 <div class="chartwrap"><div class="chart" role="img" aria-label="Hojas aprobadas por día; el detalle está en la tabla de todas las hojas">{barras}</div></div>
 <h2>Avance por tema</h2>
 <div class="scroll"><table><thead><tr><th>Tema</th><th>Lotes</th><th>Hojas</th><th>Enlazadas</th><th>Enlazadas / publicadas</th><th>Última APR</th></tr></thead><tbody>{filas_t}</tbody></table></div>
