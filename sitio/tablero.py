@@ -95,9 +95,9 @@ def main():
                 if h['archivo'].startswith(pref): d, m_, y = f.split('-'); h['apr'] = datetime.date(int(y), int(m_), int(d))
     n = len(hojas); con_apr = sum(1 for h in hojas if h['apr']); enlaz = sum(1 for h in hojas if h['tit']); sin = [h for h in hojas if not h['tit']]
     # cobertura del sitio
-    por_pag = collections.defaultdict(set)
+    por_pag = collections.defaultdict(set); hoj_pag = collections.defaultdict(set)
     for h in en['hojas']:
-        for t in h.get('titulos', []): por_pag[norm(t.get('url_pagina'))].add(t.get('titulo'))
+        for t in h.get('titulos', []): por_pag[norm(t.get('url_pagina'))].add(t.get('titulo')); hoj_pag[norm(t.get('url_pagina'))].add(h['archivo'])
     cob = []; tot_tit = 0
     if arbol:
         for p in arbol['paginas']:
@@ -129,6 +129,23 @@ def main():
     filas_c = ''.join(f"<tr><td><a href='{e(u)}' target='_blank' rel='noopener'>{e(t)}</a></td><td class='num'>{k}</td><td class='num'>{tt}</td><td>{meter(k, tt)}</td><td class='num'>{pct(k, tt):.1f} %</td></tr>" for t, k, tt, u in cob_top)
     filas_h = ''.join(f"<tr><td class='num'>{h['lote']:02d}</td><td><a href='{BASE}{e(h['archivo'])}' target='_blank' rel='noopener'>{e(h['nombre'])}</a></td><td>{e(h['tema'])}</td><td class='num'>{fch(h['apr'])}</td><td>{'✓ ' + str(len(h['tit'])) + (' título' if len(h['tit']) == 1 else ' títulos') if h['tit'] else '✗ sin enlazar'}</td></tr>" for h in sorted(hojas, key=lambda x: (x['lote'], x['archivo'])))
     sin_pag = len([c for c in cob if not c[1]])
+    # páginas de cursos: avance y hojas estimadas que faltan
+    import statistics
+    tph_l = sorted(len(set((t.get('url_pagina'), t.get('titulo')) for t in h.get('titulos', []))) for h in en['hojas'] if h.get('titulos'))
+    t_med = statistics.median(tph_l) if tph_l else 0; t_prom = (sum(tph_l) / len(tph_l)) if tph_l else 0
+    nmc = lambda x, d=1: f'{x:.{d}f}'.replace('.', ',')
+    est = lambda falt: (f'{falt / t_prom:.0f} a {falt / t_med:.0f}' if falt and t_med and t_prom else '0')
+    r_in = (sum(c[1] for c in cob) / sum(len(hoj_pag.get(norm(c[3]), ())) for c in cob)) if any(hoj_pag.get(norm(c[3])) for c in cob) else 1
+    completas = [c for c in cob if c[1] >= c[2]]; avance = [c for c in cob if 0 < c[1] < c[2]]; cero = [c for c in cob if not c[1]]
+    def fila_p(c):
+        t, k, tt, u = c; hp = len(hoj_pag.get(norm(u), ())); falt = max(0, tt - k)
+        return f"<tr><td><a href='{e(u)}' target='_blank' rel='noopener'>{e(t)}</a></td><td class='num'>{tt}</td><td class='num'>{k}</td><td class='num'>{falt}</td><td class='num'>{hp}</td><td class='num'>{falt / r_in:.0f}</td><td>{meter(k, tt)}</td><td class='num'>{pct(k, tt):.1f} %</td></tr>"
+    cab_p = '<thead><tr><th>Página de curso</th><th>Títulos</th><th>Con hoja</th><th>Faltan</th><th>Hojas enlazadas</th><th>Hojas que faltan en la página (estimado)</th><th>Avance</th><th>%</th></tr></thead>'
+    falt_tot = tot_tit - tit_con
+    cursos = '<h2>Páginas de cursos: avance y hojas que faltan</h2>\n<div class="tiles">' + tile(len(cob), 'Páginas de cursos', 'las que tienen títulos en el sitio') + tile(len(completas), 'Páginas completas', 'todos sus títulos abren una hoja') + tile(len(avance), 'Páginas en avance', 'al menos un título con hoja') + tile(len(cero), 'Páginas sin empezar', 'ningún título con hoja') + tile(len(cob) - len(completas), 'Páginas por rebajar', 'baja en 1 cada vez que una página se completa') + tile(est(falt_tot), 'Hojas que faltan en el sitio (estimado)', f'{nmc(t_prom, 2)} títulos por hoja en promedio; mediana {nmc(t_med, 0)}') + '</div>\n'
+    cursos += f'<div class="scroll"><table>{cab_p}<tbody>' + ''.join(fila_p(c) for c in sorted(completas + avance, key=lambda c: (-pct(c[1], c[2]), c[0]))) + '</tbody></table></div>\n'
+    cursos += f'<details><summary>Páginas sin empezar ({len(cero)})</summary><div class="scroll"><table>{cab_p}<tbody>' + ''.join(fila_p(c) for c in sorted(cero, key=lambda c: (-c[2], c[0]))) + '</tbody></table></div></details>\n'
+    cursos += f'<p class="sub">Por página: títulos sin hoja divididos por {nmc(r_in, 2)}, que es lo que hoy abre una hoja dentro de una misma página. Para el sitio: una hoja suele servir a varias páginas, y en total abre {nmc(t_prom, 2)} títulos en promedio (mediana {nmc(t_med, 0)}); por eso el total del sitio es menor que la suma de las páginas. Los totales por página vienen de la copia del árbol del 13-nov.</p>\n'
     # producción programada
     pr = produccion(); prod = ''
     if pr and pr['hojas']:
@@ -183,10 +200,7 @@ details{{margin-top:8px}} summary{{cursor:pointer;font-weight:600;padding:6px 0}
 <div class="chartwrap"><div class="chart" role="img" aria-label="Hojas aprobadas por día; el detalle está en la tabla de todas las hojas">{barras}</div></div>
 <h2>Avance por tema</h2>
 <div class="scroll"><table><thead><tr><th>Tema</th><th>Lotes</th><th>Hojas</th><th>Enlazadas</th><th>Enlazadas / publicadas</th><th>Última APR</th></tr></thead><tbody>{filas_t}</tbody></table></div>
-<h2>Páginas del sitio con hojas enlazadas</h2>
-<div class="scroll"><table><thead><tr><th>Página</th><th>Títulos con hoja</th><th>Títulos en la página</th><th>Avance</th><th>%</th></tr></thead><tbody>{filas_c}</tbody></table></div>
-<p class="sub">{sin_pag} páginas con títulos todavía no tienen ninguna hoja enlazada. Los totales por página vienen de la copia del árbol del 13-nov; un mismo título puede repetirse en varias páginas.</p>
-<details><summary>Todas las hojas ({n})</summary><div class="scroll"><table><thead><tr><th>Lote</th><th>Hoja</th><th>Tema</th><th>APR</th><th>En el sitio</th></tr></thead><tbody>{filas_h}</tbody></table></div></details>
+{cursos}<details><summary>Todas las hojas ({n})</summary><div class="scroll"><table><thead><tr><th>Lote</th><th>Hoja</th><th>Tema</th><th>APR</th><th>En el sitio</th></tr></thead><tbody>{filas_h}</tbody></table></div></details>
 <p class="pie">Se arma solo con <code>sitio/tablero.py</code> a partir del repositorio, de la <a href="enlaces.html">vista de enlaces</a>, del <a href="index.html">árbol del sitio</a> y de <code>sitio/plan.json</code> (lo anotado a mano: «en curso» y «lo que sigue»).</p>
 </main></body></html>'''
     (AQUI / 'tablero.html').write_text(doc, encoding='utf-8')
