@@ -1046,6 +1046,204 @@ for z10 in ['0\\lt |x-a|\\lt \\delta\\ \\Longrightarrow\\ |f(x)-L|\\lt \\varepsi
 ok(q10(4) == 2 and 4 - 1 == 3 and p10(3) == 10 and 2*3 + 1 == 7, 'H10: puntos marcados de las gráficas descritas')
 # <<< H10
 
+# >>> H11
+# ───────── H11: definición formal de los límites (épsilon-delta): la frase, sus piezas, las dos fases, la negación y la unicidad ─────────
+A11, E11 = molde('11', 'H11_definicion_formal_de_los_limites_epsilon_delta.html', 'Definición formal de los límites (épsilon-delta)', 'lim-formal', 'Definición formal de límite (épsilon-delta)', ['formal-idea'], 1)
+# funciones exactas de la hoja
+def f11(x):                                                     # función ancla: recta con hueco, a = 1, L = 3; f(1) no está definida
+    assert x != 1, 'f(1) no está definida'
+    return 5*Fr(x) - 2
+def g11(x): return 6*Fr(x) + 1                                  # ejemplo 1: a = −1, L = −5
+def h11(x): return Fr(x)/4 + 2                                  # ejemplo 2: a = 8, L = 4
+def r11(x): return 3*Fr(x) + 1                                  # ejemplo 3: a = 2, límite 7 (8 no lo es)
+def e11(x): return Fr(2) if x < 3 else Fr(5)                    # ejemplo 4: escalón en 3
+def k11(x): return 9 - 2*Fr(x)                                  # ejercicio A: a = 4, L = 1
+def j11(x): return Fr(x) - 1 if x < 0 else 2*Fr(x) + 1          # ejercicio B: salto en 0
+def F11(c): return Fr(9, 5)*Fr(c) + 32                          # ejercicio C: de grados Celsius a grados Fahrenheit
+FUN11 = {'f': f11, 'g': g11, 'h': h11, 'r': r11, 'e': e11, 'k': k11, 'j': j11, 'F': F11}
+valores('H11 hoja', mates_de(A11), FUN11, 11)
+ES11 = [Fr(1), Fr(1, 2), Fr(1, 10), Fr(1, 100), Fr(3, 5), Fr(3, 10), Fr(7, 3), Fr(9), Fr(9, 5), Fr(4), Fr(1, 10**6)]   # tolerancias (o distancias) de prueba
+TS11 = [Fr(i11, 40) for i11 in range(-39, 40) if i11]                                                                  # fracciones del tramo: 0 < |t| < 1
+def implica11(et, F, a, L, d, e, lado=0):
+    """en rejilla: todo x con 0 < |x − a| < d (lado = 0), a − d < x < a (lado = −1) o a < x < a + d (lado = 1) cumple |F(x) − L| < e"""
+    for t in TS11:
+        if lado and t*lado < 0: continue
+        x = a + t*d; ok(0 < abs(x - a) < d and abs(F(x) - L) < e, '%s: x = %s no cumple' % (et, x))
+def falla11(et, F, a, L, e, xde):
+    """la negación, en rejilla: para cada distancia d hay un x = xde(d) con 0 < |x − a| < d y |F(x) − L| ≥ e"""
+    for d in ES11:
+        x = xde(d); ok(0 < abs(x - a) < d and abs(F(x) - L) >= e, '%s: con δ = %s el x propuesto no sirve' % (et, d))
+
+# 1) la escena: función, lugar, llegada, tolerancias y distancias; franjas, marcas, tramos de entradas y salidas
+ok('function f(x){ return 5*x - 2; }' in E11 and 'var A = 1, L = 3, EPS = [1, 0.5], DEL = [0.2, 0.1];' in E11, 'H11 escena: función, a, L, tolerancias y distancias')
+EP11 = [Fr(1), Fr(1, 2)]; DE11 = [e_/5 for e_ in EP11]
+ok(DE11 == [Fr(1, 5), Fr(1, 10)], 'H11 escena: cada distancia es la quinta parte de su tolerancia')
+ok('lmMarco(-0.6, 0.55, 5.5, 4.4, 0.6, 1.4, 1, 5)' in E11 and all(Fr('0.6') < 1 - d_ and 1 + d_ < Fr('1.4') and 1 < 3 - e_ and 3 + e_ < 5 for e_, d_ in zip(EP11, DE11)) and f11(Fr('0.6')) == 1 and f11(Fr('1.4')) == 5, 'H11 escena: las franjas caben en el marco y la recta va de esquina a esquina')
+for e_, d_ in zip(EP11, DE11):
+    ok(f11(1 - d_) == 3 - e_ and f11(1 + d_) == 3 + e_ and f11(1 + d_) - 3 == e_, 'H11 escena: los extremos del trozo dan los bordes de la franja verde (ε = %s)' % e_)
+    implica11('H11 escena ε = %s' % e_, f11, 1, 3, d_, e_)
+    ok("'\\\\varepsilon=%s'" % tex(e_) in E11 and "'\\\\delta=%s'" % tex(d_) in E11, 'H11 escena: rótulos de ε = %s y su δ' % e_)
+pl11 = lambda z: tex(z).replace('{,}', ',')
+ok("marca(M.x0, %s, '%s', C.alt, 1); marca(M.x0, %s, '%s', C.alt, 1)" % (3 - EP11[0], pl11(3 - EP11[0]), 3 + EP11[0], pl11(3 + EP11[0])) in E11 and "marca(M.x0, 2.5, '%s', C.alt, 1); marca(M.x0, 3.5, '%s', C.alt, 1)" % (pl11(3 - EP11[1]), pl11(3 + EP11[1])) in E11
+   and "marca(0.8, M.y0, '%s', C.sec); marca(1.2, M.y0, '%s', C.sec)" % (pl11(1 - DE11[0]), pl11(1 + DE11[0])) in E11 and "marca(0.9, M.y0, '%s', C.sec); marca(1.1, M.y0, '%s', C.sec)" % (pl11(1 - DE11[1]), pl11(1 + DE11[1])) in E11, 'H11 escena: marcas de los bordes de las franjas')
+ok((3 - 1, 3 + 1, 3 - Fr(1, 2), 3 + Fr(1, 2), 1 - Fr(1, 5), 1 + Fr(1, 5), 1 - Fr(1, 10), 1 + Fr(1, 10)) == (2, 4, Fr('2.5'), Fr('3.5'), Fr('0.8'), Fr('1.2'), Fr('0.9'), Fr('1.1')), 'H11 escena: bordes de las franjas')
+ok('verde(EPS[0], ap(2)); azul(DEL[0], ap(3));' in E11 and 'entradas(DEL[0], Math.min(1, a*2), -2); trozo(DEL[0], Math.max(0, a*2 - 1));' in E11 and 'a = ap(5); salidas(DEL[0], a, 2);' in E11 and 'cota(1.385, L, 1.385, L + EPS[0], C.alt)' in E11 and 'cota(A, 1.3, A + DEL[0], 1.3, C.sec)' in E11
+   and 'cota(1.25, L, 1.25, L + EPS[1], C.alt)' in E11 and 'cota(A, 1.6, A + DEL[1], 1.6, C.sec)' in E11 and 'var e = f(A + d) - L;' in E11 and 'lmPunto(S, M, A, L, C.tan, true, 3.2)' in E11 and 'hueco(A, M.y0, 0, dy, C.sec)' in E11 and 'hueco(M.x0, L, dx, 0, C.rise)' in E11, 'H11 escena: cada pieza en su paso, cotas desde 3 y desde 1, y huecos en (1, 3), en la entrada 1 y en la salida 3')
+ok("['Pieza 1, «para toda tolerancia»: se elige', 'una, aquí %s. Franja verde: alturas de %s a %s.']" % (pl11(EP11[0]), pl11(3 - EP11[0]), pl11(3 + EP11[0])) in E11 and "['Pieza 2, «existe una distancia»: se responde', 'con %s. Franja azul: entradas de %s a %s.']" % (pl11(DE11[0]), pl11(1 - DE11[0]), pl11(1 + DE11[0])) in E11
+   and "['Otra tolerancia, %s: la distancia %s ya no', 'sirve; con %s, sí. Las cuatro piezas otra vez.']" % (pl11(EP11[1]), pl11(DE11[0]), pl11(DE11[1])) in E11 and "'para toda tolerancia: el límite es 3.'" in E11 and "'no está definida en 1. Cerca de 1, llega a 3.'" in E11, 'H11 lienzo: frases con las tolerancias y distancias')
+# la escena real, con node: etiquetas y lectura completas, reconstruidas con fracciones (cada número sale de una cuenta exacta)
+NODO11 = r"""
+const fs = require('fs'), p = process.argv[process.argv.length - 1];
+global.OA = { scenes:{}, scene:function(n, d){ OA.scenes[n] = d; }, num:function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); } };
+(0, eval)(['_txt.js', '_det.js', '_lim.js', '11.scene.js'].map(function(a){ return fs.readFileSync(p + '/' + a, 'utf8'); }).join('\n'));
+var S = OA.scenes['formal-idea'], N = S.sliders[0].max, k, L = [], ap = [], v;
+for (k = 1; k <= N; k++) L.push(S.readout({paso: k})[0][1]);
+[0, 0.07, 0.2, 0.36, 0.5, 0.64, 0.8, 0.93, 0.999, 1].forEach(function(q){ v = {}; S.anim.apply(q, v); ap.push([q, v.paso, v.u]); });
+console.log(JSON.stringify({n: N, lect: L, lab: S.labels, ap: ap, leg: S.legend, aria: S.aria}));
+"""
+c11 = lambda x: r'5\cdot %s=%s;\ \ f(%s)=%s-2=%s' % (tex(x), tex(5*x), tex(x), tex(5*x), tex(f11(x)))
+Q11 = '\\\\&\\qquad '
+XA11, XB11, XP11, XQ11 = Fr('0.9'), Fr('1.1'), Fr('1.15'), Fr('0.94')      # valores cercanos (paso 1) y valores de prueba (pasos 5 y 6)
+ok(0 < abs(XP11 - 1) < DE11[0] and abs(f11(XP11) - 3) < EP11[0] and not abs(f11(XP11) - 3) < EP11[1] and f11(XP11) > 3 + EP11[1] and 0 < abs(XQ11 - 1) < DE11[1] and abs(f11(XQ11) - 3) < EP11[1], 'H11 lectura: los valores de prueba están en su franja; 1,15 sirve con ε = 1 y falla con ε = 0,5')
+ok(abs(f11(XA11) - 3) == abs(f11(XB11) - 3) == Fr(1, 2) and f11(XA11) < 3 < f11(XB11), 'H11 lectura: valores cercanos a 1, a cada lado')
+LE11 = [
+    r'f(x)=5x-2\text{ si }x\ne 1;\ \ a=1;\ \ L=3' + Q11 + r'f(1)\text{ no está definida: hueco en }(1,3)' + Q11 + r'\text{cerca de }1:\ \ ' + c11(XA11) + Q11 + c11(XB11) + Q11 + r'\text{distancias a }3:\ \ |%s-3|=%s;\ \ |%s-3|=%s' % (tex(f11(XA11)), tex(abs(f11(XA11) - 3)), tex(f11(XB11)), tex(abs(f11(XB11) - 3))) + Q11 + r'\text{se propone }L=3\text{; hay que demostrarlo}',
+    r'\text{pieza 1: «para todo }\varepsilon\gt 0\text{»}' + Q11 + r'\text{alguien elige la tolerancia; aquí }\varepsilon=%s' % tex(EP11[0]) + Q11 + r'\text{se pedirá }|f(x)-3|\lt %s' % tex(EP11[0]) + Q11 + r'\text{es decir: }3-%s\lt f(x)\lt 3+%s' % (tex(EP11[0]), tex(EP11[0])) + Q11 + r'3-%s=%s;\ \ 3+%s=%s' % (tex(EP11[0]), tex(3 - EP11[0]), tex(EP11[0]), tex(3 + EP11[0])) + Q11 + r'\text{franja verde: }%s\lt f(x)\lt %s' % (tex(3 - EP11[0]), tex(3 + EP11[0])),
+    r'\text{pieza 2: «existe }\delta\gt 0\text{»; borrador para hallarla:}' + Q11 + r'f(x)-3=5x-2-3=5x-5' + Q11 + r'\text{factor común: }5x-5=5\,(x-1)' + Q11 + r'|f(x)-3|=|5|\cdot|x-1|=5\,|x-1|' + Q11 + r'\text{se quiere }5\,|x-1|\lt %s' % tex(EP11[0]) + Q11 + r'\text{se divide por }5:\ \ |x-1|\lt \tfrac{%s}{5}=%s' % (tex(EP11[0]), tex(EP11[0]/5)) + Q11 + r'\text{respuesta: }\delta=%s' % tex(DE11[0]),
+    r'\text{pieza 3: «para todo }x\text{ con }0\lt |x-1|\lt %s\text{»}' % tex(DE11[0]) + Q11 + r'|x-1|\lt %s:\ \ 1-%s\lt x\lt 1+%s' % ((tex(DE11[0]),)*3) + Q11 + r'1-%s=%s;\ \ 1+%s=%s' % (tex(DE11[0]), tex(1 - DE11[0]), tex(DE11[0]), tex(1 + DE11[0])) + Q11 + r'0\lt |x-1|:\ \ x\ne 1' + Q11 + r'\text{entradas: }%s\lt x\lt %s,\ x\ne 1' % (tex(1 - DE11[0]), tex(1 + DE11[0])) + Q11 + r'\text{son todas, no algunas}',
+    r'\text{pieza 4: «entonces }|f(x)-3|\lt %s\text{»; demostración:}' % tex(EP11[0]) + Q11 + r'\text{se parte de }|x-1|\lt %s' % tex(DE11[0]) + Q11 + r'\text{se multiplica por }5:\ \ 5\,|x-1|\lt 5\cdot %s=%s' % (tex(DE11[0]), tex(5*DE11[0])) + Q11 + r'\text{como }|f(x)-3|=5\,|x-1|:\ \ |f(x)-3|\lt %s' % tex(EP11[0]) + Q11 + r'\text{prueba: }' + c11(XP11) + Q11 + r'|%s-1|=%s\lt %s;\ \ |%s-3|=%s\lt %s' % (tex(XP11), tex(abs(XP11 - 1)), tex(DE11[0]), tex(f11(XP11)), tex(abs(f11(XP11) - 3)), tex(EP11[0])) + Q11 + r'\text{salidas: }%s\lt f(x)\lt %s,\ f(x)\ne 3' % (tex(f11(1 - DE11[0])), tex(f11(1 + DE11[0]))),
+    r'\text{otra tolerancia: }\varepsilon=%s' % tex(EP11[1]) + Q11 + r'3-%s=%s;\ \ 3+%s=%s' % (tex(EP11[1]), tex(3 - EP11[1]), tex(EP11[1]), tex(3 + EP11[1])) + Q11 + r'\delta=%s\text{ ya no sirve: }f(%s)=%s\gt %s' % (tex(DE11[0]), tex(XP11), tex(f11(XP11)), tex(3 + EP11[1])) + Q11 + r'\text{nueva respuesta: }\tfrac{%s}{5}=%s;\ \ \delta=%s' % (tex(EP11[1]), tex(EP11[1]/5), tex(DE11[1])) + Q11 + r'1-%s=%s;\ \ 1+%s=%s' % (tex(DE11[1]), tex(1 - DE11[1]), tex(DE11[1]), tex(1 + DE11[1])) + Q11 + r'5\,|x-1|\lt 5\cdot %s=%s' % (tex(DE11[1]), tex(5*DE11[1])) + Q11 + r'\text{prueba: }' + c11(XQ11) + Q11 + r'|%s-1|=%s\lt %s;\ \ |%s-3|=%s\lt %s' % (tex(XQ11), tex(abs(XQ11 - 1)), tex(DE11[1]), tex(f11(XQ11)), tex(abs(f11(XQ11) - 3)), tex(EP11[1])),
+    r'\text{las dos respuestas siguen la regla }\delta=\tfrac{\varepsilon}{5}:' + Q11 + r'\tfrac{%s}{5}=%s;\ \ \tfrac{%s}{5}=%s' % (tex(EP11[0]), tex(EP11[0]/5), tex(EP11[1]), tex(EP11[1]/5)) + Q11 + r'\text{para cualquier }\varepsilon\gt 0\text{: si }0\lt |x-1|\lt \tfrac{\varepsilon}{5},' + Q11 + r'|f(x)-3|=5\,|x-1|\lt 5\cdot \tfrac{\varepsilon}{5}=\varepsilon' + Q11 + r'\text{la frase completa se cumple: el límite es }3' + Q11 + r'f(1)\text{ no se usó en ningún paso}']
+LB11 = {'R1': r'f(x)=5x-2,\ x\ne 1;\ \ a=1;\ \ L=3', 'R2': r'\text{para todo }\varepsilon\gt 0\ \ (\text{aquí }\varepsilon=%s)' % tex(EP11[0]), 'R3': r'\text{existe }\delta\gt 0\ \ (\text{aquí }\delta=%s)' % tex(DE11[0]), 'R4': r'\text{para todo }x\text{ con }0\lt |x-1|\lt %s' % tex(DE11[0]),
+        'R5': r'\text{se cumple }|f(x)-3|\lt %s' % tex(EP11[0]), 'R6': r'\varepsilon=%s\ \to\ \delta=%s' % (tex(EP11[1]), tex(DE11[1])), 'R7': r'0\lt |x-1|\lt \tfrac{\varepsilon}{5}\ \Rightarrow\ |f(x)-3|\lt \varepsilon',
+        'E1': r'\varepsilon=%s' % tex(EP11[0]), 'E2': r'\varepsilon=%s' % tex(EP11[1]), 'D1': r'\delta=%s' % tex(DE11[0]), 'D2': r'\delta=%s' % tex(DE11[1]), 'CF': 'y=5x-2', 'LA': 'a=1', 'LL': 'L=3', 'NX': r'\text{entradas, }x\ne 1',
+        'GEN': r'\text{regla: }\delta=\tfrac{\varepsilon}{5}', 'F': r'\Longrightarrow\ \delta=\tfrac{\varepsilon}{5}\text{ sirve siempre}', 'Q': r'\text{¿por qué el límite en }1\text{ es }3\text{?}', 'EX': 'x', 'EY': 'y'}
+def plano11(t):
+    """TeX de una etiqueta → texto plano sin espacios, para compararlo con su respaldo"""
+    t = t.replace('\\tfrac{\\varepsilon}{5}', 'ε/5')
+    for a11, b11 in [('\\text{', ''), ('}', ''), ('{,', ','), ('\\varepsilon', 'ε'), ('\\delta', 'δ'), ('\\gt', '>'), ('\\lt', '<'), ('\\ne', '≠'), ('\\Longrightarrow', '⟹'), ('\\Rightarrow', '⟹'), ('\\to', '→'), ('\\ ', ''), ('-', '−'), (' ', '')]: t = t.replace(a11, b11)
+    return t
+if not SIN_NODO:
+    R11 = json.loads(subprocess.run(['node', '-e', NODO11, str(PARTES)], capture_output=True, text=True, check=True).stdout)
+    ok(R11['n'] == 7 == len(LE11), 'H11 escena: 7 pasos')
+    ok({l[0]: l[1] for l in R11['lab']} == LB11, 'H11 escena: etiquetas distintas de las calculadas: ' + ', '.join(l[0] for l in R11['lab'] if LB11.get(l[0]) != l[1]))
+    ok(all(plano11(l[1]) == l[2].replace(' ', '') for l in R11['lab']), 'H11 escena: el respaldo de una etiqueta no dice lo mismo que su TeX: ' + ' | '.join(l[2] for l in R11['lab'] if plano11(l[1]) != l[2].replace(' ', '')))
+    for i11 in range(7):
+        ok(R11['lect'][i11] == '\\begin{aligned}' + '\\\\[5pt]'.join('&\\textbf{%d.}\\ \\ %s' % (n11 + 1, LE11[n11]) for n11 in range(i11 + 1)) + '\\end{aligned}', 'H11 lectura real del paso %d: no coincide con la calculada con fracciones' % (i11 + 1))
+    ok([a11[1] for a11 in R11['ap']] == [1, 1, 2, 3, 4, 5, 6, 7, 7, 7] and all(0 <= a11[2] <= 1 for a11 in R11['ap']) and R11['ap'][0][2] == 0 and R11['ap'][-1][2] > 0.99, 'H11 escena: la animación recorre los 7 pasos, cada uno con transición')
+    ok('hueco en \\((1,3)\\)' in R11['leg'] and 'siete pasos' in R11['aria'] and 'épsilon igual a 0,5 y delta igual a 0,1' in R11['aria'] and 'entre 0,8 y 1,2' in R11['aria'] and 'entre las alturas 2 y 4' in R11['aria'], 'H11 escena: leyenda y descripción')
+
+# 2) segundo recuadro: |F(x) − L| = |m|·|x − a| y la regla δ = ε/|m|, en rejilla, para todas las rectas de la hoja (y la identidad)
+REC11 = [(f11, 1, 3, 5, -2, 'ancla f'), (g11, -1, -5, 6, 1, 'ej1 g'), (h11, 8, 4, Fr(1, 4), 2, 'ej2 h'), (r11, 2, 7, 3, 1, 'ej3 r'), (k11, 4, 1, -2, 9, 'A k'), (F11, 180, 356, Fr(9, 5), 32, 'C F'), (lambda x: Fr(x), Fr(7, 3), Fr(7, 3), 1, 0, 'identidad')]
+for F_, a_, L_, m_, b_, et_ in REC11:
+    ok(L_ == m_*a_ + b_ and m_ != 0 and abs(m_) > 0, 'H11 %s: L = ma + b y m ≠ 0' % et_)
+    for x_ in RJ:
+        if F_ is f11 and x_ == 1: continue
+        ok(F_(x_) == m_*x_ + b_ and F_(x_) - L_ == m_*x_ + b_ - (m_*a_ + b_) == m_*x_ + b_ - m_*a_ - b_ == m_*x_ - m_*a_ == m_*(x_ - a_) and abs(F_(x_) - L_) == abs(m_)*abs(x_ - a_), 'H11 %s: borrador, pasos 1 a 4' % et_)
+    for e_ in ES11:
+        d_ = e_/abs(m_); ok(d_ > 0 and abs(m_)*d_ == e_, 'H11 %s: δ = ε/|m| es positiva y |m|·δ = ε' % et_)
+        implica11('H11 %s, ε = %s' % (et_, e_), F_, a_, L_, d_, e_)
+        ok(abs(F_(a_ + d_) - L_) == e_ == abs(F_(a_ - d_) - L_), 'H11 %s: en el borde de la franja la distancia es exactamente ε' % et_)
+for c_ in (Fr(4), Fr(-3, 2), Fr(0)):                            # función constante: cualquier δ sirve
+    for e_ in ES11:
+        for d_ in (Fr(1), Fr(1000), Fr(1, 1000)): implica11('H11 constante %s' % c_, lambda x: c_, Fr(2), c_, d_, e_)
+    ok(abs(c_ - c_) == 0, 'H11 constante: |c − c| = 0')
+TB11 = re.findall(r'<table class="tbl">(.*?)</table>', A11, re.S); ok(len(TB11) == 2, 'H11 n.º de tablas')
+fr11 = lambda q: ('\\dfrac{%d}{%d}' % (q.numerator, q.denominator)) if Fr(q).denominator != 1 else '%d' % int(q)
+REG11 = [('5x-2', Fr(5)), ('6x+1', Fr(6)), ('9-2x', Fr(-2)), ('\\dfrac{x}{4}+2', Fr(1, 4)), ('x', Fr(1))]; E06 = Fr(3, 5)
+ok(filas(TB11[1]) == [['\\(%s\\)' % n_, '\\(%s\\)' % fr11(m_), '\\(%s\\)' % fr11(abs(m_)), '\\(\\delta=%s\\)' % ('\\varepsilon' if abs(m_) == 1 else ('\\dfrac{\\varepsilon}{%d}' % int(abs(m_)) if abs(m_) > 1 else '%d\\,\\varepsilon' % int(1/abs(m_)))),
+                              '\\(%s\\)' % (tex(E06) if abs(m_) == 1 else ('\\dfrac{%s}{%d}=%s' % (tex(E06), int(abs(m_)), tex(E06/abs(m_))) if abs(m_) > 1 else '%d\\cdot %s=%s' % (int(1/abs(m_)), tex(E06), tex(E06/abs(m_)))))] for n_, m_ in REG11], 'H11 tabla del segundo recuadro: pendiente, valor absoluto, regla y distancia para ε = 0,6')
+ok('\\varepsilon=0{,}6' in A11 and [E06/abs(m_) for n_, m_ in REG11] == [Fr('0.12'), Fr('0.1'), Fr('0.3'), Fr('2.4'), Fr('0.6')] and 1/Fr(1, 4) == 4, 'H11 tabla del segundo recuadro: distancias')
+# 3) primer recuadro: traducción a desigualdades e intervalos, y por qué el orden importa
+for x_ in RJ:
+    for a_ in (Fr(1), Fr(-1), Fr(8)):
+        for d_ in (Fr(1, 5), Fr(1, 20), Fr(2)):
+            ok((0 < abs(x_ - a_) < d_) == (a_ - d_ < x_ < a_ + d_ and x_ != a_) == ((a_ - d_ < x_ < a_) or (a_ < x_ < a_ + d_)) and (abs(x_ - a_) < d_) == (-d_ < x_ - a_ < d_), 'H11 k1: 0 < |x − a| < δ equivale a a − δ < x < a + δ con x ≠ a, y a la unión de los dos lados')
+    for L_ in (Fr(3), Fr(-5)):
+        for e_ in (Fr(1), Fr(3, 10)): ok((abs(x_ - L_) < e_) == (L_ - e_ < x_ < L_ + e_), 'H11 k1: |y − L| < ε equivale a L − ε < y < L + ε')
+ok(filas(TB11[0]) == [['\\(0\\lt |x-a|\\lt \\delta\\)', '\\(a-\\delta\\lt x\\lt a+\\delta\\) y \\(x\\ne a\\)', '\\(x\\) está en \\((a-\\delta,\\,a)\\cup(a,\\,a+\\delta)\\)', '\\(%s\\lt x\\lt %s\\) y \\(x\\ne 1\\)' % (tex(1 - DE11[0]), tex(1 + DE11[0]))],
+                              ['\\(|f(x)-L|\\lt \\varepsilon\\)', '\\(L-\\varepsilon\\lt f(x)\\lt L+\\varepsilon\\)', '\\(f(x)\\) está en \\((L-\\varepsilon,\\,L+\\varepsilon)\\)', '\\(%s\\lt f(x)\\lt %s\\)' % (tex(3 - EP11[0]), tex(3 + EP11[0]))]], 'H11 tabla del primer recuadro')
+for d_ in ES11:                                                 # una sola δ para todas las tolerancias: imposible con f(x) = 5x − 2
+    x_ = 1 + d_/2; ok(0 < abs(x_ - 1) < d_ and abs(f11(x_) - 3) == 5*(d_/2) == Fr(5, 2)*d_ and not abs(f11(x_) - 3) < Fr(5, 2)*d_, 'H11 k1: con x = 1 + δ/2 la distancia es 2,5·δ, que no es menor que la tolerancia 2,5·δ')
+# 4) tercer recuadro: unicidad (ningún número queda a menos de |L₁ − L₂|/2 de los dos) y propiedades avisadas
+LS11 = [Fr(i11, 4) for i11 in range(-12, 37)]                   # candidatos a L entre −3 y 9
+for L1 in LS11[::5]:
+    for L2 in LS11[::7]:
+        if L1 == L2: continue
+        e_ = abs(L1 - L2)/2; ok(e_ > 0 and e_ + e_ == 2*e_ == abs(L1 - L2), 'H11 unicidad: ε = |L₁ − L₂|/2 es positiva y 2ε = |L₁ − L₂|')
+        for y_ in RJ[::3]:
+            ok(abs(L1 - L2) <= abs(L1 - y_) + abs(y_ - L2) and abs(L1 - y_) == abs(y_ - L1) and not (abs(y_ - L1) < e_ and abs(y_ - L2) < e_), 'H11 unicidad: desigualdad triangular y contradicción')
+for x_ in RJ:
+    for y_ in RJ[::7]:
+        ok(abs(x_*y_) == abs(x_)*abs(y_) and abs(-x_) == abs(x_) and abs(x_) >= 0 and (abs(x_) == 0) == (x_ == 0) and all(abs(x_ - y_) <= abs(x_ - w_) + abs(w_ - y_) for w_ in RJ[::11]), 'H11 aviso: propiedades del valor absoluto y desigualdad triangular')
+    for c_ in (Fr(1, 2), Fr(1), Fr(3)): ok((abs(x_) < c_) == (-c_ < x_ < c_), 'H11 aviso: |u| < c equivale a −c < u < c')
+# 5) ejemplos 1 y 2 y ejercicio A: controles con números
+ok(g11(-1) == 6*(-1) + 1 == -5 and Fr('0.3')/6 == Fr('0.05') and (-1 - Fr('0.05'), -1 + Fr('0.05')) == (Fr('-1.05'), Fr('-0.95')) and abs(Fr('-1.04') + 1) == Fr('0.04') and 0 < Fr('0.04') < Fr('0.05') and 6*Fr('-1.04') == Fr('-6.24') and g11(Fr('-1.04')) == Fr('-6.24') + 1 == Fr('-5.24') and abs(Fr('-5.24') + 5) == Fr('0.24') < Fr('0.3'), 'H11 ej1')
+implica11('H11 ej1 ε = 0,3', g11, -1, -5, Fr('0.05'), Fr('0.3'))
+for x_ in RJ: ok(g11(x_) + 5 == 6*x_ + 1 + 5 == 6*x_ + 6 == 6*(x_ + 1) and x_ - (-1) == x_ + 1 and h11(x_) - 4 == x_/4 + 2 - 4 == x_/4 - 2 == Fr(1, 4)*(x_ - 8) and k11(x_) - 1 == 9 - 2*x_ - 1 == 8 - 2*x_ == -2*(x_ - 4) and F11(x_) - 356 == Fr(9, 5)*x_ + 32 - 356 == Fr(9, 5)*x_ - 324 == Fr(9, 5)*(x_ - 180), 'H11: diferencias y factor común de los ejemplos y ejercicios')
+ok(h11(8) == 4 and Fr(1, 4)*8 == 2 and 4*Fr('0.5') == 2 and (8 - 2, 8 + 2) == (6, 10) and abs(Fr('9.6') - 8) == Fr('1.6') and 0 < Fr('1.6') < 2 and Fr('9.6')/4 == Fr('2.4') and h11(Fr('9.6')) == Fr('2.4') + 2 == Fr('4.4') and abs(Fr('4.4') - 4) == Fr('0.4') < Fr('0.5') and 2 > Fr('0.5'), 'H11 ej2')
+implica11('H11 ej2 ε = 0,5', h11, 8, 4, 2, Fr('0.5'))
+for e_ in ES11: ok(Fr(1, 4)*(4*e_) == e_ and 4*e_ > 0, 'H11 ej2: δ = 4ε')
+ok((4 - Fr('0.05'), 4 + Fr('0.05'), 1 - Fr('0.1'), 1 + Fr('0.1')) == (Fr('3.95'), Fr('4.05'), Fr('0.9'), Fr('1.1')) and Fr('0.1')/2 == Fr('0.05') and abs(Fr('4.03') - 4) == Fr('0.03') and 0 < Fr('0.03') < Fr('0.05') and 2*Fr('4.03') == Fr('8.06') and k11(Fr('4.03')) == 9 - Fr('8.06') == Fr('0.94') and abs(Fr('0.94') - 1) == Fr('0.06') < Fr('0.1') and abs(-2) == 2, 'H11 A')
+implica11('H11 A ε = 0,1', k11, 4, 1, Fr('0.05'), Fr('0.1'))
+# 6) ejemplo 3: 8 no es el límite de r en 2 (negación), y una tolerancia grande sí tiene respuesta
+falla11('H11 ej3: L = 8, ε = 1', r11, 2, 8, 1, lambda d: 2 - d/2)
+for d_ in ES11:
+    x_ = 2 - d_/2
+    ok(abs(x_ - 2) == d_/2 and 0 < d_/2 < d_ and r11(x_) == 3*(2 - d_/2) + 1 == 6 - 3*d_/2 + 1 == 7 - 3*d_/2 and r11(x_) - 8 == 7 - 3*d_/2 - 8 == -1 - 3*d_/2 < 0 and abs(r11(x_) - 8) == 1 + 3*d_/2 > 1, 'H11 ej3: pasos 4 a 7 con δ = %s' % d_)
+ok(3*Fr('1.9') == Fr('5.7') and r11(Fr('1.9')) == Fr('6.7') and 3*Fr('1.99') == Fr('5.97') and r11(Fr('1.99')) == Fr('6.97') and all(r11(2 - t) < 7 and 8 - r11(2 - t) > 1 for t in TS11 if t > 0) and r11(2) == 3*2 + 1 == 7, 'H11 ej3: exploración y límite verdadero')
+implica11('H11 ej3: con L = 8, la tolerancia 3 tiene respuesta δ = 0,5', r11, 2, 8, Fr(1, 2), 3)
+ok(r11(Fr('1.5')) == Fr('4.5') + 1 == Fr('5.5') and r11(Fr('2.5')) == Fr('7.5') + 1 == Fr('8.5') and 3*Fr('1.5') == Fr('4.5') and 3*Fr('2.5') == Fr('7.5') and 8 - Fr('5.5') == Fr('2.5') and Fr('8.5') - 8 == Fr('0.5') and all(Fr('5.5') < r11(2 + t/2) < Fr('8.5') and abs(r11(2 + t/2) - 8) < Fr('2.5') < 3 for t in TS11), 'H11 ej3: cotas de la tolerancia 3')
+implica11('H11 ej3: el límite es 7 con δ = ε/3', r11, 2, 7, Fr(1, 3), 1)
+# 7) ejemplo 4: escalón; para todo L la tolerancia 1,5 no tiene respuesta; los laterales son 2 y 5
+ok(5 - 2 == 3 and Fr(3, 2) == Fr('1.5') and 2 + Fr('1.5') == Fr('3.5') and Fr('3.5') - 2 == Fr('1.5') == 5 - Fr('3.5') and e11(3) == 5 and e11(Fr('2.999')) == 2, 'H11 ej4: salto, tolerancia y punto medio')
+for L_ in LS11:
+    for d_ in ES11:
+        x1, x2 = 3 - d_/2, 3 + d_/2
+        ok(0 < abs(x1 - 3) == d_/2 < d_ and 0 < abs(x2 - 3) == d_/2 < d_ and e11(x1) == 2 and e11(x2) == 5, 'H11 ej4: las dos entradas y sus salidas')
+        if L_ >= Fr('3.5'): ok(L_ > 2 and abs(e11(x1) - L_) == L_ - 2 >= Fr('1.5'), 'H11 ej4: caso L ≥ 3,5 (L = %s)' % L_)
+        else: ok(L_ < 5 and abs(e11(x2) - L_) == 5 - L_ > Fr('1.5'), 'H11 ej4: caso L < 3,5 (L = %s)' % L_)
+for e_ in ES11:
+    for d_ in ES11[:4]: implica11('H11 ej4: lateral izquierdo 2', e11, 3, 2, d_, e_, -1); implica11('H11 ej4: lateral derecho 5', e11, 3, 5, d_, e_, 1)
+# 8) ejercicio B: salto en 0; ningún L con la tolerancia 1; laterales −1 y 1
+ok([j11(Fr(x)) for x in ('-0.1', '-0.01', '0.1', '0.01', '0')] == [Fr('-1.1'), Fr('-1.01'), Fr('1.2'), Fr('1.02'), 1] and 2*Fr('0.1') == Fr('0.2') and 2*Fr('0.01') == Fr('0.02') and Fr('-0.1') - 1 == Fr('-1.1') and Fr('-0.01') - 1 == Fr('-1.01'), 'H11 B: valores')
+for L_ in LS11:
+    for d_ in ES11:
+        if L_ >= 0:
+            x_ = -d_/2; ok(0 < abs(x_) == d_/2 < d_ and j11(x_) == -d_/2 - 1 and L_ - j11(x_) == L_ + d_/2 + 1 > 1 and abs(j11(x_) - L_) >= 1, 'H11 B c): caso L ≥ 0 (L = %s)' % L_)
+        else:
+            x_ = d_/2; ok(0 < abs(x_) == d_/2 < d_ and j11(x_) == 2*(d_/2) + 1 == d_ + 1 and j11(x_) - L_ == d_ + 1 - L_ > 1 and abs(j11(x_) - L_) >= 1, 'H11 B c): caso L < 0 (L = %s)' % L_)
+for e_ in ES11:
+    implica11('H11 B d): lateral izquierdo −1 con δ = ε', j11, 0, -1, e_, e_, -1); implica11('H11 B d): lateral derecho 1 con δ = ε/2', j11, 0, 1, e_/2, e_, 1)
+    for t in TS11:
+        if t < 0: x_ = t*e_; ok(j11(x_) - (-1) == x_ - 1 + 1 == x_ and abs(x_) == -x_ < e_, 'H11 B d): izquierda, |j(x) + 1| = −x')
+        else: x_ = t*e_/2; ok(j11(x_) - 1 == 2*x_ + 1 - 1 == 2*x_ and abs(2*x_) == 2*x_ < 2*(e_/2) == e_, 'H11 B d): derecha, |j(x) − 1| = 2x')
+# 9) ejercicio C: de grados Celsius a Fahrenheit; 356 es el límite en 180 y 360 no
+ok(Fr('1.8')*180 == 324 and F11(180) == 324 + 32 == 356 and Fr(9)/Fr('1.8') == 5 and Fr('1.8')*5 == 9 and abs(183 - 180) == 3 < 5 and Fr('1.8')*183 == Fr('329.4') and F11(183) == Fr('329.4') + 32 == Fr('361.4') and abs(Fr('361.4') - 356) == Fr('5.4') < 9 and Fr('1.8')/Fr('1.8') == 1 and 360 - 356 == 4 and Fr('1.8')/2 == Fr('0.9'), 'H11 C: cuentas')
+implica11('H11 C ε = 9', F11, 180, 356, 5, 9); implica11('H11 C ε = 1,8', F11, 180, 356, 1, Fr('1.8'))
+falla11('H11 C d): L = 360, ε = 4', F11, 180, 360, 4, lambda d: 180 - d/2)
+for d_ in ES11:
+    c_ = 180 - d_/2; ok(abs(c_ - 180) == d_/2 and F11(c_) == Fr('1.8')*(180 - d_/2) + 32 == 324 - Fr('0.9')*d_ + 32 == 356 - Fr('0.9')*d_ and F11(c_) - 360 == 356 - Fr('0.9')*d_ - 360 == -4 - Fr('0.9')*d_ < 0 and abs(F11(c_) - 360) == 4 + Fr('0.9')*d_ > 4, 'H11 C d): pasos con δ = %s' % d_)
+# 10) lo que la hoja afirma con palabras o símbolos, escrito tal cual (cuantificadores, negación, laterales, reglas y desigualdades)
+for z11 in ['\\text{para todo }\\varepsilon\\gt 0\\text{ existe }\\delta\\gt 0\\text{ tal que, para todo }x,\\quad\\text{si }0\\lt |x-a|\\lt \\delta\\text{, entonces }|f(x)-L|\\lt \\varepsilon.',
+            '\\forall\\,\\varepsilon\\gt 0\\ \\ \\exists\\,\\delta\\gt 0\\ \\ \\forall\\,x:\\ \\ 0\\lt |x-a|\\lt \\delta\\ \\Longrightarrow\\ |f(x)-L|\\lt \\varepsilon', 'definida en un intervalo abierto que contiene a \\(a\\), salvo quizá en \\(a\\), y sea \\(L\\) un número real',
+            '\\text{existe }\\varepsilon\\gt 0\\text{ tal que, para todo }\\delta\\gt 0\\text{, hay un }x\\text{ con}\\]', '\\[0\\lt |x-a|\\lt \\delta\\quad\\text{y}\\quad|f(x)-L|\\ge \\varepsilon.\\]',
+            'si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(x)-L|\\lt \\varepsilon\\)', 'si \\(a\\lt x\\lt a+\\delta\\), entonces \\(|f(x)-L|\\lt \\varepsilon\\)', 'la menor de las dos sirve para el límite',
+            '\\displaystyle\\lim_{x\\to a}(mx+b)=ma+b\\), con \\(\\delta=\\dfrac{\\varepsilon}{|m|}', 'Sea \\(f(x)=mx+b\\) con \\(m\\ne 0\\), y \\(L=ma+b\\)', 'f(x)-L=mx+b-(ma+b)', 'mx-ma=m\\,(x-a)', '|f(x)-L|=|m|\\cdot|x-a|', '|m|\\cdot|x-a|\\lt |m|\\cdot\\dfrac{\\varepsilon}{|m|}=\\varepsilon',
+            '<b>cualquier</b> \\(\\delta\\gt 0\\) sirve', '\\displaystyle\\lim_{x\\to a}c=c', '\\displaystyle\\lim_{x\\to a}x=a\\), con \\(\\delta=\\varepsilon', '\\dfrac{\\varepsilon}{1/4}=4\\,\\varepsilon',
+            '\\varepsilon=\\dfrac{|L_{1}-L_{2}|}{2}', '|L_{1}-L_{2}|\\le |L_{1}-f(x)|+|f(x)-L_{2}|', '\\lt \\varepsilon+\\varepsilon=2\\,\\varepsilon', '2\\,\\varepsilon=2\\cdot\\dfrac{|L_{1}-L_{2}|}{2}=|L_{1}-L_{2}|', '|L_{1}-L_{2}|\\lt |L_{1}-L_{2}|', 'Luego \\(L_{1}=L_{2}\\)',
+            '|f(x)-3|=5\\cdot\\dfrac{\\delta}{2}=2{,}5\\,\\delta', 'x=1+\\dfrac{\\delta}{2}', '\\displaystyle\\lim_{x\\to -1}(6x+1)=-5', '\\delta=\\dfrac{\\varepsilon}{6}', '6\\,|x+1|\\lt 6\\cdot\\dfrac{\\varepsilon}{6}=\\varepsilon', '\\delta=\\dfrac{0{,}3}{6}=0{,}05', '-1{,}05\\lt x\\lt -0{,}95', '0\\lt 0{,}04\\lt 0{,}05', '0{,}24\\lt 0{,}3',
+            '\\displaystyle\\lim_{x\\to 8}\\left(\\dfrac{x}{4}+2\\right)=4', '\\dfrac{x}{4}-2=\\dfrac{1}{4}\\,(x-8)', '\\delta=4\\,\\varepsilon', '\\dfrac{1}{4}\\,|x-8|\\lt \\dfrac{1}{4}\\cdot 4\\,\\varepsilon=\\varepsilon', '\\delta=4\\cdot 0{,}5=2', '6\\lt x\\lt 10', '0\\lt 1{,}6\\lt 2', '0{,}4\\lt 0{,}5',
+            'x=2-\\dfrac{\\delta}{2}', 'r(x)=3\\left(2-\\dfrac{\\delta}{2}\\right)+1=6-\\dfrac{3\\,\\delta}{2}+1=7-\\dfrac{3\\,\\delta}{2}', 'r(x)-8=7-\\dfrac{3\\,\\delta}{2}-8=-1-\\dfrac{3\\,\\delta}{2}', '|r(x)-8|=1+\\dfrac{3\\,\\delta}{2}', '|r(x)-8|\\ge 1=\\varepsilon', '\\(8\\) no es el límite', '1{,}5\\lt x\\lt 2{,}5', '5{,}5\\lt r(x)\\lt 8{,}5', 'sirve \\(\\delta=\\dfrac{\\varepsilon}{3}\\)',
+            'e(x)=\\begin{cases}2&\\text{si }x\\lt 3\\\\[2pt] 5&\\text{si }x\\ge 3\\end{cases}', 'círculo vacío en \\((3,2)\\)', 'punto lleno \\((3,5)\\)', '\\varepsilon=\\dfrac{3}{2}=1{,}5', 'x_{1}=3-\\dfrac{\\delta}{2}', 'x_{2}=3+\\dfrac{\\delta}{2}', 'L-2\\ge 3{,}5-2=1{,}5', '5-L\\gt 5-3{,}5=1{,}5', '|e(x)-L|\\ge 1{,}5', 'el límite de \\(e\\) en \\(3\\) no existe', '\\displaystyle\\lim_{x\\to 3^{-}}e(x)=2', '\\displaystyle\\lim_{x\\to 3^{+}}e(x)=5',
+            '3{,}95\\lt x\\lt 4{,}05', '0{,}9\\lt k(x)\\lt 1{,}1', '8-2x=-2\\,(x-4)', '|k(x)-1|=|-2|\\cdot|x-4|=2\\,|x-4|', '\\delta=\\dfrac{0{,}1}{2}=0{,}05', '0\\lt 0{,}03\\lt 0{,}05', '0{,}06\\lt 0{,}1', 'el límite es \\(1\\)',
+            'j(x)=\\begin{cases}x-1&\\text{si }x\\lt 0\\\\[2pt] 2x+1&\\text{si }x\\ge 0\\end{cases}', 'círculo vacío en \\((0,-1)\\)', 'punto lleno \\((0,1)\\)', 'j(x)=-\\dfrac{\\delta}{2}-1', 'L-j(x)=L+\\dfrac{\\delta}{2}+1', 'j(x)=2\\cdot\\dfrac{\\delta}{2}+1=\\delta+1', 'j(x)-L=\\delta+1-L', 'j(x)-(-1)=x-1+1=x', 'j(x)-1=2x+1-1=2x', '2x\\lt 2\\cdot\\dfrac{\\varepsilon}{2}=\\varepsilon', '\\displaystyle\\lim_{x\\to 0^{-}}j(x)=-1', '\\displaystyle\\lim_{x\\to 0^{+}}j(x)=1',
+            'F(c)=1{,}8\\,c+32', '1{,}8\\,c-324=1{,}8\\,(c-180)', '\\lt \\dfrac{9}{1{,}8}=5', '\\lt 1{,}8\\cdot 5=9', '\\delta=\\dfrac{\\varepsilon}{1{,}8}', '1{,}8\\cdot\\dfrac{\\varepsilon}{1{,}8}=\\varepsilon', '\\displaystyle\\lim_{c\\to 180}F(c)=356', 'c=180-\\dfrac{\\delta}{2}', 'F(c)=1{,}8\\left(180-\\dfrac{\\delta}{2}\\right)+32=324-0{,}9\\,\\delta+32=356-0{,}9\\,\\delta', 'F(c)-360=356-0{,}9\\,\\delta-360=-4-0{,}9\\,\\delta', '|F(c)-360|=4+0{,}9\\,\\delta', '\\(360\\) no es el límite',
+            'sin demostrar', 'Desigualdad triangular', 'nunca de \\(x\\)', 'no puede depender de \\(x\\)', 'No es parte de la demostración', 'se refiere a los \\(x\\) en que \\(f\\) está definida', 'Uso de la definición formal de límite', 'f(x)=5x-2\\) para \\(x\\ne 1', 'hueco en \\((1,3)\\)', '\\delta=\\dfrac{\\varepsilon}{5}', 'entre \\(0{,}6\\) y \\(1{,}4\\) y alturas entre \\(1\\) y \\(5\\)']:
+    ok(z11 in A11, 'H11: la hoja no trae «%s»' % z11)
+ok(e11(3) == 5 and j11(0) == 1 and 0 - 1 == -1 and A11.count('<div class="def">') == 1, 'H11: puntos marcados de las gráficas descritas y recuadro de laterales')
+# <<< H11
+
 ESPER = {'vel-idea': (7, FUN2), 'gra-idea': (6, FUN3), 'gra-casos': (5, FUN3), 'grf-idea': (5, FUN4), 'asi-idea': (6, FUN5), 'tab-idea': (6, FUN6), 'est-idea': (6, FUN7)}
 # >>> H08 ESPER
 ESPER['uni-idea'] = (6, FUN8)
@@ -1059,6 +1257,10 @@ ESPER['usa-idea'] = (7, FUN9)
 ESPER['eps-idea'] = (6, FUN10)
 NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '10.scene.js'].map(function(a){ return fs.readFileSync")   # H10 agrega su escena a la lista que carga node
 # <<< H10 ESPER
+# >>> H11 ESPER
+ESPER['formal-idea'] = (7, FUN11)
+NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '11.scene.js'].map(function(a){ return fs.readFileSync"); ok("'11.scene.js'" in NODO2, 'H11: la escena no quedó en la lista de node')
+# <<< H11 ESPER
 if not SIN_NODO:
     R2 = json.loads(subprocess.run(['node', '-e', NODO2, str(PARTES)], capture_output=True, text=True, check=True).stdout)
     ok(sorted(R2) == sorted(ESPER), 'H02–H07: escenas definidas')
