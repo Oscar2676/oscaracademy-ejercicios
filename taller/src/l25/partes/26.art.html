@@ -1,0 +1,284 @@
+<!--file:H26_limite_de_una_sucesion.html-->
+<!--title:Límite de una sucesión-->
+<!--id:ss-limite-suc-->
+<!--tab:H26 Límite de una sucesión-->
+<article class="sheet" id="ss-limite-suc" data-hoja="L25 H26">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Límite de una sucesión</b></li>
+    </ol>
+    <h1>Límite de una sucesión</h1>
+    <p class="lede">Una sucesión tiene límite \(L\) cuando sus términos quedan tan cerca de \(L\) como se quiera, con tal de avanzar lo suficiente en la lista. «Tan cerca como se quiera» se mide con una tolerancia \(\varepsilon&gt;0\), y «avanzar lo suficiente», con un número \(N\): pasado el término \(N\), todos están a menos de \(\varepsilon\) de \(L\). \[\lim_{n\to\infty}a_{n}=L\quad\Longleftrightarrow\quad\text{para todo }\varepsilon&gt;0\text{ existe }N\text{ tal que: }\ n&gt;N\ \Longrightarrow\ |a_{n}-L|&lt;\varepsilon\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La sucesión \(a_{n}=\dfrac{n+1}{n}\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los doce puntos azules (paso 1):</b> en horizontal va la posición \(n\); en vertical, el valor del término. De cada punto sale una punteada hasta su valor en el eje vertical: \(2\), \(1{,}5\), \(1{,}33\ldots\), \(1{,}25\), y siguen bajando. Arriba queda la pregunta: ¿tiene límite?, ¿cuál es?</li>
+    <li><b>Paso 2, en burdeo:</b> la recta horizontal es el candidato a límite, \(L=1\). El trazo que baja de cada punto hasta la recta es la distancia de ese término a \(1\), que vale \(\dfrac{1}{n}\): cada trazo es más corto que el anterior.</li>
+    <li><b>Pasos 3 y 4, en naranja y verde:</b> la franja naranja reúne los valores que están a menos de \(\varepsilon=\dfrac{1}{4}\) de \(1\): va de \(0{,}75\) a \(1{,}25\). La línea verde marca \(N=4\): desde el quinto término, todos los puntos (ahora verdes) están dentro de la franja. El cuarto está justo en el borde, y el borde no cuenta.</li>
+    <li><b>Paso 5:</b> se pide más: una franja más angosta, con \(\varepsilon=\dfrac{1}{10}\), de \(0{,}9\) a \(1{,}1\). También hay un \(N\), pero más grande: \(N=10\). Los puntos 11 y 12 quedan con un anillo verde.</li>
+    <li><b>Paso 6, registro y cuenta de abajo:</b> la misma cuenta, hecha con la letra \(\varepsilon\), sirve para cualquier franja: basta un natural \(N\ge\dfrac{1}{\varepsilon}\). Conclusión: como para <b>toda</b> franja hay un \(N\), el límite de la sucesión es \(1\). Dos franjas no bastaban; la cuenta con \(\varepsilon\) sí.</li>
+  </ol>
+  <div class="stage" data-scene="lim-idea"></div>
+  <ul class="keys">
+    <li><b>Puntos azules:</b> los términos \(a_{1},\ \ldots,\ a_{12}\); la punteada lleva cada uno a su valor en el eje vertical.</li>
+    <li><b>Burdeo:</b> el candidato a límite, \(L=1\), y la distancia de cada término a él, \(|a_{n}-1|\).</li>
+    <li><b>Franja naranja:</b> los valores entre \(L-\varepsilon\) y \(L+\varepsilon\), sin los bordes.</li>
+    <li><b>Verde:</b> el número \(N\) de cada franja y los términos posteriores a \(N\), que están todos dentro.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Sucesión</b> (hoja «Sucesión infinita»): una lista sin fin de números reales, \(a_{1},\ a_{2},\ a_{3},\ \ldots\), con un término \(a_{n}\) para cada natural \(n\ge 1\).</li>
+      <li><b>Distancia.</b> La distancia entre el término \(a_{n}\) y un número \(L\) es \(|a_{n}-L|\). Decir \(|a_{n}-L|&lt;\varepsilon\) es lo mismo que decir \(L-\varepsilon&lt;a_{n}&lt;L+\varepsilon\): el término está dentro de la franja que va de \(L-\varepsilon\) a \(L+\varepsilon\), sin tocar los bordes.</li>
+      <li><b>Límite.</b> Un número real \(L\) es el <b>límite</b> de la sucesión si para todo número \(\varepsilon&gt;0\) existe un entero \(N\ge 0\) tal que \(|a_{n}-L|&lt;\varepsilon\) para todo \(n&gt;N\). Se escribe \(\displaystyle\lim_{n\to\infty}a_{n}=L\), o también \(a_{n}\to L\).</li>
+      <li><b>Convergente y divergente.</b> Si existe un número real \(L\) que cumple la definición, la sucesión es <b>convergente</b> (converge a \(L\)). Si ningún número real la cumple, es <b>divergente</b>.</li>
+      <li><b>El orden importa.</b> Primero se da \(\varepsilon\) y después se busca \(N\): el número \(N\) depende de \(\varepsilon\), y en general crece cuando \(\varepsilon\) se achica. La definición pide un \(N\) para <b>cada</b> \(\varepsilon&gt;0\), no uno solo que sirva para todos.</li>
+      <li><b>\(N\) no es único.</b> Si un \(N\) sirve, cualquier entero mayor también sirve, porque los \(n\) mayores que él son también mayores que \(N\). No hace falta encontrar el menor: basta mostrar uno.</li>
+      <li><b>\(\varepsilon\) es positivo, nunca \(0\).</b> Con \(\varepsilon=0\) se pediría \(|a_{n}-L|&lt;0\), y una distancia nunca es negativa: ninguna sucesión tendría límite. La segunda animación lo muestra.</li>
+      <li><b>Divergir a infinito (definición aparte).</b> Se escribe \(\displaystyle\lim_{n\to\infty}a_{n}=+\infty\) si para todo número \(M&gt;0\) existe un entero \(N\ge 0\) tal que \(a_{n}&gt;M\) para todo \(n&gt;N\). Y \(\displaystyle\lim_{n\to\infty}a_{n}=-\infty\) si para todo \(M&gt;0\) existe \(N\) tal que \(a_{n}&lt;-M\) para todo \(n&gt;N\). En los dos casos la sucesión es <b>divergente</b>: \(+\infty\) y \(-\infty\) no son números reales (ejemplo 4).</li>
+    </ol>
+    <p><b>Cómo se demuestra un límite con \(\varepsilon\) y \(N\).</b></p>
+    <ol class="steps">
+      <li><b>Se simplifica la distancia</b> \(|a_{n}-L|\) hasta dejarla sin valor absoluto.</li>
+      <li><b>Se toma un \(\varepsilon&gt;0\) cualquiera</b> (una letra, no un número) y se despeja \(n\) en la desigualdad \(|a_{n}-L|&lt;\varepsilon\).</li>
+      <li><b>Se elige \(N\)</b> a partir de ese despeje. Que exista un natural tan grande como haga falta lo asegura la propiedad arquimediana.</li>
+      <li><b>Se escribe la cadena completa:</b> si \(n&gt;N\), entonces \(|a_{n}-L|&lt;\varepsilon\).</li>
+    </ol>
+    <p><b>Relación con las otras hojas.</b> En las hojas «Sucesión infinita», «Series infinitas convergentes y divergentes» y «Criterio del enésimo término», «límite» se usó con su significado intuitivo: el número al que los términos se acercan tanto como se quiera al crecer \(n\). Esta es la misma idea, escrita de modo que se pueda demostrar. La suma de una serie es el límite de sus sumas parciales: esta definición, aplicada a la sucesión \(S_{1},\ S_{2},\ S_{3},\ \ldots\)</p>
+    <p><b>Aviso de rigor.</b> Se usan sin demostrar: (1) la <b>propiedad arquimediana</b> de los números reales: para cada número real \(x\) hay un número natural \(N\) con \(N\ge x\); (2) las propiedades del valor absoluto: \(|x|\ge 0\), \(|-x|=|x|\), \(x\le|x|\), \(|x\cdot y|=|x|\cdot|y|\), la equivalencia entre \(|x|&lt;\varepsilon\) y \(-\varepsilon&lt;x&lt;\varepsilon\), y la desigualdad triangular \(|x+y|\le|x|+|y|\); (3) las reglas de las desigualdades: se puede sumar un mismo número a los dos lados y multiplicar o dividir los dos lados por un número positivo, y si \(0&lt;x&lt;y\) entonces \(\dfrac{1}{y}&lt;\dfrac{1}{x}\); (4) el principio de inducción (ejercicio B). El álgebra de límites se enuncia más abajo y solo se demuestra la regla de la suma; las reglas de la constante, la resta, el producto y el cociente quedan <b>enunciadas sin demostrar</b>. Lo mismo \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\) para \(|r|&lt;1\): aquí solo se demuestra el caso \(r=\dfrac{1}{2}\) (ejercicio B). Algunos libros escriben \(n\ge N\) en vez de \(n&gt;N\): las dos definiciones dan los mismos límites (el \(N\) de una es el de la otra más \(1\)). En el ejercicio C, las notas de la alumna son un modelo declarado, no un dato real.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Tres teoremas demostrados y dos enunciados</h3>
+    <p><b>Teorema 1 (unicidad).</b> Una sucesión no puede tener dos límites distintos: si \(a_{n}\to L\) y \(a_{n}\to M\), entonces \(L=M\).</p>
+    <ol class="steps">
+      <li>Se supone lo contrario: \(L\neq M\). Entonces \(|L-M|&gt;0\), y se puede tomar \(\varepsilon=\dfrac{|L-M|}{2}\), que es positivo.</li>
+      <li>Como \(a_{n}\to L\), para ese \(\varepsilon\) hay un \(N_{1}\) tal que \(|a_{n}-L|&lt;\varepsilon\) para todo \(n&gt;N_{1}\).</li>
+      <li>Como \(a_{n}\to M\), para ese \(\varepsilon\) hay un \(N_{2}\) tal que \(|a_{n}-M|&lt;\varepsilon\) para todo \(n&gt;N_{2}\).</li>
+      <li>Se toma un \(n\) mayor que los dos, por ejemplo \(n=N_{1}+N_{2}+1\). Para ese \(n\) valen las dos desigualdades.</li>
+      <li>Se suma y se resta \(a_{n}\): \(L-M=(L-a_{n})+(a_{n}-M)\).</li>
+      <li>Desigualdad triangular: \(|L-M|\le|L-a_{n}|+|a_{n}-M|\).</li>
+      <li>Como \(|L-a_{n}|=|a_{n}-L|\), por los pasos 2 y 3 cada sumando es menor que \(\varepsilon\): \(|L-M|&lt;\varepsilon+\varepsilon=2\varepsilon\).</li>
+      <li>Se reemplaza \(\varepsilon\): \(2\varepsilon=2\cdot\dfrac{|L-M|}{2}=|L-M|\). Queda \(|L-M|&lt;|L-M|\): un número menor que sí mismo, lo que es imposible.</li>
+      <li>La suposición \(L\neq M\) lleva a algo imposible. Entonces \(L=M\). Por eso se dice <b>el</b> límite.</li>
+    </ol>
+    <p><b>Teorema 2 (límite de una suma).</b> Si \(a_{n}\to A\) y \(b_{n}\to B\), entonces \(a_{n}+b_{n}\to A+B\).</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon&gt;0\). Entonces \(\dfrac{\varepsilon}{2}\) también es positivo, y se puede usar como tolerancia.</li>
+      <li>Como \(a_{n}\to A\), hay un \(N_{1}\) tal que \(|a_{n}-A|&lt;\dfrac{\varepsilon}{2}\) para todo \(n&gt;N_{1}\).</li>
+      <li>Como \(b_{n}\to B\), hay un \(N_{2}\) tal que \(|b_{n}-B|&lt;\dfrac{\varepsilon}{2}\) para todo \(n&gt;N_{2}\).</li>
+      <li>Sea \(N\) el mayor de \(N_{1}\) y \(N_{2}\). Si \(n&gt;N\), valen las dos desigualdades.</li>
+      <li>Se reordena la resta: \((a_{n}+b_{n})-(A+B)=(a_{n}-A)+(b_{n}-B)\).</li>
+      <li>Desigualdad triangular: \(|(a_{n}+b_{n})-(A+B)|\le|a_{n}-A|+|b_{n}-B|\).</li>
+      <li>Por los pasos 2 y 3: \(|a_{n}-A|+|b_{n}-B|&lt;\dfrac{\varepsilon}{2}+\dfrac{\varepsilon}{2}=\varepsilon\).</li>
+      <li>Entonces, si \(n&gt;N\), \(|(a_{n}+b_{n})-(A+B)|&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(a_{n}+b_{n}\to A+B\).</li>
+    </ol>
+    <p><b>Teorema 3 (correr el índice no cambia el límite).</b> Si \(a_{n}\to L\), entonces la sucesión \(b_{n}=a_{n-1}\) (definida para \(n\ge 2\)) también tiene límite \(L\). Es lo que usa la hoja «Criterio del enésimo término» con \(S_{n-1}\).</p>
+    <ol class="steps">
+      <li>Sea \(\varepsilon&gt;0\). Como \(a_{n}\to L\), hay un \(N\) tal que \(|a_{m}-L|&lt;\varepsilon\) para todo \(m&gt;N\).</li>
+      <li>Si \(n&gt;N+1\), entonces, restando \(1\) a cada lado, \(n-1&gt;N\).</li>
+      <li>Por el paso 1, con \(m=n-1\): \(|b_{n}-L|=|a_{n-1}-L|&lt;\varepsilon\).</li>
+      <li>Para \(b_{n}\) sirve el número \(N+1\). Como \(\varepsilon\) era cualquiera, \(b_{n}\to L\).</li>
+    </ol>
+    <p><b>Álgebra de límites (enunciada; aquí no se demuestra).</b> Si \(a_{n}\to A\) y \(b_{n}\to B\), y \(c\) es un número real:</p>
+    <ol class="steps">
+      <li><b>Constante por sucesión:</b> \(c\cdot a_{n}\to c\cdot A\).</li>
+      <li><b>Resta:</b> \(a_{n}-b_{n}\to A-B\).</li>
+      <li><b>Producto:</b> \(a_{n}\cdot b_{n}\to A\cdot B\).</li>
+      <li><b>Cociente:</b> si \(b_{n}\neq 0\) para todo \(n\) y \(B\neq 0\), entonces \(\dfrac{a_{n}}{b_{n}}\to\dfrac{A}{B}\).</li>
+    </ol>
+    <p>Estas cuatro reglas, junto con la de la suma (teorema 2), son las que las hojas de series usan al «calcular el límite término a término». Valen solo cuando los dos límites existen como números reales.</p>
+    <p><b>Potencias de una razón (enunciado; aquí no se demuestra).</b> Si \(|r|&lt;1\), entonces \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\). Es el resultado que usa la hoja «Series geométricas infinitas» para sumar una serie geométrica. Su demostración general usa una desigualdad (la de Bernoulli) que no se ve en esta hoja. Aquí se demuestra un caso, \(r=\dfrac{1}{2}\) (ejercicio B). Los otros casos, también enunciados: si \(r=1\), \(r^{\,n}=1\) para todo \(n\), y el límite es \(1\) (ejemplo 1); si \(r=-1\), la sucesión no tiene límite (ejemplo 3, demostrado); si \(|r|&gt;1\), la sucesión diverge.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>La franja se angosta y \(N\) crece. Número ↔ figura</h3>
+    <p>Otra sucesión, \(a_{n}=1+\dfrac{(-1)^{n}}{n}\), que se acerca a \(1\) saltando de un lado a otro: \(0,\ 1{,}5,\ 0{,}66\ldots,\ 1{,}25,\ \ldots\) El deslizador elige la tolerancia \(\varepsilon\) entre nueve valores, de mayor a menor.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los puntos y la recta burdeo:</b> los puntos son los términos, cada uno con su punteada hasta el eje vertical; la recta es el límite, \(L=1\). El trazo burdeo de cada punto a la recta es su distancia a \(1\), que vale \(\dfrac{1}{n}\).</li>
+      <li><b>Mira después la franja naranja:</b> va de \(1-\varepsilon\) a \(1+\varepsilon\); sus dos bordes están anotados en el eje. Arriba del dibujo se lee el valor de \(\varepsilon\), la franja y el \(N\) que resulta.</li>
+      <li><b>Mira la línea verde:</b> marca \(N\). Los puntos que vienen después de ella son verdes: están todos dentro de la franja. Los de antes, azules, están fuera o justo en el borde.</li>
+      <li><b>Mueve el deslizador \(\varepsilon\):</b> al achicar \(\varepsilon\) la franja se angosta y la línea verde se corre a la derecha: \(N\) vale \(0,\ 1,\ 2,\ 2,\ 4,\ 5,\ 8\) y \(10\). En el primer valor, \(\varepsilon=1{,}25\), todos los términos están dentro y sirve \(N=0\). En el último, \(\varepsilon=0\), la franja se reduce a la recta, ningún término queda dentro y no hay \(N\).</li>
+      <li><b>Cuenta de abajo:</b> para el \(\varepsilon\) elegido, la distancia \(\dfrac{1}{n}\), los bordes de la franja, el despeje \(n&gt;\dfrac{1}{\varepsilon}\), la división, el primer natural que cumple, \(N\), y una comprobación con el término \(N\) y con el siguiente. Conclusión: por angosta que sea la franja, siempre hay un \(N\); eso es tener límite \(1\).</li>
+    </ol>
+    <div class="stage" data-scene="lim-vivo"></div>
+    <ul class="keys">
+      <li><b>Franja naranja:</b> los valores entre \(1-\varepsilon\) y \(1+\varepsilon\), sin los bordes.</li>
+      <li><b>Línea verde y puntos verdes:</b> el número \(N\) y los términos posteriores a él, todos dentro de la franja.</li>
+      <li><b>Puntos azules:</b> los términos que están fuera de la franja o justo en su borde.</li>
+      <li><b>Burdeo:</b> el límite \(L=1\) y la distancia de cada término a él.</li>
+      <li><b>Caso límite 1 (\(\varepsilon=1{,}25\)):</b> una tolerancia tan grande que todos los términos la cumplen: \(N=0\). Una tolerancia grande no prueba nada; lo que cuesta, y lo que la definición exige, son las chicas.</li>
+      <li><b>Caso límite 2 (\(\varepsilon=0\)):</b> no está permitido. Ningún término cumple \(|a_{n}-1|&lt;0\), aunque la sucesión sí tiene límite \(1\). Por eso la definición dice \(\varepsilon&gt;0\).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: una constante y \(\dfrac{1}{n}\)</h3>
+  <div class="body">
+  <p><b>(a)</b> La sucesión constante \(a_{n}=5\) tiene límite \(5\).</p>
+  <ol class="steps">
+    <li>Distancia: \(|a_{n}-5|=|5-5|=|0|=0\), para todo \(n\).</li>
+    <li>Sea \(\varepsilon&gt;0\). Como \(0&lt;\varepsilon\), se cumple \(|a_{n}-5|&lt;\varepsilon\) para todo \(n\ge 1\).</li>
+    <li>Sirve \(N=0\): todo \(n&gt;0\) cumple. Entonces \(\displaystyle\lim_{n\to\infty}5=5\).</li>
+    <li>La misma cuenta, con una constante \(c\) cualquiera: \(|c-c|=0&lt;\varepsilon\). Toda sucesión constante converge a su constante. Aquí el límite sí es un término de la sucesión (todos).</li>
+  </ol>
+  <p><b>(b)</b> \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\).</p>
+  <ol class="steps">
+    <li>Distancia: \(\left|\dfrac{1}{n}-0\right|=\left|\dfrac{1}{n}\right|=\dfrac{1}{n}\), porque \(\dfrac{1}{n}\) es positivo.</li>
+    <li>Sea \(\varepsilon&gt;0\). El número \(\dfrac{1}{\varepsilon}\) es real. Por la propiedad arquimediana (usada sin demostrar), hay un natural \(N\) con \(N\ge\dfrac{1}{\varepsilon}\).</li>
+    <li>Sea \(n&gt;N\). Como \(N\ge\dfrac{1}{\varepsilon}\), resulta \(n&gt;\dfrac{1}{\varepsilon}\).</li>
+    <li>Se multiplica cada lado por \(\varepsilon\), que es positivo: \(n\,\varepsilon&gt;1\).</li>
+    <li>Se divide cada lado por \(n\), que es positivo: \(\varepsilon&gt;\dfrac{1}{n}\).</li>
+    <li>Entonces, si \(n&gt;N\), \(\left|\dfrac{1}{n}-0\right|=\dfrac{1}{n}&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n}=0\).</li>
+    <li><b>Con un número:</b> \(\varepsilon=0{,}01\). División: \(\dfrac{1}{0{,}01}=100\), porque \(100\cdot 0{,}01=1\). Sirve \(N=100\).</li>
+    <li>Comprobación con \(n=101\): \(\dfrac{1}{101}\approx 0{,}0099\), y \(0{,}0099&lt;0{,}01\). ✓ Con fracciones: \(\dfrac{1}{101}&lt;\dfrac{1}{100}\) porque \(101&gt;100\).</li>
+    <li>\(N=99\) no sirve: \(n=100\) es mayor que \(99\) y \(\dfrac{1}{100}=0{,}01\), que no es menor que \(0{,}01\).</li>
+    <li>Ningún término vale \(0\): \(\dfrac{1}{n}&gt;0\) para todo \(n\). El límite no tiene por qué ser un término.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\displaystyle\lim_{n\to\infty}\dfrac{2n+3}{n+1}=2\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Primeros términos: \(a_{1}=\dfrac{2\cdot 1+3}{1+1}=\dfrac{5}{2}=2{,}5\); \(a_{2}=\dfrac{2\cdot 2+3}{2+1}=\dfrac{7}{3}\approx 2{,}33\); \(a_{3}=\dfrac{2\cdot 3+3}{3+1}=\dfrac{9}{4}=2{,}25\). Bajan hacia \(2\): el candidato es \(L=2\).</li>
+    <li>Resta, con \(2=\dfrac{2(n+1)}{n+1}\): \(a_{n}-2=\dfrac{2n+3}{n+1}-\dfrac{2(n+1)}{n+1}=\dfrac{2n+3-2(n+1)}{n+1}\).</li>
+    <li>Se distribuye: \(2(n+1)=2n+2\). Numerador: \(2n+3-2n-2=1\). Queda \(a_{n}-2=\dfrac{1}{n+1}\).</li>
+    <li>Distancia: \(|a_{n}-2|=\dfrac{1}{n+1}\), porque es positivo.</li>
+    <li>Sea \(\varepsilon&gt;0\). Por la propiedad arquimediana, hay un natural \(N\) con \(N\ge\dfrac{1}{\varepsilon}\).</li>
+    <li>Sea \(n&gt;N\). Entonces \(n+1&gt;n&gt;N\ge\dfrac{1}{\varepsilon}\): resulta \(n+1&gt;\dfrac{1}{\varepsilon}\).</li>
+    <li>Se multiplica por \(\varepsilon\) y se divide por \(n+1\), los dos positivos: \(\varepsilon&gt;\dfrac{1}{n+1}\).</li>
+    <li>Entonces, si \(n&gt;N\), \(|a_{n}-2|=\dfrac{1}{n+1}&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}\dfrac{2n+3}{n+1}=2\).</li>
+    <li><b>Con un número:</b> \(\varepsilon=0{,}01\). \(\dfrac{1}{0{,}01}=100\): sirve \(N=100\).</li>
+    <li>Comprobación con \(n=101\): \(a_{101}=\dfrac{2\cdot 101+3}{101+1}=\dfrac{205}{102}\), y \(|a_{101}-2|=\dfrac{1}{102}\approx 0{,}0098&lt;0{,}01\). ✓</li>
+    <li>Aquí también sirve \(N=99\): si \(n&gt;99\), entonces \(n+1\ge 101\) y \(\dfrac{1}{n+1}\le\dfrac{1}{101}&lt;\dfrac{1}{100}\). En cambio \(N=98\) no sirve: con \(n=99\), \(\dfrac{1}{99+1}=\dfrac{1}{100}=0{,}01\), que no es menor que \(0{,}01\). La definición no pide el menor \(N\): con \(N=100\) la demostración ya está completa.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una sucesión sin límite. \(a_{n}=(-1)^{n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Términos: \(-1,\ 1,\ -1,\ 1,\ \ldots\) Si \(n\) es par, \(a_{n}=1\); si \(n\) es impar, \(a_{n}=-1\).</li>
+    <li>Se supone que tiene un límite real \(L\), y se busca una contradicción.</li>
+    <li>La definición vale para todo \(\varepsilon&gt;0\); en particular para \(\varepsilon=1\): hay un \(N\) tal que \(|a_{n}-L|&lt;1\) para todo \(n&gt;N\).</li>
+    <li>Un \(n\) par mayor que \(N\): \(n=2N+2\). Ahí \(a_{n}=1\), y entonces \(|1-L|&lt;1\).</li>
+    <li>Un \(n\) impar mayor que \(N\): \(n=2N+1\). Ahí \(a_{n}=-1\), y entonces \(|-1-L|&lt;1\).</li>
+    <li>Como \(-1-L=-(1+L)\) y \(|-x|=|x|\): \(|1+L|&lt;1\).</li>
+    <li>Se escribe \(2\) como suma: \(2=(1-L)+(1+L)\).</li>
+    <li>Desigualdad triangular: \(2=|(1-L)+(1+L)|\le|1-L|+|1+L|\).</li>
+    <li>Por los pasos 4 y 6: \(|1-L|+|1+L|&lt;1+1=2\). Queda \(2&lt;2\), que es falso.</li>
+    <li>Ningún número real \(L\) puede ser el límite: la sucesión \((-1)^{n}\) es <b>divergente</b>.</li>
+    <li>Y no «se va a infinito»: todos sus términos están entre \(-1\) y \(1\). Divergente quiere decir «sin límite real», nada más.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: una sucesión que diverge a infinito. \(a_{n}=2n+1\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Términos: \(2\cdot 1+1=3\), \(2\cdot 2+1=5\), \(2\cdot 3+1=7\), \(\ldots\) Crecen sin tope. Se demuestra que \(\displaystyle\lim_{n\to\infty}(2n+1)=+\infty\) con la definición aparte.</li>
+    <li>Sea \(M&gt;0\). Por la propiedad arquimediana, hay un natural \(N\) con \(N\ge\dfrac{M}{2}\).</li>
+    <li>Sea \(n&gt;N\). Como \(N\ge\dfrac{M}{2}\), resulta \(n&gt;\dfrac{M}{2}\).</li>
+    <li>Se multiplica cada lado por \(2\): \(2n&gt;M\).</li>
+    <li>Como \(2n+1&gt;2n\): \(a_{n}=2n+1&gt;M\).</li>
+    <li>Entonces, si \(n&gt;N\), \(a_{n}&gt;M\). Como \(M\) era cualquiera, \(\displaystyle\lim_{n\to\infty}(2n+1)=+\infty\).</li>
+    <li><b>Con un número:</b> \(M=1000\). \(\dfrac{1000}{2}=500\): sirve \(N=500\). Comprobación con \(n=501\): \(2\cdot 501+1=1002+1=1003\), y \(1003&gt;1000\). ✓</li>
+    <li><b>No tiene límite real.</b> Si lo tuviera, \(L\), con \(\varepsilon=1\) habría un \(N_{1}\) tal que \(a_{n}&lt;L+1\) para todo \(n&gt;N_{1}\).</li>
+    <li>Pero con \(M=|L|+1\), que es positivo, hay un \(N_{2}\) tal que \(a_{n}&gt;|L|+1\) para todo \(n&gt;N_{2}\). Como \(|L|\ge L\), eso da \(a_{n}&gt;L+1\).</li>
+    <li>Para un \(n\) mayor que \(N_{1}\) y que \(N_{2}\) se tendría \(a_{n}&lt;L+1\) y \(a_{n}&gt;L+1\) a la vez: imposible. La sucesión es divergente. (El mismo argumento vale para toda sucesión que diverge a \(+\infty\).)</li>
+    <li>Escribir «\(=+\infty\)» no dice que el límite exista: dice de qué manera la sucesión diverge.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Elegir \(N\) antes que \(\varepsilon\): primero se da \(\varepsilon\), y \(N\) depende de él. Comprobar una sola tolerancia y dar el límite por demostrado: la definición dice «para todo \(\varepsilon&gt;0\)», y eso se hace con la letra \(\varepsilon\) (un valor concreto, como \(0{,}01\), solo ilustra). Creer que «acercarse» basta: los términos de \(\dfrac{1}{n}\) también están cada vez más cerca de \(-1\), y su límite no es \(-1\); lo que cuenta es quedar a menos de <b>cualquier</b> tolerancia. Creer que el límite nunca se alcanza (una constante lo alcanza siempre) o que siempre se alcanza (\(\dfrac{1}{n}\) nunca vale \(0\)). Creer que divergente quiere decir «tiende a infinito»: \((-1)^{n}\) diverge y no sale de entre \(-1\) y \(1\). Tratar \(+\infty\) como un número y aplicarle el álgebra de límites. Olvidar que el borde de la franja no cuenta: la desigualdad es \(|a_{n}-L|&lt;\varepsilon\), estricta. Y permitir \(\varepsilon=0\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) Demuestra con \(\varepsilon\) y \(N\) que \(\displaystyle\lim_{n\to\infty}\dfrac{3}{n}=0\), y da un \(N\) para \(\varepsilon=0{,}01\). (b) Demuestra que \(\displaystyle\lim_{n\to\infty}\dfrac{4n-1}{n}=4\), y da un \(N\) para \(\varepsilon=0{,}05\). (c) La sucesión \(\dfrac{(-1)^{n}}{n}\) cambia de signo en cada término. ¿Converge? Si converge, demuéstralo.</p>
+    <details><summary>Pista</summary><div><p>En cada caso simplifica primero la distancia \(|a_{n}-L|\). En (a) queda \(\dfrac{3}{n}\); en (b) y en (c), \(\dfrac{1}{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Distancia: \(\left|\dfrac{3}{n}-0\right|=\dfrac{3}{n}\), porque es positivo.</li>
+        <li>(a) Sea \(\varepsilon&gt;0\). Por la propiedad arquimediana, hay un natural \(N\) con \(N\ge\dfrac{3}{\varepsilon}\). Sea \(n&gt;N\): entonces \(n&gt;\dfrac{3}{\varepsilon}\).</li>
+        <li>(a) Se multiplica por \(\varepsilon\), positivo: \(n\,\varepsilon&gt;3\). Se divide por \(n\), positivo: \(\varepsilon&gt;\dfrac{3}{n}\).</li>
+        <li>(a) Si \(n&gt;N\), \(\left|\dfrac{3}{n}-0\right|&lt;\varepsilon\). Como \(\varepsilon\) era cualquiera, \(\displaystyle\lim_{n\to\infty}\dfrac{3}{n}=0\).</li>
+        <li>(a) Con \(\varepsilon=0{,}01\): \(\dfrac{3}{0{,}01}=300\), porque \(300\cdot 0{,}01=3\). Sirve \(N=300\). Comprobación con \(n=301\): \(\dfrac{3}{301}\approx 0{,}00997&lt;0{,}01\). ✓</li>
+        <li>(b) Resta, con \(4=\dfrac{4n}{n}\): \(\dfrac{4n-1}{n}-\dfrac{4n}{n}=\dfrac{4n-1-4n}{n}=\dfrac{-1}{n}\).</li>
+        <li>(b) Distancia: \(\left|\dfrac{-1}{n}\right|=\dfrac{1}{n}\).</li>
+        <li>(b) Es la misma distancia del ejemplo 1 (b): dado \(\varepsilon&gt;0\), con un natural \(N\ge\dfrac{1}{\varepsilon}\), si \(n&gt;N\) entonces \(\dfrac{1}{n}&lt;\varepsilon\). Luego \(\displaystyle\lim_{n\to\infty}\dfrac{4n-1}{n}=4\).</li>
+        <li>(b) Con \(\varepsilon=0{,}05\): \(\dfrac{1}{0{,}05}=20\), porque \(20\cdot 0{,}05=1\). Sirve \(N=20\). Comprobación con \(n=21\): \(\dfrac{1}{21}\approx 0{,}048&lt;0{,}05\). ✓</li>
+        <li>(c) Candidato: \(L=0\). Distancia: \(\left|\dfrac{(-1)^{n}}{n}-0\right|=\dfrac{|(-1)^{n}|}{n}=\dfrac{1}{n}\), porque \(|(-1)^{n}|=1\).</li>
+        <li>(c) Otra vez la distancia es \(\dfrac{1}{n}\): con \(N\ge\dfrac{1}{\varepsilon}\), si \(n&gt;N\) entonces \(\left|\dfrac{(-1)^{n}}{n}-0\right|&lt;\varepsilon\). Converge, y su límite es \(0\).</li>
+        <li>(c) Cambiar de signo no impide converger: los términos saltan de un lado a otro de \(0\), cada vez más cerca. Lo que no converge es \((-1)^{n}\) (ejemplo 3), cuyos saltos no se achican.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>El límite que usan las hojas de series: \(\displaystyle\lim_{n\to\infty}\dfrac{1}{2^{n}}=0\). (a) Demuestra por inducción que \(2^{n}&gt;n\) para todo \(n\ge 1\). (b) Deduce que \(\dfrac{1}{2^{n}}&lt;\dfrac{1}{n}\). (c) Demuestra el límite con \(\varepsilon\) y \(N\). (d) Para \(\varepsilon=0{,}01\), la parte (c) da \(N=100\). Muestra que también sirve \(N=6\).</p>
+    <details><summary>Pista</summary><div><p>En (a), \(2^{n+1}=2\cdot 2^{n}\) y \(n+n\ge n+1\). En (c), usa (b) y el ejemplo 1 (b). En (d), calcula \(2^{6}\) y \(2^{7}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Primer caso, \(n=1\): \(2^{1}=2\) y \(2&gt;1\). ✓</li>
+        <li>(a) Paso de \(n\) a \(n+1\): se supone \(2^{n}&gt;n\). Ley de las potencias: \(2^{n+1}=2\cdot 2^{n}\). Se multiplica la suposición por \(2\): \(2\cdot 2^{n}&gt;2n\).</li>
+        <li>(a) \(2n=n+n\), y como \(n\ge 1\), \(n+n\ge n+1\). Entonces \(2^{n+1}&gt;n+1\). Por inducción, \(2^{n}&gt;n\) para todo \(n\ge 1\).</li>
+        <li>(b) Como \(0&lt;n&lt;2^{n}\), los inversos quedan en el orden contrario: \(\dfrac{1}{2^{n}}&lt;\dfrac{1}{n}\).</li>
+        <li>(c) Distancia: \(\left|\dfrac{1}{2^{n}}-0\right|=\dfrac{1}{2^{n}}\), porque es positivo.</li>
+        <li>(c) Sea \(\varepsilon&gt;0\) y \(N\) un natural con \(N\ge\dfrac{1}{\varepsilon}\). Si \(n&gt;N\), por el ejemplo 1 (b), \(\dfrac{1}{n}&lt;\varepsilon\).</li>
+        <li>(c) Por (b): \(\dfrac{1}{2^{n}}&lt;\dfrac{1}{n}&lt;\varepsilon\). Entonces, si \(n&gt;N\), \(\left|\dfrac{1}{2^{n}}-0\right|&lt;\varepsilon\): \(\displaystyle\lim_{n\to\infty}\dfrac{1}{2^{n}}=0\). Es el caso \(r=\dfrac{1}{2}\) de \(r^{\,n}\to 0\).</li>
+        <li>(d) Con \(\varepsilon=0{,}01=\dfrac{1}{100}\): \(\dfrac{1}{2^{n}}&lt;\dfrac{1}{100}\) se cumple exactamente cuando \(2^{n}&gt;100\).</li>
+        <li>(d) \(2^{6}=64\), que no es mayor que \(100\). \(2^{7}=2\cdot 64=128\), que sí lo es. Y si \(n&gt;7\), \(2^{n}\) es todavía mayor, porque cada potencia es el doble de la anterior.</li>
+        <li>(d) Entonces todo \(n&gt;6\) cumple: sirve \(N=6\). Comprobación con \(n=7\): \(\dfrac{1}{128}\approx 0{,}0078&lt;0{,}01\). ✓ Y \(N=5\) no sirve: con \(n=6\), \(\dfrac{1}{64}\approx 0{,}0156\), que es mayor que \(0{,}01\).</li>
+        <li>(d) \(N=100\) y \(N=6\) son los dos correctos. El primero sale de una cota cómoda, \(\dfrac{1}{2^{n}}&lt;\dfrac{1}{n}\), y es más grande de lo necesario. La definición solo pide que exista alguno.</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Camila se saca un \(4{,}0\) en la primera prueba de Matemática y, desde la segunda, un \(7{,}0\) en todas. Modelo: todas las pruebas valen lo mismo, el promedio no se redondea y las pruebas siguen sin fin (un año real tiene pocas pruebas; es un modelo). Sea \(p_{n}\) el promedio de las \(n\) primeras notas. (a) Escribe \(p_{n}\) con una fórmula. (b) Demuestra que \(\displaystyle\lim_{n\to\infty}p_{n}=7\). (c) ¿Desde qué prueba el promedio queda a menos de \(0{,}1\) de \(7\), es decir, sobre \(6{,}9\)? (d) ¿Llega alguna vez el promedio a \(7\)?</p>
+    <details><summary>Pista</summary><div><p>La suma de las \(n\) primeras notas es \(4\) más \(n-1\) veces \(7\). La distancia \(|p_{n}-7|\) queda igual a \(\dfrac{3}{n}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Suma de las \(n\) primeras notas: \(4+\underbrace{7+7+\cdots+7}_{n-1\text{ veces}}=4+\displaystyle\sum_{k=2}^{n}7=4+7(n-1)\).</li>
+        <li>(a) Se distribuye: \(4+7n-7=7n-3\). Promedio: la suma dividida por la cantidad de notas, \(p_{n}=\dfrac{7n-3}{n}\).</li>
+        <li>(a) Comprobación: \(p_{1}=\dfrac{7-3}{1}=4\); \(p_{2}=\dfrac{14-3}{2}=\dfrac{11}{2}=5{,}5\), y directamente \(\dfrac{4+7}{2}=\dfrac{11}{2}\). ✓</li>
+        <li>(b) Resta, con \(7=\dfrac{7n}{n}\): \(p_{n}-7=\dfrac{7n-3}{n}-\dfrac{7n}{n}=\dfrac{7n-3-7n}{n}=\dfrac{-3}{n}\).</li>
+        <li>(b) Distancia: \(|p_{n}-7|=\left|\dfrac{-3}{n}\right|=\dfrac{3}{n}\).</li>
+        <li>(b) Sea \(\varepsilon&gt;0\) y \(N\) un natural con \(N\ge\dfrac{3}{\varepsilon}\). Si \(n&gt;N\): \(n&gt;\dfrac{3}{\varepsilon}\); se multiplica por \(\varepsilon\) y se divide por \(n\), los dos positivos: \(\dfrac{3}{n}&lt;\varepsilon\). Entonces \(|p_{n}-7|&lt;\varepsilon\): \(\displaystyle\lim_{n\to\infty}p_{n}=7\).</li>
+        <li>(c) Se pide \(|p_{n}-7|&lt;0{,}1\), o sea \(\dfrac{3}{n}&lt;0{,}1\). Se multiplica por \(n\) y se divide por \(0{,}1\): \(n&gt;\dfrac{3}{0{,}1}=30\), porque \(30\cdot 0{,}1=3\).</li>
+        <li>(c) Sirve \(N=30\): desde la prueba \(31\). Comprobación: \(p_{31}=\dfrac{7\cdot 31-3}{31}=\dfrac{217-3}{31}=\dfrac{214}{31}\approx 6{,}903\), que es mayor que \(6{,}9\). ✓</li>
+        <li>(c) En la prueba \(30\) todavía no: \(p_{30}=\dfrac{7\cdot 30-3}{30}=\dfrac{207}{30}=6{,}9\), justo en el borde: la distancia es \(0{,}1\), que no es menor que \(0{,}1\).</li>
+        <li>(d) No. \(7-p_{n}=\dfrac{3}{n}\), que es mayor que \(0\) para todo \(n\): el promedio siempre queda bajo \(7\). El \(4{,}0\) pesa cada vez menos, pero nunca desaparece. El límite es \(7\) aunque ningún promedio valga \(7\).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H26 · v001 · Pendiente de APR</span>
+</footer>
+</article>

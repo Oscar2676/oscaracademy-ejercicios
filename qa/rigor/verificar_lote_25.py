@@ -642,4 +642,201 @@ d23 = lambda n: 10*F(3,5)**(n-1); c23 = lambda k: 20*F(3,5)**k
 ok(F(3,5)*10 == F(30,5) == 6 and F(3,5)*6 == F(18,5) and [d23(1),d23(2),d23(3)] == [10,6,F(18,5)] and all(d23(n+1) == F(3,5)*d23(n) and d23(n+1)/d23(n) == F(3,5) for n in range(1,40)), 'H23 C (a) bajadas: a = 10, r = 3/5')
 ok(all(c23(k) == 2*d23(k+1) == 2*10*F(3,5)**k and c23(k+1)/c23(k) == F(3,5) and c23(k) == 12*F(3,5)**(k-1) and F(3,5)**(k+1) == F(3,5)**k*F(3,5) for k in range(1,40)) and 20*F(3,5) == F(60,5) == 12 and 20*F(9,25) == F(180,25) == F(36,5) and F(3,5)**2 == F(9,25), 'H23 C (b) rebotes completos: a = 12, r = 3/5')
 ok(F(12,10) == F(6,5) and F(36,5)/12 == F(36,5)*F(1,12) == F(36,60) == F(3,5) and F(6,5) != F(3,5) and [10, c23(1), c23(2)] == [10,12,F(36,5)] and abs(F(3,5)) < 1, 'H23 C (c) la serie completa no es geométrica')
-print('Lote 25 H01–H23:', 'sin errores' if not err else f'{err} errores')
+# ---- H24 ----
+# Suma de una serie geométrica infinita: S = a/(1 − r) si |r| < 1
+G24 = lambda a, r, n: sum(a*r**(k-1) for k in range(1, n+1))          # suma parcial, sumando término a término
+RJ24 = [F(p,q) for p in range(-9,10) for q in range(1,8) if F(p,q) != 1]  # rejilla de razones distintas de 1
+AJ24 = [F(p,q) for p in (-7,-3,-1,1,2,5,12) for q in (1,2,3,4)]           # rejilla de primeros términos (≠ 0)
+S24 = lambda a, r: a/(1-r)
+# recuadro k2, primera parte: truco Sn − r·Sn
+ok(all(r*G24(a,r,n) == sum(a*r**k for k in range(1,n+1)) and G24(a,r,n) - r*G24(a,r,n) == a - a*r**n and (1-r)*G24(a,r,n) == a*(1-r**n) and G24(a,r,n) == a*(1-r**n)/(1-r) for a in AJ24 for r in RJ24 for n in range(1,9)), 'H24 k2: Sn − r·Sn = a − a·rⁿ y Sn = a(1 − rⁿ)/(1 − r), en rejilla')
+ok(all(G24(a,F(1),n) == n*a for a in AJ24 for n in range(1,12)), 'H24 k2: con r = 1, Sn = n·a')
+# segunda parte: separación en dos fracciones, lo que falta y el límite (numérico)
+ok(all(G24(a,r,n) == (a - a*r**n)/(1-r) == a/(1-r) - a*r**n/(1-r) and S24(a,r) - G24(a,r,n) == a*r**n/(1-r) for a in AJ24 for r in RJ24 if abs(r) < 1 for n in range(1,9)), 'H24 k2: Sn = a/(1−r) − a·rⁿ/(1−r); S − Sn = a·rⁿ/(1−r)')
+ok(all(abs(S24(a,r) - G24(a,r,400)) < F(1,10**9) for a in (F(1),F(-3),F(5,2)) for r in (F(1,2),F(-1,2),F(2,3),F(-3,4),F(9,10))), 'H24 k2: con |r| < 1 las sumas parciales se acercan a a/(1−r) (n = 400)')
+ok(all(abs(a*r**(n-1)) == abs(a)*abs(r)**(n-1) >= abs(a) > 0 for a in AJ24 for r in RJ24 + [F(1)] if abs(r) >= 1 for n in range(1,9)), 'H24 k2 tercera parte: con |r| ≥ 1, |a·rⁿ⁻¹| ≥ |a| > 0')
+ok(F(3,1-2) == F(3,-1) == -3 and [G24(3,2,n) for n in (1,2,3)] == [3,9,21] and [3*2**k for k in range(3)] == [3,6,12], 'H24 k2: a = 3, r = 2 (la expresión da −3 y no hay suma)')
+# recuadro k1: otro índice y despejes
+ok(all(sum(c*q**n for n in range(m, m+N)) == G24(c*q**m, q, N) and c*q**m*q**(n-1) == c*q**(m+n-1) for c in (F(3),F(-2),F(1,2)) for q in (F(1,2),F(-2,3),F(3,5)) for m in range(0,5) for N in range(1,8) for n in range(1,6)), 'H24 k1: Σ desde n = m de c·qⁿ es la geométrica con a = c·q^m y r = q')
+ok(all(S24(a,r)*(1-r) == a and 1 - r == a/S24(a,r) and r == 1 - a/S24(a,r) and S24(a,r) != 0 for a in AJ24 for r in RJ24 if abs(r) < 1), 'H24 k1: despejes a = S(1 − r), 1 − r = a/S, r = 1 − a/S')
+# escena sgi-idea: registro y lectura, pasos 1 a 6
+T24 = [F(1,2**n) for n in range(1,11)]; P24 = [sum(T24[:n]) for n in range(1,11)]
+ok(T24[:4] == [F(1,2),F(1,4),F(1,8),F(1,16)] and all(F(1,2**(n+1))*F(2**n,1) == F(2**n,2**n*2) == F(1,2) for n in range(1,40)) and F(1,2**1) == F(1,2) and 1*1 == 1, 'H24 sgi-idea: datos (a = 1/2, r = 1/2, área 1)')
+ok(P24[0] == F(1,2) and 1 - F(1,2) == F(2,2) - F(1,2) == F(1,2), 'H24 sgi-idea paso 1')
+ok(F(1,2)*F(1,2) == F(1,4) and P24[1] == F(1,2)+F(1,4) == F(2,4)+F(1,4) == F(3,4) and 1 - F(3,4) == F(4,4) - F(3,4) == F(1,4), 'H24 sgi-idea paso 2')
+ok(F(1,2)*F(1,4) == F(1,8) and P24[2] == F(3,4)+F(1,8) == F(6,8)+F(1,8) == F(7,8) and 1 - F(7,8) == F(8,8) - F(7,8) == F(1,8), 'H24 sgi-idea paso 3')
+ok(F(1,2)*F(1,8) == F(1,16) and P24[3] == F(7,8)+F(1,16) == F(14,16)+F(1,16) == F(15,16) and 1 - F(15,16) == F(16,16) - F(15,16) == F(1,16) == T24[3], 'H24 sgi-idea paso 4 (lo que falta = último trozo)')
+ok([1 - P24[n] for n in range(4)] == [F(1,2)**e for e in (1,2,3,4)] and all(F(1,2)*F(1,2)**n == F(1,2)**(n+1) and F(1,2)**n == 2*F(1,2)**(n+1) and 2*F(1,2)**(n+1) - F(1,2)**(n+1) == F(1,2)**(n+1) and 1 - G24(F(1,2),F(1,2),n) == F(1,2)**n and G24(F(1,2),F(1,2),n) == 1 - F(1,2)**n == F(1,2)*(1 - F(1,2)**n)/(1 - F(1,2)) for n in range(1,60)) and 1 - F(1,2) == F(1,2), 'H24 sgi-idea paso 5 (1 − Sn = (1/2)ⁿ, por los dos caminos)')
+ok(S24(F(1,2),F(1,2)) == F(1,2)/F(1,2) == 1 == 1 - 0 and F(1,2)/(1 - F(1,2)) == 1 and all(P24[n] < 1 and 1 - P24[n] == F(1,2)**(n+1) for n in range(10)) and F(1,2)**60 < F(1,10**18), 'H24 sgi-idea paso 6 (suma 1; ninguna suma parcial llega a 1)')
+# figura: los diez trozos son mitades sucesivas de lo que falta y no se enciman (áreas)
+def _tr24():
+    q = [F(0),F(0),F(1),F(1)]; tr = []; rm = [q]
+    for i in range(10):
+        if i % 2 == 0: tr.append([q[0],q[1],q[2]/2,q[3]]); q = [q[0]+q[2]/2,q[1],q[2]/2,q[3]]
+        else: tr.append([q[0],q[1]+q[3]/2,q[2],q[3]/2]); q = [q[0],q[1],q[2],q[3]/2]
+        rm.append(q)
+    return tr, rm
+TR24, RM24 = _tr24()
+ok([t[2]*t[3] for t in TR24] == T24 and [m[2]*m[3] for m in RM24] == [F(1,2**n) for n in range(0,11)] and all(0 <= t[0] and t[0]+t[2] <= 1 and 0 <= t[1] and t[1]+t[3] <= 1 for t in TR24) and TR24[:4] == [[0,0,F(1,2),1],[F(1,2),F(1,2),F(1,2),F(1,2)],[F(1,2),0,F(1,4),F(1,2)],[F(3,4),F(1,4),F(1,4),F(1,4)]], 'H24 sgi-idea: áreas de los trozos y de lo que falta en la figura')
+# escena sgi-vivo: las once posiciones del deslizador r = k/10, con a = 1
+def _viv24(k):
+    r = F(k,10); d = 1 - r
+    c = (d == F(10-k,10)) and [1*r, r*r, r*r*r] == [F(k,10), F(k*k,100), F(k**3,1000)]
+    c = c and 1 - d == r and 1 + r == F(10+k,10) and d*(1+r) == F(100-k*k,100) and 1 - F(100-k*k,100) == r*r   # segunda y tercera esquina
+    c = c and all(1 - d*G24(1,r,n) == r**n for n in range(1,12))                                                   # la recta pasa por todas las esquinas
+    if k < 10:
+        c = c and abs(r) < 1 and S24(1,r) == 1/d == F(10,10-k) and 1 - d*S24(1,r) == 0 and all(G24(1,r,n) < S24(1,r) for n in range(1,30)) if k > 0 else c and S24(1,r) == 1
+    else:
+        c = c and abs(r) >= 1 and d == 0 and [G24(1,r,n) for n in (1,2,3)] == [1,2,3] and all(G24(1,r,n) == n for n in range(1,30))
+    return c
+ok(all(_viv24(k) for k in range(11)), 'H24 sgi-vivo: lados, esquinas y suma en las once posiciones de r')
+ok([S24(1,F(k,10)) for k in range(10)] == [1, F(10,9), F(5,4), F(10,7), F(5,3), 2, F(5,2), F(10,3), 5, 10] and [F(10,10-k) for k in (4,6)] == [F(10,6), F(10,4)] and [F(10,8)] == [F(5,4)], 'H24 sgi-vivo: sumas exactas 1, 10/9, 5/4, 10/7, 5/3, 2, 5/2, 10/3, 5, 10')
+ok([(1000 % (10-k) == 0, round(1000/(10-k))) for k in range(10)] == [(True,100),(False,111),(True,125),(False,143),(False,167),(True,200),(True,250),(False,333),(True,500),(True,1000)] and all(abs(F(round(1000/(10-k)),100) - F(10,10-k)) <= F(1,200) for k in range(10)) and F(125,100) == F(5,4) and F(250,100) == F(5,2), 'H24 sgi-vivo: decimales 1; 1,11; 1,25; 1,43; 1,67; 2; 2,5; 3,33; 5; 10 (exactos o redondeados a 2 decimales)')
+ok(all(-0.95 + 1.2*float(S24(1,F(k,10))) <= 5.2 for k in range(9)) and -0.95 + 1.2*10 > 5.2 and S24(1,F(9,10)) == 10 and S24(1,F(8,10)) == 5, 'H24 sgi-vivo: la suma cabe en el dibujo hasta r = 0,8; con r = 0,9 (suma 10) queda fuera')
+ok(all(1 - (1-r)*G24(1,r,n) == 1 - (1 - r**n) == 1 - 1 + r**n == r**n and (1-r)*S24(1,r) == 1 for r in RJ24 if 0 < r < 1 for n in range(1,10)), 'H24 k3: la recta de altura 1 − (1 − r)x pasa por (Sn, rⁿ) y toca el eje en 1/(1 − r)')
+# ejemplo 1: Σ desde n = 2 de 3(1/2)ⁿ
+e24 = lambda n: 3*F(1,2)**n
+ok(F(1,2)**2 == F(1,4) and e24(2) == 3*F(1,4) == F(3,4) and e24(3) == 3*F(1,8) == F(3,8) and e24(4) == 3*F(1,16) == F(3,16) and all(e24(n+1)/e24(n) == F(1,2) and F(1,2)**(n+1) == F(1,2)**n*F(1,2) for n in range(2,40)) and 1 - F(1,2) == F(2,2) - F(1,2) == F(1,2) and F(3,4)*2 == F(6,4) == F(3,2) == S24(F(3,4),F(1,2)) == F('1.5'), 'H24 e1: a = 3/4, r = 1/2, suma 3/2')
+ok(e24(2)+e24(3)+e24(4) == F(12,16)+F(6,16)+F(3,16) == F(21,16) and F(1,2)**3 == F(1,8) and F(3,4)*F(1,8) == F(3,32) and F(3,32)*2 == F(6,32) == F(3,16) and F(3,2) - F(21,16) == F(24,16) - F(21,16) == F(3,16) and abs(sum(e24(n) for n in range(2,300)) - F(3,2)) < F(1,10**9) and S24(3,F(1,2)) == 6, 'H24 e1: comprobación con S₃ y lo que falta')
+# ejemplo 2: 12 − 6 + 3 − 3/2 + ⋯
+f24 = lambda n: 12*F(-1,2)**(n-1)
+ok([f24(n) for n in (1,2,3,4)] == [12,-6,3,F(-3,2)] and F(-6,12) == F(-1,2) and all(f24(n+1)/f24(n) == F(-1,2) for n in range(1,40)) and abs(F(-1,2)) == F(1,2) < 1 and 1 - F(-1,2) == 1 + F(1,2) == F(2,2) + F(1,2) == F(3,2) and 12*F(2,3) == F(24,3) == 8 == S24(12,F(-1,2)) and 8 < 12, 'H24 e2: a = 12, r = −1/2, suma 8')
+ok([G24(12,F(-1,2),n) for n in (1,2,3,4)] == [12, 12-6, 6+3, 9-F(3,2)] == [12,6,9,F(15,2)] and F(18,2) - F(3,2) == F(15,2) == F('7.5') and [12-8, 8-6, 9-8, 8-F('7.5')] == [4,2,1,F('0.5')] and all(abs(8 - G24(12,F(-1,2),n)) == 4*F(1,2)**(n-1) and (G24(12,F(-1,2),n) > 8) == (n % 2 == 1) for n in range(1,30)), 'H24 e2: sumas parciales a uno y otro lado de 8, a la mitad de distancia cada vez')
+# ejemplo 3: decimales periódicos
+ok(all(F(7,10**n) == F(7,10)*F(1,10)**(n-1) for n in range(1,30)) and 1 - F(1,10) == F(10,10) - F(1,10) == F(9,10) and F(7,10)*F(10,9) == F(70,90) == F(7,9) == S24(F(7,10),F(1,10)) and 70 == 7*9 + 7 and sum(F(7,10**n) for n in range(1,13)) == F('0.777777777777') and abs(F(7,9) - F('0.777777777777')) < F(1,10**12), 'H24 e3 (a): 0,777… = 7/9')
+ok(F('0.1') == F(1,10) and [F('0.06'),F('0.006'),F('0.0006')] == [F(6,100),F(6,1000),F(6,10000)] == [F(6,10**n) for n in (2,3,4)] and all(F(6,10**(n+1))*F(10**n,6) == F(6*10**n,6*10**n*10) == F(1,10) for n in range(2,30)) and F(6,100)*F(10,9) == F(60,900) == F(1,15) == S24(F(6,100),F(1,10)) and 900 == 60*15 and F(1,10) + F(1,15) == F(3,30) + F(2,30) == F(5,30) == F(1,6) and 10 == 1*6 + 4 and 40 == 6*6 + 4 and F(1,10) + sum(F(6,10**n) for n in range(2,13)) == F('0.166666666666') and abs(F(1,6) - F('0.166666666666')) < F(1,10**12), 'H24 e3 (b): 0,1666… = 1/6')
+# ejemplo 4: despejes
+ok(1 - F(3,5) == F(5,5) - F(3,5) == F(2,5) and 10*F(2,5) == F(20,5) == 4 and 4/F(2,5) == 4*F(5,2) == F(20,2) == 10 == S24(4,F(3,5)) and [4*F(3,5)**k for k in range(3)] == [4,F(12,5),F(36,25)], 'H24 e4 (a): a = 4')
+ok(F(6,4) == F(3,2) and 1 - F(3,2) == F(2,2) - F(3,2) == F(-1,2) and abs(F(-1,2)) < 1 and 1 - F(-1,2) == F(3,2) and 6*F(2,3) == F(12,3) == 4 == S24(6,F(-1,2)) and [6*F(-1,2)**k for k in range(3)] == [6,-3,F(3,2)], 'H24 e4 (b): r = −1/2')
+ok(F(6,2) == 3 and 1 - 3 == -2 and abs(-2) >= 1 and [6*(-2)**k for k in range(3)] == [6,-12,24] and all(S24(6,r) != 2 for r in RJ24 if abs(r) < 1) and all(F(6)/(1-r) > 3 for r in RJ24 if abs(r) < 1), 'H24 e4 (c): no hay serie con a = 6 y suma 2 (con |r| < 1 la suma supera 3)')
+# errores frecuentes
+ok(e24(2) == F(3,4) != 3 and 1 - F(-1,2) == F(3,2) != F(1,2) and all(a/(r-1) == -S24(a,r) for a in AJ24 for r in RJ24), 'H24 errores frecuentes')
+# ejercicio A
+ok(1 - F(2,3) == F(3,3) - F(2,3) == F(1,3) and 6*3 == 18 == S24(6,F(2,3)) and abs(F(2,3)) < 1, 'H24 A (a): 18')
+ok(F(-3,4)**0 == 1 and all(F(-3,4)**(n+1)/F(-3,4)**n == F(-3,4) for n in range(0,30)) and abs(F(-3,4)) == F(3,4) < 1 and 1 - F(-3,4) == 1 + F(3,4) == F(4,4) + F(3,4) == F(7,4) and 1*F(4,7) == F(4,7) == S24(1,F(-3,4)) and abs(sum(F(-3,4)**n for n in range(0,300)) - F(4,7)) < F(1,10**9), 'H24 A (b): 4/7')
+ok(F(2,5)**3 == F(2**3,5**3) == F(8,125) and all(F(2,5)**(n+1) == F(2,5)**n*F(2,5) for n in range(3,30)) and 1 - F(2,5) == F(5,5) - F(2,5) == F(3,5) and F(8,125)*F(5,3) == F(40,375) == F(8,75) == S24(F(8,125),F(2,5)) and 40 == 8*5 and 375 == 75*5 and abs(sum(F(2,5)**n for n in range(3,300)) - F(8,75)) < F(1,10**9), 'H24 A (c): 8/75')
+ok([5*(-1)**(n-1) for n in (1,2,3,4)] == [5,-5,5,-5] and abs(-1) == 1 >= 1 and [G24(5,-1,n) for n in (1,2,3,4)] == [5,0,5,0] and F(5,1-(-1)) == F(5,2), 'H24 A (d): no tiene suma')
+# ejercicio B
+ok([F('0.45'),F('0.0045'),F('0.000045')] == [F(45,100**n) for n in (1,2,3)] and all(F(45,100**(n+1))*F(100**n,45) == F(45*100**n,45*100**n*100) == F(1,100) for n in range(1,20)) and 1 - F(1,100) == F(100,100) - F(1,100) == F(99,100) and F(45,100)*F(100,99) == F(4500,9900) == F(45,99) == F(5,11) == S24(F(45,100),F(1,100)) and 45 == 9*5 and 99 == 9*11 and math.gcd(5,11) == 1 and 50 == 4*11 + 6 and 60 == 5*11 + 5 and sum(F(45,100**n) for n in range(1,7)) == F('0.454545454545'), 'H24 B (a): 0,4545… = 5/11')
+ok(1 - F(1,4) == F(4,4) - F(1,4) == F(3,4) and 12*F(3,4) == F(36,4) == 9 and 9*F(4,3) == F(36,3) == 12 == S24(9,F(1,4)), 'H24 B (b): a = 9')
+ok(1 - F(8,5) == F(5,5) - F(8,5) == F(-3,5) and abs(F(-3,5)) == F(3,5) < 1 and 1 - F(-3,5) == 1 + F(3,5) == F(8,5) and 8*F(5,8) == F(40,8) == 5 == S24(8,F(-3,5)), 'H24 B (c): r = −3/5')
+# ejercicio C: la pelota de H23 (10 m, razón 3/5)
+d24 = lambda n: 10*F(3,5)**(n-1); u24 = lambda k: 10*F(3,5)**k; c24 = lambda k: 20*F(3,5)**k
+ok([d24(n) for n in (1,2,3)] == [10,6,F(18,5)] and [u24(k) for k in (1,2,3)] == [6,F(18,5),F(54,25)] and [c24(k) for k in (1,2,3)] == [12,F(36,5),F(108,25)] and 10*F(3,5) == F(30,5) == 6 and all(u24(k) == d24(k+1) and u24(k+1)/u24(k) == F(3,5) and c24(k) == u24(k) + d24(k+1) for k in range(1,40)), 'H24 C: bajadas, subidas y rebotes completos')
+ok(1 - F(3,5) == F(5,5) - F(3,5) == F(2,5) and 1/F(2,5) == F(5,2) and 10*F(5,2) == F(50,2) == 25 == S24(10,F(3,5)) and 6*F(5,2) == F(30,2) == 15 == S24(6,F(3,5)) and 25 + 15 == 40 and 12*F(5,2) == F(60,2) == 30 == S24(12,F(3,5)) and 10 + 30 == 40, 'H24 C (a), (b), (c): 25 m, 15 m, 40 m por las dos maneras')
+ok(F(3,5)**3 == F(27,125) and 1 - F(27,125) == F(125,125) - F(27,125) == F(98,125) and 12*F(98,125) == F(1176,125) and F(1176,125)*F(5,2) == F(5880,250) == F(588,25) == F('23.52') == G24(12,F(3,5),3) and 12 + F(36,5) + F(108,25) == 12 + F('7.2') + F('4.32') == F('23.52') and 10 + F('23.52') == F('33.52') and 40 - F('33.52') == F('6.48') and 12*F(27,125) == F(324,125) and F(324,125)*F(5,2) == F(1620,250) == F(162,25) == F('6.48') and 10 + G24(12,F(3,5),3) == d24(1) + sum(u24(k) + d24(k+1) for k in (1,2,3)), 'H24 C (d): 33,52 m al cuarto toque; faltan 6,48 m')
+# ---- H25 ---- Aplicaciones de series geométricas
+Sn25 = lambda a, r, n: a*(1-r**n)/(1-r)          # suma parcial, r != 1
+Si25 = lambda a, r: a/(1-r)                      # suma infinita, |r| < 1
+ok(all(sum(a*r**(k-1) for k in range(1,n+1)) == Sn25(a,r,n) for a in (F(1),F(8),F(3,100),F(-5,2)) for r in (F(1,2),F(1,4),F(-2,3),F(11,10),F(3),F(-1)) for n in range(1,12)), 'H25 fórmula citada de la suma parcial (rejilla, r ≠ 1)')
+ok(all(abs(Si25(a,r)-Sn25(a,r,n)) == abs(a*r**n/(1-r)) and abs(a*r**200/(1-r)) < F(1,10**6) for a in (F(8),F(45,100),F(200)) for r in (F(1,2),F(1,4),F(1,100),F(4,5),F(-1,3)) for n in range(1,20)), 'H25 la suma infinita citada es el valor al que se acercan las parciales (|r| < 1)')
+# escena apg-idea: pelota desde 8 m, sube 1/2
+h25 = lambda k: 8*F(1,2)**k                      # altura después del rebote k
+c25 = lambda k: 2*h25(k)                         # rebote completo k
+ok(F(1,2)*8 == F(8,2) == 4 and 4+4 == 8 == c25(1), 'H25 idea paso 2: primer rebote 4 + 4 = 8')
+ok(F(1,2)*4 == F(4,2) == 2 == h25(2) and 2+2 == 4 == c25(2) and F(1,2)*2 == F(2,2) == 1 == h25(3) and 1+1 == 2 == c25(3) and F(4,8) == F(1,2) and F(2,4) == F(1,2), 'H25 idea paso 3: rebotes 4 y 2, cocientes 1/2')
+ok(all(c25(k+1) == c25(k)*F(1,2) and c25(k) == 8*F(1,2)**(k-1) for k in range(1,50)), 'H25 idea paso 3: los rebotes son Σ 8·(1/2)^(k−1), a = 8, r = 1/2')
+ok(abs(F(1,2)) < 1 and 1-F(1,2) == F(1,2) and 8/F(1,2) == 8*2 == 16 == Si25(8,F(1,2)), 'H25 idea paso 4: suma de los rebotes 16')
+ok(8+16 == 24 and 8 + Si25(8,F(1,2)) == 24, 'H25 idea paso 5: total 24 m')
+ok(8+8+4+2+2 == 24 and [0,8,16,20,22] == [0,8,8+8,8+8+4,8+8+4+2] and 24 - 22 == 2 == Si25(c25(4),F(1,2)) and [12,18,21,23] == [F(8+16,2),F(16+20,2),F(20+22,2),F(22+24,2)], 'H25 idea: trozos de la barra (8, 8, 4, 2 y el resto 2 = todos los rebotes no dibujados)')
+# recuadro k2: D = h + 2hr/(1 − r) = h(1 + r)/(1 − r), 0 < r < 1
+G25 = [(F(h), F(p,q)) for h in (1,3,8,9,12,F(5,2)) for q in range(2,12) for p in range(1,q)]
+ok(all(2*h*r**(k+1) == 2*h*r**k*r and 2*h*r**k == 2*h*r*r**(k-1) for h,r in G25 for k in range(1,8)), 'H25 k2 pasos 3–4: c(k+1) = c(k)·r y c(k) = 2hr·r^(k−1)')
+ok(all(h + Si25(2*h*r,r) == (h*(1-r)+2*h*r)/(1-r) == (h-h*r+2*h*r)/(1-r) == (h+h*r)/(1-r) == h*(1+r)/(1-r) for h,r in G25), 'H25 k2 pasos 7–11: D = h(1 + r)/(1 − r) (rejilla)')
+ok(all(abs(h + sum(2*h*r**k for k in range(1,400)) - h*(1+r)/(1-r)) == 2*h*r**400/(1-r) for h,r in G25[:40]), 'H25 k2: la distancia acumulada se acerca a D')
+ok(all(F(2*h*r,h) == 2*r != r == F(2*h*r*r,2*h*r) for h,r in G25), 'H25 k2: la serie completa no es geométrica (cocientes 2r y r)')
+ok(1+F(1,2) == F(3,2) and 1-F(1,2) == F(1,2) and F(3,2)/F(1,2) == F(3,2)*2 == 3 and 8*3 == 24, 'H25 k2 comprobación con h = 8, r = 1/2')
+# escena apg-vivo: h = 8, razón k/10, k = 0…9
+V25 = {0:(0,8), 1:(F(16,9),F(88,9)), 2:(4,12), 3:(F(48,7),F(104,7)), 4:(F(32,3),F(56,3)), 5:(16,24), 6:(24,32), 7:(F(112,3),F(136,3)), 8:(64,72), 9:(144,152)}
+ok(8*0 == 0 and 8+0 == 8 and F(8*(1+0),1-0) == 8, 'H25 vivo razón 0: no rebota, D = 8')
+for k25 in range(1,10):
+    r25 = F(k25,10); p25, q25 = r25.numerator, r25.denominator
+    x25 = 8*r25; a25 = 2*x25; u25 = 1 - r25; s25 = a25/u25; d25 = 8 + s25
+    ok(x25 == F(8*p25,q25) == F(8*k25,10) and a25 == F(2*x25.numerator, x25.denominator) and u25 == F(q25,q25)-r25 == F(q25-p25,q25) and u25.numerator == q25-p25 and u25.denominator == q25, f'H25 vivo razón 0,{k25}: primer rebote y denominador')
+    ok(abs(r25) < 1 and s25 == a25*F(q25,q25-p25) == F(a25.numerator*q25, a25.denominator*(q25-p25)) == V25[k25][0] == Si25(a25,r25) and all(a25*r25**j == 2*8*r25**(j+1) for j in range(0,30)), f'H25 vivo razón 0,{k25}: suma de los rebotes')
+    ok(d25 == F(8*s25.denominator,s25.denominator)+s25 == F(8*s25.denominator+s25.numerator, s25.denominator) == V25[k25][1] and math.gcd(8*s25.denominator+s25.numerator, s25.denominator) == 1, f'H25 vivo razón 0,{k25}: total D')
+    ok(1+r25 == F(q25+p25,q25) and F(q25+p25,q25)/u25 == F(q25+p25,q25)*F(q25,q25-p25) == F((q25+p25)*q25, q25*(q25-p25)) == F(q25+p25,q25-p25) and 8*F(q25+p25,q25-p25) == F(8*F(q25+p25,q25-p25).numerator, F(q25+p25,q25-p25).denominator) == d25, f'H25 vivo razón 0,{k25}: comprobación con h(1 + r)/(1 − r)')
+ok([F(8*k,10) for k in range(1,10)] == [F(x) for x in ('0.8','1.6','2.4','3.2','4','4.8','5.6','6.4','7.2')], 'H25 vivo: alturas del primer rebote (rótulos)')
+ok(all(abs(V25[k][1] - F(x)) <= F(1,200) for k,x in ((1,'9.78'),(3,'14.86'),(4,'18.67'),(7,'45.33'))) and [F(k,10) for k in (2,4,5,6,8)] == [F(1,5),F(2,5),F(1,2),F(3,5),F(4,5)] and max(v[1] for v in V25.values()) == 152, 'H25 vivo: aproximaciones a 2 decimales, razones simplificadas y tope de la regla')
+ok(all(V25[k][1] < V25[k+1][1] for k in range(0,9)), 'H25 vivo: a mayor razón, mayor total')
+# ejemplo 1: 0,454545… = 5/11
+ok(F('0.45') == F(45,100) and F('0.0045') == F(45,10000) and F('0.000045') == F(45,1000000) and F(45,10000)/F(45,100) == F(1,100) == F(45,1000000)/F(45,10000) and all(F(45,100)*F(1,100)**(k-1) == F(45,100**k) for k in range(1,30)), 'H25 e1 reconocer: a = 45/100, r = 1/100')
+ok(abs(F(1,100)) < 1 and 1-F(1,100) == F(100,100)-F(1,100) == F(99,100) and F(45,100)/F(99,100) == F(45,100)*F(100,99) == F(4500,9900) == F(45,99) == F(5,11) and 4500//100 == 45 and 9900//100 == 99 and 45//9 == 5 and 99//9 == 11 and math.gcd(5,11) == 1, 'H25 e1 suma: 5/11')
+ok(50 == 4*11+6 and 60 == 5*11+5 and abs(F(5,11) - F('0.4545454545')) < F(1,10**10) and abs(sum(F(45,100**k) for k in range(1,30)) - F(5,11)) < F(1,10**50), 'H25 e1 comprobación por división')
+# ejemplo 2: dosis de 200 mg, queda 1/4
+q25 = [F(200)]
+for _ in range(40): q25.append(200 + F(1,4)*q25[-1])
+ok(F(1,4)*200 == 50 and 200+50 == 250 == q25[1] and F(1,4)*(200+50) == 50+F('12.5') == F('62.5') and q25[2] == 200+50+F('12.5') == F('262.5') and 200*F(1,4) == 50 and 50*F(1,4) == F('12.5'), 'H25 e2 pasos 1–4')
+ok(all(q25[n-1] == sum(200*F(1,4)**(k-1) for k in range(1,n+1)) == Sn25(200,F(1,4),n) for n in range(1,41)), 'H25 e2 paso 5: Q_n es la suma parcial con a = 200, r = 1/4')
+ok(F(1,4) != 1 and F(1,4)**3 == F(1,64) and 1-F(1,64) == F(63,64) and 1-F(1,4) == F(3,4) and F(63,64)/F(3,4) == F(63,64)*F(4,3) == F(252,192) == F(21,16) and 252//12 == 21 and 192//12 == 16 and 252 % 12 == 0 == 192 % 12 and 200*F(21,16) == F(4200,16) == F('262.5') == 200+50+F('12.5'), 'H25 e2 (a) Q_3 = 262,5')
+ok(abs(F(1,4)) < 1 and 200/F(3,4) == 200*F(4,3) == F(800,3) == Si25(200,F(1,4)) and abs(F(800,3)-F('266.67')) <= F(1,200), 'H25 e2 (b) 800/3 ≈ 266,67')
+ok(all(q25[n-1] == F(800,3)*(1-F(1,4)**n) < F(800,3) and q25[n-1] < q25[n] for n in range(1,40)), 'H25 e2 interpretación: Q_n crece y queda bajo 800/3')
+# ejemplo 3: cuadrados inscritos, lado 4
+ok(4**2 == 16 and F(4,2) == 2 and 2**2+2**2 == 4+4 == 8, 'H25 e3 pasos 1–2')
+ok(all((L/2)**2+(L/2)**2 == L**2/4+L**2/4 == 2*L**2/4 == L**2/2 for L in [F(n,d) for n in range(1,30) for d in (1,2,3,7)]), 'H25 e3 paso 3: el área siguiente es la mitad (rejilla)')
+ok([16*F(1,2)**(n-1) for n in range(1,5)] == [16,8,4,2] and abs(F(1,2)) < 1 and 1-F(1,2) == F(1,2) and 16/F(1,2) == 16*2 == 32 == Si25(16,F(1,2)) and 32 == 2*16, 'H25 e3 suma: 32 cm²')
+ok(16+8+4+2+1 == 31 and F(1,2)**5 == F(1,32) and 1-F(1,32) == F(31,32) and 16*F(31,32) == F(31,2) and F(31,2)/F(1,2) == F(31,2)*2 == 31 == Sn25(16,F(1,2),5) and 32-31 == 1, 'H25 e3 comprobación con S_5')
+# ejemplo 4: cuatro depósitos de 100 000 al 10 %
+ok(1+F('0.1') == F('1.1') and all(x+F('0.1')*x == x*(1+F('0.1')) for x in (F(100000),F(121000),F(7,3))) and 100000*F('1.1') == 110000 and 110000*F('1.1') == 121000 and 121000*F('1.1') == 133100, 'H25 e4 pasos 1–4')
+ok([100000*F('1.1')**(k-1) for k in range(1,5)] == [100000,110000,121000,133100] and F('1.1') != 1 and F('1.1')**2 == F('1.21') and F('1.1')**4 == F('1.21')**2 == F('1.4641') and 1-F('1.4641') == -F('0.4641') and 1-F('1.1') == -F('0.1') and (-F('0.4641'))/(-F('0.1')) == F('4.641') and 100000*F('4.641') == 464100 == Sn25(100000,F('1.1'),4), 'H25 e4 suma parcial S_4 = 464 100')
+ok(100000+110000 == 210000 and 210000+121000 == 331000 and 331000+133100 == 464100 and 4*100000 == 400000 and 464100-400000 == 64100 and abs(F('1.1')) >= 1 and F(100000)/(-F('0.1')) == -1000000, 'H25 e4 suma directa, intereses y aviso |r| ≥ 1')
+# errores frecuentes
+ok(1-F(3,4) == F(1,4), 'H25 errores frecuentes: si se elimina 3/4, queda 1/4')
+# ejercicio A
+ok(F('0.8') == F(8,10) and F('0.03') == F(3,100) and F('0.003') == F(3,1000) and F('0.0003') == F(3,10000) and F(3,1000)/F(3,100) == F(1,10) == F(3,10000)/F(3,1000) and F(3,100)/F(8,10) != F(1,10) and abs(F(1,10)) < 1, 'H25 A (a) reconocer: 8/10 aparte; a = 3/100, r = 1/10')
+ok(1-F(1,10) == F(9,10) and F(3,100)/F(9,10) == F(3,100)*F(10,9) == F(30,900) == F(1,30) == Si25(F(3,100),F(1,10)) and 900//30 == 30 and F(8,10)+F(1,30) == F(24,30)+F(1,30) == F(25,30) == F(5,6) and F(8,10) == F(24,30) and 25//5 == 5 and 30//5 == 6, 'H25 A (a) 0,8333… = 5/6')
+ok(50 == 8*6+2 and 20 == 3*6+2 and abs(F(8,10)+sum(F(3,10**k) for k in range(2,40)) - F(5,6)) < F(1,10**38), 'H25 A (a) comprobación por división')
+ok(F(1,3)*9 == 3 and 3+3 == 6 and [6*F(1,3)**(k-1) for k in (1,2,3)] == [6,2,F(2,3)] and all(2*9*F(1,3)**k == 6*F(1,3)**(k-1) for k in range(1,40)) and abs(F(1,3)) < 1 and 1-F(1,3) == F(2,3) and 6/F(2,3) == 6*F(3,2) == F(18,2) == 9 == Si25(6,F(1,3)) and 9+9 == 18, 'H25 A (b) pelota desde 9 m, razón 1/3: 18 m')
+ok(1+F(1,3) == F(4,3) and F(4,3)/F(2,3) == F(4,3)*F(3,2) == F(12,6) == 2 and 9*2 == 18 == 9*(1+F(1,3))/(1-F(1,3)), 'H25 A (b) comprobación con la fórmula')
+# ejercicio B
+ok([48*F(1,4)**(n-1) for n in range(1,5)] == [48,12,3,F(3,4)] and abs(F(1,4)) < 1 and 1-F(1,4) == F(3,4) and 48/F(3,4) == 48*F(4,3) == F(192,3) == 64 == Si25(48,F(1,4)), 'H25 B (a) 64 cm²')
+ok(48+12 == 60 and 60+3 == 63 and 63+F(3,4) == F('63.75') and not (63 > 63) and F('63.75') > 63 and [Sn25(48,F(1,4),n) for n in (1,2,3,4)] == [48,60,63,F('63.75')], 'H25 B (b) sumas parciales: se necesitan 4')
+ok(F(1,4)**4 == F(1,256) and 1-F(1,256) == F(255,256) and F(255,256)/F(3,4) == F(255,256)*F(4,3) == F(1020,768) == F(85,64) and 1020//12 == 85 and 768//12 == 64 and 1020 % 12 == 0 == 768 % 12 and 48*F(85,64) == F(4080,64) == F('63.75'), 'H25 B (b) comprobación de S_4')
+ok(all(Sn25(48,F(1,4),n) == 64*(1-F(1,4)**n) < 64 for n in range(1,60)), 'H25 B (c) S_n = 64(1 − (1/4)^n) < 64')
+# ejercicio C
+ok(F(4,5)*1000000 == F(4000000,5) == 800000 and F(4,5)*800000 == F(3200000,5) == 640000, 'H25 C (a) rondas 2 y 3')
+ok(F(4,5) != 1 and F(4,5)**3 == F(64,125) and 1-F(64,125) == F(61,125) and 1-F(4,5) == F(1,5) and F(61,125)/F(1,5) == F(61,125)*5 == F(305,125) == F(61,25) and 305//5 == 61 and 125//5 == 25 and 1000000*F(61,25) == F(61000000,25) == 2440000 == Sn25(1000000,F(4,5),3) == 1000000+800000+640000, 'H25 C (b) S_3 = 2 440 000')
+ok(abs(F(4,5)) < 1 and 1000000/F(1,5) == 1000000*5 == 5000000 == Si25(1000000,F(4,5)) and 1/(1-F(4,5)) == 5 and 1000000/F(1,2) == 2000000 == Si25(1000000,F(1,2)), 'H25 C (c) y (d): total 5 000 000, multiplicador 5; con 1/2, 2 000 000')
+# ---- H26 ---- Límite de una sucesión
+rd26 = lambda x, d: F(math.floor(x*10**d + F(1,2)), 10**d)   # redondeo a d decimales
+ce26 = lambda x: -((-x.numerator)//x.denominator)            # menor entero >= x
+G26 = [F(p,q) for p in range(1,13) for q in range(1,60)]     # rejilla de tolerancias positivas
+a26 = lambda n: F(n+1,n)
+# escena lim-idea: registro y lectura, paso por paso
+ok([a26(n) for n in (1,2,3,4,5,10,12)] == [F(1+1,1),F(2+1,2),F(3+1,3),F(4+1,4),F(5+1,5),F(10+1,10),F(12+1,12)] == [2,F(3,2),F(4,3),F(5,4),F(6,5),F(11,10),F(13,12)] and F(2,1) == 2 and F(3,2) == F('1.5') and rd26(F(4,3),2) == F('1.33') and F(5,4) == F('1.25') and F(6,5) == F('1.2') and F(11,10) == F('1.1') and rd26(F(13,12),2) == F('1.08') and all(a26(n+1) < a26(n) for n in range(1,300)), 'H26 lim-idea paso 1: términos')
+ok(all(a26(n)-1 == F(n+1,n)-F(n,n) == F(n+1-n,n) == F(1,n) and abs(a26(n)-1) == F(1,n) > 0 for n in range(1,400)), 'H26 lim-idea paso 2: |a_n − 1| = 1/n')
+ok(F(1,4) == F('0.25') and 1-F('0.25') == F('0.75') and 1+F('0.25') == F('1.25') and all((F('0.75') < a26(n) < F('1.25')) == (abs(a26(n)-1) < F('0.25')) for n in range(1,400)), 'H26 lim-idea paso 3: franja de 0,75 a 1,25')
+ok(all((F(1,n) < F(1,4)) == (4 < n) == (F(1,n)*4*n < F(1,4)*4*n) for n in range(1,400)) and not (F(1,4) < F(1,4)) and F(1,5) == F('0.2') < F('0.25') and all(abs(a26(n)-1) < F(1,4) for n in range(5,400)) and not abs(a26(4)-1) < F(1,4), 'H26 lim-idea paso 4: N = 4')
+ok(F(1,10) == F('0.1') and 1-F('0.1') == F('0.9') and 1+F('0.1') == F('1.1') and all((F(1,n) < F(1,10)) == (10 < n) for n in range(1,400)) and not (F(1,10) < F(1,10)) and rd26(F(1,11),2) == F('0.09') and F(1,11) < F('0.1') and all(abs(a26(n)-1) < F(1,10) for n in range(11,400)) and a26(10) == F('1.1') and 10 > 4, 'H26 lim-idea paso 5: N = 10')
+ok(all((F(1,n) < e) == (1/e < n) for e in G26 for n in range(1,80)) and all(ce26(1/e) >= 1/e and all(abs(a26(n)-1) < e for n in range(ce26(1/e)+1, ce26(1/e)+60)) for e in G26) and ce26(1/F(1,4)) == 4 and ce26(1/F(1,10)) == 10, 'H26 lim-idea paso 6: N >= 1/ε sirve para todo ε de la rejilla')
+# escena lim-vivo: cada posición del deslizador
+b26 = lambda n: 1 + F((-1)**n, n)
+E26 = [(F(5,4),'1.25','-0.25','2.25','0.8',0), (F(1),'1','0','2','1',1), (F(1,2),'0.5','0.5','1.5','2',2), (F(2,5),'0.4','0.6','1.4','2.5',2), (F(1,4),'0.25','0.75','1.25','4',4), (F(1,5),'0.2','0.8','1.2','5',5), (F(1,8),'0.125','0.875','1.125','8',8), (F(1,10),'0.1','0.9','1.1','10',10)]
+ok([b26(n) for n in (1,2,3,4)] == [0,F(3,2),F(2,3),F(5,4)] and all(b26(n)-1 == F((-1)**n,n) and abs(b26(n)-1) == F(abs((-1)**n),n) == F(1,n) and abs((-1)**n) == 1 for n in range(1,400)), 'H26 lim-vivo: distancia 1/n')
+for e, de, lo, hi, inv, N in E26:
+    ok(e == F(de) and 1-e == F(lo) and 1+e == F(hi) and 1/e == F(inv) and F(inv)*e == 1 and N == math.floor(F(inv)) and N+1 > F(inv) >= N and all((F(1,n) < e) == (n > F(inv)) == (n >= N+1) == (F(lo) < b26(n) < F(hi)) for n in range(1,400)) and (N+1)-1 == N and F(1,N+1) < e and (N == 0 or F(1,N) >= e), f'H26 lim-vivo ε = {de}: franja, división y N = {N}')
+ok([x[5] for x in E26] == [0,1,2,2,4,5,8,10] and F(1,1) == 1 < F('1.25') and F(1,1) == 1 and not 1 < 1 and F(1,2) == F('0.5') < 1 and not F('0.5') < F('0.5') and rd26(F(1,3),2) == F('0.33') and F(1,3) < F('0.5') and F('0.5') > F('0.4') and F(1,3) < F('0.4') and F(1,4) == F('0.25') and F(1,5) == F('0.2') < F('0.25') and rd26(F(1,6),2) == F('0.17') and F(1,6) < F('0.2') and F(1,8) == F('0.125') and rd26(F(1,9),2) == F('0.11') and F(1,9) < F('0.125') and F(1,10) == F('0.1') and rd26(F(1,11),2) == F('0.09') and F(1,11) < F('0.1'), 'H26 lim-vivo: comprobaciones con el término N y el siguiente')
+ok(1-0 == 1 and 1+0 == 1 and all(F(1,n) > 0 and not abs(b26(n)-1) < 0 for n in range(1,400)), 'H26 lim-vivo ε = 0 (caso límite): ningún término dentro')
+# teoremas
+R26 = [F(p,q) for p in range(-6,7) for q in (1,2,3)]
+ok(all((L-a)+(a-M) == L-M and abs(L-M) <= abs(L-a)+abs(a-M) and abs(L-a) == abs(a-L) and 2*(abs(L-M)/2) == abs(L-M) for L in R26 for M in R26 for a in R26) and all((x+y)-(A+B) == (x-A)+(y-B) and abs((x+y)-(A+B)) <= abs(x-A)+abs(y-B) for x in R26[::3] for y in R26[::4] for A in R26[::5] for B in R26[::2]) and all(e/2+e/2 == e and e/2 > 0 and e+e == 2*e for e in G26) and all((n > N+1) == (n-1 > N) for n in range(1,40) for N in range(0,40)) and all(N1+N2+1 > N1 and N1+N2+1 > N2 for N1 in range(30) for N2 in range(30)), 'H26 teoremas 1, 2 y 3: identidades y desigualdades en rejilla')
+# ejemplos
+ok(abs(5-5) == 0 and all(0 < e for e in G26) and all(abs(c-c) == 0 for c in R26), 'H26 e1 (a) constante')
+ok(all(abs(F(1,n)-0) == F(1,n) for n in range(1,300)) and all(all(n > 1/e and n*e > 1 and e > F(1,n) for n in range(ce26(1/e)+1, ce26(1/e)+50)) for e in G26) and 1/F('0.01') == 100 and 100*F('0.01') == 1 and rd26(F(1,101),4) == F('0.0099') < F('0.01') and F(1,101) < F(1,100) and 101 > 100 and F(1,100) == F('0.01') and not F(1,100) < F('0.01') and all(F(1,n) > 0 for n in range(1,300)), 'H26 e1 (b) 1/n → 0, ε = 0,01, N = 100')
+c26 = lambda n: F(2*n+3, n+1)
+ok([c26(1),c26(2),c26(3)] == [F(2*1+3,1+1),F(2*2+3,2+1),F(2*3+3,3+1)] == [F(5,2),F(7,3),F(9,4)] and F(5,2) == F('2.5') and rd26(F(7,3),2) == F('2.33') and F(9,4) == F('2.25') and all(c26(n)-2 == F(2*n+3,n+1)-F(2*(n+1),n+1) == F(2*n+3-2*(n+1),n+1) == F(1,n+1) and 2*(n+1) == 2*n+2 and 2*n+3-2*n-2 == 1 and abs(c26(n)-2) == F(1,n+1) for n in range(1,400)) and all(all(n+1 > n > 1/e - 1 and n+1 > 1/e and F(1,n+1) < e for n in range(ce26(1/e)+1, ce26(1/e)+50)) for e in G26), 'H26 e2 (2n+3)/(n+1) → 2')
+ok(c26(101) == F(2*101+3,101+1) == F(205,102) and abs(c26(101)-2) == F(1,102) and rd26(F(1,102),4) == F('0.0098') < F('0.01') and all(F(1,n+1) <= F(1,101) < F(1,100) and n+1 >= 101 for n in range(100,500)) and F(1,99+1) == F(1,100) == F('0.01') and not abs(c26(99)-2) < F('0.01') and all(abs(c26(n)-2) < F('0.01') for n in range(100,600)), 'H26 e2 ε = 0,01: N = 100 y N = 99 sirven, N = 98 no')
+ok([(-1)**n for n in (1,2,3,4)] == [-1,1,-1,1] and all((-1)**(2*N+2) == 1 and (-1)**(2*N+1) == -1 and 2*N+2 > N and 2*N+1 > N for N in range(0,200)) and all(-1-L == -(1+L) and abs(-1-L) == abs(1+L) and (1-L)+(1+L) == 2 and 2 <= abs(1-L)+abs(1+L) and not (abs(1-L) < 1 and abs(1+L) < 1) for L in [F(p,7) for p in range(-40,41)]) and 1+1 == 2 and not 2 < 2 and all(-1 <= (-1)**n <= 1 for n in range(1,50)), 'H26 e3 (−1)^n no tiene límite')
+ok([2*1+1,2*2+1,2*3+1] == [3,5,7] and all(all(n > M/2 and 2*n > M and 2*n+1 > 2*n and 2*n+1 > M for n in range(ce26(M/2)+1, ce26(M/2)+40)) for M in G26 + [F(1000), F(37,2)]) and F(1000,2) == 500 and 2*501+1 == 1002+1 == 1003 > 1000 and all(abs(L)+1 > 0 and abs(L) >= L and abs(L)+1 >= L+1 for L in R26), 'H26 e4 2n+1 diverge a +∞, M = 1000, N = 500')
+ok(all(abs(F(1,n+1)-(-1)) < abs(F(1,n)-(-1)) and abs(F(1,n)+1) > 1 for n in range(1,200)) and all(F(1,n) != 0 for n in range(1,200)), 'H26 errores frecuentes: 1/n se acerca a −1 sin tener límite −1')
+# ejercicios
+ok(all(abs(F(3,n)-0) == F(3,n) for n in range(1,100)) and all(all(n > 3/e and n*e > 3 and e > F(3,n) for n in range(ce26(3/e)+1, ce26(3/e)+40)) for e in G26) and 3/F('0.01') == 300 and 300*F('0.01') == 3 and rd26(F(3,301),5) == F('0.00997') < F('0.01') and F(3,301) < F('0.01'), 'H26 A (a) 3/n → 0, N = 300')
+ok(all(F(4*n-1,n)-F(4*n,n) == F(4*n-1-4*n,n) == F(-1,n) and abs(F(-1,n)) == F(1,n) and abs(F(4*n-1,n)-4) == F(1,n) for n in range(1,300)) and 1/F('0.05') == 20 and 20*F('0.05') == 1 and rd26(F(1,21),3) == F('0.048') < F('0.05') and F(1,21) < F('0.05') and all(abs(F(4*n-1,n)-4) < F('0.05') for n in range(21,400)), 'H26 A (b) (4n−1)/n → 4, N = 20')
+ok(all(abs(F((-1)**n,n)-0) == F(abs((-1)**n),n) == F(1,n) for n in range(1,300)) and all((F((-1)**n,n) > 0) != (F((-1)**(n+1),n+1) > 0) for n in range(1,100)), 'H26 A (c) (−1)^n/n → 0')
+ok(2**1 == 2 > 1 and all(2**(n+1) == 2*2**n and (2**n <= n or 2*2**n > 2*n) and 2*n == n+n and n+n >= n+1 and 2**n > n and F(1,2**n) < F(1,n) and abs(F(1,2**n)-0) == F(1,2**n) for n in range(1,200)) and all(all(F(1,2**n) < F(1,n) < e for n in range(ce26(1/e)+1, ce26(1/e)+30)) for e in G26), 'H26 B (a)(b)(c) 2^n > n y 1/2^n → 0')
+ok(F('0.01') == F(1,100) and all((F(1,2**n) < F(1,100)) == (2**n > 100) == (n > 6) for n in range(1,200)) and 2**6 == 64 and not 64 > 100 and 2**7 == 2*64 == 128 > 100 and rd26(F(1,128),4) == F('0.0078') < F('0.01') and rd26(F(1,64),4) == F('0.0156') and F(1,64) > F('0.01') and ce26(1/F('0.01')) == 100, 'H26 B (d) ε = 0,01: sirven N = 100 y N = 6; N = 5 no')
+p26 = lambda n: F(4 + 7*(n-1), n)
+ok(all(4 + sum(7 for k in range(2,n+1)) == 4+7*(n-1) == 4+7*n-7 == 7*n-3 and p26(n) == F(7*n-3,n) for n in range(1,200)) and p26(1) == F(7-3,1) == 4 and p26(2) == F(14-3,2) == F(11,2) == F('5.5') == F(4+7,2), 'H26 C (a) promedio (7n − 3)/n')
+ok(all(p26(n)-7 == F(7*n-3,n)-F(7*n,n) == F(7*n-3-7*n,n) == F(-3,n) and abs(p26(n)-7) == F(3,n) and 7-p26(n) == F(3,n) > 0 and p26(n) < 7 for n in range(1,400)) and all(all(F(3,n) < e for n in range(ce26(3/e)+1, ce26(3/e)+30)) for e in G26), 'H26 C (b)(d) límite 7 y nunca llega')
+ok(3/F('0.1') == 30 and 30*F('0.1') == 3 and all((F(3,n) < F('0.1')) == (n > 30) == (p26(n) > F('6.9')) for n in range(1,400)) and p26(31) == F(7*31-3,31) == F(217-3,31) == F(214,31) and 7*31 == 217 and rd26(F(214,31),3) == F('6.903') and p26(31) > F('6.9') and p26(30) == F(7*30-3,30) == F(207,30) == F('6.9') and 7-p26(30) == F('0.1') and not F('0.1') < F('0.1'), 'H26 C (c) desde la prueba 31')
+print('Lote 25 H01–H26:', 'sin errores' if not err else f'{err} errores')

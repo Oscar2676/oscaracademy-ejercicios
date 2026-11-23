@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suma de una serie geométrica infinita | Oscar Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: hoja de estudio en una columna de lectura; la animación es la única pieza con marco. */
+:root{
+  --bg:#ffffff; --surface:#f7f3f4; --ink:#241a1c; --muted:#6d5f62; --line:#e4d9db;
+  --brand:#8a1f2d; --brand-soft:#f3e3e5; --secant:#1f5f8a; --rise:#a85f00; --tangent:#8a1f2d; --alt:#2e6b3e;
+  --display:"Fjalla One","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+    --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171213; --surface:#211a1c; --ink:#f1e9ea; --muted:#b3a4a7; --line:#3a2e31;
+  --brand:#e58a96; --brand-soft:#3a2126; --secant:#7cc0ea; --rise:#f0b45a; --tangent:#e58a96; --alt:#8fd3a0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.page{max-width:760px;margin:0 auto;padding-block:24px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+article.sheet{display:flex;flex-direction:column;gap:34px;min-width:0}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+p{margin:0;max-width:66ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);color:var(--brand)}
+h2{font-size:1.5rem;color:var(--brand)}
+h3{font-size:1.15rem;letter-spacing:.01em}
+a{color:var(--brand)}
+.route{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.86rem;color:var(--muted);list-style:none;margin:0;padding:0}
+.route li{display:flex;align-items:center;gap:8px}
+.route li+li::before{content:"›";color:var(--brand)}
+.route b{color:var(--ink);font-weight:600}
+.lede{font-size:1.08rem;color:var(--muted)}
+.status{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Navegación del lote */
+.lote{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:.92rem}
+.lote b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:1.05rem;margin-right:6px}
+.lote a{text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+.lote a[aria-current="page"]{border-bottom-color:var(--brand);font-weight:600}
+.index{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.index li{border-top:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:4px}
+.index a{font-family:var(--display);font-size:1.25rem;text-decoration:none}
+.index small{color:var(--muted);font-size:.9rem}
+
+/* Animación */
+.stage{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.plot{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:4px}
+canvas{display:block;width:100%;height:auto;max-width:100%;background:var(--bg)}
+.lab{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;font-size:.8rem;line-height:1.2;
+  padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--bg) 84%, transparent);
+  color:var(--ink);transition:opacity .15s;will-change:transform}
+.lab.diff{color:var(--rise);font-weight:600}
+.lab.pt{font-weight:600}
+.lab.c-sec{color:var(--secant)} .lab.c-alt{color:var(--alt)} .lab.c-tan{color:var(--tangent)}
+@media (min-width:560px){.lab{font-size:.92rem}}
+.caption{font-weight:600;min-height:1.6em}
+.readout{min-height:5.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px;align-items:center}
+.readout>*{min-width:0;overflow-x:auto;overflow-y:hidden}
+.readout .d{color:var(--rise)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:0;border-top:3px solid var(--ink);display:inline-block}
+.sw.sec{border-color:var(--secant)} .sw.rise{border-color:var(--rise)} .sw.alt{border-color:var(--alt)}
+.sw.tan{border-color:var(--tangent)} .sw.dot{border-top-style:dotted}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px 20px;align-items:center}
+.controls label{display:flex;align-items:center;gap:10px;min-width:0}
+.controls input[type=range]{flex:1;min-width:0;accent-color:var(--brand)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 .95rem var(--body);padding:8px 16px;border-radius:4px;border:1px solid var(--brand);background:var(--brand);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--brand)}
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--secant);outline-offset:2px}
+
+/* Matemática */
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.4em 0 !important;padding:2px 0}
+.def{border-left:4px solid var(--brand);background:var(--brand-soft);padding:14px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps li{min-width:0}
+
+/* Ejercicios */
+.ex{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ex .n{font-family:var(--display);color:var(--brand);margin-right:8px}
+details{border:1px solid var(--line);border-radius:4px;padding:6px 12px;min-width:0}
+details[open]{background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+details>div{padding:6px 0 4px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* v002: explicaciones paso a paso */
+h1 mjx-container{font-size:78% !important}
+.keys{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.keys li{min-width:0}
+.why{border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.why>h3{color:var(--brand)}
+.tblwrap{overflow-x:auto}
+table.tbl{border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:6px 14px;text-align:left;vertical-align:middle}
+table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
+.mnemo{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.35}
+.mnemo b{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--rise);text-underline-offset:4px}
+/* DIAGRAMACION-BLOQUES v1 (Óscar, 13-nov-2026): solo estilos, contenido intacto. */
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left:6px solid var(--brand);border-radius:12px}
+
+/* Regla de Óscar: animaciones y figuras chicas (mitad del tamaño antiguo). */
+.plot{max-width:340px}
+.plot.wide{max-width:460px}
+.lab{font-size:.72rem}
+/* Recuadros de color (Óscar, 13-nov): lista de propiedades y una tarjeta por demostración. */
+.props{background:var(--brand-soft);border-left:6px solid var(--brand);border-radius:12px;padding:14px 18px;margin:18px 0;overflow-x:auto}
+.props h3{margin:0 0 6px;color:var(--brand)}
+.prop{border:1.5px solid var(--brand-soft);border-radius:12px;margin:20px 0;overflow:hidden}
+.prop>h3{background:var(--brand-soft);color:var(--brand);margin:0;padding:10px 16px;border-left:6px solid var(--brand)}
+.prop>.body{padding:4px 16px 10px}
+/* Cada demostración en un recuadro de color distinto (Óscar, 15-nov). */
+.prop{--k:var(--brand);border-color:color-mix(in srgb,var(--k) 30%,transparent)}
+.prop>h3{background:color-mix(in srgb,var(--k) 15%,transparent);color:color-mix(in srgb,var(--k) 78%,var(--ink));border-left-color:var(--k)}
+.prop>.body{background:color-mix(in srgb,var(--k) 5%,transparent)}
+.prop.p2{--k:#2e6b3e}.prop.p3{--k:#1f5f8a}.prop.p4{--k:#a85f00}.prop.p5{--k:#5b3a8c}.prop.p6{--k:#1f7a78}.prop.p7{--k:#a8456b}.prop.p8{--k:#6b6b1f}.prop.p9{--k:#3d5a80}
+/* Diagramación que invite a leer (Óscar, 13-nov): bloques con fondo de color, uno por idea. */
+.card{--k:var(--brand);border-left:6px solid var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:12px;padding:14px 18px;margin:22px 0;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-x:auto}
+.card>h3{margin:0;color:var(--k)}
+.card.k1{--k:var(--alt)} .card.k2{--k:var(--secant)} .card.k3{--k:var(--rise)}
+.card .stage{background:var(--bg);border-radius:10px;padding:8px}
+.steps>li::marker{color:var(--brand);font-weight:700}
+.why{border:0;border-left:6px solid var(--rise);border-radius:12px;background:color-mix(in srgb,var(--rise) 9%,transparent)}
+.why>h3{color:var(--rise);margin:0}
+.ex{border:1.5px solid var(--brand-soft);border-radius:12px;padding:12px 16px;margin:14px 0}
+/* Hojas anteriores, sin tocar su contenido: el paso a paso principal y la lista de claves toman fondo de color. */
+.sheet section>.steps{background:color-mix(in srgb,var(--secant) 7%,transparent);border-left:6px solid var(--secant);border-radius:12px;padding:14px 18px 14px 2.6em}
+.sheet section>.keys{background:color-mix(in srgb,var(--alt) 8%,transparent);border-left:6px solid var(--alt);border-radius:12px;padding:12px 18px 12px 2.4em}
+.def{border-left-width:6px;border-radius:12px}
+</style>
+</head>
+<body style="margin:0">
+<div class="page">
+<article class="sheet" id="ss-suma-geo" data-hoja="L25 H24">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Sucesiones geométricas</li>
+      <li><b>Suma de una serie geométrica infinita</b></li>
+    </ol>
+    <h1>Suma de una serie geométrica infinita</h1>
+    <p class="lede">Sumar una serie infinita es calcular el límite de sus sumas parciales. En una serie geométrica de primer término \(a\neq 0\) y razón \(r\), ese límite existe exactamente cuando \(|r|&lt;1\), y entonces se calcula con una sola división: el primer término, dividido por \(1\) menos la razón. Si \(|r|\ge 1\), la serie no tiene suma. \[S=\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+\cdots=\dfrac{a}{1-r}\qquad\text{cuando }|r|&lt;1\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}=\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\dfrac{1}{16}+\cdots\), en seis pasos, dibujada como áreas dentro de un cuadrado de área \(1\). Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero el cuadrado (paso 1):</b> tiene lado \(1\) y área \(1\). Se pinta de azul su mitad: es el primer término, \(\dfrac{1}{2}\). La otra mitad queda rayada en naranja, con la palabra «falta». Arriba queda la pregunta: ¿cuánto suma la serie?</li>
+    <li><b>Pasos 2, 3 y 4:</b> cada trozo nuevo es la mitad de lo que faltaba: \(\dfrac{1}{4}\), \(\dfrac{1}{8}\), \(\dfrac{1}{16}\). Lo azul es la suma parcial; lo rayado, lo que le falta para llegar a \(1\). A la derecha se va anotando cuánto falta tras cada trozo: \(\dfrac{1}{2}\), \(\dfrac{1}{4}\), \(\dfrac{1}{8}\), \(\dfrac{1}{16}\).</li>
+    <li><b>Paso 5:</b> se pintan seis trozos más. Lo rayado se reduce a un cuadradito en la esquina de abajo a la derecha. Tras \(n\) trozos falta \(\left(\dfrac{1}{2}\right)^{n}\), y por eso \(S_{n}=1-\left(\dfrac{1}{2}\right)^{n}\).</li>
+    <li><b>Paso 6:</b> el cuadrado completo se remarca en burdeo. Lo que falta tiene límite \(0\), así que las sumas parciales tienen límite \(1\): esa es la suma. La respuesta se escribe bajo la pregunta.</li>
+    <li><b>Registro y cuenta de abajo:</b> cada paso queda escrito, numerado, uno bajo el otro: \(S_{1}\) a \(S_{4}\) con lo que falta en cada una, la fórmula de \(S_{n}\) y el límite. Conclusión: la suma es \(1\), lo mismo que da \(\dfrac{a}{1-r}\) con \(a=\dfrac{1}{2}\) y \(r=\dfrac{1}{2}\).</li>
+  </ol>
+  <div class="stage" data-scene="sgi-idea"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+  <ul class="keys">
+    <li><b>Azul:</b> los trozos pintados. Cada uno es un término de la serie; todos los pintados juntos son la suma parcial \(S_{n}\).</li>
+    <li><b>Naranja, rayado:</b> lo que falta para llenar el cuadrado, \(1-S_{n}\). A la derecha queda anotado su valor tras cada trozo.</li>
+    <li><b>Burdeo:</b> el cuadrado completo, de área \(1\): la suma de la serie.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>La fórmula y cómo se usa</h3>
+    <ol class="steps">
+      <li><b>Serie geométrica</b> (hoja «Series geométricas infinitas»): \(\displaystyle\sum_{n=1}^{\infty}a\,r^{\,n-1}=a+ar+ar^{2}+ar^{3}+\cdots\), con \(a\neq 0\). El número \(a\) es el primer término y \(r\) es la razón. Si \(r=0\), la serie se escribe \(a+0+0+\cdots\)</li>
+      <li><b>Suma parcial:</b> la suma de los \(n\) primeros términos, \(S_{n}=\displaystyle\sum_{k=1}^{n}a\,r^{\,k-1}=a+ar+\cdots+ar^{\,n-1}\).</li>
+      <li><b>Suma de la serie</b> (hoja «Series infinitas convergentes y divergentes»): el límite de las sumas parciales, \(S=\displaystyle\lim_{n\to\infty}S_{n}\), cuando ese límite existe y es un número real. Si no existe, la serie no tiene suma.</li>
+      <li><b>Resultado.</b> Si \(|r|&lt;1\): \(S=\dfrac{a}{1-r}\). Si \(|r|\ge 1\): no hay suma. Que la serie converge exactamente cuando \(|r|&lt;1\) es el tema de la hoja «Series geométricas infinitas»; esta hoja se dedica a calcular la suma.</li>
+    </ol>
+    <p><b>Procedimiento.</b></p>
+    <ol class="steps">
+      <li><b>Se identifican \(a\) y \(r\)</b> (hoja «Identificar una serie geométrica infinita»): \(a\) es el término que resulta al reemplazar el <b>primer</b> índice de la suma; \(r\) es el cociente entre cada término y el anterior.</li>
+      <li><b>Se compara \(|r|\) con \(1\).</b> Si \(|r|\ge 1\), se responde «no tiene suma» y se termina.</li>
+      <li><b>Si \(|r|&lt;1\), se reemplaza en \(\dfrac{a}{1-r}\):</b> primero la resta del denominador, después la división.</li>
+      <li><b>Se comprueba</b> con las primeras sumas parciales: tienen que acercarse al resultado.</li>
+    </ol>
+    <p><b>Si la suma empieza en otro índice.</b> Sea \(\displaystyle\sum_{n=m}^{\infty}c\,q^{\,n}\), con \(c\neq 0\), \(q\neq 0\), \(|q|&lt;1\) y \(m\) un entero mayor o igual que \(0\). En la hoja «Identificar una serie geométrica infinita» se muestra que es la serie geométrica de primer término \(c\,q^{\,m}\) y razón \(q\). Entonces \[\sum_{n=m}^{\infty}c\,q^{\,n}=\dfrac{c\,q^{\,m}}{1-q}\] El numerador es siempre el primer término de la suma, no el número \(c\) que acompaña a la potencia.</p>
+    <p><b>Despejar \(a\) o \(r\) cuando se conoce la suma.</b> Sea \(S=\dfrac{a}{1-r}\), con \(|r|&lt;1\).</p>
+    <ol class="steps">
+      <li>Se multiplica cada lado por \(1-r\): \(S\,(1-r)=a\). Ya está despejado el primer término: \(a=S\,(1-r)\).</li>
+      <li>\(S\neq 0\): si \(S\) fuera \(0\), sería \(a=0\cdot(1-r)=0\), y \(a\neq 0\). Se puede dividir por \(S\).</li>
+      <li>Se divide cada lado de \(S\,(1-r)=a\) por \(S\): \(1-r=\dfrac{a}{S}\).</li>
+      <li>Se suma \(r\) a cada lado: \(1=\dfrac{a}{S}+r\). Se resta \(\dfrac{a}{S}\) a cada lado: \(r=1-\dfrac{a}{S}\).</li>
+      <li>Al final se revisa que el \(r\) obtenido cumpla \(|r|&lt;1\). Si no lo cumple, no existe una serie geométrica con esos datos (ejemplo 4 c).</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) que \(\displaystyle\lim_{n\to\infty}r^{\,n}=0\) cuando \(|r|&lt;1\); (2) que el límite de una suma, de una resta y de una constante por una sucesión se calculan término a término cuando los límites existen; (3) que si una serie converge, sus términos tienen límite \(0\) (hoja «Criterio del enésimo término»); (4) las leyes de las potencias de exponente entero y el valor absoluto de un producto, \(|x\cdot y|=|x|\cdot|y|\); (5) que un decimal periódico como \(0{,}777\ldots\) es, por lo que significa la escritura decimal, la suma \(\dfrac{7}{10}+\dfrac{7}{100}+\dfrac{7}{1000}+\cdots\); (6) el principio de inducción, en la cuenta de la primera animación (allí mismo se llega al mismo resultado con la fórmula de \(S_{n}\), que sí se demuestra aquí). La segunda animación solo dibuja razones entre \(0\) y \(1\). En el ejercicio C, el rebote de la pelota es un modelo declarado, no un dato medido.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>De dónde sale la fórmula, paso a paso</h3>
+    <p><b>Primera parte: la suma parcial, con \(r\neq 1\).</b> El truco es restarle a \(S_{n}\) la misma suma multiplicada por \(r\).</p>
+    <ol class="steps">
+      <li>Suma parcial, con sus \(n\) sumandos: \(S_{n}=\displaystyle\sum_{k=1}^{n}a\,r^{\,k-1}=a+ar+ar^{2}+\cdots+ar^{\,n-1}\).</li>
+      <li>Se multiplica cada lado por \(r\) (distributiva). Cada sumando gana un factor \(r\), porque \(a\,r^{\,k-1}\cdot r=a\,r^{\,k}\): \(r\,S_{n}=\displaystyle\sum_{k=1}^{n}a\,r^{\,k}=ar+ar^{2}+\cdots+ar^{\,n-1}+ar^{\,n}\).</li>
+      <li>Se resta la segunda igualdad de la primera. Los sumandos \(ar,\ ar^{2},\ \ldots,\ ar^{\,n-1}\) están en las dos sumas y se cancelan. Queda el primero de la primera, \(a\), y el último de la segunda, \(ar^{\,n}\), restando: \(S_{n}-r\,S_{n}=a-ar^{\,n}\).</li>
+      <li>Factor común \(S_{n}\) en el lado izquierdo: \((1-r)\,S_{n}=a-ar^{\,n}\).</li>
+      <li>Factor común \(a\) en el lado derecho: \((1-r)\,S_{n}=a\,(1-r^{\,n})\).</li>
+      <li>Como \(r\neq 1\), \(1-r\neq 0\) y se puede dividir cada lado por \(1-r\): \[S_{n}=\dfrac{a\,(1-r^{\,n})}{1-r}\]</li>
+      <li>Si \(r=1\), el truco no sirve (se dividiría por \(0\)), pero no hace falta: los \(n\) sumandos valen \(a\), y \(S_{n}=n\,a\).</li>
+    </ol>
+    <p><b>Segunda parte: si \(|r|&lt;1\), la suma es \(\dfrac{a}{1-r}\).</b></p>
+    <ol class="steps">
+      <li>\(|r|&lt;1\) implica \(r\neq 1\): vale la fórmula de \(S_{n}\).</li>
+      <li>Distributiva en el numerador: \(S_{n}=\dfrac{a-a\,r^{\,n}}{1-r}\).</li>
+      <li>Se separa en dos fracciones de igual denominador: \(S_{n}=\dfrac{a}{1-r}-\dfrac{a\,r^{\,n}}{1-r}\). La primera no depende de \(n\); la segunda es la constante \(\dfrac{a}{1-r}\) multiplicada por \(r^{\,n}\).</li>
+      <li>Al crecer \(n\), \(r^{\,n}\) tiene límite \(0\) (aviso de rigor, punto 1).</li>
+      <li>Constante por sucesión (aviso, punto 2): \(\dfrac{a}{1-r}\cdot r^{\,n}\) tiene límite \(\dfrac{a}{1-r}\cdot 0=0\).</li>
+      <li>Límite de una resta (aviso, punto 2): \(S=\displaystyle\lim_{n\to\infty}S_{n}=\dfrac{a}{1-r}-0=\dfrac{a}{1-r}\).</li>
+      <li><b>Lo que falta.</b> Restando las igualdades de los pasos 6 y 3: \(S-S_{n}=\dfrac{a\,r^{\,n}}{1-r}\). Es lo que le falta a la suma parcial \(S_{n}\) para llegar a la suma de la serie. En la animación de arriba, con \(a=r=\dfrac{1}{2}\), vale \(\left(\dfrac{1}{2}\right)^{n}\): lo rayado.</li>
+    </ol>
+    <p><b>Tercera parte: si \(|r|\ge 1\), no hay suma.</b> Está demostrado en la hoja «Series geométricas infinitas»; aquí va el resumen.</p>
+    <ol class="steps">
+      <li>El valor absoluto del término \(n\) es \(|a\,r^{\,n-1}|=|a|\cdot|r|^{\,n-1}\).</li>
+      <li>Como \(|r|\ge 1\), \(|r|^{\,n-1}\ge 1\). Entonces \(|a\,r^{\,n-1}|\ge|a|\), y \(|a|&gt;0\) porque \(a\neq 0\).</li>
+      <li>Los términos no tienen límite \(0\). Si la serie convergiera, lo tendrían (aviso, punto 3). Luego no converge: no tiene suma.</li>
+      <li><b>Cuidado:</b> la expresión \(\dfrac{a}{1-r}\) entrega un número para cualquier \(r\neq 1\), haya suma o no. Con \(a=3\) y \(r=2\) da \(\dfrac{3}{1-2}=\dfrac{3}{-1}=-3\), pero \(3+6+12+\cdots\) no tiene suma: sus sumas parciales, \(3,\ 9,\ 21,\ \ldots\), crecen sin tope. Ese \(-3\) no significa nada.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>La razón decide la suma: número ↔ figura</h3>
+    <p>La serie \(1+r+r^{2}+r^{3}+\cdots\), con primer término \(a=1\) fijo y razón \(r\) entre \(0\) y \(1\). Cada término es el lado de un cuadrado; los cuadrados se ponen uno tras otro sobre un eje.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los cuadrados azules:</b> el primero tiene lado \(a=1\); el segundo, lado \(ar=r\); el tercero, \(r^{2}\); y así. Como están uno tras otro, el largo que ocupan sobre el eje es la suma de sus lados: la suma de la serie.</li>
+      <li><b>Mira después la cota naranja:</b> junto al primer cuadrado, mide cuánto más bajo es el segundo: \(1-r\). Los puntos naranjas son las esquinas de arriba a la izquierda de cada cuadrado.</li>
+      <li><b>Mira la recta burdeo:</b> parte de la esquina del primer cuadrado, a la altura \(1\), y pasa por todas las esquinas. Toca el eje en el punto burdeo: ahí está la suma \(S\), con su valor escrito.</li>
+      <li><b>Mueve el deslizador \(r\):</b> con \(r=0\) hay un solo cuadrado y la suma es \(1\). Al crecer \(r\), la recta se acuesta y la suma se aleja: \(2\) con \(r=0{,}5\); \(5\) con \(r=0{,}8\); \(10\) con \(r=0{,}9\) (queda fuera del dibujo y la recta sale con una flecha). Con \(r=1\) la recta es horizontal: nunca toca el eje y no hay suma.</li>
+      <li><b>Cuenta de abajo:</b> con la razón elegida: los lados de los tres primeros cuadrados, cuánto baja la recta por unidad, la comprobación de que pasa por la segunda y la tercera esquina, la comparación de \(|r|\) con \(1\) y la suma \(\dfrac{1}{1-r}\) (primero la resta, después la división). Los valores con «\(\approx\)» están redondeados a dos decimales.</li>
+    </ol>
+    <div class="stage" data-scene="sgi-vivo"></div>
+<p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
+    <ul class="keys">
+      <li><b>Azul:</b> los cuadrados; el lado de cada uno es un término de la serie.</li>
+      <li><b>Naranja:</b> las esquinas de los cuadrados y la cota \(1-r\), lo que baja la recta por cada unidad que avanza.</li>
+      <li><b>Burdeo:</b> la recta por las esquinas y el punto donde toca el eje: la suma \(S=\dfrac{1}{1-r}\).</li>
+      <li><b>Casos límite:</b> con \(r=0\), un solo cuadrado y suma \(1\). Con \(r=1\), cuadrados iguales sin fin, recta horizontal y ninguna suma.</li>
+    </ul>
+    <p><b>Por qué la recta pasa por todas las esquinas</b> (con \(0&lt;r&lt;1\) y \(a=1\)).</p>
+    <ol class="steps">
+      <li>La esquina de arriba a la izquierda del cuadrado número \(n+1\) está a la distancia \(S_{n}\) del origen (los \(n\) lados anteriores, uno tras otro) y a la altura \(r^{\,n}\) (su lado).</li>
+      <li>La recta parte a la altura \(1\) y baja \(1-r\) por cada unidad: a la distancia \(x\) su altura es \(1-(1-r)\,x\).</li>
+      <li>Se reemplaza \(x=S_{n}\). Por el paso 5 de la primera parte, con \(a=1\): \((1-r)\,S_{n}=1-r^{\,n}\). La altura es \(1-(1-r^{\,n})\).</li>
+      <li>Se quita el paréntesis: \(1-1+r^{\,n}=r^{\,n}\). Es la altura de la esquina: la recta pasa por ella, para todo \(n\).</li>
+      <li>La recta toca el eje donde su altura es \(0\): \(1-(1-r)\,x=0\). Se suma \((1-r)\,x\) a cada lado: \(1=(1-r)\,x\). Se divide por \(1-r\), que no es \(0\): \(x=\dfrac{1}{1-r}\), la suma de la serie.</li>
+    </ol>
+    <p>El dibujo sirve para razones entre \(0\) y \(1\). Con razón negativa los términos cambian de signo y no son lados de cuadrados; la fórmula es la misma (ejemplo 2).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: la suma parte en otro índice. \(\displaystyle\sum_{n=2}^{\infty}3\left(\dfrac{1}{2}\right)^{n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>El primer índice es \(2\). Primer término, con \(n=2\): potencia \(\left(\dfrac{1}{2}\right)^{2}=\dfrac{1}{4}\); producto \(3\cdot\dfrac{1}{4}=\dfrac{3}{4}\). Entonces \(a=\dfrac{3}{4}\) (no es \(3\)).</li>
+    <li>Con \(n=3\): \(3\cdot\dfrac{1}{8}=\dfrac{3}{8}\). Con \(n=4\): \(3\cdot\dfrac{1}{16}=\dfrac{3}{16}\). La serie es \(\dfrac{3}{4}+\dfrac{3}{8}+\dfrac{3}{16}+\cdots\)</li>
+    <li>Razón: el término siguiente dividido por el término, \(\dfrac{3\left(\frac{1}{2}\right)^{n+1}}{3\left(\frac{1}{2}\right)^{n}}\). Se simplifica por \(3\) y, como \(\left(\dfrac{1}{2}\right)^{n+1}=\left(\dfrac{1}{2}\right)^{n}\cdot\dfrac{1}{2}\), por \(\left(\dfrac{1}{2}\right)^{n}\): \(r=\dfrac{1}{2}\).</li>
+    <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{1}{2}&lt;1\). Hay suma.</li>
+    <li>Fórmula y reemplazo: \(S=\dfrac{a}{1-r}=\dfrac{\frac{3}{4}}{1-\frac{1}{2}}\).</li>
+    <li>Resta del denominador: \(1-\dfrac{1}{2}=\dfrac{2}{2}-\dfrac{1}{2}=\dfrac{1}{2}\). Queda \(\dfrac{\frac{3}{4}}{\frac{1}{2}}\).</li>
+    <li>Dividir por \(\dfrac{1}{2}\) es multiplicar por su inverso, \(2\): \(\dfrac{3}{4}\cdot 2=\dfrac{6}{4}=\dfrac{3}{2}\) (se simplifica por \(2\)).</li>
+    <li>La suma es \(\dfrac{3}{2}=1{,}5\).</li>
+    <li>Comprobación con tres términos. \(S_{3}=\dfrac{3}{4}+\dfrac{3}{8}+\dfrac{3}{16}=\dfrac{12}{16}+\dfrac{6}{16}+\dfrac{3}{16}=\dfrac{21}{16}\).</li>
+    <li>Lo que falta, según el recuadro: \(\dfrac{a\,r^{3}}{1-r}\). Potencia: \(\left(\dfrac{1}{2}\right)^{3}=\dfrac{1}{8}\). Producto: \(\dfrac{3}{4}\cdot\dfrac{1}{8}=\dfrac{3}{32}\). División por \(\dfrac{1}{2}\): \(\dfrac{3}{32}\cdot 2=\dfrac{6}{32}=\dfrac{3}{16}\).</li>
+    <li>Resta directa: \(\dfrac{3}{2}-\dfrac{21}{16}=\dfrac{24}{16}-\dfrac{21}{16}=\dfrac{3}{16}\). Coincide. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: razón negativa. \(\displaystyle\sum_{n=1}^{\infty}12\left(-\dfrac{1}{2}\right)^{n-1}=12-6+3-\dfrac{3}{2}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se compara con la forma \(a\,r^{\,n-1}\). Primer término: \(a=12\). Razón: \(r=-\dfrac{1}{2}\).</li>
+    <li>Comprobación de la razón con los dos primeros términos: \(\dfrac{-6}{12}=-\dfrac{1}{2}\) (se simplifica por \(6\)).</li>
+    <li>Se compara \(|r|\) con \(1\): \(|r|=\left|-\dfrac{1}{2}\right|=\dfrac{1}{2}&lt;1\). Hay suma.</li>
+    <li>Fórmula y reemplazo: \(S=\dfrac{a}{1-r}=\dfrac{12}{1-\left(-\frac{1}{2}\right)}\).</li>
+    <li>Denominador. Restar un número negativo es sumar su opuesto: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}\).</li>
+    <li>Suma de fracciones: \(1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\). Queda \(\dfrac{12}{\frac{3}{2}}\).</li>
+    <li>Dividir por \(\dfrac{3}{2}\) es multiplicar por su inverso, \(\dfrac{2}{3}\): \(12\cdot\dfrac{2}{3}=\dfrac{24}{3}=8\).</li>
+    <li>La suma es \(8\). Es menor que el primer término, \(12\): con razón negativa hay términos que restan.</li>
+    <li>Comprobación con sumas parciales: \(S_{1}=12\); \(S_{2}=12-6=6\); \(S_{3}=6+3=9\); \(S_{4}=9-\dfrac{3}{2}=\dfrac{18}{2}-\dfrac{3}{2}=\dfrac{15}{2}=7{,}5\).</li>
+    <li>Distancia de cada una a \(8\): \(12-8=4\); \(8-6=2\); \(9-8=1\); \(8-7{,}5=0{,}5\). Las sumas parciales quedan una vez sobre \(8\) y otra vez bajo \(8\), cada vez a la mitad de distancia. ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: decimales periódicos como fracción. \(0{,}777\ldots\) y \(0{,}1666\ldots\)</h3>
+  <div class="body">
+  <p><b>(a)</b> \(0{,}777\ldots\)</p>
+  <ol class="steps">
+    <li>En la hoja «Identificar una serie geométrica infinita» (ejemplo 3) se obtuvo: \(0{,}777\ldots=\displaystyle\sum_{n=1}^{\infty}\dfrac{7}{10^{n}}=\dfrac{7}{10}+\dfrac{7}{100}+\dfrac{7}{1000}+\cdots\), con \(a=\dfrac{7}{10}\) y \(r=\dfrac{1}{10}\).</li>
+    <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{1}{10}&lt;1\). Hay suma.</li>
+    <li>Fórmula y reemplazo: \(S=\dfrac{a}{1-r}=\dfrac{\frac{7}{10}}{1-\frac{1}{10}}\).</li>
+    <li>Resta del denominador: \(1-\dfrac{1}{10}=\dfrac{10}{10}-\dfrac{1}{10}=\dfrac{9}{10}\). Queda \(\dfrac{\frac{7}{10}}{\frac{9}{10}}\).</li>
+    <li>Dividir por \(\dfrac{9}{10}\) es multiplicar por su inverso, \(\dfrac{10}{9}\): \(\dfrac{7}{10}\cdot\dfrac{10}{9}=\dfrac{70}{90}=\dfrac{7}{9}\) (se simplifica por \(10\)).</li>
+    <li>\(0{,}777\ldots=\dfrac{7}{9}\).</li>
+    <li>Comprobación, dividiendo \(7\div 9\): \(70=7\cdot 9+7\) (cifra \(7\), resto \(7\)). Vuelve el resto \(7\): la cifra \(7\) se repite. \(7\div 9=0{,}777\ldots\) ✓</li>
+  </ol>
+  <p><b>(b)</b> \(0{,}1666\ldots\) (una cifra que no se repite, y después el período)</p>
+  <ol class="steps">
+    <li>Se separa la parte que no se repite: \(0{,}1666\ldots=0{,}1+0{,}06+0{,}006+0{,}0006+\cdots\)</li>
+    <li>Como fracciones: \(\dfrac{1}{10}+\dfrac{6}{100}+\dfrac{6}{1000}+\dfrac{6}{10\,000}+\cdots=\dfrac{1}{10}+\displaystyle\sum_{n=2}^{\infty}\dfrac{6}{10^{n}}\).</li>
+    <li>La serie parte en \(n=2\). Primer término: \(a=\dfrac{6}{10^{2}}=\dfrac{6}{100}\). Razón: \(\dfrac{6}{10^{n+1}}\cdot\dfrac{10^{n}}{6}=\dfrac{6\cdot 10^{n}}{6\cdot 10^{n}\cdot 10}=\dfrac{1}{10}\), así que \(r=\dfrac{1}{10}\).</li>
+    <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{1}{10}&lt;1\). Hay suma.</li>
+    <li>Fórmula y reemplazo: \(\dfrac{a}{1-r}=\dfrac{\frac{6}{100}}{1-\frac{1}{10}}=\dfrac{\frac{6}{100}}{\frac{9}{10}}\) (la resta es la del paso 4 de la parte a).</li>
+    <li>Se multiplica por el inverso: \(\dfrac{6}{100}\cdot\dfrac{10}{9}=\dfrac{60}{900}=\dfrac{1}{15}\) (se simplifica por \(60\)).</li>
+    <li>Se agrega la parte que no se repite. Denominador común \(30\): \(\dfrac{1}{10}+\dfrac{1}{15}=\dfrac{3}{30}+\dfrac{2}{30}=\dfrac{5}{30}=\dfrac{1}{6}\) (se simplifica por \(5\)).</li>
+    <li>\(0{,}1666\ldots=\dfrac{1}{6}\).</li>
+    <li>Comprobación, dividiendo \(1\div 6\): \(10=1\cdot 6+4\) (cifra \(1\), resto \(4\)); \(40=6\cdot 6+4\) (cifra \(6\), resto \(4\)). Vuelve el resto \(4\): la cifra \(6\) se repite. \(1\div 6=0{,}1666\ldots\) ✓</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: se conoce la suma y se busca \(a\) o \(r\)</h3>
+  <div class="body">
+  <p><b>(a)</b> Una serie geométrica tiene razón \(\dfrac{3}{5}\) y suma \(10\). ¿Cuál es su primer término?</p>
+  <ol class="steps">
+    <li>Datos: \(r=\dfrac{3}{5}\), \(S=10\). Como \(|r|=\dfrac{3}{5}&lt;1\), vale \(S=\dfrac{a}{1-r}\).</li>
+    <li>Despeje (recuadro): \(a=S\,(1-r)\). Reemplazo: \(a=10\left(1-\dfrac{3}{5}\right)\).</li>
+    <li>Resta: \(1-\dfrac{3}{5}=\dfrac{5}{5}-\dfrac{3}{5}=\dfrac{2}{5}\).</li>
+    <li>Producto: \(10\cdot\dfrac{2}{5}=\dfrac{20}{5}=4\). El primer término es \(a=4\).</li>
+    <li>Comprobación: \(\dfrac{4}{\frac{2}{5}}=4\cdot\dfrac{5}{2}=\dfrac{20}{2}=10\). ✓ La serie es \(\displaystyle\sum_{n=1}^{\infty}4\left(\dfrac{3}{5}\right)^{n-1}=4+\dfrac{12}{5}+\dfrac{36}{25}+\cdots\)</li>
+  </ol>
+  <p><b>(b)</b> Una serie geométrica tiene primer término \(6\) y suma \(4\). ¿Cuál es su razón?</p>
+  <ol class="steps">
+    <li>Datos: \(a=6\), \(S=4\). Despeje (recuadro): \(1-r=\dfrac{a}{S}\). Reemplazo: \(1-r=\dfrac{6}{4}=\dfrac{3}{2}\) (se simplifica por \(2\)).</li>
+    <li>\(r=1-\dfrac{3}{2}=\dfrac{2}{2}-\dfrac{3}{2}=-\dfrac{1}{2}\).</li>
+    <li>Se revisa: \(|r|=\dfrac{1}{2}&lt;1\). Sirve: \(r=-\dfrac{1}{2}\).</li>
+    <li>Comprobación. Denominador: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{3}{2}\). División: \(\dfrac{6}{\frac{3}{2}}=6\cdot\dfrac{2}{3}=\dfrac{12}{3}=4\). ✓ La serie es \(6-3+\dfrac{3}{2}-\cdots\): la suma es menor que el primer término porque la razón es negativa.</li>
+  </ol>
+  <p><b>(c)</b> ¿Hay una serie geométrica con primer término \(6\) y suma \(2\)?</p>
+  <ol class="steps">
+    <li>Si la hubiera, sería \(1-r=\dfrac{a}{S}=\dfrac{6}{2}=3\).</li>
+    <li>\(r=1-3=-2\).</li>
+    <li>Se revisa: \(|r|=2\ge 1\). Con esa razón la serie, \(6-12+24-\cdots\), no tiene suma.</li>
+    <li>No existe una serie geométrica con primer término \(6\) y suma \(2\). El despeje entregó un número, pero no cumple la condición \(|r|&lt;1\) con la que vale la fórmula.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Usar \(\dfrac{a}{1-r}\) sin comparar antes \(|r|\) con \(1\): la expresión entrega un número aunque no haya suma (tercera parte del recuadro). Poner en el numerador el número que acompaña a la potencia en vez del primer término: en \(\displaystyle\sum_{n=2}^{\infty}3\left(\dfrac{1}{2}\right)^{n}\) el numerador es \(\dfrac{3}{4}\), no \(3\) (ejemplo 1). Equivocar el signo del denominador con razón negativa: \(1-\left(-\dfrac{1}{2}\right)\) es \(\dfrac{3}{2}\), no \(\dfrac{1}{2}\) (ejemplo 2). Escribir \(r-1\) en vez de \(1-r\): cambia el signo del resultado. Confundir la suma de la serie, \(S\), con una suma parcial, \(S_{n}\): ninguna suma parcial es la suma; \(S\) es el límite de todas. En un decimal periódico, olvidar las cifras que no se repiten (ejemplo 3 b). Y al despejar \(r\), no revisar al final que \(|r|&lt;1\) (ejemplo 4 c).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula la suma de cada serie, si la tiene: (a) \(\displaystyle\sum_{n=1}^{\infty}6\left(\dfrac{2}{3}\right)^{n-1}\); (b) \(\displaystyle\sum_{n=0}^{\infty}\left(-\dfrac{3}{4}\right)^{n}\); (c) \(\displaystyle\sum_{n=3}^{\infty}\left(\dfrac{2}{5}\right)^{n}\); (d) \(\displaystyle\sum_{n=1}^{\infty}5\,(-1)^{n-1}=5-5+5-5+\cdots\)</p>
+    <details><summary>Pista</summary><div><p>En cada una: primer término (el del primer índice), razón, y comparar \(|r|\) con \(1\) antes de usar la fórmula.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Se compara con la forma \(a\,r^{\,n-1}\): \(a=6\), \(r=\dfrac{2}{3}\). Como \(|r|=\dfrac{2}{3}&lt;1\), hay suma.</li>
+        <li>(a) Fórmula y reemplazo: \(\dfrac{a}{1-r}=\dfrac{6}{1-\frac{2}{3}}\). Resta: \(1-\dfrac{2}{3}=\dfrac{3}{3}-\dfrac{2}{3}=\dfrac{1}{3}\).</li>
+        <li>(a) Dividir por \(\dfrac{1}{3}\) es multiplicar por su inverso, \(3\): \(6\cdot 3=18\). La suma es \(18\).</li>
+        <li>(b) El primer índice es \(0\). Primer término: \(\left(-\dfrac{3}{4}\right)^{0}=1\), así que \(a=1\). Razón: \(\dfrac{\left(-\frac{3}{4}\right)^{n+1}}{\left(-\frac{3}{4}\right)^{n}}=-\dfrac{3}{4}\) (se simplifica por \(\left(-\dfrac{3}{4}\right)^{n}\)).</li>
+        <li>(b) \(|r|=\left|-\dfrac{3}{4}\right|=\dfrac{3}{4}&lt;1\): hay suma. Denominador: \(1-\left(-\dfrac{3}{4}\right)=1+\dfrac{3}{4}=\dfrac{4}{4}+\dfrac{3}{4}=\dfrac{7}{4}\).</li>
+        <li>(b) Dividir por \(\dfrac{7}{4}\) es multiplicar por \(\dfrac{4}{7}\): \(\dfrac{1}{\frac{7}{4}}=1\cdot\dfrac{4}{7}=\dfrac{4}{7}\). La suma es \(\dfrac{4}{7}\).</li>
+        <li>(c) El primer índice es \(3\). Primer término: \(a=\left(\dfrac{2}{5}\right)^{3}=\dfrac{2^{3}}{5^{3}}=\dfrac{8}{125}\). Razón: \(r=\dfrac{2}{5}\) (cada término es el anterior por \(\dfrac{2}{5}\)). Como \(|r|=\dfrac{2}{5}&lt;1\), hay suma.</li>
+        <li>(c) Resta: \(1-\dfrac{2}{5}=\dfrac{5}{5}-\dfrac{2}{5}=\dfrac{3}{5}\). División: \(\dfrac{\frac{8}{125}}{\frac{3}{5}}=\dfrac{8}{125}\cdot\dfrac{5}{3}=\dfrac{40}{375}=\dfrac{8}{75}\) (se simplifica por \(5\)). La suma es \(\dfrac{8}{75}\).</li>
+        <li>(d) \(a=5\), \(r=-1\). Se compara: \(|r|=|-1|=1\ge 1\). No tiene suma.</li>
+        <li>(d) Se ve en las sumas parciales: \(S_{1}=5\); \(S_{2}=5-5=0\); \(S_{3}=0+5=5\); \(S_{4}=5-5=0\). Alternan entre \(5\) y \(0\): no se acercan a un solo número. (La expresión \(\dfrac{5}{1-(-1)}=\dfrac{5}{2}\) no es la suma: la fórmula no vale con \(|r|\ge 1\).)</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>(a) Escribe \(0{,}454545\ldots\) como fracción irreducible, sumando una serie geométrica. (b) Una serie geométrica tiene razón \(\dfrac{1}{4}\) y suma \(12\): ¿cuál es su primer término? (c) Una serie geométrica tiene primer término \(8\) y suma \(5\): ¿cuál es su razón?</p>
+    <details><summary>Pista</summary><div><p>(a) \(0{,}454545\ldots=\dfrac{45}{100}+\dfrac{45}{100^{2}}+\dfrac{45}{100^{3}}+\cdots\) (b) \(a=S\,(1-r)\). (c) \(1-r=\dfrac{a}{S}\); al final revisa que \(|r|&lt;1\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Se separa en bloques de dos cifras: \(0{,}454545\ldots=0{,}45+0{,}0045+0{,}000045+\cdots=\dfrac{45}{100}+\dfrac{45}{100^{2}}+\dfrac{45}{100^{3}}+\cdots=\displaystyle\sum_{n=1}^{\infty}\dfrac{45}{100^{n}}\).</li>
+        <li>(a) Primer término: \(a=\dfrac{45}{100}\). Razón: \(\dfrac{45}{100^{n+1}}\cdot\dfrac{100^{n}}{45}=\dfrac{45\cdot 100^{n}}{45\cdot 100^{n}\cdot 100}=\dfrac{1}{100}\), así que \(r=\dfrac{1}{100}\). Como \(|r|=\dfrac{1}{100}&lt;1\), hay suma.</li>
+        <li>(a) Resta: \(1-\dfrac{1}{100}=\dfrac{100}{100}-\dfrac{1}{100}=\dfrac{99}{100}\). División: \(\dfrac{\frac{45}{100}}{\frac{99}{100}}=\dfrac{45}{100}\cdot\dfrac{100}{99}=\dfrac{4500}{9900}=\dfrac{45}{99}\) (se simplifica por \(100\)).</li>
+        <li>(a) Se simplifica por \(9\) (\(45=9\cdot 5\) y \(99=9\cdot 11\)): \(\dfrac{45}{99}=\dfrac{5}{11}\). Es irreducible: \(5\) y \(11\) no tienen divisores comunes mayores que \(1\).</li>
+        <li>(a) Comprobación, dividiendo \(5\div 11\): \(50=4\cdot 11+6\) (cifra \(4\), resto \(6\)); \(60=5\cdot 11+5\) (cifra \(5\), resto \(5\)). Vuelve el resto \(5\): las cifras \(4,\ 5\) se repiten. \(5\div 11=0{,}4545\ldots\) ✓</li>
+        <li>(b) Datos: \(r=\dfrac{1}{4}\), \(S=12\); \(|r|=\dfrac{1}{4}&lt;1\). Despeje: \(a=S\,(1-r)=12\left(1-\dfrac{1}{4}\right)\).</li>
+        <li>(b) Resta: \(1-\dfrac{1}{4}=\dfrac{4}{4}-\dfrac{1}{4}=\dfrac{3}{4}\). Producto: \(12\cdot\dfrac{3}{4}=\dfrac{36}{4}=9\). El primer término es \(9\).</li>
+        <li>(b) Comprobación: \(\dfrac{9}{\frac{3}{4}}=9\cdot\dfrac{4}{3}=\dfrac{36}{3}=12\). ✓</li>
+        <li>(c) Datos: \(a=8\), \(S=5\). Despeje: \(1-r=\dfrac{a}{S}=\dfrac{8}{5}\). Entonces \(r=1-\dfrac{8}{5}=\dfrac{5}{5}-\dfrac{8}{5}=-\dfrac{3}{5}\).</li>
+        <li>(c) Se revisa: \(|r|=\dfrac{3}{5}&lt;1\). Sirve: \(r=-\dfrac{3}{5}\).</li>
+        <li>(c) Comprobación. Denominador: \(1-\left(-\dfrac{3}{5}\right)=1+\dfrac{3}{5}=\dfrac{8}{5}\). División: \(\dfrac{8}{\frac{8}{5}}=8\cdot\dfrac{5}{8}=\dfrac{40}{8}=5\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Es la pelota de la hoja «Identificar una serie geométrica infinita», y ahora sí se suma. Se deja caer desde \(10\) metros. Modelo: en cada rebote sube \(\dfrac{3}{5}\) de la altura desde la que cayó, y los rebotes no terminan (una pelota real deja de rebotar; es un modelo). Allí se identificaron dos series geométricas de razón \(\dfrac{3}{5}\): las bajadas, \(10+6+\dfrac{18}{5}+\cdots\) (\(a=10\)), y los rebotes completos, cada uno una subida y la bajada que le sigue, \(12+\dfrac{36}{5}+\cdots\) (\(a=12\)). Las subidas son \(6+\dfrac{18}{5}+\dfrac{54}{25}+\cdots\) (a) ¿Cuánto suman todas las bajadas? (b) ¿Y todas las subidas? (c) ¿Cuál es la distancia total del modelo? Calcúlala de dos maneras. (d) ¿Cuánto ha recorrido la pelota cuando toca el suelo por cuarta vez, y cuánto le falta para el total?</p>
+    <details><summary>Pista</summary><div><p>Las tres series tienen \(1-r=\dfrac{2}{5}\). En (c): bajadas más subidas, o bien la primera bajada más los rebotes completos. En (d): hasta el cuarto toque hay una bajada inicial y tres rebotes completos; usa \(S_{3}=\dfrac{a\,(1-r^{3})}{1-r}\) con \(a=12\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Las subidas: la subida número \(k\) mide lo mismo que la bajada número \(k+1\), \(10\left(\dfrac{3}{5}\right)^{k}\). La primera: \(10\cdot\dfrac{3}{5}=\dfrac{30}{5}=6\). El cociente entre una subida y la anterior es \(\dfrac{10\left(\frac{3}{5}\right)^{k+1}}{10\left(\frac{3}{5}\right)^{k}}=\dfrac{3}{5}\) (se simplifica por \(10\) y por \(\left(\dfrac{3}{5}\right)^{k}\)): es geométrica, con \(a=6\) y \(r=\dfrac{3}{5}\).</li>
+        <li>Las tres series tienen \(r=\dfrac{3}{5}\), y \(|r|=\dfrac{3}{5}&lt;1\): las tres tienen suma. Denominador común a todas: \(1-\dfrac{3}{5}=\dfrac{5}{5}-\dfrac{3}{5}=\dfrac{2}{5}\). Dividir por \(\dfrac{2}{5}\) es multiplicar por \(\dfrac{5}{2}\).</li>
+        <li>(a) Bajadas, con \(a=10\): \(\dfrac{10}{\frac{2}{5}}=10\cdot\dfrac{5}{2}=\dfrac{50}{2}=25\). Todas las bajadas suman \(25\) metros.</li>
+        <li>(b) Subidas, con \(a=6\): \(\dfrac{6}{\frac{2}{5}}=6\cdot\dfrac{5}{2}=\dfrac{30}{2}=15\). Todas las subidas suman \(15\) metros.</li>
+        <li>(c) Primera manera, bajadas más subidas: \(25+15=40\) metros.</li>
+        <li>(c) Segunda manera. Rebotes completos, con \(a=12\): \(\dfrac{12}{\frac{2}{5}}=12\cdot\dfrac{5}{2}=\dfrac{60}{2}=30\). Con la primera bajada: \(10+30=40\) metros. Coincide. ✓</li>
+        <li>(d) Hasta el cuarto toque: la primera bajada y tres rebotes completos. Suma parcial de los rebotes: \(S_{3}=\dfrac{12\left(1-\left(\frac{3}{5}\right)^{3}\right)}{\frac{2}{5}}\).</li>
+        <li>(d) Potencia: \(\left(\dfrac{3}{5}\right)^{3}=\dfrac{27}{125}\). Resta: \(1-\dfrac{27}{125}=\dfrac{125}{125}-\dfrac{27}{125}=\dfrac{98}{125}\).</li>
+        <li>(d) Producto: \(12\cdot\dfrac{98}{125}=\dfrac{1176}{125}\). División por \(\dfrac{2}{5}\): \(\dfrac{1176}{125}\cdot\dfrac{5}{2}=\dfrac{5880}{250}=\dfrac{588}{25}=23{,}52\) (se simplifica por \(10\)).</li>
+        <li>(d) Comprobación sumando: \(12+\dfrac{36}{5}+\dfrac{108}{25}=12+7{,}2+4{,}32=23{,}52\). ✓</li>
+        <li>(d) Recorrido hasta el cuarto toque: \(10+23{,}52=33{,}52\) metros. Falta: \(40-33{,}52=6{,}48\) metros.</li>
+        <li>(d) Lo mismo con «lo que falta» del recuadro, \(\dfrac{a\,r^{3}}{1-r}\): \(12\cdot\dfrac{27}{125}=\dfrac{324}{125}\); \(\dfrac{324}{125}\cdot\dfrac{5}{2}=\dfrac{1620}{250}=\dfrac{162}{25}=6{,}48\). ✓</li>
+        <li>La distancia total del modelo es \(40\) metros: es un límite. La pelota del modelo nunca la completa, pero se acerca tanto como se quiera; tras cuatro toques ya lleva \(33{,}52\) metros.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H24 · v001 · Pendiente de APR</span>
+  <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
+</footer>
+</article>
+</div>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false, ready: function(){ MathJax.startup.defaultReady(); MathJax.startup.promise.then(function(){ window.__mjReady = true; if (window.OA && OA.insts.length) OA.mathReady(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+/* Motor de animaciones de Oscar Academy: una escena = mundo + etiquetas + deslizadores + draw(). */
+(function(){
+  var OA = window.OA = { scenes:{}, insts:[], mj:false };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OA.scene = function(name, def){ OA.scenes[name] = def; };
+  OA.num = function(v, d){ var s = v.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); return s.replace('.', '{,}'); };
+  OA.ease = function(p){ return 1 - Math.pow(1 - p, 2.2); };
+  OA.smooth = function(p){ return p <= 0 ? 0 : p >= 1 ? 1 : p*p*(3 - 2*p); };
+  /* Nivel fraccionario para pasar de una etapa a la siguiente sin saltos: pausa breve y luego transición suave. */
+  OA.level = function(p, K){ if (p >= 1) return K; var u = p*K, j = Math.floor(u), fr = u - j; return j + (fr < 0.3 ? 0 : OA.smooth((fr - 0.3)/0.7)); };
+
+  function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function el(tag, cls){ var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function setTex(node, tex, fb){
+    if (OA.mj && window.MathJax && MathJax.tex2svg) node.replaceChildren(MathJax.tex2svg(tex, {display:false}));
+    else node.textContent = fb != null ? fb : tex.replace(/\{,\}/g, ',');
+  }
+
+  function Inst(stage, name, def){
+    var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
+    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    var W = def.world, aspect = def.aspect || 1;
+
+    var plot = el('div', 'plot');
+    I.cv = el('canvas'); I.cv.width = 800; I.cv.height = Math.round(800*aspect);
+    I.cv.style.aspectRatio = '1 / ' + aspect;
+    I.cv.setAttribute('role', 'img'); I.cv.setAttribute('aria-label', def.aria || 'Animación');
+    I.ctx = I.cv.getContext('2d'); plot.appendChild(I.cv);
+    (def.labels || []).forEach(function(l){
+      var s = el('span', 'lab' + (l[3] ? ' ' + l[3] : '')); s.dataset.tex = l[1]; s.dataset.fb = l[2];
+      s.textContent = l[2]; I.labels[l[0]] = s; plot.appendChild(s);
+    });
+    I.cap = el('div', 'caption'); I.cap.setAttribute('aria-live', 'polite');
+    I.ro = el('div', 'readout');
+    var legend = el('div', 'legend'); legend.innerHTML = def.legend || '';
+    var controls = el('div', 'controls');
+    (def.sliders || []).forEach(function(s){
+      var lab = el('label'), inp = el('input'), id = 'oa-' + name + '-' + s.id;
+      lab.setAttribute('for', id); lab.appendChild(document.createTextNode('\\(' + s.tex + '\\) '));
+      inp.type = 'range'; inp.id = id; inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.value;
+      I.v[s.id] = s.value; I.inputs[s.id] = inp; lab.appendChild(inp); controls.appendChild(lab);
+      inp.addEventListener('input', function(){ I.pause(); I.v[s.id] = parseFloat(inp.value); if (def.onInput) def.onInput(I.v, s.id); I.elapsed = 0; I.render(true); });
+    });
+    var btns = el('div', 'btns');
+    I.playBtn = el('button'); I.playBtn.type = 'button'; I.playBtn.id = 'oa-' + name + '-play';
+    var resetBtn = el('button', 'ghost'); resetBtn.type = 'button'; resetBtn.id = 'oa-' + name + '-reset'; resetBtn.textContent = 'Reiniciar';
+    btns.appendChild(I.playBtn); btns.appendChild(resetBtn); controls.appendChild(btns);
+    stage.replaceChildren(plot, I.cap, I.ro, legend, controls);
+
+    var c = I.ctx;
+    var S = I.S = {
+      W: W, C: {}, w: I.w, h: I.h, ctx: c,
+      X: function(x){ return (x - W.x0)/(W.x1 - W.x0)*I.w; },
+      Y: function(y){ return I.h - (y - W.y0)/(W.y1 - W.y0)*I.h; },
+      style: function(o){ o = o || {}; c.strokeStyle = o.color || S.C.ink; c.lineWidth = o.width || 1.5; c.setLineDash(o.dash || []); },
+      line: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(S.X(x1),S.Y(y1)); c.lineTo(S.X(x2),S.Y(y2)); c.stroke(); },
+      pline: function(x1,y1,x2,y2,o){ S.style(o); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); },
+      curve: function(fn, x0, x1, o){
+        o = o || {}; S.style(o); var n = o.n || 400, first = true; c.beginPath();
+        for (var i = 0; i <= n; i++){ var x = x0 + (x1 - x0)*i/n, y = fn(x); if (!isFinite(y)){ first = true; continue; }
+          if (first){ c.moveTo(S.X(x),S.Y(y)); first = false; } else c.lineTo(S.X(x),S.Y(y)); }
+        c.stroke();
+      },
+      dot: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = color; c.fill(); c.lineWidth = 2; c.strokeStyle = S.C.bg; c.stroke(); },
+      ring: function(x,y,color){ c.setLineDash([]); c.beginPath(); c.arc(S.X(x),S.Y(y),6,0,Math.PI*2); c.fillStyle = S.C.bg; c.fill(); c.lineWidth = 2.5; c.strokeStyle = color; c.stroke(); },
+      guide: function(x,y){ var o = {color:S.C.muted, width:1, dash:[3,4]}; S.line(x,y,x,0,o); S.line(x,y,0,y,o); },
+      bracketX: function(xa, xb, off){ var by = S.Y(0) + (off || 36), o = {color:S.C.rise, width:1.5};
+        S.pline(S.X(xa),by,S.X(xb),by,o); S.pline(S.X(xa),by-5,S.X(xa),by+1,o); S.pline(S.X(xb),by-5,S.X(xb),by+1,o); },
+      poly: function(pts, o){
+        o = o || {}; c.beginPath();
+        pts.forEach(function(p, i){ if (i) c.lineTo(S.X(p[0]),S.Y(p[1])); else c.moveTo(S.X(p[0]),S.Y(p[1])); });
+        if (!o.open) c.closePath();
+        if (o.fill){ c.globalAlpha = o.alpha || 0.25; c.fillStyle = o.fill; c.fill(); c.globalAlpha = 1; }
+        if (o.color){ S.style(o); c.stroke(); }
+      },
+      area: function(fn, x0, x1, o){
+        o = o || {}; var n = o.n || 200, base = o.base || function(){ return 0; }, pts = [], i, x;
+        for (i = 0; i <= n; i++){ x = x0 + (x1 - x0)*i/n; pts.push([x, fn(x)]); }
+        for (i = n; i >= 0; i--){ x = x0 + (x1 - x0)*i/n; pts.push([x, base(x)]); }
+        S.poly(pts, o);
+      },
+      arc: function(x, y, rpx, a0, a1, o){ S.style(o); c.beginPath(); c.arc(S.X(x), S.Y(y), rpx, -a0, -a1, true); c.stroke(); },
+      out: function(id, px, py, dx, dy, show, gap){
+        gap = gap || 8; var lw = S.labW(id);
+        if (dx >= 0) px = Math.min(px, I.w - lw - gap - 4); else px = Math.max(px, lw + gap + 4);
+        S.lab(id, px + (dx >= 0 ? gap : -gap), py + (dy >= 0 ? -gap : gap), dx >= 0 ? 0 : -100, dy >= 0 ? -100 : 0, show);
+      },
+      axes: function(a){
+        var i, g = {color:S.C.grid, width:1};
+        if (a.full){
+          (a.gx || []).forEach(function(x){ S.line(x,W.y0,x,W.y1,g); });
+          (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+          c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+          c.textAlign = 'center'; c.textBaseline = 'bottom';
+          (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+          c.textAlign = 'left'; c.textBaseline = 'middle';
+          (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+          var af = {color:S.C.muted, width:1.5};
+          S.line(W.x0,0,W.x1,0,af); S.line(0,W.y0,0,W.y1,af); return;
+        }
+        (a.gx || []).forEach(function(x){ S.line(x,0,x,W.y1,g); });
+        (a.gy || []).forEach(function(y){ S.line(W.x0,y,W.x1,y,g); });
+        c.fillStyle = S.C.muted; c.font = '11px "Source Sans 3", system-ui, sans-serif';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        (a.gx || []).forEach(function(x){ c.fillText(String(x), S.X(x), I.h - 3); });
+        c.textAlign = 'left'; c.textBaseline = 'middle';
+        (a.gy || []).forEach(function(y){ c.fillText(String(y), 4, S.Y(y)); });
+        var ax = {color:S.C.muted, width:1.5};
+        S.line(W.x0,0,W.x1,0,ax); S.line(0,0,0,W.y1,ax); S.pline(S.X(0),S.Y(0),S.X(0),S.Y(0)+6,ax);
+      },
+      lab: function(id, px, py, ax, ay, show){
+        var e = I.labels[id]; if (!e) return;
+        e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
+        e.style.opacity = show ? 1 : 0;
+      },
+      labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
+    };
+
+    I.resize = function(){
+      var r = I.cv.getBoundingClientRect(); if (!r.width) return;
+      var dpr = window.devicePixelRatio || 1; I.w = r.width; I.h = r.width*aspect;
+      I.cv.width = Math.round(I.w*dpr); I.cv.height = Math.round(I.h*dpr);
+      c.setTransform(dpr,0,0,dpr,0,0); I.render(true);
+    };
+    I.render = function(force){
+      S.C = {bg:cssv('--bg'), ink:cssv('--ink'), muted:cssv('--muted'), grid:cssv('--line'),
+             sec:cssv('--secant'), rise:cssv('--rise'), tan:cssv('--tangent'), alt:cssv('--alt')};
+      S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
+      c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
+      def.draw(S, I.v);
+      var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
+      if (def.caption){
+        var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
+        if (I.capKey !== ck){
+          I.capKey = ck;
+          if (typeof cp === 'string') I.cap.textContent = cp;
+          else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
+        }
+      }
+      var rows = def.readout ? def.readout(I.v) : [];
+      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+    };
+    I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
+    I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
+    I.play = function(){ I.playing = true; I.t0 = null; I.playBtn.textContent = 'Pausar'; };
+    I.apply = function(p){ def.anim.apply(p, I.v); Object.keys(I.inputs).forEach(function(k){ I.inputs[k].value = I.v[k]; }); };
+    I.tick = function(ts){
+      if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
+      if (I.t0 === null) I.t0 = ts - I.elapsed;
+      I.elapsed = ts - I.t0;
+      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
+      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+    };
+    I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
+    resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });
+    I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
+    I.apply(reduce ? (def.anim.still || 0.3) : 0);
+    if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+  }
+
+  function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
+  function showSheet(a){
+    a.hidden = false;
+    if (OA.mj && !a.dataset.ts){ a.dataset.ts = '1'; MathJax.typesetPromise([a]).then(function(){ OA.insts.forEach(function(i){ i.resize(); }); }); }
+    OA.insts.forEach(function(i){ i.resize(); });
+  }
+  function route(){
+    var sheets = [].slice.call(document.querySelectorAll('article.sheet'));
+    var id = location.hash.slice(1), target = null;
+    sheets.forEach(function(a){ if (a.id === id) target = a; });
+    if (!target) target = sheets[0];
+    sheets.forEach(function(a){ if (a !== target) a.hidden = true; });
+    [].forEach.call(document.querySelectorAll('.lote a'), function(l){
+      if (l.getAttribute('href') === '#' + target.id) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
+    showSheet(target); window.scrollTo(0, 0);
+  }
+  OA.mathReady = function(){
+    OA.mj = true;
+    OA.insts.forEach(function(i){ i.typesetLabels(); });
+    var nav = document.querySelector('.lote'); if (nav) MathJax.typesetPromise([nav]);
+    [].forEach.call(document.querySelectorAll('article.sheet'), function(a){ if (!a.hidden) showSheet(a); });
+    renderAll();
+  };
+  OA.boot = function(){
+    [].forEach.call(document.querySelectorAll('.stage[data-scene]'), function(st){
+      var name = st.dataset.scene, def = OA.scenes[name]; if (def) OA.insts.push(new Inst(st, name, def));
+    });
+    if (document.querySelectorAll('article.sheet').length > 1){ route(); window.addEventListener('hashchange', route); }
+    else [].forEach.call(document.querySelectorAll('article.sheet'), showSheet);
+    if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+    new MutationObserver(renderAll).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    (function loop(ts){ OA.insts.forEach(function(i){ i.tick(ts || 0); }); requestAnimationFrame(loop); })();
+    if (window.__mjReady) OA.mathReady();
+  };
+})();
+
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H24 · suma de una serie geométrica infinita: un cuadrado de área 1 se llena con 1/2, 1/4, 1/8, …; lo que falta tras n trozos es (1/2)ⁿ; la suma es 1 = a/(1 − r) */
+function sg24Cl(t){ return Math.max(0, Math.min(1, t)); }
+function sg24Mcd(a, b){ while (b){ var t = a % b; a = b; b = t; } return a; }
+/* entero n dividido por 10^d, como decimal sin ceros de sobra; con punto (después se cambia por coma) */
+function sg24Dec(n, d){ var s = (n/Math.pow(10, d)).toFixed(d); if (d) s = s.replace(/0+$/, '').replace(/\.$/, ''); return s; }
+function sg24T(n, d){ return sg24Dec(n, d).replace('.', '{,}'); }
+function sg24P(n, d){ return sg24Dec(n, d).replace('.', ','); }
+OA.scene('sgi-idea', (function(){
+  var N = 6, X0 = -1.2, Y0 = 3.45, LD = 3.6, CX = 2.72, TR = [], RM = [[0, 0, 1, 1]], q = [0, 0, 1, 1], i;
+  /* trozos en el cuadrado de lado 1: [x, y, ancho, alto]; cada trozo es la mitad de lo que faltaba; RM[j] es lo que falta tras j trozos */
+  for (i = 0; i < 10; i++){
+    if (i % 2 === 0){ TR.push([q[0], q[1], q[2]/2, q[3]]); q = [q[0] + q[2]/2, q[1], q[2]/2, q[3]]; }
+    else { TR.push([q[0], q[1] + q[3]/2, q[2], q[3]/2]); q = [q[0], q[1], q[2], q[3]/2]; }
+    RM.push(q); }
+  var PZ = [['P1', '\\tfrac{1}{2}', '1/2', 'c-sec'], ['P2', '\\tfrac{1}{4}', '1/4', 'c-sec'], ['P3', '\\tfrac{1}{8}', '1/8', 'c-sec'], ['P4', '\\tfrac{1}{16}', '1/16', 'c-sec'],
+    ['F1', '\\text{1 trozo: falta }\\tfrac{1}{2}', '1 trozo: falta 1/2', 'diff'], ['F2', '\\text{2 trozos: falta }\\tfrac{1}{4}', '2 trozos: falta 1/4', 'diff'], ['F3', '\\text{3 trozos: falta }\\tfrac{1}{8}', '3 trozos: falta 1/8', 'diff'], ['F4', '\\text{4 trozos: falta }\\tfrac{1}{16}', '4 trozos: falta 1/16', 'diff'],
+    ['FN', 'n\\text{ trozos: falta }\\left(\\tfrac{1}{2}\\right)^{n}', 'n trozos: falta (1/2)ⁿ', 'diff'],
+    ['Q', '\\tfrac{1}{2}+\\tfrac{1}{4}+\\tfrac{1}{8}+\\tfrac{1}{16}+\\cdots\\text{ ¿cuánto suma?}', '1/2 + 1/4 + 1/8 + 1/16 + ⋯ ¿cuánto suma?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\text{suma}=\\tfrac{1}{2}:\\left(1-\\tfrac{1}{2}\\right)=1', '⟹ suma = 1/2 : (1 − 1/2) = 1', 'c-tan'],
+    ['R1', 'S_{1}=\\tfrac{1}{2},\\qquad 1-S_{1}=\\tfrac{1}{2}', 'S₁ = 1/2, 1 − S₁ = 1/2', ''],
+    ['R2', 'S_{2}=\\tfrac{1}{2}+\\tfrac{1}{4}=\\tfrac{3}{4},\\qquad 1-S_{2}=\\tfrac{1}{4}', 'S₂ = 1/2 + 1/4 = 3/4, 1 − S₂ = 1/4', ''],
+    ['R3', 'S_{3}=\\tfrac{3}{4}+\\tfrac{1}{8}=\\tfrac{7}{8},\\qquad 1-S_{3}=\\tfrac{1}{8}', 'S₃ = 3/4 + 1/8 = 7/8, 1 − S₃ = 1/8', ''],
+    ['R4', 'S_{4}=\\tfrac{7}{8}+\\tfrac{1}{16}=\\tfrac{15}{16},\\qquad 1-S_{4}=\\tfrac{1}{16}', 'S₄ = 7/8 + 1/16 = 15/16, 1 − S₄ = 1/16', ''],
+    ['R5', '1-S_{n}=\\left(\\tfrac{1}{2}\\right)^{n},\\qquad S_{n}=1-\\left(\\tfrac{1}{2}\\right)^{n}', '1 − Sₙ = (1/2)ⁿ, Sₙ = 1 − (1/2)ⁿ', ''],
+    ['R6', '\\sum\\nolimits_{n=1}^{\\infty}\\tfrac{1}{2^{n}}=\\lim S_{n}=1-0=1', 'Σ 1/2ⁿ (n ≥ 1) = lím Sₙ = 1 − 0 = 1', 'diff']];
+  var TXT = [['Se pinta la mitad del cuadrado: primer trozo.', 'Queda sin pintar la otra mitad.'],
+    ['Segundo trozo: la mitad de lo que faltaba.', 'Ahora falta un cuarto del cuadrado.'],
+    ['Tercer trozo: otra vez la mitad de lo que', 'faltaba. Ahora falta un octavo.'],
+    ['Cuarto trozo: la mitad de lo que faltaba.', 'Lo que falta es igual al último trozo.'],
+    ['Siguen más trozos, cada uno la mitad del', 'anterior. Lo que falta se acerca a cero.'],
+    ['La suma de todos los trozos es el área', 'del cuadrado completo: uno.']];
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-2.3, y1:9.6}, aspect:11.9/6.6,
+    aria:'Arriba, una franja dice qué muestra: sumar la serie es llenar el cuadrado; lo que falta se acerca a cero. Animación en seis pasos con la serie un medio más un cuarto más un octavo más un dieciseisavo, y así sin fin. La figura es un cuadrado de lado 1 y área 1, al principio rayado en naranja entero: todo falta. Uno: se pinta de azul la mitad izquierda, rotulada un medio; la mitad derecha queda rayada en naranja con la palabra falta, y a la derecha se anota: 1 trozo, falta un medio. Dos: se pinta la mitad de arriba de lo que faltaba, rotulada un cuarto; se anota: 2 trozos, falta un cuarto. Tres: se pinta la mitad izquierda de lo que faltaba, rotulada un octavo; se anota: 3 trozos, falta un octavo. Cuatro: se pinta la mitad de arriba de lo que faltaba, rotulada un dieciseisavo; se anota: 4 trozos, falta un dieciseisavo; lo que falta es igual al último trozo. Cinco: se pintan seis trozos más, cada uno la mitad del anterior, y lo rayado se reduce a un cuadradito casi invisible en la esquina de abajo a la derecha; se anota: n trozos, falta un medio elevado a n. Seis: el cuadrado completo se remarca en burdeo y bajo la pregunta se escribe la respuesta: la suma es un medio dividido por 1 menos un medio, igual a 1. Nada de lo que aparece se borra. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> los trozos pintados: los términos de la serie</span><span><i class="sw rise"></i> lo que falta para llenar el cuadrado</span><span><i class="sw tan"></i> el cuadrado completo: la suma de la serie</span>',
+    anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, otx = oaTxt(S), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, r, fq;
+      function txt(t, x, y, col, al){ c.globalAlpha = al == null ? 1 : al; c.font = '600 12.5px ' + F; c.fillStyle = col || C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function caja(q){ return [X(X0 + q[0]*LD), Y(Y0 + (q[1] + q[3])*LD), q[2]*LD*s, q[3]*LD*s]; }
+      /* lo que falta: rayado naranja */
+      function raya(q){ var b = caja(q), d; c.save(); c.beginPath(); c.rect(b[0], b[1], b[2], b[3]); c.clip(); c.globalAlpha = 0.55; c.strokeStyle = C.rise; c.lineWidth = 1; c.setLineDash([]);
+        for (d = -b[3]; d < b[2]; d += 6){ c.beginPath(); c.moveTo(b[0] + d, b[1] + b[3]); c.lineTo(b[0] + d + b[3], b[1]); c.stroke(); } c.restore(); c.globalAlpha = 1; }
+      function borde(q, al){ var b = caja(q); if (al <= 0.02 || b[2] < 2) return; c.globalAlpha = al; c.strokeStyle = C.rise; c.lineWidth = 1.2; c.setLineDash([4, 3]); c.strokeRect(b[0] + 1, b[1] + 1, b[2] - 2, b[3] - 2); c.setLineDash([]); c.globalAlpha = 1; }
+      /* un trozo pintado: tapa el rayado y queda azul */
+      function trozo(q, al){ var b = caja(q); if (al <= 0) return; c.globalAlpha = al; c.fillStyle = '#fff'; c.fillRect(b[0], b[1], b[2], b[3]); c.globalAlpha = 0.3*al; c.fillStyle = C.sec; c.fillRect(b[0], b[1], b[2], b[3]);
+        c.globalAlpha = al; c.strokeStyle = C.sec; c.lineWidth = 1; c.setLineDash([]); c.strokeRect(b[0] + 0.5, b[1] + 0.5, Math.max(1, b[2] - 1), Math.max(1, b[3] - 1)); c.globalAlpha = 1; }
+      /* el cuadrado: fondo blanco y lo que faltaba al empezar este paso, rayado */
+      c.fillStyle = '#fff'; r = caja([0, 0, 1, 1]); c.fillRect(r[0], r[1], r[2], r[3]);
+      raya(RM[Math.min(k, 5) - 1]);
+      /* pasos 1 a 4: un trozo por paso, con su rótulo */
+      for (i = 0; i < 4 && i < k; i++){ w = k === i + 1 ? u : 1; trozo(TR[i], w); if (w > 0.5) L('P' + (i + 1), X0 + (TR[i][0] + TR[i][2]/2)*LD, Y0 + (TR[i][1] + TR[i][3]/2)*LD, -50); }
+      /* paso 5: seis trozos más, uno tras otro */
+      if (k >= 5) for (i = 4; i < 10; i++){ w = k === 5 ? sg24Cl(u*6 - (i - 4)) : 1; trozo(TR[i], w); }
+      borde(k <= 4 ? RM[k] : RM[10], k <= 5 ? u : 1);
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]); c.strokeRect(r[0] + 0.5, r[1] + 0.5, r[2] - 1, r[3] - 1);
+      /* la palabra «falta» va con lo rayado; cuando ya casi no se ve, queda al lado de la esquina */
+      fq = k <= 4 ? (u > 0.5 ? RM[k] : RM[k - 1]) : (k === 5 && u <= 0.5 ? RM[4] : null);
+      if (fq) otx('falta', X(X0 + (fq[0] + fq[2]/2)*LD), Y(Y0 + (fq[1] + fq[3]/2)*LD), 'center', C.rise);
+      else txt('← falta', X0 + LD + 0.08, Y0 + 0.08, C.rise);
+      /* paso 6: el cuadrado completo, en burdeo */
+      if (k === 6){ c.globalAlpha = u; c.strokeStyle = C.tan; c.lineWidth = 1 + 1.4*u; c.strokeRect(r[0] - 2, r[1] - 2, r[2] + 4, r[3] + 4); c.globalAlpha = 1; }
+      c.font = '500 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('cuadrado de lado 1: su área es 1', X(X0), Y(Y0) + 12);
+      /* columna de la derecha: lo que falta tras cada trozo; se acumula */
+      txt('lo que falta:', CX, 6.85, C.rise);
+      for (i = 0; i < 4 && i < k; i++){ w = k === i + 1 ? u : 1; if (w > 0.6) L('F' + (i + 1), CX, 6.3 - 0.55*i, 0); }
+      if (k >= 5 && (k > 5 || u > 0.7)) L('FN', CX, 4.1, 0);
+      L('Q', -1.2, 8.2, 0); if (k === N && u > 0.5) L('F', -1.2, 7.58, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 2.6); txt(TXT[k - 1][1], -1.2, 2.6 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(8.2));
+      dtQue(S, 'sumar la serie es llenar el', 'cuadrado: lo que falta se acerca a cero.');
+      T.fin();
+      oaReg(S, k, N, -1.2, 1.2, [6, 36, 66, 96, 126, 156]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', H = '\\left(\\dfrac{1}{2}\\right)', R = [
+      '\\text{Dato: la serie }\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{2^{n}}=\\dfrac{1}{2}+\\dfrac{1}{4}+\\dfrac{1}{8}+\\cdots' + Q + '\\text{Primer término (}n=1\\text{): }a=\\dfrac{1}{2^{1}}=\\dfrac{1}{2}' + Q + '\\text{Razón: }\\dfrac{1}{2^{n+1}}\\cdot\\dfrac{2^{n}}{1}=\\dfrac{2^{n}}{2^{n}\\cdot 2}=\\dfrac{1}{2}' + Q + '\\text{No depende de }n\\text{: }r=\\dfrac{1}{2}' + Q + '\\text{Figura: cuadrado de lado }1\\text{; área }1\\cdot 1=1.' + Q + '\\text{Primer trozo: la mitad del cuadrado.}' + Q + 'S_{1}=\\dfrac{1}{2}' + Q + '\\text{Falta: }1-\\dfrac{1}{2}=\\dfrac{2}{2}-\\dfrac{1}{2}=\\dfrac{1}{2}',
+      '\\text{Segundo trozo: la mitad de lo que faltaba.}' + Q + '\\dfrac{1}{2}\\cdot\\dfrac{1}{2}=\\dfrac{1}{4}' + Q + 'S_{2}=\\dfrac{1}{2}+\\dfrac{1}{4}=\\dfrac{2}{4}+\\dfrac{1}{4}=\\dfrac{3}{4}' + Q + '\\text{Falta: }1-\\dfrac{3}{4}=\\dfrac{4}{4}-\\dfrac{3}{4}=\\dfrac{1}{4}',
+      '\\text{Tercer trozo: la mitad de lo que faltaba.}' + Q + '\\dfrac{1}{2}\\cdot\\dfrac{1}{4}=\\dfrac{1}{8}' + Q + 'S_{3}=\\dfrac{3}{4}+\\dfrac{1}{8}=\\dfrac{6}{8}+\\dfrac{1}{8}=\\dfrac{7}{8}' + Q + '\\text{Falta: }1-\\dfrac{7}{8}=\\dfrac{8}{8}-\\dfrac{7}{8}=\\dfrac{1}{8}',
+      '\\text{Cuarto trozo: la mitad de lo que faltaba.}' + Q + '\\dfrac{1}{2}\\cdot\\dfrac{1}{8}=\\dfrac{1}{16}' + Q + 'S_{4}=\\dfrac{7}{8}+\\dfrac{1}{16}=\\dfrac{14}{16}+\\dfrac{1}{16}=\\dfrac{15}{16}' + Q + '\\text{Falta: }1-\\dfrac{15}{16}=\\dfrac{16}{16}-\\dfrac{15}{16}=\\dfrac{1}{16}' + Q + '\\text{Lo que falta es igual al último trozo.}',
+      '\\text{Lo que falta tras cada trozo: }\\dfrac{1}{2},\\ \\dfrac{1}{4},\\ \\dfrac{1}{8},\\ \\dfrac{1}{16}.' + Q + '\\text{Son }\\dfrac{1}{2}\\text{ elevado a }1,\\ 2,\\ 3\\text{ y }4.' + Q + '\\text{Si tras }n\\text{ trozos falta }' + H + '^{n}\\text{, el trozo}' + Q + '\\text{siguiente es su mitad: }\\dfrac{1}{2}\\cdot' + H + '^{n}=' + H + '^{n+1}' + Q + '\\text{Como }' + H + '^{n}=2\\cdot' + H + '^{n+1}\\text{, queda sin pintar}' + Q + '2\\cdot' + H + '^{n+1}-' + H + '^{n+1}=' + H + '^{n+1}' + Q + '\\text{Entonces, para todo }n\\text{: }1-S_{n}=' + H + '^{n}' + Q + '\\text{Se despeja: }S_{n}=1-' + H + '^{n}' + Q + '\\text{Lo mismo, con la fórmula de la suma parcial:}' + Q + 'S_{n}=\\dfrac{a\\,(1-r^{\\,n})}{1-r}=\\dfrac{\\frac{1}{2}\\left(1-\\left(\\frac{1}{2}\\right)^{n}\\right)}{1-\\frac{1}{2}}' + Q + '\\text{Abajo: }1-\\dfrac{1}{2}=\\dfrac{1}{2}\\text{. Se simplifica por }\\dfrac{1}{2}\\text{:}' + Q + 'S_{n}=1-' + H + '^{n}',
+      '\\text{Al crecer }n\\text{, }' + H + '^{n}\\text{ tiene límite }0' + Q + '\\text{(se usa sin demostrar: ver el aviso de rigor).}' + Q + '\\text{Suma: }S=\\displaystyle\\lim_{n\\to\\infty}S_{n}=1-0=1' + Q + '\\text{Con la fórmula: }\\dfrac{a}{1-r}=\\dfrac{\\frac{1}{2}}{1-\\frac{1}{2}}=\\dfrac{\\frac{1}{2}}{\\frac{1}{2}}=1' + Q + '\\text{Qué significa: las áreas de todos los trozos}' + Q + '\\text{suman el área del cuadrado, }1\\text{. Ninguna suma}' + Q + '\\text{parcial llega a }1\\text{: siempre falta }' + H + '^{n}.'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: a = 1 y razón r entre 0 y 1; cuadrados de lados 1, r, r², … uno tras otro; la recta por sus esquinas toca el eje en 1/(1 − r) */
+OA.scene('sgi-vivo', (function(){
+  var OX = -0.95, U = 1.2, XE = 5.2, Q = '\\\\&\\qquad ', PZ = [['A', 'a=1', 'a = 1', 'c-sec']], DAT = [], k;
+  function cual(v){ return Math.max(0, Math.min(10, Math.round((v.r == null ? 0.5 : v.r)*10))); }
+  for (k = 0; k <= 10; k++) (function(k){
+    var r = sg24T(k, 1), rp = sg24P(k, 1), r2 = sg24T(k*k, 2), r3 = sg24T(k*k*k, 3), d = sg24T(10 - k, 1), dp = sg24P(10 - k, 1), e = {k:k}, g, sn, sd, st, sp, R;
+    if (k < 10){ g = sg24Mcd(10, 10 - k); sn = 10/g; sd = (10 - k)/g; e.ex = 1000 % (10 - k) === 0; e.S = 10/(10 - k);
+      st = (e.ex ? '=' : '\\approx ') + sg24T(Math.round(1000/(10 - k)), 2); sp = (e.ex ? '= ' : '≈ ') + sg24P(Math.round(1000/(10 - k)), 2);
+      /* cadena de la división: 1 : (1 − r) = 10/(10 − k) = fracción irreducible = decimal */
+      e.div = '\\dfrac{10}{' + (10 - k) + '}' + (g > 1 && sd > 1 ? '=\\dfrac{' + sn + '}{' + sd + '}' : '') + (sd === 1 ? '=' + sn : st);
+      e.st = sd === 1 ? '=' + sn : st; e.sp = sd === 1 ? '= ' + sn : sp; }
+    PZ.push(['D' + k, '1-r=' + d, '1 − r = ' + dp, 'diff']);
+    PZ.push(['B' + k, 'ar=' + r, 'ar = ' + rp, 'c-sec']);
+    if (k === 0){
+      PZ.push(['H0', 'a=1,\\ \\ r=0:\\quad 1+0+0+0+\\cdots', 'a = 1, r = 0: 1 + 0 + 0 + 0 + ⋯', 'pt']);
+      PZ.push(['V0', '1+0+0+\\cdots=\\dfrac{1}{1-0}=1', '1 + 0 + 0 + ⋯ = 1/(1 − 0) = 1', 'c-tan']);
+      PZ.push(['M0', 'S=1', 'S = 1', 'c-tan']);
+      R = ['\\text{Datos: }a=1,\\quad r=0' + Q + '\\text{Serie: }1+0+0+0+\\cdots',
+        '\\text{Lado de cada cuadrado: un término.}' + Q + '\\text{Cada uno es el anterior por }r\\text{:}' + Q + '1\\cdot 0=0,\\qquad 0\\cdot 0=0' + Q + '\\text{Hay un solo cuadrado, de lado }1.',
+        '\\text{La recta parte a la altura }a=1\\text{, sobre el }0.' + Q + '\\text{Por cada unidad que avanza, baja}' + Q + '1-r=1-0=1.' + Q + '\\text{Avanza }1\\text{ y baja }1\\text{: llega al eje en }1.',
+        '\\text{Se compara }|r|\\text{ con }1\\text{: }|0|=0<1.' + Q + '\\text{Hay suma, y se calcula con }S=\\dfrac{a}{1-r}.',
+        '\\text{Reemplazo: }S=\\dfrac{1}{1-0}' + Q + '\\text{Resta: }1-0=1' + Q + '\\text{División: }\\dfrac{1}{1}=1',
+        '\\text{Qué significa: caso límite. Todas las sumas}' + Q + '\\text{parciales valen }1\\text{: }1,\\ \\ 1+0=1,\\ \\ 1+0+0=1.' + Q + '\\text{La suma es el primer término.}'];
+    } else if (k === 10){
+      PZ.push(['H10', 'a=1,\\ \\ r=1:\\quad 1+1+1+1+\\cdots', 'a = 1, r = 1: 1 + 1 + 1 + 1 + ⋯', 'pt']);
+      PZ.push(['V10', '\\sum\\nolimits_{n=1}^{\\infty}1\\cdot 1^{\\,n-1}\\text{ no tiene suma: }|r|=1\\ge 1', 'Σ 1·1ⁿ⁻¹ no tiene suma: |r| = 1 ≥ 1', 'c-tan']);
+      R = ['\\text{Datos: }a=1,\\quad r=1' + Q + '\\text{Serie: }\\displaystyle\\sum_{n=1}^{\\infty}1\\cdot 1^{\\,n-1}=1+1+1+\\cdots',
+        '\\text{Lado de cada cuadrado: un término.}' + Q + '\\text{Cada uno es el anterior por }r\\text{: }1\\cdot 1=1.' + Q + '\\text{Todos los cuadrados son iguales, de lado }1.',
+        '\\text{La recta parte a la altura }a=1\\text{, sobre el }0.' + Q + '\\text{Por cada unidad que avanza, baja}' + Q + '1-r=1-1=0.' + Q + '\\text{No baja: es horizontal y nunca toca el eje.}',
+        '\\text{Se compara }|r|\\text{ con }1\\text{: }|1|=1\\ge 1.' + Q + '\\text{No hay suma.}',
+        '\\text{La fórmula }\\dfrac{a}{1-r}\\text{ no se puede usar:}' + Q + '\\text{su denominador sería }1-1=0.' + Q + '\\text{Sumas parciales: }S_{1}=1,\\quad S_{2}=1+1=2,' + Q + 'S_{3}=2+1=3\\text{; en general }S_{n}=n.' + Q + '\\text{Crecen sin tope: no tienen límite.}',
+        '\\text{Qué significa: caso límite. En }r=1\\text{ deja de}' + Q + '\\text{haber suma. Cerca de }1\\text{ la suma ya es grande:}' + Q + '\\text{con }r=0{,}9\\text{ vale }10\\text{; con }r=0{,}8\\text{ vale }5.'];
+    } else {
+      PZ.push(['H' + k, 'a=1,\\ \\ r=' + r + ':\\quad 1+' + r + '+' + r2 + '+' + r3 + '+\\cdots', 'a = 1, r = ' + rp + ': 1 + ' + rp + ' + ' + sg24P(k*k, 2) + ' + ' + sg24P(k*k*k, 3) + ' + ⋯', 'pt']);
+      PZ.push(['V' + k, '\\sum\\nolimits_{n=1}^{\\infty}' + r + '^{\\,n-1}=\\dfrac{1}{1-' + r + '}' + e.st, 'Σ ' + rp + 'ⁿ⁻¹ (n ≥ 1) = 1/(1 − ' + rp + ') ' + e.sp, 'c-tan']);
+      if (k <= 8) PZ.push(['M' + k, 'S' + e.st, 'S ' + e.sp, 'c-tan']);
+      R = ['\\text{Datos: }a=1,\\quad r=' + r + Q + '\\text{Serie: }\\displaystyle\\sum_{n=1}^{\\infty}1\\cdot ' + r + '^{\\,n-1}=1+' + r + '+' + r2 + '+\\cdots',
+        '\\text{Lado de cada cuadrado: un término.}' + Q + '\\text{Cada uno es el anterior por }r\\text{:}' + Q + '1\\cdot ' + r + '=' + r + ',\\qquad ' + r + '\\cdot ' + r + '=' + r2 + Q + r2 + '\\cdot ' + r + '=' + r3 + Q + '\\text{Los lados van uno tras otro sobre el eje:}' + Q + '\\text{el largo total es la suma de la serie.}',
+        '\\text{La recta parte a la altura }a=1\\text{, sobre el }0.' + Q + '\\text{Por cada unidad que avanza, baja}' + Q + '1-r=1-' + r + '=' + d + Q + '\\text{Segunda esquina: avanza }1\\text{, baja }' + d + '\\text{;}' + Q + '\\text{altura }1-' + d + '=' + r + '\\text{, el lado del }2.^{\\circ}.' + Q + '\\text{Tercera esquina: avanza }1+' + r + '=' + sg24T(10 + k, 1) + '\\text{,}' + Q + '\\text{baja }' + d + '\\cdot ' + sg24T(10 + k, 1) + '=' + sg24T(100 - k*k, 2) + '\\text{;}' + Q + '\\text{altura }1-' + sg24T(100 - k*k, 2) + '=' + r2 + '\\text{, el lado del }3.^{\\circ}.' + Q + '\\text{(Todas las esquinas: en el recuadro.)}',
+        '\\text{Se compara }|r|\\text{ con }1\\text{: }|' + r + '|=' + r + '<1.' + Q + '\\text{Hay suma, y se calcula con }S=\\dfrac{a}{1-r}.',
+        '\\text{Reemplazo: }S=\\dfrac{1}{1-' + r + '}' + Q + '\\text{Resta: }1-' + r + '=' + d + Q + '\\text{División (se amplifica por }10\\text{):}' + Q + '\\dfrac{1}{' + d + '}=' + e.div,
+        '\\text{Qué significa: la recta toca el eje en }S.' + Q + '\\text{Baja }' + d + '\\text{ por unidad y tiene que bajar }1\\text{:}' + Q + '\\text{avanza }1:' + d + e.st + '.' + Q + '\\text{Los lados, uno tras otro, se acercan a ese}' + Q + '\\text{punto sin pasarlo.}' + (k === 9 ? Q + '\\text{(El }10\\text{ queda fuera del dibujo.)}' : '')];
+    }
+    e.R = R; e.rp = rp; DAT.push(e);
+  })(k);
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-2.7, y1:3.5}, aspect:6.2/6.6,
+    aria:'Arriba, una franja dice qué muestra: los lados de los cuadrados son los términos, y la recta marca la suma. Un deslizador elige la razón r, de 0 a 1 de décima en décima; el primer término es siempre 1. Sobre un eje horizontal numerado de 0 a 5 se apoyan cuadrados azules, uno tras otro: el primero de lado 1, el segundo de lado r, el tercero de lado r al cuadrado, y así. Un punto naranja marca la esquina de arriba a la izquierda de cada cuadrado. Una cota naranja, junto al primer cuadrado, mide lo que baja el segundo respecto del primero: 1 menos r. Una recta burdeo parte de la esquina del primer cuadrado, pasa por todas las esquinas y toca el eje en un punto burdeo, rotulado con la suma S, igual a 1 dividido por 1 menos r. Con r igual a 0 hay un solo cuadrado y la suma es 1. Con r igual a 0,5 la suma es 2. Con r igual a 0,8 la suma es 5. Con r igual a 0,9 la suma es 10 y queda fuera del dibujo: la recta sale por la derecha con una flecha. Con r igual a 1 todos los cuadrados son iguales, la recta es horizontal, nunca toca el eje y no hay suma. Bajo el dibujo, frases dicen la conclusión y, más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'r', tex:'r', min:0, max:1, step:0.1, value:0.5}],
+    legend:'<span><i class="sw sec"></i> cuadrados: el lado de cada uno es un término</span><span><i class="sw rise"></i> esquinas y lo que baja de un cuadrado al siguiente, \\(1-r\\)</span><span><i class="sw tan"></i> la recta por las esquinas y la suma \\(S\\), donde toca el eje</span>',
+    anim:{run:44000, hold:4000, still:1, apply:function(p, v){ v.q = p; v.r = Math.min(10, Math.floor(p*11))/10; }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var k = cual(v), e = DAT[k], r = k/10, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), j, x = 0, lado = 1, pts = [], corta = false, px, py, pw, xe;
+      function gx(t){ return OX + t*U; } function gy(t){ return t*U; }
+      function num(t, ax, ay, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, ax, ay); }
+      T.L('H' + k, -1.2, 2.15, 0);
+      /* cuadrados de lados 1, r, r², …, uno tras otro sobre el eje */
+      for (j = 0; j < 80; j++){ pw = lado*U*s; if (pw < 0.7) break; if (gx(x + lado) > XE + 1e-9){ corta = true; break; }
+        px = X(gx(x)); py = Y(gy(lado)); c.globalAlpha = 0.26; c.fillStyle = C.sec; c.fillRect(px, py, pw, pw); c.globalAlpha = 1; c.strokeStyle = C.sec; c.lineWidth = 1; c.setLineDash([]); c.strokeRect(px + 0.5, py + 0.5, Math.max(1, pw - 1), Math.max(1, pw - 1));
+        pts.push([x, lado]); x += lado; lado *= r; }
+      if (corta) num('…', X(XE) - 6, Y(gy(0.3)), 'center');
+      /* eje con sus marcas */
+      S.line(OX, 0, XE, 0, {color:C.ink, width:1.1}); c.strokeStyle = C.ink; c.lineWidth = 1;
+      for (j = 0; j <= 5; j++){ c.beginPath(); c.moveTo(X(gx(j)), Y(0) - 3); c.lineTo(X(gx(j)), Y(0) + 3); c.stroke(); num('' + j, X(gx(j)), Y(0) + 11, 'center'); }
+      /* la recta por las esquinas: parte en (0, 1) y baja 1 − r por unidad */
+      xe = (XE - OX)/U;
+      if (k < 10 && gx(e.S) <= XE){ S.line(gx(0), gy(1), gx(e.S), 0, {color:C.tan, width:1.6}); c.beginPath(); c.arc(X(gx(e.S)), Y(0), 4, 0, 6.2832); c.fillStyle = C.tan; c.fill();
+        if (gx(e.S) > 4.6) T.L('M' + k, gx(e.S) + 0.22, -0.55, -100); else T.L('M' + k, gx(e.S), -0.55, -50); }
+      else dtFlecha(S, gx(0), gy(1), XE, gy(1 - (1 - r)*xe), C.tan, 1.6);
+      /* esquinas */
+      pts.forEach(function(p){ c.beginPath(); c.arc(X(gx(p[0])), Y(gy(p[1])), 2.8, 0, 6.2832); c.fillStyle = C.rise; c.fill(); });
+      /* cota: lo que baja del primer cuadrado al segundo, 1 − r */
+      px = X(gx(1)) + 4; c.strokeStyle = C.rise; c.lineWidth = 1.6; c.setLineDash([]); c.beginPath(); c.moveTo(px, Y(gy(1))); c.lineTo(px, Y(gy(r))); c.stroke();
+      c.lineWidth = 1.2; c.beginPath(); c.moveTo(px - 3, Y(gy(1))); c.lineTo(px + 3, Y(gy(1))); c.moveTo(px - 3, Y(gy(r))); c.lineTo(px + 3, Y(gy(r))); c.stroke();
+      T.L('D' + k, gx(1) - 0.02, 1.58, -100);
+      T.L('A', gx(0.5), 0.25, -50);
+      if (k >= 7) T.L('B' + k, gx(1 + r/2), 0.25, -50); else T.L('B' + k, gx(1) + 0.2, gy(r) + 0.26, 0);
+      /* conclusión, junto al dibujo */
+      if (k === 0){ txt('razón 0: un solo cuadrado.', X(-1.2), Y(-1.1), 'left', C.ink); txt('La suma es su lado, el primer término.', X(-1.2), Y(-1.1) + 21, 'left', C.ink); }
+      else if (k === 10){ txt('razón 1: la recta no baja y nunca toca el eje.', X(-1.2), Y(-1.1), 'left', C.tan); txt('Cuadrados iguales, sin fin: no hay suma.', X(-1.2), Y(-1.1) + 21, 'left', C.tan); }
+      else if (k === 9){ txt('la recta baja poco: toca el eje en 10,', X(-1.2), Y(-1.1), 'left', C.ink); txt('fuera del dibujo. Esa es la suma.', X(-1.2), Y(-1.1) + 21, 'left', C.ink); }
+      else { txt('la recta pasa por las esquinas y toca el eje', X(-1.2), Y(-1.1), 'left', C.ink); txt('justo donde terminan los lados: en la suma.', X(-1.2), Y(-1.1) + 21, 'left', C.ink); }
+      T.L('V' + k, -1.2, -2.15, 0);
+      dtQue(S, 'los lados de los cuadrados son los', 'términos; la recta marca la suma. Mueve r.');
+      T.fin();
+    },
+    caption:function(v){ var k = cual(v), e = DAT[k]; return 'Primer término 1 y razón ' + e.rp + ': ' + (k === 10 ? 'la recta es horizontal y no toca el eje; la serie no tiene suma.' : 'la recta toca el eje en la suma, S ' + e.sp + (k === 9 ? ', fuera del dibujo.' : '.')); },
+    readout:function(v){ return dtPasos(DAT[cual(v)].R); }
+  };
+})());
+OA.boot();
+</script>
+</body>
+</html>
