@@ -1,0 +1,241 @@
+<!--file:H01_propiedades_de_limites.html-->
+<!--title:Propiedades de límites-->
+<!--id:prop-lim-->
+<!--tab:H01 Propiedades de límites-->
+<article class="sheet" id="prop-lim" data-hoja="L30 H01">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Cálculo diferencial 1ª parte</li>
+      <li>Propiedades de límites</li>
+      <li><b>Propiedades de límites</b></li>
+    </ol>
+    <h1>Propiedades de límites</h1>
+    <p class="lede">Cuando los límites de \(f\) y de \(g\) en \(a\) <b>existen</b> (son números), el límite de una suma, una resta, un producto o un cociente de \(f\) y \(g\) se obtiene operando con esos dos números. La primera propiedad dice que el límite de la suma es la suma de los límites:
+    \[\lim_{x\to a}[f(x)+g(x)]=\lim_{x\to a}f(x)+\lim_{x\to a}g(x)\]
+    Con estas propiedades un límite se calcula por partes, y se explica por qué el límite de un polinomio se obtiene reemplazando \(x\) por \(a\), algo que las hojas anteriores usaron sin demostrar.</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>Las funciones de la animación son \(f(x)=\dfrac{x}{2}+1\) y \(g(x)=x+1\), las dos definidas solo para \(x\ne 2\), y el lugar es \(a=2\). La suma se llama \(s(x)=f(x)+g(x)\) y el producto, \(p(x)=f(x)\cdot g(x)\). El dibujo es una vista ampliada: muestra los \(x\) entre \(1{,}5\) y \(2{,}5\).</p>
+  <p><b>Cómo leerla:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las dos rectas:</b> la azul es la gráfica de \(f\) y la verde, la de \(g\). Cada una tiene un círculo vacío sobre \(x=2\): ahí no están definidas, y el límite no lo necesita.</li>
+    <li><b>Pasos 2 y 3, las alturas:</b> los trazos verticales son las alturas en \(x=1{,}9\) y en \(x=2{,}1\). Las de \(f\) (azules) se acercan a \(L=2\) y las de \(g\) (verdes), a \(M=3\). Las punteadas horizontales marcan esos dos números.</li>
+    <li><b>Paso 4, apilar:</b> una copia de cada trazo verde se pone encima del trazo azul del mismo lugar. La punta queda a la altura \(f(x)+g(x)\); los trazos verdes originales siguen en su sitio.</li>
+    <li><b>Pasos 5, 6 y 7:</b> las puntas de todos los lugares forman la recta naranja, que es la gráfica de la suma. Sobre \(x=2\) se apilan los dos límites, \(2\) y encima \(3\): llegan justo al círculo vacío naranjo, a la altura \(5\). El último paso anota lo que ocurre con el producto. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada altura con su cuenta, cada suma y su distancia a \(5\). Conclusión: el límite de la suma es la suma de los límites, \(2+3=5\).</li>
+  </ol>
+  <div class="stage" data-scene="prop-idea"></div>
+  <ul class="keys">
+    <li><b>Azul:</b> la gráfica de \(f\) y sus alturas (trazos verticales) en \(x=1{,}9\) y \(x=2{,}1\).</li>
+    <li><b>Verde:</b> la gráfica de \(g\) y sus alturas. Cada trazo verde aparece dos veces: en su sitio, desde el eje, y copiado encima del trazo azul.</li>
+    <li><b>Naranjo:</b> la gráfica de la suma \(s(x)=f(x)+g(x)\) y las puntas de los trazos apilados.</li>
+    <li><b>Círculos vacíos:</b> sobre \(x=2\) ninguna de las tres gráficas tiene punto. Están a las alturas \(2\), \(3\) y \(5\), que son los tres límites.</li>
+    <li><b>Trazos segmentados sobre \(x=2\):</b> no son alturas de las funciones (ahí no hay valores); son los límites \(L=2\) y \(M=3\), apilados.</li>
+  </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra unos pocos valores: sugiere la propiedad, no la demuestra. «Límite» significa aquí lo que fija la hoja «Definición formal de los límites (épsilon-delta)»: \(\lim_{x\to a}f(x)=L\) cuando para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(x)-L|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li><b>Se demuestran aquí, con esa definición:</b> las propiedades de la constante, de la identidad, de la suma y del múltiplo constante.</li>
+      <li><b>Se deducen aquí de otras:</b> la resta (de la suma y del múltiplo constante), la potencia (del producto) y el límite de un polinomio por reemplazo (encadenando propiedades).</li>
+      <li><b>Se usan sin demostrar:</b> las propiedades del producto, del cociente y de la raíz. Sus demostraciones son más largas y no van en esta hoja.</li>
+      <li><b>También se usan sin demostrar:</b> la desigualdad triangular, \(|u+v|\le |u|+|v|\); que \(|u\cdot v|=|u|\cdot|v|\); las reglas del orden de los números (multiplicar los dos lados de una desigualdad por un número positivo la mantiene); el principio de inducción; que un límite, si existe, es único; el criterio de los límites laterales; que una función cuyos valores superan cualquier tope cerca de \(a\) no tiene límite en \(a\); y que dos funciones iguales para todo \(x\ne a\) cercano a \(a\) tienen el mismo límite en \(a\).</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Las propiedades, cada una con su hipótesis</h3>
+    <p><b>Hipótesis común.</b> \(f\) y \(g\) están definidas en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\). Los dos límites <b>existen</b> y son números: \(\lim_{x\to a}f(x)=L\) y \(\lim_{x\to a}g(x)=M\). Además, \(c\) es un número fijo (una constante) y \(n\) es un entero positivo.</p>
+    <ol class="steps">
+      <li><b>Constante.</b> \(\lim_{x\to a}c=c\). No pide nada.</li>
+      <li><b>Identidad.</b> \(\lim_{x\to a}x=a\). No pide nada.</li>
+      <li><b>Suma.</b> \(\lim_{x\to a}[f(x)+g(x)]=L+M\).</li>
+      <li><b>Resta.</b> \(\lim_{x\to a}[f(x)-g(x)]=L-M\).</li>
+      <li><b>Múltiplo constante.</b> \(\lim_{x\to a}[c\cdot f(x)]=c\cdot L\).</li>
+      <li><b>Producto.</b> \(\lim_{x\to a}[f(x)\cdot g(x)]=L\cdot M\).</li>
+      <li><b>Cociente.</b> Si además \(M\ne 0\): \(\lim_{x\to a}\dfrac{f(x)}{g(x)}=\dfrac{L}{M}\). (Con \(M\ne 0\), \(g(x)\ne 0\) para los \(x\ne a\) suficientemente cercanos a \(a\), así que el cociente está definido ahí: se usa sin demostrar.)</li>
+      <li><b>Potencia.</b> \(\lim_{x\to a}[f(x)]^{n}=L^{n}\), para todo entero positivo \(n\).</li>
+      <li><b>Raíz.</b> \(\lim_{x\to a}\sqrt[n]{f(x)}=\sqrt[n]{L}\), con esta restricción: si \(n\) es <b>impar</b>, no se pide nada más; si \(n\) es <b>par</b>, se pide además que \(f(x)\ge 0\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\) (para que la raíz exista). En ese caso \(L\ge 0\).</li>
+    </ol>
+    <p><b>Cómo se leen.</b> Cada igualdad afirma dos cosas: que el límite de la izquierda existe y que vale lo que dice la derecha. Si falta una hipótesis, la propiedad no afirma nada (recuadro del caso especial). Las propiedades 3 y 6 se aplican varias veces seguidas cuando hay tres o más sumandos o factores.</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: el límite de la suma es la suma de los límites</h3>
+    <p>Se sabe: \(\lim_{x\to a}f(x)=L\) y \(\lim_{x\to a}g(x)=M\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(x)+g(x)-(L+M)|\lt \varepsilon\).</p>
+    <ol class="steps">
+      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\). Su mitad, \(\dfrac{\varepsilon}{2}\), también es positiva.</li>
+      <li>Como el límite de \(f\) es \(L\), la tolerancia \(\dfrac{\varepsilon}{2}\) tiene respuesta: existe \(\delta_{1}\gt 0\) tal que, si \(0\lt |x-a|\lt \delta_{1}\), entonces \(|f(x)-L|\lt \dfrac{\varepsilon}{2}\).</li>
+      <li>Como el límite de \(g\) es \(M\), existe \(\delta_{2}\gt 0\) tal que, si \(0\lt |x-a|\lt \delta_{2}\), entonces \(|g(x)-M|\lt \dfrac{\varepsilon}{2}\).</li>
+      <li>Se elige \(\delta=\min\{\delta_{1},\delta_{2}\}\), el menor de los dos. Es positivo, y \(\delta\le \delta_{1}\) y \(\delta\le \delta_{2}\).</li>
+      <li>Se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Por el paso 4, \(|x-a|\lt \delta_{1}\) y \(|x-a|\lt \delta_{2}\): valen a la vez las conclusiones de los pasos 2 y 3.</li>
+      <li>Se reordena la diferencia: \(f(x)+g(x)-(L+M)=(f(x)-L)+(g(x)-M)\).</li>
+      <li>Desigualdad triangular: \(|(f(x)-L)+(g(x)-M)|\le |f(x)-L|+|g(x)-M|\).</li>
+      <li>Por los pasos 2 y 3: \(|f(x)-L|+|g(x)-M|\lt \dfrac{\varepsilon}{2}+\dfrac{\varepsilon}{2}=\varepsilon\).</li>
+      <li>Por los pasos 6, 7 y 8: \(|f(x)+g(x)-(L+M)|\lt \varepsilon\). Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}[f(x)+g(x)]=L+M\).</li>
+    </ol>
+    <p><b>Con los números de la animación</b> y la tolerancia \(\varepsilon=0{,}3\): la mitad es \(\dfrac{0{,}3}{2}=0{,}15\). Para \(f\): \(|f(x)-2|=\left|\dfrac{x}{2}-1\right|=\dfrac{|x-2|}{2}\), que es menor que \(0{,}15\) si \(|x-2|\lt 0{,}3\); sirve \(\delta_{1}=0{,}3\). Para \(g\): \(|g(x)-3|=|x-2|\); sirve \(\delta_{2}=0{,}15\). El menor es \(\delta=0{,}15\). Prueba con \(x=2{,}1\): \(|2{,}1-2|=0{,}1\), menor que \(0{,}15\); \(|2{,}05-2|=0{,}05\) y \(|3{,}1-3|=0{,}1\), los dos menores que \(0{,}15\); y \(|5{,}15-5|=0{,}15\), menor que \(0{,}3\). Además \(0{,}05+0{,}1=0{,}15\): la distancia de la suma no supera la suma de las distancias.</p>
+    <p><b>Constante e identidad.</b> Se fija \(\varepsilon\gt 0\).</p>
+    <ol class="steps">
+      <li>Constante: para todo \(x\), \(|c-c|=0\), y \(0\lt \varepsilon\). Cualquier distancia sirve, por ejemplo \(\delta=1\).</li>
+      <li>Identidad: se elige \(\delta=\varepsilon\). Si \(0\lt |x-a|\lt \delta\), entonces \(|x-a|\lt \varepsilon\), que es justo lo que se pide.</li>
+    </ol>
+    <p><b>Múltiplo constante.</b> Se sabe: \(\lim_{x\to a}f(x)=L\). Se fija \(\varepsilon\gt 0\).</p>
+    <ol class="steps">
+      <li>Caso \(c=0\): \(c\cdot f(x)=0\) para todo \(x\) donde \(f\) está definida. Es la función constante \(0\); por la propiedad de la constante su límite es \(0\), y \(0=0\cdot L\).</li>
+      <li>Caso \(c\ne 0\): \(|c|\gt 0\), así que \(\dfrac{\varepsilon}{|c|}\gt 0\). Como el límite de \(f\) es \(L\), existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(x)-L|\lt \dfrac{\varepsilon}{|c|}\).</li>
+      <li>Factor común y valor absoluto de un producto: \(|c\cdot f(x)-c\cdot L|=|c\cdot(f(x)-L)|=|c|\cdot|f(x)-L|\).</li>
+      <li>Se multiplica la desigualdad del paso 2 por \(|c|\), positivo: \(|c|\cdot|f(x)-L|\lt |c|\cdot\dfrac{\varepsilon}{|c|}=\varepsilon\). Entonces \(|c\cdot f(x)-c\cdot L|\lt \varepsilon\).</li>
+    </ol>
+    <p><b>Dos propiedades que se deducen de otras.</b></p>
+    <ol class="steps">
+      <li>Resta: \(f(x)-g(x)=f(x)+(-1)\cdot g(x)\). Múltiplo constante con \(c=-1\): el límite de \((-1)\cdot g(x)\) es \((-1)\cdot M=-M\). Suma: el límite de \(f(x)+(-1)\cdot g(x)\) es \(L+(-M)=L-M\).</li>
+      <li>Potencia, por inducción sobre \(n\) (usa el producto, que aquí no se demuestra). Para \(n=1\): \([f(x)]^{1}=f(x)\), de límite \(L=L^{1}\). Si vale para un \(n\): \([f(x)]^{n+1}=[f(x)]^{n}\cdot f(x)\), y por el producto su límite es \(L^{n}\cdot L=L^{n+1}\). Por el principio de inducción vale para todo entero positivo \(n\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: cuando falla una hipótesis, la propiedad no se puede usar</h3>
+    <p>«No se puede usar» no significa «el límite no existe». Significa que la propiedad no dice nada y hay que estudiar el límite de otra forma.</p>
+    <ol class="steps">
+      <li><b>Cociente con denominador de límite \(0\): el límite puede existir.</b> En \(\dfrac{2x-6}{x-3}\) con \(x\to 3\), el denominador tiene límite \(3-3=0\): la propiedad del cociente no se aplica. Pero para todo \(x\ne 3\), \(\dfrac{2x-6}{x-3}=\dfrac{2\,(x-3)}{x-3}=2\). La función coincide con la constante \(2\) fuera de \(3\), y su límite es \(2\).</li>
+      <li><b>Cociente con denominador de límite \(0\): el límite puede no existir.</b> En \(\dfrac{1}{|x-3|}\) con \(x\to 3\), el denominador también tiene límite \(0\). Los valores: \(\dfrac{1}{|3{,}1-3|}=\dfrac{1}{0{,}1}=10\) y \(\dfrac{1}{|3{,}01-3|}=\dfrac{1}{0{,}01}=100\). Superan cualquier tope \(M\gt 0\): si \(0\lt |x-3|\lt \dfrac{1}{M}\), entonces \(\dfrac{1}{|x-3|}\gt M\). El límite no existe.</li>
+      <li><b>Suma cuando ninguno de los dos límites existe: el de la suma puede existir.</b>
+      \[h(x)=\begin{cases}1&\text{si }x\lt 2\\[2pt] 3&\text{si }x\ge 2\end{cases}\qquad k(x)=\begin{cases}3&\text{si }x\lt 2\\[2pt] 1&\text{si }x\ge 2\end{cases}\]
+      Por la izquierda de \(2\), \(h\) vale \(1\), y por la derecha, \(3\): por ejemplo \(h(1{,}9)=1\) y \(h(2{,}1)=3\). Los límites laterales de \(h\) en \(2\) son \(1\) y \(3\), distintos: el límite de \(h\) en \(2\) no existe. Tampoco el de \(k\), con laterales \(3\) y \(1\). La propiedad de la suma no se aplica. Pero a la izquierda \(h(x)+k(x)=1+3=4\) y a la derecha \(h(x)+k(x)=3+1=4\): la suma es la constante \(4\), y su límite en \(2\) es \(4\).</li>
+      <li><b>Si un límite existe y el otro no, el de la suma no existe.</b> Se sabe que \(\lim_{x\to a}f(x)=L\) y que \(g\) no tiene límite en \(a\). Si \(f+g\) tuviera límite \(S\), como \(g(x)=[f(x)+g(x)]-f(x)\), la propiedad de la resta daría que \(g\) tiene límite \(S-L\). Eso contradice el dato. Luego \(f+g\) no tiene límite en \(a\).</li>
+      <li><b>Las propiedades no se leen al revés.</b> De «el límite de \(f+g\) existe» no se deduce que existan los límites de \(f\) y de \(g\): el punto 3 es un ejemplo.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+  <p>Cada paso usa una propiedad, que se nombra. Los pasos van «de adentro hacia afuera»: primero los límites más simples, que ya se sabe que existen, y con ellos los siguientes. Así cada propiedad se aplica con su hipótesis cumplida.</p>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: un polinomio, \(\lim_{x\to 2}(3x^{2}-5x+4)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Identidad: \(\lim_{x\to 2}x=2\). Constante: \(\lim_{x\rightarrow 2}4=4\).</li>
+    <li>Potencia con \(n=2\), sobre el paso 1: \(\lim_{x\to 2}x^{2}=2^{2}=4\).</li>
+    <li>Múltiplo constante con \(c=3\), sobre el paso 2: \(\lim_{x\to 2}3x^{2}=3\cdot 4=12\).</li>
+    <li>Múltiplo constante con \(c=5\), sobre el paso 1: \(\lim_{x\to 2}5x=5\cdot 2=10\).</li>
+    <li>Resta, con los pasos 3 y 4: \(\lim_{x\to 2}(3x^{2}-5x)=12-10=2\).</li>
+    <li>Suma, con los pasos 5 y 1: \(\lim_{x\to 2}(3x^{2}-5x+4)=2+4=6\).</li>
+    <li>Comparación con el valor del polinomio \(P(x)=3x^{2}-5x+4\) en \(2\): \(P(2)=3\cdot 2^{2}-5\cdot 2+4=12-10+4=6\). El límite es \(P(2)\).</li>
+    <li>No es casualidad. En cualquier polinomio, cada término \(c\,x^{k}\) tiene límite \(c\,a^{k}\) (identidad, potencia y múltiplo constante), el término sin \(x\) tiene por límite a sí mismo (constante), y la suma repetida da el polinomio evaluado en \(a\): \(\lim_{x\to a}P(x)=P(a)\). Eso es «reemplazar \(x\) por \(a\)».</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: un cociente, \(\lim_{x\to 3}\dfrac{x^{2}+1}{2x-1}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Numerador. Identidad y potencia: \(\lim_{x\to 3}x^{2}=3^{2}=9\). Constante y suma: \(\lim_{x\to 3}(x^{2}+1)=9+1=10\).</li>
+    <li>Denominador. Identidad y múltiplo constante: \(\lim_{x\to 3}2x=2\cdot 3=6\). Constante y resta: \(\lim_{x\to 3}(2x-1)=6-1=5\).</li>
+    <li>Hipótesis del cociente: el límite del denominador es \(5\), y \(5\ne 0\). Se cumple.</li>
+    <li>Cociente, con los pasos 1 y 2: \(\lim_{x\to 3}\dfrac{x^{2}+1}{2x-1}=\dfrac{10}{5}=2\).</li>
+    <li>Comparación con el valor de \(r(x)=\dfrac{x^{2}+1}{2x-1}\) en \(3\): \(r(3)=\dfrac{3^{2}+1}{2\cdot 3-1}=\dfrac{10}{5}=2\).</li>
+    <li>La hipótesis importa. Con la misma función y \(x\to 0{,}5\), el denominador tiene límite \(2\cdot 0{,}5-1=1-1=0\): la propiedad del cociente no se puede usar ahí.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una potencia y tres raíces</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>\(\lim_{x\to -1}(3x+1)^{4}\). Base, con identidad, múltiplo constante, constante y suma: \(\lim_{x\to -1}(3x+1)=3\cdot(-1)+1=-3+1=-2\).</li>
+    <li>Potencia con \(n=4\): \(\lim_{x\to -1}(3x+1)^{4}=(-2)^{4}=16\).</li>
+    <li>\(\lim_{x\to 4}\sqrt{2x+1}\). Lo de adentro, con las mismas propiedades: \(\lim_{x\to 4}(2x+1)=2\cdot 4+1=8+1=9\).</li>
+    <li>Raíz con \(n=2\), par: hay que revisar que \(2x+1\ge 0\) cerca de \(4\). En el intervalo abierto de \(3\) a \(5\), \(2x+1\) es mayor que \(2\cdot 3+1=7\). Se cumple.</li>
+    <li>Raíz: \(\lim_{x\to 4}\sqrt{2x+1}=\sqrt{9}=3\).</li>
+    <li>\(\lim_{x\to -3}\sqrt[3]{x-5}\). Lo de adentro, con identidad, constante y resta: \(\lim_{x\to -3}(x-5)=-3-5=-8\).</li>
+    <li>Raíz con \(n=3\), impar: no se pide nada más, aunque \(-8\) sea negativo. \(\lim_{x\to -3}\sqrt[3]{x-5}=\sqrt[3]{-8}=-2\), porque \((-2)^{3}=-8\).</li>
+    <li>\(\sqrt{x-4}\) con \(x\to 4\). Raíz con \(n=2\), par. Para todo \(x\lt 4\), \(x-4\) es negativo: no hay ningún intervalo abierto que contenga a \(4\) donde \(x-4\ge 0\). La propiedad de la raíz no se puede usar. La función ni siquiera está definida a la izquierda de \(4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: solo se conocen los límites, \(\lim_{x\to 5}F(x)=4\) y \(\lim_{x\to 5}G(x)=-2\)</h3>
+  <div class="body">
+  <p>No se conocen las fórmulas de \(F\) y \(G\), ni sus valores en \(5\). Las propiedades trabajan solo con los dos números.</p>
+  <ol class="steps">
+    <li>\(\lim_{x\to 5}[2F(x)-3G(x)]\). Múltiplo constante con \(c=2\): el límite de \(2F(x)\) es \(2\cdot 4=8\). Múltiplo constante con \(c=3\): el límite de \(3G(x)\) es \(3\cdot(-2)=-6\).</li>
+    <li>Resta: \(\lim_{x\to 5}[2F(x)-3G(x)]=8-(-6)=8+6=14\).</li>
+    <li>Producto: \(\lim_{x\to 5}[F(x)\cdot G(x)]=4\cdot(-2)=-8\).</li>
+    <li>Cociente: el límite del denominador es \(-2\), distinto de \(0\). \(\lim_{x\to 5}\dfrac{F(x)}{G(x)}=\dfrac{4}{-2}=-2\).</li>
+    <li>Potencia con \(n=3\): \(\lim_{x\to 5}[G(x)]^{3}=(-2)^{3}=-8\).</li>
+    <li>Raíz con \(n=2\), par: hay que revisar que \(F(x)\ge 0\) cerca de \(5\). Con la tolerancia \(\varepsilon=4\), la definición da un \(\delta\gt 0\) tal que, si \(0\lt |x-5|\lt \delta\), entonces \(|F(x)-4|\lt 4\), es decir, \(0\lt F(x)\lt 8\). Se cumple. \(\lim_{x\to 5}\sqrt{F(x)}=\sqrt{4}=2\).</li>
+    <li>\(\lim_{x\to 5}\dfrac{G(x)}{F(x)-4}\). Denominador, con constante y resta: su límite es \(4-4=0\). La propiedad del cociente no se puede usar, y con estos datos no se puede decidir si ese límite existe.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>usar el cociente cuando el denominador tiene límite \(0\)</b> y escribir una división por \(0\). La propiedad pide \(M\ne 0\). Dos: <b>concluir «el límite no existe» porque una propiedad no se aplica</b>. La propiedad calla; el límite puede existir (recuadro del caso especial, punto 1). Tres: <b>separar una suma sin saber que cada límite existe</b>. En el punto 3 del caso especial la suma tiene límite \(4\) y los sumandos no tienen límite. Cuatro: <b>olvidar la restricción de la raíz de índice par</b>. Se necesita \(f(x)\ge 0\) cerca de \(a\), por los dos lados. Cinco: <b>creer que \(f(a)\) participa</b>. Ninguna propiedad usa el valor de la función en \(a\); en la animación, \(f\) y \(g\) ni siquiera están definidas en \(2\).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Calcula, nombrando la propiedad de cada paso: a) \(\lim_{x\to -1}(2x^{3}-x^{2}+5)\); b) \(\lim_{x\to 2}\dfrac{4x-2}{x^{2}+1}\); c) \(\lim_{x\to 3}\sqrt[3]{x^{2}-1}\).</p>
+    <details><summary>Pista</summary><div><p>Parte por la identidad y la constante, y arma lo demás con ellas. En b), antes de dividir, revisa que el límite del denominador no sea \(0\). En c), el índice de la raíz es impar.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Identidad: \(\lim_{x\to -1}x=-1\). Potencia con \(n=3\) y con \(n=2\): \(\lim_{x\to -1}x^{3}=(-1)^{3}=-1\) y \(\lim_{x\to -1}x^{2}=(-1)^{2}=1\).</li>
+        <li>Múltiplo constante con \(c=2\): \(\lim_{x\to -1}2x^{3}=2\cdot(-1)=-2\). Resta: \(\lim_{x\to -1}(2x^{3}-x^{2})=-2-1=-3\).</li>
+        <li>Constante y suma: \(\lim_{x\to -1}(2x^{3}-x^{2}+5)=-3+5=2\). Comparación con \(m(x)=2x^{3}-x^{2}+5\): \(m(-1)=2\cdot(-1)^{3}-(-1)^{2}+5=-2-1+5=2\).</li>
+        <li>b) Numerador, con identidad, múltiplo constante, constante y resta: \(\lim_{x\to 2}(4x-2)=4\cdot 2-2=8-2=6\).</li>
+        <li>Denominador, con identidad, potencia, constante y suma: \(\lim_{x\to 2}(x^{2}+1)=2^{2}+1=4+1=5\). Es distinto de \(0\).</li>
+        <li>Cociente: \(\lim_{x\to 2}\dfrac{4x-2}{x^{2}+1}=\dfrac{6}{5}=1{,}2\).</li>
+        <li>c) Lo de adentro, con identidad, potencia, constante y resta: \(\lim_{x\to 3}(x^{2}-1)=3^{2}-1=9-1=8\).</li>
+        <li>Raíz con \(n=3\), impar: no se pide nada más. \(\lim_{x\to 3}\sqrt[3]{x^{2}-1}=\sqrt[3]{8}=2\), porque \(2^{3}=8\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>De tres funciones \(u\), \(v\) y \(w\) solo se sabe que \(\lim_{x\to 1}u(x)=6\), \(\lim_{x\to 1}v(x)=-3\) y \(\lim_{x\to 1}w(x)=0\). Calcula, si las propiedades lo permiten: a) \(\lim_{x\to 1}[u(x)+2v(x)]\); b) \(\lim_{x\to 1}[u(x)\cdot v(x)]\); c) \(\lim_{x\to 1}\dfrac{u(x)}{v(x)}\); d) \(\lim_{x\to 1}\sqrt{u(x)+3}\); e) \(\lim_{x\to 1}\dfrac{u(x)}{w(x)}\); f) \(\lim_{x\to 1}\dfrac{w(x)}{u(x)}\).</p>
+    <details><summary>Pista</summary><div><p>En cada cociente mira primero el límite del denominador. Que el numerador tenga límite \(0\) no es problema. En d), el índice de la raíz es par.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Múltiplo constante con \(c=2\): el límite de \(2v(x)\) es \(2\cdot(-3)=-6\). Suma: \(\lim_{x\to 1}[u(x)+2v(x)]=6+(-6)=0\).</li>
+        <li>b) Producto: \(\lim_{x\to 1}[u(x)\cdot v(x)]=6\cdot(-3)=-18\).</li>
+        <li>c) Cociente: el límite del denominador es \(-3\), distinto de \(0\). \(\lim_{x\to 1}\dfrac{u(x)}{v(x)}=\dfrac{6}{-3}=-2\).</li>
+        <li>d) Constante y suma: el límite de \(u(x)+3\) es \(6+3=9\). Raíz con \(n=2\), par: con la tolerancia \(\varepsilon=9\) hay un \(\delta\gt 0\) tal que, si \(0\lt |x-1|\lt \delta\), entonces \(|u(x)+3-9|\lt 9\), es decir, \(0\lt u(x)+3\lt 18\). Se cumple la restricción. \(\lim_{x\to 1}\sqrt{u(x)+3}=\sqrt{9}=3\).</li>
+        <li>e) El límite del denominador es \(0\): la propiedad del cociente no se puede usar. Con estos datos no se puede decidir si el límite existe.</li>
+        <li>f) El límite del denominador es \(6\), distinto de \(0\). Cociente: \(\lim_{x\to 1}\dfrac{w(x)}{u(x)}=\dfrac{0}{6}=0\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> La señora Marta vende sopaipillas en la feria. <b>Modelo:</b> cada día gasta \(6000\) pesos fijos (gas y aceite) y \(900\) pesos en ingredientes por cada docena. Si hace \(x\) docenas, el costo total es \(T(x)=6000+900\,x\) pesos y el costo por docena es \(U(x)=\dfrac{T(x)}{x}\) pesos, con \(x\gt 0\). (El modelo acepta cualquier cantidad positiva, no solo docenas enteras, y supone que los precios no cambian.) a) Con las propiedades, calcula \(\lim_{x\to 20}T(x)\) a partir de sus dos partes. b) Calcula \(\lim_{x\to 20}U(x)\). ¿Qué hipótesis hay que revisar? c) Compara con \(T(20)\) y \(U(20)\) y explica el resultado. d) ¿Se puede usar la propiedad del cociente cuando \(x\) se acerca a \(0\)? Calcula \(U(0{,}1)\) y \(U(0{,}01)\).</p>
+    <details><summary>Pista</summary><div><p>El costo total es una suma: una parte constante y una parte que es un múltiplo de \(x\). El costo por docena es un cociente: su denominador es \(x\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>a) Parte fija, constante: su límite es \(6000\). Parte variable, con identidad y múltiplo constante con \(c=900\): \(\lim_{x\to 20}900\,x=900\cdot 20=18000\).</li>
+        <li>Suma: \(\lim_{x\to 20}T(x)=6000+18000=24000\) pesos.</li>
+        <li>b) Hipótesis del cociente: el límite del denominador es \(\lim_{x\to 20}x=20\), distinto de \(0\). Se cumple.</li>
+        <li>Cociente: \(\lim_{x\to 20}U(x)=\dfrac{24000}{20}=1200\) pesos por docena.</li>
+        <li>c) \(T(20)=6000+900\cdot 20=6000+18000=24000\) y \(U(20)=\dfrac{24000}{20}=1200\). Coinciden con los límites: cuando la producción se acerca a \(20\) docenas, el costo total se acerca a \(24000\) pesos y el costo por docena, a \(1200\) pesos. De esos \(1200\), \(\dfrac{6000}{20}=300\) son la parte del gasto fijo, y \(300+900=1200\).</li>
+        <li>d) No: el límite del denominador sería \(0\). En el modelo \(x\gt 0\), así que solo hay valores a la derecha de \(0\). \(T(0{,}1)=6000+900\cdot 0{,}1=6000+90=6090\) y \(U(0{,}1)=\dfrac{6090}{0{,}1}=60900\). \(T(0{,}01)=6000+900\cdot 0{,}01=6000+9=6009\) y \(U(0{,}01)=\dfrac{6009}{0{,}01}=600900\).</li>
+        <li>Los valores crecen sin tope: para \(x\gt 0\), \(U(x)\gt \dfrac{6000}{x}\), y \(\dfrac{6000}{x}\gt M\) si \(0\lt x\lt \dfrac{6000}{M}\). El costo por docena no se acerca a ningún número: con muy poca producción, el gasto fijo se reparte entre muy pocas docenas.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CD-L30-H01 · v001 · Pendiente de APR</span>
+</footer>
+</article>
