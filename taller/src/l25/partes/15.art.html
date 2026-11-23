@@ -1,0 +1,260 @@
+<!--file:H15_criterio_de_la_integral.html-->
+<!--title:Criterio de la integral-->
+<!--id:ss-crit-integral-->
+<!--tab:H15 Criterio de la integral-->
+<article class="sheet" id="ss-crit-integral" data-hoja="L25 H15">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Criterio de la integral</b></li>
+    </ol>
+    <h1>Criterio de la integral</h1>
+    <p class="lede">Si los términos de una serie son los valores \(a_{n}=f(n)\) de una función continua, positiva y decreciente, cada término es el área de una columna de ancho \(1\), y esas columnas se comparan con el área bajo la curva \(y=f(x)\). La serie y la integral impropia hacen lo mismo: o las dos convergen o las dos divergen. \[\sum_{n=1}^{\infty}a_{n}\ \text{ converge}\quad\Longleftrightarrow\quad\int_{1}^{\infty}f(x)\,dx\ \text{ converge}\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}=1+\dfrac{1}{4}+\dfrac{1}{9}+\dfrac{1}{16}+\cdots\) comparada con el área bajo la curva \(y=\dfrac{1}{x^{2}}\), en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las cinco columnas azules (paso 1):</b> todas tienen ancho \(1\); la columna del término \(a_{k}\) va de \(x=k-1\) a \(x=k\) y su alto es \(a_{k}=\dfrac{1}{k^{2}}\), escrito debajo. El área de cada columna es su término: las cinco juntas son \(S_{5}\). Arriba queda la pregunta: ¿converge la serie?</li>
+    <li><b>Paso 2:</b> aparece la curva burdeo \(y=\dfrac{1}{x^{2}}\), desde \(x=1\). Pasa por la esquina superior derecha de cada columna (los puntos burdeos) y antes de esa esquina va más arriba: las columnas de \(a_{2},\ a_{3},\ a_{4},\ a_{5}\) quedan bajo la curva.</li>
+    <li><b>Paso 3:</b> se pinta de verde el área bajo la curva entre \(1\) y \(5\). Vale \(\displaystyle\int_{1}^{5}\dfrac{dx}{x^{2}}=\dfrac{4}{5}\), y las cuatro columnas caben dentro: suman menos.</li>
+    <li><b>Paso 4:</b> la primera columna se pinta naranja porque queda fuera de la curva: su valor, \(1\), se suma aparte. Resultado: \(S_{5}\le 1+\dfrac{4}{5}=\dfrac{9}{5}\).</li>
+    <li><b>Paso 5, registro y cuenta de abajo:</b> con \(n\) columnas pasa lo mismo y \(S_{n}\le 1+\left(1-\dfrac{1}{n}\right)&lt;2\). En la cuenta de abajo está cada resta y cada suma de fracciones. Conclusión: las sumas parciales crecen y no pasan de \(2\); la serie converge.</li>
+  </ol>
+  <div class="stage" data-scene="int-idea"></div>
+  <ul class="keys">
+    <li><b>Columnas azules:</b> los términos. Ancho \(1\), alto \(\dfrac{1}{n^{2}}\): el área de cada una es su término.</li>
+    <li><b>Curva burdeo:</b> \(y=\dfrac{1}{x^{2}}\), desde \(x=1\). Los puntos burdeos son las esquinas por donde pasa: \(\left(n,\ \dfrac{1}{n^{2}}\right)\).</li>
+    <li><b>Área verde:</b> lo que hay bajo la curva, entre \(1\) y \(5\) (en el paso 5 sigue hacia la derecha). Es una integral.</li>
+    <li><b>Columna naranja:</b> la primera, \(a_{1}=1\). No queda bajo la curva (la curva se usa desde \(x=1\)), así que se suma aparte.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>El criterio, en orden</h3>
+    <ol class="steps">
+      <li><b>Hipótesis:</b> \(f\) es una función <b>continua</b>, <b>positiva</b> y <b>decreciente</b> en \([1,\infty)\), y \(a_{n}=f(n)\) para \(n=1,\ 2,\ 3,\ \ldots\)</li>
+      <li><b>Integral impropia:</b> \(\displaystyle\int_{1}^{\infty}f(x)\,dx=\lim_{t\to\infty}\int_{1}^{t}f(x)\,dx\). Converge si ese límite es un número real; si no, diverge.</li>
+      <li><b>Criterio:</b> \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge si y solo si \(\displaystyle\int_{1}^{\infty}f(x)\,dx\) converge. Dicho de otro modo: si la integral converge, la serie converge; si la integral diverge, la serie diverge.</li>
+      <li><b>Cuánto vale la suma:</b> el criterio no la entrega. Cuando convergen, solo la acota: \(\displaystyle\int_{1}^{\infty}f(x)\,dx\ \le\ \sum_{n=1}^{\infty}a_{n}\ \le\ a_{1}+\int_{1}^{\infty}f(x)\,dx\). <b>El valor de la integral no es la suma de la serie.</b></li>
+      <li><b>Desde \(n=N\):</b> si las tres hipótesis se cumplen solo en \([N,\infty)\), el criterio se aplica igual con \(\displaystyle\sum_{n=N}^{\infty}a_{n}\) y \(\displaystyle\int_{N}^{\infty}f(x)\,dx\). Los términos anteriores, \(a_{1}+\cdots+a_{N-1}\), son una cantidad fija: cada suma parcial cambia en ese mismo número, así que agregarlos o quitarlos no cambia si la serie converge o diverge.</li>
+    </ol>
+    <p><b>Aviso de rigor.</b> «Límite» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». En esta hoja se usan sin demostrar: (1) que las funciones elementales que aparecen (potencias, raíces, \(\ln\), \(\arctan\), exponencial, seno y coseno) son continuas donde están definidas, que una función continua en \([a,b]\) tiene integral \(\displaystyle\int_{a}^{b}f(x)\,dx\), y la definición de integral impropia como límite de \(\displaystyle\int_{1}^{t}f(x)\,dx\) cuando \(t\to\infty\); (2) la monotonía de la integral: si \(g(x)\le h(x)\) en \([a,b]\), entonces \(\displaystyle\int_{a}^{b}g\le\int_{a}^{b}h\); y que la integral de una constante \(c\) en un intervalo de largo \(1\) vale \(c\cdot 1=c\); (3) la aditividad: \(\displaystyle\int_{a}^{b}f+\int_{b}^{c}f=\int_{a}^{c}f\); (4) que una sucesión creciente y acotada por arriba tiene límite real, que ese límite no pasa de la cota y que ningún término lo supera (hoja futura «Sucesiones monótonas acotadas»); y lo mismo para una función creciente y acotada de \(t\), cuando \(t\to\infty\); (5) que una sucesión que supera cualquier número no tiene límite real; (6) que las desigualdades \(\le\) se conservan al pasar al límite; (7) la regla de Barrow: si \(G^{\prime}=f\) en \([a,b]\), entonces \(\displaystyle\int_{a}^{b}f(x)\,dx=G(b)-G(a)\); las primitivas \(\displaystyle\int x^{r}\,dx=\dfrac{x^{\,r+1}}{r+1}\) (con \(r\neq -1\)), \(\displaystyle\int\dfrac{dx}{x}=\ln x\) (con \(x&gt;0\)), \(\displaystyle\int\dfrac{dx}{1+x^{2}}=\arctan x\), \(\displaystyle\int e^{u}\,du=e^{u}\), \(\displaystyle\int\cos u\,du=\operatorname{sen}u\); las reglas de derivación (producto y cadena), la regla de sustitución, y que una función con derivada negativa en un intervalo es decreciente en él; (8) los límites cuando \(t\to\infty\): \(\dfrac{1}{t^{c}}\to 0\) y \(t^{c}\) es creciente y supera cualquier número (con \(c&gt;0\); en particular \(\sqrt{t}=t^{1/2}\)); \(\ln t\) es creciente y supera cualquier número; \(\arctan t\to\dfrac{\pi}{2}\); \(e^{-t^{2}}\to 0\); y los valores \(\ln 1=0\), \(\arctan 1=\dfrac{\pi}{4}\), \(\operatorname{sen}(m\pi)=0\) para \(m\) entero; (9) la identidad \(\operatorname{sen}^{2}\theta=\dfrac{1-\cos 2\theta}{2}\) y las aproximaciones \(\ln 5\approx 1{,}609\), \(\ln 9\approx 2{,}197\), \(\ln 10\approx 2{,}303\), \(\pi\approx 3{,}1416\), \(e\approx 2{,}718\).</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso</h3>
+    <p>Se escribe \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}\) (suma parcial) e \(I(t)=\displaystyle\int_{1}^{t}f(x)\,dx\).</p>
+    <p><b>Primero: la desigualdad de los rectángulos.</b></p>
+    <ol class="steps">
+      <li>Sea \(k\) un natural y \(x\) un número con \(k\le x\le k+1\). Como \(f\) es decreciente: \(f(k+1)\le f(x)\le f(k)\).</li>
+      <li>Se reemplaza \(f(k+1)=a_{k+1}\) y \(f(k)=a_{k}\): \(a_{k+1}\le f(x)\le a_{k}\) en todo el intervalo \([k,\ k+1]\).</li>
+      <li>Monotonía de la integral en \([k,\ k+1]\), que tiene largo \(1\): \(a_{k+1}\cdot 1\le\displaystyle\int_{k}^{k+1}f(x)\,dx\le a_{k}\cdot 1\). Son las áreas de dos rectángulos de base \(1\): uno queda bajo la curva y el otro la cubre.</li>
+      <li>Se suman estas desigualdades con \(k=1,\ 2,\ \ldots,\ n-1\). Por la aditividad, las integrales se juntan en una: \(\displaystyle\int_{1}^{2}f+\int_{2}^{3}f+\cdots+\int_{n-1}^{n}f=\int_{1}^{n}f\).</li>
+      <li>Queda \(a_{2}+a_{3}+\cdots+a_{n}\ \le\ \displaystyle\int_{1}^{n}f(x)\,dx\ \le\ a_{1}+a_{2}+\cdots+a_{n-1}\).</li>
+      <li>Con sumas parciales: \(S_{n}-a_{1}\ \le\ I(n)\ \le\ S_{n-1}\), para todo natural \(n\ge 2\).</li>
+      <li>Además, \(I(t)\) es creciente: si \(1\le s&lt;t\), por la aditividad \(I(t)-I(s)=\displaystyle\int_{s}^{t}f(x)\,dx\), y esa integral es mayor o igual que \(0\) porque \(f\) es positiva (monotonía de la integral, comparando con la constante \(0\)).</li>
+    </ol>
+    <p><b>Si la integral converge, la serie converge.</b></p>
+    <ol class="steps">
+      <li>Sea \(I=\displaystyle\lim_{t\to\infty}I(t)\). Como \(I(t)\) es creciente, ningún valor supera al límite: \(I(n)\le I\).</li>
+      <li>De \(S_{n}-a_{1}\le I(n)\) se suma \(a_{1}\) a cada lado: \(S_{n}\le a_{1}+I(n)\le a_{1}+I\).</li>
+      <li>Las sumas parciales crecen (se suman términos positivos) y están acotadas por \(a_{1}+I\): tienen límite real. La serie converge.</li>
+    </ol>
+    <p><b>Si la serie converge, la integral converge.</b></p>
+    <ol class="steps">
+      <li>Sea \(S\) la suma de la serie. Las sumas parciales crecen, así que ninguna supera al límite: \(S_{n-1}\le S\).</li>
+      <li>Dado \(t\ge 1\), se elige un natural \(n\ge 2\) con \(n\ge t\). Como \(I\) es creciente: \(I(t)\le I(n)\le S_{n-1}\le S\).</li>
+      <li>\(I(t)\) es creciente y está acotada por \(S\): tiene límite real cuando \(t\to\infty\). La integral impropia converge.</li>
+    </ol>
+    <p>Las dos partes juntas son el «si y solo si». En particular, si la integral diverge, la serie no puede converger: diverge.</p>
+    <p><b>La cota de la suma.</b> Cuando convergen: de \(S_{n}\le a_{1}+I\), pasando al límite, \(S\le a_{1}+I\); y de \(I(n)\le S_{n-1}\le S\), pasando al límite, \(I\le S\). Juntas: \(I\le S\le a_{1}+I\). La suma está entre la integral y la integral más el primer término; en general no coincide con ninguna de las dos.</p>
+  </div>
+</section>
+
+<section>
+  <h2>El otro caso: la serie armónica</h2>
+  <p>La serie armónica \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}=1+\dfrac{1}{2}+\dfrac{1}{3}+\dfrac{1}{4}+\cdots\) comparada con el área bajo \(y=\dfrac{1}{x}\), en cinco pasos. Ahora las columnas se dibujan corridas un lugar a la derecha, para que queden <b>sobre</b> la curva: así la suma parcial es mayor que el área.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero las cuatro columnas azules (paso 1):</b> la columna del término \(a_{k}\) va de \(x=k\) a \(x=k+1\) y su alto es \(a_{k}=\dfrac{1}{k}\), escrito debajo. Juntas son \(S_{4}\). Arriba queda la pregunta: ¿converge la serie?</li>
+    <li><b>Paso 2:</b> aparece la curva burdeo \(y=\dfrac{1}{x}\). Pasa por la esquina superior izquierda de cada columna (los puntos burdeos) y después baja: queda bajo el techo de cada columna.</li>
+    <li><b>Paso 3:</b> se pinta de verde el área bajo la curva entre \(1\) y \(5\). Vale \(\displaystyle\int_{1}^{5}\dfrac{dx}{x}=\ln 5\), aproximadamente \(1{,}61\), y queda dentro de las columnas.</li>
+    <li><b>Paso 4:</b> se pinta naranja lo que las columnas tienen por encima de la curva. Por eso \(S_{4}=\dfrac{25}{12}\approx 2{,}08\) es mayor que el área verde.</li>
+    <li><b>Paso 5, registro y cuenta de abajo:</b> con \(n\) columnas, \(S_{n}\ge\ln(n+1)\). En la cuenta de abajo está la suma de fracciones de \(S_{4}\), la integral y la resta. Conclusión: \(\ln(n+1)\) supera cualquier número, las sumas parciales también, y la serie diverge.</li>
+  </ol>
+  <div class="stage" data-scene="int-arm"></div>
+  <ul class="keys">
+    <li><b>Columnas azules:</b> los términos. Ancho \(1\), alto \(\dfrac{1}{n}\); la columna de \(a_{n}\) parte en \(x=n\).</li>
+    <li><b>Curva burdeo:</b> \(y=\dfrac{1}{x}\), desde \(x=1\). Los puntos burdeos son las esquinas por donde pasa: \(\left(n,\ \dfrac{1}{n}\right)\).</li>
+    <li><b>Área verde:</b> lo que hay bajo la curva, entre \(1\) y \(5\) (en el paso 5 sigue hacia la derecha).</li>
+    <li><b>Partes naranjas:</b> lo que cada columna tiene por encima de la curva; es lo que la suma parcial le lleva de ventaja al área.</li>
+  </ul>
+  <p>Las dos animaciones usan la misma desigualdad, \(a_{k+1}\le\displaystyle\int_{k}^{k+1}f(x)\,dx\le a_{k}\): en la primera, la columna de \(a_{k+1}\) puesta sobre \([k,\ k+1]\) queda bajo la curva; en la segunda, la columna de \(a_{k}\) puesta sobre el mismo intervalo la cubre.</p>
+
+  <div class="card k3">
+    <h3>Las series \(p\), con el criterio de la integral</h3>
+    <p>En la hoja «Series harmónicas y series-p» se demostró, agrupando términos en bloques, que \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{p}}\) converge si \(p&gt;1\) y diverge si \(p\le 1\). Con el criterio de la integral sale de nuevo.</p>
+    <ol class="steps">
+      <li><b>Si \(p\le 0\):</b> \(\dfrac{1}{n^{p}}=n^{-p}\) con \(-p\ge 0\), así que cada término es mayor o igual que \(1\). Los términos no tienden a \(0\) y la serie diverge (hoja «Criterio del enésimo término»). Aquí no se usa la integral: \(f(x)=x^{-p}\) no es decreciente.</li>
+      <li><b>Si \(p&gt;0\), hipótesis:</b> \(f(x)=\dfrac{1}{x^{p}}\) es continua y positiva en \([1,\infty)\). Es decreciente: si \(1\le x&lt;y\), entonces \(x^{p}&lt;y^{p}\) (potencia de exponente positivo; se usa sin demostrar), y al invertir números positivos la desigualdad se da vuelta: \(\dfrac{1}{x^{p}}&gt;\dfrac{1}{y^{p}}\).</li>
+      <li><b>Si \(p=1\):</b> \(\displaystyle\int_{1}^{t}\dfrac{dx}{x}=\ln t-\ln 1=\ln t-0=\ln t\), que supera cualquier número. La integral diverge: la serie diverge.</li>
+      <li><b>Si \(p&gt;0\) y \(p\neq 1\), la primitiva:</b> \(\dfrac{1}{x^{p}}=x^{-p}\); con \(r=-p\), \(\displaystyle\int x^{-p}\,dx=\dfrac{x^{\,1-p}}{1-p}\).</li>
+      <li><b>Regla de Barrow:</b> \(\displaystyle\int_{1}^{t}\dfrac{dx}{x^{p}}=\dfrac{t^{\,1-p}}{1-p}-\dfrac{1^{\,1-p}}{1-p}=\dfrac{t^{\,1-p}-1}{1-p}\).</li>
+      <li><b>Si \(p&gt;1\):</b> \(t^{\,1-p}=\dfrac{1}{t^{\,p-1}}\) con \(p-1&gt;0\): tiende a \(0\). La integral vale \(\dfrac{0-1}{1-p}=\dfrac{-1}{1-p}=\dfrac{1}{p-1}\). Converge: la serie converge.</li>
+      <li><b>Si \(0&lt;p&lt;1\):</b> \(1-p&gt;0\), y \(t^{\,1-p}\) supera cualquier número; como \(1-p\) es positivo, \(\dfrac{t^{\,1-p}-1}{1-p}\) también. La integral diverge: la serie diverge.</li>
+    </ol>
+    <p>Con \(p=2\): la integral vale \(\dfrac{1}{2-1}=\dfrac{1}{1}=1\) y la suma queda entre \(1\) y \(a_{1}+1=1+1=2\). El valor exacto, \(\dfrac{\pi^{2}}{6}\approx 1{,}645\) (resultado de Euler, que aquí se enuncia sin demostrar), no es \(1\): la integral no es la suma.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{3}}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se elige la función: \(f(x)=\dfrac{1}{x^{3}}\), con \(f(n)=\dfrac{1}{n^{3}}=a_{n}\).</li>
+    <li><b>Continua</b> en \([1,\infty)\): es un cociente de funciones continuas y el denominador, \(x^{3}\), no se anula si \(x\ge 1\).</li>
+    <li><b>Positiva:</b> si \(x\ge 1\), entonces \(x^{3}&gt;0\) y \(\dfrac{1}{x^{3}}&gt;0\).</li>
+    <li><b>Decreciente:</b> si \(1\le x&lt;y\), entonces \(x^{3}&lt;y^{3}\); al invertir números positivos la desigualdad se da vuelta: \(\dfrac{1}{x^{3}}&gt;\dfrac{1}{y^{3}}\).</li>
+    <li>Primitiva: \(\dfrac{1}{x^{3}}=x^{-3}\). Con \(r=-3\): \(r+1=-3+1=-2\), y \(\displaystyle\int x^{-3}\,dx=\dfrac{x^{-2}}{-2}=-\dfrac{1}{2x^{2}}\).</li>
+    <li>Regla de Barrow: \(\displaystyle\int_{1}^{t}\dfrac{dx}{x^{3}}=\left(-\dfrac{1}{2t^{2}}\right)-\left(-\dfrac{1}{2\cdot 1^{2}}\right)=-\dfrac{1}{2t^{2}}+\dfrac{1}{2}=\dfrac{1}{2}-\dfrac{1}{2t^{2}}\).</li>
+    <li>Límite cuando \(t\to\infty\): \(\dfrac{1}{2t^{2}}=\dfrac{1}{2}\cdot\dfrac{1}{t^{2}}\) tiende a \(\dfrac{1}{2}\cdot 0=0\). Entonces \(\displaystyle\int_{1}^{\infty}\dfrac{dx}{x^{3}}=\dfrac{1}{2}-0=\dfrac{1}{2}\).</li>
+    <li>La integral converge: por el criterio, la serie converge.</li>
+    <li>Cota de la suma: \(\dfrac{1}{2}\le S\le a_{1}+\dfrac{1}{2}\). Con \(a_{1}=\dfrac{1}{1^{3}}=1\): \(1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\). La suma está entre \(0{,}5\) y \(1{,}5\); no es \(\dfrac{1}{2}\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n^{2}+1}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se elige la función: \(f(x)=\dfrac{1}{1+x^{2}}\), con \(f(n)=\dfrac{1}{1+n^{2}}=a_{n}\).</li>
+    <li><b>Continua:</b> es un cociente de funciones continuas y el denominador cumple \(1+x^{2}\ge 1\): no se anula.</li>
+    <li><b>Positiva:</b> \(1+x^{2}&gt;0\), entonces \(\dfrac{1}{1+x^{2}}&gt;0\).</li>
+    <li><b>Decreciente</b> en \([1,\infty)\): si \(1\le x&lt;y\), entonces \(x^{2}&lt;y^{2}\); se suma \(1\) a cada lado: \(1+x^{2}&lt;1+y^{2}\); al invertir números positivos: \(\dfrac{1}{1+x^{2}}&gt;\dfrac{1}{1+y^{2}}\).</li>
+    <li>Primitiva: \(\displaystyle\int\dfrac{dx}{1+x^{2}}=\arctan x\).</li>
+    <li>Regla de Barrow: \(\displaystyle\int_{1}^{t}\dfrac{dx}{1+x^{2}}=\arctan t-\arctan 1\). Se reemplaza \(\arctan 1=\dfrac{\pi}{4}\): queda \(\arctan t-\dfrac{\pi}{4}\).</li>
+    <li>Límite cuando \(t\to\infty\): \(\arctan t\to\dfrac{\pi}{2}\). Entonces \(\displaystyle\int_{1}^{\infty}\dfrac{dx}{1+x^{2}}=\dfrac{\pi}{2}-\dfrac{\pi}{4}\).</li>
+    <li>Se resta con denominador común \(4\): \(\dfrac{\pi}{2}-\dfrac{\pi}{4}=\dfrac{2\pi}{4}-\dfrac{\pi}{4}=\dfrac{\pi}{4}\approx 0{,}785\).</li>
+    <li>La integral converge: la serie converge.</li>
+    <li>Cota de la suma: \(a_{1}=\dfrac{1}{1^{2}+1}=\dfrac{1}{2}\). Entonces \(\dfrac{\pi}{4}\le S\le\dfrac{1}{2}+\dfrac{\pi}{4}\approx 0{,}5+0{,}785=1{,}285\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: una serie que empieza en \(n=2\). \(\displaystyle\sum_{n=2}^{\infty}\dfrac{1}{n\ln n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>La serie empieza en \(n=2\) porque \(\ln 1=0\) y no se divide por cero. Se elige \(f(x)=\dfrac{1}{x\ln x}\) en \([2,\infty)\) y se usa el criterio desde \(N=2\).</li>
+    <li><b>Positiva:</b> \(\ln\) es creciente y \(\ln 1=0\); si \(x\ge 2\), entonces \(\ln x\ge\ln 2&gt;0\). Como \(x&gt;0\) y \(\ln x&gt;0\), el producto \(x\ln x\) es positivo y \(f(x)&gt;0\).</li>
+    <li><b>Continua</b> en \([2,\infty)\): \(x\) y \(\ln x\) son continuas, su producto también, y no se anula ahí.</li>
+    <li><b>Decreciente:</b> si \(2\le x&lt;y\), entonces \(\ln x&lt;\ln y\) (\(\ln\) es creciente). Se multiplican dos desigualdades entre números positivos: \(x\ln x&lt;y\ln y\). Al invertir: \(\dfrac{1}{x\ln x}&gt;\dfrac{1}{y\ln y}\).</li>
+    <li>Sustitución: \(u=\ln x\), con \(du=\dfrac{dx}{x}\). Límites: si \(x=2\), \(u=\ln 2\); si \(x=t\), \(u=\ln t\).</li>
+    <li>Se reemplaza: \(\displaystyle\int_{2}^{t}\dfrac{dx}{x\ln x}=\int_{2}^{t}\dfrac{1}{\ln x}\cdot\dfrac{dx}{x}=\int_{\ln 2}^{\ln t}\dfrac{du}{u}\).</li>
+    <li>Primitiva de \(\dfrac{1}{u}\) (con \(u&gt;0\)): \(\ln u\). Regla de Barrow: \(\displaystyle\int_{\ln 2}^{\ln t}\dfrac{du}{u}=\ln(\ln t)-\ln(\ln 2)\).</li>
+    <li>Comprobación, derivando con la regla de la cadena: \(\big(\ln(\ln x)\big)^{\prime}=\dfrac{1}{\ln x}\cdot\dfrac{1}{x}=\dfrac{1}{x\ln x}\). ✓</li>
+    <li>Cuando \(t\to\infty\): \(\ln t\) supera cualquier número; entonces \(\ln(\ln t)\) también, y al restarle el número fijo \(\ln(\ln 2)\) sigue superando cualquier número. La integral diverge.</li>
+    <li>Por el criterio, la serie diverge. Lo hace lentísimo: desde \(n=3\), donde \(\ln n&gt;1\), sus términos son más chicos que los de la armónica.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: sin las hipótesis, el criterio no vale. \(f(x)=\operatorname{sen}^{2}(\pi x)\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Los términos: \(a_{n}=f(n)=\operatorname{sen}^{2}(\pi n)\). Como \(\operatorname{sen}(n\pi)=0\) para todo entero \(n\): \(a_{n}=0^{2}=0\).</li>
+    <li>La serie es \(0+0+0+\cdots\): todas las sumas parciales valen \(0\). La serie converge y su suma es \(0\).</li>
+    <li>Ahora la integral en un intervalo \([k,\ k+1]\), con \(k\) natural. Identidad: \(\operatorname{sen}^{2}(\pi x)=\dfrac{1-\cos(2\pi x)}{2}=\dfrac{1}{2}-\dfrac{1}{2}\cos(2\pi x)\).</li>
+    <li>Primitiva: de \(\dfrac{1}{2}\) es \(\dfrac{x}{2}\); de \(\cos(2\pi x)\) es \(\dfrac{\operatorname{sen}(2\pi x)}{2\pi}\) (sustitución \(u=2\pi x\)). Entonces una primitiva de \(f\) es \(G(x)=\dfrac{x}{2}-\dfrac{\operatorname{sen}(2\pi x)}{4\pi}\).</li>
+    <li>Se evalúa: \(\operatorname{sen}\big(2\pi(k+1)\big)=0\) y \(\operatorname{sen}(2\pi k)=0\) (múltiplos enteros de \(\pi\)). Entonces \(G(k+1)=\dfrac{k+1}{2}\) y \(G(k)=\dfrac{k}{2}\).</li>
+    <li>Regla de Barrow: \(\displaystyle\int_{k}^{k+1}\operatorname{sen}^{2}(\pi x)\,dx=\dfrac{k+1}{2}-\dfrac{k}{2}=\dfrac{1}{2}\).</li>
+    <li>Se suman los intervalos de \(1\) a \(n\), que son \(n-1\): \(\displaystyle\int_{1}^{n}\operatorname{sen}^{2}(\pi x)\,dx=(n-1)\cdot\dfrac{1}{2}=\dfrac{n-1}{2}\), que supera cualquier número. La integral impropia diverge.</li>
+    <li>La serie converge y la integral diverge: no hacen lo mismo. No contradice el criterio, porque \(f\) no cumple las hipótesis: no es decreciente (\(f(1)=0\) y \(f\!\left(\tfrac{3}{2}\right)=\operatorname{sen}^{2}\!\left(\tfrac{3\pi}{2}\right)=(-1)^{2}=1\), mayor) ni positiva (vale \(0\) en cada entero).</li>
+    <li>Conclusión: antes de usar el criterio hay que comprobar las tres hipótesis. Que \(a_{n}=f(n)\) no basta.</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que la suma de la serie es el valor de la integral: la integral solo dice si converge y da una cota (\(\sum\frac{1}{n^{2}}\) no vale \(1\), vale \(\frac{\pi^{2}}{6}\)). Usar el criterio sin comprobar que \(f\) es continua, positiva y decreciente (ejemplo 4). Partir la integral en \(1\) cuando la función no está definida o no es decreciente ahí: se parte desde el \(N\) en que las hipótesis ya se cumplen (ejemplo 3). Olvidar que la integral impropia es un límite: primero se integra hasta \(t\) y después se ve qué pasa cuando \(t\to\infty\). Y confundir los dos dibujos: columnas bajo la curva sirven para acotar por arriba (convergencia); columnas sobre la curva, para acotar por abajo (divergencia).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>Con el criterio de la integral, decide si cada serie converge o diverge; si converge, acota su suma: (a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n\sqrt{n}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{\sqrt{n}}\).</p>
+    <details><summary>Pista</summary><div><p>Escribe cada función como potencia: \(\dfrac{1}{x\sqrt{x}}=x^{-3/2}\) y \(\dfrac{1}{\sqrt{x}}=x^{-1/2}\). Usa \(\displaystyle\int x^{r}\,dx=\dfrac{x^{\,r+1}}{r+1}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Función: \(f(x)=\dfrac{1}{x\sqrt{x}}\). Como \(x\sqrt{x}=x^{1}\cdot x^{1/2}=x^{3/2}\) (se suman los exponentes: \(1+\dfrac{1}{2}=\dfrac{3}{2}\)), \(f(x)=x^{-3/2}\).</li>
+        <li>Hipótesis en \([1,\infty)\). Continua: cociente de continuas con denominador distinto de cero. Positiva: \(x\sqrt{x}&gt;0\). Decreciente: si \(1\le x&lt;y\), entonces \(\sqrt{x}&lt;\sqrt{y}\); se multiplican dos desigualdades entre positivos: \(x\sqrt{x}&lt;y\sqrt{y}\); al invertir, \(\dfrac{1}{x\sqrt{x}}&gt;\dfrac{1}{y\sqrt{y}}\).</li>
+        <li>Primitiva, con \(r=-\dfrac{3}{2}\): \(r+1=-\dfrac{3}{2}+\dfrac{2}{2}=-\dfrac{1}{2}\). Entonces \(\displaystyle\int x^{-3/2}\,dx=\dfrac{x^{-1/2}}{-\frac{1}{2}}=-2\,x^{-1/2}=-\dfrac{2}{\sqrt{x}}\).</li>
+        <li>Regla de Barrow: \(\displaystyle\int_{1}^{t}\dfrac{dx}{x\sqrt{x}}=\left(-\dfrac{2}{\sqrt{t}}\right)-\left(-\dfrac{2}{\sqrt{1}}\right)=-\dfrac{2}{\sqrt{t}}+2=2-\dfrac{2}{\sqrt{t}}\).</li>
+        <li>Límite cuando \(t\to\infty\): \(\dfrac{2}{\sqrt{t}}=2\cdot\dfrac{1}{t^{1/2}}\) tiende a \(2\cdot 0=0\). La integral vale \(2-0=2\).</li>
+        <li>La integral converge: la serie converge. Cota: \(a_{1}=\dfrac{1}{1\cdot\sqrt{1}}=1\), entonces \(2\le S\le 1+2=3\).</li>
+        <li>(b) Función: \(f(x)=\dfrac{1}{\sqrt{x}}=x^{-1/2}\). Continua y positiva en \([1,\infty)\) (\(\sqrt{x}&gt;0\)). Decreciente: si \(1\le x&lt;y\), \(\sqrt{x}&lt;\sqrt{y}\); al invertir, \(\dfrac{1}{\sqrt{x}}&gt;\dfrac{1}{\sqrt{y}}\).</li>
+        <li>Primitiva, con \(r=-\dfrac{1}{2}\): \(r+1=-\dfrac{1}{2}+\dfrac{2}{2}=\dfrac{1}{2}\). Entonces \(\displaystyle\int x^{-1/2}\,dx=\dfrac{x^{1/2}}{\frac{1}{2}}=2\sqrt{x}\).</li>
+        <li>Regla de Barrow: \(\displaystyle\int_{1}^{t}\dfrac{dx}{\sqrt{x}}=2\sqrt{t}-2\sqrt{1}=2\sqrt{t}-2\).</li>
+        <li>Cuando \(t\to\infty\), \(\sqrt{t}=t^{1/2}\) supera cualquier número, y \(2\sqrt{t}-2\) también. La integral diverge: la serie diverge.</li>
+        <li>Coincide con las series \(p\): en (a), \(p=\dfrac{3}{2}&gt;1\); en (b), \(p=\dfrac{1}{2}\le 1\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Estudia la serie \(\displaystyle\sum_{n=1}^{\infty}n\,e^{-n^{2}}\) con el criterio de la integral. Comprueba las tres hipótesis (para «decreciente», usa la derivada) y, si converge, acota su suma.</p>
+    <details><summary>Pista</summary><div><p>Deriva \(f(x)=x\,e^{-x^{2}}\) con la regla del producto. Para integrar, sustituye \(u=-x^{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Función: \(f(x)=x\,e^{-x^{2}}\), con \(f(n)=n\,e^{-n^{2}}=a_{n}\).</li>
+        <li><b>Continua:</b> producto de funciones continuas. <b>Positiva</b> en \([1,\infty)\): \(x&gt;0\) y \(e^{-x^{2}}&gt;0\).</li>
+        <li>Derivada, regla del producto: \(f^{\prime}(x)=1\cdot e^{-x^{2}}+x\cdot\big(e^{-x^{2}}\big)^{\prime}\). Regla de la cadena: \(\big(e^{-x^{2}}\big)^{\prime}=e^{-x^{2}}\cdot(-2x)\).</li>
+        <li>Se reemplaza y se multiplica: \(f^{\prime}(x)=e^{-x^{2}}-2x^{2}e^{-x^{2}}\). Factor común \(e^{-x^{2}}\): \(f^{\prime}(x)=e^{-x^{2}}\left(1-2x^{2}\right)\).</li>
+        <li><b>Decreciente</b> en \([1,\infty)\): si \(x\ge 1\), entonces \(2x^{2}\ge 2\) y \(1-2x^{2}\le 1-2=-1&lt;0\); como \(e^{-x^{2}}&gt;0\), el producto es negativo: \(f^{\prime}(x)&lt;0\).</li>
+        <li>Sustitución: \(u=-x^{2}\), \(du=-2x\,dx\), es decir, \(x\,dx=-\dfrac{1}{2}\,du\). Entonces \(\displaystyle\int x\,e^{-x^{2}}\,dx=-\dfrac{1}{2}\int e^{u}\,du=-\dfrac{1}{2}e^{u}=-\dfrac{1}{2}e^{-x^{2}}\).</li>
+        <li>Regla de Barrow: \(\displaystyle\int_{1}^{t}x\,e^{-x^{2}}\,dx=\left(-\dfrac{1}{2}e^{-t^{2}}\right)-\left(-\dfrac{1}{2}e^{-1}\right)=\dfrac{1}{2}e^{-1}-\dfrac{1}{2}e^{-t^{2}}\).</li>
+        <li>Límite cuando \(t\to\infty\): \(e^{-t^{2}}\to 0\). La integral vale \(\dfrac{1}{2}e^{-1}-\dfrac{1}{2}\cdot 0=\dfrac{1}{2e}\).</li>
+        <li>La integral converge: la serie converge.</li>
+        <li>Cota: \(a_{1}=1\cdot e^{-1}=\dfrac{1}{e}\). Entonces \(\dfrac{1}{2e}\le S\le\dfrac{1}{e}+\dfrac{1}{2e}=\dfrac{2}{2e}+\dfrac{1}{2e}=\dfrac{3}{2e}\).</li>
+        <li>En decimales, con \(e\approx 2{,}718\): \(2e\approx 2\cdot 2{,}718=5{,}436\); \(\dfrac{1}{2e}\approx 1:5{,}436\approx 0{,}184\) y \(\dfrac{3}{2e}\approx 3:5{,}436\approx 0{,}552\). La suma está entre \(0{,}184\) y \(0{,}552\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Josefa sube al sitio de su liceo un video del taller de música. Según el modelo que arma con su profesor, el día \(n\) el video recibe \(\dfrac{3600}{n^{2}}\) visitas (\(3600\) el primer día, \(900\) el segundo, y así). (a) ¿Cuántas visitas acumula en \(5\) días? (b) Si el modelo se mantiene, ¿puede llegar alguna vez a \(8000\) visitas? (c) Su compañero Benjamín propone otro modelo, más optimista: \(\dfrac{3600}{n}\) visitas el día \(n\). Con ese modelo, ¿se llega a \(8000\)? ¿Cuántos días lo aseguran?</p>
+    <details><summary>Pista</summary><div><p>En (b), usa la cota de la primera animación: \(S_{n}\le 1+\left(1-\dfrac{1}{n}\right)\). En (c), la de la segunda: \(S_{n}\ge\ln(n+1)\), con \(\ln 9\approx 2{,}197\) y \(\ln 10\approx 2{,}303\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Visitas de cada día: \(\dfrac{3600}{1^{2}}=3600\); \(\dfrac{3600}{2^{2}}=\dfrac{3600}{4}=900\); \(\dfrac{3600}{3^{2}}=\dfrac{3600}{9}=400\); \(\dfrac{3600}{4^{2}}=\dfrac{3600}{16}=225\); \(\dfrac{3600}{5^{2}}=\dfrac{3600}{25}=144\).</li>
+        <li>Se suman: \(3600+900=4500\); \(4500+400=4900\); \(4900+225=5125\); \(5125+144=5269\). En \(5\) días acumula \(5269\) visitas.</li>
+        <li>(b) Lo acumulado en \(n\) días, sacando el factor común \(3600\): \(\displaystyle\sum_{k=1}^{n}\dfrac{3600}{k^{2}}=3600\sum_{k=1}^{n}\dfrac{1}{k^{2}}=3600\,S_{n}\), con \(S_{n}\) la suma parcial de \(\displaystyle\sum\dfrac{1}{n^{2}}\).</li>
+        <li>Por la primera animación: \(S_{n}\le 1+\left(1-\dfrac{1}{n}\right)=2-\dfrac{1}{n}&lt;2\) para todo \(n\).</li>
+        <li>Se multiplica por \(3600\), que es positivo: \(3600\,S_{n}&lt;3600\cdot 2=7200\).</li>
+        <li>Se compara: \(7200&lt;8000\). Con este modelo el video nunca llega a \(8000\) visitas, por muchos días que pasen: lo acumulado crece cada día, pero no pasa de \(7200\).</li>
+        <li>(c) Lo acumulado en \(n\) días es \(\displaystyle\sum_{k=1}^{n}\dfrac{3600}{k}=3600\,S_{n}\), ahora con \(S_{n}\) la suma parcial de la armónica. Por la segunda animación: \(S_{n}\ge\ln(n+1)\), que supera cualquier número. Sí se llega a \(8000\), y a cualquier otra cantidad.</li>
+        <li>Basta pedir \(3600\,\ln(n+1)\ge 8000\). Se divide por \(3600\) a cada lado (es positivo): \(\ln(n+1)\ge\dfrac{8000}{3600}=\dfrac{20}{9}\approx 2{,}222\).</li>
+        <li>Se prueba: \(\ln 9\approx 2{,}197\), que no alcanza; \(\ln 10\approx 2{,}303\ge 2{,}222\). Entonces \(n+1=10\), es decir, \(n=10-1=9\): con \(9\) días es seguro.</li>
+        <li>La cota asegura, pero no es la cantidad mínima. Sumando día a día: en \(4\) días van \(3600\cdot\dfrac{25}{12}=\dfrac{90\,000}{12}=7500\) visitas; el día \(5\) llegan \(\dfrac{3600}{5}=720\) más: \(7500+720=8220\). Se alcanza el día \(5\).</li>
+        <li>Los dos modelos se parecen los primeros días, pero uno tiene tope y el otro no: es la diferencia entre una serie convergente y una divergente.</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H15 · v001 · Pendiente de APR</span>
+</footer>
+</article>

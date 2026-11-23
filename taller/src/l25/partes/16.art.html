@@ -1,0 +1,267 @@
+<!--file:H16_serie_alternante.html-->
+<!--title:Serie alternante-->
+<!--id:ss-alternante-->
+<!--tab:H16 Serie alternante-->
+<article class="sheet" id="ss-alternante" data-hoja="L25 H16">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Serie alternante</b></li>
+    </ol>
+    <h1>Serie alternante</h1>
+    <p class="lede">Una serie es alternante cuando sus términos cambian de signo en cada paso: uno se suma, el siguiente se resta, el siguiente se suma, y así. Se escribe con un factor de signo y una parte positiva \(b_{n}\). Sus sumas parciales suben y bajan por turnos: avanzan en zigzag. \[\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}=b_{1}-b_{2}+b_{3}-b_{4}+\cdots\qquad\text{con }b_{n}&gt;0\text{ para todo }n\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}-\cdots\), término a término, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes:</b> en horizontal va \(n\), la cantidad de términos sumados; en vertical, la suma parcial \(S_{n}\). Arriba queda la pregunta: ¿cuánto suma la serie completa?</li>
+    <li><b>Cada paso agrega un término, como un salto:</b> una flecha azul hacia arriba si el término se suma (\(+1\), \(+\dfrac{1}{4}\), \(+\dfrac{1}{16}\)) y una flecha naranja hacia abajo si se resta (\(-\dfrac{1}{2}\), \(-\dfrac{1}{8}\)). Cada flecha parte a la altura donde terminó la anterior (la guía punteada del mismo color la trae) y lleva escrito su término.</li>
+    <li><b>El punto negro al final de cada flecha es la suma parcial,</b> con su valor escrito: \(1,\ \dfrac{1}{2},\ \dfrac{3}{4},\ \dfrac{5}{8},\ \dfrac{11}{16}\). Una punteada gris lleva cada punto a su valor en el eje \(S_{n}\). Fíjate en que cada salto mide la mitad del anterior: el zigzag se va cerrando.</li>
+    <li><b>Al final del paso 5</b> aparece la recta burdeo, a la altura \(\dfrac{2}{3}\): es la suma de la serie. Los trazos burdeo marcan lo que separa cada punto de la recta. Los puntos quedan, por turnos, arriba y abajo de ella, cada vez más cerca.</li>
+    <li><b>Registro y cuenta de abajo:</b> cada suma parcial queda escrita con su suma o resta de fracciones (denominador común, numeradores, resultado). Al final se calcula la suma con la fórmula de la serie geométrica, \(\dfrac{1}{1+\frac{1}{2}}=\dfrac{2}{3}\), y la distancia de cada suma parcial a \(\dfrac{2}{3}\): \(\dfrac{1}{3},\ \dfrac{1}{6},\ \dfrac{1}{12},\ \dfrac{1}{24},\ \dfrac{1}{48}\).</li>
+  </ol>
+  <div class="stage" data-scene="alt-idea"></div>
+  <ul class="keys">
+    <li><b>Flechas azules:</b> los términos que se suman. La suma parcial sube.</li>
+    <li><b>Flechas naranjas:</b> los términos que se restan. La suma parcial baja.</li>
+    <li><b>Guías punteadas azules y naranjas:</b> llevan la altura de cada punto hasta donde parte la flecha siguiente.</li>
+    <li><b>Puntos negros:</b> las sumas parciales \(S_{1},\ \ldots,\ S_{5}\), con su valor. Las punteadas grises llevan cada una a su valor en el eje \(S_{n}\).</li>
+    <li><b>Recta burdeo:</b> la suma de la serie, \(\dfrac{2}{3}\). <b>Trazos burdeo:</b> lo que separa cada suma parcial de \(\dfrac{2}{3}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie alternante:</b> una serie de la forma \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}=b_{1}-b_{2}+b_{3}-b_{4}+\cdots\) o de la forma \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\,b_{n}=-b_{1}+b_{2}-b_{3}+b_{4}-\cdots\), con \(b_{n}&gt;0\) para todo \(n\). Los signos se alternan término a término.</li>
+      <li><b>De dónde sale el signo, con \(n\) par.</b> Se parte de \((-1)^{2}=(-1)\cdot(-1)=1\). Si \(n\) es par, \(n=2m\); por la potencia de una potencia, \((-1)^{2m}=\left((-1)^{2}\right)^{m}=1^{m}=1\).</li>
+      <li><b>Con \(n\) impar.</b> Si \(n\) es impar, \(n=2m+1\); por el producto de potencias de igual base, \((-1)^{2m+1}=(-1)^{2m}\cdot(-1)^{1}=1\cdot(-1)=-1\).</li>
+      <li><b>Resumen:</b> \((-1)^{n}\) vale \(1\) si \(n\) es par y \(-1\) si \(n\) es impar.</li>
+      <li><b>El factor \((-1)^{n+1}\):</b> por el producto de potencias de igual base, \((-1)^{n+1}=(-1)^{n}\cdot(-1)\): es el signo contrario al de \((-1)^{n}\). Vale \(1\) si \(n\) es impar y \(-1\) si \(n\) es par.</li>
+      <li><b>El factor \((-1)^{n-1}\) da el mismo signo que \((-1)^{n+1}\):</b> \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\cdot 1=(-1)^{n-1}\).</li>
+      <li><b>Otra forma de escribir el signo:</b> \(\cos(n\pi)=(-1)^{n}\) para todo entero \(n\) (se usa sin demostrar: ver el aviso de rigor).</li>
+      <li><b>Cómo reconocerla:</b> se escribe cada término como \(a_{n}=(\text{signo})\cdot b_{n}\), con \(b_{n}=|a_{n}|\). Es alternante si se cumplen las dos cosas: \(b_{n}&gt;0\) para todo \(n\), y el signo cambia en cada paso (de cada término al siguiente).</li>
+      <li><b>Qué no es alternante:</b> una serie con signos \(+,\ +,\ -,\ -,\ +,\ +,\ \ldots\) (el signo no cambia del primer término al segundo); una serie con algún término igual a \(0\) (ahí \(b_{n}\) no es positivo); una serie con todos sus términos positivos.</li>
+      <li><b>Un caso que engaña:</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{\operatorname{sen}(n)}{n^{2}}\) tiene términos positivos y negativos, pero no alterna término a término. Como \(0&lt;1&lt;2&lt;3&lt;\pi\), se cumple \(\operatorname{sen}1&gt;0\), \(\operatorname{sen}2&gt;0\) y \(\operatorname{sen}3&gt;0\); como \(\pi&lt;4&lt;2\pi\), \(\operatorname{sen}4&lt;0\). Los signos empiezan \(+,\ +,\ +,\ -\): no es una serie alternante.</li>
+    </ol>
+    <p>Esta hoja muestra qué es una serie alternante y cómo se mueven sus sumas parciales. Cuándo converge es otro asunto: la hoja «Criterio de Leibniz» da la condición. Aquí solo se afirma que una serie converge cuando se puede demostrar con lo ya visto.</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) las leyes de las potencias de exponente entero: producto de potencias de igual base, potencia de una potencia y potencia de un producto; (2) que \(\cos(n\pi)=(-1)^{n}\) para todo entero \(n\); (3) que el seno es positivo entre \(0\) y \(\pi\) y negativo entre \(\pi\) y \(2\pi\), y que \(3&lt;\pi&lt;4\); (4) de la hoja «Series geométricas infinitas», donde se demuestra: la suma parcial \(S_{n}=\dfrac{a\,(1-r^{\,n})}{1-r}\) si \(r\neq 1\), y que la serie geométrica converge a \(\dfrac{a}{1-r}\) si \(|r|&lt;1\); (5) de la hoja «Criterio del enésimo término», donde se demuestra: si \(\displaystyle\lim_{n\to\infty}a_{n}\) no existe, o existe y no es \(0\), la serie diverge; (6) que una sucesión que salta sin fin entre \(1\) y \(0\) no tiene límite, y que una sucesión no puede tener dos límites distintos; (7) en el ejemplo 4: que si \(\displaystyle\lim_{n\to\infty}a_{n}=0\), entonces \(\displaystyle\lim_{n\to\infty}|a_{n}|=0\); que \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\); y que el límite de una resta es la resta de los límites cuando existen. Las demostraciones de (6) y (7) corresponden a la hoja «Límite de una sucesión».</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: las sumas parciales van en zigzag</h3>
+    <p>Sea \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}\) con \(b_{n}&gt;0\), y \(S_{n}=b_{1}-b_{2}+b_{3}-\cdots+(-1)^{n+1}b_{n}\) su suma parcial. En todo lo que sigue, \(m\) es un entero con \(m\ge 0\), y se conviene \(S_{0}=0\) (la suma de ningún término).</p>
+    <p><b>Primera parte: una sube, la siguiente baja.</b></p>
+    <ol class="steps">
+      <li>El término de lugar \(2m+1\) (lugar impar) lleva el signo \((-1)^{(2m+1)+1}=(-1)^{2m+2}\). El exponente \(2m+2=2(m+1)\) es par: el signo es \(1\). El término es \(+\,b_{2m+1}\).</li>
+      <li>Cada suma parcial es la anterior más el término nuevo: \(S_{2m+1}=S_{2m}+b_{2m+1}\).</li>
+      <li>Como \(b_{2m+1}&gt;0\): \(S_{2m+1}&gt;S_{2m}\). Al agregar un término de lugar impar, la suma parcial <b>sube</b>.</li>
+      <li>El término de lugar \(2m+2\) (lugar par) lleva el signo \((-1)^{(2m+2)+1}=(-1)^{2m+3}\). El exponente \(2m+3=2(m+1)+1\) es impar: el signo es \(-1\). El término es \(-\,b_{2m+2}\).</li>
+      <li>Suma parcial: \(S_{2m+2}=S_{2m+1}-b_{2m+2}\).</li>
+      <li>Como \(b_{2m+2}&gt;0\): \(S_{2m+2}&lt;S_{2m+1}\). Al agregar un término de lugar par, la suma parcial <b>baja</b>.</li>
+      <li>Conclusión: las sumas parciales suben y bajan por turnos. Avanzan en zigzag.</li>
+    </ol>
+    <p><b>Segunda parte: si además \(b_{n}\) decrece</b> (es decir, \(b_{n+1}\le b_{n}\) para todo \(n\)), <b>el zigzag se cierra.</b></p>
+    <ol class="steps">
+      <li>Se parte del paso 5 de la primera parte: \(S_{2m+2}=S_{2m+1}-b_{2m+2}\).</li>
+      <li>Se reemplaza \(S_{2m+1}=S_{2m}+b_{2m+1}\) (paso 2): \(S_{2m+2}=S_{2m}+b_{2m+1}-b_{2m+2}\).</li>
+      <li>Se resta \(S_{2m}\) a cada lado: \(S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\).</li>
+      <li>Como \(b\) decrece, \(b_{2m+2}\le b_{2m+1}\); entonces \(b_{2m+1}-b_{2m+2}\ge 0\) y \(S_{2m+2}\ge S_{2m}\). Las sumas parciales de lugar par no bajan: \(S_{2}\le S_{4}\le S_{6}\le\cdots\)</li>
+      <li>Ahora las impares. Se parte de \(S_{2m+1}=S_{2m}+b_{2m+1}\) (paso 2 de la primera parte).</li>
+      <li>Para \(m\ge 1\), \(S_{2m}\) es la anterior, \(S_{2m-1}\), más el término de lugar par \(2m\), que es \(-\,b_{2m}\): \(S_{2m}=S_{2m-1}-b_{2m}\). Se reemplaza: \(S_{2m+1}=S_{2m-1}-b_{2m}+b_{2m+1}\).</li>
+      <li>Se resta \(S_{2m-1}\) a cada lado: \(S_{2m+1}-S_{2m-1}=-b_{2m}+b_{2m+1}\).</li>
+      <li>Como \(b\) decrece, \(b_{2m+1}\le b_{2m}\); entonces \(-b_{2m}+b_{2m+1}\le 0\) y \(S_{2m+1}\le S_{2m-1}\). Las sumas parciales de lugar impar no suben: \(S_{1}\ge S_{3}\ge S_{5}\ge\cdots\)</li>
+    </ol>
+    <p><b>Comprobación con la serie de la animación</b> (\(b_{n}=\dfrac{1}{2^{\,n-1}}\), que decrece): las de lugar par son \(S_{2}=\dfrac{1}{2}=\dfrac{4}{8}\) y \(S_{4}=\dfrac{5}{8}\), y \(\dfrac{4}{8}\le\dfrac{5}{8}\); las de lugar impar son \(S_{1}=1=\dfrac{16}{16}\), \(S_{3}=\dfrac{3}{4}=\dfrac{12}{16}\) y \(S_{5}=\dfrac{11}{16}\), y \(\dfrac{16}{16}\ge\dfrac{12}{16}\ge\dfrac{11}{16}\).</p>
+    <p>Hasta aquí todo es álgebra exacta. Que las pares suban y las impares bajen todavía no dice si la serie converge: la hoja «Criterio de Leibniz» da la condición que falta y la demostración.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: la geométrica alternante, y una alternante que diverge</h3>
+    <p><b>Una que converge:</b> \(\displaystyle\sum_{n=1}^{\infty}\left(-\dfrac{1}{2}\right)^{n-1}=1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\cdots\)</p>
+    <ol class="steps">
+      <li>Por la potencia de un producto: \(\left(-\dfrac{1}{2}\right)^{n-1}=\left((-1)\cdot\dfrac{1}{2}\right)^{n-1}=(-1)^{n-1}\cdot\left(\dfrac{1}{2}\right)^{n-1}\). Es alternante, con \(b_{n}=\left(\dfrac{1}{2}\right)^{n-1}&gt;0\).</li>
+      <li>También es geométrica, con primer término \(a=1\) y razón \(r=-\dfrac{1}{2}\).</li>
+      <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{1}{2}&lt;1\). Por la hoja «Series geométricas infinitas», converge y su suma es \(\dfrac{a}{1-r}\).</li>
+      <li>Se reemplaza: \(\dfrac{a}{1-r}=\dfrac{1}{1-\left(-\frac{1}{2}\right)}\).</li>
+      <li>Restar un negativo es sumar su opuesto: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\).</li>
+      <li>Se divide: \(1:\dfrac{3}{2}=1\cdot\dfrac{2}{3}=\dfrac{2}{3}\). La suma de la serie es \(\dfrac{2}{3}\).</li>
+    </ol>
+    <p><b>Una que diverge:</b> \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}=1-1+1-1+\cdots\)</p>
+    <ol class="steps">
+      <li>Es alternante: \(a_{n}=(-1)^{n+1}\cdot 1\), con \(b_{n}=1&gt;0\).</li>
+      <li>Sumas parciales: \(S_{1}=1\); \(S_{2}=1-1=0\); \(S_{3}=0+1=1\); \(S_{4}=1-1=0\). Siguen así: \(1,\ 0,\ 1,\ 0,\ \ldots\)</li>
+      <li>Las sumas parciales saltan sin fin entre \(1\) y \(0\): no tienen límite. La serie diverge.</li>
+      <li>Otra forma de verlo: \(|a_{n}|=1\) para todo \(n\), así que los términos no tienen límite \(0\). Por el criterio del enésimo término, la serie diverge.</li>
+    </ol>
+    <p><b>Moraleja:</b> que una serie sea alternante no basta para que converja.</p>
+
+    <p><b>Número ↔ figura.</b> Las ocho primeras sumas parciales de \(1+r+r^{2}+r^{3}+\cdots\) con la razón \(r\) entre \(-1\) y \(0\). Mueve \(r\) y mira cómo se abre el zigzag.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los ejes y los puntos:</b> en horizontal va \(n\); en vertical, la suma parcial \(S_{n}\). Cada punto negro es una suma parcial; su punteada gris la lleva a su valor en el eje. Los cuatro primeros llevan su nombre: \(S_{1},\ S_{2},\ S_{3},\ S_{4}\). El primero siempre vale \(1\).</li>
+      <li><b>Mira después las flechas:</b> cada flecha es el término que se agrega para pasar de un punto al siguiente (\(a_{2}\), \(a_{3}\), \(a_{4}\), …). Azul hacia arriba: término positivo. Naranja hacia abajo: término negativo.</li>
+      <li><b>Mueve el deslizador \(r\):</b> con \(r=0\) no hay flechas ni zigzag, todos los puntos valen \(1\) (caso límite). Con \(r\) negativo, las flechas alternan naranja y azul y los puntos quedan a un lado y al otro de la recta burdeo, que es la suma \(\dfrac{1}{1-r}\). Con \(r=-1\), todas las flechas miden \(1\), los puntos saltan entre \(1\) y \(0\) y no hay recta burdeo: la serie no tiene suma.</li>
+      <li><b>Cuenta de abajo:</b> con la razón elegida, a dos decimales, se calculan los términos \(a_{2},\ a_{3},\ a_{4}\) (cada uno es el anterior por \(r\); ahí se ve por qué cambia el signo), las sumas parciales \(S_{1}\) a \(S_{4}\), se compara \(|r|\) con \(1\) y, si \(|r|&lt;1\), se calcula la suma: primero la resta \(1-r\), después la división. El signo «\(\approx\)» indica un valor redondeado a dos decimales.</li>
+    </ol>
+    <div class="stage" data-scene="alt-vivo"></div>
+    <ul class="keys">
+      <li><b>Flechas azules:</b> términos positivos; la suma parcial sube.</li>
+      <li><b>Flechas naranjas:</b> términos negativos; la suma parcial baja.</li>
+      <li><b>Puntos negros:</b> las sumas parciales. Las punteadas grises llevan cada una a su valor en el eje \(S_{n}\).</li>
+      <li><b>Recta burdeo:</b> la suma de la serie, \(\dfrac{1}{1-r}\), con su valor a la derecha. Solo existe cuando \(|r|&lt;1\); con \(r=-1\) no se dibuja, porque la serie no tiene suma.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: los cinco primeros términos y \(S_{1},\ldots,S_{4}\) de \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se identifica: signo \((-1)^{n+1}\) y \(b_{n}=\dfrac{1}{n}&gt;0\). Es alternante (se llama serie armónica alternada).</li>
+    <li>\(n=1\): exponente \(1+1=2\), par; signo \(1\). Término: \(+\dfrac{1}{1}=1\).</li>
+    <li>\(n=2\): exponente \(2+1=3\), impar; signo \(-1\). Término: \(-\dfrac{1}{2}\).</li>
+    <li>\(n=3\): exponente \(3+1=4\), par; signo \(1\). Término: \(+\dfrac{1}{3}\).</li>
+    <li>\(n=4\): exponente \(4+1=5\), impar; signo \(-1\). Término: \(-\dfrac{1}{4}\).</li>
+    <li>\(n=5\): exponente \(5+1=6\), par; signo \(1\). Término: \(+\dfrac{1}{5}\). La serie empieza \(1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\dfrac{1}{5}-\cdots\)</li>
+    <li>\(S_{1}=1\).</li>
+    <li>\(S_{2}=S_{1}-\dfrac{1}{2}=1-\dfrac{1}{2}\). Denominador común \(2\): \(\dfrac{2}{2}-\dfrac{1}{2}=\dfrac{2-1}{2}=\dfrac{1}{2}\).</li>
+    <li>\(S_{3}=S_{2}+\dfrac{1}{3}=\dfrac{1}{2}+\dfrac{1}{3}\). Denominador común \(6\): \(\dfrac{3}{6}+\dfrac{2}{6}=\dfrac{3+2}{6}=\dfrac{5}{6}\).</li>
+    <li>\(S_{4}=S_{3}-\dfrac{1}{4}=\dfrac{5}{6}-\dfrac{1}{4}\). Denominador común \(12\): \(\dfrac{10}{12}-\dfrac{3}{12}=\dfrac{10-3}{12}=\dfrac{7}{12}\).</li>
+    <li>Las sumas parciales \(1,\ \dfrac{1}{2},\ \dfrac{5}{6},\ \dfrac{7}{12}\) van en zigzag: baja, sube, baja. Las de lugar par suben (\(\dfrac{1}{2}=\dfrac{6}{12}\le\dfrac{7}{12}\)) y las de lugar impar bajan (\(1=\dfrac{6}{6}\ge\dfrac{5}{6}\)), como dice la segunda parte de la demostración: \(b_{n}=\dfrac{1}{n}\) decrece, porque \(n&lt;n+1\) da \(\dfrac{1}{n+1}&lt;\dfrac{1}{n}\).</li>
+    <li>Si esta serie converge o no, aquí no se decide: no es geométrica y sus términos tienden a \(0\), así que el criterio del enésimo término no dice nada. Queda para la hoja «Criterio de Leibniz».</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: de la lista a la notación \(\Sigma\), y la suma. \(\dfrac{2}{3}-\dfrac{4}{9}+\dfrac{8}{27}-\dfrac{16}{81}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se separa el signo del tamaño. Tamaños: \(\dfrac{2}{3},\ \dfrac{4}{9},\ \dfrac{8}{27},\ \dfrac{16}{81}\).</li>
+    <li>Numeradores: \(2=2^{1},\ 4=2^{2},\ 8=2^{3},\ 16=2^{4}\). Denominadores: \(3=3^{1},\ 9=3^{2},\ 27=3^{3},\ 81=3^{4}\). Entonces \(b_{n}=\dfrac{2^{n}}{3^{n}}=\left(\dfrac{2}{3}\right)^{n}&gt;0\).</li>
+    <li>Signos: \(+,\ -,\ +,\ -\). Positivo cuando \(n\) es impar: el factor es \((-1)^{n+1}\).</li>
+    <li>En notación: \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\left(\dfrac{2}{3}\right)^{n}\). Es alternante.</li>
+    <li>¿Es geométrica? Se divide cada término por el anterior. \(\left(-\dfrac{4}{9}\right):\dfrac{2}{3}=-\dfrac{4}{9}\cdot\dfrac{3}{2}=-\dfrac{12}{18}=-\dfrac{2}{3}\).</li>
+    <li>\(\dfrac{8}{27}:\left(-\dfrac{4}{9}\right)=\dfrac{8}{27}\cdot\left(-\dfrac{9}{4}\right)=-\dfrac{72}{108}=-\dfrac{2}{3}\).</li>
+    <li>\(\left(-\dfrac{16}{81}\right):\dfrac{8}{27}=-\dfrac{16}{81}\cdot\dfrac{27}{8}=-\dfrac{432}{648}=-\dfrac{2}{3}\). El cociente es siempre el mismo: es geométrica, con \(a=\dfrac{2}{3}\) y \(r=-\dfrac{2}{3}\).</li>
+    <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{2}{3}&lt;1\). Converge, y su suma es \(\dfrac{a}{1-r}\) (hoja «Series geométricas infinitas»).</li>
+    <li>Se reemplaza: \(\dfrac{a}{1-r}=\dfrac{\frac{2}{3}}{1-\left(-\frac{2}{3}\right)}\).</li>
+    <li>Denominador: \(1-\left(-\dfrac{2}{3}\right)=1+\dfrac{2}{3}=\dfrac{3}{3}+\dfrac{2}{3}=\dfrac{5}{3}\).</li>
+    <li>Se divide: \(\dfrac{2}{3}:\dfrac{5}{3}=\dfrac{2}{3}\cdot\dfrac{3}{5}=\dfrac{6}{15}\).</li>
+    <li>Se simplifica por \(3\): \(\dfrac{6}{15}=\dfrac{2}{5}\). La suma es \(\dfrac{2}{5}=0{,}4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: ¿son alternantes?</h3>
+  <div class="body">
+  <p>(a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n}\,(-1)^{n}}{n^{2}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{\cos(n\pi)}{n}\); (c) \(1+\dfrac{1}{2}-\dfrac{1}{3}-\dfrac{1}{4}+\dfrac{1}{5}+\dfrac{1}{6}-\cdots\); (d) \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,(n-3)\).</p>
+  <ol class="steps">
+    <li>(a) Producto de potencias de igual base: \((-1)^{n}\cdot(-1)^{n}=(-1)^{n+n}=(-1)^{2n}\).</li>
+    <li>Potencia de una potencia: \((-1)^{2n}=\left((-1)^{2}\right)^{n}=1^{n}=1\). El término es \(\dfrac{1}{n^{2}}\), siempre positivo. <b>No es alternante.</b></li>
+    <li>(b) Se usa \(\cos(n\pi)=(-1)^{n}\): el término es \((-1)^{n}\cdot\dfrac{1}{n}\), con \(b_{n}=\dfrac{1}{n}&gt;0\). <b>Es alternante</b>, y empieza con signo negativo: \(-1+\dfrac{1}{2}-\dfrac{1}{3}+\cdots\)</li>
+    <li>(c) Signos: \(+,\ +,\ -,\ -,\ +,\ +\). Del primer término al segundo el signo no cambia. <b>No es alternante.</b></li>
+    <li>(d) Se calculan los primeros términos. \(n=1\): \((-1)^{2}\cdot(1-3)=1\cdot(-2)=-2\).</li>
+    <li>\(n=2\): \((-1)^{3}\cdot(2-3)=(-1)\cdot(-1)=1\). \(n=3\): \((-1)^{4}\cdot(3-3)=1\cdot 0=0\).</li>
+    <li>\(n=4\): \((-1)^{5}\cdot(4-3)=(-1)\cdot 1=-1\). \(n=5\): \((-1)^{6}\cdot(5-3)=1\cdot 2=2\).</li>
+    <li>El tercer término vale \(0\) y el factor \(n-3\) no es positivo para \(n=1,\ 2,\ 3\): no cumple \(b_{n}&gt;0\) para todo \(n\). <b>Tal como está escrita, no es alternante.</b> (Desde \(n=4\) sí alterna, porque ahí \(n-3&gt;0\).)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: una alternante que diverge. \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,\dfrac{n}{n+1}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es alternante: signo \((-1)^{n+1}\) y \(b_{n}=\dfrac{n}{n+1}&gt;0\). Empieza \(\dfrac{1}{2}-\dfrac{2}{3}+\dfrac{3}{4}-\dfrac{4}{5}+\cdots\)</li>
+    <li>Valor absoluto del término: \(|a_{n}|=\left|(-1)^{n+1}\right|\cdot\dfrac{n}{n+1}=1\cdot\dfrac{n}{n+1}=\dfrac{n}{n+1}\).</li>
+    <li>Se reescribe el numerador: \(n=(n+1)-1\). Entonces \(\dfrac{n}{n+1}=\dfrac{n+1}{n+1}-\dfrac{1}{n+1}=1-\dfrac{1}{n+1}\).</li>
+    <li>Límite: \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\); por el límite de una resta, \(\displaystyle\lim_{n\to\infty}|a_{n}|=1-0=1\) (ver el aviso de rigor).</li>
+    <li>Si \(a_{n}\) tuviera límite \(0\), también \(|a_{n}|\) tendría límite \(0\) (ver el aviso de rigor). Pero \(|a_{n}|\) tiene límite \(1\), y \(1\neq 0\). Entonces \(a_{n}\) no tiene límite \(0\).</li>
+    <li>Por el criterio del enésimo término (hoja «Criterio del enésimo término»), la serie diverge.</li>
+    <li>Es alternante y diverge: sus saltos no se achican hasta cero; cada uno mide cerca de \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que toda serie alternante converge: \(1-1+1-1+\cdots\) es alternante y diverge. Confundir \((-1)^{n}\) con \(-1^{n}\): en \(-1^{n}\) la potencia se calcula primero, \(-1^{n}=-(1^{n})=-1\) siempre, y el signo no alterna. Olvidar que \(b_{n}\) debe ser positivo para todo \(n\): si el factor que acompaña al signo cambia de signo o vale \(0\), la serie puede no alternar. Equivocarse en el primer signo: \((-1)^{n+1}\) empieza con \(+\) y \((-1)^{n}\) empieza con \(-\) (para \(n=1\)). Llamar alternante a cualquier serie con términos positivos y negativos: tienen que cambiar de signo en cada paso. Y creer que, porque las sumas parciales van en zigzag, ya se sabe a qué número se acercan: eso requiere una demostración aparte.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) ¿Es alternante \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n-1}\,\dfrac{3}{n^{2}}\)? Si lo es, da el signo y \(b_{n}\). (b) ¿Es alternante \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{2n}}{n}\)? (c) Escribe en notación \(\Sigma\) la serie \(-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{6}+\dfrac{1}{8}-\cdots\)</p>
+    <details><summary>Pista</summary><div><p>Separa el signo del tamaño \(b_{n}=|a_{n}|\). En (b), calcula primero \((-1)^{2n}\). En (c), mira qué signo lleva el primer término.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Signo: \((-1)^{n-1}\), que da el mismo signo que \((-1)^{n+1}\): \(+\) si \(n\) es impar, \(-\) si \(n\) es par.</li>
+        <li>Tamaño: \(b_{n}=\dfrac{3}{n^{2}}\). Como \(3&gt;0\) y \(n^{2}&gt;0\), \(b_{n}&gt;0\) para todo \(n\). Es alternante: \(3-\dfrac{3}{4}+\dfrac{3}{9}-\dfrac{3}{16}+\cdots\)</li>
+        <li>(b) Potencia de una potencia: \((-1)^{2n}=\left((-1)^{2}\right)^{n}=1^{n}=1\).</li>
+        <li>El término es \(\dfrac{1}{n}\), siempre positivo. No es alternante (es la serie armónica).</li>
+        <li>(c) Tamaños: \(\dfrac{1}{2},\ \dfrac{1}{4},\ \dfrac{1}{6},\ \dfrac{1}{8}\). Los denominadores son \(2\cdot 1,\ 2\cdot 2,\ 2\cdot 3,\ 2\cdot 4\): \(b_{n}=\dfrac{1}{2n}\).</li>
+        <li>Signos: \(-,\ +,\ -,\ +\). Negativo cuando \(n\) es impar: el factor es \((-1)^{n}\).</li>
+        <li>En notación: \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\,\dfrac{1}{2n}\).</li>
+        <li>Comprobación con \(n=1\) y \(n=2\): \((-1)^{1}\cdot\dfrac{1}{2\cdot 1}=-\dfrac{1}{2}\) y \((-1)^{2}\cdot\dfrac{1}{2\cdot 2}=\dfrac{1}{4}\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Para la serie \(3-\dfrac{3}{4}+\dfrac{3}{16}-\dfrac{3}{64}+\cdots\): (a) calcula \(S_{1},\ S_{2},\ S_{3}\) y \(S_{4}\); (b) escríbela en notación \(\Sigma\) y calcula su suma; (c) comprueba que \(S_{2}\) y \(S_{4}\) quedan bajo la suma, y \(S_{1}\) y \(S_{3}\), sobre ella.</p>
+    <details><summary>Pista</summary><div><p>Cada término es el anterior por \(-\dfrac{1}{4}\): es geométrica. Para comparar fracciones, llévalas a un denominador común.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(S_{1}=3\).</li>
+        <li>\(S_{2}=3-\dfrac{3}{4}\). Denominador común \(4\): \(\dfrac{12}{4}-\dfrac{3}{4}=\dfrac{12-3}{4}=\dfrac{9}{4}\).</li>
+        <li>\(S_{3}=\dfrac{9}{4}+\dfrac{3}{16}\). Denominador común \(16\): \(\dfrac{36}{16}+\dfrac{3}{16}=\dfrac{36+3}{16}=\dfrac{39}{16}\).</li>
+        <li>\(S_{4}=\dfrac{39}{16}-\dfrac{3}{64}\). Denominador común \(64\): \(\dfrac{156}{64}-\dfrac{3}{64}=\dfrac{156-3}{64}=\dfrac{153}{64}\).</li>
+        <li>(b) Cociente entre términos seguidos: \(\left(-\dfrac{3}{4}\right):3=-\dfrac{3}{4}\cdot\dfrac{1}{3}=-\dfrac{3}{12}=-\dfrac{1}{4}\); \(\dfrac{3}{16}:\left(-\dfrac{3}{4}\right)=\dfrac{3}{16}\cdot\left(-\dfrac{4}{3}\right)=-\dfrac{12}{48}=-\dfrac{1}{4}\); \(\left(-\dfrac{3}{64}\right):\dfrac{3}{16}=-\dfrac{3}{64}\cdot\dfrac{16}{3}=-\dfrac{48}{192}=-\dfrac{1}{4}\).</li>
+        <li>Es geométrica, con \(a=3\) y \(r=-\dfrac{1}{4}\): \(\displaystyle\sum_{n=1}^{\infty}3\left(-\dfrac{1}{4}\right)^{n-1}=\sum_{n=1}^{\infty}(-1)^{n-1}\,\dfrac{3}{4^{\,n-1}}\). Es alternante, con \(b_{n}=\dfrac{3}{4^{\,n-1}}&gt;0\).</li>
+        <li>\(|r|=\dfrac{1}{4}&lt;1\): converge, y su suma es \(\dfrac{a}{1-r}=\dfrac{3}{1-\left(-\frac{1}{4}\right)}\).</li>
+        <li>Denominador: \(1-\left(-\dfrac{1}{4}\right)=1+\dfrac{1}{4}=\dfrac{4}{4}+\dfrac{1}{4}=\dfrac{5}{4}\).</li>
+        <li>Se divide: \(3:\dfrac{5}{4}=3\cdot\dfrac{4}{5}=\dfrac{12}{5}\). La suma es \(\dfrac{12}{5}=2{,}4\).</li>
+        <li>(c) \(S_{1}=3=\dfrac{15}{5}\), y \(\dfrac{15}{5}&gt;\dfrac{12}{5}\): sobre la suma.</li>
+        <li>\(S_{2}=\dfrac{9}{4}\). Denominador común \(20\): \(\dfrac{9}{4}=\dfrac{45}{20}\) y \(\dfrac{12}{5}=\dfrac{48}{20}\). Como \(45&lt;48\): bajo la suma.</li>
+        <li>\(S_{3}=\dfrac{39}{16}\). Denominador común \(80\): \(\dfrac{39}{16}=\dfrac{195}{80}\) y \(\dfrac{12}{5}=\dfrac{192}{80}\). Como \(195&gt;192\): sobre la suma.</li>
+        <li>\(S_{4}=\dfrac{153}{64}\). Denominador común \(320\): \(\dfrac{153}{64}=\dfrac{765}{320}\) y \(\dfrac{12}{5}=\dfrac{768}{320}\). Como \(765&lt;768\): bajo la suma.</li>
+        <li>Las sumas parciales quedan a un lado y al otro de \(\dfrac{12}{5}\), cada vez más cerca: las distancias son \(\dfrac{3}{5},\ \dfrac{3}{20},\ \dfrac{3}{80},\ \dfrac{3}{320}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Valentina regula el agua de la ducha. Parte con la llave cerrada y la gira \(60\) grados hacia el agua caliente. Se pasó: la devuelve la mitad, \(30\) grados. Ahora quedó corta: la avanza \(15\) grados. Y sigue así: cada giro es la mitad del anterior y en sentido contrario. (a) ¿En qué posición queda la llave después de cuatro giros? (b) Si siguiera sin fin, ¿a qué posición se acercaría? (c) ¿Cuánto le falta después del cuarto giro para llegar a esa posición?</p>
+    <details><summary>Pista</summary><div><p>La posición es \(60-30+15-\cdots\): una serie geométrica alternante con \(a=60\) y \(r=-\dfrac{1}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Giros hacia el agua caliente se suman; giros de vuelta se restan. Posición: \(60-30+15-\cdots\)</li>
+        <li>(a) Cuarto giro: la mitad de \(15\), es decir, \(15:2=7{,}5\) grados, de vuelta.</li>
+        <li>\(S_{1}=60\). \(S_{2}=60-30=30\). \(S_{3}=30+15=45\). \(S_{4}=45-7{,}5=37{,}5\). Después de cuatro giros, la llave queda en \(37{,}5\) grados.</li>
+        <li>(b) Cada giro es el anterior por \(-\dfrac{1}{2}\): \(60\cdot\left(-\dfrac{1}{2}\right)=-30\); \((-30)\cdot\left(-\dfrac{1}{2}\right)=15\); \(15\cdot\left(-\dfrac{1}{2}\right)=-7{,}5\). Es geométrica, con \(a=60\) y \(r=-\dfrac{1}{2}\): \(\displaystyle\sum_{n=1}^{\infty}60\left(-\dfrac{1}{2}\right)^{n-1}\).</li>
+        <li>\(|r|=\dfrac{1}{2}&lt;1\): converge, y su suma es \(\dfrac{a}{1-r}=\dfrac{60}{1-\left(-\frac{1}{2}\right)}\).</li>
+        <li>Denominador: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\).</li>
+        <li>Se divide: \(60:\dfrac{3}{2}=60\cdot\dfrac{2}{3}=\dfrac{120}{3}=40\). La llave se acerca a la posición de \(40\) grados.</li>
+        <li>(c) Se resta: \(40-37{,}5=2{,}5\). Después del cuarto giro le faltan \(2{,}5\) grados.</li>
+        <li>Las posiciones \(60,\ 30,\ 45,\ 37{,}5\) quedan a un lado y al otro de \(40\): se pasa, se queda corta, se pasa, se queda corta, cada vez por menos (\(20,\ 10,\ 5,\ 2{,}5\) grados).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H16 · v001 · Pendiente de APR</span>
+</footer>
+</article>

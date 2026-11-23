@@ -1,0 +1,467 @@
+<!--file:H16_serie_alternante.html-->
+<!--title:Serie alternante-->
+<!--id:ss-alternante-->
+<!--tab:H16 Serie alternante-->
+<article class="sheet" id="ss-alternante" data-hoja="L25 H16">
+<header>
+  <section>
+    <ol class="route" aria-label="Ruta de selección en oscaracademy.org">
+      <li>Cursos</li>
+      <li>Series y sucesiones</li>
+      <li>Series</li>
+      <li><b>Serie alternante</b></li>
+    </ol>
+    <h1>Serie alternante</h1>
+    <p class="lede">Una serie es alternante cuando sus términos cambian de signo en cada paso: uno se suma, el siguiente se resta, el siguiente se suma, y así. Se escribe con un factor de signo y una parte positiva \(b_{n}\). Sus sumas parciales suben y bajan por turnos: avanzan en zigzag. \[\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}=b_{1}-b_{2}+b_{3}-b_{4}+\cdots\qquad\text{con }b_{n}&gt;0\text{ para todo }n\]</p>
+  </section>
+</header>
+
+<section>
+  <h2>La idea, en una animación</h2>
+  <p>La serie \(1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}-\cdots\), término a término, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Mira primero los ejes:</b> en horizontal va \(n\), la cantidad de términos sumados; en vertical, la suma parcial \(S_{n}\). Arriba queda la pregunta: ¿cuánto suma la serie completa?</li>
+    <li><b>Cada paso agrega un término, como un salto:</b> una flecha azul hacia arriba si el término se suma (\(+1\), \(+\dfrac{1}{4}\), \(+\dfrac{1}{16}\)) y una flecha naranja hacia abajo si se resta (\(-\dfrac{1}{2}\), \(-\dfrac{1}{8}\)). Cada flecha parte a la altura donde terminó la anterior (la guía punteada del mismo color la trae) y lleva escrito su término.</li>
+    <li><b>El punto negro al final de cada flecha es la suma parcial,</b> con su valor escrito: \(1,\ \dfrac{1}{2},\ \dfrac{3}{4},\ \dfrac{5}{8},\ \dfrac{11}{16}\). Una punteada gris lleva cada punto a su valor en el eje \(S_{n}\). Fíjate en que cada salto mide la mitad del anterior: el zigzag se va cerrando.</li>
+    <li><b>Al final del paso 5</b> aparece la recta burdeo, a la altura \(\dfrac{2}{3}\): es la suma de la serie. Los trazos burdeo marcan lo que separa cada punto de la recta. Los puntos quedan, por turnos, arriba y abajo de ella, cada vez más cerca.</li>
+    <li><b>Registro y cuenta de abajo:</b> cada suma parcial queda escrita con su suma o resta de fracciones (denominador común, numeradores, resultado). Al final se calcula la suma con la fórmula de la serie geométrica, \(\dfrac{1}{1+\frac{1}{2}}=\dfrac{2}{3}\), y la distancia de cada suma parcial a \(\dfrac{2}{3}\): \(\dfrac{1}{3},\ \dfrac{1}{6},\ \dfrac{1}{12},\ \dfrac{1}{24},\ \dfrac{1}{48}\).</li>
+  </ol>
+  <div class="stage" data-scene="alt-idea"></div>
+  <ul class="keys">
+    <li><b>Flechas azules:</b> los términos que se suman. La suma parcial sube.</li>
+    <li><b>Flechas naranjas:</b> los términos que se restan. La suma parcial baja.</li>
+    <li><b>Guías punteadas azules y naranjas:</b> llevan la altura de cada punto hasta donde parte la flecha siguiente.</li>
+    <li><b>Puntos negros:</b> las sumas parciales \(S_{1},\ \ldots,\ S_{5}\), con su valor. Las punteadas grises llevan cada una a su valor en el eje \(S_{n}\).</li>
+    <li><b>Recta burdeo:</b> la suma de la serie, \(\dfrac{2}{3}\). <b>Trazos burdeo:</b> lo que separa cada suma parcial de \(\dfrac{2}{3}\).</li>
+  </ul>
+</section>
+
+<section>
+  <div class="card k1">
+    <h3>Definición, en orden</h3>
+    <ol class="steps">
+      <li><b>Serie alternante:</b> una serie de la forma \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}=b_{1}-b_{2}+b_{3}-b_{4}+\cdots\) o de la forma \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\,b_{n}=-b_{1}+b_{2}-b_{3}+b_{4}-\cdots\), con \(b_{n}&gt;0\) para todo \(n\). Los signos se alternan término a término.</li>
+      <li><b>De dónde sale el signo, con \(n\) par.</b> Se parte de \((-1)^{2}=(-1)\cdot(-1)=1\). Si \(n\) es par, \(n=2m\); por la potencia de una potencia, \((-1)^{2m}=\left((-1)^{2}\right)^{m}=1^{m}=1\).</li>
+      <li><b>Con \(n\) impar.</b> Si \(n\) es impar, \(n=2m+1\); por el producto de potencias de igual base, \((-1)^{2m+1}=(-1)^{2m}\cdot(-1)^{1}=1\cdot(-1)=-1\).</li>
+      <li><b>Resumen:</b> \((-1)^{n}\) vale \(1\) si \(n\) es par y \(-1\) si \(n\) es impar.</li>
+      <li><b>El factor \((-1)^{n+1}\):</b> por el producto de potencias de igual base, \((-1)^{n+1}=(-1)^{n}\cdot(-1)\): es el signo contrario al de \((-1)^{n}\). Vale \(1\) si \(n\) es impar y \(-1\) si \(n\) es par.</li>
+      <li><b>El factor \((-1)^{n-1}\) da el mismo signo que \((-1)^{n+1}\):</b> \((-1)^{n+1}=(-1)^{n-1}\cdot(-1)^{2}=(-1)^{n-1}\cdot 1=(-1)^{n-1}\).</li>
+      <li><b>Otra forma de escribir el signo:</b> \(\cos(n\pi)=(-1)^{n}\) para todo entero \(n\) (se usa sin demostrar: ver el aviso de rigor).</li>
+      <li><b>Cómo reconocerla:</b> se escribe cada término como \(a_{n}=(\text{signo})\cdot b_{n}\), con \(b_{n}=|a_{n}|\). Es alternante si se cumplen las dos cosas: \(b_{n}&gt;0\) para todo \(n\), y el signo cambia en cada paso (de cada término al siguiente).</li>
+      <li><b>Qué no es alternante:</b> una serie con signos \(+,\ +,\ -,\ -,\ +,\ +,\ \ldots\) (el signo no cambia del primer término al segundo); una serie con algún término igual a \(0\) (ahí \(b_{n}\) no es positivo); una serie con todos sus términos positivos.</li>
+      <li><b>Un caso que engaña:</b> \(\displaystyle\sum_{n=1}^{\infty}\dfrac{\operatorname{sen}(n)}{n^{2}}\) tiene términos positivos y negativos, pero no alterna término a término. Como \(0&lt;1&lt;2&lt;3&lt;\pi\), se cumple \(\operatorname{sen}1&gt;0\), \(\operatorname{sen}2&gt;0\) y \(\operatorname{sen}3&gt;0\); como \(\pi&lt;4&lt;2\pi\), \(\operatorname{sen}4&lt;0\). Los signos empiezan \(+,\ +,\ +,\ -\): no es una serie alternante.</li>
+    </ol>
+    <p>Esta hoja muestra qué es una serie alternante y cómo se mueven sus sumas parciales. Cuándo converge es otro asunto: la hoja «Criterio de Leibniz» da la condición. Aquí solo se afirma que una serie converge cuando se puede demostrar con lo ya visto.</p>
+    <p><b>Aviso de rigor.</b> «Límite de una sucesión» se usa con su significado intuitivo, como en la hoja «Series infinitas convergentes y divergentes». Se usan sin demostrar: (1) las leyes de las potencias de exponente entero: producto de potencias de igual base, potencia de una potencia y potencia de un producto; (2) que \(\cos(n\pi)=(-1)^{n}\) para todo entero \(n\); (3) que el seno es positivo entre \(0\) y \(\pi\) y negativo entre \(\pi\) y \(2\pi\), y que \(3&lt;\pi&lt;4\); (4) de la hoja «Series geométricas infinitas», donde se demuestra: la suma parcial \(S_{n}=\dfrac{a\,(1-r^{\,n})}{1-r}\) si \(r\neq 1\), y que la serie geométrica converge a \(\dfrac{a}{1-r}\) si \(|r|&lt;1\); (5) de la hoja «Criterio del enésimo término», donde se demuestra: si \(\displaystyle\lim_{n\to\infty}a_{n}\) no existe, o existe y no es \(0\), la serie diverge; (6) que una sucesión que salta sin fin entre \(1\) y \(0\) no tiene límite, y que una sucesión no puede tener dos límites distintos; (7) en el ejemplo 4: que si \(\displaystyle\lim_{n\to\infty}a_{n}=0\), entonces \(\displaystyle\lim_{n\to\infty}|a_{n}|=0\); que \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\); y que el límite de una resta es la resta de los límites cuando existen. Las demostraciones de (6) y (7) corresponden a la hoja «Límite de una sucesión».</p>
+  </div>
+
+  <div class="card k2">
+    <h3>Demostración paso a paso: las sumas parciales van en zigzag</h3>
+    <p>Sea \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}\) con \(b_{n}&gt;0\), y \(S_{n}=b_{1}-b_{2}+b_{3}-\cdots+(-1)^{n+1}b_{n}\) su suma parcial. En todo lo que sigue, \(m\) es un entero con \(m\ge 0\), y se conviene \(S_{0}=0\) (la suma de ningún término).</p>
+    <p><b>Primera parte: una sube, la siguiente baja.</b></p>
+    <ol class="steps">
+      <li>El término de lugar \(2m+1\) (lugar impar) lleva el signo \((-1)^{(2m+1)+1}=(-1)^{2m+2}\). El exponente \(2m+2=2(m+1)\) es par: el signo es \(1\). El término es \(+\,b_{2m+1}\).</li>
+      <li>Cada suma parcial es la anterior más el término nuevo: \(S_{2m+1}=S_{2m}+b_{2m+1}\).</li>
+      <li>Como \(b_{2m+1}&gt;0\): \(S_{2m+1}&gt;S_{2m}\). Al agregar un término de lugar impar, la suma parcial <b>sube</b>.</li>
+      <li>El término de lugar \(2m+2\) (lugar par) lleva el signo \((-1)^{(2m+2)+1}=(-1)^{2m+3}\). El exponente \(2m+3=2(m+1)+1\) es impar: el signo es \(-1\). El término es \(-\,b_{2m+2}\).</li>
+      <li>Suma parcial: \(S_{2m+2}=S_{2m+1}-b_{2m+2}\).</li>
+      <li>Como \(b_{2m+2}&gt;0\): \(S_{2m+2}&lt;S_{2m+1}\). Al agregar un término de lugar par, la suma parcial <b>baja</b>.</li>
+      <li>Conclusión: las sumas parciales suben y bajan por turnos. Avanzan en zigzag.</li>
+    </ol>
+    <p><b>Segunda parte: si además \(b_{n}\) decrece</b> (es decir, \(b_{n+1}\le b_{n}\) para todo \(n\)), <b>el zigzag se cierra.</b></p>
+    <ol class="steps">
+      <li>Se parte del paso 5 de la primera parte: \(S_{2m+2}=S_{2m+1}-b_{2m+2}\).</li>
+      <li>Se reemplaza \(S_{2m+1}=S_{2m}+b_{2m+1}\) (paso 2): \(S_{2m+2}=S_{2m}+b_{2m+1}-b_{2m+2}\).</li>
+      <li>Se resta \(S_{2m}\) a cada lado: \(S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\).</li>
+      <li>Como \(b\) decrece, \(b_{2m+2}\le b_{2m+1}\); entonces \(b_{2m+1}-b_{2m+2}\ge 0\) y \(S_{2m+2}\ge S_{2m}\). Las sumas parciales de lugar par no bajan: \(S_{2}\le S_{4}\le S_{6}\le\cdots\)</li>
+      <li>Ahora las impares. Se parte de \(S_{2m+1}=S_{2m}+b_{2m+1}\) (paso 2 de la primera parte).</li>
+      <li>Para \(m\ge 1\), \(S_{2m}\) es la anterior, \(S_{2m-1}\), más el término de lugar par \(2m\), que es \(-\,b_{2m}\): \(S_{2m}=S_{2m-1}-b_{2m}\). Se reemplaza: \(S_{2m+1}=S_{2m-1}-b_{2m}+b_{2m+1}\).</li>
+      <li>Se resta \(S_{2m-1}\) a cada lado: \(S_{2m+1}-S_{2m-1}=-b_{2m}+b_{2m+1}\).</li>
+      <li>Como \(b\) decrece, \(b_{2m+1}\le b_{2m}\); entonces \(-b_{2m}+b_{2m+1}\le 0\) y \(S_{2m+1}\le S_{2m-1}\). Las sumas parciales de lugar impar no suben: \(S_{1}\ge S_{3}\ge S_{5}\ge\cdots\)</li>
+    </ol>
+    <p><b>Comprobación con la serie de la animación</b> (\(b_{n}=\dfrac{1}{2^{\,n-1}}\), que decrece): las de lugar par son \(S_{2}=\dfrac{1}{2}=\dfrac{4}{8}\) y \(S_{4}=\dfrac{5}{8}\), y \(\dfrac{4}{8}\le\dfrac{5}{8}\); las de lugar impar son \(S_{1}=1=\dfrac{16}{16}\), \(S_{3}=\dfrac{3}{4}=\dfrac{12}{16}\) y \(S_{5}=\dfrac{11}{16}\), y \(\dfrac{16}{16}\ge\dfrac{12}{16}\ge\dfrac{11}{16}\).</p>
+    <p>Hasta aquí todo es álgebra exacta. Que las pares suban y las impares bajen todavía no dice si la serie converge: la hoja «Criterio de Leibniz» da la condición que falta y la demostración.</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Caso especial: la geométrica alternante, y una alternante que diverge</h3>
+    <p><b>Una que converge:</b> \(\displaystyle\sum_{n=1}^{\infty}\left(-\dfrac{1}{2}\right)^{n-1}=1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\cdots\)</p>
+    <ol class="steps">
+      <li>Por la potencia de un producto: \(\left(-\dfrac{1}{2}\right)^{n-1}=\left((-1)\cdot\dfrac{1}{2}\right)^{n-1}=(-1)^{n-1}\cdot\left(\dfrac{1}{2}\right)^{n-1}\). Es alternante, con \(b_{n}=\left(\dfrac{1}{2}\right)^{n-1}&gt;0\).</li>
+      <li>También es geométrica, con primer término \(a=1\) y razón \(r=-\dfrac{1}{2}\).</li>
+      <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{1}{2}&lt;1\). Por la hoja «Series geométricas infinitas», converge y su suma es \(\dfrac{a}{1-r}\).</li>
+      <li>Se reemplaza: \(\dfrac{a}{1-r}=\dfrac{1}{1-\left(-\frac{1}{2}\right)}\).</li>
+      <li>Restar un negativo es sumar su opuesto: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\).</li>
+      <li>Se divide: \(1:\dfrac{3}{2}=1\cdot\dfrac{2}{3}=\dfrac{2}{3}\). La suma de la serie es \(\dfrac{2}{3}\).</li>
+    </ol>
+    <p><b>Una que diverge:</b> \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}=1-1+1-1+\cdots\)</p>
+    <ol class="steps">
+      <li>Es alternante: \(a_{n}=(-1)^{n+1}\cdot 1\), con \(b_{n}=1&gt;0\).</li>
+      <li>Sumas parciales: \(S_{1}=1\); \(S_{2}=1-1=0\); \(S_{3}=0+1=1\); \(S_{4}=1-1=0\). Siguen así: \(1,\ 0,\ 1,\ 0,\ \ldots\)</li>
+      <li>Las sumas parciales saltan sin fin entre \(1\) y \(0\): no tienen límite. La serie diverge.</li>
+      <li>Otra forma de verlo: \(|a_{n}|=1\) para todo \(n\), así que los términos no tienen límite \(0\). Por el criterio del enésimo término, la serie diverge.</li>
+    </ol>
+    <p><b>Moraleja:</b> que una serie sea alternante no basta para que converja.</p>
+
+    <p><b>Número ↔ figura.</b> Las ocho primeras sumas parciales de \(1+r+r^{2}+r^{3}+\cdots\) con la razón \(r\) entre \(-1\) y \(0\). Mueve \(r\) y mira cómo se abre el zigzag.</p>
+    <p><b>Cómo leer la animación:</b></p>
+    <ol class="steps">
+      <li><b>Mira primero los ejes y los puntos:</b> en horizontal va \(n\); en vertical, la suma parcial \(S_{n}\). Cada punto negro es una suma parcial; su punteada gris la lleva a su valor en el eje. Los cuatro primeros llevan su nombre: \(S_{1},\ S_{2},\ S_{3},\ S_{4}\). El primero siempre vale \(1\).</li>
+      <li><b>Mira después las flechas:</b> cada flecha es el término que se agrega para pasar de un punto al siguiente (\(a_{2}\), \(a_{3}\), \(a_{4}\), …). Azul hacia arriba: término positivo. Naranja hacia abajo: término negativo.</li>
+      <li><b>Mueve el deslizador \(r\):</b> con \(r=0\) no hay flechas ni zigzag, todos los puntos valen \(1\) (caso límite). Con \(r\) negativo, las flechas alternan naranja y azul y los puntos quedan a un lado y al otro de la recta burdeo, que es la suma \(\dfrac{1}{1-r}\). Con \(r=-1\), todas las flechas miden \(1\), los puntos saltan entre \(1\) y \(0\) y no hay recta burdeo: la serie no tiene suma.</li>
+      <li><b>Cuenta de abajo:</b> con la razón elegida, a dos decimales, se calculan los términos \(a_{2},\ a_{3},\ a_{4}\) (cada uno es el anterior por \(r\); ahí se ve por qué cambia el signo), las sumas parciales \(S_{1}\) a \(S_{4}\), se compara \(|r|\) con \(1\) y, si \(|r|&lt;1\), se calcula la suma: primero la resta \(1-r\), después la división. El signo «\(\approx\)» indica un valor redondeado a dos decimales.</li>
+    </ol>
+    <div class="stage" data-scene="alt-vivo"></div>
+    <ul class="keys">
+      <li><b>Flechas azules:</b> términos positivos; la suma parcial sube.</li>
+      <li><b>Flechas naranjas:</b> términos negativos; la suma parcial baja.</li>
+      <li><b>Puntos negros:</b> las sumas parciales. Las punteadas grises llevan cada una a su valor en el eje \(S_{n}\).</li>
+      <li><b>Recta burdeo:</b> la suma de la serie, \(\dfrac{1}{1-r}\), con su valor a la derecha. Solo existe cuando \(|r|&lt;1\); con \(r=-1\) no se dibuja, porque la serie no tiene suma.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Paso a paso</h2>
+
+  <div class="prop p1">
+  <h3>Ejemplo 1: los cinco primeros términos y \(S_{1},\ldots,S_{4}\) de \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se identifica: signo \((-1)^{n+1}\) y \(b_{n}=\dfrac{1}{n}&gt;0\). Es alternante (se llama serie armónica alternada).</li>
+    <li>\(n=1\): exponente \(1+1=2\), par; signo \(1\). Término: \(+\dfrac{1}{1}=1\).</li>
+    <li>\(n=2\): exponente \(2+1=3\), impar; signo \(-1\). Término: \(-\dfrac{1}{2}\).</li>
+    <li>\(n=3\): exponente \(3+1=4\), par; signo \(1\). Término: \(+\dfrac{1}{3}\).</li>
+    <li>\(n=4\): exponente \(4+1=5\), impar; signo \(-1\). Término: \(-\dfrac{1}{4}\).</li>
+    <li>\(n=5\): exponente \(5+1=6\), par; signo \(1\). Término: \(+\dfrac{1}{5}\). La serie empieza \(1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\dfrac{1}{5}-\cdots\)</li>
+    <li>\(S_{1}=1\).</li>
+    <li>\(S_{2}=S_{1}-\dfrac{1}{2}=1-\dfrac{1}{2}\). Denominador común \(2\): \(\dfrac{2}{2}-\dfrac{1}{2}=\dfrac{2-1}{2}=\dfrac{1}{2}\).</li>
+    <li>\(S_{3}=S_{2}+\dfrac{1}{3}=\dfrac{1}{2}+\dfrac{1}{3}\). Denominador común \(6\): \(\dfrac{3}{6}+\dfrac{2}{6}=\dfrac{3+2}{6}=\dfrac{5}{6}\).</li>
+    <li>\(S_{4}=S_{3}-\dfrac{1}{4}=\dfrac{5}{6}-\dfrac{1}{4}\). Denominador común \(12\): \(\dfrac{10}{12}-\dfrac{3}{12}=\dfrac{10-3}{12}=\dfrac{7}{12}\).</li>
+    <li>Las sumas parciales \(1,\ \dfrac{1}{2},\ \dfrac{5}{6},\ \dfrac{7}{12}\) van en zigzag: baja, sube, baja. Las de lugar par suben (\(\dfrac{1}{2}=\dfrac{6}{12}\le\dfrac{7}{12}\)) y las de lugar impar bajan (\(1=\dfrac{6}{6}\ge\dfrac{5}{6}\)), como dice la segunda parte de la demostración: \(b_{n}=\dfrac{1}{n}\) decrece, porque \(n&lt;n+1\) da \(\dfrac{1}{n+1}&lt;\dfrac{1}{n}\).</li>
+    <li>Si esta serie converge o no, aquí no se decide: no es geométrica y sus términos tienden a \(0\), así que el criterio del enésimo término no dice nada. Queda para la hoja «Criterio de Leibniz».</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p2">
+  <h3>Ejemplo 2: de la lista a la notación \(\Sigma\), y la suma. \(\dfrac{2}{3}-\dfrac{4}{9}+\dfrac{8}{27}-\dfrac{16}{81}+\cdots\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Se separa el signo del tamaño. Tamaños: \(\dfrac{2}{3},\ \dfrac{4}{9},\ \dfrac{8}{27},\ \dfrac{16}{81}\).</li>
+    <li>Numeradores: \(2=2^{1},\ 4=2^{2},\ 8=2^{3},\ 16=2^{4}\). Denominadores: \(3=3^{1},\ 9=3^{2},\ 27=3^{3},\ 81=3^{4}\). Entonces \(b_{n}=\dfrac{2^{n}}{3^{n}}=\left(\dfrac{2}{3}\right)^{n}&gt;0\).</li>
+    <li>Signos: \(+,\ -,\ +,\ -\). Positivo cuando \(n\) es impar: el factor es \((-1)^{n+1}\).</li>
+    <li>En notación: \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\left(\dfrac{2}{3}\right)^{n}\). Es alternante.</li>
+    <li>¿Es geométrica? Se divide cada término por el anterior. \(\left(-\dfrac{4}{9}\right):\dfrac{2}{3}=-\dfrac{4}{9}\cdot\dfrac{3}{2}=-\dfrac{12}{18}=-\dfrac{2}{3}\).</li>
+    <li>\(\dfrac{8}{27}:\left(-\dfrac{4}{9}\right)=\dfrac{8}{27}\cdot\left(-\dfrac{9}{4}\right)=-\dfrac{72}{108}=-\dfrac{2}{3}\).</li>
+    <li>\(\left(-\dfrac{16}{81}\right):\dfrac{8}{27}=-\dfrac{16}{81}\cdot\dfrac{27}{8}=-\dfrac{432}{648}=-\dfrac{2}{3}\). El cociente es siempre el mismo: es geométrica, con \(a=\dfrac{2}{3}\) y \(r=-\dfrac{2}{3}\).</li>
+    <li>Se compara \(|r|\) con \(1\): \(|r|=\dfrac{2}{3}&lt;1\). Converge, y su suma es \(\dfrac{a}{1-r}\) (hoja «Series geométricas infinitas»).</li>
+    <li>Se reemplaza: \(\dfrac{a}{1-r}=\dfrac{\frac{2}{3}}{1-\left(-\frac{2}{3}\right)}\).</li>
+    <li>Denominador: \(1-\left(-\dfrac{2}{3}\right)=1+\dfrac{2}{3}=\dfrac{3}{3}+\dfrac{2}{3}=\dfrac{5}{3}\).</li>
+    <li>Se divide: \(\dfrac{2}{3}:\dfrac{5}{3}=\dfrac{2}{3}\cdot\dfrac{3}{5}=\dfrac{6}{15}\).</li>
+    <li>Se simplifica por \(3\): \(\dfrac{6}{15}=\dfrac{2}{5}\). La suma es \(\dfrac{2}{5}=0{,}4\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p3">
+  <h3>Ejemplo 3: ¿son alternantes?</h3>
+  <div class="body">
+  <p>(a) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n}\,(-1)^{n}}{n^{2}}\); (b) \(\displaystyle\sum_{n=1}^{\infty}\dfrac{\cos(n\pi)}{n}\); (c) \(1+\dfrac{1}{2}-\dfrac{1}{3}-\dfrac{1}{4}+\dfrac{1}{5}+\dfrac{1}{6}-\cdots\); (d) \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,(n-3)\).</p>
+  <ol class="steps">
+    <li>(a) Producto de potencias de igual base: \((-1)^{n}\cdot(-1)^{n}=(-1)^{n+n}=(-1)^{2n}\).</li>
+    <li>Potencia de una potencia: \((-1)^{2n}=\left((-1)^{2}\right)^{n}=1^{n}=1\). El término es \(\dfrac{1}{n^{2}}\), siempre positivo. <b>No es alternante.</b></li>
+    <li>(b) Se usa \(\cos(n\pi)=(-1)^{n}\): el término es \((-1)^{n}\cdot\dfrac{1}{n}\), con \(b_{n}=\dfrac{1}{n}&gt;0\). <b>Es alternante</b>, y empieza con signo negativo: \(-1+\dfrac{1}{2}-\dfrac{1}{3}+\cdots\)</li>
+    <li>(c) Signos: \(+,\ +,\ -,\ -,\ +,\ +\). Del primer término al segundo el signo no cambia. <b>No es alternante.</b></li>
+    <li>(d) Se calculan los primeros términos. \(n=1\): \((-1)^{2}\cdot(1-3)=1\cdot(-2)=-2\).</li>
+    <li>\(n=2\): \((-1)^{3}\cdot(2-3)=(-1)\cdot(-1)=1\). \(n=3\): \((-1)^{4}\cdot(3-3)=1\cdot 0=0\).</li>
+    <li>\(n=4\): \((-1)^{5}\cdot(4-3)=(-1)\cdot 1=-1\). \(n=5\): \((-1)^{6}\cdot(5-3)=1\cdot 2=2\).</li>
+    <li>El tercer término vale \(0\) y el factor \(n-3\) no es positivo para \(n=1,\ 2,\ 3\): no cumple \(b_{n}&gt;0\) para todo \(n\). <b>Tal como está escrita, no es alternante.</b> (Desde \(n=4\) sí alterna, porque ahí \(n-3&gt;0\).)</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="prop p4">
+  <h3>Ejemplo 4: una alternante que diverge. \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,\dfrac{n}{n+1}\)</h3>
+  <div class="body">
+  <ol class="steps">
+    <li>Es alternante: signo \((-1)^{n+1}\) y \(b_{n}=\dfrac{n}{n+1}&gt;0\). Empieza \(\dfrac{1}{2}-\dfrac{2}{3}+\dfrac{3}{4}-\dfrac{4}{5}+\cdots\)</li>
+    <li>Valor absoluto del término: \(|a_{n}|=\left|(-1)^{n+1}\right|\cdot\dfrac{n}{n+1}=1\cdot\dfrac{n}{n+1}=\dfrac{n}{n+1}\).</li>
+    <li>Se reescribe el numerador: \(n=(n+1)-1\). Entonces \(\dfrac{n}{n+1}=\dfrac{n+1}{n+1}-\dfrac{1}{n+1}=1-\dfrac{1}{n+1}\).</li>
+    <li>Límite: \(\displaystyle\lim_{n\to\infty}\dfrac{1}{n+1}=0\); por el límite de una resta, \(\displaystyle\lim_{n\to\infty}|a_{n}|=1-0=1\) (ver el aviso de rigor).</li>
+    <li>Si \(a_{n}\) tuviera límite \(0\), también \(|a_{n}|\) tendría límite \(0\) (ver el aviso de rigor). Pero \(|a_{n}|\) tiene límite \(1\), y \(1\neq 0\). Entonces \(a_{n}\) no tiene límite \(0\).</li>
+    <li>Por el criterio del enésimo término (hoja «Criterio del enésimo término»), la serie diverge.</li>
+    <li>Es alternante y diverge: sus saltos no se achican hasta cero; cada uno mide cerca de \(1\).</li>
+  </ol>
+  </div>
+  </div>
+
+  <div class="why">
+    <p><b>Errores frecuentes.</b> Creer que toda serie alternante converge: \(1-1+1-1+\cdots\) es alternante y diverge. Confundir \((-1)^{n}\) con \(-1^{n}\): en \(-1^{n}\) la potencia se calcula primero, \(-1^{n}=-(1^{n})=-1\) siempre, y el signo no alterna. Olvidar que \(b_{n}\) debe ser positivo para todo \(n\): si el factor que acompaña al signo cambia de signo o vale \(0\), la serie puede no alternar. Equivocarse en el primer signo: \((-1)^{n+1}\) empieza con \(+\) y \((-1)^{n}\) empieza con \(-\) (para \(n=1\)). Llamar alternante a cualquier serie con términos positivos y negativos: tienen que cambiar de signo en cada paso. Y creer que, porque las sumas parciales van en zigzag, ya se sabe a qué número se acercan: eso requiere una demostración aparte.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ahora tú</h2>
+  <div class="ex">
+    <p><span class="n">A</span>(a) ¿Es alternante \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n-1}\,\dfrac{3}{n^{2}}\)? Si lo es, da el signo y \(b_{n}\). (b) ¿Es alternante \(\displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{2n}}{n}\)? (c) Escribe en notación \(\Sigma\) la serie \(-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{6}+\dfrac{1}{8}-\cdots\)</p>
+    <details><summary>Pista</summary><div><p>Separa el signo del tamaño \(b_{n}=|a_{n}|\). En (b), calcula primero \((-1)^{2n}\). En (c), mira qué signo lleva el primer término.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) Signo: \((-1)^{n-1}\), que da el mismo signo que \((-1)^{n+1}\): \(+\) si \(n\) es impar, \(-\) si \(n\) es par.</li>
+        <li>Tamaño: \(b_{n}=\dfrac{3}{n^{2}}\). Como \(3&gt;0\) y \(n^{2}&gt;0\), \(b_{n}&gt;0\) para todo \(n\). Es alternante: \(3-\dfrac{3}{4}+\dfrac{3}{9}-\dfrac{3}{16}+\cdots\)</li>
+        <li>(b) Potencia de una potencia: \((-1)^{2n}=\left((-1)^{2}\right)^{n}=1^{n}=1\).</li>
+        <li>El término es \(\dfrac{1}{n}\), siempre positivo. No es alternante (es la serie armónica).</li>
+        <li>(c) Tamaños: \(\dfrac{1}{2},\ \dfrac{1}{4},\ \dfrac{1}{6},\ \dfrac{1}{8}\). Los denominadores son \(2\cdot 1,\ 2\cdot 2,\ 2\cdot 3,\ 2\cdot 4\): \(b_{n}=\dfrac{1}{2n}\).</li>
+        <li>Signos: \(-,\ +,\ -,\ +\). Negativo cuando \(n\) es impar: el factor es \((-1)^{n}\).</li>
+        <li>En notación: \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\,\dfrac{1}{2n}\).</li>
+        <li>Comprobación con \(n=1\) y \(n=2\): \((-1)^{1}\cdot\dfrac{1}{2\cdot 1}=-\dfrac{1}{2}\) y \((-1)^{2}\cdot\dfrac{1}{2\cdot 2}=\dfrac{1}{4}\). ✓</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">B</span>Para la serie \(3-\dfrac{3}{4}+\dfrac{3}{16}-\dfrac{3}{64}+\cdots\): (a) calcula \(S_{1},\ S_{2},\ S_{3}\) y \(S_{4}\); (b) escríbela en notación \(\Sigma\) y calcula su suma; (c) comprueba que \(S_{2}\) y \(S_{4}\) quedan bajo la suma, y \(S_{1}\) y \(S_{3}\), sobre ella.</p>
+    <details><summary>Pista</summary><div><p>Cada término es el anterior por \(-\dfrac{1}{4}\): es geométrica. Para comparar fracciones, llévalas a un denominador común.</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>(a) \(S_{1}=3\).</li>
+        <li>\(S_{2}=3-\dfrac{3}{4}\). Denominador común \(4\): \(\dfrac{12}{4}-\dfrac{3}{4}=\dfrac{12-3}{4}=\dfrac{9}{4}\).</li>
+        <li>\(S_{3}=\dfrac{9}{4}+\dfrac{3}{16}\). Denominador común \(16\): \(\dfrac{36}{16}+\dfrac{3}{16}=\dfrac{36+3}{16}=\dfrac{39}{16}\).</li>
+        <li>\(S_{4}=\dfrac{39}{16}-\dfrac{3}{64}\). Denominador común \(64\): \(\dfrac{156}{64}-\dfrac{3}{64}=\dfrac{156-3}{64}=\dfrac{153}{64}\).</li>
+        <li>(b) Cociente entre términos seguidos: \(\left(-\dfrac{3}{4}\right):3=-\dfrac{3}{4}\cdot\dfrac{1}{3}=-\dfrac{3}{12}=-\dfrac{1}{4}\); \(\dfrac{3}{16}:\left(-\dfrac{3}{4}\right)=\dfrac{3}{16}\cdot\left(-\dfrac{4}{3}\right)=-\dfrac{12}{48}=-\dfrac{1}{4}\); \(\left(-\dfrac{3}{64}\right):\dfrac{3}{16}=-\dfrac{3}{64}\cdot\dfrac{16}{3}=-\dfrac{48}{192}=-\dfrac{1}{4}\).</li>
+        <li>Es geométrica, con \(a=3\) y \(r=-\dfrac{1}{4}\): \(\displaystyle\sum_{n=1}^{\infty}3\left(-\dfrac{1}{4}\right)^{n-1}=\sum_{n=1}^{\infty}(-1)^{n-1}\,\dfrac{3}{4^{\,n-1}}\). Es alternante, con \(b_{n}=\dfrac{3}{4^{\,n-1}}&gt;0\).</li>
+        <li>\(|r|=\dfrac{1}{4}&lt;1\): converge, y su suma es \(\dfrac{a}{1-r}=\dfrac{3}{1-\left(-\frac{1}{4}\right)}\).</li>
+        <li>Denominador: \(1-\left(-\dfrac{1}{4}\right)=1+\dfrac{1}{4}=\dfrac{4}{4}+\dfrac{1}{4}=\dfrac{5}{4}\).</li>
+        <li>Se divide: \(3:\dfrac{5}{4}=3\cdot\dfrac{4}{5}=\dfrac{12}{5}\). La suma es \(\dfrac{12}{5}=2{,}4\).</li>
+        <li>(c) \(S_{1}=3=\dfrac{15}{5}\), y \(\dfrac{15}{5}&gt;\dfrac{12}{5}\): sobre la suma.</li>
+        <li>\(S_{2}=\dfrac{9}{4}\). Denominador común \(20\): \(\dfrac{9}{4}=\dfrac{45}{20}\) y \(\dfrac{12}{5}=\dfrac{48}{20}\). Como \(45&lt;48\): bajo la suma.</li>
+        <li>\(S_{3}=\dfrac{39}{16}\). Denominador común \(80\): \(\dfrac{39}{16}=\dfrac{195}{80}\) y \(\dfrac{12}{5}=\dfrac{192}{80}\). Como \(195&gt;192\): sobre la suma.</li>
+        <li>\(S_{4}=\dfrac{153}{64}\). Denominador común \(320\): \(\dfrac{153}{64}=\dfrac{765}{320}\) y \(\dfrac{12}{5}=\dfrac{768}{320}\). Como \(765&lt;768\): bajo la suma.</li>
+        <li>Las sumas parciales quedan a un lado y al otro de \(\dfrac{12}{5}\), cada vez más cerca: las distancias son \(\dfrac{3}{5},\ \dfrac{3}{20},\ \dfrac{3}{80},\ \dfrac{3}{320}\).</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="ex">
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Valentina regula el agua de la ducha. Parte con la llave cerrada y la gira \(60\) grados hacia el agua caliente. Se pasó: la devuelve la mitad, \(30\) grados. Ahora quedó corta: la avanza \(15\) grados. Y sigue así: cada giro es la mitad del anterior y en sentido contrario. (a) ¿En qué posición queda la llave después de cuatro giros? (b) Si siguiera sin fin, ¿a qué posición se acercaría? (c) ¿Cuánto le falta después del cuarto giro para llegar a esa posición?</p>
+    <details><summary>Pista</summary><div><p>La posición es \(60-30+15-\cdots\): una serie geométrica alternante con \(a=60\) y \(r=-\dfrac{1}{2}\).</p></div></details>
+    <details><summary>Solución paso a paso</summary><div>
+      <ol class="steps">
+        <li>Giros hacia el agua caliente se suman; giros de vuelta se restan. Posición: \(60-30+15-\cdots\)</li>
+        <li>(a) Cuarto giro: la mitad de \(15\), es decir, \(15:2=7{,}5\) grados, de vuelta.</li>
+        <li>\(S_{1}=60\). \(S_{2}=60-30=30\). \(S_{3}=30+15=45\). \(S_{4}=45-7{,}5=37{,}5\). Después de cuatro giros, la llave queda en \(37{,}5\) grados.</li>
+        <li>(b) Cada giro es el anterior por \(-\dfrac{1}{2}\): \(60\cdot\left(-\dfrac{1}{2}\right)=-30\); \((-30)\cdot\left(-\dfrac{1}{2}\right)=15\); \(15\cdot\left(-\dfrac{1}{2}\right)=-7{,}5\). Es geométrica, con \(a=60\) y \(r=-\dfrac{1}{2}\): \(\displaystyle\sum_{n=1}^{\infty}60\left(-\dfrac{1}{2}\right)^{n-1}\).</li>
+        <li>\(|r|=\dfrac{1}{2}&lt;1\): converge, y su suma es \(\dfrac{a}{1-r}=\dfrac{60}{1-\left(-\frac{1}{2}\right)}\).</li>
+        <li>Denominador: \(1-\left(-\dfrac{1}{2}\right)=1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}\).</li>
+        <li>Se divide: \(60:\dfrac{3}{2}=60\cdot\dfrac{2}{3}=\dfrac{120}{3}=40\). La llave se acerca a la posición de \(40\) grados.</li>
+        <li>(c) Se resta: \(40-37{,}5=2{,}5\). Después del cuarto giro le faltan \(2{,}5\) grados.</li>
+        <li>Las posiciones \(60,\ 30,\ 45,\ 37{,}5\) quedan a un lado y al otro de \(40\): se pasa, se queda corta, se pasa, se queda corta, cada vez por menos (\(20,\ 10,\ 5,\ 2{,}5\) grados).</li>
+      </ol>
+    </div></details>
+  </div>
+</section>
+
+<footer>
+  <span class="status">CI-L25-H16 · v001 · Pendiente de APR</span>
+</footer>
+</article>
+<!--SCENE-->
+/* utilidades comunes del lote 23 */
+function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
+function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
+function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 25 (series y sucesiones) */
+function ssSub(n){ return ('' + n).split('').map(function(d){ return String.fromCharCode(8320 + (+d)); }).join(''); }
+/* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
+function ssPlot(o){
+  var N = o.N, RUN = o.run || 20;
+  if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
+  return {
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
+    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    onInput:function(v){ v.q = null; v.fin = v.n >= N; },
+    draw:function(S, v){
+      var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.3, 0, N + 1.2, 0, {color:C.ink, width:1.1}); S.line(0, Math.min(0, o.ymin), 0, o.ymax + (o.ymax - o.ymin)*0.08, {color:C.ink, width:1.1});
+      for (i = 1; i <= N; i++){ c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.stroke(); if (N <= 12 || i % 2 === 0) num('' + i, X(i), Y(0) + 11, 'center'); }
+      for (y = o.ymin; y <= o.ymax + 1e-9; y += o.ystep) if (Math.abs(y) > 1e-9){ c.beginPath(); c.moveTo(X(0) - 3, Y(y)); c.lineTo(X(0) + 3, Y(y)); c.stroke(); if (!(o.guia && Math.abs(Y(y) - Y(o.a(n))) < 12 && Math.abs(y - o.a(n)) > 1e-9)) num(oaDec(y, o.ydec || 0), X(0) - 7, Y(y), 'right'); }
+      num('n', X(N + 1.2) + 7, Y(0), 'left'); num(o.ylab || 'aₙ', X(0) + 6, Y(o.ymax + (o.ymax - o.ymin)*0.08) - 4, 'left');
+      if (o.L != null){ c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(0), Y(o.L)); c.lineTo(X(N + 1.2), Y(o.L)); c.stroke(); c.setLineDash([]); txt(o.Llab, X(N + 1.2), Y(o.L) - 11, 'right', C.tan); }
+      for (i = 1; i <= n; i++){ c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(i), Y(0)); c.lineTo(X(i), Y(o.a(i))); c.stroke(); c.beginPath(); c.arc(X(i), Y(o.a(i)), i === n ? 4 : 3, 0, 6.2832); c.fillStyle = i === n ? C.rise : C.sec; c.fill(); }
+      if (o.guia){ /* guía punteada del término actual hasta el eje vertical, con su valor marcado en el eje */
+        var gy = Y(o.a(n)), gt = o.glab ? o.glab(n) : oaDec(o.a(n), o.ydec || 0), gw;
+        if (o.guia === 2) for (i = 1; i < n; i++){ c.strokeStyle = C.sec; c.globalAlpha = 0.45; c.lineWidth = 0.9; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(i), Y(o.a(i))); c.lineTo(X(0), Y(o.a(i))); c.stroke(); c.setLineDash([]); c.beginPath(); c.arc(X(0), Y(o.a(i)), 2, 0, 6.2832); c.fillStyle = C.sec; c.fill(); c.globalAlpha = 1; }
+        c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(n), gy); c.lineTo(X(0), gy); c.stroke(); c.setLineDash([]);
+        c.beginPath(); c.arc(X(0), gy, 2.6, 0, 6.2832); c.fillStyle = C.rise; c.fill();
+        c.font = '700 11.5px "Source Sans 3", system-ui, sans-serif'; gw = c.measureText(gt).width; c.fillStyle = '#fff'; c.fillRect(X(0) - 9 - gw, gy - 7, gw + 3, 14);
+        c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
+      if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
+      if (o.extra) o.extra(S, n, !!v.fin, txt);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+  };
+}
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
+/* L25 H16 · serie alternante: 1 − 1/2 + 1/4 − 1/8 + 1/16; cada término es un salto (azul si se suma, naranja si se resta) y las sumas parciales van en zigzag alrededor de 2/3 */
+function ci16Flecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), h, ux, uy; if (d < 1.5) return; ux = (bx - ax)/d; uy = (by - ay)/d; h = Math.min(8, d*0.7);
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*h*0.7, by - uy*h*0.7); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*h - uy*h*0.45, by - uy*h + ux*h*0.45); c.lineTo(bx - ux*h + uy*h*0.45, by - uy*h - ux*h*0.45); c.closePath(); c.fill(); }
+function ci16Seg(S, x0, y0, x1, y1, col, wd, dash, al){ var c = S.ctx; c.globalAlpha = al == null ? 1 : al; c.strokeStyle = col; c.lineWidth = wd; c.setLineDash(dash || []); c.beginPath(); c.moveTo(S.X(x0), S.Y(y0)); c.lineTo(S.X(x1), S.Y(y1)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+/* número exacto con los decimales justos (mínimo 2, máximo d), con coma, para TeX */
+function ci16Num(x, d){ var s = x.toFixed(d); if (Number(s) === 0) s = (0).toFixed(d); while (s.length - s.indexOf('.') - 1 > 2 && s.charAt(s.length - 1) === '0') s = s.slice(0, -1); return s.replace('.', '{,}'); }
+OA.scene('alt-idea', (function(){
+  var N = 5, SV = [1, 1/2, 3/4, 5/8, 11/16], PV = [0, 1, 1/2, 3/4, 5/8], LIM = 2/3;
+  var JP = [[0.25, -100, -6], [0.875, -100, -6], [0.5625, -100, -6], [0.815, -100, -6], [0.585, 0, 7]];
+  var PZ = [['J1', '+1', '+1', 'c-sec'], ['J2', '-\\tfrac{1}{2}', '−1/2', 'diff'], ['J3', '+\\tfrac{1}{4}', '+1/4', 'c-sec'], ['J4', '-\\tfrac{1}{8}', '−1/8', 'diff'], ['J5', '+\\tfrac{1}{16}', '+1/16', 'c-sec'],
+    ['P1', '1', '1', 'pt'], ['P2', '\\tfrac{1}{2}', '1/2', 'pt'], ['P3', '\\tfrac{3}{4}', '3/4', 'pt'], ['P4', '\\tfrac{5}{8}', '5/8', 'pt'], ['P5', '\\tfrac{11}{16}', '11/16', 'pt'],
+    ['LS', '\\tfrac{2}{3}', '2/3', 'c-tan'], ['YM', '\\tfrac{1}{2}', '1/2', ''],
+    ['Q', '1-\\tfrac{1}{2}+\\tfrac{1}{4}-\\tfrac{1}{8}+\\tfrac{1}{16}-\\cdots=\\ ?', '1 − 1/2 + 1/4 − 1/8 + 1/16 − … = ?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\sum_{n=1}^{\\infty}\\left(-\\tfrac{1}{2}\\right)^{n-1}=\\dfrac{1}{1+\\frac{1}{2}}=\\tfrac{2}{3}', '⟹ la suma de (−1/2)ⁿ⁻¹ desde n = 1 es 1/(1 + 1/2) = 2/3', 'diff'],
+    ['R1', 'S_{1}=1', 'S₁ = 1', ''],
+    ['R2', 'S_{2}=1-\\tfrac{1}{2}=\\tfrac{1}{2}', 'S₂ = 1 − 1/2 = 1/2', ''],
+    ['R3', 'S_{3}=\\tfrac{1}{2}+\\tfrac{1}{4}=\\tfrac{3}{4}', 'S₃ = 1/2 + 1/4 = 3/4', ''],
+    ['R4', 'S_{4}=\\tfrac{3}{4}-\\tfrac{1}{8}=\\tfrac{5}{8}', 'S₄ = 3/4 − 1/8 = 5/8', ''],
+    ['R5', 'S_{5}=\\tfrac{5}{8}+\\tfrac{1}{16}=\\tfrac{11}{16};\\quad\\text{suma de la serie: }\\tfrac{2}{3}', 'S₅ = 5/8 + 1/16 = 11/16; suma de la serie: 2/3', 'diff']];
+  var TXT = [['Se parte de cero. El primer término se suma:', 'flecha azul hacia arriba, hasta 1.'],
+    ['El segundo término se resta: flecha naranja', 'hacia abajo. La suma parcial baja a un medio.'],
+    ['El tercero se suma: sube, pero solo un cuarto.', 'No alcanza a volver a 1.'],
+    ['El cuarto se resta: baja, pero solo un octavo.', 'No alcanza a volver a un medio.'],
+    ['Sube un dieciseisavo. Recta burdeo: la suma.', 'Los puntos quedan arriba y abajo, más cerca.']];
+  function gx(n){ return -0.6 + 0.9*n; } function gy(y){ return 1.15 + 3.8*y; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-4.6, y1:7.6}, aspect:12.2/6.6,
+    aria:'Arriba, una franja dice qué muestra: una serie alternante suma y resta por turnos, y sus sumas parciales van en zigzag. Animación en cinco pasos con la serie 1 menos un medio más un cuarto menos un octavo más un dieciseisavo, en una gráfica: en horizontal el número de términos sumados, de 1 a 5; en vertical, la suma parcial, de 0 a 1. Uno: una flecha azul sube desde 0 hasta 1, rotulada más 1; queda un punto a la altura 1, con su valor y una línea punteada hasta el eje vertical. Dos: desde la altura 1, una flecha naranja baja un medio, rotulada menos un medio; el punto queda a la altura un medio. Tres: una flecha azul sube un cuarto; el punto queda en tres cuartos. Cuatro: una flecha naranja baja un octavo; el punto queda en cinco octavos. Cinco: una flecha azul sube un dieciseisavo; el punto queda en once dieciseisavos; después aparece una recta horizontal burdeo a la altura dos tercios, la suma de la serie, y un trazo burdeo une cada punto con la recta: los puntos primero, tercero y quinto quedan arriba de la recta, el segundo y el cuarto abajo, y cada trazo mide la mitad del anterior. Nada de lo que aparece se borra; la pregunta queda arriba y la respuesta se escribe debajo de ella. Bajo la figura, un registro numerado guarda la suma parcial de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> término que se suma: la suma parcial sube</span><span><i class="sw rise"></i> término que se resta: la suma parcial baja</span><span><i class="sw tan"></i> la suma de la serie, \\(\\tfrac{2}{3}\\), y lo que separa de ella a cada suma parcial</span><span>puntos: las sumas parciales; líneas punteadas grises: llevan cada una a su valor en el eje \\(S_{n}\\)</span>',
+    anim:{run:34000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', s = X(1) - X(0), i, w, e, a, b, col, g;
+      function txt(t, x, y){ c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
+      function num(t, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      /* ejes: n en horizontal, la suma parcial en vertical */
+      S.line(gx(0), gy(0), gx(5.5), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(1.1), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= N; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0)) - 3); c.lineTo(X(gx(i)), Y(gy(0)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0)) + 11, 'center'); }
+      c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(1))); c.lineTo(X(gx(0)) + 3, Y(gy(1))); c.stroke();
+      c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(0.5))); c.lineTo(X(gx(0)) + 3, Y(gy(0.5))); c.stroke(); num('1', X(gx(0)) - 7, Y(gy(1)), 'right'); L('YM', gx(0), gy(0.5), -100, -6, 0);
+      num('0', X(gx(0)) - 7, Y(gy(0)), 'right'); num('n', X(gx(5.5)) + 6, Y(gy(0)), 'left'); num('Sₙ', X(gx(0)) + 6, Y(gy(1.1)) - 1, 'left');
+      /* paso 5, segunda mitad: la suma de la serie (recta burdeo) y lo que separa de ella a cada suma parcial */
+      g = k === N ? Math.max(0, Math.min(1, (u - 0.5)*2)) : 0;
+      if (g > 0){ ci16Seg(S, gx(0), gy(LIM), gx(0) + (gx(5.5) - gx(0))*g, gy(LIM), C.tan, 1.2, [5, 4]);
+        for (i = 1; i <= N; i++) ci16Seg(S, gx(i) + 0.09, gy(SV[i - 1]), gx(i) + 0.09, gy(SV[i - 1] + (LIM - SV[i - 1])*g), C.tan, 1.8);
+        if (g > 0.9){ L('LS', gx(5.5), gy(LIM), 0, 4, -1); c.font = '600 11px ' + F; c.fillStyle = C.tan; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('trazos burdeo: distancia a la recta', X(5.2), Y(gy(0.96))); } }
+      /* un salto por término: guía punteada desde el punto anterior, flecha, punto y punteada al eje; lo de cada paso queda */
+      for (i = 1; i <= k; i++){ w = i < k ? 1 : (i === N ? Math.min(1, u*2) : u); a = PV[i - 1]; b = SV[i - 1]; col = b > a ? C.sec : C.rise;
+        if (i > 1) ci16Seg(S, gx(i - 1), gy(a), gx(i - 1) + 0.9*Math.min(1, w*2), gy(a), col, 0.9, [3, 3], 0.8);
+        e = i === 1 ? w : Math.max(0, (w - 0.5)*2);
+        if (e > 0) ci16Flecha(S, gx(i), gy(a), gx(i), gy(a + (b - a)*e), col, 2);
+        if (w >= 1){ ci16Seg(S, gx(i), gy(b), gx(0), gy(b), C.ink, 0.9, [2, 3], 0.35); c.beginPath(); c.arc(X(gx(0)), Y(gy(b)), 2, 0, 6.2832); c.fillStyle = C.ink; c.fill();
+          c.beginPath(); c.arc(X(gx(i)), Y(gy(b)), 2.8, 0, 6.2832); c.fillStyle = C.ink; c.fill();
+          L('J' + i, gx(i), gy(JP[i - 1][0]), JP[i - 1][1], JP[i - 1][2], 0);
+          if (i === 3) L('P3', gx(3), gy(b), -100, -4, -12); else L('P' + i, gx(i), gy(b), -50, 0, b > a ? -13 : 13); } }
+      L('Q', -1.2, 6.28, 0); if (k === N && u > 0.75) L('F', -1.2, 5.72, 0); /* la pregunta queda; la respuesta se escribe debajo */
+      txt(TXT[k - 1][0], -1.2, 0.45); txt(TXT[k - 1][1], -1.2, 0.45 - 21/s);
+      c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(6.28));
+      dtQue(S, 'una serie alternante suma y resta', 'por turnos: sus sumas parciales van en zigzag.');
+      T.fin();
+      oaReg(S, k, N, -1.2, -1.0, [6, 36, 66, 96, 126]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', f = function(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }, R = [
+      '\\text{Serie: }1-' + f(1, 2) + '+' + f(1, 4) + '-' + f(1, 8) + '+' + f(1, 16) + '-\\cdots' + Q + '\\text{En notación: }\\displaystyle\\sum_{n=1}^{\\infty}(-1)^{n+1}\\,b_{n},\\quad b_{n}=\\dfrac{1}{2^{\\,n-1}}' + Q + '\\text{Signo: }(-1)^{n+1}\\text{ vale }1\\text{ si }n\\text{ es impar}' + Q + '\\text{(se suma) y }-1\\text{ si }n\\text{ es par (se resta).}' + Q + 'b_{1}=1,\\ \\ b_{2}=' + f(1, 2) + ',\\ \\ b_{3}=' + f(1, 4) + ',\\ \\ b_{4}=' + f(1, 8) + ',\\ \\ b_{5}=' + f(1, 16) + Q + '\\text{Primer término: se suma. Flecha azul de }0\\text{ a }1\\text{:}' + Q + 'S_{1}=b_{1}=1',
+      '\\text{Segundo término: se resta (flecha naranja).}' + Q + 'S_{2}=S_{1}-b_{2}=1-' + f(1, 2) + Q + '\\text{Denominador común }2\\text{: }1=' + f(2, 2) + Q + f(2, 2) + '-' + f(1, 2) + '=\\dfrac{2-1}{2}=' + f(1, 2) + Q + 'S_{2}=' + f(1, 2),
+      '\\text{Tercer término: se suma (flecha azul).}' + Q + 'S_{3}=S_{2}+b_{3}=' + f(1, 2) + '+' + f(1, 4) + Q + '\\text{Denominador común }4\\text{: }' + f(1, 2) + '=' + f(2, 4) + Q + f(2, 4) + '+' + f(1, 4) + '=\\dfrac{2+1}{4}=' + f(3, 4) + Q + 'S_{3}=' + f(3, 4),
+      '\\text{Cuarto término: se resta (flecha naranja).}' + Q + 'S_{4}=S_{3}-b_{4}=' + f(3, 4) + '-' + f(1, 8) + Q + '\\text{Denominador común }8\\text{: }' + f(3, 4) + '=' + f(6, 8) + Q + f(6, 8) + '-' + f(1, 8) + '=\\dfrac{6-1}{8}=' + f(5, 8) + Q + 'S_{4}=' + f(5, 8),
+      '\\text{Quinto término: se suma (flecha azul).}' + Q + 'S_{5}=S_{4}+b_{5}=' + f(5, 8) + '+' + f(1, 16) + Q + '\\text{Denominador común }16\\text{: }' + f(5, 8) + '=' + f(10, 16) + Q + f(10, 16) + '+' + f(1, 16) + '=\\dfrac{10+1}{16}=' + f(11, 16) + Q + 'S_{5}=' + f(11, 16)
+        + Q + '\\text{La suma de la serie (recta burdeo):}' + Q + '\\text{cada término es el anterior por }-' + f(1, 2) + '\\text{:}' + Q + '1\\cdot\\left(-' + f(1, 2) + '\\right)=-' + f(1, 2) + ',\\quad\\left(-' + f(1, 2) + '\\right)\\left(-' + f(1, 2) + '\\right)=' + f(1, 4) + Q + f(1, 4) + '\\cdot\\left(-' + f(1, 2) + '\\right)=-' + f(1, 8) + ',\\quad\\left(-' + f(1, 8) + '\\right)\\left(-' + f(1, 2) + '\\right)=' + f(1, 16)
+        + Q + '\\text{Es geométrica, con }a=1\\text{ y }r=-' + f(1, 2) + '.' + Q + '|r|=' + f(1, 2) + '<1\\text{: converge (hoja}' + Q + '\\text{«Series geométricas infinitas») y su suma es}' + Q + '\\dfrac{a}{1-r}=\\dfrac{1}{1-\\left(-\\frac{1}{2}\\right)}=\\dfrac{1}{1+\\frac{1}{2}}' + Q + '1+' + f(1, 2) + '=' + f(2, 2) + '+' + f(1, 2) + '=' + f(3, 2) + Q + '1:' + f(3, 2) + '=1\\cdot' + f(2, 3) + '=' + f(2, 3)
+        + Q + '\\text{Lo que separa cada suma parcial de }' + f(2, 3) + Q + '\\text{(trazos burdeo):}' + Q + 'S_{1}-' + f(2, 3) + '=' + f(3, 3) + '-' + f(2, 3) + '=' + f(1, 3) + Q + f(2, 3) + '-S_{2}=' + f(4, 6) + '-' + f(3, 6) + '=' + f(1, 6) + Q + 'S_{3}-' + f(2, 3) + '=' + f(9, 12) + '-' + f(8, 12) + '=' + f(1, 12) + Q + f(2, 3) + '-S_{4}=' + f(16, 24) + '-' + f(15, 24) + '=' + f(1, 24) + Q + 'S_{5}-' + f(2, 3) + '=' + f(33, 48) + '-' + f(32, 48) + '=' + f(1, 48)
+        + Q + 'S_{1},\\ S_{3},\\ S_{5}\\text{ quedan arriba de }' + f(2, 3) + '\\text{;}' + Q + 'S_{2},\\ S_{4}\\text{ quedan abajo. Cada distancia}' + Q + '\\text{es la mitad de la anterior: zigzag que}' + Q + '\\text{se cierra sobre }' + f(2, 3) + '.'];
+      return dtPasos(R.slice(0, k)); }
+  };
+})());
+/* número ↔ figura: las ocho primeras sumas parciales de 1 + r + r² + … con r entre −1 y 0; el foco es el signo alternado */
+OA.scene('alt-vivo', (function(){
+  var NP = 8, PZ = [['P1', 'S_{1}', 'S₁', 'pt'], ['P2', 'S_{2}', 'S₂', 'pt'], ['P3', 'S_{3}', 'S₃', 'pt'], ['P4', 'S_{4}', 'S₄', 'pt'], ['A2', 'a_{2}', 'a₂', 'diff'], ['A3', 'a_{3}', 'a₃', 'c-sec'], ['A4', 'a_{4}', 'a₄', 'diff']];
+  function gx(n){ return -0.55 + 0.6*n; } function gy(y){ return 0.75 + 3.4*y; }
+  /* todo se calcula con r redondeada a centésimas: R = 100·r es un entero y las cuentas son exactas */
+  function dat(v){ var R = Math.round(Math.max(-1, Math.min(0, v.r == null ? -0.5 : +v.r))*100), D = 100 - R, i, t = 1, s = 0, a = [], o;
+    for (i = 0; i < NP; i++){ s += t; a.push(s); t *= R/100; }
+    o = {R:R, r:R/100, D:D, a:a, caso:R === 0 ? 0 : (R <= -100 ? 3 : 1), a2:R/100, a3:R*R/1e4, a4:R*R*R/1e6, S2:(100 + R)/100, S3:(1e4 + 100*R + R*R)/1e4, S4:(1e6 + 1e4*R + 100*R*R + R*R*R)/1e6};
+    if (o.caso !== 3){ o.lim = 100/D; o.Sr = Math.round(10000/D)/100; o.eS = 10000 % D === 0; }
+    return o; }
+  function fr(d){ return d.caso === 0 ? ['razón: 0,00. Los términos que siguen valen cero', 'sin flechas: no se suma ni se resta nada', 'no hay zigzag: todos los puntos valen 1', 'recta burdeo: la suma; los puntos están en ella']
+    : ['razón: ' + oaDec(d.r, 2) + ' (negativa): los signos se alternan', 'flecha azul: término positivo, la suma sube', 'flecha naranja: término negativo, la suma baja', d.caso === 1 ? 'recta burdeo: la suma; puntos a ambos lados' : 'sin recta burdeo: salta entre 1 y 0, no hay suma']; }
+  return {
+    world:{x0:-1.3, x1:5.3, y0:-1.5, y1:5.6}, aspect:7.1/6.6,
+    aria:'Arriba, una franja dice qué muestra: con razón negativa los signos se alternan y las sumas parciales van en zigzag. Gráfica de puntos con las ocho primeras sumas parciales de la serie geométrica 1 más r más r al cuadrado, y así. Un deslizador cambia la razón r entre menos 1 y 0. Cada punto está unido por una línea punteada con su valor en el eje vertical. Entre cada punto y el siguiente hay una flecha vertical, que es el término que se agrega: azul hacia arriba si el término es positivo, naranja hacia abajo si es negativo. Los cuatro primeros puntos llevan su nombre y las tres primeras flechas, el nombre de su término. Con r igual a 0 no hay flechas y todos los puntos están a la altura 1, sobre una recta burdeo punteada. Con r negativo y mayor que menos 1, las flechas alternan azul y naranja, cada una más corta que la anterior, y los puntos quedan a un lado y al otro de la recta burdeo, trazada a la altura 1 dividido por 1 menos r, cada vez más cerca de ella. Con r igual a menos 1 todas las flechas miden 1, los puntos saltan entre 1 y 0, y no hay recta. Bajo el dibujo, cuatro frases dicen la razón, qué significa cada color de flecha y por qué hay o no hay recta burdeo; más abajo, la cuenta completa, paso a paso.',
+    labels:PZ,
+    sliders:[{id:'r', tex:'r', min:-1, max:0, step:0.25, value:-0.5}],
+    legend:'<span><i class="sw sec"></i> término positivo: la suma parcial sube</span><span><i class="sw rise"></i> término negativo: la suma parcial baja</span><span><i class="sw tan"></i> la suma, \\(\\tfrac{1}{1-r}\\), cuando \\(|r|&lt;1\\)</span><span>puntos: las sumas parciales; líneas punteadas grises: llevan cada una a su valor en el eje \\(S_{n}\\)</span>',
+    anim:{run:20000, hold:5000, still:1, apply:function(p, v){ v.q = p; v.r = -p; }},
+    onInput:function(v){ v.q = null; },
+    draw:function(S, v){
+      var d = dat(v), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', a = d.a, s = X(1) - X(0), i, y, p, col, up, jp, fs = fr(d);
+      function num(t, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(gx(0), gy(0), gx(8.6), gy(0), {color:C.ink, width:1.1}); S.line(gx(0), gy(0), gx(0), gy(1.1), {color:C.ink, width:1.1});
+      c.strokeStyle = C.ink; c.lineWidth = 1; c.setLineDash([]);
+      for (i = 1; i <= NP; i++){ c.beginPath(); c.moveTo(X(gx(i)), Y(gy(0)) - 3); c.lineTo(X(gx(i)), Y(gy(0)) + 3); c.stroke(); num('' + i, X(gx(i)), Y(gy(0)) + 11, 'center'); }
+      for (i = 1; i <= 2; i++){ c.beginPath(); c.moveTo(X(gx(0)) - 3, Y(gy(i/2))); c.lineTo(X(gx(0)) + 3, Y(gy(i/2))); c.stroke(); num(i === 1 ? '0,5' : '1', X(gx(0)) - 7, Y(gy(i/2)), 'right'); }
+      num('0', X(gx(0)) - 7, Y(gy(0)), 'right'); num('n', X(gx(8.6)), Y(gy(0)) + 11, 'center'); num('Sₙ', X(gx(0)) + 6, Y(gy(1.1)) - 1, 'left');
+      /* la suma, cuando existe */
+      if (d.caso !== 3){ ci16Seg(S, gx(0), gy(d.lim), gx(8.6), gy(d.lim), C.tan, 1.2, [5, 4]); c.font = '700 11.5px ' + F; c.fillStyle = C.tan; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(oaDec(d.Sr, 2), X(gx(8.6)) + 4, Y(gy(d.lim))); }
+      /* punteadas al eje, saltos (flechas) y puntos */
+      for (i = 1; i <= NP; i++){ y = a[i - 1]; ci16Seg(S, gx(i), gy(y), gx(0), gy(y), C.ink, 0.9, [2, 3], 0.3); c.beginPath(); c.arc(X(gx(0)), Y(gy(y)), 2, 0, 6.2832); c.fillStyle = C.ink; c.fill(); }
+      for (i = 2; i <= NP; i++){ y = a[i - 1]; p = a[i - 2]; jp = Math.abs(y - p)*3.4*s; if (jp < 1.5) continue; col = y > p ? C.sec : C.rise;
+        ci16Seg(S, gx(i - 1), gy(p), gx(i), gy(p), col, 0.9, [3, 3], 0.8); ci16Flecha(S, gx(i), gy(p), gx(i), gy(y), col, 2);
+        if (i <= 4 && jp >= 16) T.L('A' + i, gx(i), gy((y + p)/2), -100, -4, 0); }
+      for (i = 1; i <= NP; i++){ y = a[i - 1]; c.beginPath(); c.arc(X(gx(i)), Y(gy(y)), 2.8, 0, 6.2832); c.fillStyle = C.ink; c.fill();
+        if (i <= 4){ up = i % 2 === 1 || d.caso === 0; if (up) T.L('P' + i, gx(i), gy(y), -50, 0, -12); else if (y < 0.08) T.L('P' + i, gx(i), gy(y), 0, 5, -10); else T.L('P' + i, gx(i), gy(y), -50, 0, 12); } }
+      txt(fs[0], X(-1.2), Y(0.12), 'left', C.ink); txt(fs[1], X(-1.2), Y(0.12) + 21, 'left', d.caso === 0 ? C.ink : C.sec); txt(fs[2], X(-1.2), Y(0.12) + 42, 'left', d.caso === 0 ? C.ink : C.rise); txt(fs[3], X(-1.2), Y(0.12) + 63, 'left', d.caso === 3 ? C.rise : C.tan);
+      dtQue(S, 'con razón negativa los signos se', 'alternan: las sumas parciales van en zigzag.');
+      T.fin();
+    },
+    caption:function(v){ var d = dat(v); return d.caso === 0 ? 'Con razón 0,00 no hay signos alternados: todas las sumas parciales valen 1 y la suma es 1.' : d.caso === 1 ? 'Con razón ' + oaDec(d.r, 2) + ' los términos alternan de signo y las sumas parciales van en zigzag, cada vez más cerca de la suma, ' + (d.eS ? '' : 'aproximadamente ') + oaDec(d.Sr, 2) + '.' : 'Con razón −1,00 las sumas parciales saltan entre 1 y 0: la serie es alternante y no tiene suma.'; },
+    readout:function(v){ var d = dat(v), n = ci16Num, p = function(z, k){ return z < 0 ? '(' + n(z, k) + ')' : n(z, k); }, Q = '\\\\&\\qquad ', r = d.r, L;
+      L = ['\\text{Datos: }a=1,\\qquad r=' + n(r, 2) + Q + '\\text{Serie: }1+r+r^{2}+r^{3}+\\cdots=\\displaystyle\\sum_{n=1}^{\\infty}r^{\\,n-1}',
+        '\\text{Términos: cada uno es el anterior por }r\\text{:}' + Q + 'a_{1}=1' + Q + 'a_{2}=a_{1}\\cdot r=1\\cdot ' + p(r, 2) + '=' + n(d.a2, 2) + Q + 'a_{3}=a_{2}\\cdot r=' + p(d.a2, 2) + '\\cdot ' + p(r, 2) + '=' + n(d.a3, 4) + Q + 'a_{4}=a_{3}\\cdot r=' + n(d.a3, 4) + '\\cdot ' + p(r, 2) + '=' + n(d.a4, 6)
+          + (d.caso === 0 ? Q + '\\text{Desde el segundo, los términos valen }0\\text{:}' + Q + '\\text{no hay signos que alternar. No es una}' + Q + '\\text{serie alternante (se pide }b_{n}>0\\text{).}' : Q + '\\text{Signos: }+,\\ -,\\ +,\\ -\\text{. Se alternan, porque}' + Q + '\\text{multiplicar por un negativo cambia el signo.}' + Q + '\\text{Es alternante, con }b_{n}=|a_{n}|=' + n(-r, 2) + '^{\\,n-1}.'),
+        '\\text{Sumas parciales (los puntos):}' + Q + 'S_{1}=a_{1}=1' + Q + 'S_{2}=S_{1}+a_{2}=1+' + p(d.a2, 2) + '=' + n(d.S2, 2) + (d.caso === 0 ? '' : '\\quad\\text{(baja)}') + Q + 'S_{3}=S_{2}+a_{3}=' + n(d.S2, 2) + '+' + n(d.a3, 4) + '=' + n(d.S3, 4) + (d.caso === 0 ? '' : '\\quad\\text{(sube)}') + Q + 'S_{4}=S_{3}+a_{4}=' + n(d.S3, 4) + '+' + p(d.a4, 6) + Q + '\\phantom{S_{4}}=' + n(d.S4, 6) + (d.caso === 0 ? '' : '\\quad\\text{(baja)}') + Q + (d.caso === 0 ? '\\text{Así siguen hasta }S_{8}\\text{: todas valen }1.' : '\\text{Así siguen hasta }S_{8}\\text{: una sube, la otra baja.}'),
+        '\\text{Se compara }|r|\\text{ con }1\\text{:}' + Q + '|r|=' + n(Math.abs(r), 2) + (d.caso === 3 ? '\\text{, que no es menor que }1.' : '<1') + (d.caso === 3 ? '' : Q + '\\text{La serie converge (hoja}' + Q + '\\text{«Series geométricas infinitas»).}')];
+      if (d.caso !== 3){ L.push('\\text{Suma: }\\dfrac{a}{1-r}=\\dfrac{1}{1-' + p(r, 2) + '}' + Q + '\\text{Resta: }1-' + p(r, 2) + (d.caso === 0 ? '' : '=1+' + n(-r, 2)) + '=' + n(d.D/100, 2) + Q + '\\text{División: }1:' + n(d.D/100, 2) + (d.eS ? '=' : '\\approx ') + n(d.Sr, 2) + Q + '\\text{Es la altura de la recta burdeo.}');
+        if (d.caso === 0) L.push('\\text{Con }r=0\\text{ no hay zigzag: los puntos}' + Q + '\\text{están todos sobre la recta burdeo, en }1.');
+        else L.push('\\text{Qué significa: los puntos quedan a un lado}' + Q + '\\text{y al otro de la recta burdeo.}' + (d.S2 < d.Sr && d.Sr < 1 ? Q + 'S_{2}=' + n(d.S2, 2) + '<' + n(d.Sr, 2) + '<1=S_{1}' : Q + '\\text{(Con dos decimales, }S_{2}\\text{ y la suma}' + Q + '\\text{no se distinguen.)}') + Q + '\\text{Cada salto es más corto que el anterior}' + Q + '\\text{(se multiplica por }' + n(-r, 2) + '\\text{): el zigzag se cierra}' + Q + '\\text{sobre la suma.}'); }
+      else { L.push('\\text{La fórmula }\\dfrac{a}{1-r}\\text{ no da la suma aquí:}' + Q + '\\text{vale solo si }|r|<1.' + Q + '\\text{Por eso no hay recta burdeo.}');
+        L.push('\\text{Todos los términos cumplen }|a_{n}|=1\\text{:}' + Q + '\\text{no tienen límite }0.' + Q + '\\text{Por el criterio del enésimo término,}' + Q + '\\text{la serie diverge.}');
+        L.push('\\text{Qué significa: los puntos saltan entre }1\\text{ y }0' + Q + '\\text{y no se acercan a un solo número. Es}' + Q + '\\text{alternante y no tiene suma: alternar}' + Q + '\\text{no basta para converger.}'); }
+      return dtPasos(L); }
+  };
+})());
