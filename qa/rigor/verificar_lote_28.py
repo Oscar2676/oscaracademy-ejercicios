@@ -455,4 +455,45 @@ for a_, b_, c_, d_ in itertools.product(_G[::2], repeat=4):
         ok(det2(c_, d_, a_, b_) == c_*b_ - d_*a_ == b_*c_ - a_*d_ == -(a_*d_ - b_*c_) and det2(a_, b_, a_, b_) == 0 and det2(k_*a_, k_*b_, c_, d_) == k_*a_*d_ - k_*b_*c_ == k_*(a_*d_ - b_*c_) == det2(a_, b_, k_*c_, k_*d_) and det2(0, 0, c_, d_) == 0 and det2(a_, b_, k_*a_, k_*b_) == 0 and det2(a_ + k_*c_, b_ + k_*d_, c_, d_) == det2(a_, b_, c_, d_) + det2(k_*c_, k_*d_, c_, d_) == det2(a_, b_, c_, d_) and det2(k_*a_, k_*b_, k_*c_, k_*d_) == k_*k_*a_*d_ - k_*k_*b_*c_ == k_**2*(a_*d_ - b_*c_), 'H04 v005 k2 con letras')
         ok(det2(a_ + k_, b_ + 2*k_, c_, d_) == (a_ + k_)*d_ - (b_ + 2*k_)*c_ == a_*d_ + k_*d_ - b_*c_ - 2*k_*c_ == (a_*d_ - b_*c_) + (k_*d_ - 2*k_*c_) == det2(a_, b_, c_, d_) + det2(k_, 2*k_, c_, d_), 'H04 v005 propiedad 6')
 ok(det2(2, 3, 0, 6) == 2*6 - 3*0 == 12 and det2(1, 3, 1, 6) == 1*6 - 3*1 == 3 and det2(1, 2, 1, 0) == 1*0 - 2*1 == -2 and 0*12 - 4*3 + 5*(-2) == 0 - 12 - 10 == -22 == _d3([[0, 4, 5], [1, 2, 3], [1, 0, 6]]) == -_d3(_M), 'H04 v005 k3 con números')
+# ===== Revisión general (cuarta y quinta ley), 24-nov 18 h UTC: H05 v004, H06 v004, H07 v004, H08 v004, H09 v003
+def _tr(m): return [list(r) for r in zip(*m)]
+def _mul(A, B): return [[sum(A[r][k]*B[k][c] for k in range(len(B))) for c in range(len(B[0]))] for r in range(len(A))]
+def _dd(m): return det2(m[0][0], m[0][1], m[1][0], m[1][1])
+# H05 v004 · encabezado, k1, k2, k3, ejemplos 2 y 4, ejercicio B
+ok(_tr([[3, 5], [2, 4]]) == [[3, 2], [5, 4]] and 3*4 - 5*2 == 12 - 10 == 2 and 3*4 - 2*5 == 12 - 10 == 2 and 5*2 == 2*5 == 10 and _tr([[3, 2], [5, 4]]) == [[3, 5], [2, 4]], 'H05 v004 encabezado y k1')
+_MT = _tr(_M)
+ok(_MT == [[1, 0, 1], [2, 4, 0], [3, 5, 6]] and _M[1][2] == 5 == _MT[2][1] and (_M[0][0], _M[1][1], _M[2][2]) == (1, 4, 6), 'H05 v004 k1 con números')
+ok(_sar(_M) == ((1*4*6, 2*5*1, 3*0*0), (3*4*1, 1*5*0, 2*0*6)) == ((24, 10, 0), (12, 0, 0)) and _sar(_MT) == ((1*4*6, 0*0*3, 1*2*5), (1*4*3, 1*0*5, 0*2*6)) == ((24, 0, 10), (12, 0, 0)) and (24 + 10 + 0) - (12 + 0 + 0) == 34 - 12 == 22 == (24 + 0 + 10) - (12 + 0 + 0) == _d3(_M) == _d3(_MT), 'H05 v004 k2 con números y ej2')
+for m_ in itertools.product((-2, -1, 0, 1, 3), repeat=9):
+    if sum(m_) % 7: continue
+    a, b, c, d, e, f, g, h, i = m_
+    ok(_d3(_tr([[a, b, c], [d, e, f], [g, h, i]])) == a*e*i + d*h*c + g*b*f - c*e*g - f*h*a - i*b*d == a*e*i + c*d*h + b*f*g - c*e*g - a*f*h - b*d*i == _d3([[a, b, c], [d, e, f], [g, h, i]]), 'H05 v004 k2 con letras')
+ok(all(a_*d_ - c_*b_ == a_*d_ - b_*c_ and det2(b_, a_, d_, c_) == -det2(a_, b_, c_, d_) for a_ in _G for b_ in _G for c_ in _G[::2] for d_ in _G[::2]) and det2(5, 3, 4, 2) == 5*2 - 3*4 == 10 - 12 == -2, 'H05 v004 segundo orden y k3')
+ok(all(2*2 - b_*1 == 4 - b_ == 2*2 - 1*b_ for b_ in _G) and (-1)*(-1) == 1 and 1*(-1) == -1 and 2*2*2 == 8 and 8*7 == 56, 'H05 v004 k3 vivo, ej4 y B')
+# H06 v004 · encabezado, k1, k2, k3, ejemplo 3, ejercicio B
+_A6, _B6 = [[1, 2], [3, 4]], [[2, 0], [1, 3]]
+ok((1*2 + 2*1, 1*0 + 2*3, 3*2 + 4*1, 3*0 + 4*3) == (2 + 2, 0 + 6, 6 + 4, 0 + 12) == (4, 6, 10, 12) and _mul(_A6, _B6) == [[4, 6], [10, 12]] and _dd(_A6) == 1*4 - 2*3 == 4 - 6 == -2 and _dd(_B6) == 2*3 - 0*1 == 6 and _dd(_mul(_A6, _B6)) == 4*12 - 6*10 == 48 - 60 == -12 == (-2)*6, 'H06 v004 encabezado')
+ok(_mul([[1, -1], [1, 1]], [[2], [0]]) == [[1*2 + (-1)*0], [1*2 + 1*0]] == [[2], [2]] and _mul([[1, -1], [1, 1]], [[1], [1]]) == [[1*1 + (-1)*1], [1*1 + 1*1]] == [[0], [2]], 'H06 v004 k1 columnas')
+for a, b, c, d, e, f, g, h in itertools.product((-2, 0, 1, 3), repeat=8):
+    ok((a*e + b*g)*(c*f + d*h) == a*e*c*f + a*e*d*h + b*g*c*f + b*g*d*h and (a*f + b*h)*(c*e + d*g) == a*f*c*e + a*f*d*g + b*h*c*e + b*h*d*g and _dd(_mul([[a, b], [c, d]], [[e, f], [g, h]])) == a*d*e*h + b*c*f*g - a*d*f*g - b*c*e*h == a*d*e*h - a*d*f*g - b*c*e*h + b*c*f*g == a*d*(e*h - f*g) - b*c*(e*h - f*g) == (a*d - b*c)*(e*h - f*g), 'H06 v004 k2 con letras')
+ok((1*4 - 2*3)*(2*3 - 0*1) == (4 - 6)*(6 - 0) == (-2)*6 == -12 and det2(1, 0, 0, 1) == 1*1 - 0*0 == 1 and all(1*k_ - 1*0 == k_ for k_ in _G) and 22*12 == 22*10 + 22*2 == 220 + 44 == 264 and 3*3 == 9 and 9*(-2) == -18, 'H06 v004 comprobación, k3, ej3 y B')
+# H07 v004 · encabezado, k1, k2, k3, ejemplos 1 y 3
+_M7 = [[2, -1, 0], [3, 1, -2], [-1, 4, 5]]
+ok(_M7[1] == [3, 1, -2] and [r[2] for r in _M7] == [0, -2, 5] and _M7[1][2] == -2 and _M7[2][1] == 4 and 2*2 == 4 and 3*3 == 9 and det2(3, 5, 4, 6) == 3*6 - 5*4 == 18 - 20 == -2 and (1 + 3, 2 + 2, 3 + 1) == (4, 4, 4), 'H07 v004 encabezado, k1 y k2')
+ok((-1)**2 == (-1)*(-1) == 1 and (-1)**3 == (-1)*(-1)*(-1) == 1*(-1) == -1 and [['+' if (i_ + j_) % 2 == 0 else '-' for j_ in (1, 2, 3)] for i_ in (1, 2, 3)] == [['+', '-', '+'], ['-', '+', '-'], ['+', '-', '+']] and [[i_ + j_ for j_ in (1, 2, 3)] for i_ in (1, 2, 3)] == [[2, 3, 4], [3, 4, 5], [4, 5, 6]], 'H07 v004 k3 signos')
+ok(_sar([[1, 2, 3], [2, 4, 6], [3, 6, 9]]) == ((1*4*9, 2*6*3, 3*2*6), (3*4*3, 1*6*6, 2*2*9)) == ((36, 36, 36), (36, 36, 36)) and 36 + 36 + 36 == 108 and 108 - 108 == 0, 'H07 v004 ej3 Sarrus')
+# H08 v004 · encabezado, demostración, k3, ejercicio B
+ok((2*3 - 1*1, 5*3 - 5*1) == (6 - 1, 15 - 5) == (5, 10) and Fr(10, 5) == 2 and det2(2, 1, 1, 3) == 5 and det2(5, 1, 5, 3) == 5*3 - 1*5 == 10 and (3*2 - 1*1, 5*2 - 5*1) == (5, 5) and Fr(5, 5) == 1 and det2(2, 5, 1, 5) == 2*5 - 5*1 == 5 and 2*2 + 1*1 == 4 + 1 == 5 and 1*2 + 3*1 == 2 + 3 == 5, 'H08 v004 encabezado')
+for a_, b_, c_, d_, e_, f_ in itertools.product(_G[::3], repeat=6):
+    D_ = a_*d_ - b_*c_
+    if D_ == 0: continue
+    x_, y_ = (e_*d_ - b_*f_)/D_, (a_*f_ - e_*c_)/D_
+    ok(a_*x_ + b_*y_ == (a_*(e_*d_ - b_*f_) + b_*(a_*f_ - e_*c_))/D_ == (a_*e_*d_ - b_*e_*c_)/D_ == e_*(a_*d_ - b_*c_)/D_ == e_ and c_*x_ + d_*y_ == (c_*(e_*d_ - b_*f_) + d_*(a_*f_ - e_*c_))/D_ == (a_*d_*f_ - b_*c_*f_)/D_ == f_*(a_*d_ - b_*c_)/D_ == f_, 'H08 v004 demostración')
+ok(all(det2(2, 1, 1, m_) == 2*m_ - 1 for m_ in _G) and 2*Fr(1, 2) - 1 == 1 - 1 == 0 and all((k_ - 1)*(k_ + 1) == k_*k_ + k_ - k_ - 1 == k_*k_ - 1 for k_ in _G), 'H08 v004 k3 y B')
+# H09 v003 · encabezado, demostración, k3, ejemplo 4, ejercicio B
+ok(2 + 2*1 == 4 and 3*2 - 1 == 6 - 1 == 5 and det2(1, 2, 3, -1) == 1*(-1) - 2*3 == -1 - 6 == -7 and det2(1, 2, 2, 4) == 1*4 - 2*2 == 0 and det2(4, 2, 6, 4) == 4*4 - 2*6 == 16 - 12 == 4 and det2(4, 2, 8, 4) == 4*4 - 2*8 == 16 - 16 == 0 and det2(1, 4, 2, 8) == 1*8 - 4*2 == 8 - 8 == 0 and (4 + 2*0, 2 + 2*1, 0 + 2*2) == (4, 4, 4) and (2*1, 2*2, 2*4) == (2, 4, 8), 'H09 v003 encabezado')
+ok(Fr(2*2, 1) == 4 and Fr(4*2, 1) == 8 and [(4 - 2*t_, t_) for t_ in (0, 1, 2)] == [(4, 0), (2, 1), (0, 2)] and all(x_ + 2*t_ == 4 and 2*x_ + 4*t_ == 8 for t_ in _G for x_ in [4 - 2*t_]), 'H09 v003 caso 3 con números')
+ok(all(det2(1, 2, 2, m_) == m_ - 4 and (2 - m_)*(2 + m_) == 4 + 2*m_ - m_*2 - m_*m_ == 4 - m_*m_ and (4 - m_)*(4 + m_) == 16 + 4*m_ - m_*4 - m_*m_ == 16 - m_*m_ for m_ in _G), 'H09 v003 k3, ej4 y B')
+for cols_ in ([(1, 2, 3), (1, 1, 1), (1, 1, 1)], [(1, 1, 1), (1, 2, 3), (1, 1, 1)], [(1, 1, 1), (1, 1, 1), (1, 2, 3)], [(1, 1, 1)]*3):
+    ok(_d3(_tr([list(c_) for c_ in cols_])) == 0, 'H09 v003 k3 cuatro determinantes en cero')
 print('Lote 28 H01–H11: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

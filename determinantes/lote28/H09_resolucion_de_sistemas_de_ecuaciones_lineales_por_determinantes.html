@@ -162,9 +162,17 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Resolución de sistemas de ecuaciones lineales por determinantes</b></li>
     </ol>
     <h1>Resolución de sistemas de ecuaciones lineales por determinantes</h1>
-    <p class="lede">Los determinantes dicen cuántas soluciones tiene un sistema de dos ecuaciones lineales con dos incógnitas, y las entregan cuando la solución es única. Se calculan tres: \(\Delta\), el de los coeficientes, y \(\Delta_x\), \(\Delta_y\), con la columna de una incógnita cambiada por la de los términos libres.
+    <p class="lede">Un sistema de dos ecuaciones lineales con dos incógnitas puede tener una sola solución, ninguna o infinitas. Los determinantes permiten saber cuál de los tres casos es. Se calculan tres: \(\Delta\), el de los <b>coeficientes</b> (los números que multiplican a \(x\) y a \(y\)), y \(\Delta_x\), \(\Delta_y\), que son \(\Delta\) con la columna de esa incógnita cambiada por la de los <b>términos libres</b> (los números del lado derecho).</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Tres sistemas con la misma primera ecuación, \(x+2y=4\), resueltos sin determinantes y después mirados con ellos.</p>
+    <p class="lede"><b>Sistema 1:</b> \(x+2y=4\), \(3x-y=5\). El par \(x=2\), \(y=1\) cumple las dos: \(2+2\cdot 1=2+2=4\) y \(3\cdot 2-1=6-1=5\). No hay otro par que las cumpla (es el sistema del ejemplo 1, con las ecuaciones en el otro orden; ahí se resuelve). Su determinante:
+    \[\Delta=\begin{vmatrix}1&2\\3&-1\end{vmatrix}=1\cdot(-1)-2\cdot 3=-1-6=-7\neq 0\]</p>
+    <p class="lede"><b>Sistema 2:</b> \(x+2y=4\), \(2x+4y=6\). La primera ecuación, multiplicada por \(2\), dice \(2x+4y=8\). La segunda dice \(2x+4y=6\). El mismo lado izquierdo no puede valer \(8\) y \(6\) a la vez: no hay solución. Sus determinantes:
+    \[\Delta=\begin{vmatrix}1&2\\2&4\end{vmatrix}=1\cdot 4-2\cdot 2=4-4=0,\qquad\Delta_x=\begin{vmatrix}4&2\\6&4\end{vmatrix}=4\cdot 4-2\cdot 6=16-12=4\neq 0\]</p>
+    <p class="lede"><b>Sistema 3:</b> \(x+2y=4\), \(2x+4y=8\). Ahora la segunda ecuación es la primera multiplicada por \(2\): las dos dicen lo mismo, y todo par que cumple una cumple la otra. Hay infinitas soluciones; por ejemplo \((4,0)\), \((2,1)\) y \((0,2)\), porque \(4+2\cdot 0=4\), \(2+2\cdot 1=4\) y \(0+2\cdot 2=4\). Sus determinantes:
+    \[\Delta=0,\qquad\Delta_x=\begin{vmatrix}4&2\\8&4\end{vmatrix}=4\cdot 4-2\cdot 8=16-16=0,\qquad\Delta_y=\begin{vmatrix}1&4\\2&8\end{vmatrix}=1\cdot 8-4\cdot 2=8-8=0\]</p>
+    <p class="lede"><b>La regla.</b> Lo que pasó en los tres sistemas pasa siempre (recuadros «Los tres casos» y «Demostración»):
     \[\Delta\neq 0:\ \text{una única solución},\qquad x=\frac{\Delta_x}{\Delta},\quad y=\frac{\Delta_y}{\Delta}\]
-    Si \(\Delta=0\), el sistema no tiene solución o tiene infinitas: lo deciden \(\Delta_x\) y \(\Delta_y\).</p>
+    Se lee: «si delta es distinto de cero, hay una única solución: equis es delta sub equis partido por delta, e i griega es delta sub i griega partido por delta». Si \(\Delta=0\), el sistema no tiene solución o tiene infinitas: lo deciden \(\Delta_x\) y \(\Delta_y\).</p>
   </section>
 </header>
 
@@ -204,14 +212,19 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración</h3>
-    <p><b>Caso 1.</b> Es la regla de Cramer, demostrada en su hoja.</p>
-    <p><b>Caso 2.</b> Sean \(x\), \(y\) números que cumplen las dos ecuaciones.</p>
+    <p><b>Qué se demuestra:</b> los casos 2 y 3 del recuadro anterior (el caso 1 es la regla de Cramer, demostrada en su hoja). <b>Cómo funciona el método:</b> en el caso 2 se supone que hay una solución y se llega a que \(\Delta_x\) y \(\Delta_y\) tendrían que valer \(0\); como alguno no vale \(0\), no puede haber solución. En el caso 3 se muestra que la segunda ecuación es la primera multiplicada por un número, así que las soluciones de la primera, que son infinitas, lo son también de la segunda.</p>
+    <p><b>Caso 2.</b> Sean \(x\), \(y\) números que cumplen las dos ecuaciones, \(ax+by=e\) y \(cx+dy=f\).</p>
     <ol class="steps">
-      <li>Se multiplica la primera ecuación por \(d\) y la segunda por \(b\): \(adx+bdy=ed\) y \(bcx+bdy=bf\).</li>
-      <li>Se resta la segunda igualdad de la primera: \((ad-bc)\,x=ed-bf\), es decir, \(\Delta\cdot x=\Delta_x\).</li>
-      <li>Se multiplica la segunda ecuación por \(a\) y la primera por \(c\): \(acx+ady=af\) y \(acx+bcy=ec\).</li>
-      <li>Se resta la segunda igualdad de la primera: \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
-      <li>Si \(\Delta=0\), los lados izquierdos valen \(0\): tendría que ser \(\Delta_x=0\) y \(\Delta_y=0\). Luego, si \(\Delta=0\) y alguno de los dos no es \(0\), ningún par \(x\), \(y\) cumple las dos ecuaciones.</li>
+      <li>Se multiplica la primera ecuación por \(d\): \(adx+bdy=ed\).</li>
+      <li>Se multiplica la segunda ecuación por \(b\): \(bcx+bdy=bf\).</li>
+      <li>Se resta la segunda igualdad de la primera, lado por lado: \(adx-bcx+bdy-bdy=ed-bf\). Como \(bdy-bdy=0\), queda \(adx-bcx=ed-bf\).</li>
+      <li>Se saca factor común \(x\): \((ad-bc)\,x=ed-bf\), es decir, \(\Delta\cdot x=\Delta_x\).</li>
+      <li>Se multiplica la segunda ecuación por \(a\): \(acx+ady=af\).</li>
+      <li>Se multiplica la primera ecuación por \(c\): \(acx+bcy=ec\).</li>
+      <li>Se resta la segunda igualdad de la primera, lado por lado: \(acx-acx+ady-bcy=af-ec\). Como \(acx-acx=0\), queda \(ady-bcy=af-ec\).</li>
+      <li>Se saca factor común \(y\): \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
+      <li>Si \(\Delta=0\), los lados izquierdos de los pasos 4 y 8 valen \(0\cdot x=0\) y \(0\cdot y=0\): tendría que ser \(\Delta_x=0\) y \(\Delta_y=0\). Luego, si \(\Delta=0\) y alguno de los dos no es \(0\), ningún par \(x\), \(y\) cumple las dos ecuaciones.</li>
+      <li>Con el sistema 2 del encabezado: el paso 4 diría \(0\cdot x=4\), y ningún número multiplicado por \(0\) da \(4\).</li>
     </ol>
     <p><b>Caso 3, con \(a\neq 0\).</b></p>
     <ol class="steps">
@@ -219,7 +232,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>\(\Delta_y=0\) dice \(af=ec\). Se divide por \(a\): \(f=\dfrac{ec}{a}\).</li>
       <li>Se multiplica la primera ecuación por \(\dfrac{c}{a}\): \(c\,x+\dfrac{bc}{a}\,y=\dfrac{ec}{a}\).</li>
       <li>Por los pasos 1 y 2, esa igualdad es \(c\,x+d\,y=f\): la segunda ecuación. Todo par que cumple la primera cumple la segunda.</li>
-      <li>La primera tiene infinitas soluciones: para cada número \(t\), el par \(y=t\), \(x=\dfrac{e-bt}{a}\) la cumple, porque \(a\cdot\dfrac{e-bt}{a}+bt=e-bt+bt=e\).</li>
+      <li>La primera tiene infinitas soluciones: para cada número \(t\), el par \(y=t\), \(x=\dfrac{e-bt}{a}\) la cumple, porque \(a\cdot\dfrac{e-bt}{a}+bt=(e-bt)+bt=e\) (se simplifica por \(a\), y \(-bt+bt=0\)).</li>
+      <li>Con el sistema 3 del encabezado (\(a=1\), \(b=2\), \(c=2\), \(d=4\), \(e=4\), \(f=8\)): \(\dfrac{bc}{a}=\dfrac{2\cdot 2}{1}=4=d\) y \(\dfrac{ec}{a}=\dfrac{4\cdot 2}{1}=8=f\); la primera ecuación por \(\dfrac{c}{a}=2\) es \(2x+4y=8\), la segunda. Las soluciones son \(y=t\), \(x=\dfrac{4-2t}{1}=4-2t\): con \(t=0\), \((4,0)\); con \(t=1\), \((2,1)\); con \(t=2\), \((0,2)\).</li>
     </ol>
     <p>Si \(a=0\) y otro coeficiente no es \(0\), se razona igual despejando con ese coeficiente; aquí no se escribe.</p>
   </div>
@@ -232,8 +246,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>\(\Delta=0\) y alguno de \(\Delta_x,\Delta_y,\Delta_z\) distinto de \(0\):</b> no hay solución.</li>
       <li><b>Los cuatro valen \(0\):</b> los determinantes <b>no deciden</b>. Puede haber infinitas soluciones o ninguna, y hay que usar otro método, como la eliminación.</li>
     </ol>
-    <p>Ejemplo del punto 3: en \(x+y+z=1\), \(x+y+z=2\), \(x+y+z=3\), cada uno de los cuatro determinantes tiene dos columnas iguales y vale \(0\). Sin embargo no hay solución: \(x+y+z\) no puede valer \(1\) y \(2\) a la vez.</p>
-    <p><b>Número ↔ figura.</b> En el sistema \(x+2y=4\), \(2x+my=f\), mueve \(m\) y \(f\). Con \(m\neq 4\) hay un punto de corte. Con \(m=4\) y \(f\neq 8\), rectas paralelas. Con \(m=4\) y \(f=8\), la misma recta.</p>
+    <p>Ejemplo del punto 3: en \(x+y+z=1\), \(x+y+z=2\), \(x+y+z=3\), cada uno de los cuatro determinantes tiene dos columnas iguales (en cada uno, al menos dos de las columnas son \(1,1,1\)) y vale \(0\) (hoja «Propiedades de los determinantes», usada por columnas gracias a la hoja de la matriz traspuesta). Sin embargo no hay solución: \(x+y+z\) no puede valer \(1\) y \(2\) a la vez.</p>
+    <p><b>Número ↔ figura.</b> En el sistema \(x+2y=4\), \(2x+my=f\), mueve \(m\) y \(f\). Aquí \(\Delta=\begin{vmatrix}1&2\\2&m\end{vmatrix}=1\cdot m-2\cdot 2=m-4\), que vale \(0\) solo con \(m=4\). Con \(m\neq 4\) hay un punto de corte. Con \(m=4\) y \(f\neq 8\), rectas paralelas. Con \(m=4\) y \(f=8\), la misma recta.</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
       <li><b>Parte con \(m=6\) y \(f=10\):</b> las rectas se cortan en el punto naranja \((2,1)\). Es el caso de solución única.</li>
@@ -296,7 +310,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 4: con un parámetro, \(\begin{cases}x+ky=1\\kx+4y=2\end{cases}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\Delta=\begin{vmatrix}1&k\\k&4\end{vmatrix}=1\cdot 4-k\cdot k=4-k^{2}=(2-k)(2+k)\). Vale \(0\) solo si \(k=2\) o \(k=-2\).</li>
+    <li>\(\Delta=\begin{vmatrix}1&k\\k&4\end{vmatrix}=1\cdot 4-k\cdot k=4-k^{2}\). Se factoriza: \(4-k^{2}=(2-k)(2+k)\), porque \((2-k)(2+k)=2\cdot 2+2\cdot k-k\cdot 2-k\cdot k=4+2k-2k-k^{2}=4-k^{2}\). Un producto vale \(0\) solo si alguno de sus factores vale \(0\): \(2-k=0\), que da \(k=2\), o \(2+k=0\), que da \(k=-2\).</li>
     <li>\(\Delta_x=\begin{vmatrix}1&k\\2&4\end{vmatrix}=1\cdot 4-k\cdot 2=4-2k=2\,(2-k)\).</li>
     <li>\(\Delta_y=\begin{vmatrix}1&1\\k&2\end{vmatrix}=1\cdot 2-1\cdot k=2-k\).</li>
     <li><b>Si \(k\neq 2\) y \(k\neq -2\):</b> solución única. Se simplifica por \(2-k\), que no es \(0\): \(x=\dfrac{2\,(2-k)}{(2-k)(2+k)}=\dfrac{2}{2+k}\), \(y=\dfrac{2-k}{(2-k)(2+k)}=\dfrac{1}{2+k}\).</li>
@@ -332,7 +346,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Factoriza los tres determinantes: en todos aparece \(4-m\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\Delta=\begin{vmatrix}2&m\\m&8\end{vmatrix}=2\cdot 8-m\cdot m=16-m^{2}=(4-m)(4+m)\).</li>
+        <li>\(\Delta=\begin{vmatrix}2&m\\m&8\end{vmatrix}=2\cdot 8-m\cdot m=16-m^{2}\). Se factoriza: \(16-m^{2}=(4-m)(4+m)\), porque \((4-m)(4+m)=4\cdot 4+4\cdot m-m\cdot 4-m\cdot m=16+4m-4m-m^{2}=16-m^{2}\). Vale \(0\) solo si \(4-m=0\), es decir \(m=4\), o \(4+m=0\), es decir \(m=-4\).</li>
         <li>\(\Delta_x=\begin{vmatrix}4&m\\8&8\end{vmatrix}=4\cdot 8-m\cdot 8=32-8m=8\,(4-m)\).</li>
         <li>\(\Delta_y=\begin{vmatrix}2&4\\m&8\end{vmatrix}=2\cdot 8-4\cdot m=16-4m=4\,(4-m)\).</li>
         <li>Si \(m\neq 4\) y \(m\neq -4\): solución única. Se simplifica por \(4-m\neq 0\): \(x=\dfrac{\Delta_x}{\Delta}=\dfrac{8\,(4-m)}{(4-m)(4+m)}=\dfrac{8}{4+m}\), \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{4\,(4-m)}{(4-m)(4+m)}=\dfrac{4}{4+m}\).</li>
@@ -359,7 +373,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H09 · v002 · Pendiente de APR</span>
+  <span class="status">AL-L28-H09 · v003 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>

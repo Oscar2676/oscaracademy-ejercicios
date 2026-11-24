@@ -162,9 +162,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Filas i y columnas j de un determinante</b></li>
     </ol>
     <h1>Filas i y columnas j de un determinante</h1>
-    <p class="lede">En un determinante, las <b>filas</b> son las líneas horizontales y las <b>columnas</b>, las verticales. Cada elemento se nombra con dos subíndices: primero el número \(i\) de su fila y después el número \(j\) de su columna.
+    <p class="lede">Un determinante se escribe como una tabla de números entre dos barras verticales. Sus <b>filas</b> son las líneas horizontales y sus <b>columnas</b>, las verticales. Las filas se cuentan de arriba hacia abajo (1, 2, 3, …) y las columnas, de izquierda a derecha (1, 2, 3, …).</p>
+    <p class="lede"><b>De dónde sale la notación, con números.</b> En \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\) hay nueve números, y hace falta una manera de decir cuál es cuál.
+    \[\begin{aligned}\text{fila 2 (la segunda desde arriba):}&\quad 3,\ \ 1,\ \ -2\\\text{columna 3 (la tercera desde la izquierda):}&\quad 0,\ \ -2,\ \ 5\\\text{el único número que está en las dos:}&\quad -2\end{aligned}\]
+    Con dos números, el de la fila y el de la columna, queda señalado un solo elemento. Por eso al \(-2\) se le llama \(a_{23}\): el \(2\) es su fila y el \(3\), su columna. Del mismo modo, el \(4\) está en la fila 3 y la columna 2: es \(a_{32}\).</p>
+    <p class="lede"><b>La regla.</b> Cada elemento se nombra con dos subíndices: primero el número \(i\) de su fila y después el número \(j\) de su columna.
     \[a_{ij}\ =\ \text{elemento de la fila } i \text{ y la columna } j\]
-    Las filas se cuentan de arriba hacia abajo y las columnas, de izquierda a derecha.</p>
+    Se lee «a sub i jota». Las letras \(i\) y \(j\) son los nombres que se usan para «número de fila» y «número de columna».</p>
   </section>
 </header>
 
@@ -193,7 +197,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="card k1">
     <h3>Definiciones</h3>
     <ol class="steps">
-      <li><b>Orden.</b> Un determinante de orden \(n\) tiene \(n\) filas y \(n\) columnas. Tiene \(n\cdot n=n^{2}\) elementos.</li>
+      <li><b>Orden.</b> Un determinante de orden \(n\) tiene \(n\) filas y \(n\) columnas. Tiene \(n\) elementos en cada una de sus \(n\) filas: \(n\cdot n=n^{2}\) elementos. Con \(n=2\) son \(2\cdot 2=4\); con \(n=3\), \(3\cdot 3=9\).</li>
       <li><b>Fila \(i\).</b> La línea horizontal número \(i\), contando desde arriba: \(i=1,2,\dots,n\).</li>
       <li><b>Columna \(j\).</b> La línea vertical número \(j\), contando desde la izquierda: \(j=1,2,\dots,n\).</li>
       <li><b>Elemento \(a_{ij}\).</b> El que está en la fila \(i\) y la columna \(j\). Se lee «a sub i, j». Por ejemplo, \(a_{23}\) se lee «a dos tres» (no «a veintitrés»): fila \(2\), columna \(3\).</li>
@@ -208,20 +212,30 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <ol class="steps">
       <li>Se cambia cada letra por su nombre con subíndices: \(a=a_{11}\), \(b=a_{12}\), \(c=a_{21}\), \(d=a_{22}\).</li>
       <li>Se reemplaza en la fórmula: \(\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}=a_{11}\,a_{22}-a_{12}\,a_{21}\).</li>
+      <li>Con números: en \(\begin{vmatrix}3&5\\4&6\end{vmatrix}\), \(a_{11}=3\), \(a_{12}=5\), \(a_{21}=4\), \(a_{22}=6\), y \(a_{11}\,a_{22}-a_{12}\,a_{21}=3\cdot 6-5\cdot 4=18-20=-2\).</li>
     </ol>
     <p><b>Tercer orden.</b> En la hoja «Determinante de tercer orden», el desarrollo por la primera fila es \(a\,(ei-fh)-b\,(di-fg)+c\,(dh-eg)\).</p>
     <ol class="steps">
       <li>Se cambia cada letra: \(a,b,c\) son \(a_{11},a_{12},a_{13}\); \(d,e,f\) son \(a_{21},a_{22},a_{23}\); \(g,h,i\) son \(a_{31},a_{32},a_{33}\).</li>
       <li>Se reemplaza en la fórmula:
         \[a_{11}\,(a_{22}a_{33}-a_{23}a_{32})-a_{12}\,(a_{21}a_{33}-a_{23}a_{31})+a_{13}\,(a_{21}a_{32}-a_{22}a_{31})\]</li>
+      <li>Así se ve una regularidad que con \(a,b,c,\dots\) no se notaba: en cada paréntesis no aparece ningún elemento de la fila \(1\), ni de la columna del elemento que lo multiplica. Por ejemplo, \(a_{12}\) multiplica a \(a_{21}a_{33}-a_{23}a_{31}\), donde ningún subíndice de fila es \(1\) y ningún subíndice de columna es \(2\).</li>
     </ol>
-    <p><b>Diagonales.</b> La <b>diagonal principal</b> la forman los elementos con \(i=j\): \(a_{11},a_{22},\dots,a_{nn}\). La <b>diagonal secundaria</b>, los elementos con \(i+j=n+1\): en tercer orden, \(a_{13},a_{22},a_{31}\).</p>
+    <p><b>Diagonales.</b> La <b>diagonal principal</b> la forman los elementos con \(i=j\): \(a_{11},a_{22},\dots,a_{nn}\). La <b>diagonal secundaria</b>, los elementos con \(i+j=n+1\): en tercer orden \(n+1=3+1=4\), y son \(a_{13}\) (\(1+3=4\)), \(a_{22}\) (\(2+2=4\)) y \(a_{31}\) (\(3+1=4\)). La principal baja de izquierda a derecha; la secundaria baja de derecha a izquierda.</p>
   </div>
 
   <div class="card k3">
     <h3>El signo de cada posición</h3>
-    <p>A cada posición se le asocia el signo \((-1)^{i+j}\): es \(+\) si \(i+j\) es par y \(-\) si \(i+j\) es impar. Los signos se alternan como en un tablero de ajedrez, y la posición \((1,1)\) lleva \(+\).</p>
-    <p>En la primera fila, \(i=1\): los signos son \((-1)^{1+1}=+1\), \((-1)^{1+2}=-1\), \((-1)^{1+3}=+1\). Son los signos \(+,-,+\) del desarrollo por la primera fila.</p>
+    <p><b>De dónde sale.</b> En el desarrollo por la primera fila (recuadro anterior), el primer término va con \(+\), el segundo con \(-\) y el tercero con \(+\). Esos signos dependen del lugar que ocupa el elemento, no de su valor. Para escribirlos con una sola fórmula se usa una potencia de \(-1\):</p>
+    <ol class="steps">
+      <li>\((-1)^{2}=(-1)\cdot(-1)=1\): con exponente par, da \(+1\).</li>
+      <li>\((-1)^{3}=(-1)\cdot(-1)\cdot(-1)=1\cdot(-1)=-1\): con exponente impar, da \(-1\).</li>
+      <li>A la posición de la fila \(i\) y la columna \(j\) se le asocia el signo \((-1)^{i+j}\), que se lee «menos uno elevado a i más jota». Es \(+\) si \(i+j\) es par y \(-\) si \(i+j\) es impar.</li>
+      <li>Fila \(1\): \(1+1=2\), par, \(+\); \(1+2=3\), impar, \(-\); \(1+3=4\), par, \(+\). Son los signos \(+,-,+\) del desarrollo por la primera fila.</li>
+      <li>Fila \(2\): \(2+1=3\), impar, \(-\); \(2+2=4\), par, \(+\); \(2+3=5\), impar, \(-\).</li>
+      <li>Fila \(3\): \(3+1=4\), par, \(+\); \(3+2=5\), impar, \(-\); \(3+3=6\), par, \(+\).</li>
+      <li>Los nueve signos, cada uno en su posición: \(\begin{matrix}+&-&+\\-&+&-\\+&-&+\end{matrix}\). Se alternan como los colores de un tablero de ajedrez, y la posición \((1,1)\) lleva \(+\).</li>
+    </ol>
     <p><b>Número ↔ figura.</b> En \(\begin{vmatrix}2&-1&0\\3&1&-2\\-1&4&5\end{vmatrix}\), mueve \(i\) y \(j\): se marcan la fila, la columna y el elemento del cruce, con su valor y el signo de su posición.</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
@@ -249,7 +263,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <ol class="steps">
     <li>\(a_{12}\): fila \(1\), columna \(2\). Vale \(-1\).</li>
     <li>\(a_{21}\): fila \(2\), columna \(1\). Vale \(3\). No es lo mismo que \(a_{12}\).</li>
-    <li>\(a_{23}=-2\) y \(a_{32}=4\).</li>
+    <li>\(a_{23}\): fila \(2\), columna \(3\). Vale \(-2\). \(a_{32}\): fila \(3\), columna \(2\). Vale \(4\). Tampoco son lo mismo.</li>
     <li>Fila \(3\) (\(i=3\)): \(a_{31},a_{32},a_{33}\), es decir, \(-1,\ 4,\ 5\).</li>
     <li>Columna \(2\) (\(j=2\)): \(a_{12},a_{22},a_{32}\), es decir, \(-1,\ 1,\ 4\).</li>
   </ol>
@@ -277,6 +291,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li>Diagonal principal (\(i=j\)): \(a_{11},a_{22},a_{33}\), es decir, \(1,4,9\).</li>
     <li>Diagonal secundaria (\(i+j=4\)): \(a_{13},a_{22},a_{31}\), es decir, \(3,4,3\).</li>
     <li>La fila \(2\) es \(2\) veces la fila \(1\): \(2\cdot 1=2\), \(2\cdot 2=4\), \(2\cdot 3=6\). Filas proporcionales: el determinante vale \(0\) (hoja «Propiedades de los determinantes»).</li>
+    <li>Comprobación por la regla de Sarrus. Bajan: \(1\cdot 4\cdot 9=36\); \(2\cdot 6\cdot 3=36\); \(3\cdot 2\cdot 6=36\). Suma: \(36+36+36=108\). Suben: \(3\cdot 4\cdot 3=36\); \(1\cdot 6\cdot 6=36\); \(2\cdot 2\cdot 9=36\). Suma: \(36+36+36=108\). Valor: \(108-108=0\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -345,7 +360,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H07 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H07 · v004 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>

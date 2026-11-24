@@ -162,9 +162,17 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Regla de Cramer</b></li>
     </ol>
     <h1>Regla de Cramer</h1>
-    <p class="lede">La regla de Cramer resuelve un sistema de ecuaciones lineales con tantas ecuaciones como incógnitas usando solo determinantes. Si el determinante \(\Delta\) de los coeficientes no es cero, el sistema tiene una única solución, y cada incógnita es un cociente de dos determinantes.
+    <p class="lede">Un <b>sistema de ecuaciones lineales</b> son varias ecuaciones que deben cumplirse a la vez, con las incógnitas (\(x\), \(y\)) sin exponentes y sin multiplicarse entre ellas. Los números que multiplican a las incógnitas son los <b>coeficientes</b>; los que quedan solos al lado derecho, los <b>términos libres</b>. La regla de Cramer resuelve un sistema con tantas ecuaciones como incógnitas usando solo determinantes.</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toma el sistema \(2x+y=5\), \(x+3y=5\) y se resuelve eliminando \(y\):
+    \[\begin{aligned}2\cdot 3\,x+1\cdot 3\,y&=5\cdot 3&&\text{primera ecuación, por }3\\1\cdot 1\,x+3\cdot 1\,y&=5\cdot 1&&\text{segunda ecuación, por }1\\ (2\cdot 3-1\cdot 1)\,x&=5\cdot 3-5\cdot 1&&\text{se restan: }3y-3y=0\\ (6-1)\,x&=15-5&&\text{se calcula cada producto}\\5x&=10&&\text{se calcula cada resta}\\x&=\frac{10}{5}=2&&\text{se divide por }5\end{aligned}\]
+    Los productos se dejaron escritos para ver de dónde salen el \(5\) y el \(10\): \(5=2\cdot 3-1\cdot 1\) y \(10=5\cdot 3-1\cdot 5\). Cada uno es un determinante de segundo orden (el producto de la diagonal principal, menos el de la otra diagonal):
+    \[5=\begin{vmatrix}2&1\\1&3\end{vmatrix},\qquad 10=\begin{vmatrix}5&1\\5&3\end{vmatrix}\]
+    El primero tiene los coeficientes del sistema. El segundo es el mismo, con los términos libres \(5\) y \(5\) en la columna donde estaban los coeficientes de \(x\). Para \(y\) se elimina \(x\):
+    \[\begin{aligned}1\cdot 2\,x+3\cdot 2\,y&=5\cdot 2&&\text{segunda ecuación, por }2\\2\cdot 1\,x+1\cdot 1\,y&=5\cdot 1&&\text{primera ecuación, por }1\\ (3\cdot 2-1\cdot 1)\,y&=5\cdot 2-5\cdot 1&&\text{se restan: }2x-2x=0\\5y&=5&&\text{se calcula: }6-1\text{ y }10-5\\y&=\frac{5}{5}=1&&\text{se divide por }5\end{aligned}\]
+    Otra vez se divide por \(5=\begin{vmatrix}2&1\\1&3\end{vmatrix}\), y el \(5\) de la derecha es \(2\cdot 5-5\cdot 1=\begin{vmatrix}2&5\\1&5\end{vmatrix}\): los términos libres en la columna de \(y\). La misma cuenta con letras está en el recuadro «Demostración».</p>
+    <p class="lede"><b>La regla.</b> Si el determinante \(\Delta\) de los coeficientes no es cero, el sistema tiene una única solución, y cada incógnita es un cociente de dos determinantes.
     \[x=\frac{\Delta_x}{\Delta},\qquad y=\frac{\Delta_y}{\Delta}\qquad(\Delta\neq 0)\]
-    \(\Delta_x\) es \(\Delta\) con la columna de los coeficientes de \(x\) cambiada por la de los términos libres; \(\Delta_y\), lo mismo con la columna de \(y\).</p>
+    Se lee: «equis es igual a delta sub equis partido por delta; i griega es igual a delta sub i griega partido por delta». \(\Delta\) es la letra griega delta mayúscula. \(\Delta_x\) es \(\Delta\) con la columna de los coeficientes de \(x\) cambiada por la de los términos libres; \(\Delta_y\), lo mismo con la columna de \(y\).</p>
   </section>
 </header>
 
@@ -203,21 +211,26 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración</h3>
+    <p><b>Qué se demuestra:</b> dos cosas, para el sistema \(ax+by=e\), \(cx+dy=f\) con \(\Delta=ad-bc\neq 0\). Primera: si un par \(x\), \(y\) cumple las dos ecuaciones, entonces es \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\) (no puede haber otra solución). Segunda: ese par sí cumple las dos ecuaciones (la solución existe). <b>Cómo funciona el método:</b> para la primera, se elimina una incógnita igual que en el encabezado, pero con letras; para la segunda, se reemplazan los valores en cada ecuación y se simplifica.</p>
     <p><b>Si hay solución, es esa.</b> Sean \(x\), \(y\) números que cumplen las dos ecuaciones.</p>
     <ol class="steps">
-      <li>Se multiplica la primera ecuación por \(d\): \(adx+bdy=ed\).</li>
-      <li>Se multiplica la segunda ecuación por \(b\): \(bcx+bdy=bf\).</li>
-      <li>Se resta la segunda igualdad de la primera; los términos \(bdy\) se cancelan: \((ad-bc)\,x=ed-bf\), es decir, \(\Delta\cdot x=\Delta_x\).</li>
-      <li>Se multiplica la segunda ecuación por \(a\): \(acx+ady=af\).</li>
-      <li>Se multiplica la primera ecuación por \(c\): \(acx+bcy=ec\).</li>
-      <li>Se resta la segunda igualdad de la primera; los términos \(acx\) se cancelan: \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
-      <li>Como \(\Delta\neq 0\), se divide por \(\Delta\): \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\).</li>
+      <li>Se multiplica la primera ecuación por \(d\): \(d\cdot ax+d\cdot by=d\cdot e\), es decir, \(adx+bdy=ed\).</li>
+      <li>Se multiplica la segunda ecuación por \(b\): \(b\cdot cx+b\cdot dy=b\cdot f\), es decir, \(bcx+bdy=bf\).</li>
+      <li>Se resta la segunda igualdad de la primera, lado por lado: \(adx-bcx+bdy-bdy=ed-bf\).</li>
+      <li>Los términos con \(y\) se cancelan, \(bdy-bdy=0\): queda \(adx-bcx=ed-bf\).</li>
+      <li>Se saca factor común \(x\): \((ad-bc)\,x=ed-bf\). El paréntesis es \(\Delta\) y el lado derecho es \(\Delta_x\): \(\Delta\cdot x=\Delta_x\).</li>
+      <li>Se multiplica la segunda ecuación por \(a\): \(a\cdot cx+a\cdot dy=a\cdot f\), es decir, \(acx+ady=af\).</li>
+      <li>Se multiplica la primera ecuación por \(c\): \(c\cdot ax+c\cdot by=c\cdot e\), es decir, \(acx+bcy=ec\).</li>
+      <li>Se resta la segunda igualdad de la primera, lado por lado: \(acx-acx+ady-bcy=af-ec\).</li>
+      <li>Los términos con \(x\) se cancelan, \(acx-acx=0\): queda \(ady-bcy=af-ec\).</li>
+      <li>Se saca factor común \(y\): \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
+      <li>Como \(\Delta\neq 0\), se divide por \(\Delta\) en los pasos 5 y 10: \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\).</li>
     </ol>
-    <p><b>Esos valores sí son solución.</b> Se reemplazan en el lado izquierdo de cada ecuación.</p>
-    <ol class="steps">
-      <li>Primera: \(a\,\dfrac{ed-bf}{\Delta}+b\,\dfrac{af-ec}{\Delta}=\dfrac{aed-abf+abf-bec}{\Delta}=\dfrac{aed-bec}{\Delta}=\dfrac{e\,(ad-bc)}{\Delta}=\dfrac{e\,\Delta}{\Delta}=e\).</li>
-      <li>Segunda: \(c\,\dfrac{ed-bf}{\Delta}+d\,\dfrac{af-ec}{\Delta}=\dfrac{ced-bcf+adf-ced}{\Delta}=\dfrac{adf-bcf}{\Delta}=\dfrac{f\,(ad-bc)}{\Delta}=\dfrac{f\,\Delta}{\Delta}=f\).</li>
-    </ol>
+    <p><b>Esos valores sí son solución.</b> Se reemplazan \(x=\dfrac{ed-bf}{\Delta}\), \(y=\dfrac{af-ec}{\Delta}\) en el lado izquierdo de cada ecuación. En la primera, \(ax+by\):</p>
+    \[\begin{aligned}a\,\frac{ed-bf}{\Delta}+b\,\frac{af-ec}{\Delta}&=\frac{a\,(ed-bf)+b\,(af-ec)}{\Delta}&&\text{mismo denominador}\\&=\frac{aed-abf+abf-bec}{\Delta}&&\text{distributiva}\\&=\frac{aed-bec}{\Delta}&&-abf+abf=0\\&=\frac{e\,(ad-bc)}{\Delta}&&\text{factor común }e\\&=\frac{e\,\Delta}{\Delta}&&ad-bc=\Delta\\&=e&&\text{se simplifica por }\Delta\neq 0\end{aligned}\]
+    <p>En la segunda, \(cx+dy\):</p>
+    \[\begin{aligned}c\,\frac{ed-bf}{\Delta}+d\,\frac{af-ec}{\Delta}&=\frac{c\,(ed-bf)+d\,(af-ec)}{\Delta}&&\text{mismo denominador}\\&=\frac{ced-bcf+adf-ced}{\Delta}&&\text{distributiva}\\&=\frac{adf-bcf}{\Delta}&&ced-ced=0\\&=\frac{f\,(ad-bc)}{\Delta}&&\text{factor común }f\\&=\frac{f\,\Delta}{\Delta}&&ad-bc=\Delta\\&=f&&\text{se simplifica por }\Delta\neq 0\end{aligned}\]
+    <p>Con los números del encabezado (\(a=2\), \(b=1\), \(c=1\), \(d=3\), \(e=5\), \(f=5\)): \(2\cdot 2+1\cdot 1=4+1=5\) ✓ y \(1\cdot 2+3\cdot 1=2+3=5\) ✓.</p>
   </div>
 
   <div class="card k3">
@@ -226,7 +239,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     \[x=\frac{\Delta_x}{\Delta},\qquad y=\frac{\Delta_y}{\Delta},\qquad z=\frac{\Delta_z}{\Delta}\]
     Para tres incógnitas la regla se enuncia aquí sin demostrarla.</p>
     <p><b>Si \(\Delta=0\), la regla no se aplica:</b> no se puede dividir por \(0\). En ese caso el sistema no tiene solución o tiene infinitas, y hay que estudiarlo con otro método (ejemplo 4).</p>
-    <p><b>Número ↔ figura.</b> En el sistema \(2x+y=5\), \(x+my=5\), mueve \(m\): cambia la segunda recta y cambia \(\Delta=2m-1\). Con \(m=0{,}5\) las rectas son paralelas, \(\Delta=0\) y no hay punto de corte.</p>
+    <p><b>Número ↔ figura.</b> En el sistema \(2x+y=5\), \(x+my=5\), mueve \(m\): cambia la segunda recta y cambia \(\Delta=\begin{vmatrix}2&1\\1&m\end{vmatrix}=2\cdot m-1\cdot 1=2m-1\). Con \(m=0{,}5\), \(\Delta=2\cdot 0{,}5-1=1-1=0\): las rectas son paralelas y no hay punto de corte.</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
       <li><b>Parte con \(m=3\):</b> las rectas se cortan en el punto naranja \((2,1)\), el del ejemplo anterior.</li>
@@ -325,7 +338,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
         <li>\(\Delta=\begin{vmatrix}k&1\\1&k\end{vmatrix}=k\cdot k-1\cdot 1=k^{2}-1\).</li>
-        <li>(i) \(k^{2}-1=(k-1)(k+1)\) vale \(0\) solo si \(k=1\) o \(k=-1\). La regla se aplica si \(k\neq 1\) y \(k\neq -1\).</li>
+        <li>(i) Se factoriza: \(k^{2}-1=(k-1)(k+1)\), porque \((k-1)(k+1)=k\cdot k+k\cdot 1-1\cdot k-1\cdot 1=k^{2}+k-k-1=k^{2}-1\). Un producto vale \(0\) solo si alguno de sus factores vale \(0\): \(k-1=0\), que da \(k=1\), o \(k+1=0\), que da \(k=-1\). La regla se aplica si \(k\neq 1\) y \(k\neq -1\).</li>
         <li>\(\Delta_x=\begin{vmatrix}1&1\\1&k\end{vmatrix}=1\cdot k-1\cdot 1=k-1\).</li>
         <li>\(\Delta_y=\begin{vmatrix}k&1\\1&1\end{vmatrix}=k\cdot 1-1\cdot 1=k-1\).</li>
         <li>(ii) \(x=\dfrac{\Delta_x}{\Delta}=\dfrac{k-1}{(k-1)(k+1)}\). Como \(k\neq 1\), se simplifica por \(k-1\): \(x=\dfrac{1}{k+1}\). Del mismo modo, \(y=\dfrac{\Delta_y}{\Delta}=\dfrac{k-1}{(k-1)(k+1)}=\dfrac{1}{k+1}\).</li>
@@ -351,7 +364,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H08 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H08 · v004 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>

@@ -162,9 +162,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>El determinante de una matriz A es igual al determinante de la matriz traspuesta de A</b></li>
     </ol>
     <h1>El determinante de una matriz A es igual al determinante de la matriz traspuesta de A</h1>
-    <p class="lede">La <b>traspuesta</b> de una matriz \(A\), que se escribe \(A^{T}\), se obtiene poniendo cada fila de \(A\) como columna, en el mismo orden. Aunque \(A\) y \(A^{T}\) suelen ser matrices distintas, su determinante es el mismo.
+    <p class="lede">Una <b>matriz</b> es una tabla de números ordenados en <b>filas</b> (las líneas horizontales) y <b>columnas</b> (las verticales). Su <b>determinante</b> es un número que se calcula con ellos (hoja «Determinante de segundo orden»). La <b>traspuesta</b> de una matriz \(A\) se escribe \(A^{T}\) y se lee «A traspuesta». Se obtiene poniendo cada fila de \(A\) como columna, en el mismo orden: la fila 1 pasa a ser la columna 1; la fila 2, la columna 2.</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toma \(A=\begin{pmatrix}3&5\\2&4\end{pmatrix}\). Su fila 1 es \((3,5)\) y su fila 2 es \((2,4)\). Puestas como columnas dan \(A^{T}=\begin{pmatrix}3&2\\5&4\end{pmatrix}\). Se calculan los dos determinantes (el producto de la diagonal principal, menos el producto de la otra diagonal):
+    \[\begin{aligned}\det A&=3\cdot 4-5\cdot 2&&\text{la fórmula, en }A\\&=12-10&&\text{se calcula cada producto}\\&=2&&\text{se resta}\\\det A^{T}&=3\cdot 4-2\cdot 5&&\text{la misma fórmula, en }A^{T}\\&=12-10&&\text{se calcula cada producto}\\&=2&&\text{se resta}\end{aligned}\]
+    Dan lo mismo. <b>No es casualidad:</b> el \(3\) y el \(4\) están en la diagonal principal y no se movieron, así que el primer producto es el mismo, \(12\). El \(5\) y el \(2\) cambiaron de lugar entre sí, pero se siguen multiplicando uno por el otro: \(5\cdot 2=2\cdot 5=10\). Con los mismos dos productos, la resta es la misma.</p>
+    <p class="lede"><b>La regla.</b> Pasa con cualquier matriz cuadrada (la que tiene tantas filas como columnas): aunque \(A\) y \(A^{T}\) suelen ser matrices distintas, su determinante es el mismo.
     \[\det A^{T}=\det A\]
-    Por eso, toda propiedad de los determinantes que vale para las filas vale también para las columnas.</p>
+    Se lee: «el determinante de A traspuesta es igual al determinante de A». Está demostrado, para segundo y tercer orden, en el recuadro «Demostración». Por eso, toda propiedad de los determinantes que vale para las filas vale también para las columnas.</p>
   </section>
 </header>
 
@@ -195,26 +199,28 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>La fila 1 de \(A\) pasa a ser la columna 1 de \(A^{T}\); la fila 2, la columna 2; la fila 3, la columna 3.</li>
       <li>En segundo orden: \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\ \Longrightarrow\ A^{T}=\begin{pmatrix}a&c\\b&d\end{pmatrix}\).</li>
       <li>En tercer orden: \(A=\begin{pmatrix}a&b&c\\d&e&f\\g&h&i\end{pmatrix}\ \Longrightarrow\ A^{T}=\begin{pmatrix}a&d&g\\b&e&h\\c&f&i\end{pmatrix}\).</li>
-      <li>La entrada que estaba en la fila \(m\) y la columna \(n\) queda en la fila \(n\) y la columna \(m\). Las de la diagonal principal (\(m=n\)) quedan donde estaban.</li>
-      <li>Si se traspone dos veces se vuelve a la matriz original: \(\left(A^{T}\right)^{T}=A\).</li>
+      <li>Con números: \(A=\begin{pmatrix}1&2&3\\0&4&5\\1&0&6\end{pmatrix}\) tiene filas \((1,2,3)\), \((0,4,5)\) y \((1,0,6)\). Puestas como columnas, en ese orden: \(A^{T}=\begin{pmatrix}1&0&1\\2&4&0\\3&5&6\end{pmatrix}\).</li>
+      <li>La entrada que estaba en la fila \(m\) y la columna \(n\) queda en la fila \(n\) y la columna \(m\). En el paso anterior, el \(5\) está en la fila 2 y la columna 3 de \(A\), y en la fila 3 y la columna 2 de \(A^{T}\). Las de la diagonal principal (\(m=n\): aquí \(1\), \(4\) y \(6\)) quedan donde estaban.</li>
+      <li>Si se traspone dos veces se vuelve a la matriz original: \(\left(A^{T}\right)^{T}=A\). Con la matriz del encabezado: las filas de \(A^{T}=\begin{pmatrix}3&2\\5&4\end{pmatrix}\) son \((3,2)\) y \((5,4)\); puestas como columnas dan \(\begin{pmatrix}3&5\\2&4\end{pmatrix}\), que es \(A\).</li>
     </ol>
   </div>
 
   <div class="card k2">
     <h3>Demostración</h3>
-    <p><b>Segundo orden.</b></p>
+    <p><b>Qué se demuestra:</b> que \(\det A^{T}=\det A\) para toda matriz de segundo orden y para toda matriz de tercer orden, sean cuales sean sus números. <b>Cómo funciona el método:</b> las entradas se escriben con letras (así la cuenta vale para cualquier número), se calcula el determinante de \(A\) y el de \(A^{T}\) con la misma fórmula, y se comparan producto por producto. La única propiedad que se usa es la conmutativa del producto: el orden de los factores no cambia el resultado (\(5\cdot 2=2\cdot 5\)).</p>
+    <p><b>Segundo orden.</b> \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) y \(A^{T}=\begin{pmatrix}a&c\\b&d\end{pmatrix}\).</p>
+    \[\begin{aligned}\det A&=a\cdot d-b\cdot c&&\text{la fórmula, en }A\\\det A^{T}&=a\cdot d-c\cdot b&&\text{la misma fórmula, en }A^{T}\\&=a\cdot d-b\cdot c&&\text{conmutativa: }c\cdot b=b\cdot c\\&=\det A&&\text{es la primera línea}\end{aligned}\]
+    <p><b>Tercer orden.</b> Se usa la regla de Sarrus (hoja «Resolución de determinantes por regla de Sarrus»): tres productos de diagonales que bajan, que se suman, y tres de diagonales que suben, que se restan. <b>Primero con números,</b> con la matriz del recuadro anterior:</p>
+    \[\begin{aligned}\text{en }A\text{, bajan:}&\quad 1\cdot 4\cdot 6=24,\quad 2\cdot 5\cdot 1=10,\quad 3\cdot 0\cdot 0=0\\\text{en }A\text{, suben:}&\quad 3\cdot 4\cdot 1=12,\quad 1\cdot 5\cdot 0=0,\quad 2\cdot 0\cdot 6=0\\\det A&=(24+10+0)-(12+0+0)=34-12=22\\\text{en }A^{T}\text{, bajan:}&\quad 1\cdot 4\cdot 6=24,\quad 0\cdot 0\cdot 3=0,\quad 1\cdot 2\cdot 5=10\\\text{en }A^{T}\text{, suben:}&\quad 1\cdot 4\cdot 3=12,\quad 1\cdot 0\cdot 5=0,\quad 0\cdot 2\cdot 6=0\\\det A^{T}&=(24+0+10)-(12+0+0)=34-12=22\end{aligned}\]
+    <p>Son los mismos seis números: \(24\), \(10\) y \(0\) suman; \(12\), \(0\) y \(0\) restan. Solo cambió el orden de los factores dentro de cada producto. Ahora con letras, con \(A=\begin{pmatrix}a&b&c\\d&e&f\\g&h&i\end{pmatrix}\):</p>
     <ol class="steps">
-      <li>\(\det A=\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\).</li>
-      <li>\(\det A^{T}=\begin{vmatrix}a&c\\b&d\end{vmatrix}=ad-cb\).</li>
-      <li>Como \(cb=bc\) (propiedad conmutativa del producto), \(\det A^{T}=ad-bc=\det A\).</li>
-    </ol>
-    <p><b>Tercer orden.</b> Se usa la fórmula de los seis productos (regla de Sarrus).</p>
-    <ol class="steps">
-      <li>\(\det A=aei+bfg+cdh-ceg-afh-bdi\).</li>
-      <li>La misma fórmula en \(A^{T}=\begin{pmatrix}a&d&g\\b&e&h\\c&f&i\end{pmatrix}\). Bajan: \(a\,e\,i\), \(d\,h\,c\) y \(g\,b\,f\). Suben: \(c\,e\,g\), \(f\,h\,a\) e \(i\,b\,d\).
+      <li>Regla de Sarrus en \(A\): \(\det A=aei+bfg+cdh-ceg-afh-bdi\).</li>
+      <li>La misma regla en \(A^{T}=\begin{pmatrix}a&d&g\\b&e&h\\c&f&i\end{pmatrix}\). Bajan: \(a\,e\,i\), \(d\,h\,c\) y \(g\,b\,f\). Suben: \(c\,e\,g\), \(f\,h\,a\) e \(i\,b\,d\).
         \[\det A^{T}=aei+dhc+gbf-ceg-fha-ibd\]</li>
-      <li>Se ordenan los factores de cada producto (propiedad conmutativa del producto): \(dhc=cdh\), \(gbf=bfg\), \(fha=afh\), \(ibd=bdi\).</li>
-      <li>Se cambia el orden de los sumandos: \(\det A^{T}=aei+bfg+cdh-ceg-afh-bdi=\det A\).</li>
+      <li>Se ordenan los factores de cada producto (propiedad conmutativa del producto): \(dhc=cdh\), \(gbf=bfg\), \(fha=afh\), \(ibd=bdi\). Los productos \(aei\) y \(ceg\) ya estaban escritos igual.</li>
+      <li>Se reemplaza cada producto por su forma ordenada: \(\det A^{T}=aei+cdh+bfg-ceg-afh-bdi\).</li>
+      <li>Se cambia el orden de los sumandos \(cdh\) y \(bfg\) (propiedad conmutativa de la suma): \(\det A^{T}=aei+bfg+cdh-ceg-afh-bdi\).</li>
+      <li>Esa expresión es la del paso 1: \(\det A^{T}=\det A\).</li>
     </ol>
     <p>Para matrices de orden mayor el resultado también vale; aquí se enuncia sin demostrarlo.</p>
   </div>
@@ -222,7 +228,16 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="card k3">
     <h3>Lo que se gana: filas y columnas valen lo mismo</h3>
     <p>Las columnas de \(A\) son las filas de \(A^{T}\). Entonces, lo que se sabe de las filas se traslada a las columnas: si se intercambian dos columnas, el determinante cambia de signo; si una columna se multiplica por \(k\), queda multiplicado por \(k\); si a una columna se le suma un múltiplo de otra, no cambia; si dos columnas son proporcionales, vale \(0\).</p>
-    <p><b>Número ↔ figura.</b> En \(A=\begin{pmatrix}2&b\\1&2\end{pmatrix}\), las columnas forman un paralelogramo y las filas (que son las columnas de \(A^{T}\)) forman otro, de forma distinta. Mueve \(b\): las dos áreas cambian juntas y se anulan a la vez, con \(b=4\).</p>
+    <p><b>Por qué, paso a paso</b> (con el intercambio de dos columnas). Sea \(B\) la matriz que resulta al intercambiar dos columnas de \(A\).</p>
+    <ol class="steps">
+      <li>Las columnas de \(B\) son las filas de \(B^{T}\), y las columnas de \(A\) son las filas de \(A^{T}\). Entonces \(B^{T}\) es \(A^{T}\) con dos <b>filas</b> intercambiadas.</li>
+      <li>Al intercambiar dos filas, el determinante cambia de signo (hoja «Propiedades de los determinantes»): \(\det B^{T}=-\det A^{T}\).</li>
+      <li>Por esta hoja, \(\det B=\det B^{T}\) y \(\det A^{T}=\det A\).</li>
+      <li>Se juntan los pasos 2 y 3: \(\det B=\det B^{T}=-\det A^{T}=-\det A\).</li>
+      <li>Con números: en \(A=\begin{pmatrix}3&5\\2&4\end{pmatrix}\), \(\det A=2\) (encabezado). Con las columnas intercambiadas, \(B=\begin{pmatrix}5&3\\4&2\end{pmatrix}\) y \(\det B=5\cdot 2-3\cdot 4=10-12=-2\) ✓.</li>
+    </ol>
+    <p>Las otras tres propiedades se trasladan a las columnas con el mismo razonamiento.</p>
+    <p><b>Número ↔ figura.</b> En \(A=\begin{pmatrix}2&b\\1&2\end{pmatrix}\), las columnas forman un paralelogramo y las filas (que son las columnas de \(A^{T}\)) forman otro, de forma distinta. Mueve \(b\): las dos áreas cambian juntas y se anulan a la vez, con \(b=4\), porque \(\det A=2\cdot 2-b\cdot 1=4-b\) y \(\det A^{T}=2\cdot 2-1\cdot b=4-b\).</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
       <li><b>Mira el paralelogramo azul:</b> lo forman las columnas de \(A\), \((2,1)\) y \((b,2)\).</li>
@@ -259,7 +274,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 2: tercer orden, \(A=\begin{pmatrix}1&2&3\\0&4&5\\1&0&6\end{pmatrix}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\det A=22\) (calculado en la hoja «Resolución de determinantes por regla de Sarrus»).</li>
+    <li>Regla de Sarrus en \(A\). Bajan: \(1\cdot 4\cdot 6=24\); \(2\cdot 5\cdot 1=10\); \(3\cdot 0\cdot 0=0\). Suma: \(24+10+0=34\). Suben: \(3\cdot 4\cdot 1=12\); \(1\cdot 5\cdot 0=0\); \(2\cdot 0\cdot 6=0\). Suma: \(12+0+0=12\). \(\det A=34-12=22\).</li>
     <li>Traspuesta: \(A^{T}=\begin{pmatrix}1&0&1\\2&4&0\\3&5&6\end{pmatrix}\).</li>
     <li>Regla de Sarrus en \(A^{T}\). Bajan: \(1\cdot 4\cdot 6=24\); \(0\cdot 0\cdot 3=0\); \(1\cdot 2\cdot 5=10\). Suma: \(24+0+10=34\).</li>
     <li>Suben: \(3\cdot 4\cdot 1=12\); \(5\cdot 0\cdot 1=0\); \(6\cdot 2\cdot 0=0\). Suma: \(12+0+0=12\).</li>
@@ -287,8 +302,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <ol class="steps">
     <li>Por esta hoja: \(\det A=\det A^{T}\).</li>
     <li>Por la condición \(A^{T}=-A\): \(\det A^{T}=\det(-A)\).</li>
-    <li>\(-A\) es \(A\) multiplicada por \(-1\). Con tres filas, \(\det(-A)=(-1)^{3}\det A=-\det A\) (hoja «Propiedades de los determinantes»).</li>
-    <li>Se juntan los tres pasos: \(\det A=-\det A\), es decir, \(2\det A=0\). Entonces \(\det A=0\).</li>
+    <li>\(-A\) es \(A\) multiplicada por \(-1\). Cada una de las tres filas queda multiplicada por \(-1\), y el \(-1\) sale del determinante una vez por fila (hoja «Propiedades de los determinantes»): \(\det(-A)=(-1)\cdot(-1)\cdot(-1)\cdot\det A\). Como \((-1)\cdot(-1)=1\) y \(1\cdot(-1)=-1\), queda \(\det(-A)=-\det A\).</li>
+    <li>Se juntan los tres pasos: \(\det A=\det A^{T}=\det(-A)=-\det A\).</li>
+    <li>En \(\det A=-\det A\) se suma \(\det A\) a los dos lados: \(2\det A=0\). Se divide por \(2\): \(\det A=0\).</li>
     <li>Un caso: \(A=\begin{pmatrix}0&2&-1\\-2&0&3\\1&-3&0\end{pmatrix}\). Por Sarrus, bajan: \(0\cdot 0\cdot 0=0\); \(2\cdot 3\cdot 1=6\); \((-1)\cdot(-2)\cdot(-3)=2\cdot(-3)=-6\); suma \(0+6+(-6)=0\). Suben: \(1\cdot 0\cdot(-1)=0\); \((-3)\cdot 3\cdot 0=0\); \(0\cdot(-2)\cdot 2=0\); suma \(0+0+0=0\). \(\det A=0-0=0\) ✓.</li>
   </ol>
   </div>
@@ -319,7 +335,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
         <li>(i) \(\det A^{T}=\det A=7\).</li>
-        <li>(ii) \(2A^{T}\) tiene tres filas, cada una multiplicada por \(2\): \(\det\!\left(2A^{T}\right)=2^{3}\cdot 7=8\cdot 7=56\).</li>
+        <li>(ii) \(2A^{T}\) tiene tres filas, cada una multiplicada por \(2\): el \(2\) sale una vez por fila, \(\det\!\left(2A^{T}\right)=2\cdot 2\cdot 2\cdot\det A^{T}\). Como \(2\cdot 2\cdot 2=8\) y \(\det A^{T}=7\) por (i), vale \(8\cdot 7=56\).</li>
         <li>(iii) Las columnas se comportan como las filas: al intercambiar dos, el determinante cambia de signo. Vale \((-1)\cdot 7=-7\).</li>
       </ol>
     </div></details>
@@ -340,7 +356,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H05 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H05 · v004 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
