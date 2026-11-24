@@ -1510,4 +1510,18 @@ ok(all(0 < F(600, n*n+5) < F(600, n*n) for n in G34) and all(sum(F(600, k*k+5) f
 ok(all(5 <= 5*n and n+5 <= n+5*n == 6*n and F(600, n+5) >= F(600, 6*n) == F(100, n) > 0 for n in G34) and all(sum(F(600, k+5) for k in range(1, n+1)) >= 100*sum(F(1, k) for k in range(1, n+1)) for n in range(1, 200)) and all(sum(F(1, k) for k in range(1, 2**m+1)) >= 1+F(m, 2) for m in range(0, 11)), 'H34 C (c): modelo B, 600/(n+5) ≥ 100/n; armónica S(2^m) ≥ 1 + m/2 (m ≤ 10)')
 ac34 = lambda n: sum(F(600, k+5) for k in range(1, n+1))
 ok(100*(1+F(28, 2)) == 1500 and 100*(1+F(27, 2)) < 1500 and 15-1 == 14 and 14*2 == 28 and 2**28 == 268435456 and ac34(61) < 1500 <= ac34(62) and rd34(ac34(61), 1) == 14947 and rd34(ac34(62), 1) == 15036, 'H34 C (d): m ≥ 28, 2²⁸ = 268 435 456; se llena el día 62')
+# Revisión general (cuarta ley), 24-nov: cuentas nuevas de H10–H14 v003
+ok([sa(2,3,n) for n in (1,2,3,4)] == [2,7,15,26] and ar(2,3,10) == 2+9*3 == 2+27 == 29 and F(29-2,3)+1 == 9+1 == 10 and (2+3)+(11-3) == 2+11 == 13 and F(4*(2*2+(4-1)*3),2) == F(4*(4+9),2) == F(4*13,2) == 26 and F(4*5,2) == 10 == 1+2+3+4, 'H10 v003 encabezado, k1, k2, k3')
+for a1 in range(-4, 5):
+    for dn in range(-6, 7):
+        if dn == 0: continue
+        d = F(dn, 2)
+        for n in range(1, 25):
+            ok(F(ar(a1,d,n)-a1, d)+1 == n and all(ar(a1,d,n+1-k) == a1+(n-k)*d for k in range(1,n+1)), 'H10 v003 despeje de n y término n+1−k')
+ok([float(x) for x in parc(lambda k: F(1,2**k), 4)] == [0.5,0.75,0.875,0.9375] and all(1-F(2**n-1,2**n) == F(1,2**n) and F(2**(n-1)-1,2**(n-1))+F(1,2**n) == F(2**n-2,2**n)+F(1,2**n) == F(2**n-1,2**n) for n in range(1,8)) and (1-F(1,2))+(F(1,2)-F(1,4))+(F(1,4)-F(1,8)) == F(7,8) and parc(lambda k: 1, 4) == [1,2,3,4], 'H11 v003 encabezado, k2, k3 y ser-vivo')
+ok(F(4,9)/F(2,3) == F(4,9)*F(3,2) == F(12,18) == F(2,3) and F(8,27)/F(4,9) == F(8,27)*F(9,4) == F(72,108) == F(2,3) and 3*(1-F(16,81)) == F(65,27) and F(2,3)**4 == F(16,81) and F(65,81)/F(1,3) == F(195,81) == F(65,27) and F(27+18+12+8,27) == F(65,27) and [round(float(F(2,3)**k),2) for k in (1,2,3,4)] == [0.67,0.44,0.3,0.2] and 1/(1-F(2,3)) == 3, 'H12 v003 encabezado, k1 y k2')
+ok(all(F(1,3)*geo(1,F(2,3),n) == 1-F(2,3)**n for n in range(1,40)), 'H12 v003 lectura del paso 5')
+ok([round(float(x),2) for x in SG[:4]] == [1.0,1.67,2.11,2.41] and [round(float(F(2,3)**k),2) for k in (1,2,3)] == [0.67,0.44,0.3] and F(19,9)-F(15,9) == F(4,9) and F(65,27)-F(57,27) == F(8,27) and [sum(bl[:k]) for k in (1,3,6,10)] == [1,2,3,4] and [F(n,n+1) for n in (1,9,99)] == [F(1,2),F(9,10),F(99,100)], 'H13 v003 encabezado, k2, k3 y e1')
+ok(sum(F(1,n) for n in range(9,17)) > 8*F(1,16) == F(1,2) and Hn(2) == 1+F(1,2) and Hn(4) > 2 and Hn(8) > F(5,2) and Hn(16) > F(5,2)+F(1,2) == 3 and 1+F(199,2) > 100 >= 1+F(198,2) and len(str(2**199)) == 60 and F(1,4)+F(1,9) <= 2*F(1,4) == F(1,2) and sum(F(1,n*n) for n in range(4,8)) <= 4*F(1,16) == F(1,4) and sum(F(1,n*n) for n in range(1,8)) <= 1+F(1,2)+F(1,4) == F(7,4) < 2 and (2**3,3**3,4**3) == (8,27,64), 'H14 v003 encabezado, k1, k2 y k3')
+ok(all((2**(j+1)-1)-2**j+1 == 2**j for j in range(0,20)) and all(F(2**j, 2**(j*p)) == F(1, 2**(j*(p-1))) == F(1, 2**(p-1))**j for p in (2,3,4) for j in range(0,12)), 'H14 v003 k3 exponentes')
 print('Lote 25 H01–H34:', 'sin errores' if not err else f'{err} errores')

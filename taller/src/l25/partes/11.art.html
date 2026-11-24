@@ -12,7 +12,9 @@
       <li><b>Series infinitas convergentes y divergentes</b></li>
     </ol>
     <h1>Series infinitas convergentes y divergentes</h1>
-    <p class="lede">Una suma de infinitos términos se estudia mirando sus sumas parciales \(S_{n}\). Si \(S_{n}\) se acerca a un número \(S\) cuando \(n\) crece, la serie converge y su suma es \(S\); si no, diverge. \[\sum_{n=1}^{\infty}a_{n}=\lim_{n\to\infty}S_{n}=S\]</p>
+    <p class="lede">Una <b>serie infinita</b> es una suma que no termina: \(a_{1}+a_{2}+a_{3}+\cdots\) Nadie puede sumar infinitos números uno por uno. Lo que sí se puede es sumar los primeros, y después uno más, y después uno más. Cada una de esas sumas es una <b>suma parcial</b>:</p>
+    <p class="lede">\[\begin{aligned}S_{1}&=a_{1}\\ S_{2}&=a_{1}+a_{2}\\ S_{3}&=a_{1}+a_{2}+a_{3}\\ &\ \,\vdots\\ S_{n}&=a_{1}+a_{2}+a_{3}+\cdots+a_{n}\end{aligned}\]</p>
+    <p class="lede">Ejemplo, con \(\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\dfrac{1}{16}+\cdots\): \[\begin{aligned}S_{1}&=\dfrac{1}{2}&&=0{,}5\\ S_{2}&=\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{2}{4}+\dfrac{1}{4}=\dfrac{3}{4}&&=0{,}75\\ S_{3}&=\dfrac{3}{4}+\dfrac{1}{8}=\dfrac{6}{8}+\dfrac{1}{8}=\dfrac{7}{8}&&=0{,}875\\ S_{4}&=\dfrac{7}{8}+\dfrac{1}{16}=\dfrac{14}{16}+\dfrac{1}{16}=\dfrac{15}{16}&&=0{,}9375\end{aligned}\] Las sumas parciales \(0{,}5;\ 0{,}75;\ 0{,}875;\ 0{,}9375;\ \ldots\) se acercan cada vez más a \(1\). Cuando las sumas parciales \(S_{n}\) se acercan tanto como se quiera a un número \(S\) al crecer \(n\), se dice que la serie <b>converge</b> y que su suma es \(S\); si no pasa eso, la serie <b>diverge</b>. \[\sum_{n=1}^{\infty}a_{n}=\lim_{n\to\infty}S_{n}=S\] Se lee: «la sumatoria de los \(a\) sub \(n\), desde \(n\) igual a \(1\) hasta infinito, es igual al límite de \(S\) sub \(n\) cuando \(n\) tiende a infinito, y ese límite es \(S\)».</p>
   </section>
 </header>
 
@@ -40,7 +42,7 @@
     <h3>Definición, en orden</h3>
     <ol class="steps">
       <li><b>Serie infinita:</b> la expresión \(\displaystyle\sum_{n=1}^{\infty}a_{n}=a_{1}+a_{2}+a_{3}+\cdots\), donde \(a_{1},\ a_{2},\ a_{3},\ \ldots\) es una sucesión infinita.</li>
-      <li><b>Sumas parciales:</b> \(S_{n}=\displaystyle\sum_{k=1}^{n}a_{k}=a_{1}+a_{2}+\cdots+a_{n}\). Forman otra sucesión: \(S_{1},\ S_{2},\ S_{3},\ \ldots\)</li>
+      <li><b>Sumas parciales:</b> \(S_{n}=\displaystyle\sum_{k=1}^{n}a_{k}=a_{1}+a_{2}+\cdots+a_{n}\) (la suma de los \(n\) primeros términos). Forman otra sucesión: \(S_{1},\ S_{2},\ S_{3},\ \ldots\) En el ejemplo de arriba esa sucesión es \(\dfrac{1}{2},\ \dfrac{3}{4},\ \dfrac{7}{8},\ \dfrac{15}{16},\ \ldots\) Cada una es la anterior más un término: \(S_{n}=S_{n-1}+a_{n}\) (hoja «Determinar sumas parciales»).</li>
       <li><b>Converge</b> si la sucesión de sumas parciales tiene límite y ese límite es un número real \(S\). Entonces \(S\) es la suma de la serie y se escribe \(\displaystyle\sum_{n=1}^{\infty}a_{n}=S\).</li>
       <li><b>Diverge</b> si la sucesión de sumas parciales no tiene un número real como límite. Una serie divergente no tiene suma.</li>
     </ol>
@@ -50,22 +52,28 @@
 
   <div class="card k2">
     <h3>Demostración paso a paso: \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}=1\)</h3>
+    <p><b>Qué se demuestra:</b> que la serie \(\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\cdots\) converge y que su suma es exactamente \(1\). <b>Cómo funciona el método:</b> (1) se busca una fórmula para la suma parcial \(S_{n}\), que sirva para cualquier \(n\); (2) se mira a qué número se acerca esa fórmula cuando \(n\) crece.</p>
+    <p><b>Primero, la regularidad con números</b> (son las sumas parciales de la animación):</p>
+    <p>\[\begin{aligned}S_{1}&=\dfrac{1}{2}&&=1-\dfrac{1}{2}&&\text{falta }\tfrac{1}{2}\text{ para llegar a }1\\ S_{2}&=\dfrac{3}{4}&&=1-\dfrac{1}{4}&&\text{falta }\tfrac{1}{4}\\ S_{3}&=\dfrac{7}{8}&&=1-\dfrac{1}{8}&&\text{falta }\tfrac{1}{8}\\ S_{4}&=\dfrac{15}{16}&&=1-\dfrac{1}{16}&&\text{falta }\tfrac{1}{16}\end{aligned}\]</p>
+    <p>Lo que falta es \(\dfrac{1}{2^{1}},\ \dfrac{1}{2^{2}},\ \dfrac{1}{2^{3}},\ \dfrac{1}{2^{4}}\): el exponente es el número de la suma parcial. Eso hace pensar que \(S_{n}=1-\dfrac{1}{2^{n}}\). Cuatro casos no son una demostración; la demostración, para todo \(n\), es esta:</p>
     <ol class="steps">
-      <li>Cada término es una resta: \(\dfrac{1}{2^{k-1}}-\dfrac{1}{2^{k}}=\dfrac{2}{2^{k}}-\dfrac{1}{2^{k}}=\dfrac{1}{2^{k}}\).</li>
-      <li>Se reemplaza en la suma parcial: \(S_{n}=\displaystyle\sum_{k=1}^{n}\left(\dfrac{1}{2^{k-1}}-\dfrac{1}{2^{k}}\right)\).</li>
-      <li>Escrita término a término: \(\left(1-\dfrac{1}{2}\right)+\left(\dfrac{1}{2}-\dfrac{1}{4}\right)+\cdots+\left(\dfrac{1}{2^{n-1}}-\dfrac{1}{2^{n}}\right)\). Cada fracción intermedia aparece una vez restando y una vez sumando, y se cancela.</li>
-      <li>Quedan el primero y el último: \(S_{n}=1-\dfrac{1}{2^{n}}\).</li>
-      <li>Al crecer \(n\), \(\dfrac{1}{2^{n}}\) tiene límite \(0\) (ver el aviso de rigor). Entonces \(\displaystyle\lim_{n\to\infty}S_{n}=1-0=1\).</li>
-      <li>El límite es un número real: la serie converge y su suma es \(1\).</li>
+      <li><b>Cada término se escribe como una resta.</b> Con números: \(\dfrac{1}{2}=1-\dfrac{1}{2}\); \(\dfrac{1}{4}=\dfrac{1}{2}-\dfrac{1}{4}\); \(\dfrac{1}{8}=\dfrac{1}{4}-\dfrac{1}{8}\). Cada término es «la fracción anterior menos él mismo».</li>
+      <li>Con letras, para el término \(k\): \(\dfrac{1}{2^{k-1}}-\dfrac{1}{2^{k}}\). Se amplifica la primera fracción por \(2\) para igualar denominadores (\(2\cdot 2^{k-1}=2^{k}\)): \(\dfrac{2}{2^{k}}-\dfrac{1}{2^{k}}=\dfrac{2-1}{2^{k}}=\dfrac{1}{2^{k}}\). Entonces \(\dfrac{1}{2^{k}}=\dfrac{1}{2^{k-1}}-\dfrac{1}{2^{k}}\).</li>
+      <li>Se reemplaza cada término de la suma parcial por su resta: \(S_{n}=\displaystyle\sum_{k=1}^{n}\dfrac{1}{2^{k}}=\sum_{k=1}^{n}\left(\dfrac{1}{2^{k-1}}-\dfrac{1}{2^{k}}\right)\).</li>
+      <li><b>Con \(n=3\), para ver qué pasa:</b> \(S_{3}=\left(1-\dfrac{1}{2}\right)+\left(\dfrac{1}{2}-\dfrac{1}{4}\right)+\left(\dfrac{1}{4}-\dfrac{1}{8}\right)\). El \(-\dfrac{1}{2}\) se cancela con el \(+\dfrac{1}{2}\) que sigue; el \(-\dfrac{1}{4}\), con el \(+\dfrac{1}{4}\). Quedan el primero y el último: \(S_{3}=1-\dfrac{1}{8}=\dfrac{7}{8}\). ✓</li>
+      <li><b>Con cualquier \(n\):</b> \(S_{n}=\left(1-\dfrac{1}{2}\right)+\left(\dfrac{1}{2}-\dfrac{1}{4}\right)+\cdots+\left(\dfrac{1}{2^{n-1}}-\dfrac{1}{2^{n}}\right)\). Igual que antes, cada fracción intermedia aparece una vez restando y una vez sumando, y se cancela.</li>
+      <li>Quedan el primero, \(1\), y el último, \(-\dfrac{1}{2^{n}}\): \[S_{n}=1-\dfrac{1}{2^{n}}.\]</li>
+      <li><b>Segunda parte: a qué se acerca \(S_{n}\).</b> Al crecer \(n\), el denominador \(2^{n}\) crece sin tope (\(2,\ 4,\ 8,\ 16,\ 32,\ldots\)) y la fracción \(\dfrac{1}{2^{n}}\) se achica: \(0{,}5;\ 0{,}25;\ 0{,}125;\ 0{,}0625;\ldots\) Su límite es \(0\) (ver el aviso de rigor). Entonces \(\displaystyle\lim_{n\to\infty}S_{n}=1-0=1\).</li>
+      <li>El límite es un número real: la serie converge y su suma es \(1\). Se escribe \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{2^{n}}=1\).</li>
     </ol>
     <p>Las mismas sumas parciales, ahora en una gráfica. Mueve \(n\) con el deslizador o usa «Reproducir».</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
       <li><b>Mira primero los ejes:</b> en horizontal va \(n\), cuántos términos se han sumado; en vertical, la suma parcial \(S_{n}\).</li>
-      <li><b>Mira el punto naranja:</b> es la suma parcial del \(n\) elegido. Su punteada la lleva hasta su valor en el eje vertical. Los puntos azules son las sumas parciales anteriores.</li>
+      <li><b>Mira el punto naranja:</b> es la suma parcial del \(n\) elegido. Su punteada la lleva hasta su valor en el eje vertical. Los puntos azules son las sumas parciales anteriores; ninguno se borra.</li>
       <li><b>Mira la recta burdeo punteada:</b> está a la altura \(1\), la suma de la serie. Al aumentar \(n\), los puntos suben hacia ella y ninguno la toca.</li>
-      <li><b>Lee bajo la gráfica:</b> la suma parcial del punto naranja y lo que le falta para llegar a \(1\).</li>
-      <li><b>Cuenta de abajo:</b> el dato \(n\), la fórmula \(S_{n}=1-\dfrac{1}{2^{n}}\), el reemplazo, la potencia, la resta y lo que falta. Conclusión: lo que falta baja a la mitad cada vez, así que \(S_{n}\) tiende a \(1\).</li>
+      <li><b>Lee la lista bajo la gráfica:</b> hay una fila por cada suma parcial, «para \(n=1\)», «para \(n=2\)», y así. Cada fila dice cuánto vale esa suma parcial y cuánto le falta para llegar a \(1\). Las filas quedan escritas, una bajo la otra.</li>
+      <li><b>Última fila y cuenta de abajo:</b> la fila final es la general, \(S_{n}=1-\dfrac{1}{2^{n}}\). En la cuenta de abajo está cada suma hecha paso a paso: la suma anterior, más el término nuevo, con denominador común. Conclusión: lo que falta baja a la mitad cada vez, así que \(S_{n}\) tiende a \(1\).</li>
     </ol>
     <div class="stage" data-scene="ser-vivo"></div>
     <ul class="keys">
@@ -76,8 +84,8 @@
   <div class="card k3">
     <h3>Dos maneras de divergir</h3>
     <ol class="steps">
-      <li><b>Las sumas parciales crecen sin tope.</b> En \(1+1+1+\cdots\), \(S_{n}=n\). Dado cualquier número, hay un \(n\) mayor que él: \(S_{n}\) no se acerca a ningún número real. La serie diverge.</li>
-      <li><b>Las sumas parciales oscilan.</b> En \(1-1+1-1+\cdots\), las sumas parciales son \(1,\ 0,\ 1,\ 0,\ \ldots\) (hoja «Determinar sumas parciales»). No se acercan a un único número. La serie diverge, aunque sus sumas parciales nunca pasan de \(1\).</li>
+      <li><b>Las sumas parciales crecen sin tope.</b> En \(1+1+1+\cdots\): \(S_{1}=1\); \(S_{2}=1+1=2\); \(S_{3}=1+1+1=3\); \(S_{4}=1+1+1+1=4\). Al sumar \(n\) veces el \(1\) se obtiene \(n\): \(S_{n}=n\). Dado cualquier número, por grande que sea, hay un \(n\) mayor que él (por ejemplo, \(S_{1\,000\,001}=1\,000\,001\) ya pasó del millón): \(S_{n}\) no se acerca a ningún número real. La serie diverge.</li>
+      <li><b>Las sumas parciales oscilan.</b> En \(1-1+1-1+\cdots\): \(S_{1}=1\); \(S_{2}=1-1=0\); \(S_{3}=0+1=1\); \(S_{4}=1-1=0\). Las sumas parciales son \(1,\ 0,\ 1,\ 0,\ \ldots\) (hoja «Determinar sumas parciales»): saltan entre dos valores y no se acercan a un único número. La serie diverge, aunque sus sumas parciales nunca pasan de \(1\).</li>
     </ol>
     <p>En los dos casos la serie no tiene suma. Decir que «la suma es infinita» en el primer caso es una manera de describir cómo diverge, no un número.</p>
   </div>
@@ -200,6 +208,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H11 · v002 · Pendiente de APR</span>
+  <span class="status">CI-L25-H11 · v003 · Pendiente de APR</span>
 </footer>
 </article>

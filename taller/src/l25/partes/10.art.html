@@ -12,7 +12,9 @@
       <li><b>Suma parcial de los n términos de una sucesión aritmética</b></li>
     </ol>
     <h1>Suma parcial de los n términos de una sucesión aritmética</h1>
-    <p class="lede">La suma de los \(n\) primeros términos de una sucesión aritmética es la cantidad de términos por el promedio entre el primero y el último. \[S_{n}=\sum_{k=1}^{n}a_{k}=\dfrac{n\,(a_{1}+a_{n})}{2}\]</p>
+    <p class="lede">Se quiere sumar los \(n\) primeros términos de una sucesión aritmética sin sumarlos uno por uno. Esa suma se llama suma parcial y se escribe \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\) (se lee: «sumatoria de los \(a\) sub \(k\), desde \(k\) igual a \(1\) hasta \(n\)»). Primero con números, con \(2,\ 5,\ 8,\ 11\):</p>
+    <p class="lede">\[\begin{aligned}S_{4}&=\ 2+\ 5+\ 8+11&&\text{la suma, del primero al último}\\ S_{4}&=11+\ 8+\ 5+\ 2&&\text{la misma suma, del último al primero}\\ 2\,S_{4}&=13+13+13+13&&\text{se suman las dos filas, columna por columna}\\ 2\,S_{4}&=4\cdot 13=52&&\text{son 4 columnas, y cada una suma 13}\\ S_{4}&=\dfrac{52}{2}=26&&\text{se divide por 2 en los dos lados}\end{aligned}\]</p>
+    <p class="lede"><b>De dónde sale cada número:</b> el \(4\) es la cantidad de términos, \(n\); el \(13\) es el primer término más el último, \(2+11=a_{1}+a_{4}\); el \(2\) que divide aparece porque la suma se escribió dos veces. Con cualquier sucesión aritmética pasa lo mismo (se demuestra más abajo): \[S_{n}=\sum_{k=1}^{n}a_{k}=\dfrac{n\,(a_{1}+a_{n})}{2}\] En palabras: la cantidad de términos, por la suma del primero y el último, dividido por \(2\).</p>
   </section>
 </header>
 
@@ -39,32 +41,60 @@
   <div class="card k1">
     <h3>La fórmula y cuándo se usa</h3>
     <ol class="steps">
-      <li>\(S_{n}=a_{1}+a_{2}+\cdots+a_{n}\) es la suma parcial de orden \(n\) (hoja «Determinar sumas parciales»).</li>
-      <li>Si la sucesión es aritmética: \(S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}\). Se necesitan tres datos: cuántos términos son, el primero y el último.</li>
-      <li>Si no se conoce el último, se calcula antes con \(a_{n}=a_{1}+(n-1)\,d\).</li>
-      <li>Si no se conoce la cantidad de términos, se despeja \(n\) de \(a_{n}=a_{1}+(n-1)\,d\).</li>
+      <li>\(S_{n}=a_{1}+a_{2}+\cdots+a_{n}\) es la suma parcial de orden \(n\): la suma de los \(n\) primeros términos (hoja «Determinar sumas parciales»). Por ejemplo, en \(2,\ 5,\ 8,\ 11,\dots\): \(S_{1}=2\); \(S_{2}=2+5=7\); \(S_{3}=2+5+8=15\); \(S_{4}=2+5+8+11=26\).</li>
+      <li>Una sucesión es aritmética cuando cada término es el anterior más un mismo número \(d\), la diferencia (hoja «Sucesiones aritméticas»). En \(2,\ 5,\ 8,\ 11\): \(5-2=3\), \(8-5=3\), \(11-8=3\); la diferencia es \(d=3\).</li>
+      <li>Si la sucesión es aritmética: \(S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}\). Se necesitan tres datos: cuántos términos son (\(n\)), el primero (\(a_{1}\)) y el último (\(a_{n}\)).</li>
+      <li><b>Si no se conoce el último</b>, se calcula antes con el término general, \(a_{n}=a_{1}+(n-1)\,d\) (sale de contar los saltos: para llegar a la posición \(n\) se suma \(d\) un total de \(n-1\) veces; hoja «Término enésimo de una sucesión aritmética»). Ejemplo: en \(2,\ 5,\ 8,\dots\), el término \(10\) es \(a_{10}=2+(10-1)\cdot 3=2+9\cdot 3=2+27=29\).</li>
+      <li><b>Si no se conoce la cantidad de términos</b>, se despeja \(n\) de esa misma fórmula:
+        \[\begin{aligned}a_{n}&=a_{1}+(n-1)\,d&&\text{término general}\\ a_{n}-a_{1}&=(n-1)\,d&&\text{se resta }a_{1}\text{ en los dos lados}\\ \dfrac{a_{n}-a_{1}}{d}&=n-1&&\text{se divide por }d\text{ en los dos lados }(d\ne 0)\\ \dfrac{a_{n}-a_{1}}{d}+1&=n&&\text{se suma }1\text{ en los dos lados}\end{aligned}\]
+        Ejemplo: en \(2+5+8+\cdots+29\), con \(d=3\): \(n=\dfrac{29-2}{3}+1=\dfrac{27}{3}+1=9+1=10\) términos. (Si \(d=0\), todos los términos son iguales y no se puede contar así: hay que saber \(n\).)</li>
     </ol>
     <p>La fórmula vale solo para sucesiones aritméticas: la demostración usa que la diferencia es constante.</p>
   </div>
 
   <div class="card k2">
     <h3>Demostración: la suma, al derecho y al revés</h3>
+    <p><b>Qué se demuestra:</b> que en toda sucesión aritmética, \(S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}\). <b>Cómo funciona el método:</b> se escribe la suma dos veces, una del primero al último y otra del último al primero, y se suman las dos. Cada pareja de términos que queda uno sobre el otro suma lo mismo, así que la suma doble es «tantas parejas por lo que vale una». Es lo que hace la animación de arriba.</p>
+    <p><b>Primero con números</b>, con \(2+5+8+11\) (\(a_{1}=2\), \(d=3\), \(n=4\)):</p>
     <ol class="steps">
-      <li>La suma, del primero al último: \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\).</li>
-      <li>La misma suma, del último al primero (sumar en otro orden no cambia el resultado): \(S_{n}=a_{n}+a_{n-1}+\cdots+a_{1}=\displaystyle\sum_{k=1}^{n}a_{n+1-k}\).</li>
-      <li>Se suman las dos igualdades, juntando el sumando de la posición \(k\) de una con el de la posición \(k\) de la otra: \(2S_{n}=\displaystyle\sum_{k=1}^{n}\left(a_{k}+a_{n+1-k}\right)\).</li>
-      <li>Cada pareja, por el término general: \(a_{k}+a_{n+1-k}=a_{1}+(k-1)\,d+a_{1}+(n-k)\,d\).</li>
-      <li>Se saca factor común \(d\): \((k-1)+(n-k)=n-1\), así que la pareja vale \(2a_{1}+(n-1)\,d\). No depende de \(k\).</li>
-      <li>Ese valor es \(a_{1}+\left[a_{1}+(n-1)\,d\right]=a_{1}+a_{n}\).</li>
-      <li>Son \(n\) parejas iguales: \(2S_{n}=n\,(a_{1}+a_{n})\).</li>
-      <li>Se divide por \(2\): \[S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}.\]</li>
+      <li>Las parejas: \(2+11=13\); \(5+8=13\); \(8+5=13\); \(11+2=13\).</li>
+      <li><b>Por qué todas dan lo mismo:</b> al pasar de una pareja a la siguiente, el término de arriba sube \(3\) (de \(2\) a \(5\)) y el de abajo baja \(3\) (de \(11\) a \(8\)). Lo que uno gana, el otro lo pierde: \(5+8=(2+3)+(11-3)=2+11\).</li>
+      <li>Son \(4\) parejas de \(13\): \(2\,S_{4}=4\cdot 13=52\), y \(S_{4}=52:2=26\).</li>
     </ol>
-    <p><b>Otra forma, sin el último término.</b> Del paso 5, \(2S_{n}=n\left[2a_{1}+(n-1)\,d\right]\); al dividir por \(2\): \[S_{n}=\dfrac{n\left[2a_{1}+(n-1)\,d\right]}{2}.\]</p>
+    <p><b>Ahora en general</b>, con letras, para cualquier sucesión aritmética:</p>
+    <ol class="steps">
+      <li>La suma, del primero al último: \(S_{n}=a_{1}+a_{2}+\cdots+a_{n-1}+a_{n}=\displaystyle\sum_{k=1}^{n}a_{k}\).</li>
+      <li>La misma suma, del último al primero (propiedad conmutativa: sumar en otro orden no cambia el resultado): \(S_{n}=a_{n}+a_{n-1}+\cdots+a_{2}+a_{1}\).</li>
+      <li><b>Cómo se escribe esa segunda fila con \(\Sigma\).</b> En el lugar \(k\) de la segunda fila está el término de subíndice \(n+1-k\): en el lugar \(1\), \(a_{n+1-1}=a_{n}\); en el lugar \(2\), \(a_{n+1-2}=a_{n-1}\); en el lugar \(n\), \(a_{n+1-n}=a_{1}\). Entonces \(S_{n}=\displaystyle\sum_{k=1}^{n}a_{n+1-k}\). (Con \(n=4\): lugares \(1,2,3,4\) → subíndices \(4,3,2,1\).)</li>
+      <li>Se suman las dos igualdades, lado por lado. A la izquierda, \(S_{n}+S_{n}=2\,S_{n}\). A la derecha se junta el sumando del lugar \(k\) de una fila con el del lugar \(k\) de la otra: \[2\,S_{n}=(a_{1}+a_{n})+(a_{2}+a_{n-1})+\cdots+(a_{n}+a_{1})=\sum_{k=1}^{n}\left(a_{k}+a_{n+1-k}\right).\]</li>
+      <li>Se calcula cada término de la pareja con el término general \(a_{m}=a_{1}+(m-1)\,d\). Con \(m=k\): \(a_{k}=a_{1}+(k-1)\,d\). Con \(m=n+1-k\): \(a_{n+1-k}=a_{1}+(n+1-k-1)\,d=a_{1}+(n-k)\,d\).</li>
+      <li>Se suman los dos: \(a_{k}+a_{n+1-k}=a_{1}+(k-1)\,d+a_{1}+(n-k)\,d\).</li>
+      <li>Se juntan los dos \(a_{1}\) y se saca factor común \(d\): \(a_{k}+a_{n+1-k}=2a_{1}+\left[(k-1)+(n-k)\right]d\).</li>
+      <li>Se calcula el corchete: \((k-1)+(n-k)=k-1+n-k=n-1\) (la \(k\) se cancela). La pareja vale \(2a_{1}+(n-1)\,d\): <b>no depende de \(k\)</b>, o sea, todas las parejas valen lo mismo.</li>
+      <li>Ese valor se separa así: \(2a_{1}+(n-1)\,d=a_{1}+\left[a_{1}+(n-1)\,d\right]\). El corchete es el término general de la posición \(n\), es decir, \(a_{n}\). Entonces cada pareja vale \(a_{1}+a_{n}\).</li>
+      <li>Son \(n\) parejas iguales (una por cada lugar \(k=1,2,\ldots,n\)): \(2\,S_{n}=n\,(a_{1}+a_{n})\).</li>
+      <li>Se divide por \(2\) en los dos lados: \[S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}.\]</li>
+      <li><b>Comprobación con los números de arriba:</b> \(S_{4}=\dfrac{4\cdot(2+11)}{2}=\dfrac{4\cdot 13}{2}=\dfrac{52}{2}=26\), igual que sumando directo: \(2+5+8+11=26\). ✓</li>
+    </ol>
+    <p><b>Otra forma, sin el último término.</b> Sirve cuando se conocen \(a_{1}\), \(d\) y \(n\), pero no \(a_{n}\).</p>
+    <ol class="steps">
+      <li>Se parte de la fórmula recién demostrada: \(S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}\).</li>
+      <li>Se reemplaza \(a_{n}\) por el término general, \(a_{n}=a_{1}+(n-1)\,d\): \(S_{n}=\dfrac{n\left[a_{1}+a_{1}+(n-1)\,d\right]}{2}\).</li>
+      <li>Se suma \(a_{1}+a_{1}=2a_{1}\): \[S_{n}=\dfrac{n\left[2a_{1}+(n-1)\,d\right]}{2}.\]</li>
+      <li>Comprobación con \(2+5+8+11\) (\(a_{1}=2\), \(d=3\), \(n=4\)): \(S_{4}=\dfrac{4\cdot\left[2\cdot 2+(4-1)\cdot 3\right]}{2}=\dfrac{4\cdot\left[4+9\right]}{2}=\dfrac{4\cdot 13}{2}=\dfrac{52}{2}=26\). ✓</li>
+    </ol>
   </div>
 
   <div class="card k3">
     <h3>Un caso especial: \(1+2+3+\cdots+n=\dfrac{n\,(n+1)}{2}\)</h3>
-    <p>Los naturales forman una sucesión aritmética con \(a_{1}=1\), \(d=1\) y \(a_{n}=n\). Entonces \(S_{n}=\dfrac{n\,(1+n)}{2}\). Mueve \(n\) y mira la escalera y su copia.</p>
+    <p><b>De dónde sale.</b> Los números \(1,\ 2,\ 3,\ 4,\dots\) forman una sucesión aritmética: cada uno es el anterior más \(1\).</p>
+    <ol class="steps">
+      <li>Primer término: \(a_{1}=1\). Diferencia: \(d=2-1=1\).</li>
+      <li>Término de la posición \(n\), con el término general: \(a_{n}=a_{1}+(n-1)\,d=1+(n-1)\cdot 1=1+n-1=n\). O sea, el término de la posición \(n\) es el mismo número \(n\).</li>
+      <li>Se reemplaza \(a_{1}=1\) y \(a_{n}=n\) en \(S_{n}=\dfrac{n\,(a_{1}+a_{n})}{2}\): \[1+2+3+\cdots+n=\sum_{k=1}^{n}k=\dfrac{n\,(1+n)}{2}=\dfrac{n\,(n+1)}{2}.\]</li>
+      <li>Comprobación con \(n=4\): \(\dfrac{4\cdot(4+1)}{2}=\dfrac{4\cdot 5}{2}=\dfrac{20}{2}=10\), y sumando directo, \(1+2+3+4=10\). ✓</li>
+    </ol>
+    <p>La animación lo muestra con cuadraditos. Mueve \(n\) y mira la escalera y su copia.</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
       <li><b>Mira primero la escalera azul:</b> la primera columna tiene \(1\) cuadradito, la segunda \(2\), y así hasta la última, que tiene \(n\). Sus cuadraditos son la suma \(1+2+\cdots+n\).</li>
@@ -193,6 +223,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H10 · v002 · Pendiente de APR</span>
+  <span class="status">CI-L25-H10 · v003 · Pendiente de APR</span>
 </footer>
 </article>

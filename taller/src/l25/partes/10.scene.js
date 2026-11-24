@@ -8,9 +8,9 @@ OA.scene('sar-idea', (function(){
     ['Q', 'S_{4}=2+5+8+11=\\ ?', 'S₄ = 2 + 5 + 8 + 11 = ?', 'pt'], ['F', '\\Longrightarrow\\ S_{4}=26', '⟹ S₄ = 26', 'diff'],
     ['R1', 'S_{4}=2+5+8+11', 'S₄ = 2 + 5 + 8 + 11', ''],
     ['R2', 'S_{4}=11+8+5+2', 'S₄ = 11 + 8 + 5 + 2', ''],
-    ['R3', '2\\,S_{4}=13+13+13+13', '2 S₄ = 13 + 13 + 13 + 13', ''],
-    ['R4', '2\\,S_{4}=4\\cdot 13=52', '2 S₄ = 4 · 13 = 52', ''],
-    ['R5', 'S_{4}=\\tfrac{4\\cdot 13}{2}=26', 'S₄ = 4 · 13 / 2 = 26', 'diff']];
+    ['R3', '2\\,S_{4}=(2+11)+(5+8)+(8+5)+(11+2)', '2 S₄ = (2+11) + (5+8) + (8+5) + (11+2)', ''],
+    ['R4', '2\\,S_{4}=13+13+13+13=4\\cdot 13=52', '2 S₄ = 13 + 13 + 13 + 13 = 4 · 13 = 52', ''],
+    ['R5', 'S_{4}=\\tfrac{52}{2}=26\\quad\\Rightarrow\\quad S_{n}=\\tfrac{n\\,(a_{1}+a_{n})}{2}', 'S₄ = 52 / 2 = 26  ⇒  Sₙ = n (a₁ + aₙ) / 2', 'diff']];
   var TXT = [['Cuatro términos, dibujados como columnas.', 'La suma es toda la zona azul.'],
     ['Encima va la misma suma, escrita al revés:', '11 sobre el 2, 8 sobre el 5, y así.'],
     ['Cada columna completa mide lo mismo:', 'el primer término más el último, 13.'],
@@ -55,7 +55,7 @@ OA.scene('sar-idea', (function(){
       '\\text{La misma suma, del último al primero:}' + Q + 'S_{4}=11+8+5+2',
       '\\text{Se suman las dos, columna a columna:}' + Q + '2\\,S_{4}=(2+11)+(5+8)+(8+5)+(11+2)' + Q + '2+11=13,\\qquad 5+8=13' + Q + '8+5=13,\\qquad 11+2=13',
       '2\\,S_{4}=13+13+13+13=4\\cdot 13=52',
-      '\\text{Se divide por 2: }S_{4}=\\dfrac{52}{2}=26' + Q + '\\text{En general: }S_{n}=\\dfrac{n\\,(a_{1}+a_{n})}{2}' + Q + '\\text{Aquí: }S_{4}=\\dfrac{4\\cdot(2+11)}{2}=\\dfrac{4\\cdot 13}{2}=\\dfrac{52}{2}=26'];
+      '\\text{Se divide por 2: }S_{4}=\\dfrac{52}{2}=26' + Q + '\\text{De dónde salió cada número:}' + Q + '4=n\\ \\text{(cantidad de términos)}' + Q + '13=2+11=a_{1}+a_{4}\\ \\text{(primero más último)}' + Q + '\\text{En general: }S_{n}=\\dfrac{n\\,(a_{1}+a_{n})}{2}' + Q + '\\text{Aquí: }S_{4}=\\dfrac{4\\cdot(2+11)}{2}=\\dfrac{4\\cdot 13}{2}=\\dfrac{52}{2}=26'];
       return dtPasos(R.slice(0, k)); }
   };
 })());

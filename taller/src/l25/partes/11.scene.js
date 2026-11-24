@@ -55,32 +55,26 @@ OA.scene('ser-idea', (function(){
       'a_{2}=\\dfrac{1}{2^{2}}=\\dfrac{1}{4}' + Q + 'S_{2}=S_{1}+a_{2}=\\dfrac{1}{2}+\\dfrac{1}{4}=\\dfrac{2}{4}+\\dfrac{1}{4}=\\dfrac{3}{4}' + Q + '\\text{falta: }1-S_{2}=\\dfrac{4}{4}-\\dfrac{3}{4}=\\dfrac{1}{4}',
       'a_{3}=\\dfrac{1}{2^{3}}=\\dfrac{1}{8}' + Q + 'S_{3}=S_{2}+a_{3}=\\dfrac{3}{4}+\\dfrac{1}{8}=\\dfrac{6}{8}+\\dfrac{1}{8}=\\dfrac{7}{8}' + Q + '\\text{falta: }1-S_{3}=\\dfrac{8}{8}-\\dfrac{7}{8}=\\dfrac{1}{8}',
       'a_{4}=\\dfrac{1}{2^{4}}=\\dfrac{1}{16}' + Q + 'S_{4}=S_{3}+a_{4}=\\dfrac{7}{8}+\\dfrac{1}{16}=\\dfrac{14}{16}+\\dfrac{1}{16}=\\dfrac{15}{16}' + Q + '\\text{falta: }1-S_{4}=\\dfrac{16}{16}-\\dfrac{15}{16}=\\dfrac{1}{16}',
-      '\\text{Lo que falta: }\\dfrac{1}{2},\\ \\dfrac{1}{4},\\ \\dfrac{1}{8},\\ \\dfrac{1}{16},\\ \\ldots,\\ \\dfrac{1}{2^{n}}\\ \\to\\ 0' + Q + 'S_{n}=1-\\dfrac{1}{2^{n}}\\quad\\text{(se demuestra más abajo)}' + Q + '\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{2^{n}}=\\lim_{n\\to\\infty}S_{n}=1-0=1' + Q + '\\text{La serie converge y su suma es }1.'];
+      '\\text{Lo que falta: }\\dfrac{1}{2},\\ \\dfrac{1}{4},\\ \\dfrac{1}{8},\\ \\dfrac{1}{16},\\ \\ldots,\\ \\dfrac{1}{2^{n}}\\ \\to\\ 0' + Q + '\\text{Las sumas: }S_{1}=1-\\dfrac{1}{2},\\ \\ S_{2}=1-\\dfrac{1}{4}' + Q + 'S_{3}=1-\\dfrac{1}{8},\\ \\ S_{4}=1-\\dfrac{1}{16}' + Q + '\\text{En general: }S_{n}=1-\\dfrac{1}{2^{n}}\\quad\\text{(se demuestra más abajo)}' + Q + '\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{2^{n}}=\\lim_{n\\to\\infty}S_{n}=1-0=1' + Q + '\\text{La serie converge y su suma es }1.'];
       return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: las sumas parciales Sₙ = 1 − 1/2ⁿ en una gráfica; se acercan a la recta S = 1 */
 OA.scene('ser-vivo', (function(){
-  var NV = 7, i, d, LB = [['F', '\\Longrightarrow\\ \\sum_{n=1}^{\\infty}\\tfrac{1}{2^{n}}=\\lim_{n\\to\\infty}S_{n}=1', '⟹ la suma de la serie es el límite de Sₙ: 1', 'diff']];
-  for (i = 1; i <= NV; i++){ d = Math.pow(2, i); LB.push(['V' + i, 'S_{' + i + '}=\\tfrac{' + (d - 1) + '}{' + d + '}', 'S' + ssSub(i) + ' = ' + (d - 1) + '/' + d, 'diff']); LB.push(['W' + i, '1-S_{' + i + '}=\\tfrac{1}{' + d + '}', '1 − S' + ssSub(i) + ' = 1/' + d, 'c-tan']); }
-  var def = ssPlot({ guia:2, glab:function(n){ return (Math.pow(2, n) - 1) + '/' + Math.pow(2, n); }, N:NV, ymin:0, ymax:1, ystep:0.25, ydec:2, textH:0.67, aspect:1.31, endless:true, L:1, Llab:'S = 1', ylab:'Sₙ', run:18, labels:LB,
+  var NV = 7;
+  function fr(a, b){ return '\\tfrac{' + a + '}{' + b + '}'; }
+  function FR(a, b){ return '\\dfrac{' + a + '}{' + b + '}'; }
+  return ssPlot({ guia:2, glab:function(n){ return (Math.pow(2, n) - 1) + '/' + Math.pow(2, n); }, N:NV, ymin:0, ymax:1, ystep:0.25, ydec:2, textH:1.45, aspect:1.9, fila:29, endless:true, L:1, Llab:'S = 1', ylab:'Sₙ', run:24,
     a:function(n){ return 1 - 1/Math.pow(2, n); },
-    aria:'Arriba, una franja dice qué muestra: las sumas parciales suben hacia 1 y lo que falta baja a la mitad cada vez. Gráfica de puntos sueltos con las sumas parciales de la serie de término uno sobre dos elevado a n. En horizontal va n; en vertical, la suma parcial. Los puntos suben: un medio, tres cuartos, siete octavos, quince dieciseisavos, y se acercan cada vez más a una recta horizontal punteada trazada a la altura 1, sin tocarla. Cada punto está unido por una línea punteada con su valor en el eje vertical. Bajo la gráfica se lee la suma parcial del punto naranja y lo que le falta para llegar a 1; más abajo, la cuenta completa.',
+    aria:'Arriba, una franja dice qué muestra: las sumas parciales suben hacia 1 y lo que falta baja a la mitad cada vez. Gráfica de puntos sueltos con las sumas parciales de la serie de término uno sobre dos elevado a n. En horizontal va n; en vertical, la suma parcial. Los puntos suben: un medio, tres cuartos, siete octavos, quince dieciseisavos, y se acercan cada vez más a una recta horizontal punteada trazada a la altura 1, sin tocarla. Cada punto está unido por una línea punteada con su valor en el eje vertical. Bajo la gráfica queda una lista numerada que no se borra, con una fila por cada n, de 1 a 7: la suma parcial como la anterior más el término nuevo, y lo que le falta para llegar a 1. La última fila es la general: S sub n es 1 menos uno sobre dos elevado a n, que tiende a 1. Más abajo, la cuenta completa de cada suma.',
     legend:'<span><i class="sw rise"></i> la suma parcial que se está agregando</span><span><i class="sw sec"></i> las anteriores</span><span><i class="sw tan"></i> la suma de la serie, \\(S=1\\)</span><span>líneas punteadas: llevan cada suma parcial a su valor en el eje \\(S_{n}\\)</span>',
-    lines:function(n, fin){ return [['Suma parcial (punto naranja):', 'rise'], ['Lo que le falta para llegar a 1:', 'tan']].concat(fin ? [['Las sumas parciales tienden a 1: converge.', 'ink']] : []); },
-    extra:function(S, n){ var x0 = S.X(-1.5), y0 = S.Y(0) + 34, j;
-      for (j = 1; j <= NV; j++){ S.lab('V' + j, x0 + 172, y0, 0, -50, j === n); S.lab('W' + j, x0 + 180, y0 + 21, 0, -50, j === n); }
-      dtQue(S, 'las sumas parciales suben hacia 1;', 'lo que falta baja a la mitad cada vez.'); },
-    caption:function(n, fin){ var d = Math.pow(2, n); return 'La suma parcial de orden ' + n + ' vale ' + (d - 1) + '/' + d + '; le falta 1/' + d + ' para llegar a 1' + (fin ? '. Lo que falta se achica a la mitad con cada término: las sumas parciales tienden a 1' : ''); },
-    readout:function(n){ var d = Math.pow(2, n);
-      return dtPasos(['\\text{Dato: }n=' + n + '\\qquad\\text{Fórmula: }S_{n}=1-\\dfrac{1}{2^{n}}',
-        '\\text{Reemplazo: }S_{' + n + '}=1-\\dfrac{1}{2^{' + n + '}}',
-        '\\text{Potencia: }2^{' + n + '}=' + d,
-        '\\text{Resta: }S_{' + n + '}=1-\\dfrac{1}{' + d + '}=\\dfrac{' + d + '}{' + d + '}-\\dfrac{1}{' + d + '}=\\dfrac{' + (d - 1) + '}{' + d + '}',
-        '\\text{En decimal: }' + (d - 1) + ':' + d + '=' + oaDec(1 - 1/d, n).replace(',', '{,}'),
-        '\\text{Falta para llegar a 1: }1-S_{' + n + '}=\\dfrac{' + d + '}{' + d + '}-\\dfrac{' + (d - 1) + '}{' + d + '}=\\dfrac{1}{' + d + '}',
-        '\\text{Lo que falta es la mitad de lo que faltaba antes:}\\\\&\\qquad\\text{al crecer }n\\text{ tiende a }0\\text{, y }S_{n}\\text{ tiende a }1.']); }
+    que:['las sumas parciales suben hacia 1;', 'lo que falta baja a la mitad cada vez.'],
+    reg:function(i){ var d = Math.pow(2, i), h = d/2;
+      return [i === 1 ? '\\text{para }n=1:\\ \\ S_{1}=' + fr(1, 2) + ';\\ \\ \\text{falta }' + fr(1, 2) : '\\text{para }n=' + i + ':\\ \\ S_{' + i + '}=' + fr(h - 1, h) + '+' + fr(1, d) + '=' + fr(d - 1, d) + ';\\ \\ \\text{falta }' + fr(1, d),
+        i === 1 ? 'para n = 1:  S₁ = 1/2;  falta 1/2' : 'para n = ' + i + ':  S' + ssSub(i) + ' = ' + (h - 1) + '/' + h + ' + 1/' + d + ' = ' + (d - 1) + '/' + d + ';  falta 1/' + d,
+        i === 1 ? '\\text{Para }n=1:\\quad a_{1}=\\dfrac{1}{2^{1}}=\\dfrac{1}{2},\\qquad S_{1}=a_{1}=\\dfrac{1}{2}\\\\&\\qquad\\text{falta para llegar a 1: }1-\\dfrac{1}{2}=\\dfrac{2}{2}-\\dfrac{1}{2}=\\dfrac{1}{2}'
+          : '\\text{Para }n=' + i + ':\\quad a_{' + i + '}=\\dfrac{1}{2^{' + i + '}}=' + FR(1, d) + '\\\\&\\qquad S_{' + i + '}=S_{' + (i - 1) + '}+a_{' + i + '}=' + FR(h - 1, h) + '+' + FR(1, d) + '=' + FR(d - 2, d) + '+' + FR(1, d) + '=' + FR(d - 1, d) + '\\\\&\\qquad\\text{falta para llegar a 1: }1-' + FR(d - 1, d) + '=' + FR(d, d) + '-' + FR(d - 1, d) + '=' + FR(1, d) + '\\\\&\\qquad\\text{(la mitad de lo que faltaba antes, }' + FR(1, h) + '\\text{)}']; },
+    regFin:['\\text{para }n=n:\\ \\ S_{n}=1-\\tfrac{1}{2^{n}}\\ \\longrightarrow\\ 1', 'para n = n:  Sₙ = 1 − 1/2ⁿ, que tiende a 1', '\\text{Lo que falta: }\\dfrac{1}{2^{1}},\\ \\dfrac{1}{2^{2}},\\ \\dfrac{1}{2^{3}},\\ \\ldots\\text{ En la posición }n\\text{ falta }\\dfrac{1}{2^{n}}.\\\\&\\qquad\\text{Para }n=n:\\quad S_{n}=1-\\dfrac{1}{2^{n}}\\\\&\\qquad\\text{Al crecer }n\\text{, lo que falta tiende a }0\\\\&\\qquad\\text{y las sumas parciales tienden a }1:\\\\&\\qquad\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{2^{n}}=\\lim_{n\\to\\infty}S_{n}=1-0=1.'],
+    caption:function(n, fin){ var d = Math.pow(2, n); return 'La suma parcial de orden ' + n + ' vale ' + (d - 1) + '/' + d + '; le falta 1/' + d + ' para llegar a 1' + (fin ? '. Lo que falta se achica a la mitad con cada término: las sumas parciales tienden a 1' : ''); }
   });
-  def.world.y1 += 0.24; /* alto para la franja «Qué muestra» */
-  return def;
 })());

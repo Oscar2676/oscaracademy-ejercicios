@@ -162,7 +162,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Criterio del enésimo término</b></li>
     </ol>
     <h1>Criterio del enésimo término</h1>
-    <p class="lede">Si una serie converge, sus términos tienen límite cero. Leído al revés, es un criterio de divergencia: si los términos no tienen límite cero, la serie diverge. \[\lim_{n\to\infty}a_{n}\neq 0\ \text{ o no existe}\quad\Longrightarrow\quad\sum_{n=1}^{\infty}a_{n}\ \text{ diverge}\]</p>
+    <p class="lede">El <b>enésimo término</b> de una serie es \(a_{n}\): el término que está en la posición \(n\). El criterio mira qué pasa con \(a_{n}\) cuando \(n\) crece. La idea sale de una cuenta simple: cada suma parcial es la anterior más un término, \(S_{n}=S_{n-1}+a_{n}\), así que cada término es lo que la suma parcial <b>salta</b> de un paso al siguiente: \(a_{n}=S_{n}-S_{n-1}\).</p>
+    <p class="lede">Con números, en la serie \(1+\dfrac{2}{3}+\dfrac{4}{9}+\dfrac{8}{27}+\cdots\), que converge a \(3\): \[\begin{aligned}S_{1}&=1\\ S_{2}&=\dfrac{5}{3}\approx 1{,}67&&\text{salto: }a_{2}=\dfrac{5}{3}-1=\dfrac{2}{3}\approx 0{,}67\\ S_{3}&=\dfrac{19}{9}\approx 2{,}11&&\text{salto: }a_{3}=\dfrac{19}{9}-\dfrac{15}{9}=\dfrac{4}{9}\approx 0{,}44\\ S_{4}&=\dfrac{65}{27}\approx 2{,}41&&\text{salto: }a_{4}=\dfrac{65}{27}-\dfrac{57}{27}=\dfrac{8}{27}\approx 0{,}30\end{aligned}\] Las sumas parciales se van juntando cerca de \(3\). Si todas se juntan cerca de un mismo número, lo que salta de una a la siguiente tiene que achicarse. Por eso: <b>si una serie converge, sus términos tienen límite cero.</b></p>
+    <p class="lede">Leído al revés, es un criterio de divergencia: si los términos no tienen límite cero, los saltos no se achican, las sumas parciales no se juntan cerca de ningún número, y la serie diverge. \[\lim_{n\to\infty}a_{n}\neq 0\ \text{ o no existe}\quad\Longrightarrow\quad\sum_{n=1}^{\infty}a_{n}\ \text{ diverge}\] Se lee: «si el límite de \(a\) sub \(n\), cuando \(n\) tiende a infinito, es distinto de cero o no existe, entonces la serie de los \(a\) sub \(n\) diverge». La flecha \(\Longrightarrow\) se lee «entonces».</p>
   </section>
 </header>
 
@@ -201,24 +203,30 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración paso a paso del teorema</h3>
+    <p><b>Qué se demuestra:</b> que si una serie converge, entonces \(\displaystyle\lim_{n\to\infty}a_{n}=0\). <b>Cómo funciona el método:</b> se escribe cada término como la resta de dos sumas parciales seguidas; como las dos se acercan al mismo número \(S\), su resta se acerca a \(S-S=0\). Es lo que muestra la animación con \(S=3\).</p>
     <ol class="steps">
-      <li>Hipótesis: la serie converge. Por definición, sus sumas parciales tienen un límite real: \(\displaystyle\lim_{n\to\infty}S_{n}=S\).</li>
-      <li>Para \(n\ge 2\), cada término es la resta de dos sumas parciales seguidas (hoja «Determinar sumas parciales»): \(a_{n}=S_{n}-S_{n-1}\).</li>
-      <li>La sucesión \(S_{n-1}\) recorre las mismas sumas parciales, un lugar atrás: también tiene límite \(S\).</li>
-      <li>El límite de una resta es la resta de los límites: \(\displaystyle\lim_{n\to\infty}a_{n}=\lim_{n\to\infty}S_{n}-\lim_{n\to\infty}S_{n-1}=S-S\).</li>
-      <li>\(S-S=0\). Entonces \(\displaystyle\lim_{n\to\infty}a_{n}=0\).</li>
+      <li><b>Hipótesis</b> (lo que se supone): la serie converge. Por definición, eso quiere decir que sus sumas parciales tienen un límite real: \(\displaystyle\lim_{n\to\infty}S_{n}=S\).</li>
+      <li><b>Cada suma parcial es la anterior más un término.</b> Para \(n\ge 2\): \(S_{n}=\left(a_{1}+a_{2}+\cdots+a_{n-1}\right)+a_{n}=S_{n-1}+a_{n}\).</li>
+      <li>Se resta \(S_{n-1}\) en los dos lados: \(S_{n}-S_{n-1}=S_{n-1}+a_{n}-S_{n-1}=a_{n}\). Entonces \[a_{n}=S_{n}-S_{n-1}\qquad(n\ge 2).\] Con números: \(a_{3}=S_{3}-S_{2}=\dfrac{19}{9}-\dfrac{5}{3}=\dfrac{19}{9}-\dfrac{15}{9}=\dfrac{4}{9}\). ✓</li>
+      <li><b>La sucesión \(S_{n-1}\) también tiene límite \(S\).</b> La lista de los \(S_{n}\) (desde \(n=2\)) es \(S_{2},\ S_{3},\ S_{4},\ \ldots\); la lista de los \(S_{n-1}\) es \(S_{1},\ S_{2},\ S_{3},\ \ldots\) Son las mismas sumas parciales, corridas un lugar: se acercan al mismo número \(S\) (se usa sin demostrar: ver el aviso de rigor).</li>
+      <li>El límite de una resta es la resta de los límites (aviso de rigor): \(\displaystyle\lim_{n\to\infty}a_{n}=\lim_{n\to\infty}\left(S_{n}-S_{n-1}\right)=\lim_{n\to\infty}S_{n}-\lim_{n\to\infty}S_{n-1}\).</li>
+      <li>Se reemplaza cada límite por su valor, \(S\): \(\displaystyle\lim_{n\to\infty}a_{n}=S-S\).</li>
+      <li>\(S-S=0\). Entonces \(\displaystyle\lim_{n\to\infty}a_{n}=0\). En la animación, \(S=3\): \(3-3=0\).</li>
     </ol>
-    <p><b>Por qué vale leerlo al revés.</b> Si los términos no tienen límite \(0\) y la serie convergiera, el teorema obligaría a que lo tuvieran: contradicción. Entonces la serie no converge.</p>
+    <p><b>Por qué vale leerlo al revés.</b> El teorema dice: «si converge, entonces los términos tienen límite \(0\)». Supón una serie cuyos términos <b>no</b> tienen límite \(0\). ¿Puede converger? Si convergiera, el teorema obligaría a que sus términos tuvieran límite \(0\), y no lo tienen: contradicción. Entonces esa serie no converge, es decir, diverge. Un ejemplo de la vida diaria con la misma lógica: «si llueve, el patio se moja»; entonces «si el patio no está mojado, no llovió».</p>
   </div>
 
   <div class="card k3">
     <h3>El recíproco es falso: términos que tienden a cero y serie que diverge</h3>
     <p>La serie \(1+\dfrac{1}{2}+\dfrac{1}{2}+\dfrac{1}{3}+\dfrac{1}{3}+\dfrac{1}{3}+\dfrac{1}{4}+\dfrac{1}{4}+\dfrac{1}{4}+\dfrac{1}{4}+\cdots\) se arma por bloques: el bloque \(m\) tiene \(m\) términos iguales a \(\dfrac{1}{m}\).</p>
+    <p>«Recíproco» es la frase dada vuelta: «si los términos tienden a cero, entonces la serie converge». Esa frase es falsa, y para probar que es falsa basta un ejemplo donde no se cumple. Este es uno:</p>
     <ol class="steps">
-      <li>Cada bloque suma \(m\cdot\dfrac{1}{m}=1\).</li>
-      <li>Después de \(m\) bloques completos, la suma parcial vale \(1+1+\cdots+1=m\).</li>
-      <li>Dado cualquier número, hay una suma parcial mayor que él: las sumas parciales no tienen límite real. La serie diverge.</li>
-      <li>Sin embargo, los términos son \(1,\ \dfrac{1}{2},\ \dfrac{1}{2},\ \dfrac{1}{3},\ \ldots\) y tienen límite \(0\).</li>
+      <li>Los bloques, uno por uno: \[\begin{aligned}\text{bloque 1:}&\quad 1&&\text{suma }1\\ \text{bloque 2:}&\quad \dfrac{1}{2}+\dfrac{1}{2}=\dfrac{2}{2}&&\text{suma }1\\ \text{bloque 3:}&\quad \dfrac{1}{3}+\dfrac{1}{3}+\dfrac{1}{3}=\dfrac{3}{3}&&\text{suma }1\\ \text{bloque 4:}&\quad \dfrac{1}{4}+\dfrac{1}{4}+\dfrac{1}{4}+\dfrac{1}{4}=\dfrac{4}{4}&&\text{suma }1\end{aligned}\]</li>
+      <li>En general, el bloque \(m\) tiene \(m\) términos iguales a \(\dfrac{1}{m}\), y suma \(m\cdot\dfrac{1}{m}=\dfrac{m}{m}=1\).</li>
+      <li>Sumas parciales al terminar cada bloque: tras el bloque 1 (1 término), \(S_{1}=1\); tras el bloque 2 (\(1+2=3\) términos), \(S_{3}=1+1=2\); tras el bloque 3 (\(1+2+3=6\) términos), \(S_{6}=1+1+1=3\); tras el bloque 4 (\(10\) términos), \(S_{10}=4\). Después de \(m\) bloques completos, la suma parcial vale \(1+1+\cdots+1=m\).</li>
+      <li>Dado cualquier número, hay una suma parcial mayor que él (basta completar suficientes bloques): las sumas parciales no tienen límite real. La serie diverge.</li>
+      <li>Sin embargo, los términos son \(1,\ \dfrac{1}{2},\ \dfrac{1}{2},\ \dfrac{1}{3},\ \dfrac{1}{3},\ \dfrac{1}{3},\ \dfrac{1}{4},\ \ldots\): cada bloque trae términos más chicos que el anterior, y tienen límite \(0\).</li>
+      <li>Conclusión: los términos tienden a cero <b>y</b> la serie diverge. Que los términos tiendan a cero no alcanza para que la serie converja.</li>
     </ol>
     <p>El ejemplo más conocido es la serie armónica, \(\displaystyle\sum_{n=1}^{\infty}\dfrac{1}{n}\): sus términos tienden a cero y diverge. Se demuestra en la hoja «Series harmónicas y series-p».</p>
   </div>
@@ -235,6 +243,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li>Se suma y se resta \(1\) en el numerador: \(n=(n+1)-1\). Entonces \(\dfrac{n}{n+1}=\dfrac{(n+1)-1}{n+1}\).</li>
     <li>Se separa en dos fracciones con el mismo denominador: \(\dfrac{(n+1)-1}{n+1}=\dfrac{n+1}{n+1}-\dfrac{1}{n+1}\).</li>
     <li>Se simplifica la primera: \(\dfrac{n+1}{n+1}=1\). Queda \(a_{n}=1-\dfrac{1}{n+1}\).</li>
+    <li>Con números, para ver a dónde van los términos: \(a_{1}=\dfrac{1}{2}=0{,}5\); \(a_{9}=\dfrac{9}{10}=0{,}9\); \(a_{99}=\dfrac{99}{100}=0{,}99\). Se acercan a \(1\), no a \(0\).</li>
     <li>La constante \(1\) tiene límite \(1\), y \(\dfrac{1}{n+1}\) tiene límite \(0\) (aviso de rigor).</li>
     <li>El límite de una resta es la resta de los límites: \(\displaystyle\lim_{n\to\infty}a_{n}=1-0=1\).</li>
     <li>\(1\neq 0\): por el criterio, la serie diverge.</li>
@@ -343,7 +352,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H13 · v002 · Pendiente de APR</span>
+  <span class="status">CI-L25-H13 · v003 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -564,12 +573,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -589,12 +600,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */
