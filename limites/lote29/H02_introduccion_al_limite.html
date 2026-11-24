@@ -162,9 +162,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Introducción al límite</b></li>
     </ol>
     <h1>Introducción al límite</h1>
-    <p class="lede">Hay preguntas que no se pueden responder reemplazando un número, porque el reemplazo pide dividir por \(0\). El límite las responde mirando <b>a qué número se acercan</b> los resultados cuando la variable se acerca al valor prohibido, sin tocarlo:
+    <p class="lede">Hay preguntas que no se pueden responder reemplazando un número, porque el reemplazo pide dividir por \(0\). El límite las responde mirando <b>a qué número se acercan</b> los resultados cuando la variable se acerca al valor prohibido, sin tocarlo.</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Un carrito baja por una rampa y, a los \(t\) segundos de soltarlo, lleva recorridos \(t^{2}\) metros: al segundo \(1\) lleva \(1^{2}=1\) metro; al segundo \(2\), \(2^{2}=4\) metros. ¿Qué velocidad lleva justo en el segundo \(1\)? La <b>velocidad media</b> en un intervalo de tiempo es la distancia recorrida dividida por el tiempo transcurrido. Se calcula en intervalos que parten en \(t=1\) y son cada vez más cortos:
+    \[\begin{aligned}\text{de }1\text{ a }2:&\quad 2^{2}-1^{2}=4-1=3\ \text{m},\quad 2-1=1\ \text{s},\quad \frac{3}{1}=3\ \text{m/s}\\\text{de }1\text{ a }1{,}5:&\quad 1{,}5^{2}-1^{2}=2{,}25-1=1{,}25\ \text{m},\quad 1{,}5-1=0{,}5\ \text{s},\quad \frac{1{,}25}{0{,}5}=2{,}5\ \text{m/s}\\\text{de }1\text{ a }1{,}1:&\quad 1{,}1^{2}-1^{2}=1{,}21-1=0{,}21\ \text{m},\quad 1{,}1-1=0{,}1\ \text{s},\quad \frac{0{,}21}{0{,}1}=2{,}1\ \text{m/s}\\\text{de }1\text{ a }1{,}01:&\quad 1{,}01^{2}-1^{2}=1{,}0201-1=0{,}0201\ \text{m},\quad 1{,}01-1=0{,}01\ \text{s},\quad \frac{0{,}0201}{0{,}01}=2{,}01\ \text{m/s}\end{aligned}\]
+    <b>La regularidad:</b> las velocidades medias \(3\); \(2{,}5\); \(2{,}1\); \(2{,}01\) se acercan a \(2\) a medida que el intervalo se acorta. Con un intervalo de duración \(0\) no hay cuenta posible: sería \(\dfrac{0}{0}\).</p>
+    <p class="lede"><b>La fórmula.</b> Si la duración del intervalo se llama \(h\), el intervalo va de \(1\) a \(1+h\), la distancia recorrida es \((1+h)^{2}-1^{2}\) y la velocidad media es ese número dividido por \(h\). Lo que mostraron las cuatro cuentas se escribe
     \[\lim_{h\to 0}\frac{(1+h)^{2}-1^{2}}{h}=2\]
-    Se lee «el límite, cuando \(h\) tiende a \(0\), de ese cociente es \(2\)». En esta hoja ese cociente es una velocidad media, y su límite, la velocidad en un instante.</p>
+    Se lee «el límite, cuando \(h\) tiende a \(0\), de uno más \(h\) al cuadrado, menos uno al cuadrado, partido por \(h\), es \(2\)» («tiende a» quiere decir «se acerca a»). En esta hoja ese cociente es una velocidad media, y su límite, la velocidad en un instante.</p>
   </section>
 </header>
 
@@ -189,8 +193,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li><b>Trazos punteados naranjas</b> (paso 2): el tiempo transcurrido, \(1\) segundo (horizontal), y la distancia recorrida, \(3\) metros (vertical).</li>
     <li><b>Recta verde:</b> pasa por el punto de \(t=1\) con inclinación \(2\): el límite de las velocidades medias.</li>
   </ul>
+  <p><b>Lo mismo, escrito.</b> Por qué todas esas velocidades medias se acercan a \(2\). Una operación por línea, con lo que se hizo a la derecha; vale para todo \(h\ne 0\):
+  \[\begin{aligned}(1+h)^{2}&=(1+h)(1+h)&&\text{qué es elevar al cuadrado}\\&=1\cdot 1+1\cdot h+h\cdot 1+h\cdot h&&\text{se multiplica término a término}\\&=1+2h+h^{2}&&\text{se juntan }h+h=2h\\ (1+h)^{2}-1&=2h+h^{2}&&\text{se resta }1\\&=h\,(2+h)&&\text{factor común }h\\\frac{(1+h)^{2}-1}{h}&=2+h&&\text{se simplifica }h\text{, porque }h\ne 0\end{aligned}\]
+  Comprobación con \(h=0{,}1\): \(2+0{,}1=2{,}1\), la velocidad media de \(1\) a \(1{,}1\). Con \(h=-0{,}5\): \(2-0{,}5=1{,}5\). Cuando \(h\) se acerca a \(0\), \(2+h\) se acerca a \(2+0=2\).</p>
   <div class="why">
-    <p><b>Aviso de rigor: qué se justifica aquí y qué se deja para más adelante.</b> La fórmula \(s(t)=t^{2}\) es un <b>modelo</b> elegido para esta hoja, no una medición. La <b>velocidad en el instante</b> \(t=1\) <b>se define</b> como el límite de las velocidades medias; no es un resultado que se deduzca de otra cosa. Los límites de esta hoja se justifican con <b>tablas</b> y con <b>álgebra</b>, no con la definición formal (con \(\varepsilon\) y \(\delta\)), que viene en otra hoja de este lote. Se usan <b>sin demostrar</b> tres hechos que se demuestran con esa definición:</p>
+    <p><b>Aviso de rigor: qué se justifica aquí y qué se deja para más adelante.</b> La fórmula \(s(t)=t^{2}\) es un <b>modelo</b> elegido para esta hoja, no una medición. La <b>velocidad en el instante</b> \(t=1\) <b>se define</b> como el límite de las velocidades medias; no es un resultado que se deduzca de otra cosa. Los límites de esta hoja se justifican con <b>tablas</b> y con <b>álgebra</b>, no con la definición formal (con las letras griegas \(\varepsilon\), «épsilon», y \(\delta\), «delta»), que viene en otra hoja de este lote. Se usan <b>sin demostrar</b> tres hechos que se demuestran con esa definición:</p>
     <ol class="steps">
       <li>Cuando la variable se acerca a un número \(a\), las expresiones de la forma \(c+x\), \(c\,x+d\) y \(x^{2}\) (con \(c\) y \(d\) números fijos) se acercan al valor que resulta de reemplazar la variable por \(a\).</li>
       <li>Si dos funciones valen lo mismo en todos los valores cercanos a \(a\) y distintos de \(a\), tienen el mismo límite en \(a\) (o ninguna lo tiene).</li>
@@ -227,9 +234,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración paso a paso: la velocidad en cualquier instante \(a\)</h3>
-    <p>Con el mismo modelo \(s(t)=t^{2}\), la velocidad en el instante \(t=a\) es \(\displaystyle\lim_{h\to 0}\dfrac{(a+h)^{2}-a^{2}}{h}\). El álgebra es la misma de la animación, con \(a\) en lugar de \(1\).</p>
+    <p><b>Qué se demuestra.</b> Que, con el mismo modelo \(s(t)=t^{2}\), la velocidad en cualquier instante \(t=a\) es \(2a\); es decir, que \(\displaystyle\lim_{h\to 0}\dfrac{(a+h)^{2}-a^{2}}{h}=2a\).</p>
+    <p><b>Cómo funciona el método.</b> El cociente no se puede calcular en \(h=0\). Se transforma con álgebra, para \(h\ne 0\), en otra expresión que vale lo mismo y que sí se puede mirar cerca de \(0\). Es el mismo camino de «Lo mismo, escrito», con la letra \(a\) en lugar del \(1\).</p>
+    <p><b>Primero con números,</b> \(a=3\) y \(h=0{,}1\): \((3+0{,}1)^{2}=3{,}1^{2}=9{,}61\); \(9{,}61-3^{2}=9{,}61-9=0{,}61\); \(\dfrac{0{,}61}{0{,}1}=6{,}1\). La demostración dirá que ese cociente es \(2a+h=2\cdot 3+0{,}1=6+0{,}1=6{,}1\) ✓.</p>
     <ol class="steps">
-      <li>Cuadrado de un binomio: \((a+h)^{2}=a^{2}+2ah+h^{2}\).</li>
+      <li>Cuadrado de un binomio: \((a+h)^{2}=(a+h)(a+h)=a\cdot a+a\cdot h+h\cdot a+h\cdot h=a^{2}+2ah+h^{2}\).</li>
       <li>Se resta \(a^{2}\): \((a+h)^{2}-a^{2}=a^{2}+2ah+h^{2}-a^{2}=2ah+h^{2}\).</li>
       <li>Factor común \(h\): \(2ah+h^{2}=h\,(2a+h)\).</li>
       <li>Si \(h\ne 0\), se puede simplificar el factor \(h\): \(\dfrac{(a+h)^{2}-a^{2}}{h}=\dfrac{h\,(2a+h)}{h}=2a+h\).</li>
@@ -266,9 +275,10 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
         <tr><td>\(-0{,}01\)</td><td>\(2{,}99\)</td><td>\(8{,}9401\)</td><td>\(-0{,}0599\)</td><td>\(5{,}99\)</td></tr>
         <tr><td>\(0{,}01\)</td><td>\(3{,}01\)</td><td>\(9{,}0601\)</td><td>\(0{,}0601\)</td><td>\(6{,}01\)</td></tr>
         <tr><td>\(0{,}1\)</td><td>\(3{,}1\)</td><td>\(9{,}61\)</td><td>\(0{,}61\)</td><td>\(6{,}1\)</td></tr>
-      </table></div></li>
+      </table></div>
+      La primera fila, operación por operación: \(3+(-0{,}1)=2{,}9\); \(2{,}9^{2}=8{,}41\); \(8{,}41-9=-0{,}59\); \(\dfrac{-0{,}59}{-0{,}1}=5{,}9\). La última: \(3+0{,}1=3{,}1\); \(3{,}1^{2}=9{,}61\); \(9{,}61-9=0{,}61\); \(\dfrac{0{,}61}{0{,}1}=6{,}1\).</li>
     <li>Los cocientes se acercan a \(6\) por los dos lados. La tabla sugiere el resultado; el álgebra dice por qué.</li>
-    <li>Cuadrado de un binomio: \((3+h)^{2}=9+6h+h^{2}\).</li>
+    <li>Cuadrado de un binomio: \((3+h)^{2}=3^{2}+2\cdot 3\cdot h+h^{2}=9+6h+h^{2}\).</li>
     <li>Se resta \(9\): \(9+6h+h^{2}-9=6h+h^{2}\).</li>
     <li>Factor común: \(6h+h^{2}=h\,(6+h)\).</li>
     <li>Si \(h\ne 0\): \(\dfrac{h\,(6+h)}{h}=6+h\).</li>
@@ -312,7 +322,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li>Con \(x=0\): numerador \(1\) y denominador \(0^{2}=0\). Es la situación 3: un número distinto de \(0\) dividido por \(0\).</li>
     <li>Cerca de \(0\), por la derecha: con \(x=0{,}1\), \(0{,}1^{2}=0{,}01\) y \(\dfrac{1}{0{,}01}=100\); con \(x=0{,}01\), \(0{,}01^{2}=0{,}0001\) y \(\dfrac{1}{0{,}0001}=10\,000\).</li>
     <li>Por la izquierda da lo mismo, porque el cuadrado borra el signo: con \(x=-0{,}1\), \((-0{,}1)^{2}=0{,}01\) y \(\dfrac{1}{0{,}01}=100\).</li>
-    <li>Los valores no se acercan a ningún número: superan cualquier tope. Comprobación con un tope \(M\gt 0\) cualquiera: si \(0\lt |x|\lt \dfrac{1}{\sqrt{M}}\), entonces \(x^{2}\lt \dfrac{1}{M}\) y por eso \(\dfrac{1}{x^{2}}\gt M\). Por ejemplo, con \(M=10\,000\): \(\dfrac{1}{\sqrt{10\,000}}=\dfrac{1}{100}=0{,}01\), y todo \(x\ne 0\) entre \(-0{,}01\) y \(0{,}01\) da un valor mayor que \(10\,000\).</li>
+    <li>Los valores no se acercan a ningún número: superan cualquier tope. Comprobación con un tope \(M\gt 0\) cualquiera, en dos pasos. Primero: si \(0\lt |x|\lt \dfrac{1}{\sqrt{M}}\), al elevar al cuadrado los dos números positivos la desigualdad se mantiene, \(x^{2}\lt \left(\dfrac{1}{\sqrt{M}}\right)^{2}=\dfrac{1}{M}\). Segundo: de dos números positivos, el menor tiene el inverso mayor (por ejemplo, \(0{,}01\lt 0{,}1\), y sus inversos son \(\dfrac{1}{0{,}01}=100\) y \(\dfrac{1}{0{,}1}=10\), con \(100\gt 10\)); como \(x^{2}\lt \dfrac{1}{M}\), resulta \(\dfrac{1}{x^{2}}\gt M\). Por ejemplo, con \(M=10\,000\): \(\dfrac{1}{\sqrt{10\,000}}=\dfrac{1}{100}=0{,}01\), y todo \(x\ne 0\) entre \(-0{,}01\) y \(0{,}01\) da un valor mayor que \(10\,000\).</li>
     <li>Si existiera un límite \(L\), los valores tendrían que quedar a menos de \(1\) de \(L\) (es decir, por debajo de \(L+1\)) para todos los \(x\ne 0\) suficientemente cercanos a \(0\). Pero tan cerca de \(0\) como se quiera hay valores mayores que cualquier tope. Entonces \(\displaystyle\lim_{x\to 0}\dfrac{1}{x^{2}}\) <b>no existe</b>.</li>
   </ol>
   </div>
@@ -347,7 +357,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <ol class="steps">
         <li>Con \(h=0{,}1\): \(2+0{,}1=2{,}1\); \(2{,}1^{2}=4{,}41\); \(4{,}41-4=0{,}41\); \(\dfrac{0{,}41}{0{,}1}=4{,}1\).</li>
         <li>Con \(h=-0{,}1\): \(2-0{,}1=1{,}9\); \(1{,}9^{2}=3{,}61\); \(3{,}61-4=-0{,}39\); \(\dfrac{-0{,}39}{-0{,}1}=3{,}9\).</li>
-        <li>Cuadrado de un binomio: \((2+h)^{2}=4+4h+h^{2}\).</li>
+        <li>Cuadrado de un binomio: \((2+h)^{2}=2^{2}+2\cdot 2\cdot h+h^{2}=4+4h+h^{2}\).</li>
         <li>Se resta \(4\): \(4+4h+h^{2}-4=4h+h^{2}\).</li>
         <li>Factor común: \(4h+h^{2}=h\,(4+h)\).</li>
         <li>Si \(h\ne 0\): \(\dfrac{h\,(4+h)}{h}=4+h\). (Coincide: \(4+0{,}1=4{,}1\) y \(4-0{,}1=3{,}9\).)</li>
@@ -379,7 +389,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CD-L29-H02 · v001 · Pendiente de APR</span>
+  <span class="status">CD-L29-H02 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>

@@ -496,4 +496,22 @@ ok(Fr(2*2, 1) == 4 and Fr(4*2, 1) == 8 and [(4 - 2*t_, t_) for t_ in (0, 1, 2)] 
 ok(all(det2(1, 2, 2, m_) == m_ - 4 and (2 - m_)*(2 + m_) == 4 + 2*m_ - m_*2 - m_*m_ == 4 - m_*m_ and (4 - m_)*(4 + m_) == 16 + 4*m_ - m_*4 - m_*m_ == 16 - m_*m_ for m_ in _G), 'H09 v003 k3, ej4 y B')
 for cols_ in ([(1, 2, 3), (1, 1, 1), (1, 1, 1)], [(1, 1, 1), (1, 2, 3), (1, 1, 1)], [(1, 1, 1), (1, 1, 1), (1, 2, 3)], [(1, 1, 1)]*3):
     ok(_d3(_tr([list(c_) for c_ in cols_])) == 0, 'H09 v003 k3 cuatro determinantes en cero')
+# H10 v003 · encabezado, k1, k2, k3, ejemplo 4 (revisión general, 24-nov)
+ok(3*4 == 12 and 1*2 == 2 and 12 - 2 == 10 and det2(3, 1, 2, 4) == 3*4 - 1*2 == 10 and det2(1, 4, 2, 3) == 1*3 - 4*2 == 3 - 8 == -5 and abs(-5) == 5, 'H10 v003 encabezado, k1 y k2')
+ok(all(det2(a_, 1, 2, 4) == a_*4 - 1*2 == 4*a_ - 2 for a_ in _G) and 4*3 - 2 == 12 - 2 == 10 and 4*Fr(1, 2) - 2 == 2 - 2 == 0 and (2*Fr(1, 2), 2*2) == (1, 4) and 4*(-1) - 2 == -4 - 2 == -6 and abs(-6) == 6, 'H10 v003 k3 con a = 3, 0,5 y -1')
+ok(3**2 == 3*3 == 9 and 9*(-2) == -18 and det2(3, 6, 9, 12) == -18, 'H10 v003 ej4')
+# H11 v003 · encabezado, k1, k2 (demostración y comprobación), k3, ejercicio B
+_A11 = [[1, 1], [0, 2]]
+def _T11(A, p): return (A[0][0]*p[0] + A[0][1]*p[1], A[1][0]*p[0] + A[1][1]*p[1])
+ok([_T11(_A11, p) for p in ((0, 0), (1, 0), (0, 1), (1, 1))] == [(1*0 + 1*0, 0*0 + 2*0), (1*1 + 1*0, 0*1 + 2*0), (1*0 + 1*1, 0*0 + 2*1), (1*1 + 1*1, 0*1 + 2*1)] == [(0, 0), (1, 0), (1, 2), (2, 2)] and 1*2 == 2 and det2(1, 1, 0, 2) == 1*2 - 1*0 == 2 - 0 == 2, 'H11 v003 encabezado caso 1')
+ok(all(_T11([[3, 0], [0, 2]], (x_, y_)) == (3*x_, 2*y_) for x_ in _G for y_ in _G) and 3*2 == 6 and det2(3, 0, 0, 2) == 3*2 - 0*0 == 6 and abs(1*2 - 1*0) == 2, 'H11 v003 encabezado caso 2 y k1')
+for a_, b_, c_, d_ in itertools.product((-2, 0, 1, 3), repeat=4):
+    A_ = [[a_, b_], [c_, d_]]
+    for x1, y1, x2, y2, s_ in itertools.product((-1, 0, 2), (-3, 1), (0, 2), (-1, 4), (-2, Fr(1, 2), 3)):
+        ok(_T11(A_, (x1 + x2, y1 + y2)) == (a_*x1 + a_*x2 + b_*y1 + b_*y2, c_*x1 + c_*x2 + d_*y1 + d_*y2) == ((a_*x1 + b_*y1) + (a_*x2 + b_*y2), (c_*x1 + d_*y1) + (c_*x2 + d_*y2)) and _T11(A_, (s_*x1, s_*y1)) == (s_*(a_*x1 + b_*y1), s_*(c_*x1 + d_*y1)), 'H11 v003 demostración pasos 1 y 2')
+        Tu, Tv = _T11(A_, (x1, y1)), _T11(A_, (x2, y2))
+        ok(det2(Tu[0], Tv[0], Tu[1], Tv[1]) == det2(a_, b_, c_, d_)*det2(x1, x2, y1, y2), 'H11 v003 demostración pasos 6 y 7')
+ok(det2(2, 1, 0, 3) == 2*3 - 1*0 == 6 and _T11(_A11, (2, 0)) == (1*2 + 1*0, 0*2 + 2*0) == (2, 0) and _T11(_A11, (1, 3)) == (1*1 + 1*3, 0*1 + 2*3) == (1 + 3, 0 + 6) == (4, 6) and det2(2, 4, 0, 6) == 2*6 - 4*0 == 12 and 2*6 == 12, 'H11 v003 comprobación con números')
+ok(all(det2(2, 0, 0, k_) == 2*k_ - 0*0 == 2*k_ for k_ in _G) and 2*Fr(1, 2) == 1 and 2*0 == 0 and 2*(-1) == -2 and abs(-2) == 2, 'H11 v003 k3')
+ok(1 + 4 == 5 and -1 + 4 == 3 and abs(2.24**2 - 5) < 0.02 and abs(1.73**2 - 3) < 0.01 and 2*2 == 4 == (-2)*(-2) and 2*2 - 1*4 == 0, 'H11 v003 ejercicio B')
 print('Lote 28 H01–H11: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

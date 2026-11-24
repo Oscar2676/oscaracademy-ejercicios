@@ -180,7 +180,7 @@ for s in ['2\\cdot 1{,}9-1=3{,}8-1=2{,}8', '2\\cdot 1{,}99-1=3{,}98-1=2{,}98', '
 
 # 8) molde y leyes (lo que se puede revisar por texto)
 ok(ART.startswith('<!--file:H01_introduccion_a_los_limites.html-->\n<!--title:Introducción a los límites-->\n<!--id:lim-intro-->\n<!--tab:H01 Introducción a los límites-->\n<article class="sheet" id="lim-intro" data-hoja="L29 H01">'), 'H01 encabezado')
-ok('<h1>Introducción a los límites</h1>' in ART and '<span class="status">CD-L29-H01 · v001 · Pendiente de APR</span>' in ART, 'H01 título y pie')
+ok('<h1>Introducción a los límites</h1>' in ART and '<span class="status">CD-L29-H01 · v002 · Pendiente de APR</span>' in ART, 'H01 título y pie')
 ok(re.findall(r'data-scene="([^"]+)"', ART) == ['lim-idea', 'lim-vivo', 'lim-salto'] and re.findall(r"OA\.scene\('([^']+)'", ESC) == ['lim-idea', 'lim-vivo', 'lim-salto'], 'H01 escenas')
 for m in re.finditer(r'<div class="stage"', ART):
     ok(ART[:m.start()].rstrip().endswith('</ol>'), 'H01: falta «cómo leerla» justo antes de una animación')
@@ -221,7 +221,7 @@ def mates_de(html): return re.findall(r'\\\((.*?)\\\)', html, re.S) + re.findall
 def molde(nn, archivo, titulo, ident, caja, escenas, nque, modelo=True):
     A = (PARTES/('%s.art.html' % nn)).read_text(encoding='utf-8'); E = (PARTES/('%s.scene.js' % nn)).read_text(encoding='utf-8'); h = 'H' + nn
     ok(A.startswith('<!--file:%s-->\n<!--title:%s-->\n<!--id:%s-->\n<!--tab:%s %s-->\n<article class="sheet" id="%s" data-hoja="L29 %s">' % (archivo, titulo, ident, h, titulo, ident, h)), h + ' encabezado')
-    ok('<h1>%s</h1>' % titulo in A and '<span class="status">CD-L29-%s · v001 · Pendiente de APR</span>' % h in A and '<li>%s</li>\n      <li><b>%s</b></li>' % (caja, titulo) in A, h + ' título, ruta y pie')
+    ok('<h1>%s</h1>' % titulo in A and '<span class="status">CD-L29-%s · %s · Pendiente de APR</span>' % (h, 'v002' if h in ('H02', 'H03') else 'v001') in A and '<li>%s</li>\n      <li><b>%s</b></li>' % (caja, titulo) in A, h + ' título, ruta y pie')
     ok(re.findall(r'data-scene="([^"]+)"', A) == escenas and re.findall(r"OA\.scene\('([^']+)'", E) == escenas, h + ' escenas')
     for m in re.finditer(r'<div class="stage"', A): ok(A[:m.start()].rstrip().endswith('</ol>'), h + ': falta «cómo leerla» justo antes de una animación')
     ok(A.count('<p><b>Cómo leerla:</b></p>') >= 1 and A.count('<ul class="keys">') == len(escenas), h + ' cómo leerla y claves')
@@ -1481,5 +1481,21 @@ if not SIN_NODO:
             tp = pathlib.Path(td)/'lectura.html'; tp.write_text('\n'.join('<p>\\(%s\\)</p>' % w for w in trozos), encoding='utf-8')
             ok(vtex(et, tp) >= 5, et + ': pocas igualdades numéricas evaluadas')
 
+# Revisión general (24-nov): H01 v002, H02 v002, H03 v002
+_D = Fr
+def _f1(x): return (x*x - 1)/(x - 1)
+ok([(x*x, x*x - 1, x - 1, _f1(x)) for x in (_D('0.9'), _D('0.99'), _D('1.01'), _D('1.1'))] == [(_D('0.81'), _D('-0.19'), _D('-0.1'), _D('1.9')), (_D('0.9801'), _D('-0.0199'), _D('-0.01'), _D('1.99')), (_D('1.0201'), _D('0.0201'), _D('0.01'), _D('2.01')), (_D('1.21'), _D('0.21'), _D('0.1'), _D('2.1'))], 'H01 v002 encabezado')
+ok(all((x - c)*(x + c) == x*x + x*c - c*x - c*c == x*x - c*c for x in range(-6, 7) for c in (1, 2, 3)), 'H01 v002 diferencias de cuadrados desarrolladas')
+ok(1 - _D('0.1') == _D('0.9') and _D('0.9') + 1 == _D('1.9') and 2 - _D('1.9') == _D('0.1') and 1 + _D('0.1') == _D('1.1') and _D('1.1') + 1 == _D('2.1') and _D('2.1') - 2 == _D('0.1'), 'H01 v002 k2 con d = 0,1')
+ok((_D('0.9') + 1, _D('0.99') + 1, 4 - _D('1.1'), 4 - _D('1.01')) == (_D('1.9'), _D('1.99'), _D('2.9'), _D('2.99')), 'H01 v002 k3 salto con números')
+ok((_D('2.9')**2, _D('2.9')**2 - 9, _D('2.9') - 3, _D('-0.59')/_D('-0.1')) == (_D('8.41'), _D('-0.59'), _D('-0.1'), _D('5.9')) and (_D('3.1')**2, _D('3.1')**2 - 9, _D('3.1') - 3, _D('0.61')/_D('0.1')) == (_D('9.61'), _D('0.61'), _D('0.1'), _D('6.1')) and abs(_D('-0.1')) == -(_D('-0.1')) == _D('0.1'), 'H01 v002 ej1 filas y ej3')
+ok([(b*b - 1, b - 1, (b*b - 1)/(b - 1)) for b in (2, _D('1.5'), _D('1.1'), _D('1.01'))] == [(3, 1, 3), (_D('1.25'), _D('0.5'), _D('2.5')), (_D('0.21'), _D('0.1'), _D('2.1')), (_D('0.0201'), _D('0.01'), _D('2.01'))] and (2**2, _D('1.5')**2, _D('1.1')**2, _D('1.01')**2) == (4, _D('2.25'), _D('1.21'), _D('1.0201')), 'H02 v002 encabezado')
+ok(all((a + h)*(a + h) == a*a + a*h + h*a + h*h == a*a + 2*a*h + h*h and (a + h)**2 - a*a == 2*a*h + h*h == h*(2*a + h) and (h == 0 or ((a + h)**2 - a*a)/h == 2*a + h) for a in (1, 2, 3, _D('2.5')) for h in (_D(k, 10) for k in range(-12, 13))), 'H02 v002 «lo mismo, escrito» y demostración')
+ok(2 + _D('0.1') == _D('2.1') and 2 - _D('0.5') == _D('1.5') and _D('3.1')**2 == _D('9.61') and _D('9.61') - 9 == _D('0.61') and _D('0.61')/_D('0.1') == _D('6.1') == 2*3 + _D('0.1') and 3 + _D('-0.1') == _D('2.9') and 3**2 == 9 and 2*3 == 6 and 2**2 == 4 and 2*2 == 4, 'H02 v002 comprobaciones, ej1 y B')
+ok(all((0 < abs(x) < Fr(1, r)) <= (x*x < Fr(1, r*r) and 1/(x*x) > r*r) for r in (1, 2, 10, 100) for x in (_D(k, 1000) for k in range(-1500, 1501) if k)) and _D('0.01') < _D('0.1') and 1/_D('0.01') == 100 > 10 == 1/_D('0.1'), 'H02 v002 ej4 desigualdad')
+def _f3(x): return x*x/2
+ok([( x*x, _f3(x)) for x in (1, _D('1.5'), _D('1.9'), 3, _D('2.5'), _D('2.1'))] == [(1, _D('0.5')), (_D('2.25'), _D('1.125')), (_D('3.61'), _D('1.805')), (9, _D('4.5')), (_D('6.25'), _D('3.125')), (_D('4.41'), _D('2.205'))], 'H03 v002 encabezado')
+ok(all((x/2 + _D('1.01')) - (x/2 + 1) == _D('0.01') and (x == 2 or ((x - 2)*(x + 2))/(2*(x - 2)) == (x + 2)/2 == x/2 + 1) and 2*x - 4 == 2*(x - 2) for x in (_D(k, 10) for k in range(-40, 61))) and _D('0.01')*3 == _D('0.03') and _D('0.03')*10 == _D('0.3'), 'H03 v002 k3 y ej2')
+ok(_D('1.8')/2 + 1 == _D('0.9') + 1 == _D('1.9') and _D('2.2')/2 + 1 == _D('1.1') + 1 == _D('2.1') and _D('2.2')/2 + 2 == _D('1.1') + 2 == _D('3.1') and Fr(2, 2) + 1 == 2 and Fr(2, 2) + 2 == 3, 'H03 v002 ej3 y ej4')
 print('%d comprobaciones%s' % (N[0], '; SIN node: las lecturas con deslizador no se evaluaron con el código de la escena (sí su aritmética exacta)' if SIN_NODO else '; lecturas de los deslizadores evaluadas con el código de la escena'))
 print('Lote 29 H01–H12: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)
