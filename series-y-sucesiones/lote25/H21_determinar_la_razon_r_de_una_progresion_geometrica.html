@@ -162,7 +162,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Determinar la razón r de una progresión geométrica</b></li>
     </ol>
     <h1>Determinar la razón r de una progresión geométrica</h1>
-    <p class="lede">En una progresión geométrica, cada término es el anterior multiplicado por un mismo número, la razón \(r\). Por eso, al dividir cualquier término por el anterior se obtiene siempre ese número. \[r=\dfrac{a_{n+1}}{a_{n}}\qquad\text{para todo entero } n\ge 1\]</p>
+    <p class="lede">Una <b>sucesión</b> (o <b>progresión</b>) es una lista ordenada de números; cada número de la lista es un <b>término</b>. El primero se escribe \(a_{1}\), el segundo \(a_{2}\), el que está en la posición \(n\) se escribe \(a_{n}\) («\(a\) sub \(n\)») y el que le sigue, \(a_{n+1}\) («\(a\) sub \(n\) más uno»).</p>
+    <p class="lede"><b>De dónde sale la fórmula.</b> En la lista \(2,\ 6,\ 18,\ 54\) cada término es el anterior multiplicado por \(3\): \[\begin{aligned}6&=2\cdot 3\\ 18&=6\cdot 3\\ 54&=18\cdot 3\end{aligned}\] Dividir es la operación inversa de multiplicar. Por eso, al dividir cada término por el anterior se recupera ese \(3\): \[\begin{aligned}\text{para }n=1:&\quad\dfrac{a_{2}}{a_{1}}=\dfrac{6}{2}=3\\ \text{para }n=2:&\quad\dfrac{a_{3}}{a_{2}}=\dfrac{18}{6}=3\\ \text{para }n=3:&\quad\dfrac{a_{4}}{a_{3}}=\dfrac{54}{18}=3\end{aligned}\] La regularidad: el cociente entre un término y el anterior es siempre el mismo número. Una lista así se llama <b>progresión geométrica</b>, y ese número es su <b>razón</b>, \(r\).</p>
+    <p class="lede">En general: en una progresión geométrica, cada término es el anterior multiplicado por un mismo número, la razón \(r\). Por eso, al dividir cualquier término por el anterior se obtiene siempre ese número. \[r=\dfrac{a_{n+1}}{a_{n}}\qquad\text{para todo entero } n\ge 1\] Se lee: «\(r\) es igual a \(a\) sub \(n\) más uno dividido por \(a\) sub \(n\)»: el término que sigue, dividido por el término. Más abajo se demuestra a partir de la definición.</p>
   </section>
 </header>
 
@@ -214,6 +216,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Con dos términos que no son vecinos: \(r^{\,m-k}=\dfrac{a_{m}}{a_{k}}\), con \(m&gt;k\)</h3>
+    <p><b>Qué se demuestra:</b> que el cociente entre dos términos cualesquiera, el de la posición \(m\) dividido por el de la posición \(k\), con \(m\) mayor que \(k\), es la razón elevada a la cantidad de pasos que hay entre ellos, \(m-k\). <b>Cómo funciona el método:</b> se avanza desde \(a_{k}\) de a un paso, se cuenta cuántas veces se multiplicó por \(r\), y al final se divide por \(a_{k}\).</p>
+    <p><b>Primero con números.</b> En \(2,\ 6,\ 18,\ 54,\ 162\) (razón \(3\)), se va de \(a_{2}=6\) a \(a_{5}=162\): \[\begin{aligned}a_{3}&=a_{2}\cdot 3=6\cdot 3=18&&\text{un paso}\\ a_{4}&=a_{3}\cdot 3=6\cdot 3\cdot 3=54&&\text{dos pasos}\\ a_{5}&=a_{4}\cdot 3=6\cdot 3\cdot 3\cdot 3=162&&\text{tres pasos}\end{aligned}\] De la posición \(2\) a la \(5\) hay \(5-2=3\) pasos, y se multiplicó tres veces por \(3\): \(a_{5}=a_{2}\cdot 3^{3}\). Se divide por \(a_{2}\): \(3^{3}=\dfrac{a_{5}}{a_{2}}=\dfrac{162}{6}=27\), y en efecto \(3\cdot 3\cdot 3=27\). Ahora, lo mismo con letras.</p>
     <ol class="steps">
       <li>Un paso desde \(a_{k}\), por la definición: \(a_{k+1}=a_{k}\cdot r\).</li>
       <li>Dos pasos: \(a_{k+2}=a_{k+1}\cdot r\). Se reemplaza \(a_{k+1}\): \(a_{k+2}=a_{k}\cdot r\cdot r=a_{k}\cdot r^{2}\).</li>
@@ -233,6 +237,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k3">
     <h3>Qué hace la progresión según la razón, cuando \(a_{1}&gt;0\)</h3>
+    <p><b>Qué se demuestra:</b> que, con primer término positivo, la progresión crece si \(r&gt;1\), es constante si \(r=1\), decrece si \(0&lt;r&lt;1\) y alterna de signo si \(r&lt;0\). <b>Cómo funciona el método:</b> una sucesión crece cuando cada término es mayor que el anterior, es decir, cuando la resta \(a_{n+1}-a_{n}\) es positiva; decrece cuando esa resta es negativa. Se calcula esa resta y se mira su signo.</p>
+    <p><b>Primero con números</b> (\(a_{1}=4\), como en la animación que sigue). Con \(r=2\): \(4,\ 8,\ 16\); las restas son \(8-4=4\) y \(16-8=8\), positivas: crece. Con \(r=\dfrac{1}{2}\): \(4,\ 2,\ 1\); las restas son \(2-4=-2\) y \(1-2=-1\), negativas: decrece. Con \(r=-2\): \(4,\ -8,\ 16\); las restas son \(-8-4=-12\) y \(16-(-8)=24\), una negativa y otra positiva: ni crece ni decrece. Ahora, con letras.</p>
     <ol class="steps">
       <li><b>Si \(r&gt;0\), todos los términos son positivos.</b> \(a_{2}=a_{1}\cdot r\) es positivo por positivo: positivo. El paso que se repite: si \(a_{n}&gt;0\), entonces \(a_{n+1}=a_{n}\cdot r&gt;0\).</li>
       <li><b>La resta entre vecinos.</b> \(a_{n+1}-a_{n}=a_{n}\cdot r-a_{n}\). Factor común \(a_{n}\): \(a_{n+1}-a_{n}=a_{n}\,(r-1)\).</li>
@@ -402,7 +408,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H21 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H21 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -629,12 +635,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -654,12 +662,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */

@@ -12,7 +12,9 @@
       <li><b>Determinar la razón r de una progresión geométrica</b></li>
     </ol>
     <h1>Determinar la razón r de una progresión geométrica</h1>
-    <p class="lede">En una progresión geométrica, cada término es el anterior multiplicado por un mismo número, la razón \(r\). Por eso, al dividir cualquier término por el anterior se obtiene siempre ese número. \[r=\dfrac{a_{n+1}}{a_{n}}\qquad\text{para todo entero } n\ge 1\]</p>
+    <p class="lede">Una <b>sucesión</b> (o <b>progresión</b>) es una lista ordenada de números; cada número de la lista es un <b>término</b>. El primero se escribe \(a_{1}\), el segundo \(a_{2}\), el que está en la posición \(n\) se escribe \(a_{n}\) («\(a\) sub \(n\)») y el que le sigue, \(a_{n+1}\) («\(a\) sub \(n\) más uno»).</p>
+    <p class="lede"><b>De dónde sale la fórmula.</b> En la lista \(2,\ 6,\ 18,\ 54\) cada término es el anterior multiplicado por \(3\): \[\begin{aligned}6&=2\cdot 3\\ 18&=6\cdot 3\\ 54&=18\cdot 3\end{aligned}\] Dividir es la operación inversa de multiplicar. Por eso, al dividir cada término por el anterior se recupera ese \(3\): \[\begin{aligned}\text{para }n=1:&\quad\dfrac{a_{2}}{a_{1}}=\dfrac{6}{2}=3\\ \text{para }n=2:&\quad\dfrac{a_{3}}{a_{2}}=\dfrac{18}{6}=3\\ \text{para }n=3:&\quad\dfrac{a_{4}}{a_{3}}=\dfrac{54}{18}=3\end{aligned}\] La regularidad: el cociente entre un término y el anterior es siempre el mismo número. Una lista así se llama <b>progresión geométrica</b>, y ese número es su <b>razón</b>, \(r\).</p>
+    <p class="lede">En general: en una progresión geométrica, cada término es el anterior multiplicado por un mismo número, la razón \(r\). Por eso, al dividir cualquier término por el anterior se obtiene siempre ese número. \[r=\dfrac{a_{n+1}}{a_{n}}\qquad\text{para todo entero } n\ge 1\] Se lee: «\(r\) es igual a \(a\) sub \(n\) más uno dividido por \(a\) sub \(n\)»: el término que sigue, dividido por el término. Más abajo se demuestra a partir de la definición.</p>
   </section>
 </header>
 
@@ -63,6 +65,8 @@
 
   <div class="card k2">
     <h3>Con dos términos que no son vecinos: \(r^{\,m-k}=\dfrac{a_{m}}{a_{k}}\), con \(m&gt;k\)</h3>
+    <p><b>Qué se demuestra:</b> que el cociente entre dos términos cualesquiera, el de la posición \(m\) dividido por el de la posición \(k\), con \(m\) mayor que \(k\), es la razón elevada a la cantidad de pasos que hay entre ellos, \(m-k\). <b>Cómo funciona el método:</b> se avanza desde \(a_{k}\) de a un paso, se cuenta cuántas veces se multiplicó por \(r\), y al final se divide por \(a_{k}\).</p>
+    <p><b>Primero con números.</b> En \(2,\ 6,\ 18,\ 54,\ 162\) (razón \(3\)), se va de \(a_{2}=6\) a \(a_{5}=162\): \[\begin{aligned}a_{3}&=a_{2}\cdot 3=6\cdot 3=18&&\text{un paso}\\ a_{4}&=a_{3}\cdot 3=6\cdot 3\cdot 3=54&&\text{dos pasos}\\ a_{5}&=a_{4}\cdot 3=6\cdot 3\cdot 3\cdot 3=162&&\text{tres pasos}\end{aligned}\] De la posición \(2\) a la \(5\) hay \(5-2=3\) pasos, y se multiplicó tres veces por \(3\): \(a_{5}=a_{2}\cdot 3^{3}\). Se divide por \(a_{2}\): \(3^{3}=\dfrac{a_{5}}{a_{2}}=\dfrac{162}{6}=27\), y en efecto \(3\cdot 3\cdot 3=27\). Ahora, lo mismo con letras.</p>
     <ol class="steps">
       <li>Un paso desde \(a_{k}\), por la definición: \(a_{k+1}=a_{k}\cdot r\).</li>
       <li>Dos pasos: \(a_{k+2}=a_{k+1}\cdot r\). Se reemplaza \(a_{k+1}\): \(a_{k+2}=a_{k}\cdot r\cdot r=a_{k}\cdot r^{2}\).</li>
@@ -82,6 +86,8 @@
 
   <div class="card k3">
     <h3>Qué hace la progresión según la razón, cuando \(a_{1}&gt;0\)</h3>
+    <p><b>Qué se demuestra:</b> que, con primer término positivo, la progresión crece si \(r&gt;1\), es constante si \(r=1\), decrece si \(0&lt;r&lt;1\) y alterna de signo si \(r&lt;0\). <b>Cómo funciona el método:</b> una sucesión crece cuando cada término es mayor que el anterior, es decir, cuando la resta \(a_{n+1}-a_{n}\) es positiva; decrece cuando esa resta es negativa. Se calcula esa resta y se mira su signo.</p>
+    <p><b>Primero con números</b> (\(a_{1}=4\), como en la animación que sigue). Con \(r=2\): \(4,\ 8,\ 16\); las restas son \(8-4=4\) y \(16-8=8\), positivas: crece. Con \(r=\dfrac{1}{2}\): \(4,\ 2,\ 1\); las restas son \(2-4=-2\) y \(1-2=-1\), negativas: decrece. Con \(r=-2\): \(4,\ -8,\ 16\); las restas son \(-8-4=-12\) y \(16-(-8)=24\), una negativa y otra positiva: ni crece ni decrece. Ahora, con letras.</p>
     <ol class="steps">
       <li><b>Si \(r&gt;0\), todos los términos son positivos.</b> \(a_{2}=a_{1}\cdot r\) es positivo por positivo: positivo. El paso que se repite: si \(a_{n}&gt;0\), entonces \(a_{n+1}=a_{n}\cdot r&gt;0\).</li>
       <li><b>La resta entre vecinos.</b> \(a_{n+1}-a_{n}=a_{n}\cdot r-a_{n}\). Factor común \(a_{n}\): \(a_{n+1}-a_{n}=a_{n}\,(r-1)\).</li>
@@ -250,6 +256,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H21 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H21 · v002 · Pendiente de APR</span>
 </footer>
 </article>

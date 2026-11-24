@@ -162,7 +162,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Series de potencias</b></li>
     </ol>
     <h1>Series de potencias</h1>
-    <p class="lede">Una serie de potencias es una suma sin fin de potencias de \((x-a)\), cada una con su coeficiente. Para cada valor de \(x\) es una serie numérica distinta: para unos valores converge y para otros no. Los valores donde converge forman un intervalo centrado en \(a\). \[\sum_{n=0}^{\infty}c_{n}\,(x-a)^{n}=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+\cdots\]</p>
+    <p class="lede">Una <b>potencia</b> de \(x\) es \(x\) multiplicado por sí mismo varias veces: \(x^{2}=x\cdot x\), \(x^{3}=x\cdot x\cdot x\); además \(x^{1}=x\) y \(x^{0}=1\). Una <b>serie</b> es una suma de infinitos términos, y <b>converge</b> cuando sus <b>sumas parciales</b> (la suma del primer término; la de los dos primeros; la de los tres primeros; y así) se acercan a un número. Una <b>serie de potencias</b> es una suma sin fin de potencias de \(x\), como \(1+x+x^{2}+x^{3}+\cdots\)</p>
+    <p class="lede"><b>De dónde sale la idea.</b> En \(1+x+x^{2}+x^{3}+\cdots\) se reemplaza \(x\) por un número y se suma término por término. Se llama \(S_{n}\) a la suma hasta la potencia \(x^{n}\). Con \(x=\dfrac{1}{2}\) las potencias son \(\dfrac{1}{2}\), \(\dfrac{1}{2}\cdot\dfrac{1}{2}=\dfrac{1}{4}\), \(\dfrac{1}{4}\cdot\dfrac{1}{2}=\dfrac{1}{8}\), \(\dfrac{1}{8}\cdot\dfrac{1}{2}=\dfrac{1}{16}\), y las sumas parciales son: \[\begin{aligned}S_{0}&=1\\ S_{1}&=1+\dfrac{1}{2}=\dfrac{2}{2}+\dfrac{1}{2}=\dfrac{3}{2}=1{,}5\\ S_{2}&=\dfrac{3}{2}+\dfrac{1}{4}=\dfrac{6}{4}+\dfrac{1}{4}=\dfrac{7}{4}=1{,}75\\ S_{3}&=\dfrac{7}{4}+\dfrac{1}{8}=\dfrac{14}{8}+\dfrac{1}{8}=\dfrac{15}{8}=1{,}875\\ S_{4}&=\dfrac{15}{8}+\dfrac{1}{16}=\dfrac{30}{16}+\dfrac{1}{16}=\dfrac{31}{16}=1{,}9375\end{aligned}\] La regularidad: lo que le falta a cada suma para llegar a \(2\) es \(1,\ \dfrac{1}{2},\ \dfrac{1}{4},\ \dfrac{1}{8},\ \dfrac{1}{16}\); cada vez la mitad. Las sumas se acercan a \(2\): con \(x=\dfrac{1}{2}\) la serie converge. Ahora con \(x=2\), cuyas potencias son \(2\), \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\): \[\begin{aligned}S_{0}&=1\\ S_{1}&=1+2=3\\ S_{2}&=3+4=7\\ S_{3}&=7+8=15\\ S_{4}&=15+16=31\end{aligned}\] Cada suma es más del doble de la anterior: no se acercan a ningún número. Con \(x=2\) la serie diverge. La misma expresión converge para unos valores de \(x\) y diverge para otros: la pregunta de esta hoja es para cuáles.</p>
+    <p class="lede">En general, cada potencia lleva delante un número fijo, su <b>coeficiente</b> \(c_{n}\), y en lugar de \(x\) puede ir \(x-a\), la resta entre \(x\) y un número fijo \(a\), el <b>centro</b>: \[\sum_{n=0}^{\infty}c_{n}\,(x-a)^{n}=c_{0}+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+\cdots\] Se lee: «sumatoria, desde \(n\) igual a cero hasta infinito, de \(c\) sub \(n\) por \(x\) menos \(a\), elevado a \(n\)». En el ejemplo de arriba todos los coeficientes valen \(1\) y el centro es \(0\). Para cada valor de \(x\) es una serie de números distinta. Los valores de \(x\) donde converge forman un intervalo centrado en \(a\) (más abajo: el teorema, que se enuncia, y cómo se halla ese intervalo en cada serie).</p>
   </section>
 </header>
 
@@ -219,6 +221,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k3">
     <h3>Cómo hallar el radio: el criterio del cociente</h3>
+    <p><b>Qué se obtiene:</b> el radio de convergencia \(R\), calculado con los coeficientes \(c_{n}\). <b>Cómo funciona el método:</b> se deja \(x\) fijo; así la serie es una serie de números, y se le aplica el criterio del cociente. El número \(L\) del criterio queda igual a un número \(\ell\), que sale solo de los coeficientes, multiplicado por la distancia de \(x\) al centro, \(|x-a|\). Pedir \(L&lt;1\) es pedir que esa distancia sea menor que \(\dfrac{1}{\ell}\): ese es el radio.</p>
+    <p><b>Primero con números</b> (la serie del ejemplo 4: \(c_{n}=\dfrac{1}{3^{n}}\), centro \(a=2\)). Cociente de dos coeficientes seguidos: \(\dfrac{c_{n+1}}{c_{n}}=\dfrac{1}{3^{n+1}}:\dfrac{1}{3^{n}}=\dfrac{1}{3^{n+1}}\cdot\dfrac{3^{n}}{1}=\dfrac{3^{n}}{3^{n}\cdot 3}=\dfrac{1}{3}\). Entonces \(\ell=\dfrac{1}{3}\). Con \(x=3{,}5\): la distancia al centro es \(|3{,}5-2|=1{,}5\) y \(L=\dfrac{1}{3}\cdot 1{,}5=0{,}5\). Como \(0{,}5&lt;1\), converge; los términos son \(1\), \(\dfrac{1{,}5}{3}=0{,}5\), \(\dfrac{1{,}5^{2}}{3^{2}}=\dfrac{2{,}25}{9}=0{,}25\): cada uno es la mitad del anterior. Con \(x=8\): la distancia es \(|8-2|=6\) y \(L=\dfrac{1}{3}\cdot 6=2\). Como \(2&gt;1\), diverge; los términos son \(1\), \(\dfrac{6}{3}=2\), \(\dfrac{6^{2}}{3^{2}}=\dfrac{36}{9}=4\): cada uno es el doble del anterior. La frontera está donde \(L=1\): \(\dfrac{1}{3}\cdot|x-2|=1\), es decir, \(|x-2|=3\). El radio es \(R=3=1:\dfrac{1}{3}=\dfrac{1}{\ell}\). Ahora, lo mismo con letras.</p>
     <p>Se usa el criterio de la hoja «Criterio del cociente para la convergencia»: para una serie \(\displaystyle\sum u_{n}\) con \(u_{n}\ne 0\) y \(L=\displaystyle\lim_{n\to\infty}\left|\dfrac{u_{n+1}}{u_{n}}\right|\): si \(L&lt;1\), converge absolutamente; si \(L&gt;1\), o si el cociente supera cualquier número, diverge; si \(L=1\), el criterio no decide. («Supera cualquier número»: para cada número \(M\), el cociente es mayor que \(M\) desde algún \(n\) en adelante.)</p>
     <ol class="steps">
       <li><b>Se fija un \(x\ne a\)</b> (en \(x=a\) ya se sabe que converge). El término es \(u_{n}=c_{n}(x-a)^{n}\). Hace falta \(c_{n}\ne 0\), al menos desde algún \(n\) en adelante; entonces \(u_{n}\ne 0\).</li>
@@ -226,7 +230,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Se simplifican las potencias:</b> \(\dfrac{(x-a)^{n+1}}{(x-a)^{n}}=x-a\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{c_{n+1}}{c_{n}}\cdot(x-a)\).</li>
       <li><b>Valor absoluto de un producto:</b> \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=\left|\dfrac{c_{n+1}}{c_{n}}\right|\cdot|x-a|\).</li>
       <li><b>Límite cuando \(n\) crece.</b> \(x\) está fijo: \(|x-a|\) es una constante. Si \(\displaystyle\lim_{n\to\infty}\left|\dfrac{c_{n+1}}{c_{n}}\right|=\ell\), entonces \(L=\ell\cdot|x-a|\) (límite de una constante por una sucesión).</li>
-      <li><b>Si \(\ell&gt;0\):</b> \(L&lt;1\) es \(\ell\cdot|x-a|&lt;1\); se divide por \(\ell\), que es positivo: \(|x-a|&lt;\dfrac{1}{\ell}\). Para esos \(x\) la serie converge absolutamente. Del mismo modo, \(L&gt;1\) es \(|x-a|&gt;\dfrac{1}{\ell}\): para esos \(x\) diverge. El radio es \(R=\dfrac{1}{\ell}\).</li>
+      <li><b>Si \(\ell&gt;0\):</b> \(L&lt;1\) es \(\ell\cdot|x-a|&lt;1\); se divide por \(\ell\), que es positivo: \(|x-a|&lt;\dfrac{1}{\ell}\). Para esos \(x\) la serie converge absolutamente. Y \(L&gt;1\) es \(\ell\cdot|x-a|&gt;1\); se divide por \(\ell\), que es positivo (la desigualdad no cambia de sentido): \(|x-a|&gt;\dfrac{1}{\ell}\). Para esos \(x\) la serie diverge. El radio es \(R=\dfrac{1}{\ell}\).</li>
       <li><b>Si \(\ell=0\):</b> \(L=0\cdot|x-a|=0&lt;1\) para todo \(x\ne a\). La serie converge absolutamente para todo \(x\): \(R=\infty\).</li>
       <li><b>Si \(\left|\dfrac{c_{n+1}}{c_{n}}\right|\) supera cualquier número:</b> dado \(M&gt;0\), desde algún \(n\) en adelante \(\left|\dfrac{c_{n+1}}{c_{n}}\right|&gt;\dfrac{M}{|x-a|}\); se multiplica por \(|x-a|\), que es positivo: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|&gt;M\). El cociente supera cualquier número: la serie diverge para todo \(x\ne a\). Solo converge en el centro: \(R=0\).</li>
     </ol>
@@ -330,7 +334,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li>Cociente: \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{(x-2)^{n+1}}{3^{n+1}}\cdot\dfrac{3^{n}}{(x-2)^{n}}\).</li>
     <li>Se simplifican las potencias: \(\dfrac{(x-2)^{n+1}}{(x-2)^{n}}=x-2\) y \(\dfrac{3^{n}}{3^{n+1}}=\dfrac{1}{3}\). Queda \(\dfrac{u_{n+1}}{u_{n}}=\dfrac{x-2}{3}\).</li>
     <li>Valor absoluto de un cociente: \(\left|\dfrac{u_{n+1}}{u_{n}}\right|=\dfrac{|x-2|}{3}\). No depende de \(n\): su límite es \(L=\dfrac{|x-2|}{3}\).</li>
-    <li>\(L&lt;1\) es \(\dfrac{|x-2|}{3}&lt;1\); se multiplica por \(3\): \(|x-2|&lt;3\). Ahí la serie converge absolutamente. Del mismo modo, si \(|x-2|&gt;3\), diverge. El radio es \(R=3\).</li>
+    <li>\(L&lt;1\) es \(\dfrac{|x-2|}{3}&lt;1\); se multiplica por \(3\): \(|x-2|&lt;3\). Ahí la serie converge absolutamente. Y \(L&gt;1\) es \(\dfrac{|x-2|}{3}&gt;1\); se multiplica por \(3\): \(|x-2|&gt;3\). Ahí la serie diverge. El radio es \(R=3\).</li>
     <li>Se escribe sin valor absoluto: \(|x-2|&lt;3\) equivale a \(-3&lt;x-2&lt;3\). Se suma \(2\) en las tres partes: \(-3+2&lt;x&lt;3+2\), es decir, \(-1&lt;x&lt;5\).</li>
     <li>Los extremos son \(a-R=2-3=-1\) y \(a+R=2+3=5\). En ellos \(L=1\): se revisan aparte.</li>
     <li><b>Extremo \(x=5\):</b> \(\dfrac{(5-2)^{n}}{3^{n}}=\dfrac{3^{n}}{3^{n}}=1\). Queda \(1+1+1+\cdots\): el término vale \(1\) y no tiende a \(0\). Diverge (hoja «Criterio del enésimo término»).</li>
@@ -429,7 +433,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H20 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H20 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -656,12 +660,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -681,12 +687,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */
