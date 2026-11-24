@@ -162,15 +162,25 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Determinante de segundo orden</b></li>
     </ol>
     <h1>Determinante de segundo orden</h1>
-    <p class="lede">A cada matriz cuadrada de dos filas y dos columnas se le asocia un número, su <b>determinante</b>. Se calcula con sus cuatro entradas: el producto de la diagonal principal menos el producto de la otra diagonal.
+    <p class="lede">Una <b>matriz</b> es una tabla de números ordenados en filas (las líneas horizontales) y columnas (las verticales). Cada número de la tabla es una <b>entrada</b>. Esta hoja trata de las matrices de dos filas y dos columnas, \(\begin{pmatrix}a&b\\c&d\end{pmatrix}\): la primera fila es \(a,\ b\); la segunda fila es \(c,\ d\); la primera columna es \(a,\ c\); la segunda columna es \(b,\ d\). La <b>diagonal principal</b> va de arriba a la izquierda a abajo a la derecha: son \(a\) y \(d\). La otra diagonal son \(b\) y \(c\). «Segundo orden» quiere decir eso: dos filas y dos columnas.</p>
+    <p class="lede"><b>De dónde sale.</b> Las dos columnas de la matriz \(\begin{pmatrix}3&1\\1&2\end{pmatrix}\) se dibujan como dos flechas que salen del mismo punto: \(\vec u=(3,1)\), que avanza \(3\) hacia la derecha y sube \(1\), y \(\vec v=(1,2)\), que avanza \(1\) y sube \(2\). Las dos flechas forman un paralelogramo. Su área se calcula encerrándolo en un rectángulo y quitando lo que sobra (es la figura de la animación): \[\begin{aligned}\text{rectángulo: }&\ (3+1)\cdot(1+2)=4\cdot 3=12&&\text{ancho por alto}\\ \text{sobran dos rectángulos: }&\ 2\cdot(1\cdot 1)=2\cdot 1=2&&\text{cada uno mide }1\text{ por }1\\ \text{sobran dos triángulos: }&\ 2\cdot\dfrac{3\cdot 1}{2}=3&&\text{base }3\text{, altura }1\text{: base por altura, partido por }2\\ \text{sobran otros dos triángulos: }&\ 2\cdot\dfrac{1\cdot 2}{2}=2&&\text{base }1\text{, altura }2\\ \text{paralelogramo: }&\ 12-2-3-2=5&&\text{el rectángulo, menos todo lo que sobra}\end{aligned}\] <b>La regularidad:</b> ese \(5\) sale también, de una sola vez, de las cuatro entradas de la matriz: diagonal principal, \(3\cdot 2=6\); otra diagonal, \(1\cdot 1=1\); resta, \(6-1=5\). Con letras en vez de números la cuenta es la misma, y está hecha paso a paso bajo la animación.</p>
+    <p class="lede"><b>La fórmula.</b> A cada matriz de dos filas y dos columnas se le asocia un número, su <b>determinante</b>: el producto de la diagonal principal menos el producto de la otra diagonal.
     \[\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\]
-    Ese número mide algo que se puede dibujar: el <b>área del paralelogramo</b> que forman las dos columnas de la matriz, vistas como vectores.</p>
+    Se lee: «el determinante de la matriz de filas \(a\), \(b\) y \(c\), \(d\) es \(a\) por \(d\), menos \(b\) por \(c\)». Las dos barras verticales son otra forma de escribir «determinante de». Ese número mide algo que se puede dibujar: el <b>área del paralelogramo</b> que forman las dos columnas de la matriz, vistas como flechas (vectores).</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>De dónde sale \(ad-bc\), en seis pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p>De dónde sale \(ad-bc\), en seis pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Pasos 1 y 2, mira las dos flechas:</b> la azul es la primera columna, \(\vec u=(a,c)\); la naranja, la segunda, \(\vec v=(b,d)\). Entre las dos forman el paralelogramo burdeo. La pregunta de arriba es cuánto mide su área.</li>
+    <li><b>Paso 3, mira el rectángulo de borde negro</b> que encierra al paralelogramo. En las cotas se lee su ancho, \(a+b\), y su alto, \(c+d\).</li>
+    <li><b>Pasos 4 y 5, mira las piezas que sobran</b> entre el rectángulo y el paralelogramo: dos rectángulos verdes, cada uno de área \(bc\), y cuatro triángulos, dos de área \(\dfrac{ac}{2}\) y dos de área \(\dfrac{bd}{2}\). Cada pieza lleva su área escrita encima.</li>
+    <li><b>Paso 6:</b> al rectángulo se le quitan las seis piezas. Lo que queda es el paralelogramo, y su área es \(ad-bc\).</li>
+    <li><b>Lee el registro «Paso a paso» y la cuenta de abajo, línea por línea:</b> el área del rectángulo, lo que sobra y la resta. Ninguna línea se borra.</li>
+  </ol>
   <div class="stage" data-scene="det2-idea"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
   <ul class="keys">
@@ -179,6 +189,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li><b>Rectángulo de borde negro:</b> el que encierra al paralelogramo. Mide \(a+b\) de ancho y \(c+d\) de alto.</li>
     <li><b>Piezas verdes y claras:</b> lo que sobra entre el rectángulo y el paralelogramo: dos rectángulos de área \(bc\), dos triángulos de área \(\dfrac{ac}{2}\) y dos de área \(\dfrac{bd}{2}\).</li>
   </ul>
+  <p><b>Lo mismo, escrito.</b> Una línea por operación; a la derecha, lo que se hizo: \[\begin{aligned}\text{rectángulo}&=(a+b)(c+d)&&\text{ancho por alto}\\ &=ac+ad+bc+bd&&\text{se distribuye: cada sumando del primer paréntesis por cada uno del segundo}\\ \text{lo que sobra}&=2\cdot bc+2\cdot\dfrac{ac}{2}+2\cdot\dfrac{bd}{2}&&\text{dos rectángulos y cuatro triángulos}\\ &=2bc+ac+bd&&\text{se simplifica: }2\cdot\dfrac{ac}{2}=ac\ \text{ y }\ 2\cdot\dfrac{bd}{2}=bd\\ \text{Área}&=ac+ad+bc+bd-(2bc+ac+bd)&&\text{rectángulo menos lo que sobra}\\ &=ac+ad+bc+bd-2bc-ac-bd&&\text{el signo menos cambia el signo de cada sumando del paréntesis}\\ &=ad+bc-2bc&&\text{se cancelan: }ac-ac=0\ \text{ y }\ bd-bd=0\\ &=ad-bc&&\text{se juntan: }bc-2bc=-bc\end{aligned}\] Con los números del encabezado, \(a=3\), \(b=1\), \(c=1\), \(d=2\): \(ad-bc=3\cdot 2-1\cdot 1=6-1=5\), el mismo \(5\) que dio la cuenta con el rectángulo.</p>
   <div class="why">
     <p><b>Alcance del dibujo.</b> La figura supone \(a\), \(b\), \(c\) y \(d\) positivos y \(ad\gt bc\). Para cualquier signo de las entradas vale lo que se demuestra en el recuadro «El determinante y el área»: el área es el valor absoluto del determinante.</p>
   </div>
@@ -197,16 +208,20 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>El determinante y el área</h3>
-    <p>Sean \(\vec u=(a,c)\) y \(\vec v=(b,d)\) las columnas, y \(\theta\) el ángulo entre ellas. El paralelogramo que forman tiene base \(|\vec u|\) y altura \(|\vec v|\operatorname{sen}\theta\).</p>
+    <p><b>Qué se demuestra:</b> que el área del paralelogramo que forman las dos columnas es \(|ad-bc|\), el valor absoluto del determinante, sean cuales sean los signos de las entradas. (El valor absoluto de un número es el número sin su signo: \(|5|=5\) y \(|-5|=5\).) <b>Cómo funciona el método:</b> se escribe el área como base por altura, se eleva al cuadrado para poder usar una identidad de trigonometría, y lo que queda se desarrolla hasta reconocer el cuadrado de \(ad-bc\).</p>
+    <p><b>Las letras.</b> \(\vec u=(a,c)\) y \(\vec v=(b,d)\) son las columnas. \(|\vec u|\) es el largo de la flecha \(\vec u\); por el teorema de Pitágoras, \(|\vec u|^{2}=a^{2}+c^{2}\), y lo mismo \(|\vec v|^{2}=b^{2}+d^{2}\). \(\theta\) (la letra griega «theta») es el ángulo entre las dos flechas. El paralelogramo tiene base \(|\vec u|\) y altura \(|\vec v|\operatorname{sen}\theta\): la altura es el cateto opuesto a \(\theta\) en el triángulo rectángulo cuya hipotenusa es la flecha \(\vec v\). El <b>producto punto</b> de las dos flechas es \(\vec u\cdot\vec v=ab+cd\): primera coordenada por primera, más segunda por segunda.</p>
+    <p><b>Primero con números,</b> \(\vec u=(3,1)\) y \(\vec v=(1,2)\): \[\begin{aligned}|\vec u|^{2}&=3^{2}+1^{2}=9+1=10\\ |\vec v|^{2}&=1^{2}+2^{2}=1+4=5\\ \vec u\cdot\vec v&=3\cdot 1+1\cdot 2=3+2=5\\ \text{Área}^{2}&=10\cdot 5-5^{2}=50-25=25&&\text{es el paso 3 de abajo, con números}\\ \text{Área}&=5&&\text{porque }5\cdot 5=25\text{ y el área no es negativa}\end{aligned}\] Es el mismo \(5\) del encabezado, y \(|ad-bc|=|3\cdot 2-1\cdot 1|=|5|=5\) ✓.</p>
+    <p><b>Ahora con letras:</b></p>
     <ol class="steps">
-      <li>Área al cuadrado: \(\text{Área}^{2}=|\vec u|^{2}\,|\vec v|^{2}\operatorname{sen}^{2}\theta\).</li>
-      <li>Como \(\operatorname{sen}^{2}\theta=1-\cos^{2}\theta\): \(\text{Área}^{2}=|\vec u|^{2}|\vec v|^{2}-\big(|\vec u||\vec v|\cos\theta\big)^{2}\).</li>
-      <li>El paréntesis es el producto punto, \(\vec u\cdot\vec v=ab+cd\). Entonces \(\text{Área}^{2}=\left(a^{2}+c^{2}\right)\left(b^{2}+d^{2}\right)-(ab+cd)^{2}\).</li>
-      <li>Se desarrolla: \(a^{2}b^{2}+a^{2}d^{2}+b^{2}c^{2}+c^{2}d^{2}-a^{2}b^{2}-2abcd-c^{2}d^{2}=a^{2}d^{2}-2abcd+b^{2}c^{2}\).</li>
-      <li>Eso es un cuadrado de binomio: \(\text{Área}^{2}=(ad-bc)^{2}\). Como el área no es negativa:
+      <li>Área, base por altura: \(\text{Área}=|\vec u|\cdot|\vec v|\operatorname{sen}\theta\). Se elevan los dos lados al cuadrado: \(\text{Área}^{2}=|\vec u|^{2}\,|\vec v|^{2}\operatorname{sen}^{2}\theta\).</li>
+      <li>Se reemplaza \(\operatorname{sen}^{2}\theta=1-\cos^{2}\theta\) (identidad pitagórica) y se distribuye: \(\text{Área}^{2}=|\vec u|^{2}|\vec v|^{2}\left(1-\cos^{2}\theta\right)=|\vec u|^{2}|\vec v|^{2}-\big(|\vec u||\vec v|\cos\theta\big)^{2}\).</li>
+      <li>El paréntesis es el producto punto, \(\vec u\cdot\vec v=|\vec u||\vec v|\cos\theta=ab+cd\). Se reemplazan también \(|\vec u|^{2}=a^{2}+c^{2}\) y \(|\vec v|^{2}=b^{2}+d^{2}\): \(\text{Área}^{2}=\left(a^{2}+c^{2}\right)\left(b^{2}+d^{2}\right)-(ab+cd)^{2}\).</li>
+      <li>Se desarrolla cada parte y se resta:
+        \[\begin{aligned}\left(a^{2}+c^{2}\right)\left(b^{2}+d^{2}\right)&=a^{2}b^{2}+a^{2}d^{2}+b^{2}c^{2}+c^{2}d^{2}&&\text{se distribuye}\\ (ab+cd)^{2}&=a^{2}b^{2}+2abcd+c^{2}d^{2}&&\text{cuadrado de binomio}\\ \text{Área}^{2}&=a^{2}b^{2}+a^{2}d^{2}+b^{2}c^{2}+c^{2}d^{2}-a^{2}b^{2}-2abcd-c^{2}d^{2}&&\text{se resta}\\ &=a^{2}d^{2}-2abcd+b^{2}c^{2}&&\text{se cancelan }a^{2}b^{2}\text{ y }c^{2}d^{2}\end{aligned}\]</li>
+      <li>Eso es un cuadrado de binomio, porque \((ad-bc)^{2}=(ad)^{2}-2\cdot ad\cdot bc+(bc)^{2}=a^{2}d^{2}-2abcd+b^{2}c^{2}\). Entonces \(\text{Área}^{2}=(ad-bc)^{2}\). Como el área no es negativa:
         \[\text{Área}=|ad-bc|\]</li>
     </ol>
-    <p>Se usó, sin demostrarlo aquí, que \(\vec u\cdot\vec v=|\vec u||\vec v|\cos\theta\) (hojas de vectores).</p>
+    <p>Se usaron, sin demostrarlas aquí: que \(\vec u\cdot\vec v=|\vec u||\vec v|\cos\theta\) (hojas de vectores) y la identidad \(\operatorname{sen}^{2}\theta+\cos^{2}\theta=1\) (hojas de trigonometría).</p>
   </div>
 
   <div class="card k3">
@@ -226,9 +241,10 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Paralelogramo verde:</b> determinante negativo; se gira en sentido horario.</li>
       <li><b>Sin paralelogramo:</b> los dos vectores quedan sobre una misma recta y el determinante es \(0\).</li>
     </ul>
-    <p><b>El determinante es \(0\) exactamente cuando una columna es múltiplo de la otra.</b></p>
+    <p><b>El determinante es \(0\) exactamente cuando una columna es múltiplo de la otra.</b> «Múltiplo» quiere decir que una columna es la otra multiplicada por un número \(k\): \(\vec v=k\,\vec u\). En el dibujo, las dos flechas quedan sobre la misma recta.</p>
+    <p><b>Qué se demuestra:</b> dos cosas. Ida: si una columna es múltiplo de la otra, el determinante es \(0\) (paso 1). Vuelta: si el determinante es \(0\), una columna es múltiplo de la otra (pasos 2, 3 y 4, un caso por paso). <b>Cómo funciona el método:</b> en la ida se reemplaza y se calcula; en la vuelta se encuentra el número \(k\) a partir de \(ad=bc\). <b>Primero con números:</b> en \(\begin{pmatrix}6&9\\4&6\end{pmatrix}\) la segunda columna es \(\dfrac{3}{2}\) de la primera, porque \(\dfrac{3}{2}\cdot 6=9\) y \(\dfrac{3}{2}\cdot 4=6\); y el determinante es \(6\cdot 6-9\cdot 4=36-36=0\).</p>
     <ol class="steps">
-      <li>Si \(\vec v=k\,\vec u\), entonces \(b=ka\) y \(d=kc\), y \(ad-bc=a\cdot kc-ka\cdot c=0\).</li>
+      <li>Si \(\vec v=k\,\vec u\), entonces \(b=ka\) y \(d=kc\). Se reemplaza en \(ad-bc\): \(a\cdot kc-ka\cdot c=kac-kac=0\).</li>
       <li>Al revés, sea \(ad-bc=0\), es decir, \(ad=bc\). Si \(a\ne 0\), con \(k=\dfrac{b}{a}\) se tiene \(b=ka\) y \(d=\dfrac{bc}{a}=kc\): \(\vec v=k\,\vec u\).</li>
       <li>Si \(a=0\) y \(c\ne 0\): de \(ad=bc\) sale \(bc=0\), luego \(b=0\); con \(k=\dfrac{d}{c}\), \(\vec v=(0,d)=k\,(0,c)=k\,\vec u\).</li>
       <li>Si \(a=0\) y \(c=0\), entonces \(\vec u=(0,0)=0\cdot\vec v\).</li>
@@ -266,7 +282,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 3: un determinante que vale cero, \(\begin{vmatrix}6&9\\4&6\end{vmatrix}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(6\cdot 6-9\cdot 4=36-36=0\).</li>
+    <li>Diagonal principal: \(6\cdot 6=36\).</li>
+    <li>Otra diagonal: \(9\cdot 4=36\).</li>
+    <li>\(\begin{vmatrix}6&9\\4&6\end{vmatrix}=36-36=0\).</li>
     <li>Tiene que haber una columna múltiplo de la otra: \((9,6)=\dfrac{3}{2}\,(6,4)\), porque \(\dfrac{3}{2}\cdot 6=9\) y \(\dfrac{3}{2}\cdot 4=6\).</li>
     <li>Los dos vectores están sobre la misma recta: no encierran área.</li>
   </ol>
@@ -277,9 +295,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 4: con una incógnita, \(\begin{vmatrix}x&2\\3&x-1\end{vmatrix}=0\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Se calcula el determinante: \(x(x-1)-2\cdot 3=x^{2}-x-6\).</li>
-    <li>Se iguala a cero: \(x^{2}-x-6=0\).</li>
-    <li>Se factoriza: \((x-3)(x+2)=0\), porque \(-3\cdot 2=-6\) y \(-3+2=-1\).</li>
+    <li>Diagonal principal: \(x\cdot(x-1)=x\cdot x-x\cdot 1=x^{2}-x\) (se distribuye).</li>
+    <li>Otra diagonal: \(2\cdot 3=6\).</li>
+    <li>Determinante: \(x^{2}-x-6\). La ecuación es \(x^{2}-x-6=0\).</li>
+    <li>Se factoriza. Se buscan dos números que multiplicados den \(-6\) y sumados den \(-1\): son \(-3\) y \(2\), porque \(-3\cdot 2=-6\) y \(-3+2=-1\). Entonces \((x-3)(x+2)=0\).</li>
+    <li>Un producto vale \(0\) solo si alguno de sus factores vale \(0\): \(x-3=0\) o \(x+2=0\).</li>
     <li>\(x=3\) o \(x=-2\).</li>
     <li>Comprobación: con \(x=3\), \(3\cdot 2-2\cdot 3=0\) ✓; con \(x=-2\), \((-2)\cdot(-3)-2\cdot 3=6-6=0\) ✓.</li>
   </ol>
@@ -309,10 +329,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Calcula el determinante en función de \(k\) e iguálalo a \(0\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(k\cdot k-4\cdot 9=k^{2}-36\).</li>
-        <li>\(k^{2}-36=0\ \Longrightarrow\ k^{2}=36\ \Longrightarrow\ k=6\) o \(k=-6\).</li>
-        <li>Con \(k=6\): columnas \((6,9)\) y \((4,6)\), y \((6,9)=\dfrac{3}{2}\,(4,6)\).</li>
-        <li>Con \(k=-6\): columnas \((-6,9)\) y \((4,-6)\), y \((-6,9)=-\dfrac{3}{2}\,(4,-6)\).</li>
+        <li>Diagonal principal: \(k\cdot k=k^{2}\). Otra diagonal: \(4\cdot 9=36\). Determinante: \(k^{2}-36\).</li>
+        <li>Se iguala a \(0\): \(k^{2}-36=0\). Se suma \(36\) a los dos lados: \(k^{2}=36\).</li>
+        <li>Los números cuyo cuadrado es \(36\) son \(6\) y \(-6\), porque \(6\cdot 6=36\) y \((-6)\cdot(-6)=36\). Entonces \(k=6\) o \(k=-6\).</li>
+        <li>Con \(k=6\): columnas \((6,9)\) y \((4,6)\), y \((6,9)=\dfrac{3}{2}\,(4,6)\), porque \(\dfrac{3}{2}\cdot 4=6\) y \(\dfrac{3}{2}\cdot 6=9\).</li>
+        <li>Con \(k=-6\): columnas \((-6,9)\) y \((4,-6)\), y \((-6,9)=-\dfrac{3}{2}\,(4,-6)\), porque \(-\dfrac{3}{2}\cdot 4=-6\) y \(-\dfrac{3}{2}\cdot(-6)=9\).</li>
         <li>En los dos casos una columna es múltiplo de la otra.</li>
       </ol>
     </div></details>
@@ -323,7 +344,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
         <li>Lados desde el origen: \(\vec u=(30,10)\) y \(\vec v=(10,40)\). La cuarta esquina es \(\vec u+\vec v=(40,50)\) ✓: es un paralelogramo.</li>
-        <li>\(\begin{vmatrix}30&10\\10&40\end{vmatrix}=30\cdot 40-10\cdot 10=1200-100=1100\).</li>
+        <li>Se ponen como columnas: \(\begin{vmatrix}30&10\\10&40\end{vmatrix}\). Diagonal principal: \(30\cdot 40=1200\). Otra diagonal: \(10\cdot 10=100\).</li>
+        <li>Determinante: \(1200-100=1100\).</li>
         <li>Área \(=|1100|=1100\ \text{m}^{2}\).</li>
       </ol>
     </div></details>
@@ -331,7 +353,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H01 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H01 · v004 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -595,7 +617,7 @@ OA.scene('det2-idea', (function(){
     ['También sobran cuatro triángulos rectángulos,', 'iguales de dos en dos.'],
     ['Al rectángulo se le quita todo lo que sobra.', 'Queda el área: es el determinante.']];
   return {
-    world:{x0:-1.3, x1:5.3, y0:-6.45, y1:3.95}, aspect:10.4/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-6.45, y1:4.95}, aspect:11.4/6.6,
     aria:'Animación en seis pasos. Uno: las columnas de la matriz, u igual a (a, c) y v igual a (b, d), dibujadas como dos flechas desde el origen. Dos: el paralelogramo que forman. Tres: un rectángulo de ancho a más b y alto c más d que lo encierra. Cuatro: entre el rectángulo y el paralelogramo sobran dos rectángulos de área b por c. Cinco: sobran también cuatro triángulos rectángulos, dos de área a por c sobre 2 y dos de área b por d sobre 2. Seis: al área del rectángulo se le resta lo que sobra y queda a por d menos b por c. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -636,11 +658,12 @@ OA.scene('det2-idea', (function(){
       L('Q', -1.2, 3.55, 0); if (k === 6 && u > 0.5) L('F', 1.75, 3.55, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -1.0); if (TXT[k - 1][1]) txt(TXT[k - 1][1], -1.2, -1.0 - 21/(X(1) - X(0)));
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-0.55));
+      dtQue(S, 'por qué el determinante es un área:', 'un rectángulo, menos las piezas que sobran.');
       T.fin();
       oaReg(S, k, N, -1.2, -2.45, [0, 40, 70, 100, 132, 166]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1), R = ['\\vec u=(a,c),\\qquad \\vec v=(b,d)', '\\text{Área del paralelogramo}=\\ ?', '\\text{rectángulo}=(a+b)(c+d)=ac+ad+bc+bd', '\\text{sobran dos rectángulos: }2\\cdot bc', '\\text{sobran cuatro triángulos: }2\\cdot\\dfrac{ac}{2}+2\\cdot\\dfrac{bd}{2}=ac+bd', '\\text{Área}=ac+ad+bc+bd-2bc-ac-bd=ad-bc']; return dtPasos(R.slice(0, k)); }
+    readout:function(v){ var k = Math.round(v.paso || 1), R = ['\\vec u=(a,c),\\qquad \\vec v=(b,d)', '\\text{Área del paralelogramo}=\\ ?', '\\text{rectángulo}=(a+b)(c+d)=ac+ad+bc+bd', '\\text{sobran dos rectángulos: }2\\cdot bc', '\\text{sobran cuatro triángulos: }2\\cdot\\dfrac{ac}{2}+2\\cdot\\dfrac{bd}{2}=ac+bd', '\\text{Área}=(a+b)(c+d)-2bc-(ac+bd)\\\\&\\qquad\\ \\,=ac+ad+bc+bd-2bc-ac-bd\\\\&\\qquad\\ \\,=ad-bc\\quad(ac-ac=0,\\ bd-bd=0,\\ bc-2bc=-bc)']; return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: la segunda columna se mueve y el determinante cambia con el área y con el sentido de giro */

@@ -162,9 +162,11 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Propiedades de los determinantes</b></li>
     </ol>
     <h1>Propiedades de los determinantes</h1>
-    <p class="lede">Al cambiar una matriz, su determinante cambia de una manera que se puede anticipar. Si se intercambian dos filas, cambia de signo. Si una fila se multiplica por \(k\), queda multiplicado por \(k\). Si a una fila se le suma un múltiplo de otra, no cambia.
+    <p class="lede">Una <b>matriz</b> es una tabla de números ordenados en <b>filas</b> (las líneas horizontales) y columnas (las verticales). El determinante de una matriz de dos filas y dos columnas es \(\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\): diagonal principal menos la otra diagonal (hoja «Determinante de segundo orden»). Una <b>propiedad</b> es una regla que dice qué le pasa al determinante cuando a la matriz se le hace un cambio.</p>
+    <p class="lede"><b>De dónde salen, con números.</b> Se parte de \(\begin{vmatrix}2&1\\1&2\end{vmatrix}=2\cdot 2-1\cdot 1=4-1=3\) y se le hacen tres cambios, uno a la vez. Cada vez se calcula el determinante de nuevo y se compara con el \(3\) del comienzo: \[\begin{aligned}\text{se intercambian las dos filas:}&\quad\begin{vmatrix}1&2\\2&1\end{vmatrix}=1\cdot 1-2\cdot 2=1-4=-3&&\text{el mismo }3\text{, con el signo cambiado}\\ \text{la fila 1 se multiplica por }5\text{:}&\quad\begin{vmatrix}10&5\\1&2\end{vmatrix}=10\cdot 2-5\cdot 1=20-5=15&&15=5\cdot 3\text{: quedó multiplicado por }5\\ \text{a la fila 1 se le suma }4\text{ veces la fila 2:}&\quad\begin{vmatrix}6&9\\1&2\end{vmatrix}=6\cdot 2-9\cdot 1=12-9=3&&\text{no cambió}\end{aligned}\] En la tercera línea, la fila nueva es \((2,1)+4\,(1,2)=(2,1)+(4,8)=(6,9)\). <b>La regularidad:</b> con cualquier otra matriz pasa lo mismo. Está demostrado, con letras, en el recuadro «Demostraciones en segundo orden».</p>
+    <p class="lede"><b>Las tres reglas principales.</b> Si se intercambian dos filas, el determinante cambia de signo. Si una fila se multiplica por \(k\), queda multiplicado por \(k\). Si a una fila se le suma un múltiplo de otra, no cambia.
     \[\begin{vmatrix}c&d\\a&b\end{vmatrix}=-\begin{vmatrix}a&b\\c&d\end{vmatrix}\qquad \begin{vmatrix}ka&kb\\c&d\end{vmatrix}=k\begin{vmatrix}a&b\\c&d\end{vmatrix}\qquad \begin{vmatrix}a&b\\c&d\end{vmatrix}=\begin{vmatrix}a+kc&b+kd\\c&d\end{vmatrix}\]
-    Con estas reglas muchos determinantes se calculan casi sin cuentas.</p>
+    Se leen: «el determinante con las filas intercambiadas es menos el determinante original»; «el determinante con la primera fila multiplicada por \(k\) es \(k\) por el determinante original»; «el determinante original es igual al que tiene, en la primera fila, la primera más \(k\) veces la segunda». Con estas reglas muchos determinantes se calculan casi sin cuentas.</p>
   </section>
 </header>
 
@@ -210,31 +212,34 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostraciones en segundo orden</h3>
-    <p>En todas se parte de \(\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\).</p>
+    <p><b>Qué se demuestra:</b> las nueve propiedades del recuadro anterior, para matrices de dos filas y dos columnas. <b>Cómo funciona el método:</b> en todas se parte de \(\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\). Se escribe la matriz cambiada, se calcula su determinante con esa misma fórmula (diagonal principal menos la otra diagonal) y se ordena el resultado hasta que aparezca \(ad-bc\). Las propiedades 4, 5 y 7 no necesitan cuenta nueva: salen de las anteriores.</p>
+    <p><b>Primero con números,</b> con \(\begin{vmatrix}2&1\\1&2\end{vmatrix}=3\): \[\begin{aligned}\textbf{1. }&\begin{vmatrix}1&2\\2&1\end{vmatrix}=1\cdot 1-2\cdot 2=1-4=-3&&\text{filas intercambiadas: cambia el signo}\\ \textbf{2. }&\begin{vmatrix}2&1\\2&1\end{vmatrix}=2\cdot 1-1\cdot 2=2-2=0&&\text{filas iguales}\\ \textbf{3. }&\begin{vmatrix}10&5\\1&2\end{vmatrix}=10\cdot 2-5\cdot 1=20-5=15=5\cdot 3&&\text{fila 1 por }5\\ \textbf{4. }&\begin{vmatrix}0&0\\1&2\end{vmatrix}=0\cdot 2-0\cdot 1=0-0=0&&\text{fila de ceros}\\ \textbf{5. }&\begin{vmatrix}2&1\\6&3\end{vmatrix}=2\cdot 3-1\cdot 6=6-6=0&&\text{fila 2}=3\text{ veces la fila 1}\\ \textbf{6. }&\begin{vmatrix}2+3&1+4\\1&2\end{vmatrix}=\begin{vmatrix}5&5\\1&2\end{vmatrix}=5\cdot 2-5\cdot 1=10-5=5&&\text{y }\begin{vmatrix}2&1\\1&2\end{vmatrix}+\begin{vmatrix}3&4\\1&2\end{vmatrix}=3+(3\cdot 2-4\cdot 1)=3+2=5\\ \textbf{7. }&\begin{vmatrix}6&9\\1&2\end{vmatrix}=6\cdot 2-9\cdot 1=12-9=3&&\text{fila 1 más }4\text{ veces la fila 2: no cambia}\\ \textbf{8. }&\begin{vmatrix}2&1\\0&2\end{vmatrix}=2\cdot 2-1\cdot 0=4-0=4=2\cdot 2&&\text{triangular: producto de la diagonal}\\ \textbf{9. }&\begin{vmatrix}10&5\\5&10\end{vmatrix}=10\cdot 10-5\cdot 5=100-25=75=5^{2}\cdot 3&&\text{toda la matriz por }5\text{: }25\cdot 3=75\end{aligned}\] Ahora, cada una con letras.</p>
     <ol class="steps">
-      <li><b>Intercambio.</b> \(\begin{vmatrix}c&d\\a&b\end{vmatrix}=cb-da=-(ad-bc)\).</li>
-      <li><b>Filas iguales.</b> \(\begin{vmatrix}a&b\\a&b\end{vmatrix}=ab-ba=0\).</li>
-      <li><b>Factor de una fila.</b> \(\begin{vmatrix}ka&kb\\c&d\end{vmatrix}=ka\cdot d-kb\cdot c=k(ad-bc)\). Con la segunda fila: \(\begin{vmatrix}a&b\\kc&kd\end{vmatrix}=a\cdot kd-b\cdot kc=k(ad-bc)\).</li>
-      <li><b>Fila de ceros.</b> Es la propiedad 3 con \(k=0\): el determinante queda multiplicado por \(0\).</li>
-      <li><b>Filas proporcionales.</b> \(\begin{vmatrix}a&b\\ka&kb\end{vmatrix}=k\begin{vmatrix}a&b\\a&b\end{vmatrix}=k\cdot 0=0\), por las propiedades 3 y 2.</li>
-      <li><b>Suma en una fila.</b> \(\begin{vmatrix}a+a'&b+b'\\c&d\end{vmatrix}=(a+a')d-(b+b')c=(ad-bc)+(a'd-b'c)=\begin{vmatrix}a&b\\c&d\end{vmatrix}+\begin{vmatrix}a'&b'\\c&d\end{vmatrix}\).</li>
-      <li><b>Sumar un múltiplo.</b> \(\begin{vmatrix}a+kc&b+kd\\c&d\end{vmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}+\begin{vmatrix}kc&kd\\c&d\end{vmatrix}\) por la propiedad 6. El segundo determinante tiene filas proporcionales y vale \(0\) por la propiedad 5.</li>
-      <li><b>Triangular.</b> \(\begin{vmatrix}a&b\\0&d\end{vmatrix}=ad-b\cdot 0=ad\) y \(\begin{vmatrix}a&0\\c&d\end{vmatrix}=ad-0\cdot c=ad\).</li>
-      <li><b>Toda la matriz por \(k\).</b> \(\begin{vmatrix}ka&kb\\kc&kd\end{vmatrix}=ka\cdot kd-kb\cdot kc=k^{2}(ad-bc)\). Es la propiedad 3 aplicada dos veces, una por fila.</li>
+      <li><b>Intercambio.</b> La matriz con las filas intercambiadas tiene diagonal principal \(c,\ b\) y otra diagonal \(d,\ a\): \[\begin{aligned}\begin{vmatrix}c&d\\a&b\end{vmatrix}&=cb-da&&\text{diagonal principal menos la otra}\\ &=bc-ad&&\text{el orden de los factores no cambia el producto}\\ &=-(ad-bc)&&\text{se saca el signo menos: }-(ad-bc)=-ad+bc\end{aligned}\]</li>
+      <li><b>Filas iguales.</b> \(\begin{vmatrix}a&b\\a&b\end{vmatrix}=ab-ba=ab-ab=0\).</li>
+      <li><b>Factor de una fila.</b> Con la primera fila: \[\begin{aligned}\begin{vmatrix}ka&kb\\c&d\end{vmatrix}&=ka\cdot d-kb\cdot c&&\text{diagonal principal menos la otra}\\ &=k\,ad-k\,bc&&\text{se ordenan los factores}\\ &=k\,(ad-bc)&&\text{factor común }k\end{aligned}\] Con la segunda fila es la misma cuenta: \(\begin{vmatrix}a&b\\kc&kd\end{vmatrix}=a\cdot kd-b\cdot kc=k\,ad-k\,bc=k\,(ad-bc)\).</li>
+      <li><b>Fila de ceros.</b> Es la propiedad 3 con \(k=0\): una fila de ceros es una fila multiplicada por \(0\), y el determinante queda multiplicado por \(0\). Directo: \(\begin{vmatrix}0&0\\c&d\end{vmatrix}=0\cdot d-0\cdot c=0-0=0\).</li>
+      <li><b>Filas proporcionales.</b> Se saca el factor \(k\) de la segunda fila (propiedad 3) y quedan dos filas iguales (propiedad 2): \(\begin{vmatrix}a&b\\ka&kb\end{vmatrix}=k\begin{vmatrix}a&b\\a&b\end{vmatrix}=k\cdot 0=0\).</li>
+      <li><b>Suma en una fila.</b> \[\begin{aligned}\begin{vmatrix}a+a'&b+b'\\c&d\end{vmatrix}&=(a+a')\,d-(b+b')\,c&&\text{diagonal principal menos la otra}\\ &=ad+a'd-bc-b'c&&\text{se distribuye}\\ &=(ad-bc)+(a'd-b'c)&&\text{se agrupan: los sin prima y los con prima}\\ &=\begin{vmatrix}a&b\\c&d\end{vmatrix}+\begin{vmatrix}a'&b'\\c&d\end{vmatrix}&&\text{cada paréntesis es un determinante}\end{aligned}\] La letra con prima, \(a'\), se lee «a prima»: es otro número, distinto de \(a\).</li>
+      <li><b>Sumar un múltiplo.</b> Por la propiedad 6, \(\begin{vmatrix}a+kc&b+kd\\c&d\end{vmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}+\begin{vmatrix}kc&kd\\c&d\end{vmatrix}\). En el segundo determinante la fila 1 es \(k\) veces la fila 2: filas proporcionales, vale \(0\) (propiedad 5). Queda \(\begin{vmatrix}a&b\\c&d\end{vmatrix}+0=\begin{vmatrix}a&b\\c&d\end{vmatrix}\).</li>
+      <li><b>Triangular.</b> \(\begin{vmatrix}a&b\\0&d\end{vmatrix}=ad-b\cdot 0=ad-0=ad\) y \(\begin{vmatrix}a&0\\c&d\end{vmatrix}=ad-0\cdot c=ad-0=ad\).</li>
+      <li><b>Toda la matriz por \(k\).</b> \(\begin{vmatrix}ka&kb\\kc&kd\end{vmatrix}=ka\cdot kd-kb\cdot kc=k^{2}ad-k^{2}bc=k^{2}(ad-bc)\). Es la propiedad 3 aplicada dos veces, una por fila: por eso el exponente es \(2\), la cantidad de filas.</li>
     </ol>
   </div>
 
   <div class="card k3">
     <h3>En tercer orden</h3>
-    <p>Se parte de la fórmula de los seis productos: \(\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=aei+bfg+cdh-ceg-afh-bdi\).</p>
+    <p>Se parte de la fórmula de los seis productos: \(\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=aei+bfg+cdh-ceg-afh-bdi\) (hoja «Determinante de tercer orden»).</p>
+    <p><b>Qué se demuestra:</b> en tercer orden, el intercambio de las filas 1 y 2, el factor de una fila, la matriz triangular y \(\det(kA)=k^{3}\det A\). <b>Cómo funciona el método:</b> se escribe la matriz cambiada, se le aplica la misma fórmula de los seis productos, poniendo cada letra en el lugar que ahora ocupa, y se compara con la fórmula original. <b>Primero con números:</b> \(\begin{vmatrix}1&2&3\\0&4&5\\1&0&6\end{vmatrix}=22\) (hoja «Determinante de tercer orden»). Con las filas 1 y 2 intercambiadas, por la primera fila: \[\begin{aligned}\begin{vmatrix}0&4&5\\1&2&3\\1&0&6\end{vmatrix}&=0\begin{vmatrix}2&3\\0&6\end{vmatrix}-4\begin{vmatrix}1&3\\1&6\end{vmatrix}+5\begin{vmatrix}1&2\\1&0\end{vmatrix}\\ &=0\cdot(2\cdot 6-3\cdot 0)-4\cdot(1\cdot 6-3\cdot 1)+5\cdot(1\cdot 0-2\cdot 1)\\ &=0\cdot 12-4\cdot 3+5\cdot(-2)\\ &=0-12-10=-22&&\text{el mismo }22\text{, con el signo cambiado}\end{aligned}\]</p>
     <ol class="steps">
       <li><b>Intercambio de las filas 1 y 2.</b> Con la misma fórmula, \(\begin{vmatrix}d&e&f\\a&b&c\\g&h&i\end{vmatrix}=dbi+ecg+fah-fbg-dch-eai\).</li>
-      <li>Se ordenan los factores de cada producto: \(bdi+ceg+afh-bfg-cdh-aei=-(aei+bfg+cdh-ceg-afh-bdi)\). Es el determinante original con el signo cambiado.</li>
+      <li>Se ordenan los factores de cada producto (\(dbi=bdi\), \(ecg=ceg\), \(fah=afh\), \(fbg=bfg\), \(dch=cdh\), \(eai=aei\)): queda \(bdi+ceg+afh-bfg-cdh-aei\).</li>
+      <li>Se saca el signo menos: \(bdi+ceg+afh-bfg-cdh-aei=-(aei+bfg+cdh-ceg-afh-bdi)\). Dentro del paréntesis cada producto quedó con el signo contrario. Es el determinante original con el signo cambiado.</li>
       <li><b>Factor de una fila.</b> Cada uno de los seis productos tiene exactamente una entrada de cada fila. Si una fila se multiplica por \(k\), cada producto queda multiplicado por \(k\), y también la suma.</li>
       <li><b>Triangular.</b> \(\begin{vmatrix}a&b&c\\0&e&f\\0&0&i\end{vmatrix}=aei+b\cdot f\cdot 0+c\cdot 0\cdot 0-c\cdot e\cdot 0-a\cdot f\cdot 0-b\cdot 0\cdot i=aei\).</li>
       <li><b>Toda la matriz por \(k\).</b> La propiedad 3, una vez por cada una de las tres filas: \(\det(kA)=k\cdot k\cdot k\cdot\det A=k^{3}\det A\).</li>
     </ol>
-    <p>Los intercambios de las filas 1 y 3 y de las filas 2 y 3 se comprueban con la misma cuenta de los pasos 1 y 2. <b>Suma en una fila:</b> como cada producto tiene exactamente una entrada de esa fila, cada producto se separa en dos por la propiedad distributiva. <b>Filas iguales:</b> al intercambiar dos filas iguales la matriz no cambia, pero su determinante \(D\) cambia de signo; entonces \(D=-D\), es decir \(2D=0\) y \(D=0\). Las propiedades 4, 5 y 7 se deducen de las anteriores con los mismos argumentos del recuadro de segundo orden.</p>
+    <p>Los intercambios de las filas 1 y 3 y de las filas 2 y 3 se comprueban con la misma cuenta de los pasos 1, 2 y 3. <b>Suma en una fila:</b> como cada producto tiene exactamente una entrada de esa fila, cada producto se separa en dos por la propiedad distributiva. <b>Filas iguales:</b> al intercambiar dos filas iguales la matriz no cambia, pero su determinante \(D\) cambia de signo; entonces \(D=-D\), es decir \(2D=0\) y \(D=0\). Las propiedades 4, 5 y 7 se deducen de las anteriores con los mismos argumentos del recuadro de segundo orden.</p>
     <p><b>Número ↔ figura.</b> La primera columna se multiplica por \(k\) y a la segunda se le suma \(t\) veces la primera. Mueve \(k\) y \(t\): el área solo responde a \(k\).</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
@@ -352,7 +357,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H04 · v004 · Pendiente de APR</span>
+  <span class="status">AL-L28-H04 · v005 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>

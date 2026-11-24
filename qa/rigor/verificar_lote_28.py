@@ -414,4 +414,45 @@ ok(det2(1, 2, 3, 1) == 1 - 6 == -5 and 5*6 == 30 and (1*2 + 2*0, 3*2 + 1*0) == (
 ok(det2(2, 4, 1, 2) == 4 - 4 == 0 and all((2*x_ + 4*y_, x_ + 2*y_) == ((x_ + 2*y_)*2, (x_ + 2*y_)*1) for x_ in R for y_ in R), 'H11 v002 ej4')
 ok(det2(4, 1, 2, 3) == 12 - 2 == 10 and 10*4 == 40 and 5 - 4 == 1 and 3 - 4 == -1 and 2*2 - 4 == 0 == (-2)*(-2) - 4, 'H11 v002 A y B')
 ok(Fr(12, 10)*Fr(15, 10) - 0 == Fr(18, 10) and Fr(12, 10)*Fr(15, 10) - Fr(3, 10)*0 == Fr(18, 10) and Fr(18, 10)*150 == 270 and Fr(12, 10)*10 == 12 and Fr(15, 10)*15 == Fr(45, 2) and 12*Fr(45, 2) == 270, 'H11 v002 C')
+# ===== Revisión general (cuarta y quinta ley), 24-nov: H01 v004, H02 v004, H03 v004, H04 v005
+def _d3(m): return m[0][0]*det2(m[1][1], m[1][2], m[2][1], m[2][2]) - m[0][1]*det2(m[1][0], m[1][2], m[2][0], m[2][2]) + m[0][2]*det2(m[1][0], m[1][1], m[2][0], m[2][1])
+def _sar(m):
+    (a, b, c), (d, e, f), (g, h, i) = m
+    return (a*e*i, b*f*g, c*d*h), (c*e*g, a*f*h, b*d*i)
+_G = [Fr(n, 2) for n in range(-5, 6)]
+# H01 v004 · encabezado: rectángulo menos lo que sobra, con u = (3,1), v = (1,2)
+ok((3 + 1)*(1 + 2) == 4*3 == 12 and 2*(1*1) == 2 and 2*Fr(3*1, 2) == 3 and 2*Fr(1*2, 2) == 2 and 12 - 2 - 3 - 2 == 5 and 3*2 == 6 and 1*1 == 1 and 6 - 1 == 5 == det2(3, 1, 1, 2), 'H01 v004 encabezado')
+for a_, b_, c_, d_ in itertools.product(_G[::2], repeat=4):
+    ok((a_ + b_)*(c_ + d_) == a_*c_ + a_*d_ + b_*c_ + b_*d_ and 2*b_*c_ + 2*a_*c_/2 + 2*b_*d_/2 == 2*b_*c_ + a_*c_ + b_*d_ and a_*c_ + a_*d_ + b_*c_ + b_*d_ - (2*b_*c_ + a_*c_ + b_*d_) == a_*d_ + b_*c_ - 2*b_*c_ == a_*d_ - b_*c_, 'H01 v004 lo mismo, escrito')
+    ok((a_*a_ + c_*c_)*(b_*b_ + d_*d_) == a_*a_*b_*b_ + a_*a_*d_*d_ + b_*b_*c_*c_ + c_*c_*d_*d_ and (a_*b_ + c_*d_)**2 == a_*a_*b_*b_ + 2*a_*b_*c_*d_ + c_*c_*d_*d_ and (a_*a_ + c_*c_)*(b_*b_ + d_*d_) - (a_*b_ + c_*d_)**2 == a_*a_*d_*d_ - 2*a_*b_*c_*d_ + b_*b_*c_*c_ == (a_*d_ - b_*c_)**2, 'H01 v004 k2 con letras')
+ok(3**2 + 1**2 == 9 + 1 == 10 and 1**2 + 2**2 == 1 + 4 == 5 and 3*1 + 1*2 == 3 + 2 == 5 and 10*5 - 5**2 == 50 - 25 == 25 == 5*5 and abs(3*2 - 1*1) == 5, 'H01 v004 k2 con números')
+ok(Fr(3, 2)*6 == 9 and Fr(3, 2)*4 == 6 and 6*6 == 36 == 9*4 and 36 - 36 == 0, 'H01 v004 k3 y ej3')
+ok(all(a_*(k_*c_) - (k_*a_)*c_ == 0 for a_ in _G for c_ in _G for k_ in _G), 'H01 v004 k3 ida')
+ok(all(x_*(x_ - 1) == x_*x_ - x_ and (x_ - 3)*(x_ + 2) == x_*x_ - x_ - 6 for x_ in _G) and -3*2 == -6 and -3 + 2 == -1 and 2*3 == 6, 'H01 v004 ej4')
+ok(4*9 == 36 == 6*6 == (-6)*(-6) and Fr(3, 2)*4 == 6 and Fr(3, 2)*6 == 9 and -Fr(3, 2)*4 == -6 and -Fr(3, 2)*(-6) == 9 and 30*40 == 1200 and 10*10 == 100 and 1200 - 100 == 1100, 'H01 v004 B y C')
+# H02 v004 · encabezado y recuadros
+_M = [[1, 2, 3], [0, 4, 5], [1, 0, 6]]
+ok(det2(4, 5, 0, 6) == 4*6 - 5*0 == 24 - 0 == 24 and det2(0, 5, 1, 6) == 0*6 - 5*1 == 0 - 5 == -5 and det2(0, 4, 1, 0) == 0*0 - 4*1 == 0 - 4 == -4 and (1*24, -2*(-5), 3*(-4)) == (24, 10, -12) and 24 + 10 - 12 == 22 == _d3(_M), 'H02 v004 encabezado')
+ok(_sar(_M) == ((24, 10, 0), (12, 0, 0)) and 24 + 10 + 0 == 34 and 12 + 0 + 0 == 12 and 34 - 12 == 22, 'H02 v004 k2 comprobación (y H03 v004 encabezado)')
+for m_ in itertools.product((-2, -1, 0, 1, 3), repeat=9):
+    if sum(m_) % 7: continue
+    a, b, c, d, e, f, g, h, i = m_
+    ok(a*(e*i - f*h) == a*e*i - a*f*h and -b*(d*i - f*g) == -b*d*i + b*f*g and c*(d*h - e*g) == c*d*h - c*e*g and _d3([[a, b, c], [d, e, f], [g, h, i]]) == a*e*i + b*f*g + c*d*h - c*e*g - a*f*h - b*d*i, 'H02/H03 v004 seis productos')
+    ok(_d3([[d, e, f], [a, b, c], [g, h, i]]) == d*b*i + e*c*g + f*a*h - f*b*g - d*c*h - e*a*i == -(a*e*i + b*f*g + c*d*h - c*e*g - a*f*h - b*d*i), 'H04 v005 k3 intercambio')
+ok(det2(2, 1, 0, 2) == 2*2 - 1*0 == 4, 'H02 v004 área de la base')
+ok(all(x_*(x_ - 1) - 2 == x_*x_ - x_ - 2 == (x_ - 2)*(x_ + 1) for x_ in _G) and -2*1 == -2 and -2 + 1 == -1 and 2*(2 - 1) - 2 == 2*1 - 2 == 0 and (-1)*(-1 - 1) - 2 == (-1)*(-2) - 2 == 2 - 2 == 0, 'H02 v004 ej4')
+ok(det2(5, 6, 8, 9) == 45 - 48 == -3 and det2(4, 6, 7, 9) == 36 - 42 == -6 and det2(4, 5, 7, 8) == 32 - 35 == -3 and 1*(-3) - 2*(-6) + 3*(-3) == -3 + 12 - 9 == 0, 'H02 v004 B')
+ok(det2(30, 5, 0, 20) == 30*20 - 5*0 == 600 and 40*600 == 24000 and det2(0, 5, 0, 20) == 0 and det2(0, 30, 0, 0) == 0 and _d3([[40, 10, 5], [0, 30, 5], [0, 0, 20]]) == 24000 and Fr(24000, 1000) == 24, 'H02 v004 C')
+# H03 v004 · encabezado, k2 con números y k3 con filas
+ok((1*4*6, 2*5*1, 3*0*0) == (24, 10, 0) and (1*4*3, 0*5*1, 6*0*2) == (12, 0, 0), 'H03 v004 encabezado: productos')
+ok(1*(4*6 - 5*0) - 2*(0*6 - 5*1) + 3*(0*0 - 4*1) == 22 and (1*4*6 - 1*5*0, -2*0*6 + 2*5*1, 3*0*0 - 3*4*1) == (24 - 0, -0 + 10, 0 - 12) and 24 + 10 + 0 - 12 - 0 - 0 == 22, 'H03 v004 k2 con números')
+ok((1*4*6, 0*0*3, 1*2*5) == (24, 0, 10) and (1*4*3, 1*0*5, 0*2*6) == (12, 0, 0) and 24 + 0 + 10 == 34 and 34 - 12 == 22, 'H03 v004 k3 con filas')
+# H04 v005 · encabezado y recuadro k2 con números
+ok(det2(2, 1, 1, 2) == 2*2 - 1*1 == 4 - 1 == 3 and det2(1, 2, 2, 1) == 1*1 - 2*2 == 1 - 4 == -3 and det2(10, 5, 1, 2) == 10*2 - 5*1 == 20 - 5 == 15 == 5*3 and (2 + 4*1, 1 + 4*2) == (6, 9) and det2(6, 9, 1, 2) == 6*2 - 9*1 == 12 - 9 == 3, 'H04 v005 encabezado')
+ok(det2(2, 1, 2, 1) == 2*1 - 1*2 == 0 and det2(0, 0, 1, 2) == 0 and det2(2, 1, 6, 3) == 2*3 - 1*6 == 6 - 6 == 0 and (3*2, 3*1) == (6, 3) and det2(5, 5, 1, 2) == 5*2 - 5*1 == 10 - 5 == 5 and det2(3, 4, 1, 2) == 3*2 - 4*1 == 2 and 3 + 2 == 5 and det2(2, 1, 0, 2) == 4 - 0 == 4 == 2*2 and det2(10, 5, 5, 10) == 100 - 25 == 75 == 5**2*3 == 25*3, 'H04 v005 k2 con números')
+for a_, b_, c_, d_ in itertools.product(_G[::2], repeat=4):
+    for k_ in (Fr(-3), Fr(0), Fr(1, 2), Fr(5)):
+        ok(det2(c_, d_, a_, b_) == c_*b_ - d_*a_ == b_*c_ - a_*d_ == -(a_*d_ - b_*c_) and det2(a_, b_, a_, b_) == 0 and det2(k_*a_, k_*b_, c_, d_) == k_*a_*d_ - k_*b_*c_ == k_*(a_*d_ - b_*c_) == det2(a_, b_, k_*c_, k_*d_) and det2(0, 0, c_, d_) == 0 and det2(a_, b_, k_*a_, k_*b_) == 0 and det2(a_ + k_*c_, b_ + k_*d_, c_, d_) == det2(a_, b_, c_, d_) + det2(k_*c_, k_*d_, c_, d_) == det2(a_, b_, c_, d_) and det2(k_*a_, k_*b_, k_*c_, k_*d_) == k_*k_*a_*d_ - k_*k_*b_*c_ == k_**2*(a_*d_ - b_*c_), 'H04 v005 k2 con letras')
+        ok(det2(a_ + k_, b_ + 2*k_, c_, d_) == (a_ + k_)*d_ - (b_ + 2*k_)*c_ == a_*d_ + k_*d_ - b_*c_ - 2*k_*c_ == (a_*d_ - b_*c_) + (k_*d_ - 2*k_*c_) == det2(a_, b_, c_, d_) + det2(k_, 2*k_, c_, d_), 'H04 v005 propiedad 6')
+ok(det2(2, 3, 0, 6) == 2*6 - 3*0 == 12 and det2(1, 3, 1, 6) == 1*6 - 3*1 == 3 and det2(1, 2, 1, 0) == 1*0 - 2*1 == -2 and 0*12 - 4*3 + 5*(-2) == 0 - 12 - 10 == -22 == _d3([[0, 4, 5], [1, 2, 3], [1, 0, 6]]) == -_d3(_M), 'H04 v005 k3 con números')
 print('Lote 28 H01–H11: sin errores' if not err else 'ERRORES: ' + '; '.join(sorted(set(err)))); sys.exit(1 if err else 0)

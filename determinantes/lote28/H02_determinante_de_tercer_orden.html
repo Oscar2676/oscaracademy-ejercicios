@@ -162,18 +162,29 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Determinante de tercer orden</b></li>
     </ol>
     <h1>Determinante de tercer orden</h1>
-    <p class="lede">El determinante de una matriz de tres filas y tres columnas se arma con tres determinantes de segundo orden. Se recorre la primera fila: cada entrada se multiplica por el determinante que queda al tapar su fila y su columna, y los signos van alternados, \(+\), \(-\), \(+\).
-    \[\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=a\begin{vmatrix}e&f\\h&i\end{vmatrix}-b\begin{vmatrix}d&f\\g&i\end{vmatrix}+c\begin{vmatrix}d&e\\g&h\end{vmatrix}\]</p>
+    <p class="lede">Una matriz de <b>tercer orden</b> es una tabla de números con tres filas (las líneas horizontales) y tres columnas (las verticales); cada número es una <b>entrada</b>. Su determinante es un número que se calcula con lo que ya se sabe: el determinante de segundo orden, \(\begin{vmatrix}p&q\\r&s\end{vmatrix}=ps-qr\), diagonal principal menos la otra diagonal (hoja «Determinante de segundo orden»).</p>
+    <p class="lede"><b>Cómo se arma, con números.</b> Se toma \(\begin{vmatrix}1&2&3\\0&4&5\\1&0&6\end{vmatrix}\) y se recorre la primera fila: \(1\), \(2\), \(3\). Para cada entrada se tapan su fila y su columna; quedan cuatro números, que forman un determinante de segundo orden. Ese determinante chico se llama el <b>menor</b> de la entrada. \[\begin{aligned}\text{con el }1\text{ (se tapan fila 1 y columna 1):}&\quad\begin{vmatrix}4&5\\0&6\end{vmatrix}=4\cdot 6-5\cdot 0=24-0=24&&\text{aporta }+1\cdot 24=24\\ \text{con el }2\text{ (se tapan fila 1 y columna 2):}&\quad\begin{vmatrix}0&5\\1&6\end{vmatrix}=0\cdot 6-5\cdot 1=0-5=-5&&\text{aporta }-2\cdot(-5)=10\\ \text{con el }3\text{ (se tapan fila 1 y columna 3):}&\quad\begin{vmatrix}0&4\\1&0\end{vmatrix}=0\cdot 0-4\cdot 1=0-4=-4&&\text{aporta }+3\cdot(-4)=-12\\ \text{se suman los tres aportes:}&\quad 24+10-12=22\end{aligned}\] <b>La regularidad:</b> las tres líneas hacen lo mismo, «la entrada por su menor», y los signos van alternados: \(+\), \(-\), \(+\).</p>
+    <p class="lede"><b>La fórmula.</b> Con letras en vez de números, eso mismo es la definición del determinante de tercer orden:
+    \[\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=a\begin{vmatrix}e&f\\h&i\end{vmatrix}-b\begin{vmatrix}d&f\\g&i\end{vmatrix}+c\begin{vmatrix}d&e\\g&h\end{vmatrix}\]
+    Se lee: «\(a\) por el menor de \(a\), menos \(b\) por el menor de \(b\), más \(c\) por el menor de \(c\)». Es una <b>definición</b>: no se deduce de otra fórmula. Se eligen esos signos, \(+\), \(-\), \(+\), porque así el número que resulta mide el volumen del cuerpo que forman las tres columnas (recuadro «Lo que mide: un volumen») y cumple las propiedades de la hoja «Propiedades de los determinantes». Esas dos razones se nombran aquí sin demostrarlas.</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El desarrollo por la primera fila, en cinco pasos. Avanza con el deslizador o con «Reproducir». Bajo la figura queda escrito lo que aporta cada entrada.</p>
+  <p>El desarrollo por la primera fila, en cinco pasos. Avanza con el deslizador o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que aporta cada entrada.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira la matriz,</b> con sus nueve entradas, de la \(a\) a la \(i\). La pregunta de arriba es cuánto vale su determinante.</li>
+    <li><b>Paso 2, mira el círculo naranja:</b> marca la entrada \(a\). Las franjas grises tapan su fila y su columna. Las cuatro casillas azules que quedan, \(e\), \(f\), \(h\), \(i\), forman el menor de \(a\). A la derecha queda escrito el aporte: \(+\,a\) por ese menor.</li>
+    <li><b>Pasos 3 y 4:</b> lo mismo con \(b\), que lleva signo \(-\), y con \(c\), que lleva signo \(+\). Los tres aportes quedan escritos uno bajo el otro, a la derecha de la matriz.</li>
+    <li><b>Paso 5:</b> se suman los tres aportes, y la respuesta se escribe junto a la pregunta.</li>
+    <li><b>Lee el registro «Paso a paso» y la cuenta de abajo, línea por línea:</b> cada menor está calculado, diagonal principal menos la otra diagonal. Ninguna línea se borra.</li>
+  </ol>
   <div class="stage" data-scene="det3-idea"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
   <ul class="keys">
-    <li><b>Círculo naranja:</b> la entrada de la primera fila que se está usando.</li>
+    <li><b>Círculo naranja:</b> la entrada de la primera fila que se está usando. Las entradas ya usadas quedan con un círculo fino hasta el final.</li>
     <li><b>Franjas grises:</b> la fila y la columna de esa entrada, que se tapan.</li>
     <li><b>Casillas azules:</b> las cuatro entradas que quedan. Forman un determinante de segundo orden, el <b>menor</b> de esa entrada.</li>
   </ul>
@@ -192,12 +203,16 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>La misma fórmula, desarrollada</h3>
+    <p><b>Qué se hace en este recuadro:</b> se parte de \(\det A=a(ei-fh)-b(di-fg)+c(dh-eg)\), el último paso del recuadro anterior, y se quitan los paréntesis. <b>Cómo:</b> con la propiedad distributiva, un paréntesis por línea.</p>
     <ol class="steps">
-      <li>Se distribuye cada paréntesis: \(a(ei-fh)=aei-afh\); \(-b(di-fg)=-bdi+bfg\); \(c(dh-eg)=cdh-ceg\).</li>
-      <li>Se ordenan primero los tres productos con signo \(+\) y después los tres con signo \(-\):
+      <li>Se distribuye \(a\): \(a(ei-fh)=a\cdot ei-a\cdot fh=aei-afh\).</li>
+      <li>Se distribuye \(-b\): \(-b(di-fg)=-b\cdot di+b\cdot fg=-bdi+bfg\). El segundo queda con \(+\) porque menos por menos da más.</li>
+      <li>Se distribuye \(c\): \(c(dh-eg)=c\cdot dh-c\cdot eg=cdh-ceg\).</li>
+      <li>Se suman los tres resultados: \(\det A=aei-afh-bdi+bfg+cdh-ceg\).</li>
+      <li>Se cambia el orden de los sumandos, primero los tres con signo \(+\) y después los tres con signo \(-\):
         \[\det A=aei+bfg+cdh-ceg-afh-bdi\]</li>
     </ol>
-    <p>Son seis productos de tres entradas, una de cada fila y una de cada columna. Esta forma es la que usa la regla de Sarrus.</p>
+    <p>Son seis productos de tres entradas, una de cada fila y una de cada columna. Esta forma es la que usa la regla de Sarrus. <b>Comprobación con la matriz del encabezado</b> (\(a=1\), \(b=2\), \(c=3\), \(d=0\), \(e=4\), \(f=5\), \(g=1\), \(h=0\), \(i=6\)): \[\begin{aligned}aei+bfg+cdh&=1\cdot 4\cdot 6+2\cdot 5\cdot 1+3\cdot 0\cdot 0=24+10+0=34\\ ceg+afh+bdi&=3\cdot 4\cdot 1+1\cdot 5\cdot 0+2\cdot 0\cdot 6=12+0+0=12\\ \det A&=34-12=22&&\text{el mismo }22\text{ del encabezado}\end{aligned}\]</p>
   </div>
 
   <div class="card k3">
@@ -205,7 +220,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <p>Las tres columnas de la matriz, vistas como vectores del espacio, forman un cuerpo de seis caras, todas paralelogramos: un <b>paralelepípedo</b>. Su volumen es el valor absoluto del determinante. Aquí se usa sin demostrarlo; la demostración necesita el producto cruz, que se ve en las hojas de vectores.</p>
     <p>En el dibujo, las dos primeras columnas están fijas en el suelo y la tercera sube o baja con \(h\).</p>
     <ol class="steps">
-      <li><b>Mira la base:</b> el paralelogramo gris del suelo, formado por \(\vec u\) y \(\vec v\). Su área es \(4\) y no cambia.</li>
+      <li><b>Mira la base:</b> el paralelogramo gris del suelo, formado por \(\vec u=(2,0,0)\) y \(\vec v=(1,2,0)\). Su área es \(4\) y no cambia: en el suelo las flechas son \((2,0)\) y \((1,2)\), y \(\begin{vmatrix}2&1\\0&2\end{vmatrix}=2\cdot 2-1\cdot 0=4-0=4\).</li>
       <li><b>Mira la altura:</b> la línea punteada burdeo, de largo \(h\), que va del suelo a la punta de \(\vec w\).</li>
       <li><b>Mueve \(h\)</b> (o pulsa «Reproducir»): el cuerpo se estira, se aplasta cuando \(h=0\) y pasa bajo el suelo cuando \(h\lt 0\).</li>
       <li><b>Lee la cuenta de abajo, línea por línea:</b> el determinante da \(4h\), que es base por altura; su valor absoluto es el volumen y su signo dice de qué lado del suelo quedó el cuerpo.</li>
@@ -266,9 +281,10 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li>Con \(x\): \(\begin{vmatrix}x&1\\1&1\end{vmatrix}=x\cdot 1-1\cdot 1=x-1\). Aporta \(x(x-1)\).</li>
     <li>Con el \(1\): \(\begin{vmatrix}2&1\\0&1\end{vmatrix}=2\cdot 1-1\cdot 0=2\). Aporta \(-1\cdot 2=-2\).</li>
     <li>Con el \(0\): aporta \(0\).</li>
-    <li>Determinante: \(x(x-1)-2=x^{2}-x-2\).</li>
-    <li>\(x^{2}-x-2=0\ \Longrightarrow\ (x-2)(x+1)=0\ \Longrightarrow\ x=2\) o \(x=-1\).</li>
-    <li>Comprobación: con \(x=2\), \(2\cdot 1-2=0\) ✓; con \(x=-1\), \((-1)\cdot(-2)-2=0\) ✓.</li>
+    <li>Se suman los aportes: \(x(x-1)-2+0\). Se distribuye: \(x(x-1)=x\cdot x-x\cdot 1=x^{2}-x\). Determinante: \(x^{2}-x-2\).</li>
+    <li>La ecuación es \(x^{2}-x-2=0\). Se factoriza: se buscan dos números que multiplicados den \(-2\) y sumados den \(-1\). Son \(-2\) y \(1\), porque \(-2\cdot 1=-2\) y \(-2+1=-1\). Entonces \((x-2)(x+1)=0\).</li>
+    <li>Un producto vale \(0\) solo si alguno de sus factores vale \(0\): \(x-2=0\) o \(x+1=0\). Entonces \(x=2\) o \(x=-1\).</li>
+    <li>Comprobación en \(x(x-1)-2\): con \(x=2\), \(2\cdot(2-1)-2=2\cdot 1-2=2-2=0\) ✓; con \(x=-1\), \((-1)\cdot(-1-1)-2=(-1)\cdot(-2)-2=2-2=0\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -297,9 +313,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Después de calcular, prueba esta combinación de columnas: primera, menos dos veces la segunda, más la tercera.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>Con el \(1\): \(5\cdot 9-6\cdot 8=45-48=-3\). Aporta \(-3\).</li>
-        <li>Con el \(2\): \(4\cdot 9-6\cdot 7=36-42=-6\). Aporta \(-2\cdot(-6)=12\).</li>
-        <li>Con el \(3\): \(4\cdot 8-5\cdot 7=32-35=-3\). Aporta \(3\cdot(-3)=-9\).</li>
+        <li>Con el \(1\): \(\begin{vmatrix}5&6\\8&9\end{vmatrix}=5\cdot 9-6\cdot 8=45-48=-3\). Aporta \(+1\cdot(-3)=-3\).</li>
+        <li>Con el \(2\): \(\begin{vmatrix}4&6\\7&9\end{vmatrix}=4\cdot 9-6\cdot 7=36-42=-6\). Aporta \(-2\cdot(-6)=12\).</li>
+        <li>Con el \(3\): \(\begin{vmatrix}4&5\\7&8\end{vmatrix}=4\cdot 8-5\cdot 7=32-35=-3\). Aporta \(+3\cdot(-3)=-9\).</li>
         <li>Suma: \(-3+12-9=0\).</li>
         <li>El volumen es \(0\): las tres columnas están en un mismo plano. Se comprueba con \((1,4,7)-2\,(2,5,8)+(3,6,9)=(1-4+3,\ 4-10+6,\ 7-16+9)=(0,0,0)\): la tercera columna es \(2\,(2,5,8)-(1,4,7)\).</li>
       </ol>
@@ -310,17 +326,19 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Pon las tres aristas como columnas. La matriz queda triangular.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\begin{vmatrix}40&10&5\\0&30&5\\0&0&20\end{vmatrix}\). Con el \(40\): \(\begin{vmatrix}30&5\\0&20\end{vmatrix}=600\). Aporta \(40\cdot 600=24\,000\).</li>
-        <li>Con el \(10\): \(\begin{vmatrix}0&5\\0&20\end{vmatrix}=0\). Con el \(5\): \(\begin{vmatrix}0&30\\0&0\end{vmatrix}=0\). No aportan.</li>
-        <li>Volumen \(=|24\,000|=24\,000\ \text{cm}^{3}\).</li>
-        <li>\(24\,000:1000=24\) litros.</li>
+        <li>El volumen es el valor absoluto del determinante cuyas columnas son las tres aristas (recuadro «Lo que mide: un volumen»): \(\begin{vmatrix}40&10&5\\0&30&5\\0&0&20\end{vmatrix}\).</li>
+        <li>Con el \(40\): \(\begin{vmatrix}30&5\\0&20\end{vmatrix}=30\cdot 20-5\cdot 0=600-0=600\). Aporta \(+40\cdot 600=24\,000\).</li>
+        <li>Con el \(10\): \(\begin{vmatrix}0&5\\0&20\end{vmatrix}=0\cdot 20-5\cdot 0=0-0=0\). Aporta \(-10\cdot 0=0\).</li>
+        <li>Con el \(5\): \(\begin{vmatrix}0&30\\0&0\end{vmatrix}=0\cdot 0-30\cdot 0=0-0=0\). Aporta \(+5\cdot 0=0\).</li>
+        <li>Determinante: \(24\,000+0+0=24\,000\). Volumen \(=|24\,000|=24\,000\ \text{cm}^{3}\).</li>
+        <li>De centímetros cúbicos a litros se divide por \(1000\): \(24\,000:1000=24\). Le caben \(24\) litros de tierra.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">AL-L28-H02 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H02 · v004 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -580,7 +598,7 @@ OA.scene('det3-idea', (function(){
     ['Se suman los tres aportes, con sus signos.', 'La pregunta de arriba ya tiene respuesta.']];
   function cx(j){ return (j % 3)*0.95; } function cy(j){ return 2.75 - Math.floor(j/3)*0.9; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-5.45, y1:3.95}, aspect:9.4/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-5.45, y1:4.95}, aspect:10.4/6.6,
     aria:'Animación en cinco pasos. Uno: una matriz de tres por tres con entradas a, b, c en la primera fila, d, e, f en la segunda y g, h, i en la tercera. Dos: se marca la entrada a, se tapan su fila y su columna, y quedan las casillas e, f, h, i; a la derecha se escribe más a por el determinante de esas cuatro. Tres: lo mismo con b; quedan d, f, g, i, con signo menos. Cuatro: lo mismo con c; quedan d, e, g, h, con signo más. Cinco: se suman los tres aportes. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -600,12 +618,15 @@ OA.scene('det3-idea', (function(){
         /* la entrada que se usa */
         c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.arc(X(cx(col)), Y(cy(0)), 13, 0, 6.2832); c.stroke();
       }
+      /* las entradas ya usadas quedan marcadas con un círculo fino hasta el final (nada desaparece) */
+      for (j = 0; j < Math.min(k - 2, 3); j++) if (k > 4 || j !== col){ c.save(); c.globalAlpha = 0.55; c.strokeStyle = C.rise; c.lineWidth = 1.2; c.beginPath(); c.arc(X(cx(j)), Y(cy(0)), 13, 0, 6.2832); c.stroke(); c.restore(); }
       /* los aportes ya obtenidos no se borran: quedan uno bajo el otro */
       for (j = 2; j <= Math.min(k, 4); j++) if (j < k || u > 0.45) L('N' + j, 2.85, 2.75 - (j - 2)*0.9, 0);
       for (j = 0; j < 9; j++) L('M' + j, cx(j), cy(j));
       L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.25, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -0.15); txt(TXT[k - 1][1], -1.2, -0.15 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.3));
+      dtQue(S, 'cómo se arma con la primera fila:', 'cada entrada, por el menor que queda al tapar.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.7, [0, 38, 80, 122, 160]);
     },

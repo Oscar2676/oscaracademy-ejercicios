@@ -12,9 +12,11 @@
       <li><b>Resolución de determinantes por regla de Sarrus</b></li>
     </ol>
     <h1>Resolución de determinantes por regla de Sarrus</h1>
-    <p class="lede">La regla de Sarrus es una forma ordenada de calcular un determinante de <b>tercer orden</b>. Se repiten las dos primeras columnas a la derecha de la matriz; los tres productos de las diagonales que bajan se suman y los tres de las diagonales que suben se restan.
+    <p class="lede">Un determinante de <b>tercer orden</b> es el de una matriz con tres filas (las líneas horizontales) y tres columnas (las verticales). En la hoja «Determinante de tercer orden» se calcula recorriendo la primera fila, con tres determinantes chicos. La <b>regla de Sarrus</b> da el mismo número con otra organización de la cuenta: seis productos de tres números cada uno, tomados en diagonal.</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toma \(\begin{vmatrix}1&2&3\\0&4&5\\1&0&6\end{vmatrix}\), que por la primera fila vale \(22\). A la derecha de la matriz se repiten sus dos primeras columnas, y se multiplica en diagonal: \[\begin{array}{ccc|cc}1&2&3&1&2\\0&4&5&0&4\\1&0&6&1&0\end{array}\] \[\begin{aligned}\text{bajan (de izquierda a derecha, hacia abajo):}&\quad 1\cdot 4\cdot 6=24,\quad 2\cdot 5\cdot 1=10,\quad 3\cdot 0\cdot 0=0\\ \text{se suman:}&\quad 24+10+0=34\\ \text{suben (de izquierda a derecha, hacia arriba):}&\quad 1\cdot 4\cdot 3=12,\quad 0\cdot 5\cdot 1=0,\quad 6\cdot 0\cdot 2=0\\ \text{se suman:}&\quad 12+0+0=12\\ \text{lo que baja, menos lo que sube:}&\quad 34-12=22\end{aligned}\] Da \(22\), lo mismo que el desarrollo por la primera fila. <b>No es casualidad:</b> los seis productos son los mismos que aparecen al quitar los paréntesis en ese desarrollo; está demostrado en el recuadro «De dónde sale: del desarrollo por la primera fila».</p>
+    <p class="lede"><b>La regla.</b> Se repiten las dos primeras columnas a la derecha de la matriz; los tres productos de las diagonales que bajan se suman y los tres de las diagonales que suben se restan.
     \[\begin{vmatrix}a&b&c\\d&e&f\\g&h&i\end{vmatrix}=aei+bfg+cdh-ceg-afh-bdi\]
-    Sirve solo para matrices de tres filas y tres columnas.</p>
+    Se lee: «\(a\) por \(e\) por \(i\), más \(b\) por \(f\) por \(g\), más \(c\) por \(d\) por \(h\), menos \(c\) por \(e\) por \(g\), menos \(a\) por \(f\) por \(h\), menos \(b\) por \(d\) por \(i\)». Sirve solo para matrices de tres filas y tres columnas.</p>
   </section>
 </header>
 
@@ -53,11 +55,13 @@
   <div class="card k2">
     <h3>De dónde sale: del desarrollo por la primera fila</h3>
     <p>La regla no es una definición nueva. Es el desarrollo por la primera fila (hoja «Determinante de tercer orden»), con los productos ordenados de otra manera.</p>
+    <p><b>Qué se demuestra:</b> que la regla de Sarrus y el desarrollo por la primera fila dan siempre el mismo número, para cualquier matriz de tercer orden. <b>Cómo funciona el método:</b> se parte del desarrollo por la primera fila, se quitan los tres paréntesis con la propiedad distributiva (un paréntesis por paso) y se ordenan los seis productos que resultan.</p>
+    <p><b>Primero con números,</b> con la matriz del encabezado: \[\begin{aligned}\text{por la primera fila:}&\quad 1\cdot(4\cdot 6-5\cdot 0)-2\cdot(0\cdot 6-5\cdot 1)+3\cdot(0\cdot 0-4\cdot 1)\\ \text{se distribuye el }1\text{:}&\quad 1\cdot 4\cdot 6-1\cdot 5\cdot 0=24-0\\ \text{se distribuye el }-2\text{:}&\quad -2\cdot 0\cdot 6+2\cdot 5\cdot 1=-0+10\\ \text{se distribuye el }3\text{:}&\quad 3\cdot 0\cdot 0-3\cdot 4\cdot 1=0-12\\ \text{se ordenan, primero los que suman:}&\quad 24+10+0-12-0-0=22\end{aligned}\] Los tres que suman, \(24\), \(10\) y \(0\), son los productos de las diagonales que bajan; los tres que restan, \(12\), \(0\) y \(0\), los de las que suben. Ahora con letras:</p>
     <ol class="steps">
       <li>Desarrollo por la primera fila: \(\det A=a(ei-fh)-b(di-fg)+c(dh-eg)\).</li>
-      <li>Se distribuye \(a\): \(a(ei-fh)=aei-afh\).</li>
-      <li>Se distribuye \(-b\): \(-b(di-fg)=-bdi+bfg\).</li>
-      <li>Se distribuye \(c\): \(c(dh-eg)=cdh-ceg\).</li>
+      <li>Se distribuye \(a\): \(a(ei-fh)=a\cdot ei-a\cdot fh=aei-afh\).</li>
+      <li>Se distribuye \(-b\): \(-b(di-fg)=-b\cdot di+b\cdot fg=-bdi+bfg\). El segundo queda con \(+\) porque menos por menos da más.</li>
+      <li>Se distribuye \(c\): \(c(dh-eg)=c\cdot dh-c\cdot eg=cdh-ceg\).</li>
       <li>Se suman los tres resultados: \(\det A=aei-afh-bdi+bfg+cdh-ceg\).</li>
       <li>Se cambia el orden de los sumandos (propiedad conmutativa de la suma), primero los de signo \(+\):
         \[\det A=aei+bfg+cdh-ceg-afh-bdi\]</li>
@@ -69,7 +73,8 @@
     <h3>Otra forma de armarla y hasta dónde sirve</h3>
     <p><b>Con filas en vez de columnas.</b> También se pueden repetir las filas 1 y 2 debajo de la matriz:</p>
     \[\begin{array}{ccc}a&b&c\\d&e&f\\g&h&i\\\hline a&b&c\\d&e&f\end{array}\]
-    <p>Las diagonales que bajan dan \(aei\), \(dhc\) y \(gbf\); las que suben dan \(gec\), \(ahf\) y \(dbi\). Son los mismos seis productos, con los mismos signos.</p>
+    <p>Las diagonales que bajan dan \(aei\), \(dhc\) y \(gbf\); las que suben dan \(gec\), \(ahf\) y \(dbi\). Son los mismos seis productos, con los mismos signos: \(dhc=cdh\), \(gbf=bfg\), \(gec=ceg\), \(ahf=afh\) y \(dbi=bdi\), porque el orden de los factores no cambia el producto.</p>
+    <p>Con la matriz del encabezado: bajan \(1\cdot 4\cdot 6=24\), \(0\cdot 0\cdot 3=0\) y \(1\cdot 2\cdot 5=10\), que suman \(34\); suben \(1\cdot 4\cdot 3=12\), \(1\cdot 0\cdot 5=0\) y \(0\cdot 2\cdot 6=0\), que suman \(12\); y \(34-12=22\) ✓.</p>
     <p><b>Solo tercer orden.</b> Un determinante de cuarto orden se desarrolla por su primera fila con cuatro menores de tercer orden. Cada menor tiene \(6\) productos, así que el total es \(4\cdot 6=24\) productos. Un esquema de diagonales en una matriz de cuatro filas da solo \(8\): faltan \(16\). Por eso la regla de Sarrus no se usa en cuarto orden ni en órdenes mayores. El desarrollo de cuarto orden se nombra aquí sin desarrollarlo.</p>
   </div>
 </section>
@@ -178,7 +183,7 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H03 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H03 · v004 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->

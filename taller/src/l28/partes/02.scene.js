@@ -16,7 +16,7 @@ OA.scene('det3-idea', (function(){
     ['Se suman los tres aportes, con sus signos.', 'La pregunta de arriba ya tiene respuesta.']];
   function cx(j){ return (j % 3)*0.95; } function cy(j){ return 2.75 - Math.floor(j/3)*0.9; }
   return {
-    world:{x0:-1.3, x1:5.3, y0:-5.45, y1:3.95}, aspect:9.4/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-5.45, y1:4.95}, aspect:10.4/6.6,
     aria:'Animación en cinco pasos. Uno: una matriz de tres por tres con entradas a, b, c en la primera fila, d, e, f en la segunda y g, h, i en la tercera. Dos: se marca la entrada a, se tapan su fila y su columna, y quedan las casillas e, f, h, i; a la derecha se escribe más a por el determinante de esas cuatro. Tres: lo mismo con b; quedan d, f, g, i, con signo menos. Cuatro: lo mismo con c; quedan d, e, g, h, con signo más. Cinco: se suman los tres aportes. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -36,12 +36,15 @@ OA.scene('det3-idea', (function(){
         /* la entrada que se usa */
         c.strokeStyle = C.rise; c.lineWidth = 2; c.beginPath(); c.arc(X(cx(col)), Y(cy(0)), 13, 0, 6.2832); c.stroke();
       }
+      /* las entradas ya usadas quedan marcadas con un círculo fino hasta el final (nada desaparece) */
+      for (j = 0; j < Math.min(k - 2, 3); j++) if (k > 4 || j !== col){ c.save(); c.globalAlpha = 0.55; c.strokeStyle = C.rise; c.lineWidth = 1.2; c.beginPath(); c.arc(X(cx(j)), Y(cy(0)), 13, 0, 6.2832); c.stroke(); c.restore(); }
       /* los aportes ya obtenidos no se borran: quedan uno bajo el otro */
       for (j = 2; j <= Math.min(k, 4); j++) if (j < k || u > 0.45) L('N' + j, 2.85, 2.75 - (j - 2)*0.9, 0);
       for (j = 0; j < 9; j++) L('M' + j, cx(j), cy(j));
       L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.25, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -0.15); txt(TXT[k - 1][1], -1.2, -0.15 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.3));
+      dtQue(S, 'cómo se arma con la primera fila:', 'cada entrada, por el menor que queda al tapar.');
       T.fin();
       oaReg(S, k, N, -1.2, -1.7, [0, 38, 80, 122, 160]);
     },

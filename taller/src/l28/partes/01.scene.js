@@ -20,7 +20,7 @@ OA.scene('det2-idea', (function(){
     ['También sobran cuatro triángulos rectángulos,', 'iguales de dos en dos.'],
     ['Al rectángulo se le quita todo lo que sobra.', 'Queda el área: es el determinante.']];
   return {
-    world:{x0:-1.3, x1:5.3, y0:-6.45, y1:3.95}, aspect:10.4/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-6.45, y1:4.95}, aspect:11.4/6.6,
     aria:'Animación en seis pasos. Uno: las columnas de la matriz, u igual a (a, c) y v igual a (b, d), dibujadas como dos flechas desde el origen. Dos: el paralelogramo que forman. Tres: un rectángulo de ancho a más b y alto c más d que lo encierra. Cuatro: entre el rectángulo y el paralelogramo sobran dos rectángulos de área b por c. Cinco: sobran también cuatro triángulos rectángulos, dos de área a por c sobre 2 y dos de área b por d sobre 2. Seis: al área del rectángulo se le resta lo que sobra y queda a por d menos b por c. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -61,11 +61,12 @@ OA.scene('det2-idea', (function(){
       L('Q', -1.2, 3.55, 0); if (k === 6 && u > 0.5) L('F', 1.75, 3.55, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -1.0); if (TXT[k - 1][1]) txt(TXT[k - 1][1], -1.2, -1.0 - 21/(X(1) - X(0)));
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-0.55));
+      dtQue(S, 'por qué el determinante es un área:', 'un rectángulo, menos las piezas que sobran.');
       T.fin();
       oaReg(S, k, N, -1.2, -2.45, [0, 40, 70, 100, 132, 166]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
-    readout:function(v){ var k = Math.round(v.paso || 1), R = ['\\vec u=(a,c),\\qquad \\vec v=(b,d)', '\\text{Área del paralelogramo}=\\ ?', '\\text{rectángulo}=(a+b)(c+d)=ac+ad+bc+bd', '\\text{sobran dos rectángulos: }2\\cdot bc', '\\text{sobran cuatro triángulos: }2\\cdot\\dfrac{ac}{2}+2\\cdot\\dfrac{bd}{2}=ac+bd', '\\text{Área}=ac+ad+bc+bd-2bc-ac-bd=ad-bc']; return dtPasos(R.slice(0, k)); }
+    readout:function(v){ var k = Math.round(v.paso || 1), R = ['\\vec u=(a,c),\\qquad \\vec v=(b,d)', '\\text{Área del paralelogramo}=\\ ?', '\\text{rectángulo}=(a+b)(c+d)=ac+ad+bc+bd', '\\text{sobran dos rectángulos: }2\\cdot bc', '\\text{sobran cuatro triángulos: }2\\cdot\\dfrac{ac}{2}+2\\cdot\\dfrac{bd}{2}=ac+bd', '\\text{Área}=(a+b)(c+d)-2bc-(ac+bd)\\\\&\\qquad\\ \\,=ac+ad+bc+bd-2bc-ac-bd\\\\&\\qquad\\ \\,=ad-bc\\quad(ac-ac=0,\\ bd-bd=0,\\ bc-2bc=-bc)']; return dtPasos(R.slice(0, k)); }
   };
 })());
 /* número ↔ figura: la segunda columna se mueve y el determinante cambia con el área y con el sentido de giro */
