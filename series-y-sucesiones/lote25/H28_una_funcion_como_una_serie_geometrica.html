@@ -162,7 +162,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Una función como una serie geométrica</b></li>
     </ol>
     <h1>Una función como una serie geométrica</h1>
-    <p class="lede">La fórmula de la suma de una serie geométrica se puede leer al revés: en vez de partir de la serie y llegar a la fracción, se parte de la fracción y se llega a la serie. Si \(|r|&lt;1\), la fracción \(\dfrac{a}{1-r}\) es la suma de \(a+ar+ar^{2}+\cdots\) Cuando la razón es \(x\), eso escribe una función como una suma sin fin de potencias de \(x\). La igualdad vale solo en un intervalo: fuera de él la función puede existir, pero la serie no tiene suma. \[\dfrac{1}{1-x}=\sum_{n=0}^{\infty}x^{n}=1+x+x^{2}+x^{3}+\cdots\qquad\text{cuando }|x|&lt;1\]</p>
+    <p class="lede">Una <b>función</b> es una regla que a cada número \(x\) le entrega un resultado; aquí la regla es una fracción, \(\dfrac{1}{1-x}\). Una <b>serie</b> es una suma sin fin, y es <b>geométrica</b> cuando cada sumando es el anterior multiplicado por un mismo número, la <b>razón</b>. Esta hoja muestra que esa fracción y la serie \(1+x+x^{2}+x^{3}+\cdots\) (de razón \(x\)) entregan el mismo número, pero no para todos los \(x\).</p>
+    <p class="lede"><b>De dónde sale la igualdad.</b> Se prueba con \(x=\dfrac{1}{3}\). La fracción: \(\dfrac{1}{1-\frac{1}{3}}=1:\dfrac{2}{3}=1\cdot\dfrac{3}{2}=\dfrac{3}{2}\). La serie es \(1+\dfrac{1}{3}+\dfrac{1}{9}+\dfrac{1}{27}+\cdots\); se suma de a un sumando (cada resultado es una <b>suma parcial</b>; \(s_{N}\) llega hasta la potencia \(x^{N}\)) y se mira cuánto falta para \(\dfrac{3}{2}\): \[\begin{aligned}s_{0}&=1&&\text{falta }\dfrac{3}{2}-\dfrac{2}{2}=\dfrac{1}{2}\\ s_{1}&=1+\dfrac{1}{3}=\dfrac{3}{3}+\dfrac{1}{3}=\dfrac{4}{3}&&\text{falta }\dfrac{9}{6}-\dfrac{8}{6}=\dfrac{1}{6}\\ s_{2}&=\dfrac{4}{3}+\dfrac{1}{9}=\dfrac{12}{9}+\dfrac{1}{9}=\dfrac{13}{9}&&\text{falta }\dfrac{27}{18}-\dfrac{26}{18}=\dfrac{1}{18}\\ s_{3}&=\dfrac{13}{9}+\dfrac{1}{27}=\dfrac{39}{27}+\dfrac{1}{27}=\dfrac{40}{27}&&\text{falta }\dfrac{81}{54}-\dfrac{80}{54}=\dfrac{1}{54}\end{aligned}\] La regularidad: lo que falta se divide por \(3\) en cada paso (\(\dfrac{1}{2},\ \dfrac{1}{6},\ \dfrac{1}{18},\ \dfrac{1}{54}\)). Las sumas parciales se acercan a \(\dfrac{3}{2}\), el mismo número que entrega la fracción. Ahora con \(x=2\). La fracción: \(\dfrac{1}{1-2}=\dfrac{1}{-1}=-1\). La serie es \(1+2+4+8+\cdots\), con sumas parciales \(1\), \(1+2=3\), \(3+4=7\), \(7+8=15\): crecen sin tope y no se acercan a \(-1\) ni a ningún número. Con \(x=\dfrac{1}{3}\) hay igualdad; con \(x=2\), no.</p>
+    <p class="lede">En general: la fórmula de la suma de una serie geométrica se puede leer al revés: en vez de partir de la serie y llegar a la fracción, se parte de la fracción y se llega a la serie. Si \(|r|&lt;1\), la fracción \(\dfrac{a}{1-r}\) es la suma de \(a+ar+ar^{2}+\cdots\) Cuando la razón es \(x\), eso escribe una función como una suma sin fin de potencias de \(x\). La igualdad vale solo en un intervalo: fuera de él la función puede existir, pero la serie no tiene suma. \[\dfrac{1}{1-x}=\sum_{n=0}^{\infty}x^{n}=1+x+x^{2}+x^{3}+\cdots\qquad\text{cuando }|x|&lt;1\] Se lee: «uno dividido por uno menos \(x\) es igual a la sumatoria, desde \(n\) igual a cero hasta infinito, de \(x\) elevado a \(n\), cuando el valor absoluto de \(x\) es menor que uno». El primer sumando es \(x^{0}=1\). \(|x|\) es el valor absoluto de \(x\): el número sin su signo; \(|x|&lt;1\) quiere decir que \(x\) está entre \(-1\) y \(1\), sin tocarlos. Más abajo se demuestra paso a paso.</p>
   </section>
 </header>
 
@@ -213,6 +215,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>De dónde sale y dónde vale, paso a paso</h3>
+    <p><b>Qué se demuestra:</b> cuatro cosas, en orden. Primera: una fórmula para la suma parcial \(s_{N}(x)\), que evita sumar los sumandos uno por uno. Segunda: cuánto le falta exactamente a esa suma parcial para llegar a \(\dfrac{1}{1-x}\). Tercera: que si \(|x|&lt;1\), eso que falta se acerca a \(0\), y entonces la serie suma \(\dfrac{1}{1-x}\). Cuarta: que si \(|x|\ge 1\), la serie no tiene suma. <b>Cómo funciona el método:</b> se escribe la suma parcial y, debajo, la misma suma multiplicada por \(x\). Las dos filas tienen casi los mismos sumandos; al restarlas se cancelan todos menos dos.</p>
+    <p><b>Primero con números</b> (\(x=\dfrac{1}{3}\), \(N=2\)): \[\begin{aligned}s_{2}&=1+\dfrac{1}{3}+\dfrac{1}{9}\\ \dfrac{1}{3}\,s_{2}&=\phantom{1+{}}\dfrac{1}{3}+\dfrac{1}{9}+\dfrac{1}{27}&&\text{cada sumando, por }\tfrac{1}{3}\\ s_{2}-\dfrac{1}{3}\,s_{2}&=1-\dfrac{1}{27}&&\text{se cancelan }\tfrac{1}{3}\text{ y }\tfrac{1}{9}\\ \dfrac{2}{3}\,s_{2}&=\dfrac{27}{27}-\dfrac{1}{27}=\dfrac{26}{27}&&\text{a la izquierda: }1-\tfrac{1}{3}=\tfrac{2}{3}\\ s_{2}&=\dfrac{26}{27}:\dfrac{2}{3}=\dfrac{26}{27}\cdot\dfrac{3}{2}=\dfrac{78}{54}=\dfrac{13}{9}&&\text{se divide por }\tfrac{2}{3}\end{aligned}\] Es el mismo \(\dfrac{13}{9}\) que se obtiene sumando de a uno: \(\dfrac{9}{9}+\dfrac{3}{9}+\dfrac{1}{9}=\dfrac{13}{9}\). Y lo que falta para \(\dfrac{3}{2}\) es \(\dfrac{27}{18}-\dfrac{26}{18}=\dfrac{1}{18}\), que es lo que dará la fórmula de la segunda parte: \(\dfrac{x^{N+1}}{1-x}=\dfrac{1}{27}:\dfrac{2}{3}=\dfrac{1}{27}\cdot\dfrac{3}{2}=\dfrac{3}{54}=\dfrac{1}{18}\) ✓. Ahora, lo mismo con letras.</p>
     <p><b>Primera parte: la suma parcial.</b> Se llama \(s_{N}(x)\) a la suma de los términos desde \(n=0\) hasta \(n=N\); tiene \(N+1\) sumandos. El truco es el de la hoja «Suma de una serie geométrica infinita»: restarle la misma suma multiplicada por \(x\).</p>
     <ol class="steps">
       <li>Suma parcial: \(s_{N}(x)=\displaystyle\sum_{n=0}^{N}x^{n}=1+x+x^{2}+\cdots+x^{N}\).</li>
@@ -428,7 +432,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H28 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H28 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -655,12 +659,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -680,12 +686,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */

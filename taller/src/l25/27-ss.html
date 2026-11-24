@@ -12,7 +12,9 @@
       <li><b>Sucesiones monótonas acotadas</b></li>
     </ol>
     <h1>Sucesiones monótonas acotadas</h1>
-    <p class="lede">Una sucesión es <b>monótona</b> si nunca cambia de sentido: o nunca baja (creciente) o nunca sube (decreciente). Es <b>acotada</b> si todos sus términos caben entre dos números. Ninguna de las dos propiedades asegura, sola, que la sucesión tenga límite. Las dos juntas, sí: una sucesión creciente que tiene un techo converge, y su límite es el menor de sus techos, que se llama supremo. \[(a_{n})\text{ creciente y acotada superiormente}\quad\Longrightarrow\quad\lim_{n\to\infty}a_{n}=\sup\{a_{n}:n\ge 1\}\]</p>
+    <p class="lede">Una <b>sucesión</b> es una lista sin fin de números, puestos en orden: \(a_{1}\) es el primero, \(a_{2}\) el segundo y \(a_{n}\) («\(a\) sub \(n\)») el que ocupa el lugar \(n\); cada uno es un <b>término</b>. Es <b>monótona</b> si nunca cambia de sentido: o nunca baja (creciente) o nunca sube (decreciente). Es <b>acotada</b> si todos sus términos caben entre dos números: uno hace de piso (cota inferior) y otro de techo (cota superior).</p>
+    <p class="lede"><b>De dónde sale el teorema.</b> En la sucesión \(a_{n}=\dfrac{n}{n+1}\) se calculan los primeros términos, lo que sube cada uno respecto del anterior y lo que le falta para llegar a \(1\): \[\begin{aligned}\text{para }n=1:&\quad a_{1}=\dfrac{1}{1+1}=\dfrac{1}{2}=0{,}5&&\text{falta para }1:\ \dfrac{2}{2}-\dfrac{1}{2}=\dfrac{1}{2}\\ \text{para }n=2:&\quad a_{2}=\dfrac{2}{2+1}=\dfrac{2}{3}\approx 0{,}67&&\text{sube }\dfrac{2}{3}-\dfrac{1}{2}=\dfrac{4}{6}-\dfrac{3}{6}=\dfrac{1}{6};\ \text{ falta }\dfrac{3}{3}-\dfrac{2}{3}=\dfrac{1}{3}\\ \text{para }n=3:&\quad a_{3}=\dfrac{3}{3+1}=\dfrac{3}{4}=0{,}75&&\text{sube }\dfrac{3}{4}-\dfrac{2}{3}=\dfrac{9}{12}-\dfrac{8}{12}=\dfrac{1}{12};\ \text{ falta }\dfrac{4}{4}-\dfrac{3}{4}=\dfrac{1}{4}\\ \text{para }n=4:&\quad a_{4}=\dfrac{4}{4+1}=\dfrac{4}{5}=0{,}8&&\text{sube }\dfrac{4}{5}-\dfrac{3}{4}=\dfrac{16}{20}-\dfrac{15}{20}=\dfrac{1}{20};\ \text{ falta }\dfrac{5}{5}-\dfrac{4}{5}=\dfrac{1}{5}\\ \text{para }n=n:&\quad a_{n}=\dfrac{n}{n+1}&&\text{falta }\dfrac{n+1}{n+1}-\dfrac{n}{n+1}=\dfrac{1}{n+1}\end{aligned}\] Tres regularidades. Primera: cada término es mayor que el anterior (la sucesión es <b>creciente</b>; el ejemplo 1 lo demuestra para todo \(n\)). Segunda: a todos les falta algo para llegar a \(1\), así que ninguno pasa de \(1\): el número \(1\) es un techo (la sucesión es <b>acotada superiormente</b>). Tercera: lo que falta, \(\dfrac{1}{n+1}\), se achica al avanzar: los términos se acercan a \(1\). Y ningún número menor que \(1\) sirve de techo: por ejemplo, \(0{,}9\) no sirve, porque \(a_{10}=\dfrac{10}{11}\approx 0{,}91\) lo supera. El número \(1\) es el menor de los techos, y a ese número se acerca la sucesión.</p>
+    <p class="lede">En general: ninguna de las dos propiedades asegura, sola, que la sucesión tenga límite (el número al que se acercan sus términos; hoja «Límite de una sucesión»). Las dos juntas, sí: una sucesión creciente que tiene un techo converge (tiene límite), y su límite es el menor de sus techos, que se llama <b>supremo</b>. \[(a_{n})\text{ creciente y acotada superiormente}\quad\Longrightarrow\quad\lim_{n\to\infty}a_{n}=\sup\{a_{n}:n\ge 1\}\] Se lee: «si la sucesión \(a\) sub \(n\) es creciente y acotada superiormente, entonces el límite, cuando \(n\) tiende a infinito, de \(a\) sub \(n\) es el supremo del conjunto de los \(a\) sub \(n\) con \(n\) mayor o igual que uno». \((a_{n})\), entre paréntesis, es la sucesión completa; las llaves \(\{\ \}\) encierran un conjunto, aquí el de todos sus términos; \(\sup\) abrevia «supremo»; la flecha \(\Longrightarrow\) se lee «entonces». Más abajo se demuestra paso a paso.</p>
   </section>
 </header>
 
@@ -68,7 +70,9 @@
 
   <div class="card k2">
     <h3>Los teoremas, demostrados paso a paso</h3>
+    <p>Un teorema es una afirmación que vale siempre, no solo en los ejemplos probados; demostrarlo es llegar a él paso a paso desde las definiciones. Antes de cada demostración se dice qué se demuestra, cómo funciona el método y se hace la misma cuenta con números.</p>
     <p><b>Teorema 1 (toda sucesión convergente es acotada).</b> Si \(a_{n}\to L\), con \(L\) real, entonces existe un número \(K\) tal que \(|a_{n}|\le K\) para todo \(n\).</p>
+    <p><b>Qué se demuestra:</b> que si una sucesión tiene límite, todos sus términos, sin su signo, caben bajo un mismo número \(K\). <b>Cómo funciona el método:</b> la lista se parte en dos. Desde cierto lugar, todos los términos están a menos de \(1\) del límite, y eso los acota. Los anteriores son una cantidad finita, y entre una cantidad finita de números hay uno que es el mayor. <b>Primero con números:</b> \(a_{n}=\dfrac{n+1}{n}\), que tiene límite \(L=1\) (hoja «Límite de una sucesión»). Su distancia a \(1\) es \(\dfrac{1}{n}\), que es menor que \(1\) si \(n&gt;1\): sirve \(N=1\). Los términos con \(n&gt;1\) cumplen \(|a_{n}|&lt;1+|1|=2\). Antes queda uno solo, \(a_{1}=2\). El mayor entre \(|a_{1}|=2\) y \(1+|L|=2\) es \(K=2\): todos los términos cumplen \(|a_{n}|\le 2\). Ahora, con letras.</p>
     <ol class="steps">
       <li>La definición de límite vale para todo \(\varepsilon&gt;0\); en particular para \(\varepsilon=1\): hay un entero \(N\ge 0\) tal que \(|a_{n}-L|&lt;1\) para todo \(n&gt;N\).</li>
       <li>Para \(n&gt;N\) se suma y se resta \(L\): \(a_{n}=(a_{n}-L)+L\).</li>
@@ -80,6 +84,7 @@
       <li><b>Leído al revés:</b> si una sucesión no es acotada, no converge. Y el recíproco es falso: \((-1)^{n}\) es acotada y no converge (ejemplo 4).</li>
     </ol>
     <p><b>Teorema 2 (convergencia monótona).</b> Si \((a_{n})\) es creciente y acotada superiormente, entonces converge, y su límite es su supremo: \(\displaystyle\lim_{n\to\infty}a_{n}=s\), con \(s=\sup\{a_{n}:n\ge 1\}\).</p>
+    <p><b>Qué se demuestra:</b> dos cosas: que una sucesión creciente con techo tiene límite, y que ese límite es el menor de sus techos. <b>Cómo funciona el método:</b> se toma el menor techo, \(s\). Un número un poco menor, \(s-\varepsilon\), ya no es techo: algún término lo supera. Como la sucesión es creciente, todos los términos siguientes también lo superan, y ninguno pasa de \(s\): quedan atrapados entre \(s-\varepsilon\) y \(s\), a menos de \(\varepsilon\) de \(s\). <b>Primero con números:</b> \(a_{n}=\dfrac{n}{n+1}\), con menor techo \(s=1\) (ejemplo 1), y \(\varepsilon=\dfrac{1}{10}\): \[\begin{aligned}s-\varepsilon&=1-\dfrac{1}{10}=\dfrac{9}{10}&&\text{un poco menos que el menor techo}\\ a_{10}&=\dfrac{10}{11}=\dfrac{100}{110}&gt;\dfrac{99}{110}=\dfrac{9}{10}&&\text{un término lo supera: }m=10\\ N&=m-1=9&&\text{desde aquí sirven todos}\\ \dfrac{9}{10}&&lt;a_{10}\le a_{n}\le 1&&\text{si }n&gt;9\text{, porque es creciente}\end{aligned}\] Todos los términos desde el décimo están a menos de \(\dfrac{1}{10}\) de \(1\). Ahora, lo mismo con letras, para cualquier \(\varepsilon\).</p>
     <ol class="steps">
       <li><b>Existe el supremo.</b> El conjunto de los términos, \(\{a_{1},\ a_{2},\ a_{3},\ \ldots\}\), no es vacío (contiene a \(a_{1}\)) y tiene una cota superior (hipótesis). Por el axioma del supremo, tiene un supremo \(s\), que es un número real.</li>
       <li>\(s\) es cota superior: \(a_{n}\le s\) para todo \(n\).</li>
@@ -94,6 +99,7 @@
       <li><b>Qué dice y qué no dice.</b> Asegura que el límite existe y que es el supremo. No dice cuánto vale: eso se calcula aparte (ejemplos 1, 2 y 3). Y el límite es la <b>menor</b> cota superior, no cualquiera: \(2\) es cota superior de \(\dfrac{n}{n+1}\), y su límite es \(1\).</li>
     </ol>
     <p><b>Teorema 3 (versión decreciente).</b> Si \((a_{n})\) es decreciente y acotada inferiormente, entonces converge, y su límite es su ínfimo.</p>
+    <p><b>Qué se demuestra:</b> lo mismo que el teorema 2, para una sucesión que baja y tiene piso: tiene límite, y es el mayor de sus pisos (el ínfimo). <b>Cómo funciona el método:</b> no se repite la demostración. Se cambia el signo de todos los términos: lo que bajaba ahora sube y el piso se vuelve techo, y entonces se aplica el teorema 2. <b>Primero con números:</b> \(a_{n}=\dfrac{1}{n}\) es \(1,\ \dfrac{1}{2},\ \dfrac{1}{3},\ \ldots\): baja, y \(0\) es un piso. Con el signo cambiado, \(b_{n}=-\dfrac{1}{n}\) es \(-1,\ -\dfrac{1}{2},\ -\dfrac{1}{3},\ \ldots\): sube (\(-\dfrac{1}{2}&gt;-1\), \(-\dfrac{1}{3}&gt;-\dfrac{1}{2}\)), y \(0\) es un techo. Por el teorema 2, \((b_{n})\) tiene límite \(s\), su menor techo; como \(a_{n}=-b_{n}\), el límite de \((a_{n})\) es \(-s\). (Aquí \(s=0\), y el límite de \(\dfrac{1}{n}\) es \(-0=0\), como se demostró en la hoja «Límite de una sucesión».) Ahora, con letras.</p>
     <ol class="steps">
       <li>Se define \(b_{n}=-a_{n}\). Por ser \((a_{n})\) decreciente, \(a_{n+1}\le a_{n}\). Se multiplica por \(-1\), que invierte la desigualdad: \(-a_{n+1}\ge-a_{n}\), o sea \(b_{n+1}\ge b_{n}\). La sucesión \((b_{n})\) es creciente.</li>
       <li>Sea \(m\) una cota inferior de \((a_{n})\): \(a_{n}\ge m\). Se multiplica por \(-1\): \(-a_{n}\le-m\), o sea \(b_{n}\le-m\). La sucesión \((b_{n})\) es acotada superiormente.</li>
@@ -105,6 +111,7 @@
       <li>Entonces \(-s\) es la mayor cota inferior de \((a_{n})\), su ínfimo, y es su límite.</li>
     </ol>
     <p><b>Teorema 4 (el término siguiente tiene el mismo límite).</b> Si \(a_{n}\to L\), entonces la sucesión \(a_{2},\ a_{3},\ a_{4},\ \ldots\), cuyo término de lugar \(n\) es \(a_{n+1}\), también tiene límite \(L\). Se usa para hallar el límite de una sucesión dada por recurrencia.</p>
+    <p><b>Qué se demuestra:</b> que si a la lista se le quita el primer término, el límite no cambia. <b>Cómo funciona el método:</b> el mismo \(N\) sirve, porque el término siguiente está todavía más adelante en la lista. <b>Primero con números:</b> \(a_{n}=\dfrac{1}{n}\) es \(1,\ \dfrac{1}{2},\ \dfrac{1}{3},\ \ldots\), y \(a_{n+1}=\dfrac{1}{n+1}\) es \(\dfrac{1}{2},\ \dfrac{1}{3},\ \dfrac{1}{4},\ \ldots\): la misma lista, sin el \(1\). Con \(\varepsilon=\dfrac{1}{10}\) sirve \(N=10\) para las dos: si \(n&gt;10\), entonces \(n+1&gt;10\) y \(\dfrac{1}{n+1}&lt;\dfrac{1}{10}\). Ahora, con letras.</p>
     <ol class="steps">
       <li>Sea \(\varepsilon&gt;0\). Como \(a_{n}\to L\), hay un \(N\) tal que \(|a_{k}-L|&lt;\varepsilon\) para todo \(k&gt;N\).</li>
       <li>Si \(n&gt;N\), entonces \(n+1&gt;n&gt;N\).</li>
@@ -317,7 +324,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H27 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H27 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->

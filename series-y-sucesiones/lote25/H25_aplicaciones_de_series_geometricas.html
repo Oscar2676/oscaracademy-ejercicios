@@ -162,7 +162,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Aplicaciones de series geométricas</b></li>
     </ol>
     <h1>Aplicaciones de series geométricas</h1>
-    <p class="lede">Una situación se modela con una serie geométrica cuando cada cantidad que se suma es la anterior multiplicada por un mismo número \(r\): rebotes cada vez más bajos, cifras de un decimal periódico, lo que queda de una dosis, figuras que se achican. Con el primer sumando \(a\neq 0\) y la razón \(r\) se usa una de dos fórmulas, según lo que se pida: la suma de los primeros \(n\) sumandos o la suma de todos. \[S_{n}=\sum_{k=1}^{n}a\,r^{\,k-1}=\dfrac{a\,(1-r^{\,n})}{1-r}\ \ (r\neq 1)\qquad\qquad S=\sum_{k=1}^{\infty}a\,r^{\,k-1}=\dfrac{a}{1-r}\ \ (|r|&lt;1)\]</p>
+    <p class="lede">Una <b>serie</b> es una suma de muchos números, escritos uno tras otro; cada uno de ellos es un <b>sumando</b> (o término). La serie es <b>geométrica</b> cuando cada sumando es el anterior multiplicado por un mismo número, que se llama <b>razón</b> y se anota \(r\). Muchas situaciones tienen esa forma: rebotes cada vez más bajos, cifras de un decimal periódico, lo que queda de una dosis, figuras que se achican. <b>Modelar</b> una situación es escribirla como una de esas sumas, con sus supuestos dichos, y calcularla.</p>
+    <p class="lede"><b>De dónde salen las fórmulas.</b> Una pelota se suelta desde \(8\) metros y en cada rebote sube la mitad de la altura desde la que cayó. Un <b>rebote</b> es una subida y la bajada que le sigue, las dos del mismo largo. Los primeros rebotes, uno bajo otro: \[\begin{aligned}\text{rebote 1:}&\quad 4+4=8&&\text{sube }4\text{, la mitad de }8\text{, y baja }4\\ \text{rebote 2:}&\quad 2+2=4=8\cdot\dfrac{1}{2}&&\text{sube }2\text{, la mitad de }4\\ \text{rebote 3:}&\quad 1+1=2=4\cdot\dfrac{1}{2}&&\text{sube }1\text{, la mitad de }2\\ \text{rebote 4:}&\quad \dfrac{1}{2}+\dfrac{1}{2}=1=2\cdot\dfrac{1}{2}&&\text{sube }\dfrac{1}{2}\text{, la mitad de }1\end{aligned}\] La regularidad: cada rebote es el anterior multiplicado por \(\dfrac{1}{2}\). Los rebotes forman una serie geométrica, \(8+4+2+1+\cdots\), de primer sumando \(a=8\) y razón \(r=\dfrac{1}{2}\). Ahora se suman de a uno; cada resultado es una <b>suma parcial</b>, y \(S_{n}\) es la suma de los \(n\) primeros: \[\begin{aligned}S_{1}&=8&&\text{falta }8\text{ para }16\\ S_{2}&=8+4=12&&\text{falta }4\\ S_{3}&=12+2=14&&\text{falta }2\\ S_{4}&=14+1=15&&\text{falta }1\end{aligned}\] Lo que falta para \(16\) se parte por la mitad en cada paso: las sumas parciales se acercan a \(16\), y ese número es la suma de todos los rebotes. Las dos fórmulas de esta hoja dan esos mismos números sin sumar de a uno: \[\begin{aligned}S_{4}&=\dfrac{8\left(1-\left(\frac{1}{2}\right)^{4}\right)}{1-\frac{1}{2}}=\dfrac{8\cdot\frac{15}{16}}{\frac{1}{2}}=\dfrac{15}{2}:\dfrac{1}{2}=\dfrac{15}{2}\cdot 2=15\\ S&=\dfrac{8}{1-\frac{1}{2}}=8:\dfrac{1}{2}=8\cdot 2=16\end{aligned}\] Son el \(15\) y el \(16\) de la lista de arriba. ✓ La pelota recorre, además, la bajada inicial de \(8\) metros, que no es un rebote y se cuenta aparte: en total, \(8+16=24\) metros. Es la cuenta de la animación.</p>
+    <p class="lede">En general: con el primer sumando \(a\neq 0\) y la razón \(r\) se usa una de dos fórmulas, según lo que se pida: la suma de los primeros \(n\) sumandos o la suma de todos. \[S_{n}=\sum_{k=1}^{n}a\,r^{\,k-1}=\dfrac{a\,(1-r^{\,n})}{1-r}\ \ (r\neq 1)\qquad\qquad S=\sum_{k=1}^{\infty}a\,r^{\,k-1}=\dfrac{a}{1-r}\ \ (|r|&lt;1)\] La primera se lee: «\(S\) sub \(n\) es la sumatoria, desde \(k\) igual a uno hasta \(n\), de \(a\) por \(r\) elevado a \(k\) menos uno, y es igual a \(a\) por uno menos \(r\) elevado a \(n\), dividido por uno menos \(r\)». La segunda: «\(S\) es la sumatoria, desde \(k\) igual a uno hasta infinito, de \(a\) por \(r\) elevado a \(k\) menos uno, y es igual a \(a\) dividido por uno menos \(r\), cuando el valor absoluto de \(r\) es menor que uno». \(|r|\) es el valor absoluto de \(r\): el número sin su signo; \(|r|&lt;1\) quiere decir que \(r\) está entre \(-1\) y \(1\), sin tocarlos. Las dos fórmulas se demuestran paso a paso en la hoja «Suma de una serie geométrica infinita»; aquí se usan.</p>
   </section>
 </header>
 
@@ -211,6 +213,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="card k2">
     <h3>La pelota que rebota, en general: demostración paso a paso</h3>
     <p><b>Enunciado.</b> Una pelota se suelta desde una altura \(h&gt;0\). Modelo: en cada rebote sube hasta la altura anterior multiplicada por \(r\), con \(0&lt;r&lt;1\), y los rebotes no terminan. Entonces la distancia total que recorre, bajando y subiendo, es \[D=h+\dfrac{2hr}{1-r}=\dfrac{h\,(1+r)}{1-r}\]</p>
+    <p><b>Qué se demuestra:</b> una fórmula que da la distancia total con solo dos datos, la altura inicial \(h\) y la razón de rebote \(r\), sin sumar rebote por rebote. <b>Cómo funciona el método:</b> es el procedimiento del recuadro anterior, hecho con letras. Se escriben las alturas, se arma cada rebote (subida más bajada), se reconoce que los rebotes forman una serie geométrica, se suma esa serie con \(\dfrac{a}{1-r}\) y al final se agrega la bajada inicial, que va aparte.</p>
+    <p><b>Primero con números</b> (otra pelota: \(h=9\) metros, \(r=\dfrac{1}{3}\)): \[\begin{aligned}\text{alturas:}&\quad 9\cdot\dfrac{1}{3}=3,\qquad 3\cdot\dfrac{1}{3}=1,\qquad 1\cdot\dfrac{1}{3}=\dfrac{1}{3}&&\text{cada una, la anterior por }\tfrac{1}{3}\\ \text{rebotes:}&\quad 3+3=6,\qquad 1+1=2,\qquad \dfrac{1}{3}+\dfrac{1}{3}=\dfrac{2}{3}&&\text{subida más bajada}\\ \text{cocientes:}&\quad \dfrac{2}{6}=\dfrac{1}{3},\qquad \dfrac{2}{3}:2=\dfrac{2}{6}=\dfrac{1}{3}&&\text{geométrica: }a=6,\ r=\tfrac{1}{3}\\ \text{rebotes, todos:}&\quad \dfrac{6}{1-\frac{1}{3}}=6:\dfrac{2}{3}=6\cdot\dfrac{3}{2}=\dfrac{18}{2}=9&&\left|\tfrac{1}{3}\right|&lt;1\\ \text{total:}&\quad 9+9=18\text{ metros}&&\text{bajada inicial más rebotes}\end{aligned}\] Con la fórmula que se va a demostrar: \(\dfrac{9\left(1+\frac{1}{3}\right)}{1-\frac{1}{3}}=9\cdot\dfrac{4}{3}:\dfrac{2}{3}=12:\dfrac{2}{3}=12\cdot\dfrac{3}{2}=18\) ✓. Ahora, lo mismo con letras.</p>
     <ol class="steps">
       <li><b>Alturas.</b> Después del rebote número \(k\) sube hasta \(h\,r^{\,k}\): se multiplicó \(k\) veces por \(r\). (Es el término general de una progresión geométrica que parte en \(hr\); hoja «Término enésimo de una sucesión geométrica».)</li>
       <li><b>Un rebote completo</b> es esa subida y la bajada que le sigue, las dos del mismo largo: \(c_{k}=h\,r^{\,k}+h\,r^{\,k}=2h\,r^{\,k}\), con \(k\ge 1\).</li>
@@ -391,7 +395,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H25 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H25 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -618,12 +622,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -643,12 +649,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */
