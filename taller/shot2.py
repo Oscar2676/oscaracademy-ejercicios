@@ -10,8 +10,11 @@ async def main():
         await pg.goto('file:///home/claude/oscaracademy-ejercicios/taller/out/'+card); await pg.wait_for_timeout(800)
         for h in hs:
             await pg.evaluate("location.hash='%s'"%h); await pg.wait_for_timeout(400)
-            await pg.evaluate("OA.insts.forEach(function(i){i.pause(); i.apply(%s); i.resize();})" % t); await pg.wait_for_timeout(300)
             st = await pg.query_selector_all('article:not([hidden]) .stage')
-            for k,s in enumerate(st): await s.screenshot(path='out/s-%s-%d.png'%(h,k))
+            for k,s in enumerate(st):
+                # desde el 23-nov el motor parte la animación cuando queda a la vista: primero se lleva a la vista y recién después se fija el instante t y se redibuja
+                await s.scroll_into_view_if_needed(); await pg.wait_for_timeout(700)
+                await pg.evaluate("(function(el){OA.insts.forEach(function(i){ if (!el.contains(i.cv)) return; i.pause(); i.apply(%s); i.resize(); i.render(); });})(document.querySelectorAll('article:not([hidden]) .stage')[%d])" % (t, k)); await pg.wait_for_timeout(300)
+                await s.screenshot(path='out/s-%s-%d.png'%(h,k))
         print('errs',errs); await b.close()
 asyncio.run(main())
