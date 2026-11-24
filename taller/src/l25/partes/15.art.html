@@ -12,7 +12,9 @@
       <li><b>Criterio de la integral</b></li>
     </ol>
     <h1>Criterio de la integral</h1>
-    <p class="lede">Si los términos de una serie son los valores \(a_{n}=f(n)\) de una función continua, positiva y decreciente, cada término es el área de una columna de ancho \(1\), y esas columnas se comparan con el área bajo la curva \(y=f(x)\). La serie y la integral impropia hacen lo mismo: o las dos convergen o las dos divergen. \[\sum_{n=1}^{\infty}a_{n}\ \text{ converge}\quad\Longleftrightarrow\quad\int_{1}^{\infty}f(x)\,dx\ \text{ converge}\]</p>
+    <p class="lede">Una <b>serie</b> es una suma de infinitos términos, \(a_{1}+a_{2}+a_{3}+\cdots\) <b>Converge</b> si sus sumas parciales (\(S_{1}=a_{1}\), \(S_{2}=a_{1}+a_{2}\), \(S_{3}=a_{1}+a_{2}+a_{3}\), …) se acercan a un número; si no, <b>diverge</b>. Este criterio sirve cuando los términos salen de una función: \(a_{n}=f(n)\). Por ejemplo, los términos \(1,\ \dfrac{1}{4},\ \dfrac{1}{9},\ \dfrac{1}{16},\ \ldots\) son \(a_{n}=\dfrac{1}{n^{2}}\), los valores de \(f(x)=\dfrac{1}{x^{2}}\) en \(x=1,\ 2,\ 3,\ 4,\ \ldots\)</p>
+    <p class="lede"><b>De dónde sale el criterio.</b> Cada término se dibuja como una columna de ancho \(1\) y alto \(a_{n}\): su área es \(1\cdot a_{n}=a_{n}\). Sumar términos es sumar áreas de columnas, y esas áreas se comparan con el área bajo la curva \(y=f(x)\), que es una integral. Con \(f(x)=\dfrac{1}{x^{2}}\), tramo por tramo (cada integral se calcula con la primitiva \(-\dfrac{1}{x}\); la cuenta completa está bajo la animación): \[\begin{aligned}a_{2}&=\dfrac{1}{4}&&\le&\int_{1}^{2}\dfrac{dx}{x^{2}}&=1-\dfrac{1}{2}=\dfrac{1}{2}\\ a_{3}&=\dfrac{1}{9}&&\le&\int_{2}^{3}\dfrac{dx}{x^{2}}&=\dfrac{1}{2}-\dfrac{1}{3}=\dfrac{1}{6}\\ a_{4}&=\dfrac{1}{16}&&\le&\int_{3}^{4}\dfrac{dx}{x^{2}}&=\dfrac{1}{3}-\dfrac{1}{4}=\dfrac{1}{12}\\ a_{5}&=\dfrac{1}{25}&&\le&\int_{4}^{5}\dfrac{dx}{x^{2}}&=\dfrac{1}{4}-\dfrac{1}{5}=\dfrac{1}{20}\end{aligned}\] La regularidad: desde el segundo, cada término es menor o igual que el área bajo la curva en el tramo de ancho \(1\) que termina en su número. Al sumar las cuatro líneas, los términos \(a_{2}+a_{3}+a_{4}+a_{5}\) no pasan del área entre \(1\) y \(5\): \(\dfrac{1}{2}+\dfrac{1}{6}+\dfrac{1}{12}+\dfrac{1}{20}=\dfrac{30}{60}+\dfrac{10}{60}+\dfrac{5}{60}+\dfrac{3}{60}=\dfrac{48}{60}=\dfrac{4}{5}\). Si el área total bajo la curva es un número, las sumas parciales tienen tope y la serie converge; si el área no tiene tope, la serie tampoco.</p>
+    <p class="lede">Eso vale cuando \(f\) es <b>continua</b> (su gráfica se dibuja sin levantar el lápiz), <b>positiva</b> (su gráfica va sobre el eje \(x\)) y <b>decreciente</b> (al avanzar hacia la derecha, baja). La <b>integral impropia</b> \(\displaystyle\int_{1}^{\infty}f(x)\,dx\) es el área bajo la curva desde \(x=1\) hacia la derecha, sin parar. El criterio dice que la serie y esa integral hacen lo mismo: o las dos convergen o las dos divergen. \[\sum_{n=1}^{\infty}a_{n}\ \text{ converge}\quad\Longleftrightarrow\quad\int_{1}^{\infty}f(x)\,dx\ \text{ converge}\] Se lee: «la sumatoria de los \(a\) sub \(n\), desde \(n\) igual a \(1\) hasta infinito, converge si y solo si la integral de \(f\) de \(x\), desde \(1\) hasta infinito, converge». La flecha doble \(\Longleftrightarrow\) se lee «si y solo si»: cada lado obliga al otro.</p>
   </section>
 </header>
 
@@ -51,26 +53,30 @@
 
   <div class="card k2">
     <h3>Demostración paso a paso</h3>
-    <p>Se escribe \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}\) (suma parcial) e \(I(t)=\displaystyle\int_{1}^{t}f(x)\,dx\).</p>
+    <p><b>Qué se demuestra:</b> que, con \(f\) continua, positiva y decreciente en \([1,\infty)\) y \(a_{n}=f(n)\), la serie converge exactamente cuando la integral impropia converge. <b>Cómo funciona el método:</b> primero se encierra el área bajo la curva en cada tramo de ancho \(1\) entre dos columnas, una más baja y una más alta (es lo que se hizo con números en el encabezado); después se suman los tramos, y queda el área entre dos sumas parciales. Con eso, si una de las dos (serie o integral) tiene tope, la otra también.</p>
+    <p>Se escribe \(S_{n}=a_{1}+a_{2}+\cdots+a_{n}\) (suma parcial: la suma de los primeros \(n\) términos) e \(I(t)=\displaystyle\int_{1}^{t}f(x)\,dx\) (el área bajo la curva entre \(1\) y \(t\)).</p>
     <p><b>Primero: la desigualdad de los rectángulos.</b></p>
     <ol class="steps">
       <li>Sea \(k\) un natural y \(x\) un número con \(k\le x\le k+1\). Como \(f\) es decreciente: \(f(k+1)\le f(x)\le f(k)\).</li>
       <li>Se reemplaza \(f(k+1)=a_{k+1}\) y \(f(k)=a_{k}\): \(a_{k+1}\le f(x)\le a_{k}\) en todo el intervalo \([k,\ k+1]\).</li>
       <li>Monotonía de la integral en \([k,\ k+1]\), que tiene largo \(1\): \(a_{k+1}\cdot 1\le\displaystyle\int_{k}^{k+1}f(x)\,dx\le a_{k}\cdot 1\). Son las áreas de dos rectángulos de base \(1\): uno queda bajo la curva y el otro la cubre.</li>
-      <li>Se suman estas desigualdades con \(k=1,\ 2,\ \ldots,\ n-1\). Por la aditividad, las integrales se juntan en una: \(\displaystyle\int_{1}^{2}f+\int_{2}^{3}f+\cdots+\int_{n-1}^{n}f=\int_{1}^{n}f\).</li>
+      <li>Con números, \(f(x)=\dfrac{1}{x^{2}}\) y \(k=2\): en \([2,\ 3]\), \(\dfrac{1}{9}\le\dfrac{1}{x^{2}}\le\dfrac{1}{4}\), y el área es \(\displaystyle\int_{2}^{3}\dfrac{dx}{x^{2}}=\dfrac{1}{6}\). En decimales: \(0{,}11\le 0{,}17\le 0{,}25\). ✓</li>
+      <li>Se escribe la desigualdad del paso 3 para \(k=1,\ 2,\ \ldots,\ n-1\), una bajo la otra: \[\begin{aligned}a_{2}&\le\int_{1}^{2}f(x)\,dx\le a_{1}&&(k=1)\\ a_{3}&\le\int_{2}^{3}f(x)\,dx\le a_{2}&&(k=2)\\ &\ \ \vdots\\ a_{n}&\le\int_{n-1}^{n}f(x)\,dx\le a_{n-1}&&(k=n-1)\end{aligned}\]</li>
+      <li>Se suman las tres columnas. A la izquierda queda \(a_{2}+a_{3}+\cdots+a_{n}\); a la derecha, \(a_{1}+a_{2}+\cdots+a_{n-1}\). Al medio, por la aditividad, las integrales se juntan en una: \(\displaystyle\int_{1}^{2}f+\int_{2}^{3}f+\cdots+\int_{n-1}^{n}f=\int_{1}^{n}f\).</li>
       <li>Queda \(a_{2}+a_{3}+\cdots+a_{n}\ \le\ \displaystyle\int_{1}^{n}f(x)\,dx\ \le\ a_{1}+a_{2}+\cdots+a_{n-1}\).</li>
-      <li>Con sumas parciales: \(S_{n}-a_{1}\ \le\ I(n)\ \le\ S_{n-1}\), para todo natural \(n\ge 2\).</li>
+      <li>Con sumas parciales: a la izquierda están todos los términos hasta \(a_{n}\) menos el primero, \(S_{n}-a_{1}\); a la derecha, los primeros \(n-1\) términos, \(S_{n-1}\). Entonces \(S_{n}-a_{1}\ \le\ I(n)\ \le\ S_{n-1}\), para todo natural \(n\ge 2\).</li>
+      <li>Con números, \(f(x)=\dfrac{1}{x^{2}}\) y \(n=5\): \(S_{5}-a_{1}=\dfrac{1}{4}+\dfrac{1}{9}+\dfrac{1}{16}+\dfrac{1}{25}=\dfrac{900+400+225+144}{3600}=\dfrac{1669}{3600}\approx 0{,}46\); \(I(5)=\dfrac{4}{5}=0{,}8\); \(S_{4}=1+\dfrac{1}{4}+\dfrac{1}{9}+\dfrac{1}{16}=\dfrac{144+36+16+9}{144}=\dfrac{205}{144}\approx 1{,}42\). Se cumple \(0{,}46\le 0{,}8\le 1{,}42\). ✓</li>
       <li>Además, \(I(t)\) es creciente: si \(1\le s&lt;t\), por la aditividad \(I(t)-I(s)=\displaystyle\int_{s}^{t}f(x)\,dx\), y esa integral es mayor o igual que \(0\) porque \(f\) es positiva (monotonía de la integral, comparando con la constante \(0\)).</li>
     </ol>
     <p><b>Si la integral converge, la serie converge.</b></p>
     <ol class="steps">
-      <li>Sea \(I=\displaystyle\lim_{t\to\infty}I(t)\). Como \(I(t)\) es creciente, ningún valor supera al límite: \(I(n)\le I\).</li>
+      <li>Hipótesis de esta parte: la integral converge, es decir, \(I(t)\) tiene límite real cuando \(t\to\infty\). Sea \(I=\displaystyle\lim_{t\to\infty}I(t)\). Como \(I(t)\) es creciente, ningún valor supera al límite: \(I(n)\le I\).</li>
       <li>De \(S_{n}-a_{1}\le I(n)\) se suma \(a_{1}\) a cada lado: \(S_{n}\le a_{1}+I(n)\le a_{1}+I\).</li>
-      <li>Las sumas parciales crecen (se suman términos positivos) y están acotadas por \(a_{1}+I\): tienen límite real. La serie converge.</li>
+      <li>Las sumas parciales crecen (se suman términos positivos) y están acotadas por \(a_{1}+I\): tienen límite real. La serie converge. Con \(\dfrac{1}{n^{2}}\): \(a_{1}=1\) e \(I=1\), así que \(S_{n}\le 1+1=2\) siempre; es la primera animación.</li>
     </ol>
     <p><b>Si la serie converge, la integral converge.</b></p>
     <ol class="steps">
-      <li>Sea \(S\) la suma de la serie. Las sumas parciales crecen, así que ninguna supera al límite: \(S_{n-1}\le S\).</li>
+      <li>Hipótesis de esta parte: la serie converge, es decir, sus sumas parciales tienen límite real. Sea \(S\) ese límite (la suma de la serie). Las sumas parciales crecen, así que ninguna supera al límite: \(S_{n-1}\le S\).</li>
       <li>Dado \(t\ge 1\), se elige un natural \(n\ge 2\) con \(n\ge t\). Como \(I\) es creciente: \(I(t)\le I(n)\le S_{n-1}\le S\).</li>
       <li>\(I(t)\) es creciente y está acotada por \(S\): tiene límite real cuando \(t\to\infty\). La integral impropia converge.</li>
     </ol>
@@ -255,6 +261,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H15 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H15 · v002 · Pendiente de APR</span>
 </footer>
 </article>

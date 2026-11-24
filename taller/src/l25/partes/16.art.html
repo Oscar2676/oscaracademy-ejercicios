@@ -12,7 +12,9 @@
       <li><b>Serie alternante</b></li>
     </ol>
     <h1>Serie alternante</h1>
-    <p class="lede">Una serie es alternante cuando sus términos cambian de signo en cada paso: uno se suma, el siguiente se resta, el siguiente se suma, y así. Se escribe con un factor de signo y una parte positiva \(b_{n}\). Sus sumas parciales suben y bajan por turnos: avanzan en zigzag. \[\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}=b_{1}-b_{2}+b_{3}-b_{4}+\cdots\qquad\text{con }b_{n}&gt;0\text{ para todo }n\]</p>
+    <p class="lede">Una <b>serie</b> es una suma de infinitos términos. Es <b>alternante</b> cuando sus términos cambian de signo en cada paso: uno se suma, el siguiente se resta, el siguiente se suma, y así. Un ejemplo: \(1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\dfrac{1}{16}-\cdots\) Cada término tiene dos partes: su <b>signo</b> y su <b>tamaño</b>, que se llama \(b_{n}\) y es siempre positivo. Aquí \(b_{1}=1\), \(b_{2}=\dfrac{1}{2}\), \(b_{3}=\dfrac{1}{4}\), \(b_{4}=\dfrac{1}{8}\).</p>
+    <p class="lede"><b>De dónde sale el factor de signo.</b> Hace falta algo que valga \(+1\) cuando \(n\) es impar y \(-1\) cuando \(n\) es par. Las potencias de \(-1\) hacen eso; se calculan una por una, cada una con la anterior: \[\begin{aligned}\text{para }n=1:&\quad(-1)^{1+1}=(-1)^{2}=(-1)\cdot(-1)=1&&\text{el término es }+b_{1}\\ \text{para }n=2:&\quad(-1)^{2+1}=(-1)^{3}=(-1)^{2}\cdot(-1)=1\cdot(-1)=-1&&\text{el término es }-b_{2}\\ \text{para }n=3:&\quad(-1)^{3+1}=(-1)^{4}=(-1)^{3}\cdot(-1)=(-1)\cdot(-1)=1&&\text{el término es }+b_{3}\\ \text{para }n=4:&\quad(-1)^{4+1}=(-1)^{5}=(-1)^{4}\cdot(-1)=1\cdot(-1)=-1&&\text{el término es }-b_{4}\end{aligned}\] La regularidad: cada vez que el exponente sube en \(1\), se multiplica una vez más por \(-1\) y el signo se da vuelta. Por eso el término de lugar \(n\) se escribe \((-1)^{n+1}\,b_{n}\), y la serie completa: \[\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}=b_{1}-b_{2}+b_{3}-b_{4}+\cdots\qquad\text{con }b_{n}&gt;0\text{ para todo }n\] Se lee: «la sumatoria, desde \(n\) igual a \(1\) hasta infinito, de menos uno elevado a \(n\) más uno, por \(b\) sub \(n\)».</p>
+    <p class="lede"><b>Qué les pasa a las sumas parciales.</b> La suma parcial \(S_{n}\) es la suma de los primeros \(n\) términos. En el ejemplo: \[\begin{aligned}S_{1}&=1\\ S_{2}&=1-\dfrac{1}{2}=\dfrac{1}{2}&&\text{baja}\\ S_{3}&=\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{2}{4}+\dfrac{1}{4}=\dfrac{3}{4}&&\text{sube}\\ S_{4}&=\dfrac{3}{4}-\dfrac{1}{8}=\dfrac{6}{8}-\dfrac{1}{8}=\dfrac{5}{8}&&\text{baja}\end{aligned}\] Cada término que se resta la hace bajar y cada término que se suma la hace subir: las sumas parciales avanzan en <b>zigzag</b>.</p>
   </section>
 </header>
 
@@ -59,6 +61,8 @@
   <div class="card k2">
     <h3>Demostración paso a paso: las sumas parciales van en zigzag</h3>
     <p>Sea \(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\,b_{n}\) con \(b_{n}&gt;0\), y \(S_{n}=b_{1}-b_{2}+b_{3}-\cdots+(-1)^{n+1}b_{n}\) su suma parcial. En todo lo que sigue, \(m\) es un entero con \(m\ge 0\), y se conviene \(S_{0}=0\) (la suma de ningún término).</p>
+    <p><b>Qué se demuestra:</b> dos cosas. Primera: en toda serie alternante de esta forma, las sumas parciales suben y bajan por turnos. Segunda: si además los tamaños \(b_{n}\) no crecen, las sumas parciales de lugar par (\(S_{2},\ S_{4},\ S_{6},\ \ldots\)) no bajan, y las de lugar impar (\(S_{1},\ S_{3},\ S_{5},\ \ldots\)) no suben. <b>Cómo funciona el método:</b> cada suma parcial es la anterior más el término nuevo; se mira el signo del término nuevo. Para hablar de todos los lugares impares a la vez se escribe \(2m+1\) (con \(m=0,\ 1,\ 2,\ \ldots\) da \(1,\ 3,\ 5,\ \ldots\)), y para los pares, \(2m+2\) (da \(2,\ 4,\ 6,\ \ldots\)).</p>
+    <p><b>Primero con números</b> (la serie de la animación, \(b_{1}=1\), \(b_{2}=\dfrac{1}{2}\), \(b_{3}=\dfrac{1}{4}\), \(b_{4}=\dfrac{1}{8}\)): \[\begin{aligned}m=0:&\quad S_{1}=S_{0}+b_{1}=0+1=1&&\text{sube}\\ &\quad S_{2}=S_{1}-b_{2}=1-\dfrac{1}{2}=\dfrac{1}{2}&&\text{baja}\\ m=1:&\quad S_{3}=S_{2}+b_{3}=\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{3}{4}&&\text{sube}\\ &\quad S_{4}=S_{3}-b_{4}=\dfrac{3}{4}-\dfrac{1}{8}=\dfrac{5}{8}&&\text{baja}\end{aligned}\] Ahora, lo mismo con letras, para cualquier \(m\).</p>
     <p><b>Primera parte: una sube, la siguiente baja.</b></p>
     <ol class="steps">
       <li>El término de lugar \(2m+1\) (lugar impar) lleva el signo \((-1)^{(2m+1)+1}=(-1)^{2m+2}\). El exponente \(2m+2=2(m+1)\) es par: el signo es \(1\). El término es \(+\,b_{2m+1}\).</li>
@@ -73,11 +77,11 @@
     <ol class="steps">
       <li>Se parte del paso 5 de la primera parte: \(S_{2m+2}=S_{2m+1}-b_{2m+2}\).</li>
       <li>Se reemplaza \(S_{2m+1}=S_{2m}+b_{2m+1}\) (paso 2): \(S_{2m+2}=S_{2m}+b_{2m+1}-b_{2m+2}\).</li>
-      <li>Se resta \(S_{2m}\) a cada lado: \(S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\).</li>
+      <li>Se resta \(S_{2m}\) a cada lado: \(S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\). Con números (\(m=1\)): \(S_{4}-S_{2}=b_{3}-b_{4}=\dfrac{1}{4}-\dfrac{1}{8}=\dfrac{2}{8}-\dfrac{1}{8}=\dfrac{1}{8}\); y en efecto \(\dfrac{5}{8}-\dfrac{1}{2}=\dfrac{5}{8}-\dfrac{4}{8}=\dfrac{1}{8}\). ✓</li>
       <li>Como \(b\) decrece, \(b_{2m+2}\le b_{2m+1}\); entonces \(b_{2m+1}-b_{2m+2}\ge 0\) y \(S_{2m+2}\ge S_{2m}\). Las sumas parciales de lugar par no bajan: \(S_{2}\le S_{4}\le S_{6}\le\cdots\)</li>
       <li>Ahora las impares. Se parte de \(S_{2m+1}=S_{2m}+b_{2m+1}\) (paso 2 de la primera parte).</li>
       <li>Para \(m\ge 1\), \(S_{2m}\) es la anterior, \(S_{2m-1}\), más el término de lugar par \(2m\), que es \(-\,b_{2m}\): \(S_{2m}=S_{2m-1}-b_{2m}\). Se reemplaza: \(S_{2m+1}=S_{2m-1}-b_{2m}+b_{2m+1}\).</li>
-      <li>Se resta \(S_{2m-1}\) a cada lado: \(S_{2m+1}-S_{2m-1}=-b_{2m}+b_{2m+1}\).</li>
+      <li>Se resta \(S_{2m-1}\) a cada lado: \(S_{2m+1}-S_{2m-1}=-b_{2m}+b_{2m+1}\). Con números (\(m=1\)): \(S_{3}-S_{1}=-b_{2}+b_{3}=-\dfrac{1}{2}+\dfrac{1}{4}=-\dfrac{2}{4}+\dfrac{1}{4}=-\dfrac{1}{4}\); y en efecto \(\dfrac{3}{4}-1=\dfrac{3}{4}-\dfrac{4}{4}=-\dfrac{1}{4}\). ✓</li>
       <li>Como \(b\) decrece, \(b_{2m+1}\le b_{2m}\); entonces \(-b_{2m}+b_{2m+1}\le 0\) y \(S_{2m+1}\le S_{2m-1}\). Las sumas parciales de lugar impar no suben: \(S_{1}\ge S_{3}\ge S_{5}\ge\cdots\)</li>
     </ol>
     <p><b>Comprobación con la serie de la animación</b> (\(b_{n}=\dfrac{1}{2^{\,n-1}}\), que decrece): las de lugar par son \(S_{2}=\dfrac{1}{2}=\dfrac{4}{8}\) y \(S_{4}=\dfrac{5}{8}\), y \(\dfrac{4}{8}\le\dfrac{5}{8}\); las de lugar impar son \(S_{1}=1=\dfrac{16}{16}\), \(S_{3}=\dfrac{3}{4}=\dfrac{12}{16}\) y \(S_{5}=\dfrac{11}{16}\), y \(\dfrac{16}{16}\ge\dfrac{12}{16}\ge\dfrac{11}{16}\).</p>
@@ -262,6 +266,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H16 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H16 · v002 · Pendiente de APR</span>
 </footer>
 </article>

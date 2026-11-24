@@ -12,7 +12,9 @@
       <li><b>Convergencia absoluta y condicional</b></li>
     </ol>
     <h1>Convergencia absoluta y condicional</h1>
-    <p class="lede">A una serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) se le pueden quitar los signos: queda \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\), la serie de los tamaños de sus términos. Si esa serie sin signos converge, la serie original <b>converge absolutamente</b>, y entonces también converge. Si la serie original converge pero la serie sin signos diverge, <b>converge condicionalmente</b>: converge solo gracias a los signos. \[\sum_{n=1}^{\infty}|a_{n}|\ \text{ converge}\ \Longrightarrow\ \sum_{n=1}^{\infty}a_{n}\ \text{ converge}\]</p>
+    <p class="lede">Una <b>serie</b> \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) es una suma de infinitos términos, y <b>converge</b> cuando sus sumas parciales se acercan a un número. A una serie se le pueden quitar los signos: cada término \(a_{n}\) se cambia por su <b>valor absoluto</b> \(|a_{n}|\), que es su tamaño sin el signo (por ejemplo, \(\left|-\dfrac{1}{2}\right|=\dfrac{1}{2}\) y \(\left|\dfrac{1}{4}\right|=\dfrac{1}{4}\)). Queda \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\), la serie sin signos. Con la serie \(1-\dfrac{1}{2}+\dfrac{1}{4}-\dfrac{1}{8}+\cdots\), la serie sin signos es \(1+\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\cdots\)</p>
+    <p class="lede"><b>De dónde sale la idea.</b> Se calculan, una bajo otra, las sumas parciales con signos (\(S_{n}\)), las sumas parciales sin signos (\(T_{n}\)) y la suma de las dos (\(C_{n}=S_{n}+T_{n}\)): \[\begin{aligned}n=1:&\quad S_{1}=1&&T_{1}=1&&C_{1}=1+1=2\\ n=2:&\quad S_{2}=1-\dfrac{1}{2}=\dfrac{1}{2}&&T_{2}=1+\dfrac{1}{2}=\dfrac{3}{2}&&C_{2}=\dfrac{1}{2}+\dfrac{3}{2}=2\\ n=3:&\quad S_{3}=\dfrac{1}{2}+\dfrac{1}{4}=\dfrac{3}{4}&&T_{3}=\dfrac{3}{2}+\dfrac{1}{4}=\dfrac{7}{4}&&C_{3}=\dfrac{3}{4}+\dfrac{7}{4}=\dfrac{5}{2}\\ n=4:&\quad S_{4}=\dfrac{3}{4}-\dfrac{1}{8}=\dfrac{5}{8}&&T_{4}=\dfrac{7}{4}+\dfrac{1}{8}=\dfrac{15}{8}&&C_{4}=\dfrac{5}{8}+\dfrac{15}{8}=\dfrac{5}{2}\end{aligned}\] La regularidad: las \(T_{n}\) solo suben (se suman tamaños, que son positivos) y no pasan de \(2\). Las \(C_{n}\) tampoco bajan: cuando el término es positivo se suma dos veces, y cuando es negativo se anula con su tamaño; y no pasan del doble del tope de las \(T_{n}\), que es \(4\). Las \(S_{n}\), que suben y bajan, se recuperan restando: \(S_{n}=C_{n}-T_{n}\) (por ejemplo, \(S_{4}=\dfrac{5}{2}-\dfrac{15}{8}=\dfrac{20}{8}-\dfrac{15}{8}=\dfrac{5}{8}\)). Como las \(C_{n}\) y las \(T_{n}\) se acercan cada una a un número, su resta también.</p>
+    <p class="lede">Por eso: si la serie sin signos converge, la serie original también converge. Se dice entonces que la serie original <b>converge absolutamente</b>. \[\sum_{n=1}^{\infty}|a_{n}|\ \text{ converge}\ \Longrightarrow\ \sum_{n=1}^{\infty}a_{n}\ \text{ converge}\] Se lee: «si la sumatoria de los valores absolutos de \(a\) sub \(n\), desde \(n\) igual a \(1\) hasta infinito, converge, entonces la sumatoria de los \(a\) sub \(n\) converge». La flecha \(\Longrightarrow\) se lee «entonces». Al revés no vale: hay series que convergen y cuya serie sin signos diverge, como \(1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\cdots\) (se demuestra más abajo). De esas se dice que <b>convergen condicionalmente</b>: convergen solo gracias a los signos.</p>
   </section>
 </header>
 
@@ -53,10 +55,11 @@
   <div class="card k2">
     <h3>Teorema: si converge absolutamente, converge. Demostración paso a paso</h3>
     <p><b>Teorema.</b> Si \(\displaystyle\sum_{n=1}^{\infty}|a_{n}|\) converge, entonces \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge.</p>
+    <p><b>Qué se demuestra:</b> que las sumas parciales con signos, \(S_{n}\), tienen límite real, sabiendo solo que las sumas parciales sin signos, \(T_{n}\), lo tienen. <b>Cómo funciona el método:</b> es lo que se hizo con números en el encabezado. Las \(S_{n}\) suben y bajan, y para una sucesión así no hay una regla directa. Entonces se arma una serie auxiliar (de ayuda) sumando a cada término su tamaño: sus sumas parciales \(C_{n}\) no bajan y tienen tope, así que tienen límite. Al final se recupera \(S_{n}=C_{n}-T_{n}\), resta de dos sucesiones que tienen límite.</p>
     <ol class="steps">
       <li><b>Una serie auxiliar.</b> Para cada \(n\) se define \(c_{n}=a_{n}+|a_{n}|\): a cada término se le suma su tamaño.</li>
-      <li><b>Si \(a_{n}\ge 0\):</b> \(|a_{n}|=a_{n}\). Entonces \(c_{n}=a_{n}+a_{n}=2\,a_{n}=2\,|a_{n}|\), que es mayor o igual que \(0\).</li>
-      <li><b>Si \(a_{n}&lt;0\):</b> \(|a_{n}|=-a_{n}\). Entonces \(c_{n}=a_{n}+(-a_{n})=0\), y \(2\,|a_{n}|&gt;0\).</li>
+      <li><b>Si \(a_{n}\ge 0\):</b> \(|a_{n}|=a_{n}\). Entonces \(c_{n}=a_{n}+a_{n}=2\,a_{n}=2\,|a_{n}|\), que es mayor o igual que \(0\). Con números: si \(a_{1}=1\), \(c_{1}=1+|1|=1+1=2\).</li>
+      <li><b>Si \(a_{n}&lt;0\):</b> \(|a_{n}|=-a_{n}\). Entonces \(c_{n}=a_{n}+(-a_{n})=0\), y \(2\,|a_{n}|&gt;0\). Con números: si \(a_{2}=-\dfrac{1}{2}\), \(c_{2}=-\dfrac{1}{2}+\left|-\dfrac{1}{2}\right|=-\dfrac{1}{2}+\dfrac{1}{2}=0\).</li>
       <li>En los dos casos: \(0\le c_{n}\le 2\,|a_{n}|\), es decir, \[0\le a_{n}+|a_{n}|\le 2\,|a_{n}|\]</li>
       <li><b>Las sumas parciales sin signos crecen.</b> \(T_{n+1}=T_{n}+|a_{n+1}|\). Se resta \(T_{n}\) a cada lado: \(T_{n+1}-T_{n}=|a_{n+1}|\ge 0\). Entonces \(T_{n+1}\ge T_{n}\).</li>
       <li>Por hipótesis, \(\displaystyle\sum|a_{n}|\) converge: las \(T_{n}\) tienen límite real. Se llama \(T\). Como las \(T_{n}\) crecen y tienen límite \(T\): \(T_{n}\le T\) para todo \(n\) (aviso de rigor, 2).</li>
@@ -65,7 +68,7 @@
       <li>Por el paso 6, \(T_{n}\le T\). Se multiplica por \(2\), que es positivo: \(2\,T_{n}\le 2\,T\). Entonces \(C_{n}\le 2\,T\) para todo \(n\).</li>
       <li>Las \(C_{n}\) son crecientes y acotadas por arriba: tienen límite real (aviso, 2). Se llama \(C\).</li>
       <li><b>Se vuelve a la serie original.</b> De \(c_{k}=a_{k}+|a_{k}|\), restando \(|a_{k}|\) a cada lado: \(a_{k}=c_{k}-|a_{k}|\).</li>
-      <li>Se suma desde \(k=1\) hasta \(k=n\) y se agrupan los sumandos (aviso, 4): \(\displaystyle\sum_{k=1}^{n}a_{k}=\sum_{k=1}^{n}c_{k}-\sum_{k=1}^{n}|a_{k}|\), es decir, \(S_{n}=C_{n}-T_{n}\).</li>
+      <li>Se suma desde \(k=1\) hasta \(k=n\) y se agrupan los sumandos (aviso, 4): \(\displaystyle\sum_{k=1}^{n}a_{k}=\sum_{k=1}^{n}c_{k}-\sum_{k=1}^{n}|a_{k}|\), es decir, \(S_{n}=C_{n}-T_{n}\). Con los números del encabezado: \(S_{3}=C_{3}-T_{3}=\dfrac{5}{2}-\dfrac{7}{4}=\dfrac{10}{4}-\dfrac{7}{4}=\dfrac{3}{4}\). ✓</li>
       <li>Límite de una resta (aviso, 3): \(\displaystyle\lim_{n\to\infty}S_{n}=C-T\). Las sumas parciales \(S_{n}\) tienen límite real: la serie \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) converge.</li>
     </ol>
     <p><b>Dicho al revés.</b> Si \(\displaystyle\sum a_{n}\) diverge, entonces \(\displaystyle\sum|a_{n}|\) también diverge: si convergiera, por el teorema \(\displaystyle\sum a_{n}\) convergería.</p>
@@ -261,6 +264,6 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H18 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H18 · v002 · Pendiente de APR</span>
 </footer>
 </article>

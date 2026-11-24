@@ -12,7 +12,9 @@
       <li><b>Criterio del cociente para la convergencia</b></li>
     </ol>
     <h1>Criterio del cociente para la convergencia</h1>
-    <p class="lede">Para saber si una serie converge, se divide cada término por el anterior, sin los signos, y se mira a qué número \(L\) se acercan esos cocientes. Si \(L&lt;1\), los términos terminan achicándose al menos tan rápido como los de una serie geométrica, y la serie converge. Si \(L&gt;1\), terminan creciendo, y la serie diverge. Si \(L=1\), el criterio no decide. \[L=\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_{n}}\right|\qquad\begin{cases}L&lt;1: &amp; \text{converge absolutamente}\\ L&gt;1: &amp; \text{diverge}\\ L=1: &amp; \text{no decide}\end{cases}\]</p>
+    <p class="lede">Una <b>serie</b> es una suma de infinitos términos, \(a_{1}+a_{2}+a_{3}+\cdots\), y <b>converge</b> cuando sus sumas parciales se acercan a un número. El <b>cociente</b> de dos términos seguidos es el término que sigue dividido por el término: \(\dfrac{a_{n+1}}{a_{n}}\). Dice por cuánto hay que multiplicar un término para obtener el siguiente.</p>
+    <p class="lede"><b>De dónde sale el criterio.</b> En una serie geométrica, como \(1+\dfrac{1}{2}+\dfrac{1}{4}+\dfrac{1}{8}+\cdots\), el cociente es siempre el mismo número, la razón \(r\) (aquí \(\dfrac{1}{2}:1=\dfrac{1}{2}\), \(\dfrac{1}{4}:\dfrac{1}{2}=\dfrac{1}{2}\), \(\dfrac{1}{8}:\dfrac{1}{4}=\dfrac{1}{2}\)), y la serie converge cuando \(|r|&lt;1\) (hoja «Series geométricas infinitas»). En otras series el cociente cambia de un término a otro. Con \(\dfrac{1}{2}+\dfrac{2}{4}+\dfrac{3}{8}+\dfrac{4}{16}+\dfrac{5}{32}+\cdots\), donde \(a_{n}=\dfrac{n}{2^{n}}\), se calculan uno por uno: \[\begin{aligned}\text{para }n=1:&\quad\dfrac{a_{2}}{a_{1}}=\dfrac{2}{4}:\dfrac{1}{2}=\dfrac{2}{4}\cdot\dfrac{2}{1}=\dfrac{4}{4}=1\\ \text{para }n=2:&\quad\dfrac{a_{3}}{a_{2}}=\dfrac{3}{8}:\dfrac{2}{4}=\dfrac{3}{8}\cdot\dfrac{4}{2}=\dfrac{12}{16}=\dfrac{3}{4}=0{,}75\\ \text{para }n=3:&\quad\dfrac{a_{4}}{a_{3}}=\dfrac{4}{16}:\dfrac{3}{8}=\dfrac{4}{16}\cdot\dfrac{8}{3}=\dfrac{32}{48}=\dfrac{2}{3}\approx 0{,}67\\ \text{para }n=4:&\quad\dfrac{a_{5}}{a_{4}}=\dfrac{5}{32}:\dfrac{4}{16}=\dfrac{5}{32}\cdot\dfrac{16}{4}=\dfrac{80}{128}=\dfrac{5}{8}=0{,}625\end{aligned}\] La regularidad: los cocientes bajan y se acercan a \(\dfrac{1}{2}\) (más abajo se demuestra: el cociente es \(\dfrac{n+1}{2n}=\dfrac{1}{2}+\dfrac{1}{2n}\)). Como desde el segundo ninguno pasa de \(\dfrac{3}{4}\), cada término es a lo más \(\dfrac{3}{4}\) del anterior: los términos se achican al menos tan rápido como los de una serie geométrica de razón \(\dfrac{3}{4}\), que converge. Entonces esta serie también converge.</p>
+    <p class="lede">En general: se divide cada término por el anterior, sin los signos, y se mira a qué número \(L\) se acercan esos cocientes. Si \(L&lt;1\), pasa lo del ejemplo y la serie converge. Si \(L&gt;1\), desde algún lugar cada término es más grande que el anterior, y la serie diverge. Si \(L=1\), el criterio no decide. \[L=\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_{n}}\right|\qquad\begin{cases}L&lt;1: &amp; \text{converge absolutamente}\\ L&gt;1: &amp; \text{diverge}\\ L=1: &amp; \text{no decide}\end{cases}\] Se lee: «\(L\) es el límite, cuando \(n\) tiende a infinito, del valor absoluto de \(a\) sub \(n\) más uno dividido por \(a\) sub \(n\)». Las barras \(|\ |\) son el valor absoluto: el número sin su signo. «Converge absolutamente» quiere decir que converge incluso la serie sin los signos, \(\displaystyle\sum|a_{n}|\), y entonces también la original (hoja «Convergencia absoluta y condicional»).</p>
   </section>
 </header>
 
@@ -52,6 +54,8 @@
 
   <div class="card k2">
     <h3>Demostración paso a paso</h3>
+    <p><b>Qué se demuestra:</b> las dos primeras partes del teorema. Con \(L&lt;1\), que la serie sin signos \(\displaystyle\sum|a_{n}|\) converge; con \(L&gt;1\) (o cocientes que crecen sin tope), que la serie diverge. <b>Cómo funciona el método:</b> en el caso \(L&lt;1\) se elige un número \(r\) entre \(L\) y \(1\); desde algún lugar \(N\), cada término es a lo más \(r\) veces el anterior, y por eso los términos quedan bajo los de una serie geométrica de razón \(r\), cuya suma se conoce. Así las sumas parciales sin signos crecen y tienen tope: tienen límite. En el caso \(L&gt;1\), desde algún lugar los términos crecen, no se acercan a \(0\), y la serie diverge por el criterio del enésimo término.</p>
+    <p><b>Con los números de la animación</b> (\(a_{n}=\dfrac{n}{2^{n}}\), \(L=\dfrac{1}{2}\)): el punto medio entre \(L\) y \(1\) es \(r=\dfrac{\frac{1}{2}+1}{2}=\dfrac{3}{2}:2=\dfrac{3}{4}\). Desde \(N=2\), ningún cociente pasa de \(\dfrac{3}{4}\). Entonces \(a_{3}\le\dfrac{3}{4}\,a_{2}\): \(\dfrac{3}{8}\le\dfrac{3}{4}\cdot\dfrac{1}{2}=\dfrac{3}{8}\) ✓; y \(a_{4}\le\left(\dfrac{3}{4}\right)^{2}a_{2}\): \(\dfrac{1}{4}=\dfrac{8}{32}\le\dfrac{9}{16}\cdot\dfrac{1}{2}=\dfrac{9}{32}\) ✓. El tope de las sumas parciales es \(a_{1}+\dfrac{a_{2}}{1-r}=\dfrac{1}{2}+\dfrac{1}{2}:\dfrac{1}{4}=\dfrac{1}{2}+2=\dfrac{5}{2}\). Ahora, lo mismo con letras.</p>
     <p><b>Caso \(L&lt;1\): la serie converge absolutamente.</b></p>
     <ol class="steps">
       <li><b>Se elige un número \(r\) entre \(L\) y \(1\).</b> Por ejemplo el punto medio, \(r=\dfrac{L+1}{2}\): como \(L&lt;1\), se cumple \(L&lt;\dfrac{L+1}{2}&lt;1\). Queda \(L&lt;r&lt;1\).</li>
@@ -72,7 +76,7 @@
     <p><b>Caso \(L&gt;1\), o cocientes que crecen sin tope: la serie diverge.</b></p>
     <ol class="steps">
       <li>Si los cocientes tienen límite \(L&gt;1\): como \(1&lt;L\), desde algún \(N\) en adelante todos son mayores que \(1\) (aviso, 1, con \(s=1\)). Si crecen sin tope: por la definición, con \(M=1\), desde algún \(N\) en adelante todos son mayores que \(1\). En los dos casos, para todo \(n\ge N\): \(\dfrac{|a_{n+1}|}{|a_{n}|}&gt;1\).</li>
-      <li>Se multiplica cada lado por \(|a_{n}|\), que es positivo: \(|a_{n+1}|&gt;|a_{n}|\), para todo \(n\ge N\). Desde \(N\), cada término es más grande, sin el signo, que el anterior.</li>
+      <li>Se multiplica cada lado por \(|a_{n}|\), que es positivo: \(|a_{n+1}|&gt;|a_{n}|\), para todo \(n\ge N\). Desde \(N\), cada término es más grande, sin el signo, que el anterior. Con números: en \(\displaystyle\sum\dfrac{2^{n}}{n}\) los términos son \(2,\ 2,\ \dfrac{8}{3},\ 4,\ \dfrac{32}{5},\ \ldots\); el cociente \(\dfrac{a_{3}}{a_{2}}=\dfrac{8}{3}:2=\dfrac{8}{6}=\dfrac{4}{3}\) es mayor que \(1\), y \(a_{3}=\dfrac{8}{3}&gt;2=a_{2}\).</li>
       <li>Se encadena: \(|a_{N}|&lt;|a_{N+1}|&lt;|a_{N+2}|&lt;\cdots\) Entonces \(|a_{n}|\ge|a_{N}|\) para todo \(n\ge N\), y \(|a_{N}|&gt;0\) porque \(a_{N}\ne 0\).</li>
       <li>Desde \(N\) en adelante ningún término está a menos de \(|a_{N}|\) de \(0\): la sucesión \(a_{n}\) no tiene límite \(0\) (aviso, 4).</li>
       <li>Por el criterio del enésimo término (hoja «Criterio del enésimo término»), \(\displaystyle\sum_{n=1}^{\infty}a_{n}\) diverge.</li>
@@ -271,7 +275,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H19 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H19 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->

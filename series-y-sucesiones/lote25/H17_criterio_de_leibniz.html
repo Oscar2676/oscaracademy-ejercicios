@@ -162,7 +162,10 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Criterio de Leibniz</b></li>
     </ol>
     <h1>Criterio de Leibniz</h1>
-    <p class="lede">Una serie alternante suma y resta por turnos: \(b_{1}-b_{2}+b_{3}-b_{4}+\cdots\), con cada \(b_{n}&gt;0\). Si el tamaño \(b_{n}\) de sus términos decrece y tiende a cero, la serie converge; y al cortar la suma en \(n\) términos, el error no pasa del primer término que se dejó fuera. \[b_{n}&gt;0,\quad b_{n+1}\le b_{n},\quad \lim_{n\to\infty}b_{n}=0\ \Longrightarrow\ \sum_{n=1}^{\infty}(-1)^{n+1}b_{n}\ \text{ converge}\] \[|S-S_{n}|\le b_{n+1}\]</p>
+    <p class="lede">Una <b>serie alternante</b> suma y resta por turnos: \(b_{1}-b_{2}+b_{3}-b_{4}+\cdots\), con cada \(b_{n}&gt;0\) (\(b_{n}\) es el tamaño del término, sin el signo). Una serie <b>converge</b> cuando sus sumas parciales (\(S_{1}=b_{1}\), \(S_{2}=b_{1}-b_{2}\), \(S_{3}=b_{1}-b_{2}+b_{3}\), …) se acercan a un número, que es la suma \(S\) de la serie. El criterio de Leibniz dice cuándo una serie alternante converge.</p>
+    <p class="lede"><b>De dónde sale.</b> Se calculan las sumas parciales de \(1-\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}+\dfrac{1}{5}-\dfrac{1}{6}+\cdots\), donde \(b_{n}=\dfrac{1}{n}\), una por una, cada una desde la anterior: \[\begin{aligned}S_{1}&=1=\dfrac{60}{60}\\ S_{2}&=1-\dfrac{1}{2}=\dfrac{1}{2}=\dfrac{30}{60}&&\text{bajó }\tfrac{1}{2}\\ S_{3}&=\dfrac{1}{2}+\dfrac{1}{3}=\dfrac{3}{6}+\dfrac{2}{6}=\dfrac{5}{6}=\dfrac{50}{60}&&\text{subió }\tfrac{1}{3}\\ S_{4}&=\dfrac{5}{6}-\dfrac{1}{4}=\dfrac{10}{12}-\dfrac{3}{12}=\dfrac{7}{12}=\dfrac{35}{60}&&\text{bajó }\tfrac{1}{4}\\ S_{5}&=\dfrac{7}{12}+\dfrac{1}{5}=\dfrac{35}{60}+\dfrac{12}{60}=\dfrac{47}{60}&&\text{subió }\tfrac{1}{5}\\ S_{6}&=\dfrac{47}{60}-\dfrac{1}{6}=\dfrac{47}{60}-\dfrac{10}{60}=\dfrac{37}{60}&&\text{bajó }\tfrac{1}{6}\end{aligned}\] Con todas escritas en sesentavos se ve la regularidad. Las de lugar par suben: \(\dfrac{30}{60}\le\dfrac{35}{60}\le\dfrac{37}{60}\). Las de lugar impar bajan: \(\dfrac{60}{60}\ge\dfrac{50}{60}\ge\dfrac{47}{60}\). Y cada par queda bajo cada impar. La distancia entre dos seguidas es el término que se acaba de agregar: \(\dfrac{1}{2}\), \(\dfrac{1}{3}\), \(\dfrac{1}{4}\), \(\dfrac{1}{5}\), \(\dfrac{1}{6}\), cada vez más chica. Las pares, subiendo, y las impares, bajando, se van juntando: entre ellas queda atrapado un solo número, la suma \(S\).</p>
+    <p class="lede">Eso pasó porque los tamaños \(b_{n}\) son positivos, cada uno es menor o igual que el anterior y se acercan a cero. Es el criterio: \[b_{n}&gt;0,\quad b_{n+1}\le b_{n},\quad \lim_{n\to\infty}b_{n}=0\ \Longrightarrow\ \sum_{n=1}^{\infty}(-1)^{n+1}b_{n}\ \text{ converge}\] Se lee: «si \(b\) sub \(n\) es positivo, \(b\) sub \(n\) más uno es menor o igual que \(b\) sub \(n\), y el límite de \(b\) sub \(n\), cuando \(n\) tiende a infinito, es cero, entonces la serie alternante converge». La flecha \(\Longrightarrow\) se lee «entonces».</p>
+    <p class="lede">Además, como \(S\) queda siempre entre dos sumas parciales seguidas, al cortar la suma en \(n\) términos el error no pasa del primer término que se dejó fuera: \[|S-S_{n}|\le b_{n+1}\] Se lee: «la distancia entre \(S\) y \(S\) sub \(n\) es menor o igual que \(b\) sub \(n\) más uno» (las barras \(|\ |\) son el valor absoluto: la distancia entre los dos números, sin signo). Con los números de arriba: \(S\) está entre \(S_{6}=\dfrac{37}{60}\) y \(S_{5}=\dfrac{47}{60}\), que están a \(\dfrac{47}{60}-\dfrac{37}{60}=\dfrac{10}{60}=\dfrac{1}{6}\) una de otra; entonces \(S\) está a \(\dfrac{1}{6}\) o menos de \(S_{5}\), y \(\dfrac{1}{6}=b_{6}\).</p>
   </section>
 </header>
 
@@ -206,12 +209,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración paso a paso</h3>
+    <p><b>Qué se demuestra:</b> dos cosas. Primera: si se cumplen las condiciones (1), (2) y (3), las sumas parciales \(S_{n}\) tienen límite real (la serie converge). Segunda: ese límite \(S\) queda entre dos sumas parciales seguidas, y por eso \(|S-S_{n}|\le b_{n+1}\). <b>Cómo funciona el método:</b> es lo que se vio con números en el encabezado. Se separan las sumas parciales en dos listas: las de lugar par, \(S_{2},\ S_{4},\ S_{6},\ \ldots\) (se escriben \(S_{2m}\), con \(m=1,\ 2,\ 3,\ \ldots\)) y las de lugar impar, \(S_{1},\ S_{3},\ S_{5},\ \ldots\) (se escriben \(S_{2m+1}\) o \(S_{2m-1}\)). Se demuestra que las pares suben y tienen tope, así que tienen límite; y que las impares se acercan a ese mismo límite.</p>
     <p><b>Primero: la serie converge.</b></p>
     <ol class="steps">
-      <li><b>Las sumas de índice par crecen.</b> Para pasar de \(S_{2m}\) a \(S_{2m+2}\) se suma \(b_{2m+1}\) y se resta \(b_{2m+2}\): \(S_{2m+2}=S_{2m}+b_{2m+1}-b_{2m+2}\).</li>
+      <li><b>Las sumas de índice par crecen.</b> Para pasar de \(S_{2m}\) a \(S_{2m+2}\) se suma \(b_{2m+1}\) y se resta \(b_{2m+2}\): \(S_{2m+2}=S_{2m}+b_{2m+1}-b_{2m+2}\). Con números (\(b_{n}=\dfrac{1}{n}\), \(m=1\)): \(S_{4}=S_{2}+b_{3}-b_{4}=\dfrac{1}{2}+\dfrac{1}{3}-\dfrac{1}{4}=\dfrac{6}{12}+\dfrac{4}{12}-\dfrac{3}{12}=\dfrac{7}{12}\).</li>
       <li>Se resta \(S_{2m}\) a cada lado: \(S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\).</li>
       <li>Por la condición (2) con \(n=2m+1\): \(b_{2m+2}\le b_{2m+1}\). Entonces \(b_{2m+1}-b_{2m+2}\ge 0\), es decir, \(S_{2m+2}\ge S_{2m}\).</li>
-      <li><b>Están acotadas por \(b_{1}\).</b> Se agrupan los términos de \(S_{2m}\) de a dos, desde el segundo: \(S_{2m}=b_{1}-(b_{2}-b_{3})-(b_{4}-b_{5})-\cdots-(b_{2m-2}-b_{2m-1})-b_{2m}\). (Con \(m=1\) no hay paréntesis: \(S_{2}=b_{1}-b_{2}\).)</li>
+      <li><b>Están acotadas por \(b_{1}\).</b> Se agrupan los términos de \(S_{2m}\) de a dos, desde el segundo: \(S_{2m}=b_{1}-(b_{2}-b_{3})-(b_{4}-b_{5})-\cdots-(b_{2m-2}-b_{2m-1})-b_{2m}\). (Con \(m=1\) no hay paréntesis: \(S_{2}=b_{1}-b_{2}\).) Con números (\(m=2\)): \(S_{4}=b_{1}-(b_{2}-b_{3})-b_{4}=1-\left(\dfrac{1}{2}-\dfrac{1}{3}\right)-\dfrac{1}{4}=1-\dfrac{1}{6}-\dfrac{1}{4}=\dfrac{12}{12}-\dfrac{2}{12}-\dfrac{3}{12}=\dfrac{7}{12}\), que es menor que \(b_{1}=1\).</li>
       <li>Cada paréntesis es mayor o igual que \(0\) por la condición (2), y \(b_{2m}&gt;0\) por la condición (1). A \(b_{1}\) se le restan solo cantidades mayores o iguales que \(0\): \(S_{2m}\le b_{1}\).</li>
       <li>La sucesión \(S_{2},\ S_{4},\ S_{6},\ \ldots\) es creciente y acotada por arriba: tiene límite real (aviso de rigor, 1). Se llama \(S\): \(\displaystyle\lim_{m\to\infty}S_{2m}=S\).</li>
       <li><b>Las de índice impar tienen el mismo límite.</b> Una suma impar es la par anterior más un término: \(S_{2m+1}=S_{2m}+b_{2m+1}\).</li>
@@ -224,9 +228,9 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>Por la condición (2) con \(n=2m\): \(b_{2m+1}\le b_{2m}\). Entonces \(-b_{2m}+b_{2m+1}\le 0\), es decir, \(S_{2m+1}\le S_{2m-1}\).</li>
       <li>Las pares crecen y tienen límite \(S\): cada una es menor o igual que \(S\). Las impares decrecen y tienen límite \(S\): cada una es mayor o igual que \(S\) (aviso, 1). Para todo \(m\ge 1\): \(S_{2m}\le S\le S_{2m+1}\) y también \(S_{2m}\le S\le S_{2m-1}\).</li>
       <li><b>Cota con \(n\) par, \(n=2m\).</b> De \(S_{2m}\le S\): \(0\le S-S_{2m}\). De \(S\le S_{2m+1}\), restando \(S_{2m}\) a cada lado: \(S-S_{2m}\le S_{2m+1}-S_{2m}\).</li>
-      <li>Como \(S_{2m+1}=S_{2m}+b_{2m+1}\), esa resta vale \(S_{2m+1}-S_{2m}=b_{2m+1}\). Queda \(0\le S-S_{2m}\le b_{2m+1}\).</li>
+      <li>Como \(S_{2m+1}=S_{2m}+b_{2m+1}\), esa resta vale \(S_{2m+1}-S_{2m}=b_{2m+1}\). Queda \(0\le S-S_{2m}\le b_{2m+1}\). Con números (\(m=2\)): \(0\le S-S_{4}\le b_{5}=\dfrac{1}{5}\); la suma está a \(\dfrac{1}{5}\) o menos de \(S_{4}=\dfrac{7}{12}\).</li>
       <li><b>Cota con \(n\) impar, \(n=2m-1\).</b> De \(S\le S_{2m-1}\): \(0\le S_{2m-1}-S\). De \(S_{2m}\le S\): al restar algo mayor o igual queda algo menor o igual, \(S_{2m-1}-S\le S_{2m-1}-S_{2m}\).</li>
-      <li>Como \(S_{2m}=S_{2m-1}-b_{2m}\), esa resta vale \(S_{2m-1}-S_{2m}=b_{2m}\). Queda \(0\le S_{2m-1}-S\le b_{2m}\).</li>
+      <li>Como \(S_{2m}=S_{2m-1}-b_{2m}\), esa resta vale \(S_{2m-1}-S_{2m}=b_{2m}\). Queda \(0\le S_{2m-1}-S\le b_{2m}\). Con números (\(m=3\)): \(0\le S_{5}-S\le b_{6}=\dfrac{1}{6}\).</li>
       <li>En los dos casos la distancia entre \(S\) y \(S_{n}\) no pasa del término que sigue: \(|S-S_{n}|\le b_{n+1}\).</li>
     </ol>
   </div>
@@ -419,7 +423,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CI-L25-H17 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H17 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -646,12 +650,14 @@ function ssSub(n){ return ('' + n).split('').map(function(d){ return String.from
 /* gráfica de una sucesión: puntos (n, a(n)), n = 1…N; trazos finos y puntos chicos */
 function ssPlot(o){
   var N = o.N, RUN = o.run || 20;
+  var RG = [], ri; if (o.reg){ for (ri = 1; ri <= N; ri++) RG.push(o.reg(ri)); if (o.regFin) RG.push(o.regFin); } /* registro acumulado (leyes de Óscar): una línea por término, ninguna se borra */
+  var FL = o.fila || 27, FILA = RG.map(function(_, i){ return 6 + FL*i; });
   if (o.guia == null) o.guia = 2; /* criterio de Óscar (22-nov): en toda gráfica de sucesiones, cada término se lleva con punteada a su valor en el eje a_n */
   return {
-    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*0.14}, aspect:o.aspect, _chk:o.chk,
-    aria:o.aria, labels:o.labels, legend:o.legend,
+    world:{x0:-1.6, x1:N + 1.6, y0:o.ymin - o.textH, y1:o.ymax + (o.ymax - o.ymin)*(o.que ? (o.queH || 0.42) : 0.14)}, aspect:o.aspect, _chk:o.chk,
+    aria:o.aria, labels:(o.labels || []).concat(RG.map(function(r, i){ return ['R' + (i + 1), r[0], r[1], i === N ? 'diff' : '']; })), legend:o.legend,
     sliders:[{id:'n', tex:'n', min:1, max:N, step:1, value:1}],
-    anim:{run:RUN*1000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
+    anim:{run:RUN*1000, hold:o.reg ? 3000 : 7000, still:1, apply:function(p, v){ v.q = p; v.n = Math.min(N, 1 + Math.floor(p*(N + 1.5))); v.fin = p*(N + 1.5) >= N + 0.5; }},
     onInput:function(v){ v.q = null; v.fin = v.n >= N; },
     draw:function(S, v){
       var n = Math.round(v.n || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, y, x0, y0, L;
@@ -671,12 +677,13 @@ function ssPlot(o){
         c.fillStyle = C.rise; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(gt, X(0) - 7, gy); }
       if (o.endless && v.fin) txt('…', X(N + 0.8), Y(o.a(N)), 'center', C.sec);
       if (o.extra) o.extra(S, n, !!v.fin, txt);
-      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines(n, !!v.fin);
+      x0 = X(-1.5); y0 = Y(o.ymin) + 34; L = o.lines ? o.lines(n, !!v.fin) : [];
       L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
-      if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+      if (o.reg){ if (o.labels) S.lab('F', 0, 0, 0, 0, false); oaReg(S, n + (o.regFin && v.fin ? 1 : 0), RG.length, -1.5, o.ymin - (62 + 21*L.length)/(Y(0) - Y(1)), FILA); if (o.que) dtQue(S, o.que[0], o.que[1]); }
+      else if (o.labels) S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
     caption:function(v){ return o.caption(Math.round(v.n || 1), !!v.fin); },
-    readout:function(v){ return o.readout(Math.round(v.n || 1), !!v.fin); }
+    readout:function(v){ var n = Math.round(v.n || 1); return o.reg ? dtPasos(RG.slice(0, n + (o.regFin && v.fin ? 1 : 0)).map(function(r){ return r[2] || r[0]; })) : o.readout(n, !!v.fin); }
   };
 }
 /* utilidades del lote 28 (determinantes) */
