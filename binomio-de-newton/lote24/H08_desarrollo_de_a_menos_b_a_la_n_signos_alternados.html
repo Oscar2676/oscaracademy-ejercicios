@@ -456,8 +456,9 @@ window.MathJax = {
       if (!I.playing || !I.cv.offsetParent) { I.t0 = null; return; }
       if (I.t0 === null) I.t0 = ts - I.elapsed;
       I.elapsed = ts - I.t0;
-      var cyc = I.elapsed % (def.anim.run + def.anim.hold);
-      I.apply(Math.min(cyc/def.anim.run, 1)); I.render(false);
+      /* regla de Óscar (23-nov): al terminar, la animación se queda en su estado final, con todo a la vista; no se borra ni vuelve a empezar sola */
+      if (I.elapsed >= def.anim.run){ I.apply(1); I.render(true); I.elapsed = 0; I.pause(); return; }
+      I.apply(I.elapsed/def.anim.run); I.render(false);
     };
     I.playBtn.addEventListener('click', function(){ if (I.playing) I.pause(); else I.play(); });
     resetBtn.addEventListener('click', function(){ I.elapsed = 0; I.t0 = null; I.apply(0); I.render(true); });

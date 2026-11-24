@@ -81,6 +81,14 @@ Antes de cerrar una hoja, recorrerla entera con estas preguntas. Cada «no» se 
 8. **En la lista «Paso a paso» del lienzo no hay saltos:** nada de «de donde \(a_n=\ldots\)»; se muestra la regularidad en las líneas anteriores (\(2+1\cdot 3\), \(2+2\cdot 3\), \(2+3\cdot 3\)) y recién entonces la general.
 9. Se escribe para quien parte de cero: público de todo estrato, enseñanza gratuita. Frases cortas, un paso por línea.
 
+## Quinta ley de Óscar (23-nov, 21:07): «la animación muestra cada cosa que nombra, y nada desaparece»
+Palabras de Óscar: «Las animaciones muestran los pasos 1, 2, 3, 4, 5, 6: aparecen y luego desaparecen. Deben quedar cada uno de los pasos y nunca desaparecer. […] Varias animaciones no muestran o enseñan lo que dicen que hacen. El objetivo de la animación es un apoyo didáctico a la pedagogía de las matemáticas y en consecuencia debe apoyar cada concepto que menciona e incluso mostrarlo o ilustrarlo. Si digo un salame, una rodaja y una redondela, no es lo mismo que mostrar en una animación cada una de ellas.»
+1. **La animación termina y se queda:** el motor ya no vuelve a empezar solo (parche en todas las hojas publicadas y en el molde, 23-nov): al llegar al final queda el estado final completo, con todos los pasos a la vista, hasta que el alumno pulse «Reproducir». No depender de `hold`.
+2. **Cada paso deja algo visible hasta el final** en la figura y en el registro; ninguna frase, pieza, rótulo ni cuenta de un paso se reemplaza por la del siguiente. Si la frase del lienzo cambia en cada paso, su contenido tiene que quedar también en el registro o en la figura.
+3. **Cada concepto que la hoja o la animación nombra se ve en la animación**, con su rótulo: si el texto dice «término», «suma parcial», «diferencia», «salto», «lo que falta», cada uno aparece dibujado y señalado. Lista de control: subraya los sustantivos matemáticos del texto «Cómo leer la animación» y de la franja «Qué muestra»; cada uno debe poder apuntarse con el dedo en la figura.
+4. **La animación hace lo que su título promete.** Si no lo muestra, se rehace; no se arregla con texto.
+5. El resto de los criterios sale de todas las revisiones anteriores de Óscar (secciones de criterios del estado y leyes 1 a 4): repasarlas antes de cerrar cada hoja.
+
 ## Lote en curso desde el 23-nov 12:30 UTC
 El lote 28 y el lote 25 ya no tienen nada por producir. **El lote en curso es el 29 · Límites** (`taller/src/l29/partes/`, ayudantes `_txt.js _det.js _lim.js`, armado `../NN-lim.html`, `python3 taller/build.py 29 "Límites"`, código `CD-L29-HNN`, carpeta `limites/lote29/`, verificador `qa/rigor/verificar_lote_29.py`, tarjeta https://claude.ai/artifact/CAZhB9evwiS3RLpJuy88qo). Modelo: `l29/partes/01.*`. La línea «Faltan» está en la sección «Lote 29» del estado.
 
