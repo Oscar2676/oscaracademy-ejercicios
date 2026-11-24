@@ -12,7 +12,9 @@
       <li><b>Determinar serie de Maclaurin de una función</b></li>
     </ol>
     <h1>Determinar serie de Maclaurin de una función</h1>
-    <p class="lede">La serie de Maclaurin de una función \(f\) es la serie de potencias centrada en \(0\) cuyos coeficientes se fabrican con las derivadas de \(f\) en \(0\): el coeficiente de \(x^{n}\) es la derivada de orden \(n\) en \(0\), dividida por \(n!\). Es la serie de Taylor con centro \(a=0\). Hay dos caminos para determinarla: calcular las derivadas, o partir de una serie ya conocida. Los dos dan los mismos coeficientes. \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\]</p>
+    <p class="lede">Una <b>serie de potencias centrada en \(0\)</b> es una suma sin fin de números multiplicados por potencias de \(x\): \(c_{0}+c_{1}x+c_{2}x^{2}+c_{3}x^{3}+\cdots\) Los números \(c_{0},\ c_{1},\ c_{2},\ \ldots\) son sus <b>coeficientes</b>. La <b>derivada de orden \(n\)</b>, \(f^{(n)}\), es lo que resulta de derivar \(f\) \(n\) veces seguidas. El <b>factorial</b> \(n!\) es el producto de los enteros desde \(1\) hasta \(n\): \(2!=2\), \(3!=3\cdot 2\cdot 1=6\), \(4!=4\cdot 3\cdot 2\cdot 1=24\); además \(0!=1\) y \(1!=1\).</p>
+    <p class="lede"><b>De dónde sale la fórmula.</b> Se prueba una receta de tres pasos (derivar, evaluar en \(0\), dividir por el factorial) con una función cuyo resultado se puede comprobar a mano: \(f(x)=(1+x)^{3}\). \[\begin{aligned}f(x)&=(1+x)^{3}&f(0)&=1^{3}=1&\dfrac{1}{0!}&=\dfrac{1}{1}=1\\ f'(x)&=3(1+x)^{2}&f'(0)&=3\cdot 1^{2}=3&\dfrac{3}{1!}&=\dfrac{3}{1}=3\\ f''(x)&=3\cdot 2\,(1+x)=6(1+x)&f''(0)&=6\cdot 1=6&\dfrac{6}{2!}&=\dfrac{6}{2}=3\\ f'''(x)&=6&f'''(0)&=6&\dfrac{6}{3!}&=\dfrac{6}{6}=1\\ f^{(4)}(x)&=0&f^{(4)}(0)&=0&\dfrac{0}{4!}&=0\end{aligned}\] Desde la cuarta, todas las derivadas valen \(0\). Con esos coeficientes la serie es \(1+3x+3x^{2}+x^{3}+0+0+\cdots\), que es el cubo del binomio: \((1+x)^{3}=1+3x+3x^{2}+x^{3}\). La receta devolvió la función ✓. Comprobación en \(x=1\): \((1+1)^{3}=2^{3}=8\) y \(1+3+3+1=8\) ✓. <b>Por qué se divide por el factorial.</b> Al derivar \(x^{3}\) tres veces queda \(\big(x^{3}\big)'=3x^{2}\), \(\big(3x^{2}\big)'=6x\), \(\big(6x\big)'=6\): el coeficiente \(1\) de \(x^{3}\) llega a la tercera derivada multiplicado por \(3\cdot 2\cdot 1=6=3!\). Dividir por \(3!\) lo devuelve. El primer recuadro hace esta misma cuenta con letras.</p>
+    <p class="lede">En general: la serie de Maclaurin de una función \(f\) es la serie de potencias centrada en \(0\) cuyos coeficientes se fabrican con las derivadas de \(f\) en \(0\): el coeficiente de \(x^{n}\) es la derivada de orden \(n\) en \(0\), dividida por \(n!\). Es la serie de Taylor con centro \(a=0\). Hay dos caminos para determinarla: calcular las derivadas, o partir de una serie ya conocida. Los dos dan los mismos coeficientes. \[\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}=f(0)+f'(0)\,x+\dfrac{f''(0)}{2!}\,x^{2}+\dfrac{f'''(0)}{3!}\,x^{3}+\cdots\] Se lee: «la sumatoria, desde \(n\) igual a cero hasta infinito, de la derivada de orden \(n\) de \(f\) en cero, dividida por \(n\) factorial, por \(x\) elevado a \(n\)».</p>
   </section>
 </header>
 
@@ -40,6 +42,7 @@
   <div class="card k1">
     <h3>De dónde sale la fórmula, y la definición</h3>
     <p>Se parte de una función que ya está representada por una serie de potencias centrada en \(0\) (hojas «Series de potencias» y «Representación de funciones como series de potencias»): \[f(x)=\sum_{n=0}^{\infty}c_{n}\,x^{n}=c_{0}+c_{1}x+c_{2}x^{2}+c_{3}x^{3}+c_{4}x^{4}+\cdots\qquad\text{si }|x|&lt;R,\ \text{con }R&gt;0\] Pregunta: ¿cuánto valen los coeficientes \(c_{0},\ c_{1},\ c_{2},\ \ldots\)?</p>
+    <p><b>Qué se demuestra:</b> que los coeficientes de esa serie quedan obligados por la función: \(c_{n}=\dfrac{f^{(n)}(0)}{n!}\). <b>Cómo funciona el método:</b> se repiten dos operaciones. <b>Evaluar en \(x=0\)</b> borra todos los términos que tienen \(x\) y deja uno solo a la vista. <b>Derivar</b> baja en uno cada exponente y trae al frente el coeficiente siguiente. <b>Con números:</b> es la cuenta del encabezado; ahí la función era \(1+3x+3x^{2}+x^{3}\) y salieron sus coeficientes \(1\), \(3\), \(3\), \(1\).</p>
     <ol class="steps">
       <li><b>Se evalúa en \(x=0\).</b> Todos los términos con \(x\) valen \(0\), porque \(0^{n}=0\) para \(n\ge 1\). Queda \(f(0)=c_{0}\). Entonces \(c_{0}=f(0)\).</li>
       <li><b>Se deriva.</b> Por el teorema de derivación término a término (hoja «Representación de funciones como series de potencias»; ahí se enuncia sin demostrar), si \(|x|&lt;R\): \[f'(x)=c_{1}+2c_{2}x+3c_{3}x^{2}+4c_{4}x^{3}+\cdots\] Se evalúa en \(x=0\): queda \(f'(0)=c_{1}\). Entonces \(c_{1}=f'(0)\).</li>
@@ -87,6 +90,7 @@
       <li>Es la misma serie: el coeficiente de \(x^{m}\) es \((-1)^{m}(m+1)\) por los dos caminos, como asegura la unicidad. El camino 2 agrega lo que el camino 1 no daba: la suma de la serie es \(\dfrac{1}{(1+x)^{2}}\) para todo \(x\) con \(|x|&lt;1\) (con el teorema enunciado en esa hoja).</li>
     </ol>
     <p><b>Funciones pares e impares (demostrado con la regla de la cadena).</b> \(f\) es <b>par</b> si \(f(-x)=f(x)\) para todo \(x\) de su dominio, e <b>impar</b> si \(f(-x)=-f(x)\). Se supone que el dominio contiene a \(-x\) siempre que contiene a \(x\), y que \(f\) tiene derivadas de todos los órdenes.</p>
+    <p><b>Qué se demuestra:</b> que la serie de Maclaurin de una función par tiene solo potencias pares de \(x\), y la de una impar, solo potencias impares. <b>Cómo funciona el método:</b> se muestra que al derivar se alternan «par» e «impar», y que una función impar vale \(0\) en \(0\); entonces, una de cada dos derivadas vale \(0\) en \(0\), y su coeficiente es \(0\). <b>Primero con números.</b> \(f(x)=x^{2}\) es par: \(f(-3)=(-3)^{2}=9\) y \(f(3)=3^{2}=9\). Su derivada, \(2x\), es impar: \(2\cdot(-3)=-6\) y \(-(2\cdot 3)=-6\); y vale \(0\) en \(0\). \(g(x)=x^{3}\) es impar: \(g(-2)=(-2)^{3}=-8\) y \(-g(2)=-(2^{3})=-8\); y \(g(0)=0\). Su derivada, \(3x^{2}\), es par: \(3\cdot(-2)^{2}=12\) y \(3\cdot 2^{2}=12\). Un polinomio es su propia serie de Maclaurin (ejemplo 3): la de \(x^{2}\) tiene solo una potencia par, y la de \(x^{3}\), solo una impar.</p>
     <ol class="steps">
       <li><b>Una función impar vale \(0\) en \(0\).</b> Con \(x=0\) en \(g(-x)=-g(x)\): \(g(0)=-g(0)\). Se suma \(g(0)\) a cada lado: \(2\,g(0)=0\). Entonces \(g(0)=0\).</li>
       <li><b>La derivada de una par es impar.</b> Se deriva cada lado de \(f(-x)=f(x)\). A la izquierda, regla de la cadena con \((-x)'=-1\): \(f'(-x)\cdot(-1)=f'(x)\). Se multiplica por \(-1\): \(f'(-x)=-f'(x)\).</li>
@@ -286,7 +290,7 @@
 </section>
 
 <footer>
-  <span class="status">CI-L25-H31 · v001 · Pendiente de APR</span>
+  <span class="status">CI-L25-H31 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
