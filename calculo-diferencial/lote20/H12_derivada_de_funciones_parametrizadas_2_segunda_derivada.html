@@ -467,7 +467,7 @@ window.MathJax = {
       lab: function(id, px, py, ax, ay, show){
         var e = I.labels[id]; if (!e) return;
         e.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) translate(' + ax + '%,' + ay + '%)';
-        e.style.opacity = show ? 1 : 0;
+        e._op = show ? 1 : 0; /* la visibilidad se aplica una sola vez, al final del dibujo: así un rótulo no titila si en el mismo cuadro se oculta y se vuelve a mostrar */
       },
       labW: function(id){ return I.labels[id] ? I.labels[id].offsetWidth : 0; }
     };
@@ -484,6 +484,7 @@ window.MathJax = {
       S.w = I.w; S.h = I.h; c.setLineDash([]); c.lineCap = 'butt';
       c.clearRect(0,0,I.w,I.h); c.fillStyle = S.C.bg; c.fillRect(0,0,I.w,I.h);
       def.draw(S, I.v);
+      Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; if (e._op != null && e._op !== e._cur){ e._cur = e._op; e.style.transition = 'none'; e.style.opacity = e._op; } });
       var now = performance.now(); if (!force && now - I.lastR < 100) return; I.lastR = now;
       if (def.caption){
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
