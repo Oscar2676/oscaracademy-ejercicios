@@ -387,7 +387,7 @@ window.MathJax = {
 
   function Inst(stage, name, def){
     var I = this; I.def = def; I.v = {}; I.labels = {}; I.inputs = {};
-    I.playing = !reduce; I.elapsed = 0; I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
+    I.playing = false; I.auto = false; I.elapsed = 0; /* regla de Óscar (23-nov): no parte sola fuera de la vista; parte desde el paso 1 cuando el alumno llega a ella */ I.t0 = null; I.lastR = 0; I.w = 600; I.h = 600;
     var W = def.world, aspect = def.aspect || 1;
 
     var plot = el('div', 'plot');
@@ -506,8 +506,9 @@ window.MathJax = {
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }
-      var rows = def.readout ? def.readout(I.v) : [];
-      I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; }));
+      var rows = def.readout ? def.readout(I.v) : [], rk = JSON.stringify(rows) + (OA.mj ? '#1' : '#0');
+      if (rk !== I.roKey && (force || !I.playing || !I.roT || now - I.roT > 600)){ I.roKey = rk; I.roT = now; /* la cuenta de abajo solo se vuelve a escribir cuando cambia: no titila */
+        I.ro.replaceChildren.apply(I.ro, rows.map(function(t){ var d = el('div', t[0]); setTex(d, t[1]); return d; })); }
     };
     I.typesetLabels = function(){ Object.keys(I.labels).forEach(function(k){ var e = I.labels[k]; setTex(e, e.dataset.tex, e.dataset.fb); }); };
     I.pause = function(){ I.playing = false; I.t0 = null; I.playBtn.textContent = 'Reproducir'; };
@@ -526,6 +527,10 @@ window.MathJax = {
     I.playBtn.textContent = I.playing ? 'Pausar' : 'Reproducir';
     I.apply(reduce ? (def.anim.still || 0.3) : 0);
     if (window.ResizeObserver) new ResizeObserver(I.resize).observe(I.cv); else window.addEventListener('resize', I.resize);
+    if (!reduce && window.IntersectionObserver) new IntersectionObserver(function(es){ es.forEach(function(e){
+      if (e.isIntersecting && e.intersectionRatio >= 0.5){ if (!I.auto){ I.auto = true; I.elapsed = 0; I.apply(0); I.play(); } else if (I.away){ I.away = false; I.play(); } }
+      else if (I.playing && !e.isIntersecting){ I.away = true; I.pause(); } }); }, {threshold:[0, 0.5]}).observe(I.cv);
+    else if (!reduce) I.playing = true;
   }
 
   function renderAll(){ OA.insts.forEach(function(i){ i.render(true); }); }
