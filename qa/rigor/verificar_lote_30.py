@@ -994,7 +994,7 @@ for p_ in RJ:
     for q_ in (Fr(1, 4), Fr(1), Fr(5, 4), Fr(3)):
         ok((abs(p_) < q_) == (-q_ < p_ < q_) and abs(p_*q_) == abs(p_)*abs(q_), 'H06 v002 avisos: |t| < c ⟺ −c < t < c y |p·q| = |p|·|q| (rejilla)')
 # quinta ley: cada cosa que «Cómo leerla» nombra tiene su rótulo en la figura
-ok("if (ap(1) > 0.9){ frase('hueco', MF, B, K, 9, 13, mu); frase('punto lleno', MF, B, FB, 8, -10, mu); }" in E6 and en6('(rótulo «hueco»)', '(rótulo «punto lleno»)', 'rótulo «hacia 2»', 'rótulo «hacia 3»', 'rótulo «solo aquí g vale 2»', 'anillo burdeo sobre el punto lleno', 'anillo naranjo sobre el hueco', '\\(h(0{,}9)=2{,}9\\) y \\(h(1{,}1)=3{,}1\\)'), 'H06 v002 escena: rótulos «hueco» y «punto lleno», y lo que «Cómo leerla» nombra')
+ok("if (ap(1) > 0.9){ frase('hueco', MF, B, K, 8, 30, mu); frase('punto lleno', MF, B, FB, 8, -10, mu); }" in E6 and en6('(rótulo «hueco»)', '(rótulo «punto lleno»)', 'rótulo «hacia 2»', 'rótulo «hacia 3»', 'rótulo «solo aquí g vale 2»', 'anillo burdeo sobre el punto lleno', 'anillo naranjo sobre el hueco', '\\(h(0{,}9)=2{,}9\\) y \\(h(1{,}1)=3{,}1\\)'), 'H06 v002 escena: rótulos «hueco» y «punto lleno», y lo que «Cómo leerla» nombra')
 # <<< H06
 
 # >>> H06 ESPER
