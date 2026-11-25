@@ -1047,6 +1047,9 @@ ok(A8.count('hecho 1 del aviso') >= 9 and A8.count('hecho 3 del aviso') >= 2 and
 # >>> H09
 # ───────── H09: usar tablas para aproximar límites (fórmulas con raíz: valores redondeados, margen de error declarado) ─────────
 A9, E9 = molde('09', 'H09_usar_tablas_para_aproximar_limites.html', 'Usar tablas para aproximar límites', 'lim-usar', 'Límites a partir de tablas', ['usa-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001 para H09; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e9 for e9 in err if e9 != 'H09 título, ruta y pie']
+ok('<h1>Usar tablas para aproximar límites</h1>' in A9 and '<span class="status">CD-L29-H09 · v002 · Pendiente de APR</span>' in A9 and A9.count('<span class="status">') == 1 and 'v001' not in A9 and '<li>Límites a partir de tablas</li>\n      <li><b>Usar tablas para aproximar límites</b></li>' in A9, 'H09 v002 título, ruta y pie')
 import math
 def rex9(q):
     """raíz exacta de un racional (o None si no es cuadrado perfecto)"""
@@ -1115,8 +1118,10 @@ def comprobar9():
     # 3) cada raíz escrita con ≈ en la hoja (fuera de las tablas) y cada «función(número) ≈ número»
     n = 0
     for m in re.finditer(r'\\sqrt\{(%s)\}\\approx (%s)' % (NUMTEX, NUMTEX), A9):
-        q, r = D(m.group(1)), D(m.group(2)); n += 1; ok(enc9(q, r, Fr(5, 10**9) if ndec(r) == 8 else Fr(5, 10**7)), 'H09 hoja: √%s ≈ %s mal redondeada' % (m.group(1), m.group(2)))
-    ok(n == 10, 'H09 hoja: se esperaban 10 raíces con ≈ en el texto y hay %d' % n)
+        # v002: decimales declarados de cada raíz: 6 (e = 0,0000005), salvo las de 8 y 10 decimales y las dos del recuadro 3 y del aviso (2 decimales, e = 0,005)
+        q, r = D(m.group(1)), D(m.group(2)); n += 1; e2 = (q, r) in ((Fr('3.9'), Fr('1.97')), (Fr('3.99'), Fr(2)))
+        ok(enc9(q, r, Fr(5, 10**3) if e2 else Fr(5, 10**(ndec(r) + 1)) if ndec(r) in (8, 10) else Fr(5, 10**7)), 'H09 hoja: √%s ≈ %s mal redondeada' % (m.group(1), m.group(2)))
+    ok(n == 17, 'H09 v002 hoja: se esperaban 17 raíces con ≈ en el texto y hay %d' % n)
     def aprox9(et, textos, minimo):
         k = 0
         for mt in textos:
@@ -1167,6 +1172,75 @@ def comprobar9():
         ok(all('\\tfrac{0{,}0000005}{%s}=%s' % (t9(Fr(1, 10**k)), t9(Fr(5, 10**(7 - k)))) in L for k in (1, 2, 3)) and '0{,}25-0{,}0005=0{,}2495' in L and '0{,}25+0{,}0005=0{,}2505' in L, 'H09 escena: márgenes en la lectura')
         lab = {l[0]: l for l in J['lab']}
         ok(lab['R3'][1].endswith(';\\ '.join(t9(v) for v in VS9[:3])) and lab['R4'][1].endswith(';\\ '.join(t9(v) for v in VS9[3:])) and lab['R5'][1].endswith('0{,}000005;\\ 0{,}00005;\\ 0{,}0005'), 'H09 escena: registro R3, R4 y R5')
+    # 8) revisión general (25-nov): cuentas nuevas de la v002
+    F = lambda s: Fr(s); e6 = Fr(5, 10**7); en = lambda *cads: all(c in A9 for c in cads)
+    # encabezado: la raíz de 3,9, su redondeo y «de dónde sale el margen, con números»
+    lo, hi = cota9(F('3.9')); r10 = F('1.9748417658'); rz6 = F('1.974842')
+    ok(r10 <= lo and hi < r10 + Fr(1, 10**10) and rex9(F('3.9')) is None and en('\\(\\sqrt{3{,}9}\\) empieza \\(1{,}9748417658\\)', 'el sexto decimal es \\(1\\) y la cifra que sigue es \\(7\\)'), 'H09 v002 encabezado: las diez primeras cifras decimales de √3,9')
+    ok(int(r10*10**6) % 10 == 1 and int(r10*10**7) % 10 == 7 and 7 > 5 and (int(r10*10**6) + 1)/Fr(10**6) == rz6 and enc9(F('3.9'), rz6, e6) and 3*3 == 9, 'H09 v002 encabezado: redondeo a 6 decimales')
+    ok(rz6 - 2 == F('-0.025158') and F('3.9') - 4 == F('-0.1') and F('-0.025158')/F('-0.1') == F('0.25158') and rz6 - e6 == F('1.9748415') and rz6 + e6 == F('1.9748425'), 'H09 v002 encabezado: fila x = 3,9 y extremos de la raíz')
+    ok((F('1.9748415') - 2, F('-0.0251585')/F('-0.1'), F('1.9748425') - 2, F('-0.0251575')/F('-0.1')) == (F('-0.0251585'), F('0.251585'), F('-0.0251575'), F('0.251575')) and F('0.251585') - F('0.25158') == F('0.25158') - F('0.251575') == F('0.000005') == e6/F('0.1'), 'H09 v002 encabezado: la cuenta con los dos extremos da el margen')
+    lo, hi = real9('f', F('3.9')); ok(F('0.251575') <= lo and hi <= F('0.251585'), 'H09 v002 encabezado: el valor real de f(3,9) está entre 0,251575 y 0,251585')
+    ok(en('1{,}974842-0{,}0000005=1{,}9748415', '1{,}974842+0{,}0000005=1{,}9748425', '\\dfrac{1{,}9748415-2}{-0{,}1}=\\dfrac{-0{,}0251585}{-0{,}1}=0{,}251585', '\\dfrac{1{,}9748425-2}{-0{,}1}=\\dfrac{-0{,}0251575}{-0{,}1}=0{,}251575', '0{,}251585-0{,}25158=0{,}000005', '0{,}25158-0{,}251575=0{,}000005'), 'H09 v002 encabezado: la cuenta de los extremos, escrita')
+    for h, v in zip((Fr(1, 10), Fr(1, 100), Fr(1, 1000)), f6[:3]):
+        ok('&x=%s:&&\\text{distancia a }4\\text{: }%s;&&f(%s)\\approx %s;&&\\text{margen: }\\tfrac{0{,}0000005}{%s}=%s' % (t9(4 - h), t9(h), t9(4 - h), t9(v), t9(h), t9(e6/h)) in A9 and abs(4 - h - 4) == h, 'H09 v002 encabezado: fila x = %s, una bajo otra' % t9(4 - h))
+    ok(F('0.000005')*10 == F('0.00005') and F('0.00005')*10 == F('0.0005') and [e6/h for h in (Fr(1, 10), Fr(1, 100), Fr(1, 1000))] == [F('0.000005'), F('0.00005'), F('0.0005')] and abs(F('3.9') - 4) == 4 - F('3.9') == F('0.1') and [abs(v - Fr(1, 4)) for v in f6[:3]] == sorted([abs(v - Fr(1, 4)) for v in f6[:3]], reverse=True), 'H09 v002 encabezado: regularidad (márgenes por 10) y valores hacia 0,25')
+    ok(en('<b>De dónde sale el margen, con números.</b>', '<b>La regularidad:</b>', '<b>La fórmula y cómo se lee.</b>', 'se lee «raíz cuadrada de \\(u\\)»', 'se lee «aproximadamente igual a»', 'se lee «el límite de \\(f\\) de \\(x\\) cuando \\(x\\) tiende a \\(a\\)»', 'se lee «valor absoluto de \\(x\\) menos \\(a\\)»', 'se lee «menor o igual que»', 'se lee «entonces»', '<b>margen de error</b>', '<b>racionalizar</b>', '<b>redondeada</b>'), 'H09 v002 encabezado: de dónde sale, regularidad, fórmula y cómo se lee cada símbolo')
+    # aviso de rigor: encierro con números, hechos y propiedades
+    ok(F('1.97') - F('0.005') == F('1.965') and F('1.97') + F('0.005') == F('1.975') and F('1.965')**2 == F('3.861225') and F('1.975')**2 == F('3.900625') and F('3.861225') <= F('3.9') <= F('3.900625') and (Fr(5, 10**3), Fr(5, 10**7), Fr(5, 10**9)) == (F('0.005'), F('0.0000005'), F('0.000000005')), 'H09 v002 aviso: encierro de √3,9 ≈ 1,97 y media unidad del último decimal')
+    ok(rex9(Fr(4)) == 2 and 2 + 2 == 4 and Fr(1, 4) == F('0.25') and Fr(-6, 2) == -3 and abs(Fr(-6, 2)) == 3 == Fr(abs(-6), abs(2)) and 4 <= 6 and Fr(4, 2) == 2 <= 3 == Fr(6, 2), 'H09 v002 aviso: hechos 1 a 3 y propiedades B y C, con números')
+    G9 = [Fr(a, b) for a in range(-12, 13) for b in (1, 2, 3, 5)]
+    ok(all(abs(pp/qq) == abs(pp)/abs(qq) for pp in G9 for qq in G9 if qq), 'H09 v002 aviso: propiedad B en rejilla')
+    ok(all(pp/cc <= qq/cc for pp in G9[::3] for qq in G9[::3] if pp <= qq for cc in G9[::5] if cc > 0), 'H09 v002 aviso: propiedad C en rejilla')
+    ok(all(rex9(s*s) == s and s*s >= 0 for s in RJ9), 'H09 v002 aviso: propiedad A en rejilla de raíces exactas')
+    ok(all(en('<b>Hecho %d:</b>' % i) for i in range(1, 6)) and all(en('<b>Propiedad %s:</b>' % z) for z in 'ABC') and A9.count('(hecho 1)') >= 7 and A9.count('(hecho 2)') >= 7 and A9.count('hecho 3, porque') >= 7 and A9.count('hecho 4') >= 6 and en('(hecho 5)') and A9.count('(propiedad A)') >= 7 and en('(propiedad B)', '(propiedad C)'), 'H09 v002: hechos y propiedades declarados y citados')
+    # k1: de dónde salen los x, fila de la derecha, candidato y confirmación con álgebra
+    ok([4 - Fr(1, 10**k) for k in (1, 2, 3)] + [4 + Fr(1, 10**k) for k in (1, 2, 3)] == [F(z) for z in ('3.9', '3.99', '3.999', '4.1', '4.01', '4.001')] and en('\\(4-0{,}1=3{,}9\\); \\(4-0{,}01=3{,}99\\); \\(4-0{,}001=3{,}999\\); \\(4+0{,}1=4{,}1\\); \\(4+0{,}01=4{,}01\\); \\(4+0{,}001=4{,}001\\)'), 'H09 v002 k1: de dónde salen los x')
+    ok(enc9(F('4.01'), F('2.002498'), e6) and F('2.002498') - 2 == F('0.002498') and F('4.01') - 4 == F('0.01') and F('0.002498')/F('0.01') == F('0.2498') == f6[4] and e6/F('0.01') == F('0.00005') and en('Se escribe \\(f(4{,}01)\\approx 0{,}2498\\)'), 'H09 v002 k1: fila completa x = 4,01')
+    ok(f6[1] - Fr(1, 4) == Fr(1, 4) - f6[4] == F('0.0002') and f6[:3] == sorted(f6[:3], reverse=True) and f6[:2:-1] == sorted(f6[:2:-1]) and en('\\(0{,}2502-0{,}25=0{,}0002\\) y \\(0{,}25-0{,}2498=0{,}0002\\)', 'bajan, ' + pc9(f6[:3]), 'suben, ' + pc9(f6[:2:-1])), 'H09 v002 k1: lectura (bajan, suben, lo que falta para el candidato)')
+    for nom, (rad, c, den, k) in F9.items():
+        for s in RJ9:
+            ok((s - c)*(s + c) == s*s + c*s - c*s - c*c == s*s - c*c and c*s - c*s == 0, 'H09 v002: producto por el conjugado, término por término (%s)' % nom)
+    ok((2*2, 1*1, 3*3, 5*5, 4*4) == (4, 1, 9, 25, 16) and all(5 - 9 == -4 and 1 - 9 == -8 and 2*x + 1 - 9 == 2*x - 8 == 2*(x - 4) and x + 5 - 9 == x - 4 and x + 1 - 1 == x for x in G9), 'H09 v002: pasos intermedios de los productos')
+    for nom, x, v in (('f', 9, Fr(1, 5)), ('g', 3, Fr(1, 3)), ('r', 11, Fr(1, 7)), ('p', 36, Fr(1, 11)), ('w', 12, Fr(1, 4)), ('m', 25, Fr(1, 9))):
+        rad, c, den, k = F9[nom]; s = rex9(rad(Fr(x)))
+        ok(s is not None and exacta9(nom)(Fr(x)) == (s - c)/den(Fr(x)) == Fr(k)/(s + c) == v, 'H09 v002: comprobación con raíz exacta, %s(%d) por las dos formas' % (nom, x))
+    ok(en('f(9)=\\dfrac{\\sqrt{9}-2}{9-4}=\\dfrac{3-2}{5}=\\dfrac{1}{5}=0{,}2', '\\dfrac{1}{\\sqrt{9}+2}=\\dfrac{1}{3+2}=\\dfrac{1}{5}=0{,}2', 'g(3)=\\dfrac{\\sqrt{3+1}-1}{3}=\\dfrac{\\sqrt{4}-1}{3}=\\dfrac{2-1}{3}=\\dfrac{1}{3}', 'r(11)=\\dfrac{\\sqrt{11+5}-3}{11-4}=\\dfrac{\\sqrt{16}-3}{7}=\\dfrac{4-3}{7}=\\dfrac{1}{7}',
+          'p(36)=\\dfrac{\\sqrt{36}-5}{36-25}=\\dfrac{6-5}{11}=\\dfrac{1}{11}', 'w(12)=\\dfrac{\\sqrt{25}-3}{12-4}=\\dfrac{5-3}{8}=\\dfrac{2}{8}=\\dfrac{1}{4}', 'm(25)=\\dfrac{\\sqrt{25}-4}{25-16}=\\dfrac{5-4}{9}=\\dfrac{1}{9}') and 2*12 + 1 == 24 + 1 == 25, 'H09 v002: las seis comprobaciones con raíz exacta, escritas')
+    ok(A9.count('cada término por cada término') == 6 and A9.count('El producto, término por término:') == 5 and A9.count('<b>Qué se demuestra.</b>') == 1 and A9.count('<b>Cómo funciona el método') == 2 and en('<b>Paso 6: la confirmación con álgebra. Qué se hace:</b>', '<b>conjugado</b>', '<b>De dónde salen los seis pasos.</b>', '<b>Comprobación con números,</b>'), 'H09 v002: racionalizaciones línea por línea; «qué se demuestra» y «cómo funciona el método»')
+    # k2: la demostración, línea por línea, en rejilla; comprobación con la raíz a 10 decimales
+    g2 = [Fr(a, b) for a in (-7, -2, 0, 1, 3, 8) for b in (1, 3, 10)]
+    for rr, vv, cc, xa in itertools.product(g2, g2, g2[:6], [z for z in g2 if z][:8]):
+        ok((rr - cc)/xa - (vv - cc)/xa == ((rr - cc) - (vv - cc))/xa == (rr - cc - vv + cc)/xa == (rr - vv)/xa and abs((rr - vv)/xa) == abs(rr - vv)/abs(xa) and -(vv - cc) == -vv + cc and -cc + cc == 0, 'H09 v002 k2: T − f(x) = (r − v)/(x − a), línea por línea')
+    for ee in (Fr(1, 2), Fr(1, 10), e6):
+        for i in range(-10, 11):
+            for xa in (Fr(-1, 10), Fr(1, 100), Fr(3, 7)): ok(abs((ee*Fr(i, 10))/xa) <= ee/abs(xa), 'H09 v002 k2: |r − v| ≤ e da |T − f(x)| ≤ e/|x − a|')
+    ok(enc9(F('3.9'), r10, Fr(5, 10**11)) and r10 - 2 == F('-0.0251582342') and F('-0.0251582342')/F('-0.1') == F('0.251582342') and F('0.251582342') - F('0.25158') == F('0.000002342') < F('0.000005') and hi - F('0.25158') < F('0.000005') and lo > F('0.25158'), 'H09 v002 k2: comprobación con la raíz a 10 decimales')
+    ok(en('\\(1{,}9748417658-2=-0{,}0251582342\\)', '\\(\\dfrac{-0{,}0251582342}{-0{,}1}=0{,}251582342\\)', '\\(0{,}251582342-0{,}25158=0{,}000002342\\)', '\\(f(3{,}9)\\approx 0{,}251582342\\)'), 'H09 v002 k2: comprobación con números, escrita')
+    # k3
+    lo2, hi2 = cota9(F('3.99'))
+    ok(enc9(F('3.9'), F('1.97'), F('0.005')) and F('1.97') - 2 == F('-0.03') and F('-0.03')/F('-0.1') == F('0.3') == f2[0] and F('0.005')/F('0.1') == F('0.05') and F('1.9974') <= lo2 and hi2 < F('1.9975') and enc9(F('3.99'), Fr(2), F('0.005')) and Fr(0)/F('-0.01') == 0 == f2[1] and F('0.005')/F('0.01') == F('0.5') and F('0.005')/F('0.001') == 5, 'H09 v002 k3: filas completas con 2 decimales')
+    ok(0 - F('0.5') == F('-0.5') and F('-0.5') <= Fr(1, 4) <= F('0.5') and F('0.3') - F('0.25') == F('0.25') - F('0.2') == F('0.05') == e6/F('0.00001'), 'H09 v002 k3: intervalo de la fila x = 3,99 y distancias 0,05')
+    ok(F('2.000002') - 2 == F('0.000002') and F('2.000002') - e6 == F('2.0000015') and F('2.000002') + e6 == F('2.0000025') and F('2.0000015') - 2 == F('0.0000015') and F('2.0000025') - 2 == F('0.0000025') and [rex9(F(z)) for z in ('0.01', '0.0001', '0.000001')] == [F('0.1'), F('0.01'), F('0.001')] and (-3)*(-3) == 9 == 3*3 and all(z*z >= 0 for z in G9), 'H09 v002 k3: resta de números casi iguales, raíces exactas y cuadrados no negativos')
+    # ejemplos
+    ok(rex9(Fr(0 + 1)) == 1 and F('-0.1') + 1 == F('0.9') and g6[1] - Fr(1, 2) == F('0.0013') and Fr(1, 2) - g6[4] == F('0.0012') and g6[:3] == sorted(g6[:3], reverse=True) and g6[:2:-1] == sorted(g6[:2:-1]) and en('Izquierda, hacia \\(0\\): ' + pc9(g6[:3]) + '. Bajan. Derecha, hacia \\(0\\): ' + pc9(g6[:2:-1]) + '. Suben.', '\\(0{,}5013-0{,}5=0{,}0013\\) y \\(0{,}5-0{,}4988=0{,}0012\\)'), 'H09 v002 ej1: lectura y lo que falta para 0,5')
+    red = lambda q, nd: Fr(int(q*10**nd + Fr(1, 2)), 10**nd)
+    ok(red(rz6, 6) == rz6 and red(F('0.1667'), 3) == red(F('0.1666'), 3) == F('0.167') == red(Fr(1, 6), 3) and red(Fr(1, 6), 4) == F('0.1667') and int(Fr(1, 6)*10**4) == 1666 and red(Fr(1, 3), 4) == F('0.3333') and red(Fr(1, 3), 3) == F('0.333') and int(Fr(1, 3)*10**4) == 3333 and en('Izquierda, hacia \\(4\\): ' + pc9(r6[:3]) + '. Derecha, hacia \\(4\\): ' + pc9(r6[:2:-1]) + '.'), 'H09 v002 ej2 y B: redondeos de 1/6 y 1/3, y lectura')
+    ok(w6[4] < Fr(1, 3) < w6[1] and (w6[4], w6[1]) == (F('0.3331'), F('0.3335')) and int(w6[1]*1000) == int(w6[4]*1000) == 333 and (int(w6[1]*10**4) % 10, int(w6[4]*10**4) % 10) == (5, 1) and rex9(Fr(9)) == 3 and 2*4 + 1 == 8 + 1 == 9 and Fr(2, 6) == Fr(1, 3) and en('\\(0{,}3335\\) y \\(0{,}3331\\), coinciden en los tres primeros decimales, \\(0{,}333\\), y difieren en el cuarto (\\(5\\) y \\(1\\))'), 'H09 v002 B: las filas a 0,01 coinciden en tres decimales y difieren en el cuarto')
+    ok(all(abs(x)*abs(x) == x*x and abs(x) >= 0 and (abs(x) == x if x >= 0 else abs(x) == -x) and (x == 0 or q9(x) == (1 if x > 0 else -1)) for x in G9) and abs(F('-0.1')) == F('0.1') and F('0.1')*F('0.1') == F('-0.1')*F('-0.1') == F('0.01') and 1 != -1, 'H09 v002 ej3: √(x²) = |x|, con números y en rejilla')
+    lo, hi = real9('g', F('-0.001'))
+    ok(F('0.000005')*100 == F('0.0005') and abs(F('0.001') - 0) == F('0.001') and F('0.50013') - F('0.000005') == F('0.500125') <= lo and hi <= F('0.500135') == F('0.50013') + F('0.000005') and not F('0.500125') <= Fr(1, 2) and en('entre \\(0{,}50013-0{,}000005=0{,}500125\\) y \\(0{,}50013+0{,}000005=0{,}500135\\)'), 'H09 v002 ej4: margen 100 veces menor e intervalo de g(−0,001)')
+    ok(all((Fr(1)/(s + 1) == Fr(1, 2)) == (s + 1 == 2) == (s == 1) == (s*s - 1 == 0) for s in RJ9) and 2 - 1 == 1 and 1*1 == 1 and 1 - 1 == 0 and F('0.5') == Fr(1, 2), 'H09 v002 ej4: g(x) = 0,5 solo si x = 0 (cadena de equivalencias en rejilla)')
+    # ejercicios
+    ok([25 - Fr(1, 10**k) for k in (1, 2, 3)] + [25 + Fr(1, 10**k) for k in (3, 2, 1)] == [F(z) for z in ('24.9', '24.99', '24.999', '25.001', '25.01', '25.1')] and 5 + 5 == 10 and Fr(1, 10) == F('0.1') and 4 + 4 == 8 and Fr(1, 8) == F('0.125') and 3 + 3 == 6, 'H09 v002 A y C: los x y los límites')
+    ok(F('0.0125')*100 == F('1.25') and F('0.0125') - F('0.012481') == F('0.000019') and m6[5]*Fr(1, 10) == F('0.012481'), 'H09 v002 C: centímetros y diferencia con la tabla')
+    ok(not re.search(r'\\\\[(\[]', A9) and A9.count('\\begin{aligned}') == A9.count('\\end{aligned}') == 17, 'H09 v002: ningún salto de línea pegado a un paréntesis y 17 bloques aligned')
+    # escena: lo que la hoja nombra está rotulado en la figura, y la lectura trae las cuentas nuevas
+    ok("frase('recta de resultados', 5.2, YA + 44*p, mu, 'right', a*3, 10.5)" in E9 and "frase('margen', GX(0.2495) - 0.12, (YI + YD)/2, mu, 'right', sq(a, 2, 3.2), 10.5)" in E9 and "frase('candidato: 0,25'" in E9 and en('rotulada «recta de resultados»', 'rotulado «margen» y «± 0,0005»', 'el rótulo verde «candidato: 0,25»', 'la columna «margen»') and -1.3 < 2 + (0.2495 - 0.25)*1400 - 0.12 - 1.0, 'H09 v002 escena: rótulos «recta de resultados», «margen» y «candidato» en la figura y en «cómo leerla»')
+    for s in ('1{,}974842-0{,}0000005=1{,}9748415', '1{,}974842+0{,}0000005=1{,}9748425', '\\\\tfrac{1{,}9748415-2}{-0{,}1}=\\\\tfrac{-0{,}0251585}{-0{,}1}=0{,}251585', '\\\\tfrac{1{,}9748425-2}{-0{,}1}=\\\\tfrac{-0{,}0251575}{-0{,}1}=0{,}251575', '0{,}251585-0{,}25158=0{,}000005', '0{,}25158-0{,}251575=0{,}000005',
+              '(\\\\sqrt{x}-2)(\\\\sqrt{x}+2)=\\\\sqrt{x}\\\\sqrt{x}+2\\\\sqrt{x}-2\\\\sqrt{x}-2\\\\cdot 2', '=(\\\\sqrt{x})^{2}-4=x-4'):
+        ok(s in E9, 'H09 v002 escena (lectura): falta «%s»' % s)
+    ok((TR9[0][2], Fr(TR9[0][2], 10**6)) == (1974842, rz6) and VS9[0] == F('0.25158'), 'H09 v002 escena: la lectura del paso 5 usa la raíz y el valor de la fila x = 3,9')
 comprobar9()
 # <<< H09
 

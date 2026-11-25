@@ -62,7 +62,7 @@ OA.scene('usa-idea', (function(){
       frase('izquierda', -1.13, YR[1], C.sec, 'left', a*3); frase('derecha', -1.13, YR[5], C.rise, 'left', a*3);
       for (j = 0; j < 3; j++){ num(IZ[j].tx, CX[0], YR[j], C.sec, sq(a, j, 3.4)); num(DE[j].tx, CX[0], YR[6 - j], C.rise, sq(a, j, 3.4)); }
       num('4', CX[0], YR[3], mu, sq(a, 2.4, 3.4)); frase('no se calcula', CX[1], YR[3], mu, 'center', sq(a, 2.4, 3.4));
-      raya(GX(0.2476), YA, GX(0.2524), YA, C.ink, 1, null, a*3);
+      raya(GX(0.2476), YA, GX(0.2524), YA, C.ink, 1, null, a*3); frase('recta de resultados', 5.2, YA + 44*p, mu, 'right', a*3, 10.5);
       if (a > 0) for (j = 248; j <= 252; j++){ raya(GX(j/1000), YA + 3*p, GX(j/1000), YA - 3*p, C.ink, 1, null, a*3); num(lm09T(j, 3), GX(j/1000), YA - 11*p, mu, a*3, 'center', 10.5); }
       /* paso 2: la columna de las raíces, redondeadas a 6 decimales */
       a = ap(2);
@@ -80,7 +80,7 @@ OA.scene('usa-idea', (function(){
       a = ap(5);
       frase('margen', CX[3], YH, C.ink, 'center', a*3, 12);
       for (j = 0; j < 3; j++){ num(IZ[j].tm, CX[3], YR[j], C.ink, sq(a, j, 3.2)); num(DE[j].tm, CX[3], YR[6 - j], C.ink, sq(a, j, 3.2)); barra(IZ[j], YI, C.sec, sq(a, j, 3.2)); barra(DE[j], YD, C.rise, sq(a, j, 3.2)); }
-      frase('± 0,0005', GX(0.2505) + 0.12, (YI + YD)/2, mu, 'left', sq(a, 2, 3.2), 10.5);
+      frase('± 0,0005', GX(0.2505) + 0.12, (YI + YD)/2, mu, 'left', sq(a, 2, 3.2), 10.5); frase('margen', GX(0.2495) - 0.12, (YI + YD)/2, mu, 'right', sq(a, 2, 3.2), 10.5);
       /* paso 6: el candidato y lo que la tabla permite informar */
       a = ap(6);
       raya(GX(0.25), YA - 3*p, GX(0.25), YA + 36*p, C.alt, 1.4, [3, 3], a*3); frase('candidato: 0,25', GX(0.25), YA + 44*p, C.alt, 'center', a*3);
@@ -105,8 +105,8 @@ OA.scene('usa-idea', (function(){
         '\\text{raíces redondeadas a 6 decimales (aproximadas):}' + Q + raices(IZ) + Q + raices(DE) + Q + '\\text{error de cada raíz: a lo más }0{,}0000005',
         '\\text{izquierda, fila por fila (raíz − 2, dividido por }x-4\\text{):}' + Q + IZ.map(cuenta).join(Q),
         '\\text{derecha, fila por fila:}' + Q + DE.map(cuenta).join(Q),
-        '\\text{margen de cada valor: error de la raíz}\\div|x-4|' + Q + margen(IZ[0]) + ';\\ \\ ' + margen(IZ[1]) + Q + margen(IZ[2]) + Q + '\\text{el valor real de }f(' + IZ[2].x + ')\\text{ está entre}' + Q + IZ[2].f + '-' + IZ[2].mg + '=' + IZ[2].lo + '\\ \\text{ y }\\ ' + IZ[2].f + '+' + IZ[2].mg + '=' + IZ[2].hi,
+        '\\text{margen de cada valor: error de la raíz}\\div|x-4|' + Q + '\\text{por qué, en la fila de }3{,}9\\text{: la raíz real está entre}' + Q + '1{,}974842-0{,}0000005=1{,}9748415\\ \\text{ y}' + Q + '1{,}974842+0{,}0000005=1{,}9748425' + Q + '\\text{la cuenta de la fila, con esos dos extremos:}' + Q + '\\tfrac{1{,}9748415-2}{-0{,}1}=\\tfrac{-0{,}0251585}{-0{,}1}=0{,}251585' + Q + '\\tfrac{1{,}9748425-2}{-0{,}1}=\\tfrac{-0{,}0251575}{-0{,}1}=0{,}251575' + Q + '\\text{lo que se alejan del valor de la tabla:}' + Q + '0{,}251585-0{,}25158=0{,}000005' + Q + '0{,}25158-0{,}251575=0{,}000005' + Q + '\\text{es el error de la raíz, dividido por la distancia:}' + Q + margen(IZ[0]) + ';\\ \\ ' + margen(IZ[1]) + Q + margen(IZ[2]) + Q + '\\text{el valor real de }f(' + IZ[2].x + ')\\text{ está entre}' + Q + IZ[2].f + '-' + IZ[2].mg + '=' + IZ[2].lo + '\\ \\text{ y }\\ ' + IZ[2].f + '+' + IZ[2].mg + '=' + IZ[2].hi,
         '\\text{filas a }0{,}01\\text{ de }4:\\ \\ ' + IZ[1].f + '\\ \\text{ y }\\ ' + DE[1].f + Q + IZ[1].f + '-0{,}25=' + IZ[1].d + ';\\ \\ 0{,}25-' + DE[1].f + '=' + DE[1].d + Q + '\\text{la tabla sugiere: }\\lim_{x\\to 4}f(x)\\approx 0{,}25' + Q + '\\text{es una estimación: seis valores no demuestran}',
-        '(\\sqrt{x}-2)(\\sqrt{x}+2)=(\\sqrt{x})^{2}-2^{2}=x-4' + Q + 'x\\ne 4:\\ \\ f(x)=\\tfrac{\\sqrt{x}-2}{(\\sqrt{x}-2)(\\sqrt{x}+2)}=\\tfrac{1}{\\sqrt{x}+2}' + Q + 'x\\to 4:\\ \\ \\sqrt{x}\\to 2;\\ \\ \\tfrac{1}{2+2}=\\tfrac{1}{4}=0{,}25' + Q + '\\lim_{x\\to 4}f(x)=0{,}25\\ \\ \\text{(la tabla acertó)}' + Q + '\\text{comprobación con la raíz exacta del paso 1:}' + Q + 'f(9)=\\tfrac{1}{\\sqrt{9}+2}=\\tfrac{1}{3+2}=\\tfrac{1}{5}=0{,}2']; return dtPasos(R.slice(0, k)); }
+        '\\text{producto por el conjugado, término por término:}' + Q + '(\\sqrt{x}-2)(\\sqrt{x}+2)=\\sqrt{x}\\sqrt{x}+2\\sqrt{x}-2\\sqrt{x}-2\\cdot 2' + Q + '=(\\sqrt{x})^{2}-4=x-4' + Q + 'x\\ne 4:\\ \\ f(x)=\\tfrac{\\sqrt{x}-2}{(\\sqrt{x}-2)(\\sqrt{x}+2)}=\\tfrac{1}{\\sqrt{x}+2}' + Q + 'x\\to 4:\\ \\ \\sqrt{x}\\to 2;\\ \\ \\tfrac{1}{2+2}=\\tfrac{1}{4}=0{,}25' + Q + '\\lim_{x\\to 4}f(x)=0{,}25\\ \\ \\text{(la tabla acertó)}' + Q + '\\text{comprobación con la raíz exacta del paso 1:}' + Q + 'f(9)=\\tfrac{1}{\\sqrt{9}+2}=\\tfrac{1}{3+2}=\\tfrac{1}{5}=0{,}2']; return dtPasos(R.slice(0, k)); }
   };
 })());
