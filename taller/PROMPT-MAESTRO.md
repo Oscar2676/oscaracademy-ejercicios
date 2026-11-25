@@ -288,6 +288,8 @@ K7. Al pie de cada hoja y bajo cada animación: «Creado por Oscar Morales León
 
 K8. Pie con código, versión y estado («Pendiente de APR» o «APR de Óscar, fecha»).
 
+K9. **Logotipo de Oscar Academy.** Cada hoja, cada presentación (PPT) y cada archivo susceptible de salir del sitio (PDF, documento, imagen, animación descargable) lleva el logotipo de Oscar Academy. Se usa el archivo oficial del logotipo, sin redibujarlo ni alterarlo. (25-nov)
+
 ### L. Ejercicios
 
 L1. Cada tema lleva ejercicios A, B y C, con pista y solución paso a paso; el C es «De la vida cotidiana». (12-nov)
@@ -398,7 +400,7 @@ Una hoja pasa solo si las 24 respuestas son «sí». Cada «no» se corrige ante
 **Hoja**
 20. ¿La diagramación usa recuadros de color y no hay bloques largos de texto plano?
 21. ¿Los ejercicios A, B y C tienen pista y solución completa, y el C es de la vida cotidiana?
-22. ¿Están el crédito al pie y bajo cada animación, el código, la versión y el estado?
+22. ¿Están el logotipo de Oscar Academy, el crédito al pie y bajo cada animación, el código, la versión y el estado?
 
 **Fuentes**
 23. ¿Está la lista de fuentes consultadas, con enlace exacto y qué se comparó?
