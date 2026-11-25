@@ -4,10 +4,11 @@ OA.scene('prop-idea', (function(){
   function f(x){ return x/2 + 1; }
   function g(x){ return x + 1; }
   function s(x){ return f(x) + g(x); }
+  function p(x){ return f(x)*g(x); }
   /* lugar, los dos límites y los dos lugares donde se dibujan las alturas (uno a cada lado de a) */
-  var A = 2, L = 2, LM = 3, XS = [1.9, 2.1];
-  /* el marco muestra solo la zona cercana a x = 2: 1,5 ≤ x ≤ 2,5 y 0 ≤ y ≤ 6,5; su borde de abajo es el eje x */
-  var M = lmMarco(-0.6, 0.85, 5.5, 4.4, 1.5, 2.5, 0, 6.5);
+  var A = 2, L = 2, LM = 3, LP = 6, XS = [1.9, 2.1];
+  /* el marco muestra solo la zona cercana a x = 2: 1,5 ≤ x ≤ 2,5 y 0 ≤ y ≤ 7; su borde de abajo es el eje x */
+  var M = lmMarco(-0.6, 0.85, 5.5, 4.4, 1.5, 2.5, 0, 7);
   var PZ = [['Q', '\\text{¿a qué altura se acerca }f(x)+g(x)\\text{?}', '¿a qué altura se acerca f(x) + g(x)?', 'pt'], ['F', '\\Longrightarrow\\ 2+3=5', '⟹ 2 + 3 = 5', 'diff'],
     ['EX', 'x', 'x', ''], ['EY', 'y', 'y', ''],
     ['CF', 'y=f(x)', 'y = f(x)', 'c-sec'], ['CG', 'y=g(x)', 'y = g(x)', 'c-alt'], ['CS', 'y=f(x)+g(x)', 'y = f(x) + g(x)', 'diff'],
@@ -26,13 +27,13 @@ OA.scene('prop-idea', (function(){
     ['Una copia de cada trazo verde va sobre el', 'azul: las puntas quedan a 4,85 y a 5,15.'],
     ['Apilando en cada lugar sale la recta naranja:', 'es la gráfica de la suma, con su hueco.'],
     ['Sobre el 2 se apilan los límites: 2 y, encima,', '3. Llegan al hueco naranjo, a la altura 5.'],
-    ['Con el producto pasa lo mismo: los productos', 'de las alturas se acercan a 2 por 3, que es 6.']];
+    ['Puntos burdeos: los productos de las alturas,', '5,655 y 6,355. Se acercan a 2 por 3, que es 6.']];
   return {
     world:{x0:-1.3, x1:5.3, y0:-6.3, y1:7.2}, aspect:13.5/6.6,
-    aria:'Arriba, una franja dice qué muestra: el límite de una suma es la suma de los límites. Animación en siete pasos, en una vista ampliada con x entre 1,5 y 2,5. Uno: dos rectas, la azul es la gráfica de f de x igual a x medios más 1 y la verde la de g de x igual a x más 1; cada una tiene un círculo vacío sobre x igual a 2. Dos: trazos verticales azules en x igual a 1,9 y 2,1 marcan las alturas de f, 1,95 y 2,05, y una punteada horizontal marca L igual a 2. Tres: trazos verdes en los mismos lugares marcan las alturas de g, 2,9 y 3,1, y una punteada marca M igual a 3. Cuatro: una copia de cada trazo verde se pone encima del trazo azul; las puntas quedan a 4,85 y 5,15. Cinco: la recta naranja, gráfica de la suma, pasa por esas puntas y tiene un círculo vacío a la altura 5. Seis: sobre x igual a 2 se apilan con trazo segmentado los límites 2 y 3, que llegan al círculo vacío naranjo: el límite de la suma es 2 más 3, igual a 5. Siete: un rótulo anota que con el producto pasa lo mismo, 2 por 3 igual a 6. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
+    aria:'Arriba, una franja dice qué muestra: el límite de una suma es la suma de los límites. Animación en siete pasos, en una vista ampliada con x entre 1,5 y 2,5. Uno: dos rectas, la azul es la gráfica de f de x igual a x medios más 1 y la verde la de g de x igual a x más 1; cada una tiene un círculo vacío sobre x igual a 2. Dos: trazos verticales azules en x igual a 1,9 y 2,1 marcan las alturas de f, 1,95 y 2,05, y una punteada horizontal marca L igual a 2. Tres: trazos verdes en los mismos lugares marcan las alturas de g, 2,9 y 3,1, y una punteada marca M igual a 3. Cuatro: una copia de cada trazo verde se pone encima del trazo azul; las puntas quedan a 4,85 y 5,15. Cinco: la recta naranja, gráfica de la suma, pasa por esas puntas y tiene un círculo vacío a la altura 5. Seis: sobre x igual a 2 se apilan con trazo segmentado los límites 2 y 3, que llegan al círculo vacío naranjo: el límite de la suma es 2 más 3, igual a 5. Siete: dos puntos burdeos marcan los productos de las alturas, 5,655 y 6,355; entre ellos, sobre x igual a 2, un círculo vacío a la altura 6, con su punteada y un rótulo: con el producto pasa lo mismo, 2 por 3 igual a 6. Bajo el círculo vacío azul, la palabra hueco. Bajo la figura, un registro numerado guarda lo obtenido en cada paso, sin borrar lo anterior.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
-    legend:'<span><i class="sw sec"></i> \\(f\\) y sus alturas</span><span><i class="sw alt"></i> \\(g\\) y sus alturas</span><span><i class="sw rise"></i> la suma \\(f+g\\)</span><span><i class="sw tan"></i> el producto (solo el rótulo)</span>',
+    legend:'<span><i class="sw sec"></i> \\(f\\) y sus alturas</span><span><i class="sw alt"></i> \\(g\\) y sus alturas</span><span><i class="sw rise"></i> la suma \\(f+g\\)</span><span><i class="sw tan"></i> el producto \\(f\\cdot g\\): dos puntos y su hueco</span>',
     anim:{run:42000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
     onInput:function(v){ v.q = null; v.u = 1; },
     draw:function(S, v){
@@ -58,15 +59,15 @@ OA.scene('prop-idea', (function(){
       a = ap(1);
       lmCurva(S, M, f, M.x0, M.x0 + (M.x1 - M.x0)*Math.min(1, a*2), C.sec, 2);
       lmCurva(S, M, g, M.x0, M.x0 + (M.x1 - M.x0)*Math.min(1, a*2), C.alt, 2);
-      if (a > 0.9){ lmEtq(T, M, 'CF', 2.48, 1.72, -100); lmEtq(T, M, 'CG', 2.48, 3.92, -100); lmEtq(T, M, 'LA', A, M.y0, -50, 0, 25); }
+      if (a > 0.9){ lmEtq(T, M, 'CF', 2.48, 1.72, -100); lmEtq(T, M, 'CG', 2.48, 3.92, -100); lmEtq(T, M, 'LA', A, M.y0, -50, 0, 25); frase('hueco', A, 1.5, 0, 0, C.sec, 'center'); }
       /* paso 2: alturas de f en 1,9 y 2,1 (trazos azules) y la punteada de L = 2 */
       a = ap(2);
       XS.forEach(function(x){ trazo(x, 0, f(x)*a, C.sec, 0, 3); });
-      if (a > 0.6){ lmSeg(S, M, A, L, M.x0, L, C.sec, 1); num('1,95', 0, 0.8, C.sec, 13); num('2,05', 1, 0.8, C.sec, 13); lmEtq(T, M, 'LL', M.x0, 2.25, 0, 6, 0); }
+      if (a > 0.6){ lmSeg(S, M, A, L, M.x0, L, C.sec, 1); num('1,95', 0, 0.8, C.sec, 13); num('2,05', 1, 0.8, C.sec, 13); lmEtq(T, M, 'LL', M.x0, 2.27, 0, 6, 0); }
       /* paso 3: alturas de g en los mismos lugares (trazos verdes, corridos 8 px hacia afuera para que no tapen a los azules) y la punteada de M = 3 */
       a = ap(3);
       XS.forEach(function(x, i){ trazo(x, 0, g(x)*a, C.alt, i ? 8 : -8, 3); });
-      if (a > 0.6){ lmSeg(S, M, A, LM, M.x0, LM, C.alt, 1); num('2,9', 0, 2.52, C.alt, 15); num('3,1', 1, 2.52, C.alt, 15); lmEtq(T, M, 'LG', M.x0, 3.3, 0, 6, 0); }
+      if (a > 0.6){ lmSeg(S, M, A, LM, M.x0, LM, C.alt, 1); num('2,9', 0, 2.52, C.alt, 15); num('3,1', 1, 2.52, C.alt, 15); lmEtq(T, M, 'LG', M.x0, 3.32, 0, 6, 0); }
       /* paso 4: una copia de cada trazo verde sube y queda sobre el trazo azul; el original sigue en su sitio */
       a = ap(4);
       if (a > 0) XS.forEach(function(x, i){ trazo(x, f(x)*a, f(x)*a + g(x), C.alt, (i ? 8 : -8)*(1 - a), 3); });
@@ -83,11 +84,14 @@ OA.scene('prop-idea', (function(){
       if (ap(5) > 0.55) lmPunto(S, M, A, L + LM, C.rise, true, 3.4);
       /* paso 6: el rótulo de la altura 5 */
       a = ap(6);
-      if (a > 0.8){ lmFondo(S, M, 'LS', M.x0, 5.3, 0, 6, 0); lmEtq(T, M, 'LS', M.x0, 5.3, 0, 6, 0); }
-      /* paso 7: el producto, solo como rótulo (sus cuentas van en la lectura) */
+      if (a > 0.8){ lmFondo(S, M, 'LS', M.x0, 5.32, 0, 6, 0); lmEtq(T, M, 'LS', M.x0, 5.32, 0, 6, 0); }
+      /* paso 7: el producto. Dos puntos burdeos a la altura de los productos de las alturas, el círculo vacío a la altura 6 y su punteada (las cuentas van en la lectura) */
       a = ap(7);
-      if (a > 0.3) frase('con el producto, lo mismo:', M.x0, 6.2, 6, 0, C.tan);
-      if (a > 0.6) lmEtq(T, M, 'PR', M.x0, 5.82, 0, 6, 0);
+      if (a > 0.15) frase('con el producto, lo mismo:', M.x0, 6.78, 6, 0, C.tan);
+      if (a > 0.3) XS.forEach(function(x){ lmPunto(S, M, x, p(x), C.tan, false, 3); });
+      if (a > 0.45){ num('5,655', 0, 5.7, C.tan, 7); frase('6,355', XS[1], p(XS[1]), 0, -11, C.tan, 'center'); }
+      if (a > 0.6){ lmSeg(S, M, A, LP, M.x0, LP, C.tan, 1); lmPunto(S, M, A, LP, C.tan, true, 3.4); }
+      if (a > 0.75) lmEtq(T, M, 'PR', M.x0, 6.32, 0, 6, 0);
       /* pregunta arriba; al final, a su lado, la respuesta */
       T.L('Q', -1.2, 5.86, 0); if (k >= 6 && ap(6) > 0.5) T.L('F', 5.2, 5.86, -100);
       lmTxt(S, TXT[k - 1][0], -1.2, -0.3); lmTxt(S, TXT[k - 1][1], -1.2, -0.3 - 21/(X(1) - X(0)));
@@ -98,11 +102,11 @@ OA.scene('prop-idea', (function(){
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
     readout:function(v){ var k = Math.round(v.paso || 1), R = [
       'f(x)=\\tfrac{x}{2}+1;\\ \\ g(x)=x+1;\\ \\ \\text{las dos con }x\\ne 2' + Q + '\\text{lugar: }a=2\\text{ (ahí ninguna está definida)}' + Q + '\\text{suma: }s(x)=f(x)+g(x)' + Q + '\\text{pregunta: ¿a qué altura se acerca }s(x)\\text{?}',
-      '\\text{alturas de }f\\text{ cerca de }2:' + Q + 'f(1{,}9)=\\tfrac{1{,}9}{2}+1=0{,}95+1=1{,}95' + Q + 'f(2{,}1)=\\tfrac{2{,}1}{2}+1=1{,}05+1=2{,}05' + Q + '\\text{más cerca:}' + Q + 'f(1{,}99)=\\tfrac{1{,}99}{2}+1=0{,}995+1=1{,}995' + Q + 'f(2{,}01)=\\tfrac{2{,}01}{2}+1=1{,}005+1=2{,}005' + Q + '\\text{se acercan a }2:\\ \\ \\lim_{x\\to 2}f(x)=L=2',
-      '\\text{alturas de }g\\text{ en los mismos lugares:}' + Q + 'g(1{,}9)=1{,}9+1=2{,}9' + Q + 'g(2{,}1)=2{,}1+1=3{,}1' + Q + 'g(1{,}99)=1{,}99+1=2{,}99' + Q + 'g(2{,}01)=2{,}01+1=3{,}01' + Q + '\\text{se acercan a }3:\\ \\ \\lim_{x\\to 2}g(x)=M=3',
+      '\\text{alturas de }f\\text{ cerca de }2:' + Q + 'f(1{,}9)=\\tfrac{1{,}9}{2}+1=0{,}95+1=1{,}95' + Q + 'f(2{,}1)=\\tfrac{2{,}1}{2}+1=1{,}05+1=2{,}05' + Q + '\\text{más cerca:}' + Q + 'f(1{,}99)=\\tfrac{1{,}99}{2}+1=0{,}995+1=1{,}995' + Q + 'f(2{,}01)=\\tfrac{2{,}01}{2}+1=1{,}005+1=2{,}005' + Q + '\\text{distancias a }2\\text{, cada vez menores:}' + Q + '|1{,}95-2|=0{,}05;\\ \\ |2{,}05-2|=0{,}05' + Q + '|1{,}995-2|=0{,}005;\\ \\ |2{,}005-2|=0{,}005' + Q + '\\text{se acercan a }2:\\ \\ \\lim_{x\\to 2}f(x)=L=2',
+      '\\text{alturas de }g\\text{ en los mismos lugares:}' + Q + 'g(1{,}9)=1{,}9+1=2{,}9' + Q + 'g(2{,}1)=2{,}1+1=3{,}1' + Q + 'g(1{,}99)=1{,}99+1=2{,}99' + Q + 'g(2{,}01)=2{,}01+1=3{,}01' + Q + '\\text{distancias a }3\\text{, cada vez menores:}' + Q + '|2{,}9-3|=0{,}1;\\ \\ |3{,}1-3|=0{,}1' + Q + '|2{,}99-3|=0{,}01;\\ \\ |3{,}01-3|=0{,}01' + Q + '\\text{se acercan a }3:\\ \\ \\lim_{x\\to 2}g(x)=M=3',
       '\\text{se apilan: la altura de }g\\text{ sobre la de }f' + Q + 's(1{,}9)=1{,}95+2{,}9=4{,}85' + Q + 's(2{,}1)=2{,}05+3{,}1=5{,}15' + Q + 's(1{,}99)=1{,}995+2{,}99=4{,}985' + Q + 's(2{,}01)=2{,}005+3{,}01=5{,}015',
-      '\\text{en cualquier lugar }x\\ne 2:' + Q + 's(x)=\\tfrac{x}{2}+1+x+1=\\tfrac{3x}{2}+2' + Q + '\\text{su gráfica: la recta naranja, con un hueco}' + Q + '\\text{sobre el }2',
+      '\\text{en cualquier lugar }x\\ne 2:' + Q + 's(x)=\\tfrac{x}{2}+1+x+1' + Q + '\\text{se juntan los términos con }x\\text{ y los números:}' + Q + '\\tfrac{x}{2}+x=\\tfrac{x}{2}+\\tfrac{2x}{2}=\\tfrac{3x}{2};\\ \\ 1+1=2' + Q + 's(x)=\\tfrac{3x}{2}+2' + Q + '\\text{prueba con el lugar }1{,}9:' + Q + 's(1{,}9)=\\tfrac{3\\cdot 1{,}9}{2}+2=\\tfrac{5{,}7}{2}+2=4{,}85' + Q + '\\text{su gráfica: la recta naranja, con un hueco}' + Q + '\\text{sobre el }2',
       '\\text{sobre el }2\\text{ se apilan los límites, no valores:}' + Q + 'L+M=2+3=5' + Q + '\\text{distancias de las sumas a }5:' + Q + '|4{,}85-5|=0{,}15;\\ \\ |5{,}15-5|=0{,}15' + Q + '|4{,}985-5|=0{,}015;\\ \\ |5{,}015-5|=0{,}015' + Q + '\\text{la suma se acerca a }5:' + Q + '\\lim_{x\\to 2}[f(x)+g(x)]' + Q + '=\\lim_{x\\to 2}f(x)+\\lim_{x\\to 2}g(x)=2+3=5',
-      '\\text{con el producto }p(x)=f(x)\\cdot g(x)\\text{ pasa lo mismo:}' + Q + 'p(1{,}9)=1{,}95\\cdot 2{,}9=5{,}655' + Q + 'p(2{,}1)=2{,}05\\cdot 3{,}1=6{,}355' + Q + 'p(1{,}99)=1{,}995\\cdot 2{,}99=5{,}96505' + Q + 'p(2{,}01)=2{,}005\\cdot 3{,}01=6{,}03505' + Q + '\\text{se acercan a }L\\cdot M=2\\cdot 3=6' + Q + '\\text{(propiedad del producto: aquí no se demuestra)}']; return dtPasos(R.slice(0, k)); }
+      '\\text{con el producto }p(x)=f(x)\\cdot g(x)\\text{ pasa lo mismo:}' + Q + 'p(1{,}9)=1{,}95\\cdot 2{,}9=5{,}655' + Q + 'p(2{,}1)=2{,}05\\cdot 3{,}1=6{,}355' + Q + 'p(1{,}99)=1{,}995\\cdot 2{,}99=5{,}96505' + Q + 'p(2{,}01)=2{,}005\\cdot 3{,}01=6{,}03505' + Q + '\\text{distancias de los productos a }6:' + Q + '|5{,}655-6|=0{,}345;\\ \\ |6{,}355-6|=0{,}355' + Q + '|5{,}96505-6|=0{,}03495' + Q + '|6{,}03505-6|=0{,}03505' + Q + '\\text{se achican: los productos se acercan a}' + Q + 'L\\cdot M=2\\cdot 3=6' + Q + '\\text{(propiedad del producto: aquí no se demuestra)}']; return dtPasos(R.slice(0, k)); }
   };
 })());
