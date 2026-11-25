@@ -1771,6 +1771,9 @@ v002_11()
 # >>> H12
 # ───────── H12: uso de la definición formal de límite (funciones no lineales: zona no simétrica, δ = mín{tope, ε/c}) ─────────
 A12, E12 = molde('12', 'H12_uso_de_la_definicion_formal_de_limite.html', 'Uso de la definición formal de límite', 'lim-uso', 'Definición formal de límite (épsilon-delta)', ['uso-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001 para H12; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e12 for e12 in err if e12 != 'H12 título, ruta y pie']
+ok('<h1>Uso de la definición formal de límite</h1>' in A12 and '<span class="status">CD-L29-H12 · v002 · Pendiente de APR</span>' in A12 and 'v001' not in A12 and '<li>Definición formal de límite (épsilon-delta)</li>\n      <li><b>Uso de la definición formal de límite</b></li>' in A12, 'H12 v002 título, ruta y pie')
 def comprobar12():
     """todas las cuentas de H12; va en una función para no pisar nombres globales del verificador. Devuelve las funciones exactas de la hoja"""
     import importlib.util, math
@@ -1925,7 +1928,7 @@ def comprobar12():
     # 8) lo que la hoja afirma con palabras o símbolos, escrito tal cual (definición y reglas)
     for z in ['Sea \\(f\\) definida en un intervalo abierto que contiene a \\(a\\), salvo quizá en \\(a\\).', 'para todo \\(\\varepsilon\\gt 0\\) existe \\(\\delta\\gt 0\\) tal que, para todo \\(x\\),', '\\[0\\lt |x-a|\\lt \\delta\\ \\Longrightarrow\\ |f(x)-L|\\lt \\varepsilon\\]', '\\[\\delta\\le \\text{mín}\\{a-x_{1},\\ x_{2}-a\\}\\]',
               '\\delta=\\text{mín}\\left\\{1,\\ \\dfrac{\\varepsilon}{3}\\right\\}', '\\delta=\\text{mín}\\left\\{\\dfrac{1}{2},\\ \\dfrac{2\\,\\varepsilon}{5}\\right\\}', '\\delta=\\text{mín}\\left\\{1,\\ \\dfrac{\\varepsilon}{7}\\right\\}', '\\delta=\\text{mín}\\left\\{\\dfrac{1}{2},\\ \\dfrac{\\varepsilon}{2}\\right\\}', '\\delta=\\text{mín}\\{9,\\ 3\\,\\varepsilon\\}', '\\delta=\\text{mín}\\{1,\\ 2\\,\\varepsilon\\}', '\\delta=\\text{mín}\\left\\{1,\\ \\dfrac{\\varepsilon}{61}\\right\\}',
-              '\\(\\delta\\le 0{,}4\\)', '\\(\\delta=2{,}75\\)', '\\(\\delta=\\dfrac{2}{3}\\)', '\\(\\delta=0{,}5\\)', '\\(0{,}2\\lt x\\lt 1{,}4\\)', '\\(6{,}25\\lt x\\lt 12{,}25\\)', '\\(\\dfrac{10}{3}\\lt x\\lt 5\\)', '\\(1\\lt x+1\\lt 3\\)', '\\(-7\\lt x-3\\lt -5\\)', '\\(\\dfrac{1}{2}\\lt x\\lt \\dfrac{3}{2}\\)', '\\(\\dfrac{3}{2}\\lt x+1\\lt \\dfrac{5}{2}\\)', '\\(59\\lt x+30\\lt 61\\)', '\\(0\\lt x\\lt 18\\)', '\\(1\\lt x\\lt 3\\)',
+              '\\(\\delta\\le 0{,}4\\)', '\\(\\delta=2{,}75\\)', '\\(\\delta=\\dfrac{2}{3}\\)', '\\(\\delta=0{,}5\\)', '\\(0{,}2\\lt x\\lt 1{,}4\\)', '\\(6{,}25\\lt x\\lt 12{,}25\\)', '\\(\\dfrac{10}{3}\\lt x\\lt 5\\)', '\\(1\\lt x+1\\lt 3\\)', '&-7\\lt x-3\\lt -5&&', '&\\dfrac{1}{2}\\lt x\\lt \\dfrac{3}{2}&&', '&\\dfrac{3}{2}\\lt x+1\\lt \\dfrac{5}{2}&&', '\\(59\\lt x+30\\lt 61\\)', '\\(0\\lt x\\lt 18\\)', '\\(1\\lt x\\lt 3\\)',
               '\\lt 3\\cdot\\dfrac{\\varepsilon}{3}=\\varepsilon', '\\lt 7\\cdot\\dfrac{\\varepsilon}{7}=\\varepsilon', '\\lt 2\\cdot\\dfrac{\\varepsilon}{2}=\\varepsilon', '\\lt \\dfrac{3\\,\\varepsilon}{3}=\\varepsilon', '\\lt \\dfrac{2\\,\\varepsilon}{2}=\\varepsilon', '\\lt 61\\cdot 0{,}1=6{,}1',
               'sirven \\(0{,}4\\), \\(0{,}32\\), \\(0{,}1\\) y \\(0{,}001\\)', 'La distancia \\(0{,}224\\) sirve', 'La distancia \\(0{,}225\\) <b>no</b> sirve', 'sin demostrar', 'nunca de \\(x\\)', 'La distancia \\(1\\) no sirve', '\\(\\displaystyle\\lim_{x\\to 1}x^{2}=1\\)', '\\(\\displaystyle\\lim_{x\\to 30}A(x)=900\\)', '\\(\\displaystyle\\lim_{x\\to -3}x^{2}=9\\)', '\\(\\displaystyle\\lim_{x\\to 9}\\sqrt{x}=3\\)', '\\(\\displaystyle\\lim_{x\\to 1}\\dfrac{1}{x}=1\\)', '\\(\\displaystyle\\lim_{x\\to 2}\\dfrac{1}{x}=\\dfrac{1}{2}\\)']:
         ok(z in A12, 'H12: la hoja no trae «%s»' % z)
@@ -1950,8 +1953,58 @@ def comprobar12():
                   '\\text{con la mayor }(%s)\\text{ se revisaría hasta }1+%s=%s' % (tex(dm), tex(dm), tex(1 + dm)), '\\text{y no sirve; prueba con }x=%s:' % tex(xm), '|%s-1|=%s\\lt %s' % (tex(xm), tex(abs(xm - 1)), tex(dm)), 'f(%s)=%s^{2}=%s' % (tex(xm), tex(xm), tex(f(xm))), '%s\\gt %s\\text{: sale de la franja}' % (tex(f(xm)), tex(1 + e)),
                   '\\text{una distancia más chica y cómoda: }\\delta=%s' % tex(d1), '1-%s=%s;\\ \\ 1+%s=%s' % (tex(d1), tex(1 - d1), tex(d1), tex(1 + d1)), '|x^{2}-1|=|x-1|\\cdot |x+1|', '\\text{si }|x-1|\\lt %s:\\ \\ %s\\lt x\\lt %s' % (tex(d1), tex(1 - d1), tex(1 + d1)), '\\text{se suma }1:\\ \\ %s\\lt x+1\\lt %s' % (tex(2 - d1), tex(2 + d1)),
                   '%s\\lt 3\\text{, luego }|x+1|\\lt 3' % tex(2 + d1), '|x^{2}-1|\\lt %s\\cdot 3=%s' % (tex(d1), tex(e)), '\\text{prueba: }f(1{,}3)=1{,}3^{2}=%s' % tex(f(Fr('1.3'))), '|%s-1|=%s\\lt %s' % (tex(f(Fr('1.3'))), tex(f(Fr('1.3')) - 1), tex(e)), '\\text{¿de dónde sale }%s\\text{? De la regla}' % tex(d1),
-                  '\\tfrac{%s}{3}=%s' % (tex(e), tex(e/3)), '\\text{el menor entre }1\\text{ y }%s\\text{ es }%s' % (tex(e/3), tex(min(Fr(1), e/3))), '|x-1|\\lt 1\\text{, y entonces }|x+1|\\lt 3', '|x^{2}-1|=|x-1|\\cdot |x+1|\\lt \\tfrac{\\varepsilon}{3}\\cdot 3=\\varepsilon', '\\text{toda tolerancia tiene respuesta: el límite es }1'):
+                  '\\tfrac{%s}{3}=%s' % (tex(e), tex(e/3)), '\\text{el menor entre }1\\text{ y }%s\\text{ es }%s' % (tex(e/3), tex(min(Fr(1), e/3))), '|x-1|\\lt 1\\text{, es decir, }0\\lt x\\lt 2', '\\text{se suma }1:\\ \\ 1\\lt x+1\\lt 3\\text{, luego }|x+1|\\lt 3', '\\text{producto: }(x-1)(x+1)=x^{2}+x-x-1=x^{2}-1', '\\text{luego }|x^{2}-1|=|x-1|\\cdot |x+1|', '|x^{2}-1|=|x-1|\\cdot |x+1|\\lt \\tfrac{\\varepsilon}{3}\\cdot 3=\\varepsilon', '\\text{toda tolerancia tiene respuesta: el límite es }1'):
             ok(s in LL or any(s in z for z in LL), 'H12 escena (lectura): falta «%s»' % s)
+    # ───── 10) revisión general (25-nov): cuentas nuevas de la v002 ─────
+    en = lambda *cs: all(c in A12 for c in cs)
+    F_ = lambda s: Fr(s)
+    # encabezado, primera novedad: seis entradas, de a pares a la misma distancia de 1
+    for dd in ('0.1', '0.4', '0.8'):
+        xi, xd = 1 - F_(dd), 1 + F_(dd)
+        ok(abs(xi - 1) == abs(xd - 1) == F_(dd) and abs(f(xd) - 1) > abs(f(xi) - 1), 'H12 v002 encabezado: a distancia %s de 1, la salida de la derecha queda más lejos' % dd)
+        for xx, lad in ((xi, 'izquierda'), (xd, 'derecha')):
+            ok(en('&f(%s)=%s^{2}=%s;\\quad |%s-1|=%s&&\\text{entrada a }%s\\text{ de }1\\text{, %s}' % (tex(xx), tex(xx), tex(f(xx)), tex(f(xx)), tex(abs(f(xx) - 1)), tex(F_(dd)), lad)), 'H12 v002 encabezado: línea de x = %s' % tex(xx))
+    ok(en('\\(0{,}21\\gt 0{,}19\\); \\(0{,}96\\gt 0{,}64\\); \\(2{,}24\\gt 0{,}96\\)', '\\(|0{,}81-1|=1-0{,}81=0{,}19\\)') and abs(F_('0.81') - 1) == 1 - F_('0.81') == F_('0.19') and abs(f(x2) - 1) == e == abs(f(x1) - 1) and 1 - x1 == dm and x2 - 1 == d0 and min(dm, d0) == d0 and abs(f(F_('1.8')) - 1) == F_('2.24') > e, 'H12 v002 encabezado: regularidad, zona y la menor de las dos distancias')
+    # encabezado, segunda novedad: |x² − 1| = |x − 1|·|x + 1| con tres entradas, y el factor queda bajo 3
+    for xx in (F_('1.3'), F_('0.95'), F_('1.9')):
+        ok(abs(f(xx) - 1) == abs(xx - 1)*abs(xx + 1) and abs(xx + 1) < 3 and 0 < abs(xx - 1) < 1 and abs(f(xx) - 1) < 3*abs(xx - 1)
+           and en('&x=%s:&&|%s^{2}-1|=|%s-1|=%s;&&|%s-1|\\cdot|%s+1|=%s\\cdot %s=%s' % (tex(xx), tex(xx), tex(f(xx)), tex(abs(f(xx) - 1)), tex(xx), tex(xx), tex(abs(xx - 1)), tex(xx + 1), tex(abs(f(xx) - 1)))), 'H12 v002 encabezado: segunda novedad con x = %s' % tex(xx))
+    ok(e/3 == F_('0.32') and F_('0.3')/3 == F_('0.1') and Fr(6)/3 == 2 and min(Fr(1), Fr(2)) == 1 and en('\\(2{,}3\\); \\(1{,}95\\); \\(2{,}9\\)', '\\(\\dfrac{0{,}96}{3}=0{,}32\\); \\(\\dfrac{0{,}3}{3}=0{,}1\\); \\(\\dfrac{6}{3}=2\\)'), 'H12 v002 encabezado: tercera parte de tres tolerancias y el tope')
+    ok(A12.count('<b>De dónde sale, con números') == 2 and A12.count('<b>La regularidad:</b>') == 2 and A12.count('<p class="lede">') == 4 and A12.count('<b>Qué se demuestra.</b>') == 1 and A12.count('<b>Qué se justifica en este recuadro.</b>') == 1 and A12.count('<b>Qué se muestra.</b>') == 1 and A12.count('<b>Cómo funciona el método.</b>') == 3
+       and en('<b>La notación.</b>', '<b>Cómo se lee.</b>', 'se lee «épsilon»', 'se lee «delta»', 'se lee «valor absoluto de \\(x\\) menos \\(a\\)»', 'se lee «implica»', 'Se lee «delta es el menor entre uno y épsilon dividido por tres»', 'se lee «\\(x\\) sub uno»', 'se lee «delta prima»', 'se lee «aproximadamente igual a»', '<b>Comprobación con números.</b>', '<b>contraejemplo</b>', '<b>tope</b>', '<b>encierro</b>', '<b>intervalo abierto</b>', '<b>borrador</b>', '<b>acotar</b>'), 'H12 v002: «de dónde sale», «se lee», «qué se demuestra», «cómo funciona el método» y términos explicados')
+    ok('\\\\(' not in A12 and '\\\\[' not in A12 and A12.count('\\begin{aligned}') == A12.count('\\end{aligned}') >= 20, 'H12 v002: bloques aligned (sin «\\\\» pegado a un paréntesis)')
+    # aviso de rigor: las propiedades, con números
+    ok(abs(Fr(-2)*3) == abs(Fr(-6)) == 6 == abs(Fr(-2))*abs(Fr(3)) == 2*3 and 2 < 5 and 2 + 3 == 5 and 5 + 3 == 8 and 2*4 == 8 and 5*4 == 20 and 8 < 20 and 2**2 == 4 and 3**2 == 9 and 4 < 9 and Fr(1, 4) < Fr(1, 2), 'H12 v002 aviso de rigor: propiedades con números')
+    # k1: lo despejado (x₁ ≤ a − δ, a + δ ≤ x₂) y la cadena final, en rejilla de lugares, zonas y distancias
+    for a_ in (Fr(1), Fr(9), Fr(-3), Fr(4)):
+        for p_, q_ in itertools.product((Fr(1, 5), Fr(4, 5), Fr(2, 3), Fr(11, 4)), repeat=2):
+            xa, xb = a_ - p_, a_ + q_
+            for dl in (min(p_, q_), min(p_, q_)/2, min(p_, q_)/7):
+                ok(dl <= a_ - xa and dl + xa <= a_ and xa <= a_ - dl and dl <= xb - a_ and a_ + dl <= xb and all(-dl < (a_ + t*dl) - a_ < dl and xa <= a_ - dl < a_ + t*dl < a_ + dl <= xb for t in TS), 'H12 v002 k1: despeje de las dos condiciones y cadena x₁ ≤ a − δ < x < a + δ ≤ x₂')
+    ok(rz(1 - e) == x1 and rz(1 + e) == x2 and 1 - d0 == F_('0.6') and 1 + d0 == x2 and x1 < F_('0.6') and abs(x2 - 1) == d0 and en('&\\sqrt{0{,}04}\\lt x\\lt \\sqrt{1{,}96}&&', '&0{,}2\\lt x\\lt 1{,}4&&\\text{porque }0{,}2^{2}=0{,}04;\\quad 1{,}4^{2}=1{,}96', 'x_{1}&\\le a-\\delta&&', 'a+\\delta&\\le x_{2}&&', '&x_{1}\\le a-\\delta\\lt x\\lt a+\\delta\\le x_{2}&&'), 'H12 v002 k1: raíces de los bordes y números de la animación')
+    # k2 y ejemplos: productos desarrollados término a término; denominadores comunes; lo que «basta» en cada regla
+    for x in RJ:
+        ok((x - 1)*(x + 1) == x*x + x*1 - 1*x - 1*1 == x*x + x - x - 1 == f(x) - 1 and (x + 3)*(x - 3) == x*x - x*3 + 3*x - 3*3 == x*x - 3*x + 3*x - 9 == f(x) - 9 and (x - 30)*(x + 30) == x*x + x*30 - 30*x - 30*30 == x*x + 30*x - 30*x - 900 == f(x) - 900, 'H12 v002: productos desarrollados término a término')
+        if x != 0: ok(r(x) - 1 == 1/x - x/x == (1 - x)/x and r(x) - Fr(1, 2) == 2/(2*x) - x/(2*x) == (2 - x)/(2*x) and abs(1 - x) == abs(-(x - 1)) and abs(2 - x) == abs(-(x - 2)), 'H12 v002 ej3 y B: denominador común, línea por línea')
+    for s in SS: ok(s*s + 3*s - 3*s - 3*3 == s*s - 9 == (s - 3)*(s + 3) and 3*s - 3*s == 0, 'H12 v002 ej4: suma por diferencia desarrollada')
+    ok(-1 + 2 == 1 and 1 + 2 == 3 and Fr(-1, 2) + 2 == Fr(3, 2) and Fr(1, 2) + 2 == Fr(5, 2) and -1 - 6 == -7 and 1 - 6 == -5 and -5 < 7 and Fr(-1, 2) + 1 == Fr(1, 2) and Fr(1, 2) + 1 == Fr(3, 2) and 1/Fr(1, 2) == 2 and -1 + 60 == 59 and 1 + 60 == 61 and 3*3 == 9 and 30*30 == 900, 'H12 v002: sumas y restas a los tres miembros')
+    for eps in ES: ok(3*(eps/3) == eps and Fr(5, 2)*(2*eps/5) == eps and 7*(eps/7) == eps and 2*(eps/2) == eps and (3*eps)/3 == eps and (2*eps)/2 == eps and 61*(eps/61) == eps, 'H12 v002: lo que «basta» en cada regla (ε = %s)' % eps)
+    for t in TS:
+        x = -3 + t; ok(-1 - 6 < x + 3 - 6 < 1 - 6 and -7 < x - 3 < 7 and abs(x + 3) > 0, 'H12 v002 ej2: se resta 6 a los tres miembros')
+        x = 1 + t; ok(0 < x < 2 and -1 + 2 < x - 1 + 2 < 1 + 2 and abs(x - 1) > 0, 'H12 v002 k2 y ej3: se suma a los tres miembros')
+        x = 2 + t; ok(-1 + 2 < x - 2 + 2 < 1 + 2 and abs(x - 2)/2*(1/abs(x)) < abs(x - 2)/2, 'H12 v002 B: cadena de la demostración')
+        x = 30 + t*F_('0.1'); ok(abs(f(x) - 900) == abs(x - 30)*abs(x + 30) < 61*abs(x - 30) < 61*F_('0.1') == F_('6.1'), 'H12 v002 C: cadena de la parte b)')
+    for eps, t3, d, x, dx, y, dy in FK:                                             # las cuatro filas de la tabla, cada una con su cuenta escrita
+        ok('\\(\\varepsilon=%s\\): \\(\\dfrac{%s}{3}=%s\\); el menor entre \\(1\\) y \\(%s\\) es \\(%s\\), así que \\(\\delta=%s\\). El valor \\(x=%s\\) cumple \\(|%s-1|=%s\\) y \\(0\\lt %s\\lt %s\\). Su salida: \\(%s^{2}=%s\\). Su distancia a \\(1\\): \\(|%s-1|=%s\\), y \\(%s\\lt %s\\).' % (tex(eps), tex(eps), tex(t3), tex(t3), tex(d), tex(d), tex(x), tex(x), tex(dx), tex(dx), tex(d), tex(x), tex(y), tex(y), tex(dy), tex(dy), tex(eps)) in A12, 'H12 v002 k2: la fila ε = %s de la tabla no trae su cuenta escrita' % tex(eps))
+    # k3 y ejemplos: encierros, factores de los contraejemplos y pruebas nuevas
+    ok(F_('0.7065')**2 == F_('0.49914225') < Fr(1, 2) < F_('0.50055625') == F_('0.7075')**2 and 1 - F_('0.707') == F_('0.293') and F_('1.225') - 1 == F_('0.225') and abs(F_('1.24') + 1) == F_('2.24') > 2 and abs(F_('2.9') + 1) == F_('3.9') > 3 and F_('0.5') == Fr(1, 2) and Fr(1, 2)/3 == Fr(1, 6) and 1 - F_('0.5') == F_('0.5') and 1 + F_('0.5') == F_('1.5'), 'H12 v002 k3: encierro de √0,5, redondeos y factores de los contraejemplos')
+    ok(F_('2.4485')**2 == F_('5.99515225') < 6 < F_('6.00005025') == F_('2.4495')**2 and F_('11.75') < F_('12.25') and 3**2 == 9 and F_('0.8')*F_('1.25') == 1, 'H12 v002 ej1 y ej3: encierro de √6 y comprobaciones')
+    ok(0 < abs(F_('10.24') - 9) == F_('1.24') < F_('1.5') and g(F_('10.24')) == F_('3.2') and F_('3.2')**2 == F_('10.24') and abs(F_('3.2') - 3) == F_('0.2') < Fr(1, 2), 'H12 v002 ej4: prueba de la regla con x = 10,24')
+    # ejercicios
+    ok(F_('0.3') == Fr(3, 10) and 1/Fr(3, 10) == Fr(10, 3) and F_('0.2') == Fr(2, 10) == Fr(1, 5) and 1/Fr(1, 5) == 5 and F_('0.5') == Fr(1, 2) == Fr(3, 6) < Fr(4, 6) == Fr(2, 3) and F_('3.5') == Fr(7, 2) and 1/Fr(7, 2) == Fr(2, 7) and 20 < 28 and Fr(1, 28) < Fr(1, 20) and F_('3.2')*F_('0.3125') == 1, 'H12 v002 A: inversos y comparaciones, con su cuenta')
+    ok(F_('1.6')*F_('0.625') == 1 and F_('6.1')/61 == F_('0.1') and min(Fr(1), F_('0.1')) == F_('0.1') and abs(F_('30.0999') + 30) == F_('60.0999') > 60, 'H12 v002 B y C: comprobaciones')
+    # escena: la lectura muestra el producto desarrollado (paso 6) y de dónde sale |x + 1| < 3 (paso 7)
+    ok("Q + '\\\\text{producto: }(x-1)(x+1)=x^{2}+x-x-1=x^{2}-1' + Q + '\\\\text{luego }|x^{2}-1|=|x-1|\\\\cdot |x+1|'" in E12 and "Q + '|x-1|\\\\lt 1\\\\text{, es decir, }0\\\\lt x\\\\lt 2' + Q + '\\\\text{se suma }1:\\\\ \\\\ 1\\\\lt x+1\\\\lt 3\\\\text{, luego }|x+1|\\\\lt 3'" in E12 and 'factorizar' not in E12, 'H12 v002 escena: lectura de los pasos 6 y 7 sin saltos')
     return FUN
 FUN12 = comprobar12()
 # <<< H12
