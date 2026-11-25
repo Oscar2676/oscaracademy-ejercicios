@@ -718,6 +718,9 @@ comprobar6v2()
 # >>> H07
 # ───────── H07: estimar límites a partir de tablas (la tabla viene dada) ─────────
 A7, E7 = molde('07', 'H07_estimar_limites_a_partir_de_tablas.html', 'Estimar límites a partir de tablas', 'lim-estima', 'Límites a partir de tablas', ['est-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001 para H07; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e7 for e7 in err if e7 != 'H07 título, ruta y pie']
+ok('<h1>Estimar límites a partir de tablas</h1>' in A7 and '<span class="status">CD-L29-H07 · v002 · Pendiente de APR</span>' in A7 and 'v001' not in A7 and '<li>Límites a partir de tablas</li>\n      <li><b>Estimar límites a partir de tablas</b></li>' in A7, 'H07 v002 título, ruta y pie')
 def T7(x): return x + 3 if x != 2 else Fr(1)                                     # función ancla: (x² + x − 6)/(x − 2) si x ≠ 2; T(2) = 1
 def S7(x): return Fr(1) if x == 2 else (Fr(7) if Fr('1.999') < x < Fr('2.001') else x + 3)   # misma tabla que T, otro límite
 def w7(x):
@@ -815,6 +818,53 @@ for L7 in (IZ7, DE7):
     ok([abs(T7(x) - 5) for x in L7] == [Fr(1, 10), Fr(1, 100), Fr(1, 1000)], 'H07 escena: distancias 0,1; 0,01; 0,001')
 ok('T(x)=\\\\tfrac{x^{2}+x-6}{x-2}=\\\\tfrac{(x-2)(x+3)}{x-2}=x+3' in E7 and '2+3=5' in E7 and "['FO', 'T(x)=x+3\\\\ \\\\ (x\\\\ne 2)'" in E7 and 'T(2)=1' in E7, 'H07 escena: fórmula de confirmación')
 ok('function lm07E(val){ return -0.9 + (val - 4.85)*5.8/0.3; }' in E7 and all(-1.1 < -0.9 + (float(v) - 4.85)*5.8/0.3 < 5.1 for v in TB7[0][1] if v != 1), 'H07 escena: los seis valores caben en la recta numérica')
+# revisión general (25-nov): cuentas nuevas de la v002
+def en7(*cads): return all(('\\(%s\\)' % c in A7) or (c in A7) for c in cads)
+F7 = lambda s: Fr(s)
+# encabezado: «de dónde sale, con números»
+ok(all(abs(T7(x) - 5) == (5 - T7(x) if x < 2 else T7(x) - 5) == abs(x - 2) for x in TB7[0][0] if x != 2), 'H07 v002 encabezado: distancia = mayor menos menor')
+ok(en7(*['|%s-5|&=5-%s=%s' % (tex(T7(x)), tex(T7(x)), tex(5 - T7(x))) for x in IZ7] + ['|%s-5|&=%s-5=%s' % (tex(T7(x)), tex(T7(x)), tex(T7(x) - 5)) for x in DE7]), 'H07 v002 encabezado: las seis distancias escritas, una por línea')
+ok(en7(';\\quad '.join('T(%s)=%s' % (tex(x), tex(T7(x))) for x in IZ7), ';\\quad '.join('T(%s)=%s' % (tex(x), tex(T7(x))) for x in DE7), 'T(2)=1'), 'H07 v002 encabezado: los datos de la tabla, lado por lado')
+ok(F7('0.1')/10 == F7('0.01') and F7('0.01')/10 == F7('0.001') and F7('4.999') < 5 < F7('5.001') and [n7 for n7 in range(0, 11) if F7('4.999') < n7 < F7('5.001')] == [5], 'H07 v002 encabezado: regularidad y candidato')
+ok(1*2 + 3 == 2 + 3 == 5, 'H07 v002 aviso de rigor: hecho 1 con números')
+# k1
+ok(abs(F7('4.99') - 5) == 5 - F7('4.99') == F7('0.01') and en7('|4{,}99-5|=5-4{,}99=0{,}01'), 'H07 v002 k1: distancia de muestra')
+ok(abs(g7(F7('3.99')) - 7) == F7('0.02') and abs(g7(F7('4.01')) - 7) == F7('0.0001') and abs(F7('3.99') - 4) == abs(F7('4.01') - 4) == F7('0.01'), 'H07 v002 k1: los lados no avanzan igual de rápido (ejemplo 2)')
+ok([abs(x - 4) for x in TB7[4][0]] == [F7(z) for z in ('0.5', '0.1', '0.01', '0.01', '0.2', '0.5')], 'H07 v002 k1 y ej2: distancias de los x a 4')
+# k2
+for x in RJ:
+    ok((x - 2)*(x + 3) == x*x + x*3 - 2*x - 2*3 == x*x + 3*x - 2*x - 6 == x*x + x - 6 and 3*x - 2*x == x, 'H07 v002 k2: producto desarrollado término a término')
+ok(F7('1.9')**2 == F7('3.61') and F7('3.61') + F7('1.9') == F7('5.51') and F7('5.51') - 6 == F7('-0.49') and F7('1.9') - 2 == F7('-0.1') and F7('-0.49')/F7('-0.1') == F7('4.9') == F7('1.9') + 3 == T7(F7('1.9')) and 2 - 2 == 0, 'H07 v002 k2: comprobación con x = 1,9')
+ok(2 - F7('0.001') == F7('1.999') and 2 + F7('0.001') == F7('2.001') and all(F7('1.999') < x < F7('2.001') for x in (F7('1.9995'), F7('2.0005'))) and 0*2 + 7 == 0 + 7 == 7 and 5 != 7, 'H07 v002 k2: intervalo, límites 5 y 7')
+for k7 in range(-30, 31):
+    x = 2 + Fr(k7, 20000)
+    ok((0 < abs(x - 2) < F7('0.001')) == (F7('1.999') < x < F7('2.001') and x != 2), 'H07 v002 k2: 0 < |x − 2| < 0,001 es 1,999 < x < 2,001 con x ≠ 2 (x=%s)' % x)
+ok('<ol class="steps" start="7">' in A7 and 'pasos 3 a 8' in A7 and A7.count('<b>Qué se demuestra') == 2 and A7.count('<b>Cómo funciona el método') == 2, 'H07 v002 k2 y k3: «qué se demuestra» y «cómo funciona el método»')
+# k3
+ok([abs(x - 4) for x in TB7[2][0] if x != 4] == [F7(z) for z in ('0.1', '0.01', '0.001', '0.001', '0.01', '0.1')] and en7('|3{,}9-4|=0{,}1', '|3{,}99-4|=0{,}01', '|3{,}999-4|=0{,}001', '|4{,}1-4|=0{,}1', '|4{,}01-4|=0{,}01', '|4{,}001-4|=0{,}001'), 'H07 v002 k3: distancias de los x a 4')
+ok(F7('4.01') - 4 == F7('0.01') and F7('0.01')**2 == F7('0.0001') and 2/F7('0.0001') == 20000 == w7(F7('4.01')) and 0**2 == 0, 'H07 v002 k3: columna x = 4,01')
+ok(2 < 3 and 2**2 == 4 < 9 == 3**2 and Fr(1, 2) > Fr(1, 3), 'H07 v002 k3: propiedades del orden, con números')
+for n7 in range(1, 41):
+    for k7 in range(1, 30):
+        for x in (4 - Fr(k7, 30*n7), 4 + Fr(k7, 30*n7)):
+            ok(abs(x - 4)**2 == (x - 4)**2 < Fr(1, n7)**2 == Fr(1, n7*n7) and 1/(x - 4)**2 > n7*n7 and 2/(x - 4)**2 == w7(x) > 2*n7*n7, 'H07 v002 k3: cadena de desigualdades, línea por línea (n=%d)' % n7)
+ok(abs(F7('4.01') - 4) == F7('0.01') < F7('0.1') == Fr(1, 10) and 2*10**2 == 2*100 == 200 < 20000 and 2*1000**2 == 2*1000000 == 2000000 > 1000000, 'H07 v002 k3: comprobación con n = 10 y n = 1000')
+# ejemplos
+ok(all(3*x == f7(x) and '\\(3\\cdot %s=%s\\)' % (tex(x), tex(3*x)) in A7 for x in TB7[3][0] if x != 1) and 3*1 + 0 == 3, 'H07 v002 ej1: las seis columnas con la fórmula')
+ok(en7('4-3{,}5=0{,}5', '4-3{,}9=0{,}1', '4-3{,}99=0{,}01', '4{,}01-4=0{,}01', '4{,}2-4=0{,}2', '4{,}5-4=0{,}5') and [4 - x for x in TB7[4][0][:3]] + [x - 4 for x in TB7[4][0][3:]] == [F7(z) for z in ('0.5', '0.1', '0.01', '0.01', '0.2', '0.5')], 'H07 v002 ej2: distancias de los x a 4, escritas')
+ok((2*F7('3.5'), 2*F7('3.5') - 1, 2*F7('3.9'), 2*F7('3.9') - 1, 2*F7('3.99'), 2*F7('3.99') - 1) == (7, 6, F7('7.8'), F7('6.8'), F7('7.98'), F7('6.98')) and all(g7(x) == 2*x - 1 for x in TB7[4][0][:3]), 'H07 v002 ej2: columnas de la izquierda')
+ok([((x - 4)**2, 7 + (x - 4)**2) for x in TB7[4][0][3:]] == [(F7('0.0001'), F7('7.0001')), (F7('0.04'), F7('7.04')), (F7('0.25'), F7('7.25'))] and all(g7(x) == 7 + (x - 4)**2 for x in TB7[4][0][3:]) and 2*4 - 1 == 8 - 1 == 7, 'H07 v002 ej2: columnas de la derecha')
+ok(all(('\\(3-%s=%s\\)' % (tex(x), tex(3 - x)) in A7) and h7(x) == 3 - x for x in TB7[5][0] if x < 1) and all(('\\(4+%s=%s\\)' % (tex(x), tex(4 + x)) in A7) and h7(x) == 4 + x for x in TB7[5][0] if x > 1) and h7(Fr(1)) == 3 - 1 == 2, 'H07 v002 ej3: las columnas con la fórmula')
+ok(F7('41.9') < 42 < F7('42.1') and [n7 for n7 in range(30, 60) if F7('41.9') < n7 < F7('42.1')] == [42] and [abs(M7[t] - 42) for t in sorted(M7)] == [F7(z) for z in ('0.6', '0.2', '0.1', '0.1', '0.2', '0.6')], 'H07 v002 ej4: candidato 42 y distancias')
+# ejercicios
+ok(p7(F7('3.1')) == F7('1.05') and F7('3.1') - 1 == F7('2.1') and F7('2.1')/2 == F7('1.05') and all((x - 1)/2 == x/2 - Fr(1, 2) == F7('0.5')*x - F7('0.5') for x in RJ) and F7('0.5')*3 == F7('1.5') and F7('1.5') - F7('0.5') == 1 == Fr(3 - 1, 2), 'H07 v002 A: columna de la derecha, división repartida y límite')
+ok([abs(p7(x) - 1) for x in TB7[7][0] if x != 3] == [F7(z) for z in ('0.05', '0.005', '0.0005', '0.0005', '0.005', '0.05')], 'H07 v002 A: distancias a 1')
+ok(F7('-3.1') - (-3) == F7('-3.1') + 3 == F7('-0.1') and abs(F7('-0.1')) == F7('0.1'), 'H07 v002 B: restar −3 es sumar 3')
+ok(all('q(%s)=%s-5=%s' % (tex(x), tex(x), tex(x - 5)) in A7 and q7(x) == x - 5 for x in TB7[8][0] if x < 2) and all('q(%s)=5-%s=%s' % (tex(x), tex(x), tex(5 - x)) in A7 and q7(x) == 5 - x for x in TB7[8][0] if x > 2), 'H07 v002 B: las seis columnas con la fórmula')
+ok(all('R(%s)=18+0{,}4\\cdot %s=18+%s=%s' % (tex(t), tex(t), tex(F7('0.4')*t), tex(18 + F7('0.4')*t)) in A7 and R7(t) == 18 + F7('0.4')*t for t in TB7[9][0] if t != 5), 'H07 v002 C: las seis columnas con el modelo')
+ok([abs(R7(t) - 20) for t in TB7[9][0] if t != 5] == [F7(z) for z in ('0.2', '0.1', '0.02', '0.02', '0.1', '0.2')] and F7('19.98') < 20 < F7('20.02'), 'H07 v002 C: candidato 20 y distancias')
+# escena: la lectura del paso 6 muestra de dónde sale la factorización y la comprueba con dos columnas
+ok('(x-2)(x+3)=x^{2}+3x-2x-6=x^{2}+x-6' in E7 and '1{,}9+3=4{,}9;\\\\ \\\\ 2{,}1+3=5{,}1' in E7 and F7('1.9') + 3 == F7('4.9') == T7(F7('1.9')) and F7('2.1') + 3 == F7('5.1') == T7(F7('2.1')), 'H07 v002 escena: lectura del paso 6 (producto desarrollado y comprobación)')
 # <<< H07
 
 # ───────── escenas por pasos de H02–H07, con el código real (node) ─────────
