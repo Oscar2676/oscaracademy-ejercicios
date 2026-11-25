@@ -336,7 +336,11 @@ ok(all(abs(v - 6) == 2*Fr(1, 10**k) for k, v in enumerate(llegada(V4, Fr(3), -1)
 
 # >>> H05
 # ───────── H05: límites laterales a partir de gráficas. Asíntotas ─────────
+n5 = len(err)
 A5, E5 = molde('05', 'H05_limites_laterales_a_partir_de_graficas_asintotas.html', 'Límites laterales a partir de gráficas. Asíntotas', 'lim-asint', 'Límites a partir de gráficas', ['asi-idea'], 1)
+# H05 está en v002 (revisión general): molde() espera la versión en una línea común, fuera de este bloque; aquí se quita ese aviso (si salió) y se comprueba el pie v002
+err[n5:] = [z5 for z5 in err[n5:] if z5 != 'H05 título, ruta y pie']
+ok('<h1>Límites laterales a partir de gráficas. Asíntotas</h1>' in A5 and '<span class="status">CD-L29-H05 · v002 · Pendiente de APR</span>' in A5 and A5.count('class="status"') == 1 and '<li>Límites a partir de gráficas</li>\n      <li><b>Límites laterales a partir de gráficas. Asíntotas</b></li>' in A5, 'H05 título, ruta y pie (v002)')
 # funciones exactas de la hoja (cada una falla si se la evalúa fuera de su dominio)
 def f5(x):
     assert x != 2
@@ -446,6 +450,65 @@ for s5 in ['\\lim_{x\\to 2^{+}}f(x)=+\\infty', '\\lim_{x\\to 2^{-}}f(x)=-\\infty
            '20\\gt 10', '0\\lt 0{,}05\\lt 0{,}1', '-1\\lt x\\lt -0{,}996', 'hueco en \\((2,4)\\)', 'punto lleno \\((1,2)\\)', 'punto lleno \\((0,1)\\)', 'círculo vacío en \\((3,4)\\)', 'no existe', 'al menos uno', 'no son números', 'es una estimación', 'sin demostrar']:
     ok(s5 in A5, 'H05: la hoja no trae «%s»' % s5)
 ok(k5(Fr(0)) == 1 and v5(Fr(1)) == 2 and 3 + 1 == 4, 'H05: puntos marcados de las gráficas descritas')
+# ───── H05 v002 (revisión general, 25-nov): cuentas nuevas de la hoja y de la lectura de la escena
+D5 = lambda s: Fr(s)
+ok([(D5(x5) - 2, 1/(D5(x5) - 2)) for x5 in ('2.5', '2.1', '2.01', '2.001')] == [(D5('0.5'), 2), (D5('0.1'), 10), (D5('0.01'), 100), (D5('0.001'), 1000)] and 2 - 2 == 0, 'H05 v002 encabezado: cuatro casos por la derecha')
+ok([(D5(x5) - 2, 1/(D5(x5) - 2)) for x5 in ('1.5', '1.9', '1.99', '1.999')] == [(D5('-0.5'), -2), (D5('-0.1'), -10), (D5('-0.01'), -100), (D5('-0.001'), -1000)], 'H05 v002 encabezado: cuatro casos por la izquierda')
+for s5 in ['x=2{,}5:&\\quad 2{,}5-2=0{,}5;\\quad \\frac{1}{0{,}5}=2', 'x=2{,}001:&\\quad 2{,}001-2=0{,}001;\\quad \\frac{1}{0{,}001}=1000', 'x=1{,}5:&\\quad 1{,}5-2=-0{,}5;\\quad \\frac{1}{-0{,}5}=-2', 'x=1{,}999:&\\quad 1{,}999-2=-0{,}001;\\quad \\frac{1}{-0{,}001}=-1000',
+           'De dónde sale, con números', 'La notación', 'se lee «límite»', 'se lee «infinito»', 'por la izquierda es menos infinito', 'por la derecha es más infinito', 'no es un exponente', '<b>límite lateral</b>', '<b>asíntota vertical</b>', '<b>Qué se demuestra.</b>', '<b>Cómo funciona el método.</b>', '<b>Búsqueda del tramo</b>', 'Comprobación con números']:
+    ok(s5 in A5, 'H05 v002: la hoja no trae «%s»' % s5)
+ok(A5.count('<p class="lede">') == 4 and A5.index('De dónde sale, con números') < A5.index('<b>La notación.</b>') < A5.index('</header>') and A5.index('<b>Qué se demuestra.</b>') < A5.index('<b>Cómo funciona el método.</b>') < A5.index('<b>Búsqueda del tramo</b>') < A5.index('Demostración, a la derecha') < A5.index('Comprobación con números, a la izquierda') < A5.index('card k3'), 'H05 v002: orden del encabezado y de la demostración')
+ok(not re.search(r'\\\\[()]', A5), 'H05 v002: salto de línea pegado a un paréntesis en un bloque aligned')
+ok(2*4 == 8 < 12 == 3*4 and 2*(-1) == -2 > -3 == 3*(-1) and 2**2 == 4 < 9 == 3**2 and Fr(1, 3) < Fr(1, 2) and D5('0.9') + 1 == D5('1.9') and D5('0.99') + 1 == D5('1.99') and 1 + 1 == 2, 'H05 v002 aviso de rigor: los hechos 1 y 2 con números')
+ok(Fr(1, 5) == D5('0.2') and Fr(1, 100) == D5('0.01') and [f5(D5(x5)) for x5 in ('1.9', '1.99', '1.999')] == [-10, -100, -1000], 'H05 v002 k1: anchos d para los topes 5 y 100, y ejemplo por la izquierda')
+# k2: búsqueda del tramo (equivalencias) y tramos de x, en rejilla
+for M5 in MS5:
+    for t5 in [Fr(j5, 8) for j5 in range(1, 25)]:      # también fuera del tramo (t ≥ 1): las tres líneas de la búsqueda son equivalentes
+        d5 = t5/M5; x5 = 2 + d5
+        ok((1/(x5 - 2) > M5) == (1 > M5*(x5 - 2)) == (1/M5 > x5 - 2) == (t5 < 1) and (0 < x5 - 2 < 1/M5) == (2 < x5 < 2 + 1/M5), 'H05 v002 k2: búsqueda del tramo a la derecha, M=%s' % M5)
+        x5 = 2 - d5
+        ok(-(2 - x5) == -2 + x5 == x5 - 2 and 1/(x5 - 2) == 1/(-(2 - x5)) == -1/(2 - x5) and (0 < 2 - x5 < 1/M5) == (2 - 1/M5 < x5 < 2) == (t5 < 1) and ((M5 < 1/(2 - x5)) == (-M5 > -1/(2 - x5)) == (f5(x5) < -M5)), 'H05 v002 k2: izquierda, M=%s' % M5)
+        ok((3/(3*d5) > M5) == (3 > M5*(3*d5)) == (3/M5 > 3*d5) == (t5 < 1) and (4/(4*d5) > M5) == (4 > M5*4*d5) == (4/M5 > 4*d5) and (T5(60*d5) > M5) == (60 > M5*60*d5) == (60/M5 > 60*d5) == (t5 < 1), 'H05 v002: búsqueda del tramo en ej2, A y C, M=%s' % M5)
+    ok(1/M5*M5 == 1 and (1/M5)**2 == 1/M5*(1/M5) == 1/M5**2 and 2*M5 == M5 + M5 > M5 and ((M5 >= 1) <= (M5*M5 >= 1*M5 and 1/M5**2 <= 1/M5)), 'H05 v002: (1/M)² = 1/M², M² ≥ M si M ≥ 1, 2M > M (M=%s)' % M5)
+ok(Fr(1, 10) == D5('0.1') and 2 - D5('1.95') == D5('0.05') and 0 < D5('0.05') < D5('0.1') and D5('1.95') - 2 == D5('-0.05') and f5(D5('1.95')) == 1/D5('-0.05') == -20 < -10, 'H05 v002 k2: comprobación por la izquierda (M = 10, x = 1,95)')
+for M5, i5, x5, d5, y5 in FK5:
+    ok(x5 == 2 + i5/2 and '\\(M=%s\\): \\(\\dfrac{1}{%s}=%s\\); el valor \\(x=%s\\) cumple \\(%s-2=%s\\) y \\(0\\lt %s\\lt %s\\); \\(f(%s)=\\dfrac{1}{%s}=%s\\), y \\(%s\\gt %s\\).' % (M5, M5, tex(i5), tex(x5), tex(x5), tex(d5), tex(d5), tex(i5), tex(x5), tex(d5), tex(y5), tex(y5), M5) in A5, 'H05 v002 k2: cuenta escrita de la fila M=%s (x de prueba a mitad del tramo)' % M5)
+ok(D5('0.2')/2 == D5('0.1') and 2 + D5('0.1') == D5('2.1'), 'H05 v002 k2: x de prueba del tope 5')
+ok(p5(D5('1.9')) == 1/(D5('1.9') - 2) == 1/D5('-0.1') == -10 == f5(D5('1.9')) and p5(D5('2.1')) == 1/(D5('2.1') - 2) == 1/D5('0.1') == 10 == f5(D5('2.1')), 'H05 v002 k3: p y f con los mismos valores cerca de 2')
+# ejemplo 1
+ok(D5('2.99') - 3 == D5('-0.01') and D5('3.01') - 3 == D5('0.01') and D5('-0.1')*D5('-0.1') == D5('0.01') and Fr(1, 100) == D5('0.01') and D5('3.005') - 3 == D5('0.005') and D5('0.005')**2 == D5('0.000025') == D5('-0.005')**2 and D5('2.995') - 3 == D5('-0.005') and q5(D5('3.005')) == 1/D5('0.000025') == 40000 == q5(D5('2.995')) and 40000 > 100 and 0 < D5('0.005') < D5('0.01'), 'H05 v002 ej1: restas, cuadrados y comprobación con M = 100')
+for x5 in RJ:
+    if x5 != 3: ok(3 - x5 == -(x5 - 3) and (3 - x5)**2 == (x5 - 3)**2, 'H05 v002 ej1: 3 − x = −(x − 3)')
+    if x5 != 4: ok(-(x5 - 4) == -x5 + 4 == 4 - x5 and 3/(4 - x5) == 3/(-(x5 - 4)) == -3/(x5 - 4), 'H05 v002 ej2: −(x − 4) = 4 − x')
+    ok((x5 - 2)*(x5 + 2) == x5*x5 + x5*2 - 2*x5 - 2*2 == x5**2 + 2*x5 - 2*x5 - 4 == x5**2 - 4, 'H05 v002 ej4: diferencia de cuadrados desarrollada')
+for M5 in [m5 for m5 in MS5 if m5 >= 1]:
+    for t5 in TS5:
+        d5 = t5/M5
+        ok(d5**2 < (1/M5)**2 <= 1/M5 and M5*d5**2 < 1 and M5 < 1/d5**2 == q5(3 + d5) == q5(3 - d5) and 2/d5**2 == k5(3 + d5) > 2*M5, 'H05 v002 ej1 y B: cadena del tope con M ≥ 1')
+# ejemplo 2
+ok(Fr(3, 100) == D5('0.03') and 4 - D5('3.98') == D5('0.02') and 0 < D5('0.02') < D5('0.03') and w5(D5('3.98')) == 3/D5('0.02') == 150 > 100 and D5('4.02') - 4 == D5('0.02') and 4 - D5('4.02') == D5('-0.02') and w5(D5('4.02')) == 3/D5('-0.02') == -150 < -100 and 4 - D5('3.9') == D5('0.1') and 4 - D5('4.1') == D5('-0.1'), 'H05 v002 ej2: comprobación con M = 100 y signos del denominador')
+# ejemplo 3
+ok(Fr(1, 50) == D5('0.02') and D5('1.01') - 1 == D5('0.01') and 0 < D5('0.01') < D5('0.02') and v5(D5('1.01')) == 100 > 50 and v5(Fr(1)) == 1 + 1 == 2, 'H05 v002 ej3: comprobación con M = 50 y v(1)')
+for M5 in MS5:
+    for t5 in TS5:
+        x5 = 1 + t5/M5; ok(0 < x5 - 1 < 1/M5 and M5*(x5 - 1) < 1 and M5 < 1/(x5 - 1) == v5(x5), 'H05 v002 ej3: cadena del tope')
+# ejemplo 4: cada fila de g y de f, con sus operaciones
+for x5, c5, n5_, d5, y5 in (('1.9', '3.61', '-0.39', '-0.1', '3.9'), ('1.99', '3.9601', '-0.0399', '-0.01', '3.99'), ('2.01', '4.0401', '0.0401', '0.01', '4.01'), ('2.1', '4.41', '0.41', '0.1', '4.1')):
+    ok(D5(x5)**2 == D5(c5) and D5(c5) - 4 == D5(n5_) and D5(x5) - 2 == D5(d5) and D5(n5_)/D5(d5) == D5(y5) == g5(D5(x5)) == D5(x5) + 2 and f5(D5(x5)) == 1/D5(d5), 'H05 v002 ej4: fila x = %s' % x5)
+    ok('x=%s:&\\quad %s^{2}=%s;\\quad %s-4=%s;\\quad %s-2=%s;\\quad \\frac{%s}{%s}=%s' % tuple(tex(D5(z5)) for z5 in (x5, x5, c5, c5, n5_, x5, d5, n5_, d5, y5)) in A5 and '\\(f(%s)=\\dfrac{1}{%s}=%s\\)' % (tex(D5(x5)), tex(D5(d5)), tex(f5(D5(x5)))) in A5 and '\\(%s+2=%s\\)' % (tex(D5(x5)), tex(D5(y5))) in A5, 'H05 v002 ej4: cuenta escrita de la fila x = %s' % x5)
+ok(2 + 2 == 4, 'H05 v002 ej4: llegada de x + 2')
+# ejercicios
+ok(Fr(4, 100) == D5('0.04') and D5('-0.99') + 1 == D5('0.01') and 0 < D5('0.01') < D5('0.04') and u5(D5('-0.99')) == 400 > 100 and -(D5('-1.01') + 1) == D5('0.01') and u5(D5('-1.01')) == -400 < -100 and 0 - 1 == -1 and D5('0.004') - 1 == D5('-0.996'), 'H05 v002 A: comprobación con M = 100 y extremos del tramo')
+for M5 in MS5:
+    for t5 in TS5:
+        d5 = 4*t5/M5; x5 = -1 - d5
+        ok(0 < -(x5 + 1) < 4/M5 and M5*(-(x5 + 1)) < 4 and M5 < 4/(-(x5 + 1)) and u5(x5) == -4/(-(x5 + 1)) < -M5, 'H05 v002 A: cadena por la izquierda')
+        x5 = -t5/M5; ok(0 < -x5 < 1/M5 and M5*(-x5) < 1 and M5 < 1/(-x5) and k5(x5) == -1/(-x5) < -M5, 'H05 v002 B: cadena en 0 por la izquierda')
+ok(Fr(1, 50) == D5('0.02') and 0 < D5('0.01') < D5('0.02') and k5(D5('-0.01')) == -100 < -50 and k5(Fr(0)) == 0 + 1 == 1 and D5('3.01') - 3 == D5('0.01') and D5('3.005') - 3 == D5('0.005') and 0 < D5('0.005') < D5('0.01') and k5(D5('3.005')) == 2/D5('0.000025') == 80000 > 100, 'H05 v002 B: comprobaciones con M = 50 y M = 100')
+ok([T5(Fr(x5)) for x5 in (60, 30, 10, 1)] + [T5(D5('0.1'))] == [1, 2, 6, 60, 600] and 0 < D5('0.05') < D5('0.06') and T5(D5('0.05')) == 1200 > 1000, 'H05 v002 C: lectura de los valores y comprobación')
+# la lectura del paso 4 de la escena (dos operaciones y dos pruebas con números)
+ok("'\\\\text{por }M\\\\text{, positivo:}\\\\ \\\\ M\\\\,(x-2)\\\\lt 1'" in E5 and "'\\\\text{dividido por }x-2\\\\text{, positivo:}\\\\ \\\\ M\\\\lt \\\\tfrac{1}{x-2}'" in E5 and "'\\\\text{prueba: }f(2{,}1)=10\\\\text{, y }10\\\\gt 5'" in E5 and "'\\\\text{prueba: }f(2{,}005)=\\\\tfrac{1}{0{,}005}=200\\\\text{, y }200\\\\gt 100'" in E5 and "'\\\\tfrac{1}{x-2}=-\\\\tfrac{1}{2-x}\\\\text{; por eso }f(x)\\\\lt -M'" in E5, 'H05 v002 escena: la lectura del paso 4 trae las dos operaciones y las pruebas')
+ok(f5(D5('2.1')) == 10 > 5 and 0 < D5('2.1') - 2 < D5('0.2') and D5('2.005') - 2 == D5('0.005') and 0 < D5('0.005') < D5('0.01') and f5(D5('2.005')) == 1/D5('0.005') == 200 > 100, 'H05 v002 escena: pruebas de los topes 5 y 100')
 # <<< H05
 
 # >>> H06
