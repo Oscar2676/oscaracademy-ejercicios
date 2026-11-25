@@ -12,43 +12,79 @@
       <li><b>Desarrollo de (a + b)ⁿ</b></li>
     </ol>
     <h1>Desarrollo de (a + b)ⁿ</h1>
-    <p class="lede">Desarrollar \((a+b)^{n}\) es escribirlo como suma de sus \(n+1\) términos. Con el binomio de Newton se hace sin multiplicar paréntesis: se arma cada término con su coeficiente y sus dos potencias.
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). <b>Desarrollar</b> \((a+b)^{n}\) es escribir esa potencia como una suma de términos, sin paréntesis pendientes. Aquí \(a\) y \(b\) son números reales cualesquiera (o expresiones que los representan, como \(2x\)) y \(n\) es un entero, \(n\ge 1\).</p>
+    <p class="lede"><b>De dónde sale la fórmula: los casos que ya se conocen.</b> Para \(n=1,\ 2,\ 3,\ 4\), multiplicando los paréntesis (hojas «Cuadrado de un binomio», «Cubo de un binomio» y «Patrón de los coeficientes»), se obtiene: \[\begin{aligned}\text{para }n=1:&\quad(a+b)^{1}=a+b\\ \text{para }n=2:&\quad(a+b)^{2}=a^{2}+2ab+b^{2}\\ \text{para }n=3:&\quad(a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\\ \text{para }n=4:&\quad(a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> Se mira el caso \(n=4\), escribiendo todos los exponentes y todos los coeficientes, también los que valen \(1\) y \(0\) (se usa que \(a^{0}=1\) y \(b^{0}=1\)): \[(a+b)^{4}=1\,a^{4}b^{0}+4\,a^{3}b^{1}+6\,a^{2}b^{2}+4\,a^{1}b^{3}+1\,a^{0}b^{4}\] Se ven cuatro cosas. Una: hay \(5\) términos, uno más que el exponente \(4\). Dos: el exponente de \(a\) <b>baja</b> de uno en uno: \(4,\ 3,\ 2,\ 1,\ 0\). Tres: el exponente de \(b\) <b>sube</b> de uno en uno: \(0,\ 1,\ 2,\ 3,\ 4\); en cada término los dos exponentes suman \(4\). Cuatro: los coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) son la fila \(4\) del triángulo de Pascal, es decir, los números \(\dbinom{4}{0},\ \dbinom{4}{1},\ \dbinom{4}{2},\ \dbinom{4}{3},\ \dbinom{4}{4}\) (hoja «Coeficientes binomiales»). Si \(k\) es el exponente de \(b\), el término es \(\dbinom{4}{k}a^{\,4-k}b^{\,k}\).</p>
+    <p class="lede"><b>La fórmula.</b> Con exponente \(n\) pasa lo mismo: el término que tiene \(b^{\,k}\) es \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\), y \(k\) recorre \(0,\ 1,\ 2,\dots,\ n\). Es el <b>binomio de Newton</b>:
     \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n}b^{n}\]
-    La sumatoria se lee: «suma de los términos \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\) para \(k=0,\ 1,\ 2,\dots,\ n\)».</p>
+    La sumatoria se lee: «suma de los términos \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\) para \(k=0,\ 1,\ 2,\dots,\ n\)»; completa: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». El símbolo \(\dbinom{n}{k}\) se lee «\(n\) sobre \(k\)». <b>Comprobación con \(n=2\):</b> \(\dbinom{2}{0}a^{2}+\dbinom{2}{1}a^{1}b^{1}+\dbinom{2}{2}b^{2}=1\,a^{2}+2\,ab+1\,b^{2}=a^{2}+2ab+b^{2}\) ✓. Esta hoja enseña a <b>usar</b> la fórmula para desarrollar, pieza por pieza.</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El desarrollo de \((2x+3)^{4}\), armado en una tabla, fila por fila.</p>
+  <p>El desarrollo de \((2x+3)^{4}\), armado en una tabla, en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la tabla queda escrita la cuenta de cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira arriba:</b> la pregunta, \((2x+3)^{4}=\ ?\), y a su lado los datos: \(a=2x\) (azul), \(b=3\) (naranja) y \(n=4\) (burdeo). Debajo están los títulos de las columnas de la tabla: \(k\), <b>coeficiente</b>, <b>potencia de \(a\)</b>, <b>potencia de \(b\)</b> y <b>término</b>.</li>
+    <li><b>Paso 2, mira la primera fila</b> (\(k=0\)), de izquierda a derecha: el coeficiente binomial \(\dbinom{4}{0}=1\); la potencia de \(a\), \((2x)^{4}=16x^{4}\); la potencia de \(b\), \(3^{0}=1\). Entre las columnas hay un punto de multiplicar y, al final, un signo igual: el <b>término</b> es el producto de las tres piezas, \(1\cdot 16x^{4}\cdot 1=16x^{4}\).</li>
+    <li><b>Pasos 3 a 6, mira cómo se agrega una fila por paso</b> (\(k=1,\ 2,\ 3,\ 4\)). Compara cada fila con la anterior: el exponente de \(2x\) <b>baja</b> en \(1\) y el exponente de \(3\) <b>sube</b> en \(1\). Al completarse la tabla, bajo esas columnas queda escrito «exponente baja» y «exponente sube».</li>
+    <li><b>Paso 7, mira la columna de la derecha:</b> se destaca en burdeo y entre sus cinco términos aparecen signos \(+\): se <b>suman</b>. Bajo la pregunta queda escrita la respuesta: \(16x^{4}+96x^{3}+216x^{2}+216x+81\).</li>
+    <li><b>Lee después</b> el registro «Paso a paso» y la cuenta de abajo, línea por línea: ahí está cada multiplicación (por ejemplo \(6\cdot 4=24\), \(24\cdot 9=216\)) y la comprobación con \(x=1\). Conclusión: el desarrollo tiene un término por cada \(k\), y cada término es coeficiente por potencia de \(a\) por potencia de \(b\).</li>
+  </ol>
   <div class="stage" data-scene="bn-desarrollo"></div>
   <ul class="keys">
-    <li><b>Una fila por cada \(k\),</b> de \(0\) a \(4\): cinco términos.</li>
-    <li><b>Columnas:</b> el coeficiente \(\dbinom{4}{k}\); la potencia de \(2x\), con exponente \(4-k\); la potencia de \(3\), con exponente \(k\); y el término, que es el producto de las tres.</li>
-    <li><b>Fila naranja:</b> la que se está calculando. <b>En burdeo:</b> el término que resulta.</li>
-    <li><b>Bajo la tabla:</b> la multiplicación de la fila y, al final, el desarrollo completo con su comprobación.</li>
+    <li><b>Una fila por cada \(k\),</b> de \(0\) a \(4\): cinco filas, cinco términos.</li>
+    <li><b>En burdeo, el coeficiente binomial</b> \(\dbinom{4}{k}\): \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+    <li><b>En azul, la potencia de \(a=2x\),</b> con exponente \(4-k\). El paréntesis hace que el \(2\) también se eleve.</li>
+    <li><b>En naranja, la potencia de \(b=3\),</b> con exponente \(k\).</li>
+    <li><b>Columna «término»:</b> el producto de las tres piezas de la fila. La suma de esa columna es el desarrollo.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> cada desarrollo, término por término, con todas sus multiplicaciones, y su comprobación con un valor de la variable.</li>
+      <li><b>Se usa sin demostrar:</b> el binomio de Newton para todo entero \(n\ge 1\). Aquí se muestra de dónde sale (los casos \(n=1\) a \(4\) y su regularidad) y se comprueba con \(n=2\); la demostración para todo \(n\) está en la hoja «Demostración por inducción».</li>
+      <li><b>Se usan sin demostrar:</b> las propiedades conmutativa, asociativa y distributiva de los números reales, y las reglas de las potencias de exponente entero (potencia de un producto, potencia de una potencia, cociente de potencias de igual base). De la potencia de un producto se muestra abajo de dónde sale, con un caso.</li>
+      <li><b>Es una convención</b> (un acuerdo, no un resultado): un número distinto de cero elevado a \(0\) vale \(1\). En la fórmula, \(a^{0}\) y \(b^{0}\) se leen como \(1\): así el primer término es \(a^{n}\) y el último es \(b^{n}\).</li>
+      <li><b>La comprobación con un valor</b> (por ejemplo \(x=1\)) detecta errores, pero no demuestra el desarrollo.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
-  <div class="card k2">
-    <h3>El procedimiento</h3>
+  <div class="card k1">
+    <h3>Las tres piezas de cada término, y cómo se calcula cada una</h3>
+    <p><b>Palabras que se usan.</b> <b>Término:</b> cada una de las expresiones que se suman en el desarrollo. <b>Coeficiente binomial:</b> el número \(\dbinom{n}{k}\). <b>Potencia:</b> una base elevada a un exponente, como \((2x)^{3}\), donde la base es \(2x\) y el exponente es \(3\).</p>
     <ol class="steps">
-      <li><b>Identificar</b> \(a\), \(b\) y \(n\). Si \(a\) o \(b\) traen coeficiente o exponente, van entre paréntesis.</li>
-      <li><b>Coeficientes:</b> \(\dbinom{n}{0},\ \dbinom{n}{1},\dots,\ \dbinom{n}{n}\). Para \(n\) chico, la fila \(n\) del triángulo de Pascal.</li>
-      <li><b>Potencias:</b> las de \(a\) bajan de \(n\) a \(0\); las de \(b\) suben de \(0\) a \(n\).</li>
-      <li><b>Multiplicar</b> en cada término: coeficiente, potencia de \(a\), potencia de \(b\).</li>
-      <li><b>Comprobar</b> con un valor sencillo de la variable, por ejemplo \(1\).</li>
+      <li><b>Pieza 1: el coeficiente binomial.</b> Para \(1\le k\le n\) se calcula con \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\): arriba van \(k\) números, desde \(n\) hacia abajo; abajo va \(k!=k\,(k-1)\cdots 2\cdot 1\) («\(k\) factorial»). Para \(k=0\), \(\dbinom{n}{0}=1\). De dónde sale esta cuenta: hoja «Del producto notable al binomio de Newton».</li>
+      <li><b>Los cinco coeficientes de \(n=4\), uno por uno:</b> \[\begin{aligned}\binom{4}{0}&=1&&\text{caso }k=0\\ \binom{4}{1}&=\frac{4}{1}=4&&\text{un número arriba; abajo }1!=1\\ \binom{4}{2}&=\frac{4\cdot 3}{2\cdot 1}=\frac{12}{2}=6&&\text{dos números arriba; abajo }2!=2\\ \binom{4}{3}&=\frac{4\cdot 3\cdot 2}{3\cdot 2\cdot 1}=\frac{24}{6}=4&&\text{tres números arriba; abajo }3!=6\\ \binom{4}{4}&=\frac{4\cdot 3\cdot 2\cdot 1}{4\cdot 3\cdot 2\cdot 1}=\frac{24}{24}=1&&\text{cuatro números arriba; abajo }4!=24\end{aligned}\] Son \(1,\ 4,\ 6,\ 4,\ 1\): la fila \(4\) del triángulo de Pascal. Para \(n\) chico se pueden copiar de la fila \(n\) del triángulo.</li>
+      <li><b>Pieza 2: la potencia de \(a\),</b> con exponente \(n-k\). Si \(a\) trae un número y una letra, como \(a=2x\), se escribe <b>con paréntesis</b>, porque se eleva todo. De dónde sale la regla, con el caso \((2x)^{3}\): \[\begin{aligned}(2x)^{3}&=(2x)\cdot(2x)\cdot(2x)&&\text{definición de potencia: la base, tres veces}\\ &=2\cdot x\cdot 2\cdot x\cdot 2\cdot x&&2x\text{ quiere decir }2\cdot x\\ &=2\cdot 2\cdot 2\cdot x\cdot x\cdot x&&\text{propiedad conmutativa: se cambia el orden}\\ &=2^{3}\cdot x^{3}&&\text{definición de potencia, dos veces}\\ &=8x^{3}&&2\cdot 2=4,\quad 4\cdot 2=8\end{aligned}\] La regla general es la <b>potencia de un producto</b>: \((p\,q)^{m}=p^{m}\,q^{m}\).</li>
+      <li><b>Las potencias de \(2x\) que se usan en \((2x+3)^{4}\):</b> \[\begin{aligned}(2x)^{4}&=2^{4}x^{4}=16x^{4}&&2^{4}=8\cdot 2=16\\ (2x)^{3}&=2^{3}x^{3}=8x^{3}&&2^{3}=4\cdot 2=8\\ (2x)^{2}&=2^{2}x^{2}=4x^{2}&&2^{2}=2\cdot 2=4\\ (2x)^{1}&=2x&&\text{exponente }1\text{: la base sola}\\ (2x)^{0}&=1&&\text{exponente }0\end{aligned}\]</li>
+      <li><b>Pieza 3: la potencia de \(b\),</b> con exponente \(k\). Para \(b=3\): \(3^{0}=1\); \(3^{1}=3\); \(3^{2}=3\cdot 3=9\); \(3^{3}=9\cdot 3=27\); \(3^{4}=27\cdot 3=81\).</li>
+      <li><b>El término</b> es el producto de las tres piezas: \(\dbinom{n}{k}\cdot a^{\,n-k}\cdot b^{\,k}\). Se multiplican primero los números y la letra queda con su exponente. Ejemplo con \(k=2\): \(6\cdot 4x^{2}\cdot 9\); \(6\cdot 4=24\); \(24\cdot 9=216\); el término es \(216x^{2}\).</li>
     </ol>
   </div>
 
-  <div class="card k1">
+  <div class="card k2">
+    <h3>El procedimiento, en cinco pasos</h3>
+    <ol class="steps">
+      <li><b>Identificar</b> \(a\), \(b\) y \(n\). Si \(a\) o \(b\) traen coeficiente, exponente o fracción, se escriben entre paréntesis. Ejemplo: en \((2x+3)^{4}\), \(a=2x\), \(b=3\), \(n=4\).</li>
+      <li><b>Contar los términos:</b> \(k\) va de \(0\) a \(n\); son \(n+1\) términos. Ejemplo: \(k=0,\ 1,\ 2,\ 3,\ 4\); son \(4+1=5\).</li>
+      <li><b>Calcular las tres piezas de cada término:</b> el coeficiente \(\dbinom{n}{k}\); la potencia de \(a\), cuyo exponente baja de \(n\) a \(0\); la potencia de \(b\), cuyo exponente sube de \(0\) a \(n\). Sirve ordenarlas en una tabla, como en la animación.</li>
+      <li><b>Multiplicar</b> las tres piezas de cada término y <b>sumar</b> los términos.</li>
+      <li><b>Comprobar</b> con un valor sencillo de la variable, por ejemplo \(1\) (ver el recuadro siguiente).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
     <h3>Por qué sirve la comprobación con \(x=1\)</h3>
     <ol class="steps">
-      <li>El desarrollo es una igualdad que vale para todo valor de la variable. En particular vale para \(x=1\).</li>
-      <li>A la izquierda queda un número fácil: \((2\cdot 1+3)^{4}=5^{4}=625\).</li>
-      <li>A la derecha queda la suma de los coeficientes del resultado: \(16+96+216+216+81=625\).</li>
-      <li>Si los dos números no coinciden, hay un error. Si coinciden, no es una demostración, pero es una buena señal.</li>
+      <li><b>Qué se hace.</b> El desarrollo es una igualdad que vale para todo valor de la variable; en particular vale para \(x=1\). Se reemplaza \(x\) por \(1\) a los dos lados y se comparan los dos números.</li>
+      <li><b>Lado izquierdo</b> de \((2x+3)^{4}\) con \(x=1\): \[\begin{aligned}(2\cdot 1+3)^{4}&=(2+3)^{4}&&2\cdot 1=2\\ &=5^{4}&&2+3=5\\ &=625&&5\cdot 5=25,\quad 25\cdot 5=125,\quad 125\cdot 5=625\end{aligned}\]</li>
+      <li><b>Lado derecho</b> con \(x=1\): toda potencia de \(1\) vale \(1\), así que cada término queda igual a su coeficiente. \[\begin{aligned}16\cdot 1^{4}+96\cdot 1^{3}+216\cdot 1^{2}+216\cdot 1+81&=16+96+216+216+81\\ 16+96&=112\\ 112+216&=328\\ 328+216&=544\\ 544+81&=625\end{aligned}\]</li>
+      <li><b>Se compara:</b> \(625=625\) ✓. Si los dos números no coinciden, hay un error en algún término. Si coinciden, no es una demostración (dos expresiones distintas pueden valer lo mismo en un punto), pero es una buena señal.</li>
     </ol>
   </div>
 </section>
@@ -60,10 +96,17 @@
   <h3>Ejemplo 1: \((2x+3)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=2x\), \(b=3\), \(n=4\). Coeficientes: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
-    <li>\(1\cdot(2x)^{4}=16x^{4}\); \(\ 4\cdot(2x)^{3}\cdot 3=4\cdot 8x^{3}\cdot 3=96x^{3}\).</li>
-    <li>\(6\cdot(2x)^{2}\cdot 3^{2}=6\cdot 4x^{2}\cdot 9=216x^{2}\); \(\ 4\cdot(2x)\cdot 3^{3}=4\cdot 2x\cdot 27=216x\); \(\ 1\cdot 3^{4}=81\).</li>
-    <li>\((2x+3)^{4}=16x^{4}+96x^{3}+216x^{2}+216x+81\).</li>
+    <li><b>Datos.</b> \(a=2x\), \(b=3\), \(n=4\). Hay \(4+1=5\) términos: \(k=0,\ 1,\ 2,\ 3,\ 4\).</li>
+    <li><b>Fórmula y reemplazo.</b> \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\), y con los datos: \[(2x+3)^{4}=\binom{4}{0}(2x)^{4}\,3^{0}+\binom{4}{1}(2x)^{3}\,3^{1}+\binom{4}{2}(2x)^{2}\,3^{2}+\binom{4}{3}(2x)^{1}\,3^{3}+\binom{4}{4}(2x)^{0}\,3^{4}\]</li>
+    <li><b>Coeficientes</b> (calculados en el primer recuadro): \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+    <li><b>Potencias de \(2x\):</b> \(16x^{4},\ 8x^{3},\ 4x^{2},\ 2x,\ 1\). <b>Potencias de \(3\):</b> \(1,\ 3,\ 9,\ 27,\ 81\).</li>
+    <li><b>Término \(k=0\):</b> \(1\cdot 16x^{4}\cdot 1=16x^{4}\).</li>
+    <li><b>Término \(k=1\):</b> \(4\cdot 8x^{3}\cdot 3\). Números: \(4\cdot 8=32\); \(32\cdot 3=96\). Queda \(96x^{3}\).</li>
+    <li><b>Término \(k=2\):</b> \(6\cdot 4x^{2}\cdot 9\). Números: \(6\cdot 4=24\); \(24\cdot 9=216\). Queda \(216x^{2}\).</li>
+    <li><b>Término \(k=3\):</b> \(4\cdot 2x\cdot 27\). Números: \(4\cdot 2=8\); \(8\cdot 27=216\). Queda \(216x\).</li>
+    <li><b>Término \(k=4\):</b> \(1\cdot 1\cdot 81=81\).</li>
+    <li><b>Suma.</b> \((2x+3)^{4}=16x^{4}+96x^{3}+216x^{2}+216x+81\).</li>
+    <li><b>Comprobación con \(x=1\).</b> Lado izquierdo: \(5^{4}=625\). Lado derecho: \(16+96=112\); \(112+216=328\); \(328+216=544\); \(544+81=625\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -72,9 +115,14 @@
   <h3>Ejemplo 2: \(\left(x^{2}+1\right)^{3}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=x^{2}\), \(b=1\), \(n=3\). Coeficientes: \(1,\ 3,\ 3,\ 1\).</li>
-    <li>Potencia de potencia: \(\left(x^{2}\right)^{3}=x^{6}\), \(\left(x^{2}\right)^{2}=x^{4}\).</li>
-    <li>\(\left(x^{2}+1\right)^{3}=x^{6}+3x^{4}+3x^{2}+1\).</li>
+    <li><b>Datos.</b> \(a=x^{2}\), \(b=1\), \(n=3\). Hay \(3+1=4\) términos: \(k=0,\ 1,\ 2,\ 3\).</li>
+    <li><b>Reemplazo en la fórmula.</b> \[\left(x^{2}+1\right)^{3}=\binom{3}{0}\left(x^{2}\right)^{3}1^{0}+\binom{3}{1}\left(x^{2}\right)^{2}1^{1}+\binom{3}{2}\left(x^{2}\right)^{1}1^{2}+\binom{3}{3}\left(x^{2}\right)^{0}1^{3}\]</li>
+    <li><b>Coeficientes.</b> \(\dbinom{3}{0}=1\); \(\dbinom{3}{1}=\dfrac{3}{1}=3\); \(\dbinom{3}{2}=\dfrac{3\cdot 2}{2\cdot 1}=\dfrac{6}{2}=3\); \(\dbinom{3}{3}=\dfrac{3\cdot 2\cdot 1}{3\cdot 2\cdot 1}=\dfrac{6}{6}=1\).</li>
+    <li><b>Potencias de \(x^{2}\)</b> (potencia de una potencia: se multiplican los exponentes, porque \(\left(x^{2}\right)^{3}=x^{2}\cdot x^{2}\cdot x^{2}=x^{2+2+2}\)): \(\left(x^{2}\right)^{3}=x^{2\cdot 3}=x^{6}\); \(\left(x^{2}\right)^{2}=x^{2\cdot 2}=x^{4}\); \(\left(x^{2}\right)^{1}=x^{2}\); \(\left(x^{2}\right)^{0}=1\).</li>
+    <li><b>Potencias de \(1\):</b> todas valen \(1\).</li>
+    <li><b>Términos.</b> \(k=0\): \(1\cdot x^{6}\cdot 1=x^{6}\). \(k=1\): \(3\cdot x^{4}\cdot 1=3x^{4}\). \(k=2\): \(3\cdot x^{2}\cdot 1=3x^{2}\). \(k=3\): \(1\cdot 1\cdot 1=1\).</li>
+    <li><b>Suma.</b> \(\left(x^{2}+1\right)^{3}=x^{6}+3x^{4}+3x^{2}+1\).</li>
+    <li><b>Comprobación con \(x=2\)</b> (con \(x=1\) todas las potencias valen \(1\) y no se notaría un exponente mal puesto). Lado izquierdo: \(2^{2}=4\); \(4+1=5\); \(5^{3}=5\cdot 5\cdot 5=125\). Lado derecho: \(2^{6}=64\); \(3\cdot 2^{4}=3\cdot 16=48\); \(3\cdot 2^{2}=3\cdot 4=12\); \(64+48=112\); \(112+12=124\); \(124+1=125\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -83,27 +131,39 @@
   <h3>Ejemplo 3: \((a+2b)^{5}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Coeficientes: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). Potencias de \(2b\): \(1,\ 2b,\ 4b^{2},\ 8b^{3},\ 16b^{4},\ 32b^{5}\).</li>
-    <li>\(a^{5}+5a^{4}(2b)+10a^{3}\left(4b^{2}\right)+10a^{2}\left(8b^{3}\right)+5a\left(16b^{4}\right)+32b^{5}\).</li>
-    <li>\((a+2b)^{5}=a^{5}+10a^{4}b+40a^{3}b^{2}+80a^{2}b^{3}+80ab^{4}+32b^{5}\).</li>
-    <li><b>Comprobación con \(a=b=1\):</b> \(3^{5}=243\) y \(1+10+40+80+80+32=243\).</li>
+    <li><b>Datos.</b> El primer término del binomio es \(a\); el segundo es \(2b\) (va con paréntesis); \(n=5\). Hay \(5+1=6\) términos: \(k=0,\ 1,\dots,\ 5\).</li>
+    <li><b>Coeficientes.</b> \(\dbinom{5}{0}=1\); \(\dbinom{5}{1}=\dfrac{5}{1}=5\); \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}=\dfrac{20}{2}=10\); \(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3\cdot 2\cdot 1}=\dfrac{60}{6}=10\); \(\dbinom{5}{4}=\dfrac{5\cdot 4\cdot 3\cdot 2}{4\cdot 3\cdot 2\cdot 1}=\dfrac{120}{24}=5\); \(\dbinom{5}{5}=1\).</li>
+    <li><b>Potencias de \(a\):</b> \(a^{5},\ a^{4},\ a^{3},\ a^{2},\ a,\ 1\) (el exponente baja de \(5\) a \(0\)).</li>
+    <li><b>Potencias de \(2b\)</b> (potencia de un producto): \((2b)^{0}=1\); \((2b)^{1}=2b\); \((2b)^{2}=2^{2}b^{2}=4b^{2}\); \((2b)^{3}=2^{3}b^{3}=8b^{3}\); \((2b)^{4}=2^{4}b^{4}=16b^{4}\); \((2b)^{5}=2^{5}b^{5}=32b^{5}\). Las potencias de \(2\): \(2\cdot 2=4\); \(4\cdot 2=8\); \(8\cdot 2=16\); \(16\cdot 2=32\).</li>
+    <li><b>Términos, uno por uno:</b> \[\begin{aligned}k=0:&\quad 1\cdot a^{5}\cdot 1=a^{5}\\ k=1:&\quad 5\cdot a^{4}\cdot 2b=10a^{4}b&&5\cdot 2=10\\ k=2:&\quad 10\cdot a^{3}\cdot 4b^{2}=40a^{3}b^{2}&&10\cdot 4=40\\ k=3:&\quad 10\cdot a^{2}\cdot 8b^{3}=80a^{2}b^{3}&&10\cdot 8=80\\ k=4:&\quad 5\cdot a\cdot 16b^{4}=80ab^{4}&&5\cdot 16=80\\ k=5:&\quad 1\cdot 1\cdot 32b^{5}=32b^{5}\end{aligned}\]</li>
+    <li><b>Suma.</b> \((a+2b)^{5}=a^{5}+10a^{4}b+40a^{3}b^{2}+80a^{2}b^{3}+80ab^{4}+32b^{5}\).</li>
+    <li><b>Comprobación con \(a=1\) y \(b=1\).</b> Lado izquierdo: \((1+2\cdot 1)^{5}=3^{5}\); \(3\cdot 3=9\); \(9\cdot 3=27\); \(27\cdot 3=81\); \(81\cdot 3=243\). Lado derecho: \(1+10=11\); \(11+40=51\); \(51+80=131\); \(131+80=211\); \(211+32=243\) ✓.</li>
   </ol>
   </div>
   </div>
 
   <div class="prop p4">
-  <h3>Ejemplo 4: \(\left(x+\dfrac{1}{x}\right)^{4}\)</h3>
+  <h3>Ejemplo 4: \(\left(x+\dfrac{1}{x}\right)^{4}\), con \(x\neq 0\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=x\), \(b=\dfrac{1}{x}\), \(n=4\). En cada término, \(x^{4-k}\cdot\dfrac{1}{x^{k}}=x^{4-2k}\).</li>
-    <li>\(k=0\): \(x^{4}\). \(k=1\): \(4x^{2}\). \(k=2\): \(6x^{0}=6\). \(k=3\): \(4x^{-2}=\dfrac{4}{x^{2}}\). \(k=4\): \(\dfrac{1}{x^{4}}\).</li>
-    <li>\(\left(x+\dfrac{1}{x}\right)^{4}=x^{4}+4x^{2}+6+\dfrac{4}{x^{2}}+\dfrac{1}{x^{4}}\), para \(x\neq 0\).</li>
+    <li><b>Datos.</b> \(a=x\), \(b=\dfrac{1}{x}\), \(n=4\). Se pide \(x\neq 0\) porque no se puede dividir por cero. Hay \(5\) términos.</li>
+    <li><b>Coeficientes:</b> \(1,\ 4,\ 6,\ 4,\ 1\) (los de \(n=4\), calculados en el primer recuadro).</li>
+    <li><b>Potencias de \(\dfrac{1}{x}\)</b> (potencia de una fracción: se eleva arriba y abajo, y \(1\) elevado a cualquier exponente es \(1\)): \(\left(\dfrac{1}{x}\right)^{0}=1\); \(\left(\dfrac{1}{x}\right)^{1}=\dfrac{1}{x}\); \(\left(\dfrac{1}{x}\right)^{2}=\dfrac{1}{x^{2}}\); \(\left(\dfrac{1}{x}\right)^{3}=\dfrac{1}{x^{3}}\); \(\left(\dfrac{1}{x}\right)^{4}=\dfrac{1}{x^{4}}\).</li>
+    <li><b>Términos, uno por uno</b> (en cada fracción se simplifican las \(x\) repetidas arriba y abajo): \[\begin{aligned}k=0:&\quad 1\cdot x^{4}\cdot 1=x^{4}\\ k=1:&\quad 4\cdot x^{3}\cdot\frac{1}{x}=\frac{4x^{3}}{x}=4x^{2}&&\text{se simplifica una }x\\ k=2:&\quad 6\cdot x^{2}\cdot\frac{1}{x^{2}}=\frac{6x^{2}}{x^{2}}=6&&\text{se simplifica }x^{2}\text{: no queda }x\\ k=3:&\quad 4\cdot x\cdot\frac{1}{x^{3}}=\frac{4x}{x^{3}}=\frac{4}{x^{2}}&&\text{se simplifica una }x\text{; abajo quedan dos}\\ k=4:&\quad 1\cdot 1\cdot\frac{1}{x^{4}}=\frac{1}{x^{4}}\end{aligned}\]</li>
+    <li><b>Suma.</b> \(\left(x+\dfrac{1}{x}\right)^{4}=x^{4}+4x^{2}+6+\dfrac{4}{x^{2}}+\dfrac{1}{x^{4}}\), para \(x\neq 0\). El término del medio, \(6\), no tiene \(x\).</li>
+    <li><b>Comprobación con \(x=2\).</b> Lado izquierdo: \(2+\dfrac{1}{2}=\dfrac{4}{2}+\dfrac{1}{2}=\dfrac{5}{2}\); \(\left(\dfrac{5}{2}\right)^{4}=\dfrac{5^{4}}{2^{4}}=\dfrac{625}{16}\). Lado derecho: \(2^{4}=16\); \(4\cdot 2^{2}=4\cdot 4=16\); \(\dfrac{4}{2^{2}}=\dfrac{4}{4}=1\); \(\dfrac{1}{2^{4}}=\dfrac{1}{16}\); \(16+16=32\); \(32+6=38\); \(38+1=39\); \(39+\dfrac{1}{16}=\dfrac{624}{16}+\dfrac{1}{16}=\dfrac{625}{16}\) ✓ (se usó \(39\cdot 16=624\)).</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>El error más común.</b> Elevar solo la letra y olvidar su coeficiente: \((2x)^{3}=8x^{3}\), no \(2x^{3}\). Por eso el primer paso es poner paréntesis.</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Elevar solo la letra y olvidar su coeficiente.</b> \((2x)^{3}=8x^{3}\), no \(2x^{3}\). Comprobación con \(x=1\): \((2\cdot 1)^{3}=2^{3}=8\), pero \(2\cdot 1^{3}=2\). Por eso el primer paso es poner paréntesis.</li>
+      <li><b>Escribir solo el primer y el último término.</b> \((2x+3)^{4}\) no es \(16x^{4}+81\). Comprobación con \(x=1\): \(5^{4}=625\), pero \(16+81=97\). Faltan los tres términos del medio.</li>
+      <li><b>Confundir el coeficiente binomial con el coeficiente del término.</b> En el término \(k=1\) de \((2x+3)^{4}\) el coeficiente binomial es \(4\), pero el coeficiente del término es \(4\cdot 8\cdot 3=96\).</li>
+      <li><b>Cruzar los exponentes.</b> El exponente \(k\) es el de \(b\) (el segundo término del binomio); el de \(a\) es \(n-k\). Los dos suman siempre \(n\).</li>
+    </ol>
   </div>
 </section>
 
@@ -111,41 +171,61 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Desarrolla \((x+2)^{5}\).</p>
-    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 5,\ 10,\ 10,\ 5,\ 1\) y potencias de \(2\): \(1,\ 2,\ 4,\ 8,\ 16,\ 32\).</p></div></details>
+    <details><summary>Pista</summary><div><p>\(a=x\), \(b=2\), \(n=5\): seis términos. Coeficientes \(1,\ 5,\ 10,\ 10,\ 5,\ 1\) y potencias de \(2\): \(1,\ 2,\ 4,\ 8,\ 16,\ 32\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(x^{5}+5x^{4}\cdot 2+10x^{3}\cdot 4+10x^{2}\cdot 8+5x\cdot 16+32\).</li>
-        <li>\((x+2)^{5}=x^{5}+10x^{4}+40x^{3}+80x^{2}+80x+32\).</li>
-        <li>Comprobación con \(x=1\): \(3^{5}=243\) y \(1+10+40+80+80+32=243\).</li>
+        <li><b>Datos.</b> \(a=x\), \(b=2\), \(n=5\). Hay \(5+1=6\) términos.</li>
+        <li><b>Coeficientes</b> (los de \(n=5\), calculados en el ejemplo 3): \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+        <li><b>Potencias de \(x\):</b> \(x^{5},\ x^{4},\ x^{3},\ x^{2},\ x,\ 1\). <b>Potencias de \(2\):</b> \(2^{0}=1\); \(2^{1}=2\); \(2^{2}=4\); \(2^{3}=8\); \(2^{4}=16\); \(2^{5}=32\).</li>
+        <li>\(k=0\): \(1\cdot x^{5}\cdot 1=x^{5}\).</li>
+        <li>\(k=1\): \(5\cdot x^{4}\cdot 2=10x^{4}\), porque \(5\cdot 2=10\).</li>
+        <li>\(k=2\): \(10\cdot x^{3}\cdot 4=40x^{3}\), porque \(10\cdot 4=40\).</li>
+        <li>\(k=3\): \(10\cdot x^{2}\cdot 8=80x^{2}\), porque \(10\cdot 8=80\).</li>
+        <li>\(k=4\): \(5\cdot x\cdot 16=80x\), porque \(5\cdot 16=80\).</li>
+        <li>\(k=5\): \(1\cdot 1\cdot 32=32\).</li>
+        <li><b>Suma.</b> \((x+2)^{5}=x^{5}+10x^{4}+40x^{3}+80x^{2}+80x+32\).</li>
+        <li><b>Comprobación con \(x=1\).</b> Lado izquierdo: \((1+2)^{5}=3^{5}=243\) (\(9,\ 27,\ 81,\ 243\)). Lado derecho: \(1+10=11\); \(11+40=51\); \(51+80=131\); \(131+80=211\); \(211+32=243\) ✓.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Desarrolla \((3x+1)^{4}\).</p>
-    <details><summary>Pista</summary><div><p>\((3x)^{4}=81x^{4}\), \((3x)^{3}=27x^{3}\), \((3x)^{2}=9x^{2}\).</p></div></details>
+    <details><summary>Pista</summary><div><p>\(a=3x\), con paréntesis: \((3x)^{4}=81x^{4}\), \((3x)^{3}=27x^{3}\), \((3x)^{2}=9x^{2}\). Las potencias de \(b=1\) valen todas \(1\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(1\cdot 81x^{4}+4\cdot 27x^{3}+6\cdot 9x^{2}+4\cdot 3x+1\).</li>
-        <li>\((3x+1)^{4}=81x^{4}+108x^{3}+54x^{2}+12x+1\).</li>
-        <li>Comprobación con \(x=1\): \(4^{4}=256\) y \(81+108+54+12+1=256\).</li>
+        <li><b>Datos.</b> \(a=3x\), \(b=1\), \(n=4\). Hay \(5\) términos.</li>
+        <li><b>Coeficientes:</b> \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+        <li><b>Potencias de \(3x\).</b> Primero las de \(3\): \(3^{2}=3\cdot 3=9\); \(3^{3}=9\cdot 3=27\); \(3^{4}=27\cdot 3=81\). Entonces \((3x)^{4}=81x^{4}\); \((3x)^{3}=27x^{3}\); \((3x)^{2}=9x^{2}\); \((3x)^{1}=3x\); \((3x)^{0}=1\).</li>
+        <li>\(k=0\): \(1\cdot 81x^{4}\cdot 1=81x^{4}\).</li>
+        <li>\(k=1\): \(4\cdot 27x^{3}\cdot 1=108x^{3}\), porque \(4\cdot 27=108\).</li>
+        <li>\(k=2\): \(6\cdot 9x^{2}\cdot 1=54x^{2}\), porque \(6\cdot 9=54\).</li>
+        <li>\(k=3\): \(4\cdot 3x\cdot 1=12x\), porque \(4\cdot 3=12\).</li>
+        <li>\(k=4\): \(1\cdot 1\cdot 1=1\).</li>
+        <li><b>Suma.</b> \((3x+1)^{4}=81x^{4}+108x^{3}+54x^{2}+12x+1\).</li>
+        <li><b>Comprobación con \(x=1\).</b> Lado izquierdo: \((3\cdot 1+1)^{4}=4^{4}\); \(4\cdot 4=16\); \(16\cdot 4=64\); \(64\cdot 4=256\). Lado derecho: \(81+108=189\); \(189+54=243\); \(243+12=255\); \(255+1=256\) ✓.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un ahorro de \(\$200\,000\) crece un \(5\,\%\) cada año. En \(4\) años se multiplica por \((1+0{,}05)^{4}\). Desarrolla esa potencia y calcula cuánto habrá.</p>
-    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}05\). Potencias de \(0{,}05\): \(0{,}05\); \(0{,}0025\); \(0{,}000125\); \(0{,}00000625\).</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un ahorro de \(\$200\,000\) crece un \(5\,\%\) cada año. Muestra que en \(4\) años se multiplica por \((1+0{,}05)^{4}\), desarrolla esa potencia y calcula cuánto habrá.</p>
+    <details><summary>Pista</summary><div><p>Crecer un \(5\,\%\) es multiplicar por \(1+0{,}05\). Después, \(a=1\), \(b=0{,}05\), \(n=4\). Potencias de \(0{,}05\): \(0{,}05\); \(0{,}0025\); \(0{,}000125\); \(0{,}00000625\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\((1+0{,}05)^{4}=1+4\cdot 0{,}05+6\cdot 0{,}0025+4\cdot 0{,}000125+0{,}00000625\).</li>
-        <li>\(=1+0{,}2+0{,}015+0{,}0005+0{,}00000625=1{,}21550625\).</li>
-        <li>Monto: \(200\,000\cdot 1{,}21550625=\$243\,101\) (redondeado al peso).</li>
+        <li><b>De dónde sale la potencia.</b> El \(5\,\%\) de una cantidad \(M\) es \(0{,}05\cdot M\). Después de un año hay \(M+0{,}05\,M=M\,(1+0{,}05)\) (factor común \(M\)): cada año la cantidad se multiplica por \(1+0{,}05\). En \(4\) años se multiplica cuatro veces: \((1+0{,}05)(1+0{,}05)(1+0{,}05)(1+0{,}05)=(1+0{,}05)^{4}\).</li>
+        <li><b>Datos para desarrollar.</b> \(a=1\), \(b=0{,}05\), \(n=4\). Coeficientes: \(1,\ 4,\ 6,\ 4,\ 1\). Las potencias de \(a=1\) valen todas \(1\).</li>
+        <li><b>Potencias de \(0{,}05\):</b> \(0{,}05^{2}=0{,}05\cdot 0{,}05=0{,}0025\); \(0{,}05^{3}=0{,}0025\cdot 0{,}05=0{,}000125\); \(0{,}05^{4}=0{,}000125\cdot 0{,}05=0{,}00000625\).</li>
+        <li><b>Términos.</b> \(k=0\): \(1\cdot 1\cdot 1=1\). \(k=1\): \(4\cdot 1\cdot 0{,}05=0{,}2\). \(k=2\): \(6\cdot 1\cdot 0{,}0025=0{,}015\). \(k=3\): \(4\cdot 1\cdot 0{,}000125=0{,}0005\). \(k=4\): \(1\cdot 1\cdot 0{,}00000625=0{,}00000625\).</li>
+        <li><b>Suma.</b> \(1+0{,}2=1{,}2\); \(1{,}2+0{,}015=1{,}215\); \(1{,}215+0{,}0005=1{,}2155\); \(1{,}2155+0{,}00000625=1{,}21550625\). Entonces \((1+0{,}05)^{4}=1{,}21550625\).</li>
+        <li><b>Monto,</b> término por término (propiedad distributiva): \(200\,000\cdot 1=200\,000\); \(200\,000\cdot 0{,}2=40\,000\); \(200\,000\cdot 0{,}015=3\,000\); \(200\,000\cdot 0{,}0005=100\); \(200\,000\cdot 0{,}00000625=1{,}25\).</li>
+        <li><b>Total.</b> \(200\,000+40\,000=240\,000\); \(240\,000+3\,000=243\,000\); \(243\,000+100=243\,100\); \(243\,100+1{,}25=243\,101{,}25\).</li>
+        <li><b>Respuesta.</b> Habrá \(\$243\,101\) (redondeado al peso). Los \(\$43\,101\) de más son el crecimiento de los cuatro años; los términos del desarrollo muestran que casi todo viene de \(4\cdot 0{,}05=0{,}2\) (los \(\$40\,000\)).</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H07 · v002 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H07 · v003 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -153,6 +233,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -168,29 +268,124 @@ function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off =
     c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
     c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
   return off; }
-OA.scene('bn-desarrollo', (function(){
-  var CX = [0.4, 1.9, 3.9, 5.7, 7.7], HD = ['k', 'coeficiente', '(2x)⁴⁻ᵏ', '3ᵏ', 'término'];
-  function row(k){ var cf = bnC(4, k), pa = Math.pow(2, 4 - k), pb = Math.pow(3, k), xs = bnPow('x', 4 - k); return ['' + k, 'C(4, ' + k + ') = ' + cf, (4 - k === 0 ? '(2x)⁰ = 1' : '(2x)' + (4 - k === 1 ? '¹' : bnSup(4 - k)) + ' = ' + (pa === 1 ? '' : pa) + xs), '3' + bnSup(k) + ' = ' + pb, (cf*pa*pb) + xs, cf, pa, pb]; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
   return {
-    world:{x0:-0.3, x1:8.9, y0:-4.2, y1:4.0}, aspect:8.2/9.2,
-    aria:'Una tabla arma el desarrollo de 2x más 3 elevado a 4, fila por fila. Cada fila corresponde a un valor de k, de 0 a 4, y tiene el coeficiente binomial, la potencia de 2x, la potencia de 3 y el término que resulta de multiplicar los tres. Al final se suman los cinco términos: 16 x a la cuarta, más 96 x al cubo, más 216 x al cuadrado, más 216 x, más 81.',
-    labels:[['F', '(2x+3)^{4}=16x^{4}+96x^{3}+216x^{2}+216x+81', '(2x + 3)⁴ = 16x⁴ + 96x³ + 216x² + 216x + 81', 'diff']],
-    sliders:[{id:'m', tex:'\\text{fila}', min:1, max:5, step:1, value:1}],
-    legend:'<span><i class="sw rise"></i> la fila que se está calculando</span><span><i class="sw tan"></i> el término que resulta</span>',
-    anim:{run:24000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.m = Math.min(5, 1 + Math.floor(p*6.6)); v.fin = p*6.6 >= 5.6; }},
-    onInput:function(v){ v.q = null; v.fin = v.m >= 5; },
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
     draw:function(S, v){
-      var m = Math.round(v.m || 1), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, j, r, x0, y0, col;
-      function cell(t, x, y, cc, b){ c.font = (b ? '700 ' : '500 ') + '11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); }
-      for (j = 0; j < 5; j++) cell(HD[j], CX[j], 3.5, C.ink, true);
-      c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(-0.1), Y(3.5) + 11); c.lineTo(X(8.7), Y(3.5) + 11); c.stroke();
-      for (i = 0; i < m; i++){ r = row(i); col = i === m - 1 && !v.fin ? C.rise : C.ink; for (j = 0; j < 4; j++) cell(r[j], CX[j], 2.75 - 0.68*i, col, i === m - 1 && !v.fin); cell(r[4], CX[4], 2.75 - 0.68*i, C.tan, true); }
-      r = row(m - 1); x0 = X(-0.2); y0 = Y(-1.0);
-      txt('término k = ' + (m - 1) + ': ' + r[5] + ' · ' + r[6] + bnPow('x', 5 - m) + ' · ' + r[7] + ' = ' + r[4], x0, y0, 'left', C.rise);
-      if (v.fin){ txt('(2x + 3)⁴ = 16x⁴ + 96x³ + 216x² + 216x + 81', x0, y0 + 21, 'left', C.tan); txt('con x = 1: 5⁴ = 625 y 16 + 96 + 216 + 216 + 81 = 625', x0, y0 + 42, 'left', C.ink); }
-      S.lab('F', x0, y0 + 70, 0, 0, !!v.fin && v.q != null);
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
-    caption:function(v){ var m = Math.round(v.m || 1), r = row(m - 1); if (v.fin) return 'Los cinco términos, sumados, son el desarrollo. La comprobación con x = 1 da 625 a los dos lados'; return 'Fila k = ' + (m - 1) + ': el coeficiente binomial, por la potencia de 2x (con paréntesis: el 2 también se eleva), por la potencia de 3. Resultado: ' + r[4]; },
-    readout:function(v){ var m = Math.round(v.m || 1), k = m - 1, r = row(k); return [['', 'T_{' + m + '}=\\dbinom{4}{' + k + '}(2x)^{' + (4 - k) + '}\\,3^{' + k + '}=' + r[5] + '\\cdot ' + r[6] + (4 - k ? 'x^{' + (4 - k) + '}' : '') + '\\cdot ' + r[7] + '=' + (r[5]*r[6]*r[7]) + (4 - k ? 'x^{' + (4 - k) + '}' : '')]]; }
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+/* L24 H07 · el desarrollo de (2x+3)⁴ armado en una tabla: un término por cada k; cada término = coeficiente · potencia de a · potencia de b; al final se suman */
+OA.scene('bn-desarrollo', (function(){
+  var N = 7, CX = [0.55, 2.05, 4.65, 7.0, 9.05], YH = -3.75, Y0 = -4.75, DY = 0.88;
+  var CF = [1, 4, 6, 4, 1], PA = [16, 8, 4, 2, 1], PB = [1, 3, 9, 27, 81];
+  function xp(e){ return e === 0 ? '' : e === 1 ? 'x' : 'x^{' + e + '}'; }
+  function xs(e){ return e === 0 ? '' : e === 1 ? 'x' : 'x' + bnSup(e); }
+  function mono(c, e, tex){ return (c === 1 && e > 0 ? '' : '' + c) + (tex ? xp(e) : xs(e)); }
+  var PZ = [['Q', '(2x+3)^{4}=\\ ?', '(2x + 3)⁴ = ?', 'pt'],
+    ['F', '\\Longrightarrow\\ \\ 16x^{4}+96x^{3}+216x^{2}+216x+81', '⟹ 16x⁴ + 96x³ + 216x² + 216x + 81', 'diff'],
+    ['DA', 'a=2x', 'a = 2x', 'c-sec'], ['DB', 'b=3', 'b = 3', 'diff'], ['DN', 'n=4', 'n = 4', 'c-tan'], ['HK', 'k', 'k', ''],
+    ['R1', 'a=2x,\\quad b=3,\\quad n=4\\quad\\text{(5 términos)}', 'a = 2x, b = 3, n = 4 (5 términos)', '']];
+  (function(){ var k, e, t;
+    for (k = 0; k <= 4; k++){ e = 4 - k; t = CF[k]*PA[k]*PB[k];
+      PZ.push(['K' + k, '' + k, '' + k, '']);
+      PZ.push(['C' + k, '\\tbinom{4}{' + k + '}=' + CF[k], 'C(4,' + k + ') = ' + CF[k], 'c-tan']);
+      PZ.push(['A' + k, '(2x)^{' + e + '}=' + mono(PA[k], e, 1), '(2x)' + bnSup(e) + ' = ' + mono(PA[k], e, 0), 'c-sec']);
+      PZ.push(['B' + k, '3^{' + k + '}=' + PB[k], '3' + bnSup(k) + ' = ' + PB[k], 'diff']);
+      PZ.push(['T' + k, mono(t, e, 1), mono(t, e, 0), '']);
+      PZ.push(['R' + (k + 2), 'k=' + k + ':\\quad ' + CF[k] + '\\cdot ' + mono(PA[k], e, 1) + '\\cdot ' + PB[k] + '=' + mono(t, e, 1), 'k = ' + k + ': ' + CF[k] + ' · ' + mono(PA[k], e, 0) + ' · ' + PB[k] + ' = ' + mono(t, e, 0), '']); }
+    PZ.push(['R7', '\\begin{aligned}(2x+3)^{4}={}&16x^{4}+96x^{3}+216x^{2}\\\\ {}+{}&216x+81\\end{aligned}', '(2x + 3)⁴ = 16x⁴ + 96x³ + 216x² + 216x + 81', 'diff']); })();
+  var TXT = [['Primero se identifican a, b y n.', 'La tabla tendrá una fila por cada valor de k.'],
+    ['Fila k = 0: coeficiente por potencia de a', 'por potencia de b. El producto es el término.'],
+    ['Fila k = 1: el exponente de a baja en 1', 'y el exponente de b sube en 1.'],
+    ['Fila k = 2: la fila del medio.', 'Su coeficiente binomial, 6, es el mayor.'],
+    ['Fila k = 3: el exponente de a ya va en 1', 'y el exponente de b va en 3.'],
+    ['Fila k = 4: la última. Ya no queda x:', 'es el término sin letra.'],
+    ['Se suman los cinco términos de la derecha.', 'Arriba queda escrito el desarrollo.']];
+  function cl(t){ return Math.max(0, Math.min(1, t)); }
+  return {
+    world:{x0:0, x1:10, y0:-17.7, y1:0}, aspect:17.7/10,
+    aria:'Animación en siete pasos que arma el desarrollo de 2x más 3, elevado a 4, en una tabla. Uno: se identifican a igual 2x, b igual 3 y n igual 4, y se ponen los títulos de las columnas: k, coeficiente, potencia de a, potencia de b y término. Dos: fila k igual 0: 4 sobre 0 es 1, 2x a la cuarta es 16 x a la cuarta, 3 a la cero es 1; el término es 16 x a la cuarta. Tres: fila k igual 1: 4 por 8 x al cubo por 3, igual 96 x al cubo. Cuatro: fila k igual 2: 6 por 4 x al cuadrado por 9, igual 216 x al cuadrado. Cinco: fila k igual 3: 4 por 2x por 27, igual 216 x. Seis: fila k igual 4: 1 por 1 por 81, igual 81. Siete: se suman los cinco términos: 16 x a la cuarta más 96 x al cubo más 216 x al cuadrado más 216 x más 81. Bajo la tabla, un registro numerado guarda la cuenta de cada paso, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> coeficiente binomial</span><span><i class="sw sec"></i> potencia de \\(a=2x\\)</span><span><i class="sw rise"></i> potencia de \\(b=3\\)</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b';
+      var i, a, y, p, HD = ['coeficiente', 'potencia de a', 'potencia de b', 'término'], HC = [C.tan, C.sec, C.rise, C.ink];
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; después queda */
+      function tx(t, x, y, al, col, size, alpha, bold){ if (alpha <= 0) return; c.globalAlpha = alpha; c.font = (bold || '600') + ' ' + size + 'px ' + F; c.fillStyle = col; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function ry(r){ return Y0 - DY*r; }
+      /* paso 7: la columna de los términos, destacada: es lo que se suma */
+      a = ap(7);
+      if (a > 0){ c.globalAlpha = 0.12*a; c.fillStyle = C.tan; c.fillRect(X(8.2), Y(ry(0) + DY/2), X(9.92) - X(8.2), (Y(ry(4) - DY/2) - Y(ry(0) + DY/2))*cl(a*1.6)); c.globalAlpha = 1; }
+      /* paso 1: pregunta, datos a, b, n y títulos de las columnas */
+      a = ap(1);
+      L('Q', 0.3, -2.05, 0);
+      if (cl(a*3) > 0.5) L('DA', 4.9, -2.05); if (cl(a*3 - 0.7) > 0.5) L('DB', 6.7, -2.05); if (cl(a*3 - 1.4) > 0.5) L('DN', 8.4, -2.05);
+      p = cl(a*2 - 0.9);
+      if (p > 0){ if (p > 0.5) L('HK', CX[0], YH);
+        for (i = 0; i < 4; i++) tx(HD[i], CX[i + 1], YH, 'center', HC[i], 11, p, '700');
+        c.globalAlpha = p; c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0.1), Y(YH - 0.42)); c.lineTo(X(0.1) + (X(9.92) - X(0.1))*p, Y(YH - 0.42)); c.stroke(); c.globalAlpha = 1; }
+      /* pasos 2 a 6: una fila por paso; las celdas entran de izquierda a derecha y quedan */
+      for (i = 0; i <= 4; i++){ a = ap(i + 2); if (a <= 0) continue; y = ry(i);
+        if (a > 0.05) L('K' + i, CX[0], y);
+        if (a > 0.2) L('C' + i, CX[1], y);
+        tx('·', 3.1, y, 'center', MU, 14, cl(a*5 - 1.8), '700');
+        if (a > 0.42) L('A' + i, CX[2], y);
+        tx('·', 6.15, y, 'center', MU, 14, cl(a*5 - 2.8), '700');
+        if (a > 0.62) L('B' + i, CX[3], y);
+        tx('=', 8.0, y, 'center', MU, 13, cl(a*5 - 3.6), '700');
+        if (a > 0.82) L('T' + i, CX[4], y);
+        if (i > 0){ tx('+', 8.42, y, 'center', C.tan, 13, ap(7), '700'); }
+        c.strokeStyle = 'rgba(0,0,0,0.10)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0.1), Y(y - DY/2)); c.lineTo(X(0.1) + (X(9.92) - X(0.1))*cl(a*1.5), Y(y - DY/2)); c.stroke(); }
+      /* al completar la tabla: hacia dónde van los exponentes */
+      a = ap(6);
+      tx('exponente baja', CX[2] - 0.2, ry(4) - 0.72, 'center', C.sec, 10.5, cl(a*2 - 1), '600');
+      tx('exponente sube', CX[3], ry(4) - 0.72, 'center', C.rise, 10.5, cl(a*2 - 1), '600');
+      /* paso 7: la suma de los términos; el desarrollo se escribe bajo la pregunta */
+      a = ap(7);
+      tx('se suman', CX[4] - 0.05, ry(4) - 0.72, 'center', C.tan, 10.5, a, '700');
+      if (a > 0.5) L('F', 0.3, -2.9, 0);
+      /* frase del paso y número de paso */
+      tx(TXT[k - 1][0], 0.3, ry(4) - 1.75, 'left', C.ink, 12.5, 1); c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(TXT[k - 1][1], X(0.3), Y(ry(4) - 1.75) + 19);
+      tx('paso ' + k + ' de ' + N, 0.3, ry(4) - 0.72, 'left', MU, 11, 1);
+      dtQue(S, 'un término por cada k, hecho de 3 piezas;', 'la suma de los términos es el desarrollo.');
+      T.fin();
+      oaReg(S, k, N, 0.3, -12.15, [0, 24, 48, 72, 96, 120, 152]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{datos: }a=2x,\\quad b=3,\\quad n=4\\\\&\\qquad\\text{fórmula: }(a+b)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}a^{\\,n-k}\\,b^{\\,k}\\\\&\\qquad\\text{reemplazo: }(2x+3)^{4}=\\sum_{k=0}^{4}\\binom{4}{k}(2x)^{4-k}\\,3^{k}\\\\&\\qquad k=0,\\ 1,\\ 2,\\ 3,\\ 4:\\ \\text{cinco términos}',
+      'k=0:\\quad\\binom{4}{0}=1\\\\&\\qquad (2x)^{4}=2^{4}x^{4}=16x^{4}\\\\&\\qquad 3^{0}=1\\\\&\\qquad 1\\cdot 16x^{4}\\cdot 1=16x^{4}',
+      'k=1:\\quad\\binom{4}{1}=\\frac{4}{1}=4\\\\&\\qquad (2x)^{3}=2^{3}x^{3}=8x^{3}\\\\&\\qquad 3^{1}=3\\\\&\\qquad 4\\cdot 8=32,\\quad 32\\cdot 3=96\\\\&\\qquad 4\\cdot 8x^{3}\\cdot 3=96x^{3}',
+      'k=2:\\quad\\binom{4}{2}=\\frac{4\\cdot 3}{2\\cdot 1}=\\frac{12}{2}=6\\\\&\\qquad (2x)^{2}=2^{2}x^{2}=4x^{2}\\\\&\\qquad 3^{2}=3\\cdot 3=9\\\\&\\qquad 6\\cdot 4=24,\\quad 24\\cdot 9=216\\\\&\\qquad 6\\cdot 4x^{2}\\cdot 9=216x^{2}',
+      'k=3:\\quad\\binom{4}{3}=\\frac{4\\cdot 3\\cdot 2}{3\\cdot 2\\cdot 1}=\\frac{24}{6}=4\\\\&\\qquad (2x)^{1}=2x\\\\&\\qquad 3^{3}=9\\cdot 3=27\\\\&\\qquad 4\\cdot 2=8,\\quad 8\\cdot 27=216\\\\&\\qquad 4\\cdot 2x\\cdot 27=216x',
+      'k=4:\\quad\\binom{4}{4}=1\\\\&\\qquad (2x)^{0}=1\\\\&\\qquad 3^{4}=27\\cdot 3=81\\\\&\\qquad 1\\cdot 1\\cdot 81=81',
+      '\\text{suma de los cinco términos:}\\\\&\\qquad (2x+3)^{4}=16x^{4}+96x^{3}+216x^{2}+216x+81\\\\&\\qquad\\text{comprobación con }x=1:\\ (2\\cdot 1+3)^{4}=5^{4}=625\\\\&\\qquad 16+96=112,\\quad 112+216=328\\\\&\\qquad 328+216=544,\\quad 544+81=625\\ \\checkmark']; return dtPasos(R.slice(0, k)); }
   };
 })());

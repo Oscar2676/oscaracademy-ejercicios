@@ -12,44 +12,78 @@
       <li><b>Enunciado del binomio de Newton</b></li>
     </ol>
     <h1>Enunciado del binomio de Newton</h1>
-    <p class="lede">El binomio de Newton es la fórmula que desarrolla \((a+b)^{n}\) para cualquier exponente natural \(n\). Dice cuántos términos hay, qué potencias lleva cada uno y cuál es su coeficiente.
-    \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). <b>Desarrollar</b> la potencia \((a+b)^{n}\) es escribirla como una suma de términos, sin paréntesis. El <b>binomio de Newton</b> es la fórmula que da ese desarrollo para cualquier exponente \(n\) entero, \(n\ge 0\), sin tener que multiplicar los paréntesis uno por uno. Un <b>enunciado</b> es la frase exacta que dice qué afirma la fórmula y con qué condiciones. Esta hoja llega a ese enunciado desde los casos que ya se saben calcular, y enseña a leerlo símbolo por símbolo.</p>
+    <p class="lede"><b>De dónde sale: los casos \(n=1\), \(n=2\) y \(n=3\), multiplicados.</b> \[\begin{aligned}(a+b)^{1}&=a+b&&\text{un solo factor: no hay nada que multiplicar}\\[4pt] (a+b)^{2}&=(a+b)(a+b)&&\text{dos factores}\\ &=a\,(a+b)+b\,(a+b)&&\text{propiedad distributiva}\\ &=a^{2}+ab+ba+b^{2}&&\text{propiedad distributiva en cada paréntesis}\\ &=a^{2}+2ab+b^{2}&&ba=ab\ \text{(conmutativa)};\quad ab+ab=2ab\\[4pt] (a+b)^{3}&=(a+b)^{2}\,(a+b)&&\text{un factor más}\\ &=(a^{2}+2ab+b^{2})(a+b)&&\text{se reemplaza el cuadrado}\\ &=a^{3}+2a^{2}b+ab^{2}+a^{2}b+2ab^{2}+b^{3}&&\text{cada término por }a\text{ y después cada término por }b\\ &=a^{3}+3a^{2}b+3ab^{2}+b^{3}&&2a^{2}b+a^{2}b=3a^{2}b;\quad ab^{2}+2ab^{2}=3ab^{2}\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> Se escriben los tres desarrollos uno bajo otro, con todos los exponentes y coeficientes a la vista (\(a^{1}=a\), \(a^{0}=1\), y lo mismo con \(b\)): \[\begin{aligned}n=1:&\quad 1\,a^{1}b^{0}+1\,a^{0}b^{1}&&2\text{ términos}\\ n=2:&\quad 1\,a^{2}b^{0}+2\,a^{1}b^{1}+1\,a^{0}b^{2}&&3\text{ términos}\\ n=3:&\quad 1\,a^{3}b^{0}+3\,a^{2}b^{1}+3\,a^{1}b^{2}+1\,a^{0}b^{3}&&4\text{ términos}\end{aligned}\] En los tres casos pasa lo mismo: hay \(n+1\) términos; el exponente de \(b\) sube \(0,\ 1,\ 2,\dots,\ n\); el exponente de \(a\) baja \(n,\ n-1,\dots,\ 0\); y en cada término los dos exponentes suman \(n\). Si al exponente de \(b\) se le llama \(k\), el exponente de \(a\) es \(n-k\) y el término tiene la forma \(\text{(coeficiente)}\cdot a^{\,n-k}\,b^{\,k}\).</p>
+    <p class="lede"><b>Los coeficientes.</b> El <b>coeficiente</b> es el número que multiplica a las letras. Los de arriba son \(1,\ 1\); \(1,\ 2,\ 1\); \(1,\ 3,\ 3,\ 1\). Cada uno cuenta cuántos productos iguales se juntaron (por ejemplo, \(2a^{2}b+a^{2}b=3a^{2}b\)): es el número de maneras de elegir, entre los \(n\) factores \((a+b)\), los \(k\) factores de donde sale la \(b\). Ese conteo está hecho paso a paso en la hoja «Del producto notable al binomio de Newton», y da el número \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\] que se lee «\(n\) sobre \(k\)». El signo \(!\) es el <b>factorial</b>: \(n!\) se lee «\(n\) factorial» y es el producto de los enteros desde \(n\) hasta \(1\); por ejemplo, \(3!=3\cdot 2\cdot 1=6\). Se conviene que \(0!=1\). Comprobación con \(n=3\): \[\begin{aligned}\binom{3}{0}&=\frac{3!}{0!\cdot 3!}=\frac{6}{1\cdot 6}=\frac{6}{6}=1&\qquad\binom{3}{1}&=\frac{3!}{1!\cdot 2!}=\frac{6}{1\cdot 2}=\frac{6}{2}=3\\ \binom{3}{2}&=\frac{3!}{2!\cdot 1!}=\frac{6}{2\cdot 1}=\frac{6}{2}=3&\qquad\binom{3}{3}&=\frac{3!}{3!\cdot 0!}=\frac{6}{6\cdot 1}=\frac{6}{6}=1\end{aligned}\] Son los \(1,\ 3,\ 3,\ 1\) del cubo. ✓</p>
+    <p class="lede"><b>El enunciado.</b> Para \(a\) y \(b\) números reales y \(n\) entero, \(n\ge 0\): \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n}b^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)».</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El desarrollo de \((a+b)^{5}\), término por término. Después cambia \(n\) con el deslizador.</p>
+  <p>El desarrollo de \((a+b)^{5}\), armado pieza por pieza con el enunciado, en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira la fila «valor de k»:</b> arriba queda la pregunta, \((a+b)^{5}=\ ?\) Aparecen seis columnas, una por cada valor de \(k\): \(0,\ 1,\ 2,\ 3,\ 4,\ 5\). Cada columna va a ser un <b>término</b> del desarrollo: por eso hay \(5+1=6\) términos.</li>
+    <li><b>Pasos 2 y 3, mira las filas «potencia de a» y «potencia de b»:</b> en azul, la potencia de \(a\); su <b>exponente</b> es \(5-k\) y baja de \(5\) a \(0\). En naranja, la potencia de \(b\); su exponente es \(k\) y sube de \(0\) a \(5\). En cada columna los dos exponentes suman \(5\).</li>
+    <li><b>Paso 4, mira la columna destacada en burdeo (\(k=2\)):</b> en la fila «5 sobre k» aparece \(\tbinom{5}{2}\) y, debajo, su valor: el <b>coeficiente</b> \(10\). La cuenta con factoriales queda en el registro y, completa, en la lectura de abajo.</li>
+    <li><b>Paso 5:</b> se llenan los demás coeficientes con la misma cuenta: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). Se leen igual de izquierda a derecha que de derecha a izquierda.</li>
+    <li><b>Pasos 6 y 7:</b> bajo cada columna baja una línea hasta su término, que es el coeficiente por las dos potencias; la suma de los seis términos se escribe arriba, bajo la pregunta: es el <b>desarrollo</b>. Al final, en la franja burdeo, queda el <b>enunciado</b>: lo mismo con \(n\) en lugar de \(5\). Lee después el registro «Paso a paso» y la cuenta de abajo, línea por línea. Conclusión: el enunciado dice, para cada \(k\), qué coeficiente y qué potencias lleva el término.</li>
+  </ol>
   <div class="stage" data-scene="bn-enunciado"></div>
   <ul class="keys">
-    <li><b>Una barra por término.</b> Su altura es el coeficiente, \(\dbinom{n}{k}\), escrito encima.</li>
-    <li><b>Bajo cada barra:</b> el número \(k\) del término; en azul, la potencia de \(a\), que baja de \(n\) a \(0\); en burdeo, la potencia de \(b\), que sube de \(0\) a \(n\).</li>
-    <li><b>Barra naranja:</b> el término que se está formando. Bajo el dibujo va la cuenta de su coeficiente con factoriales.</li>
-    <li><b>Al final:</b> el desarrollo completo.</li>
-    <li><b>Deslizador \(n\):</b> el exponente, de \(1\) a \(7\).</li>
+    <li><b>Columnas:</b> una por cada valor de \(k\), de \(0\) a \(5\). Cada columna es un término.</li>
+    <li><b>Azul:</b> la potencia de \(a\), con exponente \(5-k\).</li>
+    <li><b>Naranja:</b> la potencia de \(b\), con exponente \(k\).</li>
+    <li><b>Burdeo:</b> el número \(\tbinom{5}{k}\) («5 sobre k») y su valor, el coeficiente. La columna \(k=2\) queda destacada porque en ella se hace la primera cuenta.</li>
+    <li><b>Fila «término»:</b> coeficiente por potencia de \(a\) por potencia de \(b\). Van a dos alturas solo para que no se encimen.</li>
+    <li><b>Franja burdeo del final:</b> el enunciado, con \(n\) en lugar de \(5\).</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> los desarrollos de \((a+b)^{2}\), \((a+b)^{3}\) y \((a+b)^{4}\) por multiplicación directa, y la comprobación de que el enunciado da lo mismo para \(n=0,\ 1,\ 2,\ 3\) y \(4\).</li>
+      <li><b>Se usa sin demostrar:</b> que el enunciado vale para <b>todo</b> entero \(n\ge 0\). Comprobar cinco casos no lo demuestra. La demostración completa está en la hoja «Demostración por inducción».</li>
+      <li><b>Se usa sin demostrar:</b> que el coeficiente es el número de maneras de elegir \(k\) factores entre \(n\), y que ese número vale \(\dfrac{n!}{k!\,(n-k)!}\). Está desarrollado en la hoja «Del producto notable al binomio de Newton».</li>
+      <li><b>Se usan sin demostrar:</b> las propiedades distributiva, conmutativa y asociativa de los números reales.</li>
+      <li><b>Son convenciones</b> (acuerdos, no resultados): \(0!=1\), y \(x^{0}=1\) para \(x\neq 0\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
-    <h3>Cómo se lee la fórmula</h3>
+    <h3>Cómo se lee el enunciado, símbolo por símbolo</h3>
     <ol class="steps">
-      <li><b>El símbolo \(\displaystyle\sum_{k=0}^{n}\)</b> significa «suma de los términos que se obtienen al dar a \(k\) los valores \(0,\ 1,\ 2,\dots,\ n\)». Escrita sin él:
-        \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n-1}ab^{n-1}+\binom{n}{n}b^{n}\]</li>
-      <li><b>\(n!\)</b> (factorial de \(n\)) es el producto \(n\,(n-1)\cdots 2\cdot 1\). Por ejemplo, \(4!=24\). Se conviene que \(0!=1\).</li>
-      <li><b>\(\dbinom{n}{k}\)</b> se lee «\(n\) sobre \(k\)» y se llama coeficiente binomial o número combinatorio.</li>
-      <li><b>Condición:</b> \(n\) es un número natural (\(0,\ 1,\ 2,\dots\)). \(a\) y \(b\) pueden ser números o expresiones cualesquiera.</li>
+      <li><b>La letra \(k\)</b> es un contador: toma, uno por uno, los valores enteros \(0,\ 1,\ 2,\dots,\ n\). Cada valor de \(k\) da un término.</li>
+      <li><b>El símbolo \(\displaystyle\sum_{k=0}^{n}\)</b> es la letra griega sigma mayúscula. Se lee «sumatoria desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\)» y manda a hacer esto: en la expresión que sigue se reemplaza \(k\) por \(0\), después por \(1\), después por \(2\), y así hasta \(n\); y se suman todos los resultados.</li>
+      <li><b>Ejemplo con \(n=3\), reemplazo por reemplazo:</b> \[\begin{aligned}k=0:&\quad\binom{3}{0}a^{3-0}b^{0}=1\cdot a^{3}\cdot 1=a^{3}\\ k=1:&\quad\binom{3}{1}a^{3-1}b^{1}=3\cdot a^{2}\cdot b=3a^{2}b\\ k=2:&\quad\binom{3}{2}a^{3-2}b^{2}=3\cdot a^{1}\cdot b^{2}=3ab^{2}\\ k=3:&\quad\binom{3}{3}a^{3-3}b^{3}=1\cdot a^{0}\cdot b^{3}=b^{3}\\ \text{suma:}&\quad\sum_{k=0}^{3}\binom{3}{k}a^{3-k}b^{k}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\end{aligned}\] Los valores \(\tbinom{3}{0}=1\), \(\tbinom{3}{1}=3\), \(\tbinom{3}{2}=3\), \(\tbinom{3}{3}=1\) son los que se calcularon en el encabezado.</li>
+      <li><b>\(n!\)</b> se lee «\(n\) factorial»: es el producto de los enteros desde \(n\) hasta \(1\). \[\begin{aligned}1!&=1\\ 2!&=2\cdot 1=2\\ 3!&=3\cdot 2\cdot 1=6\\ 4!&=4\cdot 3\cdot 2\cdot 1=24\\ 5!&=5\cdot 4\cdot 3\cdot 2\cdot 1=120\end{aligned}\] Cada uno sale del anterior: \(4!=4\cdot 3!=4\cdot 6=24\) y \(5!=5\cdot 4!=5\cdot 24=120\). Además se conviene que \(0!=1\).</li>
+      <li><b>\(\dbinom{n}{k}\)</b> se lee «\(n\) sobre \(k\)». Se llama <b>coeficiente binomial</b> o <b>número combinatorio</b>. No es una fracción: no lleva raya. Se calcula con \(\dbinom{n}{k}=\dfrac{n!}{k!\,(n-k)!}\), para \(0\le k\le n\).</li>
+      <li><b>\(a^{\,n-k}\,b^{\,k}\)</b> se lee «\(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». Son las potencias del término.</li>
+      <li><b>Condiciones.</b> \(n\) es un entero, \(n\ge 0\). \(a\) y \(b\) son números reales o expresiones (como \(2x\) o \(\tfrac{1}{x}\)); cuando traen coeficiente o signo, van entre paréntesis. En los términos donde aparece \(a^{0}\) o \(b^{0}\) se usa \(x^{0}=1\), que vale para \(x\neq 0\); si \(a=0\) o \(b=0\), ese factor se toma como \(1\) (convención).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Lo que la fórmula garantiza</h3>
+    <h3>Lo que el enunciado garantiza, y por qué</h3>
     <ol class="steps">
-      <li>El desarrollo tiene \(n+1\) términos (uno por cada \(k\) de \(0\) a \(n\)).</li>
-      <li>En cada término los exponentes de \(a\) y de \(b\) suman \(n\).</li>
-      <li>El primer y el último coeficiente valen \(1\): \(\dbinom{n}{0}=\dfrac{n!}{0!\,n!}=1\) y \(\dbinom{n}{n}=1\).</li>
-      <li>Los coeficientes son simétricos: \(\dbinom{n}{k}=\dbinom{n}{n-k}\).</li>
-      <li><b>Por qué es verdadera.</b> Cada término se forma eligiendo \(b\) en \(k\) de los \(n\) factores, y \(\dbinom{n}{k}\) cuenta esas elecciones (hoja «Del producto notable al binomio de Newton»). También se demuestra por inducción (hoja «Demostración por inducción»).</li>
+      <li><b>El desarrollo tiene \(n+1\) términos.</b> Por qué: hay un término por cada valor de \(k\), y de \(0\) a \(n\) hay \(n+1\) valores (los \(n\) valores \(1,\ 2,\dots,\ n\) y además el \(0\)). Ejemplo: con \(n=5\), los valores son \(0,\ 1,\ 2,\ 3,\ 4,\ 5\): \(5+1=6\).</li>
+      <li><b>En cada término los exponentes suman \(n\).</b> Por qué: \((n-k)+k=n-k+k=n\). Ejemplo: en \(10a^{3}b^{2}\), \(3+2=5\).</li>
+      <li><b>El primer y el último coeficiente valen \(1\).</b> Con \(0!=1\): \[\begin{aligned}\binom{n}{0}&=\frac{n!}{0!\,(n-0)!}=\frac{n!}{1\cdot n!}=\frac{n!}{n!}=1\\ \binom{n}{n}&=\frac{n!}{n!\,(n-n)!}=\frac{n!}{n!\cdot 0!}=\frac{n!}{n!\cdot 1}=\frac{n!}{n!}=1\end{aligned}\] Por eso el desarrollo empieza en \(a^{n}\) y termina en \(b^{n}\).</li>
+      <li><b>Los coeficientes son simétricos:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Qué se demuestra: que el coeficiente del término \(k\) es igual al del término \(n-k\). Cómo: se reemplaza \(k\) por \(n-k\) en la fórmula. \[\begin{aligned}\binom{n}{n-k}&=\frac{n!}{(n-k)!\,\bigl(n-(n-k)\bigr)!}&&\text{se reemplaza }k\text{ por }n-k\\ &=\frac{n!}{(n-k)!\,k!}&&n-(n-k)=n-n+k=k\\ &=\frac{n!}{k!\,(n-k)!}&&\text{propiedad conmutativa en el denominador}\\ &=\binom{n}{k}&&\text{es la fórmula de }\tbinom{n}{k}\end{aligned}\] Con números (\(n=5\), \(k=2\), \(n-k=3\)): \(\dbinom{5}{2}=\dfrac{120}{2\cdot 6}=\dfrac{120}{12}=10\) y \(\dbinom{5}{3}=\dfrac{120}{6\cdot 2}=\dfrac{120}{12}=10\). ✓</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Una comprobación nueva: \((a+b)^{4}\), multiplicando y con el enunciado</h3>
+    <p><b>Qué se comprueba:</b> que el enunciado, que salió de mirar \(n=1,\ 2,\ 3\), acierta también en un caso que no se usó para encontrarlo, \(n=4\). <b>Cómo:</b> primero se multiplica; después se usa la fórmula; al final se comparan.</p>
+    <ol class="steps">
+      <li><b>Multiplicando.</b> \[\begin{aligned}(a+b)^{4}&=(a+b)^{3}\,(a+b)&&\text{un factor más}\\ &=(a^{3}+3a^{2}b+3ab^{2}+b^{3})(a+b)&&\text{se reemplaza el cubo}\\ &=a^{4}+3a^{3}b+3a^{2}b^{2}+ab^{3}&&\text{cada término por }a\\ &\quad+a^{3}b+3a^{2}b^{2}+3ab^{3}+b^{4}&&\text{cada término por }b\\ &=a^{4}+(3+1)\,a^{3}b+(3+3)\,a^{2}b^{2}+(1+3)\,ab^{3}+b^{4}&&\text{se juntan los términos semejantes}\\ &=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}&&3+1=4,\quad 3+3=6,\quad 1+3=4\end{aligned}\]</li>
+      <li><b>Con el enunciado</b> (\(n=4\), \(4!=24\)): \[\begin{aligned}\binom{4}{0}&=\frac{4!}{0!\cdot 4!}=\frac{24}{1\cdot 24}=\frac{24}{24}=1\\ \binom{4}{1}&=\frac{4!}{1!\cdot 3!}=\frac{24}{1\cdot 6}=\frac{24}{6}=4\\ \binom{4}{2}&=\frac{4!}{2!\cdot 2!}=\frac{24}{2\cdot 2}=\frac{24}{4}=6\\ \binom{4}{3}&=\frac{4!}{3!\cdot 1!}=\frac{24}{6\cdot 1}=\frac{24}{6}=4\\ \binom{4}{4}&=\frac{4!}{4!\cdot 0!}=\frac{24}{24\cdot 1}=\frac{24}{24}=1\end{aligned}\] Potencias: \(a^{4},\ a^{3}b,\ a^{2}b^{2},\ ab^{3},\ b^{4}\). Queda \(a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+      <li><b>Comparación.</b> Los dos caminos dan lo mismo, término por término. ✓ Esto comprueba el caso \(n=4\); la demostración para todo \(n\) está en la hoja «Demostración por inducción».</li>
     </ol>
   </div>
 </section>
@@ -58,12 +92,19 @@
   <h2>Paso a paso</h2>
 
   <div class="prop p1">
-  <h3>Ejemplo 1: \((a+b)^{4}\)</h3>
+  <h3>Ejemplo 1: \((a+b)^{4}\), usando solo el enunciado</h3>
   <div class="body">
   <ol class="steps">
-    <li><b>Coeficientes.</b> \(\dbinom{4}{0}=1\), \(\dbinom{4}{1}=\dfrac{4!}{1!\,3!}=\dfrac{24}{6}=4\), \(\dbinom{4}{2}=\dfrac{4!}{2!\,2!}=\dfrac{24}{4}=6\), \(\dbinom{4}{3}=4\), \(\dbinom{4}{4}=1\).</li>
-    <li><b>Potencias.</b> \(a^{4},\ a^{3}b,\ a^{2}b^{2},\ ab^{3},\ b^{4}\).</li>
-    <li>\((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+    <li><b>Dato.</b> \(n=4\). Los valores de \(k\) son \(0,\ 1,\ 2,\ 3,\ 4\): habrá \(4+1=5\) términos.</li>
+    <li><b>Fórmula.</b> \((a+b)^{4}=\displaystyle\sum_{k=0}^{4}\binom{4}{k}a^{4-k}b^{k}\), con \(\dbinom{4}{k}=\dfrac{4!}{k!\,(4-k)!}\).</li>
+    <li><b>Factoriales que se necesitan.</b> \(0!=1\), \(1!=1\), \(2!=2\), \(3!=6\), \(4!=24\).</li>
+    <li><b>\(k=0\):</b> \(\dbinom{4}{0}=\dfrac{24}{1\cdot 24}=\dfrac{24}{24}=1\). Potencias: \(a^{4-0}b^{0}=a^{4}\cdot 1\). Término: \(a^{4}\).</li>
+    <li><b>\(k=1\):</b> \(\dbinom{4}{1}=\dfrac{24}{1\cdot 6}=\dfrac{24}{6}=4\). Potencias: \(a^{4-1}b^{1}=a^{3}b\). Término: \(4a^{3}b\).</li>
+    <li><b>\(k=2\):</b> \(\dbinom{4}{2}=\dfrac{24}{2\cdot 2}=\dfrac{24}{4}=6\). Potencias: \(a^{4-2}b^{2}=a^{2}b^{2}\). Término: \(6a^{2}b^{2}\).</li>
+    <li><b>\(k=3\):</b> \(\dbinom{4}{3}=\dfrac{24}{6\cdot 1}=\dfrac{24}{6}=4\). Potencias: \(a^{4-3}b^{3}=ab^{3}\). Término: \(4ab^{3}\).</li>
+    <li><b>\(k=4\):</b> \(\dbinom{4}{4}=\dfrac{24}{24\cdot 1}=\dfrac{24}{24}=1\). Potencias: \(a^{4-4}b^{4}=1\cdot b^{4}\). Término: \(b^{4}\).</li>
+    <li><b>Suma de los términos.</b> \((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+    <li><b>Comprobación con \(a=1\) y \(b=1\).</b> A la izquierda: \((1+1)^{4}=2^{4}\); \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\). A la derecha: \(1+4=5\), \(5+6=11\), \(11+4=15\), \(15+1=16\). ✓</li>
   </ol>
   </div>
   </div>
@@ -72,9 +113,14 @@
   <h3>Ejemplo 2: \((x+2)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Se usa el ejemplo 1 con \(a=x\) y \(b=2\). Las potencias de \(2\) son \(1,\ 2,\ 4,\ 8,\ 16\).</li>
-    <li>\(x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 4+4\cdot x\cdot 8+16\).</li>
-    <li>\((x+2)^{4}=x^{4}+8x^{3}+24x^{2}+32x+16\).</li>
+    <li><b>Datos.</b> \(a=x\), \(b=2\), \(n=4\). Del ejemplo 1: \((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+    <li><b>Reemplazo.</b> \((x+2)^{4}=x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 2^{2}+4\cdot x\cdot 2^{3}+2^{4}\).</li>
+    <li><b>Potencias de \(2\).</b> \(2^{2}=2\cdot 2=4\); \(2^{3}=4\cdot 2=8\); \(2^{4}=8\cdot 2=16\).</li>
+    <li><b>Segundo término:</b> \(4\cdot x^{3}\cdot 2\); \(4\cdot 2=8\); queda \(8x^{3}\).</li>
+    <li><b>Tercer término:</b> \(6\cdot x^{2}\cdot 4\); \(6\cdot 4=24\); queda \(24x^{2}\).</li>
+    <li><b>Cuarto término:</b> \(4\cdot x\cdot 8\); \(4\cdot 8=32\); queda \(32x\).</li>
+    <li><b>Resultado.</b> \((x+2)^{4}=x^{4}+8x^{3}+24x^{2}+32x+16\).</li>
+    <li><b>Comprobación con \(x=1\).</b> A la izquierda: \((1+2)^{4}=3^{4}\); \(3\cdot 3=9\), \(9\cdot 3=27\), \(27\cdot 3=81\). A la derecha: \(1+8=9\), \(9+24=33\), \(33+32=65\), \(65+16=81\). ✓</li>
   </ol>
   </div>
   </div>
@@ -83,9 +129,15 @@
   <h3>Ejemplo 3: \((2x+y)^{3}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(n=3\): coeficientes \(1,\ 3,\ 3,\ 1\). Con \(a=2x\) y \(b=y\). El paréntesis de \(a\) es obligatorio.</li>
-    <li>\((2x)^{3}+3\,(2x)^{2}y+3\,(2x)\,y^{2}+y^{3}\).</li>
-    <li>\((2x+y)^{3}=8x^{3}+12x^{2}y+6xy^{2}+y^{3}\).</li>
+    <li><b>Datos.</b> \(a=2x\), \(b=y\), \(n=3\). Como \(a\) trae coeficiente, va entre paréntesis: \((2x)\).</li>
+    <li><b>Fórmula con \(n=3\)</b> (coeficientes \(1,\ 3,\ 3,\ 1\), calculados en el encabezado): \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\).</li>
+    <li><b>Reemplazo.</b> \((2x+y)^{3}=(2x)^{3}+3\,(2x)^{2}\,y+3\,(2x)\,y^{2}+y^{3}\).</li>
+    <li><b>Potencias de \(2x\)</b> (potencia de un producto: se eleva cada factor). \((2x)^{2}=2^{2}x^{2}=4x^{2}\). \((2x)^{3}=2^{3}x^{3}=8x^{3}\), porque \(2\cdot 2=4\) y \(4\cdot 2=8\).</li>
+    <li><b>Primer término:</b> \((2x)^{3}=8x^{3}\).</li>
+    <li><b>Segundo término:</b> \(3\cdot 4x^{2}\cdot y\); \(3\cdot 4=12\); queda \(12x^{2}y\).</li>
+    <li><b>Tercer término:</b> \(3\cdot 2x\cdot y^{2}\); \(3\cdot 2=6\); queda \(6xy^{2}\).</li>
+    <li><b>Resultado.</b> \((2x+y)^{3}=8x^{3}+12x^{2}y+6xy^{2}+y^{3}\).</li>
+    <li><b>Comprobación con \(x=1\), \(y=1\).</b> A la izquierda: \((2\cdot 1+1)^{3}=3^{3}=27\) (\(3\cdot 3=9\), \(9\cdot 3=27\)). A la derecha: \(8+12=20\), \(20+6=26\), \(26+1=27\). ✓</li>
   </ol>
   </div>
   </div>
@@ -94,55 +146,81 @@
   <h3>Ejemplo 4: los casos \(n=0\), \(n=1\) y \(n=2\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(n=0\): un solo término, \(\dbinom{0}{0}a^{0}b^{0}=1\). Y \((a+b)^{0}=1\) (para \(a+b\neq 0\)).</li>
-    <li>\(n=1\): \(\dbinom{1}{0}a+\dbinom{1}{1}b=a+b\).</li>
-    <li>\(n=2\): \(\dbinom{2}{0}a^{2}+\dbinom{2}{1}ab+\dbinom{2}{2}b^{2}=a^{2}+2ab+b^{2}\): el cuadrado del binomio.</li>
+    <li><b>Qué se hace:</b> se usa el enunciado con los exponentes más chicos y se compara con lo que ya se sabe.</li>
+    <li><b>\(n=0\).</b> El único valor de \(k\) es \(0\): hay \(0+1=1\) término. Coeficiente: \(\dbinom{0}{0}=\dfrac{0!}{0!\cdot 0!}=\dfrac{1}{1\cdot 1}=1\). Potencias: \(a^{0}b^{0}=1\cdot 1=1\). El enunciado da \(1\). Lo que se sabe: \((a+b)^{0}=1\) cuando \(a+b\neq 0\) (todo número distinto de cero, elevado a \(0\), es \(1\)). ✓</li>
+    <li><b>\(n=1\).</b> Valores de \(k\): \(0\) y \(1\). \(\dbinom{1}{0}=\dfrac{1!}{0!\cdot 1!}=\dfrac{1}{1\cdot 1}=1\) y \(\dbinom{1}{1}=\dfrac{1!}{1!\cdot 0!}=\dfrac{1}{1\cdot 1}=1\). Términos: \(1\cdot a^{1}b^{0}=a\) y \(1\cdot a^{0}b^{1}=b\). El enunciado da \(a+b\). Lo que se sabe: \((a+b)^{1}=a+b\). ✓</li>
+    <li><b>\(n=2\).</b> Valores de \(k\): \(0,\ 1,\ 2\). Con \(2!=2\): \(\dbinom{2}{0}=\dfrac{2}{1\cdot 2}=\dfrac{2}{2}=1\); \(\dbinom{2}{1}=\dfrac{2}{1\cdot 1}=\dfrac{2}{1}=2\); \(\dbinom{2}{2}=\dfrac{2}{2\cdot 1}=\dfrac{2}{2}=1\). Términos: \(1\cdot a^{2}b^{0}=a^{2}\); \(2\cdot a^{1}b^{1}=2ab\); \(1\cdot a^{0}b^{2}=b^{2}\). El enunciado da \(a^{2}+2ab+b^{2}\). Lo que se sabe: es el cuadrado del binomio. ✓</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Los errores más comunes.</b> Uno: empezar a contar en \(k=1\). El primer término es el de \(k=0\). Dos: olvidar el paréntesis cuando \(a\) o \(b\) traen coeficiente: \((2x)^{3}=8x^{3}\), no \(2x^{3}\). Tres: usar la fórmula con un exponente que no es natural; para esos casos hay otra, que es una suma infinita (hoja «Binomio con exponente fraccionario»).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Empezar a contar en \(k=1\).</b> El primer término es el de \(k=0\), que es \(a^{n}\). Si se parte en \(1\), se pierde ese término y quedan \(n\) en vez de \(n+1\).</li>
+      <li><b>Olvidar el paréntesis cuando \(a\) o \(b\) traen coeficiente.</b> \((2x)^{3}=2^{3}x^{3}=8x^{3}\); escribir \(2x^{3}\) está mal, porque ahí el exponente afecta solo a la \(x\).</li>
+      <li><b>Escribir \((a+b)^{n}=a^{n}+b^{n}\).</b> Eso deja solo el primer y el último término. Comprobación con \(a=1\), \(b=1\), \(n=4\): \((1+1)^{4}=16\), pero \(1^{4}+1^{4}=1+1=2\).</li>
+      <li><b>Leer \(\dbinom{n}{k}\) como la fracción \(\dfrac{n}{k}\).</b> No lo es: \(\dbinom{4}{2}=6\), y \(\dfrac{4}{2}=2\).</li>
+      <li><b>Usar esta fórmula con un exponente que no es entero \(\ge 0\).</b> Para esos casos hay otra, que es una suma infinita (hoja «Binomio con exponente fraccionario»).</li>
+    </ol>
   </div>
 </section>
 
 <section>
   <h2>Ahora tú</h2>
   <div class="ex">
-    <p><span class="n">A</span>Desarrolla \((x+1)^{5}\) con la fórmula.</p>
-    <details><summary>Pista</summary><div><p>Como \(b=1\), cada término es solo el coeficiente por la potencia de \(x\).</p></div></details>
+    <p><span class="n">A</span>Desarrolla \((x+1)^{5}\) con el enunciado.</p>
+    <details><summary>Pista</summary><div><p>Como \(b=1\), todas las potencias de \(b\) valen \(1\): cada término es el coeficiente por la potencia de \(x\). Los coeficientes de \(n=5\) son los de la animación.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>Coeficientes: \(\dbinom{5}{0}=1\), \(\dbinom{5}{1}=5\), \(\dbinom{5}{2}=\dfrac{5!}{2!\,3!}=\dfrac{120}{12}=10\), y por simetría \(10,\ 5,\ 1\).</li>
-        <li>\((x+1)^{5}=x^{5}+5x^{4}+10x^{3}+10x^{2}+5x+1\).</li>
+        <li><b>Datos.</b> \(a=x\), \(b=1\), \(n=5\). Valores de \(k\): \(0\) a \(5\); son \(5+1=6\) términos.</li>
+        <li><b>Fórmula.</b> \((x+1)^{5}=\displaystyle\sum_{k=0}^{5}\binom{5}{k}x^{5-k}\cdot 1^{k}\), con \(\dbinom{5}{k}=\dfrac{5!}{k!\,(5-k)!}\) y \(5!=120\).</li>
+        <li>\(\dbinom{5}{0}=\dfrac{120}{1\cdot 120}=\dfrac{120}{120}=1\).</li>
+        <li>\(\dbinom{5}{1}=\dfrac{120}{1\cdot 24}=\dfrac{120}{24}=5\).</li>
+        <li>\(\dbinom{5}{2}=\dfrac{120}{2\cdot 6}=\dfrac{120}{12}=10\).</li>
+        <li><b>Por simetría</b> (\(\tbinom{5}{3}=\tbinom{5}{2}\), \(\tbinom{5}{4}=\tbinom{5}{1}\), \(\tbinom{5}{5}=\tbinom{5}{0}\)): los otros tres son \(10,\ 5,\ 1\).</li>
+        <li><b>Potencias de \(b\).</b> \(1^{k}=1\) para todo \(k\): no cambian el término.</li>
+        <li><b>Resultado.</b> \((x+1)^{5}=x^{5}+5x^{4}+10x^{3}+10x^{2}+5x+1\).</li>
+        <li><b>Comprobación con \(x=1\).</b> A la izquierda: \(2^{5}\); \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\), \(16\cdot 2=32\). A la derecha: \(1+5=6\), \(6+10=16\), \(16+10=26\), \(26+5=31\), \(31+1=32\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Desarrolla \((x+3)^{4}\).</p>
-    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) y potencias de \(3\): \(1,\ 3,\ 9,\ 27,\ 81\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Usa el desarrollo de \((a+b)^{4}\) del ejemplo 1, con \(a=x\) y \(b=3\). Calcula primero las potencias de \(3\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(x^{4}+4\cdot x^{3}\cdot 3+6\cdot x^{2}\cdot 9+4\cdot x\cdot 27+81\).</li>
-        <li>\((x+3)^{4}=x^{4}+12x^{3}+54x^{2}+108x+81\).</li>
-        <li>Comprobación con \(x=1\): \(4^{4}=256\) y \(1+12+54+108+81=256\).</li>
+        <li><b>Datos.</b> \(a=x\), \(b=3\), \(n=4\). Del ejemplo 1: \((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\).</li>
+        <li><b>Reemplazo.</b> \((x+3)^{4}=x^{4}+4\cdot x^{3}\cdot 3+6\cdot x^{2}\cdot 3^{2}+4\cdot x\cdot 3^{3}+3^{4}\).</li>
+        <li><b>Potencias de \(3\).</b> \(3^{2}=3\cdot 3=9\); \(3^{3}=9\cdot 3=27\); \(3^{4}=27\cdot 3=81\).</li>
+        <li><b>Segundo término:</b> \(4\cdot 3=12\); queda \(12x^{3}\).</li>
+        <li><b>Tercer término:</b> \(6\cdot 9=54\); queda \(54x^{2}\).</li>
+        <li><b>Cuarto término:</b> \(4\cdot 27=108\); queda \(108x\).</li>
+        <li><b>Resultado.</b> \((x+3)^{4}=x^{4}+12x^{3}+54x^{2}+108x+81\).</li>
+        <li><b>Comprobación con \(x=1\).</b> A la izquierda: \((1+3)^{4}=4^{4}\); \(4\cdot 4=16\), \(16\cdot 4=64\), \(64\cdot 4=256\). A la derecha: \(1+12=13\), \(13+54=67\), \(67+108=175\), \(175+81=256\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un depósito de \(\$100\,000\) gana un \(10\,\%\) de interés compuesto al año. Después de \(3\) años se ha multiplicado por \((1+0{,}1)^{3}\). Desarrolla esa potencia con el binomio y calcula el monto.</p>
-    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}1\), \(n=3\).</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un depósito de \(\$100\,000\) gana un \(10\,\%\) de interés compuesto al año: cada año el monto se multiplica por \(1+0{,}1\). Después de \(3\) años se ha multiplicado por \((1+0{,}1)^{3}\). Desarrolla esa potencia con el binomio y calcula el monto.</p>
+    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}1\), \(n=3\). Los coeficientes de \(n=3\) son \(1,\ 3,\ 3,\ 1\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\((1+0{,}1)^{3}=1+3\cdot 0{,}1+3\cdot 0{,}01+0{,}001=1+0{,}3+0{,}03+0{,}001=1{,}331\).</li>
-        <li>Monto: \(100\,000\cdot 1{,}331=\$133\,100\).</li>
-        <li>Lectura de los términos: \(0{,}3\) es el interés simple de tres años; \(0{,}03\) y \(0{,}001\) son el «interés sobre el interés».</li>
+        <li><b>Datos.</b> Depósito: \(\$100\,000\). Tasa: \(10\,\%=\dfrac{10}{100}=0{,}1\). Años: \(3\). Se busca \((1+0{,}1)^{3}\), con \(a=1\), \(b=0{,}1\), \(n=3\).</li>
+        <li><b>Fórmula con \(n=3\).</b> \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\).</li>
+        <li><b>Reemplazo.</b> \((1+0{,}1)^{3}=1^{3}+3\cdot 1^{2}\cdot 0{,}1+3\cdot 1\cdot 0{,}1^{2}+0{,}1^{3}\).</li>
+        <li><b>Potencias.</b> \(1^{3}=1\) y \(1^{2}=1\). \(0{,}1^{2}=0{,}1\cdot 0{,}1=0{,}01\). \(0{,}1^{3}=0{,}01\cdot 0{,}1=0{,}001\).</li>
+        <li><b>Cada término.</b> Primero: \(1\). Segundo: \(3\cdot 1\cdot 0{,}1=0{,}3\). Tercero: \(3\cdot 1\cdot 0{,}01=0{,}03\). Cuarto: \(0{,}001\).</li>
+        <li><b>Suma.</b> \(1+0{,}3=1{,}3\); \(1{,}3+0{,}03=1{,}33\); \(1{,}33+0{,}001=1{,}331\). Entonces \((1+0{,}1)^{3}=1{,}331\).</li>
+        <li><b>Monto.</b> \(100\,000\cdot 1{,}331=133\,100\). Después de \(3\) años hay \(\$133\,100\).</li>
+        <li><b>Comprobación, año por año.</b> Año 1: \(100\,000\cdot 1{,}1=110\,000\). Año 2: \(110\,000\cdot 1{,}1=121\,000\). Año 3: \(121\,000\cdot 1{,}1=133\,100\). ✓</li>
+        <li><b>Qué significa cada término.</b> El \(1\) es el depósito. El \(0{,}3\) es el interés simple de tres años: \(100\,000\cdot 0{,}3=\$30\,000\). El \(0{,}03\) y el \(0{,}001\) son el «interés sobre el interés»: \(0{,}03+0{,}001=0{,}031\) y \(100\,000\cdot 0{,}031=\$3\,100\). En total: \(100\,000+30\,000=130\,000\) y \(130\,000+3\,100=133\,100\). ✓</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H05 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H05 · v002 · Pendiente de APR</span>
 </footer>
 </article>

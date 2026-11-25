@@ -12,44 +12,79 @@
       <li><b>Coeficientes binomiales</b></li>
     </ol>
     <h1>Coeficientes binomiales</h1>
-    <p class="lede">El coeficiente binomial \(\dbinom{n}{k}\), que se lee «\(n\) sobre \(k\)», cuenta de cuántas maneras se pueden elegir \(k\) objetos entre \(n\), sin importar el orden. Son los números que acompañan a cada término en el desarrollo de \((a+b)^{n}\).
-    \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!},\qquad 0\le k\le n\]</p>
+    <p class="lede">El <b>coeficiente binomial</b> es un número que responde una pregunta de conteo: <b>¿de cuántas maneras se pueden elegir \(k\) objetos entre \(n\), cuando el orden no importa?</b> Se escribe \(\dbinom{n}{k}\) y se lee «\(n\) sobre \(k\)» (no es una fracción: no lleva raya). Aquí \(n\) y \(k\) son enteros con \(0\le k\le n\). Un conjunto de objetos elegidos, sin orden, se llama <b>grupo</b> y se escribe entre llaves: \(\{1,2\}\) es el grupo formado por los objetos 1 y 2, y es el mismo que \(\{2,1\}\). Se llama «binomial» porque estos números son los coeficientes del desarrollo del binomio \((a+b)^{n}\).</p>
+    <p class="lede"><b>De dónde sale la cuenta: tres casos, listados completos.</b> Los objetos se numeran \(1,\ 2,\ 3,\ldots\) Primero se elige <b>con orden</b> (un objeto tras otro) y se escribe cada elección entre paréntesis; después se ve cuántas veces quedó escrito cada grupo.
+    \[\begin{aligned}&\textbf{Elegir 2 entre 3.}\ \text{Con orden: 3 opciones para el primero y 2 para el segundo, }3\cdot 2=6:\\ &\qquad(1,2)\quad(1,3)\quad(2,1)\quad(2,3)\quad(3,1)\quad(3,2)\\ &\qquad\text{cada grupo está 2 veces, como }(1,2)\text{ y }(2,1).\ \text{Grupos: }\tfrac{6}{2}=3:\quad\{1,2\}\quad\{1,3\}\quad\{2,3\}\\[4pt] &\textbf{Elegir 2 entre 4.}\ \text{Con orden: }4\cdot 3=12.\ \text{Cada grupo está 2 veces. Grupos: }\tfrac{12}{2}=6:\\ &\qquad\{1,2\}\quad\{1,3\}\quad\{1,4\}\quad\{2,3\}\quad\{2,4\}\quad\{3,4\}\\[4pt] &\textbf{Elegir 3 entre 4.}\ \text{Con orden: }4\cdot 3\cdot 2=12\cdot 2=24.\\ &\qquad\text{cada grupo está 6 veces: }\{1,2,3\}\text{ sale de }(1,2,3),\,(1,3,2),\,(2,1,3),\,(2,3,1),\,(3,1,2),\,(3,2,1)\\ &\qquad\text{Grupos: }\tfrac{24}{6}=4:\quad\{1,2,3\}\quad\{1,2,4\}\quad\{1,3,4\}\quad\{2,3,4\}\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> En los tres casos se hizo lo mismo. <b>Arriba</b> va un producto de \(k\) números que parten en \(n\) y bajan de uno en uno (\(3\cdot 2\); \(4\cdot 3\); \(4\cdot 3\cdot 2\)): son las elecciones con orden. <b>Abajo</b> va el número de maneras de ordenar \(k\) objetos (\(2\cdot 1=2\) para dos objetos; \(3\cdot 2\cdot 1=6\) para tres): son las veces que se repite cada grupo. Ese producto «desde \(k\) hacia abajo hasta \(1\)» se llama <b>factorial de \(k\)</b>, se escribe \(k!\) y se lee «\(k\) factorial».</p>
+    <p class="lede"><b>La fórmula.</b> Para \(1\le k\le n\): \[\binom{n}{k}=\frac{\overbrace{n\,(n-1)\cdots(n-k+1)}^{k\text{ números}}}{k!}=\frac{n!}{k!\,(n-k)!}\] La segunda forma, con factoriales, es la misma cuenta escrita de otra manera; cómo se pasa de una a otra está más abajo, línea por línea. Para \(k=0\) se pone \(\dbinom{n}{0}=1\) (hay una sola manera de no elegir nada), y la forma con factoriales también da \(1\) con la convención \(0!=1\). <b>Comprobación</b> con el segundo caso (\(n=4\), \(k=2\)): \(4!=4\cdot 3\cdot 2\cdot 1=24\), \(2!=2\), \((4-2)!=2!=2\), \(2\cdot 2=4\) y \(\dfrac{24}{4}=6\). Son los \(6\) grupos listados. ✓</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Todos los grupos de \(2\) fichas que se pueden formar con \(5\) fichas, uno por uno. Después cambia \(k\) con el deslizador.</p>
+  <p>Elegir \(2\) fichas entre \(5\), en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira arriba:</b> las cinco <b>fichas</b>, numeradas del \(1\) al \(5\) (\(n=5\)). Se van a elegir dos (\(k=2\)). Arriba queda la pregunta: \(\dbinom{5}{2}=\ ?\), es decir, ¿cuántos grupos de \(2\) fichas hay?</li>
+    <li><b>Paso 2, mira la tabla:</b> cada paréntesis es una <b>elección con orden</b>: el primer número es la primera ficha que se saca y el segundo, la segunda. Hay \(5\) filas (una por cada primera ficha) y \(4\) pares en cada fila (las fichas que quedan): \(5\cdot 4=20\) pares.</li>
+    <li><b>Paso 3, mira el recuadro burdeo:</b> encierra los pares \((1,2)\) y \((2,1)\). Tienen las mismas fichas: son el mismo <b>grupo</b>, \(\{1,2\}\), escrito \(2\) veces. Lo mismo pasa con todos los grupos.</li>
+    <li><b>Pasos 4 y 5:</b> se tacha con una cruz (×) y fondo gris la <b>repetición</b> de cada grupo (el par que tiene primero la ficha mayor). Quedan \(10\) pares, con fondo azul; debajo se escriben como grupos, entre llaves: son los \(10\) grupos.</li>
+    <li><b>Pasos 6 y 7, vuelve arriba:</b> junto a la pregunta se escribe la respuesta, \(\dfrac{5\cdot 4}{2!}=10\), y la misma cuenta con <b>factoriales</b>, \(\dfrac{5!}{2!\,3!}\). Lee después el registro «Paso a paso» y la cuenta de abajo, línea por línea. Conclusión: el coeficiente binomial es «elecciones con orden, dividido por las veces que se repite cada grupo».</li>
+  </ol>
   <div class="stage" data-scene="bn-combinar"></div>
   <ul class="keys">
-    <li><b>Fichas naranjas:</b> las elegidas en el grupo que se está formando.</li>
-    <li><b>Lista azul:</b> los grupos ya formados. El orden dentro de un grupo no importa: \(\{1,\,3\}\) y \(\{3,\,1\}\) son el mismo.</li>
-    <li><b>Bajo el dibujo:</b> la cuenta. Primero se cuentan las elecciones con orden; después se divide por las veces que cada grupo quedó repetido.</li>
-    <li><b>Deslizador \(k\):</b> cuántas fichas se eligen, de \(0\) a \(5\).</li>
+    <li><b>Círculos de arriba:</b> las \(5\) fichas.</li>
+    <li><b>Paréntesis de la tabla:</b> las \(20\) elecciones con orden (primera ficha, segunda ficha).</li>
+    <li><b>Recuadro burdeo:</b> dos pares que son el mismo grupo.</li>
+    <li><b>Cruz (×) y fondo gris:</b> el par está tachado, porque es la repetición de un grupo que ya está contado. No se borra: queda a la vista.</li>
+    <li><b>Fondo azul y llaves azules:</b> los \(10\) grupos distintos.</li>
+    <li><b>Naranjo, arriba:</b> la respuesta, junto a la pregunta.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> el conteo de los casos con \(n=3\), \(4\) y \(5\), con todos los grupos listados; el paso de la fórmula con productos a la fórmula con factoriales; la simetría; y la regla de Pascal (ejemplo 4).</li>
+      <li><b>Se usa sin demostrar:</b> el principio de multiplicación para contar (si lo primero se puede elegir de \(m\) maneras y, por cada una, lo segundo de \(p\) maneras, hay \(m\cdot p\) maneras de elegir ambos). Aquí se comprueba listando los \(5\cdot 4=20\) pares de la animación.</li>
+      <li><b>Se usa sin demostrar:</b> que \(k\) objetos se pueden ordenar de \(k!\) maneras, para cualquier \(k\). Sale del mismo principio de multiplicación; aquí se comprueba listando los casos \(k=2\) y \(k=3\).</li>
+      <li><b>Se usa sin demostrar:</b> que estos números son los coeficientes de \((a+b)^{n}\) para todo \(n\). La razón está en la hoja «Del producto notable al binomio de Newton» y la demostración, en «Demostración por inducción».</li>
+      <li><b>Es una convención</b> (un acuerdo, no un resultado): \(0!=1\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
-    <h3>De dónde sale la fórmula</h3>
+    <h3>De dónde sale la fórmula, paso por paso</h3>
+    <p><b>Qué se busca.</b> Una cuenta que diga cuántos grupos de \(k\) objetos se pueden formar con \(n\) objetos, sin tener que listarlos. <b>Cómo funciona el método:</b> primero se cuenta de más, eligiendo los objetos uno tras otro (con orden); después se divide por las veces que cada grupo quedó repetido.</p>
     <ol class="steps">
-      <li><b>Factorial.</b> \(n!=n\,(n-1)\,(n-2)\cdots 2\cdot 1\). Por ejemplo, \(5!=120\). Se conviene que \(0!=1\).</li>
-      <li><b>Elegir con orden.</b> Para el primer objeto hay \(n\) opciones; para el segundo, \(n-1\); así hasta el \(k\)-ésimo, con \(n-k+1\). Total: \(n\,(n-1)\cdots(n-k+1)\).</li>
-      <li><b>Quitar el orden.</b> Cada grupo de \(k\) objetos se contó una vez por cada manera de ordenarlo, que son \(k!\). Se divide:
-        \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\]</li>
-      <li><b>Forma con factoriales.</b> Se multiplica arriba y abajo por \((n-k)!\). Arriba queda \(n\,(n-1)\cdots(n-k+1)\cdot(n-k)!=n!\):
-        \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</li>
+      <li><b>El factorial.</b> El producto de los enteros desde un número hacia abajo hasta \(1\) se llama <b>factorial</b>. Se escribe con un signo de exclamación y se lee «\(k\) factorial»: \[\begin{aligned}1!&=1\\ 2!&=2\cdot 1=2\\ 3!&=3\cdot 2\cdot 1=6\\ 4!&=4\cdot 3\cdot 2\cdot 1=24\\ 5!&=5\cdot 4\cdot 3\cdot 2\cdot 1=120\\ 6!&=6\cdot 5\cdot 4\cdot 3\cdot 2\cdot 1=720\\ k!&=k\,(k-1)\,(k-2)\cdots 2\cdot 1\end{aligned}\] Cada uno sale del anterior multiplicando por el número nuevo: \(4!=4\cdot 3!=4\cdot 6=24\), \(5!=5\cdot 4!=5\cdot 24=120\), \(6!=6\cdot 5!=6\cdot 120=720\). Además se conviene que \(0!=1\).</li>
+      <li><b>Qué cuenta el factorial.</b> \(k!\) es el número de maneras de ordenar \(k\) objetos: hay \(k\) opciones para el primer lugar, \(k-1\) para el segundo, y así hasta \(1\) para el último. Con dos objetos: \((1,2)\) y \((2,1)\); son \(2!=2\). Con tres: \((1,2,3)\), \((1,3,2)\), \((2,1,3)\), \((2,3,1)\), \((3,1,2)\), \((3,2,1)\); son \(3!=6\).</li>
+      <li><b>Elegir con orden \(k\) objetos entre \(n\).</b> Para el primero hay \(n\) opciones; para el segundo quedan \(n-1\); para el tercero, \(n-2\); y así. Son \(k\) números multiplicados: \[\underbrace{n}_{1^{\circ}}\cdot\underbrace{(n-1)}_{2^{\circ}}\cdot\underbrace{(n-2)}_{3^{\circ}}\cdots\underbrace{(n-k+1)}_{k\text{-ésimo}}\] <b>Por qué el último es \(n-k+1\):</b> al primero se le resta \(0\), al segundo \(1\), al tercero \(2\); al \(k\)-ésimo se le resta \(k-1\), y \(n-(k-1)=n-k+1\). Comprobación con \(n=5\) y \(k=2\): el último es \(5-2+1=4\) y el producto es \(5\cdot 4\). Con \(n=6\) y \(k=3\): el último es \(6-3+1=4\) y el producto es \(6\cdot 5\cdot 4\).</li>
+      <li><b>Quitar el orden.</b> Cada grupo de \(k\) objetos quedó contado una vez por cada manera de ordenarlo, es decir, \(k!\) veces. Se divide por \(k!\), para \(1\le k\le n\): \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\]</li>
+      <li><b>La misma cuenta, escrita con factoriales.</b> Qué se demuestra: que \(\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}=\dfrac{n!}{k!\,(n-k)!}\). Cómo: se multiplica arriba y abajo por el mismo número, \((n-k)!\), que no es cero. \[\begin{aligned}\binom{n}{k}&=\frac{n\,(n-1)\cdots(n-k+1)}{k!}&&\text{lo que se contó}\\ &=\frac{n\,(n-1)\cdots(n-k+1)\cdot(n-k)!}{k!\cdot(n-k)!}&&\text{se amplifica por }(n-k)!\\ &=\frac{n\,(n-1)\cdots(n-k+1)\cdot(n-k)\,(n-k-1)\cdots 2\cdot 1}{k!\cdot(n-k)!}&&\text{se escribe }(n-k)!\text{ factor por factor}\\ &=\frac{n!}{k!\,(n-k)!}&&\text{arriba quedó el producto desde }n\text{ hasta }1\text{: es }n!\end{aligned}\]</li>
+      <li><b>Con números</b> (\(n=6\), \(k=3\), y entonces \(n-k=6-3=3\)), de las dos maneras: \[\begin{aligned}\binom{6}{3}&=\frac{6\cdot 5\cdot 4}{3!}&&\text{tres números arriba, desde 6 hacia abajo}\\ &=\frac{30\cdot 4}{3!}&&6\cdot 5=30\\ &=\frac{120}{3!}&&30\cdot 4=120\\ &=\frac{120}{6}&&3!=3\cdot 2\cdot 1=6\\ &=20&&120:6=20\end{aligned}\qquad\begin{aligned}\binom{6}{3}&=\frac{6!}{3!\cdot 3!}&&\text{forma con factoriales}\\ &=\frac{720}{6\cdot 6}&&6!=720,\quad 3!=6\\ &=\frac{720}{36}&&6\cdot 6=36\\ &=20&&720:36=20\end{aligned}\] Coinciden: hay \(20\) grupos de \(3\) objetos elegidos entre \(6\).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Propiedades</h3>
+    <h3>Propiedades, cada una con su porqué</h3>
     <ol class="steps">
-      <li><b>Extremos:</b> \(\dbinom{n}{0}=\dbinom{n}{n}=1\). Hay una sola manera de no elegir nada, y una sola de elegir todo.</li>
-      <li><b>Uno:</b> \(\dbinom{n}{1}=n\).</li>
-      <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Elegir cuáles \(k\) se llevan es lo mismo que elegir cuáles \(n-k\) se dejan.</li>
-      <li><b>Regla de Pascal:</b> \(\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\), para \(1\le k\le n-1\). Es la regla «cada número es la suma de los dos de arriba» del triángulo.</li>
-      <li><b>Suma de una fila:</b> \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=2^{n}\).</li>
+      <li><b>Extremos:</b> \(\dbinom{n}{0}=1\) y \(\dbinom{n}{n}=1\). <b>Por qué:</b> hay una sola manera de no elegir ningún objeto, y una sola de elegirlos todos. Con la fórmula y la convención \(0!=1\): \[\binom{n}{0}=\frac{n!}{0!\cdot n!}=\frac{n!}{1\cdot n!}=1,\qquad\binom{n}{n}=\frac{n!}{n!\cdot(n-n)!}=\frac{n!}{n!\cdot 0!}=\frac{n!}{n!\cdot 1}=1.\] Con números: \(\dbinom{5}{0}=\dfrac{120}{1\cdot 120}=\dfrac{120}{120}=1\).</li>
+      <li><b>Uno:</b> \(\dbinom{n}{1}=n\). <b>Por qué:</b> para elegir un solo objeto hay \(n\) opciones. Con la fórmula: arriba va un solo número, \(n\); abajo, \(1!=1\); y \(\dfrac{n}{1}=n\). Con números: \(\dbinom{5}{1}=\dfrac{5}{1}=5\); los grupos son \(\{1\},\ \{2\},\ \{3\},\ \{4\},\ \{5\}\).</li>
+      <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\), para \(0\le k\le n\). <b>Por qué:</b> elegir cuáles \(k\) objetos se llevan deja decidido cuáles \(n-k\) se quedan; hay tantas maneras de lo uno como de lo otro. Con la fórmula, reemplazando \(k\) por \(n-k\): \[\begin{aligned}\binom{n}{n-k}&=\frac{n!}{(n-k)!\,\bigl(n-(n-k)\bigr)!}&&\text{se reemplaza }k\text{ por }n-k\\ &=\frac{n!}{(n-k)!\,k!}&&n-(n-k)=n-n+k=k\\ &=\frac{n!}{k!\,(n-k)!}&&\text{propiedad conmutativa en el denominador}\\ &=\binom{n}{k}&&\text{es la fórmula de }\tbinom{n}{k}\end{aligned}\] Con números (\(n=5\), \(k=2\), \(n-k=3\)): \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2!}=\dfrac{20}{2}=10\) y \(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3!}=\dfrac{60}{6}=10\). ✓</li>
+      <li><b>Regla de Pascal:</b> \(\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\), para \(1\le k\le n-1\). <b>Por qué:</b> se mira un objeto fijo, por ejemplo el último. Los grupos se separan en dos clases: los que <b>lo tienen</b> (falta elegir \(k-1\) entre los otros \(n-1\)) y los que <b>no lo tienen</b> (se eligen los \(k\) entre los otros \(n-1\)). Con las fichas de la animación (\(n=5\), \(k=2\), ficha fija: la 5): \[\begin{aligned}&\text{con la ficha 5:}&&\{1,5\},\ \{2,5\},\ \{3,5\},\ \{4,5\}&&\tbinom{4}{1}=4\\ &\text{sin la ficha 5:}&&\{1,2\},\ \{1,3\},\ \{1,4\},\ \{2,3\},\ \{2,4\},\ \{3,4\}&&\tbinom{4}{2}=\tfrac{4\cdot 3}{2!}=\tfrac{12}{2}=6\\ &\text{entre las dos clases:}&&4+6=10&&\tbinom{5}{2}=10\ ✓\end{aligned}\] Es la regla «cada número es la suma de los dos de arriba» del triángulo de Pascal. La demostración con la fórmula está en el ejemplo 4.</li>
+      <li><b>Suma de una fila:</b> \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}=2^{n}\). Se lee: «la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), es igual a \(2\) elevado a \(n\)». <b>Por qué:</b> la suma cuenta <b>todos</b> los grupos, de cualquier tamaño. Y un grupo se arma decidiendo, objeto por objeto, «va» o «no va»: \(2\) opciones para cada uno de los \(n\) objetos, \(2\cdot 2\cdots 2=2^{n}\) grupos. Con \(n=3\), todos los grupos: \[\begin{aligned}&\text{de 0 objetos:}&&\{\ \}&&1\\ &\text{de 1 objeto:}&&\{1\},\ \{2\},\ \{3\}&&3\\ &\text{de 2 objetos:}&&\{1,2\},\ \{1,3\},\ \{2,3\}&&3\\ &\text{de 3 objetos:}&&\{1,2,3\}&&1\end{aligned}\] \(1+3=4\), \(4+3=7\), \(7+1=8\); y \(2^{3}=2\cdot 2\cdot 2=8\). ✓</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Una fila completa: los coeficientes binomiales con \(n=5\)</h3>
+    <ol class="steps">
+      <li><b>Uno por uno</b>, con la fórmula \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\): \[\begin{aligned}\binom{5}{0}&=1&&\text{no se elige ninguno}\\ \binom{5}{1}&=\frac{5}{1!}=\frac{5}{1}=5&&\text{un número arriba}\\ \binom{5}{2}&=\frac{5\cdot 4}{2!}=\frac{20}{2}=10&&\text{dos números arriba; es el caso de la animación}\\ \binom{5}{3}&=\frac{5\cdot 4\cdot 3}{3!}=\frac{60}{6}=10&&5\cdot 4=20,\quad 20\cdot 3=60,\quad 3!=6\\ \binom{5}{4}&=\frac{5\cdot 4\cdot 3\cdot 2}{4!}=\frac{120}{24}=5&&60\cdot 2=120,\quad 4!=24\\ \binom{5}{5}&=\frac{5\cdot 4\cdot 3\cdot 2\cdot 1}{5!}=\frac{120}{120}=1&&120\cdot 1=120,\quad 5!=120\end{aligned}\]</li>
+      <li><b>La fila es</b> \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). Se lee igual de izquierda a derecha que de derecha a izquierda (simetría), y suma \(1+5=6\), \(6+10=16\), \(16+10=26\), \(26+5=31\), \(31+1=32\), que es \(2^{5}\): \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\), \(16\cdot 2=32\). ✓</li>
+      <li><b>Por qué se llaman «binomiales».</b> Son los coeficientes del desarrollo del binomio: \[(a+b)^{5}=1\,a^{5}+5\,a^{4}b+10\,a^{3}b^{2}+10\,a^{2}b^{3}+5\,ab^{4}+1\,b^{5}.\] La razón: \((a+b)^{5}\) son \(5\) factores \((a+b)\) multiplicados, y cada producto se forma eligiendo una letra de cada factor. El término \(a^{3}b^{2}\) aparece una vez por cada manera de elegir los \(2\) factores (entre los \(5\)) de donde sale la \(b\): \(\dbinom{5}{2}=10\) veces. Elegir \(2\) factores entre \(5\) es lo mismo que elegir \(2\) fichas entre \(5\).</li>
+      <li><b>En general</b>, para \(a\) y \(b\) reales y \(n\) entero, \(n\ge 1\): \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)».</li>
     </ol>
   </div>
 </section>
@@ -61,9 +96,14 @@
   <h3>Ejemplo 1: \(\dbinom{5}{2}\), de las dos maneras</h3>
   <div class="body">
   <ol class="steps">
-    <li><b>Con factoriales.</b> \(\dfrac{5!}{2!\,3!}=\dfrac{120}{2\cdot 6}=10\).</li>
-    <li><b>Simplificando antes.</b> \(\dfrac{5\cdot 4\cdot 3!}{2!\cdot 3!}=\dfrac{5\cdot 4}{2}=10\). Es la forma «con orden, dividido por \(k!\)».</li>
-    <li>Son los \(10\) grupos de la animación.</li>
+    <li><b>Datos.</b> \(n=5\), \(k=2\), y entonces \(n-k=5-2=3\).</li>
+    <li><b>Primera manera, fórmula con productos:</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2!}\). Arriba van \(k=2\) números, desde \(5\) hacia abajo.</li>
+    <li><b>Numerador:</b> \(5\cdot 4=20\). <b>Denominador:</b> \(2!=2\cdot 1=2\).</li>
+    <li><b>División:</b> \(\dfrac{20}{2}=10\).</li>
+    <li><b>Segunda manera, fórmula con factoriales:</b> \(\dbinom{5}{2}=\dfrac{5!}{2!\cdot 3!}\).</li>
+    <li><b>Cada factorial:</b> \(5!=5\cdot 4\cdot 3\cdot 2\cdot 1=120\); \(2!=2\); \(3!=3\cdot 2\cdot 1=6\).</li>
+    <li><b>Denominador:</b> \(2\cdot 6=12\). <b>División:</b> \(\dfrac{120}{12}=10\).</li>
+    <li><b>Resultado.</b> Las dos maneras dan \(10\): son los \(10\) grupos de la animación. La primera es más corta, porque no calcula factoriales grandes.</li>
   </ol>
   </div>
   </div>
@@ -72,8 +112,12 @@
   <h3>Ejemplo 2: \(\dbinom{8}{3}\), sin calcular factoriales grandes</h3>
   <div class="body">
   <ol class="steps">
-    <li>Arriba van \(3\) factores que bajan desde \(8\); abajo, \(3!\): \(\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}\).</li>
-    <li>\(=\dfrac{336}{6}=56\).</li>
+    <li><b>Datos.</b> \(n=8\), \(k=3\).</li>
+    <li><b>Fórmula y reemplazo.</b> Arriba van \(k=3\) números que bajan desde \(8\); el último es \(8-3+1=6\). Abajo, \(3!\): \[\binom{8}{3}=\frac{8\cdot 7\cdot 6}{3!}\]</li>
+    <li><b>Numerador:</b> \(8\cdot 7=56\), \(56\cdot 6=336\).</li>
+    <li><b>Denominador:</b> \(3!=3\cdot 2\cdot 1=6\).</li>
+    <li><b>División:</b> \(\dfrac{336}{6}=56\).</li>
+    <li><b>Qué significa.</b> Hay \(56\) grupos de \(3\) objetos elegidos entre \(8\). Con factoriales habría que calcular \(8!=40\,320\); con esta forma no hizo falta.</li>
   </ol>
   </div>
   </div>
@@ -82,9 +126,12 @@
   <h3>Ejemplo 3: \(\dbinom{10}{8}\), usando la simetría</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\dbinom{10}{8}=\dbinom{10}{2}\), porque \(10-8=2\).</li>
-    <li>\(\dbinom{10}{2}=\dfrac{10\cdot 9}{2}=45\).</li>
-    <li>Conviene siempre usar el menor entre \(k\) y \(n-k\).</li>
+    <li><b>Datos.</b> \(n=10\), \(k=8\). Directamente habría que multiplicar \(8\) números arriba.</li>
+    <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Aquí \(n-k=10-8=2\), así que \(\dbinom{10}{8}=\dbinom{10}{2}\). Elegir los \(8\) que se llevan es lo mismo que elegir los \(2\) que se dejan.</li>
+    <li><b>Fórmula y reemplazo:</b> \(\dbinom{10}{2}=\dfrac{10\cdot 9}{2!}\).</li>
+    <li><b>Numerador:</b> \(10\cdot 9=90\). <b>Denominador:</b> \(2!=2\).</li>
+    <li><b>División:</b> \(\dfrac{90}{2}=45\). Entonces \(\dbinom{10}{8}=45\).</li>
+    <li><b>Consejo.</b> Conviene siempre trabajar con el menor entre \(k\) y \(n-k\).</li>
   </ol>
   </div>
   </div>
@@ -93,17 +140,25 @@
   <h3>Ejemplo 4: demostración de la regla de Pascal</h3>
   <div class="body">
   <ol class="steps">
-    <li>Se suman las dos fracciones: \(\dbinom{n-1}{k-1}+\dbinom{n-1}{k}=\dfrac{(n-1)!}{(k-1)!\,(n-k)!}+\dfrac{(n-1)!}{k!\,(n-k-1)!}\).</li>
-    <li>Denominador común, \(k!\,(n-k)!\). La primera fracción se amplifica por \(k\) (porque \(k!=k\,(k-1)!\)); la segunda, por \(n-k\) (porque \((n-k)!=(n-k)\,(n-k-1)!\)):
-      \[\frac{(n-1)!\;k+(n-1)!\;(n-k)}{k!\,(n-k)!}=\frac{(n-1)!\,\big(k+n-k\big)}{k!\,(n-k)!}=\frac{(n-1)!\;n}{k!\,(n-k)!}\]</li>
-    <li>Como \((n-1)!\cdot n=n!\), el resultado es \(\dfrac{n!}{k!\,(n-k)!}=\dbinom{n}{k}\).</li>
-    <li><b>Con números:</b> \(\dbinom{6}{3}=\dbinom{5}{2}+\dbinom{5}{3}=10+10=20\).</li>
+    <li><b>Qué se demuestra:</b> que \(\dbinom{n-1}{k-1}+\dbinom{n-1}{k}=\dbinom{n}{k}\) para \(1\le k\le n-1\). <b>Cómo funciona el método:</b> se escribe cada sumando con la fórmula de factoriales, se llevan los dos al mismo denominador, \(k!\,(n-k)!\), se suman y se reconoce \(\dbinom{n}{k}\).</li>
+    <li><b>Primer sumando, con la fórmula.</b> Arriba \((n-1)!\); abajo \((k-1)!\) y el factorial de la resta \((n-1)-(k-1)=n-1-k+1=n-k\): \[\binom{n-1}{k-1}=\frac{(n-1)!}{(k-1)!\,(n-k)!}\]</li>
+    <li><b>Segundo sumando, con la fórmula.</b> Abajo \(k!\) y el factorial de la resta \((n-1)-k=n-k-1\): \[\binom{n-1}{k}=\frac{(n-1)!}{k!\,(n-k-1)!}\]</li>
+    <li><b>Dos igualdades que se van a usar.</b> Un factorial es el número por el factorial anterior: \(k!=k\cdot(k-1)!\) y \((n-k)!=(n-k)\cdot(n-k-1)!\). Con números: \(4!=4\cdot 3!=4\cdot 6=24\).</li>
+    <li><b>La suma, una operación por línea:</b> \[\begin{aligned}\binom{n-1}{k-1}+\binom{n-1}{k}&=\frac{(n-1)!}{(k-1)!\,(n-k)!}+\frac{(n-1)!}{k!\,(n-k-1)!}&&\text{los dos sumandos}\\ &=\frac{k\,(n-1)!}{k\,(k-1)!\,(n-k)!}+\frac{(n-1)!}{k!\,(n-k-1)!}&&\text{la primera se amplifica por }k\\ &=\frac{k\,(n-1)!}{k!\,(n-k)!}+\frac{(n-1)!}{k!\,(n-k-1)!}&&k\,(k-1)!=k!\\ &=\frac{k\,(n-1)!}{k!\,(n-k)!}+\frac{(n-k)\,(n-1)!}{k!\,(n-k)\,(n-k-1)!}&&\text{la segunda se amplifica por }n-k\\ &=\frac{k\,(n-1)!}{k!\,(n-k)!}+\frac{(n-k)\,(n-1)!}{k!\,(n-k)!}&&(n-k)\,(n-k-1)!=(n-k)!\\ &=\frac{k\,(n-1)!+(n-k)\,(n-1)!}{k!\,(n-k)!}&&\text{mismo denominador: se suman los numeradores}\\ &=\frac{\bigl(k+n-k\bigr)\,(n-1)!}{k!\,(n-k)!}&&\text{factor común }(n-1)!\\ &=\frac{n\,(n-1)!}{k!\,(n-k)!}&&k+n-k=n\\ &=\frac{n!}{k!\,(n-k)!}&&n\,(n-1)!=n!\\ &=\binom{n}{k}&&\text{es la fórmula de }\tbinom{n}{k}\end{aligned}\] Se amplificó por \(k\) y por \(n-k\), que no son cero porque \(1\le k\le n-1\).</li>
+    <li><b>Con números</b> (\(n=6\), \(k=3\)): \(\dbinom{5}{2}+\dbinom{5}{3}=10+10=20\) (los dos valores están en la fila de \(n=5\)). Y directamente: \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3!}=\dfrac{120}{6}=20\). ✓</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Los errores más comunes.</b> Uno: creer que \(0!=0\). Vale \(1\); si no, \(\dbinom{n}{0}\) no se podría calcular. Dos: «simplificar» factoriales como si fueran números: \(\dfrac{6!}{3!}\) no es \(2!\); es \(6\cdot 5\cdot 4=120\). Tres: confundir \(\dbinom{n}{k}\) con la fracción \(\dfrac{n}{k}\).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Creer que \(0!=0\).</b> Se conviene \(0!=1\). Con \(0\) en el denominador, \(\dbinom{n}{0}=\dfrac{n!}{0!\cdot n!}\) no se podría calcular.</li>
+      <li><b>«Simplificar» factoriales como si fueran números.</b> \(\dfrac{6!}{3!}\) no es \(2!\). Se escribe \(6!=6\cdot 5\cdot 4\cdot 3!\) y se simplifica \(3!\): \(\dfrac{6\cdot 5\cdot 4\cdot 3!}{3!}=6\cdot 5\cdot 4\); \(6\cdot 5=30\), \(30\cdot 4=120\). En cambio \(2!=2\).</li>
+      <li><b>Confundir \(\dbinom{n}{k}\) con la fracción \(\dfrac{n}{k}\).</b> \(\dbinom{6}{3}=20\), pero \(\dfrac{6}{3}=2\).</li>
+      <li><b>Dividir por \(k\) en vez de por \(k!\).</b> Para \(\dbinom{6}{3}\): \(\dfrac{120}{3}=40\) está mal; lo correcto es \(\dfrac{120}{3!}=\dfrac{120}{6}=20\), porque cada grupo de tres se repite \(6\) veces, no \(3\).</li>
+      <li><b>Contar con orden cuando el orden no importa.</b> \(\{1,3\}\) y \(\{3,1\}\) son el mismo grupo.</li>
+    </ol>
   </div>
 </section>
 
@@ -111,36 +166,48 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Calcula \(\dbinom{7}{3}\).</p>
-    <details><summary>Pista</summary><div><p>Tres factores que bajan desde \(7\), dividido por \(3!\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Arriba, tres números que bajan desde \(7\). Abajo, \(3!\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{7}{3}=\dfrac{7\cdot 6\cdot 5}{3\cdot 2\cdot 1}=\dfrac{210}{6}=35\).</li>
+        <li><b>Datos.</b> \(n=7\), \(k=3\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(\dbinom{7}{3}=\dfrac{7\cdot 6\cdot 5}{3!}\). El último número de arriba es \(7-3+1=5\).</li>
+        <li><b>Numerador:</b> \(7\cdot 6=42\), \(42\cdot 5=210\).</li>
+        <li><b>Denominador:</b> \(3!=3\cdot 2\cdot 1=6\).</li>
+        <li><b>División:</b> \(\dfrac{210}{6}=35\).</li>
+        <li><b>Respuesta.</b> \(\dbinom{7}{3}=35\): hay \(35\) grupos de \(3\) objetos elegidos entre \(7\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Calcula \(\dbinom{12}{10}\).</p>
-    <details><summary>Pista</summary><div><p>Usa la simetría para trabajar con \(k=2\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Usa la simetría: \(12-10=2\). Trabaja con \(k=2\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{12}{10}=\dbinom{12}{2}\).</li>
-        <li>\(=\dfrac{12\cdot 11}{2}=66\).</li>
+        <li><b>Datos.</b> \(n=12\), \(k=10\), y \(n-k=12-10=2\).</li>
+        <li><b>Simetría:</b> \(\dbinom{12}{10}=\dbinom{12}{2}\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(\dbinom{12}{2}=\dfrac{12\cdot 11}{2!}\).</li>
+        <li><b>Numerador:</b> \(12\cdot 11=132\). <b>Denominador:</b> \(2!=2\cdot 1=2\).</li>
+        <li><b>División:</b> \(\dfrac{132}{2}=66\).</li>
+        <li><b>Respuesta.</b> \(\dbinom{12}{10}=66\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">C</span><b>De la vida cotidiana.</b> De un curso de \(8\) estudiantes hay que elegir a \(3\) para representar al colegio. ¿De cuántas maneras se puede formar el grupo?</p>
-    <details><summary>Pista</summary><div><p>El orden en que se eligen no importa: es un coeficiente binomial.</p></div></details>
+    <details><summary>Pista</summary><div><p>Elegir a «Ana, Beto y Carla» es lo mismo que elegir a «Carla, Ana y Beto»: el orden no importa. Es un coeficiente binomial.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{8}{3}=\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}=56\).</li>
-        <li>Respuesta: \(56\) grupos distintos.</li>
+        <li><b>Datos.</b> \(n=8\) estudiantes; se eligen \(k=3\); el orden no importa.</li>
+        <li><b>Con orden:</b> \(8\) opciones para el primero, \(7\) para el segundo y \(6\) para el tercero: \(8\cdot 7=56\), \(56\cdot 6=336\).</li>
+        <li><b>Repeticiones:</b> cada grupo de tres quedó contado \(3!=3\cdot 2\cdot 1=6\) veces, una por cada orden.</li>
+        <li><b>División:</b> \(\dbinom{8}{3}=\dfrac{336}{6}=56\).</li>
+        <li><b>Respuesta.</b> El grupo se puede formar de \(56\) maneras distintas.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H06 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H06 · v002 · Pendiente de APR</span>
 </footer>
 </article>

@@ -12,44 +12,79 @@
       <li><b>Coeficientes binomiales</b></li>
     </ol>
     <h1>Coeficientes binomiales</h1>
-    <p class="lede">El coeficiente binomial \(\dbinom{n}{k}\), que se lee «\(n\) sobre \(k\)», cuenta de cuántas maneras se pueden elegir \(k\) objetos entre \(n\), sin importar el orden. Son los números que acompañan a cada término en el desarrollo de \((a+b)^{n}\).
-    \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!},\qquad 0\le k\le n\]</p>
+    <p class="lede">El <b>coeficiente binomial</b> es un número que responde una pregunta de conteo: <b>¿de cuántas maneras se pueden elegir \(k\) objetos entre \(n\), cuando el orden no importa?</b> Se escribe \(\dbinom{n}{k}\) y se lee «\(n\) sobre \(k\)» (no es una fracción: no lleva raya). Aquí \(n\) y \(k\) son enteros con \(0\le k\le n\). Un conjunto de objetos elegidos, sin orden, se llama <b>grupo</b> y se escribe entre llaves: \(\{1,2\}\) es el grupo formado por los objetos 1 y 2, y es el mismo que \(\{2,1\}\). Se llama «binomial» porque estos números son los coeficientes del desarrollo del binomio \((a+b)^{n}\).</p>
+    <p class="lede"><b>De dónde sale la cuenta: tres casos, listados completos.</b> Los objetos se numeran \(1,\ 2,\ 3,\ldots\) Primero se elige <b>con orden</b> (un objeto tras otro) y se escribe cada elección entre paréntesis; después se ve cuántas veces quedó escrito cada grupo.
+    \[\begin{aligned}&\textbf{Elegir 2 entre 3.}\ \text{Con orden: 3 opciones para el primero y 2 para el segundo, }3\cdot 2=6:\\ &\qquad(1,2)\quad(1,3)\quad(2,1)\quad(2,3)\quad(3,1)\quad(3,2)\\ &\qquad\text{cada grupo está 2 veces, como }(1,2)\text{ y }(2,1).\ \text{Grupos: }\tfrac{6}{2}=3:\quad\{1,2\}\quad\{1,3\}\quad\{2,3\}\\[4pt] &\textbf{Elegir 2 entre 4.}\ \text{Con orden: }4\cdot 3=12.\ \text{Cada grupo está 2 veces. Grupos: }\tfrac{12}{2}=6:\\ &\qquad\{1,2\}\quad\{1,3\}\quad\{1,4\}\quad\{2,3\}\quad\{2,4\}\quad\{3,4\}\\[4pt] &\textbf{Elegir 3 entre 4.}\ \text{Con orden: }4\cdot 3\cdot 2=12\cdot 2=24.\\ &\qquad\text{cada grupo está 6 veces: }\{1,2,3\}\text{ sale de }(1,2,3),\,(1,3,2),\,(2,1,3),\,(2,3,1),\,(3,1,2),\,(3,2,1)\\ &\qquad\text{Grupos: }\tfrac{24}{6}=4:\quad\{1,2,3\}\quad\{1,2,4\}\quad\{1,3,4\}\quad\{2,3,4\}\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> En los tres casos se hizo lo mismo. <b>Arriba</b> va un producto de \(k\) números que parten en \(n\) y bajan de uno en uno (\(3\cdot 2\); \(4\cdot 3\); \(4\cdot 3\cdot 2\)): son las elecciones con orden. <b>Abajo</b> va el número de maneras de ordenar \(k\) objetos (\(2\cdot 1=2\) para dos objetos; \(3\cdot 2\cdot 1=6\) para tres): son las veces que se repite cada grupo. Ese producto «desde \(k\) hacia abajo hasta \(1\)» se llama <b>factorial de \(k\)</b>, se escribe \(k!\) y se lee «\(k\) factorial».</p>
+    <p class="lede"><b>La fórmula.</b> Para \(1\le k\le n\): \[\binom{n}{k}=\frac{\overbrace{n\,(n-1)\cdots(n-k+1)}^{k\text{ números}}}{k!}=\frac{n!}{k!\,(n-k)!}\] La segunda forma, con factoriales, es la misma cuenta escrita de otra manera; cómo se pasa de una a otra está más abajo, línea por línea. Para \(k=0\) se pone \(\dbinom{n}{0}=1\) (hay una sola manera de no elegir nada), y la forma con factoriales también da \(1\) con la convención \(0!=1\). <b>Comprobación</b> con el segundo caso (\(n=4\), \(k=2\)): \(4!=4\cdot 3\cdot 2\cdot 1=24\), \(2!=2\), \((4-2)!=2!=2\), \(2\cdot 2=4\) y \(\dfrac{24}{4}=6\). Son los \(6\) grupos listados. ✓</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Todos los grupos de \(2\) fichas que se pueden formar con \(5\) fichas, uno por uno. Después cambia \(k\) con el deslizador.</p>
+  <p>Elegir \(2\) fichas entre \(5\), en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira arriba:</b> las cinco <b>fichas</b>, numeradas del \(1\) al \(5\) (\(n=5\)). Se van a elegir dos (\(k=2\)). Arriba queda la pregunta: \(\dbinom{5}{2}=\ ?\), es decir, ¿cuántos grupos de \(2\) fichas hay?</li>
+    <li><b>Paso 2, mira la tabla:</b> cada paréntesis es una <b>elección con orden</b>: el primer número es la primera ficha que se saca y el segundo, la segunda. Hay \(5\) filas (una por cada primera ficha) y \(4\) pares en cada fila (las fichas que quedan): \(5\cdot 4=20\) pares.</li>
+    <li><b>Paso 3, mira el recuadro burdeo:</b> encierra los pares \((1,2)\) y \((2,1)\). Tienen las mismas fichas: son el mismo <b>grupo</b>, \(\{1,2\}\), escrito \(2\) veces. Lo mismo pasa con todos los grupos.</li>
+    <li><b>Pasos 4 y 5:</b> se tacha con una cruz (×) y fondo gris la <b>repetición</b> de cada grupo (el par que tiene primero la ficha mayor). Quedan \(10\) pares, con fondo azul; debajo se escriben como grupos, entre llaves: son los \(10\) grupos.</li>
+    <li><b>Pasos 6 y 7, vuelve arriba:</b> junto a la pregunta se escribe la respuesta, \(\dfrac{5\cdot 4}{2!}=10\), y la misma cuenta con <b>factoriales</b>, \(\dfrac{5!}{2!\,3!}\). Lee después el registro «Paso a paso» y la cuenta de abajo, línea por línea. Conclusión: el coeficiente binomial es «elecciones con orden, dividido por las veces que se repite cada grupo».</li>
+  </ol>
   <div class="stage" data-scene="bn-combinar"></div>
   <ul class="keys">
-    <li><b>Fichas naranjas:</b> las elegidas en el grupo que se está formando.</li>
-    <li><b>Lista azul:</b> los grupos ya formados. El orden dentro de un grupo no importa: \(\{1,\,3\}\) y \(\{3,\,1\}\) son el mismo.</li>
-    <li><b>Bajo el dibujo:</b> la cuenta. Primero se cuentan las elecciones con orden; después se divide por las veces que cada grupo quedó repetido.</li>
-    <li><b>Deslizador \(k\):</b> cuántas fichas se eligen, de \(0\) a \(5\).</li>
+    <li><b>Círculos de arriba:</b> las \(5\) fichas.</li>
+    <li><b>Paréntesis de la tabla:</b> las \(20\) elecciones con orden (primera ficha, segunda ficha).</li>
+    <li><b>Recuadro burdeo:</b> dos pares que son el mismo grupo.</li>
+    <li><b>Cruz (×) y fondo gris:</b> el par está tachado, porque es la repetición de un grupo que ya está contado. No se borra: queda a la vista.</li>
+    <li><b>Fondo azul y llaves azules:</b> los \(10\) grupos distintos.</li>
+    <li><b>Naranjo, arriba:</b> la respuesta, junto a la pregunta.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> el conteo de los casos con \(n=3\), \(4\) y \(5\), con todos los grupos listados; el paso de la fórmula con productos a la fórmula con factoriales; la simetría; y la regla de Pascal (ejemplo 4).</li>
+      <li><b>Se usa sin demostrar:</b> el principio de multiplicación para contar (si lo primero se puede elegir de \(m\) maneras y, por cada una, lo segundo de \(p\) maneras, hay \(m\cdot p\) maneras de elegir ambos). Aquí se comprueba listando los \(5\cdot 4=20\) pares de la animación.</li>
+      <li><b>Se usa sin demostrar:</b> que \(k\) objetos se pueden ordenar de \(k!\) maneras, para cualquier \(k\). Sale del mismo principio de multiplicación; aquí se comprueba listando los casos \(k=2\) y \(k=3\).</li>
+      <li><b>Se usa sin demostrar:</b> que estos números son los coeficientes de \((a+b)^{n}\) para todo \(n\). La razón está en la hoja «Del producto notable al binomio de Newton» y la demostración, en «Demostración por inducción».</li>
+      <li><b>Es una convención</b> (un acuerdo, no un resultado): \(0!=1\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
-    <h3>De dónde sale la fórmula</h3>
+    <h3>De dónde sale la fórmula, paso por paso</h3>
+    <p><b>Qué se busca.</b> Una cuenta que diga cuántos grupos de \(k\) objetos se pueden formar con \(n\) objetos, sin tener que listarlos. <b>Cómo funciona el método:</b> primero se cuenta de más, eligiendo los objetos uno tras otro (con orden); después se divide por las veces que cada grupo quedó repetido.</p>
     <ol class="steps">
-      <li><b>Factorial.</b> \(n!=n\,(n-1)\,(n-2)\cdots 2\cdot 1\). Por ejemplo, \(5!=120\). Se conviene que \(0!=1\).</li>
-      <li><b>Elegir con orden.</b> Para el primer objeto hay \(n\) opciones; para el segundo, \(n-1\); así hasta el \(k\)-ésimo, con \(n-k+1\). Total: \(n\,(n-1)\cdots(n-k+1)\).</li>
-      <li><b>Quitar el orden.</b> Cada grupo de \(k\) objetos se contó una vez por cada manera de ordenarlo, que son \(k!\). Se divide:
-        \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\]</li>
-      <li><b>Forma con factoriales.</b> Se multiplica arriba y abajo por \((n-k)!\). Arriba queda \(n\,(n-1)\cdots(n-k+1)\cdot(n-k)!=n!\):
-        \[\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\]</li>
+      <li><b>El factorial.</b> El producto de los enteros desde un número hacia abajo hasta \(1\) se llama <b>factorial</b>. Se escribe con un signo de exclamación y se lee «\(k\) factorial»: \[\begin{aligned}1!&=1\\ 2!&=2\cdot 1=2\\ 3!&=3\cdot 2\cdot 1=6\\ 4!&=4\cdot 3\cdot 2\cdot 1=24\\ 5!&=5\cdot 4\cdot 3\cdot 2\cdot 1=120\\ 6!&=6\cdot 5\cdot 4\cdot 3\cdot 2\cdot 1=720\\ k!&=k\,(k-1)\,(k-2)\cdots 2\cdot 1\end{aligned}\] Cada uno sale del anterior multiplicando por el número nuevo: \(4!=4\cdot 3!=4\cdot 6=24\), \(5!=5\cdot 4!=5\cdot 24=120\), \(6!=6\cdot 5!=6\cdot 120=720\). Además se conviene que \(0!=1\).</li>
+      <li><b>Qué cuenta el factorial.</b> \(k!\) es el número de maneras de ordenar \(k\) objetos: hay \(k\) opciones para el primer lugar, \(k-1\) para el segundo, y así hasta \(1\) para el último. Con dos objetos: \((1,2)\) y \((2,1)\); son \(2!=2\). Con tres: \((1,2,3)\), \((1,3,2)\), \((2,1,3)\), \((2,3,1)\), \((3,1,2)\), \((3,2,1)\); son \(3!=6\).</li>
+      <li><b>Elegir con orden \(k\) objetos entre \(n\).</b> Para el primero hay \(n\) opciones; para el segundo quedan \(n-1\); para el tercero, \(n-2\); y así. Son \(k\) números multiplicados: \[\underbrace{n}_{1^{\circ}}\cdot\underbrace{(n-1)}_{2^{\circ}}\cdot\underbrace{(n-2)}_{3^{\circ}}\cdots\underbrace{(n-k+1)}_{k\text{-ésimo}}\] <b>Por qué el último es \(n-k+1\):</b> al primero se le resta \(0\), al segundo \(1\), al tercero \(2\); al \(k\)-ésimo se le resta \(k-1\), y \(n-(k-1)=n-k+1\). Comprobación con \(n=5\) y \(k=2\): el último es \(5-2+1=4\) y el producto es \(5\cdot 4\). Con \(n=6\) y \(k=3\): el último es \(6-3+1=4\) y el producto es \(6\cdot 5\cdot 4\).</li>
+      <li><b>Quitar el orden.</b> Cada grupo de \(k\) objetos quedó contado una vez por cada manera de ordenarlo, es decir, \(k!\) veces. Se divide por \(k!\), para \(1\le k\le n\): \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\]</li>
+      <li><b>La misma cuenta, escrita con factoriales.</b> Qué se demuestra: que \(\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}=\dfrac{n!}{k!\,(n-k)!}\). Cómo: se multiplica arriba y abajo por el mismo número, \((n-k)!\), que no es cero. \[\begin{aligned}\binom{n}{k}&=\frac{n\,(n-1)\cdots(n-k+1)}{k!}&&\text{lo que se contó}\\ &=\frac{n\,(n-1)\cdots(n-k+1)\cdot(n-k)!}{k!\cdot(n-k)!}&&\text{se amplifica por }(n-k)!\\ &=\frac{n\,(n-1)\cdots(n-k+1)\cdot(n-k)\,(n-k-1)\cdots 2\cdot 1}{k!\cdot(n-k)!}&&\text{se escribe }(n-k)!\text{ factor por factor}\\ &=\frac{n!}{k!\,(n-k)!}&&\text{arriba quedó el producto desde }n\text{ hasta }1\text{: es }n!\end{aligned}\]</li>
+      <li><b>Con números</b> (\(n=6\), \(k=3\), y entonces \(n-k=6-3=3\)), de las dos maneras: \[\begin{aligned}\binom{6}{3}&=\frac{6\cdot 5\cdot 4}{3!}&&\text{tres números arriba, desde 6 hacia abajo}\\ &=\frac{30\cdot 4}{3!}&&6\cdot 5=30\\ &=\frac{120}{3!}&&30\cdot 4=120\\ &=\frac{120}{6}&&3!=3\cdot 2\cdot 1=6\\ &=20&&120:6=20\end{aligned}\qquad\begin{aligned}\binom{6}{3}&=\frac{6!}{3!\cdot 3!}&&\text{forma con factoriales}\\ &=\frac{720}{6\cdot 6}&&6!=720,\quad 3!=6\\ &=\frac{720}{36}&&6\cdot 6=36\\ &=20&&720:36=20\end{aligned}\] Coinciden: hay \(20\) grupos de \(3\) objetos elegidos entre \(6\).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Propiedades</h3>
+    <h3>Propiedades, cada una con su porqué</h3>
     <ol class="steps">
-      <li><b>Extremos:</b> \(\dbinom{n}{0}=\dbinom{n}{n}=1\). Hay una sola manera de no elegir nada, y una sola de elegir todo.</li>
-      <li><b>Uno:</b> \(\dbinom{n}{1}=n\).</li>
-      <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Elegir cuáles \(k\) se llevan es lo mismo que elegir cuáles \(n-k\) se dejan.</li>
-      <li><b>Regla de Pascal:</b> \(\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\), para \(1\le k\le n-1\). Es la regla «cada número es la suma de los dos de arriba» del triángulo.</li>
-      <li><b>Suma de una fila:</b> \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=2^{n}\).</li>
+      <li><b>Extremos:</b> \(\dbinom{n}{0}=1\) y \(\dbinom{n}{n}=1\). <b>Por qué:</b> hay una sola manera de no elegir ningún objeto, y una sola de elegirlos todos. Con la fórmula y la convención \(0!=1\): \[\binom{n}{0}=\frac{n!}{0!\cdot n!}=\frac{n!}{1\cdot n!}=1,\qquad\binom{n}{n}=\frac{n!}{n!\cdot(n-n)!}=\frac{n!}{n!\cdot 0!}=\frac{n!}{n!\cdot 1}=1.\] Con números: \(\dbinom{5}{0}=\dfrac{120}{1\cdot 120}=\dfrac{120}{120}=1\).</li>
+      <li><b>Uno:</b> \(\dbinom{n}{1}=n\). <b>Por qué:</b> para elegir un solo objeto hay \(n\) opciones. Con la fórmula: arriba va un solo número, \(n\); abajo, \(1!=1\); y \(\dfrac{n}{1}=n\). Con números: \(\dbinom{5}{1}=\dfrac{5}{1}=5\); los grupos son \(\{1\},\ \{2\},\ \{3\},\ \{4\},\ \{5\}\).</li>
+      <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\), para \(0\le k\le n\). <b>Por qué:</b> elegir cuáles \(k\) objetos se llevan deja decidido cuáles \(n-k\) se quedan; hay tantas maneras de lo uno como de lo otro. Con la fórmula, reemplazando \(k\) por \(n-k\): \[\begin{aligned}\binom{n}{n-k}&=\frac{n!}{(n-k)!\,\bigl(n-(n-k)\bigr)!}&&\text{se reemplaza }k\text{ por }n-k\\ &=\frac{n!}{(n-k)!\,k!}&&n-(n-k)=n-n+k=k\\ &=\frac{n!}{k!\,(n-k)!}&&\text{propiedad conmutativa en el denominador}\\ &=\binom{n}{k}&&\text{es la fórmula de }\tbinom{n}{k}\end{aligned}\] Con números (\(n=5\), \(k=2\), \(n-k=3\)): \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2!}=\dfrac{20}{2}=10\) y \(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3!}=\dfrac{60}{6}=10\). ✓</li>
+      <li><b>Regla de Pascal:</b> \(\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\), para \(1\le k\le n-1\). <b>Por qué:</b> se mira un objeto fijo, por ejemplo el último. Los grupos se separan en dos clases: los que <b>lo tienen</b> (falta elegir \(k-1\) entre los otros \(n-1\)) y los que <b>no lo tienen</b> (se eligen los \(k\) entre los otros \(n-1\)). Con las fichas de la animación (\(n=5\), \(k=2\), ficha fija: la 5): \[\begin{aligned}&\text{con la ficha 5:}&&\{1,5\},\ \{2,5\},\ \{3,5\},\ \{4,5\}&&\tbinom{4}{1}=4\\ &\text{sin la ficha 5:}&&\{1,2\},\ \{1,3\},\ \{1,4\},\ \{2,3\},\ \{2,4\},\ \{3,4\}&&\tbinom{4}{2}=\tfrac{4\cdot 3}{2!}=\tfrac{12}{2}=6\\ &\text{entre las dos clases:}&&4+6=10&&\tbinom{5}{2}=10\ ✓\end{aligned}\] Es la regla «cada número es la suma de los dos de arriba» del triángulo de Pascal. La demostración con la fórmula está en el ejemplo 4.</li>
+      <li><b>Suma de una fila:</b> \(\dbinom{n}{0}+\dbinom{n}{1}+\cdots+\dbinom{n}{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}=2^{n}\). Se lee: «la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), es igual a \(2\) elevado a \(n\)». <b>Por qué:</b> la suma cuenta <b>todos</b> los grupos, de cualquier tamaño. Y un grupo se arma decidiendo, objeto por objeto, «va» o «no va»: \(2\) opciones para cada uno de los \(n\) objetos, \(2\cdot 2\cdots 2=2^{n}\) grupos. Con \(n=3\), todos los grupos: \[\begin{aligned}&\text{de 0 objetos:}&&\{\ \}&&1\\ &\text{de 1 objeto:}&&\{1\},\ \{2\},\ \{3\}&&3\\ &\text{de 2 objetos:}&&\{1,2\},\ \{1,3\},\ \{2,3\}&&3\\ &\text{de 3 objetos:}&&\{1,2,3\}&&1\end{aligned}\] \(1+3=4\), \(4+3=7\), \(7+1=8\); y \(2^{3}=2\cdot 2\cdot 2=8\). ✓</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Una fila completa: los coeficientes binomiales con \(n=5\)</h3>
+    <ol class="steps">
+      <li><b>Uno por uno</b>, con la fórmula \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\): \[\begin{aligned}\binom{5}{0}&=1&&\text{no se elige ninguno}\\ \binom{5}{1}&=\frac{5}{1!}=\frac{5}{1}=5&&\text{un número arriba}\\ \binom{5}{2}&=\frac{5\cdot 4}{2!}=\frac{20}{2}=10&&\text{dos números arriba; es el caso de la animación}\\ \binom{5}{3}&=\frac{5\cdot 4\cdot 3}{3!}=\frac{60}{6}=10&&5\cdot 4=20,\quad 20\cdot 3=60,\quad 3!=6\\ \binom{5}{4}&=\frac{5\cdot 4\cdot 3\cdot 2}{4!}=\frac{120}{24}=5&&60\cdot 2=120,\quad 4!=24\\ \binom{5}{5}&=\frac{5\cdot 4\cdot 3\cdot 2\cdot 1}{5!}=\frac{120}{120}=1&&120\cdot 1=120,\quad 5!=120\end{aligned}\]</li>
+      <li><b>La fila es</b> \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). Se lee igual de izquierda a derecha que de derecha a izquierda (simetría), y suma \(1+5=6\), \(6+10=16\), \(16+10=26\), \(26+5=31\), \(31+1=32\), que es \(2^{5}\): \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\), \(16\cdot 2=32\). ✓</li>
+      <li><b>Por qué se llaman «binomiales».</b> Son los coeficientes del desarrollo del binomio: \[(a+b)^{5}=1\,a^{5}+5\,a^{4}b+10\,a^{3}b^{2}+10\,a^{2}b^{3}+5\,ab^{4}+1\,b^{5}.\] La razón: \((a+b)^{5}\) son \(5\) factores \((a+b)\) multiplicados, y cada producto se forma eligiendo una letra de cada factor. El término \(a^{3}b^{2}\) aparece una vez por cada manera de elegir los \(2\) factores (entre los \(5\)) de donde sale la \(b\): \(\dbinom{5}{2}=10\) veces. Elegir \(2\) factores entre \(5\) es lo mismo que elegir \(2\) fichas entre \(5\).</li>
+      <li><b>En general</b>, para \(a\) y \(b\) reales y \(n\) entero, \(n\ge 1\): \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)».</li>
     </ol>
   </div>
 </section>
@@ -61,9 +96,14 @@
   <h3>Ejemplo 1: \(\dbinom{5}{2}\), de las dos maneras</h3>
   <div class="body">
   <ol class="steps">
-    <li><b>Con factoriales.</b> \(\dfrac{5!}{2!\,3!}=\dfrac{120}{2\cdot 6}=10\).</li>
-    <li><b>Simplificando antes.</b> \(\dfrac{5\cdot 4\cdot 3!}{2!\cdot 3!}=\dfrac{5\cdot 4}{2}=10\). Es la forma «con orden, dividido por \(k!\)».</li>
-    <li>Son los \(10\) grupos de la animación.</li>
+    <li><b>Datos.</b> \(n=5\), \(k=2\), y entonces \(n-k=5-2=3\).</li>
+    <li><b>Primera manera, fórmula con productos:</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2!}\). Arriba van \(k=2\) números, desde \(5\) hacia abajo.</li>
+    <li><b>Numerador:</b> \(5\cdot 4=20\). <b>Denominador:</b> \(2!=2\cdot 1=2\).</li>
+    <li><b>División:</b> \(\dfrac{20}{2}=10\).</li>
+    <li><b>Segunda manera, fórmula con factoriales:</b> \(\dbinom{5}{2}=\dfrac{5!}{2!\cdot 3!}\).</li>
+    <li><b>Cada factorial:</b> \(5!=5\cdot 4\cdot 3\cdot 2\cdot 1=120\); \(2!=2\); \(3!=3\cdot 2\cdot 1=6\).</li>
+    <li><b>Denominador:</b> \(2\cdot 6=12\). <b>División:</b> \(\dfrac{120}{12}=10\).</li>
+    <li><b>Resultado.</b> Las dos maneras dan \(10\): son los \(10\) grupos de la animación. La primera es más corta, porque no calcula factoriales grandes.</li>
   </ol>
   </div>
   </div>
@@ -72,8 +112,12 @@
   <h3>Ejemplo 2: \(\dbinom{8}{3}\), sin calcular factoriales grandes</h3>
   <div class="body">
   <ol class="steps">
-    <li>Arriba van \(3\) factores que bajan desde \(8\); abajo, \(3!\): \(\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}\).</li>
-    <li>\(=\dfrac{336}{6}=56\).</li>
+    <li><b>Datos.</b> \(n=8\), \(k=3\).</li>
+    <li><b>Fórmula y reemplazo.</b> Arriba van \(k=3\) números que bajan desde \(8\); el último es \(8-3+1=6\). Abajo, \(3!\): \[\binom{8}{3}=\frac{8\cdot 7\cdot 6}{3!}\]</li>
+    <li><b>Numerador:</b> \(8\cdot 7=56\), \(56\cdot 6=336\).</li>
+    <li><b>Denominador:</b> \(3!=3\cdot 2\cdot 1=6\).</li>
+    <li><b>División:</b> \(\dfrac{336}{6}=56\).</li>
+    <li><b>Qué significa.</b> Hay \(56\) grupos de \(3\) objetos elegidos entre \(8\). Con factoriales habría que calcular \(8!=40\,320\); con esta forma no hizo falta.</li>
   </ol>
   </div>
   </div>
@@ -82,9 +126,12 @@
   <h3>Ejemplo 3: \(\dbinom{10}{8}\), usando la simetría</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\dbinom{10}{8}=\dbinom{10}{2}\), porque \(10-8=2\).</li>
-    <li>\(\dbinom{10}{2}=\dfrac{10\cdot 9}{2}=45\).</li>
-    <li>Conviene siempre usar el menor entre \(k\) y \(n-k\).</li>
+    <li><b>Datos.</b> \(n=10\), \(k=8\). Directamente habría que multiplicar \(8\) números arriba.</li>
+    <li><b>Simetría:</b> \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Aquí \(n-k=10-8=2\), así que \(\dbinom{10}{8}=\dbinom{10}{2}\). Elegir los \(8\) que se llevan es lo mismo que elegir los \(2\) que se dejan.</li>
+    <li><b>Fórmula y reemplazo:</b> \(\dbinom{10}{2}=\dfrac{10\cdot 9}{2!}\).</li>
+    <li><b>Numerador:</b> \(10\cdot 9=90\). <b>Denominador:</b> \(2!=2\).</li>
+    <li><b>División:</b> \(\dfrac{90}{2}=45\). Entonces \(\dbinom{10}{8}=45\).</li>
+    <li><b>Consejo.</b> Conviene siempre trabajar con el menor entre \(k\) y \(n-k\).</li>
   </ol>
   </div>
   </div>
@@ -93,17 +140,25 @@
   <h3>Ejemplo 4: demostración de la regla de Pascal</h3>
   <div class="body">
   <ol class="steps">
-    <li>Se suman las dos fracciones: \(\dbinom{n-1}{k-1}+\dbinom{n-1}{k}=\dfrac{(n-1)!}{(k-1)!\,(n-k)!}+\dfrac{(n-1)!}{k!\,(n-k-1)!}\).</li>
-    <li>Denominador común, \(k!\,(n-k)!\). La primera fracción se amplifica por \(k\) (porque \(k!=k\,(k-1)!\)); la segunda, por \(n-k\) (porque \((n-k)!=(n-k)\,(n-k-1)!\)):
-      \[\frac{(n-1)!\;k+(n-1)!\;(n-k)}{k!\,(n-k)!}=\frac{(n-1)!\,\big(k+n-k\big)}{k!\,(n-k)!}=\frac{(n-1)!\;n}{k!\,(n-k)!}\]</li>
-    <li>Como \((n-1)!\cdot n=n!\), el resultado es \(\dfrac{n!}{k!\,(n-k)!}=\dbinom{n}{k}\).</li>
-    <li><b>Con números:</b> \(\dbinom{6}{3}=\dbinom{5}{2}+\dbinom{5}{3}=10+10=20\).</li>
+    <li><b>Qué se demuestra:</b> que \(\dbinom{n-1}{k-1}+\dbinom{n-1}{k}=\dbinom{n}{k}\) para \(1\le k\le n-1\). <b>Cómo funciona el método:</b> se escribe cada sumando con la fórmula de factoriales, se llevan los dos al mismo denominador, \(k!\,(n-k)!\), se suman y se reconoce \(\dbinom{n}{k}\).</li>
+    <li><b>Primer sumando, con la fórmula.</b> Arriba \((n-1)!\); abajo \((k-1)!\) y el factorial de la resta \((n-1)-(k-1)=n-1-k+1=n-k\): \[\binom{n-1}{k-1}=\frac{(n-1)!}{(k-1)!\,(n-k)!}\]</li>
+    <li><b>Segundo sumando, con la fórmula.</b> Abajo \(k!\) y el factorial de la resta \((n-1)-k=n-k-1\): \[\binom{n-1}{k}=\frac{(n-1)!}{k!\,(n-k-1)!}\]</li>
+    <li><b>Dos igualdades que se van a usar.</b> Un factorial es el número por el factorial anterior: \(k!=k\cdot(k-1)!\) y \((n-k)!=(n-k)\cdot(n-k-1)!\). Con números: \(4!=4\cdot 3!=4\cdot 6=24\).</li>
+    <li><b>La suma, una operación por línea:</b> \[\begin{aligned}\binom{n-1}{k-1}+\binom{n-1}{k}&=\frac{(n-1)!}{(k-1)!\,(n-k)!}+\frac{(n-1)!}{k!\,(n-k-1)!}&&\text{los dos sumandos}\\ &=\frac{k\,(n-1)!}{k\,(k-1)!\,(n-k)!}+\frac{(n-1)!}{k!\,(n-k-1)!}&&\text{la primera se amplifica por }k\\ &=\frac{k\,(n-1)!}{k!\,(n-k)!}+\frac{(n-1)!}{k!\,(n-k-1)!}&&k\,(k-1)!=k!\\ &=\frac{k\,(n-1)!}{k!\,(n-k)!}+\frac{(n-k)\,(n-1)!}{k!\,(n-k)\,(n-k-1)!}&&\text{la segunda se amplifica por }n-k\\ &=\frac{k\,(n-1)!}{k!\,(n-k)!}+\frac{(n-k)\,(n-1)!}{k!\,(n-k)!}&&(n-k)\,(n-k-1)!=(n-k)!\\ &=\frac{k\,(n-1)!+(n-k)\,(n-1)!}{k!\,(n-k)!}&&\text{mismo denominador: se suman los numeradores}\\ &=\frac{\bigl(k+n-k\bigr)\,(n-1)!}{k!\,(n-k)!}&&\text{factor común }(n-1)!\\ &=\frac{n\,(n-1)!}{k!\,(n-k)!}&&k+n-k=n\\ &=\frac{n!}{k!\,(n-k)!}&&n\,(n-1)!=n!\\ &=\binom{n}{k}&&\text{es la fórmula de }\tbinom{n}{k}\end{aligned}\] Se amplificó por \(k\) y por \(n-k\), que no son cero porque \(1\le k\le n-1\).</li>
+    <li><b>Con números</b> (\(n=6\), \(k=3\)): \(\dbinom{5}{2}+\dbinom{5}{3}=10+10=20\) (los dos valores están en la fila de \(n=5\)). Y directamente: \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3!}=\dfrac{120}{6}=20\). ✓</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Los errores más comunes.</b> Uno: creer que \(0!=0\). Vale \(1\); si no, \(\dbinom{n}{0}\) no se podría calcular. Dos: «simplificar» factoriales como si fueran números: \(\dfrac{6!}{3!}\) no es \(2!\); es \(6\cdot 5\cdot 4=120\). Tres: confundir \(\dbinom{n}{k}\) con la fracción \(\dfrac{n}{k}\).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Creer que \(0!=0\).</b> Se conviene \(0!=1\). Con \(0\) en el denominador, \(\dbinom{n}{0}=\dfrac{n!}{0!\cdot n!}\) no se podría calcular.</li>
+      <li><b>«Simplificar» factoriales como si fueran números.</b> \(\dfrac{6!}{3!}\) no es \(2!\). Se escribe \(6!=6\cdot 5\cdot 4\cdot 3!\) y se simplifica \(3!\): \(\dfrac{6\cdot 5\cdot 4\cdot 3!}{3!}=6\cdot 5\cdot 4\); \(6\cdot 5=30\), \(30\cdot 4=120\). En cambio \(2!=2\).</li>
+      <li><b>Confundir \(\dbinom{n}{k}\) con la fracción \(\dfrac{n}{k}\).</b> \(\dbinom{6}{3}=20\), pero \(\dfrac{6}{3}=2\).</li>
+      <li><b>Dividir por \(k\) en vez de por \(k!\).</b> Para \(\dbinom{6}{3}\): \(\dfrac{120}{3}=40\) está mal; lo correcto es \(\dfrac{120}{3!}=\dfrac{120}{6}=20\), porque cada grupo de tres se repite \(6\) veces, no \(3\).</li>
+      <li><b>Contar con orden cuando el orden no importa.</b> \(\{1,3\}\) y \(\{3,1\}\) son el mismo grupo.</li>
+    </ol>
   </div>
 </section>
 
@@ -111,37 +166,49 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Calcula \(\dbinom{7}{3}\).</p>
-    <details><summary>Pista</summary><div><p>Tres factores que bajan desde \(7\), dividido por \(3!\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Arriba, tres números que bajan desde \(7\). Abajo, \(3!\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{7}{3}=\dfrac{7\cdot 6\cdot 5}{3\cdot 2\cdot 1}=\dfrac{210}{6}=35\).</li>
+        <li><b>Datos.</b> \(n=7\), \(k=3\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(\dbinom{7}{3}=\dfrac{7\cdot 6\cdot 5}{3!}\). El último número de arriba es \(7-3+1=5\).</li>
+        <li><b>Numerador:</b> \(7\cdot 6=42\), \(42\cdot 5=210\).</li>
+        <li><b>Denominador:</b> \(3!=3\cdot 2\cdot 1=6\).</li>
+        <li><b>División:</b> \(\dfrac{210}{6}=35\).</li>
+        <li><b>Respuesta.</b> \(\dbinom{7}{3}=35\): hay \(35\) grupos de \(3\) objetos elegidos entre \(7\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Calcula \(\dbinom{12}{10}\).</p>
-    <details><summary>Pista</summary><div><p>Usa la simetría para trabajar con \(k=2\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Usa la simetría: \(12-10=2\). Trabaja con \(k=2\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{12}{10}=\dbinom{12}{2}\).</li>
-        <li>\(=\dfrac{12\cdot 11}{2}=66\).</li>
+        <li><b>Datos.</b> \(n=12\), \(k=10\), y \(n-k=12-10=2\).</li>
+        <li><b>Simetría:</b> \(\dbinom{12}{10}=\dbinom{12}{2}\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(\dbinom{12}{2}=\dfrac{12\cdot 11}{2!}\).</li>
+        <li><b>Numerador:</b> \(12\cdot 11=132\). <b>Denominador:</b> \(2!=2\cdot 1=2\).</li>
+        <li><b>División:</b> \(\dfrac{132}{2}=66\).</li>
+        <li><b>Respuesta.</b> \(\dbinom{12}{10}=66\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">C</span><b>De la vida cotidiana.</b> De un curso de \(8\) estudiantes hay que elegir a \(3\) para representar al colegio. ¿De cuántas maneras se puede formar el grupo?</p>
-    <details><summary>Pista</summary><div><p>El orden en que se eligen no importa: es un coeficiente binomial.</p></div></details>
+    <details><summary>Pista</summary><div><p>Elegir a «Ana, Beto y Carla» es lo mismo que elegir a «Carla, Ana y Beto»: el orden no importa. Es un coeficiente binomial.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{8}{3}=\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}=56\).</li>
-        <li>Respuesta: \(56\) grupos distintos.</li>
+        <li><b>Datos.</b> \(n=8\) estudiantes; se eligen \(k=3\); el orden no importa.</li>
+        <li><b>Con orden:</b> \(8\) opciones para el primero, \(7\) para el segundo y \(6\) para el tercero: \(8\cdot 7=56\), \(56\cdot 6=336\).</li>
+        <li><b>Repeticiones:</b> cada grupo de tres quedó contado \(3!=3\cdot 2\cdot 1=6\) veces, una por cada orden.</li>
+        <li><b>División:</b> \(\dbinom{8}{3}=\dfrac{336}{6}=56\).</li>
+        <li><b>Respuesta.</b> El grupo se puede formar de \(56\) maneras distintas.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H06 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H06 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -149,6 +216,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -164,31 +251,123 @@ function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off =
     c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
     c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
   return off; }
-OA.scene('bn-combinar', (function(){
-  var N = 5;
-  function combos(k){ var out = [], cur = []; (function rec(s){ var i; if (cur.length === k){ out.push(cur.slice()); return; } for (i = s; i <= N; i++){ cur.push(i); rec(i + 1); cur.pop(); } })(1); return out; }
-  function f(n){ var r = 1, i; for (i = 2; i <= n; i++) r *= i; return r; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
   return {
-    world:{x0:-0.6, x1:8.6, y0:-4.2, y1:4.0}, aspect:8.2/9.2,
-    aria:'Cinco fichas numeradas del 1 al 5. Se forman, uno por uno, todos los grupos de 2 fichas: las fichas elegidas se pintan de naranja y cada grupo nuevo se anota en una lista. Al terminar hay 10 grupos. Bajo el dibujo se hace la cuenta: eligiendo con orden hay 5 por 4, 20 maneras, pero cada grupo se contó 2 veces, así que son 20 dividido por 2, 10.',
-    labels:[['F', '\\dbinom{n}{k}=\\dfrac{n!}{k!\\,(n-k)!}', 'C(n, k) = n! / (k! (n − k)!)', 'diff']],
-    sliders:[{id:'k', tex:'k', min:0, max:5, step:1, value:2}],
-    legend:'<span><i class="sw rise"></i> fichas elegidas en este grupo</span><span><i class="sw sec"></i> grupos ya formados</span>',
-    anim:{run:22000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = 2; v.m = Math.min(10, 1 + Math.floor(p*12.5)); v.fin = p*12.5 >= 10.8; }},
-    onInput:function(v){ v.q = null; v.m = 1e9; v.fin = true; },
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
     draw:function(S, v){
-      var k = Math.round(v.k), L = combos(k), tot = L.length, m = Math.min(tot, v.m || tot), cur = L[m - 1] || [], C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, x0, y0, ord = [], prod = 1, on;
-      for (i = 1; i <= N; i++){ on = cur.indexOf(i) >= 0; c.beginPath(); c.arc(X(1 + i), Y(3), 13, 0, 6.2832); c.fillStyle = on ? C.rise : '#fff'; c.fill(); c.strokeStyle = on ? C.rise : C.ink; c.lineWidth = 1.3; c.stroke(); c.font = '700 13px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = on ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + i, X(1 + i), Y(3)); }
-      for (i = 0; i < m; i++){ c.font = (i === m - 1 && !v.fin ? '700' : '500') + ' 12px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = i === m - 1 && !v.fin ? C.rise : C.sec; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('{' + L[i].join(', ') + '}', X(0.9 + 1.55*(i % 5)), Y(1.7) + 20*Math.floor(i/5)); }
-      for (i = 0; i < k; i++){ ord.push(N - i); prod *= N - i; }
-      x0 = X(-0.5); y0 = Y(-0.35);
-      txt('elegir k = ' + k + ' fichas de n = 5: grupo ' + m + ' de ' + tot, x0, y0, 'left', C.ink);
-      txt(k === 0 ? 'hay una sola manera: no elegir ninguna' : 'eligiendo con orden: ' + ord.join(' · ') + (k > 1 ? ' = ' + prod : '') + ' maneras', x0, y0 + 21, 'left', C.ink);
-      txt(k === 0 ? '0! = 1 (por convenio)' : 'cada grupo se contó ' + k + '! = ' + f(k) + (f(k) === 1 ? ' vez' : ' veces') + ' (sus órdenes)', x0, y0 + 42, 'left', C.ink);
-      if (v.fin) txt('C(5, ' + k + ') = ' + prod + ' / ' + f(k) + ' = ' + tot + ' grupos', x0, y0 + 63, 'left', C.tan);
-      S.lab('F', x0, y0 + 90, 0, 0, !!v.fin && v.q != null);
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
-    caption:function(v){ var k = Math.round(v.k), tot = combos(k).length; if (v.fin) return 'Hay ' + tot + ' maneras de elegir ' + k + ' fichas entre 5: ese número es el coeficiente binomial de 5 sobre ' + k + '. Cambia k con el deslizador'; return 'Se forman, uno por uno, todos los grupos de ' + k + ' fichas. El orden dentro del grupo no importa: {1, 3} y {3, 1} son el mismo'; },
-    readout:function(v){ var k = Math.round(v.k); return [['', '\\dbinom{5}{' + k + '}=\\dfrac{5!}{' + k + '!\\,' + (5 - k) + '!}=\\dfrac{120}{' + f(k) + '\\cdot ' + f(5 - k) + '}=' + bnC(5, k)]]; }
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+/* L24 H06 · coeficiente binomial: elegir 2 fichas entre 5. Con orden hay 5·4 = 20 elecciones; cada grupo quedó escrito 2! = 2 veces; 20/2 = 10 grupos */
+OA.scene('bn-combinar', (function(){
+  var N = 7, FX0 = 1.0, FDX = 1.2, YFI = -3.65, CX0 = 2.6, CDX = 1.7, RY0 = -5.45, RDY = 0.6, GX0 = 1.1, GDX = 1.95;
+  var G = [[1, 2], [1, 3], [1, 4], [1, 5], [2, 3], [2, 4], [2, 5], [3, 4], [3, 5], [4, 5]];
+  var PZ = [['Q', '\\dbinom{5}{2}=\\ ?', 'C(5, 2) = ?', 'pt'], ['F', '\\Longrightarrow\\ \\dfrac{5\\cdot 4}{2!}=10', '⟹ 5·4/2! = 10', 'diff'], ['F2', '=\\dfrac{5!}{2!\\,3!}', '= 5!/(2!·3!)', 'c-tan'],
+    ['N1', 'n=5\\text{ fichas}', 'n = 5 fichas', ''], ['K1', '\\text{se eligen }k=2', 'se eligen k = 2', 'diff'],
+    ['M', '(1,2)\\ \\text{y}\\ (2,1)\\ \\longrightarrow\\ \\{1,2\\}', '(1, 2) y (2, 1) → {1, 2}', 'c-tan'],
+    ['R1', '\\text{se eligen }k=2\\text{ fichas entre }n=5', 'se eligen k = 2 fichas entre n = 5', ''],
+    ['R2', '\\text{con orden: }5\\cdot 4=20\\text{ elecciones}', 'con orden: 5·4 = 20 elecciones', ''],
+    ['R3', '\\text{cada grupo se repite }2!=2\\cdot 1=2\\text{ veces}', 'cada grupo se repite 2! = 2·1 = 2 veces', 'c-tan'],
+    ['R4', '\\text{grupos: }\\dfrac{20}{2}=10', 'grupos: 20/2 = 10', ''],
+    ['R5', '\\dbinom{5}{2}=10\\quad\\text{(«5 sobre 2»)}', 'C(5, 2) = 10 («5 sobre 2»)', 'c-sec'],
+    ['R6', '\\dbinom{5}{2}=\\dfrac{5\\cdot 4}{2!}=\\dfrac{20}{2}=10', 'C(5, 2) = 5·4/2! = 20/2 = 10', 'diff'],
+    ['R7', '\\dbinom{5}{2}=\\dfrac{5!}{2!\\,3!}=\\dfrac{120}{12}=10', 'C(5, 2) = 5!/(2!·3!) = 120/12 = 10', 'c-tan']];
+  var TXT = [['Hay 5 fichas numeradas. Se eligen 2.', 'Un grupo: las fichas elegidas, sin orden.'],
+    ['Primero se cuenta con orden: 1ª y 2ª ficha.', 'Hay 5 filas y 4 pares en cada fila.'],
+    ['Dos pares con las mismas fichas son un grupo.', 'Cada grupo quedó escrito 2 veces.'],
+    ['Se tacha (×) la repetición de cada grupo.', 'Queda la mitad de los 20 pares: 10.'],
+    ['Cada par azul es un grupo distinto.', 'Se escriben los 10, entre llaves.'],
+    ['La respuesta se escribe junto a la pregunta:', 'pares con orden, dividido por repeticiones.'],
+    ['La misma cuenta, escrita con factoriales.', 'Da lo mismo: 10 grupos.']];
+  function seg(r, j){ var o = [], i; for (i = 1; i <= 5; i++) if (i !== r + 1) o.push(i); return o[j]; }
+  (function(){ var r, j, i;
+    for (r = 0; r < 5; r++) for (j = 0; j < 4; j++) PZ.push(['O' + r + j, '(' + (r + 1) + ',' + seg(r, j) + ')', '(' + (r + 1) + ', ' + seg(r, j) + ')', '']);
+    for (i = 0; i < 10; i++) PZ.push(['G' + i, '\\{' + G[i][0] + ',' + G[i][1] + '\\}', '{' + G[i][0] + ', ' + G[i][1] + '}', 'c-sec']); })();
+  function cl(t){ return Math.max(0, Math.min(1, t)); }
+  return {
+    world:{x0:0, x1:10, y0:-21.3, y1:0}, aspect:21.3/10,
+    aria:'Animación en siete pasos. Uno: cinco fichas numeradas del 1 al 5; se van a elegir 2 y se pregunta cuántos grupos distintos hay. Dos: se cuentan primero las elecciones con orden, primera ficha y segunda ficha, en una tabla de 5 filas con 4 pares cada una: 20 pares. Tres: los pares 1, 2 y 2, 1 tienen las mismas fichas; son el mismo grupo, y cada grupo quedó escrito 2 veces. Cuatro: se tacha con una cruz, sobre fondo gris, la repetición de cada grupo y quedan 10 pares con fondo azul. Cinco: se escriben los 10 grupos entre llaves. Seis: junto a la pregunta se escribe la respuesta: 5 por 4, dividido por 2 factorial, igual a 10. Siete: la misma cuenta con factoriales: 5 factorial dividido por 2 factorial por 3 factorial, 120 dividido por 12, igual a 10. Bajo la figura, un registro numerado guarda la expresión de cada paso, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> par que se conserva: un grupo</span><span><i class="sw tan"></i> el mismo grupo, escrito dos veces</span><span><i class="sw rise"></i> la respuesta</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b';
+      var r, j, i, a, pr, x, y, rep, n4, yA, yB;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; después queda */
+      function tx(t, x, y, al, col, size, alpha, bold){ if (alpha <= 0) return; c.globalAlpha = alpha; c.font = (bold || '600') + ' ' + size + 'px ' + F; c.fillStyle = col; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      function cx(j){ return CX0 + CDX*j; }
+      function ry(r){ return RY0 - RDY*r; }
+      /* paso 1: las cinco fichas y la pregunta */
+      for (i = 0; i < 5; i++){ a = k > 1 ? 1 : cl(u*3 - i*0.4); if (a <= 0) continue; c.globalAlpha = a; c.beginPath(); c.arc(X(FX0 + FDX*i), Y(YFI), 12, 0, 6.2832); c.fillStyle = '#fff'; c.fill(); c.strokeStyle = C.ink; c.lineWidth = 1.2; c.stroke(); c.globalAlpha = 1; tx('' + (i + 1), FX0 + FDX*i, YFI, 'center', C.ink, 13, a, '700'); }
+      tx('fichas', 0.3, YFI + 0.72, 'left', MU, 10.5, ap(1), '700');
+      L('Q', 0.3, -2.35, 0);
+      if (ap(1) > 0.6){ L('N1', 6.55, YFI + 0.3, 0); L('K1', 6.55, YFI - 0.35, 0); }
+      /* paso 4 (fondo): los pares que se conservan, en azul claro */
+      n4 = 0; a = ap(4);
+      /* paso 2: la tabla de elecciones con orden, 5 filas de 4 pares */
+      a = ap(2);
+      if (a > 0){ tx('elecciones con orden (1ª ficha, 2ª ficha):', 0.3, -4.75, 'left', MU, 11, a, '700');
+        for (r = 0; r < 5; r++){ pr = cl(a*6 - r); if (pr <= 0) continue; tx('primera: ' + (r + 1), 0.3, ry(r), 'left', MU, 10.5, pr);
+          for (j = 0; j < 4; j++){ if (cl(a*6 - r)*4 < j + 0.5) continue; rep = r + 1 > seg(r, j);
+            if (!rep && ap(4) > 0){ c.globalAlpha = 0.14*ap(4); c.fillStyle = C.sec; c.fillRect(X(cx(j) - 0.62), Y(ry(r) + 0.25), X(cx(j) + 0.62) - X(cx(j) - 0.62), Y(ry(r) - 0.25) - Y(ry(r) + 0.25)); c.globalAlpha = 1; }
+            L('O' + r + j, cx(j), ry(r)); } }
+        tx('5 filas, 4 pares en cada fila', 0.3, -8.5, 'left', C.ink, 11.5, cl(a*6 - 5)); }
+      /* paso 3: (1,2) y (2,1) son el mismo grupo */
+      a = ap(3);
+      if (a > 0){ yA = ry(0) + 0.27; yB = ry(1) - 0.27; c.strokeStyle = C.tan; c.lineWidth = 1.5; c.globalAlpha = a; c.strokeRect(X(cx(0) - 0.68), Y(yA), X(cx(0) + 0.68) - X(cx(0) - 0.68), (Y(yB) - Y(yA))*cl(a*2)); c.globalAlpha = 1;
+        tx('mismo grupo:', 0.3, -9.1, 'left', C.tan, 11.5, a, '700'); if (a > 0.5) L('M', 2.75, -9.1, 0); }
+      /* paso 4: se tacha la repetición de cada grupo */
+      a = ap(4);
+      if (a > 0){ i = 0; for (r = 0; r < 5; r++) for (j = 0; j < 4; j++){ if (r + 1 < seg(r, j)) continue; pr = cl(a*10 - i*0.9); i++; if (pr <= 0) continue;
+          c.globalAlpha = 0.10*pr; c.fillStyle = '#000'; c.fillRect(X(cx(j) - 0.62), Y(ry(r) + 0.25), X(cx(j) + 0.62) - X(cx(j) - 0.62), Y(ry(r) - 0.25) - Y(ry(r) + 0.25)); c.globalAlpha = 1; tx('×', cx(j) - 0.76, ry(r), 'center', C.ink, 12, pr, '700'); }
+        tx('tachados (×, gris): 10 repetidos. Quedan 10 (azul).', 0.3, -9.7, 'left', C.ink, 11.5, a); }
+      /* paso 5: los diez grupos, entre llaves */
+      a = ap(5);
+      if (a > 0){ tx('los grupos, sin orden (uno por cada par azul):', 0.3, -10.35, 'left', C.sec, 11, a, '700');
+        for (i = 0; i < 10; i++){ pr = cl(a*10 - i*0.9); if (pr > 0.4) L('G' + i, GX0 + GDX*(i % 5), -10.95 - 0.6*Math.floor(i/5)); } }
+      /* pasos 6 y 7: la respuesta, junto a la pregunta */
+      if (ap(6) > 0.5) L('F', 2.6, -2.35, 0);
+      if (ap(7) > 0.5) L('F2', 7.05, -2.35, 0);
+      /* frase del paso y número de paso */
+      tx('paso ' + k + ' de ' + N, 9.7, -12.1, 'right', MU, 11, 1);
+      tx(TXT[k - 1][0], 0.3, -12.7, 'left', C.ink, 12.5, 1); c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(TXT[k - 1][1], X(0.3), Y(-12.7) + 19);
+      dtQue(S, 'elegir 2 fichas entre 5. Con orden hay', '20 pares; cada grupo sale 2 veces: son 10.');
+      T.fin();
+      oaReg(S, k, N, 0.3, -14.8, [0, 24, 48, 80, 116, 152, 188]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{datos: }n=5\\text{ fichas; se eligen }k=2\\\\&\\qquad\\text{pregunta: ¿cuántos grupos distintos hay?}',
+      '\\text{con orden: 5 opciones para la 1ª ficha}\\\\&\\qquad\\text{y, por cada una, 4 opciones para la 2ª}\\\\&\\qquad 5\\cdot 4=20\\text{ elecciones con orden}',
+      '(1,2)\\text{ y }(2,1)\\text{ tienen las mismas fichas:}\\\\&\\qquad\\text{son el mismo grupo, }\\{1,2\\}\\\\&\\qquad\\text{2 fichas se ordenan de }2!=2\\cdot 1=2\\text{ maneras:}\\\\&\\qquad\\text{cada grupo está escrito 2 veces}',
+      '\\text{se divide por las repeticiones:}\\\\&\\qquad\\dfrac{20}{2}=10\\text{ grupos}',
+      '\\text{grupos: }\\{1,2\\},\\{1,3\\},\\{1,4\\},\\{1,5\\},\\{2,3\\},\\\\&\\qquad\\{2,4\\},\\{2,5\\},\\{3,4\\},\\{3,5\\},\\{4,5\\}\\\\&\\qquad\\text{con la ficha menor 1, 2, 3, 4: }4,\\ 3,\\ 2,\\ 1\\\\&\\qquad 4+3=7,\\quad 7+2=9,\\quad 9+1=10',
+      '\\dbinom{5}{2}=\\dfrac{5\\cdot 4}{2!}=\\dfrac{20}{2}=10\\\\&\\qquad\\text{se lee «5 sobre 2»: es el coeficiente binomial}',
+      '\\text{con factoriales: se amplifica por }3!\\\\&\\qquad\\dfrac{5\\cdot 4}{2!}=\\dfrac{5\\cdot 4\\cdot 3!}{2!\\cdot 3!}=\\dfrac{5!}{2!\\,3!}\\\\&\\qquad 5!=120,\\quad 2!\\cdot 3!=2\\cdot 6=12\\\\&\\qquad\\dfrac{120}{12}=10\\text{ grupos}']; return dtPasos(R.slice(0, k)); }
   };
 })());

@@ -12,41 +12,78 @@
       <li><b>Desarrollo de (a − b)ⁿ: signos alternados</b></li>
     </ol>
     <h1>Desarrollo de (a − b)ⁿ: signos alternados</h1>
-    <p class="lede">Cuando el binomio es una resta, el desarrollo tiene los mismos coeficientes y las mismas potencias que el de la suma, pero con los signos alternados: \(+,\ -,\ +,\ -,\dots\)
-    \[(a-b)^{n}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}=a^{n}-\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}-\cdots\]</p>
+    <p class="lede">Un <b>binomio</b> es una expresión de dos términos. En \(a-b\) los términos están restados: \(a\) es el primer término y \(b\) es el término que se resta. <b>Desarrollar</b> \((a-b)^{n}\) es escribir esa potencia como una suma de términos, sin paréntesis. Aquí \(a\) y \(b\) son números reales cualesquiera y \(n\) es un entero, \(n\ge 1\). Esta hoja muestra que el desarrollo de la resta tiene los mismos coeficientes y las mismas letras que el de la suma, y que solo cambian los signos: van <b>alternados</b>, es decir, uno sí y uno no, \(+,\ -,\ +,\ -,\ \dots\)</p>
+    <p class="lede"><b>De dónde sale: el caso \(n=2\), producto por producto.</b> \[\begin{aligned}(a-b)^{2}&=(a-b)(a-b)&&\text{elevar al cuadrado es multiplicar dos factores iguales}\\ &=a\,(a-b)-b\,(a-b)&&\text{propiedad distributiva: cada término del primer factor por el segundo}\\ &=aa-ab-ba+bb&&\text{distributiva otra vez; }(-b)\cdot(-b)=+bb\text{: menos por menos da más}\\ &=a^{2}-ab-ab+b^{2}&&aa=a^{2},\quad ba=ab\ \text{(propiedad conmutativa)},\quad bb=b^{2}\\ &=a^{2}-2ab+b^{2}&&\text{se juntan los términos iguales: }-ab-ab=-2ab\end{aligned}\]</p>
+    <p class="lede"><b>El caso \(n=3\), producto por producto.</b> Se parte del resultado anterior y se multiplica por el tercer factor: \[\begin{aligned}(a-b)^{3}&=(a-b)^{2}\,(a-b)&&\text{el cubo es el cuadrado por un factor más}\\ &=(a^{2}-2ab+b^{2})(a-b)&&\text{se reemplaza el cuadrado, ya calculado}\\ &=a^{2}\cdot a-2ab\cdot a+b^{2}\cdot a-a^{2}\cdot b+2ab\cdot b-b^{2}\cdot b&&\text{distributiva: cada término por }a\text{ y por }-b\\ &=a^{3}-2a^{2}b+ab^{2}-a^{2}b+2ab^{2}-b^{3}&&\text{se multiplica en cada producto}\\ &=a^{3}-3a^{2}b+3ab^{2}-b^{3}&&-2a^{2}b-a^{2}b=-3a^{2}b,\quad ab^{2}+2ab^{2}=3ab^{2}\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> Se comparan con los desarrollos de la suma, que ya se conocen (hojas H01 y H02): \[\begin{aligned}(a+b)^{2}&=a^{2}+2ab+b^{2}&&(a-b)^{2}=a^{2}-2ab+b^{2}\\ (a+b)^{3}&=a^{3}+3a^{2}b+3ab^{2}+b^{3}&&(a-b)^{3}=a^{3}-3a^{2}b+3ab^{2}-b^{3}\end{aligned}\] Los <b>coeficientes</b> (los números que multiplican a las letras) son los mismos: \(1,\ 2,\ 1\) y \(1,\ 3,\ 3,\ 1\). Las letras también. Cambia solo el signo, y siempre en los mismos lugares: el término es negativo cuando el exponente de \(b\) es impar (\(b^{1}\), \(b^{3}\)) y positivo cuando es par (\(b^{0}\), es decir, sin \(b\); y \(b^{2}\)).</p>
+    <p class="lede"><b>La fórmula.</b> Para cualquier entero \(n\ge 1\) pasa lo mismo. Si \(k\) es el exponente de \(b\) en un término, el signo de ese término es el de \((-1)^{k}\): \(+\) si \(k\) es par y \(-\) si \(k\) es impar. \[(a-b)^{n}=a^{n}-\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}-\cdots+(-1)^{n}\,b^{n}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) menos \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de menos uno elevado a \(k\), por \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». El símbolo \(\dbinom{n}{k}\) se lee «\(n\) sobre \(k\)»: es el coeficiente del binomio de Newton, \(\dbinom{n}{k}=\dfrac{n!}{k!\,(n-k)!}\) (hojas H04 y H06), y es el número que está en la fila \(n\) del triángulo de Pascal (hoja H03). Por qué la fórmula vale para todo \(n\) está demostrado más abajo, en el recuadro «De dónde salen los signos».</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Los términos de \((a-b)^{5}\), uno por uno. Después cambia \(n\) con el deslizador.</p>
+  <p>El desarrollo de \((a-b)^{4}\), en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira la primera línea:</b> está la pregunta, \((a-b)^{4}=\ ?\), y a su lado la misma potencia escrita como suma: \(\big(a+(-b)\big)^{4}\). Restar \(b\) es sumar \(-b\).</li>
+    <li><b>Paso 2, mira las cinco columnas:</b> hay una por cada <b>término</b>, numeradas con \(k=0,\ 1,\ 2,\ 3,\ 4\). En cada columna, de arriba hacia abajo: el <b>coeficiente</b> (\(1,\ 4,\ 6,\ 4,\ 1\), los mismos de la suma), la <b>potencia del primer término</b> (\(a^{4}\), \(a^{3}\), …) y la <b>potencia del término que se resta</b>, con su signo adentro: \((-b)^{k}\).</li>
+    <li><b>Paso 3, mira bajo cada \((-b)^{k}\):</b> aparece su valor (\(1\), \(-b\), \(+b^{2}\), \(-b^{3}\), \(+b^{4}\)) y, debajo, una rayita burdeo por cada signo menos que se multiplica. Un corchete azul junta las rayitas de a pares: cada par de signos menos da un signo más. Si sobra una rayita sin pareja, la potencia es negativa.</li>
+    <li><b>Pasos 4 y 5, mira los círculos y las barras:</b> el círculo da el <b>signo del término</b>: \(+\) (azul) si \(k\) es par, \(-\) (burdeo) si \(k\) es impar. Después cada término se dibuja como una barra con su rótulo: sube si es positivo, baja si es negativo, y su largo es el coeficiente.</li>
+    <li><b>Pasos 6 y 7:</b> bajo la pregunta se escribe el <b>desarrollo</b>, \(a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}\), y al final la <b>comprobación</b> con \(a=1\) y \(b=1\). Lee después el registro «Paso a paso» y la cuenta de abajo, línea por línea. Conclusión: la resta se desarrolla igual que la suma, con los signos alternados.</li>
+  </ol>
   <div class="stage" data-scene="bn-signos"></div>
   <ul class="keys">
-    <li><b>Barras azules, hacia arriba:</b> los términos positivos. Son los de \(k\) par.</li>
-    <li><b>Barras burdeo, hacia abajo:</b> los términos negativos. Son los de \(k\) impar.</li>
-    <li><b>El largo de cada barra</b> es el coeficiente \(\dbinom{n}{k}\), el mismo de la suma.</li>
-    <li><b>Bajo las barras:</b> \(k\) y las potencias de \(a\) y de \(b\).</li>
-    <li><b>Bajo el dibujo:</b> por qué el término sale con ese signo y, al final, el desarrollo completo.</li>
+    <li><b>Columnas:</b> una por cada término del desarrollo, desde \(k=0\) hasta \(k=4\).</li>
+    <li><b>Azul:</b> lo positivo (columnas con \(k\) par). <b>Burdeo:</b> lo negativo (columnas con \(k\) impar).</li>
+    <li><b>Rayitas burdeo:</b> los signos menos que se multiplican en \((-b)^{k}\); son \(k\). <b>Corchete azul:</b> un par de signos menos, que da más.</li>
+    <li><b>Círculos:</b> el signo de cada término.</li>
+    <li><b>Barras:</b> los términos. Hacia arriba, positivos; hacia abajo, negativos. El largo es el coeficiente.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> los desarrollos de \((a-b)^{2}\) y \((a-b)^{3}\), producto por producto; el paso de la fórmula de la suma a la fórmula de la resta; y por qué \((-1)^{k}\) vale \(1\) si \(k\) es par y \(-1\) si \(k\) es impar.</li>
+      <li><b>Se usa sin demostrar:</b> el binomio de Newton para la suma, \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\). Su origen está en la hoja H04 y su demostración por inducción, en la hoja H17.</li>
+      <li><b>Se usa sin demostrar:</b> la regla de Pascal para obtener una fila de coeficientes a partir de la anterior (hoja H03), las propiedades distributiva, conmutativa y asociativa de los números reales, y las propiedades de las potencias \((xy)^{k}=x^{k}y^{k}\), \(x^{m+p}=x^{m}x^{p}\) y \((x^{m})^{p}=x^{mp}\) para exponentes enteros no negativos.</li>
+      <li><b>Es una convención</b> (un acuerdo, no un resultado): en la fórmula, \(a^{0}=1\) y \(b^{0}=1\), también cuando la base vale \(0\); y \((-1)^{0}=1\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
     <h3>De dónde salen los signos</h3>
+    <p><b>Qué se demuestra:</b> que \((a-b)^{n}=\displaystyle\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}a^{\,n-k}b^{\,k}\) para \(a\), \(b\) reales y \(n\) entero, \(n\ge 1\). <b>Cómo funciona el método:</b> la resta se escribe como una suma; a esa suma se le aplica el binomio de Newton, que ya se conoce; y al final se separa el signo de cada potencia.</p>
     <ol class="steps">
-      <li>Restar \(b\) es sumar \(-b\): \((a-b)^{n}=\big(a+(-b)\big)^{n}\).</li>
-      <li>Se aplica el binomio de Newton con \(-b\) en el lugar de \(b\). El término \(k\) es \(\dbinom{n}{k}a^{\,n-k}(-b)^{k}\).</li>
-      <li>\((-b)^{k}=(-1)^{k}\,b^{k}\), y \((-1)^{k}\) vale \(+1\) si \(k\) es par y \(-1\) si \(k\) es impar.</li>
-      <li>Entonces el término \(k\) es \((-1)^{k}\dbinom{n}{k}a^{\,n-k}b^{\,k}\): positivo si \(k\) es par, negativo si \(k\) es impar.</li>
+      <li><b>La resta como suma.</b> Restar un número es sumar su <b>opuesto</b> (el mismo número con el signo cambiado): \(a-b=a+(-b)\). Ejemplo: \(5-2=5+(-2)=3\). Entonces \[(a-b)^{n}=\big(a+(-b)\big)^{n}.\]</li>
+      <li><b>Se aplica el binomio de Newton</b> con \(-b\) en el lugar de \(b\). La fórmula de la suma vale para cualquier par de números reales, y \(-b\) es un número real: \[\big(a+(-b)\big)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,(-b)^{k}.\] El término número \(k\) es \(\dbinom{n}{k}a^{\,n-k}(-b)^{k}\). El signo quedó guardado dentro de la potencia \((-b)^{k}\).</li>
+      <li><b>Se separa el signo.</b> \[\begin{aligned}(-b)^{k}&=\big((-1)\cdot b\big)^{k}&&-b=(-1)\cdot b\\ &=(-1)^{k}\,b^{k}&&\text{potencia de un producto: }(xy)^{k}=x^{k}y^{k}\end{aligned}\]</li>
+      <li><b>Cuánto vale \((-1)^{k}\), caso por caso.</b> Cada potencia es la anterior multiplicada por \(-1\): \[\begin{aligned}(-1)^{0}&=1&&\text{convención del exponente }0\\ (-1)^{1}&=-1&&\text{un solo factor}\\ (-1)^{2}&=(-1)\cdot(-1)=1&&\text{menos por menos da más}\\ (-1)^{3}&=(-1)^{2}\cdot(-1)=1\cdot(-1)=-1&&\text{la anterior por }-1\\ (-1)^{4}&=(-1)^{3}\cdot(-1)=(-1)\cdot(-1)=1&&\text{la anterior por }-1\\ (-1)^{5}&=(-1)^{4}\cdot(-1)=1\cdot(-1)=-1&&\text{la anterior por }-1\end{aligned}\] <b>Regularidad:</b> cada factor \(-1\) que se agrega cambia el signo. Los valores se alternan: \(1,\ -1,\ 1,\ -1,\ \dots\) Con exponente par sale \(1\); con exponente impar, \(-1\).</li>
+      <li><b>Por qué pasa siempre.</b> Un número par se escribe \(k=2m\) y uno impar, \(k=2m+1\), con \(m\) entero, \(m\ge 0\): \[\begin{aligned}(-1)^{2m}&=\big((-1)^{2}\big)^{m}=1^{m}=1&&\text{potencia de una potencia; }(-1)^{2}=1\\ (-1)^{2m+1}&=(-1)^{2m}\cdot(-1)=1\cdot(-1)=-1&&\text{un factor más; se usa la línea anterior}\end{aligned}\]</li>
+      <li><b>Conclusión.</b> Se reemplaza \((-b)^{k}=(-1)^{k}b^{k}\) en el paso 2: \[(a-b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,(-1)^{k}\,b^{k}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}a^{\,n-k}\,b^{\,k}.\] El término número \(k\) es positivo si \(k\) es par y negativo si \(k\) es impar (cuando \(a\) y \(b\) son positivos). Como \(k\) toma los valores \(0,\ 1,\ 2,\ 3,\ \dots\), que son par, impar, par, impar, …, los signos se alternan.</li>
+      <li><b>Comprobación con números</b> (\(a=5\), \(b=2\), \(n=3\)). Directo: \(5-2=3\) y \(3^{3}=3\cdot 3\cdot 3=27\). Con el desarrollo \(a^{3}-3a^{2}b+3ab^{2}-b^{3}\): \[\begin{aligned}a^{3}&=5^{3}=125\\ 3a^{2}b&=3\cdot 25\cdot 2=75\cdot 2=150\\ 3ab^{2}&=3\cdot 5\cdot 4=15\cdot 4=60\\ b^{3}&=2^{3}=8\\ 125-150&=-25,\qquad -25+60=35,\qquad 35-8=27\end{aligned}\] Coinciden: \(27\). ✓</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Lo que muestra la animación, escrito: \((a-b)^{4}\) término por término</h3>
+    <ol class="steps">
+      <li><b>Datos.</b> \(n=4\). Hay un término por cada \(k\) desde \(0\) hasta \(4\): son \(5\) términos.</li>
+      <li><b>Coeficientes.</b> Son los de la fila 4 del triángulo de Pascal. Salen de la fila 3, que es \(1,\ 3,\ 3,\ 1\) (los coeficientes del cubo): los extremos son \(1\) y cada número de adentro es la suma de los dos que tiene encima: \(1+3=4\), \(3+3=6\), \(3+1=4\). Fila 4: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
+      <li><b>Potencias de \(-b\), una por una.</b> \[\begin{aligned}(-b)^{0}&=1&&\text{exponente }0\\ (-b)^{1}&=-b&&\text{un signo menos}\\ (-b)^{2}&=(-b)(-b)=+b^{2}&&\text{dos signos menos: un par, da más}\\ (-b)^{3}&=(-b)^{2}\,(-b)=b^{2}\,(-b)=-b^{3}&&\text{tres signos menos: un par y sobra uno}\\ (-b)^{4}&=(-b)^{3}\,(-b)=(-b^{3})(-b)=+b^{4}&&\text{cuatro signos menos: dos pares}\end{aligned}\]</li>
+      <li><b>Cada término</b> es coeficiente por potencia de \(a\) por potencia de \(-b\): \[\begin{aligned}k=0:&\quad 1\cdot a^{4}\cdot 1=+a^{4}&&k\text{ par: signo }+\\ k=1:&\quad 4\cdot a^{3}\cdot(-b)=-4a^{3}b&&k\text{ impar: signo }-\\ k=2:&\quad 6\cdot a^{2}\cdot b^{2}=+6a^{2}b^{2}&&k\text{ par: signo }+\\ k=3:&\quad 4\cdot a^{1}\cdot(-b^{3})=-4ab^{3}&&k\text{ impar: signo }-\\ k=4:&\quad 1\cdot a^{0}\cdot b^{4}=+b^{4}&&k\text{ par: signo }+;\quad a^{0}=1\end{aligned}\]</li>
+      <li><b>Resultado.</b> \((a-b)^{4}=a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}\). En notación de sumatoria: \((a-b)^{4}=\displaystyle\sum_{k=0}^{4}(-1)^{k}\binom{4}{k}a^{\,4-k}b^{\,k}\).</li>
+      <li><b>Comprobación con \(a=1\) y \(b=1\).</b> Lado izquierdo: \((1-1)^{4}=0^{4}=0\). Lado derecho: todas las potencias de \(1\) valen \(1\), y queda \(1-4+6-4+1\); \(1-4=-3\), \(-3+6=3\), \(3-4=-1\), \(-1+1=0\). Coinciden. ✓</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Tres cosas que conviene recordar</h3>
+    <h3>Tres cosas que conviene recordar, y por qué</h3>
     <ol class="steps">
-      <li><b>Empieza con \(+\).</b> El primer término (\(k=0\)) es \(a^{n}\), positivo.</li>
-      <li><b>El último término</b> es \((-1)^{n}b^{n}\): positivo si \(n\) es par, negativo si \(n\) es impar.</li>
-      <li><b>La suma de los coeficientes con su signo es \(0\)</b> (para \(n\ge 1\)): al poner \(a=b=1\) queda \((1-1)^{n}=0\). Sirve de comprobación.</li>
+      <li><b>El desarrollo empieza con \(+\).</b> El primer término es el de \(k=0\). Como \(0\) es par, \((-1)^{0}=1\), y el término es \(1\cdot\dbinom{n}{0}a^{n}b^{0}=1\cdot 1\cdot a^{n}\cdot 1=a^{n}\).</li>
+      <li><b>El signo del último término depende de \(n\).</b> El último término es el de \(k=n\): \((-1)^{n}\dbinom{n}{n}a^{0}b^{n}=(-1)^{n}\cdot 1\cdot 1\cdot b^{n}=(-1)^{n}b^{n}\). Si \(n\) es par, termina en \(+b^{n}\): \((a-b)^{2}\) termina en \(+b^{2}\) y \((a-b)^{4}\), en \(+b^{4}\). Si \(n\) es impar, termina en \(-b^{n}\): \((a-b)^{3}\) termina en \(-b^{3}\).</li>
+      <li><b>Los coeficientes, sumados con su signo, dan \(0\)</b> (para \(n\ge 1\)). Por qué: se reemplaza \(a=1\) y \(b=1\) en los dos lados de la fórmula. A la izquierda queda \((1-1)^{n}=0^{n}=0\). A la derecha, todas las potencias de \(1\) valen \(1\) y quedan solo los coeficientes con su signo: \(\displaystyle\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}=0\). Con números: \[\begin{aligned}n=2:&\quad 1-2+1;&&1-2=-1,\quad -1+1=0\\ n=3:&\quad 1-3+3-1;&&1-3=-2,\quad -2+3=1,\quad 1-1=0\\ n=4:&\quad 1-4+6-4+1;&&1-4=-3,\quad -3+6=3,\quad 3-4=-1,\quad -1+1=0\end{aligned}\] Sirve de comprobación rápida: si la suma no da \(0\), hay un coeficiente o un signo equivocado. (Vale cuando los coeficientes son los de \((a-b)^{n}\) con las letras solas; si \(a\) o \(b\) traen números, como en \((x-2)^{4}\), se comprueba reemplazando un valor, como en los ejemplos.)</li>
     </ol>
   </div>
 </section>
@@ -58,9 +95,14 @@
   <h3>Ejemplo 1: \((a-b)^{5}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Coeficientes de la fila 5: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). Signos: \(+,\ -,\ +,\ -,\ +,\ -\).</li>
-    <li>\((a-b)^{5}=a^{5}-5a^{4}b+10a^{3}b^{2}-10a^{2}b^{3}+5ab^{4}-b^{5}\).</li>
-    <li><b>Comprobación:</b> \(1-5+10-10+5-1=0\).</li>
+    <li><b>Datos.</b> \(n=5\). Hay un término por cada \(k\) desde \(0\) hasta \(5\): son \(6\) términos.</li>
+    <li><b>Fórmula.</b> Término número \(k\): \((-1)^{k}\dbinom{5}{k}a^{\,5-k}b^{\,k}\).</li>
+    <li><b>Coeficientes.</b> Fila 5 del triángulo de Pascal, a partir de la fila 4, que es \(1,\ 4,\ 6,\ 4,\ 1\): \(1+4=5\), \(4+6=10\), \(6+4=10\), \(4+1=5\). Fila 5: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li><b>Signos.</b> \(k=0,\ 2,\ 4\) son pares: signo \(+\). \(k=1,\ 3,\ 5\) son impares: signo \(-\). Quedan \(+,\ -,\ +,\ -,\ +,\ -\).</li>
+    <li><b>Término por término</b> (signo, coeficiente, potencia de \(a\), potencia de \(b\)): \[\begin{aligned}k=0:&\quad +1\cdot a^{5}\cdot b^{0}=+a^{5}&&b^{0}=1\\ k=1:&\quad -5\cdot a^{4}\cdot b^{1}=-5a^{4}b\\ k=2:&\quad +10\cdot a^{3}\cdot b^{2}=+10a^{3}b^{2}\\ k=3:&\quad -10\cdot a^{2}\cdot b^{3}=-10a^{2}b^{3}\\ k=4:&\quad +5\cdot a^{1}\cdot b^{4}=+5ab^{4}\\ k=5:&\quad -1\cdot a^{0}\cdot b^{5}=-b^{5}&&a^{0}=1\end{aligned}\]</li>
+    <li><b>Resultado.</b> \((a-b)^{5}=a^{5}-5a^{4}b+10a^{3}b^{2}-10a^{2}b^{3}+5ab^{4}-b^{5}\). Como \(n=5\) es impar, el último término es negativo.</li>
+    <li><b>Comprobación 1</b> (suma de los coeficientes con su signo): \(1-5=-4\), \(-4+10=6\), \(6-10=-4\), \(-4+5=1\), \(1-1=0\). ✓</li>
+    <li><b>Comprobación 2</b> (con \(a=3\), \(b=1\)). Directo: \(3-1=2\) y \(2^{5}=32\). Con el desarrollo: \(3^{5}=243\), \(3^{4}=81\), \(3^{3}=27\), \(3^{2}=9\), y las potencias de \(1\) valen \(1\): \[\begin{aligned}&243-5\cdot 81+10\cdot 27-10\cdot 9+5\cdot 3-1\\ &=243-405+270-90+15-1&&\text{cada producto}\\ &243-405=-162,\quad -162+270=108,\quad 108-90=18,\quad 18+15=33,\quad 33-1=32\end{aligned}\] Coinciden: \(32\). ✓</li>
   </ol>
   </div>
   </div>
@@ -69,10 +111,13 @@
   <h3>Ejemplo 2: \((x-2)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Coeficientes \(1,\ 4,\ 6,\ 4,\ 1\); potencias de \(2\): \(1,\ 2,\ 4,\ 8,\ 16\); signos alternados.</li>
-    <li>\(x^{4}-4x^{3}\cdot 2+6x^{2}\cdot 4-4x\cdot 8+16\).</li>
-    <li>\((x-2)^{4}=x^{4}-8x^{3}+24x^{2}-32x+16\).</li>
-    <li><b>Comprobación con \(x=1\):</b> \((1-2)^{4}=1\) y \(1-8+24-32+16=1\).</li>
+    <li><b>Datos.</b> Se compara con \((a-b)^{n}\): \(a=x\), \(b=2\), \(n=4\). Son \(5\) términos, \(k=0\) hasta \(4\).</li>
+    <li><b>Fórmula y reemplazo.</b> Término número \(k\): \((-1)^{k}\dbinom{4}{k}x^{\,4-k}\cdot 2^{k}\).</li>
+    <li><b>Coeficientes</b> (fila 4): \(1,\ 4,\ 6,\ 4,\ 1\). <b>Signos:</b> \(+,\ -,\ +,\ -,\ +\).</li>
+    <li><b>Potencias de \(2\):</b> \(2^{0}=1\), \(2^{1}=2\), \(2^{2}=2\cdot 2=4\), \(2^{3}=4\cdot 2=8\), \(2^{4}=8\cdot 2=16\).</li>
+    <li><b>Término por término:</b> \[\begin{aligned}k=0:&\quad +1\cdot x^{4}\cdot 1=+x^{4}\\ k=1:&\quad -4\cdot x^{3}\cdot 2=-8x^{3}&&4\cdot 2=8\\ k=2:&\quad +6\cdot x^{2}\cdot 4=+24x^{2}&&6\cdot 4=24\\ k=3:&\quad -4\cdot x^{1}\cdot 8=-32x&&4\cdot 8=32\\ k=4:&\quad +1\cdot x^{0}\cdot 16=+16&&x^{0}=1\end{aligned}\]</li>
+    <li><b>Resultado.</b> \((x-2)^{4}=x^{4}-8x^{3}+24x^{2}-32x+16\).</li>
+    <li><b>Comprobación con \(x=1\).</b> Lado izquierdo: \((1-2)^{4}=(-1)^{4}=1\). Lado derecho: \(1-8+24-32+16\); \(1-8=-7\), \(-7+24=17\), \(17-32=-15\), \(-15+16=1\). Coinciden. ✓</li>
   </ol>
   </div>
   </div>
@@ -81,9 +126,13 @@
   <h3>Ejemplo 3: \((2x-y)^{3}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=2x\), \(b=y\), \(n=3\): \((2x)^{3}-3\,(2x)^{2}y+3\,(2x)\,y^{2}-y^{3}\).</li>
-    <li>\((2x-y)^{3}=8x^{3}-12x^{2}y+6xy^{2}-y^{3}\).</li>
-    <li>\(n\) es impar: el último término es negativo.</li>
+    <li><b>Datos.</b> \(a=2x\), \(b=y\), \(n=3\). Son \(4\) términos, \(k=0\) hasta \(3\).</li>
+    <li><b>Fórmula y reemplazo.</b> Término número \(k\): \((-1)^{k}\dbinom{3}{k}(2x)^{3-k}\,y^{k}\). El primer término va entre paréntesis: se eleva completo, el \(2\) y la \(x\).</li>
+    <li><b>Coeficientes</b> (fila 3): \(1,\ 3,\ 3,\ 1\). <b>Signos:</b> \(+,\ -,\ +,\ -\).</li>
+    <li><b>Potencias de \(2x\)</b> (potencia de un producto): \((2x)^{3}=2^{3}x^{3}=8x^{3}\); \((2x)^{2}=2^{2}x^{2}=4x^{2}\); \((2x)^{1}=2x\); \((2x)^{0}=1\).</li>
+    <li><b>Término por término:</b> \[\begin{aligned}k=0:&\quad +1\cdot 8x^{3}\cdot 1=+8x^{3}\\ k=1:&\quad -3\cdot 4x^{2}\cdot y=-12x^{2}y&&3\cdot 4=12\\ k=2:&\quad +3\cdot 2x\cdot y^{2}=+6xy^{2}&&3\cdot 2=6\\ k=3:&\quad -1\cdot 1\cdot y^{3}=-y^{3}\end{aligned}\]</li>
+    <li><b>Resultado.</b> \((2x-y)^{3}=8x^{3}-12x^{2}y+6xy^{2}-y^{3}\). Como \(n=3\) es impar, el último término es negativo.</li>
+    <li><b>Comprobación con \(x=1\), \(y=1\).</b> Lado izquierdo: \((2\cdot 1-1)^{3}=(2-1)^{3}=1^{3}=1\). Lado derecho: \(8-12+6-1\); \(8-12=-4\), \(-4+6=2\), \(2-1=1\). Coinciden. ✓</li>
   </ol>
   </div>
   </div>
@@ -92,15 +141,26 @@
   <h3>Ejemplo 4: cuando el negativo es el primer término, \((-a+b)^{3}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Ahora el signo va con las potencias de \(a\): \((-a)^{3}=-a^{3}\), \((-a)^{2}=a^{2}\), \((-a)^{1}=-a\).</li>
-    <li>\((-a+b)^{3}=-a^{3}+3a^{2}b-3ab^{2}+b^{3}\).</li>
-    <li>Es lo mismo que \((b-a)^{3}\) escrito al revés. La regla de fondo no cambia: el signo de cada término lo decide la potencia del término negativo.</li>
+    <li><b>Datos.</b> Ahora el signo menos está en el primer término. Se usa la fórmula de la suma con \(-a\) en el lugar de \(a\): \((-a+b)^{3}=\big((-a)+b\big)^{3}\), \(n=3\).</li>
+    <li><b>Fórmula y reemplazo.</b> Término número \(k\): \(\dbinom{3}{k}(-a)^{3-k}\,b^{k}\). El signo va ahora con las potencias de \(a\).</li>
+    <li><b>Potencias de \(-a\):</b> \[\begin{aligned}(-a)^{3}&=(-1)^{3}a^{3}=-a^{3}&&\text{exponente impar}\\ (-a)^{2}&=(-1)^{2}a^{2}=+a^{2}&&\text{exponente par}\\ (-a)^{1}&=-a&&\text{exponente impar}\\ (-a)^{0}&=1&&\text{exponente }0\end{aligned}\]</li>
+    <li><b>Término por término</b> (coeficientes \(1,\ 3,\ 3,\ 1\)): \[\begin{aligned}k=0:&\quad 1\cdot(-a^{3})\cdot 1=-a^{3}\\ k=1:&\quad 3\cdot a^{2}\cdot b=+3a^{2}b\\ k=2:&\quad 3\cdot(-a)\cdot b^{2}=-3ab^{2}\\ k=3:&\quad 1\cdot 1\cdot b^{3}=+b^{3}\end{aligned}\]</li>
+    <li><b>Resultado.</b> \((-a+b)^{3}=-a^{3}+3a^{2}b-3ab^{2}+b^{3}\). Los signos también se alternan, pero empiezan con \(-\).</li>
+    <li><b>Es lo mismo que \((b-a)^{3}\)</b>, porque \(-a+b=b-a\) (propiedad conmutativa de la suma). Con la fórmula de esta hoja, con \(b\) de primer término y \(a\) de término que se resta: \((b-a)^{3}=b^{3}-3b^{2}a+3ba^{2}-a^{3}\). Son los mismos cuatro términos, escritos en el otro orden.</li>
+    <li><b>Comprobación con \(a=1\), \(b=2\).</b> Lado izquierdo: \((-1+2)^{3}=1^{3}=1\). Lado derecho: \(-1^{3}+3\cdot 1^{2}\cdot 2-3\cdot 1\cdot 2^{2}+2^{3}=-1+6-12+8\); \(-1+6=5\), \(5-12=-7\), \(-7+8=1\). Coinciden. ✓</li>
+    <li><b>La regla de fondo no cambia:</b> el signo de cada término lo decide la potencia del término negativo: exponente par, \(+\); exponente impar, \(-\).</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Los errores más comunes.</b> Uno: poner todos los términos negativos después del primero. Los signos se alternan. Dos: escribir \(-2^{4}\) cuando se quiere \((-2)^{4}\). El primero vale \(-16\); el segundo, \(+16\).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Poner todos los términos negativos después del primero.</b> Los signos se alternan: \((a-b)^{3}=a^{3}-3a^{2}b+3ab^{2}-b^{3}\), no \(a^{3}-3a^{2}b-3ab^{2}-b^{3}\). Comprobación con \(a=5\), \(b=2\): lo correcto da \(125-150+60-8=27=3^{3}\); lo equivocado da \(125-150-60-8=-93\).</li>
+      <li><b>Escribir \(-2^{4}\) cuando se quiere \((-2)^{4}\).</b> Sin paréntesis, el exponente afecta solo al \(2\): \(-2^{4}=-(2\cdot 2\cdot 2\cdot 2)=-16\). Con paréntesis se eleva también el signo: \((-2)^{4}=(-2)(-2)(-2)(-2)=+16\).</li>
+      <li><b>Escribir \((a-b)^{2}=a^{2}-b^{2}\).</b> Falta el término del medio, \(-2ab\), y el último es positivo. Con \(a=5\), \(b=2\): \((5-2)^{2}=3^{2}=9\), pero \(5^{2}-2^{2}=25-4=21\).</li>
+      <li><b>Elevar solo la letra en un término como \(2x\).</b> \((2x)^{3}=2^{3}x^{3}=8x^{3}\), no \(2x^{3}\).</li>
+    </ol>
   </div>
 </section>
 
@@ -108,40 +168,56 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Desarrolla \((x-1)^{6}\).</p>
-    <details><summary>Pista</summary><div><p>Fila 6: \(1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\), con signos alternados.</p></div></details>
+    <details><summary>Pista</summary><div><p>\(a=x\), \(b=1\), \(n=6\). Fila 6 del triángulo de Pascal: \(1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\). Signos alternados, empezando con \(+\). Todas las potencias de \(1\) valen \(1\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\((x-1)^{6}=x^{6}-6x^{5}+15x^{4}-20x^{3}+15x^{2}-6x+1\).</li>
-        <li>Comprobación: \(1-6+15-20+15-6+1=0\), que es \((1-1)^{6}\).</li>
+        <li><b>Datos.</b> \(a=x\), \(b=1\), \(n=6\). Son \(7\) términos, \(k=0\) hasta \(6\).</li>
+        <li><b>Fórmula y reemplazo.</b> Término número \(k\): \((-1)^{k}\dbinom{6}{k}x^{\,6-k}\cdot 1^{k}\), y \(1^{k}=1\).</li>
+        <li><b>Coeficientes.</b> Fila 6, a partir de la fila 5, que es \(1,\ 5,\ 10,\ 10,\ 5,\ 1\): \(1+5=6\), \(5+10=15\), \(10+10=20\), \(10+5=15\), \(5+1=6\). Fila 6: \(1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\).</li>
+        <li><b>Signos:</b> \(+,\ -,\ +,\ -,\ +,\ -,\ +\) (positivo si \(k\) es par).</li>
+        <li><b>Término por término:</b> \[\begin{aligned}k=0:&\quad +1\cdot x^{6}=+x^{6}\\ k=1:&\quad -6\cdot x^{5}=-6x^{5}\\ k=2:&\quad +15\cdot x^{4}=+15x^{4}\\ k=3:&\quad -20\cdot x^{3}=-20x^{3}\\ k=4:&\quad +15\cdot x^{2}=+15x^{2}\\ k=5:&\quad -6\cdot x^{1}=-6x\\ k=6:&\quad +1\cdot x^{0}=+1\end{aligned}\]</li>
+        <li><b>Resultado.</b> \((x-1)^{6}=x^{6}-6x^{5}+15x^{4}-20x^{3}+15x^{2}-6x+1\). Como \(n=6\) es par, el último término es positivo.</li>
+        <li><b>Comprobación con \(x=1\).</b> Lado izquierdo: \((1-1)^{6}=0\). Lado derecho: \(1-6=-5\), \(-5+15=10\), \(10-20=-10\), \(-10+15=5\), \(5-6=-1\), \(-1+1=0\). ✓</li>
+        <li><b>Comprobación con \(x=2\).</b> Lado izquierdo: \((2-1)^{6}=1^{6}=1\). Lado derecho, con \(2^{6}=64\), \(2^{5}=32\), \(2^{4}=16\), \(2^{3}=8\), \(2^{2}=4\): \(64-6\cdot 32+15\cdot 16-20\cdot 8+15\cdot 4-6\cdot 2+1=64-192+240-160+60-12+1\); \(64-192=-128\), \(-128+240=112\), \(112-160=-48\), \(-48+60=12\), \(12-12=0\), \(0+1=1\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Desarrolla \((3-2x)^{3}\).</p>
-    <details><summary>Pista</summary><div><p>\(a=3\), \(b=2x\). Potencias de \(3\): \(27,\ 9,\ 3,\ 1\).</p></div></details>
+    <details><summary>Pista</summary><div><p>\(a=3\), \(b=2x\), \(n=3\). Coeficientes \(1,\ 3,\ 3,\ 1\). Calcula primero las potencias de \(3\) y las de \(2x\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(3^{3}-3\cdot 3^{2}\cdot 2x+3\cdot 3\cdot(2x)^{2}-(2x)^{3}\).</li>
-        <li>\((3-2x)^{3}=27-54x+36x^{2}-8x^{3}\).</li>
-        <li>Comprobación con \(x=1\): \((3-2)^{3}=1\) y \(27-54+36-8=1\).</li>
+        <li><b>Datos.</b> \(a=3\), \(b=2x\), \(n=3\). Son \(4\) términos, \(k=0\) hasta \(3\).</li>
+        <li><b>Fórmula y reemplazo.</b> Término número \(k\): \((-1)^{k}\dbinom{3}{k}\,3^{\,3-k}\,(2x)^{k}\).</li>
+        <li><b>Potencias de \(3\):</b> \(3^{3}=27\), \(3^{2}=9\), \(3^{1}=3\), \(3^{0}=1\).</li>
+        <li><b>Potencias de \(2x\):</b> \((2x)^{0}=1\), \((2x)^{1}=2x\), \((2x)^{2}=2^{2}x^{2}=4x^{2}\), \((2x)^{3}=2^{3}x^{3}=8x^{3}\).</li>
+        <li><b>Término por término</b> (coeficientes \(1,\ 3,\ 3,\ 1\); signos \(+,\ -,\ +,\ -\)): \[\begin{aligned}k=0:&\quad +1\cdot 27\cdot 1=+27\\ k=1:&\quad -3\cdot 9\cdot 2x=-54x&&3\cdot 9=27,\quad 27\cdot 2=54\\ k=2:&\quad +3\cdot 3\cdot 4x^{2}=+36x^{2}&&3\cdot 3=9,\quad 9\cdot 4=36\\ k=3:&\quad -1\cdot 1\cdot 8x^{3}=-8x^{3}\end{aligned}\]</li>
+        <li><b>Resultado.</b> \((3-2x)^{3}=27-54x+36x^{2}-8x^{3}\).</li>
+        <li><b>Comprobación con \(x=1\).</b> Lado izquierdo: \((3-2\cdot 1)^{3}=(3-2)^{3}=1^{3}=1\). Lado derecho: \(27-54+36-8\); \(27-54=-27\), \(-27+36=9\), \(9-8=1\). Coinciden. ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una tienda rebaja un producto de \(\$50\,000\) un \(10\,\%\) tres veces seguidas, cada vez sobre el precio ya rebajado. El precio final es \(50\,000\cdot(1-0{,}1)^{3}\). Desarrolla la potencia. ¿Equivale a una rebaja del \(30\,\%\)?</p>
-    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}1\), signos alternados.</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una tienda rebaja un producto de \(\$50\,000\) un \(10\,\%\) tres veces seguidas, cada vez sobre el precio ya rebajado. Rebajar un \(10\,\%\) es quedarse con \(1-0{,}1\) del precio; hacerlo tres veces es multiplicar tres veces por \(1-0{,}1\). El precio final es \(50\,000\cdot(1-0{,}1)^{3}\). Desarrolla la potencia y calcula el precio final. ¿Equivale a una sola rebaja del \(30\,\%\)?</p>
+    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}1\), \(n=3\). Coeficientes \(1,\ 3,\ 3,\ 1\), signos alternados. \(0{,}1^{2}=0{,}01\) y \(0{,}1^{3}=0{,}001\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\((1-0{,}1)^{3}=1-3\cdot 0{,}1+3\cdot 0{,}01-0{,}001=1-0{,}3+0{,}03-0{,}001=0{,}729\).</li>
-        <li>Precio final: \(50\,000\cdot 0{,}729=\$36\,450\).</li>
-        <li>No equivale al \(30\,\%\): con esa rebaja quedaría en \(\$35\,000\). La rebaja real es \(1-0{,}729=27{,}1\,\%\). Los términos \(+0{,}03\) y \(-0{,}001\) hacen la diferencia.</li>
+        <li><b>Datos.</b> Precio inicial: \(\$50\,000\). Rebaja: \(10\,\%=0{,}1\), tres veces. Potencia: \((1-0{,}1)^{3}\), con \(a=1\), \(b=0{,}1\), \(n=3\).</li>
+        <li><b>Fórmula.</b> \((a-b)^{3}=a^{3}-3a^{2}b+3ab^{2}-b^{3}\).</li>
+        <li><b>Potencias.</b> Las de \(1\) valen \(1\). Las de \(0{,}1\): \(0{,}1^{2}=0{,}1\cdot 0{,}1=0{,}01\); \(0{,}1^{3}=0{,}01\cdot 0{,}1=0{,}001\).</li>
+        <li><b>Término por término:</b> \[\begin{aligned}a^{3}&=1\\ 3a^{2}b&=3\cdot 1\cdot 0{,}1=0{,}3\\ 3ab^{2}&=3\cdot 1\cdot 0{,}01=0{,}03\\ b^{3}&=0{,}001\end{aligned}\]</li>
+        <li><b>Se suman con su signo:</b> \((1-0{,}1)^{3}=1-0{,}3+0{,}03-0{,}001\); \(1-0{,}3=0{,}7\), \(0{,}7+0{,}03=0{,}73\), \(0{,}73-0{,}001=0{,}729\).</li>
+        <li><b>Precio final:</b> \(50\,000\cdot 0{,}729=\$36\,450\).</li>
+        <li><b>Comprobación, rebaja por rebaja</b> (quedarse con el \(90\,\%\) es multiplicar por \(0{,}9\)): \(50\,000\cdot 0{,}9=45\,000\); \(45\,000\cdot 0{,}9=40\,500\); \(40\,500\cdot 0{,}9=36\,450\). ✓</li>
+        <li><b>Una sola rebaja del \(30\,\%\):</b> \(50\,000\cdot 0{,}3=15\,000\) de descuento; \(50\,000-15\,000=\$35\,000\).</li>
+        <li><b>Interpretación.</b> No equivalen: \(\$36\,450\) no es \(\$35\,000\). La rebaja real es \(1-0{,}729=0{,}271\), es decir, \(27{,}1\,\%\); en pesos, \(50\,000-36\,450=\$13\,550\). La diferencia con el \(30\,\%\) viene de los términos \(+0{,}03\) y \(-0{,}001\): cada rebaja nueva se aplica sobre un precio que ya bajó.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H08 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H08 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -149,6 +225,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -164,33 +260,133 @@ function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off =
     c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
     c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
   return off; }
-OA.scene('bn-signos', (function(){
-  function expo(n){ var s = '(a − b)' + bnSup(n) + ' = ', k; for (k = 0; k <= n; k++) s += (k === 0 ? '' : k % 2 ? ' − ' : ' + ') + bnTerm(n, k); return s; }
-  function two(s){ var t, h; if (s.length <= 48) return [s]; t = s.split(/ (?=[+−] )/); h = Math.ceil(t.length/2); return [t.slice(0, h).join(' '), '      ' + t.slice(h).join(' ')]; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
   return {
-    world:{x0:-0.9, x1:7.9, y0:-8.4, y1:3.3}, aspect:11.7/8.8,
-    aria:'Una barra por cada término del desarrollo de a menos b elevado a n. Las barras de los términos con k par suben, en azul, y llevan signo más; las de k impar bajan, en burdeo, y llevan signo menos. Los signos se alternan: más, menos, más, menos. Bajo las barras van k y las potencias de a y de b.',
-    labels:[['F', '(a-b)^{n}=\\displaystyle\\sum_{k=0}^{n}(-1)^{k}\\binom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k}', '(a − b)ⁿ = Σ (−1)ᵏ C(n, k) aⁿ⁻ᵏ bᵏ', 'diff']],
-    sliders:[{id:'n', tex:'n', min:1, max:7, step:1, value:5}],
-    legend:'<span><i class="sw sec"></i> términos positivos: \\(k\\) par</span><span><i class="sw tan"></i> términos negativos: \\(k\\) impar</span>',
-    anim:{run:22000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.n = 5; v.k = Math.min(5, Math.floor(p*7.2)); v.fin = p*7.2 >= 6; }},
-    onInput:function(v){ v.q = null; v.k = v.n; v.fin = true; },
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
     draw:function(S, v){
-      var n = Math.round(v.n || 5), k = v.k == null ? n : Math.min(n, v.k), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), mx = bnC(n, Math.floor(n/2)), off = (7 - n)/2, i, h, x, x0, y0, cf, neg, col;
-      function sm(t, px, py, cc, b){ c.font = (b ? '700 ' : '600 ') + '12px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, px, py); }
-      c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(off - 0.6), Y(0)); c.lineTo(X(off + n + 0.6), Y(0)); c.stroke();
-      for (i = 0; i <= k; i++){ cf = bnC(n, i); neg = i % 2 === 1; h = 2.4*cf/mx*(neg ? -1 : 1); x = off + i; col = neg ? C.tan : C.sec;
-        S.poly([[x - 0.3, 0], [x + 0.3, 0], [x + 0.3, h], [x - 0.3, h]], {fill:col, alpha:i === k && !v.fin ? 0.9 : 0.55});
-        sm((neg ? '−' : '+') + cf, X(x), Y(h) + (neg ? 11 : -10), col, true);
-        sm('k = ' + i, X(x), Y(-2.75) + 12, C.muted || '#6b6b6b'); sm('a' + (n - i === 1 ? '¹' : bnSup(n - i)), X(x), Y(-2.75) + 28, C.ink, true); sm('b' + (i === 1 ? '¹' : bnSup(i)), X(x), Y(-2.75) + 44, C.ink, true); }
-      x0 = X(-0.8); y0 = Y(-4.75);
-      txt('término k = ' + k + ': (−b)' + bnSup(k) + ' = (−1)' + bnSup(k) + ' b' + bnSup(k) + ' = ' + (k % 2 ? '−' : '+') + 'b' + bnSup(k), x0, y0, 'left', k % 2 ? C.tan : C.sec);
-      txt(k % 2 ? 'k impar: el término es negativo' : 'k par: el término es positivo', x0, y0 + 21, 'left', C.ink);
-      txt('término: ' + (k % 2 ? '−' : '+') + (bnTerm(n, k) || '1'), x0, y0 + 42, 'left', k % 2 ? C.tan : C.sec);
-      if (v.fin) two(expo(n)).forEach(function(l, q){ txt(l, x0, y0 + 63 + 19*q, 'left', C.ink); });
-      S.lab('F', x0, y0 + 112, 0, 0, !!v.fin && v.q != null);
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
-    caption:function(v){ var n = Math.round(v.n || 5), k = v.k == null ? n : Math.min(n, v.k); if (v.fin) return 'Los signos se alternan empezando por +. Los coeficientes son los mismos de (a + b)' + bnSup(n) + '. El último término es ' + (n % 2 ? 'negativo, porque n es impar' : 'positivo, porque n es par'); return 'Término k = ' + k + ': la potencia (−b)' + bnSup(k) + ' es ' + (k % 2 ? 'negativa, porque el exponente es impar' : 'positiva, porque el exponente es par'); },
-    readout:function(v){ var n = Math.round(v.n || 5), k = v.k == null ? n : Math.min(n, v.k); return [['', '(a-b)^{n}=\\big(a+(-b)\\big)^{n}\\qquad(-b)^{k}=(-1)^{k}\\,b^{k}'], ['d', 'k=' + k + ':\\quad(-1)^{' + k + '}\\dbinom{' + n + '}{' + k + '}a^{' + (n - k) + '}b^{' + k + '}=' + (k % 2 ? '-' : '') + bnC(n, k) + '\\,a^{' + (n - k) + '}b^{' + k + '}']]; }
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+/* L24 H08 · (a − b)⁴ = (a + (−b))⁴: los coeficientes son los de la suma; el signo de cada término lo pone la potencia (−b)ᵏ: + si k es par, − si k es impar */
+OA.scene('bn-signos', (function(){
+  var N = 7, CX = [1.5, 3.3, 5.1, 6.9, 8.7], CF = [1, 4, 6, 4, 1];
+  var YK = -4.15, YC = -5.3, YA = -6.45, YB = -7.6, YV = -8.15, YM = -8.68, YS = -9.9, Y0 = -12.2, HB = 0.8, YCH = -14.05, YT = -14.85;
+  var VT = ['=1', '=-b', '=+b^{2}', '=-b^{3}', '=+b^{4}'], VF = ['= 1', '= −b', '= +b²', '= −b³', '= +b⁴'];
+  var TT = ['+a^{4}', '-4a^{3}b', '+6a^{2}b^{2}', '-4ab^{3}', '+b^{4}'], TF = ['+a⁴', '−4a³b', '+6a²b²', '−4ab³', '+b⁴'];
+  var PZ = [['Q', '(a-b)^{4}=\\ ?', '(a − b)⁴ = ?', 'pt'], ['S1', '=\\big(a+(-b)\\big)^{4}', '= (a + (−b))⁴', ''],
+    ['F', '\\Longrightarrow\\ \\ a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}', '⟹ a⁴ − 4a³b + 6a²b² − 4ab³ + b⁴', 'diff'],
+    ['CH', '\\text{con }a=1,\\ b=1:\\quad 1-4+6-4+1=0', 'con a = 1, b = 1: 1 − 4 + 6 − 4 + 1 = 0', ''],
+    ['R1', '(a-b)^{4}=\\big(a+(-b)\\big)^{4}', '(a − b)⁴ = (a + (−b))⁴', ''],
+    ['R2', '\\text{término }k:\\ \\ \\tbinom{4}{k}\\,a^{4-k}\\,(-b)^{k},\\quad k=0,\\ 1,\\ 2,\\ 3,\\ 4', 'término k: C(4, k) a⁴⁻ᵏ (−b)ᵏ, k = 0, 1, 2, 3, 4', ''],
+    ['R3', '(-b)^{k}:\\quad 1,\\ \\ -b,\\ \\ +b^{2},\\ \\ -b^{3},\\ \\ +b^{4}', '(−b)ᵏ: 1, −b, +b², −b³, +b⁴', ''],
+    ['R4', 'k\\text{ par: signo }+\\qquad k\\text{ impar: signo }-', 'k par: signo +; k impar: signo −', 'c-tan'],
+    ['R5', '+a^{4},\\ \\ -4a^{3}b,\\ \\ +6a^{2}b^{2},\\ \\ -4ab^{3},\\ \\ +b^{4}', '+a⁴, −4a³b, +6a²b², −4ab³, +b⁴', ''],
+    ['R6', '(a-b)^{4}=a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}', '(a − b)⁴ = a⁴ − 4a³b + 6a²b² − 4ab³ + b⁴', 'diff'],
+    ['R7', '(1-1)^{4}=0\\quad\\text{y}\\quad 1-4+6-4+1=0\\ \\ \\checkmark', '(1 − 1)⁴ = 0 y 1 − 4 + 6 − 4 + 1 = 0 ✓', '']];
+  var TXT = [['Restar b es lo mismo que sumar su opuesto, −b.', 'La resta se escribe como una suma.'],
+    ['Se usa el binomio de Newton de la suma:', 'un término por cada k, con el mismo coeficiente.'],
+    ['Se calcula cada potencia del término que se resta.', 'Cada par de signos menos da un signo más.'],
+    ['El signo depende de si k es par o impar:', 'par, signo más; impar, signo menos.'],
+    ['Cada término: coeficiente por las dos potencias.', 'Barra arriba: positivo. Barra abajo: negativo.'],
+    ['Se escriben los términos seguidos, con su signo.', 'Arriba queda el desarrollo: signos alternados.'],
+    ['Comprobación: se reemplazan las letras por 1.', 'Los dos lados dan cero.']];
+  (function(){ var i;
+    for (i = 0; i < 5; i++){ PZ.push(['K' + i, 'k=' + i, 'k = ' + i, '']); PZ.push(['C' + i, '' + CF[i], '' + CF[i], '']);
+      PZ.push(['A' + i, 'a^{' + (4 - i) + '}', 'a' + bnSup(4 - i), '']); PZ.push(['B' + i, '(-b)^{' + i + '}', '(−b)' + bnSup(i), '']);
+      PZ.push(['V' + i, VT[i], VF[i], i % 2 ? 'c-tan' : 'c-sec']); PZ.push(['G' + i, i % 2 ? '-' : '+', i % 2 ? '−' : '+', i % 2 ? 'c-tan' : 'c-sec']);
+      PZ.push(['T' + i, TT[i], TF[i], i % 2 ? 'c-tan' : 'c-sec']); } })();
+  function cl(t){ return Math.max(0, Math.min(1, t)); }
+  return {
+    world:{x0:0, x1:10, y0:-21.8, y1:0}, aspect:21.8/10,
+    aria:'Animación en siete pasos sobre el desarrollo de a menos b elevado a cuatro. Uno: a menos b elevado a cuatro se escribe como a más menos b, elevado a cuatro. Dos: aparecen cinco columnas, una por cada k desde cero hasta cuatro, con el coeficiente 1, 4, 6, 4, 1, la potencia de a y la potencia de menos b. Tres: se calcula cada potencia de menos b: uno, menos b, más b al cuadrado, menos b al cubo, más b a la cuarta; bajo cada una se ven los signos menos que se multiplican, agrupados en pares. Cuatro: el signo de cada columna: más si k es par, menos si k es impar. Cinco: una barra por término; las de los términos positivos suben, en azul, y las de los negativos bajan, en burdeo; cada barra lleva su término. Seis: junto a la pregunta se escribe el desarrollo: a a la cuarta, menos 4 a al cubo b, más 6 a al cuadrado b al cuadrado, menos 4 a b al cubo, más b a la cuarta. Siete: comprobación con a igual a 1 y b igual a 1: uno menos cuatro más seis menos cuatro más uno es cero. Bajo la figura, un registro numerado guarda la expresión de cada paso, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> término positivo: \\(k\\) par</span><span><i class="sw tan"></i> término negativo: \\(k\\) impar</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b';
+      var i, j, a, pr, col, h, x, w, m, x0;
+      function ap(n){ return k > n ? 1 : (k === n ? u : 0); } /* cuánto ha aparecido lo del paso n; después queda */
+      function tx(t, x, y, al, cc, size, alpha, bold){ if (alpha <= 0) return; c.globalAlpha = alpha; c.font = (bold || '600') + ' ' + size + 'px ' + F; c.fillStyle = cc; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      /* paso 1: la pregunta y, a su lado, la resta escrita como suma del opuesto */
+      L('Q', 0.3, -2.1, 0); a = ap(1);
+      if (a > 0.45) L('S1', 3.05, -2.1, 0);
+      /* paso 2: una columna por cada k: su coeficiente, la potencia de a y la potencia de −b */
+      a = ap(2);
+      if (a > 0){
+        tx('un término por cada valor de k', 0.3, YK + 0.52, 'left', MU, 10.5, a, '700');
+        tx('coeficiente: el mismo de la suma', 0.3, YC + 0.52, 'left', MU, 10.5, cl(a*2 - 0.3), '700');
+        tx('potencia del primer término', 0.3, YA + 0.52, 'left', MU, 10.5, cl(a*2 - 0.6), '700');
+        tx('potencia del término que se resta, con su signo', 0.3, YB + 0.52, 'left', MU, 10.5, cl(a*2 - 0.9), '700');
+        for (i = 0; i < 5; i++){ pr = cl(a*5 - i*0.8); if (pr <= 0) continue;
+          c.globalAlpha = 0.07*pr; c.fillStyle = i % 2 ? C.tan : C.sec; c.fillRect(X(CX[i] - 0.8), Y(YK + 0.3), X(CX[i] + 0.8) - X(CX[i] - 0.8), Y(YM - 0.25) - Y(YK + 0.3)); c.globalAlpha = 1;
+          if (pr > 0.25) L('K' + i, CX[i], YK); if (pr > 0.5) L('C' + i, CX[i], YC); if (pr > 0.7) L('A' + i, CX[i], YA); if (pr > 0.9) L('B' + i, CX[i], YB); } }
+      /* paso 3: cuánto vale cada potencia de −b; debajo, los signos menos que se multiplican, de a pares */
+      a = ap(3);
+      for (i = 0; i < 5; i++){ pr = cl(a*5 - i*0.85); if (pr <= 0) continue; if (pr > 0.5) L('V' + i, CX[i], YV);
+        w = 9; x0 = X(CX[i]) - (i - 1)*w/2;
+        for (j = 0; j < i; j++){ m = cl(pr*i - j); if (m <= 0) continue; x = x0 + j*w; c.globalAlpha = m; c.strokeStyle = C.tan; c.lineWidth = 1.8; c.beginPath(); c.moveTo(x - 3, Y(YM)); c.lineTo(x + 3, Y(YM)); c.stroke();
+          if (j % 2 === 1){ c.strokeStyle = C.sec; c.lineWidth = 1.1; c.beginPath(); c.moveTo(x - w - 3.5, Y(YM) + 4); c.lineTo(x - w - 3.5, Y(YM) + 7); c.lineTo(x + 3.5, Y(YM) + 7); c.lineTo(x + 3.5, Y(YM) + 4); c.stroke(); }
+          c.globalAlpha = 1; }
+        if (i === 0) tx('ninguno', CX[i], YM, 'center', MU, 10, pr); }
+      /* paso 4: el signo del término */
+      a = ap(4);
+      if (a > 0){ tx('signo: más si k es par, menos si k es impar', 0.3, YS + 0.6, 'left', MU, 10.5, a, '700');
+        for (i = 0; i < 5; i++){ pr = cl(a*5 - i*0.85); if (pr <= 0) continue; col = i % 2 ? C.tan : C.sec;
+          c.globalAlpha = 0.14; c.fillStyle = col; c.beginPath(); c.arc(X(CX[i]), Y(YS), 10*pr, 0, 6.2832); c.fill(); c.globalAlpha = 1;
+          c.strokeStyle = col; c.lineWidth = 1.3; c.beginPath(); c.arc(X(CX[i]), Y(YS), 10, -1.5708, -1.5708 + 6.2832*pr); c.stroke();
+          if (pr > 0.5) L('G' + i, CX[i], YS);
+          tx(i % 2 ? 'impar' : 'par', CX[i] + 0.42, YS, 'left', col, 10, cl(pr*2 - 1)); } }
+      /* paso 5: una barra por término: sube si es positivo, baja si es negativo; su largo es el coeficiente */
+      a = ap(5);
+      if (a > 0){ tx('términos con su signo; largo de barra: coeficiente', 0.3, Y0 + 1.55, 'left', MU, 10.5, a, '700');
+        c.globalAlpha = a; c.strokeStyle = C.ink; c.lineWidth = 1.1; c.beginPath(); c.moveTo(X(0.5), Y(Y0)); c.lineTo(X(0.5 + 9.1*cl(a*3)), Y(Y0)); c.stroke(); c.globalAlpha = 1;
+        for (i = 0; i < 5; i++){ pr = cl(a*5 - i*0.85); if (pr <= 0) continue; col = i % 2 ? C.tan : C.sec; h = HB*CF[i]/6*(i % 2 ? -1 : 1)*pr;
+          S.poly([[CX[i] - 0.3, Y0], [CX[i] + 0.3, Y0], [CX[i] + 0.3, Y0 + h], [CX[i] - 0.3, Y0 + h]], {fill:col, alpha:0.6});
+          if (pr > 0.6) L('T' + i, CX[i], Y0 + HB*CF[i]/6*(i % 2 ? -1 : 1) + (i % 2 ? -0.33 : 0.33)); } }
+      /* paso 6: el desarrollo, escrito bajo la pregunta (la pregunta no se borra) */
+      if (ap(6) > 0.4) L('F', 0.3, -2.95, 0);
+      /* paso 7: comprobación con a = 1 y b = 1 */
+      if (ap(7) > 0.4) L('CH', 0.3, YCH, 0);
+      /* frase del paso y número de paso */
+      tx(TXT[k - 1][0], 0.3, YT, 'left', C.ink, 12.5, 1); c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(TXT[k - 1][1], X(0.3), Y(YT) + 19);
+      tx('paso ' + k + ' de ' + N, 9.9, -2.1, 'right', MU, 11, 1);
+      dtQue(S, 'la resta se desarrolla como la suma,', 'pero con los signos alternados: +, −, +, −, +');
+      T.fin();
+      oaReg(S, k, N, 0.3, -16.75, [0, 28, 56, 80, 104, 128, 152]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '(a-b)^{4}=\\big(a+(-b)\\big)^{4}\\quad\\text{(restar }b\\text{ es sumar }-b\\text{)}',
+      '\\text{binomio de Newton, con }-b\\text{ en el lugar de }b:\\\\&\\qquad\\text{término }k=\\tbinom{4}{k}\\,a^{4-k}\\,(-b)^{k},\\quad k=0,\\ 1,\\ 2,\\ 3,\\ 4\\\\&\\qquad\\text{coeficientes }\\tbinom{4}{k}\\text{ (fila 4): }1,\\ 4,\\ 6,\\ 4,\\ 1',
+      '\\text{potencias de }-b\\text{, una por una:}\\\\&\\qquad (-b)^{0}=1\\\\&\\qquad (-b)^{1}=-b\\\\&\\qquad (-b)^{2}=(-b)(-b)=+b^{2}\\\\&\\qquad (-b)^{3}=(-b)^{2}(-b)=b^{2}\\,(-b)=-b^{3}\\\\&\\qquad (-b)^{4}=(-b)^{3}(-b)=(-b^{3})(-b)=+b^{4}',
+      '\\text{signo }+\\text{ si }k\\text{ es par: }k=0,\\ 2,\\ 4\\\\&\\qquad\\text{signo }-\\text{ si }k\\text{ es impar: }k=1,\\ 3\\\\&\\qquad\\text{en una fórmula: }(-b)^{k}=(-1)^{k}\\,b^{k}',
+      '\\text{cada término: coeficiente}\\cdot\\text{potencia}\\cdot\\text{potencia}\\\\&\\qquad k=0:\\ \\ 1\\cdot a^{4}\\cdot 1=+a^{4}\\\\&\\qquad k=1:\\ \\ 4\\cdot a^{3}\\cdot(-b)=-4a^{3}b\\\\&\\qquad k=2:\\ \\ 6\\cdot a^{2}\\cdot b^{2}=+6a^{2}b^{2}\\\\&\\qquad k=3:\\ \\ 4\\cdot a^{1}\\cdot(-b^{3})=-4ab^{3}\\\\&\\qquad k=4:\\ \\ 1\\cdot a^{0}\\cdot b^{4}=+b^{4}\\quad(a^{0}=1)',
+      '(a-b)^{4}=a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}\\\\&\\qquad\\text{signos alternados: }+,\\ -,\\ +,\\ -,\\ +',
+      '\\text{comprobación con }a=1,\\ b=1:\\\\&\\qquad\\text{lado izquierdo: }(1-1)^{4}=0^{4}=0\\\\&\\qquad\\text{lado derecho: }1-4+6-4+1\\\\&\\qquad 1-4=-3,\\ \\ -3+6=3,\\ \\ 3-4=-1,\\ \\ -1+1=0\\ \\ \\checkmark']; return dtPasos(R.slice(0, k)); }
   };
 })());
