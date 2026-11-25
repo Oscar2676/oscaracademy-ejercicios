@@ -452,4 +452,4 @@ Las direcciones de esta tabla son las portadas, escritas de memoria: se verifica
 - No puede garantizar cero correcciones; sí obliga a que cada corrección se vuelva regla y control el mismo día.
 - La regla H3 y H4 (dibujo técnico) queda escrita con las convenciones habituales de dibujo de ingeniería; si Óscar usa otra convención para algún caso, la suya manda.
 - Faltan las cuentas de Instagram que Óscar considera rigurosas.
-- El control con «fórmulas dibujadas» requiere un navegador con acceso a internet; en una corrida sin ese acceso, la hoja no se entrega como lista: queda marcada «falta control con fórmulas».
+- El control con «fórmulas dibujadas» ya no depende de internet (resuelto el 25-nov): el taller tiene su propia copia del programa que dibuja las fórmulas (`taller/vendor/mathjax-3.2.2/`, MathJax 3.2.2, licencia Apache 2.0) y `taller/shot2.py` la usa en cada captura. Toda captura de control muestra las fórmulas como las ve el alumno. Si esa copia faltara, la hoja no se entrega como lista: queda marcada «falta control con fórmulas».
