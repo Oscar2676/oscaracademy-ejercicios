@@ -12,37 +12,44 @@
       <li><b>Límites de funciones definidas por partes</b></li>
     </ol>
     <h1>Límites de funciones definidas por partes</h1>
-    <p class="lede">Una función <b>definida por partes</b> usa una fórmula en un tramo y otra fórmula en otro. Para su límite en \(a\) solo importa qué fórmula vale <b>cerca</b> de \(a\), a cada lado. Si \(a\) es un punto donde cambia la fórmula, con \(P(x)\) a la izquierda y \(Q(x)\) a la derecha, cada límite lateral se calcula con la fórmula de su lado:
+    <p class="lede"><b>De dónde sale, con números.</b> Una función <b>definida por partes</b> (también se dice «por tramos») no tiene una sola fórmula: los números donde está definida se reparten en trozos, y en cada trozo vale una fórmula. Cada trozo, con su fórmula, es un <b>tramo</b>. El número donde termina un tramo y empieza otro es un <b>punto de corte</b> (también se le dice punto de cambio de fórmula). Ejemplo: \(f(x)=x+1\) si \(x\lt 2\), \(f(2)=1\) y \(f(x)=5-x\) si \(x\gt 2\). Su punto de corte es \(2\). Para calcular un valor, primero se mira en qué tramo cae el número: \(1{,}9\) es menor que \(2\), así que se usa \(x+1\); \(2{,}1\) es mayor que \(2\), así que se usa \(5-x\). Se calcula \(f\) en dos lugares a la izquierda de \(2\) (menores que \(2\)) y en dos a la derecha (mayores que \(2\)), cada vez más cerca. Los resultados parecen acercarse a \(3\): ese número es el candidato a límite. Al lado de cada resultado se anota su distancia al candidato, es decir, cuánto le falta para llegar a \(3\):
+    \[\begin{aligned}f(1{,}9)&=1{,}9+1=2{,}9&&\text{distancia a tres: }3-2{,}9=0{,}1\\ f(1{,}99)&=1{,}99+1=2{,}99&&\text{distancia a tres: }3-2{,}99=0{,}01\\ f(2{,}01)&=5-2{,}01=2{,}99&&\text{distancia a tres: }3-2{,}99=0{,}01\\ f(2{,}1)&=5-2{,}1=2{,}9&&\text{distancia a tres: }3-2{,}9=0{,}1\end{aligned}\]
+    Las dos primeras cuentas usan el tramo de la izquierda, \(x+1\), porque \(1{,}9\) y \(1{,}99\) son menores que \(2\). Las dos últimas usan el tramo de la derecha, \(5-x\), porque \(2{,}01\) y \(2{,}1\) son mayores que \(2\). En ninguna se usó el valor \(f(2)=1\).</p>
+    <p class="lede"><b>La regularidad.</b> La distancia de cada lugar al punto de corte es \(2-1{,}9=0{,}1\); \(2-1{,}99=0{,}01\); \(2{,}01-2=0{,}01\) y \(2{,}1-2=0{,}1\). Son las mismas cuatro distancias de la tabla: cuando \(x\) está a \(0{,}1\) de \(2\), a \(f(x)\) le falta \(0{,}1\) para \(3\); cuando \(x\) está a \(0{,}01\), le falta \(0{,}01\). Mientras más cerca de \(2\) está \(x\), más cerca de \(3\) está \(f(x)\), y eso pasa a los dos lados. Cada lado llega a \(3\) con su propia cuenta: a la izquierda, la fórmula \(x+1\) con \(x\) cerca de \(2\) da un número cerca de \(2+1=3\); a la derecha, la fórmula \(5-x\) con \(x\) cerca de \(2\) da un número cerca de \(5-2=3\). El número al que se acercan los valores de \(f\) cuando \(x\) se acerca a \(a\) con \(x\lt a\) se llama <b>límite lateral por la izquierda</b> y se escribe \(\lim_{x\to a^{-}}f(x)\). Con \(x\gt a\) es el <b>límite lateral por la derecha</b>, \(\lim_{x\to a^{+}}f(x)\). Aquí los dos laterales valen \(3\).</p>
+    <p class="lede"><b>Los laterales no siempre coinciden.</b> Otra función: \(u(x)=x\) si \(x\lt 1\) y \(u(x)=x+2\) si \(x\ge 1\). Su punto de corte es \(1\). A la izquierda: \(u(0{,}9)=0{,}9\) y \(u(0{,}99)=0{,}99\), cerca de \(1\). A la derecha: \(u(1{,}01)=1{,}01+2=3{,}01\) y \(u(1{,}1)=1{,}1+2=3{,}1\), cerca de \(3\). Los laterales son \(1\) y \(3\), dos números distintos. En la gráfica, la altura cambia de golpe al pasar por \(1\): eso es un <b>salto</b>, y su tamaño es la diferencia entre los laterales, \(3-1=2\). Con un salto no hay un solo número al que se acerquen los valores por los dos lados: la función no tiene límite en ese punto. En cambio, en la gráfica de \(f\) los dos tramos llegan a la misma altura, \(3\), pero el punto \((2, 3)\) no es de la gráfica, porque \(f(2)=1\). Ese lugar vacío se llama <b>hueco</b> y se dibuja con un círculo vacío; el valor \(f(2)=1\) se dibuja con un <b>punto lleno</b> en \((2, 1)\).</p>
+    <p class="lede"><b>La regla.</b> Si \(a\) es un punto de corte, con la fórmula \(P(x)\) en el tramo de la izquierda y la fórmula \(Q(x)\) en el tramo de la derecha, cada límite lateral se calcula con la fórmula de su lado:
     \[\lim_{x\to a^{-}}f(x)=\lim_{x\to a^{-}}P(x)\qquad\text{y}\qquad\lim_{x\to a^{+}}f(x)=\lim_{x\to a^{+}}Q(x)\]
-    Si los dos resultados existen y coinciden, ese número es el límite de \(f\) en \(a\); si son distintos, \(f\) no tiene límite en \(a\). El valor \(f(a)\) no participa.</p>
+    Se lee: «el límite de \(f\) de \(x\), cuando \(x\) tiende a \(a\) por la izquierda, es igual al límite de \(P\) de \(x\) cuando \(x\) tiende a \(a\) por la izquierda; y el límite de \(f\) de \(x\), cuando \(x\) tiende a \(a\) por la derecha, es igual al límite de \(Q\) de \(x\) cuando \(x\) tiende a \(a\) por la derecha». Después se comparan: el límite de \(f\) en \(a\) existe si y solo si los dos laterales existen y coinciden, y entonces vale ese número; si son distintos, \(f\) no tiene límite en \(a\). El valor \(f(a)\) no participa. Con la \(f\) del comienzo: por la izquierda, \(2+1=3\); por la derecha, \(5-2=3\); coinciden, y el límite de \(f\) en \(2\) es \(3\), aunque \(f(2)=1\).</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>La función de la animación es \(f(x)=x+1\) si \(x\lt 2\), \(f(2)=1\) y \(f(x)=5-x\) si \(x\gt 2\). El punto de cambio de fórmula es \(a=2\).</p>
+  <p>La función de la animación es la del encabezado: \(f(x)=x+1\) si \(x\lt 2\), \(f(2)=1\) y \(f(x)=5-x\) si \(x\gt 2\). El punto de corte es \(a=2\). El <b>tramo izquierdo</b> es el trozo de gráfica de los \(x\) menores que \(2\) (la recta \(y=x+1\)); el <b>tramo derecho</b>, el de los \(x\) mayores que \(2\) (la recta \(y=5-x\)). El <b>lateral izquierdo</b> es el límite por la izquierda y el <b>lateral derecho</b>, el límite por la derecha. La <b>altura</b> de la gráfica en un lugar \(x\) es el valor de la función en ese \(x\).</p>
   <p><b>Cómo leerla:</b></p>
   <ol class="steps">
-    <li><b>Mira primero la gráfica:</b> son dos tramos rectos que se juntan sobre \(x=2\) en un círculo vacío, a la altura \(3\), y un punto suelto a la altura \(1\), que es el valor \(f(2)=1\).</li>
-    <li><b>Pasos 2 y 3, el lado izquierdo (azul):</b> a la izquierda de \(2\) vale la fórmula \(x+1\). La flecha azul recorre ese tramo y la altura va hacia \(2+1=3\).</li>
-    <li><b>Pasos 4 y 5, el lado derecho (verde):</b> a la derecha de \(2\) vale la fórmula \(5-x\). La flecha verde recorre ese tramo y la altura va hacia \(5-2=3\).</li>
-    <li><b>Pasos 6 y 7:</b> los dos lados llegan a \(3\): ese es el límite. El punto suelto, a la altura \(1\), no se usó en ninguna cuenta. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
-    <li><b>Lee la cuenta de abajo, línea por línea:</b> los valores de \(f\) a cada lado de \(2\), cada uno con la fórmula de su tramo, los dos límites laterales y la comparación. Conclusión: \(\lim_{x\to 2}f(x)=3\), aunque \(f(2)=1\).</li>
+    <li><b>Mira primero la gráfica (paso 1):</b> la vertical punteada rotulada «punto de corte» pasa por \(x=2\). A su izquierda está el «tramo izquierdo», con su fórmula \(y=x+1\); a su derecha, el «tramo derecho», con su fórmula \(y=5-x\). Los dos tramos llegan al «hueco» (círculo vacío), a la altura \(3\). Más abajo, a la altura \(1\), está el «punto lleno»: es el valor \(f(2)=1\).</li>
+    <li><b>Pasos 2 y 3, el lado izquierdo (azul):</b> a la izquierda de \(2\) vale la fórmula \(x+1\). La flecha azul recorre el tramo izquierdo hacia el punto de corte y la altura va hacia \(3\) (punteada azul). Bajo la gráfica queda escrito el lateral izquierdo: \(2+1=3\).</li>
+    <li><b>Pasos 4 y 5, el lado derecho (verde):</b> a la derecha de \(2\) vale la fórmula \(5-x\). La flecha verde recorre el tramo derecho hacia el punto de corte y la altura va hacia \(3\) (punteada verde). Bajo la gráfica queda escrito el lateral derecho: \(5-2=3\).</li>
+    <li><b>Pasos 6 y 7:</b> los dos laterales valen \(3\): ese es el límite. El punto lleno, a la altura \(1\), queda rodeado por un anillo: no se usó en ninguna cuenta. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra, y bajo la figura un registro numerado guarda lo obtenido en cada paso.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> las dos fórmulas y el punto de corte; tres valores de \(f\) en el tramo izquierdo, cada uno con su cuenta y con lo que le falta para \(3\); el lateral izquierdo; lo mismo en el tramo derecho; la comparación de los laterales. Conclusión: \(\lim_{x\to 2}f(x)=3\), aunque \(f(2)=1\).</li>
   </ol>
   <div class="stage" data-scene="partes-idea"></div>
   <ul class="keys">
-    <li><b>Azul:</b> lo que ocurre por la izquierda de \(2\): la flecha sobre el tramo \(y=x+1\), la punteada de la altura \(3\) y la cuenta \(2+1=3\).</li>
-    <li><b>Verde:</b> lo que ocurre por la derecha de \(2\): la flecha sobre el tramo \(y=5-x\), la punteada de la altura \(3\) y la cuenta \(5-2=3\).</li>
-    <li><b>Naranjo:</b> el límite de \(f\) en \(2\), que existe porque los dos lados coinciden.</li>
-    <li><b>Burdeo:</b> el anillo que rodea al punto suelto \((2, 1)\): el valor de la función en \(2\), que no participa en el límite.</li>
-    <li><b>Círculo vacío y punto lleno:</b> el círculo vacío en \((2, 3)\) dice que los tramos llegan a esa altura sin tocarla; el punto lleno en \((2, 1)\) es el valor \(f(2)=1\).</li>
+    <li><b>Azul:</b> lo que ocurre por la izquierda de \(2\): la flecha sobre el tramo izquierdo, \(y=x+1\), la punteada de la altura \(3\) y el lateral izquierdo, \(2+1=3\).</li>
+    <li><b>Verde:</b> lo que ocurre por la derecha de \(2\): la flecha sobre el tramo derecho, \(y=5-x\), la punteada de la altura \(3\) y el lateral derecho, \(5-2=3\).</li>
+    <li><b>Naranjo:</b> el límite de \(f\) en \(2\), que existe porque los dos laterales coinciden.</li>
+    <li><b>Burdeo:</b> el anillo que rodea al punto lleno \((2, 1)\): el valor de la función en \(2\), que no participa en el límite.</li>
+    <li><b>Vertical punteada gris:</b> el punto de corte, \(x=2\). No es parte de la gráfica: solo marca dónde cambia la fórmula.</li>
+    <li><b>Hueco y punto lleno:</b> el hueco (círculo vacío) en \((2, 3)\) dice que los tramos llegan a esa altura sin tocarla; el punto lleno en \((2, 1)\) es el valor \(f(2)=1\).</li>
   </ul>
   <div class="why">
-    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra una gráfica y unos pocos valores: sugiere el resultado, no lo demuestra.</p>
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación y las tablas del encabezado muestran una gráfica y unos pocos valores: sugieren el resultado, no lo demuestran. El desarrollo completo está escrito en los recuadros que siguen.</p>
     <ol class="steps">
       <li><b>Se demuestra aquí:</b> el principio local por la izquierda (recuadro de la demostración): si una función coincide con otra en un intervalo abierto pegado a \(a\) por la izquierda, las dos tienen el mismo límite por la izquierda. La versión por la derecha y la versión por los dos lados son la misma demostración, cambiando la condición sobre \(x\); no se repiten.</li>
-      <li><b>Se usa sin demostrar el criterio de los laterales:</b> \(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y los dos valen \(L\).</li>
-      <li><b>Se usa sin demostrar el límite de un polinomio:</b> si \(P\) es un polinomio, \(\lim_{x\to a}P(x)=P(a)\) (hoja «Propiedades de límites», donde se deduce de propiedades que allí se avisan). Por el criterio de los laterales, sus dos límites laterales en \(a\) también valen \(P(a)\).</li>
+      <li><b>Se usa sin demostrar el criterio de los laterales:</b> \(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y los dos valen \(L\). De ahí sale la regla «existe el límite si y solo si los laterales existen y coinciden».</li>
+      <li><b>Se usa sin demostrar el límite de un polinomio:</b> si \(P\) es un polinomio, \(\lim_{x\to a}P(x)=P(a)\) (hoja «Propiedades de límites», donde se deduce de propiedades que allí se avisan). Por el criterio de los laterales, sus dos límites laterales en \(a\) también valen \(P(a)\). En los ejemplos esto se nombra «límite de un polinomio: se reemplaza \(x\) por \(a\)».</li>
+      <li><b>Se usan sin demostrar las reglas de las igualdades y del orden de los números:</b> sumar o restar un mismo número a los dos lados de una igualdad o de una desigualdad la mantiene; dividir los dos lados de una igualdad por un mismo número distinto de \(0\) la mantiene; multiplicar los dos lados de una desigualdad por \(-1\) la invierte; y el valor absoluto de un número positivo es el mismo número.</li>
       <li><b>Alcance:</b> en esta hoja todos los tramos son polinomios. Con otros tramos (cocientes, raíces) el método es el mismo, pero el límite de cada fórmula se calcula con sus propias hipótesis.</li>
     </ol>
   </div>
@@ -51,70 +58,93 @@
 <section>
   <div class="card k1">
     <h3>Función definida por partes y su límite</h3>
-    <p><b>Definición.</b> Una función está definida por partes cuando su dominio se divide en tramos y en cada tramo vale una fórmula. Los números donde termina un tramo y empieza otro son los <b>puntos de cambio</b>. Para calcular un valor \(f(c)\) se mira en qué tramo está \(c\) y se usa esa fórmula.</p>
+    <p><b>Palabras que se usan.</b> El <b>dominio</b> de una función es el conjunto de los números en los que está definida. Un <b>tramo</b> es un trozo del dominio junto con la fórmula que vale en él. Un <b>punto de corte</b> es un número donde termina un tramo y empieza otro. Un <b>intervalo abierto</b> es el conjunto de los números que están entre dos extremos, sin contar los extremos. Un número está <b>dentro de un tramo</b> cuando hay un intervalo abierto que lo contiene y en el que vale una sola fórmula. Un <b>punto suelto</b> es un valor \(f(a)\) que no sale de la fórmula de ninguno de los dos tramos vecinos.</p>
+    <p><b>Cómo se escribe y cómo se lee.</b> Una función definida por partes se escribe con una llave, una línea por tramo: a la izquierda la fórmula y a la derecha la condición que dice para qué \(x\) vale. La función del encabezado:
+    \[f(x)=\begin{cases}x+1&\text{si }x\lt 2\\ 1&\text{si }x=2\\ 5-x&\text{si }x\gt 2\end{cases}\]
+    Se lee: «\(f\) de \(x\) es igual a \(x\) más \(1\) si \(x\) es menor que \(2\); es igual a \(1\) si \(x\) es igual a \(2\); y es igual a \(5\) menos \(x\) si \(x\) es mayor que \(2\)». \(x\to a^{-}\) se lee «\(x\) tiende a \(a\) por la izquierda» (con valores menores que \(a\)) y \(x\to a^{+}\), «\(x\) tiende a \(a\) por la derecha» (con valores mayores que \(a\)). \(\lim_{x\to a^{-}}f(x)=L\) se lee «el límite de \(f\) de \(x\), cuando \(x\) tiende a \(a\) por la izquierda, es \(L\)».</p>
+    <p><b>Definición.</b> Una función está definida por partes cuando su dominio se divide en tramos y en cada tramo vale una fórmula. Los números donde termina un tramo y empieza otro son los <b>puntos de corte</b>. Para calcular un valor \(f(c)\) se mira en qué tramo está \(c\) y se usa esa fórmula.</p>
+    <p><b>Un caso con números: tres valores de \(f\).</b></p>
+    <ol class="steps">
+      <li>\(f(1)\): como \(1\) es menor que \(2\), está en el tramo izquierdo y se usa \(x+1\). Se reemplaza \(x\) por \(1\): \(f(1)=1+1=2\).</li>
+      <li>\(f(3)\): como \(3\) es mayor que \(2\), está en el tramo derecho y se usa \(5-x\). Se reemplaza \(x\) por \(3\): \(f(3)=5-3=2\).</li>
+      <li>\(f(2)\): \(2\) no es menor ni mayor que \(2\); vale la línea del medio: \(f(2)=1\). No se usa ninguna de las dos fórmulas: es un punto suelto.</li>
+    </ol>
     <p><b>Para el límite en \(a\) hay dos situaciones:</b></p>
     <ol class="steps">
-      <li><b>\(a\) está dentro de un tramo.</b> Existe \(r\gt 0\) tal que para todo \(x\ne a\) con \(a-r\lt x\lt a+r\) vale una sola fórmula, \(f(x)=P(x)\). Entonces \(\lim_{x\to a}f(x)=\lim_{x\to a}P(x)\). Si \(P\) es un polinomio, ese límite es \(P(a)\).</li>
-      <li><b>\(a\) es un punto de cambio.</b> Existe \(r\gt 0\) tal que \(f(x)=P(x)\) para todo \(x\) con \(a-r\lt x\lt a\), y \(f(x)=Q(x)\) para todo \(x\) con \(a\lt x\lt a+r\). Entonces \(\lim_{x\to a^{-}}f(x)=\lim_{x\to a^{-}}P(x)\) y \(\lim_{x\to a^{+}}f(x)=\lim_{x\to a^{+}}Q(x)\). Si \(P\) y \(Q\) son polinomios, esos laterales son \(P(a)\) y \(Q(a)\).</li>
-      <li><b>Comparación</b> (criterio de los laterales): si los dos laterales coinciden, ese número es \(\lim_{x\to a}f(x)\); si son distintos, \(f\) no tiene límite en \(a\).</li>
-      <li><b>El valor en \(a\) no participa.</b> En las dos situaciones las condiciones hablan de \(x\ne a\). Da lo mismo cuál tramo tiene el signo «\(\le\)», o si \(f(a)\) es un número aparte, o si \(f\) no está definida en \(a\).</li>
+      <li><b>\(a\) está dentro de un tramo.</b> Existe \(r\gt 0\) tal que para todo \(x\ne a\) con \(a-r\lt x\lt a+r\) vale una sola fórmula, \(f(x)=P(x)\). Entonces \(\lim_{x\to a}f(x)=\lim_{x\to a}P(x)\). Si \(P\) es un polinomio, ese límite es \(P(a)\). Con números: \(a=1\) está dentro del tramo izquierdo de \(f\); sirve \(r=1\), porque para todo \(x\) con \(1-1\lt x\lt 1+1\), es decir, \(0\lt x\lt 2\), vale \(x+1\). Entonces \(\lim_{x\to 1}f(x)=1+1=2\).</li>
+      <li><b>\(a\) es un punto de corte.</b> Existe \(r\gt 0\) tal que \(f(x)=P(x)\) para todo \(x\) con \(a-r\lt x\lt a\), y \(f(x)=Q(x)\) para todo \(x\) con \(a\lt x\lt a+r\). Entonces \(\lim_{x\to a^{-}}f(x)=\lim_{x\to a^{-}}P(x)\) y \(\lim_{x\to a^{+}}f(x)=\lim_{x\to a^{+}}Q(x)\). Si \(P\) y \(Q\) son polinomios, esos laterales son \(P(a)\) y \(Q(a)\). Con números: en \(a=2\), \(P(x)=x+1\) y \(Q(x)=5-x\); al reemplazar \(x\) por \(2\), los laterales son \(2+1=3\) y \(5-2=3\).</li>
+      <li><b>Comparación</b> (criterio de los laterales): si los dos laterales coinciden, ese número es \(\lim_{x\to a}f(x)\); si son distintos, \(f\) no tiene límite en \(a\). Con números: \(3\) y \(3\) coinciden, así que \(\lim_{x\to 2}f(x)=3\).</li>
+      <li><b>El valor en \(a\) no participa.</b> En las dos situaciones las condiciones hablan de \(x\ne a\). Da lo mismo cuál tramo tiene el signo «\(\le\)» (se lee «menor o igual»), o si \(f(a)\) es un número aparte, o si \(f\) no está definida en \(a\). Con números: \(f(2)=1\), y el límite en \(2\) es \(3\).</li>
     </ol>
-    <p><b>Procedimiento en un punto de cambio \(a\):</b></p>
+    <p><b>De dónde sale la regla.</b> El límite por la izquierda solo mira los \(x\) menores que \(a\) y cercanos a \(a\). Para esos \(x\), \(f(x)\) y \(P(x)\) son el mismo número: las dos funciones dan la misma tabla de valores (en el encabezado, \(f(1{,}9)=2{,}9\) se calculó con \(x+1\)). Por eso tienen el mismo límite por la izquierda. Esa idea se llama <b>principio local</b> y se demuestra en el recuadro siguiente.</p>
+    <p><b>Procedimiento en un punto de corte \(a\):</b></p>
     <ol class="steps">
       <li>Identificar la fórmula que vale justo a la izquierda de \(a\) y calcular con ella el límite por la izquierda.</li>
       <li>Identificar la fórmula que vale justo a la derecha de \(a\) y calcular con ella el límite por la derecha.</li>
       <li>Comparar los dos resultados.</li>
     </ol>
+    <p><b>El procedimiento con la \(f\) de la animación:</b> paso 1, a la izquierda de \(2\) vale \(x+1\), y el lateral izquierdo es \(2+1=3\); paso 2, a la derecha de \(2\) vale \(5-x\), y el lateral derecho es \(5-2=3\); paso 3, \(3\) y \(3\) coinciden: el límite de \(f\) en \(2\) es \(3\). Está hecho paso por paso en el ejemplo 1.</p>
   </div>
 
   <div class="card k2">
     <h3>Demostración paso a paso: el principio local, por la izquierda</h3>
-    <p>Se sabe: hay un número \(r\gt 0\) tal que \(F(x)=P(x)\) para todo \(x\) con \(a-r\lt x\lt a\); y \(\lim_{x\to a^{-}}P(x)=L\). Hay que probar: \(\lim_{x\to a^{-}}F(x)=L\), es decir, para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(a-\delta\lt x\lt a\), entonces \(|F(x)-L|\lt \varepsilon\).</p>
+    <p><b>Qué se demuestra.</b> Se sabe: hay un número \(r\gt 0\) tal que \(F(x)=P(x)\) para todo \(x\) con \(a-r\lt x\lt a\); y \(\lim_{x\to a^{-}}P(x)=L\). Hay que probar: \(\lim_{x\to a^{-}}F(x)=L\), es decir, para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(a-\delta\lt x\lt a\), entonces \(|F(x)-L|\lt \varepsilon\). En palabras: si dos funciones coinciden en un trozo pegado a \(a\) por la izquierda, y una tiene límite \(L\) por la izquierda, la otra también.</p>
+    <p><b>Cómo se leen los símbolos.</b> \(\varepsilon\) se lee «épsilon» y es la <b>tolerancia</b>: la distancia máxima que se acepta entre \(F(x)\) y \(L\). \(\delta\) se lee «delta» y es el largo del trozo a la izquierda de \(a\) en el que se cumple esa tolerancia. \(|F(x)-L|\) se lee «valor absoluto de \(F\) de \(x\) menos \(L\)» y es la distancia entre \(F(x)\) y \(L\). \(\min\{\delta_{P},r\}\) se lee «el mínimo entre delta sub \(P\) y \(r\)»: el menor de los dos números.</p>
+    <p><b>Cómo funciona el método.</b> Alguien fija la tolerancia \(\varepsilon\), tan chica como quiera. Hay que responder con un \(\delta\): un trozo a la izquierda de \(a\), de largo \(\delta\), en el que \(F(x)\) esté a menos de \(\varepsilon\) de \(L\). La idea: \(P\) ya tiene su propio trozo (de largo \(\delta_{P}\)), porque su límite es \(L\). Pero \(F\) solo coincide con \(P\) en un trozo de largo \(r\). Se usa el más corto de los dos trozos: ahí valen las dos cosas a la vez, \(F\) es igual a \(P\) y \(P\) está cerca de \(L\).</p>
+    <p><b>Los números que acompañan a las letras.</b> Sea \(h(x)=2x+1\) si \(x\lt 1\); \(h(x)=4-x\) si \(1\le x\lt 3\); \(h(x)=x-1\) si \(x\ge 3\). Se estudia por la izquierda de \(a=3\). Ahí \(F\) es \(h\) y la fórmula es \(P(x)=4-x\), pero solo coinciden para \(1\le x\lt 3\): sirve \(r=2\), porque \(3-2=1\). El límite de \(P\) por la izquierda de \(3\) es \(L=4-3=1\) (límite de un polinomio). La distancia entre \(P(x)\) y \(1\), para \(x\lt 3\), se calcula línea por línea:</p>
+    \[\begin{aligned}|P(x)-1|&=|(4-x)-1|&&\text{porque }P(x)=4-x\\ &=|4-1-x|&&\text{se cambia el orden}\\ &=|3-x|&&\text{porque }4-1=3\\ &=3-x&&\text{porque }3-x\text{ es positivo}\end{aligned}\]
+    <p>(Si \(x\lt 3\), al restar \(x\) a los dos lados queda \(0\lt 3-x\): por eso \(3-x\) es positivo, y el valor absoluto de un número positivo es el mismo número.)</p>
     <ol class="steps">
-      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
-      <li>Como el límite de \(P\) por la izquierda es \(L\), existe \(\delta_{P}\gt 0\) tal que, si \(a-\delta_{P}\lt x\lt a\), entonces \(|P(x)-L|\lt \varepsilon\).</li>
-      <li>Se elige \(\delta=\min\{\delta_{P},r\}\), el menor de los dos. Es positivo, y \(a-\delta_{P}\le a-\delta\) y \(a-r\le a-\delta\).</li>
-      <li>Se toma un \(x\) cualquiera con \(a-\delta\lt x\lt a\). Por el paso 3, \(a-r\lt x\lt a\): ahí las dos funciones coinciden, \(F(x)=P(x)\).</li>
-      <li>También por el paso 3, \(a-\delta_{P}\lt x\lt a\): por el paso 2, \(|P(x)-L|\lt \varepsilon\).</li>
-      <li>Se reemplaza \(P(x)\) por \(F(x)\) (paso 4): \(|F(x)-L|=|P(x)-L|\lt \varepsilon\).</li>
-      <li>Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a^{-}}F(x)=L\).</li>
+      <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\). <b>Con números:</b> \(\varepsilon=0{,}5\).</li>
+      <li>Como el límite de \(P\) por la izquierda es \(L\), existe \(\delta_{P}\gt 0\) tal que, si \(a-\delta_{P}\lt x\lt a\), entonces \(|P(x)-L|\lt \varepsilon\). <b>Con números:</b> se despeja para qué \(x\) la distancia \(3-x\) es menor que \(0{,}5\):
+      \[\begin{aligned}3-x&\lt 0{,}5&&\text{lo que se pide}\\ 3&\lt 0{,}5+x&&\text{se suma }x\text{ a los dos lados}\\ 2{,}5&\lt x&&\text{se resta }0{,}5\text{ a los dos lados}\end{aligned}\]
+      Como \(2{,}5=3-0{,}5\), la distancia es menor que \(0{,}5\) si \(3-0{,}5\lt x\lt 3\): sirve \(\delta_{P}=0{,}5\).</li>
+      <li>Se elige \(\delta=\min\{\delta_{P},r\}\), el menor de los dos. Es positivo, porque los dos lo son. Como \(\delta\le \delta_{P}\) y \(\delta\le r\), queda \(a-\delta_{P}\le a-\delta\) y \(a-r\le a-\delta\). El porqué, línea por línea (con \(r\) es igual):
+      \[\begin{aligned}\delta&\le \delta_{P}&&\text{el mínimo no supera a ninguno de los dos}\\ -\delta_{P}&\le -\delta&&\text{se multiplica por }-1\text{: la desigualdad se invierte}\\ a-\delta_{P}&\le a-\delta&&\text{se suma }a\text{ a los dos lados}\end{aligned}\]
+      <b>Con números:</b> \(\delta=\min\{0{,}5;\ 2\}=0{,}5\). Además \(3-0{,}5=2{,}5\) y \(3-2=1\), y se cumple \(2{,}5\le 2{,}5\) y \(1\le 2{,}5\).</li>
+      <li>Se toma un \(x\) cualquiera con \(a-\delta\lt x\lt a\). Por el paso 3, \(a-r\le a-\delta\lt x\). Entonces \(a-r\lt x\lt a\): ahí las dos funciones coinciden, \(F(x)=P(x)\). <b>Con números:</b> se toma \(x=2{,}8\), que cumple \(2{,}5\lt 2{,}8\lt 3\). También cumple \(1\lt 2{,}8\lt 3\): está en el tramo del medio, y \(h(2{,}8)=4-2{,}8=1{,}2\), lo mismo que \(P(2{,}8)=4-2{,}8=1{,}2\).</li>
+      <li>También por el paso 3, \(a-\delta_{P}\le a-\delta\lt x\). Entonces \(a-\delta_{P}\lt x\lt a\) y, por el paso 2, \(|P(x)-L|\lt \varepsilon\). <b>Con números:</b> \(|P(2{,}8)-1|=|1{,}2-1|=0{,}2\), menor que \(0{,}5\).</li>
+      <li>Se reemplaza \(P(x)\) por \(F(x)\), que es el mismo número (paso 4): \(|F(x)-L|=|P(x)-L|\lt \varepsilon\). <b>Con números:</b> \(|h(2{,}8)-1|=|1{,}2-1|=0{,}2\), menor que \(0{,}5\).</li>
+      <li>Como \(\varepsilon\) era cualquiera y el \(x\) también, \(\lim_{x\to a^{-}}F(x)=L\). <b>Con números:</b> \(\lim_{x\to 3^{-}}h(x)=1\). (El caso \(\varepsilon=0{,}5\) solo acompaña a las letras; la demostración es la de las letras, que vale para toda tolerancia.)</li>
     </ol>
-    <p><b>Con números.</b> Sea \(h(x)=2x+1\) si \(x\lt 1\); \(h(x)=4-x\) si \(1\le x\lt 3\); \(h(x)=x-1\) si \(x\ge 3\). Por la izquierda de \(a=3\) vale \(P(x)=4-x\), pero solo para \(1\le x\lt 3\): sirve \(r=2\), porque \(3-2=1\). El límite de \(P\) por la izquierda de \(3\) es \(L=4-3=1\), y para \(x\lt 3\) la distancia es \(|P(x)-1|=|3-x|=3-x\).</p>
-    <ol class="steps">
-      <li>Tolerancia \(\varepsilon=0{,}5\): \(3-x\lt 0{,}5\) si \(3-0{,}5\lt x\lt 3\). Sirve \(\delta_{P}=0{,}5\), y \(\delta=\min\{0{,}5;\ 2\}=0{,}5\). Prueba con \(x=2{,}8\): \(h(2{,}8)=4-2{,}8=1{,}2\) y \(|1{,}2-1|=0{,}2\), menor que \(0{,}5\).</li>
-      <li>Tolerancia \(\varepsilon=5\): para \(P\) sirve \(\delta_{P}=5\), pero \(\delta=\min\{5;\ 2\}=2\). El número \(r\) hace falta: en \(x=0\), que está a distancia \(3\) de \(3\), la fórmula de \(h\) ya es otra: \(h(0)=2\cdot 0+1=1\), mientras que \(P(0)=4-0=4\).</li>
-    </ol>
+    <p><b>Por qué hace falta el número \(r\).</b> Con una tolerancia grande, \(\varepsilon=5\), el despeje del paso 2 da \(3-5\lt x\), es decir, \(-2\lt x\): para \(P\) sirve \(\delta_{P}=5\). Pero \(\delta=\min\{5;\ 2\}=2\). Si se usara \(5\) en vez de \(2\), entraría \(x=0\), que está a distancia \(3-0=3\) de \(3\). Ahí la fórmula de \(h\) ya es otra (\(0\) es menor que \(1\): primer tramo): \(h(0)=2\cdot 0+1=0+1=1\), mientras que \(P(0)=4-0=4\). Fuera del trozo de largo \(r\), lo que se sabe de \(P\) no dice nada de \(h\).</p>
     <p><b>Por la derecha</b> la demostración es la misma, con \(a\lt x\lt a+\delta\) y \(a\lt x\lt a+r\). <b>Por los dos lados</b> (situación 1 del recuadro anterior) también, con \(0\lt |x-a|\lt \delta\) y \(0\lt |x-a|\lt r\).</p>
   </div>
 
   <div class="card k3">
-    <h3>Caso especial: varios puntos de cambio, un punto suelto y un parámetro</h3>
+    <h3>Caso especial: varios puntos de corte, un punto suelto y un parámetro</h3>
+    <p>Cinco casos, cada uno con su cuenta. Los tres primeros usan la función \(h\) del recuadro anterior: \(h(x)=2x+1\) si \(x\lt 1\); \(h(x)=4-x\) si \(1\le x\lt 3\); \(h(x)=x-1\) si \(x\ge 3\). Tiene tres tramos y dos puntos de corte, \(1\) y \(3\).</p>
     <ol class="steps">
-      <li><b>Tres tramos, dos puntos de cambio.</b> Con la función \(h\) del recuadro anterior, en \(1\): por la izquierda vale \(2x+1\) y el límite es \(2\cdot 1+1=3\); por la derecha vale \(4-x\) y el límite es \(4-1=3\). Coinciden: \(\lim_{x\to 1}h(x)=3\).</li>
-      <li>En \(3\): por la izquierda vale \(4-x\) y el límite es \(4-3=1\); por la derecha vale \(x-1\) y el límite es \(3-1=2\). Como \(1\ne 2\), \(h\) no tiene límite en \(3\). Cada punto de cambio se estudia por separado.</li>
-      <li><b>Dentro de un tramo.</b> En \(2\): para todo \(x\) con \(1\lt x\lt 3\) vale \(h(x)=4-x\), y ese intervalo abierto contiene a \(2\). No hace falta separar lados: \(\lim_{x\to 2}h(x)=4-2=2\).</li>
-      <li><b>Un punto suelto.</b> Sea \(q(x)=2x\) si \(x\ne 3\) y \(q(3)=10\). A los dos lados de \(3\) vale la misma fórmula, \(2x\): \(\lim_{x\to 3}q(x)=2\cdot 3=6\). El valor \(q(3)=10\) no participa, y \(6\ne 10\).</li>
-      <li><b>Un parámetro.</b> Sea \(p(x)=kx+1\) si \(x\lt 2\) y \(p(x)=x^{2}+3\) si \(x\ge 2\), con \(k\) un número fijo. Límite por la izquierda de \(2\): \(k\cdot 2+1=2k+1\). Límite por la derecha: \(2^{2}+3=4+3=7\).</li>
-      <li>El límite en \(2\) existe solo si los laterales coinciden: \(2k+1=7\). Se resta \(1\): \(2k=6\). Se divide por \(2\): \(k=3\). Comprobación: \(3\cdot 2+1=7\). Con \(k=3\), \(\lim_{x\to 2}p(x)=7\); con cualquier otro \(k\), \(p\) no tiene límite en \(2\).</li>
+      <li><b>Primer punto de corte, \(1\).</b> A la izquierda de \(1\) (\(x\lt 1\)) vale \(2x+1\). Se reemplaza \(x\) por \(1\): \(2\cdot 1+1\). Producto: \(2\cdot 1=2\). Suma: \(2+1=3\). A la derecha de \(1\) (\(1\lt x\lt 3\)) vale \(4-x\). Se reemplaza: \(4-1=3\). Los laterales, \(3\) y \(3\), coinciden: \(\lim_{x\to 1}h(x)=3\).</li>
+      <li><b>Segundo punto de corte, \(3\).</b> A la izquierda de \(3\) (\(1\lt x\lt 3\)) vale \(4-x\). Se reemplaza \(x\) por \(3\): \(4-3=1\). A la derecha de \(3\) (\(x\gt 3\)) vale \(x-1\). Se reemplaza: \(3-1=2\). Como \(1\ne 2\), \(h\) no tiene límite en \(3\): hay un salto de tamaño \(2-1=1\). Cada punto de corte se estudia por separado.</li>
+      <li><b>Dentro de un tramo.</b> En \(2\): para todo \(x\) con \(1\lt x\lt 3\) vale \(h(x)=4-x\), y ese intervalo abierto contiene a \(2\), porque \(1\lt 2\lt 3\). No hace falta separar lados: \(\lim_{x\to 2}h(x)=4-2=2\).</li>
+      <li><b>Un punto suelto.</b> Sea \(q(x)=2x\) si \(x\ne 3\) y \(q(3)=10\). A los dos lados de \(3\) vale la misma fórmula, \(2x\). Se reemplaza \(x\) por \(3\): \(\lim_{x\to 3}q(x)=2\cdot 3=6\). El valor \(q(3)=10\) no participa, y \(6\ne 10\). Con valores: \(q(2{,}9)=2\cdot 2{,}9=5{,}8\) y \(q(3{,}1)=2\cdot 3{,}1=6{,}2\), los dos cerca de \(6\) y lejos de \(10\).</li>
+      <li><b>Un parámetro.</b> Un parámetro es una letra que representa un número fijo que todavía no se ha elegido. Sea \(p(x)=kx+1\) si \(x\lt 2\) y \(p(x)=x^{2}+3\) si \(x\ge 2\), con \(k\) un número fijo. Lateral izquierdo en \(2\), con \(kx+1\): se reemplaza \(x\) por \(2\) y queda \(k\cdot 2+1=2k+1\). Lateral derecho, con \(x^{2}+3\): se reemplaza y queda \(2^{2}+3\). Potencia: \(2^{2}=2\cdot 2=4\). Suma: \(4+3=7\).</li>
+      <li>El límite en \(2\) existe solo si los laterales coinciden. Se despeja \(k\), una operación por línea:
+      \[\begin{aligned}2k+1=7&&\text{los laterales deben coincidir}\\ 2k=6&&\text{se resta }1\text{ a los dos lados}\\ k=3&&\text{se divide por }2\text{ a los dos lados}\end{aligned}\]
+      Las cuentas: \(7-1=6\) y \(\dfrac{6}{2}=3\). Comprobación: con \(k=3\), el lateral izquierdo es \(3\cdot 2+1=6+1=7\), igual al derecho. Con \(k=3\), \(\lim_{x\to 2}p(x)=7\); con cualquier otro \(k\), \(p\) no tiene límite en \(2\). Por ejemplo, con \(k=1\) el lateral izquierdo es \(1\cdot 2+1=2+1=3\), y \(3\ne 7\).</li>
     </ol>
   </div>
 </section>
 
 <section>
   <h2>Paso a paso</h2>
-  <p>En cada ejemplo se dice qué fórmula vale a cada lado y por qué; todos los tramos son polinomios, y el límite de cada fórmula se obtiene por reemplazo.</p>
+  <p>En cada ejemplo se dice qué fórmula vale a cada lado y por qué. Todos los tramos son polinomios: el límite de cada fórmula se obtiene reemplazando \(x\) por el lugar (límite de un polinomio, ver el aviso de rigor), y después se hace cada operación por separado.</p>
 
   <div class="prop p1">
   <h3>Ejemplo 1: la función de la animación, \(\lim_{x\to 2}f(x)\)</h3>
   <div class="body">
+  <p>Dato: \(f(x)=x+1\) si \(x\lt 2\); \(f(2)=1\); \(f(x)=5-x\) si \(x\gt 2\).</p>
   <ol class="steps">
-    <li>\(a=2\) es un punto de cambio: a la izquierda (\(x\lt 2\)) vale \(x+1\); a la derecha (\(x\gt 2\)) vale \(5-x\).</li>
-    <li>Límite por la izquierda, con \(x+1\): \(\lim_{x\to 2^{-}}f(x)=2+1=3\).</li>
-    <li>Límite por la derecha, con \(5-x\): \(\lim_{x\to 2^{+}}f(x)=5-2=3\).</li>
+    <li>\(a=2\) es un punto de corte: a la izquierda (\(x\lt 2\)) vale \(x+1\); a la derecha (\(x\gt 2\)) vale \(5-x\). Hay que calcular los dos laterales.</li>
+    <li>Lateral izquierdo. Solo cuentan los \(x\) menores que \(2\), y ahí \(f(x)=x+1\): \(\lim_{x\to 2^{-}}f(x)=\lim_{x\to 2^{-}}(x+1)\).</li>
+    <li>Límite de un polinomio: se reemplaza \(x\) por \(2\) y se suma: \(\lim_{x\to 2^{-}}f(x)=2+1=3\).</li>
+    <li>Lateral derecho. Solo cuentan los \(x\) mayores que \(2\), y ahí \(f(x)=5-x\): \(\lim_{x\to 2^{+}}f(x)=\lim_{x\to 2^{+}}(5-x)\).</li>
+    <li>Límite de un polinomio: se reemplaza \(x\) por \(2\) y se resta: \(\lim_{x\to 2^{+}}f(x)=5-2=3\).</li>
     <li>Comparación: los dos laterales valen \(3\). Por el criterio de los laterales, \(\lim_{x\to 2}f(x)=3\).</li>
     <li>Comprobación con valores, por la izquierda: \(f(1{,}9)=1{,}9+1=2{,}9\) y \(f(1{,}99)=1{,}99+1=2{,}99\).</li>
     <li>Por la derecha: \(f(2{,}1)=5-2{,}1=2{,}9\) y \(f(2{,}01)=5-2{,}01=2{,}99\). A los dos lados, los valores se acercan a \(3\).</li>
-    <li>El valor en el lugar es \(f(2)=1\). No se usó: el límite es \(3\) y el valor es \(1\).</li>
+    <li>Interpretación: el valor en el lugar es \(f(2)=1\). No se usó en ningún paso: el límite es \(3\) y el valor es \(1\). En la gráfica, el hueco está a la altura \(3\) y el punto lleno, a la altura \(1\).</li>
   </ol>
   </div>
   </div>
@@ -122,14 +152,15 @@
   <div class="prop p2">
   <h3>Ejemplo 2: un salto, y dos lugares dentro de los tramos</h3>
   <div class="body">
-  <p>Sea \(r(x)=x^{2}\) si \(x\le 1\) y \(r(x)=2x+1\) si \(x\gt 1\).</p>
+  <p>Sea \(r(x)=x^{2}\) si \(x\le 1\) y \(r(x)=2x+1\) si \(x\gt 1\). Se piden los límites de \(r\) en \(1\), en \(-2\) y en \(4\).</p>
   <ol class="steps">
-    <li>En \(1\), punto de cambio. Por la izquierda vale \(x^{2}\): \(\lim_{x\to 1^{-}}r(x)=1^{2}=1\).</li>
-    <li>Por la derecha vale \(2x+1\): \(\lim_{x\to 1^{+}}r(x)=2\cdot 1+1=3\).</li>
-    <li>Como \(1\ne 3\), \(r\) no tiene límite en \(1\). El valor \(r(1)=1\) existe (el tramo izquierdo tiene el «\(\le\)»), pero eso no cambia la respuesta.</li>
-    <li>Valores: \(r(0{,}9)=0{,}9^{2}=0{,}81\) y \(r(1{,}1)=2\cdot 1{,}1+1=3{,}2\). A un lado están cerca de \(1\) y al otro, cerca de \(3\).</li>
-    <li>En \(-2\), dentro del primer tramo: para todo \(x\) con \(-3\lt x\lt -1\) vale \(x^{2}\). Luego \(\lim_{x\to -2}r(x)=(-2)^{2}=4\).</li>
-    <li>En \(4\), dentro del segundo tramo: para todo \(x\) con \(3\lt x\lt 5\) vale \(2x+1\). Luego \(\lim_{x\to 4}r(x)=2\cdot 4+1=9\).</li>
+    <li>En \(1\), punto de corte. A la izquierda (\(x\lt 1\)) vale \(x^{2}\). Se reemplaza \(x\) por \(1\): \(1^{2}\). Potencia: \(1^{2}=1\cdot 1=1\). Entonces \(\lim_{x\to 1^{-}}r(x)=1\).</li>
+    <li>A la derecha (\(x\gt 1\)) vale \(2x+1\). Se reemplaza \(x\) por \(1\): \(2\cdot 1+1\). Producto: \(2\cdot 1=2\). Suma: \(2+1=3\). Entonces \(\lim_{x\to 1^{+}}r(x)=3\).</li>
+    <li>Como \(1\ne 3\), \(r\) no tiene límite en \(1\): hay un salto de tamaño \(3-1=2\). El valor \(r(1)=1\) existe (el tramo izquierdo tiene el «\(\le\)»), pero eso no cambia la respuesta.</li>
+    <li>Comprobación con valores. A la izquierda: \(0{,}9\cdot 0{,}9=0{,}81\), así que \(r(0{,}9)=0{,}81\). A la derecha: \(2\cdot 1{,}1=2{,}2\) y \(2{,}2+1=3{,}2\), así que \(r(1{,}1)=3{,}2\). A un lado están cerca de \(1\) y al otro, cerca de \(3\).</li>
+    <li>En \(-2\). No es punto de corte: está dentro del primer tramo, porque para todo \(x\) con \(-3\lt x\lt -1\) se cumple \(x\le 1\) y vale \(x^{2}\). Se reemplaza \(x\) por \(-2\): \((-2)^{2}\). Potencia: \((-2)\cdot(-2)=4\). Entonces \(\lim_{x\to -2}r(x)=(-2)^{2}=4\).</li>
+    <li>En \(4\). Tampoco es punto de corte: está dentro del segundo tramo, porque para todo \(x\) con \(3\lt x\lt 5\) se cumple \(x\gt 1\) y vale \(2x+1\). Se reemplaza \(x\) por \(4\): \(2\cdot 4+1\). Producto: \(2\cdot 4=8\). Suma: \(8+1=9\). Entonces \(\lim_{x\to 4}r(x)=2\cdot 4+1=9\).</li>
+    <li>Interpretación: una misma función puede no tener límite en su punto de corte y tenerlo en todos los demás lugares. Separar lados solo hace falta en el punto de corte.</li>
   </ol>
   </div>
   </div>
@@ -137,14 +168,16 @@
   <div class="prop p3">
   <h3>Ejemplo 3: el signo «\(\le\)» y el valor en el lugar no cambian el límite</h3>
   <div class="body">
-  <p>Sean \(u(x)=x\) si \(x\lt 1\) y \(u(x)=x+2\) si \(x\ge 1\); \(v(x)=x\) si \(x\le 1\) y \(v(x)=x+2\) si \(x\gt 1\); y \(w(x)=x\) si \(x\lt 1\), \(w(1)=7\) y \(w(x)=2-x\) si \(x\gt 1\).</p>
+  <p>Sean \(u(x)=x\) si \(x\lt 1\) y \(u(x)=x+2\) si \(x\ge 1\); \(v(x)=x\) si \(x\le 1\) y \(v(x)=x+2\) si \(x\gt 1\); y \(w(x)=x\) si \(x\lt 1\), \(w(1)=7\) y \(w(x)=2-x\) si \(x\gt 1\). La \(u\) es la del encabezado; \(v\) es la misma, con el «igual» en el otro tramo.</p>
   <ol class="steps">
-    <li>Valores en el lugar: \(u(1)=1+2=3\) (usa el tramo derecho) y \(v(1)=1\) (usa el tramo izquierdo). Son distintos.</li>
-    <li>Laterales de \(u\) en \(1\): por la izquierda vale \(x\), y el límite es \(1\); por la derecha vale \(x+2\), y el límite es \(1+2=3\).</li>
-    <li>Laterales de \(v\) en \(1\): las fórmulas a cada lado son las mismas que las de \(u\). Los laterales son \(1\) y \(3\).</li>
-    <li>Como \(1\ne 3\), ni \(u\) ni \(v\) tienen límite en \(1\). Mover el «\(\le\)» de un tramo al otro cambió el valor en \(1\), no los laterales.</li>
-    <li>Laterales de \(w\) en \(1\): por la izquierda vale \(x\), y el límite es \(1\); por la derecha vale \(2-x\), y el límite es \(2-1=1\).</li>
+    <li>Valores en el lugar. Para \(u\), el \(1\) cumple \(x\ge 1\): se usa el tramo derecho, \(u(1)=1+2=3\). Para \(v\), el \(1\) cumple \(x\le 1\): se usa el tramo izquierdo, \(v(1)=1\). Son distintos.</li>
+    <li>Laterales de \(u\) en \(1\). A la izquierda (\(x\lt 1\)) vale \(x\): al reemplazar \(x\) por \(1\), el lateral izquierdo es \(1\). A la derecha (\(x\gt 1\)) vale \(x+2\): al reemplazar, el lateral derecho es \(1+2=3\).</li>
+    <li>Laterales de \(v\) en \(1\). Para \(x\lt 1\) vale \(x\) y para \(x\gt 1\) vale \(x+2\): son las mismas fórmulas que las de \(u\). Los laterales son \(1\) y \(1+2=3\).</li>
+    <li>Como \(1\ne 3\), ni \(u\) ni \(v\) tienen límite en \(1\). Mover el «\(\le\)» de un tramo al otro cambió el valor en \(1\) (de \(3\) a \(1\)), no los laterales.</li>
+    <li>Laterales de \(w\) en \(1\). A la izquierda (\(x\lt 1\)) vale \(x\): el lateral izquierdo es \(1\). A la derecha (\(x\gt 1\)) vale \(2-x\): al reemplazar \(x\) por \(1\), el lateral derecho es \(2-1=1\).</li>
     <li>Coinciden: \(\lim_{x\to 1}w(x)=1\), aunque \(w(1)=7\).</li>
+    <li>Comprobación con valores de \(w\): \(w(0{,}9)=0{,}9\) y \(w(1{,}1)=2-1{,}1=0{,}9\). Los dos están cerca de \(1\) y lejos de \(7\).</li>
+    <li>Interpretación: para el límite cuentan las fórmulas de los dos lados; el valor en el lugar no cuenta, sea el que sea.</li>
   </ol>
   </div>
   </div>
@@ -152,22 +185,23 @@
   <div class="prop p4">
   <h3>Ejemplo 4: elegir un número para que el límite exista</h3>
   <div class="body">
-  <p>Sea \(t(x)=x^{2}-c\) si \(x\lt 3\) y \(t(x)=2x+c\) si \(x\ge 3\), con \(c\) un número fijo. ¿Para qué valor de \(c\) existe \(\lim_{x\to 3}t(x)\)?</p>
+  <p>Sea \(t(x)=x^{2}-c\) si \(x\lt 3\) y \(t(x)=2x+c\) si \(x\ge 3\), con \(c\) un número fijo (un parámetro). ¿Para qué valor de \(c\) existe \(\lim_{x\to 3}t(x)\)?</p>
   <ol class="steps">
-    <li>Límite por la izquierda, con \(x^{2}-c\): \(3^{2}-c=9-c\).</li>
-    <li>Límite por la derecha, con \(2x+c\): \(2\cdot 3+c=6+c\).</li>
-    <li>El límite existe solo si los laterales coinciden: \(9-c=6+c\).</li>
-    <li>Se suma \(c\) a los dos lados: \(9=6+2c\).</li>
-    <li>Se resta \(6\) a los dos lados: \(3=2c\).</li>
-    <li>Se divide por \(2\): \(c=\dfrac{3}{2}\), y \(\dfrac{3}{2}=1{,}5\).</li>
-    <li>Comprobación: \(9-1{,}5=7{,}5\) y \(6+1{,}5=7{,}5\). Con \(c=1{,}5\), \(\lim_{x\to 3}t(x)=7{,}5\).</li>
-    <li>Con otro valor, por ejemplo \(c=0\): los laterales son \(9-0=9\) y \(6+0=6\). Como \(9\ne 6\), no hay límite.</li>
+    <li>Lateral izquierdo, con \(x^{2}-c\) (vale para \(x\lt 3\)). Se reemplaza \(x\) por \(3\): \(3^{2}-c\). Potencia: \(3^{2}=3\cdot 3=9\). Queda \(9-c\).</li>
+    <li>Lateral derecho, con \(2x+c\) (vale para \(x\gt 3\)). Se reemplaza \(x\) por \(3\): \(2\cdot 3+c\). Producto: \(2\cdot 3=6\). Queda \(6+c\).</li>
+    <li>El límite existe solo si los laterales coinciden. Se despeja \(c\), una operación por línea:
+    \[\begin{aligned}9-c=6+c&&\text{los laterales deben coincidir}\\ 9=6+c+c&&\text{se suma }c\text{ a los dos lados}\\ 9=6+2c&&\text{porque }c+c=2c\\ 3=2c&&\text{se resta }6\text{ a los dos lados}\\ \frac{3}{2}=c&&\text{se divide por }2\text{ a los dos lados}\end{aligned}\]</li>
+    <li>Las cuentas del despeje: \(9-6=3\), y \(\dfrac{3}{2}=1{,}5\). Entonces \(c=1{,}5\).</li>
+    <li>Comprobación: con \(c=1{,}5\), el lateral izquierdo es \(9-1{,}5=7{,}5\) y el derecho, \(6+1{,}5=7{,}5\). Coinciden: con \(c=1{,}5\), \(\lim_{x\to 3}t(x)=7{,}5\).</li>
+    <li>Comprobación con valores, con \(c=1{,}5\). A la izquierda: \(2{,}9\cdot 2{,}9=8{,}41\) y \(8{,}41-1{,}5=6{,}91\), así que \(t(2{,}9)=6{,}91\). A la derecha: \(2\cdot 3{,}1=6{,}2\) y \(6{,}2+1{,}5=7{,}7\), así que \(t(3{,}1)=7{,}7\). Los dos están cerca de \(7{,}5\).</li>
+    <li>Con otro valor, por ejemplo \(c=0\): los laterales son \(9-0=9\) y \(6+0=6\). Como \(9\ne 6\), no hay límite: queda un salto de tamaño \(9-6=3\).</li>
+    <li>Interpretación: el parámetro \(c\) sube o baja cada tramo; solo con \(c=1{,}5\) los dos tramos llegan a la misma altura sobre \(x=3\).</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Cinco errores frecuentes.</b> Uno: <b>dar como límite el valor \(f(a)\)</b>, reemplazando en el tramo que tiene el «\(\le\)». El límite se decide con los dos lados; el valor en \(a\) no participa. Dos: <b>mirar un solo lado</b>. En un punto de cambio hay que calcular los dos laterales y compararlos. Tres: <b>responder «no existe» solo porque la fórmula cambia</b>. Si los laterales coinciden, el límite existe. Cuatro: <b>usar la fórmula del tramo equivocado</b>: por la izquierda de \(a\) vale la fórmula de los \(x\) menores que \(a\). Cinco: <b>separar lados donde no hay cambio</b>. Dentro de un tramo basta la fórmula de ese tramo.</p>
+    <p><b>Cinco errores frecuentes.</b> Uno: <b>dar como límite el valor \(f(a)\)</b>, reemplazando en el tramo que tiene el «\(\le\)». El límite se decide con los dos lados; el valor en \(a\) no participa. Dos: <b>mirar un solo lado</b>. En un punto de corte hay que calcular los dos laterales y compararlos. Tres: <b>responder «no existe» solo porque la fórmula cambia</b>. Si los laterales coinciden, el límite existe. Cuatro: <b>usar la fórmula del tramo equivocado</b>: por la izquierda de \(a\) vale la fórmula de los \(x\) menores que \(a\). Cinco: <b>separar lados donde no hay cambio</b>. Dentro de un tramo basta la fórmula de ese tramo.</p>
   </div>
 </section>
 
@@ -175,51 +209,60 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Sea \(m(x)=3x-1\) si \(x\lt 2\) y \(m(x)=x^{2}+1\) si \(x\ge 2\). a) Halla los dos límites laterales de \(m\) en \(2\). ¿Existe \(\lim_{x\to 2}m(x)\)? b) Calcula \(\lim_{x\to 0}m(x)\). c) Calcula \(\lim_{x\to 3}m(x)\). d) Comprueba a) con \(m(1{,}9)\) y \(m(2{,}1)\).</p>
-    <details><summary>Pista</summary><div><p>En a), \(2\) es el punto de cambio: un lado con cada fórmula. En b) y c), el lugar está dentro de un tramo: di cuál y usa su fórmula.</p></div></details>
+    <details><summary>Pista</summary><div><p>En a), \(2\) es el punto de corte: un lado con cada fórmula. En b) y c), el lugar está dentro de un tramo: di cuál y usa su fórmula.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) Por la izquierda vale \(3x-1\): \(\lim_{x\to 2^{-}}m(x)=3\cdot 2-1=5\).</li>
-        <li>Por la derecha vale \(x^{2}+1\): \(\lim_{x\to 2^{+}}m(x)=2^{2}+1=5\).</li>
-        <li>Los laterales coinciden: \(\lim_{x\to 2}m(x)=5\).</li>
-        <li>b) \(0\) está dentro del primer tramo: para todo \(x\) con \(-1\lt x\lt 1\) vale \(3x-1\). Luego \(\lim_{x\to 0}m(x)=3\cdot 0-1=-1\).</li>
-        <li>c) \(3\) está dentro del segundo tramo: para todo \(x\) con \(2\lt x\lt 4\) vale \(x^{2}+1\). Luego \(\lim_{x\to 3}m(x)=3^{2}+1=10\).</li>
-        <li>d) \(m(1{,}9)=3\cdot 1{,}9-1=5{,}7-1=4{,}7\) y \(m(2{,}1)=2{,}1^{2}+1=4{,}41+1=5{,}41\). Los dos valores están cerca de \(5\).</li>
+        <li>a) \(2\) es el punto de corte. A la izquierda (\(x\lt 2\)) vale \(3x-1\). Se reemplaza \(x\) por \(2\): \(3\cdot 2-1\). Producto: \(3\cdot 2=6\). Resta: \(6-1=5\). Entonces \(\lim_{x\to 2^{-}}m(x)=5\).</li>
+        <li>A la derecha (\(x\gt 2\)) vale \(x^{2}+1\). Se reemplaza \(x\) por \(2\): \(2^{2}+1\). Potencia: \(2^{2}=2\cdot 2=4\). Suma: \(4+1=5\). Entonces \(\lim_{x\to 2^{+}}m(x)=5\).</li>
+        <li>Los laterales, \(5\) y \(5\), coinciden. Por el criterio de los laterales, \(\lim_{x\to 2}m(x)=5\).</li>
+        <li>b) \(0\) está dentro del primer tramo: para todo \(x\) con \(-1\lt x\lt 1\) se cumple \(x\lt 2\) y vale \(3x-1\). Se reemplaza \(x\) por \(0\): \(3\cdot 0-1\). Producto: \(3\cdot 0=0\). Resta: \(0-1=-1\). Entonces \(\lim_{x\to 0}m(x)=3\cdot 0-1=-1\).</li>
+        <li>c) \(3\) está dentro del segundo tramo: para todo \(x\) con \(2\lt x\lt 4\) vale \(x^{2}+1\). Se reemplaza \(x\) por \(3\): \(3^{2}+1\). Potencia: \(3^{2}=3\cdot 3=9\). Suma: \(9+1=10\). Entonces \(\lim_{x\to 3}m(x)=3^{2}+1=10\).</li>
+        <li>d) \(1{,}9\) es menor que \(2\): se usa \(3x-1\). Producto: \(3\cdot 1{,}9=5{,}7\). Resta: \(5{,}7-1=4{,}7\). Entonces \(m(1{,}9)=4{,}7\), a distancia \(5-4{,}7=0{,}3\) de \(5\).</li>
+        <li>\(2{,}1\) es mayor que \(2\): se usa \(x^{2}+1\). Potencia: \(2{,}1\cdot 2{,}1=4{,}41\). Suma: \(4{,}41+1=5{,}41\). Entonces \(m(2{,}1)=5{,}41\), a distancia \(5{,}41-5=0{,}41\) de \(5\).</li>
+        <li>Interpretación: los dos valores están cerca de \(5\), uno por abajo y otro por arriba. La fórmula cambia en \(2\), pero los dos tramos llegan a la misma altura: no hay salto.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Sea \(n(x)=x+4\) si \(x\lt -1\); \(n(x)=x^{2}\) si \(-1\le x\le 2\); \(n(x)=kx\) si \(x\gt 2\), con \(k\) un número fijo. a) ¿Existe \(\lim_{x\to -1}n(x)\)? b) Calcula \(\lim_{x\to 0}n(x)\). c) ¿Para qué valor de \(k\) existe \(\lim_{x\to 2}n(x)\), y cuánto vale? d) Si \(k=3\), ¿existe el límite en \(2\)?</p>
-    <details><summary>Pista</summary><div><p>Hay dos puntos de cambio, \(-1\) y \(2\): cada uno se estudia por separado, con las dos fórmulas que se juntan ahí. En c), iguala los dos laterales y despeja \(k\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Hay dos puntos de corte, \(-1\) y \(2\): cada uno se estudia por separado, con las dos fórmulas que se juntan ahí. En c), iguala los dos laterales y despeja \(k\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) Por la izquierda de \(-1\) vale \(x+4\): el límite es \(-1+4=3\).</li>
-        <li>Por la derecha de \(-1\) vale \(x^{2}\): el límite es \((-1)^{2}=1\).</li>
-        <li>Como \(3\ne 1\), \(n\) no tiene límite en \(-1\).</li>
-        <li>b) \(0\) está dentro del tramo del medio: para todo \(x\) con \(-1\lt x\lt 1\) vale \(x^{2}\). Luego \(\lim_{x\to 0}n(x)=0^{2}=0\).</li>
-        <li>c) Por la izquierda de \(2\) vale \(x^{2}\): el límite es \(2^{2}=4\). Por la derecha vale \(kx\): el límite es \(k\cdot 2=2k\).</li>
-        <li>El límite existe solo si \(2k=4\). Se divide por \(2\): \(k=2\). Con \(k=2\), \(\lim_{x\to 2}n(x)=4\).</li>
-        <li>d) Con \(k=3\), el lateral derecho es \(3\cdot 2=6\) y el izquierdo sigue siendo \(4\). Como \(4\ne 6\), no hay límite en \(2\).</li>
+        <li>a) \(-1\) es un punto de corte. A su izquierda (\(x\lt -1\)) vale \(x+4\). Se reemplaza \(x\) por \(-1\): el lateral izquierdo es \(-1+4=3\).</li>
+        <li>A su derecha (\(-1\lt x\lt 2\)) vale \(x^{2}\). Se reemplaza \(x\) por \(-1\): \((-1)^{2}\). Potencia: \((-1)\cdot(-1)=1\). El lateral derecho es \(1\).</li>
+        <li>Como \(3\ne 1\), \(n\) no tiene límite en \(-1\): hay un salto de tamaño \(3-1=2\).</li>
+        <li>b) \(0\) está dentro del tramo del medio: para todo \(x\) con \(-1\lt x\lt 1\) vale \(x^{2}\). Se reemplaza \(x\) por \(0\): \(0^{2}=0\cdot 0=0\). Entonces \(\lim_{x\to 0}n(x)=0^{2}=0\).</li>
+        <li>c) \(2\) es el otro punto de corte. A su izquierda (\(-1\lt x\lt 2\)) vale \(x^{2}\). Se reemplaza \(x\) por \(2\): \(2^{2}=2\cdot 2=4\). El lateral izquierdo es \(4\).</li>
+        <li>A su derecha (\(x\gt 2\)) vale \(kx\). Se reemplaza \(x\) por \(2\): el lateral derecho es \(k\cdot 2=2k\).</li>
+        <li>El límite existe solo si los laterales coinciden. Se despeja \(k\):
+        \[\begin{aligned}2k=4&&\text{los laterales deben coincidir}\\ k=2&&\text{se divide por }2\text{ a los dos lados}\end{aligned}\]
+        La cuenta: \(\dfrac{4}{2}=2\). Comprobación: con \(k=2\), el lateral derecho es \(2\cdot 2=4\), igual al izquierdo. Con \(k=2\), \(\lim_{x\to 2}n(x)=4\).</li>
+        <li>d) Con \(k=3\), el lateral derecho es \(3\cdot 2=6\) y el izquierdo sigue siendo \(4\). Como \(4\ne 6\), no hay límite en \(2\): queda un salto de tamaño \(6-4=2\).</li>
+        <li>Interpretación: el parámetro \(k\) es la inclinación del tercer tramo; solo con \(k=2\) ese tramo parte de la altura \(4\), donde termina el tramo del medio.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">C</span><b>De la vida cotidiana.</b> La cuenta de la luz de la casa de Ignacia se cobra por tramos. <b>Modelo:</b> (precios inventados para el ejercicio) si en el mes se consumen \(x\) kilowatt-hora, con \(x\ge 0\), cada uno de los primeros \(200\) cuesta \(150\) pesos y cada uno de los que pasan de \(200\) cuesta \(200\) pesos. La cuenta, en pesos, es \(C(x)=150x\) si \(0\le x\le 200\) y \(C(x)=30000+200(x-200)\) si \(x\gt 200\). (El modelo acepta cualquier consumo, no solo números enteros.) a) Halla los dos límites laterales de \(C\) en \(200\). ¿Existe el límite? b) Calcula \(C(199)\) y \(C(201)\) y compáralos con el límite. c) Otra compañía cobra \(D(x)=150x\) si \(0\le x\le 200\) y \(D(x)=200x\) si \(x\gt 200\): al pasar de \(200\), todos los kilowatt-hora se cobran a \(200\) pesos. ¿Existe \(\lim_{x\to 200}D(x)\)? d) Calcula \(\lim_{x\to 100}C(x)\).</p>
-    <details><summary>Pista</summary><div><p>\(200\) es el punto de cambio de las dos tarifas: un lado con cada fórmula. En d), \(100\) está dentro del primer tramo.</p></div></details>
+    <details><summary>Pista</summary><div><p>\(200\) es el punto de corte de las dos tarifas: un lado con cada fórmula. En d), \(100\) está dentro del primer tramo.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) Por la izquierda de \(200\) vale \(150x\): el límite es \(150\cdot 200=30000\).</li>
-        <li>Por la derecha vale \(30000+200(x-200)\). Resta: \(200-200=0\). Producto: \(200\cdot 0=0\). Suma: \(30000+0=30000\).</li>
+        <li>De dónde sale la segunda fórmula de \(C\): los primeros \(200\) kilowatt-hora cuestan \(150\cdot 200=30000\) pesos; los que pasan de \(200\) son \(x-200\), y cada uno cuesta \(200\) pesos. Por eso, si \(x\gt 200\), la cuenta es \(30000+200(x-200)\).</li>
+        <li>a) \(200\) es el punto de corte. A su izquierda (\(x\lt 200\)) vale \(150x\). Se reemplaza \(x\) por \(200\): el lateral izquierdo es \(150\cdot 200=30000\).</li>
+        <li>A su derecha (\(x\gt 200\)) vale \(30000+200(x-200)\). Se reemplaza \(x\) por \(200\): \(30000+200(200-200)\). Resta: \(200-200=0\). Producto: \(200\cdot 0=0\). Suma: \(30000+0=30000\). El lateral derecho es \(30000\).</li>
         <li>Los laterales coinciden: \(\lim_{x\to 200}C(x)=30000\) pesos.</li>
-        <li>b) \(C(199)=150\cdot 199=29850\). Para \(C(201)\): \(201-200=1\), \(200\cdot 1=200\) y \(30000+200=30200\); es decir, \(C(201)=30200\). Los dos valores están cerca de \(30000\): al pasar por los \(200\) kilowatt-hora la cuenta no da un salto.</li>
-        <li>c) Por la izquierda: \(150\cdot 200=30000\). Por la derecha vale \(200x\): \(200\cdot 200=40000\).</li>
-        <li>Como \(30000\ne 40000\), \(D\) no tiene límite en \(200\): con esa tarifa, consumir apenas más de \(200\) sube la cuenta de golpe en \(40000-30000=10000\) pesos. Por ejemplo, \(D(201)=200\cdot 201=40200\).</li>
-        <li>d) \(100\) está dentro del primer tramo: para todo \(x\) con \(0\lt x\lt 200\) vale \(150x\). Luego \(\lim_{x\to 100}C(x)=150\cdot 100=15000\) pesos.</li>
+        <li>b) \(199\) es menor que \(200\): se usa \(150x\), y \(C(199)=150\cdot 199=29850\). Le faltan \(30000-29850=150\) pesos para el límite.</li>
+        <li>\(201\) es mayor que \(200\): se usa la segunda fórmula. Resta: \(201-200=1\). Producto: \(200\cdot 1=200\). Suma: \(30000+200=30200\). Entonces \(C(201)=30200\): se pasa del límite en \(30200-30000=200\) pesos.</li>
+        <li>Interpretación de a) y b): los dos valores están cerca de \(30000\). Al pasar por los \(200\) kilowatt-hora la cuenta no da un salto: solo empieza a subir más rápido.</li>
+        <li>c) Para \(D\), a la izquierda de \(200\) vale \(150x\): el lateral izquierdo es \(150\cdot 200=30000\). A la derecha vale \(200x\): el lateral derecho es \(200\cdot 200=40000\).</li>
+        <li>Como \(30000\ne 40000\), \(D\) no tiene límite en \(200\): hay un salto de tamaño \(40000-30000=10000\) pesos. Con esa tarifa, consumir apenas más de \(200\) sube la cuenta de golpe. Por ejemplo, \(D(201)=200\cdot 201=40200\).</li>
+        <li>d) \(100\) está dentro del primer tramo: para todo \(x\) con \(0\lt x\lt 200\) vale \(150x\). Se reemplaza \(x\) por \(100\): \(\lim_{x\to 100}C(x)=150\cdot 100=15000\) pesos.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">CD-L30-H07 · v001 · Pendiente de APR</span>
+  <span class="status">CD-L30-H07 · v002 · Pendiente de APR</span>
 </footer>
 </article>

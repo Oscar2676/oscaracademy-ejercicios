@@ -12,46 +12,97 @@
       <li><b>Patrón de los coeficientes</b></li>
     </ol>
     <h1>Patrón de los coeficientes</h1>
-    <p class="lede">Al desarrollar \((a+b)^{n}\) para \(n=0,\ 1,\ 2,\ 3,\dots\) los coeficientes forman un triángulo. Cada fila empieza y termina en \(1\), y cada número interior es la suma de los dos que tiene arriba.
-    \[\begin{array}{c}1\\1\quad 1\\1\quad 2\quad 1\\1\quad 3\quad 3\quad 1\\1\quad 4\quad 6\quad 4\quad 1\end{array}\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). <b>Desarrollar</b> \((a+b)^{n}\), que se lee «\(a\) más \(b\), elevado a \(n\)», es escribirlo sin paréntesis, como una suma de términos. En cada término, el número que multiplica a las letras se llama <b>coeficiente</b>: en \(3a^{2}b\) el coeficiente es \(3\). Cuando no hay ningún número escrito, el coeficiente es \(1\): \(a^{3}\) es lo mismo que \(1a^{3}\). Esta hoja responde una pregunta: ¿qué coeficientes aparecen al desarrollar \((a+b)^{n}\), y cómo se obtienen sin hacer toda la multiplicación?</p>
+    <p class="lede"><b>De dónde sale.</b> Se escriben los cinco primeros desarrollos, uno bajo otro, con todos sus coeficientes a la vista (también los que valen \(1\)). A la derecha, de dónde sale cada uno:
+    \[\begin{aligned}(a+b)^{0}&=1&&\text{elevar a }0\text{ da }1\text{ (para }a+b\ne 0\text{)}\\ (a+b)^{1}&=1a+1b&&\text{elevar a }1\text{ no cambia nada}\\ (a+b)^{2}&=1a^{2}+2ab+1b^{2}&&\text{hoja «Cuadrado de un binomio»}\\ (a+b)^{3}&=1a^{3}+3a^{2}b+3ab^{2}+1b^{3}&&\text{hoja «Cubo de un binomio»}\\ (a+b)^{4}&=1a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+1b^{4}&&\text{se calcula en esta hoja, paso a paso}\end{aligned}\]
+    Ahora se copian <b>solo los coeficientes</b>, en el mismo orden, y cada lista se centra bajo la anterior. Cada lista es una <b>fila</b>, y lleva el número del exponente: la fila \(0\) es la de \((a+b)^{0}\), la fila \(1\) es la de \((a+b)^{1}\), y así.
+    \[\begin{array}{rc}\text{fila }0:&1\\ \text{fila }1:&1\quad 1\\ \text{fila }2:&1\quad 2\quad 1\\ \text{fila }3:&1\quad 3\quad 3\quad 1\\ \text{fila }4:&1\quad 4\quad 6\quad 4\quad 1\end{array}\]
+    <b>La regularidad.</b> Se miran dos cosas. Una: cada fila empieza y termina en \(1\); esos unos son los <b>bordes</b>. Dos: cada número que no está en un borde (un número <b>interior</b>) queda justo debajo de dos números de la fila anterior, uno arriba a su izquierda y otro arriba a su derecha, y es la suma de esos dos:
+    \[\begin{aligned}\text{fila }2:&\quad 1+1=2&&\text{los dos unos de la fila }1\\ \text{fila }3:&\quad 1+2=3,\qquad 2+1=3&&\text{los números }1,\ 2,\ 1\text{ de la fila }2\text{, de dos en dos}\\ \text{fila }4:&\quad 1+3=4,\qquad 3+3=6,\qquad 3+1=4&&\text{los números }1,\ 3,\ 3,\ 1\text{ de la fila }3\text{, de dos en dos}\end{aligned}\]</p>
+    <p class="lede"><b>La regla.</b> Las filas forman un triángulo de números, que se conoce como <b>triángulo de Pascal</b> (o de Tartaglia). Se arma así: la fila \(0\) es un \(1\); cada fila siguiente empieza y termina en \(1\); y entre los bordes,
+    \[\text{número interior}=\text{número de arriba a la izquierda}+\text{número de arriba a la derecha}\]
+    Se lee: «cada número interior del triángulo es la suma de los dos números que tiene arriba». La fila \(n\) tiene \(n+1\) números, y son los coeficientes de \((a+b)^{n}\), en orden. Por qué la regla funciona siempre, y no solo en estas cinco filas, se demuestra más abajo, en el recuadro «Por qué cada número es la suma de los dos de arriba».</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El triángulo se arma número por número. Mira de dónde sale cada uno.</p>
+  <p>El triángulo se arma fila por fila, en siete pasos, hasta responder la pregunta de arriba: ¿cuánto es \((a+b)^{4}\)? Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Pasos 1, 2 y 3, mira las tres primeras filas.</b> A la izquierda está el nombre de cada fila; a la derecha, en burdeo, el binomio al que pertenece: la fila \(2\) son los coeficientes de \((a+b)^{2}\). Los unos verdes son los bordes. El \(2\) naranja es un número interior: dos líneas azules lo unen con los dos unos que tiene arriba, porque \(1+1=2\).</li>
+    <li><b>Paso 4, mira los dos renglones bajo el triángulo.</b> Para pasar de \((a+b)^{2}\) a \((a+b)^{3}\) se multiplica \((a+b)^{2}\) por \(b\) (primer renglón) y por \(a\) (segundo renglón). Los resultados están escritos en columnas: en cada columna quedan los términos con las mismas letras y los mismos exponentes.</li>
+    <li><b>Paso 5, mira las dos columnas enmarcadas.</b> En cada una hay dos términos semejantes, y sus coeficientes se suman: \(1+2=3\) y \(2+1=3\). En las columnas de los extremos hay un solo término, de coeficiente \(1\). Esos cuatro números, \(1,\ 3,\ 3,\ 1\), son la fila \(3\), que aparece al mismo tiempo en el triángulo.</li>
+    <li><b>Paso 6, mira la fila 4.</b> Se arma igual, ya sin multiplicar: un \(1\) en cada borde, y cada interior unido por dos líneas a los dos números que se suman: \(1+3=4\), \(3+3=6\), \(3+1=4\).</li>
+    <li><b>Paso 7, y la cuenta de abajo.</b> La fila \(4\), enmarcada, da la respuesta. Lee el registro «Paso a paso» y la cuenta bajo la figura, línea por línea: cada desarrollo, cada suma y la fila que sale. Ninguna línea se borra.</li>
+  </ol>
   <div class="stage" data-scene="bn-pascal"></div>
   <ul class="keys">
-    <li><b>Número naranja:</b> el que se está calculando.</li>
-    <li><b>Números azules, unidos por líneas:</b> los dos de arriba, que se suman para obtenerlo.</li>
-    <li><b>A la izquierda:</b> el número de fila, \(n\). Es el exponente del binomio.</li>
-    <li><b>Bajo el triángulo:</b> la suma que se hizo y, cuando una fila queda completa, el desarrollo de \((a+b)^{n}\) con esos coeficientes.</li>
-    <li><b>Deslizador «paso»:</b> avanza o retrocede un número a la vez.</li>
+    <li><b>Unos verdes:</b> los bordes. Cada fila empieza y termina en \(1\).</li>
+    <li><b>Números naranjas:</b> los interiores. Cada uno es la suma de los dos números que tiene arriba.</li>
+    <li><b>Líneas azules:</b> unen cada número interior con los dos números de arriba que se suman para obtenerlo.</li>
+    <li><b>Burdeo:</b> a la derecha de cada fila, el binomio cuyos coeficientes son esa fila; bajo el triángulo, el desarrollo de \((a+b)^{3}\) que resulta de sumar los dos renglones.</li>
+    <li><b>Recuadros naranjas, bajo el triángulo:</b> las columnas con dos términos semejantes, cuyos coeficientes se suman.</li>
   </ul>
+  <p><b>Lo mismo, escrito.</b> El paso de \((a+b)^{2}\) a \((a+b)^{3}\), una operación por línea; a la derecha, lo que se hizo. Dos términos son <b>semejantes</b> cuando tienen las mismas letras con los mismos exponentes, como \(a^{2}b\) y \(2a^{2}b\); se suman sumando sus coeficientes.
+  \[\begin{aligned}(a+b)^{3}&=(a+b)^{2}\cdot(a+b)&&\text{elevar a }3\text{ es multiplicar una vez más por }(a+b)\\ &=(a+b)^{2}\cdot b+(a+b)^{2}\cdot a&&\text{propiedad distributiva: se multiplica por cada término de }(a+b)\\ (a+b)^{2}\cdot b&=\left(1a^{2}+2ab+1b^{2}\right)\cdot b&&\text{se reemplaza el desarrollo de }(a+b)^{2}\\ &=1a^{2}b+2ab^{2}+1b^{3}&&\text{cada término por }b\text{: el exponente de }b\text{ sube en }1\\ (a+b)^{2}\cdot a&=\left(1a^{2}+2ab+1b^{2}\right)\cdot a&&\text{se reemplaza el desarrollo de }(a+b)^{2}\\ &=1a^{3}+2a^{2}b+1ab^{2}&&\text{cada término por }a\text{: el exponente de }a\text{ sube en }1\end{aligned}\]
+  Se escriben los dos resultados en columnas de términos semejantes y se suma cada columna:
+  \[\begin{array}{rcccc}(a+b)^{2}\cdot b=&&1a^{2}b&+\,2ab^{2}&+\,1b^{3}\\ (a+b)^{2}\cdot a=&1a^{3}&+\,2a^{2}b&+\,1ab^{2}&\\ \hline (a+b)^{3}=&1a^{3}&+\,3a^{2}b&+\,3ab^{2}&+\,1b^{3}\\ \text{coeficientes:}&1&1+2=3&2+1=3&1\end{array}\]
+  Columna por columna: \(1a^{3}\) está solo, y queda con su \(1\). En la segunda columna, \(1a^{2}b+2a^{2}b=(1+2)\,a^{2}b=3a^{2}b\). En la tercera, \(2ab^{2}+1ab^{2}=(2+1)\,ab^{2}=3ab^{2}\). Y \(1b^{3}\) está solo, con su \(1\). <b>Ahí está el porqué de la regla:</b> el \(1\) y el \(2\) que se suman en la segunda columna son dos coeficientes vecinos de \((a+b)^{2}\), es decir, dos números vecinos de la fila \(2\): el \(1\) de \(1a^{2}\), que se multiplicó por \(b\), y el \(2\) de \(2ab\), que se multiplicó por \(a\). Los dos productos dan las mismas letras, \(a^{2}b\), y por eso se juntan.</p>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra las filas \(0\) a \(4\) y un solo paso de multiplicación (de \((a+b)^{2}\) a \((a+b)^{3}\)): eso ilustra la regla, no la demuestra para todas las filas. La demostración general está en el recuadro «Por qué cada número es la suma de los dos de arriba». Se usan sin demostrar: los desarrollos de \((a+b)^{2}\) y \((a+b)^{3}\) (hojas «Cuadrado de un binomio» y «Cubo de un binomio»), la propiedad distributiva y la regla de los exponentes \(a^{m}\cdot a=a^{m+1}\). La igualdad \((a+b)^{0}=1\) vale cuando \(a+b\ne 0\): todo número distinto de cero, elevado a \(0\), es \(1\).</p>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
-    <h3>Los primeros desarrollos</h3>
+    <h3>Los primeros desarrollos: lo que se observa</h3>
+    <p>Se mira el desarrollo de \((a+b)^{4}\), término por término. En cada término se anota el exponente de \(a\), el exponente de \(b\) y su suma. (Una letra sin exponente escrito tiene exponente \(1\); una letra que no aparece tiene exponente \(0\), porque \(b^{0}=1\) si \(b\ne 0\).)</p>
+    \[\begin{aligned}1a^{4}&:\quad\text{exponentes }4\text{ y }0,&&4+0=4\\ 4a^{3}b&:\quad\text{exponentes }3\text{ y }1,&&3+1=4\\ 6a^{2}b^{2}&:\quad\text{exponentes }2\text{ y }2,&&2+2=4\\ 4ab^{3}&:\quad\text{exponentes }1\text{ y }3,&&1+3=4\\ 1b^{4}&:\quad\text{exponentes }0\text{ y }4,&&0+4=4\end{aligned}\]
     <ol class="steps">
-      <li>\((a+b)^{0}=1\)</li>
-      <li>\((a+b)^{1}=a+b\)</li>
-      <li>\((a+b)^{2}=a^{2}+2ab+b^{2}\)</li>
-      <li>\((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\)</li>
-      <li>\((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\)</li>
+      <li><b>Cuántos términos hay.</b> El exponente de \(b\) recorre \(0,\ 1,\ 2,\ 3,\ 4\): son \(5\) valores, es decir, \(4+1\) términos. En las filas de arriba pasa lo mismo: la fila \(0\) tiene \(1\) número; la fila \(1\), \(2\); la fila \(2\), \(3\); la fila \(3\), \(4\). La fila \(n\) tiene \(n+1\) números.</li>
+      <li><b>Cómo van los exponentes.</b> El de \(a\) baja de uno en uno, de \(4\) a \(0\); el de \(b\) sube de uno en uno, de \(0\) a \(4\). En cada término suman \(4\), el exponente del binomio.</li>
+      <li><b>Por qué suman siempre el exponente del binomio.</b> Cada vez que se multiplica por \((a+b)\), cada término se multiplica por \(a\) o por \(b\): uno de sus dos exponentes sube en \(1\), y la suma de los dos sube en \(1\). En \((a+b)^{1}=1a+1b\) la suma es \(1\); en \((a+b)^{2}\), \(2\); y así, de uno en uno.</li>
+      <li><b>Los coeficientes se leen igual en los dos sentidos.</b> \(1,\ 4,\ 6,\ 4,\ 1\) leído de derecha a izquierda es otra vez \(1,\ 4,\ 6,\ 4,\ 1\). Pasa en las cinco filas escritas. La razón: \(a+b\) y \(b+a\) son el mismo binomio, así que al cambiar \(a\) por \(b\) y \(b\) por \(a\) el desarrollo tiene que quedar igual; y ese cambio lleva el término \(4a^{3}b\) al término \(4b^{3}a\), que es \(4ab^{3}\): los dos tienen el mismo coeficiente.</li>
     </ol>
-    <p><b>Lo que se observa.</b> El desarrollo de \((a+b)^{n}\) tiene \(n+1\) términos. Las potencias de \(a\) bajan de \(n\) a \(0\); las de \(b\) suben de \(0\) a \(n\); en cada término suman \(n\). Los coeficientes se leen igual de izquierda a derecha que de derecha a izquierda.</p>
   </div>
 
   <div class="card k1">
     <h3>Por qué cada número es la suma de los dos de arriba</h3>
+    <p><b>Qué se demuestra.</b> Que si se conoce una fila del triángulo (los coeficientes de \((a+b)^{n-1}\)), la fila siguiente (los coeficientes de \((a+b)^{n}\)) se obtiene así: un \(1\) en cada borde y, en cada lugar interior, la suma de los dos números que quedan arriba. Vale para todo exponente \(n\) entero, desde \(n=2\).</p>
+    <p><b>Cómo funciona el método.</b> Es el mismo de la animación. Se multiplica el desarrollo conocido por \((a+b)\), es decir, por \(b\) y por \(a\); se buscan los términos semejantes, que son siempre dos (salvo en los bordes); y se suman sus coeficientes. Primero se hace con números, de la fila \(3\) a la fila \(4\); después con letras, para cualquier fila.</p>
+    <p><b>Primero con números: de \((a+b)^{3}\) a \((a+b)^{4}\).</b></p>
+    \[\begin{aligned}(a+b)^{4}&=(a+b)^{3}\cdot(a+b)&&\text{elevar a }4\text{ es multiplicar una vez más por }(a+b)\\ &=(a+b)^{3}\cdot b+(a+b)^{3}\cdot a&&\text{propiedad distributiva}\\ (a+b)^{3}\cdot b&=\left(1a^{3}+3a^{2}b+3ab^{2}+1b^{3}\right)\cdot b&&\text{se reemplaza el desarrollo de }(a+b)^{3}\\ &=1a^{3}b+3a^{2}b^{2}+3ab^{3}+1b^{4}&&\text{cada término por }b\text{: el exponente de }b\text{ sube en }1\\ (a+b)^{3}\cdot a&=\left(1a^{3}+3a^{2}b+3ab^{2}+1b^{3}\right)\cdot a&&\text{se reemplaza el desarrollo de }(a+b)^{3}\\ &=1a^{4}+3a^{3}b+3a^{2}b^{2}+1ab^{3}&&\text{cada término por }a\text{: el exponente de }a\text{ sube en }1\end{aligned}\]
+    <p>En columnas de términos semejantes:</p>
+    \[\begin{array}{rccccc}(a+b)^{3}\cdot b=&&1a^{3}b&+\,3a^{2}b^{2}&+\,3ab^{3}&+\,1b^{4}\\ (a+b)^{3}\cdot a=&1a^{4}&+\,3a^{3}b&+\,3a^{2}b^{2}&+\,1ab^{3}&\\ \hline (a+b)^{4}=&1a^{4}&+\,4a^{3}b&+\,6a^{2}b^{2}&+\,4ab^{3}&+\,1b^{4}\\ \text{coeficientes:}&1&1+3=4&3+3=6&3+1=4&1\end{array}\]
+    <p>Una columna por línea:</p>
+    \[\begin{aligned}1a^{4}&&&\text{está solo: borde, coeficiente }1\\ 1a^{3}b+3a^{3}b&=(1+3)\,a^{3}b=4a^{3}b&&\text{semejantes: se suman los coeficientes}\\ 3a^{2}b^{2}+3a^{2}b^{2}&=(3+3)\,a^{2}b^{2}=6a^{2}b^{2}&&\text{semejantes: se suman los coeficientes}\\ 3ab^{3}+1ab^{3}&=(3+1)\,ab^{3}=4ab^{3}&&\text{semejantes: se suman los coeficientes}\\ 1b^{4}&&&\text{está solo: borde, coeficiente }1\end{aligned}\]
+    <p>La fila \(4\) es \(1,\ 4,\ 6,\ 4,\ 1\), y las sumas \(1+3\), \(3+3\) y \(3+1\) usan los números \(1,\ 3,\ 3,\ 1\) de la fila \(3\), tomados de dos en dos vecinos.</p>
+    <p><b>Ahora con letras, para cualquier fila.</b> A los números de la fila \(n-1\) se les pone nombre, de izquierda a derecha: \(c_{0},\ c_{1},\ c_{2},\ \ldots,\ c_{n-1}\). El símbolo \(c_{k}\) se lee «\(c\) sub \(k\)»: es el número del lugar \(k\) de la fila, contando desde \(0\), y es el coeficiente del término que tiene \(k\) veces la letra \(b\). Por ejemplo, en la fila \(3\): \(c_{0}=1\), \(c_{1}=3\), \(c_{2}=3\), \(c_{3}=1\). Entonces
+    \[(a+b)^{n-1}=c_{0}\,a^{n-1}+c_{1}\,a^{n-2}b+c_{2}\,a^{n-3}b^{2}+\ldots+c_{n-1}\,b^{n-1}\]
+    y el término del lugar \(k\) es \(c_{k}\,a^{n-1-k}\,b^{k}\) (los dos exponentes suman \(n-1\)). Con \(n-1=3\) y \(k=1\): \(c_{1}\,a^{3-1}\,b^{1}=3a^{2}b\).</p>
     <ol class="steps">
-      <li>Cada desarrollo sale del anterior multiplicando por \((a+b)\): \((a+b)^{4}=(a+b)\,(a+b)^{3}\).</li>
-      <li>\((a+b)\left(a^{3}+3a^{2}b+3ab^{2}+b^{3}\right)=a\left(a^{3}+3a^{2}b+3ab^{2}+b^{3}\right)+b\left(a^{3}+3a^{2}b+3ab^{2}+b^{3}\right)\).</li>
-      <li>Multiplicar por \(a\) da \(a^{4}+3a^{3}b+3a^{2}b^{2}+ab^{3}\). Multiplicar por \(b\) da \(a^{3}b+3a^{2}b^{2}+3ab^{3}+b^{4}\).</li>
-      <li>Se suman los semejantes. Por ejemplo, \(a^{2}b^{2}\) aparece con \(3\) en la primera línea y con \(3\) en la segunda: \(3+3=6\). Y \(a^{3}b\): \(3+1=4\).</li>
-      <li>Siempre pasa igual: el coeficiente de un término se forma con <b>dos coeficientes vecinos</b> de la fila anterior. Los extremos, \(a^{n}\) y \(b^{n}\), reciben un solo aporte: por eso valen \(1\).</li>
+      <li><b>Se multiplica por \((a+b)\).</b> \((a+b)^{n}=(a+b)^{n-1}\cdot(a+b)=(a+b)^{n-1}\cdot b+(a+b)^{n-1}\cdot a\) (propiedad distributiva).</li>
+      <li><b>Qué le pasa a cada término al multiplicarlo por \(b\).</b> \(c_{k}\,a^{n-1-k}\,b^{k}\cdot b=c_{k}\,a^{n-1-k}\,b^{k+1}\): el coeficiente no cambia y el exponente de \(b\) sube en \(1\).</li>
+      <li><b>Qué le pasa al multiplicarlo por \(a\).</b> \(c_{k}\,a^{n-1-k}\,b^{k}\cdot a=c_{k}\,a^{n-k}\,b^{k}\): el coeficiente no cambia, el exponente de \(a\) sube en \(1\) y el de \(b\) queda igual.</li>
+      <li><b>Se elige un término interior de \((a+b)^{n}\):</b> el que tiene \(k\) veces la letra \(b\), con \(k\) entre \(1\) y \(n-1\). Sus letras son \(a^{n-k}\,b^{k}\). ¿Qué productos lo dan? Por el paso 3, al multiplicar por \(a\) el exponente de \(b\) no cambia: sirve solo el término que ya tenía \(b^{k}\), que es el del lugar \(k\), y da \(c_{k}\,a^{n-k}\,b^{k}\). Por el paso 2, al multiplicar por \(b\) el exponente de \(b\) sube en \(1\): sirve solo el término que tenía \(b^{k-1}\), que es el del lugar \(k-1\), y da \(c_{k-1}\,a^{n-k}\,b^{k}\). No hay más.</li>
+      <li><b>Se suman los dos semejantes.</b> \(c_{k-1}\,a^{n-k}\,b^{k}+c_{k}\,a^{n-k}\,b^{k}=\left(c_{k-1}+c_{k}\right)a^{n-k}\,b^{k}\). El coeficiente nuevo es \(c_{k-1}+c_{k}\): la suma de dos números vecinos de la fila anterior. En el triángulo, como cada fila va centrada bajo la anterior, \(c_{k-1}\) queda arriba a la izquierda y \(c_{k}\) arriba a la derecha.</li>
+      <li><b>Los bordes.</b> El término \(a^{n}\) no tiene ninguna \(b\): solo puede salir de multiplicar por \(a\) el término sin \(b\), \(c_{0}\,a^{n-1}\cdot a=c_{0}\,a^{n}\). El término \(b^{n}\) no tiene ninguna \(a\): solo puede salir de multiplicar por \(b\) el término sin \(a\), \(c_{n-1}\,b^{n-1}\cdot b=c_{n-1}\,b^{n}\). Cada borde recibe un solo aporte y conserva el borde de la fila anterior. Como los bordes de la fila \(1\) son \(1\) y \(1\), los de la fila \(2\) también, y los de la fila \(3\), y así en todas.</li>
+      <li><b>Comprobación con la fila 4,</b> que sale de la fila \(3\) (\(c_{0}=1\), \(c_{1}=3\), \(c_{2}=3\), \(c_{3}=1\)): lugar \(1\), \(c_{0}+c_{1}=1+3=4\); lugar \(2\), \(c_{1}+c_{2}=3+3=6\); lugar \(3\), \(c_{2}+c_{3}=3+1=4\); bordes, \(c_{0}=1\) y \(c_{3}=1\). Fila \(4\): \(1,\ 4,\ 6,\ 4,\ 1\) ✓.</li>
     </ol>
+    <p><b>Qué se usó sin demostrar.</b> La propiedad distributiva y la regla \(a^{m}\cdot a=a^{m+1}\). Además, el argumento pasa de una fila a la siguiente; que así se alcancen <b>todas</b> las filas, partiendo de la fila \(1\), es un modo de razonar que se llama inducción y se estudia en la hoja «Demostración por inducción».</p>
+  </div>
+
+  <div class="card k3">
+    <h3>Cómo se usa una fila para desarrollar un binomio</h3>
+    <p>Con la fila \(n\) a la vista, el desarrollo de \((a+b)^{n}\) se escribe sin multiplicar. Se muestra con \(n=3\), fila \(1,\ 3,\ 3,\ 1\):</p>
+    <ol class="steps">
+      <li><b>Las letras.</b> Se escriben \(n+1\) términos. En el primero, \(a\) lleva el exponente \(n\) y \(b\) el exponente \(0\); de un término al siguiente, el exponente de \(a\) baja en \(1\) y el de \(b\) sube en \(1\). Con \(n=3\): \(a^{3}b^{0}\), \(a^{2}b^{1}\), \(a^{1}b^{2}\), \(a^{0}b^{3}\).</li>
+      <li><b>Los coeficientes.</b> A cada término se le pone delante el número de la fila que le toca, en orden: \(1\,a^{3}b^{0}+3\,a^{2}b^{1}+3\,a^{1}b^{2}+1\,a^{0}b^{3}\).</li>
+      <li><b>Se simplifica la escritura.</b> \(b^{0}=1\) y \(a^{0}=1\) (para \(a\ne 0\) y \(b\ne 0\)), el exponente \(1\) no se escribe y el coeficiente \(1\) tampoco: \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\).</li>
+      <li><b>Si \(a\) o \(b\) no son letras solas</b> (por ejemplo \(a=x\) y \(b=2\), o \(a=2x\)), se reemplazan con paréntesis y se calcula cada potencia por separado, como en los ejemplos 2 y 4.</li>
+    </ol>
+    <p><b>Caso especial: las filas \(0\) y \(1\).</b> No tienen números interiores, así que no salen de la regla de la suma: se escriben directamente. La fila \(0\) es \(1\), porque \((a+b)^{0}=1\); la fila \(1\) es \(1,\ 1\), porque \((a+b)^{1}=1a+1b\). La primera suma aparece en la fila \(2\): \(1+1=2\).</p>
   </div>
 </section>
 
@@ -62,10 +113,16 @@
   <h3>Ejemplo 1: la fila 5, a partir de la fila 4</h3>
   <div class="body">
   <ol class="steps">
-    <li>Fila 4: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
-    <li>Extremos: \(1\). Interiores: \(1+4=5\), \(4+6=10\), \(6+4=10\), \(4+1=5\).</li>
-    <li>Fila 5: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li>Fila \(4\): \(1,\ 4,\ 6,\ 4,\ 1\). La fila \(5\) tiene \(5+1=6\) números.</li>
+    <li>Borde izquierdo: \(1\).</li>
+    <li>Primer interior, bajo el \(1\) y el \(4\): \(1+4=5\).</li>
+    <li>Segundo interior, bajo el \(4\) y el \(6\): \(4+6=10\).</li>
+    <li>Tercer interior, bajo el \(6\) y el \(4\): \(6+4=10\).</li>
+    <li>Cuarto interior, bajo el \(4\) y el \(1\): \(4+1=5\).</li>
+    <li>Borde derecho: \(1\). Fila \(5\): \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li>Las letras: el exponente de \(a\) baja de \(5\) a \(0\) y el de \(b\) sube de \(0\) a \(5\): \(a^{5}\), \(a^{4}b\), \(a^{3}b^{2}\), \(a^{2}b^{3}\), \(ab^{4}\), \(b^{5}\).</li>
     <li>\((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\).</li>
+    <li>Comprobación con \(a=1\) y \(b=1\). Lado izquierdo: \((1+1)^{5}=2^{5}=32\). Lado derecho: toda potencia de \(1\) es \(1\), así que cada término vale su coeficiente: \(1+5=6\); \(6+10=16\); \(16+10=26\); \(26+5=31\); \(31+1=32\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -74,10 +131,16 @@
   <h3>Ejemplo 2: \((x+2)^{4}\) con la fila 4</h3>
   <div class="body">
   <ol class="steps">
-    <li>Coeficientes: \(1,\ 4,\ 6,\ 4,\ 1\). Con \(a=x\) y \(b=2\).</li>
-    <li>\(x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 4+4\cdot x\cdot 8+16\).</li>
+    <li>Fila \(4\): \(1,\ 4,\ 6,\ 4,\ 1\). Aquí \(a=x\) y \(b=2\).</li>
+    <li>Se escribe el desarrollo con paréntesis: \((x+2)^{4}=1\cdot x^{4}\cdot 2^{0}+4\cdot x^{3}\cdot 2^{1}+6\cdot x^{2}\cdot 2^{2}+4\cdot x^{1}\cdot 2^{3}+1\cdot x^{0}\cdot 2^{4}\).</li>
+    <li>Las potencias de \(2\): \(2^{0}=1\); \(2^{1}=2\); \(2^{2}=2\cdot 2=4\); \(2^{3}=4\cdot 2=8\); \(2^{4}=8\cdot 2=16\).</li>
+    <li>Primer término: \(1\cdot x^{4}\cdot 1=x^{4}\).</li>
+    <li>Segundo término: \(4\cdot x^{3}\cdot 2=8x^{3}\), porque \(4\cdot 2=8\).</li>
+    <li>Tercer término: \(6\cdot x^{2}\cdot 4=24x^{2}\), porque \(6\cdot 4=24\).</li>
+    <li>Cuarto término: \(4\cdot x\cdot 8=32x\), porque \(4\cdot 8=32\).</li>
+    <li>Quinto término: \(1\cdot 1\cdot 16=16\) (se usó \(x^{0}=1\)).</li>
     <li>\((x+2)^{4}=x^{4}+8x^{3}+24x^{2}+32x+16\).</li>
-    <li><b>Comprobación con \(x=1\):</b> \(3^{4}=81\) y \(1+8+24+32+16=81\).</li>
+    <li>Comprobación con \(x=1\). Lado izquierdo: \((1+2)^{4}=3^{4}=3\cdot 3\cdot 3\cdot 3=81\). Lado derecho: \(1+8=9\); \(9+24=33\); \(33+32=65\); \(65+16=81\) ✓.</li>
   </ol>
   </div>
   </div>
@@ -86,9 +149,15 @@
   <h3>Ejemplo 3: la suma de cada fila</h3>
   <div class="body">
   <ol class="steps">
-    <li>Fila 0: \(1\). Fila 1: \(1+1=2\). Fila 2: \(1+2+1=4\). Fila 3: \(1+3+3+1=8\). Fila 4: \(16\).</li>
-    <li>Son las potencias de \(2\). La razón: al poner \(a=1\) y \(b=1\) en el desarrollo, cada término se reduce a su coeficiente, y el lado izquierdo es \((1+1)^{n}=2^{n}\).</li>
-    <li>La suma de los coeficientes de la fila \(n\) es \(2^{n}\).</li>
+    <li>Fila \(0\): \(1\).</li>
+    <li>Fila \(1\): \(1+1=2\).</li>
+    <li>Fila \(2\): \(1+2+1=4\).</li>
+    <li>Fila \(3\): \(1+3+3+1=8\).</li>
+    <li>Fila \(4\): \(1+4+6+4+1=16\).</li>
+    <li>La regularidad: \(1,\ 2,\ 4,\ 8,\ 16\) son las potencias de \(2\): \(2^{0}=1\), \(2^{1}=2\), \(2^{2}=4\), \(2^{3}=8\), \(2^{4}=16\). Cada suma es el doble de la anterior.</li>
+    <li>De dónde sale, con la fila \(3\). Se reemplaza \(a=1\) y \(b=1\) en \((a+b)^{3}=1a^{3}+3a^{2}b+3ab^{2}+1b^{3}\). Lado izquierdo: \((1+1)^{3}=2^{3}=8\). Lado derecho: \(1\cdot 1^{3}+3\cdot 1^{2}\cdot 1+3\cdot 1\cdot 1^{2}+1\cdot 1^{3}=1+3+3+1\), porque toda potencia de \(1\) es \(1\). Entonces \(1+3+3+1=8=2^{3}\).</li>
+    <li>Lo mismo vale en cualquier fila: con \(a=1\) y \(b=1\), cada término se reduce a su coeficiente y el lado izquierdo es \((1+1)^{n}=2^{n}\). La suma de los números de la fila \(n\) es \(2^{n}\).</li>
+    <li>En símbolos, con \(c_{0},\ c_{1},\ \ldots,\ c_{n}\) los números de la fila \(n\): \(\displaystyle\sum_{k=0}^{n}c_{k}=c_{0}+c_{1}+\ldots+c_{n}=2^{n}\). Se lee: «la sumatoria de los \(c\) sub \(k\), desde \(k\) igual a \(0\) hasta \(n\), es \(2\) elevado a \(n\)». (Este resultado tiene su propia hoja: «Suma de los coeficientes».)</li>
   </ol>
   </div>
   </div>
@@ -97,56 +166,79 @@
   <h3>Ejemplo 4: \((a-b)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Mismos coeficientes, con \(-b\) en el lugar de \(b\): las potencias impares de \(-b\) son negativas.</li>
-    <li>\((a-b)^{4}=a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}\).</li>
+    <li>Una resta es la suma del opuesto: \(a-b=a+(-b)\). Se usa la fila \(4\), \(1,\ 4,\ 6,\ 4,\ 1\), con \(-b\) en el lugar de \(b\).</li>
+    <li>\((a-b)^{4}=1\cdot a^{4}+4\cdot a^{3}\cdot(-b)^{1}+6\cdot a^{2}\cdot(-b)^{2}+4\cdot a\cdot(-b)^{3}+1\cdot(-b)^{4}\).</li>
+    <li>Las potencias de \(-b\), una por una: \((-b)^{1}=-b\); \((-b)^{2}=(-b)\cdot(-b)=b^{2}\) (menos por menos es más); \((-b)^{3}=b^{2}\cdot(-b)=-b^{3}\); \((-b)^{4}=-b^{3}\cdot(-b)=b^{4}\).</li>
+    <li>Segundo término: \(4\cdot a^{3}\cdot(-b)=-4a^{3}b\).</li>
+    <li>Tercer término: \(6\cdot a^{2}\cdot b^{2}=6a^{2}b^{2}\).</li>
+    <li>Cuarto término: \(4\cdot a\cdot\left(-b^{3}\right)=-4ab^{3}\).</li>
+    <li>Quinto término: \(1\cdot b^{4}=b^{4}\).</li>
+    <li>\((a-b)^{4}=a^{4}-4a^{3}b+6a^{2}b^{2}-4ab^{3}+b^{4}\). Los coeficientes son los mismos de la fila \(4\); los signos se alternan, porque las potencias impares de \(-b\) son negativas.</li>
+    <li>Comprobación con \(a=3\) y \(b=1\). Lado izquierdo: \((3-1)^{4}=2^{4}=16\). Lado derecho, término por término: \(3^{4}=81\); \(4\cdot 3^{3}\cdot 1=4\cdot 27=108\); \(6\cdot 3^{2}\cdot 1^{2}=6\cdot 9=54\); \(4\cdot 3\cdot 1^{3}=12\); \(1^{4}=1\). Entonces \(81-108=-27\); \(-27+54=27\); \(27-12=15\); \(15+1=16\) ✓.</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Nombre y límite.</b> Este arreglo se conoce como triángulo de Pascal (o de Tartaglia). Sirve bien para exponentes chicos; para uno grande habría que escribir todas las filas anteriores. Para eso está la fórmula de los coeficientes binomiales, \(\dbinom{n}{k}\), que da cualquier número del triángulo directamente.</p>
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>contar mal las filas</b>. La primera fila es la fila \(0\); la fila \(4\), la de \((a+b)^{4}\), es la quinta que se escribe y tiene \(5\) números. Dos: <b>olvidar los bordes</b>. Cada fila empieza y termina en \(1\); la regla de la suma es solo para los interiores. Tres: <b>creer que \((a+b)^{n}\) es \(a^{n}+b^{n}\)</b>. Con \(a=1\), \(b=1\) y \(n=2\): \((1+1)^{2}=2^{2}=4\), pero \(1^{2}+1^{2}=1+1=2\). Faltan los términos del medio. Cuatro: <b>copiar la fila como resultado cuando \(a\) o \(b\) traen números o signos</b>. En \((x+2)^{4}\) los coeficientes finales no son \(1,\ 4,\ 6,\ 4,\ 1\) sino \(1,\ 8,\ 24,\ 32,\ 16\): cada número de la fila se multiplica por la potencia de \(2\) que le toca (ejemplo 2).</p>
+    <p><b>Nombre y límite.</b> El triángulo de Pascal sirve bien para exponentes chicos; para llegar a una fila lejana hay que escribir todas las anteriores. Para eso existe una fórmula que da cualquier número del triángulo directamente: los <b>números combinatorios</b> (o coeficientes binomiales), que se escriben \(\dbinom{n}{k}\) y se leen «\(n\) sobre \(k\)». En esta hoja no se usan ni se demuestra esa fórmula: se estudian en la hoja «Coeficientes binomiales».</p>
   </div>
 </section>
 
 <section>
   <h2>Ahora tú</h2>
   <div class="ex">
-    <p><span class="n">A</span>Escribe la fila 6 del triángulo y el desarrollo de \((a+b)^{6}\).</p>
-    <details><summary>Pista</summary><div><p>Parte de la fila 5: \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</p></div></details>
+    <p><span class="n">A</span>Escribe la fila \(6\) del triángulo y el desarrollo de \((a+b)^{6}\).</p>
+    <details><summary>Pista</summary><div><p>Parte de la fila \(5\): \(1,\ 5,\ 10,\ 10,\ 5,\ 1\) (ejemplo 1). Un \(1\) en cada borde y, entre medio, la suma de cada par de vecinos.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(1+5=6\), \(5+10=15\), \(10+10=20\), \(10+5=15\), \(5+1=6\).</li>
-        <li>Fila 6: \(1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\). Suma: \(64=2^{6}\).</li>
+        <li>Fila \(5\): \(1,\ 5,\ 10,\ 10,\ 5,\ 1\). La fila \(6\) tiene \(6+1=7\) números.</li>
+        <li>Borde izquierdo: \(1\).</li>
+        <li>Interiores, uno por uno: \(1+5=6\); \(5+10=15\); \(10+10=20\); \(10+5=15\); \(5+1=6\).</li>
+        <li>Borde derecho: \(1\). Fila \(6\): \(1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\).</li>
+        <li>Las letras: el exponente de \(a\) baja de \(6\) a \(0\) y el de \(b\) sube de \(0\) a \(6\): \(a^{6}\), \(a^{5}b\), \(a^{4}b^{2}\), \(a^{3}b^{3}\), \(a^{2}b^{4}\), \(ab^{5}\), \(b^{6}\).</li>
         <li>\((a+b)^{6}=a^{6}+6a^{5}b+15a^{4}b^{2}+20a^{3}b^{3}+15a^{2}b^{4}+6ab^{5}+b^{6}\).</li>
+        <li>Comprobación con la suma de la fila, que debe ser \(2^{6}=64\) (ejemplo 3): \(1+6=7\); \(7+15=22\); \(22+20=42\); \(42+15=57\); \(57+6=63\); \(63+1=64\) ✓.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">B</span>Desarrolla \((2x-1)^{3}\) con la fila 3.</p>
-    <details><summary>Pista</summary><div><p>Coeficientes \(1,\ 3,\ 3,\ 1\), con \(a=2x\) y \(b=1\), signos alternados.</p></div></details>
+    <p><span class="n">B</span>Desarrolla \((2x-1)^{3}\) con la fila \(3\).</p>
+    <details><summary>Pista</summary><div><p>Escribe la resta como suma: \(2x-1=2x+(-1)\). Entonces \(a=2x\) y \(b=-1\). Calcula por separado las potencias de \(2x\) y las de \(-1\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\((2x)^{3}-3\,(2x)^{2}\cdot 1+3\,(2x)\cdot 1^{2}-1^{3}\).</li>
-        <li>\(=8x^{3}-12x^{2}+6x-1\).</li>
-        <li>Comprobación con \(x=1\): \((2-1)^{3}=1\) y \(8-12+6-1=1\).</li>
+        <li>Fila \(3\): \(1,\ 3,\ 3,\ 1\). Con \(a=2x\) y \(b=-1\): \((2x-1)^{3}=1\cdot(2x)^{3}+3\cdot(2x)^{2}\cdot(-1)^{1}+3\cdot(2x)^{1}\cdot(-1)^{2}+1\cdot(-1)^{3}\).</li>
+        <li>Potencias de \(2x\): \((2x)^{1}=2x\); \((2x)^{2}=2x\cdot 2x=4x^{2}\); \((2x)^{3}=4x^{2}\cdot 2x=8x^{3}\).</li>
+        <li>Potencias de \(-1\): \((-1)^{1}=-1\); \((-1)^{2}=(-1)\cdot(-1)=1\); \((-1)^{3}=1\cdot(-1)=-1\).</li>
+        <li>Primer término: \(1\cdot 8x^{3}=8x^{3}\).</li>
+        <li>Segundo término: \(3\cdot 4x^{2}\cdot(-1)=-12x^{2}\), porque \(3\cdot 4=12\).</li>
+        <li>Tercer término: \(3\cdot 2x\cdot 1=6x\).</li>
+        <li>Cuarto término: \(1\cdot(-1)=-1\).</li>
+        <li>\((2x-1)^{3}=8x^{3}-12x^{2}+6x-1\).</li>
+        <li>Comprobación con \(x=2\). Lado izquierdo: \((2\cdot 2-1)^{3}=(4-1)^{3}=3^{3}=27\). Lado derecho: \(8\cdot 2^{3}=8\cdot 8=64\); \(12\cdot 2^{2}=12\cdot 4=48\); \(6\cdot 2=12\). Entonces \(64-48=16\); \(16+12=28\); \(28-1=27\) ✓.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> Se lanzan \(4\) monedas. ¿De cuántas maneras pueden salir exactamente \(2\) caras? ¿Cuántos resultados posibles hay en total?</p>
-    <details><summary>Pista</summary><div><p>Mira la fila 4: sus números cuentan las maneras de obtener \(0,\ 1,\ 2,\ 3\) y \(4\) caras.</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Se lanzan \(4\) monedas distintas (de \(10\), \(50\), \(100\) y \(500\) pesos) y se anota, en ese orden, si cada una salió cara (C) o sello (S). Por ejemplo, CSSC quiere decir cara, sello, sello, cara. a) ¿Cuántos resultados distintos hay en total? b) ¿En cuántos de ellos salen exactamente \(2\) caras? c) Compara con la fila \(4\) del triángulo.</p>
+    <details><summary>Pista</summary><div><p>Escribe todos los resultados, ordenados según cuántas caras tienen: primero los de \(0\) caras, después los de \(1\) cara, y así hasta \(4\) caras. Cuenta cada grupo.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>Fila 4: \(1,\ 4,\ 6,\ 4,\ 1\).</li>
-        <li>Exactamente \(2\) caras: \(6\) maneras (CCSS, CSCS, CSSC, SCCS, SCSC, SSCC).</li>
-        <li>Total: \(1+4+6+4+1=16=2^{4}\) resultados.</li>
+        <li>Con \(0\) caras: SSSS. Es \(1\) resultado.</li>
+        <li>Con \(1\) cara (la cara puede estar en el primer, segundo, tercer o cuarto lugar): CSSS, SCSS, SSCS, SSSC. Son \(4\).</li>
+        <li>Con \(2\) caras: CCSS, CSCS, CSSC, SCCS, SCSC, SSCC. Son \(6\).</li>
+        <li>Con \(3\) caras (el sello puede estar en el cuarto, tercer, segundo o primer lugar): CCCS, CCSC, CSCC, SCCC. Son \(4\).</li>
+        <li>Con \(4\) caras: CCCC. Es \(1\).</li>
+        <li>a) Total: \(1+4=5\); \(5+6=11\); \(11+4=15\); \(15+1=16\) resultados. Se comprueba de otra forma: cada moneda tiene \(2\) posibilidades, y \(2\cdot 2\cdot 2\cdot 2=2^{4}=16\) ✓.</li>
+        <li>b) Exactamente \(2\) caras: \(6\) resultados (los del paso 3).</li>
+        <li>c) Los cinco grupos tienen \(1,\ 4,\ 6,\ 4,\ 1\) resultados: es la fila \(4\). No es casualidad: si en \((a+b)^{4}=(a+b)(a+b)(a+b)(a+b)\) se pone C en vez de \(a\) y S en vez de \(b\), cada resultado de las monedas es una manera de elegir una letra de cada paréntesis, y los \(6\) resultados con dos C y dos S son los que se juntan en el término \(6a^{2}b^{2}\). Aquí se comprobó contando la lista completa; la relación general se estudia en las hojas «Coeficientes binomiales» y «Relación con la probabilidad binomial».</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H03 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H03 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -154,6 +246,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -169,32 +281,117 @@ function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off =
     c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
     c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
   return off; }
-OA.scene('bn-pascal', (function(){
-  var NMAX = 6, cells = [], n, k;
-  for (n = 0; n <= NMAX; n++) for (k = 0; k <= n; k++) cells.push([n, k]);
-  function px(n, k){ return (k - n/2)*1.05; } function py(n){ return -n*0.8; }
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
   return {
-    world:{x0:-4.6, x1:3.8, y0:-8.9, y1:0.7}, aspect:9.6/8.4,
-    aria:'El triángulo de coeficientes se construye fila por fila. La fila 0 tiene un 1. Cada fila empieza y termina en 1, y cada número interior es la suma de los dos que tiene arriba: dos líneas finas lo unen con ellos. La fila n contiene los coeficientes del desarrollo de a más b elevado a n, que se escribe bajo el triángulo.',
-    labels:[['F', '\\binom{n}{k}=\\binom{n-1}{k-1}+\\binom{n-1}{k}', 'cada número = suma de los dos de arriba', 'diff']],
-    sliders:[{id:'m', tex:'\\text{paso}', min:0, max:cells.length - 1, step:1, value:0}],
-    legend:'<span><i class="sw rise"></i> el número que se está calculando</span><span><i class="sw sec"></i> los dos de arriba, que se suman</span>',
-    anim:{run:30000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.m = Math.min(cells.length - 1, Math.floor(p*(cells.length + 3))); }},
-    onInput:function(v){ v.q = null; },
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
     draw:function(S, v){
-      var m = Math.round(v.m || 0), C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, cl, n = cells[m][0], k = cells[m][1], val, x0, y0, inner = k > 0 && k < n;
-      for (i = 0; i <= NMAX; i++){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = i === n ? C.ink : (C.muted || '#6b6b6b'); c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('n = ' + i, X(-4.5), Y(py(i))); }
-      if (inner){ c.strokeStyle = C.sec; c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(px(n - 1, k - 1)), Y(py(n - 1)) + 9); c.lineTo(X(px(n, k)), Y(py(n)) - 9); c.moveTo(X(px(n - 1, k)), Y(py(n - 1)) + 9); c.lineTo(X(px(n, k)), Y(py(n)) - 9); c.stroke(); }
-      for (i = 0; i <= m; i++){ cl = cells[i]; val = bnC(cl[0], cl[1]); c.font = (i === m ? '700 15px' : '600 13px') + ' "Source Sans 3", system-ui, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
-        c.fillStyle = i === m ? C.rise : (inner && cl[0] === n - 1 && (cl[1] === k - 1 || cl[1] === k)) ? C.sec : C.ink; c.fillText('' + val, X(px(cl[0], cl[1])), Y(py(cl[0]))); }
-      x0 = X(-4.5); y0 = Y(-5.75);
-      txt('fila n = ' + n + ', lugar k = ' + k, x0, y0, 'left', C.ink);
-      txt(inner ? bnC(n, k) + ' = ' + bnC(n - 1, k - 1) + ' + ' + bnC(n - 1, k) + '   (los dos de arriba)' : 'los extremos de cada fila valen 1', x0, y0 + 21, 'left', C.rise);
-      txt(k === n ? 'fila ' + n + ' completa: coeficientes de (a + b)' + bnSup(n) : 'la fila ' + n + ' dará los coeficientes de (a + b)' + bnSup(n), x0, y0 + 42, 'left', C.ink);
-      if (k === n && n >= 1) bnExp2(n).forEach(function(l, q){ txt(l, x0, y0 + 63 + 19*q, 'left', C.tan); });
-      S.lab('F', x0, y0 + 110, 0, 0, m >= cells.length - 1 && v.q != null);
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
     },
-    caption:function(v){ var m = Math.round(v.m || 0), n = cells[m][0], k = cells[m][1]; if (m === 0) return 'La fila 0 tiene un solo número: 1. Es el coeficiente de (a + b)⁰ = 1'; if (k === 0 || k === n) return 'Fila ' + n + ': cada fila empieza y termina en 1' + (k === n ? '. La fila ' + n + ' quedó completa: son los coeficientes de (a + b)' + bnSup(n) : ''); return 'Fila ' + n + ': el ' + bnC(n, k) + ' es la suma de los dos números que tiene arriba, ' + bnC(n - 1, k - 1) + ' + ' + bnC(n - 1, k); },
-    readout:function(v){ var m = Math.round(v.m || 0), n = cells[m][0], k = cells[m][1]; return [['', '\\text{fila }n=' + n + ',\\ \\text{lugar }k=' + k + ':\\quad\\dbinom{' + n + '}{' + k + '}=' + bnC(n, k)]].concat(k > 0 && k < n ? [['d', '\\dbinom{' + n + '}{' + k + '}=\\dbinom{' + (n - 1) + '}{' + (k - 1) + '}+\\dbinom{' + (n - 1) + '}{' + k + '}=' + bnC(n - 1, k - 1) + '+' + bnC(n - 1, k) + '=' + bnC(n, k)]] : []); }
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+/* L24 H03 · el triángulo de coeficientes, fila por fila: bordes 1, cada interior es la suma de los dos de arriba; y por qué (de (a+b)² a (a+b)³, por b y por a) */
+OA.scene('bn-pascal', (function(){
+  var N = 7, CX = 170, SP = 38, Y0 = 120, DY = 32, COL = [118, 178, 238, 298], PASO = [1, 2, 3, 5, 6]; /* PASO[n]: paso en que aparece la fila n */
+  function tx(n, j){ return CX + (j - n/2)*SP; } function ty(n){ return Y0 + DY*n; }
+  var PZ = [['Q', '(a+b)^{4}=\\ ?', '(a+b)⁴ = ?', 'pt'], ['F', '\\Longrightarrow\\ \\text{coeficientes }1,\\ 4,\\ 6,\\ 4,\\ 1', '⟹ coeficientes 1, 4, 6, 4, 1', 'diff'],
+    ['E0', '(a+b)^{0}', '(a+b)⁰', 'c-tan'], ['E1', '(a+b)^{1}', '(a+b)¹', 'c-tan'], ['E2', '(a+b)^{2}', '(a+b)²', 'c-tan'], ['E3', '(a+b)^{3}', '(a+b)³', 'c-tan'], ['E4', '(a+b)^{4}', '(a+b)⁴', 'c-tan'],
+    ['TB', '(a+b)^{2}\\cdot b=', '(a+b)²·b =', ''], ['TA', '(a+b)^{2}\\cdot a=', '(a+b)²·a =', ''], ['TS', '(a+b)^{3}=', '(a+b)³ =', 'c-tan'],
+    ['B1', '1a^{2}b', '1a²b', ''], ['B2', '+\\,2ab^{2}', '+ 2ab²', ''], ['B3', '+\\,1b^{3}', '+ 1b³', ''],
+    ['A0', '1a^{3}', '1a³', ''], ['A1', '+\\,2a^{2}b', '+ 2a²b', ''], ['A2', '+\\,1ab^{2}', '+ 1ab²', ''],
+    ['S0', '1a^{3}', '1a³', 'c-tan'], ['S1', '+\\,3a^{2}b', '+ 3a²b', 'c-tan'], ['S2', '+\\,3ab^{2}', '+ 3ab²', 'c-tan'], ['S3', '+\\,1b^{3}', '+ 1b³', 'c-tan'],
+    ['C0', '1', '1', 'c-alt'], ['C1', '1+2=3', '1 + 2 = 3', 'diff'], ['C2', '2+1=3', '2 + 1 = 3', 'diff'], ['C3', '1', '1', 'c-alt'],
+    ['R1', '(a+b)^{0}=1\\ \\Rightarrow\\ \\text{fila 0: }1', '(a+b)⁰ = 1 ⟹ fila 0: 1', ''],
+    ['R2', '(a+b)^{1}=1a+1b\\ \\Rightarrow\\ \\text{fila 1: }1,\\ 1', '(a+b)¹ = 1a + 1b ⟹ fila 1: 1, 1', ''],
+    ['R3', '(a+b)^{2}=1a^{2}+2ab+1b^{2},\\quad 1+1=2', '(a+b)² = 1a² + 2ab + 1b², 1 + 1 = 2', ''],
+    ['R4', '(a+b)^{3}=(a+b)^{2}\\cdot b+(a+b)^{2}\\cdot a', '(a+b)³ = (a+b)²·b + (a+b)²·a', ''],
+    ['R5', '1+2=3,\\ \\ 2+1=3\\ \\Rightarrow\\ \\text{fila 3: }1,\\ 3,\\ 3,\\ 1', '1 + 2 = 3, 2 + 1 = 3 ⟹ fila 3: 1, 3, 3, 1', ''],
+    ['R6', '\\text{fila 4: }1,\\ \\ 1+3=4,\\ \\ 3+3=6,\\ \\ 3+1=4,\\ \\ 1', 'fila 4: 1, 1 + 3 = 4, 3 + 3 = 6, 3 + 1 = 4, 1', ''],
+    ['R7', '(a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}', '(a+b)⁴ = a⁴ + 4a³b + 6a²b² + 4ab³ + b⁴', 'diff']];
+  var TXT = [['Fila 0: un solo coeficiente, el 1.', 'Es el del binomio elevado a 0.'],
+    ['Fila 1: dos coeficientes, 1 y 1.', 'Son los bordes: en cada fila valen 1.'],
+    ['Fila 2: bordes 1 y 1. El interior, 2,', 'es la suma de los dos de arriba: 1 + 1.'],
+    ['¿Por qué se suma? Para subir el exponente', 'se multiplica por b y por a: dos renglones.'],
+    ['En cada columna hay términos semejantes:', 'sus coeficientes se suman. Sale la fila 3.'],
+    ['Fila 4, igual: bordes 1; cada interior,', 'la suma de los dos números de arriba.'],
+    ['La fila 4 da los coeficientes pedidos.', 'Respuesta arriba; desarrollo en el paso 7.']];
+  return {
+    world:{x0:0, x1:340, y0:-624, y1:0}, aspect:624/340,
+    aria:'Animación en siete pasos. Uno: la fila 0 del triángulo, un solo 1, el coeficiente de a más b elevado a 0. Dos: la fila 1, con dos unos, los bordes. Tres: la fila 2, 1, 2, 1; el 2 interior se une con dos líneas a los dos unos de arriba, porque es su suma. Cuatro: bajo el triángulo, a más b al cuadrado se multiplica por b y por a, en dos renglones ordenados por columnas de términos semejantes. Cinco: en cada columna se suman los coeficientes, 1 más 2 igual 3 y 2 más 1 igual 3, y aparece la fila 3: 1, 3, 3, 1. Seis: la fila 4, con 1 más 3 igual 4, 3 más 3 igual 6 y 3 más 1 igual 4, entre dos unos. Siete: la fila 4 da el desarrollo de a más b elevado a 4. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw alt"></i> bordes de cada fila: siempre 1</span><span><i class="sw rise"></i> número interior: suma de los dos de arriba</span><span><i class="sw sec"></i> líneas: unen cada interior con los dos que se suman</span><span><i class="sw tan"></i> binomio al que pertenece cada fila</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, T = dtEtq(S, PZ), F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b', n, j, a, e, q;
+      function X(x){ return S.X(x); } function Y(y){ return S.Y(-y); }
+      function ap(m){ return k > m ? 1 : (k === m ? u : 0); } /* cuánto ha aparecido lo del paso m; después queda hasta el final */
+      function L(id, x, y, ax){ T.L(id, x, -y, ax); }
+      function txt(t, x, y, col, al, f, alpha){ c.globalAlpha = alpha == null ? 1 : alpha; c.font = (f || '600 12.5px ') + F; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(y)); c.globalAlpha = 1; }
+      /* pregunta arriba; al final, a su lado, la respuesta */
+      L('Q', 6, 65, 0); if (ap(7) > 0.5) L('F', 82, 65, 0);
+      /* los dos nombres: borde e interior */
+      if (ap(2) > 0) txt('borde: siempre 1', 6, 85, C.alt, 'left', '600 11px ', ap(2));
+      if (ap(3) > 0) txt('interior: suma de los dos de arriba', 334, 85, C.rise, 'right', '600 11px ', ap(3));
+      txt('coeficientes de', 334, 101, MU, 'right', '600 10.5px ', ap(1));
+      /* el triángulo: cada fila queda; las líneas unen cada interior con los dos de arriba */
+      for (n = 0; n <= 4; n++){ a = ap(PASO[n]); if (a <= 0){ continue; }
+        txt('fila ' + n, 6, ty(n), MU, 'left', '600 11px ', a);
+        if (a > 0.5) L('E' + n, 304, ty(n));
+        for (j = 0; j <= n; j++){ e = j === 0 || j === n;
+          if (!e){ c.strokeStyle = C.sec; c.lineWidth = 1.1; c.setLineDash([]); c.beginPath();
+            for (q = j - 1; q <= j; q++){ c.moveTo(X(tx(n - 1, q)), Y(ty(n - 1) + 9)); c.lineTo(X(tx(n - 1, q) + (tx(n, j) - tx(n - 1, q))*a), Y(ty(n - 1) + 9 + (DY - 19)*a)); }
+            c.stroke(); }
+          txt('' + bnC(n, j), tx(n, j), ty(n), e ? C.alt : C.rise, 'center', '700 14px ', a); } }
+      /* paso 7: la fila 4, la pedida, queda enmarcada */
+      a = ap(7); if (a > 0){ c.globalAlpha = a; c.strokeStyle = C.tan; c.lineWidth = 1.3; c.strokeRect(X(tx(4, 0) - 15), Y(ty(4) - 9.5), X(tx(4, 4) + 15) - X(tx(4, 0) - 15), Y(ty(4) + 9.5) - Y(ty(4) - 9.5)); c.globalAlpha = 1; }
+      /* paso 4: (a+b)² por b y por a, en columnas de términos semejantes */
+      a = ap(4);
+      if (a > 0.3){ L('TB', 6, 276, 0); L('B1', COL[1], 276); L('B2', COL[2], 276); L('B3', COL[3], 276); }
+      if (a > 0.65){ L('TA', 6, 298, 0); L('A0', COL[0], 298); L('A1', COL[1], 298); L('A2', COL[2], 298); }
+      /* paso 5: en cada columna se suman los semejantes; sale la fila 3 */
+      a = ap(5);
+      if (a > 0){ c.globalAlpha = a; for (j = 1; j <= 2; j++){ c.fillStyle = 'rgba(200,110,20,0.10)'; c.fillRect(X(COL[j] - 28), Y(264), X(COL[j] + 28) - X(COL[j] - 28), Y(310) - Y(264)); c.strokeStyle = C.rise; c.lineWidth = 1.1; c.strokeRect(X(COL[j] - 28), Y(264), X(COL[j] + 28) - X(COL[j] - 28), Y(310) - Y(264)); }
+        c.globalAlpha = 1; c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(88), Y(312)); c.lineTo(X(88 + 246*a), Y(312)); c.stroke(); }
+      if (a > 0.4){ L('TS', 6, 325, 0); L('S0', COL[0], 325); L('S1', COL[1], 325); L('S2', COL[2], 325); L('S3', COL[3], 325); }
+      if (a > 0.7){ txt('fila 3:', 6, 347, MU, 'left', '600 11px '); L('C0', COL[0], 347); L('C1', COL[1], 347); L('C2', COL[2], 347); L('C3', COL[3], 347); }
+      /* frase del paso (su contenido queda también en el registro) */
+      txt(TXT[k - 1][0], 6, 371, C.ink); txt(TXT[k - 1][1], 6, 389, C.ink);
+      txt('paso ' + k + ' de ' + N, 334, 412, MU, 'right', '600 11px ');
+      dtQue(S, 'cada fila sale de la fila anterior:', 'borde 1; adentro, suma de los dos de arriba.');
+      T.fin();
+      oaReg(S, k, N, 6, -438, [0, 28, 56, 84, 112, 140, 168]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '(a+b)^{0}=1\\quad\\Rightarrow\\quad\\text{fila 0: }1',
+      '(a+b)^{1}=1a+1b\\quad\\Rightarrow\\quad\\text{fila 1: }1,\\ 1\\\\ &\\qquad\\text{los dos son bordes}',
+      '(a+b)^{2}=1a^{2}+2ab+1b^{2}\\\\ &\\qquad\\Rightarrow\\ \\text{fila 2: }1,\\ 2,\\ 1\\\\ &\\qquad\\text{bordes: }1\\text{ y }1;\\quad\\text{interior: }1+1=2',
+      '(a+b)^{3}=(a+b)^{2}\\cdot(a+b)\\\\ &\\qquad\\ \\ \\,=(a+b)^{2}\\cdot b+(a+b)^{2}\\cdot a\\\\ &\\qquad\\left(1a^{2}+2ab+1b^{2}\\right)\\cdot b=1a^{2}b+2ab^{2}+1b^{3}\\\\ &\\qquad\\left(1a^{2}+2ab+1b^{2}\\right)\\cdot a=1a^{3}+2a^{2}b+1ab^{2}',
+      '\\text{semejantes: }1a^{2}b+2a^{2}b=(1+2)\\,a^{2}b=3a^{2}b\\\\ &\\qquad\\text{semejantes: }2ab^{2}+1ab^{2}=(2+1)\\,ab^{2}=3ab^{2}\\\\ &\\qquad\\text{sin pareja: }1a^{3}\\ \\text{ y }\\ 1b^{3}\\quad\\text{(los bordes)}\\\\ &\\qquad (a+b)^{3}=1a^{3}+3a^{2}b+3ab^{2}+1b^{3}\\\\ &\\qquad\\Rightarrow\\ \\text{fila 3: }1,\\ 3,\\ 3,\\ 1',
+      '\\text{fila 4, desde la fila 3 }(1,\\ 3,\\ 3,\\ 1):\\\\ &\\qquad\\text{borde: }1\\\\ &\\qquad 1+3=4\\\\ &\\qquad 3+3=6\\\\ &\\qquad 3+1=4\\\\ &\\qquad\\text{borde: }1',
+      '\\text{fila 4: }1,\\ 4,\\ 6,\\ 4,\\ 1\\quad\\Rightarrow\\\\ &\\qquad (a+b)^{4}=1a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+1b^{4}']; return dtPasos(R.slice(0, k)); }
   };
 })());

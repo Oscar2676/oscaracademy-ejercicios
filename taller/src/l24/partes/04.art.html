@@ -12,45 +12,83 @@
       <li><b>Del producto notable al binomio de Newton</b></li>
     </ol>
     <h1>Del producto notable al binomio de Newton</h1>
-    <p class="lede">El cuadrado y el cubo de un binomio son los dos primeros casos de una misma regla. Para llegar a ella hay que mirar la multiplicación de otra manera: cada término del desarrollo se forma <b>eligiendo una letra de cada factor</b>, y el coeficiente cuenta de cuántas maneras se puede hacer esa elección.
-    \[(a+b)^{n}=\underbrace{(a+b)(a+b)\cdots(a+b)}_{n\text{ factores}}\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). Elevarlo a \(n\) es multiplicarlo por sí mismo hasta completar \(n\) <b>factores</b> (factor: cada una de las expresiones que se multiplican): \[(a+b)^{n}=\underbrace{(a+b)(a+b)\cdots(a+b)}_{n\text{ factores}}\] Aquí \(a\) y \(b\) son números reales cualesquiera y \(n\) es un entero, \(n\ge 1\). Los <b>productos notables</b> son los casos \(n=2\) (cuadrado del binomio) y \(n=3\) (cubo del binomio). Esta hoja muestra de dónde salen sus coeficientes y cómo la misma idea da una fórmula para cualquier \(n\): el <b>binomio de Newton</b>.</p>
+    <p class="lede"><b>De dónde sale: el caso \(n=2\), producto por producto.</b> \[\begin{aligned}(a+b)^{2}&=(a+b)(a+b)&&\text{dos factores}\\ &=a\,(a+b)+b\,(a+b)&&\text{propiedad distributiva: cada letra del primer factor por el segundo}\\ &=aa+ab+ba+bb&&\text{propiedad distributiva, otra vez, en cada paréntesis}\\ &=a^{2}+ab+ab+b^{2}&&aa=a^{2},\quad ba=ab\ \text{(propiedad conmutativa)},\quad bb=b^{2}\\ &=a^{2}+2ab+b^{2}&&\text{se juntan los iguales: }ab+ab=2ab\end{aligned}\] Antes de juntar hay \(4\) sumandos: \(aa,\ ab,\ ba,\ bb\). Cada uno tiene una letra del primer factor y una letra del segundo.</p>
+    <p class="lede"><b>El caso \(n=3\), producto por producto.</b> Se parte de los cuatro sumandos anteriores y se multiplica cada uno por el tercer factor: \[\begin{aligned}(a+b)^{3}&=(a+b)(a+b)(a+b)&&\text{tres factores}\\ &=(aa+ab+ba+bb)(a+b)&&\text{los dos primeros factores ya están multiplicados}\\ &=aaa+aab+aba+abb+baa+bab+bba+bbb&&\text{cada sumando por }a\text{ y por }b\\ &=a^{3}+a^{2}b+a^{2}b+ab^{2}+a^{2}b+ab^{2}+ab^{2}+b^{3}&&\text{en cada producto se ordenan las letras (conmutativa)}\\ &=a^{3}+3a^{2}b+3ab^{2}+b^{3}&&\text{se juntan los iguales}\end{aligned}\] Aquí \(aab\) quiere decir \(a\cdot a\cdot b\). Antes de juntar hay \(8\) sumandos, y cada uno tiene una letra de cada factor.</p>
+    <p class="lede"><b>La regularidad.</b> En los dos casos, cada sumando se forma <b>eligiendo una letra de cada factor</b>. Los sumandos con las mismas letras son iguales y se juntan. Por eso el <b>coeficiente</b> (el número que multiplica a las letras) cuenta <b>de cuántas maneras</b> se puede hacer la elección que da ese término: en \((a+b)^{2}\) hay \(1\) manera para \(a^{2}\), \(2\) para \(ab\) y \(1\) para \(b^{2}\); en \((a+b)^{3}\) hay \(1\) para \(a^{3}\), \(3\) para \(a^{2}b\), \(3\) para \(ab^{2}\) y \(1\) para \(b^{3}\).</p>
+    <p class="lede"><b>La fórmula.</b> Con \(n\) factores pasa lo mismo. Si la \(b\) se elige en \(k\) de los factores, el término es \(a^{\,n-k}b^{\,k}\), y su coeficiente es el número de maneras de elegir esos \(k\) factores entre los \(n\). Ese número se escribe \(\dbinom{n}{k}\) y se lee «\(n\) sobre \(k\)»: \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n}b^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». Cómo se calcula \(\dbinom{n}{k}\), y de dónde sale esa cuenta, está más abajo, paso a paso.</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El producto \((a+b)(a+b)(a+b)\), elección por elección.</p>
+  <p>El producto \((a+b)(a+b)(a+b)\), elección por elección, en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira los tres recuadros de arriba:</b> son los tres <b>factores</b>, «factor 1», «factor 2» y «factor 3». Cada uno ofrece dos letras: \(a\) (azul) y \(b\) (naranja). Arriba queda la pregunta: \((a+b)^{3}=\ ?\)</li>
+    <li><b>Paso 2, mira la fila 1:</b> bajo cada letra baja una línea punteada. Un punto sobre una punteada es una <b>elección</b>: dice qué letra se tomó en ese factor. Los tres puntos de la fila, unidos por una línea, son un <b>camino</b>. El camino 1 toma \(a\), \(a\), \(a\); al final de su flecha está su <b>producto</b>, \(aaa\) (es decir, \(a\cdot a\cdot a\)).</li>
+    <li><b>Paso 3, mira cómo se llenan las ocho filas:</b> son todos los caminos posibles, y hay \(2\cdot 2\cdot 2=8\). Cada camino termina en su producto: \(aaa\), \(aab\), \(aba\), \(baa\), \(abb\), \(bab\), \(bba\), \(bbb\).</li>
+    <li><b>Pasos 4 y 5, mira la derecha:</b> una llave junta los productos que tienen las mismas letras; son <b>términos semejantes</b> y valen lo mismo (\(aab=aba=baa=a^{2}b\)). El círculo burdeo dice cuántos productos tiene cada grupo: \(1\), \(3\), \(3\), \(1\).</li>
+    <li><b>Pasos 6 y 7:</b> cada cuenta es el <b>coeficiente</b> de su término, y junto a la pregunta se escribe el desarrollo, \(a^{3}+3a^{2}b+3ab^{2}+b^{3}\). La franja burdeo destaca los tres caminos que dan \(a^{2}b\): el anillo muestra que la \(b\) sale del factor 3, del factor 2 o del factor 1. Lee después el registro «Paso a paso» y la cuenta de abajo, línea por línea. Conclusión: el coeficiente es el número de caminos que dan el mismo producto.</li>
+  </ol>
   <div class="stage" data-scene="bn-caminos"></div>
   <ul class="keys">
-    <li><b>Arriba:</b> los tres factores. El <b>anillo naranja</b> marca la letra que se elige en cada uno.</li>
-    <li><b>Al centro:</b> el producto de las tres letras elegidas.</li>
-    <li><b>Cuatro columnas:</b> los productos ya formados, agrupados según cuántas veces se eligió \(b\): ninguna (\(a^{3}\)), una (\(a^{2}b\)), dos (\(ab^{2}\)) o tres (\(b^{3}\)).</li>
-    <li><b>En burdeo:</b> cuántos productos hay en cada columna. Al terminar son \(1,\ 3,\ 3,\ 1\): los coeficientes.</li>
-    <li><b>Deslizador «elección»:</b> recorre las \(8\) elecciones una por una.</li>
+    <li><b>Recuadros de arriba:</b> los tres factores de \((a+b)^{3}\).</li>
+    <li><b>Punto azul:</b> en ese factor se eligió \(a\). <b>Punto naranja:</b> se eligió \(b\).</li>
+    <li><b>Línea que une tres puntos:</b> un camino, es decir, una elección completa (una letra de cada factor). La flecha lleva a su producto.</li>
+    <li><b>Llaves:</b> agrupan los términos semejantes: \(a^{3}\), \(a^{2}b\), \(ab^{2}\) y \(b^{3}\).</li>
+    <li><b>Círculos burdeo:</b> cuántos caminos dan cada término: \(1,\ 3,\ 3,\ 1\). Son los coeficientes.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> los desarrollos de \((a+b)^{2}\) y \((a+b)^{3}\), producto por producto; el conteo de \(\dbinom{4}{2}\) con todos los casos listados; y el paso de la fórmula con productos a la fórmula con factoriales.</li>
+      <li><b>Se usa sin demostrar:</b> las propiedades distributiva, conmutativa y asociativa de los números reales.</li>
+      <li><b>Se usa sin demostrar:</b> que con \(n\) factores, para cualquier \(n\), el desarrollo tiene exactamente un producto por cada elección de una letra en cada factor. Aquí se comprueba para \(n=2\) y \(n=3\); para todo \(n\) se demuestra por inducción, y esa demostración no está en esta hoja.</li>
+      <li><b>Se usa sin demostrar:</b> el principio de multiplicación para contar (si lo primero se puede elegir de \(m\) maneras y, por cada una, lo segundo de \(p\) maneras, hay \(m\cdot p\) maneras de elegir ambos). Aquí se comprueba listando todos los casos de \(4\cdot 3=12\).</li>
+      <li><b>Es una convención</b> (un acuerdo, no un resultado): \(0!=1\).</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
     <h3>Multiplicar es elegir</h3>
+    <p><b>Palabras que se usan.</b> <b>Factor:</b> cada paréntesis \((a+b)\) que se multiplica. <b>Elección:</b> la letra que se toma en un factor, \(a\) o \(b\). <b>Camino:</b> una elección completa, con una letra de cada factor. <b>Producto:</b> las letras de un camino, multiplicadas. <b>Términos semejantes:</b> productos con las mismas letras y los mismos exponentes; valen lo mismo y se suman en uno solo. <b>Coeficiente:</b> el número que queda multiplicando a las letras después de sumar los semejantes.</p>
     <ol class="steps">
-      <li>Con dos factores: \((a+b)(a+b)=aa+ab+ba+bb\). Cada sumando toma una letra del primer paréntesis y una del segundo. Hay \(2\cdot 2=4\) elecciones.</li>
-      <li>\(ab\) y \(ba\) son el mismo término, \(ab\): por eso aparece \(2ab\). El \(2\) cuenta las maneras de elegir <b>en cuál</b> de los dos factores se toma la \(b\).</li>
-      <li>Con \(n\) factores hay \(2\cdot 2\cdots 2=2^{n}\) elecciones. Si en \(k\) de los factores se elige \(b\) (y en los otros \(n-k\) se elige \(a\)), el producto es \(a^{\,n-k}b^{\,k}\).</li>
-      <li>El coeficiente de \(a^{\,n-k}b^{\,k}\) es, entonces, el número de maneras de elegir \(k\) factores entre los \(n\).</li>
+      <li><b>Con dos factores</b> hay \(2\) elecciones en el primero y, por cada una, \(2\) en el segundo: \(2\cdot 2=4\) caminos. \[\begin{aligned}&a\text{ del factor 1},\ a\text{ del factor 2}:&&aa=a^{2}\\ &a\text{ del factor 1},\ b\text{ del factor 2}:&&ab\\ &b\text{ del factor 1},\ a\text{ del factor 2}:&&ba=ab\\ &b\text{ del factor 1},\ b\text{ del factor 2}:&&bb=b^{2}\end{aligned}\] El término \(ab\) sale de \(2\) caminos: por eso el cuadrado del binomio tiene \(2ab\). El \(2\) cuenta en cuál de los dos factores se tomó la \(b\).</li>
+      <li><b>Con tres factores</b> hay \(2\cdot 2\cdot 2=4\cdot 2=8\) caminos. Son las ocho filas de la animación: \[\begin{aligned}&\text{camino 1: }a,\ a,\ a&&aaa=a^{3}&&\text{ninguna }b\\ &\text{camino 2: }a,\ a,\ b&&aab=a^{2}b&&\text{una }b\text{, del factor 3}\\ &\text{camino 3: }a,\ b,\ a&&aba=a^{2}b&&\text{una }b\text{, del factor 2}\\ &\text{camino 4: }b,\ a,\ a&&baa=a^{2}b&&\text{una }b\text{, del factor 1}\\ &\text{camino 5: }a,\ b,\ b&&abb=ab^{2}&&\text{dos }b\text{, de los factores 2 y 3}\\ &\text{camino 6: }b,\ a,\ b&&bab=ab^{2}&&\text{dos }b\text{, de los factores 1 y 3}\\ &\text{camino 7: }b,\ b,\ a&&bba=ab^{2}&&\text{dos }b\text{, de los factores 1 y 2}\\ &\text{camino 8: }b,\ b,\ b&&bbb=b^{3}&&\text{tres }b\end{aligned}\]</li>
+      <li><b>Se cuenta cada grupo:</b> \(1\) camino da \(a^{3}\); \(3\) dan \(a^{2}b\); \(3\) dan \(ab^{2}\); \(1\) da \(b^{3}\). Están todos: \(1+3=4\), \(4+3=7\), \(7+1=8\). Entonces \((a+b)^{3}=1\,a^{3}+3\,a^{2}b+3\,ab^{2}+1\,b^{3}\).</li>
+      <li><b>Con \(n\) factores</b> cada factor nuevo duplica el número de caminos: \(2\), \(2\cdot 2=4\), \(2\cdot 2\cdot 2=8\), y así hasta \(2^{n}\) (el \(2\) multiplicado \(n\) veces).</li>
+      <li><b>Qué término da cada camino.</b> Si en \(k\) de los factores se elige \(b\), en los otros \(n-k\) se elige \(a\), y el producto es \(a^{\,n-k}b^{\,k}\). Ejemplo con \(n=3\) y \(k=1\): la \(b\) una vez y la \(a\) en \(3-1=2\) factores; el producto es \(a^{2}b\).</li>
+      <li><b>Conclusión.</b> El coeficiente de \(a^{\,n-k}b^{\,k}\) es el número de caminos con exactamente \(k\) letras \(b\): el número de maneras de elegir, entre los \(n\) factores, los \(k\) factores de donde sale la \(b\).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Cuántas maneras hay: el número \(\dbinom{n}{k}\)</h3>
+    <h3>Cuántas maneras hay: el factorial y el número \(\dbinom{n}{k}\)</h3>
+    <p><b>Qué se busca.</b> Una cuenta que diga de cuántas maneras se pueden elegir \(k\) factores entre \(n\), sin tener que listar todos los caminos. <b>Cómo funciona el método:</b> primero se cuenta de más, eligiendo los factores uno tras otro (con orden); después se divide por las veces que cada grupo quedó repetido.</p>
     <ol class="steps">
-      <li>Se eligen los \(k\) factores uno tras otro: para el primero hay \(n\) opciones, para el segundo \(n-1\), y así hasta \(n-k+1\). En total, \(n\,(n-1)\cdots(n-k+1)\) elecciones <b>ordenadas</b>.</li>
-      <li>Pero el orden no importa: elegir los factores 1 y 3 es lo mismo que elegir 3 y 1. Cada grupo de \(k\) factores se contó \(k!=k\,(k-1)\cdots 2\cdot 1\) veces.</li>
-      <li>Se divide:
-        \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}=\frac{n!}{k!\,(n-k)!}\]
-        La segunda forma sale de multiplicar arriba y abajo por \((n-k)!\). Se conviene que \(0!=1\).</li>
-      <li>Resultado, el <b>binomio de Newton</b>:
-        \[(a+b)^{n}=\binom{n}{0}a^{n}+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^{2}+\cdots+\binom{n}{n}b^{n}\]</li>
+      <li><b>Un caso listado completo: elegir \(2\) factores entre \(4\).</b> Los factores se numeran \(1,\ 2,\ 3,\ 4\). Para el primero que se elige hay \(4\) opciones; para el segundo quedan \(3\). Con orden, son \(4\cdot 3=12\) elecciones: \[\begin{aligned}&(1,2)\quad(1,3)\quad(1,4)&&\text{primero el factor 1}\\ &(2,1)\quad(2,3)\quad(2,4)&&\text{primero el factor 2}\\ &(3,1)\quad(3,2)\quad(3,4)&&\text{primero el factor 3}\\ &(4,1)\quad(4,2)\quad(4,3)&&\text{primero el factor 4}\end{aligned}\]</li>
+      <li><b>El orden no importa.</b> Elegir \((1,2)\) o \((2,1)\) pone la \(b\) en los mismos factores, el 1 y el 2: es el mismo camino, \(bbaa\). Cada grupo de dos factores quedó escrito \(2\) veces, porque dos objetos se pueden ordenar de \(2\cdot 1=2\) maneras.</li>
+      <li><b>Se divide por las repeticiones:</b> \(\dfrac{12}{2}=6\) grupos. Son: \[\begin{aligned}&\{1,2\}:\ bbaa&&\{1,3\}:\ baba&&\{1,4\}:\ baab\\ &\{2,3\}:\ abba&&\{2,4\}:\ abab&&\{3,4\}:\ aabb\end{aligned}\] Seis caminos con dos \(b\): el coeficiente de \(a^{2}b^{2}\) en \((a+b)^{4}\) es \(6\).</li>
+      <li><b>Con grupos de tres, cada grupo se repite \(6\) veces.</b> Los factores \(1,\ 2,\ 3\) se pueden elegir en estos órdenes: \(123,\ 132,\ 213,\ 231,\ 312,\ 321\). Son \(3\cdot 2\cdot 1=6\): hay \(3\) opciones para el primero, \(2\) para el segundo y \(1\) para el tercero.</li>
+      <li><b>El factorial.</b> Ese producto, desde un número hacia abajo hasta \(1\), se llama <b>factorial</b>. Se escribe con un signo de exclamación, \(k!\), y se lee «\(k\) factorial»: \[\begin{aligned}1!&=1\\ 2!&=2\cdot 1=2\\ 3!&=3\cdot 2\cdot 1=6\\ 4!&=4\cdot 3\cdot 2\cdot 1=24\\ 5!&=5\cdot 4\cdot 3\cdot 2\cdot 1=120\\ k!&=k\,(k-1)\,(k-2)\cdots 2\cdot 1\end{aligned}\] \(k!\) es el número de maneras de ordenar \(k\) objetos. Además se conviene que \(0!=1\).</li>
+      <li><b>El caso general, con orden.</b> Para elegir \(k\) factores entre \(n\), uno tras otro: \(n\) opciones para el primero, \(n-1\) para el segundo, \(n-2\) para el tercero, y así. Son \(k\) números multiplicados, cada uno una unidad menor que el anterior; el último es \(n-k+1\). Comprobación: con \(n=4\) y \(k=2\), el último es \(4-2+1=3\), y el producto es \(4\cdot 3\). Con \(n=5\) y \(k=3\), el último es \(5-3+1=3\), y el producto es \(5\cdot 4\cdot 3\). En general: \(n\,(n-1)\cdots(n-k+1)\) elecciones con orden.</li>
+      <li><b>Se divide por las repeticiones.</b> Cada grupo de \(k\) factores quedó contado \(k!\) veces (una por cada manera de ordenarlo). El resultado es el número \(\dbinom{n}{k}\), para \(1\le k\le n\): \[\binom{n}{k}=\frac{n\,(n-1)\cdots(n-k+1)}{k!}\] Se lee «\(n\) sobre \(k\)». También se llama <b>número combinatorio</b> o <b>combinación</b> de \(n\) objetos tomados de a \(k\): cuenta de cuántas maneras se pueden elegir \(k\) objetos entre \(n\) cuando el orden no importa. Para \(k=0\) se pone \(\dbinom{n}{0}=1\): hay una sola manera de no elegir la \(b\) en ningún factor.</li>
+      <li><b>La misma cuenta, escrita con factoriales.</b> Qué se demuestra: que \(\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}=\dfrac{n!}{k!\,(n-k)!}\). Cómo: se multiplica arriba y abajo por el mismo número, \((n-k)!\), que no es cero. \[\begin{aligned}\binom{n}{k}&=\frac{n\,(n-1)\cdots(n-k+1)}{k!}&&\text{lo que se contó}\\ &=\frac{n\,(n-1)\cdots(n-k+1)\cdot(n-k)!}{k!\cdot(n-k)!}&&\text{se amplifica por }(n-k)!\\ &=\frac{n\,(n-1)\cdots(n-k+1)\cdot(n-k)\,(n-k-1)\cdots 2\cdot 1}{k!\cdot(n-k)!}&&\text{se escribe }(n-k)!\text{ factor por factor}\\ &=\frac{n!}{k!\,(n-k)!}&&\text{arriba quedó el producto desde }n\text{ hasta }1\text{: es }n!\end{aligned}\]</li>
+      <li><b>El mismo paso, con números</b> (\(n=5\), \(k=2\), y entonces \(n-k=3\)): \[\begin{aligned}\binom{5}{2}&=\frac{5\cdot 4}{2!}&&\text{lo que se contó}\\ &=\frac{5\cdot 4\cdot 3!}{2!\cdot 3!}&&\text{se amplifica por }3!\\ &=\frac{5\cdot 4\cdot 3\cdot 2\cdot 1}{2!\cdot 3!}&&3!=3\cdot 2\cdot 1\\ &=\frac{5!}{2!\cdot 3!}&&\text{arriba quedó }5!\\ &=\frac{120}{2\cdot 6}&&5!=120,\quad 2!=2,\quad 3!=6\\ &=\frac{120}{12}&&2\cdot 6=12\\ &=10&&120:12=10\end{aligned}\] Y por el otro camino: \(5\cdot 4=20\), \(2!=2\), \(20:2=10\). Coinciden.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>El binomio de Newton, y su comprobación con el cuadrado y el cubo</h3>
+    <ol class="steps">
+      <li><b>La fórmula.</b> Para \(a\) y \(b\) reales y \(n\) entero, \(n\ge 1\): \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k},\qquad\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\quad(0\le k\le n).\] En cada término, \(k\) es el número de factores en que se eligió \(b\); los exponentes suman \((n-k)+k=n\).</li>
+      <li><b>Los casos \(k=0\) y \(k=n\)</b>, con la convención \(0!=1\): \[\binom{n}{0}=\frac{n!}{0!\cdot n!}=\frac{n!}{1\cdot n!}=1,\qquad\binom{n}{n}=\frac{n!}{n!\cdot 0!}=\frac{n!}{n!\cdot 1}=1.\] Calza con el conteo: hay un solo camino sin ninguna \(b\) y un solo camino con \(b\) en todos los factores. Para eso se conviene \(0!=1\).</li>
+      <li><b>Comprobación con \(n=2\).</b> \[\begin{aligned}\binom{2}{0}&=1&&\text{caso }k=0\\ \binom{2}{1}&=\frac{2}{1!}=\frac{2}{1}=2&&\text{un solo número arriba, porque }k=1\\ \binom{2}{2}&=\frac{2\cdot 1}{2!}=\frac{2}{2}=1&&\text{dos números arriba, porque }k=2\end{aligned}\] Queda \((a+b)^{2}=1\,a^{2}+2\,ab+1\,b^{2}=a^{2}+2ab+b^{2}\): el cuadrado del binomio. ✓</li>
+      <li><b>Comprobación con \(n=3\).</b> \[\begin{aligned}\binom{3}{0}&=1&&\text{caso }k=0\\ \binom{3}{1}&=\frac{3}{1!}=\frac{3}{1}=3&&k=1\\ \binom{3}{2}&=\frac{3\cdot 2}{2!}=\frac{6}{2}=3&&k=2\\ \binom{3}{3}&=\frac{3\cdot 2\cdot 1}{3!}=\frac{6}{6}=1&&k=3\end{aligned}\] Queda \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\): el cubo del binomio, con los mismos \(1,\ 3,\ 3,\ 1\) que se contaron en la animación. ✓</li>
     </ol>
   </div>
 </section>
@@ -59,13 +97,15 @@
   <h2>Paso a paso</h2>
 
   <div class="prop p1">
-  <h3>Ejemplo 1: los coeficientes del cubo, contados</h3>
+  <h3>Ejemplo 1: los coeficientes del cubo, contados y calculados</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\dbinom{3}{0}=1\): hay una sola manera de no elegir \(b\) nunca (\(aaa\)).</li>
-    <li>\(\dbinom{3}{1}=\dfrac{3}{1}=3\): la \(b\) va en el factor 1, en el 2 o en el 3 (\(baa,\ aba,\ aab\)).</li>
-    <li>\(\dbinom{3}{2}=\dfrac{3\cdot 2}{2\cdot 1}=3\) (\(bba,\ bab,\ abb\)) y \(\dbinom{3}{3}=1\) (\(bbb\)).</li>
-    <li>\((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\): el producto notable, ahora con explicación para cada coeficiente.</li>
+    <li><b>Dato.</b> \((a+b)^{3}\) tiene \(n=3\) factores. Se busca cada coeficiente de dos maneras: listando los caminos y con la fórmula \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\).</li>
+    <li><b>\(k=0\)</b> (ninguna \(b\)): un solo camino, \(aaa\). \(\dbinom{3}{0}=1\).</li>
+    <li><b>\(k=1\)</b> (una \(b\)): la \(b\) sale del factor 1, del 2 o del 3: \(baa,\ aba,\ aab\). Son \(3\). Con la fórmula: \(\dbinom{3}{1}=\dfrac{3}{1!}=\dfrac{3}{1}=3\).</li>
+    <li><b>\(k=2\)</b> (dos \(b\)): \(bba,\ bab,\ abb\). Son \(3\). Con la fórmula: arriba, \(3\cdot 2=6\); abajo, \(2!=2\cdot 1=2\); entonces \(\dbinom{3}{2}=\dfrac{6}{2}=3\).</li>
+    <li><b>\(k=3\)</b> (tres \(b\)): un solo camino, \(bbb\). Con la fórmula: arriba, \(3\cdot 2\cdot 1=6\); abajo, \(3!=6\); entonces \(\dbinom{3}{3}=\dfrac{6}{6}=1\).</li>
+    <li><b>Resultado.</b> \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\): el producto notable, ahora con la explicación de cada coeficiente.</li>
   </ol>
   </div>
   </div>
@@ -74,9 +114,12 @@
   <h3>Ejemplo 2: el \(6\) de \((a+b)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>El término \(a^{2}b^{2}\) aparece cuando se elige \(b\) en \(2\) de los \(4\) factores.</li>
-    <li>\(\dbinom{4}{2}=\dfrac{4\cdot 3}{2\cdot 1}=6\).</li>
-    <li>Las seis elecciones: \(bbaa,\ baba,\ baab,\ abba,\ abab,\ aabb\).</li>
+    <li><b>Dato.</b> \(n=4\) factores. El término \(a^{2}b^{2}\) aparece cuando la \(b\) se elige en \(k=2\) de los \(4\) factores (y la \(a\) en los otros \(4-2=2\)).</li>
+    <li><b>Fórmula y reemplazo.</b> \(\dbinom{4}{2}=\dfrac{4\cdot 3}{2!}\): arriba van \(k=2\) números, desde \(4\) hacia abajo.</li>
+    <li><b>Numerador:</b> \(4\cdot 3=12\).</li>
+    <li><b>Denominador:</b> \(2!=2\cdot 1=2\).</li>
+    <li><b>División:</b> \(\dfrac{12}{2}=6\).</li>
+    <li><b>Los seis caminos:</b> \(bbaa,\ baba,\ baab,\ abba,\ abab,\ aabb\). El coeficiente de \(a^{2}b^{2}\) en \((a+b)^{4}\) es \(6\).</li>
   </ol>
   </div>
   </div>
@@ -85,10 +128,15 @@
   <h3>Ejemplo 3: \((a+b)^{5}\), sin multiplicar</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(\dbinom{5}{0}=1\), \(\dbinom{5}{1}=5\), \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2}=10\).</li>
-    <li>\(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3\cdot 2\cdot 1}=10\), \(\dbinom{5}{4}=5\), \(\dbinom{5}{5}=1\).</li>
-    <li>\((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\).</li>
-    <li><b>Comprobación.</b> Hay \(2^{5}=32\) elecciones, y \(1+5+10+10+5+1=32\).</li>
+    <li><b>Dato.</b> \(n=5\). Hay un término por cada \(k\) desde \(0\) hasta \(5\): \(a^{5},\ a^{4}b,\ a^{3}b^{2},\ a^{2}b^{3},\ ab^{4},\ b^{5}\).</li>
+    <li>\(\dbinom{5}{0}=1\) (el camino sin ninguna \(b\)).</li>
+    <li>\(\dbinom{5}{1}=\dfrac{5}{1!}=\dfrac{5}{1}=5\).</li>
+    <li>\(\dbinom{5}{2}=\dfrac{5\cdot 4}{2!}\). Arriba: \(5\cdot 4=20\). Abajo: \(2!=2\). División: \(\dfrac{20}{2}=10\).</li>
+    <li>\(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3!}\). Arriba: \(5\cdot 4=20\), \(20\cdot 3=60\). Abajo: \(3!=3\cdot 2\cdot 1=6\). División: \(\dfrac{60}{6}=10\).</li>
+    <li>\(\dbinom{5}{4}=\dfrac{5\cdot 4\cdot 3\cdot 2}{4!}\). Arriba: \(5\cdot 4=20\), \(20\cdot 3=60\), \(60\cdot 2=120\). Abajo: \(4!=4\cdot 3\cdot 2\cdot 1=24\). División: \(\dfrac{120}{24}=5\).</li>
+    <li>\(\dbinom{5}{5}=\dfrac{5\cdot 4\cdot 3\cdot 2\cdot 1}{5!}=\dfrac{120}{120}=1\).</li>
+    <li><b>Resultado.</b> \((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\).</li>
+    <li><b>Comprobación.</b> Caminos en total: \(2^{5}\); \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\), \(16\cdot 2=32\). Suma de los coeficientes: \(1+5=6\), \(6+10=16\), \(16+10=26\), \(26+5=31\), \(31+1=32\). Coinciden: están todos los caminos. ✓</li>
   </ol>
   </div>
   </div>
@@ -97,15 +145,23 @@
   <h3>Ejemplo 4: por qué los coeficientes son simétricos</h3>
   <div class="body">
   <ol class="steps">
-    <li>Elegir en cuáles \(k\) factores va la \(b\) es lo mismo que elegir en cuáles \(n-k\) factores va la \(a\).</li>
-    <li>Por eso \(\dbinom{n}{k}=\dbinom{n}{n-k}\). Con la fórmula: \(\dfrac{n!}{k!\,(n-k)!}\) no cambia al intercambiar \(k\) con \(n-k\).</li>
-    <li>Ejemplo: \(\dbinom{5}{2}=\dbinom{5}{3}=10\).</li>
+    <li><b>Qué se demuestra:</b> que \(\dbinom{n}{k}=\dbinom{n}{n-k}\) para \(0\le k\le n\). Es decir, los coeficientes se leen igual de izquierda a derecha que de derecha a izquierda, como en \(1,\ 5,\ 10,\ 10,\ 5,\ 1\).</li>
+    <li><b>Con la idea de elegir:</b> decidir en cuáles \(k\) factores va la \(b\) deja decidido en cuáles \(n-k\) factores va la \(a\). Cada manera de elegir \(k\) factores es también una manera de elegir los otros \(n-k\); hay la misma cantidad de unas y de otras.</li>
+    <li><b>Con la fórmula</b>, se reemplaza \(k\) por \(n-k\): \[\begin{aligned}\binom{n}{n-k}&=\frac{n!}{(n-k)!\,\bigl(n-(n-k)\bigr)!}&&\text{se reemplaza }k\text{ por }n-k\\ &=\frac{n!}{(n-k)!\,k!}&&n-(n-k)=n-n+k=k\\ &=\frac{n!}{k!\,(n-k)!}&&\text{propiedad conmutativa en el denominador}\\ &=\binom{n}{k}&&\text{es la fórmula de }\tbinom{n}{k}\end{aligned}\]</li>
+    <li><b>Con números:</b> en el ejemplo 3, \(\dbinom{5}{2}=\dfrac{20}{2}=10\) y \(\dbinom{5}{3}=\dfrac{60}{6}=10\). Aquí \(n=5\), \(k=2\) y \(n-k=5-2=3\). ✓</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Qué se gana.</b> Con los productos notables hay que memorizar una fórmula por cada exponente. Con esta idea basta una sola, que sirve para cualquier \(n\) natural y que además dice <b>por qué</b> aparece cada coeficiente.</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Escribir \((a+b)^{3}=a^{3}+b^{3}\).</b> Eso cuenta solo \(2\) de los \(8\) caminos (\(aaa\) y \(bbb\)) y olvida los otros \(6\). Comprobación con \(a=1\) y \(b=1\): \((1+1)^{3}=2^{3}=8\), pero \(1^{3}+1^{3}=1+1=2\).</li>
+      <li><b>Dividir por \(k\) en vez de por \(k!\).</b> Para \(\dbinom{5}{3}\): \(\dfrac{60}{3}=20\) está mal; lo correcto es \(\dfrac{60}{3!}=\dfrac{60}{6}=10\), porque cada grupo de tres factores se repite \(6\) veces, no \(3\).</li>
+      <li><b>Creer que \(0!=0\).</b> Se conviene \(0!=1\); con \(0\) en el denominador la fórmula no se podría calcular.</li>
+      <li><b>Contar \(ab\) y \(ba\) como términos distintos.</b> Son semejantes: \(ba=ab\). Se suman: \(ab+ba=2ab\).</li>
+    </ol>
+    <p><b>Qué se gana.</b> Con los productos notables hay que memorizar una fórmula por cada exponente. Con esta idea basta una sola, que sirve para cualquier entero \(n\ge 1\) y que además dice <b>por qué</b> aparece cada coeficiente.</p>
   </div>
 </section>
 
@@ -116,34 +172,46 @@
     <details><summary>Pista</summary><div><p>Hay que elegir en cuáles \(2\) de los \(5\) factores va la \(b\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}=10\).</li>
-        <li>Tres de los diez: \(bbaaa,\ babaa,\ aaabb\).</li>
+        <li><b>Datos.</b> \(n=5\) factores. En \(a^{3}b^{2}\) el exponente de \(b\) es \(2\): la \(b\) se eligió en \(k=2\) factores, y la \(a\) en los otros \(5-2=3\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2!}\).</li>
+        <li><b>Numerador:</b> \(5\cdot 4=20\). <b>Denominador:</b> \(2!=2\cdot 1=2\).</li>
+        <li><b>División:</b> \(\dfrac{20}{2}=10\). Hay \(10\) productos iguales a \(a^{3}b^{2}\).</li>
+        <li><b>Tres de los diez:</b> \(bbaaa\) (la \(b\) de los factores 1 y 2), \(babaa\) (de los factores 1 y 3) y \(aaabb\) (de los factores 4 y 5). Cada uno tiene dos \(b\) y tres \(a\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Calcula el coeficiente de \(a^{2}b^{4}\) en \((a+b)^{6}\).</p>
-    <details><summary>Pista</summary><div><p>La \(b\) se elige en \(4\) de los \(6\) factores. Por simetría, es lo mismo que elegir \(2\).</p></div></details>
+    <details><summary>Pista</summary><div><p>La \(b\) se elige en \(4\) de los \(6\) factores. Por simetría, es lo mismo que elegir los \(2\) factores de la \(a\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{6}{4}=\dbinom{6}{2}=\dfrac{6\cdot 5}{2\cdot 1}=15\).</li>
-        <li>Con la otra forma: \(\dfrac{6!}{4!\,2!}=\dfrac{720}{24\cdot 2}=15\).</li>
+        <li><b>Datos.</b> \(n=6\) y \(k=4\) (el exponente de \(b\)). El coeficiente es \(\dbinom{6}{4}\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(\dbinom{6}{4}=\dfrac{6\cdot 5\cdot 4\cdot 3}{4!}\): arriba van \(4\) números, desde \(6\) hacia abajo.</li>
+        <li><b>Numerador:</b> \(6\cdot 5=30\), \(30\cdot 4=120\), \(120\cdot 3=360\).</li>
+        <li><b>Denominador:</b> \(4!=4\cdot 3\cdot 2\cdot 1\); \(4\cdot 3=12\), \(12\cdot 2=24\), \(24\cdot 1=24\).</li>
+        <li><b>División:</b> \(\dfrac{360}{24}=15\). El coeficiente es \(15\).</li>
+        <li><b>Más corto, por simetría</b> (ejemplo 4): \(\dbinom{6}{4}=\dbinom{6}{6-4}=\dbinom{6}{2}=\dfrac{6\cdot 5}{2!}\). Arriba: \(6\cdot 5=30\). Abajo: \(2!=2\). División: \(\dfrac{30}{2}=15\). ✓</li>
+        <li><b>Con factoriales:</b> \(\dbinom{6}{4}=\dfrac{6!}{4!\cdot 2!}\). \(6!=6\cdot 5!=6\cdot 120=720\); \(4!=24\); \(2!=2\); \(24\cdot 2=48\); \(\dfrac{720}{48}=15\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> De un grupo de \(5\) amigos hay que elegir a \(2\) para ir a comprar. ¿De cuántas maneras se puede hacer? ¿Qué tiene que ver con \((a+b)^{5}\)?</p>
-    <details><summary>Pista</summary><div><p>Elegir \(2\) personas entre \(5\) es elegir \(2\) factores entre \(5\).</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> De un grupo de \(5\) amigos (Ana, Beto, Carla, Diego y Elena) hay que elegir a \(2\) para ir a comprar. ¿De cuántas maneras se puede hacer? ¿Qué tiene que ver con \((a+b)^{5}\)?</p>
+    <details><summary>Pista</summary><div><p>Elegir \(2\) personas entre \(5\) es como elegir \(2\) factores entre \(5\). Ir «Ana y Beto» es lo mismo que ir «Beto y Ana».</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(\dbinom{5}{2}=\dfrac{5\cdot 4}{2}=10\) maneras.</li>
-        <li>Es el coeficiente de \(a^{3}b^{2}\) en \((a+b)^{5}\): cada amigo es un factor; «\(b\)» significa «va a comprar» y «\(a\)», «se queda».</li>
+        <li><b>Datos.</b> \(n=5\) personas; se eligen \(k=2\); el orden no importa.</li>
+        <li><b>Con orden:</b> \(5\) opciones para la primera persona y \(4\) para la segunda: \(5\cdot 4=20\).</li>
+        <li><b>Repeticiones:</b> cada pareja quedó contada \(2!=2\cdot 1=2\) veces («Ana y Beto», «Beto y Ana»).</li>
+        <li><b>División:</b> \(\dbinom{5}{2}=\dfrac{20}{2}=10\) maneras.</li>
+        <li><b>Listadas</b> (con las iniciales): \(AB,\ AC,\ AD,\ AE,\ BC,\ BD,\ BE,\ CD,\ CE,\ DE\). Son \(4+3+2+1=10\). ✓</li>
+        <li><b>Relación con \((a+b)^{5}\).</b> Cada amigo es un factor; elegir «\(b\)» en un factor significa «va a comprar» y elegir «\(a\)», «se queda». Cada pareja es un camino con dos \(b\) y tres \(a\), como \(bbaaa\) (van Ana y Beto). Por eso el número de maneras, \(10\), es el coeficiente de \(a^{3}b^{2}\) en \((a+b)^{5}\).</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H04 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H04 · v002 · Pendiente de APR</span>
 </footer>
 </article>
