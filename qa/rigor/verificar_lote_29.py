@@ -1247,6 +1247,9 @@ comprobar9()
 # >>> H10
 # ───────── H10: ideas para construir la definición formal de límite (tolerancia ε de la salida, distancia δ de la entrada) ─────────
 A10, E10 = molde('10', 'H10_ideas_para_construir_la_definicion_formal_de_limite.html', 'Ideas para construir la definición formal de límite', 'lim-ideas', 'Definición formal de límite (épsilon-delta)', ['eps-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001 para H10; aquí se cambia esa comprobación por la misma con v002
+err[:] = [m10_ for m10_ in err if m10_ != 'H10 título, ruta y pie']
+ok('<h1>Ideas para construir la definición formal de límite</h1>' in A10 and '<span class="status">CD-L29-H10 · v002 · Pendiente de APR</span>' in A10 and 'v001' not in A10 and A10.count('class="status"') == 1 and '<li>Definición formal de límite (épsilon-delta)</li>\n      <li><b>Ideas para construir la definición formal de límite</b></li>' in A10, 'H10 v002 título, ruta y pie')
 # funciones exactas de la hoja
 def f10(x): return 2*Fr(x) + 1                                  # función ancla: a = 3, L = 7
 def g10(x): return 3*Fr(x) - 2                                  # ejemplo 1: a = 2, L = 4
@@ -1278,7 +1281,7 @@ ok("marca(M.x0, 6, '6', C.alt); marca(M.x0, 8, '8', C.alt)" in E10 and "marca(2.
 ok((7 - 1, 7 + 1, 3 - Fr(1, 2), 3 + Fr(1, 2), 7 - Fr(1, 2), 7 + Fr(1, 2), 3 - Fr(1, 4), 3 + Fr(1, 4)) == (6, 8, Fr('2.5'), Fr('3.5'), Fr('6.5'), Fr('7.5'), Fr('2.75'), Fr('3.25')), 'H10 escena: bordes de las franjas')
 ok("['R2', '\\\\varepsilon=1:\\\\ \\\\ 6\\\\lt f(x)\\\\lt 8'" in E10 and "['R3', '\\\\delta=0{,}5:\\\\ \\\\ 2{,}5\\\\lt x\\\\lt 3{,}5\\\\ \\\\Rightarrow\\\\ 6\\\\lt f(x)\\\\lt 8'" in E10 and "['R4', '\\\\varepsilon=0{,}5\\\\ \\\\to\\\\ \\\\delta=0{,}25'" in E10 and "['R5', '\\\\varepsilon=0{,}1\\\\ \\\\to\\\\ \\\\delta=0{,}05'" in E10 and "['R6', '0\\\\lt |x-3|\\\\lt \\\\tfrac{\\\\varepsilon}{2}\\\\ \\\\Rightarrow\\\\ |f(x)-7|\\\\lt \\\\varepsilon'" in E10 and "['F', '\\\\Longrightarrow\\\\ \\\\delta=\\\\tfrac{\\\\varepsilon}{2}'" in E10, 'H10 escena: registro y respuesta')
 for x10 in (Fr('2.9'), Fr('3.1'), Fr('3.4'), Fr('3.2'), Fr('3.04')):
-    ok('f(%s)=2\\\\cdot %s+1=%s' % (tex(x10), tex(x10), tex(f10(x10))) in E10, 'H10 lectura f(%s)' % tex(x10))
+    ok('f(%s)=2\\\\cdot %s+1=%s+1=%s' % (tex(x10), tex(x10), tex(2*x10), tex(f10(x10))) in E10 and 2*x10 + 1 == f10(x10), 'H10 v002 lectura f(%s), con el producto aparte' % tex(x10))
 for x10, e10, d10 in ((Fr('3.4'), Fr(1), Fr(1, 2)), (Fr('3.2'), Fr(1, 2), Fr(1, 4)), (Fr('3.04'), Fr(1, 10), Fr(1, 20))):
     ok(0 < abs(x10 - 3) < d10 and '|%s-7|=%s\\\\lt %s' % (tex(f10(x10)), tex(abs(f10(x10) - 7)), tex(e10)) in E10 and abs(f10(x10) - 7) < e10 and '2\\\\,|x-3|\\\\lt 2\\\\cdot %s=%s' % (tex(d10), tex(e10)) in E10, 'H10 lectura: prueba con x = %s' % tex(x10))
 ok('f(3{,}4)=7{,}8\\\\gt 7{,}5' in E10 and f10(Fr('3.4')) > Fr('7.5') and 0 < abs(Fr('3.4') - 3) < Fr(1, 2), 'H10 lectura: la distancia 0,5 no sirve para la tolerancia 0,5')
@@ -1357,6 +1360,115 @@ for z10 in ['0\\lt |x-a|\\lt \\delta\\ \\Longrightarrow\\ |f(x)-L|\\lt \\varepsi
             '0\\lt 0{,}04\\lt 0{,}05', '0{,}08\\lt 0{,}1', '0\\lt 0{,}15\\lt 0{,}2', '0{,}45\\lt 0{,}6', '0{,}16\\lt 0{,}2', '0\\lt 0{,}05\\lt 0{,}1', '0{,}2\\lt 0{,}4']:
     ok(z10 in A10, 'H10: la hoja no trae «%s»' % z10)
 ok(q10(4) == 2 and 4 - 1 == 3 and p10(3) == 10 and 2*3 + 1 == 7, 'H10: puntos marcados de las gráficas descritas')
+# ───── H10 v002 (revisión general, 25-nov): cuentas nuevas de la hoja y de la lectura de la escena
+def num10(z):
+    """una cuenta numérica en TeX (suma, resta, producto, fracción) -> fracción exacta"""
+    z = re.sub(r'\\[dt]?frac\{([^{}]*(?:\{,\}[^{}]*)*)\}\{([^{}]*(?:\{,\}[^{}]*)*)\}', r'((\1)/(\2))', z.strip())
+    z = z.replace('\\cdot', '*').replace('{,}', '.').replace(' ', '')
+    assert re.fullmatch(r'[-+*/().\d]+', z), z
+    return eval(re.sub(r'\d+(?:\.\d+)?', lambda m: "Fr('%s')" % m.group(0), z), {'Fr': Fr})
+D10 = lambda s: Fr(s)
+# a) filas «nombre(x) = producto = suma = valor» de los bloques aligned (encabezado, ejemplos 1 y 2): cada lado vale lo que la función
+FIL10 = re.findall(r'(?<![A-Za-z\\|])([A-Za-z])\((' + NUMTEX + r')\)&=(.*?)(?=&&)', A10, re.S)
+ok(len(FIL10) == 12 and [n for n, _, _ in FIL10] == list('ffffgggghhhh'), 'H10 v002: se esperaban 12 filas «nombre(x) = cuenta = valor» en bloques aligned y hay %d' % len(FIL10))
+for nom10, arg10, cad10 in FIL10:
+    ok(len(cad10.split('=')) == 3 and all(num10(z) == FUN10[nom10](D(arg10)) for z in cad10.split('=')), 'H10 v002: fila %s(%s) = %s' % (nom10, arg10, cad10))
+ok([D(a) for n, a, _ in FIL10] == [D10(z) for z in ('2.9', '2.99', '3.1', '3.01', '1.9', '1.99', '2.1', '2.01', '0.9', '0.99', '1.1', '1.01')], 'H10 v002: entradas de las filas del encabezado y de los ejemplos 1 y 2')
+# b) cadenas «nombre(x) = … = valor» escritas en línea: todos los lados numéricos valen lo que la función
+n10 = 0
+for mt10 in mates_de(A10):
+    m10_ = re.fullmatch(r'([A-Za-z])\((' + NUMTEX + r')\)=(.+)', mt10.strip())
+    if not m10_ or m10_.group(1) not in FUN10: continue
+    try: lados10 = [num10(z) for z in m10_.group(3).split('=')]
+    except AssertionError: continue
+    n10 += 1; ok(all(z == FUN10[m10_.group(1)](D(m10_.group(2))) for z in lados10), 'H10 v002: %s' % mt10)
+ok(n10 == 36, 'H10 v002: se esperaban 36 cadenas «nombre(x) = … = valor» en línea y hay %d' % n10)
+# c) encabezado: distancia de la entrada a 3, de la salida a 7, y el doble; las tres mitades
+for x10 in (D10('2.9'), D10('2.99'), D10('3.1'), D10('3.01')):
+    y10 = f10(x10); dx10 = abs(x10 - 3); dy10 = abs(y10 - 7)
+    r1 = ('3-%s' % tex(x10)) if x10 < 3 else ('%s-3' % tex(x10)); r2 = ('7-%s' % tex(y10)) if y10 < 7 else ('%s-7' % tex(y10))
+    ok('|%s-3|&=%s=%s;\\quad |%s-7|=%s=%s&&\\text{y }%s=2\\cdot %s' % (tex(x10), r1, tex(dx10), tex(y10), r2, tex(dy10), tex(dy10), tex(dx10)) in A10 and dy10 == 2*dx10 and dx10 == max(x10, 3) - min(x10, 3) and dy10 == max(y10, 7) - min(y10, 7), 'H10 v002 encabezado: distancias de x = %s' % tex(x10))
+for e10 in EP10:
+    ok(('basta tomar la entrada a menos de \\(\\dfrac{%s}{2}=%s\\) de \\(3\\), porque \\(2\\cdot %s=%s\\)' if e10 == 1 else 'basta \\(\\dfrac{%s}{2}=%s\\), porque \\(2\\cdot %s=%s\\)') % (tex(e10), tex(e10/2), tex(e10/2), tex(e10)) in A10 and 2*(e10/2) == e10, 'H10 v002 encabezado: la mitad de la tolerancia %s' % e10)
+ok('\\(0\\lt |x-3|\\lt 0{,}5\\ \\Longrightarrow\\ |f(x)-7|\\lt 1\\)' in A10, 'H10 v002 encabezado: la frase con los números de muestra')
+# d) estructura: de dónde sale → regularidad → notación; qué se demuestra y cómo funciona el método antes de la demostración; comprobación después
+ok(A10.count('<p class="lede">') == 3 and A10.index('<b>De dónde sale, con números.</b>') < A10.index('<b>La regularidad:</b>') < A10.index('<b>La notación.</b>') < A10.index('</header>') < A10.index('<b>Qué se demuestra.</b>') < A10.index('<b>Cómo funciona el método.</b>') < A10.index('<b>Búsqueda, primera parte') < A10.index('<b>Búsqueda, segunda parte') < A10.index('<b>Demostración.</b>') < A10.index('<b>Comprobación con números.</b>') < A10.index('<p>Las cuentas de cada fila:</p>') < A10.index('card k3') < A10.index('<b>Cómo se lee.</b>') < A10.index('<b>De dónde sale cada parte.</b>'), 'H10 v002: orden «de dónde sale → regularidad → notación» y «qué se demuestra → método → demostración → comprobación»')
+for z10 in ['se lee «\\(f\\) de \\(x\\)»', 'se lee «valor absoluto de \\(2{,}9\\) menos \\(3\\)»', 'la letra griega «épsilon»', 'la letra griega «delta»', 'se lee «épsilon mayor que cero»', 'se lee «valor absoluto de \\(x\\) menos \\(a\\)»', 'La flecha \\(\\Longrightarrow\\) se lee «entonces»', 'se lee «el límite de \\(f\\) de \\(x\\), cuando \\(x\\) tiende a \\(a\\), es \\(L\\)»', 'se lee «tiende a»', 'se lee «valor absoluto de \\(u\\) menos \\(v\\)»',
+            'Un <b>intervalo abierto</b> es el conjunto de todos los números que están entre dos extremos, sin contar los extremos', 'propiedad 1», «propiedad 2», «propiedad 3» y «propiedad 4»', 'Multiplicar los dos lados por un número negativo la da vuelta', 'Si \\(u\\lt v\\) y \\(v\\lt w\\), entonces \\(u\\lt w\\)',
+            'el límite de \\(f\\) en \\(3\\) es \\(7\\)', 'el límite es \\(1\\)', '<b>Comprobación con números.</b> Con \\(\\delta=0{,}2\\)', 'Ningún número es mayor que \\(3{,}55\\) y menor que \\(3{,}45\\)', 'mayor que \\(3{,}05-0{,}5=2{,}55\\) y menor que \\(2{,}05+0{,}5=2{,}55\\): imposible',
+            '\\lt 0{,}5+0{,}5=1', '0\\lt 0{,}4\\lt 0{,}5', '0\\lt 0{,}2\\lt 0{,}25', '0\\lt 0{,}004\\lt 0{,}005', '0{,}8\\lt 1', '0{,}4\\lt 0{,}5', '0{,}008\\lt 0{,}01', '0{,}25\\lt 0{,}5', '0{,}05\\lt 0{,}5', '2\\lt 3\\) y \\(2+5\\lt 3+5', '2\\lt 3\\) y \\(2\\cdot 4\\lt 3\\cdot 4', '2\\lt 3\\) y \\(-2\\gt -3']:
+    ok(z10 in A10, 'H10 v002: la hoja no trae «%s»' % z10)
+ok(not re.search(r'\\\\[()]', A10), 'H10 v002: salto de línea pegado a un paréntesis en un bloque aligned')
+ok(A10.count('\\begin{aligned}') == A10.count('\\end{aligned}') == 39, 'H10 v002: bloques aligned (%d)' % A10.count('\\begin{aligned}'))
+# e) aviso de rigor: los ejemplos con números y las reglas del orden, en rejilla
+ok(abs(2*(-3)) == abs(-6) == 6 == abs(2)*abs(-3) == 2*3 and abs(-4) == 4 == abs(4) and abs(D10('-0.8')) == D10('0.8') < 1 and -1 < D10('-0.8') < 1 and not abs(D10('1.2')) < 1 and not -1 < D10('1.2') < 1 and abs(4 - 3) == 1 == abs(4 - D10('3.5')) + abs(D10('3.5') - 3) == D10('0.5') + D10('0.5') and 2 + 5 < 3 + 5 and 2*4 < 3*4 and -2 > -3, 'H10 v002 aviso: ejemplos con números')
+for x10 in RJ[::5]:
+    for y10 in RJ[::7]:
+        ok(abs(x10 - y10) == max(x10, y10) - min(x10, y10) and abs(x10) == (x10 if x10 >= 0 else -x10), 'H10 v002 aviso: |u − v| es el mayor menos el menor')
+        if x10 < y10:
+            for c10 in (Fr(5), Fr(-7, 2), Fr(1, 3), Fr(4), Fr(-1), Fr(-2)):
+                ok(x10 + c10 < y10 + c10 and ((c10*x10 < c10*y10) if c10 > 0 else (c10*x10 > c10*y10)) and (c10 < 0 or x10/c10 < y10/c10), 'H10 v002 aviso: reglas del orden (sumar, multiplicar por positivo, por negativo)')
+# f) k1: las dos franjas sin barras, en rejilla, y los números de muestra
+for L10, e10 in ((Fr(7), Fr(1)), (Fr(7), Fr(1, 2)), (Fr(3), Fr(1, 2)), (Fr(0), Fr(3)), (Fr(-2), Fr(5, 2))):
+    for u10_ in RJ:
+        ok((abs(u10_ - L10) < e10) == (-e10 < u10_ - L10 < e10) == (L10 - e10 < u10_ < L10 + e10) and (0 < abs(u10_ - L10) < e10) == (L10 - e10 < u10_ < L10 + e10 and u10_ != L10) and ((abs(u10_ - L10) == 0) == (u10_ == L10)), 'H10 v002 k1: franja sin barras (centro %s, ancho %s)' % (L10, e10))
+ok(7 - 1 == 6 and 7 + 1 == 8 and 3 - D10('0.5') == D10('2.5') and 3 + D10('0.5') == D10('3.5') and abs(3 - 3) == 0 and D10('1.8') < 3 < D10('4.2') and abs(D10('3.4') - 3) == D10('0.4') < D10('0.5') and 2*D10('3.4') == D10('6.8') and f10(D10('3.4')) == D10('7.8') and abs(D10('7.8') - 7) == D10('0.8') < 1 and abs(D10('7.2') - 7) == D10('0.2'), 'H10 v002 k1: números de muestra')
+# g) k2: la búsqueda, operación por operación, y las cuatro filas de la tabla con su cuenta escrita
+for x10 in RJ:
+    ok(abs(f10(x10) - 7) == abs(2*x10 + 1 - 7) == abs(2*x10 - 6) == abs(2*(x10 - 3)) == abs(2)*abs(x10 - 3) == 2*abs(x10 - 3) and 2*x10 - 2*3 == 2*x10 - 6, 'H10 v002 k2: búsqueda, primera parte')
+    for e10 in ES10: ok((2*abs(x10 - 3) < e10) == (abs(x10 - 3) < e10/2) and 2*(e10/2) == e10, 'H10 v002 k2: búsqueda, segunda parte (dividir por 2)')
+ok(1 - 7 == -6 and 2*3 == 6 and abs(2) == 2 and 2*abs(D10('2.9') - 3) == 2*D10('0.1') == D10('0.2') == abs(D10('6.8') - 7), 'H10 v002 k2: cuentas al margen de la búsqueda')
+for e10, d10, x10, dx10, y10, dy10 in FK10:
+    m1 = '|%s|=' % tex(x10 - 3) if x10 < 3 else ''; m2 = '|%s|=' % tex(y10 - 7) if y10 < 7 else ''
+    fila10 = '<li>\\(\\varepsilon=%s\\): \\(\\dfrac{%s}{2}=%s\\). El valor \\(x=%s\\) cumple \\(|%s-3|=%s%s\\) y \\(0\\lt %s\\lt %s\\). Su salida: \\(f(%s)=2\\cdot %s+1=%s+1=%s\\). Su distancia a \\(7\\): \\(|%s-7|=%s%s\\), y \\(%s\\lt %s\\).</li>' % (tex(e10), tex(e10), tex(d10), tex(x10), tex(x10), m1, tex(dx10), tex(dx10), tex(d10), tex(x10), tex(x10), tex(2*x10), tex(y10), tex(y10), m2, tex(dy10), tex(dy10), tex(e10))
+    ok(fila10 in A10 and 2*x10 + 1 == y10 and '\\(2\\cdot %s=%s\\)' % (tex(dx10), tex(dy10)) in A10 and 2*dx10 == dy10, 'H10 v002 k2: cuenta escrita de la fila ε = %s' % tex(e10))
+# h) k3: una distancia menor también sirve (0,25 y 0,05 para la tolerancia 1)
+ok(D10('0.25') < D10('0.5') and D10('0.05') < D10('0.5') and Fr(1)/2 == D10('0.5') and D10('0.1')/2 == D10('0.05'), 'H10 v002 k3: comparaciones y mitades')
+implica10('H10 v002 k3: 0,25 sirve para la tolerancia 1', f10, 3, 7, D10('0.25'), 1); implica10('H10 v002 k3: 0,05 sirve para la tolerancia 1', f10, 3, 7, D10('0.05'), 1)
+for t10 in TS10: ok((not 0 < abs(t10*D10('0.25')) < D10('0.25')) or 0 < abs(t10*D10('0.25')) < D10('0.5'), 'H10 v002 k3: los x de la franja 0,25 están en la franja 0,5')
+# i) ejemplos 1 y 2, ejercicios A y C: la distancia de la salida escrita con |x − a|, operación por operación
+for x10 in RJ:
+    ok(abs(g10(x10) - 4) == abs(3*x10 - 2 - 4) == abs(3*x10 - 6) == abs(3*(x10 - 2)) == abs(3)*abs(x10 - 2) == 3*abs(x10 - 2), 'H10 v002 ej1: cadena del valor absoluto')
+    ok(abs(h10(x10) - 1) == abs(5 - 4*x10 - 1) == abs(4 - 4*x10) == abs(-4*(x10 - 1)) == abs(-4)*abs(x10 - 1) == 4*abs(x10 - 1) and -4*x10 + (-4)*(-1) == 4 - 4*x10, 'H10 v002 ej2: cadena del valor absoluto')
+    ok(abs(u10(x10) - 5) == abs(4*x10 - 3 - 5) == abs(4*x10 - 8) == abs(4*(x10 - 2)) == abs(4)*abs(x10 - 2) == 4*abs(x10 - 2), 'H10 v002 A: cadena del valor absoluto')
+    ok(abs(P10(x10) - 4000) == abs(16*x10 - 4000) == abs(16*(x10 - 250)) == abs(16)*abs(x10 - 250) == 16*abs(x10 - 250), 'H10 v002 C: cadena del valor absoluto')
+    for m10, e10 in ((3, D10('0.6')), (4, D10('0.2')), (4, D10('0.4')), (16, Fr(80))) + tuple((m, e) for m in (3, 4, 16) for e in ES10[:4]):
+        ok((m10*abs(x10) < e10) == (abs(x10) < e10/m10) and m10*(e10/m10) == e10, 'H10 v002: dividir los dos lados por %d' % m10)
+ok(-2 - 4 == -6 and 3*2 == 6 and 5 - 1 == 4 and -4*(-1) == 4 and abs(-4) == 4 and -3 - 5 == -8 and 4*2 == 8 and 16*250 == 4000 and 3*D10('0.15') == D10('0.45') and 4*D10('0.04') == D10('0.16') and 5 - D10('4.6') == D10('0.4') == D10('5.4') - 5, 'H10 v002 ej1, ej2 y A: cuentas al margen')
+ok(h10(D10('0.9')) > 1 > h10(D10('1.1')) and h10(D10('0.99')) > 1 > h10(D10('1.01')), 'H10 v002 ej2: la gráfica baja (salidas mayores que 1 a la izquierda y menores a la derecha)')
+# j) ejemplo 3: elección de t, la salida 7 + 2t y su distancia a 10
+for d10 in ES10 + [Fr(1, 5), Fr(4), Fr(3, 2), Fr(1, 1000), Fr(2)]:
+    t = d10/2 if d10 <= 1 else Fr(1, 2); x10 = 3 + t
+    ok(0 < t < d10 and t <= Fr(1, 2) and abs(x10 - 3) == abs(t) == t and x10 != 3, 'H10 v002 ej3: t está en la franja de δ = %s' % d10)
+    ok(p10(x10) == 2*(3 + t) + 1 == 6 + 2*t + 1 == 7 + 2*t <= 7 + 2*Fr(1, 2) == 8 < 10 and abs(p10(x10) - 10) == 10 - (7 + 2*t) == 10 - 7 - 2*t == 3 - 2*t >= 3 - 2*Fr(1, 2) == 2 and not abs(p10(x10) - 10) < 1 and -2*t >= -2*Fr(1, 2), 'H10 v002 ej3: salida y distancia a 10 con δ = %s' % d10)
+ok(D10('0.2')/2 == D10('0.1') and 3 + D10('0.1') == D10('3.1') and 2*D10('3.1') == D10('6.2') and p10(D10('3.1')) == D10('7.2') and abs(D10('7.2') - 10) == 10 - D10('7.2') == D10('2.8') and not D10('2.8') < 1 and 3 + D10('0.5') == D10('3.5') and 2*D10('3.5') == 7 and p10(D10('3.5')) == 8 and abs(8 - 10) == 10 - 8 == 2 and not 2 < 1 and D10('0.5') < 4 and 2*3 == 6 and 6 + 1 == 7 and 10 - 7 == 3, 'H10 v002 ej3: comprobación con δ = 0,2 y δ = 4')
+# k) ejemplo 4 y ejercicio B: cada tramo, operación por operación; pruebas; diferencia de salidas
+for t10 in TS10:
+    x10 = 2 + t10*Fr(1, 2)
+    if t10 < 0: ok(s10(x10) == x10 + 1 and D10('3.5') - s10(x10) == D10('3.5') - (x10 + 1) == D10('3.5') - x10 - 1 == D10('2.5') - x10 and -2 < -x10 < D10('-1.5') and D10('0.5') < D10('2.5') - x10 < 1 and abs(s10(x10) - D10('3.5')) == D10('2.5') - x10, 'H10 v002 ej4: tramo izquierdo')
+    else: ok(s10(x10) == x10 + 2 and s10(x10) - D10('3.5') == x10 + 2 - D10('3.5') == x10 - D10('1.5') and D10('0.5') < x10 - D10('1.5') < 1 and abs(s10(x10) - D10('3.5')) == x10 - D10('1.5'), 'H10 v002 ej4: tramo derecho')
+    x10 = 4 + t10*Fr(1, 2)
+    if t10 < 0: ok(q10(x10) == 6 - x10 and D10('2.5') - q10(x10) == D10('2.5') - (6 - x10) == D10('2.5') - 6 + x10 == x10 - D10('3.5') and 0 < x10 - D10('3.5') < D10('0.5') and abs(q10(x10) - D10('2.5')) == x10 - D10('3.5'), 'H10 v002 B: tramo izquierdo')
+    else: ok(q10(x10) == x10 - 1 and q10(x10) - D10('2.5') == x10 - 1 - D10('2.5') == x10 - D10('3.5') and D10('0.5') < x10 - D10('3.5') < 1 and abs(q10(x10) - D10('2.5')) == x10 - D10('3.5'), 'H10 v002 B: tramo derecho')
+ok(2 - D10('0.5') == D10('1.5') and 2 + D10('0.5') == D10('2.5') and D10('3.5') - 1 == D10('2.5') and D10('2.5') - 2 == D10('0.5') and D10('2.5') - D10('1.5') == 1 and 2 - D10('3.5') == D10('-1.5') and 2 - D10('1.5') == D10('0.5') and 3 < D10('3.5') < 4 and D10('3.5') - 3 == 4 - D10('3.5') and s10(D10('1.8')) == D10('2.8') and abs(D10('2.8') - D10('3.5')) == D10('3.5') - D10('2.8') == D10('0.7') < 1 and s10(D10('2.3')) == D10('4.3') and abs(D10('4.3') - D10('3.5')) == D10('0.8') < 1, 'H10 v002 ej4: franja, cuentas al margen y pruebas con 1,8 y 2,3')
+ok(D10('0.1')/2 == D10('0.05') and 2 + D10('0.05') == D10('2.05') and s10(D10('2.05')) == D10('4.05') and abs(D10('4.05') - D10('3.5')) == D10('0.55') and not D10('0.55') < D10('0.5') and 4 - D10('3.5') == D10('0.5') and s10(D10('1.95')) == D10('1.95') + 1 == D10('2.95') and D10('4.05') - D10('0.5') == D10('3.55') and D10('2.95') + D10('0.5') == D10('3.45') and D10('3.55') > D10('3.45') and 2 - D10('0.05') == D10('1.95'), 'H10 v002 ej4: comprobaciones con t = 0,05')
+ok(4 - D10('0.5') == D10('3.5') and 4 + D10('0.5') == D10('4.5') and D10('2.5') - 6 == D10('-3.5') and D10('3.5') - D10('3.5') == 0 and 4 - D10('3.5') == D10('0.5') and -1 - D10('2.5') == D10('-3.5') and D10('4.5') - D10('3.5') == 1 and q10(D10('3.8')) == D10('2.2') and abs(D10('2.2') - D10('2.5')) == D10('2.5') - D10('2.2') == D10('0.3') < 1 and q10(D10('4.3')) == D10('3.3') and abs(D10('3.3') - D10('2.5')) == D10('0.8') < 1 and q10(D10('4.05')) == D10('3.05') and abs(D10('3.05') - D10('2.5')) == D10('0.55') and not D10('0.55') < D10('0.5') and 3 - D10('2.5') == D10('0.5') and q10(D10('3.95')) == D10('2.05') and D10('3.05') - D10('0.5') == D10('2.55') == D10('2.05') + D10('0.5') and not 1 < 1, 'H10 v002 B: franja, cuentas al margen y pruebas')
+for d10 in ES10:
+    for t10 in TS10:
+        if t10 <= 0: continue
+        t = t10*d10
+        ok(abs((2 - t) - 2) == abs(-t) == t == abs((2 + t) - 2) and s10(2 - t) == 2 - t + 1 == 3 - t and s10(2 + t) == 2 + t + 2 == 4 + t and (4 + t) - (3 - t) == 4 + t - 3 + t == 1 + 2*t > 1 and abs(s10(2 + t) - D10('3.5')) == 4 + t - D10('3.5') == D10('0.5') + t, 'H10 v002 ej4: salidas de 2 − t y 2 + t y su diferencia')
+        ok(q10(4 - t) == 6 - (4 - t) == 6 - 4 + t == 2 + t and q10(4 + t) == 4 + t - 1 == 3 + t and 3 + t - (2 + t) == 3 + t - 2 - t == (3 - 2) + (t - t) == 1 + 0 == 1 and abs(q10(4 + t) - D10('2.5')) == 3 + t - D10('2.5') == D10('0.5') + t, 'H10 v002 B: salidas de 4 − t y 4 + t y su diferencia')
+        if t10.numerator % 13 == 0:
+            for L10 in LS10:
+                ok(abs(s10(2 + t) - s10(2 - t)) <= abs(s10(2 + t) - L10) + abs(L10 - s10(2 - t)) == abs(s10(2 + t) - L10) + abs(s10(2 - t) - L10), 'H10 v002 ej4: la cadena de la desigualdad triangular')
+# l) ejercicio C: los productos, desarmados
+ok(16*250 == 10*250 + 6*250 == 2500 + 1500 == 4000 and 16*253 == 16*250 + 16*3 == 4000 + 48 == 4048 and 16*3 == 48 and 16*1 == 16 and '\\(16\\cdot 250=10\\cdot 250+6\\cdot 250=2500+1500=4000\\)' in A10 and '\\(16\\cdot 253=16\\cdot 250+16\\cdot 3=4000+48=4048\\)' in A10, 'H10 v002 C: productos desarmados')
+# m) lectura de la escena: de dónde sale cada distancia (búsqueda), los bordes de cada franja azul y la prueba con su entrada
+ok("'\\\\text{la salida queda al doble: }0{,}2=2\\\\cdot 0{,}1'" in E10 and "'|f(x)-7|=|2x+1-7|=|2x-6|' + Q + '|2x-6|=|2\\\\,(x-3)|=2\\\\,|x-3|'" in E10 and D10('0.2') == 2*D10('0.1'), 'H10 v002 lectura: el doble y la cadena del valor absoluto')
+for x10, e10, d10 in ((D10('3.4'), EP10[0], DE10[0]), (D10('3.2'), EP10[1], DE10[1]), (D10('3.04'), EP10[2], DE10[2])):
+    ok("'\\\\text{se quiere }2\\\\,|x-3|\\\\lt %s' + Q + '\\\\text{dividido por }2:\\\\ \\\\ |x-3|\\\\lt \\\\tfrac{%s}{2}=%s'" % (tex(e10), tex(e10), tex(d10)) in E10 and e10/2 == d10, 'H10 v002 lectura: búsqueda de la distancia para ε = %s' % tex(e10))
+    ok("'3-%s=%s;\\\\ \\\\ 3+%s=%s'" % (tex(d10), tex(3 - d10), tex(d10), tex(3 + d10)) in E10 and "'\\\\text{prueba: }|%s-3|=%s\\\\lt %s' + Q + 'f(%s)=" % (tex(x10), tex(x10 - 3), tex(d10), tex(x10)) in E10 and 0 < x10 - 3 < d10, 'H10 v002 lectura: bordes de la franja azul y entrada de prueba (ε = %s)' % tex(e10))
 # <<< H10
 
 # >>> H11
