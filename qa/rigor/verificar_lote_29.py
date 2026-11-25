@@ -881,7 +881,16 @@ console.log(JSON.stringify(out));
 """
 # >>> H08
 # ───────── H08: tablas y límites unilaterales (cada lado de la tabla da su lateral; después se comparan) ─────────
+# pie en v002 (revisión general): molde() trae su propia lista de versiones, fuera de este bloque; aquí se comprueba
+# «título, ruta y pie» de H08 con v002, sin tocar molde() (vale igual si después se agrega H08 a esa lista)
+_ok8 = ok
+def ok(c, m):
+    if m == 'H08 título, ruta y pie':
+        _a = (PARTES/'08.art.html').read_text(encoding='utf-8')
+        c = '<h1>Tablas y límites unilaterales</h1>' in _a and '<span class="status">CD-L29-H08 · v002 · Pendiente de APR</span>' in _a and _a.count('<span class="status">') == 1 and '<li>Límites a partir de tablas</li>\n      <li><b>Tablas y límites unilaterales</b></li>' in _a
+    _ok8(c, m)
 A8, E8 = molde('08', 'H08_tablas_y_limites_unilaterales.html', 'Tablas y límites unilaterales', 'lim-unil', 'Límites a partir de tablas', ['uni-idea'], 1)
+ok = _ok8
 def f8(x): return x + 1 if x < 3 else 2*x                                        # función ancla: laterales 4 y 6 en a = 3; f(3) = 6
 def r8(x): return x + 1                                                          # k2: mismo lado izquierdo que f, otro lado derecho
 def s8(x):
@@ -986,6 +995,53 @@ for L8, c8 in ((IZ8, 4), (DE8, 6)):
 ok([abs(f8(x) - 4) for x in IZ8] == [Fr(1, 10), Fr(1, 100), Fr(1, 1000)] and [abs(f8(x) - 6) for x in DE8] == [Fr(2, 10), Fr(2, 100), Fr(2, 1000)], 'H08 escena: distancias 0,1; 0,01; 0,001 y 0,2; 0,02; 0,002')
 ok('f(x)=x+1\\\\ \\\\text{si }x<3;\\\\ \\\\ f(x)=2x\\\\ \\\\text{si }x\\\\ge 3' in E8 and '3+1=4' in E8 and '2\\\\cdot 3=6' in E8 and '6-4=2' in E8 and "['FO', 'f(x)=x+1\\\\ (x<3);\\\\ \\\\ 2x\\\\ (x\\\\ge 3)'" in E8 and 'f(3)=6' in E8, 'H08 escena: fórmula de confirmación')
 ok('function lm08E(val){ return -0.9 + (val - 3.85)*5.8/2.4; }' in E8 and all(-1.1 < -0.9 + (float(v) - 3.85)*5.8/2.4 < 5.1 for v in TB8[0][1]), 'H08 escena: los valores caben en la recta numérica')
+# ── revisión general (v002): cuentas nuevas del encabezado, los recuadros, los ejemplos y los ejercicios ──
+def num8(z):
+    """una cuenta numérica en TeX (suma, resta, producto, fracción) -> fracción exacta"""
+    z = re.sub(r'\\d?frac\{([^{}]*(?:\{,\}[^{}]*)*)\}\{([^{}]*(?:\{,\}[^{}]*)*)\}', r'((\1)/(\2))', z.strip())
+    z = z.replace('\\cdot', '*').replace('{,}', '.').replace(' ', '')
+    assert re.fullmatch(r'[-+*/().\d]+', z), z
+    return eval(re.sub(r'\d+(?:\.\d+)?', lambda m: "Fr('%s')" % m.group(0), z), {'Fr': Fr})
+FILAS8 = re.findall(r'(?:(?<![A-Za-z\\])|(?<=\\\\))([A-Za-z])\((' + NUMTEX + r')\)&=(.*?)(?=&&|\\\\|\\end\{aligned\})', A8, re.S)
+ok(len(FILAS8) == 60, 'H08 v002: se esperaban 60 filas «nombre(x) = cuenta = valor» y hay %d' % len(FILAS8))
+for nom8, arg8, cad8 in FILAS8:
+    ok(nom8 in FUN8 and len(cad8.split('=')) >= 2 and all(num8(z) == FUN8[nom8](D(arg8)) for z in cad8.split('=')), 'H08 v002: fila %s(%s) = %s' % (nom8, arg8, cad8))
+CON8 = set((n, D(a)) for n, a, _ in FILAS8)
+for nom8, t8, a8 in (('f', TB8[1], 3), ('r', TB8[1], 3), ('s', TB8[2], 0), ('g', TB8[3], 2), ('h', TB8[4], 2), ('k', TB8[5], 4), ('p', TB8[7], 4), ('q', TB8[8], 1), ('P', TB8[9], 5)):
+    for x in t8[0]:
+        if x == a8 and nom8 in ('s', 'g', 'q'): continue                          # s(0) no existe; g(2) y q(1) son datos
+        ok((nom8, x) in CON8, 'H08 v002: la columna x = %s de la tabla de %s no tiene su cuenta' % (x, nom8))
+# encabezado: valor, resta con su signo, valor absoluto y distancia, las seis columnas; décimas partes
+for x, c8 in [(Fr(z), 4) for z in ('2.9', '2.99', '2.999')] + [(Fr(z), 6) for z in ('3.1', '3.01', '3.001')]:
+    cad = 'f(%s)=%s;\\quad&|%s-%d|=|%s|=%s' % (tex(x), tex(f8(x)), tex(f8(x)), c8, tex(f8(x) - c8), tex(abs(f8(x) - c8)))
+    ok(cad in A8, 'H08 v002 encabezado: falta «%s»' % cad)
+ok(Fr('0.1')/10 == Fr('0.01') and Fr('0.01')/10 == Fr('0.001') and Fr('0.2')/10 == Fr('0.02') and Fr('0.02')/10 == Fr('0.002') and A8.count('\\dfrac{0{,}1}{10}=0{,}01') == 2 and '\\dfrac{0{,}2}{10}=0{,}02' in A8, 'H08 v002 encabezado y k3: cada distancia (o cada x) es la décima parte de la anterior')
+ok(A8.count('<p class="lede">') == 4 and 'De dónde sale, con números.' in A8 and 'La regularidad:' in A8 and 'La notación.' in A8 and all(z in A8 for z in ('«límite»', '«tiende a»', 'por la izquierda»', 'por la derecha»', '«aproximadamente igual a»', '«valor absoluto de»', '«ele sub uno»', '«es distinto de»', 'más infinito»', '«\\(x\\) mayor o igual que \\(3\\)»', '«\\(1\\) menor o igual que \\(x\\)»')), 'H08 v002: encabezado con «de dónde sale» y lectura de cada símbolo')
+# aviso de rigor: ejemplos con números
+ok(2*3 + 0 == 6 and 2 < 4 and Fr(1, 4) == Fr('0.25') < Fr('0.5') == Fr(1, 2), 'H08 v002 aviso: ejemplo de c·a + d y de los inversos')
+for p8_ in range(1, 25):
+    for q8_ in range(p8_ + 1, 26):
+        ok(Fr(1, q8_) < Fr(1, p8_) and Fr(3, 7*q8_) < Fr(3, 7*p8_), 'H08 v002 aviso: si 0 < p < q, 1/q < 1/p')
+# k1: distancia = resta sin signo
+ok(Fr('3.9') - 4 == Fr('-0.1') and abs(Fr('-0.1')) == Fr('0.1') and '|3{,}9-4|=|-0{,}1|=0{,}1' in A8, 'H08 v002 k1: distancia de 3,9 a 4')
+# k2: «qué se justifica», «cómo funciona» y comprobación con números más cercanos
+ok('<b>Qué se quiere justificar:</b>' in A8 and '<b>Cómo funciona el método:</b>' in A8 and 'Comprobación con números más cercanos' in A8, 'H08 v002 k2: qué se justifica, método y comprobación')
+ok(f8(Fr('2.9999')) == r8(Fr('2.9999')) == Fr('3.9999') and abs(Fr('3.9999') - 4) == Fr('0.0001') < Fr('0.001') and f8(Fr('3.0001')) == Fr('6.0002') and abs(Fr('6.0002') - 6) == Fr('0.0002') < Fr('0.002') and r8(Fr('3.0001')) == Fr('4.0001') and abs(Fr('4.0001') - 4) == Fr('0.0001'), 'H08 v002 k2: valores en 2,9999 y 3,0001 y sus distancias')
+ok(all(z in A8 for z in ('|3{,}9999-4|=0{,}0001', '|6{,}0002-6|=0{,}0002', '|4{,}0001-4|=0{,}0001')) and r8(Fr(3)) == 4 != f8(Fr(3)), 'H08 v002 k2: distancias escritas; r(3) = 4 distinto de f(3) = 6')
+# k3: cadena del tope M (0 < x < 1/M  =>  1/(1/M) < 1/x  =>  M < 1/x = s(x)) y su ejemplo
+for M8 in list(range(1, 40)) + [1000, Fr(1, 2), Fr(7, 3)]:
+    for j8 in range(1, 20):
+        x = Fr(j8, 20)/M8
+        ok(0 < x < Fr(1)/M8 and 1/(Fr(1)/M8) == M8 == 1*M8 and 1/(Fr(1)/M8) < 1/x == s8(x), 'H08 v002 k3: cadena del tope (M=%s)' % M8)
+ok(0 < Fr('0.0005') < Fr('0.001') == Fr(1, 1000) and s8(Fr('0.0005')) == 2000 > 1000 and 'Qué se justifica:' in A8, 'H08 v002 k3: ejemplo con M = 1000')
+# ejemplos y ejercicios: saltos, productos intermedios y listas de distancias nuevas
+ok(6 - 1 == 5 and 8 - 5 == 3 and '6-1=5' in A8 and '8-5=3' in A8, 'H08 v002 ej1 y A: saltos 5 y 3')
+ok([3*Fr(z) for z in ('2.001', '2.01', '2.1')] == [Fr('6.003'), Fr('6.03'), Fr('6.3')] and [2*Fr(z) for z in ('4.5', '4.1', '4.01', '4.001')] == [9, Fr('8.2'), Fr('8.02'), Fr('8.002')], 'H08 v002 ej2 y ej3: productos intermedios')
+ok([2*Fr(z) for z in ('3.9', '3.99', '3.999', '4')] == [Fr('7.8'), Fr('7.98'), Fr('7.998'), 8] and [5*Fr(z) for z in ('0.9', '0.99', '0.999')] == [Fr('4.5'), Fr('4.95'), Fr('4.995')], 'H08 v002 A y B: productos intermedios')
+ok([abs(q8(Fr(z)) - 3) for z in ('0.9', '0.99', '0.999')] == [Fr('0.5'), Fr('0.05'), Fr('0.005')] and [abs(q8(Fr(z)) - 3) for z in ('1.1', '1.01', '1.001')] == [Fr('0.1'), Fr('0.01'), Fr('0.001')] and '\\(0{,}5\\); \\(0{,}05\\); \\(0{,}005\\)' in A8, 'H08 v002 B: las dos listas de distancias')
+ok([1200*Fr(z) for z in ('4.9', '4.99', '4.999')] == [5880, 5988, Fr('5998.8')] and [1000*Fr(z) for z in ('5', '5.001', '5.01', '5.1')] == [5000, 5001, 5010, 5100], 'H08 v002 C: cada columna del modelo')
+ok(all(e8(Fr(z)) == 1 and 1 <= Fr(z) < 2 for z in ('1.9', '1.99', '1.999')) and all(e8(Fr(z)) == 2 and 2 <= Fr(z) < 3 for z in ('2', '2.001', '2.01', '2.1')) and 'De dónde sale la tabla:' in A8, 'H08 v002 ej4: de dónde sale cada columna')
+ok(A8.count('hecho 1 del aviso') >= 9 and A8.count('hecho 3 del aviso') >= 2 and not re.search(r'\\\\[(\[]', A8), 'H08 v002: referencias a los hechos del aviso; ningún salto de línea pegado a un paréntesis')
 # <<< H08
 
 # >>> H09
