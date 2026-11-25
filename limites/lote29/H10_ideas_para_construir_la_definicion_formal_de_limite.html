@@ -162,9 +162,15 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Ideas para construir la definición formal de límite</b></li>
     </ol>
     <h1>Ideas para construir la definición formal de límite</h1>
-    <p class="lede">«\(f(x)\) queda tan cerca de \(L\) como se quiera, con tal de tomar \(x\) suficientemente cerca de \(a\)» se puede convertir en una frase exacta. La cercanía se mide con una <b>distancia</b>, y la distancia entre dos números es un valor absoluto. Alguien fija una <b>tolerancia</b> \(\varepsilon\gt 0\) para la salida, y hay que responder con una distancia \(\delta\gt 0\) para la entrada que la garantice:
+    <p class="lede">Una <b>función</b> \(f\) es una regla que a cada número \(x\) (la <b>entrada</b>) le asigna un solo número, \(f(x)\) (la <b>salida</b>), que se lee «\(f\) de \(x\)». Las hojas anteriores dijeron con palabras qué es un límite: «\(f(x)\) queda tan cerca de \(L\) como se quiera, con tal de tomar \(x\) suficientemente cerca de \(a\)». Esta hoja convierte esas palabras en una frase exacta. La cercanía se mide con una <b>distancia</b>. Alguien fija una <b>tolerancia</b> para la salida (cuánto se le permite alejarse de \(L\)), y hay que responder con una distancia para la entrada que la garantice.</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toma \(f(x)=2x+1\) y el lugar \(a=3\). Primero se calculan salidas con entradas cercanas a \(3\):
+    \[\begin{aligned}f(2{,}9)&=2\cdot 2{,}9+1=5{,}8+1=6{,}8&&\text{entrada a la izquierda de }3\\ f(2{,}99)&=2\cdot 2{,}99+1=5{,}98+1=6{,}98&&\text{más cerca, por la izquierda}\\ f(3{,}1)&=2\cdot 3{,}1+1=6{,}2+1=7{,}2&&\text{entrada a la derecha de }3\\ f(3{,}01)&=2\cdot 3{,}01+1=6{,}02+1=7{,}02&&\text{más cerca, por la derecha}\end{aligned}\]
+    Las salidas se acercan a \(7\): se propone \(L=7\). Ahora se mide. La <b>distancia</b> entre dos números es el mayor menos el menor. Se anota con dos barras: \(|2{,}9-3|\) se lee «valor absoluto de \(2{,}9\) menos \(3\)» y es la distancia entre \(2{,}9\) y \(3\). Para cada entrada se mide su distancia a \(3\) y la distancia de su salida a \(7\):
+    \[\begin{aligned}|2{,}9-3|&=3-2{,}9=0{,}1;\quad |6{,}8-7|=7-6{,}8=0{,}2&&\text{y }0{,}2=2\cdot 0{,}1\\ |2{,}99-3|&=3-2{,}99=0{,}01;\quad |6{,}98-7|=7-6{,}98=0{,}02&&\text{y }0{,}02=2\cdot 0{,}01\\ |3{,}1-3|&=3{,}1-3=0{,}1;\quad |7{,}2-7|=7{,}2-7=0{,}2&&\text{y }0{,}2=2\cdot 0{,}1\\ |3{,}01-3|&=3{,}01-3=0{,}01;\quad |7{,}02-7|=7{,}02-7=0{,}02&&\text{y }0{,}02=2\cdot 0{,}01\end{aligned}\]
+    <b>La regularidad:</b> en las cuatro filas, la distancia de la salida a \(7\) es el doble de la distancia de la entrada a \(3\). (El porqué, con letras, está en el recuadro de la demostración.) Entonces se puede pedir al revés. Si se quiere la salida a menos de \(1\) de \(7\), basta tomar la entrada a menos de \(\dfrac{1}{2}=0{,}5\) de \(3\), porque \(2\cdot 0{,}5=1\). Si se quiere a menos de \(0{,}5\), basta \(\dfrac{0{,}5}{2}=0{,}25\), porque \(2\cdot 0{,}25=0{,}5\). Si se quiere a menos de \(0{,}1\), basta \(\dfrac{0{,}1}{2}=0{,}05\), porque \(2\cdot 0{,}05=0{,}1\). Cada vez se responde con la mitad de lo pedido.</p>
+    <p class="lede"><b>La notación.</b> Lo pedido para la salida se llama <b>tolerancia</b> y se anota \(\varepsilon\), la letra griega «épsilon». La distancia con que se responde, para la entrada, se anota \(\delta\), la letra griega «delta». Las dos son números positivos: \(\varepsilon\gt 0\) se lee «épsilon mayor que cero». \(|x-a|\) se lee «valor absoluto de \(x\) menos \(a\)» y es la distancia de \(x\) a \(a\); \(|f(x)-L|\) es la distancia de la salida a \(L\). Con eso, «la distancia \(\delta\) garantiza la tolerancia \(\varepsilon\)» se escribe:
     \[0\lt |x-a|\lt \delta\ \Longrightarrow\ |f(x)-L|\lt \varepsilon\]
-    El límite es \(L\) cuando <b>toda</b> tolerancia tiene respuesta. (\(\varepsilon\) es la letra griega épsilon y \(\delta\), la letra griega delta.)</p>
+    Se lee: «si la distancia de \(x\) a \(a\) es mayor que cero y menor que delta, entonces la distancia de \(f\) de \(x\) a \(L\) es menor que épsilon». La flecha \(\Longrightarrow\) se lee «entonces». El «\(0\lt\)» dice que \(x\) no es \(a\): la distancia de \(x\) a \(a\) es \(0\) solo cuando \(x=a\). Con los números de arriba (\(a=3\), \(L=7\), \(\varepsilon=1\), \(\delta=0{,}5\)): \(0\lt |x-3|\lt 0{,}5\ \Longrightarrow\ |f(x)-7|\lt 1\). El límite es \(L\) cuando <b>toda</b> tolerancia tiene respuesta.</p>
   </section>
 </header>
 
@@ -177,7 +183,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li><b>Paso 2, la tolerancia:</b> la franja verde horizontal reúne las alturas que están a menos de \(\varepsilon=1\) de \(7\), es decir, entre \(6\) y \(8\). La pone quien desafía.</li>
     <li><b>Paso 3, la respuesta:</b> la franja azul vertical reúne los \(x\) que están a menos de \(\delta=0{,}5\) de \(3\). El trozo de recta sobre la franja azul, en naranjo, queda completo dentro de la franja verde.</li>
     <li><b>Pasos 4 y 5:</b> la tolerancia se achica (\(0{,}5\) y después \(0{,}1\)) y se responde con una distancia más chica (\(0{,}25\) y \(0{,}05\)). Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
-    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada tolerancia con sus bordes, la distancia con que se responde, la desigualdad que la justifica y un valor de prueba. Conclusión: con \(\delta=\dfrac{\varepsilon}{2}\) toda tolerancia tiene respuesta.</li>
+    <li><b>Lee la cuenta de abajo, línea por línea:</b> cada tolerancia con sus bordes, la búsqueda de la distancia con que se responde (se divide la tolerancia por \(2\)), la desigualdad que la justifica y un valor de prueba con su cuenta. Conclusión: con \(\delta=\dfrac{\varepsilon}{2}\) toda tolerancia tiene respuesta.</li>
   </ol>
   <div class="stage" data-scene="eps-idea"></div>
 <p class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</p>
@@ -190,23 +196,28 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="why">
     <p><b>Aviso de rigor: qué hace esta hoja y qué deja para las siguientes.</b> Esta hoja construye la idea. La definición formal se enuncia al final, como la frase a la que se llega; su estudio y su uso van en las dos hojas siguientes de este lote. Una figura muestra tres tolerancias: «para toda tolerancia» no se puede dibujar, se demuestra con álgebra (recuadro de la demostración). Se usan, <b>sin demostrar</b>:</p>
     <ol class="steps">
-      <li>Propiedades del valor absoluto: \(|u-v|\) es la distancia entre \(u\) y \(v\) en la recta numérica; \(|u\cdot v|=|u|\cdot|v|\); \(|-u|=|u|\).</li>
-      <li>Para \(c\gt 0\): \(|u|\lt c\) equivale a \(-c\lt u\lt c\).</li>
-      <li>Desigualdad triangular: \(|u-v|\le |u-w|+|w-v|\).</li>
-      <li>Reglas del orden de los números: multiplicar o dividir los dos lados de una desigualdad por un número positivo la mantiene; sumar el mismo número a los dos lados la mantiene.</li>
+      <li>Valor absoluto: \(|u|\) es \(u\) si \(u\ge 0\), y es \(-u\) si \(u\lt 0\). \(|u-v|\) es la distancia entre \(u\) y \(v\) en la recta numérica (el mayor menos el menor). Además \(|u\cdot v|=|u|\cdot|v|\) y \(|-u|=|u|\). Con números: \(|2\cdot(-3)|=|-6|=6\) y \(|2|\cdot|-3|=2\cdot 3=6\); \(|-4|=4\) y \(|4|=4\).</li>
+      <li>Para \(c\gt 0\): \(|u|\lt c\) equivale a \(-c\lt u\lt c\). Con números, para \(c=1\): \(u=-0{,}8\) cumple las dos (\(|-0{,}8|=0{,}8\), menor que \(1\); y \(-0{,}8\) está entre \(-1\) y \(1\)); \(u=1{,}2\) no cumple ninguna.</li>
+      <li>Desigualdad triangular: \(|u-v|\le |u-w|+|w-v|\). Con números, \(u=4\), \(v=3\), \(w=3{,}5\): \(|4-3|=1\) y \(|4-3{,}5|+|3{,}5-3|=0{,}5+0{,}5=1\).</li>
+      <li>Reglas del orden de los números. Sumar el mismo número a los dos lados de una desigualdad la mantiene (\(2\lt 3\) y \(2+5\lt 3+5\)). Multiplicar o dividir los dos lados por un número positivo la mantiene (\(2\lt 3\) y \(2\cdot 4\lt 3\cdot 4\)). Multiplicar los dos lados por un número negativo la da vuelta (\(2\lt 3\) y \(-2\gt -3\)). Si \(u\lt v\) y \(v\lt w\), entonces \(u\lt w\). Valen igual con \(\le\) y \(\ge\).</li>
     </ol>
+    <p>En adelante se citan como «propiedad 1», «propiedad 2», «propiedad 3» y «propiedad 4».</p>
   </div>
 </section>
 
 <section>
   <div class="card k1">
     <h3>Las tres piezas: distancia, tolerancia y respuesta</h3>
-    <p>Se supone que \(f\) está definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\).</p>
+    <p>Se supone que \(f\) está definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\). (Un <b>intervalo abierto</b> es el conjunto de todos los números que están entre dos extremos, sin contar los extremos. Por ejemplo, los \(x\) con \(1{,}8\lt x\lt 4{,}2\), que contiene a \(3\).) Los números de muestra son los del encabezado: \(f(x)=2x+1\), \(a=3\), \(L=7\).</p>
     <ol class="steps">
-      <li><b>Distancia.</b> La distancia entre dos números \(u\) y \(v\) es \(|u-v|\). Por ejemplo, \(|6{,}8-7|=|-0{,}2|=0{,}2\) y \(|7{,}2-7|=|0{,}2|=0{,}2\): los dos están a \(0{,}2\) de \(7\).</li>
-      <li><b>Salida cerca de \(L\).</b> «\(f(x)\) está a menos de \(\varepsilon\) de \(L\)» se escribe \(|f(x)-L|\lt \varepsilon\). Equivale a \(L-\varepsilon\lt f(x)\lt L+\varepsilon\): una franja horizontal.</li>
-      <li><b>Entrada cerca de \(a\), sin ser \(a\).</b> «\(x\) está a menos de \(\delta\) de \(a\), y \(x\ne a\)» se escribe \(0\lt |x-a|\lt \delta\). Equivale a \(a-\delta\lt x\lt a+\delta\) con \(x\ne a\): una franja vertical, sin la recta \(x=a\).</li>
-      <li><b>El juego de la tolerancia.</b> Primero alguien fija una tolerancia \(\varepsilon\gt 0\). Después se responde con una distancia \(\delta\gt 0\), que puede depender de \(\varepsilon\). La respuesta sirve si <b>todos</b> los \(x\) con \(0\lt |x-a|\lt \delta\) cumplen \(|f(x)-L|\lt \varepsilon\).</li>
+      <li><b>Distancia.</b> La distancia entre dos números \(u\) y \(v\) es \(|u-v|\), que se lee «valor absoluto de \(u\) menos \(v\)». Por ejemplo, \(|6{,}8-7|=|-0{,}2|=0{,}2\) y \(|7{,}2-7|=|0{,}2|=0{,}2\): los dos están a \(0{,}2\) de \(7\), uno por debajo y otro por encima.</li>
+      <li><b>Salida cerca de \(L\).</b> «\(f(x)\) está a menos de \(\varepsilon\) de \(L\)» se escribe \(|f(x)-L|\lt \varepsilon\). Se puede escribir sin barras:
+      \[\begin{aligned}|f(x)-L|&\lt \varepsilon&&\text{lo que se pide}\\ -\varepsilon\lt f(x)-L&\lt \varepsilon&&\text{propiedad 2, con }u=f(x)-L\text{ y }c=\varepsilon\\ L-\varepsilon\lt f(x)&\lt L+\varepsilon&&\text{se suma }L\text{ en cada lado (propiedad 4)}\end{aligned}\]
+      Es una franja horizontal. Con \(L=7\) y \(\varepsilon=1\): \(7-1=6\) y \(7+1=8\), así que \(|f(x)-7|\lt 1\) dice \(6\lt f(x)\lt 8\). Es la franja verde de la animación.</li>
+      <li><b>Entrada cerca de \(a\), sin ser \(a\).</b> «\(x\) está a menos de \(\delta\) de \(a\), y \(x\ne a\)» se escribe \(0\lt |x-a|\lt \delta\). La parte «\(|x-a|\lt \delta\)» se escribe sin barras igual que en el paso 2:
+      \[\begin{aligned}|x-a|&\lt \delta&&\text{a menos de }\delta\text{ de }a\\ -\delta\lt x-a&\lt \delta&&\text{propiedad 2, con }u=x-a\text{ y }c=\delta\\ a-\delta\lt x&\lt a+\delta&&\text{se suma }a\text{ en cada lado (propiedad 4)}\end{aligned}\]
+      La parte «\(0\lt |x-a|\)» dice \(x\ne a\), porque \(|x-a|=0\) solo cuando \(x=a\) (por ejemplo, \(|3-3|=|0|=0\)). Es una franja vertical, sin la recta \(x=a\). Con \(a=3\) y \(\delta=0{,}5\): \(3-0{,}5=2{,}5\) y \(3+0{,}5=3{,}5\), así que \(0\lt |x-3|\lt 0{,}5\) dice \(2{,}5\lt x\lt 3{,}5\) con \(x\ne 3\). Es la franja azul de la animación.</li>
+      <li><b>El juego de la tolerancia.</b> Primero alguien fija una tolerancia \(\varepsilon\gt 0\). Después se responde con una distancia \(\delta\gt 0\), que puede depender de \(\varepsilon\). La respuesta sirve si <b>todos</b> los \(x\) con \(0\lt |x-a|\lt \delta\) cumplen \(|f(x)-L|\lt \varepsilon\). Con los números de muestra: a la tolerancia \(1\) se responde con la distancia \(0{,}5\). Un \(x\) de esa franja es \(3{,}4\), porque \(|3{,}4-3|=0{,}4\), que es menor que \(0{,}5\). Su salida es \(f(3{,}4)=2\cdot 3{,}4+1=6{,}8+1=7{,}8\), a distancia \(|7{,}8-7|=0{,}8\) de \(7\), menor que \(1\). Que pase lo mismo con <b>todos</b> los \(x\) de la franja se demuestra en el recuadro siguiente.</li>
       <li><b>Cuándo el límite es \(L\).</b> Cuando hay respuesta para <b>toda</b> tolerancia \(\varepsilon\gt 0\), por chica que sea.</li>
     </ol>
     <p><b>En la gráfica:</b> la respuesta sirve cuando toda la parte de la gráfica que está sobre la franja vertical (sin contar \(x=a\)) queda dentro de la franja horizontal.</p>
@@ -214,18 +225,24 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración paso a paso: con \(f(x)=2x+1\), \(a=3\) y \(L=7\), la respuesta \(\delta=\dfrac{\varepsilon}{2}\) sirve para toda tolerancia</h3>
+    <p><b>Qué se demuestra.</b> Que para \(f(x)=2x+1\), con \(a=3\) y \(L=7\), toda tolerancia \(\varepsilon\gt 0\) tiene respuesta, y que una respuesta es la mitad de la tolerancia. En símbolos: si \(0\lt |x-3|\lt \dfrac{\varepsilon}{2}\), entonces \(|f(x)-7|\lt \varepsilon\).</p>
+    <p><b>Cómo funciona el método.</b> Tiene dos partes. Primero, la <b>búsqueda</b>: se parte de lo que se quiere lograr, \(|f(x)-7|\lt \varepsilon\), y se despeja \(|x-3|\) para ver qué distancia conviene. Después, la <b>demostración</b>: se parte de lo que se supone, \(0\lt |x-3|\lt \delta\), y se llega, operación por operación, a \(|f(x)-7|\lt \varepsilon\). No se elige un número para \(\varepsilon\): la letra representa a cualquier tolerancia, y así el resultado vale para todas a la vez. Al final se comprueba con números.</p>
+    <p><b>Búsqueda, primera parte: la distancia de la salida a \(7\), escrita con \(|x-3|\).</b></p>
+    \[\begin{aligned}|f(x)-7|&=|2x+1-7|&&\text{se reemplaza }f(x)=2x+1\\ &=|2x-6|&&\text{porque }1-7=-6\\ &=|2\,(x-3)|&&\text{factor común }2\text{: }2\cdot x=2x\text{ y }2\cdot 3=6\\ &=|2|\cdot|x-3|&&\text{valor absoluto de un producto (propiedad 1)}\\ &=2\,|x-3|&&\text{porque }|2|=2\end{aligned}\]
+    <p>Es la regularidad del encabezado: la distancia de la salida a \(7\) es el doble de la distancia de la entrada a \(3\). Con \(x=2{,}9\): \(2\cdot|2{,}9-3|=2\cdot 0{,}1=0{,}2\), que es \(|6{,}8-7|\).</p>
+    <p><b>Búsqueda, segunda parte: se despeja \(|x-3|\).</b></p>
+    \[\begin{aligned}2\,|x-3|&\lt \varepsilon&&\text{lo que se quiere lograr}\\ |x-3|&\lt \frac{\varepsilon}{2}&&\text{se dividen los dos lados por }2\text{, positivo (propiedad 4)}\end{aligned}\]
+    <p>De ahí sale «la mitad»: conviene responder con \(\delta=\dfrac{\varepsilon}{2}\).</p>
+    <p><b>Demostración.</b></p>
     <ol class="steps">
       <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
       <li>Se propone \(\delta=\dfrac{\varepsilon}{2}\). Es positiva, porque \(\varepsilon\gt 0\) y se divide por \(2\), positivo.</li>
       <li>Se toma un \(x\) cualquiera con \(0\lt |x-3|\lt \dfrac{\varepsilon}{2}\).</li>
-      <li>Se calcula la diferencia: \(f(x)-7=2x+1-7=2x-6\).</li>
-      <li>Factor común: \(2x-6=2\,(x-3)\).</li>
-      <li>Valor absoluto de un producto: \(|2\,(x-3)|=|2|\cdot|x-3|=2\,|x-3|\). Entonces \(|f(x)-7|=2\,|x-3|\).</li>
-      <li>Se multiplica \(|x-3|\lt \dfrac{\varepsilon}{2}\) por \(2\), que es positivo: \(2\,|x-3|\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\).</li>
-      <li>Por los pasos 6 y 7: \(|f(x)-7|\lt \varepsilon\). Como \(\varepsilon\) era cualquiera, toda tolerancia tiene respuesta.</li>
-      <li>¿De dónde sale «la mitad»? De lo que se quiere lograr: \(2\,|x-3|\lt \varepsilon\). Al dividir por \(2\) queda \(|x-3|\lt \dfrac{\varepsilon}{2}\).</li>
+      <li>Se llega a la tolerancia, una operación por línea:
+      \[\begin{aligned}|x-3|&\lt \frac{\varepsilon}{2}&&\text{lo que se supone (paso 3)}\\ 2\,|x-3|&\lt 2\cdot\frac{\varepsilon}{2}&&\text{se multiplican los dos lados por }2\text{, positivo}\\ 2\,|x-3|&\lt \varepsilon&&\text{porque }2\cdot\tfrac{\varepsilon}{2}=\varepsilon\\ |f(x)-7|&\lt \varepsilon&&\text{porque }|f(x)-7|=2\,|x-3|\text{ (búsqueda)}\end{aligned}\]</li>
+      <li>Como \(\varepsilon\) era cualquiera, toda tolerancia tiene respuesta: el límite de \(f\) en \(3\) es \(7\).</li>
     </ol>
-    <p>Cuatro tolerancias, cada una con un \(x\) de prueba que cumple \(0\lt |x-3|\lt \delta\):</p>
+    <p><b>Comprobación con números.</b> Cuatro tolerancias, cada una con un \(x\) de prueba que cumple \(0\lt |x-3|\lt \delta\):</p>
     <div class="tblwrap"><table class="tbl">
       <tr><th>tolerancia \(\varepsilon\)</th><th>\(\delta=\dfrac{\varepsilon}{2}\)</th><th>\(x\) de prueba</th><th>\(|x-3|\)</th><th>\(f(x)\)</th><th>\(|f(x)-7|\)</th></tr>
       <tr><td>\(1\)</td><td>\(0{,}5\)</td><td>\(3{,}4\)</td><td>\(0{,}4\)</td><td>\(7{,}8\)</td><td>\(0{,}8\)</td></tr>
@@ -233,7 +250,14 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <tr><td>\(0{,}1\)</td><td>\(0{,}05\)</td><td>\(2{,}96\)</td><td>\(0{,}04\)</td><td>\(6{,}92\)</td><td>\(0{,}08\)</td></tr>
       <tr><td>\(0{,}01\)</td><td>\(0{,}005\)</td><td>\(3{,}004\)</td><td>\(0{,}004\)</td><td>\(7{,}008\)</td><td>\(0{,}008\)</td></tr>
     </table></div>
-    <p>Fila de muestra, \(\varepsilon=0{,}1\): \(\dfrac{0{,}1}{2}=0{,}05\). El valor \(x=2{,}96\) cumple \(|2{,}96-3|=|-0{,}04|=0{,}04\) y \(0\lt 0{,}04\lt 0{,}05\). Su salida: \(f(2{,}96)=2\cdot 2{,}96+1=5{,}92+1=6{,}92\). Su distancia a \(7\): \(|6{,}92-7|=|-0{,}08|=0{,}08\), y \(0{,}08\lt 0{,}1\).</p>
+    <p>Las cuentas de cada fila:</p>
+    <ol class="steps">
+      <li>\(\varepsilon=1\): \(\dfrac{1}{2}=0{,}5\). El valor \(x=3{,}4\) cumple \(|3{,}4-3|=0{,}4\) y \(0\lt 0{,}4\lt 0{,}5\). Su salida: \(f(3{,}4)=2\cdot 3{,}4+1=6{,}8+1=7{,}8\). Su distancia a \(7\): \(|7{,}8-7|=0{,}8\), y \(0{,}8\lt 1\).</li>
+      <li>\(\varepsilon=0{,}5\): \(\dfrac{0{,}5}{2}=0{,}25\). El valor \(x=3{,}2\) cumple \(|3{,}2-3|=0{,}2\) y \(0\lt 0{,}2\lt 0{,}25\). Su salida: \(f(3{,}2)=2\cdot 3{,}2+1=6{,}4+1=7{,}4\). Su distancia a \(7\): \(|7{,}4-7|=0{,}4\), y \(0{,}4\lt 0{,}5\).</li>
+      <li>\(\varepsilon=0{,}1\): \(\dfrac{0{,}1}{2}=0{,}05\). El valor \(x=2{,}96\) cumple \(|2{,}96-3|=|-0{,}04|=0{,}04\) y \(0\lt 0{,}04\lt 0{,}05\). Su salida: \(f(2{,}96)=2\cdot 2{,}96+1=5{,}92+1=6{,}92\). Su distancia a \(7\): \(|6{,}92-7|=|-0{,}08|=0{,}08\), y \(0{,}08\lt 0{,}1\).</li>
+      <li>\(\varepsilon=0{,}01\): \(\dfrac{0{,}01}{2}=0{,}005\). El valor \(x=3{,}004\) cumple \(|3{,}004-3|=0{,}004\) y \(0\lt 0{,}004\lt 0{,}005\). Su salida: \(f(3{,}004)=2\cdot 3{,}004+1=6{,}008+1=7{,}008\). Su distancia a \(7\): \(|7{,}008-7|=0{,}008\), y \(0{,}008\lt 0{,}01\).</li>
+    </ol>
+    <p>En las cuatro filas la última columna es el doble de la cuarta: \(2\cdot 0{,}4=0{,}8\); \(2\cdot 0{,}2=0{,}4\); \(2\cdot 0{,}04=0{,}08\); \(2\cdot 0{,}004=0{,}008\). Es lo que dice la búsqueda: \(|f(x)-7|=2\,|x-3|\).</p>
   </div>
 
   <div class="card k3">
@@ -241,11 +265,15 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <p>Juntando las piezas queda la frase que se estudia en la hoja siguiente, «Definición formal de los límites (épsilon-delta)»:</p>
     <p>\[\lim_{x\to a}f(x)=L\quad\text{significa:}\quad\text{para todo }\varepsilon\gt 0\text{ existe }\delta\gt 0\text{ tal que, para todo }x,\]
     \[\text{si }0\lt |x-a|\lt \delta\text{, entonces }|f(x)-L|\lt \varepsilon.\]</p>
+    <p><b>Cómo se lee.</b> \(\displaystyle\lim_{x\to a}f(x)=L\) se lee «el límite de \(f\) de \(x\), cuando \(x\) tiende a \(a\), es \(L\)». «lím» abrevia «límite» y la flecha \(\to\) se lee «tiende a», es decir, «se acerca a». La frase completa: «para todo épsilon mayor que cero existe un delta mayor que cero tal que, para todo \(x\), si la distancia de \(x\) a \(a\) es mayor que cero y menor que delta, entonces la distancia de \(f\) de \(x\) a \(L\) es menor que épsilon».</p>
+    <p><b>De dónde sale cada parte.</b> «Para todo \(\varepsilon\gt 0\)» es «toda tolerancia» (pieza 5 del primer recuadro). «Existe \(\delta\gt 0\)» es «tiene respuesta» (pieza 4). «\(0\lt |x-a|\lt \delta\)» es la franja vertical sin \(x=a\) (pieza 3). «\(|f(x)-L|\lt \varepsilon\)» es la franja horizontal (pieza 2). Con \(f(x)=2x+1\), \(a=3\) y \(L=7\), la demostración del recuadro anterior probó justamente esa frase, con \(\delta=\dfrac{\varepsilon}{2}\).</p>
     <ol class="steps">
-      <li><b>El orden importa.</b> Primero va la tolerancia \(\varepsilon\) y después la respuesta \(\delta\). Por eso \(\delta\) puede depender de \(\varepsilon\) (en la demostración, \(\delta=\dfrac{\varepsilon}{2}\)), pero no de \(x\): una misma distancia tiene que servir para todos los \(x\) de la franja.</li>
+      <li><b>El orden importa.</b> Primero va la tolerancia \(\varepsilon\) y después la respuesta \(\delta\). Por eso \(\delta\) puede depender de \(\varepsilon\), pero no de \(x\). Depende de \(\varepsilon\): en la demostración, a \(\varepsilon=1\) se respondió con \(\dfrac{1}{2}=0{,}5\), y a \(\varepsilon=0{,}1\), con \(\dfrac{0{,}1}{2}=0{,}05\). No depende de \(x\): una misma distancia tiene que servir para todos los \(x\) de la franja.</li>
       <li><b>«Para todo \(\varepsilon\)», no «para un \(\varepsilon\)».</b> Que una tolerancia tenga respuesta no basta: en el ejemplo 4 la tolerancia \(1\) tiene respuesta y la tolerancia \(0{,}5\) no.</li>
       <li><b>El «\(0\lt\)» deja fuera a \(x=a\).</b> El valor \(f(a)\) no participa: puede no existir o ser cualquier número (ejemplo 3).</li>
-      <li><b>La respuesta no es única.</b> Si una distancia \(\delta\) sirve, toda distancia positiva menor también sirve, porque sus \(x\) están entre los de \(\delta\). Para \(f(x)=2x+1\) y la tolerancia \(1\) sirven \(0{,}5\), \(0{,}25\) y \(0{,}05\). No hace falta encontrar la mayor: basta una.</li>
+      <li><b>La respuesta no es única.</b> Si una distancia \(\delta\) sirve, toda distancia positiva menor también sirve, porque sus \(x\) están entre los de \(\delta\). Con números: para \(f(x)=2x+1\) y la tolerancia \(1\) sirve \(0{,}5\). Entonces también sirve \(0{,}25\):
+      \[\begin{aligned}0\lt |x-3|&\lt 0{,}25&&\text{lo que se supone}\\ 0\lt |x-3|&\lt 0{,}5&&\text{porque }0{,}25\lt 0{,}5\text{ (propiedad 4)}\\ |f(x)-7|&\lt 1&&\text{porque la distancia }0{,}5\text{ sirve para la tolerancia }1\end{aligned}\]
+      Lo mismo con \(0{,}05\), porque \(0{,}05\lt 0{,}5\). Para la tolerancia \(1\) sirven \(0{,}5\), \(0{,}25\) y \(0{,}05\). No hace falta encontrar la mayor: basta una.</li>
     </ol>
   </div>
 </section>
@@ -258,13 +286,20 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 1: otra pendiente, \(g(x)=3x-2\) en \(a=2\), con la tolerancia \(0{,}6\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Valores cerca de \(2\): \(g(1{,}9)=3\cdot 1{,}9-2=5{,}7-2=3{,}7\) y \(g(2{,}1)=3\cdot 2{,}1-2=6{,}3-2=4{,}3\). El valor de llegada que se propone es \(L=4\).</li>
-    <li>La diferencia: \(g(x)-4=3x-2-4=3x-6\).</li>
-    <li>Factor común: \(3x-6=3\,(x-2)\). Valor absoluto de un producto: \(|g(x)-4|=|3|\cdot|x-2|=3\,|x-2|\).</li>
-    <li>Se quiere \(3\,|x-2|\lt 0{,}6\). Al dividir por \(3\), positivo: \(|x-2|\lt \dfrac{0{,}6}{3}=0{,}2\). Respuesta: \(\delta=0{,}2\).</li>
-    <li>La respuesta sirve: si \(0\lt |x-2|\lt 0{,}2\), se multiplica por \(3\): \(3\,|x-2|\lt 3\cdot 0{,}2=0{,}6\). Es decir, \(|g(x)-4|\lt 0{,}6\).</li>
-    <li>Prueba con \(x=2{,}15\): \(|2{,}15-2|=0{,}15\) y \(0\lt 0{,}15\lt 0{,}2\). Su salida: \(g(2{,}15)=3\cdot 2{,}15-2=6{,}45-2=4{,}45\). Su distancia a \(4\): \(|4{,}45-4|=0{,}45\), y \(0{,}45\lt 0{,}6\).</li>
-    <li>Regla general: para una tolerancia \(\varepsilon\gt 0\) cualquiera sirve \(\delta=\dfrac{\varepsilon}{3}\), porque \(3\,|x-2|\lt 3\cdot\dfrac{\varepsilon}{3}=\varepsilon\). Toda tolerancia tiene respuesta: el límite es \(4\).</li>
+    <li><b>Valores cerca de \(2\):</b>
+    \[\begin{aligned}g(1{,}9)&=3\cdot 1{,}9-2=5{,}7-2=3{,}7&&\text{izquierda de }2\\ g(1{,}99)&=3\cdot 1{,}99-2=5{,}97-2=3{,}97&&\text{más cerca, por la izquierda}\\ g(2{,}1)&=3\cdot 2{,}1-2=6{,}3-2=4{,}3&&\text{derecha de }2\\ g(2{,}01)&=3\cdot 2{,}01-2=6{,}03-2=4{,}03&&\text{más cerca, por la derecha}\end{aligned}\]
+    Las salidas se acercan a \(4\). El valor de llegada que se propone es \(L=4\).</li>
+    <li><b>La distancia de la salida a \(4\), escrita con \(|x-2|\):</b>
+    \[\begin{aligned}|g(x)-4|&=|3x-2-4|&&\text{se reemplaza }g(x)=3x-2\\ &=|3x-6|&&\text{porque }-2-4=-6\\ &=|3\,(x-2)|&&\text{factor común }3\text{: }3\cdot x=3x\text{ y }3\cdot 2=6\\ &=|3|\cdot|x-2|&&\text{valor absoluto de un producto (propiedad 1)}\\ &=3\,|x-2|&&\text{porque }|3|=3\end{aligned}\]</li>
+    <li><b>Búsqueda de la distancia:</b>
+    \[\begin{aligned}3\,|x-2|&\lt 0{,}6&&\text{lo que se quiere lograr}\\ |x-2|&\lt \dfrac{0{,}6}{3}=0{,}2&&\text{se dividen los dos lados por }3\text{, positivo}\end{aligned}\]
+    Respuesta: \(\delta=0{,}2\).</li>
+    <li><b>La respuesta sirve:</b>
+    \[\begin{aligned}0\lt |x-2|&\lt 0{,}2&&\text{lo que se supone}\\ 3\,|x-2|&\lt 3\cdot 0{,}2=0{,}6&&\text{se multiplican los dos lados por }3\text{, positivo}\\ |g(x)-4|&\lt 0{,}6&&\text{porque }|g(x)-4|=3\,|x-2|\text{ (paso 2)}\end{aligned}\]</li>
+    <li><b>Prueba con \(x=2{,}15\):</b> \(|2{,}15-2|=0{,}15\) y \(0\lt 0{,}15\lt 0{,}2\). Su salida: \(g(2{,}15)=3\cdot 2{,}15-2=6{,}45-2=4{,}45\). Su distancia a \(4\): \(|4{,}45-4|=0{,}45\), y \(0{,}45\lt 0{,}6\). Además \(3\cdot 0{,}15=0{,}45\), como dice el paso 2.</li>
+    <li><b>Regla general:</b> para una tolerancia \(\varepsilon\gt 0\) cualquiera se repiten los pasos 3 y 4 con \(\varepsilon\) en lugar de \(0{,}6\). Sirve \(\delta=\dfrac{\varepsilon}{3}\):
+    \[\begin{aligned}0\lt |x-2|&\lt \frac{\varepsilon}{3}&&\text{lo que se supone}\\ 3\,|x-2|&\lt 3\cdot\frac{\varepsilon}{3}&&\text{se multiplican los dos lados por }3\text{, positivo}\\ 3\,|x-2|&\lt \varepsilon&&\text{porque }3\cdot\tfrac{\varepsilon}{3}=\varepsilon\\ |g(x)-4|&\lt \varepsilon&&\text{porque }|g(x)-4|=3\,|x-2|\end{aligned}\]
+    Toda tolerancia tiene respuesta: el límite es \(4\).</li>
   </ol>
   </div>
   </div>
@@ -273,13 +308,19 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 2: pendiente negativa, \(h(x)=5-4x\) en \(a=1\), con la tolerancia \(0{,}2\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Valores cerca de \(1\): \(h(0{,}9)=5-4\cdot 0{,}9=5-3{,}6=1{,}4\) y \(h(1{,}1)=5-4\cdot 1{,}1=5-4{,}4=0{,}6\). El valor de llegada que se propone es \(L=1\).</li>
-    <li>La diferencia: \(h(x)-1=5-4x-1=4-4x\).</li>
-    <li>Factor común: \(4-4x=-4\,(x-1)\). Valor absoluto de un producto: \(|h(x)-1|=|-4|\cdot|x-1|=4\,|x-1|\).</li>
-    <li>Se quiere \(4\,|x-1|\lt 0{,}2\). Al dividir por \(4\), positivo: \(|x-1|\lt \dfrac{0{,}2}{4}=0{,}05\). Respuesta: \(\delta=0{,}05\).</li>
-    <li>La respuesta sirve: si \(0\lt |x-1|\lt 0{,}05\), se multiplica por \(4\): \(4\,|x-1|\lt 4\cdot 0{,}05=0{,}2\). Es decir, \(|h(x)-1|\lt 0{,}2\).</li>
-    <li>Prueba con \(x=0{,}96\): \(|0{,}96-1|=|-0{,}04|=0{,}04\) y \(0\lt 0{,}04\lt 0{,}05\). Su salida: \(h(0{,}96)=5-4\cdot 0{,}96=5-3{,}84=1{,}16\). Su distancia a \(1\): \(|1{,}16-1|=0{,}16\), y \(0{,}16\lt 0{,}2\).</li>
-    <li>Regla general: sirve \(\delta=\dfrac{\varepsilon}{4}\). Lo que cuenta es el valor absoluto de la pendiente, \(|-4|=4\): la gráfica baja, pero la distancia entre salidas sigue siendo \(4\) veces la distancia entre entradas.</li>
+    <li><b>Valores cerca de \(1\):</b>
+    \[\begin{aligned}h(0{,}9)&=5-4\cdot 0{,}9=5-3{,}6=1{,}4&&\text{izquierda de }1\\ h(0{,}99)&=5-4\cdot 0{,}99=5-3{,}96=1{,}04&&\text{más cerca, por la izquierda}\\ h(1{,}1)&=5-4\cdot 1{,}1=5-4{,}4=0{,}6&&\text{derecha de }1\\ h(1{,}01)&=5-4\cdot 1{,}01=5-4{,}04=0{,}96&&\text{más cerca, por la derecha}\end{aligned}\]
+    Las salidas se acercan a \(1\). El valor de llegada que se propone es \(L=1\).</li>
+    <li><b>La distancia de la salida a \(1\), escrita con \(|x-1|\):</b>
+    \[\begin{aligned}|h(x)-1|&=|5-4x-1|&&\text{se reemplaza }h(x)=5-4x\\ &=|4-4x|&&\text{porque }5-1=4\\ &=|-4\,(x-1)|&&\text{factor común }-4\text{: }-4\cdot x=-4x\text{ y }-4\cdot(-1)=4\\ &=|-4|\cdot|x-1|&&\text{valor absoluto de un producto (propiedad 1)}\\ &=4\,|x-1|&&\text{porque }|-4|=4\end{aligned}\]</li>
+    <li><b>Búsqueda de la distancia:</b>
+    \[\begin{aligned}4\,|x-1|&\lt 0{,}2&&\text{lo que se quiere lograr}\\ |x-1|&\lt \dfrac{0{,}2}{4}=0{,}05&&\text{se dividen los dos lados por }4\text{, positivo}\end{aligned}\]
+    Respuesta: \(\delta=0{,}05\).</li>
+    <li><b>La respuesta sirve:</b>
+    \[\begin{aligned}0\lt |x-1|&\lt 0{,}05&&\text{lo que se supone}\\ 4\,|x-1|&\lt 4\cdot 0{,}05=0{,}2&&\text{se multiplican los dos lados por }4\text{, positivo}\\ |h(x)-1|&\lt 0{,}2&&\text{porque }|h(x)-1|=4\,|x-1|\text{ (paso 2)}\end{aligned}\]</li>
+    <li><b>Prueba con \(x=0{,}96\):</b> \(|0{,}96-1|=|-0{,}04|=0{,}04\) y \(0\lt 0{,}04\lt 0{,}05\). Su salida: \(h(0{,}96)=5-4\cdot 0{,}96=5-3{,}84=1{,}16\). Su distancia a \(1\): \(|1{,}16-1|=0{,}16\), y \(0{,}16\lt 0{,}2\). Además \(4\cdot 0{,}04=0{,}16\), como dice el paso 2.</li>
+    <li><b>Regla general:</b> sirve \(\delta=\dfrac{\varepsilon}{4}\), por la misma cuenta del paso 4 con \(\varepsilon\) en lugar de \(0{,}2\): si \(0\lt |x-1|\lt \dfrac{\varepsilon}{4}\), entonces \(4\,|x-1|\lt 4\cdot\dfrac{\varepsilon}{4}=\varepsilon\), es decir, \(|h(x)-1|\lt \varepsilon\). Toda tolerancia tiene respuesta: el límite es \(1\).</li>
+    <li><b>Qué cambia con la pendiente negativa.</b> Lo que cuenta es el valor absoluto de la pendiente, \(|-4|=4\). La gráfica baja (a la izquierda de \(1\) las salidas son mayores que \(1\), y a la derecha, menores), pero la distancia entre salidas sigue siendo \(4\) veces la distancia entre entradas.</li>
   </ol>
   </div>
   </div>
@@ -290,12 +331,16 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <p>\[p(x)=\begin{cases}2x+1&\text{si }x\ne 3\\[2pt] 10&\text{si }x=3\end{cases}\]</p>
   <ol class="steps">
     <li>La gráfica: la recta de la animación con un círculo vacío en \((3,7)\), y un punto lleno suelto en \((3,10)\).</li>
-    <li>Para todo \(x\ne 3\), \(p(x)=2x+1\). La demostración del recuadro vale sin cambios: si \(0\lt |x-3|\lt \dfrac{\varepsilon}{2}\), entonces \(|p(x)-7|=2\,|x-3|\lt \varepsilon\). Toda tolerancia tiene respuesta: el límite de \(p\) en \(3\) es \(7\).</li>
+    <li>Para todo \(x\ne 3\), \(p(x)=2x+1\). La frase del límite solo revisa los \(x\) con \(0\lt |x-3|\), es decir, con \(x\ne 3\). Para ellos la demostración del recuadro vale sin cambios: si \(0\lt |x-3|\lt \dfrac{\varepsilon}{2}\), entonces \(|p(x)-7|=2\,|x-3|\) y \(2\,|x-3|\lt 2\cdot\dfrac{\varepsilon}{2}=\varepsilon\). Toda tolerancia tiene respuesta: el límite de \(p\) en \(3\) es \(7\).</li>
     <li>El valor en el lugar es otro: \(p(3)=10\), y su distancia a \(7\) es \(|10-7|=3\).</li>
     <li>Si la frase revisara también \(x=3\) (con \(|x-3|\lt \delta\), sin el «\(0\lt\)»): \(|3-3|=0\), y \(0\) es menor que cualquier \(\delta\gt 0\). Habría que cumplir \(|p(3)-7|\lt \varepsilon\). Con la tolerancia \(\varepsilon=1\) no se cumple, porque \(3\) no es menor que \(1\). Ninguna distancia serviría.</li>
     <li>Con «\(0\lt |x-3|\)», \(x=3\) queda fuera de la revisión. Es la misma idea de las hojas anteriores: el límite mira los \(x\) cercanos a \(a\), no el valor en \(a\).</li>
-    <li>¿Y si se propone \(L=10\)? Tolerancia \(\varepsilon=1\). Sea \(\delta\gt 0\) cualquiera y \(x=3+t\) con \(0\lt t\lt \delta\) y \(t\le 0{,}5\). Entonces \(p(x)=2\,(3+t)+1=7+2t\), y \(7+2t\le 7+2\cdot 0{,}5=8\).</li>
-    <li>Su distancia a \(10\): \(|p(x)-10|=10-(7+2t)=3-2t\), y \(3-2t\ge 3-2\cdot 0{,}5=2\). Como \(2\) no es menor que \(1\), ninguna distancia responde: \(10\) no es el límite.</li>
+    <li><b>¿Y si se propone \(L=10\)?</b> Se muestra que la tolerancia \(\varepsilon=1\) no tiene respuesta. Sea \(\delta\gt 0\) cualquiera. Se elige un \(x\) de su franja: \(x=3+t\), con \(t=\dfrac{\delta}{2}\) si \(\delta\le 1\), y \(t=0{,}5\) si \(\delta\gt 1\). En los dos casos \(0\lt t\lt \delta\) y \(t\le 0{,}5\). Como \(|x-3|=|t|=t\), ese \(x\) cumple \(0\lt |x-3|\lt \delta\). Y como \(x\ne 3\), su salida se calcula con \(2x+1\):
+    \[\begin{aligned}p(x)&=2\,(3+t)+1&&\text{se reemplaza }x=3+t\\ &=6+2t+1&&\text{porque }2\cdot 3=6\text{ y }2\cdot t=2t\\ &=7+2t&&\text{porque }6+1=7\end{aligned}\]</li>
+    <li><b>Su distancia a \(10\).</b> Como \(t\le 0{,}5\), se tiene \(7+2t\le 7+2\cdot 0{,}5=8\) (se multiplica por \(2\) y se suma \(7\): propiedad 4). La salida no pasa de \(8\), que es menor que \(10\); la distancia es el mayor menos el menor:
+    \[\begin{aligned}|p(x)-10|&=10-(7+2t)&&\text{el mayor menos el menor}\\ &=10-7-2t&&\text{se quita el paréntesis}\\ &=3-2t&&\text{porque }10-7=3\end{aligned}\]
+    Y \(3-2t\ge 3-2\cdot 0{,}5=2\) (de \(t\le 0{,}5\): se multiplica por \(-2\), que da vuelta la desigualdad, y se suma \(3\)). Como \(2\) no es menor que \(1\), ese \(x\) no cumple \(|p(x)-10|\lt 1\). Ninguna distancia responde: \(10\) no es el límite.</li>
+    <li><b>Comprobación con números.</b> Con \(\delta=0{,}2\): \(t=\dfrac{0{,}2}{2}=0{,}1\) y \(x=3+0{,}1=3{,}1\). Su salida: \(p(3{,}1)=2\cdot 3{,}1+1=6{,}2+1=7{,}2\). Su distancia a \(10\): \(|7{,}2-10|=10-7{,}2=2{,}8\), que no es menor que \(1\). Con \(\delta=4\): \(t=0{,}5\) y \(x=3+0{,}5=3{,}5\). Su salida: \(p(3{,}5)=2\cdot 3{,}5+1=7+1=8\). Su distancia a \(10\): \(|8-10|=10-8=2\), que no es menor que \(1\).</li>
   </ol>
   </div>
   </div>
@@ -305,19 +350,32 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="body">
   <p>\[s(x)=\begin{cases}x+1&\text{si }x\lt 2\\[2pt] x+2&\text{si }x\ge 2\end{cases}\]</p>
   <ol class="steps">
-    <li>Valores cerca de \(2\). Izquierda: \(s(1{,}9)=1{,}9+1=2{,}9\) y \(s(1{,}99)=1{,}99+1=2{,}99\). Derecha: \(s(2{,}1)=2{,}1+2=4{,}1\) y \(s(2{,}01)=2{,}01+2=4{,}01\). Por un lado las salidas se acercan a \(3\); por el otro, a \(4\).</li>
-    <li>Se propone \(L=3{,}5\) con la tolerancia \(\varepsilon=1\), y se responde \(\delta=0{,}5\). Izquierda, \(1{,}5\lt x\lt 2\): \(s(x)=x+1\) está entre \(1{,}5+1=2{,}5\) y \(2+1=3\); su distancia a \(3{,}5\) está entre \(3{,}5-3=0{,}5\) y \(3{,}5-2{,}5=1\), sin llegar a \(1\).</li>
-    <li>Derecha, \(2\lt x\lt 2{,}5\): \(s(x)=x+2\) está entre \(2+2=4\) y \(2{,}5+2=4{,}5\); su distancia a \(3{,}5\) está entre \(4-3{,}5=0{,}5\) y \(4{,}5-3{,}5=1\), sin llegar a \(1\). <b>La tolerancia \(1\) tiene respuesta.</b></li>
-    <li>Ahora la tolerancia \(\varepsilon=0{,}5\), con el mismo \(L=3{,}5\). Sea \(\delta\gt 0\) cualquiera y \(x=2+t\) con \(0\lt t\lt \delta\). Entonces \(s(x)=2+t+2=4+t\) y \(|s(x)-3{,}5|=4+t-3{,}5=0{,}5+t\), que es mayor que \(0{,}5\). <b>Ninguna distancia responde.</b></li>
-    <li>¿Servirá otro \(L\)? Tolerancia \(0{,}5\), \(\delta\gt 0\) cualquiera y \(0\lt t\lt \delta\). Los valores \(x_{1}=2-t\) y \(x_{2}=2+t\) cumplen \(0\lt |x-2|\lt \delta\). La diferencia de sus salidas: \(s(x_{2})-s(x_{1})=(2+t+2)-(2-t+1)=4+t-3+t=1+2t\), mayor que \(1\).</li>
-    <li>Si las dos salidas estuvieran a menos de \(0{,}5\) de \(L\), por la desigualdad triangular \(|s(x_{2})-s(x_{1})|\le |s(x_{2})-L|+|L-s(x_{1})|\), y esa suma sería menor que \(0{,}5+0{,}5=1\). Contradice el paso 5.</li>
-    <li>Conclusión: para la tolerancia \(0{,}5\) ningún \(L\) tiene respuesta. El límite de \(s\) en \(2\) no existe, aunque con \(L=3{,}5\) la tolerancia \(1\) sí tenía respuesta. Por eso la frase dice «para todo \(\varepsilon\)».</li>
+    <li><b>Valores cerca de \(2\).</b> Izquierda (se usa \(x+1\)): \(s(1{,}9)=1{,}9+1=2{,}9\) y \(s(1{,}99)=1{,}99+1=2{,}99\). Derecha (se usa \(x+2\)): \(s(2{,}1)=2{,}1+2=4{,}1\) y \(s(2{,}01)=2{,}01+2=4{,}01\). Por un lado las salidas se acercan a \(3\); por el otro, a \(4\).</li>
+    <li><b>Una propuesta.</b> Se propone \(L=3{,}5\), el número que está justo entre \(3\) y \(4\), con la tolerancia \(\varepsilon=1\). Se responde \(\delta=0{,}5\). Su franja: \(2-0{,}5=1{,}5\) y \(2+0{,}5=2{,}5\), así que \(0\lt |x-2|\lt 0{,}5\) dice \(1{,}5\lt x\lt 2{,}5\) con \(x\ne 2\). Tiene dos tramos y se revisa cada uno.</li>
+    <li><b>Tramo izquierdo, \(1{,}5\lt x\lt 2\).</b> Ahí \(s(x)=x+1\). Primero la resta \(3{,}5-s(x)\), y después entre qué números queda:
+    \[\begin{aligned}3{,}5-s(x)&=3{,}5-(x+1)&&\text{se reemplaza }s(x)=x+1\\ &=3{,}5-x-1&&\text{se quita el paréntesis}\\ &=2{,}5-x&&\text{porque }3{,}5-1=2{,}5\end{aligned}\]
+    \[\begin{aligned}1{,}5\lt x&\lt 2&&\text{el tramo}\\ -2\lt -x&\lt -1{,}5&&\text{se multiplica por }-1\text{: la desigualdad se da vuelta}\\ 0{,}5\lt 2{,}5-x&\lt 1&&\text{se suma }2{,}5\text{ en cada lado}\end{aligned}\]
+    Las cuentas de la última línea: \(2{,}5-2=0{,}5\) y \(2{,}5-1{,}5=1\). La resta es positiva, así que es la distancia: \(|s(x)-3{,}5|=2{,}5-x\), que está entre \(0{,}5\) y \(1\), sin llegar a \(1\). Prueba con \(x=1{,}8\): \(s(1{,}8)=1{,}8+1=2{,}8\) y \(|2{,}8-3{,}5|=3{,}5-2{,}8=0{,}7\), menor que \(1\).</li>
+    <li><b>Tramo derecho, \(2\lt x\lt 2{,}5\).</b> Ahí \(s(x)=x+2\):
+    \[\begin{aligned}s(x)-3{,}5&=x+2-3{,}5&&\text{se reemplaza }s(x)=x+2\\ &=x-1{,}5&&\text{porque }2-3{,}5=-1{,}5\end{aligned}\]
+    \[\begin{aligned}2\lt x&\lt 2{,}5&&\text{el tramo}\\ 0{,}5\lt x-1{,}5&\lt 1&&\text{se suma }-1{,}5\text{ en cada lado}\end{aligned}\]
+    Las cuentas de la última línea: \(2-1{,}5=0{,}5\) y \(2{,}5-1{,}5=1\). La resta es positiva, así que es la distancia: \(|s(x)-3{,}5|=x-1{,}5\), entre \(0{,}5\) y \(1\), sin llegar a \(1\). Prueba con \(x=2{,}3\): \(s(2{,}3)=2{,}3+2=4{,}3\) y \(|4{,}3-3{,}5|=0{,}8\), menor que \(1\). <b>La tolerancia \(1\) tiene respuesta.</b></li>
+    <li><b>Ahora la tolerancia \(\varepsilon=0{,}5\), con el mismo \(L=3{,}5\).</b> Sea \(\delta\gt 0\) cualquiera. Se elige \(x=2+t\) con \(0\lt t\lt \delta\) (por ejemplo, \(t=\dfrac{\delta}{2}\)). Cumple \(0\lt |x-2|\lt \delta\), porque \(|x-2|=|t|=t\). Como \(x\gt 2\), se usa \(x+2\):
+    \[\begin{aligned}s(x)&=2+t+2=4+t&&\text{se reemplaza }x=2+t\\ |s(x)-3{,}5|&=4+t-3{,}5&&\text{el mayor menos el menor}\\ &=0{,}5+t&&\text{porque }4-3{,}5=0{,}5\end{aligned}\]
+    Como \(t\gt 0\), \(0{,}5+t\) es mayor que \(0{,}5\): ese \(x\) no cumple la tolerancia. Con números, \(\delta=0{,}1\): \(t=\dfrac{0{,}1}{2}=0{,}05\), \(x=2{,}05\), \(s(2{,}05)=2{,}05+2=4{,}05\) y \(|4{,}05-3{,}5|=0{,}55\), que no es menor que \(0{,}5\). <b>Ninguna distancia responde.</b></li>
+    <li><b>¿Servirá otro \(L\)?</b> Tolerancia \(0{,}5\), \(\delta\gt 0\) cualquiera y \(0\lt t\lt \delta\). Los valores \(x_{1}=2-t\) y \(x_{2}=2+t\) cumplen \(0\lt |x-2|\lt \delta\), porque \(|x_{1}-2|=|-t|=t\) y \(|x_{2}-2|=|t|=t\). Como \(x_{1}\lt 2\), su salida es \(s(x_{1})=2-t+1=3-t\). Como \(x_{2}\gt 2\), su salida es \(s(x_{2})=2+t+2=4+t\). La diferencia de las salidas:
+    \[\begin{aligned}s(x_{2})-s(x_{1})&=(4+t)-(3-t)&&\text{se reemplazan las dos salidas}\\ &=4+t-3+t&&\text{se quitan los paréntesis}\\ &=1+2t&&\text{porque }4-3=1\text{ y }t+t=2t\end{aligned}\]
+    Como \(t\gt 0\), la diferencia \(1+2t\) es mayor que \(1\).</li>
+    <li><b>Qué pasaría si las dos salidas estuvieran a menos de \(0{,}5\) de un mismo \(L\):</b>
+    \[\begin{aligned}|s(x_{2})-s(x_{1})|&\le |s(x_{2})-L|+|L-s(x_{1})|&&\text{desigualdad triangular (propiedad 3)}\\ |s(x_{2})-s(x_{1})|&\le |s(x_{2})-L|+|s(x_{1})-L|&&\text{porque }|-u|=|u|\text{ (propiedad 1)}\\ |s(x_{2})-s(x_{1})|&\lt 0{,}5+0{,}5=1&&\text{cada distancia sería menor que }0{,}5\end{aligned}\]
+    La diferencia sería menor que \(1\). Contradice el paso 6, donde es mayor que \(1\). Con números, \(t=0{,}05\): \(s(1{,}95)=1{,}95+1=2{,}95\) y \(s(2{,}05)=2{,}05+2=4{,}05\). Para estar a menos de \(0{,}5\) de \(4{,}05\), \(L\) tendría que ser mayor que \(4{,}05-0{,}5=3{,}55\). Para estar a menos de \(0{,}5\) de \(2{,}95\), tendría que ser menor que \(2{,}95+0{,}5=3{,}45\). Ningún número es mayor que \(3{,}55\) y menor que \(3{,}45\).</li>
+    <li><b>Conclusión:</b> para la tolerancia \(0{,}5\) ningún \(L\) tiene respuesta. El límite de \(s\) en \(2\) no existe, aunque con \(L=3{,}5\) la tolerancia \(1\) sí tenía respuesta. Por eso la frase dice «para todo \(\varepsilon\)».</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Cuatro errores frecuentes.</b> Uno: <b>invertir el orden</b>, eligiendo primero la distancia \(\delta\) y después la tolerancia \(\varepsilon\). La tolerancia va primero y la distancia es la respuesta. Dos: <b>conformarse con una tolerancia</b>. En el ejemplo 4 la tolerancia \(1\) tiene respuesta y el límite no existe. Tres: <b>revisar también \(x=a\)</b>. La condición es \(0\lt |x-a|\lt \delta\): el valor \(f(a)\) no participa. Cuatro: <b>creer que \(\delta\) es único o que debe ser el mayor posible</b>. Basta una distancia que sirva; toda distancia positiva menor también sirve.</p>
+    <p><b>Cuatro errores frecuentes.</b> Uno: <b>invertir el orden</b>, eligiendo primero la distancia \(\delta\) y después la tolerancia \(\varepsilon\). La tolerancia va primero y la distancia es la respuesta: en la demostración, a \(\varepsilon=1\) se respondió con \(0{,}5\), y no al revés. Dos: <b>conformarse con una tolerancia</b>. En el ejemplo 4 la tolerancia \(1\) tiene respuesta y el límite no existe. Tres: <b>revisar también \(x=a\)</b>. La condición es \(0\lt |x-a|\lt \delta\): el valor \(f(a)\) no participa (en el ejemplo 3, \(p(3)=10\) y el límite es \(7\)). Cuatro: <b>creer que \(\delta\) es único o que debe ser el mayor posible</b>. Basta una distancia que sirva; toda distancia positiva menor también sirve (para la tolerancia \(1\) sirven \(0{,}5\) y también \(0{,}25\)).</p>
   </div>
 </section>
 
@@ -328,13 +386,18 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Escribe \(u(x)-L\) y saca factor común: debe aparecer \(x-2\). Después divide la tolerancia por el número que lo acompaña.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) \(u(1{,}9)=4\cdot 1{,}9-3=7{,}6-3=4{,}6\) y \(u(2{,}1)=4\cdot 2{,}1-3=8{,}4-3=5{,}4\). Se propone \(L=5\), que es \(4\cdot 2-3=8-3=5\).</li>
-        <li>b) La diferencia: \(u(x)-5=4x-3-5=4x-8\). Factor común: \(4x-8=4\,(x-2)\).</li>
-        <li>Valor absoluto de un producto: \(|u(x)-5|=|4|\cdot|x-2|=4\,|x-2|\).</li>
-        <li>Se quiere \(4\,|x-2|\lt 0{,}4\). Al dividir por \(4\), positivo: \(|x-2|\lt \dfrac{0{,}4}{4}=0{,}1\). Respuesta: \(\delta=0{,}1\).</li>
-        <li>La respuesta sirve: si \(0\lt |x-2|\lt 0{,}1\), entonces \(4\,|x-2|\lt 4\cdot 0{,}1=0{,}4\).</li>
+        <li>a) \(u(1{,}9)=4\cdot 1{,}9-3=7{,}6-3=4{,}6\) y \(u(2{,}1)=4\cdot 2{,}1-3=8{,}4-3=5{,}4\). Las dos salidas están a \(0{,}4\) de \(5\): \(5-4{,}6=0{,}4\) y \(5{,}4-5=0{,}4\). Se propone \(L=5\), que además es \(u(2)=4\cdot 2-3=8-3=5\).</li>
+        <li>b) La distancia de la salida a \(5\), escrita con \(|x-2|\):
+        \[\begin{aligned}|u(x)-5|&=|4x-3-5|&&\text{se reemplaza }u(x)=4x-3\\ &=|4x-8|&&\text{porque }-3-5=-8\\ &=|4\,(x-2)|&&\text{factor común }4\text{: }4\cdot x=4x\text{ y }4\cdot 2=8\\ &=|4|\cdot|x-2|&&\text{valor absoluto de un producto (propiedad 1)}\\ &=4\,|x-2|&&\text{porque }|4|=4\end{aligned}\]</li>
+        <li>Búsqueda de la distancia:
+        \[\begin{aligned}4\,|x-2|&\lt 0{,}4&&\text{lo que se quiere lograr}\\ |x-2|&\lt \dfrac{0{,}4}{4}=0{,}1&&\text{se dividen los dos lados por }4\text{, positivo}\end{aligned}\]
+        Respuesta: \(\delta=0{,}1\).</li>
+        <li>La respuesta sirve:
+        \[\begin{aligned}0\lt |x-2|&\lt 0{,}1&&\text{lo que se supone}\\ 4\,|x-2|&\lt 4\cdot 0{,}1=0{,}4&&\text{se multiplican los dos lados por }4\text{, positivo}\\ |u(x)-5|&\lt 0{,}4&&\text{porque }|u(x)-5|=4\,|x-2|\end{aligned}\]</li>
         <li>Prueba con \(x=2{,}05\): \(|2{,}05-2|=0{,}05\) y \(0\lt 0{,}05\lt 0{,}1\). Su salida: \(u(2{,}05)=4\cdot 2{,}05-3=8{,}2-3=5{,}2\). Su distancia a \(5\): \(|5{,}2-5|=0{,}2\), y \(0{,}2\lt 0{,}4\).</li>
-        <li>c) Regla: \(\delta=\dfrac{\varepsilon}{4}\). Si \(0\lt |x-2|\lt \dfrac{\varepsilon}{4}\), entonces \(|u(x)-5|=4\,|x-2|\lt 4\cdot\dfrac{\varepsilon}{4}=\varepsilon\). Toda tolerancia tiene respuesta: el límite es \(5\).</li>
+        <li>c) Regla: \(\delta=\dfrac{\varepsilon}{4}\). Es la cuenta de b) con \(\varepsilon\) en lugar de \(0{,}4\):
+        \[\begin{aligned}0\lt |x-2|&\lt \frac{\varepsilon}{4}&&\text{lo que se supone}\\ 4\,|x-2|&\lt 4\cdot\frac{\varepsilon}{4}&&\text{se multiplican los dos lados por }4\text{, positivo}\\ 4\,|x-2|&\lt \varepsilon&&\text{porque }4\cdot\tfrac{\varepsilon}{4}=\varepsilon\\ |u(x)-5|&\lt \varepsilon&&\text{porque }|u(x)-5|=4\,|x-2|\end{aligned}\]
+        Toda tolerancia tiene respuesta: el límite es \(5\).</li>
       </ol>
     </div></details>
   </div>
@@ -345,12 +408,21 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>Revisa cada lado por separado. Para c), usa \(x=4+t\) con \(t\) positivo y tan chico como haga falta. Para d), compara las salidas de \(4-t\) y \(4+t\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) Izquierda: \(q(3{,}9)=6-3{,}9=2{,}1\) y \(q(3{,}99)=6-3{,}99=2{,}01\). Derecha: \(q(4{,}1)=4{,}1-1=3{,}1\) y \(q(4{,}01)=4{,}01-1=3{,}01\). Las salidas se acercan a \(2\) por un lado y a \(3\) por el otro.</li>
-        <li>b) Izquierda, \(3{,}5\lt x\lt 4\): \(q(x)=6-x\) está entre \(6-4=2\) y \(6-3{,}5=2{,}5\); su distancia a \(2{,}5\) está entre \(2{,}5-2{,}5=0\) y \(2{,}5-2=0{,}5\), menor que \(1\).</li>
-        <li>Derecha, \(4\lt x\lt 4{,}5\): \(q(x)=x-1\) está entre \(4-1=3\) y \(4{,}5-1=3{,}5\); su distancia a \(2{,}5\) está entre \(3-2{,}5=0{,}5\) y \(3{,}5-2{,}5=1\), sin llegar a \(1\). La distancia \(\delta=0{,}5\) sirve para la tolerancia \(1\).</li>
-        <li>c) Sea \(\delta\gt 0\) cualquiera y \(x=4+t\) con \(0\lt t\lt \delta\). Entonces \(q(x)=4+t-1=3+t\) y \(|q(x)-2{,}5|=3+t-2{,}5=0{,}5+t\), que es mayor que \(0{,}5\). Ninguna distancia sirve.</li>
-        <li>d) Sea \(\delta\gt 0\) cualquiera y \(0\lt t\lt \delta\). Con \(x_{1}=4-t\): \(q(x_{1})=6-(4-t)=2+t\). Con \(x_{2}=4+t\): \(q(x_{2})=3+t\). La diferencia: \(q(x_{2})-q(x_{1})=3+t-(2+t)=1\).</li>
-        <li>Si las dos salidas estuvieran a menos de \(0{,}5\) de un mismo \(L\), por la desigualdad triangular su diferencia sería menor que \(0{,}5+0{,}5=1\). Pero es exactamente \(1\). Ningún \(L\) sirve.</li>
+        <li>a) Izquierda (se usa \(6-x\)): \(q(3{,}9)=6-3{,}9=2{,}1\) y \(q(3{,}99)=6-3{,}99=2{,}01\). Derecha (se usa \(x-1\)): \(q(4{,}1)=4{,}1-1=3{,}1\) y \(q(4{,}01)=4{,}01-1=3{,}01\). Las salidas se acercan a \(2\) por un lado y a \(3\) por el otro.</li>
+        <li>b) La franja de \(\delta=0{,}5\): \(4-0{,}5=3{,}5\) y \(4+0{,}5=4{,}5\), así que \(0\lt |x-4|\lt 0{,}5\) dice \(3{,}5\lt x\lt 4{,}5\) con \(x\ne 4\). Tramo izquierdo, \(3{,}5\lt x\lt 4\), donde \(q(x)=6-x\):
+        \[\begin{aligned}2{,}5-q(x)&=2{,}5-(6-x)&&\text{se reemplaza }q(x)=6-x\\ &=2{,}5-6+x&&\text{se quita el paréntesis}\\ &=x-3{,}5&&\text{porque }2{,}5-6=-3{,}5\end{aligned}\]
+        \[\begin{aligned}3{,}5\lt x&\lt 4&&\text{el tramo}\\ 0\lt x-3{,}5&\lt 0{,}5&&\text{se suma }-3{,}5\text{ en cada lado}\end{aligned}\]
+        Las cuentas de la última línea: \(3{,}5-3{,}5=0\) y \(4-3{,}5=0{,}5\). La resta es positiva, así que es la distancia: \(|q(x)-2{,}5|=x-3{,}5\), entre \(0\) y \(0{,}5\), menor que \(1\). Prueba con \(x=3{,}8\): \(q(3{,}8)=6-3{,}8=2{,}2\) y \(|2{,}2-2{,}5|=2{,}5-2{,}2=0{,}3\).</li>
+        <li>Tramo derecho, \(4\lt x\lt 4{,}5\), donde \(q(x)=x-1\):
+        \[\begin{aligned}q(x)-2{,}5&=x-1-2{,}5&&\text{se reemplaza }q(x)=x-1\\ &=x-3{,}5&&\text{porque }-1-2{,}5=-3{,}5\end{aligned}\]
+        \[\begin{aligned}4\lt x&\lt 4{,}5&&\text{el tramo}\\ 0{,}5\lt x-3{,}5&\lt 1&&\text{se suma }-3{,}5\text{ en cada lado}\end{aligned}\]
+        Las cuentas de la última línea: \(4-3{,}5=0{,}5\) y \(4{,}5-3{,}5=1\). La resta es positiva, así que es la distancia: \(|q(x)-2{,}5|=x-3{,}5\), entre \(0{,}5\) y \(1\), sin llegar a \(1\). Prueba con \(x=4{,}3\): \(q(4{,}3)=4{,}3-1=3{,}3\) y \(|3{,}3-2{,}5|=0{,}8\). La distancia \(\delta=0{,}5\) sirve para la tolerancia \(1\).</li>
+        <li>c) Sea \(\delta\gt 0\) cualquiera y \(x=4+t\) con \(0\lt t\lt \delta\) (por ejemplo, \(t=\dfrac{\delta}{2}\)). Cumple \(0\lt |x-4|\lt \delta\), porque \(|x-4|=|t|=t\). Como \(x\gt 4\), se usa \(x-1\):
+        \[\begin{aligned}q(x)&=4+t-1=3+t&&\text{se reemplaza }x=4+t\\ |q(x)-2{,}5|&=3+t-2{,}5&&\text{el mayor menos el menor}\\ &=0{,}5+t&&\text{porque }3-2{,}5=0{,}5\end{aligned}\]
+        Como \(t\gt 0\), \(0{,}5+t\) es mayor que \(0{,}5\). Con números, \(\delta=0{,}1\): \(t=0{,}05\), \(q(4{,}05)=4{,}05-1=3{,}05\) y \(|3{,}05-2{,}5|=0{,}55\), que no es menor que \(0{,}5\). Ninguna distancia sirve.</li>
+        <li>d) Sea \(\delta\gt 0\) cualquiera y \(0\lt t\lt \delta\). Con \(x_{1}=4-t\) (menor que \(4\): se usa \(6-x\)) y \(x_{2}=4+t\) (mayor que \(4\): se usa \(x-1\)):
+        \[\begin{aligned}q(x_{1})&=6-(4-t)=6-4+t=2+t&&\text{salida de }x_{1}\\ q(x_{2})&=4+t-1=3+t&&\text{salida de }x_{2}\\ q(x_{2})-q(x_{1})&=3+t-(2+t)&&\text{la diferencia}\\ &=3+t-2-t&&\text{se quita el paréntesis}\\ &=(3-2)+(t-t)&&\text{se agrupan los números y las }t\\ &=1+0=1&&\text{porque }3-2=1\text{ y }t-t=0\end{aligned}\]</li>
+        <li>Si las dos salidas estuvieran a menos de \(0{,}5\) de un mismo \(L\), por la desigualdad triangular (propiedad 3) su diferencia sería menor o igual que la suma de esas dos distancias, y esa suma sería menor que \(0{,}5+0{,}5=1\). Pero la diferencia es exactamente \(1\), y \(1\) no es menor que \(1\). Con números, \(t=0{,}05\): \(q(3{,}95)=6-3{,}95=2{,}05\) y \(q(4{,}05)=3{,}05\). \(L\) tendría que ser mayor que \(3{,}05-0{,}5=2{,}55\) y menor que \(2{,}05+0{,}5=2{,}55\): imposible. Ningún \(L\) sirve.</li>
         <li>Conclusión: el límite de \(q\) en \(4\) no existe. Que la tolerancia \(1\) tuviera respuesta con \(L=2{,}5\) no bastaba.</li>
       </ol>
     </div></details>
@@ -360,12 +432,16 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>La salida es el precio y la entrada es la masa. Escribe \(P(m)-4000\) y saca factor común \(16\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) \(P(250)=16\cdot 250=4000\) pesos.</li>
-        <li>b) La diferencia: \(P(m)-4000=16\,m-4000=16\,(m-250)\), porque \(16\cdot 250=4000\). Entonces \(|P(m)-4000|=16\,|m-250|\).</li>
-        <li>Se quiere \(16\,|m-250|\lt 80\). Al dividir por \(16\), positivo: \(|m-250|\lt \dfrac{80}{16}=5\). Respuesta: \(\delta=5\) gramos.</li>
-        <li>La respuesta sirve: si \(|m-250|\lt 5\), entonces \(16\,|m-250|\lt 16\cdot 5=80\).</li>
-        <li>Prueba con \(m=253\): \(|253-250|=3\), menor que \(5\). El precio: \(P(253)=16\cdot 253=4048\) pesos. Su distancia a \(4000\): \(|4048-4000|=48\), menor que \(80\).</li>
-        <li>c) Con \(\varepsilon=16\): \(\dfrac{16}{16}=1\), sirve \(\delta=1\) gramo. Regla: \(\delta=\dfrac{\varepsilon}{16}\) gramos, porque \(16\,|m-250|\lt 16\cdot\dfrac{\varepsilon}{16}=\varepsilon\).</li>
+        <li>a) \(P(250)=16\cdot 250\). La cuenta: \(16\cdot 250=10\cdot 250+6\cdot 250=2500+1500=4000\). Paga \(4000\) pesos.</li>
+        <li>b) La distancia del precio a \(4000\), escrita con \(|m-250|\):
+        \[\begin{aligned}|P(m)-4000|&=|16\,m-4000|&&\text{se reemplaza }P(m)=16\,m\\ &=|16\,(m-250)|&&\text{factor común }16\text{: }16\cdot m=16\,m\text{ y }16\cdot 250=4000\\ &=|16|\cdot|m-250|&&\text{valor absoluto de un producto (propiedad 1)}\\ &=16\,|m-250|&&\text{porque }|16|=16\end{aligned}\]</li>
+        <li>Búsqueda de la distancia:
+        \[\begin{aligned}16\,|m-250|&\lt 80&&\text{lo que se quiere lograr}\\ |m-250|&\lt \dfrac{80}{16}=5&&\text{se dividen los dos lados por }16\text{, positivo}\end{aligned}\]
+        Respuesta: \(\delta=5\) gramos.</li>
+        <li>La respuesta sirve:
+        \[\begin{aligned}|m-250|&\lt 5&&\text{lo que se supone}\\ 16\,|m-250|&\lt 16\cdot 5=80&&\text{se multiplican los dos lados por }16\text{, positivo}\\ |P(m)-4000|&\lt 80&&\text{porque }|P(m)-4000|=16\,|m-250|\end{aligned}\]</li>
+        <li>Prueba con \(m=253\): \(|253-250|=3\), menor que \(5\). El precio: \(P(253)=16\cdot 253\), y \(16\cdot 253=16\cdot 250+16\cdot 3=4000+48=4048\) pesos. Su distancia a \(4000\): \(|4048-4000|=48\), menor que \(80\). Además \(16\cdot 3=48\), como dice la primera cuenta de b).</li>
+        <li>c) Con \(\varepsilon=16\): \(\dfrac{16}{16}=1\), sirve \(\delta=1\) gramo, porque \(16\cdot 1=16\). Regla: \(\delta=\dfrac{\varepsilon}{16}\) gramos. Si \(|m-250|\lt \dfrac{\varepsilon}{16}\), se multiplica por \(16\), positivo: \(16\,|m-250|\lt 16\cdot\dfrac{\varepsilon}{16}=\varepsilon\), es decir, \(|P(m)-4000|\lt \varepsilon\).</li>
         <li>d) Toda tolerancia en el precio, por chica que sea, se garantiza con una masa suficientemente cercana a \(250\) gramos: en el modelo, el límite de \(P(m)\) cuando \(m\) se acerca a \(250\) es \(4000\). Aquí \(m=250\) también cumple, porque \(P(250)=4000\); la frase del límite no lo revisa.</li>
       </ol>
     </div></details>
@@ -373,7 +449,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">CD-L29-H10 · v001 · Pendiente de APR</span>
+  <span class="status">CD-L29-H10 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -742,11 +818,11 @@ OA.scene('eps-idea', (function(){
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
     readout:function(v){ var k = Math.round(v.paso || 1), R = [
-      'f(x)=2x+1;\\ \\ a=3;\\ \\ L=7' + Q + '\\text{cerca de }3:\\ \\ f(2{,}9)=2\\cdot 2{,}9+1=6{,}8' + Q + 'f(3{,}1)=2\\cdot 3{,}1+1=7{,}2' + Q + '\\text{distancia de la entrada a }3:\\ \\ |2{,}9-3|=0{,}1' + Q + '\\text{distancia de la salida a }7:\\ \\ |6{,}8-7|=0{,}2',
+      'f(x)=2x+1;\\ \\ a=3;\\ \\ L=7' + Q + '\\text{cerca de }3:\\ \\ f(2{,}9)=2\\cdot 2{,}9+1=5{,}8+1=6{,}8' + Q + 'f(3{,}1)=2\\cdot 3{,}1+1=6{,}2+1=7{,}2' + Q + '\\text{distancia de la entrada a }3:\\ \\ |2{,}9-3|=0{,}1' + Q + '\\text{distancia de la salida a }7:\\ \\ |6{,}8-7|=0{,}2' + Q + '\\text{la salida queda al doble: }0{,}2=2\\cdot 0{,}1',
       '\\text{tolerancia para la salida: }\\varepsilon=1' + Q + '\\text{se pide }|f(x)-7|\\lt 1' + Q + '\\text{es decir: }7-1\\lt f(x)\\lt 7+1' + Q + '7-1=6;\\ \\ 7+1=8' + Q + '\\text{franja verde: }6\\lt f(x)\\lt 8',
-      '\\text{respuesta: distancia }\\delta=0{,}5\\text{ para la entrada}' + Q + '0\\lt |x-3|\\lt 0{,}5:\\ \\ 2{,}5\\lt x\\lt 3{,}5,\\ x\\ne 3' + Q + '|f(x)-7|=|2x+1-7|=|2x-6|=2\\,|x-3|' + Q + '2\\,|x-3|\\lt 2\\cdot 0{,}5=1' + Q + '\\text{prueba: }f(3{,}4)=2\\cdot 3{,}4+1=7{,}8' + Q + '|7{,}8-7|=0{,}8\\lt 1',
-      '\\text{tolerancia más exigente: }\\varepsilon=0{,}5' + Q + '7-0{,}5=6{,}5;\\ \\ 7+0{,}5=7{,}5' + Q + '\\text{la distancia }0{,}5\\text{ ya no sirve: }f(3{,}4)=7{,}8\\gt 7{,}5' + Q + '\\text{nueva respuesta: }\\delta=0{,}25' + Q + '2\\,|x-3|\\lt 2\\cdot 0{,}25=0{,}5' + Q + '\\text{prueba: }f(3{,}2)=2\\cdot 3{,}2+1=7{,}4' + Q + '|7{,}4-7|=0{,}4\\lt 0{,}5',
-      '\\text{tolerancia }\\varepsilon=0{,}1:\\ \\ 7-0{,}1=6{,}9;\\ \\ 7+0{,}1=7{,}1' + Q + '\\text{respuesta: }\\delta=0{,}05' + Q + '2\\,|x-3|\\lt 2\\cdot 0{,}05=0{,}1' + Q + '\\text{prueba: }f(3{,}04)=2\\cdot 3{,}04+1=7{,}08' + Q + '|7{,}08-7|=0{,}08\\lt 0{,}1',
+      '\\text{distancia de la salida a }7\\text{, con }|x-3|:' + Q + '|f(x)-7|=|2x+1-7|=|2x-6|' + Q + '|2x-6|=|2\\,(x-3)|=2\\,|x-3|' + Q + '\\text{se quiere }2\\,|x-3|\\lt 1' + Q + '\\text{dividido por }2:\\ \\ |x-3|\\lt \\tfrac{1}{2}=0{,}5' + Q + '\\text{respuesta: distancia }\\delta=0{,}5\\text{ para la entrada}' + Q + '3-0{,}5=2{,}5;\\ \\ 3+0{,}5=3{,}5' + Q + '\\text{franja azul: }2{,}5\\lt x\\lt 3{,}5,\\ x\\ne 3' + Q + '\\text{sirve: }2\\,|x-3|\\lt 2\\cdot 0{,}5=1' + Q + '\\text{prueba: }|3{,}4-3|=0{,}4\\lt 0{,}5' + Q + 'f(3{,}4)=2\\cdot 3{,}4+1=6{,}8+1=7{,}8' + Q + '|7{,}8-7|=0{,}8\\lt 1',
+      '\\text{tolerancia más exigente: }\\varepsilon=0{,}5' + Q + '7-0{,}5=6{,}5;\\ \\ 7+0{,}5=7{,}5' + Q + '\\text{la distancia }0{,}5\\text{ ya no sirve: }f(3{,}4)=7{,}8\\gt 7{,}5' + Q + '\\text{se quiere }2\\,|x-3|\\lt 0{,}5' + Q + '\\text{dividido por }2:\\ \\ |x-3|\\lt \\tfrac{0{,}5}{2}=0{,}25' + Q + '\\text{nueva respuesta: }\\delta=0{,}25' + Q + '3-0{,}25=2{,}75;\\ \\ 3+0{,}25=3{,}25' + Q + '\\text{sirve: }2\\,|x-3|\\lt 2\\cdot 0{,}25=0{,}5' + Q + '\\text{prueba: }|3{,}2-3|=0{,}2\\lt 0{,}25' + Q + 'f(3{,}2)=2\\cdot 3{,}2+1=6{,}4+1=7{,}4' + Q + '|7{,}4-7|=0{,}4\\lt 0{,}5',
+      '\\text{tolerancia }\\varepsilon=0{,}1:\\ \\ 7-0{,}1=6{,}9;\\ \\ 7+0{,}1=7{,}1' + Q + '\\text{se quiere }2\\,|x-3|\\lt 0{,}1' + Q + '\\text{dividido por }2:\\ \\ |x-3|\\lt \\tfrac{0{,}1}{2}=0{,}05' + Q + '\\text{respuesta: }\\delta=0{,}05' + Q + '3-0{,}05=2{,}95;\\ \\ 3+0{,}05=3{,}05' + Q + '\\text{sirve: }2\\,|x-3|\\lt 2\\cdot 0{,}05=0{,}1' + Q + '\\text{prueba: }|3{,}04-3|=0{,}04\\lt 0{,}05' + Q + 'f(3{,}04)=2\\cdot 3{,}04+1=6{,}08+1=7{,}08' + Q + '|7{,}08-7|=0{,}08\\lt 0{,}1',
       '\\text{en los tres casos se respondió con }\\delta=\\tfrac{\\varepsilon}{2}:' + Q + '\\tfrac{1}{2}=0{,}5;\\ \\ \\tfrac{0{,}5}{2}=0{,}25;\\ \\ \\tfrac{0{,}1}{2}=0{,}05' + Q + '\\text{para cualquier }\\varepsilon\\gt 0\\text{: si }0\\lt |x-3|\\lt \\tfrac{\\varepsilon}{2},' + Q + '|f(x)-7|=2\\,|x-3|\\lt 2\\cdot \\tfrac{\\varepsilon}{2}=\\varepsilon' + Q + '\\text{toda tolerancia tiene respuesta: el límite es }7']; return dtPasos(R.slice(0, k)); }
   };
 })());
