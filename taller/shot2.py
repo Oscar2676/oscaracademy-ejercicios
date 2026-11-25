@@ -10,7 +10,8 @@ async def main():
         MJ = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'vendor', 'mathjax-3.2.2', 'tex-svg.js')
         async def ruta(r):  # las fórmulas se dibujan de verdad: MathJax sale de la copia local (taller/vendor); el resto de internet se corta
             u = r.request.url
-            if 'mathjax' in u and u.endswith('tex-svg.js') and os.path.isfile(MJ): await r.fulfill(path=MJ, content_type='application/javascript')
+            loc = os.path.join(os.path.dirname(MJ), u.split('/es5/', 1)[1]) if ('mathjax' in u and '/es5/' in u) else None  # también las extensiones (color, etc.)
+            if loc and os.path.isfile(loc): await r.fulfill(path=loc, content_type='application/javascript')
             elif u.startswith('http'): await r.abort()
             else: await r.continue_()
         await pg.route('**/*', ruta)

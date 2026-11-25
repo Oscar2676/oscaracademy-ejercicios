@@ -58,7 +58,7 @@ OA.scene('det2-idea', (function(){
       if (k > 1 || u > 0.6){ L('LU', a - 0.3, cc + 0.2, -100); L('LV', b + 0.14, d - 0.06, 0); }
       if (k === 6 && u > 0.5) L('AR', 2.95, 2.0);
       /* pregunta arriba; al final, en el mismo lugar, la respuesta */
-      L('Q', -1.2, 3.55, 0); if (k === 6 && u > 0.5) L('F', 1.75, 3.55, 0); /* la pregunta queda; la respuesta se escribe a su lado */
+      L('Q', -1.2, 3.55, 0); if (k === 6 && u > 0.5) L('F', 1.45, 3.55, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -1.0); if (TXT[k - 1][1]) txt(TXT[k - 1][1], -1.2, -1.0 - 21/(X(1) - X(0)));
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(-0.55));
       dtQue(S, 'por qué el determinante es un área:', 'un rectángulo, menos las piezas que sobran.');
@@ -99,7 +99,7 @@ OA.scene('det2-vivo', (function(){
       dtQue(S, 'el determinante es el área pintada,', 'con signo. Gira la flecha naranja y míralo cambiar.');
       T.fin();
     },
-    caption:function(v){ var b = v.b == null ? 1 : +v.b, d = v.d == null ? 2 : +v.d, D = A0*d - b*C0, n = function(z){ return oaDec(z, 2); }; return 'Con v = (' + n(b) + '; ' + n(d) + ') el determinante vale ' + n(D) + ' y el paralelogramo mide ' + n(Math.abs(D)) + ' unidades cuadradas. Sobre la recta punteada, la de u, el determinante es 0'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, b = R(v.b == null ? 1 : +v.b), d = R(v.d == null ? 2 : +v.d), D = R(R(A0*d) - R(b*C0)); return 'Con ' + M('\\vec v=(' + n2(b) + ';\\ ' + n2(d) + ')') + ' el determinante vale ' + N(D) + ' y el paralelogramo mide ' + N(Math.abs(D)) + ' unidades cuadradas. Sobre la recta punteada, la de ' + M('\\vec u') + ', el determinante es ' + M('0'); },
     readout:function(v){ var b = Math.round((v.b == null ? 1 : +v.b)*100)/100, d = Math.round((v.d == null ? 2 : +v.d)*100)/100, P1 = Math.round(A0*d*100)/100, P2 = Math.round(b*C0*100)/100, D = Math.round((P1 - P2)*100)/100, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
       return dtPasos(['\\vec u=(3,\\,1),\\qquad \\vec v=(b,\\,d)=(' + n(b, 2) + ';\\ ' + n(d, 2) + ')',
         '\\begin{vmatrix}3&b\\\\1&d\\end{vmatrix}=\\begin{vmatrix}3&' + n(b, 2) + '\\\\1&' + n(d, 2) + '\\end{vmatrix}',

@@ -92,13 +92,13 @@ OA.scene('prod-vivo', (function(){
       for (i = -1; i <= 2; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 7, Y(i), 'right'); }
       par([2, 0], [2, k], C.rise, !cero); par([2, 0], [1, 1], C.sec, true);
       c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.4, 0, 6.2832); c.fill();
-      T.L('PB', 0.9, 1, -100, -6, -9); T.L('PA', 4, k, -100, 0, k < 0 ? 11 : -11);
+      T.L('PB', 1, 1, 0, 8, -10); T.L('PA', 4, k, -100, 0, k < 0 ? 11 : -11);
       m = cero ? 'Determinante cero: el naranja se aplasta' : (k < 0 ? 'Determinante negativo: el naranja se da vuelta' : 'El área naranja es la azul por el factor k');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-0.9), Y(-2.1));
       dtQue(S, 'al aplicar A, el área azul queda', 'multiplicada por el determinante de A, sin su signo.');
       T.fin();
     },
-    caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ', el determinante de A vale ' + n(k) + ', el de B vale 2 y el de AB vale ' + n(2*k) + '. El paralelogramo naranja mide ' + n(Math.abs(2*k)) + ' unidades cuadradas. Con k = 0 se aplasta'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, k = R(v.k == null ? 1.5 : +v.k); return 'Con ' + M('k=' + n2(k)) + ', el determinante de ' + M('A') + ' vale ' + N(k) + ', el de ' + M('B') + ' vale ' + M('2') + ' y el de ' + M('AB') + ' vale ' + N(2*k) + '. El paralelogramo naranja mide ' + N(Math.abs(2*k)) + ' unidades cuadradas. Con ' + M('k=0') + ' se aplasta'; },
     readout:function(v){ var k = Math.round((v.k == null ? 1.5 : +v.k)*100)/100, D = Math.round(2*k*100)/100, n = OA.num, Q = '\\\\&\\qquad ', K = k < 0 ? '\\left(' + n(k, 2) + '\\right)' : n(k, 2);
       return dtPasos(['A=\\begin{pmatrix}1&1\\\\0&k\\end{pmatrix},\\quad B=\\begin{pmatrix}2&1\\\\0&1\\end{pmatrix},\\quad k=' + n(k, 2),
         '|A|=\\begin{vmatrix}1&1\\\\0&' + n(k, 2) + '\\end{vmatrix}=1\\cdot ' + K + '-1\\cdot 0' + Q + '\\text{productos: }1\\cdot ' + K + '=' + n(k, 2) + ';\\qquad 1\\cdot 0=0' + Q + '|A|=' + n(k, 2) + '-0=' + n(k, 2),

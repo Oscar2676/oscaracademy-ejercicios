@@ -165,7 +165,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <p class="lede">Una matriz \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) (una tabla de cuatro números) sirve para <b>transformar</b> el plano: mueve cada punto \((x,y)\) al punto \((ax+by,\ cx+dy)\). La primera coordenada nueva se arma con la primera fila de la tabla, y la segunda, con la segunda fila. El punto al que llega se llama la <b>imagen</b> del punto, y la figura que forman las imágenes de todos los puntos de una figura es la imagen de la figura. Esta hoja responde: ¿cuánto cambia el área?</p>
     <p class="lede"><b>De dónde sale, con números.</b> Con \(A=\begin{pmatrix}1&1\\0&2\end{pmatrix}\), el punto \((x,y)\) va a \((1\cdot x+1\cdot y,\ 0\cdot x+2\cdot y)\). Se aplica a las cuatro esquinas del cuadrado de lado \(1\), que tiene área \(1\cdot 1=1\):
     \[\begin{aligned}(0,0)&\to(1\cdot 0+1\cdot 0,\ 0\cdot 0+2\cdot 0)=(0,0)\\ (1,0)&\to(1\cdot 1+1\cdot 0,\ 0\cdot 1+2\cdot 0)=(1,0)\\ (0,1)&\to(1\cdot 0+1\cdot 1,\ 0\cdot 0+2\cdot 1)=(1,2)\\ (1,1)&\to(1\cdot 1+1\cdot 1,\ 0\cdot 1+2\cdot 1)=(2,2)\end{aligned}\]
-    Las cuatro imágenes son las esquinas de un paralelogramo: su base va de \((0,0)\) a \((1,0)\) y mide \(1\); su altura es \(2\). Su área es base por altura: \(1\cdot 2=2\). El área pasó de \(1\) a \(2\): se multiplicó por \(2\). Y el <b>determinante</b> de la matriz (el producto de una diagonal menos el de la otra) es
+    Las cuatro imágenes son las esquinas de un paralelogramo: su base va de \((0,0)\) a \((1,0)\) y mide \(1\); su altura es \(2\), porque va de \(y=0\) a \(y=2\). Su área es base por altura: \(1\cdot 2=2\). El área pasó de \(1\) a \(2\): se multiplicó por \(2\). Y el <b>determinante</b> de la matriz (el producto de una diagonal menos el de la otra) es
     \[\det A=\begin{vmatrix}1&1\\0&2\end{vmatrix}=1\cdot 2-1\cdot 0=2-0=2\]
     El mismo \(2\).</p>
     <p class="lede"><b>Otro caso.</b> Con \(A=\begin{pmatrix}3&0\\0&2\end{pmatrix}\), el punto \((x,y)\) va a \((3x,\ 2y)\): el cuadrado de lado \(1\) pasa a un rectángulo de \(3\) por \(2\), de área \(3\cdot 2=6\). El área se multiplicó por \(6\), y \(\det A=3\cdot 2-0\cdot 0=6-0=6\). Otra vez coinciden.</p>
@@ -210,13 +210,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 
   <div class="card k2">
     <h3>Demostración para cualquier paralelogramo</h3>
-    <p><b>Qué se demuestra.</b> Que si un paralelogramo cualquiera, en cualquier lugar del plano, se transforma con la matriz \(A\), su imagen es otro paralelogramo y el área de esa imagen es \(|\det A|\) por el área original.</p>
+    <p><b>Qué se demuestra.</b> Que si un paralelogramo cualquiera, en cualquier lugar del plano, se transforma con la matriz \(A\), su imagen es otro paralelogramo (si \(\det A\neq 0\)) y el área de esa imagen es \(|\det A|\) por el área original. Si \(\det A=0\), la imagen se aplasta en un segmento o en un punto, de área \(0\), y la fórmula vale igual: \(0\) por el área original es \(0\).</p>
     <p><b>Cómo funciona el método.</b> Tres ideas, en este orden. Primera (pasos 1 y 2): la transformación se lleva bien con la suma y con el producto por un número. Segunda (pasos 3 y 4): por eso un paralelogramo va a un paralelogramo, y sus lados van a los lados de la imagen. Tercera (pasos 5 a 8): las dos áreas se escriben como determinantes y se comparan con la regla \(|AB|=|A|\,|B|\).</p>
     <p>Se llama \(T\) a la transformación: \(T(x,y)=(ax+by,\ cx+dy)\). Se lee «\(T\) de \(x\), \(y\)». Un punto \(p=(x_1,y_1)\) más otro \(q=(x_2,y_2)\) es \(p+q=(x_1+x_2,\ y_1+y_2)\), y un número \(s\) por el punto \(p\) es \(s\,p=(s\,x_1,\ s\,y_1)\).</p>
     <ol class="steps">
       <li><b>\(T\) respeta la suma.</b> Primera coordenada de \(T(x_1+x_2,\ y_1+y_2)\): \(a(x_1+x_2)+b(y_1+y_2)\). Se distribuye: \(ax_1+ax_2+by_1+by_2\). Se reordena: \((ax_1+by_1)+(ax_2+by_2)\), que es la primera coordenada de \(T(p)\) más la de \(T(q)\). Segunda coordenada, igual con \(c\) y \(d\): \(c(x_1+x_2)+d(y_1+y_2)=cx_1+cx_2+dy_1+dy_2=(cx_1+dy_1)+(cx_2+dy_2)\). Luego \(T(p+q)=T(p)+T(q)\).</li>
       <li><b>\(T\) respeta el producto por un número.</b> Primera coordenada de \(T(s\,x,\ s\,y)\): \(a(sx)+b(sy)\). Se saca el factor común \(s\): \(s\,(ax+by)\). Segunda coordenada: \(c(sx)+d(sy)=s\,(cx+dy)\). Luego \(T(s\,p)=s\,T(p)\).</li>
-      <li>Un paralelogramo con un vértice en \(p\) y lados \(u\), \(v\) (no paralelos) está formado por los puntos \(p+s\,u+t\,v\), con \(0\leq s\leq 1\) y \(0\leq t\leq 1\).</li>
+      <li>Un paralelogramo con un vértice en \(p\) y lados \(u\), \(v\) (no paralelos) está formado por los puntos \(p+s\,u+t\,v\), con \(0\leq s\leq 1\) y \(0\leq t\leq 1\) (se lee «\(s\) entre \(0\) y \(1\)»: \(s\) y \(t\) son números que dicen cuánto se avanza por cada lado, desde nada, \(0\), hasta el lado completo, \(1\)).</li>
       <li>Por los pasos 1 y 2, \(T(p+s\,u+t\,v)=T(p)+s\,T(u)+t\,T(v)\): la imagen es el paralelogramo con un vértice en \(T(p)\) y lados \(T(u)\), \(T(v)\).</li>
       <li>Área original: \(|\det M|\), donde \(M\) es la matriz de columnas \(u\), \(v\) (hoja «Determinante de segundo orden»).</li>
       <li>La matriz de columnas \(T(u)\), \(T(v)\) es el producto \(AM\). Con \(u=(u_1,u_2)\), la primera columna del producto \(AM\) se arma fila por columna: \((a\,u_1+b\,u_2,\ c\,u_1+d\,u_2)\), que es justamente \(T(u)\). Con la segunda columna y \(v\) pasa lo mismo.</li>
@@ -232,13 +232,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>Área de la imagen: el determinante de columnas \((2,0)\) y \((4,6)\) es \(\begin{vmatrix}2&4\\0&6\end{vmatrix}=2\cdot 6-4\cdot 0=12-0=12\). Área: \(|12|=12\).</li>
       <li>Factor: \(\det A=1\cdot 2-1\cdot 0=2\), y \(|\det A|\cdot 6=2\cdot 6=12\) ✓.</li>
     </ol>
-    <p><b>Triángulos.</b> Un triángulo es la mitad de un paralelogramo, y su imagen es la mitad del paralelogramo imagen. Si el paralelogramo tiene área \(P\), el triángulo tiene \(\dfrac{P}{2}\); la imagen del paralelogramo tiene \(|\det A|\cdot P\) y la del triángulo, \(\dfrac{|\det A|\cdot P}{2}=|\det A|\cdot\dfrac{P}{2}\). Su área también se multiplica por \(|\det A|\) (ejemplo 2, con números).</p>
+    <p><b>Triángulos.</b> Un triángulo es la mitad de un paralelogramo, y su imagen es la mitad del paralelogramo imagen (porque la diagonal que lo corta en dos va a parar a la diagonal del paralelogramo imagen; se usa aquí sin demostrarlo). Si el paralelogramo tiene área \(P\), el triángulo tiene \(\dfrac{P}{2}\); la imagen del paralelogramo tiene \(|\det A|\cdot P\) y la del triángulo, \(\dfrac{|\det A|\cdot P}{2}=|\det A|\cdot\dfrac{P}{2}\). Su área también se multiplica por \(|\det A|\) (ejemplo 2, con números).</p>
   </div>
 
   <div class="card k3">
     <h3>Otras figuras, el signo y el caso cero</h3>
     <p><b>Cualquier figura.</b> Para círculos y otras figuras con borde curvo el factor es el mismo, \(|\det A|\). Se enuncia aquí sin demostrarlo: la idea es cubrir la figura con cuadraditos cada vez más chicos, como en la animación.</p>
-    <p><b>El signo.</b> Si \(\det A&lt;0\), la figura además se da vuelta, como en un espejo. El factor de escala de las áreas es \(|\det A|\), nunca negativo.</p>
+    <p><b>El signo.</b> Si \(\det A&lt;0\), la figura además se da vuelta, como en un espejo (esto se enuncia aquí sin demostrarlo). El factor de escala de las áreas es \(|\det A|\), nunca negativo.</p>
     <p><b>Número ↔ figura.</b> La matriz \(A=\begin{pmatrix}2&0\\0&k\end{pmatrix}\) lleva el punto \((x,y)\) a \((2\cdot x+0\cdot y,\ 0\cdot x+k\cdot y)=(2x,\ ky)\): duplica el ancho y multiplica el alto por \(k\). El círculo de radio \(1\), de área \(\pi\cdot 1^{2}=\pi\), pasa a una <b>elipse</b> (un círculo estirado): su medio ancho es \(2\) y su medio alto, \(|k|\); esas dos medidas se llaman <b>semiejes</b>. La cuenta, paso por paso:
     \[\begin{aligned}\det A&=2\cdot k-0\cdot 0&&\text{regla de segundo orden}\\&=2k&&\text{cada producto y la resta}\\\text{área de la elipse}&=|2k|\cdot\pi&&\text{factor por el área del círculo}\end{aligned}\]
     Con \(k=0{,}5\): \(\det A=2\cdot 0{,}5=1\), y el área es \(|1|\cdot\pi=\pi\), la misma del círculo. Con \(k=0\): \(\det A=2\cdot 0=0\), el área es \(0\cdot\pi=0\) y el círculo se aplasta en un segmento. Con \(k=-1\): \(\det A=2\cdot(-1)=-2\), el área es \(|-2|\cdot\pi=2\pi\) y la figura se da vuelta.</p>
@@ -360,7 +360,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H11 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H11 · v004 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -510,7 +510,8 @@ window.MathJax = {
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
         if (I.capKey !== ck){
           I.capKey = ck;
-          if (typeof cp === 'string') I.cap.textContent = cp;
+          if (typeof cp === 'string'){ if (cp.indexOf('\\(') < 0) I.cap.textContent = cp; /* regla E1: las expresiones de la frase van dibujadas; se escriben entre \( y \) */
+            else { I.cap.textContent = ''; cp.split(/\\\((.+?)\\\)/).forEach(function(t, i){ if (i % 2){ var cx = document.createElement('span'); cx.className = 'captex'; setTex(cx, t, t.replace(/\\[a-zA-Z]+|[{}]/g, '')); I.cap.appendChild(cx); } else if (t) I.cap.appendChild(document.createTextNode(t)); }); } }
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }
@@ -615,7 +616,7 @@ OA.scene('esc-idea', (function(){
     ['R6', '6=2\\cdot 3=|\\det A|\\cdot\\text{área de la figura}', '6 = 2·3 = |det A| · área de la figura', 'diff']];
   var TXT = [['Una figura de tres cuadraditos: área 3.', 'Se transforma con la matriz: ¿qué área queda?'],
     ['Cada punto se mueve y la figura se deforma.', 'La original queda en gris, en su lugar.'],
-    ['Un cuadradito pasa a un paralelogramo.', 'Su área es el determinante: vale 2.'],
+    ['Un cuadradito pasa a un paralelogramo.', 'Su área es el valor absoluto del determinante: 2.'],
     ['Los tres cuadraditos cambian igual:', 'tres paralelogramos de área 2.'],
     ['El área de la imagen es la suma', 'de las tres: vale 6.'],
     ['De 3 a 6: el área se multiplicó por 2,', 'el valor absoluto del determinante.']];
@@ -687,21 +688,21 @@ OA.scene('esc-vivo', (function(){
       function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
       S.line(-2.7, 0, 2.7, 0, {color:C.ink, width:1}); S.line(0, -2.2, 0, 2.15, {color:C.ink, width:1});
       c.strokeStyle = C.ink; c.lineWidth = 1;
-      for (i = -2; i <= 2; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(i) + 7, Y(0) + 11, 'center'); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 7, Y(i) - 8, 'right'); }
+      for (i = -2; i <= 2; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(i) + (i === -2 ? -10 : (i === 2 ? 10 : 7)), Y(0) + 11, 'center'); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 7, Y(i) - 8, 'right'); }
       for (i = 0; i < 72; i++){ a = i*6.2832/72; pe.push([2*Math.cos(a), k*Math.sin(a)]); }
       if (!cero) S.poly(pe, {fill:C.rise, alpha:0.26});
       c.strokeStyle = C.rise; c.lineWidth = cero ? 2.4 : 1.4; c.setLineDash([]); c.beginPath(); for (i = 0; i < 72; i++){ if (i) c.lineTo(X(pe[i][0]), Y(pe[i][1])); else c.moveTo(X(pe[i][0]), Y(pe[i][1])); } c.closePath(); c.stroke();
       c.strokeStyle = C.sec; c.lineWidth = 1.3; c.setLineDash([4, 3]); c.beginPath(); c.arc(X(0), Y(0), X(1) - X(0), 0, 6.2832); c.stroke(); c.setLineDash([]);
       c.fillStyle = C.sec; c.beginPath(); c.arc(X(0), Y(1), 3, 0, 6.2832); c.fill();
       c.fillStyle = C.rise; c.beginPath(); c.arc(X(0), Y(k), 3.6, 0, 6.2832); c.fill();
-      T.L('P', 0, k, 0, 8, k < 0 ? 10 : -10);
+      T.L('P', 0, k, 0, 10, k < 0 ? 14 : -14); (function(){ function fm(z){ var r = Math.round(z*100)/100; return (r < 0 ? '−' : '') + ('' + Math.abs(r)).replace('.', ','); } c.font = '600 12px ' + F; c.fillStyle = C.rise; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('= (0; ' + fm(k) + ')', X(0) + 48, Y(k) + (k < 0 ? 14 : -14)); })();
       T.L('CI', -2.8, 2.38, 0); T.L('EL', 0.25, 2.38, 0);
-      m = cero ? 'Determinante cero: el círculo se aplasta' : (k < 0 ? 'Determinante negativo: la figura se dio vuelta' : 'El área se multiplica por el determinante');
+      m = cero ? 'Determinante cero: el círculo se aplasta' : (k < 0 ? 'Determinante negativo: la figura se dio vuelta' : 'Determinante positivo: el área se multiplica por él');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-2.8), Y(-2.6));
       dtQue(S, 'al transformar el círculo, su área', 'se multiplica por el determinante, sin signo.');
       T.fin();
     },
-    caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ' el determinante vale ' + n(2*k) + ' y el área de la elipse es ' + n(Math.abs(2*k)) + ' veces la del círculo: ' + n(Math.abs(2*k)*Math.PI) + ' unidades cuadradas, aproximadamente. Con k = 0 se aplasta'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, k = R(v.k == null ? 1.5 : +v.k), D = R(2*k), AR = R(Math.abs(D)*3.14); return 'Con ' + M('k=' + n2(k)) + ' el determinante vale ' + N(D) + ' y el área de la elipse es ' + N(Math.abs(D)) + ' veces la del círculo: ' + M(n2(Math.abs(D)) + '\\cdot 3{,}14\\approx ' + n2(AR)) + ' unidades cuadradas. Con ' + M('k=0') + ' se aplasta'; },
     readout:function(v){ var r2 = function(z){ return Math.round(z*100)/100; }, k = r2(v.k == null ? 1.5 : +v.k), K2 = r2(2*k), AB = Math.abs(K2), AR = AB*3.14, ex = Math.abs(AR*100 - Math.round(AR*100)) < 1e-7, n = OA.num, Q = '\\\\&\\qquad ', pk = k < 0 ? '\\left(' + n(k, 2) + '\\right)' : n(k, 2), r;
       r = ['A=\\begin{pmatrix}2&0\\\\0&k\\end{pmatrix},\\qquad k=' + n(k, 2),
         '\\det A=\\begin{vmatrix}2&0\\\\0&' + n(k, 2) + '\\end{vmatrix}=2\\cdot ' + pk + '-0\\cdot 0',

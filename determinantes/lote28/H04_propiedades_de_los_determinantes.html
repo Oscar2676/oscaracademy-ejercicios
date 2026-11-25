@@ -190,7 +190,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li><b>Fila de figuras chicas:</b> lo que dejó cada paso, con su número y su determinante. Nada se borra hasta el final.</li>
   </ul>
   <div class="why">
-    <p><b>Alcance.</b> Las propiedades valen para determinantes de cualquier orden. En esta hoja se demuestran para segundo orden y, para tercer orden, se demuestra el intercambio de las filas 1 y 2; los demás casos de tercer orden se enuncian y se comprobaron con la fórmula de los seis productos. Todo lo que se dice de las filas vale igual para las columnas, porque una matriz y su traspuesta tienen el mismo determinante (hoja «El determinante de una matriz A es igual al determinante de la matriz traspuesta de A»).</p>
+    <p><b>Alcance.</b> Las propiedades valen para determinantes de cualquier orden. En esta hoja se demuestran para segundo orden y, para tercer orden, se demuestra el intercambio de las filas 1 y 2; los demás casos de tercer orden se enuncian y se comprobaron con la fórmula de los seis productos. Todo lo que se dice de las filas vale igual para las columnas, porque una matriz y su traspuesta (la que resulta de escribir las filas como columnas) tienen el mismo determinante (hoja «El determinante de una matriz A es igual al determinante de la matriz traspuesta de A»).</p>
   </div>
 </section>
 
@@ -219,7 +219,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Filas iguales.</b> \(\begin{vmatrix}a&b\\a&b\end{vmatrix}=ab-ba=ab-ab=0\).</li>
       <li><b>Factor de una fila.</b> Con la primera fila: \[\begin{aligned}\begin{vmatrix}ka&kb\\c&d\end{vmatrix}&=ka\cdot d-kb\cdot c&&\text{diagonal principal menos la otra}\\ &=k\,ad-k\,bc&&\text{se ordenan los factores}\\ &=k\,(ad-bc)&&\text{factor común }k\end{aligned}\] Con la segunda fila es la misma cuenta: \(\begin{vmatrix}a&b\\kc&kd\end{vmatrix}=a\cdot kd-b\cdot kc=k\,ad-k\,bc=k\,(ad-bc)\).</li>
       <li><b>Fila de ceros.</b> Es la propiedad 3 con \(k=0\): una fila de ceros es una fila multiplicada por \(0\), y el determinante queda multiplicado por \(0\). Directo: \(\begin{vmatrix}0&0\\c&d\end{vmatrix}=0\cdot d-0\cdot c=0-0=0\).</li>
-      <li><b>Filas proporcionales.</b> Se saca el factor \(k\) de la segunda fila (propiedad 3) y quedan dos filas iguales (propiedad 2): \(\begin{vmatrix}a&b\\ka&kb\end{vmatrix}=k\begin{vmatrix}a&b\\a&b\end{vmatrix}=k\cdot 0=0\).</li>
+      <li><b>Filas proporcionales.</b> Se saca el factor \(k\) de la segunda fila (propiedad 3) y quedan dos filas iguales (propiedad 2): \(\begin{vmatrix}a&b\\ka&kb\end{vmatrix}=k\begin{vmatrix}a&b\\a&b\end{vmatrix}=k\cdot 0=0\). Lo mismo si es la fila 1 la que es \(k\) veces la fila 2: se saca \(k\) de la fila 1 y quedan dos filas iguales, \(\begin{vmatrix}ka&kb\\a&b\end{vmatrix}=k\begin{vmatrix}a&b\\a&b\end{vmatrix}=k\cdot 0=0\).</li>
       <li><b>Suma en una fila.</b> \[\begin{aligned}\begin{vmatrix}a+a'&b+b'\\c&d\end{vmatrix}&=(a+a')\,d-(b+b')\,c&&\text{diagonal principal menos la otra}\\ &=ad+a'd-bc-b'c&&\text{se distribuye}\\ &=(ad-bc)+(a'd-b'c)&&\text{se agrupan: los sin prima y los con prima}\\ &=\begin{vmatrix}a&b\\c&d\end{vmatrix}+\begin{vmatrix}a'&b'\\c&d\end{vmatrix}&&\text{cada paréntesis es un determinante}\end{aligned}\] La letra con prima, \(a'\), se lee «a prima»: es otro número, distinto de \(a\).</li>
       <li><b>Sumar un múltiplo.</b> Por la propiedad 6, \(\begin{vmatrix}a+kc&b+kd\\c&d\end{vmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}+\begin{vmatrix}kc&kd\\c&d\end{vmatrix}\). En el segundo determinante la fila 1 es \(k\) veces la fila 2: filas proporcionales, vale \(0\) (propiedad 5). Queda \(\begin{vmatrix}a&b\\c&d\end{vmatrix}+0=\begin{vmatrix}a&b\\c&d\end{vmatrix}\).</li>
       <li><b>Triangular.</b> \(\begin{vmatrix}a&b\\0&d\end{vmatrix}=ad-b\cdot 0=ad-0=ad\) y \(\begin{vmatrix}a&0\\c&d\end{vmatrix}=ad-0\cdot c=ad-0=ad\).</li>
@@ -357,7 +357,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H04 · v005 · Pendiente de APR</span>
+  <span class="status">AL-L28-H04 · v006 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -507,7 +507,8 @@ window.MathJax = {
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
         if (I.capKey !== ck){
           I.capKey = ck;
-          if (typeof cp === 'string') I.cap.textContent = cp;
+          if (typeof cp === 'string'){ if (cp.indexOf('\\(') < 0) I.cap.textContent = cp; /* regla E1: las expresiones de la frase van dibujadas; se escriben entre \( y \) */
+            else { I.cap.textContent = ''; cp.split(/\\\((.+?)\\\)/).forEach(function(t, i){ if (i % 2){ var cx = document.createElement('span'); cx.className = 'captex'; setTex(cx, t, t.replace(/\\[a-zA-Z]+|[{}]/g, '')); I.cap.appendChild(cx); } else if (t) I.cap.appendChild(document.createTextNode(t)); }); } }
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }
@@ -717,7 +718,7 @@ OA.scene('prop-vivo', (function(){
       dtQue(S, 'el área solo responde a k.', 'Mover t inclina la figura, pero no cambia su área.');
       T.fin();
     },
-    caption:function(v){ var k = v.k == null ? 1 : +v.k, t = v.t == null ? 0 : +v.t, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ' y t = ' + n(t) + ' el determinante vale ' + n(3*k) + ' y el paralelogramo mide ' + n(Math.abs(3*k)) + ' unidades cuadradas. Mover t no cambia el área; mover k, sí'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, k = R(v.k == null ? 1 : +v.k), t = R(v.t == null ? 0 : +v.t); return 'Con ' + M('k=' + n2(k)) + ' y ' + M('t=' + n2(t)) + ' el determinante vale ' + N(3*k) + ' y el paralelogramo mide ' + N(Math.abs(3*k)) + ' unidades cuadradas. Mover ' + M('t') + ' no cambia el área; mover ' + M('k') + ', sí'; },
     readout:function(v){ var k = Math.round((v.k == null ? 1 : +v.k)*100)/100, t = Math.round((v.t == null ? 0 : +v.t)*100)/100, D = Math.round(3*k*100)/100, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
       return dtPasos(['k=' + n(k, 2) + ',\\qquad t=' + n(t, 2),
         '\\text{columnas: }k\\,\\vec u=(2k,\\ k),\\\\&\\qquad\\vec v+t\\,\\vec u=(1+2t,\\ 2+t)',

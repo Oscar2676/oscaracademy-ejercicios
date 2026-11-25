@@ -15,7 +15,7 @@
     <p class="lede">Una matriz \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) (una tabla de cuatro números) sirve para <b>transformar</b> el plano: mueve cada punto \((x,y)\) al punto \((ax+by,\ cx+dy)\). La primera coordenada nueva se arma con la primera fila de la tabla, y la segunda, con la segunda fila. El punto al que llega se llama la <b>imagen</b> del punto, y la figura que forman las imágenes de todos los puntos de una figura es la imagen de la figura. Esta hoja responde: ¿cuánto cambia el área?</p>
     <p class="lede"><b>De dónde sale, con números.</b> Con \(A=\begin{pmatrix}1&1\\0&2\end{pmatrix}\), el punto \((x,y)\) va a \((1\cdot x+1\cdot y,\ 0\cdot x+2\cdot y)\). Se aplica a las cuatro esquinas del cuadrado de lado \(1\), que tiene área \(1\cdot 1=1\):
     \[\begin{aligned}(0,0)&\to(1\cdot 0+1\cdot 0,\ 0\cdot 0+2\cdot 0)=(0,0)\\ (1,0)&\to(1\cdot 1+1\cdot 0,\ 0\cdot 1+2\cdot 0)=(1,0)\\ (0,1)&\to(1\cdot 0+1\cdot 1,\ 0\cdot 0+2\cdot 1)=(1,2)\\ (1,1)&\to(1\cdot 1+1\cdot 1,\ 0\cdot 1+2\cdot 1)=(2,2)\end{aligned}\]
-    Las cuatro imágenes son las esquinas de un paralelogramo: su base va de \((0,0)\) a \((1,0)\) y mide \(1\); su altura es \(2\). Su área es base por altura: \(1\cdot 2=2\). El área pasó de \(1\) a \(2\): se multiplicó por \(2\). Y el <b>determinante</b> de la matriz (el producto de una diagonal menos el de la otra) es
+    Las cuatro imágenes son las esquinas de un paralelogramo: su base va de \((0,0)\) a \((1,0)\) y mide \(1\); su altura es \(2\), porque va de \(y=0\) a \(y=2\). Su área es base por altura: \(1\cdot 2=2\). El área pasó de \(1\) a \(2\): se multiplicó por \(2\). Y el <b>determinante</b> de la matriz (el producto de una diagonal menos el de la otra) es
     \[\det A=\begin{vmatrix}1&1\\0&2\end{vmatrix}=1\cdot 2-1\cdot 0=2-0=2\]
     El mismo \(2\).</p>
     <p class="lede"><b>Otro caso.</b> Con \(A=\begin{pmatrix}3&0\\0&2\end{pmatrix}\), el punto \((x,y)\) va a \((3x,\ 2y)\): el cuadrado de lado \(1\) pasa a un rectángulo de \(3\) por \(2\), de área \(3\cdot 2=6\). El área se multiplicó por \(6\), y \(\det A=3\cdot 2-0\cdot 0=6-0=6\). Otra vez coinciden.</p>
@@ -59,13 +59,13 @@
 
   <div class="card k2">
     <h3>Demostración para cualquier paralelogramo</h3>
-    <p><b>Qué se demuestra.</b> Que si un paralelogramo cualquiera, en cualquier lugar del plano, se transforma con la matriz \(A\), su imagen es otro paralelogramo y el área de esa imagen es \(|\det A|\) por el área original.</p>
+    <p><b>Qué se demuestra.</b> Que si un paralelogramo cualquiera, en cualquier lugar del plano, se transforma con la matriz \(A\), su imagen es otro paralelogramo (si \(\det A\neq 0\)) y el área de esa imagen es \(|\det A|\) por el área original. Si \(\det A=0\), la imagen se aplasta en un segmento o en un punto, de área \(0\), y la fórmula vale igual: \(0\) por el área original es \(0\).</p>
     <p><b>Cómo funciona el método.</b> Tres ideas, en este orden. Primera (pasos 1 y 2): la transformación se lleva bien con la suma y con el producto por un número. Segunda (pasos 3 y 4): por eso un paralelogramo va a un paralelogramo, y sus lados van a los lados de la imagen. Tercera (pasos 5 a 8): las dos áreas se escriben como determinantes y se comparan con la regla \(|AB|=|A|\,|B|\).</p>
     <p>Se llama \(T\) a la transformación: \(T(x,y)=(ax+by,\ cx+dy)\). Se lee «\(T\) de \(x\), \(y\)». Un punto \(p=(x_1,y_1)\) más otro \(q=(x_2,y_2)\) es \(p+q=(x_1+x_2,\ y_1+y_2)\), y un número \(s\) por el punto \(p\) es \(s\,p=(s\,x_1,\ s\,y_1)\).</p>
     <ol class="steps">
       <li><b>\(T\) respeta la suma.</b> Primera coordenada de \(T(x_1+x_2,\ y_1+y_2)\): \(a(x_1+x_2)+b(y_1+y_2)\). Se distribuye: \(ax_1+ax_2+by_1+by_2\). Se reordena: \((ax_1+by_1)+(ax_2+by_2)\), que es la primera coordenada de \(T(p)\) más la de \(T(q)\). Segunda coordenada, igual con \(c\) y \(d\): \(c(x_1+x_2)+d(y_1+y_2)=cx_1+cx_2+dy_1+dy_2=(cx_1+dy_1)+(cx_2+dy_2)\). Luego \(T(p+q)=T(p)+T(q)\).</li>
       <li><b>\(T\) respeta el producto por un número.</b> Primera coordenada de \(T(s\,x,\ s\,y)\): \(a(sx)+b(sy)\). Se saca el factor común \(s\): \(s\,(ax+by)\). Segunda coordenada: \(c(sx)+d(sy)=s\,(cx+dy)\). Luego \(T(s\,p)=s\,T(p)\).</li>
-      <li>Un paralelogramo con un vértice en \(p\) y lados \(u\), \(v\) (no paralelos) está formado por los puntos \(p+s\,u+t\,v\), con \(0\leq s\leq 1\) y \(0\leq t\leq 1\).</li>
+      <li>Un paralelogramo con un vértice en \(p\) y lados \(u\), \(v\) (no paralelos) está formado por los puntos \(p+s\,u+t\,v\), con \(0\leq s\leq 1\) y \(0\leq t\leq 1\) (se lee «\(s\) entre \(0\) y \(1\)»: \(s\) y \(t\) son números que dicen cuánto se avanza por cada lado, desde nada, \(0\), hasta el lado completo, \(1\)).</li>
       <li>Por los pasos 1 y 2, \(T(p+s\,u+t\,v)=T(p)+s\,T(u)+t\,T(v)\): la imagen es el paralelogramo con un vértice en \(T(p)\) y lados \(T(u)\), \(T(v)\).</li>
       <li>Área original: \(|\det M|\), donde \(M\) es la matriz de columnas \(u\), \(v\) (hoja «Determinante de segundo orden»).</li>
       <li>La matriz de columnas \(T(u)\), \(T(v)\) es el producto \(AM\). Con \(u=(u_1,u_2)\), la primera columna del producto \(AM\) se arma fila por columna: \((a\,u_1+b\,u_2,\ c\,u_1+d\,u_2)\), que es justamente \(T(u)\). Con la segunda columna y \(v\) pasa lo mismo.</li>
@@ -81,13 +81,13 @@
       <li>Área de la imagen: el determinante de columnas \((2,0)\) y \((4,6)\) es \(\begin{vmatrix}2&4\\0&6\end{vmatrix}=2\cdot 6-4\cdot 0=12-0=12\). Área: \(|12|=12\).</li>
       <li>Factor: \(\det A=1\cdot 2-1\cdot 0=2\), y \(|\det A|\cdot 6=2\cdot 6=12\) ✓.</li>
     </ol>
-    <p><b>Triángulos.</b> Un triángulo es la mitad de un paralelogramo, y su imagen es la mitad del paralelogramo imagen. Si el paralelogramo tiene área \(P\), el triángulo tiene \(\dfrac{P}{2}\); la imagen del paralelogramo tiene \(|\det A|\cdot P\) y la del triángulo, \(\dfrac{|\det A|\cdot P}{2}=|\det A|\cdot\dfrac{P}{2}\). Su área también se multiplica por \(|\det A|\) (ejemplo 2, con números).</p>
+    <p><b>Triángulos.</b> Un triángulo es la mitad de un paralelogramo, y su imagen es la mitad del paralelogramo imagen (porque la diagonal que lo corta en dos va a parar a la diagonal del paralelogramo imagen; se usa aquí sin demostrarlo). Si el paralelogramo tiene área \(P\), el triángulo tiene \(\dfrac{P}{2}\); la imagen del paralelogramo tiene \(|\det A|\cdot P\) y la del triángulo, \(\dfrac{|\det A|\cdot P}{2}=|\det A|\cdot\dfrac{P}{2}\). Su área también se multiplica por \(|\det A|\) (ejemplo 2, con números).</p>
   </div>
 
   <div class="card k3">
     <h3>Otras figuras, el signo y el caso cero</h3>
     <p><b>Cualquier figura.</b> Para círculos y otras figuras con borde curvo el factor es el mismo, \(|\det A|\). Se enuncia aquí sin demostrarlo: la idea es cubrir la figura con cuadraditos cada vez más chicos, como en la animación.</p>
-    <p><b>El signo.</b> Si \(\det A&lt;0\), la figura además se da vuelta, como en un espejo. El factor de escala de las áreas es \(|\det A|\), nunca negativo.</p>
+    <p><b>El signo.</b> Si \(\det A&lt;0\), la figura además se da vuelta, como en un espejo (esto se enuncia aquí sin demostrarlo). El factor de escala de las áreas es \(|\det A|\), nunca negativo.</p>
     <p><b>Número ↔ figura.</b> La matriz \(A=\begin{pmatrix}2&0\\0&k\end{pmatrix}\) lleva el punto \((x,y)\) a \((2\cdot x+0\cdot y,\ 0\cdot x+k\cdot y)=(2x,\ ky)\): duplica el ancho y multiplica el alto por \(k\). El círculo de radio \(1\), de área \(\pi\cdot 1^{2}=\pi\), pasa a una <b>elipse</b> (un círculo estirado): su medio ancho es \(2\) y su medio alto, \(|k|\); esas dos medidas se llaman <b>semiejes</b>. La cuenta, paso por paso:
     \[\begin{aligned}\det A&=2\cdot k-0\cdot 0&&\text{regla de segundo orden}\\&=2k&&\text{cada producto y la resta}\\\text{área de la elipse}&=|2k|\cdot\pi&&\text{factor por el área del círculo}\end{aligned}\]
     Con \(k=0{,}5\): \(\det A=2\cdot 0{,}5=1\), y el área es \(|1|\cdot\pi=\pi\), la misma del círculo. Con \(k=0\): \(\det A=2\cdot 0=0\), el área es \(0\cdot\pi=0\) y el círculo se aplasta en un segmento. Con \(k=-1\): \(\det A=2\cdot(-1)=-2\), el área es \(|-2|\cdot\pi=2\pi\) y la figura se da vuelta.</p>
@@ -208,6 +208,6 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H11 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H11 · v004 · Pendiente de APR</span>
 </footer>
 </article>

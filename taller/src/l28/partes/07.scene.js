@@ -87,7 +87,7 @@ OA.scene('filcol-vivo', (function(){
       dtQue(S, 'elige una fila y una columna:', 'el cruce da el elemento y el signo de su posición.');
       T.fin();
     },
-    caption:function(v){ var i = Math.round(v.i || 2), j = Math.round(v.j || 3), a = NUM[3*(i - 1) + j - 1]; return 'El elemento de la fila ' + i + ' y la columna ' + j + ' vale ' + ('' + a).replace('-', '−') + '. El signo de su posición es ' + ((i + j) % 2 ? 'menos' : 'más') + ', porque ' + i + ' + ' + j + ' = ' + (i + j) + ' es ' + ((i + j) % 2 ? 'impar' : 'par'); },
+    caption:function(v){ var i = Math.round(v.i || 2), j = Math.round(v.j || 3), a = NUM[3*(i - 1) + j - 1]; return 'El elemento de la fila ' + i + ' y la columna ' + j + ' vale ' + ('' + a).replace('-', '−') + '. El signo de su posición es ' + ((i + j) % 2 ? 'menos' : 'más') + ', porque \\(' + i + '+' + j + '=' + (i + j) + '\\) es ' + ((i + j) % 2 ? 'impar' : 'par'); },
     readout:function(v){ var i = Math.round(v.i || 2), j = Math.round(v.j || 3), a = NUM[3*(i - 1) + j - 1], par = (i + j) % 2 === 0, Q = '\\\\&\\qquad ',
         f = ['\\text{se elige: }i=' + i + ',\\quad j=' + j,
           '\\text{fila }' + i + '\\text{: }' + NUM.slice(3*(i - 1), 3*i).join(',\\ ') + Q + '\\text{columna }' + j + '\\text{: }' + [NUM[j - 1], NUM[2 + j], NUM[5 + j]].join(',\\ '),

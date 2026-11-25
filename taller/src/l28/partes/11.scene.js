@@ -11,7 +11,7 @@ OA.scene('esc-idea', (function(){
     ['R6', '6=2\\cdot 3=|\\det A|\\cdot\\text{área de la figura}', '6 = 2·3 = |det A| · área de la figura', 'diff']];
   var TXT = [['Una figura de tres cuadraditos: área 3.', 'Se transforma con la matriz: ¿qué área queda?'],
     ['Cada punto se mueve y la figura se deforma.', 'La original queda en gris, en su lugar.'],
-    ['Un cuadradito pasa a un paralelogramo.', 'Su área es el determinante: vale 2.'],
+    ['Un cuadradito pasa a un paralelogramo.', 'Su área es el valor absoluto del determinante: 2.'],
     ['Los tres cuadraditos cambian igual:', 'tres paralelogramos de área 2.'],
     ['El área de la imagen es la suma', 'de las tres: vale 6.'],
     ['De 3 a 6: el área se multiplicó por 2,', 'el valor absoluto del determinante.']];
@@ -83,21 +83,21 @@ OA.scene('esc-vivo', (function(){
       function num(tx, px, py, al){ c.font = '500 10.5px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(tx, px, py); }
       S.line(-2.7, 0, 2.7, 0, {color:C.ink, width:1}); S.line(0, -2.2, 0, 2.15, {color:C.ink, width:1});
       c.strokeStyle = C.ink; c.lineWidth = 1;
-      for (i = -2; i <= 2; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(i) + 7, Y(0) + 11, 'center'); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 7, Y(i) - 8, 'right'); }
+      for (i = -2; i <= 2; i++){ if (!i) continue; c.beginPath(); c.moveTo(X(i), Y(0) - 3); c.lineTo(X(i), Y(0) + 3); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(i < 0 ? '−' + (-i) : '' + i, X(i) + (i === -2 ? -10 : (i === 2 ? 10 : 7)), Y(0) + 11, 'center'); num(i < 0 ? '−' + (-i) : '' + i, X(0) - 7, Y(i) - 8, 'right'); }
       for (i = 0; i < 72; i++){ a = i*6.2832/72; pe.push([2*Math.cos(a), k*Math.sin(a)]); }
       if (!cero) S.poly(pe, {fill:C.rise, alpha:0.26});
       c.strokeStyle = C.rise; c.lineWidth = cero ? 2.4 : 1.4; c.setLineDash([]); c.beginPath(); for (i = 0; i < 72; i++){ if (i) c.lineTo(X(pe[i][0]), Y(pe[i][1])); else c.moveTo(X(pe[i][0]), Y(pe[i][1])); } c.closePath(); c.stroke();
       c.strokeStyle = C.sec; c.lineWidth = 1.3; c.setLineDash([4, 3]); c.beginPath(); c.arc(X(0), Y(0), X(1) - X(0), 0, 6.2832); c.stroke(); c.setLineDash([]);
       c.fillStyle = C.sec; c.beginPath(); c.arc(X(0), Y(1), 3, 0, 6.2832); c.fill();
       c.fillStyle = C.rise; c.beginPath(); c.arc(X(0), Y(k), 3.6, 0, 6.2832); c.fill();
-      T.L('P', 0, k, 0, 8, k < 0 ? 10 : -10);
+      T.L('P', 0, k, 0, 10, k < 0 ? 14 : -14); (function(){ function fm(z){ var r = Math.round(z*100)/100; return (r < 0 ? '−' : '') + ('' + Math.abs(r)).replace('.', ','); } c.font = '600 12px ' + F; c.fillStyle = C.rise; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('= (0; ' + fm(k) + ')', X(0) + 48, Y(k) + (k < 0 ? 14 : -14)); })();
       T.L('CI', -2.8, 2.38, 0); T.L('EL', 0.25, 2.38, 0);
-      m = cero ? 'Determinante cero: el círculo se aplasta' : (k < 0 ? 'Determinante negativo: la figura se dio vuelta' : 'El área se multiplica por el determinante');
+      m = cero ? 'Determinante cero: el círculo se aplasta' : (k < 0 ? 'Determinante negativo: la figura se dio vuelta' : 'Determinante positivo: el área se multiplica por él');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-2.8), Y(-2.6));
       dtQue(S, 'al transformar el círculo, su área', 'se multiplica por el determinante, sin signo.');
       T.fin();
     },
-    caption:function(v){ var k = v.k == null ? 1.5 : +v.k, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ' el determinante vale ' + n(2*k) + ' y el área de la elipse es ' + n(Math.abs(2*k)) + ' veces la del círculo: ' + n(Math.abs(2*k)*Math.PI) + ' unidades cuadradas, aproximadamente. Con k = 0 se aplasta'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, k = R(v.k == null ? 1.5 : +v.k), D = R(2*k), AR = R(Math.abs(D)*3.14); return 'Con ' + M('k=' + n2(k)) + ' el determinante vale ' + N(D) + ' y el área de la elipse es ' + N(Math.abs(D)) + ' veces la del círculo: ' + M(n2(Math.abs(D)) + '\\cdot 3{,}14\\approx ' + n2(AR)) + ' unidades cuadradas. Con ' + M('k=0') + ' se aplasta'; },
     readout:function(v){ var r2 = function(z){ return Math.round(z*100)/100; }, k = r2(v.k == null ? 1.5 : +v.k), K2 = r2(2*k), AB = Math.abs(K2), AR = AB*3.14, ex = Math.abs(AR*100 - Math.round(AR*100)) < 1e-7, n = OA.num, Q = '\\\\&\\qquad ', pk = k < 0 ? '\\left(' + n(k, 2) + '\\right)' : n(k, 2), r;
       r = ['A=\\begin{pmatrix}2&0\\\\0&k\\end{pmatrix},\\qquad k=' + n(k, 2),
         '\\det A=\\begin{vmatrix}2&0\\\\0&' + n(k, 2) + '\\end{vmatrix}=2\\cdot ' + pk + '-0\\cdot 0',

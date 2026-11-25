@@ -7,9 +7,9 @@ OA.scene('cramer-idea', (function(){
     ['D0', '\\Delta=5', 'Δ = 5', ''], ['DX', '\\Delta_x=10', 'Δx = 10', ''], ['DY', '\\Delta_y=5', 'Δy = 5', ''],
     ['Q', 'x=\\ ?\\qquad y=\\ ?', 'x = ?   y = ?', 'pt'], ['F', '\\Longrightarrow\\ x=2,\\quad y=1', '⟹ x = 2, y = 1', 'diff'],
     ['R1', '2x+y=5,\\qquad x+3y=5', '2x + y = 5, x + 3y = 5', ''],
-    ['R2', '\\Delta=2\\cdot 3-1\\cdot 1=5', 'Δ = 2·3 − 1·1 = 5', ''],
-    ['R3', '\\Delta_x=5\\cdot 3-1\\cdot 5=10', 'Δx = 5·3 − 1·5 = 10', ''],
-    ['R4', '\\Delta_y=2\\cdot 5-5\\cdot 1=5', 'Δy = 2·5 − 5·1 = 5', ''],
+    ['R2', '\\Delta=\\begin{vmatrix}2&1\\\\1&3\\end{vmatrix}=2\\cdot 3-1\\cdot 1=5', 'Δ = 2·3 − 1·1 = 5', ''],
+    ['R3', '\\Delta_x=\\begin{vmatrix}5&1\\\\5&3\\end{vmatrix}=5\\cdot 3-1\\cdot 5=10', 'Δx = 5·3 − 1·5 = 10', ''],
+    ['R4', '\\Delta_y=\\begin{vmatrix}2&5\\\\1&5\\end{vmatrix}=2\\cdot 5-5\\cdot 1=5', 'Δy = 2·5 − 5·1 = 5', ''],
     ['R5', 'x=\\tfrac{10}{5}=2,\\qquad y=\\tfrac{5}{5}=1', 'x = 10/5 = 2, y = 5/5 = 1', 'diff']];
   var TXT = [['Dos ecuaciones, dos rectas.', '¿En qué punto se cortan?'],
     ['Los coeficientes forman el determinante', 'del sistema. Vale 5: no es cero.'],
@@ -18,7 +18,7 @@ OA.scene('cramer-idea', (function(){
     ['Cada incógnita es su determinante dividido', 'por el del sistema. Las rectas se cortan ahí.']];
   var GX = -0.75, GY = 1.05, E = 0.5, S1 = 3.15, S2 = 3.85, S3 = 4.8, F1 = 3.0, F2 = 2.3;
   return {
-    world:{x0:-1.3, x1:5.3, y0:-4.2, y1:5.4}, aspect:9.6/6.6,
+    world:{x0:-1.3, x1:5.3, y0:-4.9, y1:5.4}, aspect:10.3/6.6,
     aria:'Animación en cinco pasos para el sistema 2x más y igual a 5, x más 3y igual a 5. A la izquierda, un plano con las dos rectas. A la derecha, tres columnas de números: la de los coeficientes de x, 2 y 1, en azul; la de los coeficientes de y, 1 y 3, en verde; y la de los términos libres, 5 y 5, en naranja. Uno: se dibujan las dos rectas. Dos: las columnas azul y verde forman el determinante del sistema, delta, que vale 2 por 3 menos 1 por 1, 5. Tres: la columna naranja entra al lugar de la azul y se forma delta x, 5 por 3 menos 1 por 5, 10. Cuatro: la columna azul vuelve y la naranja entra al lugar de la verde: delta y, 2 por 5 menos 5 por 1, 5. Cinco: todo vuelve a su lugar; x es 10 dividido en 5, 2; y es 5 dividido en 5, 1; en el plano se marca el punto (2, 1), donde se cortan las rectas. Bajo la figura, un registro numerado guarda la expresión de cada paso, una bajo la otra, sin borrar las anteriores.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
@@ -41,7 +41,7 @@ OA.scene('cramer-idea', (function(){
       if (a > 0.6) L('LA', mx(0.55), my(4.5), 0); if (b > 0.6) L('LB', mx(2.6), my(1.45), 0);
       /* paso 5: el punto de corte, con sus punteadas a los ejes */
       if (k === 5){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([3, 3]); /* último paso: nada que quitar después */ c.beginPath(); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2)), Y(my(1 - u))); c.moveTo(X(mx(2)), Y(my(1))); c.lineTo(X(mx(2 - 2*u)), Y(my(1))); c.stroke(); c.setLineDash([]);
-        c.globalAlpha = Math.max(u, 0.2); c.fillStyle = C.rise; c.beginPath(); c.arc(X(mx(2)), Y(my(1)), 3.4, 0, 6.2832); c.fill(); c.globalAlpha = 1; if (u > 0.5) L('P', mx(2.35), my(2.45), 0); }
+        c.globalAlpha = Math.max(u, 0.2); c.fillStyle = C.rise; c.beginPath(); c.arc(X(mx(2)), Y(my(1)), 3.4, 0, 6.2832); c.fill(); c.globalAlpha = 1; if (u > 0.5) L('P', mx(2.12), my(1.5), 0); }
       /* columnas: en su lugar, o cambiadas con la de términos libres */
       wx_ = k === 3 ? u : (k === 4 ? Math.max(0, 1 - 2*u) : 0);      /* naranja en el lugar de la azul */
       wy_ = k === 4 ? Math.max(0, 2*u - 1) : (k === 5 ? 1 - u : 0);  /* naranja en el lugar de la verde */
@@ -61,7 +61,7 @@ OA.scene('cramer-idea', (function(){
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(4.12));
       dtQue(S, 'cada incógnita es un determinante', 'dividido por el determinante del sistema.');
       T.fin();
-      oaReg(S, k, N, -1.2, -1.25, [0, 30, 60, 90, 122]);
+      oaReg(S, k, N, -1.2, -1.25, [0, 36, 78, 120, 160]);
     },
     caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
     readout:function(v){ var k = Math.round(v.paso || 1), Q = '\\\\&\\qquad ', R = ['2x+y=5,\\qquad x+3y=5',
@@ -98,13 +98,13 @@ OA.scene('cramer-vivo', (function(){
       if (!cero){ px = (5*m - 5)/D; py = 5/D; dentro = px > -3.1 && px < 6.9 && py > -0.9 && py < 7.1;
         if (dentro){ c.strokeStyle = C.rise; c.lineWidth = 1.1; c.setLineDash([3, 3]); c.beginPath(); c.moveTo(X(px), Y(py)); c.lineTo(X(px), Y(0)); c.moveTo(X(px), Y(py)); c.lineTo(X(0), Y(py)); c.stroke(); c.setLineDash([]);
           c.fillStyle = C.rise; c.beginPath(); c.arc(X(px), Y(py), 3.6, 0, 6.2832); c.fill(); T.L('P', px, py, 0, 9, -12); } }
-      T.L('LA', 2.9, -0.75, 0, 6, 0); T.L('LB', 5.05, 0.75, 0, 0, 0);
+      T.L('LA', 2.9, -0.75, 0, 6, 0); T.L('LB', 7.0, 0.95, -100, 0, 0);
       msg = cero ? 'Determinante cero: rectas paralelas, sin corte' : (dentro ? 'Las rectas se cortan en un solo punto' : 'El punto de corte ya salió del dibujo');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(msg, X(-3.2), Y(-1.8));
       dtQue(S, 'si el determinante se acerca a cero,', 'el corte se aleja; en cero, no hay corte.');
       T.fin();
     },
-    caption:function(v){ var m = v.m == null ? 3 : +v.m, D = 2*m - 1, n = function(z){ return oaDec(z, 2); }; return Math.abs(D) < 0.02 ? 'Con m = 0,50 el determinante del sistema vale 0: las rectas son paralelas, no hay punto de corte y la regla de Cramer no se aplica' : 'Con m = ' + n(m) + ' el determinante del sistema vale ' + n(D) + ' y las rectas se cortan en (' + n((5*m - 5)/D) + '; ' + n(5/D) + ')'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, m = R(v.m == null ? 3 : +v.m), D = R(R(2*m) - 1), DX = R(R(5*m) - 5), ap = function(q){ return Math.abs(q*100 - Math.round(q*100)) < 1e-7 ? '' : '\\approx '; }; return D === 0 ? 'Con ' + M('m=0{,}50') + ' el determinante del sistema vale ' + M('0') + ': las rectas son paralelas, no hay punto de corte y la regla de Cramer no se aplica' : 'Con ' + M('m=' + n2(m)) + ' el determinante del sistema vale ' + N(D) + ' y las rectas se cortan en ' + M('x' + (ap(DX/D) || '=') + n2(DX/D) + ',\\ \\ y' + (ap(5/D) || '=') + n2(5/D)); },
     readout:function(v){ var m = Math.round((v.m == null ? 3 : +v.m)*100)/100, r2 = function(z){ return Math.round(z*100)/100; }, M2 = r2(2*m), D = r2(M2 - 1), M5 = r2(5*m), DX = r2(M5 - 5), n = OA.num, Q = '\\\\&\\qquad ', f,
         coc = function(a, b, ta){ var q = a/b, ex = Math.abs(q*100 - Math.round(q*100)) < 1e-7; return '\\dfrac{' + (ta || n(a, 2)) + '}{' + n(b, 2) + '}' + (ex ? '=' : '\\approx ') + n(q, 2); };
       f = ['2x+y=5,\\qquad x+my=5,\\qquad m=' + n(m, 2),

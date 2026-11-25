@@ -594,7 +594,8 @@ window.MathJax = {
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
         if (I.capKey !== ck){
           I.capKey = ck;
-          if (typeof cp === 'string') I.cap.textContent = cp;
+          if (typeof cp === 'string'){ if (cp.indexOf('\\(') < 0) I.cap.textContent = cp; /* regla E1: las expresiones de la frase van dibujadas; se escriben entre \( y \) */
+            else { I.cap.textContent = ''; cp.split(/\\\((.+?)\\\)/).forEach(function(t, i){ if (i % 2){ var cx = document.createElement('span'); cx.className = 'captex'; setTex(cx, t, t.replace(/\\[a-zA-Z]+|[{}]/g, '')); I.cap.appendChild(cx); } else if (t) I.cap.appendChild(document.createTextNode(t)); }); } }
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }

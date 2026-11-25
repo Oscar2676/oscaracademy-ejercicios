@@ -80,7 +80,7 @@ OA.scene('trasp-vivo', (function(){
       dtQue(S, 'A y su traspuesta dan figuras', 'distintas, pero siempre con la misma área.');
       T.fin();
     },
-    caption:function(v){ var b = v.b == null ? 1 : +v.b, n = function(z){ return oaDec(z, 2); }; return 'Con b = ' + n(b) + ' los dos determinantes valen ' + n(4 - b) + ' y cada paralelogramo mide ' + n(Math.abs(4 - b)) + ' unidades cuadradas. Con b = 4 los dos se aplastan a la vez'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, b = R(v.b == null ? 1 : +v.b); return 'Con ' + M('b=' + n2(b)) + ' los dos determinantes valen ' + N(4 - b) + ' y cada paralelogramo mide ' + N(Math.abs(4 - b)) + ' unidades cuadradas. Con ' + M('b=4') + ' los dos se aplastan a la vez'; },
     readout:function(v){ var b = Math.round((v.b == null ? 1 : +v.b)*100)/100, D = Math.round((4 - b)*100)/100, n = OA.num;
       return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquad b=' + n(b, 2),
         '\\det A=\\begin{vmatrix}2&' + n(b, 2) + '\\\\1&2\\end{vmatrix}=2\\cdot 2-' + n(b, 2) + '\\cdot 1',

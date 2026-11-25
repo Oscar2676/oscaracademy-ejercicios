@@ -176,7 +176,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <p><b>Cómo leer la animación:</b></p>
   <ol class="steps">
     <li><b>Paso 1, mira la matriz,</b> con sus nueve entradas, de la \(a\) a la \(i\). La pregunta de arriba es cuánto vale su determinante.</li>
-    <li><b>Paso 2, mira el círculo naranja:</b> marca la entrada \(a\). Las franjas grises tapan su fila y su columna. Las cuatro casillas azules que quedan, \(e\), \(f\), \(h\), \(i\), forman el menor de \(a\). A la derecha queda escrito el aporte: \(+\,a\) por ese menor.</li>
+    <li><b>Paso 2, mira el círculo naranja:</b> marca la entrada \(a\). Las franjas grises tapan su fila y su columna. Las cuatro casillas azules que quedan, \(e\), \(f\), \(h\), \(i\), forman el menor de \(a\). A la derecha queda escrito el aporte: \(+\,a\) por ese menor. Junto a cada aporte queda una matriz chica que recuerda qué se tapó (gris), qué casillas forman el menor (azul) y qué entrada se usó (borde naranja): esas matrices chicas no se borran.</li>
     <li><b>Pasos 3 y 4:</b> lo mismo con \(b\), que lleva signo \(-\), y con \(c\), que lleva signo \(+\). Los tres aportes quedan escritos uno bajo el otro, a la derecha de la matriz.</li>
     <li><b>Paso 5:</b> se suman los tres aportes, y la respuesta se escribe junto a la pregunta.</li>
     <li><b>Lee el registro «Paso a paso» y la cuenta de abajo, línea por línea:</b> cada menor está calculado, diagonal principal menos la otra diagonal. Ninguna línea se borra.</li>
@@ -197,7 +197,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>Primera entrada, \(a\): se tapan la fila 1 y la columna 1. Queda \(\begin{vmatrix}e&f\\h&i\end{vmatrix}=ei-fh\). Signo \(+\).</li>
       <li>Segunda entrada, \(b\): se tapan la fila 1 y la columna 2. Queda \(\begin{vmatrix}d&f\\g&i\end{vmatrix}=di-fg\). Signo \(-\).</li>
       <li>Tercera entrada, \(c\): se tapan la fila 1 y la columna 3. Queda \(\begin{vmatrix}d&e\\g&h\end{vmatrix}=dh-eg\). Signo \(+\).</li>
-      <li>Se suma todo: \(\det A=a(ei-fh)-b(di-fg)+c(dh-eg)\).</li>
+      <li>Se suma todo. Llamamos \(A\) a la matriz y \(\det A\) (se lee «determinante de A») a su determinante: \(\det A=a(ei-fh)-b(di-fg)+c(dh-eg)\).</li>
     </ol>
   </div>
 
@@ -220,7 +220,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <p>Las tres columnas de la matriz, vistas como vectores del espacio, forman un cuerpo de seis caras, todas paralelogramos: un <b>paralelepípedo</b>. Su volumen es el valor absoluto del determinante. Aquí se usa sin demostrarlo; la demostración necesita el producto cruz, que se ve en las hojas de vectores.</p>
     <p>En el dibujo, las dos primeras columnas están fijas en el suelo y la tercera sube o baja con \(h\).</p>
     <ol class="steps">
-      <li><b>Mira la base:</b> el paralelogramo gris del suelo, formado por \(\vec u=(2,0,0)\) y \(\vec v=(1,2,0)\). Su área es \(4\) y no cambia: en el suelo las flechas son \((2,0)\) y \((1,2)\), y \(\begin{vmatrix}2&1\\0&2\end{vmatrix}=2\cdot 2-1\cdot 0=4-0=4\).</li>
+      <li><b>Mira la base:</b> el paralelogramo gris del suelo, formado por \(\vec u=(2,0,0)\) y \(\vec v=(1,2,0)\). En el espacio cada flecha lleva tres números: \((x,\ y,\ \text{altura})\); las dos tienen altura \(0\) porque están en el suelo. Su área es \(4\) y no cambia: en el suelo las flechas son \((2,0)\) y \((1,2)\), y \(\begin{vmatrix}2&1\\0&2\end{vmatrix}=2\cdot 2-1\cdot 0=4-0=4\).</li>
       <li><b>Mira la altura:</b> la línea punteada burdeo, de largo \(h\), que va del suelo a la punta de \(\vec w\).</li>
       <li><b>Mueve \(h\)</b> (o pulsa «Reproducir»): el cuerpo se estira, se aplasta cuando \(h=0\) y pasa bajo el suelo cuando \(h\lt 0\).</li>
       <li><b>Lee la cuenta de abajo, línea por línea:</b> el determinante da \(4h\), que es base por altura; su valor absoluto es el volumen y su signo dice de qué lado del suelo quedó el cuerpo.</li>
@@ -338,7 +338,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H02 · v004 · Pendiente de APR</span>
+  <span class="status">AL-L28-H02 · v005 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -488,7 +488,8 @@ window.MathJax = {
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
         if (I.capKey !== ck){
           I.capKey = ck;
-          if (typeof cp === 'string') I.cap.textContent = cp;
+          if (typeof cp === 'string'){ if (cp.indexOf('\\(') < 0) I.cap.textContent = cp; /* regla E1: las expresiones de la frase van dibujadas; se escriben entre \( y \) */
+            else { I.cap.textContent = ''; cp.split(/\\\((.+?)\\\)/).forEach(function(t, i){ if (i % 2){ var cx = document.createElement('span'); cx.className = 'captex'; setTex(cx, t, t.replace(/\\[a-zA-Z]+|[{}]/g, '')); I.cap.appendChild(cx); } else if (t) I.cap.appendChild(document.createTextNode(t)); }); } }
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }
@@ -584,7 +585,7 @@ function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 
 OA.scene('det3-idea', (function(){
   var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
   var PZ = LET.map(function(l, j){ return ['M' + j, l, l, '']; }).concat([
-    ['Q', '\\det A=\\ ?', 'det A = ?', 'pt'], ['F', '\\Longrightarrow\\ \\det A=a(ei-fh)-b(di-fg)+c(dh-eg)', '⟹ a(ei − fh) − b(di − fg) + c(dh − eg)', 'diff'],
+    ['Q', '\\det A=\\ ?', 'det A = ?', 'pt'], ['F', '\\small\\Longrightarrow\\ a(ei-fh)-b(di-fg)+c(dh-eg)', '⟹ a(ei − fh) − b(di − fg) + c(dh − eg)', 'diff'],
     ['N2', '+\\,a\\begin{vmatrix}e&f\\\\h&i\\end{vmatrix}', '+ a |e f; h i|', 'diff'], ['N3', '-\\,b\\begin{vmatrix}d&f\\\\g&i\\end{vmatrix}', '− b |d f; g i|', 'diff'], ['N4', '+\\,c\\begin{vmatrix}d&e\\\\g&h\\end{vmatrix}', '+ c |d e; g h|', 'diff'],
     ['R1', '\\text{se recorre la primera fila: }a,\\ b,\\ c', 'primera fila: a, b, c', ''],
     ['R2', '+\\,a\\begin{vmatrix}e&f\\\\h&i\\end{vmatrix}=a\\,(ei-fh)', '+ a(ei − fh)', ''],
@@ -621,9 +622,13 @@ OA.scene('det3-idea', (function(){
       /* las entradas ya usadas quedan marcadas con un círculo fino hasta el final (nada desaparece) */
       for (j = 0; j < Math.min(k - 2, 3); j++) if (k > 4 || j !== col){ c.save(); c.globalAlpha = 0.55; c.strokeStyle = C.rise; c.lineWidth = 1.2; c.beginPath(); c.arc(X(cx(j)), Y(cy(0)), 13, 0, 6.2832); c.stroke(); c.restore(); }
       /* los aportes ya obtenidos no se borran: quedan uno bajo el otro */
-      for (j = 2; j <= Math.min(k, 4); j++) if (j < k || u > 0.45) L('N' + j, 2.85, 2.75 - (j - 2)*0.9, 0);
+      for (j = 2; j <= Math.min(k, 4); j++) if (j < k || u > 0.45){ var yj = 2.75 - (j - 2)*0.9, cj = j - 2, rr, cc, q = 0.15;
+        /* mini matriz de ese paso: fila y columna tapadas en gris, las cuatro casillas del menor en azul, la entrada usada en naranja. Queda hasta el final */
+        for (rr = 0; rr < 3; rr++) for (cc = 0; cc < 3; cc++){ c.globalAlpha = (rr === 0 || cc === cj) ? 0.16 : 0.4; c.fillStyle = (rr === 0 || cc === cj) ? C.ink : C.sec; c.fillRect(X(2.7 + cc*q) + 0.5, Y(yj + 1.5*q - rr*q) + 0.5, q*s - 1, q*s - 1); }
+        c.globalAlpha = 1; c.strokeStyle = C.rise; c.lineWidth = 1.4; c.strokeRect(X(2.7 + cj*q), Y(yj + 1.5*q), q*s, q*s);
+        L('N' + j, 3.3, yj, 0); }
       for (j = 0; j < 9; j++) L('M' + j, cx(j), cy(j));
-      L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.25, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
+      L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.12, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -0.15); txt(TXT[k - 1][1], -1.2, -0.15 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.3));
       dtQue(S, 'cómo se arma con la primera fila:', 'cada entrada, por el menor que queda al tapar.');
@@ -669,7 +674,7 @@ OA.scene('det3-vol', (function(){
       dtQue(S, 'el determinante es el volumen del cuerpo,', 'con signo: base (4) por altura (h). Sube y baja h.');
       T.fin();
     },
-    caption:function(v){ var h = v.h == null ? 2 : +v.h, n = function(z){ return oaDec(z, 2); }; return 'Con h = ' + n(h) + ' el determinante vale ' + n(4*h) + ' y el cuerpo mide ' + n(Math.abs(4*h)) + ' unidades cúbicas: área de la base, 4, por altura, ' + n(Math.abs(h)); },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, h = R(v.h == null ? 2 : +v.h); return 'Con ' + M('h=' + n2(h)) + ' el determinante vale ' + N(4*h) + ' y el cuerpo mide ' + N(Math.abs(4*h)) + ' unidades cúbicas: área de la base, ' + M('4') + ', por altura, ' + N(Math.abs(h)); },
     readout:function(v){ var h = Math.round((v.h == null ? 2 : +v.h)*100)/100, D = Math.round(4*h*100)/100, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
       return dtPasos(['\\text{columnas: }\\vec u=(2,0,0),\\ \\vec v=(1,2,0),\\ \\vec w=\\left(\\tfrac12,\\tfrac12,h\\right)',
         '\\begin{vmatrix}2&1&\\frac12\\\\0&2&\\frac12\\\\0&0&h\\end{vmatrix}\\ \\text{se desarrolla por la primera fila:}',

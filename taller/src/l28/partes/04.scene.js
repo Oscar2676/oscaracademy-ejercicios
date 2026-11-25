@@ -116,7 +116,7 @@ OA.scene('prop-vivo', (function(){
       dtQue(S, 'el área solo responde a k.', 'Mover t inclina la figura, pero no cambia su área.');
       T.fin();
     },
-    caption:function(v){ var k = v.k == null ? 1 : +v.k, t = v.t == null ? 0 : +v.t, n = function(z){ return oaDec(z, 2); }; return 'Con k = ' + n(k) + ' y t = ' + n(t) + ' el determinante vale ' + n(3*k) + ' y el paralelogramo mide ' + n(Math.abs(3*k)) + ' unidades cuadradas. Mover t no cambia el área; mover k, sí'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, k = R(v.k == null ? 1 : +v.k), t = R(v.t == null ? 0 : +v.t); return 'Con ' + M('k=' + n2(k)) + ' y ' + M('t=' + n2(t)) + ' el determinante vale ' + N(3*k) + ' y el paralelogramo mide ' + N(Math.abs(3*k)) + ' unidades cuadradas. Mover ' + M('t') + ' no cambia el área; mover ' + M('k') + ', sí'; },
     readout:function(v){ var k = Math.round((v.k == null ? 1 : +v.k)*100)/100, t = Math.round((v.t == null ? 0 : +v.t)*100)/100, D = Math.round(3*k*100)/100, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
       return dtPasos(['k=' + n(k, 2) + ',\\qquad t=' + n(t, 2),
         '\\text{columnas: }k\\,\\vec u=(2k,\\ k),\\\\&\\qquad\\vec v+t\\,\\vec u=(1+2t,\\ 2+t)',

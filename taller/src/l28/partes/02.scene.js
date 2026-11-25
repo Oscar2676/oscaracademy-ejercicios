@@ -2,7 +2,7 @@
 OA.scene('det3-idea', (function(){
   var N = 5, LET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
   var PZ = LET.map(function(l, j){ return ['M' + j, l, l, '']; }).concat([
-    ['Q', '\\det A=\\ ?', 'det A = ?', 'pt'], ['F', '\\Longrightarrow\\ \\det A=a(ei-fh)-b(di-fg)+c(dh-eg)', '⟹ a(ei − fh) − b(di − fg) + c(dh − eg)', 'diff'],
+    ['Q', '\\det A=\\ ?', 'det A = ?', 'pt'], ['F', '\\small\\Longrightarrow\\ a(ei-fh)-b(di-fg)+c(dh-eg)', '⟹ a(ei − fh) − b(di − fg) + c(dh − eg)', 'diff'],
     ['N2', '+\\,a\\begin{vmatrix}e&f\\\\h&i\\end{vmatrix}', '+ a |e f; h i|', 'diff'], ['N3', '-\\,b\\begin{vmatrix}d&f\\\\g&i\\end{vmatrix}', '− b |d f; g i|', 'diff'], ['N4', '+\\,c\\begin{vmatrix}d&e\\\\g&h\\end{vmatrix}', '+ c |d e; g h|', 'diff'],
     ['R1', '\\text{se recorre la primera fila: }a,\\ b,\\ c', 'primera fila: a, b, c', ''],
     ['R2', '+\\,a\\begin{vmatrix}e&f\\\\h&i\\end{vmatrix}=a\\,(ei-fh)', '+ a(ei − fh)', ''],
@@ -39,9 +39,13 @@ OA.scene('det3-idea', (function(){
       /* las entradas ya usadas quedan marcadas con un círculo fino hasta el final (nada desaparece) */
       for (j = 0; j < Math.min(k - 2, 3); j++) if (k > 4 || j !== col){ c.save(); c.globalAlpha = 0.55; c.strokeStyle = C.rise; c.lineWidth = 1.2; c.beginPath(); c.arc(X(cx(j)), Y(cy(0)), 13, 0, 6.2832); c.stroke(); c.restore(); }
       /* los aportes ya obtenidos no se borran: quedan uno bajo el otro */
-      for (j = 2; j <= Math.min(k, 4); j++) if (j < k || u > 0.45) L('N' + j, 2.85, 2.75 - (j - 2)*0.9, 0);
+      for (j = 2; j <= Math.min(k, 4); j++) if (j < k || u > 0.45){ var yj = 2.75 - (j - 2)*0.9, cj = j - 2, rr, cc, q = 0.15;
+        /* mini matriz de ese paso: fila y columna tapadas en gris, las cuatro casillas del menor en azul, la entrada usada en naranja. Queda hasta el final */
+        for (rr = 0; rr < 3; rr++) for (cc = 0; cc < 3; cc++){ c.globalAlpha = (rr === 0 || cc === cj) ? 0.16 : 0.4; c.fillStyle = (rr === 0 || cc === cj) ? C.ink : C.sec; c.fillRect(X(2.7 + cc*q) + 0.5, Y(yj + 1.5*q - rr*q) + 0.5, q*s - 1, q*s - 1); }
+        c.globalAlpha = 1; c.strokeStyle = C.rise; c.lineWidth = 1.4; c.strokeRect(X(2.7 + cj*q), Y(yj + 1.5*q), q*s, q*s);
+        L('N' + j, 3.3, yj, 0); }
       for (j = 0; j < 9; j++) L('M' + j, cx(j), cy(j));
-      L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.25, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
+      L('Q', -1.2, 3.72, 0); if (k === 5 && u > 0.5) L('F', 0.12, 3.72, 0); /* la pregunta queda; la respuesta se escribe a su lado */
       txt(TXT[k - 1][0], -1.2, -0.15); txt(TXT[k - 1][1], -1.2, -0.15 - 21/s);
       c.font = '600 11px ' + F; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('paso ' + k + ' de ' + N, X(5.2), Y(0.3));
       dtQue(S, 'cómo se arma con la primera fila:', 'cada entrada, por el menor que queda al tapar.');
@@ -87,7 +91,7 @@ OA.scene('det3-vol', (function(){
       dtQue(S, 'el determinante es el volumen del cuerpo,', 'con signo: base (4) por altura (h). Sube y baja h.');
       T.fin();
     },
-    caption:function(v){ var h = v.h == null ? 2 : +v.h, n = function(z){ return oaDec(z, 2); }; return 'Con h = ' + n(h) + ' el determinante vale ' + n(4*h) + ' y el cuerpo mide ' + n(Math.abs(4*h)) + ' unidades cúbicas: área de la base, 4, por altura, ' + n(Math.abs(h)); },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, h = R(v.h == null ? 2 : +v.h); return 'Con ' + M('h=' + n2(h)) + ' el determinante vale ' + N(4*h) + ' y el cuerpo mide ' + N(Math.abs(4*h)) + ' unidades cúbicas: área de la base, ' + M('4') + ', por altura, ' + N(Math.abs(h)); },
     readout:function(v){ var h = Math.round((v.h == null ? 2 : +v.h)*100)/100, D = Math.round(4*h*100)/100, n = OA.num, p = function(z){ return z < 0 ? '(' + n(z, 2) + ')' : n(z, 2); };
       return dtPasos(['\\text{columnas: }\\vec u=(2,0,0),\\ \\vec v=(1,2,0),\\ \\vec w=\\left(\\tfrac12,\\tfrac12,h\\right)',
         '\\begin{vmatrix}2&1&\\frac12\\\\0&2&\\frac12\\\\0&0&h\\end{vmatrix}\\ \\text{se desarrolla por la primera fila:}',

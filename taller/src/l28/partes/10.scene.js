@@ -34,7 +34,7 @@ OA.scene('nota-idea', (function(){
         c.beginPath(); c.moveTo(X(xl), yt); c.quadraticCurveTo(X(xl) - bz, (yt + yb)/2, X(xl), yb); c.stroke();
         c.beginPath(); c.moveTo(X(xr), yt); c.quadraticCurveTo(X(xr) + bz, (yt + yb)/2, X(xr), yb); c.stroke(); }
       delim(A1 - 0.4, A2 + 0.4, 1);
-      L('N11', A1, F1); L('N12', A2, F1); L('N21', A1, F2); L('N22', A2, F2); L('LA', A1 - 0.74, (F1 + F2)/2, -100);
+      L('N11', A1, F1); L('N12', A2, F1); L('N21', A1, F2); L('N22', A2, F2); L('LA', A1 - 0.5, (F1 + F2)/2, -100);
       g = k > 2 ? 1 : (k === 2 ? u : 0); dx = (D1 - A1)*g;
       if (k >= 2){
         /* paso 4: las dos diagonales, sobre el determinante */
@@ -87,14 +87,15 @@ OA.scene('nota-vivo', (function(){
       if (!cero){ S.poly([[0, 0], [a, 2], [a + 1, 6], [1, 4]], {fill:C.rise, alpha:0.26});
         c.strokeStyle = C.rise; c.lineWidth = 1.2; c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(a), Y(2)); c.lineTo(X(a + 1), Y(6)); c.lineTo(X(1), Y(4)); c.stroke(); c.setLineDash([]); }
       dtFlecha(S, 0, 0, 1, 4, C.alt, 1.8); dtFlecha(S, 0, 0, a, 2, C.sec, 1.8);
+      if (Math.abs(D) >= 1.2){ function fm(z){ var r = Math.round(z*100)/100; return (r < 0 ? '−' : '') + ('' + Math.abs(r)).replace('.', ','); } c.font = '600 12px ' + F; c.fillStyle = C.rise; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('área = ' + fm(Math.abs(D)), X((a + 1)/2), Y(3)); }
       c.fillStyle = C.ink; c.beginPath(); c.arc(X(0), Y(0), 2.4, 0, 6.2832); c.fill();
-      T.L('U', a, 2, a < 0.5 ? -100 : 0, a < 0.5 ? -7 : 7, 10); T.L('V', 1, 4, a < 0.5 ? 0 : -100, a < 0.5 ? 7 : -7, -4);
+      T.L('U', a, 2, a < 0.5 ? -100 : 0, a < 0.5 ? -7 : 7, 10); T.L('V', 1, 4, 0, 8, -10);
       m = cero ? 'Determinante cero: no hay paralelogramo' : (D < 0 ? 'Determinante negativo: el área es su opuesto' : 'Determinante positivo: coincide con el área');
       c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(m, X(-3.0), Y(-1.6));
       dtQue(S, 'el determinante lleva signo;', 'el área es su valor absoluto, nunca negativa.');
       T.fin();
     },
-    caption:function(v){ var a = v.a == null ? 3 : +v.a, D = 4*a - 2, n = function(z){ return oaDec(z, 2); }; return 'Con a = ' + n(a) + ' el determinante vale ' + n(D) + ' y el paralelogramo de las columnas mide ' + n(Math.abs(D)) + ' unidades cuadradas. Con a = 0,50 el determinante es 0'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, a = R(v.a == null ? 3 : +v.a), D = R(R(4*a) - 2); return 'Con ' + M('a=' + n2(a)) + ' el determinante vale ' + N(D) + ' y el paralelogramo de las columnas mide ' + N(Math.abs(D)) + ' unidades cuadradas. Con ' + M('a=0{,}50') + ' el determinante es ' + M('0'); },
     readout:function(v){ var r2 = function(z){ return Math.round(z*100)/100; }, a = r2(v.a == null ? 3 : +v.a), A4 = r2(4*a), D = r2(A4 - 2), n = OA.num, Q = '\\\\&\\qquad ', pa = a < 0 ? '\\left(' + n(a, 2) + '\\right)' : n(a, 2), r;
       r = ['A=\\begin{pmatrix}a&1\\\\2&4\\end{pmatrix},\\qquad a=' + n(a, 2),
         '|A|=\\begin{vmatrix}' + n(a, 2) + '&1\\\\2&4\\end{vmatrix}=' + pa + '\\cdot 4-1\\cdot 2',

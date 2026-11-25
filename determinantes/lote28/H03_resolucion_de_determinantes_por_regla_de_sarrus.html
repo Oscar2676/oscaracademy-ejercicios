@@ -199,7 +199,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>Diagonales que bajan (de arriba a la izquierda a abajo a la derecha). Hay tres con tres entradas: \(a\,e\,i\), \(b\,f\,g\) y \(c\,d\,h\). Se multiplican las entradas de cada una y se suman los tres productos: \(aei+bfg+cdh\).</li>
       <li>Diagonales que suben (de abajo a la izquierda a arriba a la derecha). Hay tres con tres entradas: \(g\,e\,c\), \(h\,f\,a\) e \(i\,d\,b\). Se multiplican las entradas de cada una y se suman los tres productos: \(ceg+afh+bdi\).</li>
       <li>El determinante es la primera suma menos la segunda:
-        \[\det A=(aei+bfg+cdh)-(ceg+afh+bdi)\]</li>
+        \[\det A=(aei+bfg+cdh)-(ceg+afh+bdi)\] Aquí \(A\) es la matriz y \(\det A\) se lee «determinante de A».</li>
     </ol>
   </div>
 
@@ -334,7 +334,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H03 · v004 · Pendiente de APR</span>
+  <span class="status">AL-L28-H03 · v005 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -484,7 +484,8 @@ window.MathJax = {
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
         if (I.capKey !== ck){
           I.capKey = ck;
-          if (typeof cp === 'string') I.cap.textContent = cp;
+          if (typeof cp === 'string'){ if (cp.indexOf('\\(') < 0) I.cap.textContent = cp; /* regla E1: las expresiones de la frase van dibujadas; se escriben entre \( y \) */
+            else { I.cap.textContent = ''; cp.split(/\\\((.+?)\\\)/).forEach(function(t, i){ if (i % 2){ var cx = document.createElement('span'); cx.className = 'captex'; setTex(cx, t, t.replace(/\\[a-zA-Z]+|[{}]/g, '')); I.cap.appendChild(cx); } else if (t) I.cap.appendChild(document.createTextNode(t)); }); } }
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }

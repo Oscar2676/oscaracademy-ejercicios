@@ -53,8 +53,8 @@
     \[\begin{cases}a\,x+b\,y=e\\ c\,x+d\,y=f\end{cases}\qquad \Delta=\begin{vmatrix}a&b\\c&d\end{vmatrix},\quad \Delta_x=\begin{vmatrix}e&b\\f&d\end{vmatrix},\quad \Delta_y=\begin{vmatrix}a&e\\c&f\end{vmatrix}\]</p>
     <ol class="steps">
       <li><b>\(\Delta\neq 0\):</b> una única solución, \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\) (regla de Cramer). El sistema se llama <b>compatible determinado</b>. Las dos rectas se cortan en un punto.</li>
-      <li><b>\(\Delta=0\) y \(\Delta_x\neq 0\) o \(\Delta_y\neq 0\):</b> no hay solución. El sistema se llama <b>incompatible</b>. Las rectas son paralelas.</li>
-      <li><b>\(\Delta=0\), \(\Delta_x=0\) y \(\Delta_y=0\), con algún coeficiente \(a,b,c,d\) distinto de \(0\):</b> infinitas soluciones. El sistema se llama <b>compatible indeterminado</b>. Las dos ecuaciones describen la misma recta.</li>
+      <li><b>\(\Delta=0\) y \(\Delta_x\neq 0\) o \(\Delta_y\neq 0\):</b> no hay solución. El sistema se llama <b>incompatible</b>. Cuando cada ecuación tiene algún coeficiente distinto de \(0\), cada una es una recta y las dos rectas son paralelas.</li>
+      <li><b>\(\Delta=0\), \(\Delta_x=0\) y \(\Delta_y=0\), con algún coeficiente \(a,b,c,d\) distinto de \(0\):</b> infinitas soluciones. El sistema se llama <b>compatible indeterminado</b>. Cuando cada ecuación tiene algún coeficiente distinto de \(0\), las dos describen la misma recta.</li>
     </ol>
     <p>Si los cuatro coeficientes son \(0\), no hay rectas: el sistema dice \(0=e\) y \(0=f\), y solo tiene solución si \(e=0\) y \(f=0\).</p>
   </div>
@@ -66,11 +66,11 @@
     <ol class="steps">
       <li>Se multiplica la primera ecuación por \(d\): \(adx+bdy=ed\).</li>
       <li>Se multiplica la segunda ecuación por \(b\): \(bcx+bdy=bf\).</li>
-      <li>Se resta la segunda igualdad de la primera, lado por lado: \(adx-bcx+bdy-bdy=ed-bf\). Como \(bdy-bdy=0\), queda \(adx-bcx=ed-bf\).</li>
+      <li>Al paso 1 se le resta el paso 2, lado por lado. Las dos igualdades, una bajo la otra, y la resta debajo: \[\begin{aligned}adx+bdy&=ed\\bcx+bdy&=bf\\[2pt]\hline adx-bcx+bdy-bdy&=ed-bf\end{aligned}\] Como \(bdy-bdy=0\), queda \(adx-bcx=ed-bf\).</li>
       <li>Se saca factor común \(x\): \((ad-bc)\,x=ed-bf\), es decir, \(\Delta\cdot x=\Delta_x\).</li>
       <li>Se multiplica la segunda ecuación por \(a\): \(acx+ady=af\).</li>
       <li>Se multiplica la primera ecuación por \(c\): \(acx+bcy=ec\).</li>
-      <li>Se resta la segunda igualdad de la primera, lado por lado: \(acx-acx+ady-bcy=af-ec\). Como \(acx-acx=0\), queda \(ady-bcy=af-ec\).</li>
+      <li>Al paso 5 se le resta el paso 6, lado por lado: \[\begin{aligned}acx+ady&=af\\acx+bcy&=ec\\[2pt]\hline acx-acx+ady-bcy&=af-ec\end{aligned}\] Como \(acx-acx=0\), queda \(ady-bcy=af-ec\).</li>
       <li>Se saca factor común \(y\): \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
       <li>Si \(\Delta=0\), los lados izquierdos de los pasos 4 y 8 valen \(0\cdot x=0\) y \(0\cdot y=0\): tendría que ser \(\Delta_x=0\) y \(\Delta_y=0\). Luego, si \(\Delta=0\) y alguno de los dos no es \(0\), ningún par \(x\), \(y\) cumple las dos ecuaciones.</li>
       <li>Con el sistema 2 del encabezado: el paso 4 diría \(0\cdot x=4\), y ningún número multiplicado por \(0\) da \(4\).</li>
@@ -93,7 +93,7 @@
     <ol class="steps">
       <li><b>\(\Delta\neq 0\):</b> una única solución, \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\), \(z=\dfrac{\Delta_z}{\Delta}\).</li>
       <li><b>\(\Delta=0\) y alguno de \(\Delta_x,\Delta_y,\Delta_z\) distinto de \(0\):</b> no hay solución.</li>
-      <li><b>Los cuatro valen \(0\):</b> los determinantes <b>no deciden</b>. Puede haber infinitas soluciones o ninguna, y hay que usar otro método, como la eliminación.</li>
+      <li><b>Los cuatro valen \(0\):</b> los determinantes <b>no deciden</b>. Puede haber infinitas soluciones o ninguna, y hay que usar otro método, como la eliminación (multiplicar las ecuaciones por números convenientes y restarlas, para que una incógnita desaparezca).</li>
     </ol>
     <p>Ejemplo del punto 3: en \(x+y+z=1\), \(x+y+z=2\), \(x+y+z=3\), cada uno de los cuatro determinantes tiene dos columnas iguales (en cada uno, al menos dos de las columnas son \(1,1,1\)) y vale \(0\) (hoja «Propiedades de los determinantes», usada por columnas gracias a la hoja de la matriz traspuesta). Sin embargo no hay solución: \(x+y+z\) no puede valer \(1\) y \(2\) a la vez.</p>
     <p><b>Número ↔ figura.</b> En el sistema \(x+2y=4\), \(2x+my=f\), mueve \(m\) y \(f\). Aquí \(\Delta=\begin{vmatrix}1&2\\2&m\end{vmatrix}=1\cdot m-2\cdot 2=m-4\), que vale \(0\) solo con \(m=4\). Con \(m\neq 4\) hay un punto de corte. Con \(m=4\) y \(f\neq 8\), rectas paralelas. Con \(m=4\) y \(f=8\), la misma recta.</p>
@@ -155,7 +155,7 @@
   </div>
 
   <div class="prop p4">
-  <h3>Ejemplo 4: con un parámetro, \(\begin{cases}x+ky=1\\kx+4y=2\end{cases}\)</h3>
+  <h3>Ejemplo 4: con un parámetro (una letra, aquí \(k\), que representa un número que no se ha fijado), \(\begin{cases}x+ky=1\\kx+4y=2\end{cases}\)</h3>
   <div class="body">
   <ol class="steps">
     <li>\(\Delta=\begin{vmatrix}1&k\\k&4\end{vmatrix}=1\cdot 4-k\cdot k=4-k^{2}\). Se factoriza: \(4-k^{2}=(2-k)(2+k)\), porque \((2-k)(2+k)=2\cdot 2+2\cdot k-k\cdot 2-k\cdot k=4+2k-2k-k^{2}=4-k^{2}\). Un producto vale \(0\) solo si alguno de sus factores vale \(0\): \(2-k=0\), que da \(k=2\), o \(2+k=0\), que da \(k=-2\).</li>
@@ -213,7 +213,7 @@
         <li>\(\Delta=\begin{vmatrix}2&3\\4&6\end{vmatrix}=2\cdot 6-3\cdot 4=12-12=0\). No hay solución única.</li>
         <li>\(\Delta_c=\begin{vmatrix}6\,900&3\\13\,800&6\end{vmatrix}=6\,900\cdot 6-3\cdot 13\,800=41\,400-41\,400=0\).</li>
         <li>\(\Delta_p=\begin{vmatrix}2&6\,900\\4&13\,800\end{vmatrix}=2\cdot 13\,800-6\,900\cdot 4=27\,600-27\,600=0\).</li>
-        <li>(i) Los tres valen \(0\) y \(a=2\neq 0\): infinitas soluciones. No se puede saber: la segunda boleta es el doble de la primera y no agrega información. Por ejemplo, sirven \(c=1\,500\), \(p=1\,300\) (\(3\,000+3\,900=6\,900\)) y también \(c=1\,800\), \(p=1\,100\) (\(3\,600+3\,300=6\,900\)).</li>
+        <li>(i) Los tres valen \(0\) y \(a=2\neq 0\): infinitas soluciones. No se puede saber: la segunda boleta es el doble de la primera y no agrega información. Por ejemplo, sirven \(c=1\,500\), \(p=1\,300\) (\(2\cdot 1\,500+3\cdot 1\,300=3\,000+3\,900=6\,900\)) y también \(c=1\,800\), \(p=1\,100\) (\(2\cdot 1\,800+3\cdot 1\,100=3\,600+3\,300=6\,900\)).</li>
         <li>(ii) Con \(\$14\,000\): \(\Delta_c=6\,900\cdot 6-3\cdot 14\,000=41\,400-42\,000=-600\neq 0\). Con \(\Delta=0\), el sistema no tiene solución: ningún par de precios explica las dos boletas. Una de ellas tiene un error, o los precios cambiaron entre una y otra.</li>
       </ol>
     </div></details>
@@ -221,6 +221,6 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H09 · v003 · Pendiente de APR</span>
+  <span class="status">AL-L28-H09 · v004 · Pendiente de APR</span>
 </footer>
 </article>

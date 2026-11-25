@@ -162,7 +162,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>El determinante de una matriz A es igual al determinante de la matriz traspuesta de A</b></li>
     </ol>
     <h1>El determinante de una matriz A es igual al determinante de la matriz traspuesta de A</h1>
-    <p class="lede">Una <b>matriz</b> es una tabla de números ordenados en <b>filas</b> (las líneas horizontales) y <b>columnas</b> (las verticales). Su <b>determinante</b> es un número que se calcula con ellos (hoja «Determinante de segundo orden»). La <b>traspuesta</b> de una matriz \(A\) se escribe \(A^{T}\) y se lee «A traspuesta». Se obtiene poniendo cada fila de \(A\) como columna, en el mismo orden: la fila 1 pasa a ser la columna 1; la fila 2, la columna 2.</p>
+    <p class="lede">Una <b>matriz</b> es una tabla de números ordenados en <b>filas</b> (las líneas horizontales) y <b>columnas</b> (las verticales). Cada número de la tabla se llama <b>entrada</b> (o <b>elemento</b>). Su <b>determinante</b> es un número que se calcula con ellos (hoja «Determinante de segundo orden»). La <b>traspuesta</b> de una matriz \(A\) se escribe \(A^{T}\) y se lee «A traspuesta». Se obtiene poniendo cada fila de \(A\) como columna, en el mismo orden: la fila 1 pasa a ser la columna 1; la fila 2, la columna 2.</p>
     <p class="lede"><b>De dónde sale, con números.</b> Se toma \(A=\begin{pmatrix}3&5\\2&4\end{pmatrix}\). Su fila 1 es \((3,5)\) y su fila 2 es \((2,4)\). Puestas como columnas dan \(A^{T}=\begin{pmatrix}3&2\\5&4\end{pmatrix}\). Se calculan los dos determinantes (el producto de la diagonal principal, menos el producto de la otra diagonal):
     \[\begin{aligned}\det A&=3\cdot 4-5\cdot 2&&\text{la fórmula, en }A\\&=12-10&&\text{se calcula cada producto}\\&=2&&\text{se resta}\\\det A^{T}&=3\cdot 4-2\cdot 5&&\text{la misma fórmula, en }A^{T}\\&=12-10&&\text{se calcula cada producto}\\&=2&&\text{se resta}\end{aligned}\]
     Dan lo mismo. <b>No es casualidad:</b> el \(3\) y el \(4\) están en la diagonal principal y no se movieron, así que el primer producto es el mismo, \(12\). El \(5\) y el \(2\) cambiaron de lugar entre sí, pero se siguen multiplicando uno por el otro: \(5\cdot 2=2\cdot 5=10\). Con los mismos dos productos, la resta es la misma.</p>
@@ -356,7 +356,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
 </section>
 
 <footer>
-  <span class="status">AL-L28-H05 · v004 · Pendiente de APR</span>
+  <span class="status">AL-L28-H05 · v005 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -506,7 +506,8 @@ window.MathJax = {
         var cp = def.caption(I.v), ck = (typeof cp === 'string' ? cp : cp.join('|')) + (OA.mj ? '#1' : '#0');
         if (I.capKey !== ck){
           I.capKey = ck;
-          if (typeof cp === 'string') I.cap.textContent = cp;
+          if (typeof cp === 'string'){ if (cp.indexOf('\\(') < 0) I.cap.textContent = cp; /* regla E1: las expresiones de la frase van dibujadas; se escriben entre \( y \) */
+            else { I.cap.textContent = ''; cp.split(/\\\((.+?)\\\)/).forEach(function(t, i){ if (i % 2){ var cx = document.createElement('span'); cx.className = 'captex'; setTex(cx, t, t.replace(/\\[a-zA-Z]+|[{}]/g, '')); I.cap.appendChild(cx); } else if (t) I.cap.appendChild(document.createTextNode(t)); }); } }
           else { I.cap.textContent = cp[0]; var cs = document.createElement('span'); cs.className = 'captex'; setTex(cs, cp[1], cp[2]); I.cap.appendChild(cs); if (cp[3]) I.cap.appendChild(document.createTextNode(cp[3])); }
         }
       }
@@ -680,7 +681,7 @@ OA.scene('trasp-vivo', (function(){
       dtQue(S, 'A y su traspuesta dan figuras', 'distintas, pero siempre con la misma área.');
       T.fin();
     },
-    caption:function(v){ var b = v.b == null ? 1 : +v.b, n = function(z){ return oaDec(z, 2); }; return 'Con b = ' + n(b) + ' los dos determinantes valen ' + n(4 - b) + ' y cada paralelogramo mide ' + n(Math.abs(4 - b)) + ' unidades cuadradas. Con b = 4 los dos se aplastan a la vez'; },
+    caption:function(v){ var R = function(z){ return Math.round(z*100)/100; }, N = function(z){ return '\\(' + OA.num(R(z), 2) + '\\)'; }, M = function(t){ return '\\(' + t + '\\)'; }, n2 = function(z){ return OA.num(R(z), 2); }, b = R(v.b == null ? 1 : +v.b); return 'Con ' + M('b=' + n2(b)) + ' los dos determinantes valen ' + N(4 - b) + ' y cada paralelogramo mide ' + N(Math.abs(4 - b)) + ' unidades cuadradas. Con ' + M('b=4') + ' los dos se aplastan a la vez'; },
     readout:function(v){ var b = Math.round((v.b == null ? 1 : +v.b)*100)/100, D = Math.round((4 - b)*100)/100, n = OA.num;
       return dtPasos(['A=\\begin{pmatrix}2&b\\\\1&2\\end{pmatrix},\\qquad A^{T}=\\begin{pmatrix}2&1\\\\b&2\\end{pmatrix},\\\\&\\qquad b=' + n(b, 2),
         '\\det A=\\begin{vmatrix}2&' + n(b, 2) + '\\\\1&2\\end{vmatrix}=2\\cdot 2-' + n(b, 2) + '\\cdot 1',

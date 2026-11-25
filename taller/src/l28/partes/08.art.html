@@ -14,7 +14,7 @@
     <h1>Regla de Cramer</h1>
     <p class="lede">Un <b>sistema de ecuaciones lineales</b> son varias ecuaciones que deben cumplirse a la vez, con las incógnitas (\(x\), \(y\)) sin exponentes y sin multiplicarse entre ellas. Los números que multiplican a las incógnitas son los <b>coeficientes</b>; los que quedan solos al lado derecho, los <b>términos libres</b>. La regla de Cramer resuelve un sistema con tantas ecuaciones como incógnitas usando solo determinantes.</p>
     <p class="lede"><b>De dónde sale, con números.</b> Se toma el sistema \(2x+y=5\), \(x+3y=5\) y se resuelve eliminando \(y\):
-    \[\begin{aligned}2\cdot 3\,x+1\cdot 3\,y&=5\cdot 3&&\text{primera ecuación, por }3\\1\cdot 1\,x+3\cdot 1\,y&=5\cdot 1&&\text{segunda ecuación, por }1\\ (2\cdot 3-1\cdot 1)\,x&=5\cdot 3-5\cdot 1&&\text{se restan: }3y-3y=0\\ (6-1)\,x&=15-5&&\text{se calcula cada producto}\\5x&=10&&\text{se calcula cada resta}\\x&=\frac{10}{5}=2&&\text{se divide por }5\end{aligned}\]
+    \[\begin{aligned}2\cdot 3\,x+1\cdot 3\,y&=5\cdot 3&&\text{primera ecuación, por }3\\1\cdot 1\,x+3\cdot 1\,y&=5\cdot 1&&\text{segunda ecuación, por }1\\ (2\cdot 3-1\cdot 1)\,x&=5\cdot 3-1\cdot 5&&\text{se restan: }3y-3y=0;\ 5\cdot 1=1\cdot 5\\ (6-1)\,x&=15-5&&\text{se calcula cada producto}\\5x&=10&&\text{se calcula cada resta}\\x&=\frac{10}{5}=2&&\text{se divide por }5\end{aligned}\]
     Los productos se dejaron escritos para ver de dónde salen el \(5\) y el \(10\): \(5=2\cdot 3-1\cdot 1\) y \(10=5\cdot 3-1\cdot 5\). Cada uno es un determinante de segundo orden (el producto de la diagonal principal, menos el de la otra diagonal):
     \[5=\begin{vmatrix}2&1\\1&3\end{vmatrix},\qquad 10=\begin{vmatrix}5&1\\5&3\end{vmatrix}\]
     El primero tiene los coeficientes del sistema. El segundo es el mismo, con los términos libres \(5\) y \(5\) en la columna donde estaban los coeficientes de \(x\). Para \(y\) se elimina \(x\):
@@ -41,6 +41,7 @@
   <ul class="keys">
     <li><b>Columna azul:</b> los coeficientes de \(x\), \(2\) y \(1\). <b>Columna verde:</b> los coeficientes de \(y\), \(1\) y \(3\).</li>
     <li><b>Columna naranja:</b> los términos libres, \(5\) y \(5\). Entra al lugar de la columna azul para formar \(\Delta_x\), vuelve, y entra al lugar de la verde para formar \(\Delta_y\). Al final vuelve a su lugar. Bajo las columnas quedan escritos \(\Delta\), \(\Delta_x\) y \(\Delta_y\), uno bajo el otro.</li>
+    <li><b>Lista «Paso a paso»:</b> los tres determinantes quedan armados hasta el final. En \(\Delta_x\) la primera columna es la de los términos libres; en \(\Delta_y\), la segunda.</li>
     <li><b>Rectas:</b> cada ecuación es una recta; la solución \((2,1)\) es el punto donde se cortan.</li>
   </ul>
 </section>
@@ -65,12 +66,12 @@
     <ol class="steps">
       <li>Se multiplica la primera ecuación por \(d\): \(d\cdot ax+d\cdot by=d\cdot e\), es decir, \(adx+bdy=ed\).</li>
       <li>Se multiplica la segunda ecuación por \(b\): \(b\cdot cx+b\cdot dy=b\cdot f\), es decir, \(bcx+bdy=bf\).</li>
-      <li>Se resta la segunda igualdad de la primera, lado por lado: \(adx-bcx+bdy-bdy=ed-bf\).</li>
+      <li>Al paso 1 se le resta el paso 2, lado por lado. Las dos igualdades, una bajo la otra, y la resta debajo: \[\begin{aligned}adx+bdy&=ed\\bcx+bdy&=bf\\[2pt]\hline adx-bcx+bdy-bdy&=ed-bf\end{aligned}\]</li>
       <li>Los términos con \(y\) se cancelan, \(bdy-bdy=0\): queda \(adx-bcx=ed-bf\).</li>
       <li>Se saca factor común \(x\): \((ad-bc)\,x=ed-bf\). El paréntesis es \(\Delta\) y el lado derecho es \(\Delta_x\): \(\Delta\cdot x=\Delta_x\).</li>
       <li>Se multiplica la segunda ecuación por \(a\): \(a\cdot cx+a\cdot dy=a\cdot f\), es decir, \(acx+ady=af\).</li>
       <li>Se multiplica la primera ecuación por \(c\): \(c\cdot ax+c\cdot by=c\cdot e\), es decir, \(acx+bcy=ec\).</li>
-      <li>Se resta la segunda igualdad de la primera, lado por lado: \(acx-acx+ady-bcy=af-ec\).</li>
+      <li>Al paso 6 se le resta el paso 7, lado por lado: \[\begin{aligned}acx+ady&=af\\acx+bcy&=ec\\[2pt]\hline acx-acx+ady-bcy&=af-ec\end{aligned}\]</li>
       <li>Los términos con \(x\) se cancelan, \(acx-acx=0\): queda \(ady-bcy=af-ec\).</li>
       <li>Se saca factor común \(y\): \((ad-bc)\,y=af-ec\), es decir, \(\Delta\cdot y=\Delta_y\).</li>
       <li>Como \(\Delta\neq 0\), se divide por \(\Delta\) en los pasos 5 y 10: \(x=\dfrac{\Delta_x}{\Delta}\), \(y=\dfrac{\Delta_y}{\Delta}\).</li>
@@ -84,11 +85,11 @@
 
   <div class="card k3">
     <h3>Tres incógnitas, y el caso \(\Delta=0\)</h3>
-    <p><b>Tres ecuaciones con tres incógnitas \(x,y,z\).</b> \(\Delta\) es el determinante de tercer orden de los coeficientes. \(\Delta_x\), \(\Delta_y\), \(\Delta_z\) se obtienen cambiando en \(\Delta\) la columna de esa incógnita por la de los términos libres. Si \(\Delta\neq 0\), la única solución es
+    <p><b>Tres ecuaciones con tres incógnitas \(x,y,z\).</b> El sistema, con letras: \[\begin{cases}a_1x+b_1y+c_1z=d_1\\a_2x+b_2y+c_2z=d_2\\a_3x+b_3y+c_3z=d_3\end{cases}\] Los cuatro determinantes: \[\Delta=\begin{vmatrix}a_1&b_1&c_1\\a_2&b_2&c_2\\a_3&b_3&c_3\end{vmatrix},\quad \Delta_x=\begin{vmatrix}d_1&b_1&c_1\\d_2&b_2&c_2\\d_3&b_3&c_3\end{vmatrix},\quad \Delta_y=\begin{vmatrix}a_1&d_1&c_1\\a_2&d_2&c_2\\a_3&d_3&c_3\end{vmatrix},\quad \Delta_z=\begin{vmatrix}a_1&b_1&d_1\\a_2&b_2&d_2\\a_3&b_3&d_3\end{vmatrix}\] \(\Delta\) es el determinante de tercer orden de los coeficientes. \(\Delta_x\), \(\Delta_y\), \(\Delta_z\) se obtienen cambiando en \(\Delta\) la columna de esa incógnita por la de los términos libres. Si \(\Delta\neq 0\), la única solución es
     \[x=\frac{\Delta_x}{\Delta},\qquad y=\frac{\Delta_y}{\Delta},\qquad z=\frac{\Delta_z}{\Delta}\]
     Para tres incógnitas la regla se enuncia aquí sin demostrarla.</p>
-    <p><b>Si \(\Delta=0\), la regla no se aplica:</b> no se puede dividir por \(0\). En ese caso el sistema no tiene solución o tiene infinitas, y hay que estudiarlo con otro método (ejemplo 4).</p>
-    <p><b>Número ↔ figura.</b> En el sistema \(2x+y=5\), \(x+my=5\), mueve \(m\): cambia la segunda recta y cambia \(\Delta=\begin{vmatrix}2&1\\1&m\end{vmatrix}=2\cdot m-1\cdot 1=2m-1\). Con \(m=0{,}5\), \(\Delta=2\cdot 0{,}5-1=1-1=0\): las rectas son paralelas y no hay punto de corte.</p>
+    <p><b>Si \(\Delta=0\), la regla no se aplica:</b> no se puede dividir por \(0\). En ese caso el sistema no tiene solución o tiene infinitas, y hay que estudiarlo con otro método (ejemplo 4). Esto se usa aquí sin demostrarlo; la demostración está en la hoja «Resolución de sistemas de ecuaciones lineales por determinantes».</p>
+    <p><b>Número ↔ figura.</b> En el sistema \(2x+y=5\), \(x+my=5\), mueve \(m\): cambia la segunda recta y cambia \(\Delta=\begin{vmatrix}2&1\\1&m\end{vmatrix}=2\cdot m-1\cdot 1=2m-1\). Con \(m=0{,}5\), \(\Delta=2\cdot 0{,}5-1=1-1=0\): las rectas son paralelas y no hay punto de corte. Se comprueba despejando \(y\): de \(2x+y=5\) sale \(y=5-2x\); de \(x+0{,}5\,y=5\), multiplicando por \(2\), \(2x+y=10\), es decir \(y=10-2x\). Las dos bajan \(2\) por cada unidad de \(x\) (misma pendiente, \(-2\)) y parten de alturas distintas, \(5\) y \(10\): nunca se cortan.</p>
     <p><b>Cómo leer la animación:</b></p>
     <ol class="steps">
       <li><b>Parte con \(m=3\):</b> las rectas se cortan en el punto naranja \((2,1)\), el del ejemplo anterior.</li>
@@ -98,7 +99,7 @@
     </ol>
     <div class="stage" data-scene="cramer-vivo"></div>
     <ul class="keys">
-      <li><b>Recta azul:</b> \(2x+y=5\), fija. <b>Recta verde:</b> \(x+my=5\); pasa siempre por \((5,0)\).</li>
+    <li><b>Recta azul:</b> \(2x+y=5\), fija. <b>Recta verde:</b> \(x+my=5\); pasa siempre por \((5,0)\), porque \(5+m\cdot 0=5+0=5\) para cualquier \(m\).</li>
       <li><b>Punto naranja:</b> la solución \(\left(\dfrac{\Delta_x}{\Delta},\dfrac{\Delta_y}{\Delta}\right)\). Cuando \(\Delta\) se acerca a \(0\), el punto se aleja y sale del dibujo.</li>
     </ul>
   </div>
@@ -212,6 +213,6 @@
 </section>
 
 <footer>
-  <span class="status">AL-L28-H08 · v004 · Pendiente de APR</span>
+  <span class="status">AL-L28-H08 · v005 · Pendiente de APR</span>
 </footer>
 </article>
