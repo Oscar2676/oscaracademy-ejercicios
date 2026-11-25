@@ -21,7 +21,7 @@ OA.scene('grf-idea', (function(){
     ['En los tres lugares se miró lo mismo: la altura', 'de llegada de cada lado. Iguales: hay límite.']];
   return {
     world:{x0:-1.3, x1:5.3, y0:-5.1, y1:6.0}, aspect:11.1/6.6,
-    aria:'Arriba, una franja dice qué muestra: en una gráfica, el límite en a se lee comparando la altura de llegada de cada lado. Animación en cinco pasos sobre la gráfica de una función G hecha con tres trozos de recta: de (0, 1) sube hasta un hueco en (3, 4); desde ese hueco baja hasta otro hueco en (5, 2); y desde un punto lleno en (5, 5) baja hasta (8, 2). Además hay un punto lleno en (3, 1). Uno: la gráfica completa. Dos: en a igual a 2, una flecha azul por la izquierda y una naranja por la derecha llegan a la altura 3; el límite es 3. Tres: en a igual a 3, las dos flechas llegan a la altura 4, la del hueco; el límite es 4 aunque la función vale 1 en 3. Cuatro: en a igual a 5, la flecha azul llega a la altura 2 y la naranja a la altura 5; el límite no existe. Cinco: resumen, hay límite cuando las dos alturas de llegada son iguales. Bajo la figura, un registro numerado guarda cada lectura, sin borrar lo anterior.',
+    aria:'Arriba, una franja dice qué muestra: en una gráfica, el límite en a se lee comparando la altura de llegada de cada lado. Animación en cinco pasos sobre la gráfica de una función G hecha con tres trozos de recta: de (0, 1) sube hasta un hueco en (3, 4); desde ese hueco baja hasta otro hueco en (5, 2); y desde un punto lleno en (5, 5) baja hasta (8, 2). Además hay un punto lleno en (3, 1). Junto al hueco (5, 2) dice «hueco» y junto al punto (5, 5), «punto lleno». Uno: la gráfica completa. Dos: en a igual a 2, una flecha azul por la izquierda y una naranja por la derecha llegan a la altura 3; el límite es 3. Tres: en a igual a 3, las dos flechas llegan a la altura 4, la del hueco; el límite es 4 aunque la función vale 1 en 3. Cuatro: en a igual a 5, la flecha azul llega a la altura 2 y la naranja a la altura 5; el límite no existe. Cinco: resumen, hay límite cuando las dos alturas de llegada son iguales. Bajo la figura, un registro numerado guarda cada lectura, sin borrar lo anterior.',
     labels:PZ,
     sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
     legend:'<span><i class="sw tan"></i> gráfica de \\(G\\), con huecos y puntos llenos</span><span><i class="sw sec"></i> llegada por la izquierda</span><span><i class="sw rise"></i> llegada por la derecha</span>',
@@ -51,9 +51,11 @@ OA.scene('grf-idea', (function(){
       });
       /* los puntos marcados de la gráfica van encima de las líneas */
       if (ap(1) > 0.9){ lmPunto(S, M, 0, 1, C.tan, false, 3.2); lmPunto(S, M, 3, 4, C.tan, true, 3.6); lmPunto(S, M, 3, 1, C.tan, false, 3.2); lmPunto(S, M, 5, 2, C.tan, true, 3.6); lmPunto(S, M, 5, 5, C.tan, false, 3.2); lmPunto(S, M, 8, 2, C.tan, false, 3.2); }
+      /* cada tipo de punto, con su nombre (aparecen con la gráfica y quedan) */
+      if (ap(1) > 0.9){ frase('hueco', 5, 2, 9, 0, C.tan); frase('punto lleno', 5, 5, -7, -10, C.tan, 'right'); }
       /* frases junto a cada llegada */
       if (ap(2) > 0.6) frase('llegan a 3', 2, 3, 10, 17, C.ink);
-      if (ap(3) > 0.6){ frase('llegan a 4', 3, 4, 0, -14, C.ink, 'center'); lmEtq(T, M, 'V3', 3, 1, -50, 0, 13); }
+      if (ap(3) > 0.6){ frase('llegan a 4, al hueco', 3, 4, 0, -14, C.ink, 'center'); lmEtq(T, M, 'V3', 3, 1, -50, 0, 13); }
       if (ap(4) > 0.6){ frase('izquierda: llega a 2', 5, 2, -9, 15, C.sec, 'right'); frase('derecha: llega a 5', 5, 5, 10, -9, C.rise); }
       /* paso 5: se marca en el eje vertical lo que se comparó en cada lectura */
       a5 = ap(5);
