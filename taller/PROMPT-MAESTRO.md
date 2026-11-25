@@ -288,7 +288,7 @@ K7. Al pie de cada hoja y bajo cada animación: «Creado por Oscar Morales León
 
 K8. Pie con código, versión y estado («Pendiente de APR» o «APR de Óscar, fecha»).
 
-K9. **Logotipo de Oscar Academy.** Cada hoja, cada presentación (PPT) y cada archivo susceptible de salir del sitio (PDF, documento, imagen, animación descargable) lleva el logotipo de Oscar Academy. Se usa el archivo oficial del logotipo, sin redibujarlo ni alterarlo. (25-nov)
+K9. **Logotipo de Oscar Academy.** Cada hoja, cada presentación (PPT) y cada archivo susceptible de salir del sitio (PDF, documento, imagen, animación descargable) lleva el logotipo de Oscar Academy. Se usa el archivo oficial del logotipo, sin redibujarlo ni alterarlo. Agregar el logotipo a una hoja con APR no toca su APR: es la única excepción a G9, decidida por Óscar. (25-nov)
 
 ### L. Ejercicios
 
