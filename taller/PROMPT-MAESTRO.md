@@ -433,7 +433,7 @@ Fuentes indicadas por Óscar (13-nov-2026):
 | Universidad Técnica Federico Santa María (Depto. de Matemática) | usm.cl · matematica.usm.cl |
 | Sociedad de Matemática de Chile | somachi.cl |
 | Real Sociedad Matemática Española | rsme.es |
-| Creadores de Instagram indicados por Óscar (25-nov) | @calculusphile · @4rchive.md · @matheorem.s · @afzalwebsolutions |
+| Creadores de Instagram indicados por Óscar (25-nov) | @calculusphile · @4rchive.md · @matheorem.s · @afzalwebsolutions · @brilliant · @bilimmatematigio · @themathflow · @pildorasdecurioso · @math_files_ · @limerse (sitio: limerse.com) |
 
 Fuentes abiertas que Claude ha usado además, para contraste:
 
@@ -451,5 +451,5 @@ Las direcciones de esta tabla son las portadas, escritas de memoria: se verifica
 
 - No puede garantizar cero correcciones; sí obliga a que cada corrección se vuelva regla y control el mismo día.
 - La regla H3 y H4 (dibujo técnico) queda escrita con las convenciones habituales de dibujo de ingeniería; si Óscar usa otra convención para algún caso, la suya manda.
-- Las cuentas de Instagram se usan como referencia de ideas y de tipos de animación (regla N1: no copiar; redibujar). El contraste de rigor se hace con las fuentes académicas de la tabla; lo visto en una cuenta se comprueba antes de usarlo.
+- Las cuentas de Instagram se usan como referencia de ideas y de tipos de animación (regla N1: no copiar; redibujar). El contraste de rigor se hace con las fuentes académicas de la tabla; lo visto en una cuenta se comprueba antes de usarlo, y un resultado no se da por contrastado solo con una publicación de red social. Los nombres van como Óscar los escribió: se verifica la cuenta exacta al usarla.
 - El control con «fórmulas dibujadas» ya no depende de internet (resuelto el 25-nov): el taller tiene su propia copia del programa que dibuja las fórmulas (`taller/vendor/mathjax-3.2.2/`, MathJax 3.2.2, licencia Apache 2.0) y `taller/shot2.py` la usa en cada captura. Toda captura de control muestra las fórmulas como las ve el alumno. Si esa copia faltara, la hoja no se entrega como lista: queda marcada «falta control con fórmulas».
