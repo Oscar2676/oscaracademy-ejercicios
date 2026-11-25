@@ -12,41 +12,94 @@
       <li><b>Fórmula del término k + 1</b></li>
     </ol>
     <h1>Fórmula del término k + 1</h1>
-    <p class="lede">Para conocer un término del desarrollo de \((a+b)^{n}\) no hace falta escribir los anteriores. El término que ocupa la posición \(k+1\) se calcula directamente:
-    \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad k=0,\ 1,\ 2,\dots,\ n\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). Su <b>desarrollo</b> es lo que queda al calcular la potencia \((a+b)^{n}\) y sumar los términos semejantes; \(n\) es el <b>exponente</b>, un entero con \(n\ge 1\). Un <b>término</b> es cada una de las partes del desarrollo separadas por un signo \(+\). La <b>posición</b> de un término es el lugar que ocupa contando de izquierda a derecha: 1º, 2º, 3º… La pregunta de esta hoja: <b>¿se puede calcular el término de una posición cualquiera sin escribir los anteriores?</b></p>
+    <p class="lede"><b>De dónde sale la respuesta: se mira, término por término, un desarrollo que ya se conoce.</b> El de exponente \(4\) es \((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\) (hoja H03). En cada término se anotan tres cosas: el <b>coeficiente</b> (el número que multiplica a las letras), el exponente de \(a\) y el exponente de \(b\). Se recuerda que \(a=a^{1}\), \(b=b^{1}\), que si una letra no aparece su exponente es \(0\) (\(b^{0}=1\), con \(b\neq 0\)), y que si no se ve un número el coeficiente es \(1\). \[\begin{aligned}1^{\circ}\text{ término}:\quad&a^{4}=1\cdot a^{4}\,b^{0}&&\text{coeficiente }1,&&\text{exponente de }a:\ 4,&&\text{exponente de }b:\ 0\\ 2^{\circ}\text{ término}:\quad&4a^{3}b=4\cdot a^{3}\,b^{1}&&\text{coeficiente }4,&&\text{exponente de }a:\ 3,&&\text{exponente de }b:\ 1\\ 3^{\circ}\text{ término}:\quad&6a^{2}b^{2}=6\cdot a^{2}\,b^{2}&&\text{coeficiente }6,&&\text{exponente de }a:\ 2,&&\text{exponente de }b:\ 2\\ 4^{\circ}\text{ término}:\quad&4ab^{3}=4\cdot a^{1}\,b^{3}&&\text{coeficiente }4,&&\text{exponente de }a:\ 1,&&\text{exponente de }b:\ 3\\ 5^{\circ}\text{ término}:\quad&b^{4}=1\cdot a^{0}\,b^{4}&&\text{coeficiente }1,&&\text{exponente de }a:\ 0,&&\text{exponente de }b:\ 4\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> Se llama \(k\) al exponente de \(b\). Mirando las cinco líneas:</p>
+    <ol class="steps">
+      <li><b>El exponente de \(b\) es la posición menos \(1\):</b> \(0=1-1\), \(1=2-1\), \(2=3-1\), \(3=4-1\), \(4=5-1\). Dicho al revés: la posición es \(k+1\).</li>
+      <li><b>El exponente de \(a\) es \(4-k\):</b> \(4=4-0\), \(3=4-1\), \(2=4-2\), \(1=4-3\), \(0=4-4\). Los dos exponentes suman siempre \(4\), el exponente del binomio.</li>
+      <li><b>El coeficiente es \(\dbinom{4}{k}\).</b> Este símbolo se lee «\(4\) sobre \(k\)» y se llama coeficiente binomial (hoja H06): \(\dbinom{4}{0}=1\), \(\dbinom{4}{1}=4\), \(\dbinom{4}{2}=6\), \(\dbinom{4}{3}=4\), \(\dbinom{4}{4}=1\). Son justo los coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) (las cuentas están más abajo, en «Cómo se calcula \(\binom{n}{k}\)»).</li>
+    </ol>
+    <p class="lede"><b>La fórmula.</b> Lo mismo, con un exponente \(n\) cualquiera en vez de \(4\). El término de la posición \(k+1\) se anota \(T_{k+1}\) y vale: \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad k=0,\ 1,\ 2,\ \dots,\ n\] Se lee: «el término \(k\) más \(1\) es igual a \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». El desarrollo completo es la suma de todos esos términos: \[(a+b)^{n}=T_{1}+T_{2}+T_{3}+\cdots+T_{n+1}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». Esa igualdad es el binomio de Newton (hoja H05).</p>
+    <p class="lede"><b>Comprobación con un caso nuevo:</b> el 3º término de \((a+b)^{5}\). Posición \(3\): \(k=3-1=2\). Coeficiente: \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}=\dfrac{20}{2}=10\). Exponente de \(a\): \(5-2=3\). Exponente de \(b\): \(2\). Entonces \(T_{3}=10a^{3}b^{2}\). El desarrollo completo es \((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\) (hoja H04, ejemplo 3), y su 3º término es \(10a^{3}b^{2}\). ✓ Por qué la fórmula vale para <b>todo</b> \(n\) está más abajo, en el recuadro «De dónde sale la fórmula».</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Los siete términos de \((a+b)^{6}\). Se elige una posición y se arma su término.</p>
+  <p>Los cinco términos de \((a+b)^{4}\), con sus datos anotados uno por uno, en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Pasos 1 y 2, mira la fila de casilleros:</b> cada <b>término</b> del desarrollo va en un <b>casillero</b>, con un signo \(+\) entre uno y otro. Sobre cada casillero aparece su <b>posición</b>: 1º, 2º, 3º, 4º, 5º. Arriba queda la pregunta.</li>
+    <li><b>Pasos 3, 4 y 5, mira bajo cada casillero,</b> siguiendo la línea punteada: primero, en burdeo, \(k\), el <b>exponente de \(b\)</b> (\(0,\ 1,\ 2,\ 3,\ 4\)); después, en azul, el <b>exponente de \(a\)</b>, que es \(4-k\) (\(4,\ 3,\ 2,\ 1,\ 0\)); después, en naranja, el <b>coeficiente</b> \(\dbinom{4}{k}\) (\(1,\ 4,\ 6,\ 4,\ 1\)). A la derecha de cada fila dice qué es.</li>
+    <li><b>Paso 6, mira la columna naranja:</b> es la del <b>término elegido</b>, el 3º. Con los datos de su columna (\(k=2\), exponente de \(a\) igual a \(2\), coeficiente \(6\)) se arma el término, \(T_{3}=6a^{2}b^{2}\), que es el mismo que está en su casillero.</li>
+    <li><b>Paso 7, mira junto a la pregunta:</b> se escribe la respuesta, la fórmula con letras para un exponente \(n\) y una posición \(k+1\) cualesquiera.</li>
+    <li><b>Lee después el registro «Paso a paso» y la cuenta de abajo,</b> línea por línea. Conclusión: para armar un término basta su posición; de ella sale \(k\), y con \(k\) salen el coeficiente y los dos exponentes.</li>
+  </ol>
   <div class="stage" data-scene="bn-termino"></div>
   <ul class="keys">
-    <li><b>Sobre cada casillero:</b> la posición del término. <b>Debajo:</b> su \(k\), que es siempre la posición menos \(1\).</li>
-    <li><b>Casillero naranja:</b> el término elegido.</li>
-    <li><b>Bajo la fila, paso a paso:</b> de la posición sale \(k\); con \(k\), el coeficiente \(\dbinom{6}{k}\) (naranja), la potencia de \(a\), que es \(6-k\) (azul), y la potencia de \(b\), que es \(k\) (burdeo).</li>
-    <li><b>Deslizador «posición»:</b> elige cualquiera de los siete.</li>
+    <li><b>Casillero:</b> un término del desarrollo de \((a+b)^{4}\). <b>Sobre él:</b> su posición.</li>
+    <li><b>Burdeo:</b> \(k\), el exponente de \(b\) en ese término. Es la posición menos \(1\).</li>
+    <li><b>Azul:</b> el exponente de \(a\), que es \(4-k\) (en general, \(n-k\)).</li>
+    <li><b>Naranja:</b> el coeficiente \(\dbinom{4}{k}\) (en general, \(\dbinom{n}{k}\)); la columna del término elegido, y la fórmula final.</li>
+    <li><b>Línea punteada:</b> une cada casillero con sus tres datos.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> la lectura de los cinco términos de \((a+b)^{4}\); por qué el término con \(b^{k}\) ocupa la posición \(k+1\); y el paso del binomio de Newton a la fórmula de \(T_{k+1}\), también con resta.</li>
+      <li><b>Se usa sin demostrar:</b> el binomio de Newton, \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\) (hojas H04 y H05; su demostración por inducción está en la hoja H17).</li>
+      <li><b>Se usan sin demostrar</b> (hoja H06): la regla para calcular \(\dbinom{n}{k}\), y que \(\dbinom{n}{0}=1\) y \(\dbinom{n}{n}=1\).</li>
+      <li><b>Se usan sin demostrar:</b> las leyes de las potencias \((x\cdot y)^{m}=x^{m}\cdot y^{m}\), \(x^{1}=x\) y \(x^{0}=1\) para \(x\neq 0\); y la regla de los signos: «menos por menos da más» y «más por menos da menos».</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
     <h3>Por qué se llama \(T_{k+1}\) y no \(T_{k}\)</h3>
+    <p><b>Qué se demuestra:</b> que el término que lleva \(b^{k}\) ocupa la posición \(k+1\). <b>Cómo funciona el método:</b> los términos se escriben en orden, con el exponente de \(b\) subiendo de uno en uno desde \(0\); se cuenta cuántos términos hay antes del que lleva \(b^{k}\).</p>
     <ol class="steps">
-      <li>En el binomio de Newton la suma empieza en \(k=0\): el primer término es \(\dbinom{n}{0}a^{n}b^{0}=a^{n}\).</li>
-      <li>Entonces \(k=0\) da el 1º, \(k=1\) da el 2º, \(k=2\) da el 3º, y así: el valor de \(k\) va siempre uno atrás de la posición.</li>
-      <li>Por eso el término de índice \(k\) ocupa la posición \(k+1\), y se escribe \(T_{k+1}\).</li>
-      <li><b>Regla práctica:</b> para el término de la posición \(p\), usar \(k=p-1\).</li>
+      <li><b>El orden de los términos.</b> En el binomio de Newton la suma empieza en \(k=0\) y \(k\) sube de uno en uno: primero el término con \(b^{0}\), después el término con \(b^{1}\), después el término con \(b^{2}\), y así hasta \(b^{n}\).</li>
+      <li><b>Con números</b> (\(n=4\)): el término con \(b^{0}\) es el 1º; el término con \(b^{1}\) es el 2º; el término con \(b^{2}\) es el 3º; el término con \(b^{3}\) es el 4º; el término con \(b^{4}\) es el 5º.</li>
+      <li><b>Se cuenta, con números:</b> antes del término con \(b^{2}\) están los de \(b^{0}\) y \(b^{1}\): son \(2\) términos. Entonces el término con \(b^{2}\) es el que sigue: posición \(2+1=3\).</li>
+      <li><b>Se cuenta, en general:</b> antes del término con \(b^{k}\) están los de \(b^{0},\ b^{1},\ \dots,\ b^{k-1}\). De \(1\) a \(k-1\) hay \(k-1\) exponentes; con el \(0\) hay uno más: \((k-1)+1=k\) términos. Entonces el término con \(b^{k}\) es el que sigue: posición \(k+1\).</li>
+      <li><b>Conclusión.</b> El término de índice \(k\) ocupa la posición \(k+1\); por eso se escribe \(T_{k+1}\). El índice \(k\) va siempre uno atrás de la posición.</li>
+      <li><b>Regla práctica, despejando.</b> Si la posición pedida se llama \(p\): \[\begin{aligned}p&=k+1&&\text{la posición es }k\text{ más }1\\ p-1&=k+1-1&&\text{se resta }1\text{ a los dos lados}\\ p-1&=k&&\text{porque }1-1=0\end{aligned}\] Para el término de la posición \(p\) se usa \(k=p-1\). Ejemplo: para el 4º término, \(k=4-1=3\).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Cómo se usa</h3>
+    <h3>De dónde sale la fórmula</h3>
+    <p><b>Qué se demuestra:</b> que el término de la posición \(k+1\) del desarrollo de \((a+b)^{n}\) es \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\), para \(n\) entero, \(n\ge 1\), y \(k=0,\ 1,\ \dots,\ n\). <b>Cómo funciona el método:</b> se parte del binomio de Newton (que aquí se usa sin demostrar), se escribe su suma término por término, y se lee cuál es el sumando que queda en la posición \(k+1\).</p>
     <ol class="steps">
-      <li>Identificar \(a\), \(b\) y \(n\), con paréntesis y con su signo.</li>
-      <li>Pasar de la posición a \(k\): \(k=p-1\).</li>
-      <li>Calcular \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\), y multiplicar.</li>
-      <li><b>Con resta,</b> \((a-b)^{n}\): el signo va dentro de \(b\). \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}(-b)^{k}=(-1)^{k}\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li><b>El punto de partida: el binomio de Newton</b> (hojas H04 y H05). \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k}\]</li>
+      <li><b>Se escribe la suma término por término,</b> reemplazando \(k=0\), después \(k=1\), después \(k=2\), y así hasta \(k=n\): \[\begin{aligned}k=0:\quad&\binom{n}{0}a^{\,n-0}\,b^{\,0}&&\text{es el }1^{\circ}\text{ sumando}\\ k=1:\quad&\binom{n}{1}a^{\,n-1}\,b^{\,1}&&\text{es el }2^{\circ}\text{ sumando}\\ k=2:\quad&\binom{n}{2}a^{\,n-2}\,b^{\,2}&&\text{es el }3^{\circ}\text{ sumando}\\ &\ \ \vdots\\ k=n:\quad&\binom{n}{n}a^{\,n-n}\,b^{\,n}&&\text{es el último sumando, el de la posición }n+1\end{aligned}\]</li>
+      <li><b>El sumando de índice \(k\) está en la posición \(k+1\)</b> (recuadro anterior). Entonces: \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\]</li>
+      <li><b>Comprobación con números</b> (\(n=4\), \(k=2\)): \(T_{3}=\dbinom{4}{2}a^{4-2}b^{2}=6a^{2}b^{2}\), que es el 3º término de \(a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\). ✓</li>
+      <li><b>Una comprobación que sirve siempre:</b> los exponentes de \(a\) y de \(b\) suman \(n\), porque \((n-k)+k=n\). En el caso anterior: \(2+2=4\). ✓</li>
+    </ol>
+    <p><b>Cómo se calcula \(\dbinom{n}{k}\)</b> (hoja H06; aquí se usa sin demostrar). Para \(k\ge 1\): arriba van \(k\) factores, partiendo de \(n\) y bajando de uno en uno; abajo van los \(k\) factores \(k,\ k-1,\ \dots,\ 1\). Además, \(\dbinom{n}{0}=1\) y \(\dbinom{n}{n}=1\). Las cinco cuentas de \(n=4\): \[\begin{aligned}\binom{4}{0}&=1&&\text{por la regla }\tbinom{n}{0}=1\\ \binom{4}{1}&=\frac{4}{1}=4&&\text{un factor arriba y uno abajo}\\ \binom{4}{2}&=\frac{4\cdot 3}{2\cdot 1}=\frac{12}{2}=6&&\text{dos factores arriba y dos abajo}\\ \binom{4}{3}&=\frac{4\cdot 3\cdot 2}{3\cdot 2\cdot 1}=\frac{24}{6}=4&&\text{tres factores arriba y tres abajo}\\ \binom{4}{4}&=1&&\text{por la regla }\tbinom{n}{n}=1\end{aligned}\]</p>
+    <p><b>Cómo se usa la fórmula, en cuatro pasos:</b></p>
+    <ol class="steps">
+      <li>Identificar \(a\), \(b\) y \(n\). Si \(a\) o \(b\) tienen más de un factor o un signo menos, se escriben entre paréntesis.</li>
+      <li>Pasar de la posición \(p\) a \(k\): \(k=p-1\).</li>
+      <li>Reemplazar en \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li>Calcular por separado \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\), y al final multiplicar.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Casos especiales: con resta, el primer término y el último</h3>
+    <p><b>Qué se demuestra:</b> (1) que en \((a-b)^{n}\) el término de la posición \(k+1\) es \((-1)^{k}\dbinom{n}{k}a^{\,n-k}b^{\,k}\); (2) que el primer término de \((a+b)^{n}\) es \(a^{n}\) y el último es \(b^{n}\). <b>Cómo funciona el método:</b> en los dos casos se reemplaza en la fórmula de \(T_{k+1}\) y se simplifica, una operación por línea.</p>
+    <ol class="steps">
+      <li><b>Con resta: una resta es la suma del opuesto.</b> \(a-b=a+(-b)\). Entonces \((a-b)^{n}=\big(a+(-b)\big)^{n}\): es un binomio con suma, cuyo segundo término es \((-b)\).</li>
+      <li><b>Se reemplaza \(b\) por \((-b)\) en la fórmula:</b> \[\begin{aligned}T_{k+1}&=\binom{n}{k}\,a^{\,n-k}\,(-b)^{k}&&\text{fórmula, con }(-b)\text{ en el lugar de }b\\ &=\binom{n}{k}\,a^{\,n-k}\,\big((-1)\cdot b\big)^{k}&&\text{porque }-b=(-1)\cdot b\\ &=\binom{n}{k}\,a^{\,n-k}\,(-1)^{k}\,b^{\,k}&&\text{potencia de un producto}\\ &=(-1)^{k}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}&&\text{se cambia el orden de los factores}\end{aligned}\]</li>
+      <li><b>Cuánto vale \((-1)^{k}\).</b> Se multiplica \(-1\) por sí mismo \(k\) veces: \[\begin{aligned}(-1)^{1}&=-1\\ (-1)^{2}&=(-1)\cdot(-1)=1&&\text{menos por menos da más}\\ (-1)^{3}&=(-1)^{2}\cdot(-1)=1\cdot(-1)=-1&&\text{más por menos da menos}\\ (-1)^{4}&=(-1)^{3}\cdot(-1)=(-1)\cdot(-1)=1&&\text{menos por menos da más}\end{aligned}\] Además \((-1)^{0}=1\). El signo se alterna: si \(k\) es par, \((-1)^{k}=1\) y el término es positivo; si \(k\) es impar, \((-1)^{k}=-1\) y el término es negativo (hoja H08).</li>
+      <li><b>El primer término</b> (posición \(1\), \(k=1-1=0\)), con \(b\neq 0\): \[\begin{aligned}T_{1}&=\binom{n}{0}\,a^{\,n-0}\,b^{\,0}&&\text{fórmula con }k=0\\ &=1\cdot a^{\,n}\cdot 1&&\tbinom{n}{0}=1,\quad n-0=n,\quad b^{0}=1\\ &=a^{n}&&\text{multiplicar por }1\text{ no cambia nada}\end{aligned}\]</li>
+      <li><b>El último término</b> (posición \(n+1\), \(k=(n+1)-1=n\)), con \(a\neq 0\): \[\begin{aligned}T_{n+1}&=\binom{n}{n}\,a^{\,n-n}\,b^{\,n}&&\text{fórmula con }k=n\\ &=1\cdot a^{\,0}\cdot b^{\,n}&&\tbinom{n}{n}=1,\quad n-n=0\\ &=1\cdot 1\cdot b^{\,n}&&a^{0}=1\\ &=b^{n}&&\text{multiplicar por }1\text{ no cambia nada}\end{aligned}\]</li>
+      <li><b>Con números</b> (\(n=4\)): el primero es \(a^{4}\) y el último es \(b^{4}\), como en \(a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\). ✓</li>
     </ol>
   </div>
 </section>
@@ -58,9 +111,13 @@
   <h3>Ejemplo 1: el 4º término de \((a+b)^{6}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Posición \(4\): \(k=3\).</li>
-    <li>\(T_{4}=\dbinom{6}{3}a^{6-3}b^{3}\), con \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3\cdot 2\cdot 1}=20\).</li>
-    <li>\(T_{4}=20a^{3}b^{3}\).</li>
+    <li><b>Datos.</b> Primer término del binomio: \(a\). Segundo: \(b\). Exponente: \(n=6\). Posición pedida: \(p=4\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=p-1=4-1=3\).</li>
+    <li><b>Fórmula y reemplazo:</b> \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\), con \(n=6\) y \(k=3\): \(T_{4}=\dbinom{6}{3}a^{6-3}b^{3}\).</li>
+    <li><b>El exponente de \(a\):</b> \(6-3=3\).</li>
+    <li><b>El coeficiente,</b> con tres factores arriba y tres abajo: \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3\cdot 2\cdot 1}\). Arriba: \(6\cdot 5=30\) y \(30\cdot 4=120\). Abajo: \(3\cdot 2=6\) y \(6\cdot 1=6\). División: \(\dfrac{120}{6}=20\).</li>
+    <li><b>Resultado:</b> \(T_{4}=20a^{3}b^{3}\).</li>
+    <li><b>Comprobación:</b> los exponentes suman \(3+3=6=n\). ✓</li>
   </ol>
   </div>
   </div>
@@ -69,9 +126,15 @@
   <h3>Ejemplo 2: el 3º término de \((2x+1)^{5}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=2x\), \(b=1\), \(n=5\). Posición \(3\): \(k=2\).</li>
-    <li>\(T_{3}=\dbinom{5}{2}(2x)^{3}\cdot 1^{2}=10\cdot 8x^{3}\cdot 1\).</li>
-    <li>\(T_{3}=80x^{3}\).</li>
+    <li><b>Datos.</b> Primer término del binomio: \(a=2x\) (va entre paréntesis, porque tiene dos factores). Segundo: \(b=1\). Exponente: \(n=5\). Posición pedida: \(p=3\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=p-1=3-1=2\).</li>
+    <li><b>Fórmula y reemplazo:</b> \(T_{3}=\dbinom{5}{2}(2x)^{5-2}\cdot 1^{2}\).</li>
+    <li><b>El exponente de \(a\):</b> \(5-2=3\).</li>
+    <li><b>El coeficiente binomial:</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}\). Arriba: \(5\cdot 4=20\). Abajo: \(2\cdot 1=2\). División: \(\dfrac{20}{2}=10\).</li>
+    <li><b>La potencia de \(a\):</b> \((2x)^{3}=2^{3}\cdot x^{3}\) (potencia de un producto). \(2^{3}=2\cdot 2\cdot 2\): \(2\cdot 2=4\) y \(4\cdot 2=8\). Entonces \((2x)^{3}=8x^{3}\).</li>
+    <li><b>La potencia de \(b\):</b> \(1^{2}=1\cdot 1=1\).</li>
+    <li><b>Se multiplica:</b> \(T_{3}=10\cdot 8x^{3}\cdot 1\). Primero \(10\cdot 8=80\); después \(80\cdot 1=80\).</li>
+    <li><b>Resultado:</b> \(T_{3}=80x^{3}\).</li>
   </ol>
   </div>
   </div>
@@ -80,9 +143,14 @@
   <h3>Ejemplo 3, con resta: el 5º término de \((x-2)^{7}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=x\), \(b=-2\), \(n=7\). Posición \(5\): \(k=4\).</li>
-    <li>\(T_{5}=\dbinom{7}{4}x^{3}(-2)^{4}\), con \(\dbinom{7}{4}=\dbinom{7}{3}=35\) y \((-2)^{4}=16\).</li>
-    <li>\(T_{5}=35\cdot 16\,x^{3}=560x^{3}\). Es positivo porque \(k=4\) es par.</li>
+    <li><b>Datos.</b> \(x-2=x+(-2)\). Primer término del binomio: \(a=x\). Segundo: \(b=-2\), con su signo. Exponente: \(n=7\). Posición pedida: \(p=5\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=p-1=5-1=4\).</li>
+    <li><b>Fórmula y reemplazo:</b> \(T_{5}=\dbinom{7}{4}x^{7-4}(-2)^{4}\).</li>
+    <li><b>El exponente de \(a\):</b> \(7-4=3\).</li>
+    <li><b>El coeficiente binomial,</b> con cuatro factores arriba y cuatro abajo: \(\dbinom{7}{4}=\dfrac{7\cdot 6\cdot 5\cdot 4}{4\cdot 3\cdot 2\cdot 1}\). Arriba: \(7\cdot 6=42\), \(42\cdot 5=210\) y \(210\cdot 4=840\). Abajo: \(4\cdot 3=12\), \(12\cdot 2=24\) y \(24\cdot 1=24\). División: \(\dfrac{840}{24}=35\).</li>
+    <li><b>La potencia de \(b\):</b> \((-2)^{4}=(-2)\cdot(-2)\cdot(-2)\cdot(-2)\). Primero \((-2)\cdot(-2)=4\); después \(4\cdot(-2)=-8\); después \((-8)\cdot(-2)=16\).</li>
+    <li><b>Se multiplica:</b> \(T_{5}=35\cdot x^{3}\cdot 16\). \(35\cdot 16=35\cdot 10+35\cdot 6=350+210=560\).</li>
+    <li><b>Resultado:</b> \(T_{5}=560x^{3}\). Es positivo porque \(k=4\) es par.</li>
   </ol>
   </div>
   </div>
@@ -91,15 +159,27 @@
   <h3>Ejemplo 4: el primer y el último término de \((3x+y)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li><b>Primero</b> (\(k=0\)): \(T_{1}=\dbinom{4}{0}(3x)^{4}y^{0}=81x^{4}\).</li>
-    <li><b>Último</b> (posición \(n+1=5\), \(k=4\)): \(T_{5}=\dbinom{4}{4}(3x)^{0}y^{4}=y^{4}\).</li>
-    <li>Siempre: el primero es \(a^{n}\) y el último es \(b^{n}\).</li>
+    <li><b>Datos.</b> \(a=3x\), \(b=y\), \(n=4\), con \(x\neq 0\) e \(y\neq 0\). El desarrollo tiene \(n+1=4+1=5\) términos (hoja H09): el primero está en la posición \(1\) y el último en la posición \(5\).</li>
+    <li><b>Primer término:</b> \(k=1-1=0\). \(T_{1}=\dbinom{4}{0}(3x)^{4-0}y^{0}\).</li>
+    <li>\(\dbinom{4}{0}=1\); \(4-0=4\); \(y^{0}=1\).</li>
+    <li>\((3x)^{4}=3^{4}\cdot x^{4}\) (potencia de un producto). \(3^{4}=3\cdot 3\cdot 3\cdot 3\): \(3\cdot 3=9\), \(9\cdot 3=27\) y \(27\cdot 3=81\). Entonces \((3x)^{4}=81x^{4}\).</li>
+    <li>\(T_{1}=1\cdot 81x^{4}\cdot 1=81x^{4}\).</li>
+    <li><b>Último término:</b> \(k=5-1=4\). \(T_{5}=\dbinom{4}{4}(3x)^{4-4}y^{4}\).</li>
+    <li>\(\dbinom{4}{4}=1\); \(4-4=0\); \((3x)^{0}=1\).</li>
+    <li>\(T_{5}=1\cdot 1\cdot y^{4}=y^{4}\).</li>
+    <li><b>Lectura:</b> el primero es \(a^{n}=(3x)^{4}=81x^{4}\) y el último es \(b^{n}=y^{4}\), como dice el recuadro de los casos especiales.</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>El error más común.</b> Usar \(k\) igual a la posición. Para el 4º término se usa \(k=3\), no \(k=4\). Una comprobación rápida: los exponentes de \(a\) y de \(b\) del término tienen que sumar \(n\).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Usar \(k\) igual a la posición.</b> Para el 4º término se usa \(k=4-1=3\), no \(k=4\). Con \(k=4\) sale el 5º término.</li>
+      <li><b>Olvidar el paréntesis.</b> Si \(a=2x\), la potencia es \((2x)^{3}=8x^{3}\), no \(2x^{3}\): el exponente afecta también al \(2\).</li>
+      <li><b>Dejar el signo fuera.</b> En \((x-2)^{7}\) el segundo término es \(b=-2\), no \(2\). La potencia es \((-2)^{k}\), y su signo depende de si \(k\) es par o impar.</li>
+      <li><b>Una comprobación rápida:</b> los exponentes de \(a\) y de \(b\) en la fórmula, \(n-k\) y \(k\), tienen que sumar \(n\).</li>
+    </ol>
   </div>
 </section>
 
@@ -107,38 +187,56 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Encuentra el 2º término de \((x+3)^{8}\).</p>
-    <details><summary>Pista</summary><div><p>Posición \(2\): \(k=1\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(2\): \(k=2-1=1\). Aquí \(a=x\), \(b=3\) y \(n=8\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{2}=\dbinom{8}{1}x^{7}\cdot 3^{1}=8\cdot 3\,x^{7}\).</li>
-        <li>\(T_{2}=24x^{7}\).</li>
+        <li><b>Datos:</b> \(a=x\), \(b=3\), \(n=8\), posición \(p=2\).</li>
+        <li><b>De la posición a \(k\):</b> \(k=2-1=1\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(T_{2}=\dbinom{8}{1}x^{8-1}\cdot 3^{1}\).</li>
+        <li><b>El exponente de \(a\):</b> \(8-1=7\).</li>
+        <li><b>El coeficiente binomial,</b> con un factor arriba y uno abajo: \(\dbinom{8}{1}=\dfrac{8}{1}=8\).</li>
+        <li><b>La potencia de \(b\):</b> \(3^{1}=3\).</li>
+        <li><b>Se multiplica:</b> \(T_{2}=8\cdot x^{7}\cdot 3\), y \(8\cdot 3=24\).</li>
+        <li><b>Resultado:</b> \(T_{2}=24x^{7}\). Comprobación: los exponentes de \(a\) y de \(b\) suman \(7+1=8\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Encuentra el 6º término de \((a-b)^{9}\).</p>
-    <details><summary>Pista</summary><div><p>Posición \(6\): \(k=5\), impar.</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(6\): \(k=6-1=5\), que es impar. El segundo término del binomio es \((-b)\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{6}=\dbinom{9}{5}a^{4}(-b)^{5}\), con \(\dbinom{9}{5}=\dbinom{9}{4}=\dfrac{9\cdot 8\cdot 7\cdot 6}{4\cdot 3\cdot 2\cdot 1}=126\).</li>
-        <li>\((-b)^{5}=-b^{5}\), porque \(5\) es impar.</li>
-        <li>\(T_{6}=-126a^{4}b^{5}\).</li>
+        <li><b>Datos:</b> \(a-b=a+(-b)\). Primer término: \(a\). Segundo: \((-b)\). \(n=9\), posición \(p=6\).</li>
+        <li><b>De la posición a \(k\):</b> \(k=6-1=5\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(T_{6}=\dbinom{9}{5}a^{9-5}(-b)^{5}\).</li>
+        <li><b>El exponente de \(a\):</b> \(9-5=4\).</li>
+        <li><b>El coeficiente binomial,</b> con cinco factores arriba y cinco abajo: \(\dbinom{9}{5}=\dfrac{9\cdot 8\cdot 7\cdot 6\cdot 5}{5\cdot 4\cdot 3\cdot 2\cdot 1}\). Arriba: \(9\cdot 8=72\), \(72\cdot 7=504\), \(504\cdot 6=3024\) y \(3024\cdot 5=15\,120\). Abajo: \(5\cdot 4=20\), \(20\cdot 3=60\), \(60\cdot 2=120\) y \(120\cdot 1=120\). División: \(\dfrac{15\,120}{120}=126\).</li>
+        <li><b>La potencia de \((-b)\):</b> \((-b)^{5}=(-1)^{5}\cdot b^{5}\) (potencia de un producto). Como \(5\) es impar, \((-1)^{5}=-1\). Entonces \((-b)^{5}=-b^{5}\).</li>
+        <li><b>Se multiplica:</b> \(T_{6}=126\cdot a^{4}\cdot\left(-b^{5}\right)\). Más por menos da menos.</li>
+        <li><b>Resultado:</b> \(T_{6}=-126a^{4}b^{5}\). Comprobación: los exponentes suman \(4+5=9\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">C</span><b>De la vida cotidiana.</b> Un capital crece un \(4\,\%\) al año durante \(10\) años: se multiplica por \((1+0{,}04)^{10}\). Calcula el 3º término de ese desarrollo. ¿Qué parte del crecimiento representa?</p>
-    <details><summary>Pista</summary><div><p>Posición \(3\): \(k=2\). \(a=1\), \(b=0{,}04\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(3\): \(k=3-1=2\). Aquí \(a=1\), \(b=0{,}04\) y \(n=10\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{3}=\dbinom{10}{2}\cdot 1^{8}\cdot 0{,}04^{2}=45\cdot 0{,}0016=0{,}072\).</li>
-        <li>Lectura: el 1º término es \(1\) (el capital); el 2º es \(10\cdot 0{,}04=0{,}4\) (el interés simple de diez años); el 3º, \(0{,}072\), es la primera capa de «interés sobre interés»: un \(7{,}2\,\%\) del capital.</li>
+        <li><b>Datos:</b> \(a=1\), \(b=0{,}04\) (el \(4\,\%\) escrito como decimal: \(4:100=0{,}04\)), \(n=10\), posición \(p=3\).</li>
+        <li><b>De la posición a \(k\):</b> \(k=3-1=2\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(T_{3}=\dbinom{10}{2}\cdot 1^{10-2}\cdot 0{,}04^{2}\).</li>
+        <li><b>El exponente de \(a\):</b> \(10-2=8\), y \(1^{8}=1\) (multiplicar \(1\) por sí mismo da siempre \(1\)).</li>
+        <li><b>El coeficiente binomial:</b> \(\dbinom{10}{2}=\dfrac{10\cdot 9}{2\cdot 1}\). Arriba: \(10\cdot 9=90\). Abajo: \(2\cdot 1=2\). División: \(\dfrac{90}{2}=45\).</li>
+        <li><b>La potencia de \(b\):</b> \(0{,}04^{2}=0{,}04\cdot 0{,}04\). Como \(4\cdot 4=16\) y hay cuatro decimales en total, \(0{,}04^{2}=0{,}0016\).</li>
+        <li><b>Se multiplica:</b> \(T_{3}=45\cdot 1\cdot 0{,}0016\). Primero \(45\cdot 1=45\). Después \(45\cdot 16=45\cdot 10+45\cdot 6=450+270=720\), y con cuatro decimales, \(45\cdot 0{,}0016=0{,}0720=0{,}072\).</li>
+        <li><b>Resultado:</b> \(T_{3}=0{,}072\).</li>
+        <li><b>Qué significa, comparando con los dos primeros términos.</b> El 1º (\(k=0\)) es \(a^{n}=1^{10}=1\): el capital inicial. El 2º (\(k=1\)) es \(\dbinom{10}{1}\cdot 1^{9}\cdot 0{,}04^{1}=10\cdot 1\cdot 0{,}04=0{,}4\): el interés simple de diez años, un \(40\,\%\) del capital. El 3º, \(0{,}072\), es la primera capa de «interés sobre interés»: \(0{,}072\cdot 100=7{,}2\), es decir, un \(7{,}2\,\%\) del capital.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H10 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H10 · v002 · Pendiente de APR</span>
 </footer>
 </article>

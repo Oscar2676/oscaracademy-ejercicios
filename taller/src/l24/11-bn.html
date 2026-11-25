@@ -12,42 +12,81 @@
       <li><b>Encontrar un término específico</b></li>
     </ol>
     <h1>Encontrar un término específico</h1>
-    <p class="lede">Para encontrar un término cualquiera de \((a+b)^{n}\) —el quinto, el penúltimo, el que lleva \(b^{4}\)— se usa la fórmula del término general, sin escribir el desarrollo completo.
-    \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\qquad\text{(posición }p\ \Longrightarrow\ k=p-1\text{)}\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). Su <b>desarrollo</b> es lo que queda al calcular la potencia \((a+b)^{n}\), donde el <b>exponente</b> \(n\) es un entero con \(n\ge 1\). Cada parte del desarrollo separada por un signo \(+\) es un <b>término</b>, y su <b>posición</b> es el lugar que ocupa contando desde la izquierda: 1º, 2º, 3º… La pregunta de esta hoja: <b>¿cómo se encuentra un solo término —el quinto, el penúltimo, el que lleva \(b^{4}\)— sin escribir todo el desarrollo?</b></p>
+    <p class="lede"><b>De dónde sale la respuesta: se mira un desarrollo que ya se conoce, término por término.</b> El de \((a+b)^{4}\) es \(a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\) (hoja H03). Sus coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) son los números \(\dbinom{4}{0},\ \dbinom{4}{1},\ \dbinom{4}{2},\ \dbinom{4}{3},\ \dbinom{4}{4}\) (hoja H06); el símbolo \(\dbinom{n}{k}\) se lee «\(n\) sobre \(k\)». Recordando que \(b^{0}=1\) y \(a^{0}=1\): \[\begin{aligned}&\text{1}^{\circ}\text{ término: }&a^{4}&=\binom{4}{0}a^{4}b^{0}&&\text{exponente de }b:\ 0&&\text{exponente de }a:\ 4-0=4\\ &\text{2}^{\circ}\text{ término: }&4a^{3}b&=\binom{4}{1}a^{3}b^{1}&&\text{exponente de }b:\ 1&&\text{exponente de }a:\ 4-1=3\\ &\text{3}^{\circ}\text{ término: }&6a^{2}b^{2}&=\binom{4}{2}a^{2}b^{2}&&\text{exponente de }b:\ 2&&\text{exponente de }a:\ 4-2=2\\ &\text{4}^{\circ}\text{ término: }&4ab^{3}&=\binom{4}{3}a^{1}b^{3}&&\text{exponente de }b:\ 3&&\text{exponente de }a:\ 4-3=1\\ &\text{5}^{\circ}\text{ término: }&b^{4}&=\binom{4}{4}a^{0}b^{4}&&\text{exponente de }b:\ 4&&\text{exponente de }a:\ 4-4=0\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> Se llama \(k\) al exponente de \(b\). En cada línea pasan tres cosas: el número de abajo del coeficiente es \(k\); el exponente de \(a\) es \(4-k\); y la posición es una unidad mayor que \(k\): \(0+1=1\), \(1+1=2\), \(2+1=3\), \(3+1=4\), \(4+1=5\).</p>
+    <p class="lede"><b>La fórmula.</b> Con un exponente \(n\) cualquiera en lugar de \(4\), el término de la posición \(k+1\) se llama \(T_{k+1}\) y es \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\qquad\text{con }k=0,\ 1,\ 2,\ \dots,\ n\] Se lee: «el término de la posición \(k\) más \(1\) es \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». Si se conoce la posición \(p\), entonces \(k=p-1\). El desarrollo completo es la suma de todos esos términos (binomio de Newton, hoja H05): \[(a+b)^{n}=T_{1}+T_{2}+\cdots+T_{n+1}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». <b>Comprobación con un caso nuevo:</b> el 3º término de \((a+b)^{5}\). Posición \(3\): \(k=3-1=2\). \(T_{3}=\dbinom{5}{2}a^{5-2}b^{2}\), con \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}=\dfrac{20}{2}=10\) y \(5-2=3\): \(T_{3}=10a^{3}b^{2}\). En el desarrollo \((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\) (hoja H04, ejemplo 3), el 3º término es \(10a^{3}b^{2}\). ✓</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El 5º término de \((2x-3)^{7}\), en seis pasos.</p>
+  <p>El 5º término de \((2x-3)^{7}\), encontrado en siete pasos, sin escribir los otros siete términos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Paso 1, mira arriba:</b> están los <b>datos</b>, \(a=2x\) (azul), \(b=-3\) (burdeo, con su signo) y \(n=7\). Debajo hay ocho <b>casilleros</b>, uno por cada <b>término</b> del desarrollo (son \(7+1=8\)), con su <b>posición</b> escrita adentro: 1º, 2º, … 8º. El casillero naranja es <b>el término que se busca</b>, el 5º.</li>
+    <li><b>Paso 2, mira bajo los casilleros:</b> aparece el valor de <b>\(k\)</b> de cada término, que es el exponente de \(b\). Parte en \(0\), por eso \(k\) es la posición menos \(1\). Bajo el 5º queda la cuenta \(5-1=4\).</li>
+    <li><b>Paso 3, mira la fórmula y los tres recuadros:</b> la fórmula del término con los datos reemplazados, y sus tres <b>partes</b>, cada una en un recuadro: el <b>coeficiente</b> (naranja), la <b>potencia de \(a\)</b> (azul) y la <b>potencia de \(b\)</b> (burdeo).</li>
+    <li><b>Pasos 4, 5 y 6, mira dentro de cada recuadro:</b> se escribe el valor de cada parte: \(35\), \(8x^{3}\) y \(81\). El desarrollo de cada cuenta está en la lectura de abajo.</li>
+    <li><b>Paso 7, mira bajo los recuadros y junto a la pregunta:</b> las tres partes se multiplican y sale el término. Conclusión: para un término basta con su \(k\) y tres cuentas; no hace falta el desarrollo completo.</li>
+  </ol>
   <div class="stage" data-scene="bn-buscar"></div>
   <ul class="keys">
-    <li><b>Arriba:</b> los ocho casilleros del desarrollo. El naranja es el que se busca.</li>
-    <li><b>Paso 1:</b> identificar \(a=2x\), \(b=-3\) (con su signo) y \(n=7\).</li>
-    <li><b>Paso 2:</b> de la posición a \(k\): \(k=5-1=4\).</li>
-    <li><b>Pasos 3, 4 y 5:</b> el coeficiente (naranja), la potencia de \(a\) (azul) y la potencia de \(b\) (burdeo).</li>
-    <li><b>Paso 6:</b> el producto de las tres partes.</li>
-    <li><b>Deslizador «paso»:</b> avanza o retrocede.</li>
+    <li><b>Casilleros:</b> los ocho términos del desarrollo de \((2x-3)^{7}\); adentro, la posición de cada uno.</li>
+    <li><b>Casillero naranja, «se busca»:</b> el 5º término.</li>
+    <li><b>Bajo los casilleros:</b> \(k\), el exponente de \(b\) en ese término; \(k=\text{posición}-1\).</li>
+    <li><b>Recuadro naranja:</b> el coeficiente, \(\dbinom{7}{4}\).</li>
+    <li><b>Recuadro azul:</b> la potencia de \(a=2x\), con exponente \(n-k=3\).</li>
+    <li><b>Recuadro burdeo:</b> la potencia de \(b=-3\), con exponente \(k=4\).</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> el paso de la posición a \(k\) y al revés; el paso de un exponente dado a \(k\); la posición de un término contado desde el final; y todas las cuentas de los ejemplos y ejercicios.</li>
+      <li><b>Se usa sin demostrar:</b> el binomio de Newton, \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\) (hojas H04 y H05; su demostración por inducción está en la hoja H17). En esta hoja la fórmula del término se <b>observa</b> en \((a+b)^{4}\) y se comprueba en \((a+b)^{5}\); eso no es una demostración.</li>
+      <li><b>Se usa sin demostrar:</b> la fórmula para calcular el coeficiente, \(\dbinom{n}{k}=\dfrac{n\,(n-1)\cdots(n-k+1)}{k!}\) (arriba, \(k\) factores que parten en \(n\) y bajan de uno en uno; abajo, \(k!=k\cdot(k-1)\cdots 2\cdot 1\), que se lee «\(k\) factorial»), y la simetría \(\dbinom{n}{k}=\dbinom{n}{n-k}\) (hojas H04 y H06).</li>
+      <li><b>Se usan sin demostrar</b> las leyes de las potencias: \((u\cdot v)^{m}=u^{m}\cdot v^{m}\); \(\left(\dfrac{1}{x}\right)^{m}=\dfrac{1}{x^{m}}\) y \(\dfrac{x^{m}}{x^{p}}=x^{m-p}\) para \(x\neq 0\); y \(u^{1}=u\), \(1^{m}=1\).</li>
+      <li><b>Ejercicio C:</b> que una deuda que crece \(3\,\%\) al mes queda multiplicada por \((1+0{,}03)^{12}\) al cabo de \(12\) meses se toma como dato del enunciado.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
     <h3>El procedimiento</h3>
+    <p><b>Qué se hace:</b> encontrar un término de \((a+b)^{n}\) con la fórmula \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\). <b>Cómo funciona el método:</b> la fórmula necesita cuatro datos, \(a\), \(b\), \(n\) y \(k\); se identifican, se reemplazan, y se calculan las tres partes por separado antes de multiplicar.</p>
     <ol class="steps">
-      <li><b>Identificar</b> \(a\), \(b\) y \(n\). El signo va dentro de \(b\); los coeficientes y exponentes, entre paréntesis.</li>
-      <li><b>Encontrar \(k\).</b> Si se da la posición \(p\): \(k=p-1\). Si se da la potencia de \(b\): \(k\) es ese exponente. Si se da la potencia de \(a\): \(k=n-\) ese exponente.</li>
-      <li><b>Calcular</b> \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\).</li>
-      <li><b>Multiplicar</b> y simplificar.</li>
+      <li><b>Identificar \(a\), \(b\) y \(n\).</b> \(a\) es el primer término del binomio, \(b\) el segundo y \(n\) el exponente. Si hay una resta, se escribe como suma del opuesto: \(2x-3=2x+(-3)\); por eso <b>el signo va dentro de \(b\)</b>: \(b=-3\).</li>
+      <li><b>Encontrar \(k\).</b> Según lo que se sepa del término: su posición, su potencia de \(b\) o su potencia de \(a\). El recuadro siguiente muestra los tres casos.</li>
+      <li><b>Reemplazar en la fórmula,</b> con \(a\) y \(b\) <b>entre paréntesis</b>: \(T_{k+1}=\dbinom{n}{k}\,(a)^{\,n-k}\,(b)^{\,k}\). El paréntesis hace que el exponente afecte a todo: al coeficiente, a la letra y al signo.</li>
+      <li><b>Calcular las tres partes, una por una:</b> el coeficiente \(\dbinom{n}{k}\), la potencia \(a^{\,n-k}\) y la potencia \(b^{\,k}\).</li>
+      <li><b>Multiplicar</b> las tres partes, de a dos factores cada vez, y simplificar.</li>
+      <li><b>Revisar.</b> Antes de simplificar, los exponentes de \(a\) y de \(b\) suman \(n\): \((n-k)+k=n\).</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Tres maneras de llegar a \(k\)</h3>
+    <ol class="steps">
+      <li><b>Se conoce la posición \(p\).</b> En la fórmula, la posición es \(k+1\). Se despeja \(k\): \[\begin{aligned}p&=k+1&&\text{la posición es }k+1\\ p-1&=k+1-1&&\text{se resta }1\text{ en los dos lados}\\ p-1&=k&&1-1=0\end{aligned}\] Ejemplo: el 5º término tiene \(k=5-1=4\).</li>
+      <li><b>Se conoce la potencia de \(b\).</b> En la fórmula, el exponente de \(b\) es \(k\): no hay nada que calcular. Ejemplo: el término con \(b^{4}\) tiene \(k=4\).</li>
+      <li><b>Se conoce la potencia de \(a\).</b> En la fórmula, el exponente de \(a\) es \(n-k\). Si ese exponente vale \(e\), se despeja \(k\): \[\begin{aligned}n-k&=e&&\text{el exponente de }a\text{ es }n-k\\ n-k+k&=e+k&&\text{se suma }k\text{ en los dos lados}\\ n&=e+k&&-k+k=0\\ n-e&=e+k-e&&\text{se resta }e\text{ en los dos lados}\\ n-e&=k&&e-e=0\end{aligned}\] Ejemplo: en \((a+b)^{9}\), el término con \(a^{5}\) tiene \(k=9-5=4\).</li>
+      <li><b>De \(k\) a la posición,</b> cuando se pide: posición \(=k+1\). Ejemplo: \(k=4\) es el \(4+1=5\)º término.</li>
     </ol>
   </div>
 
   <div class="card k1">
     <h3>Contar desde el final</h3>
+    <p><b>Qué se demuestra:</b> que el término que está en el lugar \(q\) contando desde el final (\(q=1\) es el último, \(q=2\) el penúltimo) ocupa la posición \(n+2-q\) y tiene \(k=n+1-q\). <b>Cómo funciona el método:</b> se parte de la última posición, que se conoce, y se retrocede; primero con números y después con letras.</p>
     <ol class="steps">
-      <li>El desarrollo tiene \(n+1\) términos. El último está en la posición \(n+1\) (\(k=n\)); el penúltimo, en la posición \(n\) (\(k=n-1\)).</li>
-      <li>En general, el término que está en el lugar \(q\) contando desde el final ocupa la posición \(n+2-q\), y usa \(k=n+1-q\).</li>
-      <li>Por la simetría, su coeficiente es el mismo que el del lugar \(q\) contando desde el principio.</li>
+      <li><b>Cuántos términos hay.</b> \(k\) toma los valores \(0,\ 1,\ \dots,\ n\): son \(n+1\) términos (hoja H09). El último está en la posición \(n+1\).</li>
+      <li><b>Con números</b> (\(n=6\)): hay \(6+1=7\) términos. \[\begin{aligned}&q=1\ \text{(último):}&&\text{posición }7&&\text{se retrocede }0\text{ lugares: }7-0=7\\ &q=2\ \text{(penúltimo):}&&\text{posición }6&&\text{se retrocede }1\text{ lugar: }7-1=6\\ &q=3\ \text{(antepenúltimo):}&&\text{posición }5&&\text{se retrocede }2\text{ lugares: }7-2=5\end{aligned}\]</li>
+      <li><b>La regularidad:</b> desde la última posición se retroceden \(q-1\) lugares (\(0=1-1\), \(1=2-1\), \(2=3-1\)).</li>
+      <li><b>En general:</b> \[\begin{aligned}\text{posición}&=(n+1)-(q-1)&&\text{última posición menos }q-1\text{ lugares}\\ &=n+1-q+1&&\text{se quita el paréntesis: cambian los signos}\\ &=n+2-q&&1+1=2\end{aligned}\]</li>
+      <li><b>Su valor de \(k\):</b> \[\begin{aligned}k&=\text{posición}-1&&\text{recuadro anterior}\\ &=(n+2-q)-1&&\text{se reemplaza la posición}\\ &=n+1-q&&2-1=1\end{aligned}\]</li>
+      <li><b>Comprobación</b> con \(n=6\) y \(q=2\) (penúltimo): posición \(6+2-2=6\) ✓ (es la del paso 2); \(k=6+1-2=5\), y \(6-1=5\). ✓</li>
+      <li><b>Su coeficiente es el mismo que el del lugar \(q\) contando desde el principio.</b> El término del lugar \(q\) desde el principio tiene \(k=q-1\). El del lugar \(q\) desde el final tiene \(k=n+1-q\), que es \(n-(q-1)\). Por la simetría \(\dbinom{n}{k}=\dbinom{n}{n-k}\) (usada sin demostrar; hojas H04 y H06), los dos coeficientes binomiales son iguales. Ejemplo, \(n=6\), \(q=2\): \(\dbinom{6}{5}=6\) y \(\dbinom{6}{1}=6\). Ojo: si \(a\) o \(b\) traen coeficientes o signos propios, como en \((a+2b)^{6}\), los términos completos no quedan iguales; solo los coeficientes binomiales.</li>
     </ol>
   </div>
 </section>
@@ -59,19 +98,31 @@
   <h3>Ejemplo 1: el 5º término de \((2x-3)^{7}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=2x\), \(b=-3\), \(n=7\); posición \(5\): \(k=4\).</li>
-    <li>\(\dbinom{7}{4}=\dbinom{7}{3}=35\); \((2x)^{3}=8x^{3}\); \((-3)^{4}=81\).</li>
-    <li>\(T_{5}=35\cdot 8x^{3}\cdot 81=22\,680\,x^{3}\).</li>
+    <li><b>Datos.</b> \(2x-3=2x+(-3)\): \(a=2x\), \(b=-3\), \(n=7\). Hay \(7+1=8\) términos; se busca el de la posición \(5\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=5-1=4\).</li>
+    <li><b>Fórmula y reemplazo.</b> \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\); con los datos, \(T_{5}=\dbinom{7}{4}(2x)^{7-4}(-3)^{4}\). Como \(7-4=3\): \(T_{5}=\dbinom{7}{4}(2x)^{3}(-3)^{4}\).</li>
+    <li><b>Coeficiente.</b> \(\dbinom{7}{4}=\dfrac{7\cdot 6\cdot 5\cdot 4}{4!}\). Arriba: \(7\cdot 6=42\), \(42\cdot 5=210\), \(210\cdot 4=840\). Abajo: \(4!=4\cdot 3\cdot 2\cdot 1\); \(4\cdot 3=12\), \(12\cdot 2=24\), \(24\cdot 1=24\). División: \(\dfrac{840}{24}=35\).</li>
+    <li><b>Potencia de \(a\).</b> \((2x)^{3}=2^{3}\cdot x^{3}\) (potencia de un producto). \(2^{3}=2\cdot 2\cdot 2\): \(2\cdot 2=4\), \(4\cdot 2=8\). Entonces \((2x)^{3}=8x^{3}\).</li>
+    <li><b>Potencia de \(b\).</b> \((-3)^{4}=(-3)(-3)(-3)(-3)\): \((-3)(-3)=9\), \(9\cdot(-3)=-27\), \((-27)(-3)=81\). Entonces \((-3)^{4}=81\).</li>
+    <li><b>Producto.</b> \(T_{5}=35\cdot 8x^{3}\cdot 81\). Primero \(35\cdot 8=280\). Después \(280\cdot 81\): \(280\cdot 80=22\,400\) y \(280\cdot 1=280\); \(22\,400+280=22\,680\).</li>
+    <li><b>Resultado.</b> \(T_{5}=22\,680\,x^{3}\).</li>
+    <li><b>Revisión.</b> Exponentes antes de simplificar: \(3+4=7=n\) ✓. Signo: \(b\) es negativo y \(k=4\) es par, así que el término es positivo ✓.</li>
   </ol>
   </div>
   </div>
 
   <div class="prop p2">
-  <h3>Ejemplo 2: el 3º término de \(\left(x+\dfrac{1}{x}\right)^{8}\)</h3>
+  <h3>Ejemplo 2: el 3º término de \(\left(x+\dfrac{1}{x}\right)^{8}\), con \(x\neq 0\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=x\), \(b=\dfrac{1}{x}\), \(n=8\); posición \(3\): \(k=2\).</li>
-    <li>\(T_{3}=\dbinom{8}{2}x^{6}\cdot\dfrac{1}{x^{2}}=28\,x^{4}\).</li>
+    <li><b>Datos.</b> \(a=x\), \(b=\dfrac{1}{x}\), \(n=8\). Se pide \(x\neq 0\) porque no se puede dividir por \(0\). Se busca la posición \(3\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=3-1=2\).</li>
+    <li><b>Fórmula y reemplazo.</b> \(T_{3}=\dbinom{8}{2}\,x^{8-2}\left(\dfrac{1}{x}\right)^{2}\). Como \(8-2=6\): \(T_{3}=\dbinom{8}{2}\,x^{6}\left(\dfrac{1}{x}\right)^{2}\).</li>
+    <li><b>Coeficiente.</b> \(\dbinom{8}{2}=\dfrac{8\cdot 7}{2!}\). Arriba: \(8\cdot 7=56\). Abajo: \(2!=2\cdot 1=2\). División: \(\dfrac{56}{2}=28\).</li>
+    <li><b>Potencia de \(a\):</b> \(x^{6}\); no hay nada que calcular.</li>
+    <li><b>Potencia de \(b\):</b> \(\left(\dfrac{1}{x}\right)^{2}=\dfrac{1}{x^{2}}\).</li>
+    <li><b>Producto de las potencias:</b> \(x^{6}\cdot\dfrac{1}{x^{2}}=\dfrac{x^{6}}{x^{2}}=x^{6-2}=x^{4}\) (división de potencias de igual base: se restan los exponentes; \(6-2=4\)).</li>
+    <li><b>Resultado.</b> \(T_{3}=28\,x^{4}\).</li>
   </ol>
   </div>
   </div>
@@ -80,9 +131,15 @@
   <h3>Ejemplo 3: el penúltimo término de \((a+2b)^{6}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Hay \(7\) términos; el penúltimo es el 6º: \(k=5\).</li>
-    <li>\(T_{6}=\dbinom{6}{5}a^{1}(2b)^{5}=6\cdot a\cdot 32b^{5}\).</li>
-    <li>\(T_{6}=192\,ab^{5}\).</li>
+    <li><b>Datos.</b> El primer término del binomio es \(a\), el segundo es \(2b\), y \(n=6\). Hay \(6+1=7\) términos.</li>
+    <li><b>Posición.</b> El último es el 7º; el penúltimo está un lugar antes: \(7-1=6\). Con la fórmula del recuadro (\(q=2\)): \(n+2-q=6+2-2=6\). ✓</li>
+    <li><b>De la posición a \(k\):</b> \(k=6-1=5\).</li>
+    <li><b>Fórmula y reemplazo.</b> \(T_{6}=\dbinom{6}{5}\,a^{6-5}\,(2b)^{5}\). Como \(6-5=1\): \(T_{6}=\dbinom{6}{5}\,a^{1}\,(2b)^{5}\).</li>
+    <li><b>Coeficiente.</b> \(\dbinom{6}{5}=\dfrac{6\cdot 5\cdot 4\cdot 3\cdot 2}{5!}\). Arriba: \(6\cdot 5=30\), \(30\cdot 4=120\), \(120\cdot 3=360\), \(360\cdot 2=720\). Abajo: \(5!=5\cdot 4\cdot 3\cdot 2\cdot 1\); \(5\cdot 4=20\), \(20\cdot 3=60\), \(60\cdot 2=120\), \(120\cdot 1=120\). División: \(\dfrac{720}{120}=6\).</li>
+    <li><b>Primera potencia:</b> \(a^{1}=a\).</li>
+    <li><b>Segunda potencia:</b> \((2b)^{5}=2^{5}\cdot b^{5}\). \(2^{5}\): \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\), \(16\cdot 2=32\). Entonces \((2b)^{5}=32b^{5}\).</li>
+    <li><b>Producto.</b> \(T_{6}=6\cdot a\cdot 32b^{5}\); \(6\cdot 32=192\).</li>
+    <li><b>Resultado.</b> \(T_{6}=192\,ab^{5}\). Revisión: exponentes \(1+5=6=n\). ✓</li>
   </ol>
   </div>
   </div>
@@ -91,15 +148,25 @@
   <h3>Ejemplo 4: el término de \((a-b)^{9}\) que contiene \(b^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>El exponente de \(b\) es \(k\): \(k=4\). Es el 5º término.</li>
-    <li>\(T_{5}=\dbinom{9}{4}a^{5}(-b)^{4}\), con \(\dbinom{9}{4}=\dfrac{9\cdot 8\cdot 7\cdot 6}{4\cdot 3\cdot 2\cdot 1}=126\) y \((-b)^{4}=b^{4}\).</li>
-    <li>\(T_{5}=126\,a^{5}b^{4}\).</li>
+    <li><b>Datos.</b> \(a-b=a+(-b)\): el primer término es \(a\), el segundo es \(-b\), y \(n=9\).</li>
+    <li><b>Se conoce la potencia de \(b\):</b> el exponente de \(b\) es \(k\), así que \(k=4\). Su posición: \(4+1=5\); es el 5º término.</li>
+    <li><b>Fórmula y reemplazo.</b> \(T_{5}=\dbinom{9}{4}\,a^{9-4}\,(-b)^{4}\). Como \(9-4=5\): \(T_{5}=\dbinom{9}{4}\,a^{5}\,(-b)^{4}\).</li>
+    <li><b>Coeficiente.</b> \(\dbinom{9}{4}=\dfrac{9\cdot 8\cdot 7\cdot 6}{4!}\). Arriba: \(9\cdot 8=72\), \(72\cdot 7=504\), \(504\cdot 6=3\,024\). Abajo: \(4!=4\cdot 3\cdot 2\cdot 1=24\) (ejemplo 1). División: \(\dfrac{3\,024}{24}=126\).</li>
+    <li><b>Segunda potencia.</b> \(-b=(-1)\cdot b\), entonces \((-b)^{4}=(-1)^{4}\cdot b^{4}\). \((-1)^{4}\): \((-1)(-1)=1\), \(1\cdot(-1)=-1\), \((-1)(-1)=1\). Entonces \((-b)^{4}=1\cdot b^{4}=b^{4}\).</li>
+    <li><b>Producto.</b> \(T_{5}=126\cdot a^{5}\cdot b^{4}\).</li>
+    <li><b>Resultado.</b> \(T_{5}=126\,a^{5}b^{4}\). Revisión: exponentes \(5+4=9=n\) ✓; \(k=4\) es par: término positivo ✓.</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>Para revisar el resultado.</b> Los exponentes de \(a\) y de \(b\) (antes de simplificar) tienen que sumar \(n\). Y el signo: si \(b\) es negativo, el término es negativo solo cuando \(k\) es impar.</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Usar \(k\) igual a la posición.</b> El 5º término no es el de \(k=5\): es el de \(k=5-1=4\), porque \(k\) parte en \(0\). Con \(k=5\), en \((2x-3)^{7}\) sale el 6º término, que es otro.</li>
+      <li><b>Dejar el signo fuera de \(b\).</b> En \((2x-3)^{7}\), \(b=-3\), no \(3\). En el ejemplo 1 no se nota porque \(k=4\) es par; con \(k\) impar el término cambia de signo: \((-3)^{3}=-27\), no \(27\).</li>
+      <li><b>No elevar el coeficiente de \(a\).</b> \((2x)^{3}=8x^{3}\), no \(2x^{3}\): el paréntesis hace que el \(2\) también se eleve.</li>
+    </ol>
+    <p><b>Para revisar el resultado.</b> Los exponentes de \(a\) y de \(b\) (antes de simplificar) tienen que sumar \(n\). Y el signo: si \(b\) es negativo y \(a\) positivo, el término es negativo solo cuando \(k\) es impar, porque un número negativo elevado a exponente par da positivo, y a exponente impar, negativo.</p>
   </div>
 </section>
 
@@ -107,39 +174,56 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Encuentra el 4º término de \((3x+2)^{5}\).</p>
-    <details><summary>Pista</summary><div><p>Posición \(4\): \(k=3\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(4\): \(k=4-1=3\). Escribe \(a=3x\) entre paréntesis.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{4}=\dbinom{5}{3}(3x)^{2}\cdot 2^{3}=10\cdot 9x^{2}\cdot 8\).</li>
-        <li>\(T_{4}=720x^{2}\).</li>
+        <li><b>Datos.</b> \(a=3x\), \(b=2\), \(n=5\). Hay \(5+1=6\) términos; se busca el 4º.</li>
+        <li><b>De la posición a \(k\):</b> \(k=4-1=3\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(T_{4}=\dbinom{5}{3}(3x)^{5-3}\cdot 2^{3}\). Como \(5-3=2\): \(T_{4}=\dbinom{5}{3}(3x)^{2}\cdot 2^{3}\).</li>
+        <li><b>Coeficiente.</b> \(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3!}\). Arriba: \(5\cdot 4=20\), \(20\cdot 3=60\). Abajo: \(3!=3\cdot 2\cdot 1\); \(3\cdot 2=6\), \(6\cdot 1=6\). División: \(\dfrac{60}{6}=10\).</li>
+        <li><b>Potencia de \(a\):</b> \((3x)^{2}=3^{2}\cdot x^{2}\); \(3\cdot 3=9\). Entonces \((3x)^{2}=9x^{2}\).</li>
+        <li><b>Potencia de \(b\):</b> \(2^{3}\): \(2\cdot 2=4\), \(4\cdot 2=8\).</li>
+        <li><b>Producto.</b> \(T_{4}=10\cdot 9x^{2}\cdot 8\); \(10\cdot 9=90\), \(90\cdot 8=720\).</li>
+        <li><b>Resultado.</b> \(T_{4}=720x^{2}\). Revisión: exponentes \(2+3=5=n\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Encuentra el 7º término de \((x-1)^{10}\).</p>
-    <details><summary>Pista</summary><div><p>Posición \(7\): \(k=6\), par.</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(7\): \(k=7-1=6\), que es par. Para el coeficiente sirve la simetría: \(\dbinom{10}{6}=\dbinom{10}{4}\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{7}=\dbinom{10}{6}x^{4}(-1)^{6}\), con \(\dbinom{10}{6}=\dbinom{10}{4}=\dfrac{10\cdot 9\cdot 8\cdot 7}{4\cdot 3\cdot 2\cdot 1}=210\).</li>
-        <li>\((-1)^{6}=1\). \(T_{7}=210x^{4}\).</li>
+        <li><b>Datos.</b> \(x-1=x+(-1)\): \(a=x\), \(b=-1\), \(n=10\). Hay \(10+1=11\) términos; se busca el 7º.</li>
+        <li><b>De la posición a \(k\):</b> \(k=7-1=6\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(T_{7}=\dbinom{10}{6}\,x^{10-6}\,(-1)^{6}\). Como \(10-6=4\): \(T_{7}=\dbinom{10}{6}\,x^{4}\,(-1)^{6}\).</li>
+        <li><b>Coeficiente.</b> Por la simetría, \(\dbinom{10}{6}=\dbinom{10}{10-6}=\dbinom{10}{4}\), que tiene menos factores: \(\dbinom{10}{4}=\dfrac{10\cdot 9\cdot 8\cdot 7}{4!}\). Arriba: \(10\cdot 9=90\), \(90\cdot 8=720\), \(720\cdot 7=5\,040\). Abajo: \(4!=4\cdot 3\cdot 2\cdot 1=24\). División: \(\dfrac{5\,040}{24}=210\).</li>
+        <li><b>Potencia de \(b\):</b> \((-1)^{6}\). Cada par de factores da \((-1)(-1)=1\), y son tres pares: \(1\cdot 1\cdot 1=1\). Entonces \((-1)^{6}=1\).</li>
+        <li><b>Producto.</b> \(T_{7}=210\cdot x^{4}\cdot 1\).</li>
+        <li><b>Resultado.</b> \(T_{7}=210x^{4}\). Revisión: exponentes \(4+6=10=n\) ✓; \(k=6\) es par: término positivo ✓.</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un préstamo crece un \(3\,\%\) al mes durante \(12\) meses: la deuda se multiplica por \((1+0{,}03)^{12}\). Calcula el 4º término de ese desarrollo.</p>
-    <details><summary>Pista</summary><div><p>Posición \(4\): \(k=3\). \(0{,}03^{3}=0{,}000027\).</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Una deuda crece un \(3\,\%\) cada mes durante \(12\) meses, sin que se pague nada: al final, la deuda inicial queda multiplicada por \((1+0{,}03)^{12}\). Calcula el 4º término del desarrollo de \((1+0{,}03)^{12}\) y di qué parte de la deuda inicial representa.</p>
+    <details><summary>Pista</summary><div><p>\(a=1\), \(b=0{,}03\), \(n=12\). Posición \(4\): \(k=4-1=3\). Calcula \(0{,}03^{3}\) de a una multiplicación.</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{4}=\dbinom{12}{3}\cdot 1^{9}\cdot 0{,}03^{3}\), con \(\dbinom{12}{3}=\dfrac{12\cdot 11\cdot 10}{3\cdot 2\cdot 1}=220\).</li>
-        <li>\(T_{4}=220\cdot 0{,}000027=0{,}00594\).</li>
-        <li>Lectura: ese término agrega cerca de un \(0{,}6\,\%\) de la deuda inicial. Parece poco, pero se suma a los anteriores.</li>
+        <li><b>Datos.</b> \(a=1\), \(b=0{,}03\) (el \(3\,\%\) escrito como decimal: \(3:100=0{,}03\)), \(n=12\). Se busca el 4º término.</li>
+        <li><b>De la posición a \(k\):</b> \(k=4-1=3\).</li>
+        <li><b>Fórmula y reemplazo.</b> \(T_{4}=\dbinom{12}{3}\cdot 1^{12-3}\cdot 0{,}03^{3}\). Como \(12-3=9\): \(T_{4}=\dbinom{12}{3}\cdot 1^{9}\cdot 0{,}03^{3}\).</li>
+        <li><b>Coeficiente.</b> \(\dbinom{12}{3}=\dfrac{12\cdot 11\cdot 10}{3!}\). Arriba: \(12\cdot 11=132\), \(132\cdot 10=1\,320\). Abajo: \(3!=3\cdot 2\cdot 1=6\). División: \(\dfrac{1\,320}{6}=220\).</li>
+        <li><b>Potencia de \(a\):</b> \(1^{9}=1\) (el \(1\) multiplicado por sí mismo siempre da \(1\)).</li>
+        <li><b>Potencia de \(b\):</b> \(0{,}03^{3}=0{,}03\cdot 0{,}03\cdot 0{,}03\). Primero \(0{,}03\cdot 0{,}03=0{,}0009\); después \(0{,}0009\cdot 0{,}03=0{,}000027\).</li>
+        <li><b>Producto.</b> \(T_{4}=220\cdot 1\cdot 0{,}000027\); \(220\cdot 1=220\), \(220\cdot 0{,}000027=0{,}00594\).</li>
+        <li><b>Resultado.</b> \(T_{4}=0{,}00594\).</li>
+        <li><b>Qué significa.</b> Como porcentaje: \(0{,}00594\cdot 100=0{,}594\), es decir, \(0{,}594\,\%\). Ese solo término agrega cerca de un \(0{,}6\,\%\) de la deuda inicial. Parece poco, pero se suma a los términos anteriores.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H11 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H11 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -147,6 +231,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -192,26 +296,89 @@ function bnExpo(o){
     readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
   };
 }
-OA.scene('bn-buscar', {
-  world:{x0:-0.9, x1:7.9, y0:-5.0, y1:3.5}, aspect:8.5/8.8,
-  aria:'Se busca el quinto término del desarrollo de 2x menos 3 elevado a 7. Arriba, los ocho casilleros del desarrollo, con su posición y su k. Paso a paso: se marca la posición 5; se obtiene k igual a 4; se calcula el coeficiente, 35; la potencia de 2x, que es 8 x al cubo; la potencia de menos 3, que es 81; y se multiplican los tres: 22680 x al cubo.',
-  labels:[['F', 'T_{5}=\\dbinom{7}{4}(2x)^{3}(-3)^{4}=35\\cdot 8x^{3}\\cdot 81=22\\,680\\,x^{3}', 'T₅ = 35 · 8x³ · 81 = 22 680 x³', 'diff']],
-  sliders:[{id:'s', tex:'\\text{paso}', min:1, max:6, step:1, value:1}],
-  legend:'<span><i class="sw rise"></i> el término buscado y su coeficiente</span><span><i class="sw sec"></i> potencia de \\(a=2x\\)</span><span><i class="sw tan"></i> potencia de \\(b=-3\\)</span>',
-  anim:{run:22000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.s = Math.min(6, 1 + Math.floor(p*7.2)); }},
-  onInput:function(v){ v.q = null; },
-  draw:function(S, v){
-    var s = Math.round(v.s || 1), C = S.C, txt = oaTxt(S), x0, y0;
-    bnCajas(S, 7, 2, function(i){ return i === 4 ? C.rise : null; }, function(i){ return (i + 1) + 'º'; }, function(i){ return s >= 2 ? 'k = ' + i : ''; });
-    x0 = S.X(-0.8); y0 = S.Y(0.55);
-    txt('(2x − 3)⁷:  a = 2x,  b = −3,  n = 7.  Se busca el 5º término', x0, y0, 'left', C.ink);
-    if (s >= 2) txt('posición 5  →  k = 5 − 1 = 4', x0, y0 + 21, 'left', C.ink);
-    if (s >= 3) txt('coeficiente: C(7, 4) = C(7, 3) = (7 · 6 · 5)/(3 · 2 · 1) = 35', x0, y0 + 42, 'left', C.rise);
-    if (s >= 4) txt('potencia de a: (2x)⁷⁻⁴ = (2x)³ = 8x³', x0, y0 + 63, 'left', C.sec);
-    if (s >= 5) txt('potencia de b: (−3)⁴ = 81   (positiva: exponente par)', x0, y0 + 84, 'left', C.tan);
-    if (s >= 6) txt('T₅ = 35 · 8x³ · 81 = 22 680 x³', x0, y0 + 105, 'left', C.ink);
-    S.lab('F', x0, y0 + 132, 0, 0, s >= 6 && v.q != null);
-  },
-  caption:function(v){ var s = Math.round(v.s || 1); return ['Se identifican a, b y n, con el signo dentro de b. El término buscado es el de la posición 5', 'De la posición se pasa a k restando 1: k = 4', 'Con k = 4 se calcula el coeficiente binomial: 35', 'La potencia de a lleva exponente n − k = 3. El paréntesis hace que el 2 también se eleve: 8x³', 'La potencia de b lleva exponente k = 4. Como es par, (−3)⁴ es positivo: 81', 'Se multiplican las tres partes: el 5º término es 22 680 x³'][s - 1]; },
-  readout:function(v){ var s = Math.round(v.s || 1); return [['', 'T_{k+1}=\\dbinom{n}{k}a^{\\,n-k}b^{\\,k}\\qquad n=7,\\ a=2x,\\ b=-3,\\ k=4']].concat(s >= 6 ? [['d', 'T_{5}=\\dbinom{7}{4}(2x)^{3}(-3)^{4}=35\\cdot 8x^{3}\\cdot 81=22\\,680\\,x^{3}']] : []); }
-});
+/* L24 H11 · encontrar un término específico: el 5º término de (2x − 3)^7 sin escribir el desarrollo: datos → posición y k → fórmula con sus tres partes → coeficiente → potencia de a → potencia de b → producto */
+OA.scene('bn-buscar', (function(){
+  var N = 7, X0 = 0.75, DXC = 1.2, BW = 1.06, BH = 0.66, YB = -4.05, YK = -4.82, YX = -5.5, YF = -6.55, PT = -7.5, PB = -9.5, XP = [1.75, 5, 8.25], PW = 2.9, YZ = -10.15;
+  var PZ = [['Q', '\\text{¿}5^{\\circ}\\text{ término de }(2x-3)^{7}\\text{?}', '¿5º término de (2x − 3)⁷?', 'pt'], ['F', '\\Longrightarrow\\ 22\\,680\\,x^{3}', '⟹ 22 680 x³', 'diff'],
+    ['A1', 'a=2x', 'a = 2x', 'c-sec'], ['B1', 'b=-3', 'b = −3', 'c-tan'], ['N1', 'n=7', 'n = 7', ''], ['NT', '7+1=8\\text{ términos}', '7 + 1 = 8 términos', ''],
+    ['KR', 'k=\\text{posición}-1', 'k = posición − 1', 'c-sec'], ['KX', '5-1=4', '5 − 1 = 4', 'diff'],
+    ['FT', 'T_{5}=\\dbinom{7}{4}\\,(2x)^{7-4}\\,(-3)^{4}', 'T₅ = (7 sobre 4) · (2x)⁷⁻⁴ · (−3)⁴', ''],
+    ['P1', '\\binom{7}{4}', '7 sobre 4', 'diff'], ['P2', '(2x)^{3}', '(2x)³', 'c-sec'], ['P3', '(-3)^{4}', '(−3)⁴', 'c-tan'],
+    ['V1', '=35', '= 35', 'diff'], ['V2', '=8x^{3}', '= 8x³', 'c-sec'], ['V3', '=81', '= 81', 'c-tan'],
+    ['Z', 'T_{5}=35\\cdot 8x^{3}\\cdot 81=22\\,680\\,x^{3}', 'T₅ = 35 · 8x³ · 81 = 22 680 x³', 'diff'],
+    ['R1', 'a=2x,\\ \\ b=-3,\\ \\ n=7;\\ \\ \\ 7+1=8\\text{ términos}', 'a = 2x, b = −3, n = 7; 7 + 1 = 8 términos', ''],
+    ['R2', '\\text{posición }5:\\ \\ k=\\text{posición}-1=5-1=4', 'posición 5: k = posición − 1 = 5 − 1 = 4', 'c-sec'],
+    ['R3', 'T_{5}=\\binom{7}{4}\\,(2x)^{7-4}\\,(-3)^{4}=\\binom{7}{4}\\,(2x)^{3}\\,(-3)^{4}', 'T₅ = (7 sobre 4) · (2x)⁷⁻⁴ · (−3)⁴ = (7 sobre 4) · (2x)³ · (−3)⁴', ''],
+    ['R4', '\\binom{7}{4}=\\dfrac{7\\cdot 6\\cdot 5\\cdot 4}{4\\cdot 3\\cdot 2\\cdot 1}=\\dfrac{840}{24}=35', '7 sobre 4 = (7 · 6 · 5 · 4)/(4 · 3 · 2 · 1) = 840/24 = 35', 'diff'],
+    ['R5', '(2x)^{3}=2^{3}\\cdot x^{3}=8x^{3}', '(2x)³ = 2³ · x³ = 8x³', 'c-sec'],
+    ['R6', '(-3)^{4}=(-3)(-3)(-3)(-3)=81', '(−3)⁴ = (−3)(−3)(−3)(−3) = 81', 'c-tan'],
+    ['R7', '\\begin{aligned}&35\\cdot 8=280,\\quad 280\\cdot 81=22\\,680\\\\ &T_{5}=35\\cdot 8x^{3}\\cdot 81=22\\,680\\,x^{3}\\end{aligned}', '35 · 8 = 280, 280 · 81 = 22 680; T₅ = 35 · 8x³ · 81 = 22 680 x³', 'diff']];
+  var TXT = [['Se identifican a, b y n. El signo va dentro de b.', 'Hay 8 términos; se busca el de la posición 5.'],
+    ['Bajo cada posición va su k: el exponente de b.', 'k parte en 0: es la posición menos 1. Aquí, 4.'],
+    ['El término se arma con tres partes:', 'coeficiente, potencia de a y potencia de b.'],
+    ['Coeficiente: arriba, 4 factores desde el 7', 'hacia abajo; abajo, 4 factorial. Resulta 35.'],
+    ['Potencia de a: el paréntesis hace que el 2', 'también se eleve al cubo, igual que la x.'],
+    ['Potencia de b: menos 3, cuatro veces.', 'Exponente par: el resultado es positivo.'],
+    ['Se multiplican las tres partes, de a una.', 'Ese es el 5º término, sin desarrollar todo.']];
+  var TIT = ['coeficiente', 'potencia de a', 'potencia de b'];
+  (function(){ var j; for (j = 0; j <= 7; j++){ PZ.push(['O' + j, (j + 1) + '^{\\circ}', (j + 1) + 'º', j === 4 ? 'diff' : '']); PZ.push(['K' + j, 'k=' + j, 'k = ' + j, j === 4 ? 'diff' : 'c-sec']); } })();
+  function cl(t){ return Math.max(0, Math.min(1, t)); }
+  return {
+    world:{x0:0, x1:10, y0:-20, y1:0}, aspect:20/10,
+    aria:'Animación en siete pasos para encontrar el quinto término de 2x menos 3, elevado a 7, sin escribir el desarrollo completo. Uno: se identifican a igual a 2x, b igual a menos 3 y n igual a 7; el desarrollo tiene 7 más 1, 8 términos, dibujados como ocho casilleros numerados; el quinto queda marcado. Dos: bajo cada casillero se escribe su valor de k, de 0 a 7; k es la posición menos 1, y para el quinto es 5 menos 1, 4. Tres: la fórmula del término: T sub 5 es 7 sobre 4, por 2x elevado a 7 menos 4, por menos 3 elevado a 4; sus tres partes van a tres recuadros: coeficiente, potencia de a y potencia de b. Cuatro: el coeficiente, 7 sobre 4, es 840 dividido en 24, 35. Cinco: la potencia de a, 2x al cubo, es 8 x al cubo. Seis: la potencia de b, menos 3 a la cuarta, es 81. Siete: se multiplican las tres partes: 35 por 8 x al cubo por 81 es 22680 x al cubo. Bajo la figura, un registro numerado guarda la expresión de cada paso, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw rise"></i> el término buscado y su coeficiente</span><span><i class="sw sec"></i> \\(k\\) y la potencia de \\(a=2x\\)</span><span><i class="sw tan"></i> la potencia de \\(b=-3\\)</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b';
+      var j, i, a, pr, xc, COL = [C.rise, C.sec, C.tan], a1 = ap(1), a2 = ap(2), a3 = ap(3), a7 = ap(7);
+      function ap(m){ return k > m ? 1 : (k === m ? u : 0); } /* cuánto ha aparecido lo del paso m; después queda */
+      function tx(t, x, yy, al, col, size, alpha, bold){ if (alpha <= 0) return; c.globalAlpha = alpha; c.font = (bold || '600') + ' ' + size + 'px ' + F; c.fillStyle = col; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(yy)); c.globalAlpha = 1; }
+      function col(j){ return X0 + DXC*j; }
+      function seg(x0, y0, x1, y1, colr, al, w){ if (al <= 0) return; c.globalAlpha = al; c.strokeStyle = colr; c.lineWidth = w || 1.1; c.setLineDash([]); c.beginPath(); c.moveTo(X(x0), Y(y0)); c.lineTo(X(x0 + (x1 - x0)*al), Y(y0 + (y1 - y0)*al)); c.stroke(); c.globalAlpha = 1; }
+      /* paso 1: los datos y los 8 casilleros, uno por término, con su posición; el 5º, marcado */
+      if (a1 > 0.25) L('A1', 0.3, -2.8, 0); if (a1 > 0.4) L('B1', 2.3, -2.8, 0); if (a1 > 0.55) L('N1', 4.4, -2.8, 0); if (a1 > 0.7) L('NT', 6.2, -2.8, 0);
+      tx('posición de cada término:', 0.22, -3.47, 'left', MU, 10.5, a1, '700');
+      for (j = 0; j <= 7; j++){ pr = cl(a1*9.5 - j); if (pr <= 0) continue; xc = col(j);
+        if (j === 4){ c.globalAlpha = 0.16*pr; c.fillStyle = C.rise; c.fillRect(X(xc - BW/2), Y(YB + BH/2), X(xc + BW/2) - X(xc - BW/2), Y(YB - BH/2) - Y(YB + BH/2)); c.globalAlpha = 1; }
+        c.globalAlpha = pr; c.strokeStyle = j === 4 ? C.rise : 'rgba(31,93,134,0.6)'; c.lineWidth = j === 4 ? 1.9 : 1.1; c.strokeRect(X(xc - BW/2), Y(YB + BH/2), X(xc + BW/2) - X(xc - BW/2), Y(YB - BH/2) - Y(YB + BH/2)); c.globalAlpha = 1;
+        if (pr > 0.5) L('O' + j, xc, YB); }
+      tx('se busca', col(4), -3.47, 'center', C.rise, 10.5, cl(a1*9.5 - 5), '700');
+      /* paso 2: bajo cada posición, su k (el exponente de b); k = posición − 1 */
+      for (j = 0; j <= 7; j++){ pr = cl(a2*9 - j*0.8); if (pr > 0.4) L('K' + j, col(j), YK); }
+      if (a2 > 0.5) L('KR', 0.22, YX, 0); if (a2 > 0.85) L('KX', col(4), YX);
+      /* paso 3: la fórmula con los datos, y sus tres partes en tres recuadros */
+      if (a3 > 0.2) L('FT', 5, YF);
+      for (i = 0; i < 3; i++){ pr = cl(a3*4 - 1 - i*0.6); if (pr <= 0) continue; xc = XP[i];
+        seg(5, -7.2, xc, PT, COL[i], pr, 1);
+        c.globalAlpha = 0.07*pr; c.fillStyle = COL[i]; c.fillRect(X(xc - PW/2), Y(PT), X(xc + PW/2) - X(xc - PW/2), Y(PB) - Y(PT)); c.globalAlpha = 1;
+        c.globalAlpha = pr; c.strokeStyle = COL[i]; c.lineWidth = 1.3; c.strokeRect(X(xc - PW/2), Y(PT), X(xc + PW/2) - X(xc - PW/2), Y(PB) - Y(PT)); c.globalAlpha = 1;
+        tx(TIT[i], xc, PT - 0.3, 'center', COL[i], 11, pr, '700');
+        if (pr > 0.6) L('P' + (i + 1), xc, -8.42); }
+      /* pasos 4, 5 y 6: el valor de cada parte se escribe dentro de su recuadro */
+      for (i = 0; i < 3; i++) if (ap(4 + i) > 0.5) L('V' + (i + 1), XP[i], -9.12);
+      /* paso 7: las tres partes se juntan en el producto */
+      for (i = 0; i < 3; i++) seg(XP[i], PB, 5 + (XP[i] - 5)*0.55, -9.82, COL[i], a7, 1);
+      if (a7 > 0.5) L('Z', 5, YZ);
+      /* la pregunta queda arriba; la respuesta se escribe a su lado */
+      L('Q', 0.3, -1.95, 0); if (a7 > 0.7) L('F', 6.2, -1.95, 0);
+      /* frase del paso y número de paso */
+      tx('paso ' + k + ' de ' + N, 0.3, -10.95, 'left', MU, 11, 1);
+      tx(TXT[k - 1][0], 0.3, -11.5, 'left', C.ink, 12.5, 1); c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(TXT[k - 1][1], X(0.3), Y(-11.5) + 19);
+      dtQue(S, 'cómo hallar un solo término del desarrollo,', 'sin escribir los demás: con k y tres partes.');
+      T.fin();
+      oaReg(S, k, N, 0.3, -13.45, [0, 25, 54, 90, 124, 149, 183]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{datos: }(2x-3)^{7}=\\bigl(2x+(-3)\\bigr)^{7}\\\\&\\qquad a=2x,\\quad b=-3,\\quad n=7\\\\&\\qquad\\text{términos: }n+1=7+1=8\\\\&\\qquad\\text{se busca el }5^{\\circ}\\text{ término}',
+      '\\text{de la posición a }k:\\quad k=\\text{posición}-1\\\\&\\qquad k=5-1=4\\quad\\text{(el exponente de }b\\text{)}',
+      '\\text{fórmula: }T_{k+1}=\\dbinom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k}\\\\&\\qquad\\text{reemplazo: }T_{5}=\\dbinom{7}{4}\\,(2x)^{7-4}\\,(-3)^{4}\\\\&\\qquad 7-4=3:\\quad T_{5}=\\dbinom{7}{4}\\,(2x)^{3}\\,(-3)^{4}',
+      '\\text{coeficiente: }\\dbinom{7}{4}=\\dfrac{7\\cdot 6\\cdot 5\\cdot 4}{4\\cdot 3\\cdot 2\\cdot 1}\\\\&\\qquad\\text{arriba: }7\\cdot 6=42,\\quad 42\\cdot 5=210\\\\&\\qquad\\phantom{\\text{arriba: }}210\\cdot 4=840\\\\&\\qquad\\text{abajo: }4\\cdot 3=12,\\quad 12\\cdot 2=24\\\\&\\qquad\\phantom{\\text{abajo: }}24\\cdot 1=24\\\\&\\qquad\\text{división: }\\dfrac{840}{24}=35',
+      '\\text{potencia de }a:\\quad (2x)^{3}=2^{3}\\cdot x^{3}\\\\&\\qquad 2\\cdot 2=4,\\quad 4\\cdot 2=8\\quad\\to\\quad (2x)^{3}=8x^{3}',
+      '\\text{potencia de }b:\\quad (-3)^{4}=(-3)(-3)(-3)(-3)\\\\&\\qquad (-3)(-3)=9,\\quad 9\\cdot(-3)=-27\\\\&\\qquad (-27)(-3)=81\\quad\\to\\quad (-3)^{4}=81',
+      '\\text{producto: }T_{5}=35\\cdot 8x^{3}\\cdot 81\\\\&\\qquad 35\\cdot 8=280,\\quad 280\\cdot 81=22\\,680\\\\&\\qquad T_{5}=22\\,680\\,x^{3}\\quad\\text{(el }5^{\\circ}\\text{ término)}']; return dtPasos(R.slice(0, k)); }
+  };
+})());

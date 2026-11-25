@@ -12,42 +12,82 @@
       <li><b>Coeficiente de una potencia dada</b></li>
     </ol>
     <h1>Coeficiente de una potencia dada</h1>
-    <p class="lede">Para saber qué número acompaña a una potencia determinada de \(x\) en un desarrollo —por ejemplo, el coeficiente de \(x^{3}\)— no hace falta desarrollar todo: se busca qué término tiene ese exponente.
-    \[\text{exponente de }x\text{ en }T_{k+1}=m\ \Longrightarrow\ k\ \Longrightarrow\ \text{coeficiente de }x^{m}\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(x+2\). Su <b>desarrollo</b> es lo que queda al calcular una potencia del binomio, como \((x+2)^{3}\), y sumar los términos semejantes. En el desarrollo, cada potencia de \(x\) va multiplicada por un número: ese número es el <b>coeficiente</b> de esa potencia. Por ejemplo, en \(6x^{2}\) el coeficiente de \(x^{2}\) es \(6\). La pregunta de esta hoja: <b>¿qué coeficiente lleva una potencia dada, como \(x^{2}\), sin tener que escribir todo el desarrollo?</b></p>
+    <p class="lede"><b>De dónde sale la respuesta: un caso que se puede desarrollar completo.</b> Con el cubo del binomio (hoja H02), \((a+b)^{3}=a^{3}+3a^{2}b+3ab^{2}+b^{3}\), y \(a=x\), \(b=2\): \[\begin{aligned}(x+2)^{3}&=x^{3}+3\cdot x^{2}\cdot 2+3\cdot x\cdot 2^{2}+2^{3}&&\text{se reemplaza }a=x,\ b=2\\ &=x^{3}+3\cdot x^{2}\cdot 2+3\cdot x\cdot 4+8&&2^{2}=4,\quad 2^{3}=8\\ &=x^{3}+6x^{2}+12x+8&&3\cdot 2=6,\quad 3\cdot 4=12\end{aligned}\] Ahora se mira cada término por separado. En la hoja H10 los términos se numeran con \(k\), que es el exponente de \(b\) (aquí, el exponente del \(2\)), y parte en \(0\): \[\begin{aligned}k=0:\quad&1\cdot x^{3}\cdot 2^{0}=1\cdot x^{3}\cdot 1=1\,x^{3}&&\text{exponente de }x:\ 3-0=3&&\text{coeficiente }1\\ k=1:\quad&3\cdot x^{2}\cdot 2^{1}=3\cdot 2\cdot x^{2}=6\,x^{2}&&\text{exponente de }x:\ 3-1=2&&\text{coeficiente }6\\ k=2:\quad&3\cdot x^{1}\cdot 2^{2}=3\cdot 4\cdot x=12\,x&&\text{exponente de }x:\ 3-2=1&&\text{coeficiente }12\\ k=3:\quad&1\cdot x^{0}\cdot 2^{3}=1\cdot 1\cdot 8=8&&\text{exponente de }x:\ 3-3=0&&\text{coeficiente }8\end{aligned}\] Los números \(1,\ 3,\ 3,\ 1\) que van adelante son los coeficientes binomiales \(\dbinom{3}{0},\ \dbinom{3}{1},\ \dbinom{3}{2},\ \dbinom{3}{3}\) (hoja H06). El símbolo \(\dbinom{n}{k}\) se lee «\(n\) sobre \(k\)».</p>
+    <p class="lede"><b>La regularidad.</b> En cada término pasan dos cosas. Primera: el exponente de \(x\) depende de \(k\) (aquí es \(3-k\): \(3,\ 2,\ 1,\ 0\)), así que cada potencia de \(x\) está en <b>un solo</b> término. Segunda: el coeficiente es <b>todo el número</b> de ese término: el coeficiente binomial multiplicado por la potencia del número (\(1\cdot 1\), \(3\cdot 2\), \(3\cdot 4\), \(1\cdot 8\)). Entonces, para saber el coeficiente de \(x^{2}\) basta encontrar el término que tiene \(x^{2}\): \(3-k=2\) da \(k=1\), y su número es \(3\cdot 2=6\).</p>
+    <p class="lede"><b>La regla, en tres pasos.</b> Se parte del término general del desarrollo de \((a+b)^{n}\) (hoja H10), con \(n\) entero, \(n\ge 1\): \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». \(T_{k+1}\) se lee «te sub \(k\) más \(1\)»: es el término que ocupa la posición \(k+1\). \[\underbrace{\text{exponente de }x\text{ en }T_{k+1}=m}_{\text{1. se plantea}}\ \Longrightarrow\ \underbrace{k}_{\text{2. se despeja}}\ \Longrightarrow\ \underbrace{\text{coeficiente de }x^{m}}_{\text{3. se calcula el número de ese término}}\] Aquí \(m\) es el exponente de la potencia que se busca. <b>Comprobación con un caso nuevo:</b> el coeficiente de \(x^{2}\) en \((x+2)^{4}\). El término general es \(\dbinom{4}{k}x^{4-k}\cdot 2^{k}\). Paso 1: \(4-k=2\). Paso 2: \(k=4-2=2\). Paso 3: \(\dbinom{4}{2}\cdot 2^{2}=6\cdot 4=24\). Y el desarrollo completo, con los coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) (fila 4 del triángulo de los coeficientes, hoja H03): \[(x+2)^{4}=x^{4}+4\cdot x^{3}\cdot 2+6\cdot x^{2}\cdot 4+4\cdot x\cdot 8+16=x^{4}+8x^{3}+24x^{2}+32x+16\] El coeficiente de \(x^{2}\) es \(24\). ✓ Por qué la regla vale siempre está demostrado más abajo, en el recuadro «El procedimiento, y por qué funciona».</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>El desarrollo de \(\left(x^{2}+\dfrac{2}{x}\right)^{6}\): se busca el coeficiente de \(x^{3}\). Después mueve el deslizador para buscar otra potencia.</p>
+  <p>El desarrollo de \(\left(x^{2}+\dfrac{2}{x}\right)^{6}\), con \(x\neq 0\): se busca el coeficiente de \(x^{3}\), en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Pasos 1 y 2, mira los dos ejes:</b> en el eje horizontal está \(k\), de \(0\) a \(6\); bajo la figura, la fila «término» dice qué <b>término</b> es cada uno: 1º, 2º, …, 7º. En el eje vertical está el <b>exponente de \(x\)</b>. Arriba a la derecha, en azul, la regla que lo da: \(12-3k\).</li>
+    <li><b>Paso 3, mira los puntos azules:</b> hay un punto por cada término. Su altura es el exponente de \(x\) de ese término, y a su lado está escrita la potencia: \(x^{12},\ x^{9},\ x^{6},\ x^{3},\ x^{0},\ x^{-3},\ x^{-6}\). Las líneas punteadas llevan cada punto a su \(k\) y a su exponente.</li>
+    <li><b>Pasos 4 a 6, mira la recta burdeo:</b> marca la altura \(3\), el exponente de la <b>potencia que se busca</b>, \(x^{3}\). El punto que cae sobre ella queda encerrado en un círculo: es el de \(k=3\), el 4º término. A su lado se escribe su <b>coeficiente</b>, \(160\), y arriba, junto a la pregunta, la respuesta.</li>
+    <li><b>Paso 7, mira la recta verde:</b> marca la altura \(5\), para buscar \(x^{5}\). Ningún punto cae sobre ella: el círculo vacío muestra dónde tendría que estar, entre \(k=2\) y \(k=3\). Esa potencia no aparece.</li>
+    <li><b>Lee después el registro «Paso a paso» y la cuenta de abajo,</b> línea por línea. Conclusión: el coeficiente de una potencia se obtiene encontrando el término que la tiene (se despeja \(k\)) y calculando todo el número de ese término; si ningún término la tiene, el coeficiente es \(0\).</li>
+  </ol>
   <div class="stage" data-scene="bn-potencia"></div>
   <ul class="keys">
-    <li><b>Puntos azules:</b> el exponente de \(x\) en cada término, \(12-3k\), para \(k=0,\dots,6\).</li>
-    <li><b>Recta punteada burdeo:</b> el exponente que se busca.</li>
-    <li><b>Punto burdeo:</b> el término que tiene ese exponente. Si ningún punto cae sobre la recta, esa potencia no aparece: su coeficiente es \(0\).</li>
-    <li><b>Bajo el dibujo:</b> la ecuación para \(k\) y la cuenta del coeficiente, que incluye la potencia de \(2\).</li>
-    <li><b>Deslizador «exponente buscado»:</b> prueba con \(6\), con \(0\), con \(4\).</li>
+    <li><b>Eje horizontal, \(k\):</b> el número de cada término, desde \(0\). <b>Fila «término»:</b> su posición, \(k+1\).</li>
+    <li><b>Eje vertical:</b> el exponente de \(x\).</li>
+    <li><b>Puntos azules:</b> el exponente de \(x\) en cada término, \(12-3k\), con su potencia escrita al lado.</li>
+    <li><b>Recta punteada burdeo:</b> el exponente que se busca, \(3\). <b>Punto burdeo con círculo:</b> el término que lo tiene.</li>
+    <li><b>Naranja:</b> el coeficiente de ese término, que es la respuesta.</li>
+    <li><b>Recta punteada verde y círculo vacío:</b> una potencia que no aparece, \(x^{5}\); su coeficiente es \(0\).</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> cómo se juntan las potencias de \(x\) en el término general, el despeje de \(k\), por qué cada potencia está a lo más en un término, y todas las cuentas de los ejemplos.</li>
+      <li><b>Se usa sin demostrar:</b> el binomio de Newton y su término general, \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\) (hojas H05 y H10; la demostración por inducción está en la hoja H17), y la fórmula para calcular \(\dbinom{n}{k}\) (hoja H06).</li>
+      <li><b>Se usan sin demostrar</b> las leyes de las potencias, para \(x\neq 0\) y exponentes enteros: \((u\cdot v)^{k}=u^{k}\cdot v^{k}\), \(\left(\dfrac{u}{v}\right)^{k}=\dfrac{u^{k}}{v^{k}}\), \(\left(x^{r}\right)^{p}=x^{r\cdot p}\), \(\dfrac{1}{x^{k}}=x^{-k}\) y \(x^{r}\cdot x^{p}=x^{r+p}\).</li>
+      <li><b>Se usa sin demostrar:</b> que dos términos con distinto exponente de \(x\), como \(6x^{2}\) y \(12x\), no son semejantes y no se pueden juntar en uno solo.</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
-    <h3>El procedimiento</h3>
+    <h3>El procedimiento, y por qué funciona</h3>
+    <p><b>Qué se demuestra:</b> que en el desarrollo de \(\left(p\,x^{r}+q\,x^{s}\right)^{n}\) cada potencia de \(x\) aparece a lo más en un término, y cuál es su coeficiente. Aquí \(p\) y \(q\) son números distintos de \(0\); \(r\) y \(s\) son enteros <b>distintos</b> (los exponentes de \(x\) en cada parte del binomio); \(n\) es entero, \(n\ge 1\); y \(x\neq 0\). <b>Cómo funciona el método:</b> se escribe el término general, se juntan todas las \(x\) en una sola potencia, y se mira qué exponente queda. Primero con los números de la animación; después, con letras.</p>
     <ol class="steps">
-      <li>Escribir el término general y juntar las potencias de \(x\): queda \(T_{k+1}=(\text{número que depende de }k)\cdot x^{\,(\text{expresión con }k)}\).</li>
-      <li>Igualar el exponente al que se pide, \(m\), y despejar \(k\).</li>
-      <li>Si \(k\) es entero y \(0\le k\le n\): el coeficiente es el número que acompaña a \(x^{m}\) en ese término, con <b>todo</b> lo que no es \(x\): el coeficiente binomial, las potencias de los números y el signo.</li>
-      <li>Si no: la potencia no aparece, y su coeficiente es \(0\).</li>
+      <li><b>Con números</b> (la animación: \(p=1\), \(r=2\), \(q=2\), \(s=-1\), \(n=6\), porque \(\dfrac{2}{x}=2\cdot x^{-1}\)): \[\begin{aligned}T_{k+1}&=\binom{6}{k}\left(x^{2}\right)^{6-k}\left(\frac{2}{x}\right)^{k}&&\text{término general con }a=x^{2},\ b=\tfrac{2}{x}\\ &=\binom{6}{k}\,x^{2\cdot(6-k)}\left(\frac{2}{x}\right)^{k}&&\text{potencia de una potencia}\\ &=\binom{6}{k}\,x^{12-2k}\left(\frac{2}{x}\right)^{k}&&2\cdot(6-k)=12-2k\\ &=\binom{6}{k}\,x^{12-2k}\cdot\frac{2^{k}}{x^{k}}&&\text{potencia de un cociente}\\ &=\binom{6}{k}\,x^{12-2k}\cdot 2^{k}\cdot x^{-k}&&\tfrac{1}{x^{k}}=x^{-k}\\ &=\binom{6}{k}\,2^{k}\,x^{12-2k-k}&&\text{producto de potencias de igual base}\\ &=\binom{6}{k}\,2^{k}\,x^{12-3k}&&-2k-k=-3k\end{aligned}\] El exponente de \(x\) es \(12-3k\), y el número que acompaña a la potencia es \(\dbinom{6}{k}\cdot 2^{k}\).</li>
+      <li><b>Con letras, el mismo camino:</b> \[\begin{aligned}T_{k+1}&=\binom{n}{k}\left(p\,x^{r}\right)^{n-k}\left(q\,x^{s}\right)^{k}&&\text{término general con }a=p\,x^{r},\ b=q\,x^{s}\\ &=\binom{n}{k}\,p^{\,n-k}\left(x^{r}\right)^{n-k}q^{\,k}\left(x^{s}\right)^{k}&&\text{potencia de un producto}\\ &=\binom{n}{k}\,p^{\,n-k}\,q^{\,k}\,x^{r(n-k)}\,x^{sk}&&\text{potencia de una potencia}\\ &=\binom{n}{k}\,p^{\,n-k}\,q^{\,k}\,x^{r(n-k)+sk}&&\text{producto de potencias de igual base}\end{aligned}\]</li>
+      <li><b>Se ordena el exponente:</b> \[\begin{aligned}r(n-k)+sk&=rn-rk+sk&&\text{se distribuye }r\\ &=rn+(s-r)\,k&&\text{factor común }k\end{aligned}\] Comprobación con la animación: \(rn=2\cdot 6=12\) y \(s-r=-1-2=-3\); queda \(12-3k\). ✓</li>
+      <li><b>Paso 1 del procedimiento: se plantea.</b> Para que el término tenga \(x^{m}\), el exponente tiene que ser \(m\): \(rn+(s-r)\,k=m\).</li>
+      <li><b>Paso 2: se despeja \(k\).</b> \[\begin{aligned}rn+(s-r)\,k&=m&&\\ (s-r)\,k&=m-rn&&\text{se resta }rn\text{ a los dos lados}\\ k&=\frac{m-rn}{s-r}&&\text{se divide por }s-r\text{, que no es }0\text{ porque }r\neq s\end{aligned}\] Comprobación con la animación y \(m=3\): \(k=\dfrac{3-12}{-3}=\dfrac{-9}{-3}=3\). ✓</li>
+      <li><b>Cada potencia está a lo más en un término.</b> La ecuación del paso 2 tiene una sola solución. Dicho de otro modo: al pasar de un término al siguiente (\(k\) sube en \(1\)), el exponente cambia siempre en la misma cantidad, \(s-r\), que no es \(0\); por eso dos términos distintos nunca tienen el mismo exponente. En la animación: \(12,\ 9,\ 6,\ 3,\ 0,\ -3,\ -6\), cada uno \(3\) menos que el anterior, todos distintos.</li>
+      <li><b>Paso 3: se calcula el coeficiente.</b> Si el \(k\) despejado es un entero y \(0\le k\le n\), ese término existe, es el único con \(x^{m}\), y el coeficiente de \(x^{m}\) es todo lo que no es \(x\) en él: \[\text{coeficiente de }x^{m}=\binom{n}{k}\,p^{\,n-k}\,q^{\,k}\] Lleva el coeficiente binomial, las potencias de los números y el signo.</li>
+      <li><b>Si no:</b> si \(k\) no es entero, o es negativo, o es mayor que \(n\), ningún término tiene \(x^{m}\). Esa potencia no aparece en el desarrollo, y su coeficiente es \(0\).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>En el ejemplo de la animación</h3>
+    <h3>En el ejemplo de la animación, con todas las cuentas</h3>
     <ol class="steps">
-      <li>\(T_{k+1}=\dbinom{6}{k}\left(x^{2}\right)^{6-k}\left(\dfrac{2}{x}\right)^{k}=\dbinom{6}{k}\,2^{k}\,x^{12-3k}\).</li>
-      <li>Para \(x^{3}\): \(12-3k=3\ \Longrightarrow\ k=3\).</li>
-      <li>Coeficiente: \(\dbinom{6}{3}\cdot 2^{3}=20\cdot 8=160\).</li>
-      <li>Para \(x^{4}\): \(12-3k=4\ \Longrightarrow\ k=\dfrac{8}{3}\), que no es entero. El coeficiente de \(x^{4}\) es \(0\).</li>
+      <li><b>Término general</b> (recuadro anterior, paso 1): \(T_{k+1}=\dbinom{6}{k}\,2^{k}\,x^{12-3k}\), con \(k=0,\ 1,\ \dots,\ 6\).</li>
+      <li><b>Se busca \(x^{3}\). Se plantea:</b> \(12-3k=3\).</li>
+      <li><b>Se despeja \(k\):</b> \[\begin{aligned}12-3k&=3&&\\ 12&=3+3k&&\text{se suma }3k\text{ a los dos lados}\\ 12-3&=3k&&\text{se resta }3\text{ a los dos lados}\\ 9&=3k&&12-3=9\\ k&=\frac{9}{3}=3&&\text{se divide por }3\end{aligned}\] \(3\) es entero y está entre \(0\) y \(6\): el término existe. Su posición es \(k+1=3+1=4\): es el 4º.</li>
+      <li><b>Coeficiente binomial</b> (hoja H06): \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3\cdot 2\cdot 1}\). Arriba: \(6\cdot 5=30\), \(30\cdot 4=120\). Abajo: \(3\cdot 2=6\), \(6\cdot 1=6\). División: \(\dfrac{120}{6}=20\).</li>
+      <li><b>Potencia del número:</b> \(2^{3}=2\cdot 2\cdot 2\). \(2\cdot 2=4\), \(4\cdot 2=8\).</li>
+      <li><b>Producto:</b> \(20\cdot 8=160\). <b>El coeficiente de \(x^{3}\) es \(160\)</b>: el 4º término es \(160\,x^{3}\).</li>
+      <li><b>Otra potencia, \(x^{5}\):</b> \[\begin{aligned}12-3k&=5&&\\ 12-5&=3k&&\text{se suma }3k\text{ y se resta }5\text{ a los dos lados}\\ 7&=3k&&12-5=7\\ k&=\frac{7}{3}&&\text{se divide por }3\end{aligned}\] \(\dfrac{7}{3}\) no es entero (\(3\cdot 2=6\) y \(3\cdot 3=9\): el \(7\) queda entre medio, así que \(k\) quedaría entre \(2\) y \(3\)). Ningún término tiene \(x^{5}\): <b>su coeficiente es \(0\)</b>.</li>
+      <li><b>Comprobación: el desarrollo completo,</b> término por término, con \(\dbinom{6}{k}=1,\ 6,\ 15,\ 20,\ 15,\ 6,\ 1\) (fila 6 del triángulo de los coeficientes, hoja H03) y \(2^{k}=1,\ 2,\ 4,\ 8,\ 16,\ 32,\ 64\): \[\begin{aligned}k=0:\quad&1\cdot 1\cdot x^{12}=x^{12}&\qquad k=4:\quad&15\cdot 16\cdot x^{0}=240\\ k=1:\quad&6\cdot 2\cdot x^{9}=12\,x^{9}&\qquad k=5:\quad&6\cdot 32\cdot x^{-3}=192\,x^{-3}\\ k=2:\quad&15\cdot 4\cdot x^{6}=60\,x^{6}&\qquad k=6:\quad&1\cdot 64\cdot x^{-6}=64\,x^{-6}\\ k=3:\quad&20\cdot 8\cdot x^{3}=160\,x^{3}&&\end{aligned}\] \[\left(x^{2}+\frac{2}{x}\right)^{6}=x^{12}+12x^{9}+60x^{6}+160x^{3}+240+\frac{192}{x^{3}}+\frac{64}{x^{6}}\] El término con \(x^{3}\) es \(160x^{3}\) ✓, y no hay ningún término con \(x^{5}\) ✓.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Tres casos frecuentes: cuál es el exponente en cada uno</h3>
+    <p>La ecuación del paso 1 depende de cómo es el binomio. Estos tres casos salen del término general \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\), reemplazando \(a\) y \(b\).</p>
+    <ol class="steps">
+      <li><b>La \(x\) está en la primera parte:</b> \((x+c)^{n}\), con \(c\) un número. \(T_{k+1}=\dbinom{n}{k}x^{\,n-k}c^{\,k}\): el exponente de \(x\) es \(n-k\). Se plantea \(n-k=m\), y sale \(k=n-m\). Ejemplo: \(x^{2}\) en \((x+2)^{4}\): \(k=4-2=2\).</li>
+      <li><b>La \(x\) está en la segunda parte:</b> \((1+x)^{n}\). \(T_{k+1}=\dbinom{n}{k}\cdot 1^{\,n-k}\cdot x^{\,k}=\dbinom{n}{k}x^{\,k}\), porque \(1\) elevado a cualquier exponente es \(1\). El exponente de \(x\) es \(k\): se plantea \(k=m\). Ejemplo: \(x^{2}\) en \((1+x)^{4}\): \(k=2\), coeficiente \(\dbinom{4}{2}=\dfrac{4\cdot 3}{2\cdot 1}=\dfrac{12}{2}=6\).</li>
+      <li><b>Dos letras:</b> \((u\,a+v\,b)^{n}\), con \(u\) y \(v\) números. \(T_{k+1}=\dbinom{n}{k}(u\,a)^{n-k}(v\,b)^{k}\): el exponente de \(b\) es \(k\) y el de \(a\) es \(n-k\). Para \(a^{i}b^{j}\) se toma \(k=j\), y hay que revisar que \(n-k=i\); si \(i+j\neq n\), ese producto de letras no aparece y su coeficiente es \(0\).</li>
     </ol>
   </div>
 </section>
@@ -59,9 +99,14 @@
   <h3>Ejemplo 1: el coeficiente de \(x^{3}\) en \((x+2)^{7}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(T_{k+1}=\dbinom{7}{k}x^{7-k}\cdot 2^{k}\).</li>
-    <li>\(7-k=3\ \Longrightarrow\ k=4\).</li>
-    <li>Coeficiente: \(\dbinom{7}{4}\cdot 2^{4}=35\cdot 16=560\).</li>
+    <li><b>Datos.</b> \(a=x\), \(b=2\), \(n=7\). Se busca el exponente \(m=3\).</li>
+    <li><b>Término general:</b> \(T_{k+1}=\dbinom{7}{k}x^{7-k}\cdot 2^{k}\). El exponente de \(x\) es \(7-k\).</li>
+    <li><b>Se plantea:</b> \(7-k=3\).</li>
+    <li><b>Se despeja \(k\):</b> se suma \(k\) y se resta \(3\) a los dos lados: \(7-3=k\), o sea \(k=4\). Es entero y está entre \(0\) y \(7\): es el término de posición \(4+1=5\).</li>
+    <li><b>Coeficiente binomial:</b> \(\dbinom{7}{4}=\dfrac{7\cdot 6\cdot 5\cdot 4}{4\cdot 3\cdot 2\cdot 1}\). Arriba: \(7\cdot 6=42\), \(42\cdot 5=210\), \(210\cdot 4=840\). Abajo: \(4\cdot 3=12\), \(12\cdot 2=24\), \(24\cdot 1=24\). División: \(\dfrac{840}{24}=35\).</li>
+    <li><b>Potencia del número:</b> \(2^{4}=2\cdot 2\cdot 2\cdot 2\). \(2\cdot 2=4\), \(4\cdot 2=8\), \(8\cdot 2=16\).</li>
+    <li><b>Producto:</b> \(35\cdot 16\). Por partes: \(35\cdot 10=350\), \(35\cdot 6=210\), \(350+210=560\).</li>
+    <li><b>Resultado.</b> El coeficiente de \(x^{3}\) es \(560\): el 5º término es \(560\,x^{3}\).</li>
   </ol>
   </div>
   </div>
@@ -70,9 +115,16 @@
   <h3>Ejemplo 2, con signo: el coeficiente de \(x^{5}\) en \((2x-1)^{8}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(T_{k+1}=\dbinom{8}{k}(2x)^{8-k}(-1)^{k}=\dbinom{8}{k}\,2^{8-k}\,(-1)^{k}\,x^{8-k}\).</li>
-    <li>\(8-k=5\ \Longrightarrow\ k=3\).</li>
-    <li>Coeficiente: \(\dbinom{8}{3}\cdot 2^{5}\cdot(-1)^{3}=56\cdot 32\cdot(-1)=-1792\).</li>
+    <li><b>Datos.</b> Una resta es la suma del opuesto: \(2x-1=2x+(-1)\). Entonces \(a=2x\), \(b=-1\), \(n=8\). Se busca \(m=5\).</li>
+    <li><b>Término general:</b> \(T_{k+1}=\dbinom{8}{k}(2x)^{8-k}(-1)^{k}\).</li>
+    <li><b>Se separa el número de la \(x\)</b> (potencia de un producto): \((2x)^{8-k}=2^{8-k}\cdot x^{8-k}\). Queda \(T_{k+1}=\dbinom{8}{k}\cdot 2^{8-k}\cdot(-1)^{k}\cdot x^{8-k}\). El exponente de \(x\) es \(8-k\).</li>
+    <li><b>Se plantea:</b> \(8-k=5\).</li>
+    <li><b>Se despeja \(k\):</b> \(8-5=k\), o sea \(k=3\). Es entero y está entre \(0\) y \(8\): es el 4º término (\(3+1=4\)).</li>
+    <li><b>Coeficiente binomial:</b> \(\dbinom{8}{3}=\dfrac{8\cdot 7\cdot 6}{3\cdot 2\cdot 1}\). Arriba: \(8\cdot 7=56\), \(56\cdot 6=336\). Abajo: \(3\cdot 2=6\), \(6\cdot 1=6\). División: \(\dfrac{336}{6}=56\).</li>
+    <li><b>Potencia del \(2\):</b> el exponente es \(8-k=8-3=5\). \(2^{5}=2\cdot 2\cdot 2\cdot 2\cdot 2\): \(4,\ 8,\ 16,\ 32\). \(2^{5}=32\).</li>
+    <li><b>Signo:</b> \((-1)^{3}=(-1)\cdot(-1)\cdot(-1)\). \((-1)\cdot(-1)=1\), \(1\cdot(-1)=-1\).</li>
+    <li><b>Producto:</b> \(56\cdot 32\). Por partes: \(56\cdot 30=1680\), \(56\cdot 2=112\), \(1680+112=1792\). Con el signo: \(1792\cdot(-1)=-1792\).</li>
+    <li><b>Resultado.</b> El coeficiente de \(x^{5}\) es \(-1792\): el 4º término es \(-1792\,x^{5}\).</li>
   </ol>
   </div>
   </div>
@@ -81,26 +133,43 @@
   <h3>Ejemplo 3, con dos letras: el coeficiente de \(a^{3}b^{2}\) en \((2a+3b)^{5}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>El exponente de \(b\) es \(k\): \(k=2\) (y el de \(a\) es \(5-2=3\), como se pide).</li>
-    <li>\(T_{3}=\dbinom{5}{2}(2a)^{3}(3b)^{2}=10\cdot 8a^{3}\cdot 9b^{2}\).</li>
-    <li>Coeficiente: \(10\cdot 8\cdot 9=720\).</li>
+    <li><b>Datos.</b> El binomio es \(2a+3b\): su primera parte es \(2a\), la segunda es \(3b\), y \(n=5\).</li>
+    <li><b>Término general:</b> \(T_{k+1}=\dbinom{5}{k}(2a)^{5-k}(3b)^{k}\). El exponente de \(b\) es \(k\); el de \(a\) es \(5-k\).</li>
+    <li><b>Se plantea y se despeja:</b> se pide \(b^{2}\), así que \(k=2\). Se revisa la \(a\): \(5-k=5-2=3\), y se pide \(a^{3}\). ✓ Es el 3º término (\(2+1=3\)).</li>
+    <li><b>Coeficiente binomial:</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}\). Arriba: \(5\cdot 4=20\). Abajo: \(2\cdot 1=2\). División: \(\dfrac{20}{2}=10\).</li>
+    <li><b>Primera potencia</b> (potencia de un producto): \((2a)^{3}=2^{3}\cdot a^{3}\). \(2^{3}=2\cdot 2\cdot 2=8\). Queda \(8a^{3}\).</li>
+    <li><b>Segunda potencia:</b> \((3b)^{2}=3^{2}\cdot b^{2}\). \(3^{2}=3\cdot 3=9\). Queda \(9b^{2}\).</li>
+    <li><b>Producto de los números:</b> \(10\cdot 8=80\), \(80\cdot 9=720\).</li>
+    <li><b>Resultado.</b> El coeficiente de \(a^{3}b^{2}\) es \(720\): el 3º término es \(720\,a^{3}b^{2}\).</li>
   </ol>
   </div>
   </div>
 
   <div class="prop p4">
-  <h3>Ejemplo 4: una potencia que no aparece. \(x^{4}\) en \(\left(x^{2}+1\right)^{5}\)… y \(x^{3}\)</h3>
+  <h3>Ejemplo 4: una potencia que aparece y otra que no. \(x^{4}\) y \(x^{3}\) en \(\left(x^{2}+1\right)^{5}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(T_{k+1}=\dbinom{5}{k}\left(x^{2}\right)^{5-k}=\dbinom{5}{k}x^{10-2k}\).</li>
-    <li>\(x^{4}\): \(10-2k=4\ \Longrightarrow\ k=3\). Coeficiente: \(\dbinom{5}{3}=10\).</li>
-    <li>\(x^{3}\): \(10-2k=3\ \Longrightarrow\ k=\dfrac{7}{2}\), no entero. Coeficiente \(0\): en este desarrollo solo hay potencias pares.</li>
+    <li><b>Datos.</b> \(a=x^{2}\), \(b=1\), \(n=5\).</li>
+    <li><b>Término general:</b> \(T_{k+1}=\dbinom{5}{k}\left(x^{2}\right)^{5-k}\cdot 1^{k}\).</li>
+    <li><b>Se juntan las potencias:</b> \(\left(x^{2}\right)^{5-k}=x^{2\cdot(5-k)}=x^{10-2k}\) (potencia de una potencia), y \(1^{k}=1\). Queda \(T_{k+1}=\dbinom{5}{k}\,x^{10-2k}\). El exponente de \(x\) es \(10-2k\).</li>
+    <li><b>Para \(x^{4}\), se plantea:</b> \(10-2k=4\).</li>
+    <li><b>Se despeja \(k\):</b> \(10-4=2k\); \(6=2k\); \(k=\dfrac{6}{2}=3\). Es entero y está entre \(0\) y \(5\): es el 4º término.</li>
+    <li><b>Coeficiente:</b> \(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3\cdot 2\cdot 1}\). Arriba: \(5\cdot 4=20\), \(20\cdot 3=60\). Abajo: \(3\cdot 2=6\), \(6\cdot 1=6\). División: \(\dfrac{60}{6}=10\). No hay otro número que multiplicar (\(1^{3}=1\)): <b>el coeficiente de \(x^{4}\) es \(10\)</b>.</li>
+    <li><b>Para \(x^{3}\), se plantea:</b> \(10-2k=3\).</li>
+    <li><b>Se despeja \(k\):</b> \(10-3=2k\); \(7=2k\); \(k=\dfrac{7}{2}\). No es entero (\(2\cdot 3=6\) y \(2\cdot 4=8\): el \(7\) queda entre medio). Ningún término tiene \(x^{3}\): <b>el coeficiente de \(x^{3}\) es \(0\)</b>.</li>
+    <li><b>Lectura.</b> Los exponentes \(10-2k\), para \(k=0,\ 1,\ 2,\ 3,\ 4,\ 5\), son \(10,\ 8,\ 6,\ 4,\ 2,\ 0\): en este desarrollo solo hay potencias pares de \(x\).</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>El error más común.</b> Responder con el coeficiente binomial solo. El coeficiente de la potencia es <b>todo el número</b> que la acompaña: en el ejemplo 2, \(-1792\), no \(56\).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Responder con el coeficiente binomial solo.</b> El coeficiente de la potencia es <b>todo el número</b> que la acompaña. En el ejemplo 2 es \(-1792\), no \(56\): faltaban el \(2^{5}=32\) y el signo.</li>
+      <li><b>Olvidar el signo.</b> Si el binomio es una resta, \(b\) es negativo y \(b^{k}\) lleva \((-1)^{k}\): negativo cuando \(k\) es impar.</li>
+      <li><b>Creer que \(k\) es siempre el exponente que se pide.</b> Hay que mirar el exponente de \(x\) en el término general. En \((x+2)^{7}\) es \(7-k\): para \(x^{3}\), \(k=4\), no \(k=3\).</li>
+      <li><b>Seguir calculando cuando \(k\) no es entero.</b> Si \(k\) no es un entero entre \(0\) y \(n\), no hay nada más que calcular: el coeficiente es \(0\).</li>
+    </ol>
   </div>
 </section>
 
@@ -108,39 +177,57 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Encuentra el coeficiente de \(x^{2}\) en \((x+3)^{5}\).</p>
-    <details><summary>Pista</summary><div><p>\(5-k=2\).</p></div></details>
+    <details><summary>Pista</summary><div><p>El exponente de \(x\) en el término general es \(5-k\). Plantea \(5-k=2\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(k=3\).</li>
-        <li>Coeficiente: \(\dbinom{5}{3}\cdot 3^{3}=10\cdot 27=270\).</li>
+        <li><b>Datos.</b> \(a=x\), \(b=3\), \(n=5\), \(m=2\).</li>
+        <li><b>Término general:</b> \(T_{k+1}=\dbinom{5}{k}x^{5-k}\cdot 3^{k}\).</li>
+        <li><b>Se plantea:</b> \(5-k=2\).</li>
+        <li><b>Se despeja:</b> \(5-2=k\), o sea \(k=3\). Es entero y está entre \(0\) y \(5\).</li>
+        <li><b>Coeficiente binomial:</b> \(\dbinom{5}{3}=\dfrac{5\cdot 4\cdot 3}{3\cdot 2\cdot 1}=\dfrac{60}{6}=10\) (\(5\cdot 4=20\), \(20\cdot 3=60\); \(3\cdot 2\cdot 1=6\)).</li>
+        <li><b>Potencia del número:</b> \(3^{3}=3\cdot 3\cdot 3\). \(3\cdot 3=9\), \(9\cdot 3=27\).</li>
+        <li><b>Producto:</b> \(10\cdot 27=270\).</li>
+        <li><b>Resultado.</b> El coeficiente de \(x^{2}\) es \(270\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Encuentra el coeficiente de \(x^{6}\) en \(\left(x^{2}-1\right)^{5}\).</p>
-    <details><summary>Pista</summary><div><p>El exponente de \(x\) es \(10-2k\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Escribe \(x^{2}-1=x^{2}+(-1)\). El exponente de \(x\) es \(10-2k\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(10-2k=6\ \Longrightarrow\ k=2\).</li>
-        <li>Coeficiente: \(\dbinom{5}{2}\cdot(-1)^{2}=10\).</li>
+        <li><b>Datos.</b> \(a=x^{2}\), \(b=-1\), \(n=5\), \(m=6\).</li>
+        <li><b>Término general:</b> \(T_{k+1}=\dbinom{5}{k}\left(x^{2}\right)^{5-k}(-1)^{k}\).</li>
+        <li><b>Se juntan las potencias:</b> \(\left(x^{2}\right)^{5-k}=x^{2\cdot(5-k)}=x^{10-2k}\). Queda \(T_{k+1}=\dbinom{5}{k}(-1)^{k}\,x^{10-2k}\).</li>
+        <li><b>Se plantea:</b> \(10-2k=6\).</li>
+        <li><b>Se despeja:</b> \(10-6=2k\); \(4=2k\); \(k=\dfrac{4}{2}=2\). Es entero y está entre \(0\) y \(5\).</li>
+        <li><b>Coeficiente binomial:</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}=\dfrac{20}{2}=10\).</li>
+        <li><b>Signo:</b> \((-1)^{2}=(-1)\cdot(-1)=1\).</li>
+        <li><b>Producto:</b> \(10\cdot 1=10\).</li>
+        <li><b>Resultado.</b> El coeficiente de \(x^{6}\) es \(10\).</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
-    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un capital crece con una tasa anual \(r\) durante \(10\) años: se multiplica por \((1+r)^{10}\). ¿Cuál es el coeficiente de \(r^{2}\) en ese desarrollo, y cuánto aporta ese término si \(r=0{,}05\)?</p>
-    <details><summary>Pista</summary><div><p>El exponente de \(r\) es \(k\).</p></div></details>
+    <p><span class="n">C</span><b>De la vida cotidiana.</b> Un capital crece con una tasa anual \(r\) durante \(10\) años, con interés compuesto: al final queda multiplicado por \((1+r)^{10}\). ¿Cuál es el coeficiente de \(r^{2}\) en ese desarrollo, y cuánto aporta ese término si \(r=0{,}05\) (un \(5\,\%\) anual)?</p>
+    <details><summary>Pista</summary><div><p>En \((1+r)^{10}\) la letra está en la segunda parte del binomio: el exponente de \(r\) es \(k\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(k=2\): coeficiente \(\dbinom{10}{2}=45\).</li>
-        <li>Con \(r=0{,}05\): \(45\cdot 0{,}0025=0{,}1125\).</li>
-        <li>Lectura: el término en \(r^{2}\) agrega un \(11{,}25\,\%\) del capital, por encima del \(50\,\%\) del interés simple (\(10r\)).</li>
+        <li><b>Datos.</b> \(a=1\), \(b=r\), \(n=10\). Se busca \(r^{2}\); después, \(r=0{,}05\).</li>
+        <li><b>Término general:</b> \(T_{k+1}=\dbinom{10}{k}\cdot 1^{10-k}\cdot r^{k}=\dbinom{10}{k}\,r^{k}\), porque \(1\) elevado a cualquier exponente es \(1\). El exponente de \(r\) es \(k\).</li>
+        <li><b>Se plantea y se despeja:</b> \(k=2\). Es entero y está entre \(0\) y \(10\).</li>
+        <li><b>Coeficiente:</b> \(\dbinom{10}{2}=\dfrac{10\cdot 9}{2\cdot 1}\). Arriba: \(10\cdot 9=90\). Abajo: \(2\cdot 1=2\). División: \(\dfrac{90}{2}=45\). El coeficiente de \(r^{2}\) es \(45\): el término es \(45\,r^{2}\).</li>
+        <li><b>Se reemplaza \(r=0{,}05\):</b> \(r^{2}=0{,}05\cdot 0{,}05=0{,}0025\).</li>
+        <li><b>Producto:</b> \(45\cdot 0{,}0025=0{,}1125\) (\(45\cdot 25=1125\), con cuatro decimales).</li>
+        <li><b>En porcentaje:</b> \(0{,}1125\cdot 100=11{,}25\). El término aporta un \(11{,}25\,\%\) del capital.</li>
+        <li><b>Lectura.</b> El término anterior, el de \(k=1\), es \(\dbinom{10}{1}r=10\,r=10\cdot 0{,}05=0{,}5\): un \(50\,\%\), lo que daría el interés simple. El término en \(r^{2}\) agrega \(11{,}25\,\%\) más: es la primera parte del «interés sobre el interés».</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H14 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H14 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -148,6 +235,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -193,11 +300,96 @@ function bnExpo(o){
     readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
   };
 }
-OA.scene('bn-potencia', bnExpo({ n:6, e0:12, d:3, ymin:-6, ymax:12, ystep:3, aspect:1.25, target:true, m0:3,
-  aria:'Para el desarrollo de x al cuadrado más 2 sobre x, elevado a 6, se dibuja un punto por cada término: en horizontal k y en vertical el exponente de x, que es 12 menos 3k. Una recta punteada marca el exponente que se busca. Si un punto cae sobre ella, ese término da el coeficiente pedido; si ninguno cae, esa potencia no aparece y su coeficiente es 0. Para x al cubo cae el punto de k igual a 3, y el coeficiente es 160.',
-  labels:[['F', '\\text{coeficiente de }x^{3}:\\quad\\dbinom{6}{3}\\cdot 2^{3}=20\\cdot 8=160', 'coeficiente de x³: C(6, 3) · 2³ = 160', 'diff']],
-  legend:'<span><i class="sw sec"></i> exponente de \\(x\\) en cada término</span><span><i class="sw tan"></i> el exponente buscado y el término que lo tiene</span>',
-  lines:function(k, m, hit, fin){ var ms = ('' + m).replace('-', '−'); if (!fin) return [['término k = ' + k + ': (x²)' + bnSup(6 - k) + ' · (2/x)' + bnSup(k) + ' = 2' + bnSup(k) + ' · x' + (12 - 3*k < 0 ? '⁻' : '') + bnSup(Math.abs(12 - 3*k)), 'ink'], ['exponente de x: 12 − 3k = ' + ('' + (12 - 3*k)).replace('-', '−'), 'sec']]; return hit >= 0 ? [['se busca x elevado a ' + ms + ':  12 − 3k = ' + ms + '  ⟹  k = ' + hit, 'tan'], ['coeficiente: C(6, ' + hit + ') · 2' + bnSup(hit) + ' = ' + bnC(6, hit) + ' · ' + Math.pow(2, hit) + ' = ' + bnC(6, hit)*Math.pow(2, hit), 'tan']] : [['se busca x elevado a ' + ms + ':  12 − 3k = ' + ms + '  ⟹  k = ' + oaDec((12 - m)/3, 2), 'ink'], ['k no es entero: esa potencia no aparece. Coeficiente 0', 'tan']]; },
-  caption:function(k, m, fin){ if (!fin) return 'Cada término lleva x elevado a 12 − 3k. En k = ' + k + ' el exponente es ' + (12 - 3*k); return (12 - m) % 3 === 0 && m <= 12 && m >= -6 ? 'El exponente ' + m + ' lo tiene el término de k = ' + (12 - m)/3 + '. Su coeficiente incluye también la potencia de 2. Mueve el deslizador para buscar otra potencia' : 'Ningún término tiene exponente ' + m + ': la ecuación 12 − 3k = ' + m + ' no tiene solución entera. Esa potencia no aparece en el desarrollo'; },
-  readout:function(k, m, fin){ return [['', 'T_{k+1}=\\dbinom{6}{k}\\left(x^{2}\\right)^{6-k}\\left(\\dfrac{2}{x}\\right)^{k}=\\dbinom{6}{k}\\,2^{k}\\,x^{12-3k}']].concat(fin && (12 - m) % 3 === 0 ? [['d', '12-3k=' + m + '\\ \\Longrightarrow\\ k=' + (12 - m)/3 + ':\\quad\\dbinom{6}{' + (12 - m)/3 + '}2^{' + (12 - m)/3 + '}=' + bnC(6, (12 - m)/3)*Math.pow(2, (12 - m)/3)]] : []); }
-}));
+/* L24 H14 · coeficiente de una potencia dada: en (x² + 2/x)⁶ cada término (k = 0…6) lleva x elevado a 12 − 3k; se busca x³ (recta burdeo): k = 3, coeficiente C(6,3)·2³ = 160; se busca x⁵ (recta verde): ningún término, coeficiente 0 */
+OA.scene('bn-potencia', (function(){
+  var N = 7, GX0 = 2.3, GDX = 0.95, GY0 = -7.1, GS = 0.325, AXX = 1.8, YT = -9.62;
+  var EX = [12, 9, 6, 3, 0, -3, -6];
+  var PZ = [['Q', '\\text{¿coeficiente de }x^{3}\\text{ en }\\left(x^{2}+\\tfrac{2}{x}\\right)^{6}\\text{?}', '¿coeficiente de x³ en (x² + 2/x)⁶?', 'pt'], ['F', '\\Longrightarrow\\ 160', '⟹ 160', 'diff'],
+    ['E', '\\text{exponente de }x=12-3k', 'exponente de x = 12 − 3k', 'c-sec'],
+    ['B', '\\text{se busca }x^{3}', 'se busca x³', 'c-tan'],
+    ['K3', 'k=3', 'k = 3', 'c-tan'],
+    ['C6', '\\text{coeficiente: }160', 'coeficiente: 160', 'diff'],
+    ['G', 'x^{5}:\\ k=\\tfrac{7}{3}\\text{, ningún punto}', 'x⁵: k = 7/3, ningún punto', 'c-alt'],
+    ['R1', 'T_{k+1}=\\dbinom{6}{k}\\left(x^{2}\\right)^{6-k}\\left(\\dfrac{2}{x}\\right)^{k}', 'T(k+1) = C(6, k) · (x²)^(6−k) · (2/x)^k', ''],
+    ['R2', 'T_{k+1}=\\dbinom{6}{k}\\,2^{k}\\,x^{12-3k}', 'T(k+1) = C(6, k) · 2^k · x^(12−3k)', 'c-sec'],
+    ['R3', '\\text{exponentes }(k=0,\\dots,6)\\text{: }12,\\ 9,\\ 6,\\ 3,\\ 0,\\ -3,\\ -6', 'exponentes (k = 0, …, 6): 12, 9, 6, 3, 0, −3, −6', 'c-sec'],
+    ['R4', '\\text{se busca }x^{3}:\\quad 12-3k=3', 'se busca x³: 12 − 3k = 3', 'c-tan'],
+    ['R5', '3k=9\\ \\Longrightarrow\\ k=3\\quad\\text{(es el }4^{\\circ}\\text{ término)}', '3k = 9 ⟹ k = 3 (es el 4º término)', 'c-tan'],
+    ['R6', '\\text{coeficiente de }x^{3}:\\ \\dbinom{6}{3}\\cdot 2^{3}=20\\cdot 8=160', 'coeficiente de x³: C(6, 3) · 2³ = 20 · 8 = 160', 'diff'],
+    ['R7', 'x^{5}:\\ 12-3k=5\\ \\Rightarrow\\ k=\\tfrac{7}{3}\\text{, no entero: coeficiente }0', 'x⁵: 12 − 3k = 5 ⟹ k = 7/3, no entero: coeficiente 0', 'c-alt']];
+  var TXT = [['El desarrollo tiene 7 términos, del 1º al 7º.', 'A cada uno le toca un valor de k, desde 0.'],
+    ['Se juntan las potencias de x de cada término.', 'El exponente de x queda escrito con k.'],
+    ['Un punto por término: su altura es el exponente.', 'De un término al siguiente, el exponente baja 3.'],
+    ['Se busca la potencia de exponente 3:', 'la recta burdeo marca esa altura.'],
+    ['Se despeja k y da 3. El punto de ese término', 'cae justo en la recta: es el 4º término.'],
+    ['El coeficiente es todo el número de ese término:', 'el coeficiente binomial por la potencia de 2.'],
+    ['Con exponente 5 (recta verde) no cae ningún punto:', 'esa potencia no aparece. Su coeficiente es 0.']];
+  (function(){ var j; for (j = 0; j <= 6; j++) PZ.push(['P' + j, 'x^{' + EX[j] + '}', 'x^' + ('' + EX[j]).replace('-', '−'), j === 3 ? 'c-tan' : 'c-sec']); })();
+  function cl(t){ return Math.max(0, Math.min(1, t)); }
+  function gx(k){ return GX0 + GDX*k; }
+  function gy(e){ return GY0 + GS*e; }
+  return {
+    world:{x0:0, x1:10, y0:-18.9, y1:0}, aspect:18.9/10,
+    aria:'Animación en siete pasos sobre el desarrollo de x al cuadrado más 2 sobre x, elevado a 6. Uno: el desarrollo tiene siete términos, uno por cada valor de k, de 0 a 6. Dos: al juntar las potencias de x, el exponente de x en cada término es 12 menos 3 k. Tres: se dibuja un punto por término; su altura es el exponente: 12, 9, 6, 3, 0, menos 3 y menos 6. Cuatro: se busca x al cubo; una recta burdeo marca la altura 3 y se escribe la ecuación 12 menos 3 k igual a 3. Cinco: al despejar, k es 3; el punto de k igual a 3 cae sobre la recta: es el cuarto término. Seis: el coeficiente es 6 sobre 3 por 2 al cubo, que es 20 por 8, igual a 160. Siete: se busca x a la quinta; una recta verde marca la altura 5 y ningún punto cae sobre ella, porque k tendría que ser 7 tercios; el coeficiente de x a la quinta es 0. Bajo la figura, un registro numerado guarda la expresión de cada paso, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw sec"></i> el exponente de \\(x\\) en cada término</span><span><i class="sw tan"></i> la potencia que se busca y el término que la tiene</span><span><i class="sw alt"></i> una potencia que no aparece</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b';
+      var j, pr, e, a1 = ap(1), a2 = ap(2), a3 = ap(3), a4 = ap(4), a5 = ap(5), a6 = ap(6), a7 = ap(7), XR = gx(6) + 0.6, kq = 7/3;
+      function ap(m){ return k > m ? 1 : (k === m ? u : 0); } /* cuánto ha aparecido lo del paso m; después queda */
+      function tx(t, x, yy, al, col, size, alpha, bold){ if (alpha <= 0) return; c.globalAlpha = alpha; c.font = (bold || '600') + ' ' + size + 'px ' + F; c.fillStyle = col; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(yy)); c.globalAlpha = 1; }
+      function seg(x0, y0, x1, y1, col, w, dash, alpha){ if (alpha <= 0) return; c.globalAlpha = alpha; c.strokeStyle = col; c.lineWidth = w; c.setLineDash(dash || []); c.beginPath(); c.moveTo(X(x0), Y(y0)); c.lineTo(X(x1), Y(y1)); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+      /* paso 1: el eje de k; un término por cada k, con su posición (1º … 7º) */
+      seg(AXX - 0.25, GY0, AXX - 0.25 + (XR - AXX + 0.25)*a1, GY0, C.ink, 1.1, null, 1);
+      tx('k', XR + 0.12, GY0, 'left', C.ink, 11.5, a1, '700');
+      tx('término', 0.15, YT, 'left', MU, 10.5, a1, '700');
+      for (j = 0; j <= 6; j++){ pr = cl(a1*8 - j);
+        tx('' + j, gx(j), GY0 + (j <= 3 ? -0.33 : 0.33), 'center', MU, 10.5, pr, '600');
+        seg(gx(j), GY0 - 0.08, gx(j), GY0 + 0.08, C.ink, 1, null, pr);
+        if (j === 3 && a5 > 0){ tx((j + 1) + 'º', gx(j), YT, 'center', MU, 11, pr*(1 - a5), '700'); tx((j + 1) + 'º', gx(j), YT, 'center', C.tan, 12, a5, '700'); }
+        else tx((j + 1) + 'º', gx(j), YT, 'center', MU, 11, pr, '700'); }
+      /* paso 2: el eje del exponente de x, y la recta de la regla 12 − 3k (tenue) */
+      if (a2 > 0){ seg(AXX, gy(-6.8), AXX, gy(-6.8) + (gy(13) - gy(-6.8))*a2, C.ink, 1.1, null, 1);
+        tx('exponente de x', 0.15, gy(13) + 0.42, 'left', C.sec, 10.5, a2, '700');
+        for (e = -6; e <= 12; e += 3){ if (!e) continue; seg(AXX - 0.08, gy(e), AXX + 0.08, gy(e), C.ink, 1, null, a2); tx(('' + e).replace('-', '−'), AXX - 0.2, gy(e), 'right', MU, 10.5, a2, '600'); }
+        seg(gx(0), gy(12), gx(0) + (gx(6) - gx(0))*a2, gy(12) + (gy(-6) - gy(12))*a2, 'rgba(31,93,134,0.3)', 1, null, 1);
+        if (a2 > 0.5) L('E', 9.85, gy(12) + 0.1, -100); }
+      /* paso 3: un punto por término, con punteadas hasta su k y hasta su exponente, y su potencia rotulada */
+      for (j = 0; j <= 6; j++){ pr = cl(a3*8 - j); if (pr <= 0) continue;
+        seg(gx(j), GY0, gx(j), GY0 + (gy(EX[j]) - GY0)*pr, 'rgba(31,93,134,0.45)', 1, [2, 3], 1);
+        seg(gx(j), gy(EX[j]), gx(j) + (AXX - gx(j))*pr, gy(EX[j]), 'rgba(31,93,134,0.45)', 1, [2, 3], 1);
+        c.globalAlpha = pr; c.beginPath(); c.arc(X(gx(j)), Y(gy(EX[j])), 3.2, 0, 6.2832); c.fillStyle = j === 3 && a5 > 0.5 ? C.tan : C.sec; c.fill(); c.globalAlpha = 1;
+        if (pr > 0.5) L('P' + j, gx(j), gy(EX[j]), 0, 6, -10); }
+      /* paso 4: la potencia que se busca: recta punteada burdeo a la altura 3 */
+      if (a4 > 0){ seg(AXX, gy(3), AXX + (9.85 - AXX)*a4, gy(3), C.tan, 1.3, [5, 4], 1); if (a4 > 0.5) L('B', AXX + 0.15, gy(4), 0); }
+      /* paso 5: el término que la tiene: el punto de k = 3, y su k marcado en el eje */
+      if (a5 > 0){ c.globalAlpha = a5; c.strokeStyle = C.tan; c.lineWidth = 1.6; c.beginPath(); c.arc(X(gx(3)), Y(gy(3)), 7.5, -1.5708, -1.5708 + 6.2832*a5); c.stroke(); c.globalAlpha = 1;
+        seg(gx(3), gy(3), gx(3), gy(3) + (GY0 - 0.2 - gy(3))*a5, C.tan, 1.3, [4, 3], 1); if (a5 > 0.6) L('K3', gx(3) + 0.15, GY0 - 0.85, 0); }
+      /* paso 6: el coeficiente de ese término */
+      if (a6 > 0.4) L('C6', gx(3) - 0.35, gy(3) - 0.45, -100);
+      /* paso 7: otra potencia, x⁵: recta verde a la altura 5; el lugar donde tendría que estar el punto queda vacío */
+      if (a7 > 0){ seg(AXX, gy(5), AXX + (9.85 - AXX)*a7, gy(5), C.alt, 1.3, [5, 4], 1);
+        if (a7 > 0.5){ c.globalAlpha = cl(a7*2 - 1); c.fillStyle = '#fff'; c.strokeStyle = C.alt; c.lineWidth = 1.5; c.beginPath(); c.arc(X(gx(kq)), Y(gy(5)), 4, 0, 6.2832); c.fill(); c.stroke(); c.globalAlpha = 1; L('G', 9.85, gy(5) + 0.38, -100); } }
+      /* la pregunta queda arriba; la respuesta se escribe a su lado */
+      L('Q', 0.3, -1.95, 0); if (a6 > 0.6) L('F', 7.55, -1.95, 0);
+      /* frase del paso y número de paso */
+      tx('paso ' + k + ' de ' + N, 0.3, -10.3, 'left', MU, 11, 1);
+      tx(TXT[k - 1][0], 0.3, -10.85, 'left', C.ink, 12.5, 1); c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(TXT[k - 1][1], X(0.3), Y(-10.85) + 19);
+      dtQue(S, 'el exponente de x en cada término, para', 'hallar el coeficiente de una potencia.');
+      T.fin();
+      oaReg(S, k, N, 0.3, -12.85, [0, 38, 70, 94, 118, 150, 184]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{término general (hoja H10):}\\\\&\\qquad T_{k+1}=\\binom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k},\\qquad k=0,\\ 1,\\ \\dots,\\ n\\\\&\\qquad\\text{aquí }a=x^{2},\\quad b=\\frac{2}{x},\\quad n=6:\\\\&\\qquad T_{k+1}=\\binom{6}{k}\\left(x^{2}\\right)^{6-k}\\left(\\frac{2}{x}\\right)^{k},\\quad k=0,\\ \\dots,\\ 6',
+      '\\text{se juntan las potencias de }x:\\\\&\\qquad\\left(x^{2}\\right)^{6-k}=x^{2\\cdot(6-k)}=x^{12-2k}\\\\&\\qquad\\left(\\frac{2}{x}\\right)^{k}=\\frac{2^{k}}{x^{k}}=2^{k}\\cdot x^{-k}\\\\&\\qquad x^{12-2k}\\cdot x^{-k}=x^{12-2k-k}=x^{12-3k}\\\\&\\qquad T_{k+1}=\\binom{6}{k}\\,2^{k}\\,x^{12-3k}',
+      '\\text{exponente de }x\\text{, término por término }(12-3k):\\\\&\\qquad k=0:\\ 12-3\\cdot 0=12-0=12\\\\&\\qquad k=1:\\ 12-3\\cdot 1=12-3=9\\\\&\\qquad k=2:\\ 12-3\\cdot 2=12-6=6\\\\&\\qquad k=3:\\ 12-3\\cdot 3=12-9=3\\\\&\\qquad k=4:\\ 12-3\\cdot 4=12-12=0\\\\&\\qquad k=5:\\ 12-3\\cdot 5=12-15=-3\\\\&\\qquad k=6:\\ 12-3\\cdot 6=12-18=-6',
+      '\\text{se busca }x^{3}\\text{: el exponente tiene que ser }3\\\\&\\qquad 12-3k=3',
+      '\\text{se despeja }k:\\\\&\\qquad 12-3k=3\\\\&\\qquad 12=3+3k\\qquad\\text{(se suma }3k\\text{ a los dos lados)}\\\\&\\qquad 12-3=3k\\qquad\\text{(se resta }3\\text{ a los dos lados)}\\\\&\\qquad 9=3k\\\\&\\qquad k=\\frac{9}{3}=3\\qquad\\text{(se divide por }3\\text{)}\\\\&\\qquad 3\\text{ es entero y está entre }0\\text{ y }6:\\\\&\\qquad\\text{es el término de posición }3+1=4',
+      '\\text{coeficiente: todo lo que no es }x\\text{ en }T_{4}\\\\&\\qquad T_{4}=\\binom{6}{3}\\cdot 2^{3}\\cdot x^{3}\\\\&\\qquad\\binom{6}{3}=\\frac{6\\cdot 5\\cdot 4}{3\\cdot 2\\cdot 1}=\\frac{120}{6}=20\\\\&\\qquad 2^{3}=2\\cdot 2\\cdot 2=8\\\\&\\qquad 20\\cdot 8=160\\\\&\\qquad T_{4}=160\\,x^{3}:\\ \\text{el coeficiente de }x^{3}\\text{ es }160',
+      '\\text{otra potencia, }x^{5}:\\\\&\\qquad 12-3k=5\\\\&\\qquad 12-5=3k\\\\&\\qquad 7=3k\\\\&\\qquad k=\\frac{7}{3}\\qquad\\text{(no es entero: está entre }2\\text{ y }3\\text{)}\\\\&\\qquad\\text{ningún término tiene }x^{5}:\\\\&\\qquad\\text{el coeficiente de }x^{5}\\text{ es }0']; return dtPasos(R.slice(0, k)); }
+  };
+})());

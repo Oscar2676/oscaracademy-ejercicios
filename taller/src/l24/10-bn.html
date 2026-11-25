@@ -12,41 +12,94 @@
       <li><b>Fórmula del término k + 1</b></li>
     </ol>
     <h1>Fórmula del término k + 1</h1>
-    <p class="lede">Para conocer un término del desarrollo de \((a+b)^{n}\) no hace falta escribir los anteriores. El término que ocupa la posición \(k+1\) se calcula directamente:
-    \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad k=0,\ 1,\ 2,\dots,\ n\]</p>
+    <p class="lede">Un <b>binomio</b> es una suma de dos términos, como \(a+b\). Su <b>desarrollo</b> es lo que queda al calcular la potencia \((a+b)^{n}\) y sumar los términos semejantes; \(n\) es el <b>exponente</b>, un entero con \(n\ge 1\). Un <b>término</b> es cada una de las partes del desarrollo separadas por un signo \(+\). La <b>posición</b> de un término es el lugar que ocupa contando de izquierda a derecha: 1º, 2º, 3º… La pregunta de esta hoja: <b>¿se puede calcular el término de una posición cualquiera sin escribir los anteriores?</b></p>
+    <p class="lede"><b>De dónde sale la respuesta: se mira, término por término, un desarrollo que ya se conoce.</b> El de exponente \(4\) es \((a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\) (hoja H03). En cada término se anotan tres cosas: el <b>coeficiente</b> (el número que multiplica a las letras), el exponente de \(a\) y el exponente de \(b\). Se recuerda que \(a=a^{1}\), \(b=b^{1}\), que si una letra no aparece su exponente es \(0\) (\(b^{0}=1\), con \(b\neq 0\)), y que si no se ve un número el coeficiente es \(1\). \[\begin{aligned}1^{\circ}\text{ término}:\quad&a^{4}=1\cdot a^{4}\,b^{0}&&\text{coeficiente }1,&&\text{exponente de }a:\ 4,&&\text{exponente de }b:\ 0\\ 2^{\circ}\text{ término}:\quad&4a^{3}b=4\cdot a^{3}\,b^{1}&&\text{coeficiente }4,&&\text{exponente de }a:\ 3,&&\text{exponente de }b:\ 1\\ 3^{\circ}\text{ término}:\quad&6a^{2}b^{2}=6\cdot a^{2}\,b^{2}&&\text{coeficiente }6,&&\text{exponente de }a:\ 2,&&\text{exponente de }b:\ 2\\ 4^{\circ}\text{ término}:\quad&4ab^{3}=4\cdot a^{1}\,b^{3}&&\text{coeficiente }4,&&\text{exponente de }a:\ 1,&&\text{exponente de }b:\ 3\\ 5^{\circ}\text{ término}:\quad&b^{4}=1\cdot a^{0}\,b^{4}&&\text{coeficiente }1,&&\text{exponente de }a:\ 0,&&\text{exponente de }b:\ 4\end{aligned}\]</p>
+    <p class="lede"><b>La regularidad.</b> Se llama \(k\) al exponente de \(b\). Mirando las cinco líneas:</p>
+    <ol class="steps">
+      <li><b>El exponente de \(b\) es la posición menos \(1\):</b> \(0=1-1\), \(1=2-1\), \(2=3-1\), \(3=4-1\), \(4=5-1\). Dicho al revés: la posición es \(k+1\).</li>
+      <li><b>El exponente de \(a\) es \(4-k\):</b> \(4=4-0\), \(3=4-1\), \(2=4-2\), \(1=4-3\), \(0=4-4\). Los dos exponentes suman siempre \(4\), el exponente del binomio.</li>
+      <li><b>El coeficiente es \(\dbinom{4}{k}\).</b> Este símbolo se lee «\(4\) sobre \(k\)» y se llama coeficiente binomial (hoja H06): \(\dbinom{4}{0}=1\), \(\dbinom{4}{1}=4\), \(\dbinom{4}{2}=6\), \(\dbinom{4}{3}=4\), \(\dbinom{4}{4}=1\). Son justo los coeficientes \(1,\ 4,\ 6,\ 4,\ 1\) (las cuentas están más abajo, en «Cómo se calcula \(\binom{n}{k}\)»).</li>
+    </ol>
+    <p class="lede"><b>La fórmula.</b> Lo mismo, con un exponente \(n\) cualquiera en vez de \(4\). El término de la posición \(k+1\) se anota \(T_{k+1}\) y vale: \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k},\qquad k=0,\ 1,\ 2,\ \dots,\ n\] Se lee: «el término \(k\) más \(1\) es igual a \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». El desarrollo completo es la suma de todos esos términos: \[(a+b)^{n}=T_{1}+T_{2}+T_{3}+\cdots+T_{n+1}=\sum_{k=0}^{n}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\] Se lee: «\(a\) más \(b\), elevado a \(n\), es igual a la sumatoria, desde \(k\) igual a \(0\) hasta \(k\) igual a \(n\), de \(n\) sobre \(k\), por \(a\) elevado a \(n\) menos \(k\), por \(b\) elevado a \(k\)». Esa igualdad es el binomio de Newton (hoja H05).</p>
+    <p class="lede"><b>Comprobación con un caso nuevo:</b> el 3º término de \((a+b)^{5}\). Posición \(3\): \(k=3-1=2\). Coeficiente: \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}=\dfrac{20}{2}=10\). Exponente de \(a\): \(5-2=3\). Exponente de \(b\): \(2\). Entonces \(T_{3}=10a^{3}b^{2}\). El desarrollo completo es \((a+b)^{5}=a^{5}+5a^{4}b+10a^{3}b^{2}+10a^{2}b^{3}+5ab^{4}+b^{5}\) (hoja H04, ejemplo 3), y su 3º término es \(10a^{3}b^{2}\). ✓ Por qué la fórmula vale para <b>todo</b> \(n\) está más abajo, en el recuadro «De dónde sale la fórmula».</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Los siete términos de \((a+b)^{6}\). Se elige una posición y se arma su término.</p>
+  <p>Los cinco términos de \((a+b)^{4}\), con sus datos anotados uno por uno, en siete pasos. Avanza con el deslizador «paso» o con «Reproducir». Lo que aparece en cada paso queda a la vista hasta el final, y bajo la figura queda escrito lo que se obtiene en cada paso.</p>
+  <p><b>Cómo leer la animación:</b></p>
+  <ol class="steps">
+    <li><b>Pasos 1 y 2, mira la fila de casilleros:</b> cada <b>término</b> del desarrollo va en un <b>casillero</b>, con un signo \(+\) entre uno y otro. Sobre cada casillero aparece su <b>posición</b>: 1º, 2º, 3º, 4º, 5º. Arriba queda la pregunta.</li>
+    <li><b>Pasos 3, 4 y 5, mira bajo cada casillero,</b> siguiendo la línea punteada: primero, en burdeo, \(k\), el <b>exponente de \(b\)</b> (\(0,\ 1,\ 2,\ 3,\ 4\)); después, en azul, el <b>exponente de \(a\)</b>, que es \(4-k\) (\(4,\ 3,\ 2,\ 1,\ 0\)); después, en naranja, el <b>coeficiente</b> \(\dbinom{4}{k}\) (\(1,\ 4,\ 6,\ 4,\ 1\)). A la derecha de cada fila dice qué es.</li>
+    <li><b>Paso 6, mira la columna naranja:</b> es la del <b>término elegido</b>, el 3º. Con los datos de su columna (\(k=2\), exponente de \(a\) igual a \(2\), coeficiente \(6\)) se arma el término, \(T_{3}=6a^{2}b^{2}\), que es el mismo que está en su casillero.</li>
+    <li><b>Paso 7, mira junto a la pregunta:</b> se escribe la respuesta, la fórmula con letras para un exponente \(n\) y una posición \(k+1\) cualesquiera.</li>
+    <li><b>Lee después el registro «Paso a paso» y la cuenta de abajo,</b> línea por línea. Conclusión: para armar un término basta su posición; de ella sale \(k\), y con \(k\) salen el coeficiente y los dos exponentes.</li>
+  </ol>
   <div class="stage" data-scene="bn-termino"></div>
   <ul class="keys">
-    <li><b>Sobre cada casillero:</b> la posición del término. <b>Debajo:</b> su \(k\), que es siempre la posición menos \(1\).</li>
-    <li><b>Casillero naranja:</b> el término elegido.</li>
-    <li><b>Bajo la fila, paso a paso:</b> de la posición sale \(k\); con \(k\), el coeficiente \(\dbinom{6}{k}\) (naranja), la potencia de \(a\), que es \(6-k\) (azul), y la potencia de \(b\), que es \(k\) (burdeo).</li>
-    <li><b>Deslizador «posición»:</b> elige cualquiera de los siete.</li>
+    <li><b>Casillero:</b> un término del desarrollo de \((a+b)^{4}\). <b>Sobre él:</b> su posición.</li>
+    <li><b>Burdeo:</b> \(k\), el exponente de \(b\) en ese término. Es la posición menos \(1\).</li>
+    <li><b>Azul:</b> el exponente de \(a\), que es \(4-k\) (en general, \(n-k\)).</li>
+    <li><b>Naranja:</b> el coeficiente \(\dbinom{4}{k}\) (en general, \(\dbinom{n}{k}\)); la columna del término elegido, y la fórmula final.</li>
+    <li><b>Línea punteada:</b> une cada casillero con sus tres datos.</li>
+    <li><b>Deslizador «paso»:</b> recorre los siete pasos; ninguno se borra.</li>
   </ul>
+  <div class="why">
+    <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b></p>
+    <ol class="steps">
+      <li><b>Se hace aquí, completo:</b> la lectura de los cinco términos de \((a+b)^{4}\); por qué el término con \(b^{k}\) ocupa la posición \(k+1\); y el paso del binomio de Newton a la fórmula de \(T_{k+1}\), también con resta.</li>
+      <li><b>Se usa sin demostrar:</b> el binomio de Newton, \((a+b)^{n}=\displaystyle\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}b^{\,k}\) (hojas H04 y H05; su demostración por inducción está en la hoja H17).</li>
+      <li><b>Se usan sin demostrar</b> (hoja H06): la regla para calcular \(\dbinom{n}{k}\), y que \(\dbinom{n}{0}=1\) y \(\dbinom{n}{n}=1\).</li>
+      <li><b>Se usan sin demostrar:</b> las leyes de las potencias \((x\cdot y)^{m}=x^{m}\cdot y^{m}\), \(x^{1}=x\) y \(x^{0}=1\) para \(x\neq 0\); y la regla de los signos: «menos por menos da más» y «más por menos da menos».</li>
+    </ol>
+  </div>
 </section>
 
 <section>
   <div class="card k2">
     <h3>Por qué se llama \(T_{k+1}\) y no \(T_{k}\)</h3>
+    <p><b>Qué se demuestra:</b> que el término que lleva \(b^{k}\) ocupa la posición \(k+1\). <b>Cómo funciona el método:</b> los términos se escriben en orden, con el exponente de \(b\) subiendo de uno en uno desde \(0\); se cuenta cuántos términos hay antes del que lleva \(b^{k}\).</p>
     <ol class="steps">
-      <li>En el binomio de Newton la suma empieza en \(k=0\): el primer término es \(\dbinom{n}{0}a^{n}b^{0}=a^{n}\).</li>
-      <li>Entonces \(k=0\) da el 1º, \(k=1\) da el 2º, \(k=2\) da el 3º, y así: el valor de \(k\) va siempre uno atrás de la posición.</li>
-      <li>Por eso el término de índice \(k\) ocupa la posición \(k+1\), y se escribe \(T_{k+1}\).</li>
-      <li><b>Regla práctica:</b> para el término de la posición \(p\), usar \(k=p-1\).</li>
+      <li><b>El orden de los términos.</b> En el binomio de Newton la suma empieza en \(k=0\) y \(k\) sube de uno en uno: primero el término con \(b^{0}\), después el término con \(b^{1}\), después el término con \(b^{2}\), y así hasta \(b^{n}\).</li>
+      <li><b>Con números</b> (\(n=4\)): el término con \(b^{0}\) es el 1º; el término con \(b^{1}\) es el 2º; el término con \(b^{2}\) es el 3º; el término con \(b^{3}\) es el 4º; el término con \(b^{4}\) es el 5º.</li>
+      <li><b>Se cuenta, con números:</b> antes del término con \(b^{2}\) están los de \(b^{0}\) y \(b^{1}\): son \(2\) términos. Entonces el término con \(b^{2}\) es el que sigue: posición \(2+1=3\).</li>
+      <li><b>Se cuenta, en general:</b> antes del término con \(b^{k}\) están los de \(b^{0},\ b^{1},\ \dots,\ b^{k-1}\). De \(1\) a \(k-1\) hay \(k-1\) exponentes; con el \(0\) hay uno más: \((k-1)+1=k\) términos. Entonces el término con \(b^{k}\) es el que sigue: posición \(k+1\).</li>
+      <li><b>Conclusión.</b> El término de índice \(k\) ocupa la posición \(k+1\); por eso se escribe \(T_{k+1}\). El índice \(k\) va siempre uno atrás de la posición.</li>
+      <li><b>Regla práctica, despejando.</b> Si la posición pedida se llama \(p\): \[\begin{aligned}p&=k+1&&\text{la posición es }k\text{ más }1\\ p-1&=k+1-1&&\text{se resta }1\text{ a los dos lados}\\ p-1&=k&&\text{porque }1-1=0\end{aligned}\] Para el término de la posición \(p\) se usa \(k=p-1\). Ejemplo: para el 4º término, \(k=4-1=3\).</li>
     </ol>
   </div>
 
   <div class="card k1">
-    <h3>Cómo se usa</h3>
+    <h3>De dónde sale la fórmula</h3>
+    <p><b>Qué se demuestra:</b> que el término de la posición \(k+1\) del desarrollo de \((a+b)^{n}\) es \(\dbinom{n}{k}a^{\,n-k}b^{\,k}\), para \(n\) entero, \(n\ge 1\), y \(k=0,\ 1,\ \dots,\ n\). <b>Cómo funciona el método:</b> se parte del binomio de Newton (que aquí se usa sin demostrar), se escribe su suma término por término, y se lee cuál es el sumando que queda en la posición \(k+1\).</p>
     <ol class="steps">
-      <li>Identificar \(a\), \(b\) y \(n\), con paréntesis y con su signo.</li>
-      <li>Pasar de la posición a \(k\): \(k=p-1\).</li>
-      <li>Calcular \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\), y multiplicar.</li>
-      <li><b>Con resta,</b> \((a-b)^{n}\): el signo va dentro de \(b\). \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}(-b)^{k}=(-1)^{k}\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li><b>El punto de partida: el binomio de Newton</b> (hojas H04 y H05). \[(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{\,n-k}\,b^{\,k}\]</li>
+      <li><b>Se escribe la suma término por término,</b> reemplazando \(k=0\), después \(k=1\), después \(k=2\), y así hasta \(k=n\): \[\begin{aligned}k=0:\quad&\binom{n}{0}a^{\,n-0}\,b^{\,0}&&\text{es el }1^{\circ}\text{ sumando}\\ k=1:\quad&\binom{n}{1}a^{\,n-1}\,b^{\,1}&&\text{es el }2^{\circ}\text{ sumando}\\ k=2:\quad&\binom{n}{2}a^{\,n-2}\,b^{\,2}&&\text{es el }3^{\circ}\text{ sumando}\\ &\ \ \vdots\\ k=n:\quad&\binom{n}{n}a^{\,n-n}\,b^{\,n}&&\text{es el último sumando, el de la posición }n+1\end{aligned}\]</li>
+      <li><b>El sumando de índice \(k\) está en la posición \(k+1\)</b> (recuadro anterior). Entonces: \[T_{k+1}=\binom{n}{k}\,a^{\,n-k}\,b^{\,k}\]</li>
+      <li><b>Comprobación con números</b> (\(n=4\), \(k=2\)): \(T_{3}=\dbinom{4}{2}a^{4-2}b^{2}=6a^{2}b^{2}\), que es el 3º término de \(a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\). ✓</li>
+      <li><b>Una comprobación que sirve siempre:</b> los exponentes de \(a\) y de \(b\) suman \(n\), porque \((n-k)+k=n\). En el caso anterior: \(2+2=4\). ✓</li>
+    </ol>
+    <p><b>Cómo se calcula \(\dbinom{n}{k}\)</b> (hoja H06; aquí se usa sin demostrar). Para \(k\ge 1\): arriba van \(k\) factores, partiendo de \(n\) y bajando de uno en uno; abajo van los \(k\) factores \(k,\ k-1,\ \dots,\ 1\). Además, \(\dbinom{n}{0}=1\) y \(\dbinom{n}{n}=1\). Las cinco cuentas de \(n=4\): \[\begin{aligned}\binom{4}{0}&=1&&\text{por la regla }\tbinom{n}{0}=1\\ \binom{4}{1}&=\frac{4}{1}=4&&\text{un factor arriba y uno abajo}\\ \binom{4}{2}&=\frac{4\cdot 3}{2\cdot 1}=\frac{12}{2}=6&&\text{dos factores arriba y dos abajo}\\ \binom{4}{3}&=\frac{4\cdot 3\cdot 2}{3\cdot 2\cdot 1}=\frac{24}{6}=4&&\text{tres factores arriba y tres abajo}\\ \binom{4}{4}&=1&&\text{por la regla }\tbinom{n}{n}=1\end{aligned}\]</p>
+    <p><b>Cómo se usa la fórmula, en cuatro pasos:</b></p>
+    <ol class="steps">
+      <li>Identificar \(a\), \(b\) y \(n\). Si \(a\) o \(b\) tienen más de un factor o un signo menos, se escriben entre paréntesis.</li>
+      <li>Pasar de la posición \(p\) a \(k\): \(k=p-1\).</li>
+      <li>Reemplazar en \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\).</li>
+      <li>Calcular por separado \(\dbinom{n}{k}\), \(a^{\,n-k}\) y \(b^{\,k}\), y al final multiplicar.</li>
+    </ol>
+  </div>
+
+  <div class="card k3">
+    <h3>Casos especiales: con resta, el primer término y el último</h3>
+    <p><b>Qué se demuestra:</b> (1) que en \((a-b)^{n}\) el término de la posición \(k+1\) es \((-1)^{k}\dbinom{n}{k}a^{\,n-k}b^{\,k}\); (2) que el primer término de \((a+b)^{n}\) es \(a^{n}\) y el último es \(b^{n}\). <b>Cómo funciona el método:</b> en los dos casos se reemplaza en la fórmula de \(T_{k+1}\) y se simplifica, una operación por línea.</p>
+    <ol class="steps">
+      <li><b>Con resta: una resta es la suma del opuesto.</b> \(a-b=a+(-b)\). Entonces \((a-b)^{n}=\big(a+(-b)\big)^{n}\): es un binomio con suma, cuyo segundo término es \((-b)\).</li>
+      <li><b>Se reemplaza \(b\) por \((-b)\) en la fórmula:</b> \[\begin{aligned}T_{k+1}&=\binom{n}{k}\,a^{\,n-k}\,(-b)^{k}&&\text{fórmula, con }(-b)\text{ en el lugar de }b\\ &=\binom{n}{k}\,a^{\,n-k}\,\big((-1)\cdot b\big)^{k}&&\text{porque }-b=(-1)\cdot b\\ &=\binom{n}{k}\,a^{\,n-k}\,(-1)^{k}\,b^{\,k}&&\text{potencia de un producto}\\ &=(-1)^{k}\binom{n}{k}\,a^{\,n-k}\,b^{\,k}&&\text{se cambia el orden de los factores}\end{aligned}\]</li>
+      <li><b>Cuánto vale \((-1)^{k}\).</b> Se multiplica \(-1\) por sí mismo \(k\) veces: \[\begin{aligned}(-1)^{1}&=-1\\ (-1)^{2}&=(-1)\cdot(-1)=1&&\text{menos por menos da más}\\ (-1)^{3}&=(-1)^{2}\cdot(-1)=1\cdot(-1)=-1&&\text{más por menos da menos}\\ (-1)^{4}&=(-1)^{3}\cdot(-1)=(-1)\cdot(-1)=1&&\text{menos por menos da más}\end{aligned}\] Además \((-1)^{0}=1\). El signo se alterna: si \(k\) es par, \((-1)^{k}=1\) y el término es positivo; si \(k\) es impar, \((-1)^{k}=-1\) y el término es negativo (hoja H08).</li>
+      <li><b>El primer término</b> (posición \(1\), \(k=1-1=0\)), con \(b\neq 0\): \[\begin{aligned}T_{1}&=\binom{n}{0}\,a^{\,n-0}\,b^{\,0}&&\text{fórmula con }k=0\\ &=1\cdot a^{\,n}\cdot 1&&\tbinom{n}{0}=1,\quad n-0=n,\quad b^{0}=1\\ &=a^{n}&&\text{multiplicar por }1\text{ no cambia nada}\end{aligned}\]</li>
+      <li><b>El último término</b> (posición \(n+1\), \(k=(n+1)-1=n\)), con \(a\neq 0\): \[\begin{aligned}T_{n+1}&=\binom{n}{n}\,a^{\,n-n}\,b^{\,n}&&\text{fórmula con }k=n\\ &=1\cdot a^{\,0}\cdot b^{\,n}&&\tbinom{n}{n}=1,\quad n-n=0\\ &=1\cdot 1\cdot b^{\,n}&&a^{0}=1\\ &=b^{n}&&\text{multiplicar por }1\text{ no cambia nada}\end{aligned}\]</li>
+      <li><b>Con números</b> (\(n=4\)): el primero es \(a^{4}\) y el último es \(b^{4}\), como en \(a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\). ✓</li>
     </ol>
   </div>
 </section>
@@ -58,9 +111,13 @@
   <h3>Ejemplo 1: el 4º término de \((a+b)^{6}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Posición \(4\): \(k=3\).</li>
-    <li>\(T_{4}=\dbinom{6}{3}a^{6-3}b^{3}\), con \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3\cdot 2\cdot 1}=20\).</li>
-    <li>\(T_{4}=20a^{3}b^{3}\).</li>
+    <li><b>Datos.</b> Primer término del binomio: \(a\). Segundo: \(b\). Exponente: \(n=6\). Posición pedida: \(p=4\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=p-1=4-1=3\).</li>
+    <li><b>Fórmula y reemplazo:</b> \(T_{k+1}=\dbinom{n}{k}a^{\,n-k}b^{\,k}\), con \(n=6\) y \(k=3\): \(T_{4}=\dbinom{6}{3}a^{6-3}b^{3}\).</li>
+    <li><b>El exponente de \(a\):</b> \(6-3=3\).</li>
+    <li><b>El coeficiente,</b> con tres factores arriba y tres abajo: \(\dbinom{6}{3}=\dfrac{6\cdot 5\cdot 4}{3\cdot 2\cdot 1}\). Arriba: \(6\cdot 5=30\) y \(30\cdot 4=120\). Abajo: \(3\cdot 2=6\) y \(6\cdot 1=6\). División: \(\dfrac{120}{6}=20\).</li>
+    <li><b>Resultado:</b> \(T_{4}=20a^{3}b^{3}\).</li>
+    <li><b>Comprobación:</b> los exponentes suman \(3+3=6=n\). ✓</li>
   </ol>
   </div>
   </div>
@@ -69,9 +126,15 @@
   <h3>Ejemplo 2: el 3º término de \((2x+1)^{5}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=2x\), \(b=1\), \(n=5\). Posición \(3\): \(k=2\).</li>
-    <li>\(T_{3}=\dbinom{5}{2}(2x)^{3}\cdot 1^{2}=10\cdot 8x^{3}\cdot 1\).</li>
-    <li>\(T_{3}=80x^{3}\).</li>
+    <li><b>Datos.</b> Primer término del binomio: \(a=2x\) (va entre paréntesis, porque tiene dos factores). Segundo: \(b=1\). Exponente: \(n=5\). Posición pedida: \(p=3\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=p-1=3-1=2\).</li>
+    <li><b>Fórmula y reemplazo:</b> \(T_{3}=\dbinom{5}{2}(2x)^{5-2}\cdot 1^{2}\).</li>
+    <li><b>El exponente de \(a\):</b> \(5-2=3\).</li>
+    <li><b>El coeficiente binomial:</b> \(\dbinom{5}{2}=\dfrac{5\cdot 4}{2\cdot 1}\). Arriba: \(5\cdot 4=20\). Abajo: \(2\cdot 1=2\). División: \(\dfrac{20}{2}=10\).</li>
+    <li><b>La potencia de \(a\):</b> \((2x)^{3}=2^{3}\cdot x^{3}\) (potencia de un producto). \(2^{3}=2\cdot 2\cdot 2\): \(2\cdot 2=4\) y \(4\cdot 2=8\). Entonces \((2x)^{3}=8x^{3}\).</li>
+    <li><b>La potencia de \(b\):</b> \(1^{2}=1\cdot 1=1\).</li>
+    <li><b>Se multiplica:</b> \(T_{3}=10\cdot 8x^{3}\cdot 1\). Primero \(10\cdot 8=80\); después \(80\cdot 1=80\).</li>
+    <li><b>Resultado:</b> \(T_{3}=80x^{3}\).</li>
   </ol>
   </div>
   </div>
@@ -80,9 +143,14 @@
   <h3>Ejemplo 3, con resta: el 5º término de \((x-2)^{7}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>\(a=x\), \(b=-2\), \(n=7\). Posición \(5\): \(k=4\).</li>
-    <li>\(T_{5}=\dbinom{7}{4}x^{3}(-2)^{4}\), con \(\dbinom{7}{4}=\dbinom{7}{3}=35\) y \((-2)^{4}=16\).</li>
-    <li>\(T_{5}=35\cdot 16\,x^{3}=560x^{3}\). Es positivo porque \(k=4\) es par.</li>
+    <li><b>Datos.</b> \(x-2=x+(-2)\). Primer término del binomio: \(a=x\). Segundo: \(b=-2\), con su signo. Exponente: \(n=7\). Posición pedida: \(p=5\).</li>
+    <li><b>De la posición a \(k\):</b> \(k=p-1=5-1=4\).</li>
+    <li><b>Fórmula y reemplazo:</b> \(T_{5}=\dbinom{7}{4}x^{7-4}(-2)^{4}\).</li>
+    <li><b>El exponente de \(a\):</b> \(7-4=3\).</li>
+    <li><b>El coeficiente binomial,</b> con cuatro factores arriba y cuatro abajo: \(\dbinom{7}{4}=\dfrac{7\cdot 6\cdot 5\cdot 4}{4\cdot 3\cdot 2\cdot 1}\). Arriba: \(7\cdot 6=42\), \(42\cdot 5=210\) y \(210\cdot 4=840\). Abajo: \(4\cdot 3=12\), \(12\cdot 2=24\) y \(24\cdot 1=24\). División: \(\dfrac{840}{24}=35\).</li>
+    <li><b>La potencia de \(b\):</b> \((-2)^{4}=(-2)\cdot(-2)\cdot(-2)\cdot(-2)\). Primero \((-2)\cdot(-2)=4\); después \(4\cdot(-2)=-8\); después \((-8)\cdot(-2)=16\).</li>
+    <li><b>Se multiplica:</b> \(T_{5}=35\cdot x^{3}\cdot 16\). \(35\cdot 16=35\cdot 10+35\cdot 6=350+210=560\).</li>
+    <li><b>Resultado:</b> \(T_{5}=560x^{3}\). Es positivo porque \(k=4\) es par.</li>
   </ol>
   </div>
   </div>
@@ -91,15 +159,27 @@
   <h3>Ejemplo 4: el primer y el último término de \((3x+y)^{4}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li><b>Primero</b> (\(k=0\)): \(T_{1}=\dbinom{4}{0}(3x)^{4}y^{0}=81x^{4}\).</li>
-    <li><b>Último</b> (posición \(n+1=5\), \(k=4\)): \(T_{5}=\dbinom{4}{4}(3x)^{0}y^{4}=y^{4}\).</li>
-    <li>Siempre: el primero es \(a^{n}\) y el último es \(b^{n}\).</li>
+    <li><b>Datos.</b> \(a=3x\), \(b=y\), \(n=4\), con \(x\neq 0\) e \(y\neq 0\). El desarrollo tiene \(n+1=4+1=5\) términos (hoja H09): el primero está en la posición \(1\) y el último en la posición \(5\).</li>
+    <li><b>Primer término:</b> \(k=1-1=0\). \(T_{1}=\dbinom{4}{0}(3x)^{4-0}y^{0}\).</li>
+    <li>\(\dbinom{4}{0}=1\); \(4-0=4\); \(y^{0}=1\).</li>
+    <li>\((3x)^{4}=3^{4}\cdot x^{4}\) (potencia de un producto). \(3^{4}=3\cdot 3\cdot 3\cdot 3\): \(3\cdot 3=9\), \(9\cdot 3=27\) y \(27\cdot 3=81\). Entonces \((3x)^{4}=81x^{4}\).</li>
+    <li>\(T_{1}=1\cdot 81x^{4}\cdot 1=81x^{4}\).</li>
+    <li><b>Último término:</b> \(k=5-1=4\). \(T_{5}=\dbinom{4}{4}(3x)^{4-4}y^{4}\).</li>
+    <li>\(\dbinom{4}{4}=1\); \(4-4=0\); \((3x)^{0}=1\).</li>
+    <li>\(T_{5}=1\cdot 1\cdot y^{4}=y^{4}\).</li>
+    <li><b>Lectura:</b> el primero es \(a^{n}=(3x)^{4}=81x^{4}\) y el último es \(b^{n}=y^{4}\), como dice el recuadro de los casos especiales.</li>
   </ol>
   </div>
   </div>
 
   <div class="why">
-    <p><b>El error más común.</b> Usar \(k\) igual a la posición. Para el 4º término se usa \(k=3\), no \(k=4\). Una comprobación rápida: los exponentes de \(a\) y de \(b\) del término tienen que sumar \(n\).</p>
+    <p><b>Errores frecuentes.</b></p>
+    <ol class="steps">
+      <li><b>Usar \(k\) igual a la posición.</b> Para el 4º término se usa \(k=4-1=3\), no \(k=4\). Con \(k=4\) sale el 5º término.</li>
+      <li><b>Olvidar el paréntesis.</b> Si \(a=2x\), la potencia es \((2x)^{3}=8x^{3}\), no \(2x^{3}\): el exponente afecta también al \(2\).</li>
+      <li><b>Dejar el signo fuera.</b> En \((x-2)^{7}\) el segundo término es \(b=-2\), no \(2\). La potencia es \((-2)^{k}\), y su signo depende de si \(k\) es par o impar.</li>
+      <li><b>Una comprobación rápida:</b> los exponentes de \(a\) y de \(b\) en la fórmula, \(n-k\) y \(k\), tienen que sumar \(n\).</li>
+    </ol>
   </div>
 </section>
 
@@ -107,39 +187,57 @@
   <h2>Ahora tú</h2>
   <div class="ex">
     <p><span class="n">A</span>Encuentra el 2º término de \((x+3)^{8}\).</p>
-    <details><summary>Pista</summary><div><p>Posición \(2\): \(k=1\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(2\): \(k=2-1=1\). Aquí \(a=x\), \(b=3\) y \(n=8\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{2}=\dbinom{8}{1}x^{7}\cdot 3^{1}=8\cdot 3\,x^{7}\).</li>
-        <li>\(T_{2}=24x^{7}\).</li>
+        <li><b>Datos:</b> \(a=x\), \(b=3\), \(n=8\), posición \(p=2\).</li>
+        <li><b>De la posición a \(k\):</b> \(k=2-1=1\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(T_{2}=\dbinom{8}{1}x^{8-1}\cdot 3^{1}\).</li>
+        <li><b>El exponente de \(a\):</b> \(8-1=7\).</li>
+        <li><b>El coeficiente binomial,</b> con un factor arriba y uno abajo: \(\dbinom{8}{1}=\dfrac{8}{1}=8\).</li>
+        <li><b>La potencia de \(b\):</b> \(3^{1}=3\).</li>
+        <li><b>Se multiplica:</b> \(T_{2}=8\cdot x^{7}\cdot 3\), y \(8\cdot 3=24\).</li>
+        <li><b>Resultado:</b> \(T_{2}=24x^{7}\). Comprobación: los exponentes de \(a\) y de \(b\) suman \(7+1=8\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">B</span>Encuentra el 6º término de \((a-b)^{9}\).</p>
-    <details><summary>Pista</summary><div><p>Posición \(6\): \(k=5\), impar.</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(6\): \(k=6-1=5\), que es impar. El segundo término del binomio es \((-b)\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{6}=\dbinom{9}{5}a^{4}(-b)^{5}\), con \(\dbinom{9}{5}=\dbinom{9}{4}=\dfrac{9\cdot 8\cdot 7\cdot 6}{4\cdot 3\cdot 2\cdot 1}=126\).</li>
-        <li>\((-b)^{5}=-b^{5}\), porque \(5\) es impar.</li>
-        <li>\(T_{6}=-126a^{4}b^{5}\).</li>
+        <li><b>Datos:</b> \(a-b=a+(-b)\). Primer término: \(a\). Segundo: \((-b)\). \(n=9\), posición \(p=6\).</li>
+        <li><b>De la posición a \(k\):</b> \(k=6-1=5\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(T_{6}=\dbinom{9}{5}a^{9-5}(-b)^{5}\).</li>
+        <li><b>El exponente de \(a\):</b> \(9-5=4\).</li>
+        <li><b>El coeficiente binomial,</b> con cinco factores arriba y cinco abajo: \(\dbinom{9}{5}=\dfrac{9\cdot 8\cdot 7\cdot 6\cdot 5}{5\cdot 4\cdot 3\cdot 2\cdot 1}\). Arriba: \(9\cdot 8=72\), \(72\cdot 7=504\), \(504\cdot 6=3024\) y \(3024\cdot 5=15\,120\). Abajo: \(5\cdot 4=20\), \(20\cdot 3=60\), \(60\cdot 2=120\) y \(120\cdot 1=120\). División: \(\dfrac{15\,120}{120}=126\).</li>
+        <li><b>La potencia de \((-b)\):</b> \((-b)^{5}=(-1)^{5}\cdot b^{5}\) (potencia de un producto). Como \(5\) es impar, \((-1)^{5}=-1\). Entonces \((-b)^{5}=-b^{5}\).</li>
+        <li><b>Se multiplica:</b> \(T_{6}=126\cdot a^{4}\cdot\left(-b^{5}\right)\). Más por menos da menos.</li>
+        <li><b>Resultado:</b> \(T_{6}=-126a^{4}b^{5}\). Comprobación: los exponentes suman \(4+5=9\). ✓</li>
       </ol>
     </div></details>
   </div>
   <div class="ex">
     <p><span class="n">C</span><b>De la vida cotidiana.</b> Un capital crece un \(4\,\%\) al año durante \(10\) años: se multiplica por \((1+0{,}04)^{10}\). Calcula el 3º término de ese desarrollo. ¿Qué parte del crecimiento representa?</p>
-    <details><summary>Pista</summary><div><p>Posición \(3\): \(k=2\). \(a=1\), \(b=0{,}04\).</p></div></details>
+    <details><summary>Pista</summary><div><p>Posición \(3\): \(k=3-1=2\). Aquí \(a=1\), \(b=0{,}04\) y \(n=10\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>\(T_{3}=\dbinom{10}{2}\cdot 1^{8}\cdot 0{,}04^{2}=45\cdot 0{,}0016=0{,}072\).</li>
-        <li>Lectura: el 1º término es \(1\) (el capital); el 2º es \(10\cdot 0{,}04=0{,}4\) (el interés simple de diez años); el 3º, \(0{,}072\), es la primera capa de «interés sobre interés»: un \(7{,}2\,\%\) del capital.</li>
+        <li><b>Datos:</b> \(a=1\), \(b=0{,}04\) (el \(4\,\%\) escrito como decimal: \(4:100=0{,}04\)), \(n=10\), posición \(p=3\).</li>
+        <li><b>De la posición a \(k\):</b> \(k=3-1=2\).</li>
+        <li><b>Fórmula y reemplazo:</b> \(T_{3}=\dbinom{10}{2}\cdot 1^{10-2}\cdot 0{,}04^{2}\).</li>
+        <li><b>El exponente de \(a\):</b> \(10-2=8\), y \(1^{8}=1\) (multiplicar \(1\) por sí mismo da siempre \(1\)).</li>
+        <li><b>El coeficiente binomial:</b> \(\dbinom{10}{2}=\dfrac{10\cdot 9}{2\cdot 1}\). Arriba: \(10\cdot 9=90\). Abajo: \(2\cdot 1=2\). División: \(\dfrac{90}{2}=45\).</li>
+        <li><b>La potencia de \(b\):</b> \(0{,}04^{2}=0{,}04\cdot 0{,}04\). Como \(4\cdot 4=16\) y hay cuatro decimales en total, \(0{,}04^{2}=0{,}0016\).</li>
+        <li><b>Se multiplica:</b> \(T_{3}=45\cdot 1\cdot 0{,}0016\). Primero \(45\cdot 1=45\). Después \(45\cdot 16=45\cdot 10+45\cdot 6=450+270=720\), y con cuatro decimales, \(45\cdot 0{,}0016=0{,}0720=0{,}072\).</li>
+        <li><b>Resultado:</b> \(T_{3}=0{,}072\).</li>
+        <li><b>Qué significa, comparando con los dos primeros términos.</b> El 1º (\(k=0\)) es \(a^{n}=1^{10}=1\): el capital inicial. El 2º (\(k=1\)) es \(\dbinom{10}{1}\cdot 1^{9}\cdot 0{,}04^{1}=10\cdot 1\cdot 0{,}04=0{,}4\): el interés simple de diez años, un \(40\,\%\) del capital. El 3º, \(0{,}072\), es la primera capa de «interés sobre interés»: \(0{,}072\cdot 100=7{,}2\), es decir, un \(7{,}2\,\%\) del capital.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">MA-L24-H10 · v001 · APR de Óscar, 21-nov-2026</span>
+  <span class="status">MA-L24-H10 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -147,6 +245,26 @@
 function oaTxt(S){ var c = S.ctx, C = S.C; return function(tx, px, py, al, cc){ c.font = '600 12px "Source Sans 3", system-ui, sans-serif'; var w = c.measureText(tx).width + 8, xb = al === 'left' ? px - 4 : al === 'right' ? px - w + 4 : px - w/2; c.fillStyle = 'rgba(255,255,255,0.88)'; c.fillRect(xb, py - 9, w, 18); c.fillStyle = cc || C.ink; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(tx, px, py); }; }
 function oaDec(x, d){ return x.toFixed(d).replace('.', ',').replace('-', '−'); }
 function oaPar(S, fx, fy, a, b, col, w){ var c = S.ctx, i, t, n = 240; c.strokeStyle = col; c.lineWidth = w || 2.6; c.setLineDash([]); c.beginPath(); for (i = 0; i <= n; i++){ t = a + (b - a)*i/n; if (i) c.lineTo(S.X(fx(t)), S.Y(fy(t))); else c.moveTo(S.X(fx(t)), S.Y(fy(t))); } c.stroke(); }
+/* utilidades del lote 28 (determinantes) */
+function dtSuave(t){ t = Math.max(0, Math.min(1, t)); return t*t*(3 - 2*t); }
+function dtFlecha(S, x0, y0, x1, y1, col, w){ var c = S.ctx, ax = S.X(x0), ay = S.Y(y0), bx = S.X(x1), by = S.Y(y1), d = Math.hypot(bx - ax, by - ay), ux, uy; if (d < 2) return; ux = (bx - ax)/d; uy = (by - ay)/d;
+  c.strokeStyle = col; c.lineWidth = w || 2; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx - ux*6, by - uy*6); c.stroke();
+  c.fillStyle = col; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - ux*9 - uy*4, by - uy*9 + ux*4); c.lineTo(bx - ux*9 + uy*4, by - uy*9 - ux*4); c.closePath(); c.fill(); }
+function dtEtq(S, PZ){ var on = {}; return { L:function(id, x, y, ax, dx, dy){ on[id] = 1; S.lab(id, S.X(x) + (dx || 0), S.Y(y) + (dy || 0), ax == null ? -50 : ax, -50, true); }, fin:function(){ PZ.forEach(function(e){ if (!on[e[0]]) S.lab(e[0], 0, 0, 0, 0, false); }); } }; }
+/* registro acumulado: la expresión de cada paso queda escrita, numerada, y se acumula hacia abajo */
+function oaReg(S, k, n, xw, yw, FILA){ var c = S.ctx, C = S.C, x0 = S.X(xw), y0 = S.Y(yw), i, act;
+  c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('Paso a paso, lo que se va obteniendo:', x0, y0 - 26);
+  for (i = 0; i < n; i++){ if (i >= k){ S.lab('R' + (i + 1), 0, 0, 0, 0, false); continue; } act = i === k - 1;
+    c.beginPath(); c.arc(x0 + 9, y0 + FILA[i], 9, 0, 6.2832); c.fillStyle = act ? C.rise : 'rgba(0,0,0,0.08)'; c.fill();
+    c.font = '700 11px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = act ? '#fff' : C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('' + (i + 1), x0 + 9, y0 + FILA[i] + 0.5);
+    S.lab('R' + (i + 1), x0 + 25, y0 + FILA[i], 0, -50, true); } }
+/* lectura con todos los pasos, uno bajo el otro, en un solo bloque (no se reparte en columnas) */
+function dtPasos(ls){ return [['', '\\begin{aligned}' + ls.map(function(l, i){ return '&\\textbf{' + (i + 1) + '.}\\ \\ ' + l; }).join('\\\\[5pt]') + '\\end{aligned}']]; }
+/* franja superior «Qué muestra»: toda animación dice, arriba, qué quiere mostrar (ley de Óscar, 22-nov) */
+function dtQue(S, l1, l2){ var c = S.ctx, C = S.C, x = S.X(S.world ? S.world.x0 : 0), F = '"Source Sans 3", system-ui, sans-serif', x0 = 8, y0 = 6, w = c.canvas.clientWidth ? c.canvas.clientWidth - 16 : 324, h = l2 ? 44 : 26;
+  c.fillStyle = 'rgba(31,93,134,0.08)'; c.fillRect(x0, y0, w, h); c.fillStyle = C.sec; c.fillRect(x0, y0, 3, h);
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.font = '700 12px ' + F; c.fillStyle = C.sec; c.fillText('Qué muestra:', x0 + 9, y0 + 13); var tw = c.measureText('Qué muestra: ').width;
+  c.font = '600 12px ' + F; c.fillStyle = C.ink; c.fillText(l1, x0 + 9 + tw, y0 + 13); if (l2) c.fillText(l2, x0 + 9, y0 + 31); }
 /* utilidades del lote 24 (binomio de Newton) */
 function bnSup(n){ var m = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return ('' + n).split('').map(function(d){ return m[d]; }).join(''); }
 function bnPow(l, e){ return e === 0 ? '' : e === 1 ? l : l + bnSup(e); }
@@ -162,26 +280,110 @@ function bnCajas(S, n, y, col, top, bot){ var c = S.ctx, X = S.X, Y = S.Y, off =
     c.font = '600 11.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || S.C.ink; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(bnPow('a', n - k) + bnPow('b', k), X(x), Y(y));
     c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = cc || (S.C.muted || '#6b6b6b'); if (top) c.fillText(top(k), X(x), Y(y + 0.36) - 10); if (bot) c.fillText(bot(k), X(x), Y(y - 0.36) + 11); }
   return off; }
-OA.scene('bn-termino', {
-  world:{x0:-0.9, x1:7.9, y0:-4.6, y1:3.5}, aspect:8.1/8.8,
-  aria:'Los siete términos del desarrollo de a más b elevado a 6, en una fila de casilleros con su posición arriba y su valor de k abajo. Un casillero se destaca y, bajo la fila, se arma su término paso a paso: de la posición se obtiene k restando 1, con k se calcula el coeficiente, la potencia de a es 6 menos k y la potencia de b es k.',
-  labels:[['F', 'T_{k+1}=\\dbinom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k}', 'T(k+1) = C(n, k) aⁿ⁻ᵏ bᵏ', 'diff']],
-  sliders:[{id:'p', tex:'\\text{posición}', min:1, max:7, step:1, value:1}],
-  legend:'<span><i class="sw rise"></i> el término elegido y su coeficiente</span><span><i class="sw sec"></i> potencia de \\(a\\): \\(n-k\\)</span><span><i class="sw tan"></i> potencia de \\(b\\): \\(k\\)</span>',
-  anim:{run:24000, hold:6000, still:1, apply:function(p, v){ v.q = p; v.p = Math.min(7, 1 + Math.floor(p*7.6)); }},
-  onInput:function(v){ v.q = null; },
-  draw:function(S, v){
-    var n = 6, p = Math.round(v.p || 1), k = p - 1, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), x0, y0, off;
-    off = bnCajas(S, n, 2, function(i){ return i === k ? C.rise : null; }, function(i){ return (i + 1) + 'º'; }, function(i){ return 'k = ' + i; });
-    
-    x0 = X(-0.8); y0 = Y(0.5);
-    txt('posición ' + p + '  →  k = ' + p + ' − 1 = ' + k, x0, y0, 'left', C.ink);
-    txt('coeficiente: C(6, ' + k + ') = ' + bnC(6, k), x0, y0 + 21, 'left', C.rise);
-    txt('potencia de a: n − k = 6 − ' + k + ' = ' + (6 - k), x0, y0 + 42, 'left', C.sec);
-    txt('potencia de b: k = ' + k, x0, y0 + 63, 'left', C.tan);
-    txt('T' + String.fromCharCode(8320 + p) + ' = ' + (bnTerm(6, k)), x0, y0 + 84, 'left', C.ink);
-    S.lab('F', x0, y0 + 112, 0, 0, true);
-  },
-  caption:function(v){ var p = Math.round(v.p || 1), k = p - 1; return 'El término de la posición ' + p + ' usa k = ' + k + ', uno menos que su posición. Con ese k se arman el coeficiente y las dos potencias: ' + bnTerm(6, k); },
-  readout:function(v){ var p = Math.round(v.p || 1), k = p - 1; return [['', '\\text{posición }' + p + ':\\quad k=' + p + '-1=' + k], ['d', 'T_{' + p + '}=\\dbinom{6}{' + k + '}a^{' + (6 - k) + '}b^{' + k + '}=' + bnC(6, k) + '\\,a^{' + (6 - k) + '}b^{' + k + '}']]; }
-});
+/* exponente de x en cada término: puntos (k, e0 − d·k); se busca el que da el exponente pedido */
+function bnExpo(o){
+  var n = o.n, e0 = o.e0, d = o.d;
+  function ex(k){ return e0 - d*k; }
+  return {
+    world:{x0:-1.7, x1:n + 1.3, y0:o.ymin - 0.52*(o.ymax - o.ymin) - 1.6, y1:o.ymax + 1.6}, aspect:o.aspect,
+    aria:o.aria, labels:o.labels, legend:o.legend,
+    sliders:o.target ? [{id:'m', tex:'\\text{exponente buscado}', min:o.ymin, max:o.ymax, step:1, value:o.m0}] : [{id:'k', tex:'k', min:0, max:n, step:1, value:0}],
+    anim:{run:20000, hold:7000, still:1, apply:function(p, v){ v.q = p; v.k = Math.min(n, Math.floor(p*(n + 2.6))); v.fin = p*(n + 2.6) >= n + 1; if (o.target) v.m = o.m0; }},
+    onInput:function(v){ v.q = null; v.fin = true; if (o.target) v.k = n; },
+    draw:function(S, v){
+      var k = Math.round(v.k || 0), m = o.target ? Math.round(v.m) : 0, C = S.C, c = S.ctx, X = S.X, Y = S.Y, txt = oaTxt(S), i, hit = -1, x0, y0, L, sc = 1;
+      function num(t, px, py, al){ c.font = '500 10.5px "Source Sans 3", system-ui, sans-serif'; c.fillStyle = C.muted || '#6b6b6b'; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, px, py); }
+      S.line(-0.4, 0, n + 0.6, 0, {color:C.ink, width:1.1}); S.line(0, o.ymin - 0.4, 0, o.ymax + 0.8, {color:C.ink, width:1.1});
+      for (i = 0; i <= n; i++) num('' + i, X(i), Y(0) + (ex(i) === 0 ? -11 : 11), 'center');
+      for (i = o.ymin; i <= o.ymax; i += o.ystep) if (i) { c.strokeStyle = C.ink; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0) - 3, Y(i)); c.lineTo(X(0) + 3, Y(i)); c.stroke(); num(('' + i).replace('-', '−'), X(0) - 7, Y(i), 'right'); }
+      num('k', X(n + 0.6) + 8, Y(0), 'left'); num('exponente de x', X(0) + 6, Y(o.ymax + 0.8) - 6, 'left');
+      c.strokeStyle = C.tan; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(-0.4), Y(m)); c.lineTo(X(n + 0.6), Y(m)); c.stroke(); c.setLineDash([]);
+      txt('exponente ' + ('' + m).replace('-', '−') + (m === 0 ? ': no queda x' : ''), X(n + 0.6), Y(m) - 11, 'right', C.tan);
+      c.strokeStyle = 'rgba(31,93,134,0.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(X(0), Y(ex(0))); c.lineTo(X(n), Y(ex(n))); c.stroke();
+      for (i = 0; i <= (v.fin ? n : k); i++){ if (ex(i) === m) hit = i; c.beginPath(); c.arc(X(i), Y(ex(i)), ex(i) === m ? 4.2 : 3, 0, 6.2832); c.fillStyle = ex(i) === m ? C.tan : (i === k && !v.fin ? C.rise : C.sec); c.fill(); }
+      x0 = X(-1.6); y0 = Y(o.ymin - 1.6);
+      L = o.lines(v.fin ? (hit >= 0 ? hit : n) : k, m, hit, !!v.fin);
+      L.forEach(function(r, q){ txt(r[0], x0, y0 + 21*q, 'left', C[r[1]]); });
+      S.lab('F', x0, y0 + 21*L.length + 8, 0, 0, !!v.fin && v.q != null);
+    },
+    caption:function(v){ return o.caption(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); },
+    readout:function(v){ return o.readout(Math.round(v.k || 0), o.target ? Math.round(v.m) : 0, !!v.fin); }
+  };
+}
+/* L24 H10 · fórmula del término k + 1: sobre los cinco términos de (a+b)^4 se anotan la posición, el exponente de b (k), el exponente de a (4 − k) y el coeficiente; con eso se arma el 3º término sin mirar los otros y se escribe la fórmula general */
+OA.scene('bn-termino', (function(){
+  var N = 7, X0 = 0.85, DXC = 1.25, BW = 1.1, BH = 0.62, YP = -3.05, YB = -3.9, YK = -4.8, YA = -5.6, YC = -6.4, YT = -7.3, XR = 6.6;
+  var TT = ['a^{4}', '4a^{3}b', '6a^{2}b^{2}', '4ab^{3}', 'b^{4}'], TF = ['a⁴', '4a³b', '6a²b²', '4ab³', 'b⁴'], CO = [1, 4, 6, 4, 1];
+  var PZ = [['Q', '\\text{¿el término }k+1\\text{?}', '¿el término k + 1?', 'pt'], ['F', '\\Longrightarrow\\ T_{k+1}=\\tbinom{n}{k}a^{\\,n-k}b^{\\,k}', '⟹ T(k+1) = C(n, k) aⁿ⁻ᵏ bᵏ', 'diff'],
+    ['NP', '\\leftarrow\\text{posición}', '← posición', ''],
+    ['NK', '\\leftarrow k\\text{: exp. de }b', '← k: exponente de b', 'c-tan'],
+    ['NA', '\\leftarrow 4-k\\text{: exp. de }a', '← 4 − k: exponente de a', 'c-sec'],
+    ['NC', '\\leftarrow\\tbinom{4}{k}\\text{: coeficiente}', '← C(4, k): coeficiente', 'diff'],
+    ['T3', 'T_{3}=\\tbinom{4}{2}a^{4-2}b^{2}=6a^{2}b^{2}', 'T₃ = C(4, 2) a⁴⁻² b² = 6a²b²', 'diff'],
+    ['R1', '(a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}', '(a + b)⁴ = a⁴ + 4a³b + 6a²b² + 4ab³ + b⁴', ''],
+    ['R2', '\\text{posiciones: }1^{\\circ},\\ 2^{\\circ},\\ 3^{\\circ},\\ 4^{\\circ},\\ 5^{\\circ}', 'posiciones: 1º, 2º, 3º, 4º, 5º', ''],
+    ['R3', '\\begin{aligned}&k=\\text{exponente de }b:\\ \\ 0,\\ 1,\\ 2,\\ 3,\\ 4\\\\ &\\text{posición}=k+1\\ \\ (0+1=1,\\ \\dots,\\ 4+1=5)\\end{aligned}', 'k = exponente de b: 0, 1, 2, 3, 4; posición = k + 1 (0 + 1 = 1, …, 4 + 1 = 5)', 'c-tan'],
+    ['R4', '\\begin{aligned}&\\text{exponente de }a=4-k:\\\\ &4-0=4,\\,4-1=3,\\,4-2=2,\\,4-3=1,\\,4-4=0\\end{aligned}', 'exponente de a = 4 − k: 4 − 0 = 4, 4 − 1 = 3, 4 − 2 = 2, 4 − 3 = 1, 4 − 4 = 0', 'c-sec'],
+    ['R5', '\\begin{aligned}&\\text{coeficiente}=\\tbinom{4}{k}:\\\\ &\\tbinom{4}{0}=1,\\ \\tbinom{4}{1}=4,\\ \\tbinom{4}{2}=6,\\ \\tbinom{4}{3}=4,\\ \\tbinom{4}{4}=1\\end{aligned}', 'coeficiente = C(4, k): C(4, 0) = 1, C(4, 1) = 4, C(4, 2) = 6, C(4, 3) = 4, C(4, 4) = 1', 'diff'],
+    ['R6', '\\begin{aligned}&3^{\\circ}\\text{ término}:\\ \\ k=3-1=2\\\\ &T_{3}=\\tbinom{4}{2}a^{4-2}b^{2}=6a^{2}b^{2}\\end{aligned}', '3º término: k = 3 − 1 = 2; T₃ = C(4, 2) a⁴⁻² b² = 6a²b²', ''],
+    ['R7', '\\begin{aligned}&\\text{para la posición }k+1,\\text{ con exponente }n:\\\\ &T_{k+1}=\\tbinom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k}\\end{aligned}', 'para la posición k + 1, con exponente n: T(k+1) = C(n, k) aⁿ⁻ᵏ bᵏ', 'diff']];
+  var TXT = [['Se parte de un desarrollo conocido: exponente 4.', 'Cada término va en un casillero.'],
+    ['Sobre cada casillero se anota su posición,', 'contando de izquierda a derecha.'],
+    ['Bajo cada casillero, el exponente de la letra b.', 'Va siempre uno atrás de la posición.'],
+    ['Después, el exponente de la letra a.', 'Los dos exponentes suman siempre 4.'],
+    ['Después, el coeficiente: el número que multiplica.', 'Se calcula con el exponente de la letra b.'],
+    ['Se arma el tercer término sin mirar los otros.', 'Resultado igual al de su casillero.'],
+    ['La misma receta, escrita con letras:', 'es la fórmula del término de la posición pedida.']];
+  (function(){ var j; for (j = 0; j <= 4; j++){ PZ.push(['B' + j, TT[j], TF[j], '']); PZ.push(['O' + j, (j + 1) + '^{\\circ}', (j + 1) + 'º', '']); PZ.push(['K' + j, '' + j, '' + j, 'c-tan']); PZ.push(['A' + j, '' + (4 - j), '' + (4 - j), 'c-sec']); PZ.push(['C' + j, '' + CO[j], '' + CO[j], 'diff']); } })();
+  function cl(t){ return Math.max(0, Math.min(1, t)); }
+  return {
+    world:{x0:0, x1:10, y0:-17.6, y1:0}, aspect:17.6/10,
+    aria:'Animación en siete pasos. Uno: los cinco términos del desarrollo de a más b elevado a 4, cada uno en un casillero: a a la cuarta, 4 a al cubo b, 6 a al cuadrado b al cuadrado, 4 a b al cubo y b a la cuarta. Dos: sobre cada casillero se anota su posición: primero, segundo, tercero, cuarto, quinto. Tres: bajo cada casillero se anota k, el exponente de b: 0, 1, 2, 3, 4; la posición es k más 1. Cuatro: se anota el exponente de a, que es 4 menos k: 4, 3, 2, 1, 0. Cinco: se anota el coeficiente, 4 sobre k: 1, 4, 6, 4, 1. Seis: se destaca la columna del tercer término: k es 3 menos 1, igual a 2, y el término es 4 sobre 2 por a al cuadrado por b al cuadrado, igual a 6 a al cuadrado b al cuadrado. Siete: junto a la pregunta se escribe la fórmula general: el término k más 1 es n sobre k, por a elevado a n menos k, por b elevado a k. Bajo la figura, un registro numerado guarda la expresión de cada paso, sin borrar las anteriores.',
+    labels:PZ,
+    sliders:[{id:'paso', tex:'\\text{paso}', min:1, max:N, step:1, value:1}],
+    legend:'<span><i class="sw tan"></i> \\(k\\): el exponente de \\(b\\)</span><span><i class="sw sec"></i> el exponente de \\(a\\): \\(n-k\\)</span><span><i class="sw rise"></i> el coeficiente \\(\\binom{n}{k}\\) y el término elegido</span>',
+    anim:{run:38000, hold:3000, still:1, apply:function(p, v){ var t = Math.min(N - 1e-6, p*N); v.q = p; v.paso = 1 + Math.floor(t); v.u = dtSuave((t - Math.floor(t))*1.4); }},
+    onInput:function(v){ v.q = null; v.u = 1; },
+    draw:function(S, v){
+      var k = Math.round(v.paso || 1), u = v.u == null ? 1 : v.u, C = S.C, c = S.ctx, X = S.X, Y = S.Y, T = dtEtq(S, PZ), L = T.L, F = '"Source Sans 3", system-ui, sans-serif', MU = C.muted || '#6b6b6b';
+      var j, pr, xc, a6 = ap(6), sel;
+      function ap(m){ return k > m ? 1 : (k === m ? u : 0); } /* cuánto ha aparecido lo del paso m; después queda */
+      function tx(t, x, yy, al, col, size, alpha, bold){ if (alpha <= 0) return; c.globalAlpha = alpha; c.font = (bold || '600') + ' ' + size + 'px ' + F; c.fillStyle = col; c.textAlign = al; c.textBaseline = 'middle'; c.fillText(t, X(x), Y(yy)); c.globalAlpha = 1; }
+      function col(j){ return X0 + DXC*j; }
+      function fila(m, y, pre, nom){ var a = ap(m), i, q; if (a <= 0) return; for (i = 0; i <= 4; i++){ q = cl(a*5 - i*0.8); if (q > 0.3) L(pre + i, col(i), y); } if (a > 0.5) L(nom, XR, y, 0); }
+      /* paso 6 (va al fondo): banda naranja sobre la columna del término elegido, el 3º */
+      if (a6 > 0){ xc = col(2); c.globalAlpha = 0.13*a6; c.fillStyle = C.rise; c.fillRect(X(xc - BW/2 - 0.04), Y(YP + 0.36), X(xc + BW/2 + 0.04) - X(xc - BW/2 - 0.04), Y(YP + 0.36 + (YC - 0.36 - YP - 0.36)*a6) - Y(YP + 0.36)); c.globalAlpha = 1; }
+      /* pasos 3 a 5 (al fondo): punteada que baja de cada casillero por sus tres datos */
+      if (ap(3) > 0){ c.strokeStyle = 'rgba(31,93,134,0.25)'; c.lineWidth = 1; c.setLineDash([2, 3]);
+        for (j = 0; j <= 4; j++){ pr = (ap(3) + ap(4) + ap(5))/3; c.beginPath(); c.moveTo(X(col(j)), Y(YB - BH/2)); c.lineTo(X(col(j)), Y(YB - BH/2 + (YC + 0.2 - YB + BH/2)*pr)); c.stroke(); } c.setLineDash([]); }
+      /* paso 1: un casillero por término, con + entre uno y otro */
+      for (j = 0; j <= 4; j++){ pr = cl(ap(1)*6 - j); if (pr <= 0) continue; xc = col(j); sel = j === 2 && a6 > 0.5;
+        c.fillStyle = '#fff'; c.fillRect(X(xc - BW/2), Y(YB + BH/2), X(xc + BW/2) - X(xc - BW/2), Y(YB - BH/2) - Y(YB + BH/2));
+        c.globalAlpha = pr; c.strokeStyle = sel ? C.rise : 'rgba(31,93,134,0.6)'; c.lineWidth = sel ? 1.9 : 1.1; c.strokeRect(X(xc - BW/2), Y(YB + BH/2), X(xc + BW/2) - X(xc - BW/2), Y(YB - BH/2) - Y(YB + BH/2)); c.globalAlpha = 1;
+        if (j > 0) tx('+', xc - DXC/2, YB, 'center', C.ink, 11.5, pr);
+        if (pr > 0.5) L('B' + j, xc, YB); }
+      tx('← un término', XR, YB + 0.17, 'left', C.ink, 10.5, ap(1), '700'); tx('en cada casillero', XR + 0.42, YB - 0.2, 'left', C.ink, 10.5, ap(1), '700');
+      /* pasos 2 a 5: posición, k, exponente de a y coeficiente de cada término */
+      fila(2, YP, 'O', 'NP'); fila(3, YK, 'K', 'NK'); fila(4, YA, 'A', 'NA'); fila(5, YC, 'C', 'NC');
+      /* paso 6: el término elegido, armado con los datos de su columna */
+      if (a6 > 0){ dtFlecha(S, col(2), YC - 0.3, col(2), YC - 0.3 - 0.38*a6, C.rise, 1.4); tx('término elegido: el 3º', 0.3, YT, 'left', C.rise, 10.5, a6, '700'); if (a6 > 0.5) L('T3', 4.15, YT, 0); }
+      /* la pregunta queda arriba; la respuesta se escribe a su lado */
+      L('Q', 0.3, -1.95, 0); if (ap(7) > 0.5) L('F', 4.2, -1.95, 0);
+      /* frase del paso y número de paso */
+      tx('paso ' + k + ' de ' + N, 0.3, -8.2, 'left', MU, 11, 1);
+      tx(TXT[k - 1][0], 0.3, -8.8, 'left', C.ink, 12.5, 1); c.font = '600 12.5px ' + F; c.fillStyle = C.ink; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(TXT[k - 1][1], X(0.3), Y(-8.8) + 19);
+      dtQue(S, 'cada término se arma con su posición,', 'sin escribir los términos anteriores.');
+      T.fin();
+      oaReg(S, k, N, 0.3, -10.85, [0, 24, 54, 92, 132, 174, 214]);
+    },
+    caption:function(v){ var k = Math.round(v.paso || 1); return 'Paso ' + k + '. ' + TXT[k - 1][0] + ' ' + TXT[k - 1][1]; },
+    readout:function(v){ var k = Math.round(v.paso || 1), R = [
+      '\\text{desarrollo conocido (hoja H03), }n=4:\\\\&\\qquad (a+b)^{4}=a^{4}+4a^{3}b+6a^{2}b^{2}+4ab^{3}+b^{4}\\\\&\\qquad\\text{tiene }4+1=5\\text{ términos (hoja H09)}',
+      '\\text{posición, de izquierda a derecha:}\\\\&\\qquad a^{4}\\text{ es el }1^{\\circ}\\qquad 4a^{3}b\\text{ es el }2^{\\circ}\\\\&\\qquad 6a^{2}b^{2}\\text{ es el }3^{\\circ}\\qquad 4ab^{3}\\text{ es el }4^{\\circ}\\\\&\\qquad b^{4}\\text{ es el }5^{\\circ}',
+      'k\\text{ es el exponente de }b\\text{ en cada término:}\\\\&\\qquad 1^{\\circ}:\\ a^{4}=a^{4}b^{0},\\ \\ k=0\\\\&\\qquad 2^{\\circ}:\\ 4a^{3}b=4a^{3}b^{1},\\ \\ k=1\\\\&\\qquad 3^{\\circ}:\\ 6a^{2}b^{2},\\ \\ k=2\\qquad 4^{\\circ}:\\ 4ab^{3},\\ \\ k=3\\\\&\\qquad 5^{\\circ}:\\ b^{4}=a^{0}b^{4},\\ \\ k=4\\\\&\\qquad\\text{posición}=k+1:\\ \\ 0+1=1,\\ \\ 1+1=2,\\\\&\\qquad 2+1=3,\\ \\ 3+1=4,\\ \\ 4+1=5',
+      '\\text{exponente de }a=4-k\\text{ (los dos suman 4):}\\\\&\\qquad k=0:\\ 4-0=4\\qquad k=1:\\ 4-1=3\\\\&\\qquad k=2:\\ 4-2=2\\qquad k=3:\\ 4-3=1\\\\&\\qquad k=4:\\ 4-4=0',
+      '\\text{coeficiente}=\\tbinom{4}{k}\\text{ («4 sobre }k\\text{», hoja H06):}\\\\&\\qquad\\tbinom{4}{0}=1\\qquad\\tbinom{4}{1}=\\tfrac{4}{1}=4\\\\&\\qquad\\tbinom{4}{2}=\\tfrac{4\\cdot 3}{2\\cdot 1}=\\tfrac{12}{2}=6\\\\&\\qquad\\tbinom{4}{3}=\\tfrac{4\\cdot 3\\cdot 2}{3\\cdot 2\\cdot 1}=\\tfrac{24}{6}=4\\qquad\\tbinom{4}{4}=1',
+      '\\text{el }3^{\\circ}\\text{ término, sin mirar los otros:}\\\\&\\qquad k=\\text{posición}-1=3-1=2\\\\&\\qquad\\text{coeficiente: }\\tbinom{4}{2}=\\tfrac{4\\cdot 3}{2\\cdot 1}=\\tfrac{12}{2}=6\\\\&\\qquad\\text{exponente de }a:\\ 4-2=2\\\\&\\qquad\\text{exponente de }b:\\ k=2\\\\&\\qquad T_{3}=6\\,a^{2}\\,b^{2}\\ \\text{ (el del tercer casillero)}',
+      '\\text{con letras: exponente }n,\\text{ posición }k+1\\\\&\\qquad\\text{coeficiente: }\\tbinom{n}{k}\\\\&\\qquad\\text{exponente de }a:\\ n-k\\\\&\\qquad\\text{exponente de }b:\\ k\\\\&\\qquad T_{k+1}=\\tbinom{n}{k}\\,a^{\\,n-k}\\,b^{\\,k},\\quad k=0,\\ 1,\\ \\dots,\\ n']; return dtPasos(R.slice(0, k)); }
+  };
+})());
