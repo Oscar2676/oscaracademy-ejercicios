@@ -1474,6 +1474,9 @@ for x10, e10, d10 in ((D10('3.4'), EP10[0], DE10[0]), (D10('3.2'), EP10[1], DE10
 # >>> H11
 # ───────── H11: definición formal de los límites (épsilon-delta): la frase, sus piezas, las dos fases, la negación y la unicidad ─────────
 A11, E11 = molde('11', 'H11_definicion_formal_de_los_limites_epsilon_delta.html', 'Definición formal de los límites (épsilon-delta)', 'lim-formal', 'Definición formal de límite (épsilon-delta)', ['formal-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001 para H11; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e11_ for e11_ in err if e11_ != 'H11 título, ruta y pie']
+ok('<h1>Definición formal de los límites (épsilon-delta)</h1>' in A11 and '<span class="status">CD-L29-H11 · v002 · Pendiente de APR</span>' in A11 and 'v001' not in A11 and A11.count('class="status"') == 1 and '<li>Definición formal de límite (épsilon-delta)</li>\n      <li><b>Definición formal de los límites (épsilon-delta)</b></li>' in A11, 'H11 v002 título, ruta y pie')
 # funciones exactas de la hoja
 def f11(x):                                                     # función ancla: recta con hueco, a = 1, L = 3; f(1) no está definida
     assert x != 1, 'f(1) no está definida'
@@ -1654,19 +1657,116 @@ for z11 in ['\\text{para todo }\\varepsilon\\gt 0\\text{ existe }\\delta\\gt 0\\
             '\\forall\\,\\varepsilon\\gt 0\\ \\ \\exists\\,\\delta\\gt 0\\ \\ \\forall\\,x:\\ \\ 0\\lt |x-a|\\lt \\delta\\ \\Longrightarrow\\ |f(x)-L|\\lt \\varepsilon', 'definida en un intervalo abierto que contiene a \\(a\\), salvo quizá en \\(a\\), y sea \\(L\\) un número real',
             '\\text{existe }\\varepsilon\\gt 0\\text{ tal que, para todo }\\delta\\gt 0\\text{, hay un }x\\text{ con}\\]', '\\[0\\lt |x-a|\\lt \\delta\\quad\\text{y}\\quad|f(x)-L|\\ge \\varepsilon.\\]',
             'si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(x)-L|\\lt \\varepsilon\\)', 'si \\(a\\lt x\\lt a+\\delta\\), entonces \\(|f(x)-L|\\lt \\varepsilon\\)', 'la menor de las dos sirve para el límite',
-            '\\displaystyle\\lim_{x\\to a}(mx+b)=ma+b\\), con \\(\\delta=\\dfrac{\\varepsilon}{|m|}', 'Sea \\(f(x)=mx+b\\) con \\(m\\ne 0\\), y \\(L=ma+b\\)', 'f(x)-L=mx+b-(ma+b)', 'mx-ma=m\\,(x-a)', '|f(x)-L|=|m|\\cdot|x-a|', '|m|\\cdot|x-a|\\lt |m|\\cdot\\dfrac{\\varepsilon}{|m|}=\\varepsilon',
+            '\\displaystyle\\lim_{x\\to a}(mx+b)=ma+b\\), con \\(\\delta=\\dfrac{\\varepsilon}{|m|}', 'Sea \\(f(x)=mx+b\\) con \\(m\\ne 0\\), y \\(L=ma+b\\)', 'f(x)-L&=mx+b-(ma+b)', '&=mx+b-ma-b', '&=mx-ma', '&=m\\,(x-a)', '|f(x)-L|&=|m\\,(x-a)|', '&=|m|\\cdot|x-a|', '|f(x)-L|=|m|\\cdot|x-a|', '|m|\\cdot|x-a|&\\lt |m|\\cdot\\frac{\\varepsilon}{|m|}', '|m|\\cdot|x-a|&\\lt \\varepsilon&&\\text{se simplifica }|m|',
             '<b>cualquier</b> \\(\\delta\\gt 0\\) sirve', '\\displaystyle\\lim_{x\\to a}c=c', '\\displaystyle\\lim_{x\\to a}x=a\\), con \\(\\delta=\\varepsilon', '\\dfrac{\\varepsilon}{1/4}=4\\,\\varepsilon',
-            '\\varepsilon=\\dfrac{|L_{1}-L_{2}|}{2}', '|L_{1}-L_{2}|\\le |L_{1}-f(x)|+|f(x)-L_{2}|', '\\lt \\varepsilon+\\varepsilon=2\\,\\varepsilon', '2\\,\\varepsilon=2\\cdot\\dfrac{|L_{1}-L_{2}|}{2}=|L_{1}-L_{2}|', '|L_{1}-L_{2}|\\lt |L_{1}-L_{2}|', 'Luego \\(L_{1}=L_{2}\\)',
-            '|f(x)-3|=5\\cdot\\dfrac{\\delta}{2}=2{,}5\\,\\delta', 'x=1+\\dfrac{\\delta}{2}', '\\displaystyle\\lim_{x\\to -1}(6x+1)=-5', '\\delta=\\dfrac{\\varepsilon}{6}', '6\\,|x+1|\\lt 6\\cdot\\dfrac{\\varepsilon}{6}=\\varepsilon', '\\delta=\\dfrac{0{,}3}{6}=0{,}05', '-1{,}05\\lt x\\lt -0{,}95', '0\\lt 0{,}04\\lt 0{,}05', '0{,}24\\lt 0{,}3',
-            '\\displaystyle\\lim_{x\\to 8}\\left(\\dfrac{x}{4}+2\\right)=4', '\\dfrac{x}{4}-2=\\dfrac{1}{4}\\,(x-8)', '\\delta=4\\,\\varepsilon', '\\dfrac{1}{4}\\,|x-8|\\lt \\dfrac{1}{4}\\cdot 4\\,\\varepsilon=\\varepsilon', '\\delta=4\\cdot 0{,}5=2', '6\\lt x\\lt 10', '0\\lt 1{,}6\\lt 2', '0{,}4\\lt 0{,}5',
-            'x=2-\\dfrac{\\delta}{2}', 'r(x)=3\\left(2-\\dfrac{\\delta}{2}\\right)+1=6-\\dfrac{3\\,\\delta}{2}+1=7-\\dfrac{3\\,\\delta}{2}', 'r(x)-8=7-\\dfrac{3\\,\\delta}{2}-8=-1-\\dfrac{3\\,\\delta}{2}', '|r(x)-8|=1+\\dfrac{3\\,\\delta}{2}', '|r(x)-8|\\ge 1=\\varepsilon', '\\(8\\) no es el límite', '1{,}5\\lt x\\lt 2{,}5', '5{,}5\\lt r(x)\\lt 8{,}5', 'sirve \\(\\delta=\\dfrac{\\varepsilon}{3}\\)',
+            '\\varepsilon=\\dfrac{|L_{1}-L_{2}|}{2}', '|L_{1}-L_{2}|&\\le |L_{1}-f(x)|+|f(x)-L_{2}|', '&=|f(x)-L_{1}|+|f(x)-L_{2}|', '&\\lt \\varepsilon+\\varepsilon', '&=2\\,\\varepsilon', '&=2\\cdot\\frac{|L_{1}-L_{2}|}{2}', '&=|L_{1}-L_{2}|&&\\text{se simplifica el }2', 'L_{1}-f(x)=-(f(x)-L_{1})', '|L_{1}-L_{2}|\\lt |L_{1}-L_{2}|', 'Luego \\(L_{1}=L_{2}\\)',
+            'f(x)&=5\\left(1+\\frac{\\delta}{2}\\right)-2', '&=5+\\frac{5\\,\\delta}{2}-2', '&=3+\\frac{5\\,\\delta}{2}', 'f(x)-3&=\\frac{5\\,\\delta}{2}=2{,}5\\,\\delta', '|f(x)-3|&=2{,}5\\,\\delta', '\\varepsilon=2{,}5\\,\\delta', 'x=1+\\dfrac{\\delta}{2}', '\\displaystyle\\lim_{x\\to -1}(6x+1)=-5', '\\delta=\\dfrac{\\varepsilon}{6}', 'g(x)+5&=6x+1+5', '&=6x+6', '&=6\\,(x+1)', '|g(x)+5|&=|6|\\cdot|x+1|', '&=6\\,|x+1|', '6\\,|x+1|&\\lt 6\\cdot\\frac{\\varepsilon}{6}', '6\\,|x+1|&\\lt \\varepsilon&&\\text{se simplifica el }6', '\\delta=\\dfrac{0{,}3}{6}=0{,}05', '-1{,}05\\lt x\\lt -0{,}95', '0\\lt 0{,}04\\lt 0{,}05', '0{,}24\\lt 0{,}3',
+            '\\displaystyle\\lim_{x\\to 8}\\left(\\dfrac{x}{4}+2\\right)=4', 'h(x)-4&=\\frac{x}{4}+2-4', '&=\\frac{x}{4}-2', '&=\\frac{1}{4}\\,(x-8)', '|h(x)-4|&=\\left|\\frac{1}{4}\\right|\\cdot|x-8|', '&=\\frac{1}{4}\\,|x-8|', '\\delta=4\\,\\varepsilon', '\\frac{1}{4}\\,|x-8|&\\lt \\frac{1}{4}\\cdot 4\\,\\varepsilon', '\\frac{1}{4}\\,|x-8|&\\lt \\varepsilon&&\\text{porque }\\tfrac{1}{4}\\cdot 4=1', '\\delta=4\\cdot 0{,}5=2', '6\\lt x\\lt 10', '0\\lt 1{,}6\\lt 2', '0{,}4\\lt 0{,}5',
+            'x=2-\\dfrac{\\delta}{2}', 'r(x)&=3\\left(2-\\frac{\\delta}{2}\\right)+1', '&=6-\\frac{3\\,\\delta}{2}+1', '&=7-\\frac{3\\,\\delta}{2}', 'r(x)-8&=7-\\frac{3\\,\\delta}{2}-8', '&=-1-\\frac{3\\,\\delta}{2}', '|r(x)-8|&=1+\\frac{3\\,\\delta}{2}', '|r(x)-8|\\gt 1', '|r(x)-8|\\ge 1=\\varepsilon', '\\(8\\) no es el límite', '1{,}5\\lt x\\lt 2{,}5', '5{,}5\\lt r(x)\\lt 8{,}5', 'sirve \\(\\delta=\\dfrac{\\varepsilon}{3}\\)',
             'e(x)=\\begin{cases}2&\\text{si }x\\lt 3\\\\[2pt] 5&\\text{si }x\\ge 3\\end{cases}', 'círculo vacío en \\((3,2)\\)', 'punto lleno \\((3,5)\\)', '\\varepsilon=\\dfrac{3}{2}=1{,}5', 'x_{1}=3-\\dfrac{\\delta}{2}', 'x_{2}=3+\\dfrac{\\delta}{2}', 'L-2\\ge 3{,}5-2=1{,}5', '5-L\\gt 5-3{,}5=1{,}5', '|e(x)-L|\\ge 1{,}5', 'el límite de \\(e\\) en \\(3\\) no existe', '\\displaystyle\\lim_{x\\to 3^{-}}e(x)=2', '\\displaystyle\\lim_{x\\to 3^{+}}e(x)=5',
-            '3{,}95\\lt x\\lt 4{,}05', '0{,}9\\lt k(x)\\lt 1{,}1', '8-2x=-2\\,(x-4)', '|k(x)-1|=|-2|\\cdot|x-4|=2\\,|x-4|', '\\delta=\\dfrac{0{,}1}{2}=0{,}05', '0\\lt 0{,}03\\lt 0{,}05', '0{,}06\\lt 0{,}1', 'el límite es \\(1\\)',
+            '3{,}95\\lt x\\lt 4{,}05', '0{,}9\\lt k(x)\\lt 1{,}1', 'k(x)-1&=9-2x-1', '&=8-2x', '&=-2\\,(x-4)', '|k(x)-1|&=|-2|\\cdot|x-4|', '&=2\\,|x-4|', '2\\,|x-4|&\\lt 2\\cdot\\frac{\\varepsilon}{2}', '|k(x)-1|&\\lt \\varepsilon', '\\delta=\\dfrac{0{,}1}{2}=0{,}05', '0\\lt 0{,}03\\lt 0{,}05', '0{,}06\\lt 0{,}1', 'el límite es \\(1\\)',
             'j(x)=\\begin{cases}x-1&\\text{si }x\\lt 0\\\\[2pt] 2x+1&\\text{si }x\\ge 0\\end{cases}', 'círculo vacío en \\((0,-1)\\)', 'punto lleno \\((0,1)\\)', 'j(x)=-\\dfrac{\\delta}{2}-1', 'L-j(x)=L+\\dfrac{\\delta}{2}+1', 'j(x)=2\\cdot\\dfrac{\\delta}{2}+1=\\delta+1', 'j(x)-L=\\delta+1-L', 'j(x)-(-1)=x-1+1=x', 'j(x)-1=2x+1-1=2x', '2x\\lt 2\\cdot\\dfrac{\\varepsilon}{2}=\\varepsilon', '\\displaystyle\\lim_{x\\to 0^{-}}j(x)=-1', '\\displaystyle\\lim_{x\\to 0^{+}}j(x)=1',
-            'F(c)=1{,}8\\,c+32', '1{,}8\\,c-324=1{,}8\\,(c-180)', '\\lt \\dfrac{9}{1{,}8}=5', '\\lt 1{,}8\\cdot 5=9', '\\delta=\\dfrac{\\varepsilon}{1{,}8}', '1{,}8\\cdot\\dfrac{\\varepsilon}{1{,}8}=\\varepsilon', '\\displaystyle\\lim_{c\\to 180}F(c)=356', 'c=180-\\dfrac{\\delta}{2}', 'F(c)=1{,}8\\left(180-\\dfrac{\\delta}{2}\\right)+32=324-0{,}9\\,\\delta+32=356-0{,}9\\,\\delta', 'F(c)-360=356-0{,}9\\,\\delta-360=-4-0{,}9\\,\\delta', '|F(c)-360|=4+0{,}9\\,\\delta', '\\(360\\) no es el límite',
+            'F(c)=1{,}8\\,c+32', 'F(c)-356&=1{,}8\\,c+32-356', '&=1{,}8\\,c-324', '&=1{,}8\\,(c-180)', '|F(c)-356|&=|1{,}8|\\cdot|c-180|', '&=1{,}8\\,|c-180|', '|c-180|&\\lt \\frac{9}{1{,}8}', '|c-180|&\\lt 5', '\\dfrac{9}{1{,}8}=5', '\\lt 1{,}8\\cdot 5=9', '\\delta=\\dfrac{\\varepsilon}{1{,}8}', '1{,}8\\cdot\\dfrac{\\varepsilon}{1{,}8}=\\varepsilon', '\\displaystyle\\lim_{c\\to 180}F(c)=356', 'c=180-\\dfrac{\\delta}{2}', 'F(c)&=1{,}8\\left(180-\\frac{\\delta}{2}\\right)+32', '&=324-0{,}9\\,\\delta+32', '&=356-0{,}9\\,\\delta', 'F(c)-360&=356-0{,}9\\,\\delta-360', '&=-4-0{,}9\\,\\delta', '|F(c)-360|&=4+0{,}9\\,\\delta', '|F(c)-360|\\gt 4', '\\(360\\) no es el límite',
             'sin demostrar', 'Desigualdad triangular', 'nunca de \\(x\\)', 'no puede depender de \\(x\\)', 'No es parte de la demostración', 'se refiere a los \\(x\\) en que \\(f\\) está definida', 'Uso de la definición formal de límite', 'f(x)=5x-2\\) para \\(x\\ne 1', 'hueco en \\((1,3)\\)', '\\delta=\\dfrac{\\varepsilon}{5}', 'entre \\(0{,}6\\) y \\(1{,}4\\) y alturas entre \\(1\\) y \\(5\\)']:
     ok(z11 in A11, 'H11: la hoja no trae «%s»' % z11)
 ok(e11(3) == 5 and j11(0) == 1 and 0 - 1 == -1 and A11.count('<div class="def">') == 1, 'H11: puntos marcados de las gráficas descritas y recuadro de laterales')
+# ───── H11 v002 (revisión general, 25-nov): cuentas nuevas del encabezado, el aviso, los recuadros, los ejemplos y los ejercicios
+def v002_11():
+    """cada cuenta nueva de la hoja, con fracciones; en una función para no pisar nombres globales"""
+    d = lambda s: Fr(s.replace(',', '.'))
+    def trae(*zs):
+        for z in zs: ok(z in A11, 'H11 v002: la hoja no trae «%s»' % z)
+    # encabezado: cuatro entradas con su cuenta, distancias de entrada y de salida, y la regularidad «5 veces»
+    for x in ('0,9', '0,99', '1,01', '1,1'):
+        X = d(x); p = 5*X; y = f11(X); dx = abs(X - 1); dy = abs(y - 3)
+        ok(y == p - 2 and dy == 5*dx and dx == (1 - X if X < 1 else X - 1) and dy == (3 - y if y < 3 else y - 3), 'H11 v002 encabezado: fila x = %s' % x)
+        trae('&f(%s)=5\\cdot %s-2=%s-2=%s' % (tex(X), tex(X), tex(p), tex(y)),
+             '|%s-1|&=%s=%s' % (tex(X), ('1-%s' % tex(X)) if X < 1 else ('%s-1' % tex(X)), tex(dx)),
+             '|%s-3|&=%s=%s&&\\text{y }5\\cdot %s=%s' % (tex(y), ('3-%s' % tex(y)) if y < 3 else ('%s-3' % tex(y)), tex(dy), tex(dx), tex(dy)))
+    for e, dl in (('1', '0,2'), ('0,5', '0,1'), ('0,01', '0,002')):
+        ok(d(e)/5 == d(dl) and 5*d(dl) == d(e), 'H11 v002 encabezado: tolerancia %s, distancia %s' % (e, dl))
+        implica11('H11 v002 encabezado ε = %s' % e, f11, 1, 3, d(dl), d(e))
+        trae('\\text{salida a menos de }%s:&&\\text{entrada a menos de }\\tfrac{%s}{5}=%s' % (tex(d(e)), tex(d(e)), tex(d(dl))), '5\\cdot %s=%s' % (tex(d(dl)), tex(d(e))))
+    ok(A11.count('<p class="lede">') == 4 and A11.index('<b>De dónde sale, con números.</b>') < A11.index('<b>La regularidad:</b>') < A11.index('<b>La notación.</b>') < A11.index('</header>'), 'H11 v002: orden del encabezado (de dónde sale → regularidad → notación)')
+    trae('se lee «\\(f\\) de \\(x\\)»', '(se lee «épsilon»)', '(se lee «delta»)', '«valor absoluto de \\(0{,}9\\) menos \\(1\\)»', '«el límite de \\(f\\) de \\(x\\), cuando \\(x\\) tiende a \\(a\\), es \\(L\\)»', 'se lee «tiende a»', '«épsilon mayor que cero»', '«delta mayor que cero»',
+         '«valor absoluto de \\(x\\) menos \\(a\\)»', '«cero menor que valor absoluto de \\(x\\) menos \\(a\\), menor que delta»', '«valor absoluto de \\(f\\) de \\(x\\) menos \\(L\\), menor que épsilon»', 'se lee «implica»', '(se lee «para todo»)', '(se lee «existe»)', 'se lee «unión»',
+         '«ele sub uno»', '«\\(x\\) tiende a \\(a\\) por la izquierda»', '«\\(x\\) tiende a \\(a\\) por la derecha»', '<b>tolerancia</b>', '<b>número real</b>', '<b>intervalo abierto</b>', '<b>función lineal</b>', '<b>pendiente</b>', '<b>por contradicción</b>', '<b>límite lateral</b>', '<b>Negar</b>')
+    # aviso de rigor: definición del valor absoluto y cada propiedad con números
+    for u in RJ:
+        ok(abs(u) == (u if u >= 0 else -u), 'H11 v002 aviso: definición del valor absoluto')
+    ok(abs(2 - 5) == abs(-3) == 3 == 5 - 2 and abs((-2)*3) == abs(-6) == 6 == abs(-2)*abs(3) == 2*3 and abs(-3) == 3 == abs(3), 'H11 v002 aviso: propiedad 1 con números')
+    ok(abs(d('-1,5')) == d('1,5') < 2 and -2 < d('-1,5') < 2, 'H11 v002 aviso: propiedad 2 con números')
+    ok(abs(2 - 9) == 7 and abs(2 - 12) + abs(12 - 9) == 10 + 3 == 13 and 7 <= 13, 'H11 v002 aviso: desigualdad triangular con números')
+    ok(2 < 3 and 2*4 == 8 < 12 == 3*4 and 2 + 10 == 12 < 13 == 3 + 10 and 1 < 2 and 3 < 5 and 1 + 3 == 4 < 7 == 2 + 5, 'H11 v002 aviso: reglas del orden con números')
+    for u in RJ[::5]:
+        for v in RJ[::7]:
+            if u < v:
+                ok(all(u*c < v*c and u/c < v/c for c in (Fr(1, 3), Fr(2), Fr(9, 5))) and all(u + c < v + c for c in RJ[::13]), 'H11 v002 aviso: el orden se mantiene al multiplicar o dividir por un positivo y al sumar')
+    trae('|u|=u\\) si \\(u\\ge 0\\), y \\(|u|=-u\\)', '«propiedad 1» a «propiedad 5»', '|2-12|+|12-9|=10+3=13', '«existe un día en que no llueve»', '«llueve y no me mojo»')
+    # k1: piezas con números, traducción renglón por renglón y por qué el orden importa
+    ok(abs(d('1,15') - 1) == d('0,15') and 0 < d('0,15') < d('0,2') and abs(d('1,3') - 1) == d('0,3') and not d('0,3') < d('0,2') and 5*d('1,15') == d('5,75') and f11(d('1,15')) == d('5,75') - 2 == d('3,75') and abs(d('3,75') - 3) == d('0,75') < 1 and not d('0,15') < d('0,1'), 'H11 v002 k1: entradas 1,15 y 1,3 y la salida 3,75')
+    implica11('H11 v002 k1: con ε = 1 también sirve δ = 0,1', f11, 1, 3, d('0,1'), 1)
+    ok(all(2 < x < 5 for x in (Fr(5, 2), Fr(3), Fr(49, 10))) and not 2 < Fr(2) and not Fr(5) < 5, 'H11 v002 k1: intervalo abierto (2, 5)')
+    for x in RJ:
+        for a, dl in ((Fr(1), d('0,2')), (Fr(-1), Fr(1, 20)), (Fr(8), Fr(2))):
+            ok((abs(x - a) < dl) == (-dl < x - a < dl) == (a - dl < x < a + dl) and -dl + a == a - dl and x - a + a == x and dl + a == a + dl, 'H11 v002 k1: primera fila, renglón por renglón')
+        for L, e in ((Fr(3), Fr(1)), (Fr(-5), Fr(3, 10))):
+            ok((abs(x - L) < e) == (-e < x - L < e) == (L - e < x < L + e), 'H11 v002 k1: segunda fila, renglón por renglón')
+    trae('-0{,}2\\lt x-1\\lt 0{,}2', '1-0{,}2\\lt x\\lt 1+0{,}2', '-1\\lt f(x)-3\\lt 1', '3-1\\lt f(x)\\lt 3+1', '-\\delta+a=a-\\delta', 'x-a+a=x')
+    for dl in ES11:
+        x = 1 + dl/2
+        ok(abs(x - 1) == abs(dl/2) == dl/2 and 0 < dl/2 < dl and f11(x) == 5*(1 + dl/2) - 2 == 5 + 5*dl/2 - 2 == 3 + 5*dl/2 and f11(x) - 3 == 5*dl/2 == d('2,5')*dl > 0 and abs(f11(x) - 3) == d('2,5')*dl and not abs(f11(x) - 3) < d('2,5')*dl, 'H11 v002 k1: orden invertido, cadena con δ = %s' % dl)
+    ok(Fr(5, 2) == d('2,5') and 5 - 2 == 3 and 1 + d('0,2')/2 == 1 + d('0,1') == d('1,1') and f11(d('1,1')) == d('5,5') - 2 == d('3,5') and 5*d('1,1') == d('5,5') and abs(d('3,5') - 3) == d('0,5') == d('2,5')*d('0,2') and not d('0,5') < d('0,5'), 'H11 v002 k1: orden invertido con δ = 0,2')
+    # k2: qué se demuestra, método, cadenas y comprobación con números
+    ok(A11.index('card k2') < A11.index('<b>Qué se demuestra.</b>') < A11.index('<b>Cómo funciona el método.</b>') < A11.index('<b>Fase 1, el borrador.</b>') < A11.index('<b>Fase 2, la demostración.</b>') < A11.index('<b>Comprobación con números.</b>') < A11.index('card k3'), 'H11 v002 k2: qué se demuestra → método → fase 1 → fase 2 → comprobación')
+    ok(5*1 - 2 == 5 - 2 == 3 and d('0,6')/5 == d('0,12') and abs(d('1,1') - 1) == d('0,1') and 0 < d('0,1') < d('0,12') and abs(f11(d('1,1')) - 3) == d('0,5') < d('0,6') and abs(d('1,2') - 1) == d('0,2') and not d('0,2') < d('0,12') and 5*d('1,2') == 6 and f11(d('1,2')) == 6 - 2 == 4 and abs(4 - 3) == 1 and not 1 < d('0,6') and abs(-2) == 2, 'H11 v002 k2: comprobación con ε = 0,6 (x = 1,1 dentro; x = 1,2 fuera)')
+    implica11('H11 v002 k2: ε = 0,6 con δ = 0,12', f11, 1, 3, d('0,12'), d('0,6'))
+    ok(abs(d('2,7') - 2) == d('0,7') and 0 < d('0,7') < 1 and abs(4 - 4) == 0 < d('0,01'), 'H11 v002 k2: función constante con números')
+    for m in (Fr(5), Fr(-2), Fr(1, 4), Fr(1), Fr(-7, 3)):
+        for e in ES11:
+            for t in TS11[::6]:
+                x = Fr(2) + t*e/abs(m)                                # un x cualquiera de la franja, con a = 2
+                ok(abs(x - 2) < e/abs(m) and abs(m)*abs(x - 2) < abs(m)*(e/abs(m)) == e and abs(m*(x - 2)) == abs(m)*abs(x - 2), 'H11 v002 k2: cadena de la fase 2 (m = %s)' % m)
+    # k3: la negación con números, y la unicidad (idea con 7 y 8, y cadena)
+    ok(abs(d('1,9') - 2) == d('0,1') and 0 < d('0,1') < d('0,2') and 3*d('1,9') == d('5,7') and r11(d('1,9')) == d('5,7') + 1 == d('6,7') and abs(d('6,7') - 8) == d('1,3') and not d('1,3') < 1 and abs(d('1,99') - 2) == d('0,01') and 0 < d('0,01') < d('0,02') and 3*d('1,99') == d('5,97') and r11(d('1,99')) == d('5,97') + 1 == d('6,97') and abs(d('6,97') - 8) == d('1,03') and not d('1,03') < 1, 'H11 v002 k3: la negación con δ = 0,2 y δ = 0,02')
+    ok(abs(7 - 8) == 1 and Fr(1, 2) == d('0,5') and (7 - d('0,5'), 7 + d('0,5'), 8 - d('0,5'), 8 + d('0,5')) == (d('6,5'), d('7,5'), d('7,5'), d('8,5')) and not any(abs(Fr(i, 200) - 7) < d('0,5') and abs(Fr(i, 200) - 8) < d('0,5') for i in range(1000, 2000)) and not abs(d('7,5') - 7) < d('0,5') and not abs(d('7,5') - 8) < d('0,5'), 'H11 v002 k3: ningún número está a menos de 0,5 de 7 y de 8 a la vez')
+    for L1 in LS11[::5]:
+        for y in RJ[::3]:
+            ok(L1 - y == -(y - L1) and abs(L1 - y) == abs(y - L1), 'H11 v002 k3: L₁ − f(x) = −(f(x) − L₁)')
+    ok(A11.index('card k3') < A11.index('<b>Qué se busca.</b>') < A11.index('<b>Unicidad del límite. Qué se demuestra:</b>') < A11.index('<b>por contradicción</b>') < A11.index('Se supone \\(L_{1}\\ne L_{2}\\)') < A11.index('<div class="def">'), 'H11 v002 k3: qué se busca, qué se demuestra y método antes de la demostración')
+    # laterales: las dos direcciones, en rejilla, y los números
+    ok((3 - d('0,5'), 3 + d('0,5'), 3 - d('0,2')) == (d('2,5'), d('3,5'), d('2,8')) and min(d('0,5'), d('0,2')) == d('0,2') and d('2,5') < d('2,8'), 'H11 v002 laterales: números')
+    for a in (Fr(3), Fr(0)):
+        for d1 in (d('0,5'), Fr(1, 3), Fr(2)):
+            for d2 in (d('0,2'), Fr(1), Fr(1, 3)):
+                dm = min(d1, d2)
+                for x in RJ:
+                    ok((0 < abs(x - a) < dm) <= ((a - d1 < x < a) or (a < x < a + d2)), 'H11 v002 laterales: la menor de las dos distancias sirve para el límite')
+                    ok(((a - d1 < x < a) or (a < x < a + d1)) == (0 < abs(x - a) < d1), 'H11 v002 laterales: una misma δ sirve para cada lado')
+    trae('<b>Qué se justifica:</b>', '2{,}8\\lt x\\lt 3', '2{,}5\\lt x\\lt 3\\) o con \\(3\\lt x\\lt 3{,}5')
+    # ejemplos 1 a 4
+    ok(6*(-1) + 1 == -6 + 1 == -5 == g11(-1) and 1 + 5 == 6 and abs(6) == 6 and Fr(8, 4) + 2 == 2 + 2 == 4 == h11(8) and 2 - 4 == -2 and Fr(1, 4)*8 == 2 and Fr(1, 4)*4 == 1, 'H11 v002 ej1 y ej2: L = ma + b y cuentas de los renglones')
+    ok(2 - d('0,2')/2 == 2 - d('0,1') == d('1,9') and 1 + 3*d('0,2')/2 == 1 + d('0,6')/2 == 1 + d('0,3') == d('1,3') == abs(r11(d('1,9')) - 8) and 3*d('0,2') == d('0,6') and d('1,3') >= 1 and 6 + 1 == 7 and 7 - 8 == -1 and abs(3) == 3, 'H11 v002 ej3: comprobación con δ = 0,2')
+    ok(e11(d('2,9')) == 2 and e11(d('3,1')) == 5 and abs(2 - 4) == 4 - 2 == 2 >= d('1,5') and abs(5 - 3) == 2 >= d('1,5'), 'H11 v002 ej4: valores y casos con L = 4 y L = 3')
+    for L in LS11:
+        if L < d('3,5'): ok(L + (d('1,5') - L) == d('1,5') and d('3,5') + (d('1,5') - L) == 5 - L and d('1,5') < 5 - L, 'H11 v002 ej4: de L < 3,5 sale 1,5 < 5 − L')
+        else: ok(L - 2 >= d('3,5') - 2 == d('1,5'), 'H11 v002 ej4: de L ≥ 3,5 sale L − 2 ≥ 1,5')
+    ok(d('0,6')/(-2) == d('-0,3') < 0, 'H11 v002 errores: dividir por −2 da una distancia negativa')
+    ok(sum(A11.count(z) for z in ('<b>Qué se demuestra.</b>', '<b>Qué se demuestra:</b>')) >= 6 and sum(A11.count(z) for z in ('<b>Cómo funciona el método.</b>', '<b>Cómo funciona:</b>', '<b>Cómo:</b>')) >= 8 and A11.count('Comprobación con números') >= 3 and A11.count('Con números') >= 12, 'H11 v002: cada demostración dice qué se demuestra y cómo, y se comprueba con números')
+    # ejercicios A, B y C
+    ok(9 - 1 == 8 and (-2)*(-4) == 8 and -2*4 + 9 == -8 + 9 == 1 == k11(4), 'H11 v002 A: factor común −2 y L = ma + b')
+    ok(j11(d('-0,1')) == d('-1,1') and abs(d('-1,1') - 0) == d('1,1') > 1 and j11(d('0,1')) == d('1,2') and abs(d('1,2') - (-1)) == abs(d('1,2') + 1) == d('2,2') > 1 and -d('0,2')/2 == d('-0,1'), 'H11 v002 B c): los dos casos con δ = 0,2')
+    ok(-d('0,5') < d('-0,3') < 0 and j11(d('-0,3')) == d('-0,3') - 1 == d('-1,3') and abs(d('-1,3') + 1) == abs(d('-0,3')) == d('0,3') < d('0,5') and d('0,5')/2 == d('0,25') and 0 < d('0,2') < d('0,25') and 2*d('0,2') == d('0,4') and j11(d('0,2')) == d('0,4') + 1 == d('1,4') and abs(d('1,4') - 1) == d('0,4') < d('0,5'), 'H11 v002 B d): los dos laterales con ε = 0,5')
+    for dl in ES11:
+        for t in TS11:
+            if t < 0:
+                x = t*dl; ok(-dl < x and -dl + (dl - x) == -x and x + (dl - x) == dl and -x < dl, 'H11 v002 B d): de −δ < x sale −x < δ, sumando δ − x')
+    ok(32 - 356 == -324 and Fr(90, 18) == 5 == 9/d('1,8') and 180 - Fr(2, 2) == 180 - 1 == 179 and d('1,8')*179 == d('322,2') and F11(179) == d('322,2') + 32 == d('354,2') and abs(d('354,2') - 360) == d('5,8') == 4 + d('0,9')*2 == 4 + d('1,8') and d('5,8') > 4 and 324 + 32 == 356 and 356 - 360 == -4 and d('1,8')/2 == d('0,9'), 'H11 v002 C: cuentas nuevas (b y d con δ = 2)')
+    for dl in ES11: ok(d('1,8')*(dl/2) == d('0,9')*dl, 'H11 v002 C d): 1,8·δ/2 = 0,9·δ')
+    trae('F(179)=322{,}2+32=354{,}2', '|354{,}2-360|=5{,}8', 'j(-0{,}3)=-0{,}3-1=-1{,}3', 'j(0{,}2)=2\\cdot 0{,}2+1=0{,}4+1=1{,}4', '-2\\cdot 4+9=-8+9=1', '6\\cdot(-1)+1=-6+1=-5', '\\dfrac{8}{4}+2=2+2=4', '1+\\dfrac{3\\cdot 0{,}2}{2}=1+\\dfrac{0{,}6}{2}=1+0{,}3=1{,}3', '\\dfrac{0{,}6}{-2}=-0{,}3', 'r(1{,}9)=3\\cdot 1{,}9+1=5{,}7+1=6{,}7', 'r(1{,}99)=3\\cdot 1{,}99+1=5{,}97+1=6{,}97', 'f(1{,}2)=5\\cdot 1{,}2-2=6-2=4', '\\delta=\\dfrac{0{,}6}{5}=0{,}12', 'f(1{,}15)=5\\cdot 1{,}15-2=5{,}75-2=3{,}75')
+    ok(not re.search(r'\\\\[()]', A11), 'H11 v002: salto de línea pegado a un paréntesis en un bloque aligned')
+    ok(A11.count('\\begin{aligned}') == A11.count('\\end{aligned}') >= 24 and A11.count('&&\\text{') >= 80, 'H11 v002: desarrollos en bloques aligned, una operación por renglón con su razón')
+v002_11()
 # <<< H11
 # >>> H12
 # ───────── H12: uso de la definición formal de límite (funciones no lineales: zona no simétrica, δ = mín{tope, ε/c}) ─────────
