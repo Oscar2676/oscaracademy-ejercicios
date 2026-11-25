@@ -2,6 +2,8 @@
 
 Versión 1 · 25-nov-2026 · Dueño y única autoridad de aprobación: Óscar Morales León.
 
+**Estado: EN VIGOR. Aprobado por Óscar con APR el 25-nov-2026, 13:33 de Chile.** Gobierna toda la producción, también la tarea programada.
+
 Este documento completo es el prompt. Reúne, una por una, todas las reglas que Óscar ha dictado desde el 9-nov-2026, ordenadas por materia y con la fecha en que las dio. Sustituye a las listas parciales («leyes» 1 a 5) de la guía de la tarea programada, que quedan contenidas aquí.
 
 ---

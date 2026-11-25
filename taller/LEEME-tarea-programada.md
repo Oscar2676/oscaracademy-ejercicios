@@ -1,5 +1,7 @@
 # Producción automática de hojas · guía para la tarea programada (22-nov-2026)
 
+> **PROMPT MAESTRO EN VIGOR (APR de Óscar, 25-nov 13:33 de Chile).** Antes de tocar una hoja, lee `taller/PROMPT-MAESTRO.md` completo y cúmplelo: gobierno G1–G10, las 137 reglas, el procedimiento y «la puerta» de 24 preguntas con revisor independiente. Una hoja que no pasa 24 de 24 no se entrega a Óscar como lista. Si esta guía y el prompt maestro se contradicen, manda el prompt maestro. Primer trabajo al reanudar: terminar el control del lote 28 (`taller/pedidos/CONTROL-lote-28.md`), luego L25 H06–H34, L29 y L30.
+
 > **REVISIÓN GENERAL ANTES QUE HOJAS NUEVAS (23-nov, 21:40 de Chile).** Óscar revisó L25 H01–H09 y rechazó todo por el mismo motivo (ver «Cuarta ley» y su lista de control). **No producir hojas nuevas** hasta que este aviso se quite. Cada corrida corrige **hasta 5 hojas** de la cola «Revisión general (cuarta ley)» del estado, en ese orden, las sube de versión («Pendiente de APR»), republica la tarjeta del lote y anota la corrida. Modelo ya corregido: L25 H01–H09 (v003/v002 del 23-nov).
 
 
