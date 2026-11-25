@@ -12,9 +12,17 @@
       <li><b>Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen</b></li>
     </ol>
     <h1>Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen</h1>
-    <p class="lede">El teorema de la compuesta tiene dos condiciones. Uno: el límite interno existe, \(\lim_{x\to a}g(x)=b\). Dos: la externa cumple \(\lim_{u\to b}f(u)=f(b)\). Con las dos,
+    <p class="lede">Una <b>función compuesta</b> es una función aplicada sobre el resultado de otra. Se escribe \(f(g(x))\) y se lee «\(f\) de \(g\) de \(x\)»: primero se calcula \(g(x)\), y a ese resultado se le aplica \(f\). La función \(g\) se llama <b>interna</b> (actúa primero) y la función \(f\), <b>externa</b> (actúa después). El <b>límite</b> de una función en un número \(a\) es el número al que se acercan sus valores cuando \(x\) se acerca a \(a\) por sus dos lados, sin llegar a \(a\) (la definición exacta está en la hoja «Propiedades de límites»). Se escribe \(\lim_{x\to a}g(x)=b\) y se lee «el límite de \(g\) de \(x\), cuando \(x\) tiende a \(a\), es \(b\)». Esta hoja responde una pregunta: si se conoce el límite de la interna, ¿cuánto vale el límite de la compuesta?</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toman las dos funciones de la animación y el lugar \(a=1\). La interna es \(g(x)=x+1\). La externa es \(f(u)=u+1\) si \(u\ne 2\), con \(f(2)=5\): en \(u=2\) no sigue su fórmula, vale \(5\). Primero se calcula la interna en cuatro \(x\) cercanos a \(1\), dos de cada lado:
+    \[\begin{aligned}g(0{,}9)&=0{,}9+1=1{,}9&&\text{izquierda de }1\\ g(0{,}99)&=0{,}99+1=1{,}99&&\text{izquierda, más cerca}\\ g(1{,}01)&=1{,}01+1=2{,}01&&\text{derecha, más cerca}\\ g(1{,}1)&=1{,}1+1=2{,}1&&\text{derecha de }1\end{aligned}\]
+    Los valores de \(g\) se acercan a \(2\): el límite interno es \(2\). Ahora cada resultado entra en la externa. Ninguno es \(2\), así que en los cuatro se usa la fórmula \(u+1\):
+    \[\begin{aligned}f(g(0{,}9))&=f(1{,}9)=1{,}9+1=2{,}9&&\text{izquierda de }1\\ f(g(0{,}99))&=f(1{,}99)=1{,}99+1=2{,}99&&\text{izquierda, más cerca}\\ f(g(1{,}01))&=f(2{,}01)=2{,}01+1=3{,}01&&\text{derecha, más cerca}\\ f(g(1{,}1))&=f(2{,}1)=2{,}1+1=3{,}1&&\text{derecha de }1\end{aligned}\]
+    <b>La regularidad:</b> los valores de la compuesta se acercan a \(3\), y \(3\) no es \(f(2)\), porque \(f(2)=5\). La razón: \(g(x)\) vale \(2\) solo cuando \(x=1\), y el límite no mira lo que pasa en \(x=1\). Para todo \(x\ne 1\), lo que entra en \(f\) está cerca de \(2\) pero no es \(2\): el valor \(f(2)=5\) nunca se usa. Quien responde «el límite es \(f(2)=5\)» se equivoca. Ahora se cambia la interna por la constante \(c(x)=2\), que también tiene límite \(2\) en \(1\):
+    \[\begin{aligned}f(c(0{,}9))&=f(2)=5&&\text{izquierda de }1\\ f(c(1{,}1))&=f(2)=5&&\text{derecha de }1\end{aligned}\]
+    Con esta interna siempre entra \(2\) en \(f\), y el límite de la compuesta es \(5\). El mismo límite interno dio dos resultados distintos, \(3\) y \(5\).</p>
+    <p class="lede"><b>La fórmula, y cuándo vale.</b> El teorema de la compuesta tiene dos condiciones. Uno: el límite interno existe, \(\lim_{x\to a}g(x)=b\). Dos: la externa cumple \(\lim_{u\to b}f(u)=f(b)\), es decir, su límite en \(b\) es igual a su valor en \(b\). Con las dos,
     \[\lim_{x\to a}f(g(x))=f(b)\]
-    Si falta una, el teorema <b>no se puede usar</b>. Eso <b>no</b> significa que el límite de la compuesta no exista: hay que estudiarla directamente. Esta hoja trata el caso en que la externa tiene límite en \(b\), pero su valor \(f(b)\) es otro número: el resultado depende de si la interna toma o no el valor \(b\) cerca de \(a\).</p>
+    Se lee: «el límite, cuando \(x\) tiende a \(a\), de \(f\) de \(g\) de \(x\), es \(f\) de \(b\)». En las cuentas de arriba la condición dos no se cumple: el límite de \(f\) en \(2\) es \(3\) y su valor es \(5\). Si falta una condición, el teorema <b>no se puede usar</b>. Eso <b>no</b> significa que el límite de la compuesta no exista: hay que estudiarla directamente. Esta hoja trata el caso en que la externa tiene límite en \(b\), pero su valor \(f(b)\) es otro número: el resultado depende de si la interna toma o no el valor \(b\) cerca de \(a\), como se vio con \(g\) y con \(c\).</p>
   </section>
 </header>
 
@@ -23,9 +31,9 @@
   <p>La función interna de la animación es \(g(x)=x+1\). La externa es \(f(u)=u+1\) si \(u\ne 2\), con \(f(2)=5\): su gráfica es una recta con un hueco en \((2, 3)\) y un punto lleno aparte, en \((2, 5)\). El lugar es \(a=1\) y la compuesta se llama \(h(x)=f(g(x))\). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\).</p>
   <p><b>Cómo leerla:</b></p>
   <ol class="steps">
-    <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de la interna, \(u=g(x)\), una recta. A la derecha, la de la externa, \(y=f(u)\): una recta con un círculo vacío a la altura \(3\) y un punto lleno a la altura \(5\), los dos sobre \(u=2\). El eje vertical de la primera y el eje horizontal de la segunda son el mismo: \(u\).</li>
-    <li><b>Pasos 2, 3 y 4, las dos condiciones del teorema:</b> la interna va hacia \(2\) (azul): la primera condición se cumple. Cerca de \(u=2\) las alturas de \(f\) van hacia \(3\) (verde), pero el valor \(f(2)\) es \(5\) (burdeo): la segunda condición no se cumple y el teorema no se puede usar.</li>
-    <li><b>Pasos 5 y 6, el estudio directo:</b> \(g(x)\) vale \(2\) solo cuando \(x=1\). Para \(x\ne 1\), lo que entra en \(f\) está cerca de \(2\) pero no es \(2\): \(f\) nunca usa su punto lleno, y la compuesta va hacia el hueco. Su límite es \(3\) (naranjo), no \(5\).</li>
+    <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de la interna, \(u=g(x)\), una recta. A la derecha, la de la externa, \(y=f(u)\): una recta con un círculo vacío a la altura \(3\) (rótulo «hueco») y un punto lleno a la altura \(5\) (rótulo «punto lleno»), los dos sobre \(u=2\). El eje vertical de la primera y el eje horizontal de la segunda son el mismo: \(u\).</li>
+    <li><b>Pasos 2, 3 y 4, las dos condiciones del teorema:</b> la interna va hacia \(2\) (flechas azules y rótulo «hacia 2»): ese es el límite interno, y la primera condición se cumple. Cerca de \(u=2\) las alturas de \(f\) van hacia \(3\) (flechas verdes y rótulo «hacia 3»): ese es el límite de la externa. Pero el valor \(f(2)\) es \(5\) (anillo burdeo sobre el punto lleno): la segunda condición no se cumple y el teorema no se puede usar.</li>
+    <li><b>Pasos 5 y 6, el estudio directo:</b> \(g(x)\) vale \(2\) solo cuando \(x=1\) (punto azul con el rótulo «solo aquí g vale 2»). Bajo la gráfica quedan escritos dos valores de la compuesta, \(h(0{,}9)=2{,}9\) y \(h(1{,}1)=3{,}1\). Para \(x\ne 1\), lo que entra en \(f\) está cerca de \(2\) pero no es \(2\): \(f\) nunca usa su punto lleno, y la compuesta va hacia el hueco. Su límite es \(3\) (anillo naranjo sobre el hueco), no \(5\).</li>
     <li><b>Paso 7, otra interna:</b> la constante \(c(x)=2\) (recta burdeo) tiene el mismo límite interno, \(2\), pero siempre entrega \(2\): \(f\) siempre usa su punto lleno y el límite de esa compuesta es \(5\). Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
     <li><b>Lee la cuenta de abajo, línea por línea:</b> las fórmulas, la revisión de cada condición, los valores de la compuesta y su límite. Conclusión: \(\lim_{x\to 1}f(g(x))=3\), y con la interna constante el límite es \(5\).</li>
   </ol>
@@ -35,7 +43,7 @@
     <li><b>Verde:</b> el límite de la externa en \(2\): las flechas sobre su gráfica y la punteada de la altura \(3\), la del hueco.</li>
     <li><b>Burdeo:</b> el valor \(f(2)=5\) (punto lleno, con un anillo) y la interna constante \(c(x)=2\), que es la única que lo usa.</li>
     <li><b>Naranjo:</b> el límite de la compuesta \(f(g(x))\): el anillo sobre el hueco y el resultado \(3\).</li>
-    <li><b>Círculo vacío y punto lleno:</b> sobre \(u=2\), la gráfica de \(f\) no pasa por \((2, 3)\); su punto es \((2, 5)\).</li>
+    <li><b>Círculo vacío («hueco») y punto lleno:</b> sobre \(u=2\), la gráfica de \(f\) no pasa por \((2, 3)\); su punto es \((2, 5)\). El hueco marca el límite de \(f\) en \(2\); el punto lleno, su valor.</li>
   </ul>
   <div class="why">
     <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra dos gráficas y unos pocos valores: sugiere el resultado, no lo demuestra.</p>
@@ -44,6 +52,7 @@
       <li><b>Nombre de la segunda condición.</b> \(\lim_{u\to b}f(u)=f(b)\) se llama continuidad de \(f\) en \(b\) y se estudia más adelante. Todo polinomio la cumple en todo \(b\) (hoja «Propiedades de límites»).</li>
       <li><b>Se usa sin demostrar:</b> que dos funciones iguales para todo \(u\ne b\) de un intervalo abierto que contiene a \(b\) tienen el mismo límite en \(b\) (así se obtiene el límite de una externa con hueco a partir de su fórmula); y que una función constante por un lado de \(a\) tiene por ese lado el límite igual a esa constante.</li>
       <li><b>También se usan sin demostrar:</b> el criterio de los laterales (\(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y valen \(L\)) y la versión por un lado de la regla del hueco, que no se escribe aparte: su demostración es la misma, con \(x\) de un solo lado de \(a\).</li>
+      <li><b>En las cuentas con números de las demostraciones se usa sin demostrar:</b> que, para \(c\) positivo, \(|t|\lt c\) dice lo mismo que \(-c\lt t\lt c\); que el valor absoluto de un producto es el producto de los valores absolutos; que sumar o restar un mismo número a los lados de una desigualdad la mantiene; y que si \(0\le p\lt A\) y \(0\le q\lt B\), entonces \(p\cdot q\lt A\cdot B\).</li>
     </ol>
   </div>
 </section>
@@ -51,6 +60,17 @@
 <section>
   <div class="card k1">
     <h3>El teorema, sus dos condiciones y la regla del hueco</h3>
+    <p><b>Palabras que se usan.</b></p>
+    <ol class="steps">
+      <li><b>Interna y externa.</b> En \(f(g(x))\), la interna es \(g\) (actúa primero) y la externa es \(f\) (actúa después). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\): \(u=g(x)\).</li>
+      <li><b>Límite interno.</b> Es el límite de la interna en \(a\). En esta hoja se llama \(b\). En la animación, \(b=2\).</li>
+      <li><b>Límite de la externa en \(b\).</b> Es el número al que se acercan los valores \(f(u)\) cuando \(u\) se acerca a \(b\), sin llegar a \(b\). En la regla del hueco se llama \(K\). En la animación, \(K=3\).</li>
+      <li><b>Valor de la externa en \(b\).</b> Es el número \(f(b)\), si existe. En la animación, \(f(2)=5\). El límite y el valor son dos cosas distintas: pueden coincidir o no.</li>
+      <li><b>Hueco y punto lleno.</b> En la gráfica, un círculo vacío («hueco») marca un punto por donde la gráfica no pasa; un punto lleno marca el valor que la función sí toma.</li>
+      <li><b>«Cerca de \(a\)».</b> Quiere decir: para todo \(x\ne a\) de algún intervalo abierto que contiene a \(a\). Un <b>intervalo abierto</b> es el conjunto de los números que están entre dos números dados, sin incluir a esos dos.</li>
+      <li><b>«La interna toca \(b\)».</b> Quiere decir: \(g(x)=b\) para algún \(x\ne a\), tan cerca de \(a\) como se quiera.</li>
+    </ol>
+    <p><b>Cómo se lee cada una.</b> \(\lim_{u\to b}f(u)=f(b)\) se lee «el límite de \(f\) de \(u\), cuando \(u\) tiende a \(b\), es \(f\) de \(b\)». \(g(x)\ne b\) se lee «\(g\) de \(x\) es distinto de \(b\)». \(\lim_{x\to a}f(g(x))=K\) se lee «el límite de \(f\) de \(g\) de \(x\), cuando \(x\) tiende a \(a\), es \(K\)».</p>
     <p><b>Teorema de la compuesta.</b> Sea \(g\) definida en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\). Si</p>
     <ol class="steps">
       <li>\(\lim_{x\to a}g(x)=b\) (condición 1: el límite interno existe y es el número \(b\)),</li>
@@ -58,6 +78,7 @@
       <li>\(\lim_{u\to b}f(u)=f(b)\) (condición 2: el límite de la externa en \(b\) existe y es igual a su valor en \(b\)),</li>
     </ol>
     <p>entonces \(\lim_{x\to a}f(g(x))=f(b)\). En palabras: el límite «entra» en la externa.</p>
+    <p><b>El teorema, visto en una cuenta</b> (ejemplo 2). Interna \(g(x)=x+1\), lugar \(a=1\), externa el polinomio \(P(u)=u^{2}-3u+1\). Condición 1: el límite interno es \(1+1=2\). Condición 2: \(P\) es un polinomio y cumple \(\lim_{u\to 2}P(u)=P(2)\). Entonces el límite de la compuesta es \(P(2)=-1\) (la cuenta está en el ejemplo 2).</p>
     <p><b>Cuando una condición no se cumple</b>, el teorema no se puede usar: no dice que el límite exista ni que no exista. La compuesta se estudia directamente.</p>
     <p><b>Regla del hueco</b> (para cuando la externa tiene límite en \(b\), pero \(f(b)\) es otro número o no existe). Si</p>
     <ol class="steps">
@@ -66,6 +87,8 @@
       <li>\(f\) está definida en un intervalo abierto que contiene a \(b\), salvo quizá en \(b\), y \(\lim_{u\to b}f(u)=K\),</li>
     </ol>
     <p>entonces \(\lim_{x\to a}f(g(x))=K\). El resultado es el límite de la externa (la altura del hueco), no su valor \(f(b)\).</p>
+    <p><b>La regla del hueco, vista en una cuenta</b> (la animación). Uno: \(\lim_{x\to 1}g(x)=2\). Dos: \(g(x)=x+1\) vale \(2\) solo si \(x=1\), así que \(g(x)\ne 2\) para todo \(x\ne 1\). Tres: \(\lim_{u\to 2}f(u)=3\). Entonces \(\lim_{x\to 1}f(g(x))=3\), que es lo que mostraron los valores \(2{,}9\); \(2{,}99\); \(3{,}01\) y \(3{,}1\) del encabezado.</p>
+    <p><b>De dónde sale la regla.</b> Del encabezado: mientras la interna no toque \(b\), en la externa solo entran números cercanos a \(b\) y distintos de \(b\); con esos números, los valores de la externa se acercan a su límite \(K\). La demostración completa está en el recuadro siguiente.</p>
     <p><b>Procedimiento:</b></p>
     <ol class="steps">
       <li>Hallar el límite interno \(b\). Si no existe, se estudia cada lado (hoja «Límites de funciones compuestas cuando el límite interno no existe»).</li>
@@ -77,7 +100,9 @@
 
   <div class="card k2">
     <h3>Demostración paso a paso: el teorema y la regla del hueco</h3>
-    <p><b>Teorema.</b> Se sabe: \(\lim_{x\to a}g(x)=b\); \(f\) está definida en un intervalo abierto que contiene a \(b\); \(\lim_{u\to b}f(u)=f(b)\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-f(b)|\lt \varepsilon\).</p>
+    <p><b>Cómo se leen los símbolos de la definición.</b> \(\varepsilon\) se lee «épsilon»: es la tolerancia, la distancia máxima que se acepta entre los valores de la función y su límite. \(\delta\) se lee «delta»: es la distancia a \(a\) que asegura esa tolerancia. \(\eta\) se lee «eta»: es otra distancia, la que se le pide a \(u\) respecto de \(b\). \(|x-a|\) se lee «valor absoluto de \(x\) menos \(a\)» y es la distancia entre \(x\) y \(a\). \(0\lt |x-a|\lt \delta\) dice: \(x\) no es \(a\) y está a menos de \(\delta\) de \(a\). \(\min\{\delta_{1},\delta_{2}\}\) se lee «el mínimo entre delta uno y delta dos»: el menor de los dos.</p>
+    <p><b>La definición que se usa</b> (hoja «Propiedades de límites»): \(\lim_{x\to a}F(x)=L\) quiere decir que para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|F(x)-L|\lt \varepsilon\).</p>
+    <p><b>Teorema.</b> <b>Qué se demuestra:</b> que con las condiciones 1 y 2 el límite de la compuesta en \(a\) existe y vale \(f(b)\). <b>Cómo funciona el método:</b> es una cadena de dos eslabones. La externa dice qué tan cerca de \(b\) tiene que estar \(u\) para que \(f(u)\) quede a menos de \(\varepsilon\) de \(f(b)\): esa distancia es \(\eta\). La interna dice qué tan cerca de \(a\) tiene que estar \(x\) para que \(g(x)\) quede a menos de \(\eta\) de \(b\): esa distancia es \(\delta\). Juntando los dos eslabones, \(\delta\) sirve para la compuesta. Se sabe: \(\lim_{x\to a}g(x)=b\); \(f\) está definida en un intervalo abierto que contiene a \(b\); \(\lim_{u\to b}f(u)=f(b)\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-f(b)|\lt \varepsilon\).</p>
     <ol class="steps">
       <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
       <li>Como \(\lim_{u\to b}f(u)=f(b)\), existe \(\eta\gt 0\) tal que, si \(0\lt |u-b|\lt \eta\), entonces \(|f(u)-f(b)|\lt \varepsilon\). (Se toma \(\eta\) tan chico que esos \(u\) estén en el intervalo donde \(f\) está definida.)</li>
@@ -87,7 +112,20 @@
       <li>Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}f(g(x))=f(b)\).</li>
     </ol>
     <p><b>Dónde se usa la condición 2:</b> en el paso 3. Ahí puede ocurrir \(g(x)=b\), y entonces la compuesta vale \(f(b)\): solo queda cerca del límite de \(f\) si \(f(b)\) es ese límite.</p>
-    <p><b>Regla del hueco.</b> Se sabe: \(\lim_{x\to a}g(x)=b\); \(g(x)\ne b\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\); \(\lim_{u\to b}f(u)=K\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-K|\lt \varepsilon\).</p>
+    <p><b>El teorema, con números</b> (ejemplo 2: \(g(x)=x+1\), \(a=1\), \(b=2\), \(P(u)=u^{2}-3u+1\), \(P(2)=-1\)) y la tolerancia \(\varepsilon=0{,}5\).</p>
+    <ol class="steps">
+      <li>La distancia de \(P(u)\) a \(P(2)\), línea por línea:
+      \[\begin{aligned}P(u)-P(2)&=u^{2}-3u+1-(-1)&&\text{se reemplazan }P(u)\text{ y }P(2)=-1\\ &=u^{2}-3u+1+1&&\text{restar }-1\text{ es sumar }1\\ &=u^{2}-3u+2&&\text{porque }1+1=2\\ &=(u-2)(u-1)&&\text{se factoriza}\end{aligned}\]</li>
+      <li>Comprobación de la factorización: \((u-2)(u-1)=u^{2}-u-2u+2=u^{2}-3u+2\).</li>
+      <li>Se prueba con \(\eta=0{,}25\). Si \(|u-2|\lt 0{,}25\):
+      \[\begin{aligned}-0{,}25\lt u-2&\lt 0{,}25&&\text{lo mismo, sin valor absoluto}\\ 0{,}75\lt u-1&\lt 1{,}25&&\text{se suma }1\text{ en los tres lados}\\ |u-1|&\lt 1{,}25&&\text{porque }u-1\text{ es positivo}\end{aligned}\]</li>
+      <li>Entonces \(|P(u)-P(2)|=|u-2|\cdot|u-1|\), menor que \(0{,}25\cdot 1{,}25=0{,}3125\), y \(0{,}3125\) es menor que \(0{,}5\). Sirve \(\eta=0{,}25\) (paso 2 de la demostración).</li>
+      <li>Para la interna: \(|g(x)-2|=|x+1-2|=|x-1|\). Es menor que \(0{,}25\) si \(|x-1|\lt 0{,}25\). Sirve \(\delta=0{,}25\) (paso 4).</li>
+      <li>Prueba con \(x=1{,}2\). Distancia a \(1\): \(|1{,}2-1|=0{,}2\), menor que \(0{,}25\). Interna: \(g(1{,}2)=1{,}2+1=2{,}2\), y \(|2{,}2-2|=0{,}2\), menor que \(0{,}25\).</li>
+      <li>Externa: \(P(2{,}2)=2{,}2^{2}-3\cdot 2{,}2+1=4{,}84-6{,}6+1=-0{,}76\).</li>
+      <li>Distancia al límite: \(|-0{,}76-(-1)|=|-0{,}76+1|=0{,}24\), menor que \(0{,}5\). Se cumple (paso 5).</li>
+    </ol>
+    <p><b>Regla del hueco.</b> <b>Qué se demuestra:</b> que con las tres condiciones de la regla el límite de la compuesta en \(a\) existe y vale \(K\), el límite de la externa en \(b\). <b>Cómo funciona el método:</b> la misma cadena de dos eslabones, con un cuidado más. Ahora la externa solo responde por los \(u\) cercanos a \(b\) y distintos de \(b\). Por eso se achica \(\delta\) hasta que \(g(x)\) nunca sea \(b\): se usan dos distancias, \(\delta_{1}\) y \(\delta_{2}\), y se toma la menor. Se sabe: \(\lim_{x\to a}g(x)=b\); \(g(x)\ne b\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\); \(\lim_{u\to b}f(u)=K\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-K|\lt \varepsilon\).</p>
     <ol class="steps">
       <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
       <li>Como \(\lim_{u\to b}f(u)=K\), existe \(\eta\gt 0\) tal que, si \(0\lt |u-b|\lt \eta\), entonces \(|f(u)-K|\lt \varepsilon\). De \(u=b\) no se sabe nada.</li>
@@ -96,18 +134,28 @@
       <li>Se elige \(\delta=\min\{\delta_{1},\delta_{2}\}\) y se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Entonces \(|g(x)-b|\lt \eta\) (paso 3) y \(g(x)\ne b\) (paso 4): el número \(u=g(x)\) cumple \(0\lt |u-b|\lt \eta\).</li>
       <li>Por el paso 2, \(|f(g(x))-K|\lt \varepsilon\). Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}f(g(x))=K\).</li>
     </ol>
-    <p><b>Con los números de la animación</b> (\(a=1\), \(b=2\), \(K=3\)) y la tolerancia \(\varepsilon=0{,}5\). Para \(u\ne 2\): \(|f(u)-3|=|u+1-3|=|u-2|\), menor que \(0{,}5\) si \(0\lt |u-2|\lt 0{,}5\); sirve \(\eta=0{,}5\). Para \(g\): \(|g(x)-2|=|x+1-2|=|x-1|\), menor que \(0{,}5\) si \(|x-1|\lt 0{,}5\); sirve \(\delta_{1}=0{,}5\). Además \(g(x)=2\) solo si \(x=1\): sirve cualquier \(\delta_{2}\), y se toma \(\delta=0{,}5\). Prueba con \(x=1{,}1\): \(|1{,}1-1|=0{,}1\), menor que \(0{,}5\); \(g(1{,}1)=1{,}1+1=2{,}1\) y \(|2{,}1-2|=0{,}1\), mayor que \(0\) y menor que \(0{,}5\); \(h(1{,}1)=f(2{,}1)=3{,}1\) y \(|3{,}1-3|=0{,}1\), menor que \(0{,}5\). En cambio, en \(u=2\): \(|f(2)-3|=|5-3|=2\), que no es menor que \(0{,}5\). Por eso la regla necesita \(g(x)\ne 2\).</p>
+    <p><b>La regla del hueco, con los números de la animación</b> (\(a=1\), \(b=2\), \(K=3\)) y la tolerancia \(\varepsilon=0{,}5\).</p>
+    <ol class="steps">
+      <li>Externa, para \(u\ne 2\): \(|f(u)-3|=|u+1-3|=|u-2|\), porque \(1-3=-2\). Es menor que \(0{,}5\) si \(0\lt |u-2|\lt 0{,}5\). Sirve \(\eta=0{,}5\) (paso 2).</li>
+      <li>Interna: \(|g(x)-2|=|x+1-2|=|x-1|\), porque \(1-2=-1\). Es menor que \(0{,}5\) si \(|x-1|\lt 0{,}5\). Sirve \(\delta_{1}=0{,}5\) (paso 3).</li>
+      <li>\(g(x)=2\) solo si \(x=1\): sirve cualquier \(\delta_{2}\) (paso 4). Se toma \(\delta_{2}=1\), y \(\delta=\min\{0{,}5;\ 1\}=0{,}5\) (paso 5).</li>
+      <li>Prueba con \(x=1{,}1\). Distancia a \(1\): \(|1{,}1-1|=0{,}1\), mayor que \(0\) y menor que \(0{,}5\).</li>
+      <li>Interna: \(g(1{,}1)=1{,}1+1=2{,}1\), y \(|2{,}1-2|=0{,}1\), mayor que \(0\) y menor que \(0{,}5\).</li>
+      <li>Compuesta: \(h(1{,}1)=f(2{,}1)=2{,}1+1=3{,}1\), y \(|3{,}1-3|=0{,}1\), menor que \(0{,}5\). Se cumple (paso 6).</li>
+      <li>En cambio, en \(u=2\): \(|f(2)-3|=|5-3|=2\), que no es menor que \(0{,}5\). Por eso la regla necesita \(g(x)\ne 2\).</li>
+    </ol>
   </div>
 
   <div class="card k3">
     <h3>Caso especial: cuando la interna toca el valor \(b\)</h3>
-    <p>La externa es la \(f\) de la animación: límite \(3\) en \(2\) y valor \(f(2)=5\). Las tres internas que siguen tienen el mismo límite interno, \(2\), en \(a=1\).</p>
+    <p><b>Qué se muestra:</b> que, cuando la condición 2 del teorema falla, el límite de la compuesta depende de si la interna toca el valor \(b\). <b>Cómo:</b> se deja fija la externa y se prueban tres internas con el mismo límite interno. La externa es la \(f\) de la animación: límite \(3\) en \(2\) y valor \(f(2)=5\). Las tres internas que siguen tienen el mismo límite interno, \(2\), en \(a=1\).</p>
+    <p><b>Palabra nueva: límite lateral.</b> El límite por la izquierda de \(a\) mira solo los \(x\) menores que \(a\); el límite por la derecha, solo los \(x\) mayores que \(a\). Los dos juntos se llaman «laterales».</p>
     <ol class="steps">
-      <li><b>La interna no toca el \(2\):</b> \(g(x)=x+1\) vale \(2\) solo en \(x=1\). Regla del hueco: \(\lim_{x\to 1}f(g(x))=3\).</li>
-      <li><b>La interna es constante:</b> \(c(x)=2\) para todo \(x\). La regla del hueco no se puede usar (su condición 2 falla). Estudio directo: \(f(c(x))=f(2)=5\) para todo \(x\); la compuesta es la constante \(5\) y \(\lim_{x\to 1}f(c(x))=5\).</li>
+      <li><b>La interna no toca el \(2\):</b> \(g(x)=x+1\) vale \(2\) solo en \(x=1\). Regla del hueco: \(\lim_{x\to 1}f(g(x))=3\). Con números: \(h(0{,}9)=f(1{,}9)=1{,}9+1=2{,}9\) y \(h(1{,}1)=f(2{,}1)=2{,}1+1=3{,}1\).</li>
+      <li><b>La interna es constante:</b> \(c(x)=2\) para todo \(x\). La regla del hueco no se puede usar (su condición 2 falla). Estudio directo: \(f(c(x))=f(2)=5\) para todo \(x\); la compuesta es la constante \(5\) y \(\lim_{x\to 1}f(c(x))=5\) (el límite de una constante es esa constante: hoja «Propiedades de límites»).</li>
       <li><b>La interna toca el \(2\) por un solo lado:</b> sea \(s(x)=2\) si \(x\lt 1\) y \(s(x)=x+1\) si \(x\ge 1\). Sus laterales en \(1\) son \(2\) (constante) y \(1+1=2\): el límite interno es \(2\).</li>
-      <li>Por la izquierda de \(1\): \(f(s(x))=f(2)=5\), constante. El límite por la izquierda de la compuesta es \(5\).</li>
-      <li>Por la derecha de \(1\): \(s(x)=x+1\) es mayor que \(2\), así que \(s(x)\ne 2\) y \(f(s(x))=(x+1)+1=x+2\). El límite por la derecha es \(1+2=3\) (regla del hueco por la derecha).</li>
+      <li>Por la izquierda de \(1\): \(s(x)=2\), así que \(f(s(x))=f(2)=5\), constante. Con números: \(s(0{,}9)=2\) y \(f(2)=5\). El límite por la izquierda de la compuesta es \(5\).</li>
+      <li>Por la derecha de \(1\): \(s(x)=x+1\) es mayor que \(2\), así que \(s(x)\ne 2\) y \(f(s(x))=(x+1)+1=x+2\). Con números: \(s(1{,}1)=1{,}1+1=2{,}1\) y \(f(2{,}1)=2{,}1+1=3{,}1\). El límite por la derecha es \(1+2=3\) (regla del hueco por la derecha).</li>
       <li>Como \(5\ne 3\), \(f(s(x))\) no tiene límite en \(1\) (criterio de los laterales).</li>
       <li><b>Resumen:</b> con el mismo límite interno y la misma externa, la compuesta tuvo límite \(3\), límite \(5\) o no tuvo límite. Saber solo «el límite interno es \(2\)» no alcanza cuando la condición 2 del teorema falla.</li>
     </ol>
@@ -128,16 +176,19 @@
   <div class="prop p1">
   <h3>Ejemplo 1: la compuesta de la animación, \(\lim_{x\to 1}f(g(x))\)</h3>
   <div class="body">
+  <p>Datos: \(g(x)=x+1\); \(f(u)=u+1\) si \(u\ne 2\), con \(f(2)=5\); \(h(x)=f(g(x))\); lugar \(a=1\).</p>
   <ol class="steps">
-    <li>Condición 1. La interna \(g(x)=x+1\) es un polinomio: \(\lim_{x\to 1}g(x)=1+1=2\). Se cumple, con \(b=2\).</li>
-    <li>Límite de la externa en \(2\). Para \(u\ne 2\), \(f(u)=u+1\), que es un polinomio: \(\lim_{u\to 2}f(u)=2+1=3\).</li>
+    <li>Condición 1. La interna \(g(x)=x+1\) es un polinomio, y el límite de un polinomio se obtiene reemplazando (hoja «Propiedades de límites»): \(\lim_{x\to 1}g(x)=1+1=2\). Se cumple, con \(b=2\).</li>
+    <li>Límite de la externa en \(2\). Para \(u\ne 2\), \(f(u)=u+1\), que es un polinomio. Dos funciones iguales fuera de \(2\) tienen el mismo límite en \(2\) (aviso de rigor): \(\lim_{u\to 2}f(u)=2+1=3\).</li>
     <li>Condición 2. El valor es \(f(2)=5\), y \(3\ne 5\). No se cumple: el teorema no se puede usar.</li>
-    <li>¿La interna toca el \(2\)? \(x+1=2\) solo si \(x=1\). Entonces \(g(x)\ne 2\) para todo \(x\ne 1\).</li>
+    <li>¿La interna toca el \(2\)? Se resuelve \(g(x)=2\):
+    \[\begin{aligned}x+1=2&&\text{la interna igualada a }2\\ x=2-1&&\text{se resta }1\text{ a los dos lados}\\ x=1&&\text{porque }2-1=1\end{aligned}\]
+    Solo en \(x=1\). Entonces \(g(x)\ne 2\) para todo \(x\ne 1\).</li>
     <li>Regla del hueco, con \(K=3\): \(\lim_{x\to 1}f(g(x))=3\).</li>
-    <li>Comprobación con la fórmula. Para \(x\ne 1\): \(h(x)=f(x+1)=(x+1)+1=x+2\), y \(\lim_{x\to 1}(x+2)=1+2=3\).</li>
-    <li>Comprobación con valores. \(g(0{,}9)=1{,}9\) y \(f(1{,}9)=1{,}9+1=2{,}9\). \(g(1{,}1)=2{,}1\) y \(f(2{,}1)=2{,}1+1=3{,}1\).</li>
-    <li>Más cerca. \(g(0{,}99)=1{,}99\) y \(f(1{,}99)=1{,}99+1=2{,}99\). \(g(1{,}01)=2{,}01\) y \(f(2{,}01)=2{,}01+1=3{,}01\). Los valores se acercan a \(3\), no a \(5\).</li>
-    <li>El valor de la compuesta en \(1\) no participa: \(h(1)=f(2)=5\), distinto de su límite.</li>
+    <li>Comprobación con la fórmula. Para \(x\ne 1\), lo que entra en \(f\) es \(x+1\), distinto de \(2\), y \(f\) le suma \(1\): \(h(x)=f(x+1)=(x+1)+1=x+2\). El límite de ese polinomio es \(\lim_{x\to 1}(x+2)=1+2=3\).</li>
+    <li>Comprobación con valores. \(g(0{,}9)=0{,}9+1=1{,}9\) y \(f(1{,}9)=1{,}9+1=2{,}9\). \(g(1{,}1)=1{,}1+1=2{,}1\) y \(f(2{,}1)=2{,}1+1=3{,}1\).</li>
+    <li>Más cerca. \(g(0{,}99)=0{,}99+1=1{,}99\) y \(f(1{,}99)=1{,}99+1=2{,}99\). \(g(1{,}01)=1{,}01+1=2{,}01\) y \(f(2{,}01)=2{,}01+1=3{,}01\). Los valores se acercan a \(3\), no a \(5\).</li>
+    <li>El valor de la compuesta en \(1\) no participa: \(g(1)=1+1=2\), así que \(h(1)=f(2)=5\), distinto de su límite.</li>
   </ol>
   </div>
   </div>
@@ -148,11 +199,12 @@
   <p>La interna es la misma, \(g(x)=x+1\), y la externa es el polinomio \(P(u)=u^{2}-3u+1\). El lugar es \(a=1\).</p>
   <ol class="steps">
     <li>Condición 1: \(\lim_{x\to 1}g(x)=1+1=2\). Se cumple, con \(b=2\).</li>
-    <li>Condición 2: \(P\) es un polinomio, así que \(\lim_{u\to 2}P(u)=P(2)\). Se cumple.</li>
+    <li>Condición 2: \(P\) es un polinomio, y el límite de un polinomio en \(2\) es su valor en \(2\) (hoja «Propiedades de límites»): \(\lim_{u\to 2}P(u)=P(2)\). Se cumple.</li>
     <li>Teorema de la compuesta: \(\lim_{x\to 1}P(g(x))=P(2)\).</li>
-    <li>Valor: \(P(2)=2^{2}-3\cdot 2+1=4-6+1=-1\). El límite es \(-1\).</li>
+    <li>Valor: \(P(2)=2^{2}-3\cdot 2+1=4-6+1=-1\), porque \(2^{2}=4\), \(3\cdot 2=6\), \(4-6=-2\) y \(-2+1=-1\). El límite es \(-1\).</li>
     <li>No hizo falta revisar si \(g\) toca el \(2\): con las dos condiciones, el teorema basta.</li>
-    <li>Comprobación con valores: \(P(1{,}9)=3{,}61-5{,}7+1=-1{,}09\) y \(P(2{,}1)=4{,}41-6{,}3+1=-0{,}89\), los dos cerca de \(-1\).</li>
+    <li>Comprobación con \(x=0{,}9\). Interna: \(g(0{,}9)=0{,}9+1=1{,}9\). Externa: \(1{,}9^{2}=3{,}61\) y \(3\cdot 1{,}9=5{,}7\), así que \(P(1{,}9)=3{,}61-5{,}7+1=-1{,}09\).</li>
+    <li>Comprobación con \(x=1{,}1\). Interna: \(g(1{,}1)=1{,}1+1=2{,}1\). Externa: \(2{,}1^{2}=4{,}41\) y \(3\cdot 2{,}1=6{,}3\), así que \(P(2{,}1)=4{,}41-6{,}3+1=-0{,}89\). Los dos valores, \(-1{,}09\) y \(-0{,}89\), están cerca de \(-1\).</li>
   </ol>
   </div>
   </div>
@@ -162,12 +214,20 @@
   <div class="body">
   <p>La interna es \(q(x)=3x-1\) y la externa, \(F(u)=\dfrac{u^{2}-4}{u-2}\), que no está definida en \(u=2\). El lugar es \(a=1\).</p>
   <ol class="steps">
-    <li>Condición 1: \(\lim_{x\to 1}q(x)=3\cdot 1-1=3-1=2\). Se cumple, con \(b=2\).</li>
+    <li>Condición 1: \(q\) es un polinomio, y su límite se obtiene reemplazando: \(\lim_{x\to 1}q(x)=3\cdot 1-1=3-1=2\). Se cumple, con \(b=2\).</li>
     <li>Condición 2: \(F(2)\) no existe (el denominador sería \(2-2=0\)). No se cumple: el teorema no se puede usar.</li>
-    <li>Límite de la externa en \(2\). Como \(u^{2}-4=(u-2)(u+2)\), para todo \(u\ne 2\) se tiene \(F(u)=u+2\). Luego \(\lim_{u\to 2}F(u)=2+2=4\) (funciones iguales fuera de \(2\): mismo límite).</li>
-    <li>¿La interna toca el \(2\)? \(3x-1=2\) solo si \(3x=3\), es decir, \(x=1\). Entonces \(q(x)\ne 2\) para todo \(x\ne 1\).</li>
+    <li>Límite de la externa en \(2\). Primero se factoriza el numerador: \(u^{2}-4=(u-2)(u+2)\). Comprobación: \((u-2)(u+2)=u^{2}+2u-2u-4=u^{2}-4\).</li>
+    <li>Se simplifica, para \(u\ne 2\):
+    \[\begin{aligned}F(u)&=\frac{u^{2}-4}{u-2}&&\text{la fórmula de }F\\ &=\frac{(u-2)(u+2)}{u-2}&&\text{numerador factorizado}\\ &=u+2&&\text{porque }\frac{u-2}{u-2}=1\text{ si }u\ne 2\end{aligned}\]
+    Es decir, para todo \(u\ne 2\) se tiene \(F(u)=u+2\).</li>
+    <li>\(u+2\) es un polinomio, y \(F\) es igual a él fuera de \(2\). Luego \(\lim_{u\to 2}F(u)=2+2=4\) (funciones iguales fuera de \(2\): mismo límite).</li>
+    <li>¿La interna toca el \(2\)? Se resuelve \(q(x)=2\):
+    \[\begin{aligned}3x-1=2&&\text{la interna igualada a }2\\ 3x=3&&\text{se suma }1\text{ a los dos lados}\\ x=1&&\text{se divide por }3\text{ a los dos lados}\end{aligned}\]
+    Solo en \(x=1\). Entonces \(q(x)\ne 2\) para todo \(x\ne 1\).</li>
     <li>Regla del hueco, con \(K=4\): \(\lim_{x\to 1}F(q(x))=4\).</li>
-    <li>Comprobación con valores. \(q(0{,}9)=2{,}7-1=1{,}7\) y \(F(1{,}7)=1{,}7+2=3{,}7\). \(q(1{,}1)=3{,}3-1=2{,}3\) y \(F(2{,}3)=2{,}3+2=4{,}3\).</li>
+    <li>Comprobación con \(x=0{,}9\). Interna: \(q(0{,}9)=3\cdot 0{,}9-1=2{,}7-1=1{,}7\). Externa, con la fórmula simplificada: \(F(1{,}7)=1{,}7+2=3{,}7\).</li>
+    <li>Lo mismo con la fórmula original: \(1{,}7^{2}=2{,}89\); \(2{,}89-4=-1{,}11\); \(1{,}7-2=-0{,}3\); y \(\dfrac{-1{,}11}{-0{,}3}=3{,}7\). Coincide.</li>
+    <li>Comprobación con \(x=1{,}1\). Interna: \(q(1{,}1)=3\cdot 1{,}1-1=3{,}3-1=2{,}3\). Externa: \(F(2{,}3)=2{,}3+2=4{,}3\). Los dos valores, \(3{,}7\) y \(4{,}3\), están cerca de \(4\).</li>
     <li>Con la interna constante \(c(x)=2\) la compuesta \(F(c(x))\) no estaría definida en ningún \(x\): no habría límite que calcular.</li>
   </ol>
   </div>
@@ -178,10 +238,10 @@
   <div class="body">
   <p>Datos: \(\lim_{x\to 4}G(x)=1\); la externa \(r\) cumple \(\lim_{u\to 1}r(u)=6\) y \(r(1)=2\).</p>
   <ol class="steps">
-    <li>Condición 1: se cumple, con \(b=1\).</li>
+    <li>Condición 1: el límite interno es dato, \(\lim_{x\to 4}G(x)=1\). Se cumple, con \(b=1\).</li>
     <li>Condición 2: el límite de \(r\) en \(1\) es \(6\) y su valor es \(2\). Como \(6\ne 2\), no se cumple: el teorema no se puede usar.</li>
     <li>Si además se sabe que \(G(x)\ne 1\) para todo \(x\ne 4\) cercano a \(4\): por la regla del hueco, \(\lim_{x\to 4}r(G(x))=6\).</li>
-    <li>Si, en cambio, se sabe que \(G(x)=1\) para todo \(x\) cercano a \(4\): la compuesta es la constante \(r(1)=2\) cerca de \(4\), y \(\lim_{x\to 4}r(G(x))=2\).</li>
+    <li>Si, en cambio, se sabe que \(G(x)=1\) para todo \(x\) cercano a \(4\): entonces \(r(G(x))=r(1)=2\) para esos \(x\). La compuesta es la constante \(2\) cerca de \(4\), y \(\lim_{x\to 4}r(G(x))=2\).</li>
     <li>Si solo se conocen los datos del enunciado: no se puede decidir. Falta saber si \(G\) toma el valor \(1\) cerca de \(4\).</li>
     <li>Si el valor de \(r\) en \(1\) fuera \(6\), la condición 2 se cumpliría y el teorema daría \(6\) en todos los casos, sin más datos.</li>
   </ol>
@@ -202,10 +262,11 @@
       <ol class="steps">
         <li>a) \(m\) es un polinomio: \(\lim_{x\to 1}m(x)=1+2=3\). La condición 1 se cumple, con \(b=3\).</li>
         <li>b) Para \(u\ne 3\), \(n(u)=2u-1\): \(\lim_{u\to 3}n(u)=2\cdot 3-1=6-1=5\). El valor es \(n(3)=1\). Como \(5\ne 1\), la condición 2 no se cumple: el teorema no se puede usar.</li>
-        <li>c) \(x+2=3\) solo si \(x=1\): \(m(x)\ne 3\) para todo \(x\ne 1\). Regla del hueco, con \(K=5\): \(\lim_{x\to 1}n(m(x))=5\).</li>
+        <li>c) ¿La interna toca el \(3\)? Se resuelve \(m(x)=3\): \(x+2=3\); se resta \(2\) a los dos lados y queda \(x=3-2=1\). Solo en \(x=1\): \(m(x)\ne 3\) para todo \(x\ne 1\).</li>
+        <li>Regla del hueco, con \(K=5\): \(\lim_{x\to 1}n(m(x))=5\).</li>
         <li>d) \(m(0{,}9)=0{,}9+2=2{,}9\) y \(n(2{,}9)=2\cdot 2{,}9-1=5{,}8-1=4{,}8\): \(k(0{,}9)=4{,}8\).</li>
         <li>\(m(1{,}1)=1{,}1+2=3{,}1\) y \(n(3{,}1)=2\cdot 3{,}1-1=6{,}2-1=5{,}2\): \(k(1{,}1)=5{,}2\). Los dos valores están cerca de \(5\).</li>
-        <li>e) Con la interna constante \(3\), la compuesta vale \(n(3)=1\) para todo \(x\): es la constante \(1\) y su límite en \(1\) es \(1\).</li>
+        <li>e) Con la interna constante \(3\), en \(n\) siempre entra \(3\): la compuesta vale \(n(3)=1\) para todo \(x\). Es la constante \(1\) y su límite en \(1\) es \(1\). La regla del hueco no se puede usar ahí, porque esa interna toca el \(3\).</li>
       </ol>
     </div></details>
   </div>
@@ -216,9 +277,9 @@
       <ol class="steps">
         <li>a) Condición 1: el límite interno es \(2\). Condición 2: el límite de \(E\) en \(2\) es \(7\) y \(E(2)=7\), iguales. Teorema de la compuesta: \(\lim_{x\to 0}E(v(x))=7\).</li>
         <li>b) El límite de \(D\) en \(2\) es \(4\) y \(D(2)=9\). Como \(4\ne 9\), la condición 2 no se cumple: el teorema no se puede usar. Solo con esos datos no se puede decidir.</li>
-        <li>c) Si \(v(x)\ne 2\) cerca de \(0\): regla del hueco, con \(K=4\). El límite es \(4\).</li>
-        <li>d) Si \(v(x)=2\) cerca de \(0\): la compuesta es la constante \(D(2)=9\) cerca de \(0\). El límite es \(9\).</li>
-        <li>e) Por la izquierda de \(0\) la compuesta es la constante \(9\): su límite por la izquierda es \(9\). Por la derecha, \(v(x)\ne 2\) y la regla del hueco por la derecha da \(4\). Como \(9\ne 4\), no tiene límite en \(0\).</li>
+        <li>c) Si \(v(x)\ne 2\) cerca de \(0\), se cumplen las tres condiciones de la regla del hueco: límite interno \(2\), la interna no toca el \(2\), y el límite de \(D\) en \(2\) es \(K=4\). El límite es \(4\).</li>
+        <li>d) Si \(v(x)=2\) cerca de \(0\): \(D(v(x))=D(2)=9\) para esos \(x\). La compuesta es la constante \(9\) cerca de \(0\). El límite es \(9\).</li>
+        <li>e) Por la izquierda de \(0\), \(v(x)=2\) y la compuesta es la constante \(D(2)=9\): su límite por la izquierda es \(9\). Por la derecha, \(v(x)\ne 2\) y la regla del hueco por la derecha da \(4\). Como \(9\ne 4\), no tiene límite en \(0\) (criterio de los laterales).</li>
       </ol>
     </div></details>
   </div>
@@ -229,8 +290,10 @@
       <ol class="steps">
         <li>a) \(w\) es un polinomio: \(\lim_{x\to 4}w(x)=50\cdot 4=200\). La condición 1 se cumple, con \(b=200\).</li>
         <li>b) Para \(u\ne 200\), \(p(u)=12\,u\): \(\lim_{u\to 200}p(u)=12\cdot 200=2400\). El valor es \(p(200)=2000\). Como \(2400\ne 2000\), la condición 2 no se cumple: el teorema no se puede usar.</li>
-        <li>c) \(50\,x=200\) solo si \(x=4\): \(w(x)\ne 200\) para todo \(x\ne 4\). Regla del hueco, con \(K=2400\): \(\lim_{x\to 4}p(w(x))=2400\).</li>
-        <li>d) \(w(3{,}9)=50\cdot 3{,}9=195\) y \(p(195)=12\cdot 195=2340\). \(w(4{,}1)=50\cdot 4{,}1=205\) y \(p(205)=12\cdot 205=2460\). Los dos precios están cerca de \(2400\).</li>
+        <li>c) ¿El peso toca los \(200\) gramos? Se resuelve \(w(x)=200\): \(50\,x=200\); se divide por \(50\) a los dos lados y queda \(x=\dfrac{200}{50}=4\). Solo en \(x=4\): \(w(x)\ne 200\) para todo \(x\ne 4\).</li>
+        <li>Regla del hueco, con \(K=2400\): \(\lim_{x\to 4}p(w(x))=2400\).</li>
+        <li>d) Con \(x=3{,}9\): \(w(3{,}9)=50\cdot 3{,}9=195\) gramos, distinto de \(200\), y \(p(195)=12\cdot 195=2340\) pesos.</li>
+        <li>Con \(x=4{,}1\): \(w(4{,}1)=50\cdot 4{,}1=205\) gramos, distinto de \(200\), y \(p(205)=12\cdot 205=2460\) pesos. Los dos precios están cerca de \(2400\): les faltan o les sobran \(2400-2340=60\) y \(2460-2400=60\) pesos.</li>
         <li>e) Con tiempos cercanos a \(4\) segundos, pero distintos de \(4\), el peso nunca es \(200\) gramos justos y la promoción no se aplica: los precios se acercan a \(2400\) pesos, aunque a los \(4\) segundos exactos se pagan \(2000\).</li>
         <li>f) La interna es la constante \(200\): el precio es \(p(200)=2000\) para todo tiempo. La compuesta es la constante \(2000\) y su límite es \(2000\).</li>
       </ol>
@@ -239,7 +302,7 @@
 </section>
 
 <footer>
-  <span class="status">CD-L30-H06 · v001 · Pendiente de APR</span>
+  <span class="status">CD-L30-H06 · v002 · Pendiente de APR</span>
 </footer>
 </article>
 <!--SCENE-->
@@ -379,6 +442,7 @@ OA.scene('compteo-idea', (function(){
       if (a > 0.6){ lmSeg(S, MF, B, K, 0, K, C.alt, 1); frase('hacia 3', MF, 0, K, 5, -9, C.alt); w = prNota(S, 'externa:', 2.15, 1.4, C.alt); T.L('LF', 2.15, 1.4, 0, w + 6, 0); }
       /* hueco y punto lleno de f (encima de las guías) */
       if (ap(1) > 0.5){ lmPunto(S, MF, B, K, C.ink, true, 3.2); lmPunto(S, MF, B, FB, C.ink, false, 3.2); }
+      if (ap(1) > 0.9){ frase('hueco', MF, B, K, 8, 30, mu); frase('punto lleno', MF, B, FB, 8, -10, mu); }
       /* paso 4: el valor f(2) = 5 no es el límite 3 (anillo y rótulo burdeo) */
       a = ap(4);
       if (a > 0.3){ prAnillo(S, MF, B, FB, C.tan, 7); lmPunto(S, MF, B, FB, C.tan, false, 3.2); }

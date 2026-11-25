@@ -162,21 +162,29 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li><b>Límites de combinaciones de funciones</b></li>
     </ol>
     <h1>Límites de combinaciones de funciones</h1>
-    <p class="lede">Una <b>combinación</b> de \(f\) y \(g\) es una función armada con ellas y con sumas, restas, múltiplos, productos o cocientes, como \(2f(x)-3g(x)\). Si los límites de \(f\) y de \(g\) en \(a\) <b>existen</b> (son los números \(L\) y \(M\)), el límite de la combinación se obtiene haciendo las mismas operaciones con \(L\) y \(M\). Para dos números fijos \(c\) y \(d\):
+    <p class="lede">Una <b>función</b> \(f\) es una regla que a cada número \(x\) le asigna un solo número, \(f(x)\), que se lee «\(f\) de \(x\)». Su <b>límite</b> en un número \(a\) es el número \(L\) al que se acercan los valores \(f(x)\) cuando \(x\) se acerca a \(a\) por sus dos lados, sin llegar a \(a\); se escribe \(\displaystyle\lim_{x\to a}f(x)=L\) y se lee «el límite de \(f\) de \(x\), cuando \(x\) tiende a \(a\), es \(L\)» (hoja «Propiedades de límites»). Una <b>combinación</b> de dos funciones \(f\) y \(g\) es una función nueva, armada con ellas y con sumas, restas, productos por un número, productos o cocientes. Por ejemplo \(2f(x)-3g(x)\), que se lee «dos por \(f\) de \(x\), menos tres por \(g\) de \(x\)»: en cada \(x\) se calcula \(f(x)\), se multiplica por \(2\); se calcula \(g(x)\), se multiplica por \(3\); y se restan los dos resultados. Esta hoja responde una pregunta: si ya se conocen el límite de \(f\) y el de \(g\) en \(a\), ¿cuánto vale el límite de la combinación?</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toman las dos funciones de la animación: \(f(x)=x-1\) y \(g(x)=4-x\), las dos para \(x\ne 3\), y el número \(a=3\). Se calcula cada una en cuatro \(x\) cercanos a \(3\), dos de cada lado. Primero \(f\):
+    \[\begin{aligned}f(2{,}9)&=2{,}9-1=1{,}9&&\text{izquierda de }3\\ f(2{,}99)&=2{,}99-1=1{,}99&&\text{izquierda, más cerca}\\ f(3{,}01)&=3{,}01-1=2{,}01&&\text{derecha, más cerca}\\ f(3{,}1)&=3{,}1-1=2{,}1&&\text{derecha de }3\end{aligned}\]
+    Los valores de \(f\) se acercan a \(2\). Ahora \(g\), en los mismos lugares:
+    \[\begin{aligned}g(2{,}9)&=4-2{,}9=1{,}1&&\text{izquierda de }3\\ g(2{,}99)&=4-2{,}99=1{,}01&&\text{izquierda, más cerca}\\ g(3{,}01)&=4-3{,}01=0{,}99&&\text{derecha, más cerca}\\ g(3{,}1)&=4-3{,}1=0{,}9&&\text{derecha de }3\end{aligned}\]
+    Los valores de \(g\) se acercan a \(1\). (Que los límites son exactamente \(2\) y \(1\) se explica en el aviso de rigor, más abajo.) Ahora, en cada lugar, se arma la combinación \(2f(x)-3g(x)\): primero los dos productos, después la resta. Y se mide la distancia de cada resultado a \(1\): el mayor menos el menor.
+    \[\begin{aligned}2f(2{,}9)-3g(2{,}9)&=2\cdot 1{,}9-3\cdot 1{,}1=3{,}8-3{,}3=0{,}5&&\text{distancia a uno: }1-0{,}5=0{,}5\\ 2f(2{,}99)-3g(2{,}99)&=2\cdot 1{,}99-3\cdot 1{,}01=3{,}98-3{,}03=0{,}95&&\text{distancia a uno: }1-0{,}95=0{,}05\\ 2f(3{,}01)-3g(3{,}01)&=2\cdot 2{,}01-3\cdot 0{,}99=4{,}02-2{,}97=1{,}05&&\text{distancia a uno: }1{,}05-1=0{,}05\\ 2f(3{,}1)-3g(3{,}1)&=2\cdot 2{,}1-3\cdot 0{,}9=4{,}2-2{,}7=1{,}5&&\text{distancia a uno: }1{,}5-1=0{,}5\end{aligned}\]
+    <b>La regularidad:</b> los resultados se acercan a \(1\), y \(1=2\cdot 2-3\cdot 1\), porque \(2\cdot 2=4\), \(3\cdot 1=3\) y \(4-3=1\): es la misma cuenta, hecha con el límite de \(f\) y el límite de \(g\). No es casualidad. En \(x=2{,}9\), a \(f\) le falta \(2-1{,}9=0{,}1\) para llegar a \(2\) y a \(g\) le sobra \(1{,}1-1=0{,}1\) sobre \(1\); a la combinación le falta \(0{,}5\), que es dos veces lo de \(f\) más tres veces lo de \(g\): \(2\cdot 0{,}1+3\cdot 0{,}1=0{,}2+0{,}3=0{,}5\). En \(x=2{,}99\): \(2\cdot 0{,}01+3\cdot 0{,}01=0{,}02+0{,}03=0{,}05\). Si las dos distancias se achican hacia \(0\), la de la combinación también. (La demostración está en el segundo recuadro.)</p>
+    <p class="lede"><b>La fórmula.</b> Si los límites de \(f\) y de \(g\) en \(a\) <b>existen</b> (son los números \(L\) y \(M\)), el límite de la combinación se obtiene haciendo las mismas operaciones con \(L\) y \(M\). Para dos números fijos \(c\) y \(d\):
     \[\lim_{x\to a}[c\cdot f(x)+d\cdot g(x)]=c\cdot L+d\cdot M\]
-    No hace falta conocer las fórmulas: basta conocer los dos límites, vengan de una gráfica, de una tabla o de un dato.</p>
+    Se lee: «el límite, cuando \(x\) tiende a \(a\), de \(c\) por \(f\) de \(x\) más \(d\) por \(g\) de \(x\), es \(c\) por \(L\) más \(d\) por \(M\)». En el ejemplo, \(c=2\) y \(d=-3\) (restar \(3g(x)\) es sumar \((-3)\cdot g(x)\)), \(L=2\) y \(M=1\). No hace falta conocer las fórmulas de \(f\) y de \(g\): basta conocer los dos límites, vengan de una gráfica, de una tabla o de un dato.</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>Las funciones de la animación se conocen por sus gráficas. Para que nada quede a ojo, se declaran también sus fórmulas: \(f(x)=x-1\) si \(x\ne 3\), con \(f(3)=4\); y \(g(x)=4-x\) si \(x\ne 3\), sin valor en \(3\). El lugar es \(a=3\) y la combinación es \(h(x)=2f(x)-3g(x)\).</p>
+  <p>Las funciones de la animación son las del encabezado, y se conocen por sus gráficas. La <b>gráfica</b> de una función es el dibujo de todos los puntos \((x, f(x))\): sobre cada \(x\), un punto a la altura \(f(x)\). Un <b>círculo vacío</b> (un hueco) marca un lugar donde la gráfica no tiene punto; un <b>punto lleno</b> marca el valor de la función en ese lugar. Para que nada quede a ojo, se declaran también sus fórmulas: \(f(x)=x-1\) si \(x\ne 3\), con \(f(3)=4\); y \(g(x)=4-x\) si \(x\ne 3\), sin valor en \(3\). El lugar es \(a=3\) y la combinación es \(h(x)=2f(x)-3g(x)\).</p>
   <p><b>Cómo leerla:</b></p>
   <ol class="steps">
     <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de \(f\) (azul); a la derecha, la de \(g\) (verde). Cada una tiene un círculo vacío sobre \(x=3\). La de \(f\) tiene además un punto lleno más arriba, a la altura \(4\).</li>
-    <li><b>Pasos 2 y 3, los dos límites:</b> las flechas recorren cada gráfica hacia su hueco, por los dos lados. La punteada horizontal marca la altura a la que se acercan: \(L=2\) para \(f\) y \(M=1\) para \(g\).</li>
+    <li><b>Pasos 2 y 3, los dos límites:</b> las flechas recorren cada gráfica hacia su hueco, por los dos lados. La punteada horizontal marca la altura a la que se acercan: \(L=2\) para \(f\) y \(M=1\) para \(g\). Son los mismos números del encabezado: \(1{,}9\); \(1{,}99\); \(2{,}01\); \(2{,}1\) se acercan a \(2\), y \(1{,}1\); \(1{,}01\); \(0{,}99\); \(0{,}9\) se acercan a \(1\).</li>
     <li><b>Pasos 4 y 5, la combinación:</b> bajo cada gráfica aparece su límite multiplicado por su número, \(2\cdot 2=4\) y \(3\cdot 1=3\); después, la resta \(4-3=1\). La respuesta se escribe arriba, al lado de la pregunta.</li>
-    <li><b>Pasos 6 y 7:</b> los puntos en \(x=2{,}5\) y \(x=3{,}5\) son la comprobación con valores, y el anillo destaca el punto lleno de \(f\), que no participa. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
+    <li><b>Pasos 6 y 7:</b> los puntos en \(x=2{,}5\) y \(x=3{,}5\) son la comprobación con valores: junto a cada punto está su altura (\(1{,}5\) y \(2{,}5\) en \(f\); \(1{,}5\) y \(0{,}5\) en \(g\)), y la cuenta de abajo arma con ellas la combinación. El anillo destaca el punto lleno de \(f\), que no participa. Avanza con el deslizador «paso» o con «Reproducir»: nada se borra.</li>
     <li><b>Lee la cuenta de abajo, línea por línea:</b> cada límite, cada producto, la resta y los valores de \(h\) cada vez más cerca de \(3\). Conclusión: \(\lim_{x\to 3}[2f(x)-3g(x)]=1\).</li>
   </ol>
   <div class="stage" data-scene="comb-idea"></div>
@@ -191,7 +199,7 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="why">
     <p><b>Aviso de rigor: qué se demuestra en esta hoja y qué no.</b> La animación muestra dos gráficas y unos pocos valores: sugiere el resultado, no lo demuestra. Leer un límite en una gráfica es una estimación (hoja «Límites a partir de gráficas»); por eso aquí cada gráfica viene con su fórmula.</p>
     <ol class="steps">
-      <li><b>Por qué los límites de la animación son exactos:</b> fuera de \(3\), \(f\) coincide con el polinomio \(x-1\), cuyo límite en \(3\) es \(3-1=2\) (hoja «Propiedades de límites»); y \(g\) coincide con \(4-x\), de límite \(4-3=1\). Se usa sin demostrar que dos funciones iguales para todo \(x\ne a\) cercano a \(a\) tienen el mismo límite en \(a\).</li>
+      <li><b>Por qué los límites de la animación son exactos:</b> fuera de \(3\), \(f\) coincide con el polinomio \(x-1\) (un <b>polinomio</b> es una suma de números multiplicados por potencias de \(x\)), cuyo límite en \(3\) es \(3-1=2\) (hoja «Propiedades de límites»); y \(g\) coincide con \(4-x\), de límite \(4-3=1\). Se usa sin demostrar que dos funciones iguales para todo \(x\ne a\) cercano a \(a\) tienen el mismo límite en \(a\).</li>
       <li><b>Se demuestran aquí:</b> la regla de la combinación \(c\cdot f(x)+d\cdot g(x)\), a partir de las propiedades del múltiplo constante y de la suma (demostradas en la hoja «Propiedades de límites»); y que un cociente con numerador de límite distinto de \(0\) y denominador de límite \(0\) no tiene límite.</li>
       <li><b>Se usan sin demostrar:</b> las propiedades del producto, del cociente y de la raíz, y que un límite, si existe, es único (demostrado en la hoja «Definición formal de los límites (épsilon-delta)»).</li>
     </ol>
@@ -202,6 +210,8 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="card k1">
     <h3>Cómo se calcula el límite de una combinación</h3>
     <p><b>Hipótesis.</b> \(f\) y \(g\) están definidas en un intervalo abierto que contiene a \(a\), salvo quizá en \(a\), y sus límites <b>existen</b>: \(\lim_{x\to a}f(x)=L\) y \(\lim_{x\to a}g(x)=M\).</p>
+    <p><b>Palabras que se usan.</b> <b>Hipótesis:</b> lo que tiene que cumplirse para poder usar una regla. Que un límite <b>existe</b> quiere decir que hay un número al que los valores se acercan por los dos lados. <b>Pieza:</b> cada función o número que entra en la combinación. <b>Múltiplo constante:</b> una función multiplicada por un número fijo, como \(2f(x)\). <b>Propiedad:</b> cada una de las reglas de la hoja «Propiedades de límites» (constante, identidad, múltiplo constante, suma, resta, producto, cociente, potencia y raíz).</p>
+    <p><b>El procedimiento</b>, en cuatro pasos:</p>
     <ol class="steps">
       <li><b>Separar.</b> Se identifican las piezas (\(f\), \(g\), constantes) y las operaciones que las unen, en el orden habitual: primero potencias y raíces, después productos y cocientes, al final sumas y restas.</li>
       <li><b>Leer cada límite.</b> De la gráfica (la altura a la que se acerca, por los dos lados), de la tabla o del dato. Si alguno no existe, estas reglas no se pueden usar tal cual (hoja «Límites de funciones combinadas»).</li>
@@ -214,35 +224,55 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <li>\(\lim_{x\to a}[f(x)\cdot g(x)+c]=L\cdot M+c\).</li>
       <li>Si \(M\ne 0\): \(\lim_{x\to a}\dfrac{c\cdot f(x)}{g(x)}=\dfrac{c\cdot L}{M}\).</li>
     </ol>
+    <p><b>De dónde sale cada una.</b> La cuenta 1 se demuestra en el recuadro siguiente. La cuenta 2 se arma con tres propiedades, una por línea:</p>
+    \[\begin{aligned}\lim_{x\to a}[f(x)\cdot g(x)]&=L\cdot M&&\text{producto}\\ \lim_{x\to a}c&=c&&\text{constante}\\ \lim_{x\to a}[f(x)\cdot g(x)+c]&=L\cdot M+c&&\text{suma de las dos líneas anteriores}\end{aligned}\]
+    <p>Con los números de la animación (\(L=2\), \(M=1\)) y \(c=4\): \(2\cdot 1+4=2+4=6\) (ejemplo 1). La cuenta 3 se arma con dos propiedades:</p>
+    \[\begin{aligned}\lim_{x\to a}[c\cdot f(x)]&=c\cdot L&&\text{múltiplo constante}\\ \lim_{x\to a}\frac{c\cdot f(x)}{g(x)}&=\frac{c\cdot L}{M}&&\text{cociente; se puede usar porque }M\ne 0\end{aligned}\]
+    <p>Con \(L=2\), \(M=1\) y \(c=5\): primero \(5\cdot 2=10\), después \(\dfrac{10}{1}=10\).</p>
+    <p><b>Cómo se lee.</b> \(\lim_{x\to a}[f(x)\cdot g(x)+c]\) se lee «el límite, cuando \(x\) tiende a \(a\), de \(f\) de \(x\) por \(g\) de \(x\), más \(c\)». \(M\ne 0\) se lee «\(M\) distinto de cero».</p>
     <p>El valor de las funciones en \(a\) no aparece en ninguna de estas cuentas.</p>
   </div>
 
   <div class="card k2">
     <h3>Demostración paso a paso: la combinación \(c\cdot f(x)+d\cdot g(x)\)</h3>
+    <p><b>Qué se demuestra.</b> Si \(f\) tiene límite \(L\) en \(a\) y \(g\) tiene límite \(M\) en \(a\), y \(c\) y \(d\) son números fijos, entonces la combinación \(c\cdot f(x)+d\cdot g(x)\) tiene límite en \(a\), y ese límite es \(c\cdot L+d\cdot M\).</p>
+    <p><b>Cómo funciona el método.</b> No se parte de cero. Se usan dos propiedades ya demostradas en la hoja «Propiedades de límites»: la del múltiplo constante (el límite de un número por una función es ese número por el límite) y la de la suma (el límite de una suma es la suma de los límites). Se aplican una tras otra: primero a cada pieza, después a la suma de las dos. Cada propiedad pide que los límites que usa existan; por eso en cada paso se dice que el límite obtenido existe.</p>
     <p>Se sabe: \(\lim_{x\to a}f(x)=L\) y \(\lim_{x\to a}g(x)=M\); \(c\) y \(d\) son números fijos. Hay que probar que \(\lim_{x\to a}[c\cdot f(x)+d\cdot g(x)]=c\cdot L+d\cdot M\).</p>
     <ol class="steps">
       <li>Múltiplo constante, con la constante \(c\) y la función \(f\): \(\lim_{x\to a}[c\cdot f(x)]=c\cdot L\). Este límite existe.</li>
       <li>Múltiplo constante, con la constante \(d\) y la función \(g\): \(\lim_{x\to a}[d\cdot g(x)]=d\cdot M\). Este límite existe.</li>
       <li>Suma, aplicada a las funciones \(c\cdot f(x)\) y \(d\cdot g(x)\), cuyos límites existen por los pasos 1 y 2: \(\lim_{x\to a}[c\cdot f(x)+d\cdot g(x)]=c\cdot L+d\cdot M\).</li>
-      <li>Con los números de la animación, \(c=2\), \(d=-3\), \(L=2\) y \(M=1\): \(2\cdot 2+(-3)\cdot 1=4-3=1\).</li>
     </ol>
-    <p><b>Un cociente que no tiene límite.</b> Se sabe: \(\lim_{x\to a}f(x)=L\) con \(L\ne 0\), \(\lim_{x\to a}g(x)=0\), y \(g(x)\ne 0\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\) (así el cociente está definido cerca de \(a\)). Hay que probar que \(\dfrac{f(x)}{g(x)}\) no tiene límite en \(a\).</p>
+    <p><b>Los mismos pasos, con los números de la animación.</b> La combinación es \(2f(x)-3g(x)\). Una resta es la suma del opuesto: \(2f(x)-3g(x)=2f(x)+(-3)\cdot g(x)\). Entonces \(c=2\), \(d=-3\), \(L=2\) y \(M=1\):</p>
+    \[\begin{aligned}\lim_{x\to 3}[2f(x)]&=2\cdot 2=4&&\text{paso 1, con }c=2\\ \lim_{x\to 3}[(-3)\cdot g(x)]&=(-3)\cdot 1=-3&&\text{paso 2, con }d=-3\\ \lim_{x\to 3}[2f(x)+(-3)\cdot g(x)]&=4+(-3)=4-3=1&&\text{paso 3: se suman los dos límites}\end{aligned}\]
+    <p>En la última línea, sumar \(-3\) es restar \(3\): \(4+(-3)=4-3\), y \(4-3=1\).</p>
+    <p>En una sola línea: \(2\cdot 2+(-3)\cdot 1=4-3=1\). Es el número al que se acercaban \(0{,}5\); \(0{,}95\); \(1{,}05\); \(1{,}5\) en el encabezado.</p>
+    <p><b>Un cociente que no tiene límite.</b> <b>Qué se demuestra:</b> si el numerador tiene un límite distinto de \(0\) y el denominador tiene límite \(0\), el cociente no tiene límite: no hay ningún número al que se acerquen sus valores. <b>Cómo funciona el método:</b> por contradicción. Se supone lo contrario de lo que se quiere probar (que el cociente sí tiene límite) y se razona con propiedades conocidas hasta llegar a algo imposible. Como lo imposible salió de la suposición, la suposición es falsa. Se usan dos hechos sin demostrarlos aquí: la propiedad del producto, y que un límite, si existe, es único (una función no puede acercarse a dos números distintos en el mismo lugar).</p>
+    <p>Se sabe: \(\lim_{x\to a}f(x)=L\) con \(L\ne 0\), \(\lim_{x\to a}g(x)=0\), y \(g(x)\ne 0\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\) (así el cociente está definido cerca de \(a\)). Hay que probar que \(\dfrac{f(x)}{g(x)}\) no tiene límite en \(a\).</p>
     <ol class="steps">
       <li>Se supone lo contrario: que el cociente tiene límite, un número \(K\).</li>
-      <li>Para los \(x\ne a\) de ese intervalo, \(f(x)=\dfrac{f(x)}{g(x)}\cdot g(x)\), porque \(g(x)\ne 0\).</li>
-      <li>Producto, con el límite \(K\) del cociente y el límite \(0\) de \(g\): \(\lim_{x\to a}f(x)=K\cdot 0=0\).</li>
+      <li>Para los \(x\ne a\) de ese intervalo, \(f(x)=\dfrac{f(x)}{g(x)}\cdot g(x)\), porque \(g(x)\ne 0\): dividir por un número distinto de \(0\) y después multiplicar por el mismo número devuelve lo que había. Con números: \(\dfrac{6}{2}\cdot 2=3\cdot 2=6\).</li>
+      <li>Producto, con el límite \(K\) del cociente (supuesto en el paso 1) y el límite \(0\) de \(g\) (dato): los dos existen, así que el producto de las dos funciones, que por el paso 2 es \(f(x)\), tiene límite \(K\cdot 0\). Cualquier número por \(0\) es \(0\): \(\lim_{x\to a}f(x)=K\cdot 0=0\).</li>
       <li>Pero \(\lim_{x\to a}f(x)=L\) y \(L\ne 0\). Un límite, si existe, es único: no puede ser \(L\) y también \(0\).</li>
       <li>La suposición del paso 1 lleva a una contradicción. Luego el cociente no tiene límite en \(a\).</li>
     </ol>
+    <p><b>Con números</b> (es el ejemplo 4): el numerador es \(f(x)\), de límite \(2\), y el denominador es \(g(x)-1\), de límite \(1-1=0\). En \(x=2{,}9\) el cociente vale \(\dfrac{1{,}9}{0{,}1}=19\); en \(x=2{,}99\), \(\dfrac{1{,}99}{0{,}01}=199\); en \(x=3{,}01\), \(\dfrac{2{,}01}{-0{,}01}=-201\). El numerador casi no cambia (está cerca de \(2\)) y el denominador se achica hacia \(0\): los cocientes crecen sin tope y no se acercan a ningún número. Y el paso 2 se comprueba: \(19\cdot 0{,}1=1{,}9\), que es \(f(2{,}9)\).</p>
   </div>
 
   <div class="card k3">
     <h3>Caso especial: lo que no participa y lo que no se puede decidir</h3>
     <ol class="steps">
       <li><b>El valor en \(a\) no participa.</b> En la animación \(f(3)=4\) y \(g\) no tiene valor en \(3\), así que la combinación ni siquiera está definida en \(3\). Su límite es \(1\) igual. Si se cambiara el punto lleno de \(f\) a cualquier otra altura, el límite seguiría siendo \(1\).</li>
-      <li><b>Numerador y denominador de límite \(0\): puede salir un número.</b> Para \(x\ne 3\): \(\dfrac{f(x)-2}{g(x)-1}=\dfrac{(x-1)-2}{(4-x)-1}=\dfrac{x-3}{3-x}=-1\). El numerador tiene límite \(2-2=0\) y el denominador, \(1-1=0\): la propiedad del cociente no se puede usar. Pero la función coincide con la constante \(-1\) fuera de \(3\), y su límite es \(-1\).</li>
-      <li><b>Con los mismos límites \(0\) y \(0\), puede salir otro número.</b> Para \(x\ne 3\): \(\dfrac{[f(x)-2]^{2}}{g(x)-1}=\dfrac{(x-3)^{2}}{3-x}=-(x-3)=3-x\). Su límite en \(3\) es \(3-3=0\).</li>
-      <li><b>Y puede no haber límite.</b> Para \(x\ne 3\): \(\dfrac{f(x)-2}{[g(x)-1]^{2}}=\dfrac{x-3}{(3-x)^{2}}=\dfrac{1}{x-3}\). En \(x=3{,}1\) vale \(\dfrac{1}{0{,}1}=10\) y en \(x=2{,}9\), \(\dfrac{1}{-0{,}1}=-10\); en \(x=3{,}01\) vale \(\dfrac{1}{0{,}01}=100\). Sus valores superan cualquier tope: no tiene límite en \(3\).</li>
+      <li><b>Numerador y denominador de límite \(0\): puede salir un número.</b> Se estudia \(\dfrac{f(x)-2}{g(x)-1}\). Resta, en el numerador: su límite es \(2-2=0\). Resta, en el denominador: su límite es \(1-1=0\). La propiedad del cociente no se puede usar. Se reemplazan las fórmulas, para \(x\ne 3\), una operación por línea:
+      \[\begin{aligned}\frac{f(x)-2}{g(x)-1}&=\frac{(x-1)-2}{(4-x)-1}&&\text{se reemplazan }f(x)=x-1\text{ y }g(x)=4-x\\ &=\frac{x-3}{3-x}&&\text{se juntan los números, arriba y abajo}\\ &=\frac{x-3}{-(x-3)}&&\text{porque }3-x=-(x-3)\\ &=\frac{1}{-1}=-1&&\text{se simplifica }x-3\text{, distinto de cero porque }x\ne 3\end{aligned}\]
+      (En la segunda línea: arriba, \(-1-2=-3\); abajo, \(4-1=3\).)
+      Con números: en \(x=2{,}9\), \(\dfrac{1{,}9-2}{1{,}1-1}=\dfrac{-0{,}1}{0{,}1}=-1\); en \(x=3{,}1\), \(\dfrac{2{,}1-2}{0{,}9-1}=\dfrac{0{,}1}{-0{,}1}=-1\). La función coincide con la constante \(-1\) fuera de \(3\), y su límite es \(-1\).</li>
+      <li><b>Con los mismos límites \(0\) y \(0\), puede salir otro número.</b> Ahora el numerador va al cuadrado; su límite es \(0^{2}=0\) (potencia). Para \(x\ne 3\):
+      \[\begin{aligned}\frac{[f(x)-2]^{2}}{g(x)-1}&=\frac{(x-3)^{2}}{3-x}&&\text{por el paso 2: }f(x)-2=x-3\text{ y }g(x)-1=3-x\\ &=\frac{(x-3)\cdot(x-3)}{-(x-3)}&&\text{el cuadrado es un producto; }3-x=-(x-3)\\ &=\frac{x-3}{-1}&&\text{se simplifica un factor }x-3\text{, distinto de cero}\\ &=-(x-3)&&\text{dividir por }-1\text{ cambia el signo}\\ &=3-x&&\text{porque }-(x-3)=-x+3\end{aligned}\]
+      Con números: en \(x=2{,}9\), \(\dfrac{(-0{,}1)^{2}}{0{,}1}=\dfrac{0{,}01}{0{,}1}=0{,}1\), y \(3-2{,}9=0{,}1\). El polinomio \(3-x\) tiene límite \(3-3=0\) en \(3\): el límite es \(0\).</li>
+      <li><b>Y puede no haber límite.</b> Ahora el cuadrado va en el denominador; su límite es \(0^{2}=0\). Para \(x\ne 3\):
+      \[\begin{aligned}\frac{f(x)-2}{[g(x)-1]^{2}}&=\frac{x-3}{(3-x)^{2}}&&\text{por el paso 2}\\ &=\frac{x-3}{(x-3)^{2}}&&\text{porque }(3-x)^{2}=[-(x-3)]^{2}=(x-3)^{2}\\ &=\frac{x-3}{(x-3)\cdot(x-3)}&&\text{el cuadrado es un producto}\\ &=\frac{1}{x-3}&&\text{se simplifica un factor }x-3\text{, distinto de cero}\end{aligned}\]
+      En \(x=3{,}1\) vale \(\dfrac{1}{0{,}1}=10\) y en \(x=2{,}9\), \(\dfrac{1}{-0{,}1}=-10\); en \(x=3{,}01\) vale \(\dfrac{1}{0{,}01}=100\) y en \(x=3{,}001\), \(\dfrac{1}{0{,}001}=1000\). Sus valores superan cualquier tope (para pasar un tope \(K\) positivo basta un \(x\) entre \(3\) y \(3+\dfrac{1}{K}\)): no tiene límite en \(3\).</li>
       <li><b>Conclusión.</b> Saber solo que el numerador y el denominador tienen límite \(0\) no permite decidir nada: hay que estudiar la función de otra forma (por ejemplo, simplificando, como aquí).</li>
     </ol>
   </div>
@@ -257,12 +287,14 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="body">
   <ol class="steps">
     <li>Piezas y operaciones: primero el producto \(f(x)\cdot g(x)\); después se le suma la constante \(4\).</li>
-    <li>Producto: \(\lim_{x\to 3}[f(x)\cdot g(x)]=2\cdot 1=2\).</li>
+    <li>Producto (propiedad usada sin demostrar; los dos límites existen): \(\lim_{x\to 3}[f(x)\cdot g(x)]=2\cdot 1=2\).</li>
     <li>Constante: \(\lim_{x\rightarrow 3}4=4\).</li>
     <li>Suma, con los pasos 2 y 3: \(\lim_{x\to 3}[f(x)\cdot g(x)+4]=2+4=6\).</li>
-    <li>Comprobación con valores a la izquierda de \(3\): en \(x=2{,}9\), \(f(2{,}9)=1{,}9\) y \(g(2{,}9)=1{,}1\); el producto es \(1{,}9\cdot 1{,}1=2{,}09\) y la combinación vale \(2{,}09+4=6{,}09\).</li>
-    <li>A la derecha de \(3\): en \(x=3{,}1\), \(f(3{,}1)=2{,}1\) y \(g(3{,}1)=0{,}9\); el producto es \(2{,}1\cdot 0{,}9=1{,}89\) y la combinación vale \(1{,}89+4=5{,}89\).</li>
-    <li>Más cerca: en \(x=2{,}99\), \(1{,}99\cdot 1{,}01=2{,}0099\) y \(2{,}0099+4=6{,}0099\); en \(x=3{,}01\), \(2{,}01\cdot 0{,}99=1{,}9899\) y \(1{,}9899+4=5{,}9899\). Los valores se acercan a \(6\).</li>
+    <li>Comprobación con valores a la izquierda de \(3\): en \(x=2{,}9\), \(f(2{,}9)=2{,}9-1=1{,}9\) y \(g(2{,}9)=4-2{,}9=1{,}1\); el producto es \(1{,}9\cdot 1{,}1=2{,}09\) y la combinación vale \(2{,}09+4=6{,}09\).</li>
+    <li>A la derecha de \(3\): en \(x=3{,}1\), \(f(3{,}1)=3{,}1-1=2{,}1\) y \(g(3{,}1)=4-3{,}1=0{,}9\); el producto es \(2{,}1\cdot 0{,}9=1{,}89\) y la combinación vale \(1{,}89+4=5{,}89\).</li>
+    <li>Más cerca, por la izquierda: en \(x=2{,}99\), \(f(2{,}99)=2{,}99-1=1{,}99\) y \(g(2{,}99)=4-2{,}99=1{,}01\); el producto es \(1{,}99\cdot 1{,}01=2{,}0099\) y la combinación vale \(2{,}0099+4=6{,}0099\).</li>
+    <li>Más cerca, por la derecha: en \(x=3{,}01\), \(f(3{,}01)=3{,}01-1=2{,}01\) y \(g(3{,}01)=4-3{,}01=0{,}99\); el producto es \(2{,}01\cdot 0{,}99=1{,}9899\) y la combinación vale \(1{,}9899+4=5{,}9899\).</li>
+    <li>Los cuatro valores, ordenados según su \(x\): \(6{,}09\); \(6{,}0099\); \(5{,}9899\); \(5{,}89\). Se acercan a \(6\), el límite del paso 4.</li>
   </ol>
   </div>
   </div>
@@ -271,11 +303,13 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <h3>Ejemplo 2: un cociente con una potencia, \(\lim_{x\to 3}\dfrac{f(x)+1}{[g(x)]^{2}}\)</h3>
   <div class="body">
   <ol class="steps">
-    <li>Numerador. Constante y suma: \(\lim_{x\to 3}[f(x)+1]=2+1=3\).</li>
-    <li>Denominador. Potencia con \(n=2\): \(\lim_{x\to 3}[g(x)]^{2}=1^{2}=1\).</li>
+    <li>Piezas y operaciones: arriba, la suma \(f(x)+1\); abajo, la potencia \([g(x)]^{2}\), que es \(g(x)\cdot g(x)\); al final, el cociente.</li>
+    <li>Numerador. Constante: \(\lim_{x\rightarrow 3}1=1\). Suma: \(\lim_{x\to 3}[f(x)+1]=2+1=3\).</li>
+    <li>Denominador. Potencia con \(n=2\): \(\lim_{x\to 3}[g(x)]^{2}=1^{2}=1\), porque \(1^{2}=1\cdot 1=1\).</li>
     <li>Hipótesis del cociente: el límite del denominador es \(1\), distinto de \(0\). Se cumple.</li>
-    <li>Cociente, con los pasos 1 y 2: \(\lim_{x\to 3}\dfrac{f(x)+1}{[g(x)]^{2}}=\dfrac{3}{1}=3\).</li>
-    <li>Otro cociente con las mismas piezas: \(\lim_{x\to 3}\dfrac{g(x)}{f(x)}\). El límite del denominador es \(2\), distinto de \(0\). Cociente: \(\lim_{x\to 3}\dfrac{g(x)}{f(x)}=\dfrac{1}{2}=0{,}5\).</li>
+    <li>Cociente, con los pasos 2 y 3: \(\lim_{x\to 3}\dfrac{f(x)+1}{[g(x)]^{2}}=\dfrac{3}{1}=3\).</li>
+    <li>Comprobación con valores. En \(x=2{,}99\): arriba, \(1{,}99+1=2{,}99\); abajo, \(1{,}01^{2}=1{,}01\cdot 1{,}01=1{,}0201\); el cociente es \(\dfrac{2{,}99}{1{,}0201}\approx 2{,}9311\). En \(x=3{,}01\): arriba, \(2{,}01+1=3{,}01\); abajo, \(0{,}99^{2}=0{,}99\cdot 0{,}99=0{,}9801\); el cociente es \(\dfrac{3{,}01}{0{,}9801}\approx 3{,}0711\). (El signo ≈ se lee «aproximadamente»: los cocientes están redondeados a cuatro decimales.) Los dos están cerca de \(3\).</li>
+    <li>Otro cociente con las mismas piezas: \(\lim_{x\to 3}\dfrac{g(x)}{f(x)}\). El límite del denominador es \(2\), distinto de \(0\). Cociente: \(\lim_{x\to 3}\dfrac{g(x)}{f(x)}=\dfrac{1}{2}=0{,}5\). Con valores: en \(x=2{,}99\), \(\dfrac{1{,}01}{1{,}99}\approx 0{,}5075\); en \(x=3{,}01\), \(\dfrac{0{,}99}{2{,}01}\approx 0{,}4925\).</li>
   </ol>
   </div>
   </div>
@@ -283,16 +317,19 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
   <div class="prop p3">
   <h3>Ejemplo 3: tres funciones de las que solo se conocen los límites</h3>
   <div class="body">
-  <p>Datos: \(\lim_{x\to -2}u(x)=3\), \(\lim_{x\to -2}v(x)=-1\) y \(\lim_{x\to -2}w(x)=4\).</p>
+  <p>Datos: \(\lim_{x\to -2}u(x)=3\), \(\lim_{x\to -2}v(x)=-1\) y \(\lim_{x\to -2}w(x)=4\). No se conocen las fórmulas ni las gráficas de \(u\), \(v\) y \(w\): por eso aquí no hay comprobación con valores, y todo sale de las propiedades.</p>
   <ol class="steps">
     <li>\(\lim_{x\to -2}\left[u(x)\cdot v(x)-\dfrac{w(x)}{v(x)}\right]\). Orden: primero el producto y el cociente; al final, la resta.</li>
     <li>Producto: \(\lim_{x\to -2}[u(x)\cdot v(x)]=3\cdot(-1)=-3\).</li>
     <li>Cociente: el límite del denominador es \(-1\), distinto de \(0\). \(\lim_{x\to -2}\dfrac{w(x)}{v(x)}=\dfrac{4}{-1}=-4\).</li>
     <li>Resta, con los pasos 2 y 3: \(-3-(-4)=-3+4=1\). El límite pedido es \(1\).</li>
-    <li>\(\lim_{x\to -2}\{[u(x)]^{2}\cdot v(x)\}\). Potencia con \(n=2\): el límite de \([u(x)]^{2}\) es \(3^{2}=9\). Producto: \(9\cdot(-1)=-9\).</li>
-    <li>\(\lim_{x\to -2}\sqrt{w(x)+5}\). Constante y suma: el límite de \(w(x)+5\) es \(4+5=9\).</li>
-    <li>Raíz con \(n=2\), par: hay que revisar que \(w(x)+5\ge 0\) cerca de \(-2\). Con la tolerancia \(\varepsilon=9\), la definición de límite da un \(\delta\gt 0\) tal que, si \(0\lt |x-(-2)|\lt \delta\), entonces \(|w(x)+5-9|\lt 9\), es decir, \(0\lt w(x)+5\lt 18\). Se cumple.</li>
-    <li>Raíz: \(\lim_{x\to -2}\sqrt{w(x)+5}=\sqrt{9}=3\).</li>
+    <li>Segundo límite: \(\lim_{x\to -2}\{[u(x)]^{2}\cdot v(x)\}\). Potencia con \(n=2\): el límite de \([u(x)]^{2}\) es \(3^{2}=3\cdot 3=9\).</li>
+    <li>Producto, con el paso 5 y el límite \(-1\) de \(v\): \(9\cdot(-1)=-9\). El límite pedido es \(-9\).</li>
+    <li>Tercer límite: \(\lim_{x\to -2}\sqrt{w(x)+5}\). Constante: \(\lim_{x\rightarrow -2}5=5\). Suma: el límite de \(w(x)+5\) es \(4+5=9\).</li>
+    <li>Raíz con \(n=2\), par: hay que revisar que \(w(x)+5\ge 0\) cerca de \(-2\) (no hay raíz cuadrada real de un número negativo). Se usa la definición de límite (hoja «Definición formal de los límites (épsilon-delta)»): para cada tolerancia \(\varepsilon\gt 0\) hay una distancia \(\delta\gt 0\) tal que, si \(0\lt |x-(-2)|\lt \delta\), los valores quedan a menos de \(\varepsilon\) del límite. Se elige \(\varepsilon=9\), igual al límite. Para esos \(x\):
+    \[\begin{aligned}|w(x)+5-9|&\lt 9&&\text{definición, con tolerancia }9\\ -9\lt w(x)+5-9&\lt 9&&\text{porque }|t|\lt 9\text{ equivale a }-9\lt t\lt 9\\ 0\lt w(x)+5&\lt 18&&\text{se suma }9\text{ a los tres lados}\end{aligned}\]
+    porque \(-9+9=0\) y \(9+9=18\). Luego \(w(x)+5\) es positivo cerca de \(-2\). Se cumple.</li>
+    <li>Raíz: \(\lim_{x\to -2}\sqrt{w(x)+5}=\sqrt{9}=3\), porque \(3\cdot 3=9\) y \(3\) es positivo.</li>
   </ol>
   </div>
   </div>
@@ -304,10 +341,12 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <li>Numerador: \(\lim_{x\to 3}f(x)=2\), distinto de \(0\).</li>
     <li>Denominador. Constante y resta: \(\lim_{x\to 3}[g(x)-1]=1-1=0\).</li>
     <li>La propiedad del cociente no se puede usar: pide que el límite del denominador sea distinto de \(0\).</li>
-    <li>¿Está definido el cociente cerca de \(3\)? Para \(x\ne 3\), \(g(x)-1=(4-x)-1=3-x\), que es distinto de \(0\). Sí.</li>
+    <li>¿Está definido el cociente cerca de \(3\)? Para \(x\ne 3\), \(g(x)-1=(4-x)-1=3-x\) (porque \(4-1=3\)), y \(3-x\) solo vale \(0\) cuando \(x=3\). Entonces el denominador es distinto de \(0\) para todo \(x\ne 3\). Sí.</li>
     <li>Por el segundo resultado del recuadro de la demostración (numerador de límite \(2\ne 0\), denominador de límite \(0\)), el cociente no tiene límite en \(3\).</li>
-    <li>Los valores lo muestran. En \(x=2{,}9\): \(\dfrac{1{,}9}{0{,}1}=19\). En \(x=3{,}1\): \(\dfrac{2{,}1}{-0{,}1}=-21\).</li>
-    <li>Más cerca. En \(x=2{,}99\): \(\dfrac{1{,}99}{0{,}01}=199\). En \(x=3{,}01\): \(\dfrac{2{,}01}{-0{,}01}=-201\). No se acercan a ningún número.</li>
+    <li>Los valores lo muestran (los de \(f\) y \(g\) están calculados en el ejemplo 1). En \(x=2{,}9\): el numerador es \(1{,}9\) y el denominador, \(1{,}1-1=0{,}1\); el cociente es \(\dfrac{1{,}9}{0{,}1}=19\).</li>
+    <li>En \(x=3{,}1\): el numerador es \(2{,}1\) y el denominador, \(0{,}9-1=-0{,}1\); el cociente es \(\dfrac{2{,}1}{-0{,}1}=-21\).</li>
+    <li>Más cerca. En \(x=2{,}99\): numerador \(1{,}99\), denominador \(1{,}01-1=0{,}01\), cociente \(\dfrac{1{,}99}{0{,}01}=199\). En \(x=3{,}01\): numerador \(2{,}01\), denominador \(0{,}99-1=-0{,}01\), cociente \(\dfrac{2{,}01}{-0{,}01}=-201\).</li>
+    <li>Los cuatro valores, \(19\); \(199\); \(-201\); \(-21\), no se acercan a ningún número: a la izquierda de \(3\) crecen y a la derecha son negativos cada vez más grandes en tamaño.</li>
   </ol>
   </div>
   </div>
@@ -324,9 +363,12 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>En la gráfica de \(m\), el límite es la altura del círculo vacío, no la del punto lleno. Fuera de \(2\), \(m\) coincide con el polinomio \(2x-1\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) Fuera de \(2\), \(m\) coincide con \(2x-1\), de límite \(2\cdot 2-1=4-1=3\): \(\lim_{x\to 2}m(x)=3\). Y \(n\) es el polinomio \(6-x\): \(\lim_{x\to 2}n(x)=6-2=4\).</li>
+        <li>a) Fuera de \(2\), \(m\) coincide con el polinomio \(2x-1\), de límite \(2\cdot 2-1=4-1=3\): \(\lim_{x\to 2}m(x)=3\). Es la altura del círculo vacío.</li>
+        <li>\(n\) es el polinomio \(6-x\): \(\lim_{x\to 2}n(x)=6-2=4\).</li>
         <li>b) Suma: \(\lim_{x\to 2}[m(x)+n(x)]=3+4=7\).</li>
-        <li>c) Múltiplo constante con \(c=3\): \(3\cdot 3=9\). Múltiplo constante con \(c=2\): \(2\cdot 4=8\). Resta: \(\lim_{x\to 2}[3m(x)-2n(x)]=9-8=1\).</li>
+        <li>Comprobación de b) con valores. A la izquierda: \(m(1{,}9)=2\cdot 1{,}9-1=3{,}8-1=2{,}8\) y \(n(1{,}9)=6-1{,}9=4{,}1\); la suma es \(2{,}8+4{,}1=6{,}9\). A la derecha: \(m(2{,}1)=2\cdot 2{,}1-1=4{,}2-1=3{,}2\) y \(n(2{,}1)=6-2{,}1=3{,}9\); la suma es \(3{,}2+3{,}9=7{,}1\). Las dos están cerca de \(7\).</li>
+        <li>c) Múltiplo constante con \(c=3\), para \(3m(x)\): \(3\cdot 3=9\). Múltiplo constante con \(c=2\), para \(2n(x)\): \(2\cdot 4=8\).</li>
+        <li>Resta de los dos resultados: \(\lim_{x\to 2}[3m(x)-2n(x)]=9-8=1\).</li>
         <li>d) Producto: \(\lim_{x\to 2}[m(x)\cdot n(x)]=3\cdot 4=12\).</li>
         <li>e) Cociente: el límite del denominador es \(3\), distinto de \(0\). \(\lim_{x\to 2}\dfrac{n(x)}{m(x)}=\dfrac{4}{3}\).</li>
         <li>f) Los valores son \(m(2)=5\) y \(n(2)=6-2=4\). Su suma es \(5+4=9\), distinta del límite \(7\) de b): el punto lleno de \(m\) no participa en el límite.</li>
@@ -340,9 +382,10 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
       <ol class="steps">
         <li>a) Producto: \(4\cdot(-2)=-8\). Suma: \(\lim_{x\to 0}[p(x)\cdot r(x)+q(x)]=-8+0=-8\).</li>
         <li>b) Denominador, con la suma: \(4+(-2)=2\), distinto de \(0\). Cociente: \(\lim_{x\to 0}\dfrac{q(x)}{p(x)+r(x)}=\dfrac{0}{2}=0\).</li>
-        <li>c) Numerador, con la resta: \(4-(-2)=4+2=6\). Denominador, con múltiplo constante y suma: \(4+2\cdot(-2)=4-4=0\).</li>
+        <li>c) Numerador, con la resta: \(4-(-2)=4+2=6\).</li>
+        <li>Denominador. Múltiplo constante, para \(2r(x)\): \(2\cdot(-2)=-4\). Suma: \(4+(-4)=4-4=0\).</li>
         <li>La propiedad del cociente no se puede usar. El numerador tiene límite \(6\), distinto de \(0\), y el denominador, \(0\): si el cociente está definido cerca de \(0\), no tiene límite (recuadro de la demostración).</li>
-        <li>d) Denominador, con constante y resta: \(4-4=0\). El numerador también tiene límite \(0\). La propiedad del cociente no se puede usar, y con estos datos no se puede decidir si el límite existe.</li>
+        <li>d) Denominador, con constante y resta: \(4-4=0\). El numerador también tiene límite \(0\). La propiedad del cociente no se puede usar, y con estos datos no se puede decidir si el límite existe: el recuadro del caso especial muestra tres cocientes con límites \(0\) y \(0\) que terminan distinto (\(-1\), \(0\) y sin límite).</li>
       </ol>
     </div></details>
   </div>
@@ -351,20 +394,25 @@ table.tbl th{font-weight:600;color:var(--muted);font-size:.9rem}
     <details><summary>Pista</summary><div><p>La ganancia es una resta de dos funciones cuyos límites existen. En d), revisa el límite del denominador antes de dividir, y calcula \(G(25{,}1)\) y \(G(24{,}9)\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
-        <li>a) Identidad y múltiplo constante: \(\lim_{x\to 50}I(x)=1500\cdot 50=75000\). Para el costo: \(700\cdot 50=35000\), y con la constante y la suma, \(\lim_{x\to 50}K(x)=20000+35000=55000\).</li>
+        <li>a) Ingreso. Identidad: \(\lim_{x\to 50}x=50\). Múltiplo constante con \(c=1500\): \(\lim_{x\to 50}I(x)=1500\cdot 50=75000\) pesos.</li>
+        <li>Costo. Múltiplo constante con \(c=700\): el límite de \(700\,x\) es \(700\cdot 50=35000\). Constante: \(\lim_{x\rightarrow 50}20000=20000\). Suma: \(\lim_{x\to 50}K(x)=20000+35000=55000\) pesos.</li>
         <li>b) Resta: \(\lim_{x\to 50}G(x)=75000-55000=20000\) pesos.</li>
         <li>c) El límite del denominador es \(\lim_{x\to 50}x=50\), distinto de \(0\). Cociente: \(\lim_{x\to 50}\dfrac{G(x)}{x}=\dfrac{20000}{50}=400\) pesos por kilo.</li>
-        <li>d) \(\lim_{x\to 25}I(x)=1500\cdot 25=37500\). Para el costo: \(700\cdot 25=17500\) y \(\lim_{x\to 25}K(x)=20000+17500=37500\). Resta: \(\lim_{x\to 25}G(x)=37500-37500=0\). Cerca de \(25\) kilos, don Luis ni gana ni pierde.</li>
-        <li>En \(\dfrac{K(x)}{G(x)}\) el denominador tiene límite \(0\) y el numerador, \(37500\), distinto de \(0\). La propiedad del cociente no se puede usar. Además \(G(x)=1500\,x-20000-700\,x=800\,x-20000\), que solo vale \(0\) en \(x=25\): el cociente está definido cerca de \(25\) y, por el recuadro de la demostración, no tiene límite.</li>
-        <li>Los valores lo muestran. \(I(25{,}1)=1500\cdot 25{,}1=37650\) y \(K(25{,}1)=20000+17570=37570\), así que \(G(25{,}1)=37650-37570=80\) y el cociente vale \(\dfrac{37570}{80}=469{,}625\).</li>
-        <li>\(I(24{,}9)=1500\cdot 24{,}9=37350\) y \(K(24{,}9)=20000+17430=37430\), así que \(G(24{,}9)=37350-37430=-80\) y el cociente vale \(\dfrac{37430}{-80}=-467{,}875\). Muy cerca de \(25\) kilos, el costo es cientos de veces la ganancia (o la pérdida), y el signo cambia de un lado al otro.</li>
+        <li>d) Con las mismas propiedades de a): \(\lim_{x\to 25}I(x)=1500\cdot 25=37500\). Para el costo: \(700\cdot 25=17500\) y \(\lim_{x\to 25}K(x)=20000+17500=37500\).</li>
+        <li>Resta: \(\lim_{x\to 25}G(x)=37500-37500=0\). Cerca de \(25\) kilos, don Luis ni gana ni pierde.</li>
+        <li>En \(\dfrac{K(x)}{G(x)}\) el denominador tiene límite \(0\) y el numerador, \(37500\), distinto de \(0\). La propiedad del cociente no se puede usar.</li>
+        <li>¿Está definido el cociente cerca de \(25\)? Se escribe la ganancia, una operación por línea:
+        \[\begin{aligned}G(x)&=I(x)-K(x)&&\text{modelo}\\ &=1500\,x-(20000+700\,x)&&\text{se reemplazan }I(x)\text{ y }K(x)\\ &=1500\,x-20000-700\,x&&\text{se quita el paréntesis: cambia el signo de cada término}\\ &=800\,x-20000&&\text{porque }1500-700=800\end{aligned}\]
+        \(G(x)=0\) solo si \(800\,x=20000\), es decir, \(x=\dfrac{20000}{800}=25\). Para \(x\ne 25\) el denominador es distinto de \(0\): el cociente está definido cerca de \(25\) y, por el recuadro de la demostración, no tiene límite.</li>
+        <li>Los valores lo muestran. \(I(25{,}1)=1500\cdot 25{,}1=37650\); \(700\cdot 25{,}1=17570\) y \(K(25{,}1)=20000+17570=37570\), así que \(G(25{,}1)=37650-37570=80\) y el cociente vale \(\dfrac{37570}{80}=469{,}625\).</li>
+        <li>\(I(24{,}9)=1500\cdot 24{,}9=37350\); \(700\cdot 24{,}9=17430\) y \(K(24{,}9)=20000+17430=37430\), así que \(G(24{,}9)=37350-37430=-80\) y el cociente vale \(\dfrac{37430}{-80}=-467{,}875\). Muy cerca de \(25\) kilos, el costo es cientos de veces la ganancia (o la pérdida), y el signo cambia de un lado al otro.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">CD-L30-H02 · v001 · Pendiente de APR</span>
+  <span class="status">CD-L30-H02 · v002 · Pendiente de APR</span>
   <span class="oa-credito" style="display:block;text-align:right;font-size:.82em;color:#6b6b6b;margin:.35em 0 0">Creado por Oscar Morales León asistido por IA.</span>
 </footer>
 </article>
@@ -740,7 +788,7 @@ OA.scene('comb-idea', (function(){
       '\\text{la gráfica de }g\\text{ va hacia su hueco,}' + Q + '\\text{que está a la altura }1\\text{, por los dos lados:}' + Q + '\\lim_{x\\to 3}g(x)=M=1',
       '\\text{múltiplo constante, dos veces:}' + Q + '\\lim_{x\\to 3}2f(x)=2\\cdot 2=4' + Q + '\\lim_{x\\to 3}3g(x)=3\\cdot 1=3',
       '\\text{resta de los dos resultados:}' + Q + '\\lim_{x\\to 3}[2f(x)-3g(x)]=4-3=1',
-      '\\text{comprobación con valores:}' + Q + 'f(2{,}5)=2{,}5-1=1{,}5;\\ \\ g(2{,}5)=4-2{,}5=1{,}5' + Q + 'h(2{,}5)=2\\cdot 1{,}5-3\\cdot 1{,}5' + Q + '=3-4{,}5=-1{,}5' + Q + 'f(3{,}5)=3{,}5-1=2{,}5;\\ \\ g(3{,}5)=4-3{,}5=0{,}5' + Q + 'h(3{,}5)=2\\cdot 2{,}5-3\\cdot 0{,}5' + Q + '=5-1{,}5=3{,}5' + Q + '\\text{más cerca del }3:' + Q + 'h(2{,}9)=2\\cdot 1{,}9-3\\cdot 1{,}1' + Q + '=3{,}8-3{,}3=0{,}5' + Q + 'h(3{,}1)=2\\cdot 2{,}1-3\\cdot 0{,}9' + Q + '=4{,}2-2{,}7=1{,}5' + Q + 'h(2{,}99)=2\\cdot 1{,}99-3\\cdot 1{,}01' + Q + '=3{,}98-3{,}03=0{,}95' + Q + 'h(3{,}01)=2\\cdot 2{,}01-3\\cdot 0{,}99' + Q + '=4{,}02-2{,}97=1{,}05' + Q + '\\text{los valores se acercan a }1',
+      '\\text{comprobación con valores:}' + Q + 'f(2{,}5)=2{,}5-1=1{,}5;\\ \\ g(2{,}5)=4-2{,}5=1{,}5' + Q + 'h(2{,}5)=2\\cdot 1{,}5-3\\cdot 1{,}5' + Q + '=3-4{,}5=-1{,}5' + Q + 'f(3{,}5)=3{,}5-1=2{,}5;\\ \\ g(3{,}5)=4-3{,}5=0{,}5' + Q + 'h(3{,}5)=2\\cdot 2{,}5-3\\cdot 0{,}5' + Q + '=5-1{,}5=3{,}5' + Q + '\\text{más cerca del }3:' + Q + 'f(2{,}9)=2{,}9-1=1{,}9;\\ \\ g(2{,}9)=4-2{,}9=1{,}1' + Q + 'h(2{,}9)=2\\cdot 1{,}9-3\\cdot 1{,}1' + Q + '=3{,}8-3{,}3=0{,}5' + Q + 'f(3{,}1)=3{,}1-1=2{,}1;\\ \\ g(3{,}1)=4-3{,}1=0{,}9' + Q + 'h(3{,}1)=2\\cdot 2{,}1-3\\cdot 0{,}9' + Q + '=4{,}2-2{,}7=1{,}5' + Q + 'f(2{,}99)=2{,}99-1=1{,}99;\\ \\ g(2{,}99)=4-2{,}99=1{,}01' + Q + 'h(2{,}99)=2\\cdot 1{,}99-3\\cdot 1{,}01' + Q + '=3{,}98-3{,}03=0{,}95' + Q + 'f(3{,}01)=3{,}01-1=2{,}01;\\ \\ g(3{,}01)=4-3{,}01=0{,}99' + Q + 'h(3{,}01)=2\\cdot 2{,}01-3\\cdot 0{,}99' + Q + '=4{,}02-2{,}97=1{,}05' + Q + '\\text{los valores se acercan a }1',
       '\\text{el punto lleno: }f(3)=4' + Q + '\\text{no participa: el límite mira lo de cerca}' + Q + '\\text{además, }g\\text{ no tiene valor en }3:' + Q + '\\text{con valores en }3\\text{ no hay cuenta posible}' + Q + '\\text{con límites sí: }\\lim_{x\\to 3}h(x)=1']; return dtPasos(R.slice(0, k)); }
   };
 })());

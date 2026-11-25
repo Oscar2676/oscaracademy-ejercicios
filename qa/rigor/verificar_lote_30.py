@@ -355,6 +355,9 @@ def n2(x): return 6 - Fr(x)                                        # ejercicio A
 def I2(x): return 1500*Fr(x)                                       # ejercicio C: ingreso
 def K2(x): return 20000 + 700*Fr(x)                                # ejercicio C: costo
 def G2(x): return I2(x) - K2(x)                                    # ejercicio C: ganancia
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e2 for e2 in err if e2 != 'H02 título, ruta y pie']
+ok('<h1>Límites de combinaciones de funciones</h1>' in A2 and '<span class="status">CD-L30-H02 · v002 · Pendiente de APR</span>' in A2 and 'v001' not in A2 and '<li>Cursos</li>\n      <li>Cálculo diferencial 1ª parte</li>\n      <li>Propiedades de límites</li>\n      <li><b>Límites de combinaciones de funciones</b></li>' in A2, 'H02 v002 título, ruta y pie')
 FUN2 = {'f': f2, 'g': g2, 'h': h2, 'm': m2, 'n': n2, 'I': I2, 'K': K2, 'G': G2}
 valores('H02 hoja', mates_de(A2), FUN2, 12)
 ok("function f(x){ return x === 3 ? 4 : x - 1; }" in E2 and "function g(x){ return 4 - x; }" in E2 and 'var A = 3, L = 2, LM = 1, XS = [2.5, 3.5];' in E2 and 'lmMarco(-0.85, 1.75, 2.6, 3.3, 0, 6, 0, 5), MG = lmMarco(2.55, 1.75, 2.6, 3.3, 0, 6, 0, 5)' in E2, 'H02 escena: funciones, lugar, límites y marcos')
@@ -366,7 +369,7 @@ for x2 in RJ:
         ok((f2(x2) - 2)/(g2(x2) - 1) == -1 and (f2(x2) - 2)**2/(g2(x2) - 1) == -(x2 - 3) == 3 - x2 and (f2(x2) - 2)/(g2(x2) - 1)**2 == 1/(x2 - 3), 'H02 k3: tres cocientes con límites 0 y 0')
         ok(all(0 <= F2(x2) <= 5 for F2 in (f2, g2)) or not (1 <= x2 <= 4), 'H02 escena: las gráficas caben en la ventana')
 # lectura y registro, armados con Fraction
-for x2 in (Fr('2.5'), Fr('3.5')):
+for x2 in (Fr('2.5'), Fr('3.5'), Fr('2.9'), Fr('3.1'), Fr('2.99'), Fr('3.01')):   # v002: también 2,9; 3,1; 2,99 y 3,01
     ok('f(%s)=%s-1=%s;\\\\ \\\\ g(%s)=4-%s=%s' % (tex(x2), tex(x2), tex(f2(x2)), tex(x2), tex(x2), tex(g2(x2))) in E2, 'H02 lectura: alturas en %s' % tex(x2))
 for x2 in (Fr('2.5'), Fr('3.5'), Fr('2.9'), Fr('3.1'), Fr('2.99'), Fr('3.01')):
     ok('h(%s)=2\\\\cdot %s-3\\\\cdot %s%s=%s-%s=%s' % (tex(x2), tex(f2(x2)), tex(g2(x2)), JQ, tex(2*f2(x2)), tex(3*g2(x2)), tex(h2(x2))) in E2, 'H02 lectura: h(%s)' % tex(x2))
@@ -401,13 +404,56 @@ llega1('H02 C G', G2, 50, 20000); llega1('H02 C G/x', lambda x: G2(x)/Fr(x), 50,
 for z2 in ['\\[\\lim_{x\\to a}[c\\cdot f(x)+d\\cdot g(x)]=c\\cdot L+d\\cdot M\\]', '\\(f(x)=x-1\\) si \\(x\\ne 3\\), con \\(f(3)=4\\); y \\(g(x)=4-x\\) si \\(x\\ne 3\\), sin valor en \\(3\\)', '\\(h(x)=2f(x)-3g(x)\\)', 'sus límites <b>existen</b>: \\(\\lim_{x\\to a}f(x)=L\\) y \\(\\lim_{x\\to a}g(x)=M\\)',
            '\\(\\lim_{x\\to a}[f(x)\\cdot g(x)+c]=L\\cdot M+c\\)', 'Si \\(M\\ne 0\\): \\(\\lim_{x\\to a}\\dfrac{c\\cdot f(x)}{g(x)}=\\dfrac{c\\cdot L}{M}\\)', '\\(\\lim_{x\\to a}[c\\cdot f(x)]=c\\cdot L\\)', '\\(\\lim_{x\\to a}[d\\cdot g(x)]=d\\cdot M\\)',
            '\\(\\lim_{x\\to a}f(x)=L\\) con \\(L\\ne 0\\), \\(\\lim_{x\\to a}g(x)=0\\), y \\(g(x)\\ne 0\\) para todo \\(x\\ne a\\) de un intervalo abierto que contiene a \\(a\\)', '\\(f(x)=\\dfrac{f(x)}{g(x)}\\cdot g(x)\\)', '\\(\\lim_{x\\to a}f(x)=K\\cdot 0=0\\)', 'Luego el cociente no tiene límite en \\(a\\)',
-           '\\(\\dfrac{f(x)-2}{g(x)-1}=\\dfrac{(x-1)-2}{(4-x)-1}=\\dfrac{x-3}{3-x}=-1\\)', '\\(\\dfrac{[f(x)-2]^{2}}{g(x)-1}=\\dfrac{(x-3)^{2}}{3-x}=-(x-3)=3-x\\)', '\\(\\dfrac{f(x)-2}{[g(x)-1]^{2}}=\\dfrac{x-3}{(3-x)^{2}}=\\dfrac{1}{x-3}\\)', 'no tiene límite en \\(3\\)',
-           '\\(\\lim_{x\\to 3}[f(x)\\cdot g(x)+4]=2+4=6\\)', '\\(\\lim_{x\\to 3}\\dfrac{f(x)+1}{[g(x)]^{2}}=\\dfrac{3}{1}=3\\)', '\\(\\lim_{x\\to 3}\\dfrac{g(x)}{f(x)}=\\dfrac{1}{2}=0{,}5\\)', '\\(\\lim_{x\\to -2}u(x)=3\\), \\(\\lim_{x\\to -2}v(x)=-1\\) y \\(\\lim_{x\\to -2}w(x)=4\\)', '\\(\\lim_{x\\to -2}\\sqrt{w(x)+5}=\\sqrt{9}=3\\)', '\\(|w(x)+5-9|\\lt 9\\), es decir, \\(0\\lt w(x)+5\\lt 18\\)',
+           '\\frac{f(x)-2}{g(x)-1}&=\\frac{(x-1)-2}{(4-x)-1}&&', '&=\\frac{x-3}{3-x}&&\\text{se juntan los números, arriba y abajo}', 'arriba, \\(-1-2=-3\\); abajo, \\(4-1=3\\)', '&=\\frac{x-3}{-(x-3)}&&\\text{porque }3-x=-(x-3)', '&=\\frac{1}{-1}=-1&&\\text{se simplifica }x-3', '\\frac{[f(x)-2]^{2}}{g(x)-1}&=\\frac{(x-3)^{2}}{3-x}&&', '&=\\frac{(x-3)\\cdot(x-3)}{-(x-3)}&&', '&=\\frac{x-3}{-1}&&', '&=-(x-3)&&', '&=3-x&&', '\\frac{f(x)-2}{[g(x)-1]^{2}}&=\\frac{x-3}{(3-x)^{2}}&&', '&=\\frac{x-3}{(x-3)^{2}}&&\\text{porque }(3-x)^{2}=[-(x-3)]^{2}=(x-3)^{2}', '&=\\frac{x-3}{(x-3)\\cdot(x-3)}&&', '&=\\frac{1}{x-3}&&', 'no tiene límite en \\(3\\)',
+           '\\(\\lim_{x\\to 3}[f(x)\\cdot g(x)+4]=2+4=6\\)', '\\(\\lim_{x\\to 3}\\dfrac{f(x)+1}{[g(x)]^{2}}=\\dfrac{3}{1}=3\\)', '\\(\\lim_{x\\to 3}\\dfrac{g(x)}{f(x)}=\\dfrac{1}{2}=0{,}5\\)', '\\(\\lim_{x\\to -2}u(x)=3\\), \\(\\lim_{x\\to -2}v(x)=-1\\) y \\(\\lim_{x\\to -2}w(x)=4\\)', '\\(\\lim_{x\\to -2}\\sqrt{w(x)+5}=\\sqrt{9}=3\\)', '|w(x)+5-9|&\\lt 9&&', '-9\\lt w(x)+5-9&\\lt 9&&', '0\\lt w(x)+5&\\lt 18&&\\text{se suma }9\\text{ a los tres lados}',
            '\\(\\lim_{x\\to 3}[g(x)-1]=1-1=0\\)', 'el cociente no tiene límite en \\(3\\)', '\\(g(x)-1=(4-x)-1=3-x\\)', '\\(m(x)=2x-1\\) si \\(x\\ne 2\\), y \\(m(2)=5\\)', '\\(\\lim_{x\\to 2}[m(x)+n(x)]=3+4=7\\)', '\\(\\lim_{x\\to 2}[3m(x)-2n(x)]=9-8=1\\)', '\\(\\lim_{x\\to 2}[m(x)\\cdot n(x)]=3\\cdot 4=12\\)', '\\(\\lim_{x\\to 2}\\dfrac{n(x)}{m(x)}=\\dfrac{4}{3}\\)',
            '\\(\\lim_{x\\to 0}p(x)=4\\), \\(\\lim_{x\\to 0}q(x)=0\\) y \\(\\lim_{x\\to 0}r(x)=-2\\)', '\\(\\lim_{x\\to 0}[p(x)\\cdot r(x)+q(x)]=-8+0=-8\\)', '\\(\\lim_{x\\to 0}\\dfrac{q(x)}{p(x)+r(x)}=\\dfrac{0}{2}=0\\)', 'con estos datos no se puede decidir si el límite existe',
-           '\\(I(x)=1500\\,x\\)', '\\(K(x)=20000+700\\,x\\)', '\\(G(x)=I(x)-K(x)\\)', '\\(\\lim_{x\\to 50}G(x)=75000-55000=20000\\)', '\\(\\lim_{x\\to 50}\\dfrac{G(x)}{x}=\\dfrac{20000}{50}=400\\)', '\\(\\lim_{x\\to 25}G(x)=37500-37500=0\\)', '\\(G(x)=1500\\,x-20000-700\\,x=800\\,x-20000\\)']:
+           '\\(I(x)=1500\\,x\\)', '\\(K(x)=20000+700\\,x\\)', '\\(G(x)=I(x)-K(x)\\)', '\\(\\lim_{x\\to 50}G(x)=75000-55000=20000\\)', '\\(\\lim_{x\\to 50}\\dfrac{G(x)}{x}=\\dfrac{20000}{50}=400\\)', '\\(\\lim_{x\\to 25}G(x)=37500-37500=0\\)', 'G(x)&=I(x)-K(x)&&\\text{modelo}', '&=1500\\,x-(20000+700\\,x)&&', '&=1500\\,x-20000-700\\,x&&', '&=800\\,x-20000&&\\text{porque }1500-700=800']:
     ok(z2 in A2, 'H02: la hoja no trae «%s»' % z2)
 ok(A2.count('no se puede usar') >= 5 and A2.count('sin demostrar') >= 2, 'H02: avisos «no se puede usar» y «sin demostrar»')
+# ───────── H02 v002 (revisión general, cuarta y quinta ley, 25-nov): cuentas nuevas de la hoja y de la lectura ─────────
+def en2(*cads): return all(c in A2 for c in cads)
+X42 = [Fr('2.9'), Fr('2.99'), Fr('3.01'), Fr('3.1')]
+ok(en2(*[r'f(%s)&=%s-1=%s&&' % (tex(x), tex(x), tex(f2(x))) for x in X42]) and en2(*[r'g(%s)&=4-%s=%s&&' % (tex(x), tex(x), tex(g2(x))) for x in X42]), 'H02 v002 encabezado: los valores de f y de g, uno bajo otro')
+ok(en2(*[r'2f(%s)-3g(%s)&=2\cdot %s-3\cdot %s=%s-%s=%s&&\text{distancia a uno: }%s=%s' % (tex(x), tex(x), tex(f2(x)), tex(g2(x)), tex(2*f2(x)), tex(3*g2(x)), tex(h2(x)), ('1-%s' % tex(h2(x))) if h2(x) < 1 else ('%s-1' % tex(h2(x))), tex(abs(h2(x) - 1))) for x in X42]), 'H02 v002 encabezado: las cuatro combinaciones y su distancia a 1')
+ok(all(abs(h2(x) - 1) <= 2*abs(f2(x) - 2) + 3*abs(g2(x) - 1) for x in RJ if x != 3) and all(abs(h2(x) - 1) == 2*abs(f2(x) - 2) + 3*abs(g2(x) - 1) for x in X42) and 2 - f2(X42[0]) == Fr('0.1') == g2(X42[0]) - 1 and 2*Fr('0.1') + 3*Fr('0.1') == Fr('0.2') + Fr('0.3') == Fr('0.5') == abs(h2(X42[0]) - 1) and 2*Fr('0.01') + 3*Fr('0.01') == Fr('0.02') + Fr('0.03') == Fr('0.05') == abs(h2(X42[1]) - 1), 'H02 v002 encabezado: la distancia de la combinación es 2 veces la de f más 3 veces la de g')
+ok(all(abs(F2(X42[i]) - l2) > abs(F2(X42[j]) - l2) for F2, l2 in ((f2, 2), (g2, 1), (h2, 1)) for i, j in ((0, 1), (3, 2))) and 2*2 - 3*1 == 4 - 3 == 1, 'H02 v002 encabezado: más cerca de 3, más cerca de 2, de 1 y de 1')
+ok(en2(r'\(2\cdot 0{,}1+3\cdot 0{,}1=0{,}2+0{,}3=0{,}5\)', r'\(2\cdot 0{,}01+3\cdot 0{,}01=0{,}02+0{,}03=0{,}05\)', r'\(1=2\cdot 2-3\cdot 1\)', '<b>De dónde sale, con números.</b>', '<b>La regularidad:</b>', '<b>La fórmula.</b>', 'se lee «\\(f\\) de \\(x\\)»', 'se lee «dos por \\(f\\) de \\(x\\), menos tres por \\(g\\) de \\(x\\)»', 'Se lee: «el límite, cuando \\(x\\) tiende a \\(a\\), de \\(c\\) por \\(f\\) de \\(x\\) más \\(d\\) por \\(g\\) de \\(x\\), es \\(c\\) por \\(L\\) más \\(d\\) por \\(M\\)»', 'restar \\(3g(x)\\) es sumar \\((-3)\\cdot g(x)\\)') and A2.count('<p class="lede">') == 3, 'H02 v002 encabezado: frases')
+for x2 in RJ:
+    if x2 != 3: ok(2*f2(x2) - 3*g2(x2) == 2*f2(x2) + (-3)*g2(x2), 'H02 v002: restar 3g es sumar (−3)·g')
+ok(en2('; '.join(r'\(%s\)' % tex(f2(x)) for x in X42) + ' se acercan a \\(2\\)', '; '.join(r'\(%s\)' % tex(g2(x)) for x in X42) + ' se acercan a \\(1\\)', '(\\(1{,}5\\) y \\(2{,}5\\) en \\(f\\); \\(1{,}5\\) y \\(0{,}5\\) en \\(g\\))') and (f2(Fr('2.5')), f2(Fr('3.5')), g2(Fr('2.5')), g2(Fr('3.5'))) == (Fr('1.5'), Fr('2.5'), Fr('1.5'), Fr('0.5')), 'H02 v002 cómo leerla: los números del encabezado y las alturas de los puntos')
+ok(en2('<b>Palabras que se usan.</b>', '<b>El procedimiento</b>', '<b>De dónde sale cada una.</b>', '<b>Cómo se lee.</b>', r'\lim_{x\to a}[f(x)\cdot g(x)+c]&=L\cdot M+c&&\text{suma de las dos líneas anteriores}', r'\lim_{x\to a}\frac{c\cdot f(x)}{g(x)}&=\frac{c\cdot L}{M}&&\text{cociente; se puede usar porque }M\ne 0', r'\(2\cdot 1+4=2+4=6\)', r'primero \(5\cdot 2=10\), después \(\dfrac{10}{1}=10\)') and 2*1 + 4 == 6 and Fr(5*2, 1) == 10, 'H02 v002 k1: de dónde sale cada cuenta frecuente')
+llega1('H02 v002 k1: f·g + 4', lambda x: f2(x)*g2(x) + 4, 3, 6); llega1('H02 v002 k1: 5f/g', lambda x: 5*f2(x)/g2(x), 3, 10)
+ok(A2.count('<b>Qué se demuestra') == 2 and A2.count('<b>Cómo funciona el método') == 2 and en2('por contradicción', 'un límite, si existe, es único'), 'H02 v002 k2: qué se demuestra y cómo funciona el método, dos veces')
+ok(en2(r'\lim_{x\to 3}[2f(x)]&=2\cdot 2=4&&\text{paso 1, con }c=2', r'\lim_{x\to 3}[(-3)\cdot g(x)]&=(-3)\cdot 1=-3&&\text{paso 2, con }d=-3', r'\lim_{x\to 3}[2f(x)+(-3)\cdot g(x)]&=4+(-3)=4-3=1&&\text{paso 3: se suman los dos límites}', r'sumar \(-3\) es restar \(3\): \(4+(-3)=4-3\), y \(4-3=1\)', r'\(2\cdot 2+(-3)\cdot 1=4-3=1\)', '; '.join(r'\(%s\)' % tex(h2(x)) for x in X42)) and 2*2 == 4 and (-3)*1 == -3 and 4 + (-3) == 4 - 3 == 1, 'H02 v002 k2: los pasos con los números de la animación')
+llega1('H02 v002 k2: 2f', lambda x: 2*f2(x), 3, 4); llega1('H02 v002 k2: (−3)g', lambda x: -3*g2(x), 3, -3)
+ok(Fr(6, 2)*2 == 3*2 == 6 and en2(r'\(\dfrac{6}{2}\cdot 2=3\cdot 2=6\)', r'\(\dfrac{1{,}9}{0{,}1}=19\)', r'\(\dfrac{1{,}99}{0{,}01}=199\)', r'\(\dfrac{2{,}01}{-0{,}01}=-201\)', r'\(19\cdot 0{,}1=1{,}9\), que es \(f(2{,}9)\)') and 19*Fr('0.1') == Fr('1.9') == f2(Fr('2.9')) and 1 - 1 == 0, 'H02 v002 k2: el cociente sin límite, con números')
+for x2 in RJ:
+    if x2 != 3:
+        ok(-1 - 2 == -3 and 4 - 1 == 3 and (x2 - 1) - 2 == x2 - 3 and (4 - x2) - 1 == 3 - x2 == -(x2 - 3) and (x2 - 3)/(-(x2 - 3)) == Fr(1, -1) == -1, 'H02 v002 k3: primer cociente, línea por línea')
+        ok((x2 - 3)**2 == (x2 - 3)*(x2 - 3) and (x2 - 3)*(x2 - 3)/(-(x2 - 3)) == (x2 - 3)/(-1) == -(x2 - 3) == -x2 + 3 == 3 - x2, 'H02 v002 k3: segundo cociente, línea por línea')
+        ok((3 - x2)**2 == (-(x2 - 3))**2 == (x2 - 3)**2 and (x2 - 3)/((x2 - 3)*(x2 - 3)) == 1/(x2 - 3), 'H02 v002 k3: tercer cociente, línea por línea')
+ok((Fr('1.9') - 2)/(Fr('1.1') - 1) == Fr('-0.1')/Fr('0.1') == -1 and (Fr('2.1') - 2)/(Fr('0.9') - 1) == Fr('0.1')/Fr('-0.1') == -1 and Fr('-0.1')**2/Fr('0.1') == Fr('0.01')/Fr('0.1') == Fr('0.1') == 3 - Fr('2.9') and 0**2 == 0 and 1/Fr('0.001') == 1000
+   and en2(r'\(\dfrac{1{,}9-2}{1{,}1-1}=\dfrac{-0{,}1}{0{,}1}=-1\)', r'\(\dfrac{2{,}1-2}{0{,}9-1}=\dfrac{0{,}1}{-0{,}1}=-1\)', r'\(\dfrac{(-0{,}1)^{2}}{0{,}1}=\dfrac{0{,}01}{0{,}1}=0{,}1\), y \(3-2{,}9=0{,}1\)', r'\(\dfrac{1}{0{,}001}=1000\)', r'basta un \(x\) entre \(3\) y \(3+\dfrac{1}{K}\)'), 'H02 v002 k3: los tres cocientes con números')
+for K2_ in (Fr(1, 2), 1, 7, 1000):
+    for t2 in TS1:
+        if t2 > 0: x2 = 3 + t2/K2_; ok(3 < x2 < 3 + Fr(1)/K2_ and 1/(x2 - 3) > K2_, 'H02 v002 k3: entre 3 y 3 + 1/K, 1/(x − 3) pasa el tope K')
+# ejemplos
+ok(en2(*[r'\(f(%s)=%s-1=%s\) y \(g(%s)=4-%s=%s\)' % (tex(x), tex(x), tex(f2(x)), tex(x), tex(x), tex(g2(x))) for x in X42]) and en2('; '.join(r'\(%s\)' % tex(f2(x)*g2(x) + 4) for x in (X42[0], X42[1], X42[2], X42[3]))), 'H02 v002 ej1: valores de f y de g con su cuenta, y los cuatro valores ordenados')
+ok(Fr('1.99') + 1 == Fr('2.99') and Fr('1.01')**2 == Fr('1.01')*Fr('1.01') == Fr('1.0201') and Fr('2.01') + 1 == Fr('3.01') and Fr('0.99')**2 == Fr('0.99')*Fr('0.99') == Fr('0.9801') and 1**2 == 1*1 == 1
+   and en2(r'\(1{,}99+1=2{,}99\)', r'\(1{,}01^{2}=1{,}01\cdot 1{,}01=1{,}0201\)', r'\(\dfrac{2{,}99}{1{,}0201}\approx %s\)' % r41(Fr('2.99')/Fr('1.0201')), r'\(0{,}99^{2}=0{,}99\cdot 0{,}99=0{,}9801\)', r'\(\dfrac{3{,}01}{0{,}9801}\approx %s\)' % r41(Fr('3.01')/Fr('0.9801')), r'\(\dfrac{1{,}01}{1{,}99}\approx %s\)' % r41(Fr('1.01')/Fr('1.99')), r'\(\dfrac{0{,}99}{2{,}01}\approx %s\)' % r41(Fr('0.99')/Fr('2.01')), r'\(\lim_{x\rightarrow 3}1=1\)', r'\(1^{2}=1\cdot 1=1\)')
+   and (f2(Fr('2.99')) + 1)/g2(Fr('2.99'))**2 == Fr('2.99')/Fr('1.0201') and (f2(Fr('3.01')) + 1)/g2(Fr('3.01'))**2 == Fr('3.01')/Fr('0.9801') and g2(Fr('2.99'))/f2(Fr('2.99')) == Fr('1.01')/Fr('1.99') and g2(Fr('3.01'))/f2(Fr('3.01')) == Fr('0.99')/Fr('2.01'), 'H02 v002 ej2: comprobación con valores (redondeo a cuatro decimales)')
+ok(3**2 == 3*3 == 9 and 9*(-1) == -9 and 4 + 5 == 9 and -9 + 9 == 0 and 9 + 9 == 18 and en2(r'\(3^{2}=3\cdot 3=9\)', r'\(9\cdot(-1)=-9\)', r'\(\lim_{x\rightarrow -2}5=5\)', r'porque \(-9+9=0\) y \(9+9=18\)', r'porque \(3\cdot 3=9\) y \(3\) es positivo', 'no hay comprobación con valores'), 'H02 v002 ej3')
+for y2 in RJ: ok((abs(y2 - 9) < 9) == (-9 < y2 - 9 < 9) == (0 < y2 < 18), 'H02 v002 ej3: las tres líneas de la desigualdad')
+ok(Fr('1.1') - 1 == Fr('0.1') and Fr('0.9') - 1 == Fr('-0.1') and Fr('1.01') - 1 == Fr('0.01') and Fr('0.99') - 1 == Fr('-0.01') and 4 - 1 == 3 and en2(r'\(1{,}1-1=0{,}1\)', r'\(0{,}9-1=-0{,}1\)', r'\(1{,}01-1=0{,}01\)', r'\(0{,}99-1=-0{,}01\)', r'\(19\); \(199\); \(-201\); \(-21\)', r'\(3-x\) solo vale \(0\) cuando \(x=3\)') and all((3 - x == 0) == (x == 3) for x in RJ), 'H02 v002 ej4: denominadores y valores')
+# ejercicios
+ok(m2(Fr('1.9')) == 2*Fr('1.9') - 1 == Fr('3.8') - 1 == Fr('2.8') and n2(Fr('1.9')) == Fr('4.1') and Fr('2.8') + Fr('4.1') == Fr('6.9') and m2(Fr('2.1')) == Fr('4.2') - 1 == Fr('3.2') and n2(Fr('2.1')) == Fr('3.9') and Fr('3.2') + Fr('3.9') == Fr('7.1')
+   and en2(r'\(m(1{,}9)=2\cdot 1{,}9-1=3{,}8-1=2{,}8\)', r'\(n(1{,}9)=6-1{,}9=4{,}1\)', r'\(2{,}8+4{,}1=6{,}9\)', r'\(m(2{,}1)=2\cdot 2{,}1-1=4{,}2-1=3{,}2\)', r'\(n(2{,}1)=6-2{,}1=3{,}9\)', r'\(3{,}2+3{,}9=7{,}1\)'), 'H02 v002 A: comprobación de b) con valores')
+ok(2*(-2) == -4 and 4 + (-4) == 4 - 4 == 0 and en2(r'\(2\cdot(-2)=-4\)', r'\(4+(-4)=4-4=0\)', r'(\(-1\), \(0\) y sin límite)'), 'H02 v002 B c) y d)')
+ok(1500 - 700 == 800 and Fr(20000, 800) == 25 and 700*Fr('25.1') == 17570 and 700*Fr('24.9') == 17430 and 1500*50 == 75000 and en2(r'\(\lim_{x\to 50}x=50\)', r'\(\lim_{x\rightarrow 50}20000=20000\)', r'\(x=\dfrac{20000}{800}=25\)', r'\(700\cdot 25{,}1=17570\)', r'\(700\cdot 24{,}9=17430\)', r'\(800\,x=20000\)'), 'H02 v002 C: la ganancia línea por línea y los productos')
+for x2 in RJ: ok(I2(x2) - K2(x2) == 1500*x2 - (20000 + 700*x2) == 1500*x2 - 20000 - 700*x2 == 800*x2 - 20000, 'H02 v002 C: G(x), una operación por línea')
+# lectura del paso 6 (v002): cada h(x) lleva antes sus f(x) y g(x) con su cuenta
+ok(all(E2.index("'f(%s)=%s-1=%s;" % (tex(x), tex(x), tex(f2(x)))) < E2.index("'h(%s)=2" % tex(x)) for x in X42), 'H02 v002 lectura: f y g antes de cada h')
 # <<< H02
 
 # >>> H02 ESPER
@@ -419,6 +465,9 @@ NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '02.scene.
 # >>> H03
 # ───────── H03: límites de funciones combinadas (f y g con salto: la combinación se estudia por cada lado; suma por la izquierda demostrada) ─────────
 A3, E3 = molde('03', 'H03_limites_de_funciones_combinadas.html', 'Límites de funciones combinadas', 'comb-lat', 'Propiedades de límites', ['comblat-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e3 for e3 in err if e3 != 'H03 título, ruta y pie']
+ok('<h1>Límites de funciones combinadas</h1>' in A3 and '<span class="status">CD-L30-H03 · v002 · Pendiente de APR</span>' in A3 and 'v001' not in A3 and '<li>Cursos</li>\n      <li>Cálculo diferencial 1ª parte</li>\n      <li>Propiedades de límites</li>\n      <li><b>Límites de funciones combinadas</b></li>' in A3, 'H03 v002 título, ruta y pie')
 def f3(x): x = Fr(x); return x - 1 if x < 2 else x + 1             # animación: laterales 1 y 3 en 2; f(2) = 3
 def g3(x): x = Fr(x); return 6 - x if x <= 2 else 4 - x            # animación: laterales 4 y 2 en 2; g(2) = 4
 def s3(x): return f3(x) + g3(x)                                    # suma: 5 fuera de 2; s(2) = 7
@@ -481,13 +530,71 @@ for z3 in ['\\[\\lim_{x\\to a^{-}}[f(x)+g(x)]=\\lim_{x\\to a^{-}}f(x)+\\lim_{x\\
            'para todo \\(\\varepsilon\\gt 0\\) existe \\(\\delta\\gt 0\\) tal que, si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(x)-L|\\lt \\varepsilon\\)', 'la condición es \\(a\\lt x\\lt a+\\delta\\)', '\\(\\lim_{x\\to a}F(x)=L\\) si y solo si los dos límites laterales de \\(F\\) en \\(a\\) existen y los dos valen \\(L\\)',
            '\\(\\lim_{x\\to a^{-}}[f(x)\\pm g(x)]=L\\pm M\\)', '\\(\\lim_{x\\to a^{-}}[c\\cdot f(x)]=c\\cdot L\\)', '\\(\\lim_{x\\to a^{-}}[f(x)\\cdot g(x)]=L\\cdot M\\)', 'Si además \\(M\\ne 0\\): \\(\\lim_{x\\to a^{-}}\\dfrac{f(x)}{g(x)}=\\dfrac{L}{M}\\)', '\\(\\lim_{x\\to a^{-}}[f(x)]^{n}=L^{n}\\)', '<b>No se mezclan los lados:</b>',
            'si \\(a-\\delta\\lt x\\lt a\\), entonces \\(|f(x)+g(x)-(L+M)|\\lt \\varepsilon\\)', 'si \\(a-\\delta_{1}\\lt x\\lt a\\), entonces \\(|f(x)-L|\\lt \\dfrac{\\varepsilon}{2}\\)', 'si \\(a-\\delta_{2}\\lt x\\lt a\\), entonces \\(|g(x)-M|\\lt \\dfrac{\\varepsilon}{2}\\)', '\\(\\delta=\\min\\{\\delta_{1},\\delta_{2}\\}\\)', '\\(a-\\delta_{1}\\le a-\\delta\\) y \\(a-\\delta_{2}\\le a-\\delta\\)',
-           '\\(|(f(x)-L)+(g(x)-M)|\\le |f(x)-L|+|g(x)-M|\\)', '\\(\\lim_{x\\to a^{-}}[f(x)+g(x)]=L+M\\)', '\\(|f(x)-1|=|x-2|=2-x\\) y \\(|g(x)-4|=|2-x|=2-x\\)', 'el producto no tiene límite en \\(2\\)', 'los laterales de la suma son \\(L+M_{1}\\) y \\(L+M_{2}\\), también distintos', 'tampoco hay límite en \\(2\\)',
-           '\\(\\lim_{x\\to 2^{-}}[f(x)+g(x)]=1+4=5\\)', '\\(\\lim_{x\\to 2^{+}}[f(x)+g(x)]=3+2=5\\)', '\\(\\lim_{x\\to 2}[f(x)+g(x)]=5\\)', '\\(s(x)=(x-1)+(6-x)=5\\)', '\\(s(x)=(x+1)+(4-x)=5\\)', 'la resta \\(f(x)-g(x)\\) no tiene límite en \\(2\\)', '\\(\\lim_{x\\to 2}[f(x)-2]^{2}=1\\)',
+           '\\(|(f(x)-L)+(g(x)-M)|\\le |f(x)-L|+|g(x)-M|\\)', '\\(\\lim_{x\\to a^{-}}[f(x)+g(x)]=L+M\\)', '|f(x)-1|&=|x-1-1|&&\\text{porque }f(x)=x-1\\\\ &=|x-2|&&\\text{porque }-1-1=-2\\\\ &=2-x&&', '|g(x)-4|&=|6-x-4|&&\\text{porque }g(x)=6-x\\\\ &=|2-x|&&\\text{porque }6-4=2\\\\ &=2-x&&', 'el producto no tiene límite en \\(2\\)', 'los laterales de la suma son \\(L+M_{1}\\) y \\(L+M_{2}\\), también distintos', 'tampoco hay límite en \\(2\\)',
+           '\\(\\lim_{x\\to 2^{-}}[f(x)+g(x)]=1+4=5\\)', '\\(\\lim_{x\\to 2^{+}}[f(x)+g(x)]=3+2=5\\)', '\\(\\lim_{x\\to 2}[f(x)+g(x)]=5\\)', 's(x)&=(x-1)+(6-x)&&\\text{fórmulas de la izquierda}\\\\ &=x-x-1+6&&\\text{se cambia el orden}\\\\ &=0+5=5&&', 's(x)&=(x+1)+(4-x)&&\\text{fórmulas de la derecha}\\\\ &=x-x+1+4&&\\text{se cambia el orden}\\\\ &=0+5=5&&', 'la resta \\(f(x)-g(x)\\) no tiene límite en \\(2\\)', '\\(\\lim_{x\\to 2}[f(x)-2]^{2}=1\\)',
            '\\(\\lim_{x\\to 0^{-}}u(x)=-2\\) y \\(\\lim_{x\\to 0^{+}}u(x)=2\\); \\(\\lim_{x\\to 0^{-}}v(x)=3\\) y \\(\\lim_{x\\to 0^{+}}v(x)=-3\\)', '\\(\\lim_{x\\to 0}[u(x)\\cdot v(x)]=-6\\)', '\\(\\lim_{x\\to 0}\\dfrac{u(x)}{v(x)}=-\\dfrac{2}{3}\\)', '\\(\\lim_{x\\to 0}[u(x)]^{2}=4\\)',
            '\\(\\lim_{x\\to 1}P(x)=3\\); \\(\\lim_{x\\to 1^{-}}J(x)=0\\) y \\(\\lim_{x\\to 1^{+}}J(x)=2\\)', '\\(\\lim_{x\\to 1}\\{J(x)\\cdot[J(x)-2]\\}=0\\)', '\\(m(x)=2x\\) si \\(x\\lt 1\\) y \\(m(x)=5-x\\) si \\(x\\ge 1\\); \\(n(x)=3-x\\) si \\(x\\lt 1\\) y \\(n(x)=x-1\\) si \\(x\\ge 1\\)', '\\(\\lim_{x\\to 1}[m(x)+n(x)]=4\\)', '\\(\\lim_{x\\to 1}[m(x)-3]^{2}=1\\)',
            '\\(\\lim_{x\\to 3^{-}}F(x)=5\\), \\(\\lim_{x\\to 3^{+}}F(x)=-5\\), \\(\\lim_{x\\to 3^{-}}G(x)=-1\\) y \\(\\lim_{x\\to 3^{+}}G(x)=1\\)', '\\(k(x)=800\\) si \\(x\\lt 10\\) y \\(k(x)=700\\) si \\(x\\ge 10\\)', '\\(e(x)=0\\) si \\(x\\lt 10\\) y \\(e(x)=1000\\) si \\(x\\ge 10\\)', '\\(T(x)=k(x)\\cdot x+e(x)\\)', '\\(\\lim_{x\\to 10}T(x)=8000\\)']:
     ok(z3 in A3, 'H03: la hoja no trae «%s»' % z3)
 ok(A3.count('no se puede usar') >= 1 and A3.count('sin demostrar') >= 2 and A3.count('no tiene límite') >= 8, 'H03: avisos')
+# ───────── H03 v002 (revisión general, cuarta y quinta ley, 25-nov): cuentas nuevas de la hoja y de la escena ─────────
+def en3(*cads): return all(c in A3 for c in cads)
+def r43(q):
+    """redondeo a cuatro decimales (mitad hacia arriba; ningún caso de la hoja cae justo en la mitad), con coma"""
+    q = Fr(q); e = q*10**4; assert (e*2).denominator != 1 or e.denominator == 1; n = int(e + Fr(1, 2)); return tex(Fr(n, 10**4))
+X43 = [Fr('1.9'), Fr('1.99'), Fr('2.01'), Fr('2.1')]; XI3 = X43[:2]
+fm3_ = lambda x, F: {('f', -1): '%s-1', ('f', 1): '%s+1', ('g', -1): '6-%s', ('g', 1): '4-%s'}[(F, -1 if x < 2 else 1)] % tex(x)
+ok(en3(*[r'f(%s)&=%s=%s&&g(%s)=%s=%s' % (tex(x), fm3_(x, 'f'), tex(f3(x)), tex(x), fm3_(x, 'g'), tex(g3(x))) for x in X43]), 'H03 v002 encabezado: los valores de f y de g, uno bajo otro')
+ok(en3(*[r'f(%s)+g(%s)&=%s+%s=%s&&\text{a la %s de dos}' % (tex(x), tex(x), tex(f3(x)), tex(g3(x)), tex(s3(x)), 'izquierda' if x < 2 else 'derecha') for x in X43]) and all(s3(x) == 5 for x in X43) and 1 + 4 == 5 == 3 + 2, 'H03 v002 encabezado: las cuatro sumas')
+ok(en3(r'se acercan a \(1\) (\(0{,}9\); \(0{,}99\)); por la derecha, a \(3\) (\(3{,}01\); \(3{,}1\))', '<b>De dónde sale, con números.</b>', '<b>La regularidad.</b>', '<b>La fórmula.</b>', '<b>límite lateral por la izquierda</b>', '<b>límite lateral por la derecha</b>', 'Se lee: «el límite, cuando \\(x\\) tiende a \\(a\\) por la izquierda, de \\(f\\) de \\(x\\) más \\(g\\) de \\(x\\), es igual al límite por la izquierda de \\(f\\) de \\(x\\) más el límite por la izquierda de \\(g\\) de \\(x\\)»', 'Una <b>combinación</b> de \\(f\\) y \\(g\\) es', 'Un <b>tramo</b> es', 'Un <b>salto</b> es', 'La <b>altura</b> de una gráfica') and abs(f3(XI3[0]) - 1) > abs(f3(XI3[1]) - 1) and abs(f3(X43[3]) - 3) > abs(f3(X43[2]) - 3) and abs(g3(XI3[0]) - 4) > abs(g3(XI3[1]) - 4) and abs(g3(X43[3]) - 2) > abs(g3(X43[2]) - 2), 'H03 v002 encabezado: frases, términos explicados y acercamiento')
+# k1: cómo se lee, la definición con números y las propiedades vistas en cuentas
+ok(en3('<b>Palabras que se usan.</b>', '<b>Cómo se lee.</b>', 'se lee «\\(x\\) tiende a \\(a\\) por la izquierda»', 'se lee «el límite de \\(f\\) de \\(x\\), cuando \\(x\\) tiende a \\(a\\) por la izquierda, es \\(L\\)»', 'se lee «épsilon»', '«delta»', '<b>La definición con números.</b>', r'\(2-0{,}1\lt x\lt 2\), o sea, \(1{,}9\lt x\lt 2\)', '<b>De dónde salen las propiedades por un lado: las cuentas.</b>', 'se lee «\\(M\\) distinto de cero»') and 2 - Fr('0.1') == Fr('1.9') < Fr('1.95') < 2 and abs(f3(Fr('1.95')) - 1) == Fr('0.05') < Fr('0.1'), 'H03 v002 k1: lecturas y definición con números')
+for t3 in TS1:
+    if t3 > 0: ok(abs(f3(2 - t3*Fr('0.1')) - 1) < Fr('0.1'), 'H03 v002 k1: δ = 0,1 responde a ε = 0,1 por la izquierda (rejilla)')
+ok(en3('; '.join(r'\(%s-%s=%s\)' % (tex(f3(x)), tex(g3(x)), tex(f3(x) - g3(x))) for x in XI3), r'\(1-4=-3\)') and 1 - 4 == -3, 'H03 v002 k1: restas')
+ok(en3('; '.join(r'\(3\cdot %s=%s\)' % (tex(f3(x)), tex(3*f3(x))) for x in XI3), r'\(3\cdot 1=3\)'), 'H03 v002 k1: múltiplos')
+ok(en3('; '.join(r'\(%s\cdot %s=%s\)' % (tex(f3(x)), tex(g3(x)), tex(p3(x))) for x in XI3), r'\(1\cdot 4=4\)'), 'H03 v002 k1: productos')
+ok(en3('; '.join(r'\(\dfrac{%s}{%s}\approx %s\)' % (tex(f3(x)), tex(g3(x)), r43(f3(x)/g3(x))) for x in XI3), r'\(\dfrac{1}{4}=0{,}25\)') and Fr(1, 4) == Fr('0.25') and 4 != 0, 'H03 v002 k1: cocientes redondeados')
+ok(en3('; '.join(r'\(%s^{2}=%s\)' % (tex(f3(x)), tex(f3(x)**2)) for x in XI3), r'\(1^{2}=1\)'), 'H03 v002 k1: cuadrados')
+lat1('H03 v002 k1 resta', lambda x: f3(x) - g3(x), 2, -1, -3); lat1('H03 v002 k1 múltiplo', lambda x: 3*f3(x), 2, -1, 3); lat1('H03 v002 k1 cociente', lambda x: f3(x)/g3(x), 2, -1, Fr(1, 4)); lat1('H03 v002 k1 cuadrado', lambda x: f3(x)**2, 2, -1, 1)
+ok(en3(r'\(1+2=3\) (el límite de \(f\) por la izquierda más el de \(g\) por la derecha) no es límite lateral de nada') and 1 + 2 == 3 != 5, 'H03 v002 k1: mezclar lados')
+# k2
+ok(A3.count('<b>Qué se demuestra.</b>') == 1 and A3.count('<b>Cómo funciona el método.</b>') == 1 and en3(r'\(\delta_{1}=0{,}3\) y \(\delta_{2}=0{,}1\), entonces \(\delta=0{,}1\); \(2-0{,}3=1{,}7\) y \(2-0{,}1=1{,}9\), y \(1{,}7\le 1{,}9\)', r'\(a-\delta_{1}\le a-\delta\lt x\) y \(a-\delta_{2}\le a-\delta\lt x\)') and min(Fr('0.3'), Fr('0.1')) == Fr('0.1') and 2 - Fr('0.3') == Fr('1.7') <= 2 - Fr('0.1') == Fr('1.9'), 'H03 v002 k2: qué se demuestra, método y el mínimo con números')
+for a3 in RJ[::7]:
+    for d13 in ES1:
+        for d23 in ES1:
+            d3 = min(d13, d23); ok(d3 > 0 and a3 - d13 <= a3 - d3 and a3 - d23 <= a3 - d3, 'H03 v002 k2: a − δ₁ ≤ a − δ y a − δ₂ ≤ a − δ')
+for a_ in RJ[::11]:
+    for b_ in RJ[::13]:
+        for L_ in RJ[::17]:
+            M_ = L_ - 3; ok(a_ + b_ - (L_ + M_) == a_ + b_ - L_ - M_ == a_ - L_ + b_ - M_ == (a_ - L_) + (b_ - M_), 'H03 v002 k2: la diferencia reordenada, línea por línea')
+ok(en3(r'f(x)+g(x)-(L+M)&=f(x)+g(x)-L-M&&\text{se quita el paréntesis}', r'&=f(x)-L+g(x)-M&&\text{se cambia el orden}', r'&=(f(x)-L)+(g(x)-M)&&\text{se agrupa}', r'|f(x)+g(x)-(L+M)|&=|(f(x)-L)+(g(x)-M)|&&\text{paso 6}', r'&\le |f(x)-L|+|g(x)-M|&&\text{paso 7}', r'&\lt \frac{\varepsilon}{2}+\frac{\varepsilon}{2}&&\text{paso 8}', r'&=\varepsilon&&\text{dos mitades}'), 'H03 v002 k2: cadenas escritas línea por línea')
+for x3 in RJ:
+    if x3 < 2: ok(abs(f3(x3) - 1) == abs(x3 - 1 - 1) == abs(x3 - 2) == 2 - x3 and x3 - 2 < 0 and abs(g3(x3) - 4) == abs(6 - x3 - 4) == abs(2 - x3) == 2 - x3 and 2 - x3 > 0, 'H03 v002 k2: distancias por la izquierda, línea por línea')
+    if x3 > 2: ok(abs(f3(x3) - 3) == abs(x3 + 1 - 3) == abs(x3 - 2) == x3 - 2 > 0 and abs(g3(x3) - 2) == abs(4 - x3 - 2) == abs(2 - x3) == x3 - 2 and 2 - x3 < 0 and (x3 - 2 < Fr('0.1')) == (x3 < 2 + Fr('0.1')), 'H03 v002 k2: distancias por la derecha, línea por línea')
+    ok((2 - x3 < Fr('0.1')) == (2 < Fr('0.1') + x3) == (Fr('1.9') < x3), 'H03 v002 k2: el despeje 2 − x < 0,1, línea por línea')
+ok(-1 - 1 == -2 and 6 - 4 == 2 and 1 - 3 == -2 and 4 - 2 == 2 and 2 - Fr('0.1') == Fr('1.9') and en3(r'2-x&\lt 0{,}1&&\text{lo que se pide}', r'2&\lt 0{,}1+x&&', r'1{,}9&\lt x&&', r'|f(x)-3|&=|x+1-3|&&\text{porque }f(x)=x+1\\ &=|x-2|&&\text{porque }1-3=-2\\ &=x-2&&', r'|g(x)-2|&=|4-x-2|&&\text{porque }g(x)=4-x\\ &=|2-x|&&\text{porque }4-2=2\\ &=x-2&&'), 'H03 v002 k2: despeje y distancias por la derecha escritos')
+ok(f3(Fr('2.05')) == Fr('3.05') and abs(Fr('3.05') - 3) == Fr('0.05') < Fr('0.1') and g3(Fr('2.05')) == Fr('1.95') and abs(Fr('1.95') - 2) == Fr('0.05') and Fr('3.05') + Fr('1.95') == 5 and 2 < Fr('2.05') < 2 + Fr('0.1') and en3(r'\(f(2{,}05)=2{,}05+1=3{,}05\) y \(|3{,}05-3|=0{,}05\); \(g(2{,}05)=4-2{,}05=1{,}95\) y \(|1{,}95-2|=0{,}05\)', r'\(3{,}05+1{,}95=5\)'), 'H03 v002 k2: prueba por la derecha con x = 2,05')
+for e3_ in ES1:
+    for t3 in TS1:
+        if t3 > 0: x3 = 2 + t3*e3_/2; ok(2 < x3 < 2 + e3_/2 and abs(f3(x3) - 3) < e3_/2 and abs(g3(x3) - 2) < e3_/2 and abs(s3(x3) - (3 + 2)) <= abs(f3(x3) - 3) + abs(g3(x3) - 2) < e3_, 'H03 v002 k2: cadena por la derecha (ε = %s)' % e3_)
+# k3
+ok(en3(r'\(p(1{,}99)=0{,}99\cdot 4{,}01=3{,}9699\), cerca de \(4\); \(p(2{,}01)=3{,}01\cdot 1{,}99=5{,}9899\), cerca de \(6\)', r'\(L=3\), \(M_{1}=0\) y \(M_{2}=2\) dan \(3+0=3\) y \(3+2=5\)', 'al restar \\(L\\) a los dos lados quedaría \\(M_{1}=M_{2}\\)') and p3(Fr('1.99')) == Fr('3.9699') and p3(Fr('2.01')) == Fr('5.9899'), 'H03 v002 k3: producto con valores y caso L, M₁, M₂ con números')
+ok(en3(*[r'\(\dfrac{%s}{%s-2}=\dfrac{%s}{%s}\approx %s\)' % (tex(f3(x)), tex(g3(x)), tex(f3(x)), tex(g3(x) - 2), r43(f3(x)/(g3(x) - 2))) for x in XI3]) and r43(Fr('0.9')/Fr('2.1')) == '0{,}4286' and r43(Fr('0.99')/Fr('2.01')) == '0{,}4925', 'H03 v002 k3: cociente por la izquierda con valores')
+for x3 in RJ:
+    if x3 > 2: ok(g3(x3) - 2 == (4 - x3) - 2 == 4 - 2 - x3 == 2 - x3, 'H03 v002 k3: g(x) − 2 por la derecha, línea por línea')
+ok(en3(r'g(x)-2&=(4-x)-2&&\text{porque }g(x)=4-x\\ &=4-2-x&&\text{se cambia el orden}\\ &=2-x&&\text{porque }4-2=2', *[r'numerador \(%s+1=%s\), denominador \(2-%s=%s\), cociente \(\dfrac{%s}{%s}=%s\)' % (tex(x), tex(f3(x)), tex(x), tex(2 - x), tex(f3(x)), tex(2 - x), tex(f3(x)/(g3(x) - 2))) for x in (Fr('2.1'), Fr('2.01'))], r'numerador \(3{,}001\), denominador \(-0{,}001\), cociente \(\dfrac{3{,}001}{-0{,}001}=-3001\)') and f3(Fr('2.001')) == Fr('3.001') and g3(Fr('2.001')) - 2 == Fr('-0.001') and Fr('3.001')/Fr('-0.001') == -3001, 'H03 v002 k3: cociente por la derecha, cada número con su cuenta')
+# ejemplos y ejercicios
+for x3 in RJ:
+    ok((x3 - 1) + (6 - x3) == x3 - x3 - 1 + 6 == 0 + 5 == 5 and (x3 + 1) + (4 - x3) == x3 - x3 + 1 + 4 == 0 + 5 == 5, 'H03 v002 ej1: la suma de las fórmulas, línea por línea')
+ok(en3('Identidad: el límite de \\(x\\) es \\(2\\). Constante: el límite de \\(1\\) es \\(1\\). Resta: \\(\\lim_{x\\to 2^{-}}f(x)=2-1=1\\)', 'Resta: \\(\\lim_{x\\to 2^{-}}g(x)=6-2=4\\)', 'Suma: \\(\\lim_{x\\to 2^{+}}f(x)=2+1=3\\)', 'Resta: \\(\\lim_{x\\to 2^{+}}g(x)=4-2=2\\)', 'por eso las cuatro sumas del encabezado dieron \\(5\\)'), 'H03 v002 ej1: una propiedad nombrada por cuenta')
+ok(en3(r'\((-1)^{2}=(-1)\cdot(-1)=1\)', r'\(1^{2}=1\cdot 1=1\)', *[r'\(f(%s)=%s=%s\); resta: \(%s-2=%s\); cuadrado: \(%s^{2}=%s\)' % (tex(x), fm3_(x, 'f'), tex(f3(x)), tex(f3(x)), tex(f3(x) - 2), ('(%s)' if f3(x) < 2 else '%s') % tex(f3(x) - 2), tex((f3(x) - 2)**2)) for x in X43]) and (-1)*(-1) == 1 == 1*1, 'H03 v002 ej2: cada valor con su cuenta')
+ok(en3(r'\((-2)^{2}=(-2)\cdot(-2)=4\)', r'\(2^{2}=2\cdot 2=4\)', r'\(5^{2}=5\cdot 5=25\)', r'\((-5)^{2}=(-5)\cdot(-5)=25\)') and (-2)*(-2) == 4 == 2*2 and 5*5 == 25 == (-5)*(-5), 'H03 v002 ej3 y B: potencias como productos')
+ok(en3(r'\(800\cdot 9{,}9=7920\)', r'\(700\cdot 10{,}1=7070\)', r'\(8000-7920=80\) y \(8070-8000=70\)', r'\(700\cdot 10+500=7500\)', r'Como \(800\ne 700\) y \(0\ne 1000\)') and 800*Fr('9.9') == 7920 and 8000 - 7920 == 80 and 8070 - 8000 == 70 and 700*10 + 500 == 7500 < 8000 and Fr('9.9') < 10 <= Fr('10.1'), 'H03 v002 C: productos, distancias e interpretación')
+for t3 in TS1:
+    if t3 > 0: ok(700*10 + 500 < 800*(10 - t3/100) < 8000 and 8000 - 800*(10 - t3/100) < 10, 'H03 v002 C d): con saco de 500, 10 kilos cuestan menos que un poco menos de 10 kilos')
+# escena: el salto queda rotulado en las dos gráficas (quinta ley)
+ok("frase('salto', MF, A, 2, 6, 0, mu); frase('salto', MG, A, 3, 6, 0, mu);" in E3 and 1 < 2 < 3 and 2 < 3 < 4 and en3('la palabra «salto» lo señala en cada gráfica', '<b>Vertical punteada y la palabra «salto»:</b>'), 'H03 v002 escena: rótulo «salto» entre las dos alturas de cada gráfica')
 # <<< H03
 
 # >>> H03 ESPER
@@ -498,6 +605,9 @@ NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '03.scene.
 # >>> H04
 # ───────── H04: compuesta cuando el límite interno no existe (interna con salto; regla de la compuesta por un lado, demostrada; se comparan los dos lados) ─────────
 A4, E4 = molde('04', 'H04_limites_de_funciones_compuestas_cuando_el_limite_interno_no_existe.html', 'Límites de funciones compuestas cuando el límite interno no existe', 'comp-int', 'Propiedades de límites', ['compint-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e4 for e4 in err if e4 != 'H04 título, ruta y pie']
+ok('<h1>Límites de funciones compuestas cuando el límite interno no existe</h1>' in A4 and '<span class="status">CD-L30-H04 · v002 · Pendiente de APR</span>' in A4 and 'v001' not in A4 and '<li>Cursos</li>\n      <li>Cálculo diferencial 1ª parte</li>\n      <li>Propiedades de límites</li>\n      <li><b>Límites de funciones compuestas cuando el límite interno no existe</b></li>' in A4, 'H04 v002 título, ruta y pie')
 def g4(x): x = Fr(x); assert x != 1; return x + 1 if x < 1 else 4 - x    # animación: interna, laterales 2 y 3 en 1
 def f4(u): u = Fr(u); return u*u - 5*u + 8                               # animación: externa; f(2) = f(3) = 2
 def h4(x): return f4(g4(x))                                              # la compuesta; límite 2
@@ -529,7 +639,7 @@ ok(g4(Fr('0.9')) == Fr('1.9') and abs(Fr('1.9') - 2) == Fr('0.1') < Fr('0.25') a
 for x4, fm4 in ((Fr('0.9'), '%s+1'), (Fr('0.99'), '%s+1'), (Fr('1.1'), '4-%s'), (Fr('1.01'), '4-%s')):
     ok('g(%s)=%s=%s' % (tex(x4), fm4 % tex(x4), tex(g4(x4))) in E4, 'H04 lectura: g(%s)' % tex(x4))
     u4 = g4(x4); ok('=%s-%s+8=%s' % (tex(u4*u4), tex(5*u4), tex(h4(x4))) in E4 and 'h(%s)=f(%s)' % (tex(x4), tex(u4)) in E4, 'H04 lectura: h(%s)' % tex(x4))
-    ok('\\(g(%s)=%s\\) y \\(f(%s)=%s-%s+8=%s\\)' % (tex(x4), tex(u4), tex(u4), tex(u4*u4), tex(5*u4), tex(h4(x4))) in A4, 'H04 ej1: valores en %s' % tex(x4))
+    ok('Interna: \\(g(%s)=%s=%s\\). Productos: \\(%s^{2}=%s\\) y \\(5\\cdot %s=%s\\). Externa: \\(f(%s)=%s-%s+8=%s\\).' % (tex(x4), fm4 % tex(x4), tex(u4), tex(u4), tex(u4*u4), tex(u4), tex(5*u4), tex(u4), tex(u4*u4), tex(5*u4), tex(h4(x4))) in A4, 'H04 ej1: valores en %s' % tex(x4))   # v002: interna con su cuenta y productos por separado
 for u4 in (Fr('1.9'), Fr('2.9')): ok('h(%s)=f(%s)=%s^{2}-5\\\\cdot %s+8' % (tex(u4 - 1 if u4 < 2 else 4 - u4), tex(u4), tex(u4), tex(u4)) in E4, 'H04 lectura: reemplazo en f(%s)' % tex(u4))
 ok('f(2)=2^{2}-5\\\\cdot 2+8=4-10+8=2' in E4 and 'f(3)=3^{2}-5\\\\cdot 3+8=9-15+8=2' in E4, 'H04 lectura: f(2) y f(3)')
 ok("['R2', '\\\\lim_{x\\\\to 1^{-}}g(x)=2'" in E4 and "['R3', '\\\\lim_{x\\\\to 1^{-}}f(g(x))=f(2)=2'" in E4 and "['R4', '\\\\lim_{x\\\\to 1^{+}}g(x)=3'" in E4 and "['R5', '\\\\lim_{x\\\\to 1^{+}}f(g(x))=f(3)=2'" in E4 and "['R6', '\\\\lim_{x\\\\to 1}f(g(x))=2'" in E4 and "['F', '\\\\Longrightarrow\\\\ 2'" in E4, 'H04 registro')
@@ -557,6 +667,50 @@ for z4 in ['\\[\\lim_{x\\to a^{-}}f(g(x))=f(b)\\]', '\\(g(x)=x+1\\) si \\(x\\lt 
            '\\(T(t)=34+t\\) si \\(0\\le t\\lt 2\\) y \\(T(t)=42-t\\) si \\(2\\lt t\\le 6\\)', '\\(I(T)=(T-38)^{2}\\)', 'el límite de la incomodidad en \\(t=2\\) es \\(4\\)', 'la temperatura no tiene límite en \\(t=2\\)']:
     ok(z4 in A4, 'H04: la hoja no trae «%s»' % z4)
 ok(A4.count('no se puede usar') >= 1 and A4.count('sin demostrar') >= 2 and A4.count('no tiene límite') >= 8 and A4.count('criterio de los laterales') >= 3, 'H04: avisos')
+# ───────── H04 v002 (revisión general, cuarta y quinta ley, 25-nov): cuentas nuevas de la hoja ─────────
+def en4(*cads): return all(c in A4 for c in cads)
+X44 = [Fr('0.9'), Fr('0.99'), Fr('1.01'), Fr('1.1')]
+ok(en4(*[r'g(%s)&=%s=%s&&' % (tex(x), ('%s+1' if x < 1 else '4-%s') % tex(x), tex(g4(x))) for x in X44]), 'H04 v002 encabezado: los cuatro valores de la interna')
+ok(en4(*[r'f(%s)&=%s^{2}-5\cdot %s+8=%s-%s+8=%s&&\text{distancia a dos: }%s=%s' % (tex(g4(x)), tex(g4(x)), tex(g4(x)), tex(g4(x)**2), tex(5*g4(x)), tex(h4(x)), ('%s-2' % tex(h4(x))) if h4(x) > 2 else ('2-%s' % tex(h4(x))), tex(abs(h4(x) - 2))) for x in X44]), 'H04 v002 encabezado: los cuatro valores de la compuesta y su distancia a 2')
+ok(all(g4(x)**2 - 5*g4(x) + 8 == h4(x) for x in X44) and [abs(h4(x) - 2) for x in X44] == [Fr('0.11'), Fr('0.0101'), Fr('0.0099'), Fr('0.09')] and abs(h4(X44[1]) - 2) < abs(h4(X44[0]) - 2) and abs(h4(X44[2]) - 2) < abs(h4(X44[3]) - 2) and abs(g4(X44[1]) - 2) < abs(g4(X44[0]) - 2) and abs(g4(X44[2]) - 3) < abs(g4(X44[3]) - 3), 'H04 v002 encabezado: más cerca de 1, más cerca de 2 (y la interna, de 2 y de 3)')
+ok(en4('<b>De dónde sale, con números.</b>', '<b>La regularidad:</b>', '<b>La fórmula.</b>', 'se lee «\\(f\\) de \\(g\\) de \\(x\\)»', 'se lee «el límite de \\(g\\) de \\(x\\), cuando \\(x\\) tiende a \\(a\\)»', 'Se lee: «el límite, cuando \\(x\\) tiende a \\(a\\) por la izquierda, de \\(f\\) de \\(g\\) de \\(x\\), es \\(f\\) de \\(b\\)»', 'quiere decir «por la izquierda»', 'es «por la derecha»', 'función <b>interna</b>', 'función <b>externa</b>', '<b>límite interno</b>', '<b>salta</b>', r'\(f(2)=2^{2}-5\cdot 2+8=4-10+8=2\)', r'\(f(3)=3^{2}-5\cdot 3+8=9-15+8=2\)', 'cuatro valores cercanos no prueban un límite'), 'H04 v002 encabezado: origen, regularidad, fórmula y lecturas')
+ok(en4('La <b>altura</b> de una gráfica', 'Un <b>círculo vacío</b> (un «hueco»)', 'Los <b>límites laterales</b> de \\(g\\) en \\(1\\)', 'rótulo «hacia 2»', 'rótulo «hacia 3»', 'rótulo «g salta de 2 a 3»', 'rotulada \\(u=g(x)\\)', 'rotulada \\(y=f(u)\\)', r'\(h(0{,}9)=2{,}11\) y \(h(1{,}1)=1{,}91\)') and "['CG', 'u=g(x)'" in E4 and "['CF', 'y=f(u)'" in E4, 'H04 v002 cómo leerla: cada cosa nombrada tiene su rótulo en la escena')
+ok(en4('<b>Reglas de cálculo usadas sin demostrar:</b>', r'\(|p\cdot q|=|p|\cdot|q|\)', r'\(|p|\lt c\) dice lo mismo que \(-c\lt p\lt c\)', r'si \(0\le p\lt c\) y \(0\le q\lt d\), entonces \(p\cdot q\lt c\cdot d\)'), 'H04 v002 aviso: reglas de cálculo declaradas')
+for p_ in RJ:
+    for q_ in RJ[::7]:
+        ok(abs(p_*q_) == abs(p_)*abs(q_), 'H04 v002 aviso: |p·q| = |p|·|q|')
+        for c_ in (Fr(1, 2), Fr(3)):
+            ok((abs(p_) < c_) == (-c_ < p_ < c_), 'H04 v002 aviso: |p| < c ⟺ −c < p < c')
+            if 0 <= p_ < c_ and 0 <= q_ < 2: ok(p_*q_ < c_*2, 'H04 v002 aviso: producto de desigualdades entre no negativos')
+# k1: palabras, un valor de la compuesta y el otro orden
+ok(en4('<b>Palabras que se usan.</b>', 'El <b>dominio</b>', 'Un <b>polinomio</b>', 'Un <b>intervalo abierto</b>', 'Un <b>límite lateral</b>', '<b>Un valor de la compuesta, paso a paso.</b>', r'\(g(0{,}5)=0{,}5+1=1{,}5\)', r'\(1{,}5^{2}=2{,}25\) y \(5\cdot 1{,}5=7{,}5\)', r'\(f(1{,}5)=2{,}25-7{,}5+8=2{,}75\)', r'\(h(0{,}5)=f(1{,}5)=2{,}75\)', r'\(0{,}5^{2}=0{,}25\) y \(5\cdot 0{,}5=2{,}5\)', r'\(f(0{,}5)=0{,}25-2{,}5+8=5{,}75\)', r'\(4-5{,}75=-1{,}75\)', r'\(2{,}75\ne -1{,}75\)', '<b>La regla, vista con los números del encabezado.</b>', r'En el encabezado: \(b_{1}=2\) y \(b_{2}=3\)', r'En el encabezado: \(f(2)=2\) y \(f(3)=2\), iguales'), 'H04 v002 k1: frases')
+ok(Fr('0.5') < 1 and g4(Fr('0.5')) == Fr('0.5') + 1 == Fr('1.5') and Fr('1.5')**2 == Fr('2.25') and 5*Fr('1.5') == Fr('7.5') and f4(Fr('1.5')) == Fr('2.25') - Fr('7.5') + 8 == Fr('2.75') == h4(Fr('0.5')) and Fr('0.5')**2 == Fr('0.25') and 5*Fr('0.5') == Fr('2.5') and f4(Fr('0.5')) == Fr('0.25') - Fr('2.5') + 8 == Fr('5.75') > 1 and g4(f4(Fr('0.5'))) == 4 - Fr('5.75') == Fr('-1.75') != Fr('2.75'), 'H04 v002 k1: h(0,5) = 2,75 y, en el otro orden, −1,75')
+# k2: qué se demuestra, método, símbolos y los pasos con números, línea por línea
+ok(A4.count('<b>Qué se demuestra.</b>') == 1 and A4.count('<b>Cómo funciona el método.</b>') == 1 and en4('<b>Cómo se leen los símbolos.</b>', 'se lee «épsilon»', 'se lee «eta»', 'se lee «delta»', r'\(|1{,}9-2|=0{,}1\)', '<b>Los mismos pasos con los números de la animación</b>', r'f(u)-2&=u^{2}-5u+8-2&&\text{se reemplaza }f(u)', r'&=u^{2}-5u+6&&\text{porque }8-2=6', r'&=(u-2)(u-3)&&\text{se factoriza}', r'\((u-2)(u-3)=u^{2}-3u-2u+6=u^{2}-5u+6\)', r'|u-2|&\lt 0{,}25&&', r'-0{,}25\lt u-2&\lt 0{,}25&&', r'1{,}75\lt u&\lt 2{,}25&&\text{se suma }2', r'-1{,}25\lt u-3&\lt -0{,}75&&\text{se resta }3', r'\(-0{,}25+2=1{,}75\); \(0{,}25+2=2{,}25\); \(1{,}75-3=-1{,}25\); \(2{,}25-3=-0{,}75\)', r'|g(x)-2|&=|x+1-2|&&\text{se reemplaza }g(x)', r'&=|x-1|&&\text{porque }1-2=-1', r'&=1-x&&\text{porque }x-1\text{ es negativo}', r'\(1-0{,}25=0{,}75\)', r'\(0{,}75\lt 0{,}9\lt 1\)'), 'H04 v002 k2: frases y cadenas')
+ok(8 - 2 == 6 and 1 - 2 == -1 and Fr('-0.25') + 2 == Fr('1.75') and Fr('0.25') + 2 == Fr('2.25') and Fr('1.75') - 3 == Fr('-1.25') and Fr('2.25') - 3 == Fr('-0.75') and 1 - Fr('0.25') == Fr('0.75') < Fr('0.9') < 1 and abs(Fr('1.9') - 2) == Fr('0.1'), 'H04 v002 k2: cuentas sueltas')
+for u4 in RJ:
+    ok(f4(u4) - 2 == u4*u4 - 5*u4 + 8 - 2 == u4*u4 - 5*u4 + 6 == (u4 - 2)*(u4 - 3) == u4*u4 - 3*u4 - 2*u4 + 6, 'H04 v002 k2: f(u) − 2, línea por línea, y la factorización multiplicada')
+    ok((abs(u4 - 2) < Fr('0.25')) == (Fr('-0.25') < u4 - 2 < Fr('0.25')) == (Fr('1.75') < u4 < Fr('2.25')) == (Fr('-1.25') < u4 - 3 < Fr('-0.75')), 'H04 v002 k2: las cuatro líneas de la desigualdad dicen lo mismo')
+    if Fr('-1.25') < u4 - 3 < Fr('-0.75'): ok(abs(u4 - 3) < Fr('1.25'), 'H04 v002 k2: |u − 3| < 1,25')
+    if u4 < 1: ok(abs(g4(u4) - 2) == abs(u4 + 1 - 2) == abs(u4 - 1) == 1 - u4 and u4 - 1 < 0 and ((1 - u4 < Fr('0.25')) == (u4 > 1 - Fr('0.25'))), 'H04 v002 k2: |g(x) − 2|, línea por línea, y el despeje de x')
+# k3: valores de F y de E a cada lado, y las desigualdades hechas
+ok(en4(r'\(F(2)=2\cdot 2-1=4-1=3\)', r'\(F(3)=2\cdot 3-1=6-1=5\)', r'\(F(1{,}9)=2\cdot 1{,}9-1=3{,}8-1=2{,}8\)', r'\(F(2{,}9)=2\cdot 2{,}9-1=5{,}8-1=4{,}8\)', r'\(x+1\lt 2\)', r'\(g(0{,}9)=1{,}9\) y \(E(1{,}9)=1\); \(g(0{,}99)=1{,}99\) y \(E(1{,}99)=1\)', r'1\lt x&\lt 2&&', r'-2\lt -x&\lt -1&&\text{se multiplica por }-1', r'2\lt 4-x&\lt 3&&\text{se suma }4', r'\(-2+4=2\) y \(-1+4=3\)', r'\(g(1{,}1)=2{,}9\) y \(E(2{,}9)=5\); \(g(1{,}01)=2{,}99\) y \(E(2{,}99)=5\)', r'sus laterales en \(2\) son \(1\) y \(5\), distintos'), 'H04 v002 k3: frases')
+ok(2*2 == 4 and 4 - 1 == 3 and 2*3 == 6 and 6 - 1 == 5 and 2*Fr('1.9') == Fr('3.8') and Fr('3.8') - 1 == Fr('2.8') == F4(g4(Fr('0.9'))) and 2*Fr('2.9') == Fr('5.8') and Fr('5.8') - 1 == Fr('4.8') == F4(g4(Fr('1.1'))) and -2 + 4 == 2 and -1 + 4 == 3 and all(S4(g4(x)) == (1 if x < 1 else 5) for x in X44) and abs(Fr('2.8') - 3) < 1 and abs(Fr('4.8') - 5) < 1, 'H04 v002 k3: cuentas')
+for x4 in RJ:
+    ok((1 < x4 < 2) == (-2 < -x4 < -1) == (2 < 4 - x4 < 3) and ((x4 < 1) == (x4 + 1 < 2)), 'H04 v002 k3: las desigualdades, línea por línea')
+    if x4 < 2: ok(S4(x4) == 1, 'H04 v002 k3: E vale 1 a la izquierda de 2')
+    else: ok(S4(x4) == 5, 'H04 v002 k3: E vale 5 desde 2 a la derecha')
+# ejemplos
+ok(en4(r'Productos: \(2^{2}=4\) y \(5\cdot 2=10\). Entonces \(f(2)=2^{2}-5\cdot 2+8=4-10+8=-6+8=2\)', r'Productos: \(3^{2}=9\) y \(5\cdot 3=15\). Entonces \(f(3)=3^{2}-5\cdot 3+8=9-15+8=-6+8=2\)', r'\(2{,}11\); \(2{,}0101\); \(1{,}9901\) y \(1{,}91\)') and 4 - 10 == -6 == 9 - 15 and -6 + 8 == 2 and [h4(x) for x in (X44[0], X44[1], X44[2], X44[3])] == [Fr('2.11'), Fr('2.0101'), Fr('1.9901'), Fr('1.91')], 'H04 v002 ej1')
+ok(en4(r'\([g(0{,}9)]^{2}=1{,}9^{2}=3{,}61\), cerca de \(4\); \([g(1{,}1)]^{2}=2{,}9^{2}=8{,}41\), cerca de \(9\)', r'\((u-2)(u-3)=u^{2}-3u-2u+6=u^{2}-5u+6\): es un polinomio', r'da \(4\) y \(9\), distintos', r'da \(0\) y \(0\), iguales') and g4(Fr('0.9'))**2 == Fr('3.61') and g4(Fr('1.1'))**2 == Fr('8.41') and abs(Fr('3.61') - 4) < 1 and abs(Fr('8.41') - 9) < 1, 'H04 v002 ej2')
+ok(en4(r'\((-1)^{2}=(-1)\cdot(-1)=1\)', r'\(1^{2}=1\cdot 1=1\)', r'\((-1)^{3}=(-1)\cdot(-1)\cdot(-1)=1\cdot(-1)=-1\)', r'\(1^{3}=1\cdot 1\cdot 1=1\)', r'como \(-1\ne 1\), el límite interno en \(0\) no existe') and (-1)*(-1) == 1 and (-1)*(-1)*(-1) == 1*(-1) == -1 and 1*1*1 == 1, 'H04 v002 ej3')
+ok(en4(r'\((-2)^{2}=(-2)\cdot(-2)=4\)', r'\((-2)^{3}=(-2)\cdot(-2)\cdot(-2)=4\cdot(-2)=-8\)', r'\(4\cdot(-2)=-8\)', r'\(Q(-2)=(-2)^{3}-4\cdot(-2)=-8-(-8)=-8+8=0\)', r'\(2^{3}=2\cdot 2\cdot 2=8\)', r'\(b_{1}=-2\) y \(b_{2}=2\)') and (-2)*(-2) == 4 and (-2)*(-2)*(-2) == 4*(-2) == -8 and -8 - (-8) == -8 + 8 == 0 and 2*2*2 == 8 == 4*2, 'H04 v002 ej4')
+# ejercicios
+ok(en4(r'Productos: \(2^{2}=4\) y \(6\cdot 2=12\). Entonces \(n(2)=2^{2}-6\cdot 2+10=4-12+10=-8+10=2\)', r'Productos: \(4^{2}=16\) y \(6\cdot 4=24\). Entonces \(n(4)=4^{2}-6\cdot 4+10=16-24+10=-8+10=2\)', r'Productos: \(1{,}8^{2}=3{,}24\) y \(6\cdot 1{,}8=10{,}8\)', r'Productos: \(4{,}1^{2}=16{,}81\) y \(6\cdot 4{,}1=24{,}6\)') and 4 - 12 == -8 == 16 - 24 and -8 + 10 == 2 and Fr('1.8')**2 == Fr('3.24') and 6*Fr('1.8') == Fr('10.8') and Fr('4.1')**2 == Fr('16.81') and 6*Fr('4.1') == Fr('24.6'), 'H04 v002 A')
+ok(en4(r'\((-3)^{2}=(-3)\cdot(-3)=9\)', r'\((-3)^{3}=(-3)\cdot(-3)\cdot(-3)=9\cdot(-3)=-27\)', r'\(3^{3}=3\cdot 3\cdot 3=9\cdot 3=27\)', r'\(2\cdot(-3)^{2}+(-3)=2\cdot 9-3=18-3=15\)', r'\(2\cdot 3^{2}+3=2\cdot 9+3=18+3=21\)', r'\((-3)^{3}-9\cdot(-3)=-27-(-27)=-27+27=0\)', r'\(9\cdot(-3)=-27\)', r'\(9\cdot 3=27\)') and (-3)*(-3) == 9 and 9*(-3) == -27 and 3*3*3 == 9*3 == 27 and 2*9 == 18 and -27 - (-27) == 0, 'H04 v002 B')
+ok(en4(r'\((T-38)^{2}=T^{2}-76T+1444\)', r'\(4{,}41-4=0{,}41\) y \(4-3{,}61=0{,}39\)') and Fr('4.41') - 4 == Fr('0.41') and 4 - Fr('3.61') == Fr('0.39') and 2*38 == 76 and 38*38 == 1444, 'H04 v002 C')
+ok(A4.count('criterio de los laterales') >= 7 and A4.count('\\begin{aligned}') == A4.count('\\end{aligned}') == 6, 'H04 v002: bloques aligned y criterio de los laterales nombrado')
+ok(not re.search(r'\\\\\(', A4), 'H04 v002: salto de línea pegado a un paréntesis')
 # <<< H04
 
 # >>> H04 ESPER
@@ -567,6 +721,9 @@ NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '04.scene.
 # >>> H05
 # ───────── H05: compuesta cuando el límite externo no existe (externa con salto en b; la interna llega a b por arriba; regla demostrada con ε–η–δ; decide el lado por el que llega la interna) ─────────
 A5, E5 = molde('05', 'H05_limites_de_funciones_compuestas_cuando_el_limite_externo_no_existe.html', 'Límites de funciones compuestas cuando el límite externo no existe', 'comp-ext', 'Propiedades de límites', ['compext-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e5_ for e5_ in err if e5_ != 'H05 título, ruta y pie']
+ok('<h1>Límites de funciones compuestas cuando el límite externo no existe</h1>' in A5 and '<span class="status">CD-L30-H05 · v002 · Pendiente de APR</span>' in A5 and 'v001' not in A5 and '<li>Cursos</li>\n      <li>Cálculo diferencial 1ª parte</li>\n      <li>Propiedades de límites</li>\n      <li><b>Límites de funciones compuestas cuando el límite externo no existe</b></li>' in A5, 'H05 v002 título, ruta y pie')
 def g5(x): x = Fr(x); return 2 + (x - 1)**2                              # animación: interna; límite 2 en 1 y g(x) > 2 si x ≠ 1
 def f5(u): u = Fr(u); return u - 1 if u <= 2 else 5 - u                  # animación: externa; laterales 1 y 3 en 2; f(2) = 1
 def h5(x): return f5(g5(x))                                              # la compuesta; límite 3; h(1) = 1
@@ -647,9 +804,9 @@ for z5 in ['\\[\\lim_{x\\to a}f(g(x))=\\lim_{u\\to b^{+}}f(u)\\]', '\\(g(x)=2+(x
            'si \\(b\\lt u\\lt b+\\eta\\), entonces \\(|f(u)-K|\\lt \\varepsilon\\)', '<li>\\(\\lim_{x\\to a}g(x)=b\\) (la interna tiene límite \\(b\\) en \\(a\\)),</li>', '<li>\\(g(x)\\gt b\\) para todo \\(x\\ne a\\) de un intervalo abierto que contiene a \\(a\\), y</li>', '<li>\\(\\lim_{u\\to b^{+}}f(u)=K\\),</li>', '<p>entonces \\(\\lim_{x\\to a}f(g(x))=K\\).</p>',
            'se tiene \\(g(x)\\lt b\\) y en la condición 3 se tiene \\(\\lim_{u\\to b^{-}}f(u)=K\\)', '\\(\\lim_{x\\to a^{-}}f(g(x))=K\\)', 'donde \\(g(x)\\gt b\\), el lateral de la compuesta es \\(K_{2}\\); donde \\(g(x)\\lt b\\), es \\(K_{1}\\)',
            'si \\(0\\lt |x-a|\\lt \\delta\\), entonces \\(|f(g(x))-K|\\lt \\varepsilon\\)', 'si \\(0\\lt |x-a|\\lt \\delta_{1}\\), entonces \\(|g(x)-b|\\lt \\eta\\)', 'si \\(0\\lt |x-a|\\lt r\\), se tiene \\(g(x)\\gt b\\)', '\\(\\delta=\\min\\{\\delta_{1},r\\}\\)', '\\(g(x)\\lt b+\\eta\\)', 'cumple \\(b\\lt u\\lt b+\\eta\\)', '\\(\\lim_{x\\to a}f(g(x))=K\\).</li>',
-           '\\(|f(u)-3|=|5-u-3|=|2-u|=u-2\\)', '\\(|g(x)-2|=(x-1)^{2}\\)', '\\(0{,}7^{2}=0{,}49\\)', 'sirve \\(\\eta=0{,}5\\)', 'sirve \\(\\delta_{1}=0{,}7\\)', 'El menor es \\(\\delta=0{,}7\\)',
+           '|f(u)-3|&=|5-u-3|&&\\text{se reemplaza }f(u)\\text{ por }5-u\\\\ &=|2-u|&&\\text{porque }5-3=2\\\\ &=u-2&&', '|g(x)-2|&=|2+(x-1)^{2}-2|&&\\text{se reemplaza }g(x)\\\\ &=|(x-1)^{2}|&&\\text{porque }2-2=0\\\\ &=(x-1)^{2}&&', '\\(0{,}7^{2}=0{,}49\\)', 'sirve \\(\\eta=0{,}5\\)', 'sirve \\(\\delta_{1}=0{,}7\\)', 'El menor es \\(\\delta=0{,}7\\)',
            '\\(f(x+1)\\) no tiene límite en \\(1\\)', '\\(E(u)=1\\) si \\(u\\lt 2\\), \\(E(2)=5\\) y \\(E(u)=3\\) si \\(u\\gt 2\\)', 'su límite en \\(1\\) es \\(5\\)', 'la regla no se puede usar', 'el límite de la compuesta en \\(1\\) es el lateral izquierdo de \\(f\\): \\(1\\)',
-           '\\(\\lim_{x\\to 1}g(x)=2+(1-1)^{2}=2+0=2\\)', '\\(\\lim_{u\\to 2^{-}}f(u)=2-1=1\\)', '\\(\\lim_{u\\to 2^{+}}f(u)=5-2=3\\)', 'el límite externo \\(\\lim_{u\\to 2}f(u)\\) no existe', '\\(\\lim_{x\\to 1}f(g(x))=3\\)', '\\(h(x)=5-g(x)=5-2-(x-1)^{2}=3-(x-1)^{2}\\)', '\\(h(1)=f(g(1))=f(2)=2-1=1\\)',
+           '\\(\\lim_{x\\to 1}g(x)=2+(1-1)^{2}=2+0=2\\)', '\\(\\lim_{u\\to 2^{-}}f(u)=2-1=1\\)', '\\(\\lim_{u\\to 2^{+}}f(u)=5-2=3\\)', 'el límite externo \\(\\lim_{u\\to 2}f(u)\\) no existe', '\\(\\lim_{x\\to 1}f(g(x))=3\\)', 'h(x)&=5-g(x)&&', '&=5-2-(x-1)^{2}&&', '&=3-(x-1)^{2}&&\\text{porque }5-2=3', '\\(h(1)=f(g(1))=f(2)=2-1=1\\)',
            '\\(r(x)=2-x^{2}\\)', '\\(\\lim_{x\\to 0}f(r(x))=1\\)', '\\(s(x)=x+1\\)', '\\(\\lim_{x\\to 1^{-}}f(s(x))=1\\)', '\\(\\lim_{x\\to 1^{+}}f(s(x))=3\\)', '\\(f(s(x))\\) no tiene límite en \\(1\\)',
            '\\(\\lim_{u\\to 0^{-}}F(u)=-2\\) y \\(\\lim_{u\\to 0^{+}}F(u)=6\\)', '\\(\\lim_{x\\to 4}F(G(x))=6\\)', '\\(\\lim_{x\\to 4}F(-G(x))=-2\\)', '\\(\\lim_{x\\to 4}F([G(x)]^{2})=6\\)', 'no se puede decidir si \\(F(H(x))\\) tiene límite en \\(4\\)',
            '\\(m(x)=3+(x-2)^{2}\\)', '\\(n(u)=2u\\) si \\(u\\lt 3\\) y \\(n(u)=u+1\\) si \\(u\\ge 3\\)', '\\(c(x)=n(m(x))\\)', '\\(\\lim_{x\\to 2}n(m(x))=4\\)', '\\(n(x+1)\\) no tiene límite en \\(2\\)',
@@ -657,6 +814,47 @@ for z5 in ['\\[\\lim_{x\\to a}f(g(x))=\\lim_{u\\to b^{+}}f(u)\\]', '\\(g(x)=2+(x
            '\\(T(t)=24+(t-3)^{2}\\), para \\(2\\le t\\le 4\\)', '\\(P(T)=0\\) si \\(T\\le 24\\) y \\(P(T)=800+100\\cdot(T-24)\\) si \\(T\\gt 24\\)', 'el límite de \\(P(T(t))\\) en \\(t=3\\) es \\(800\\) watts', 'la potencia no tiene límite en \\(t=3\\)']:
     ok(z5 in A5, 'H05: la hoja no trae «%s»' % z5)
 ok(A5.count('no se puede usar') >= 3 and A5.count('sin demostrar') >= 3 and A5.count('no tiene límite') >= 5 and A5.count('criterio de los laterales') >= 3 and A5.count('no se puede decidir') + A5.count('No se puede decidir') >= 2, 'H05: avisos')
+# ───────── H05 v002 (revisión general, cuarta y quinta ley, 25-nov): cuentas nuevas de la hoja (la escena no se tocó) ─────────
+def en5(*cads): return all(c in A5 for c in cads)
+X45 = [Fr('0.9'), Fr('0.99'), Fr('1.01'), Fr('1.1')]; LADO5 = ['izquierda de }1', 'izquierda, más cerca', 'derecha, más cerca', 'derecha de }1']
+pb5 = lambda d: ('(%s)' if d < 0 else '%s') % tex(d)
+# encabezado: los cuatro valores de g, los cuatro de f, los cuatro de la compuesta con su distancia a 3
+ok(en5(*[r'g(%s)&=2+(%s-1)^{2}=2+%s^{2}=2+%s=%s&&\text{%s' % (tex(x), tex(x), pb5(x - 1), tex((x - 1)**2), tex(g5(x)), l) for x, l in zip(X45, LADO5)]) and all(g5(x) == 2 + (x - 1)**2 and g5(x) > 2 for x in X45), 'H05 v002 encabezado: los valores de g, uno bajo otro, todos mayores que 2')
+ok(en5(r'f(1{,}9)&=1{,}9-1=0{,}9&&', r'f(1{,}99)&=1{,}99-1=0{,}99&&', r'f(2{,}01)&=5-2{,}01=2{,}99&&', r'f(2{,}1)&=5-2{,}1=2{,}9&&') and f5(Fr('1.9')) == Fr('1.9') - 1 == Fr('0.9') and f5(Fr('1.99')) == Fr('1.99') - 1 == Fr('0.99') and f5(Fr('2.01')) == 5 - Fr('2.01') == Fr('2.99') and f5(Fr('2.1')) == 5 - Fr('2.1') == Fr('2.9'), 'H05 v002 encabezado: los valores de f a cada lado de 2')
+ok(en5(*[r'f(g(%s))&=f(%s)=5-%s=%s&&\text{distancia a tres: }3-%s=%s' % (tex(x), tex(g5(x)), tex(g5(x)), tex(h5(x)), tex(h5(x)), tex(3 - h5(x))) for x in X45]) and all(h5(x) == f5(g5(x)) == 5 - g5(x) and 0 < 3 - h5(x) for x in X45), 'H05 v002 encabezado: los valores de la compuesta y su distancia a 3')
+ok(all(3 - h5(x) == g5(x) - 2 == (x - 1)**2 for x in X45 + [z for z in RJ if z != 1]) and en5(r'en \(x=0{,}9\), \(2{,}01-2=0{,}01\); en \(x=0{,}99\), \(2{,}0001-2=0{,}0001\)') and g5(Fr('0.9')) - 2 == Fr('0.01') == 3 - h5(Fr('0.9')) and g5(Fr('0.99')) - 2 == Fr('0.0001') == 3 - h5(Fr('0.99')), 'H05 v002 encabezado: lo que le falta a la compuesta es lo que le sobra a g')
+ok(all(abs(g5(X45[i]) - 2) > abs(g5(X45[j]) - 2) and abs(h5(X45[i]) - 3) > abs(h5(X45[j]) - 3) for i, j in ((0, 1), (3, 2))) and all(g5(x) > 2 and f5(g5(x)) == 5 - g5(x) != g5(x) - 1 for x in X45), 'H05 v002 encabezado: más cerca de 1, más cerca de 2 y de 3; solo se usa la fórmula de la derecha')
+ok(en5('<b>De dónde sale, con números.</b>', '<b>La regularidad:</b>', '<b>La fórmula.</b>', 'se lee «\\(g\\) de \\(x\\)»', 'se lee «\\(f\\) de \\(g\\) de \\(x\\)»', 'se lee «el límite de \\(f\\) de \\(u\\), cuando \\(u\\) tiende a \\(b\\) por la derecha»', 'Se lee: «el límite, cuando \\(x\\) tiende a \\(a\\), de \\(f\\) de \\(g\\) de \\(x\\), es igual al límite de \\(f\\) de \\(u\\) cuando \\(u\\) tiende a \\(b\\) por la derecha»', 'Si \\(g\\) tiene límite \\(b\\) en \\(a\\) y \\(g(x)\\) es mayor que \\(b\\) para todo \\(x\\ne a\\) cercano a \\(a\\)', 'Vale siempre que ese límite lateral de \\(f\\) <b>exista</b>', 'La externa <b>salta</b> en \\(b\\) cuando sus dos límites laterales en \\(b\\) son números distintos') and A5.count('<p class="lede">') == 3, 'H05 v002 encabezado: tres párrafos, hipótesis de la fórmula y cómo se lee')
+# k1: palabras, lectura de símbolos y el lateral derecho con números (ε = 0,1, η = 0,1, u = 2,04)
+ok(en5('<b>Palabras que se usan.</b>', '<b>Cómo se leen los símbolos.</b>', 'se lee «épsilon»', 'se lee «eta»', 'se lee «delta»', '<b>Con números.</b>', '<b>La regla, vista en la animación.</b>', 'los números entre \\(0\\) y \\(2\\) forman un intervalo abierto que contiene a \\(1\\)') and 0 < 1 < 2, 'H05 v002 k1: palabras, símbolos y regla vista en la animación')
+ok(en5(r'\(f(2{,}04)=5-2{,}04=2{,}96\)', r'\(|2{,}96-3|=0{,}04\), menor que \(0{,}1\)') and 2 < Fr('2.04') < Fr('2.1') and f5(Fr('2.04')) == 5 - Fr('2.04') == Fr('2.96') and abs(Fr('2.96') - 3) == Fr('0.04') < Fr('0.1'), 'H05 v002 k1: prueba con u = 2,04')
+for t5 in TS1:
+    u5 = 2 + abs(t5)*Fr('0.1'); ok(2 < u5 < Fr('2.1') and abs(f5(u5) - 3) == u5 - 2 < Fr('0.1'), 'H05 v002 k1: η = 0,1 responde a ε = 0,1')
+# k2: qué se demuestra, método, y las cadenas línea por línea
+ok(A5.count('<b>Qué se demuestra.</b>') == 1 and A5.count('<b>Cómo funciona el método.</b>') == 1 and en5(r'g(x)-b&\lt \eta&&\text{un número es menor o igual que su valor absoluto}', r'g(x)&\lt b+\eta&&\text{se suma }b\text{ a los dos lados}', 'ese \\(x\\) cumple a la vez \\(0\\lt |x-a|\\lt \\delta_{1}\\) y \\(0\\lt |x-a|\\lt r\\)', 'en el paso 8 no se sabría', '<b>Los mismos pasos, con los números de la animación</b>', 'Entre \\(0{,}7\\) y \\(1\\), el menor es \\(0{,}7\\)'), 'H05 v002 k2: qué se demuestra, método y pasos 6 a 8')
+ok(A5[A5.index('card k2'):A5.index('card k3')].count('<li>') == 10 + 5, 'H05 v002 k2: diez pasos de la demostración y cinco con números')
+for y5 in RJ:
+    for b5 in RJ[::9]:
+        ok(y5 - b5 <= abs(y5 - b5), 'H05 v002 k2: un número es menor o igual que su valor absoluto')
+        for n5_ in (Fr(1, 10), Fr(1), Fr(7, 2)):
+            if abs(y5 - b5) < n5_: ok(y5 - b5 < n5_ and y5 < b5 + n5_, 'H05 v002 k2: de |g(x) − b| < η sale g(x) < b + η')
+    if y5 > 2: ok(5 - y5 - 3 == 2 - y5 < 0 and abs(2 - y5) == -(2 - y5) == y5 - 2, 'H05 v002 k2: |5 − u − 3| = |2 − u| = u − 2, línea por línea')
+    ok(2 + (y5 - 1)**2 - 2 == (y5 - 1)**2 >= 0 and abs((y5 - 1)**2) == (y5 - 1)**2, 'H05 v002 k2: |g(x) − 2|, línea por línea')
+    if y5 < 0: ok(abs(y5) == -y5 > 0, 'H05 v002 aviso: valor absoluto de un negativo')
+    if y5 > 0: ok(-y5 < 0, 'H05 v002 aviso: el opuesto de un positivo es negativo')
+ok(5 - 3 == 2 and 2 - 2 == 0 and min(Fr('0.7'), 1) == Fr('0.7'), 'H05 v002 k2: 5 − 3, 2 − 2 y el menor')
+# k3: valores nuevos
+ok(en5(r'\(2-(-0{,}1)^{2}=2-0{,}01=1{,}99\)', r'\(f(1{,}99)=1{,}99-1=0{,}99\)', r'\(2-0{,}1^{2}=2-0{,}01=1{,}99\)', 'en \\(x=0{,}9\\) vale \\(5\\) y en \\(x=1{,}1\\) vale \\(5\\)') and all(2 - (x - 1)**2 == Fr('1.99') and f5(2 - (x - 1)**2) == Fr('0.99') and S5(Fr(2)) == 5 for x in (Fr('0.9'), Fr('1.1'))) and Fr('-0.1')**2 == Fr('0.1')**2 == Fr('0.01'), 'H05 v002 k3: la interna por abajo y la constante, con números')
+# ejemplos y ejercicios: los signos, línea por línea
+ok(en5(r'g(x)-2&=2+(x-1)^{2}-2&&\text{se reemplaza }g(x)', r'&=(x-1)^{2}&&\text{porque }2-2=0', 'Se suma \\(2\\) a los dos lados: \\(g(x)\\gt 2\\) para todo \\(x\\ne 1\\)', r'\(r(x)-2=2-x^{2}-2=-x^{2}\)', r'\(s(x)-2=x+1-2=x-1\)', r'\(m(x)-3=3+(x-2)^{2}-3=(x-2)^{2}\)', r'\(T(t)-24=24+(t-3)^{2}-24=(t-3)^{2}\)', r'\(27-t-24=3-t\)', 'Aquí \\(a=4\\) y \\(b=0\\)', 'Datos comunes: \\(a=0\\), \\(b=5\\)', 'el opuesto de un número positivo es negativo'), 'H05 v002 ejemplos y ejercicios: frases de los signos')
+for x5 in RJ:
+    ok(g5(x5) - 2 == 2 + (x5 - 1)**2 - 2 == (x5 - 1)**2 and ((x5 - 1 != 0) == (x5 != 1)) and r5(x5) - 2 == 2 - x5**2 - 2 == -x5**2 and ((-x5**2 < 0) == (x5 != 0)) and s5(x5) - 2 == x5 + 1 - 2 == x5 - 1 and m5(x5) - 3 == 3 + (x5 - 2)**2 - 3 == (x5 - 2)**2, 'H05 v002: g − 2, r − 2, s − 2 y m − 3, línea por línea')
+    ok(27 - x5 - 24 == 3 - x5 and ((3 - x5 > 0) == (x5 < 3) == (27 - x5 > 24)) and ((3 - x5 < 0) == (x5 > 3) == (27 - x5 < 24)), 'H05 v002 C f): el signo de 27 − t − 24 = 3 − t')
+    if 2 <= x5 <= 4: ok(T5(x5) - 24 == 24 + (x5 - 3)**2 - 24 == (x5 - 3)**2, 'H05 v002 C: T(t) − 24, línea por línea')
+    if x5 != 1: ok(h5(x5) == 5 - g5(x5) == 5 - 2 - (x5 - 1)**2 == 3 - (x5 - 1)**2, 'H05 v002 ej1: h(x), línea por línea')
+ok(1 - 2 == -1 and 3 - 3 == 0 and 24 - 24 == 0 and 27 - 24 == 3 and 5 - 2 == 3, 'H05 v002: restas nombradas en los «porque»')
+ok(en5('que un número es menor o igual que su valor absoluto', 'que el valor absoluto de un número negativo es su opuesto', 'que el opuesto de un número positivo es negativo', 'que sumar un mismo número a los dos lados de una desigualdad la mantiene'), 'H05 v002: avisos de rigor nuevos declarados')
+ok(not re.search(r'\\\\[()]', A5), 'H05 v002: un salto de línea de aligned pegado a un paréntesis')
 # <<< H05
 
 # >>> H05 ESPER
@@ -667,6 +865,9 @@ NODO2 = NODO2.replace("].map(function(a){ return fs.readFileSync", ", '05.scene.
 # >>> H06
 # ───────── H06: teorema de la compuesta cuando sus condiciones no se cumplen (externa con límite en b distinto de f(b); regla del hueco, demostrada; la interna toca o no toca b) ─────────
 A6, E6 = molde('06', 'H06_teorema_para_los_limites_de_funciones_compuestas_cuando_las_condiciones_no_se_cumplen.html', 'Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen', 'comp-teo', 'Propiedades de límites', ['compteo-idea'], 1)
+# pie v002 (revisión general, 25-nov): molde(), que está fuera de este bloque, todavía espera v001; aquí se cambia esa comprobación por la misma con v002
+err[:] = [e6 for e6 in err if e6 != 'H06 título, ruta y pie']
+ok('<h1>Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen</h1>' in A6 and '<span class="status">CD-L30-H06 · v002 · Pendiente de APR</span>' in A6 and 'v001' not in A6 and '<li>Cursos</li>\n      <li>Cálculo diferencial 1ª parte</li>\n      <li>Propiedades de límites</li>\n      <li><b>Teorema para los límites de funciones compuestas: cuando las condiciones no se cumplen</b></li>' in A6, 'H06 v002 título, ruta y pie')
 def g6(x): return Fr(x) + 1                                              # animación: interna; límite 2 en 1; vale 2 solo en x = 1
 def f6(u): u = Fr(u); return Fr(5) if u == 2 else u + 1                  # animación: externa; límite 3 en 2 y valor f(2) = 5
 def h6(x): return f6(g6(x))                                              # la compuesta; límite 3; h(1) = 5
@@ -716,7 +917,7 @@ for x6 in (Fr('0.9'), Fr('1.1')):
     u6 = g6(x6); ok("'f(%s)=%s+1=%s'" % (tex(u6), tex(u6), tex(f6(u6))) in E6, 'H06 lectura: f(%s)' % tex(u6))
 for x6 in (Fr('0.9'), Fr('1.1'), Fr('0.99'), Fr('1.01')):
     u6 = g6(x6); ok('h(%s)=f(%s)=%s+1=%s' % (tex(x6), tex(u6), tex(u6), tex(h6(x6))) in E6, 'H06 lectura: h(%s)' % tex(x6))
-    ok('\\(g(%s)=%s\\) y \\(f(%s)=%s+1=%s\\)' % (tex(x6), tex(u6), tex(u6), tex(u6), tex(h6(x6))) in A6, 'H06 ej1: valores en %s' % tex(x6))
+    ok(g6(x6) == x6 + 1 == u6 and '\\(g(%s)=%s+1=%s\\) y \\(f(%s)=%s+1=%s\\)' % (tex(x6), tex(x6), tex(u6), tex(u6), tex(u6), tex(h6(x6))) in A6, 'H06 ej1: valores en %s' % tex(x6))   # v002: g con su cuenta
 ok('\\\\lim_{x\\\\to 1}g(x)=1+1=2' in E6 and '\\\\lim_{u\\\\to 2}f(u)=2+1=3' in E6 and '\\\\text{límite: }3\\\\text{; valor: }f(2)=5' in E6 and '3\\\\ne 5\\\\text{: no se cumple}' in E6 and 'h(x)=(x+1)+1=x+2' in E6 and '\\\\lim_{x\\\\to 1}f(g(x))=1+2=3' in E6 and 'f(c(x))=f(2)=5\\\\text{ para todo }x' in E6 and '\\\\lim_{x\\\\to 1}f(c(x))=5' in E6 and '\\\\text{externa: }f(u)=u+1\\\\text{ si }u\\\\ne 2\\\\text{, y }f(2)=5' in E6, 'H06 lectura: límites, condición 2, fórmula de la compuesta e interna constante')
 ok("['R1', 'h(x)=f(g(x));\\\\ \\\\ a=1'" in E6 and "['R2', '\\\\lim_{x\\\\to 1}g(x)=2'" in E6 and "['R3', '\\\\lim_{u\\\\to 2}f(u)=3'" in E6 and "['R4', 'f(2)=5\\\\ne 3'" in E6 and "['R6', '\\\\lim_{x\\\\to 1}f(g(x))=3'" in E6 and "['R7', 'c(x)=2:\\\\ \\\\ \\\\lim_{x\\\\to 1}f(c(x))=5'" in E6 and "['F', '\\\\Longrightarrow\\\\ 3'" in E6, 'H06 registro')
 ok("['R5', 'h(%s)=%s;\\\\ \\\\ h(%s)=%s'" % (tex(Fr('0.99')), tex(h6(Fr('0.99'))), tex(Fr('1.01')), tex(h6(Fr('1.01')))) in E6 and "['CM', 'h(%s)=%s;\\\\ \\\\ h(%s)=%s'" % (tex(Fr('0.9')), tex(h6(Fr('0.9'))), tex(Fr('1.1')), tex(h6(Fr('1.1')))) in E6, 'H06 registro R5 y rótulo de valores')
@@ -760,6 +961,40 @@ for z6 in ['\\[\\lim_{x\\to a}f(g(x))=f(b)\\]', '\\(g(x)=x+1\\)', '\\(f(u)=u+1\\
            'Hoja «Límites de funciones compuestas cuando el límite interno no existe»', 'Hoja «Límites de funciones compuestas cuando el límite externo no existe»']:
     ok(z6 in A6, 'H06: la hoja no trae «%s»' % z6)
 ok(A6.count('no se puede usar') >= 8 and A6.count('sin demostrar') >= 2 and A6.count('regla del hueco') + A6.count('Regla del hueco') >= 12 and A6.count('criterio de los laterales') >= 2 and A6.count('estudio directo') + A6.count('Estudio directo') >= 3, 'H06: avisos')
+# ───────── H06 v002 (revisión general, cuarta y quinta ley, 25-nov): cuentas nuevas de la hoja y rótulos nuevos de la escena ─────────
+def en6(*cads): return all(c in A6 for c in cads)
+X46 = [Fr('0.9'), Fr('0.99'), Fr('1.01'), Fr('1.1')]; LD6 = [r'\text{izquierda de }1', r'\text{izquierda, más cerca}', r'\text{derecha, más cerca}', r'\text{derecha de }1']
+ok(en6(*[r'g(%s)&=%s+1=%s&&%s' % (tex(x), tex(x), tex(g6(x)), l) for x, l in zip(X46, LD6)]), 'H06 v002 encabezado: los cuatro valores de g, uno bajo otro')
+ok(en6(*[r'f(g(%s))&=f(%s)=%s+1=%s&&%s' % (tex(x), tex(g6(x)), tex(g6(x)), tex(h6(x)), l) for x, l in zip(X46, LD6)]) and all(g6(x) != 2 and h6(x) == g6(x) + 1 for x in X46), 'H06 v002 encabezado: los cuatro valores de la compuesta, uno bajo otro')
+ok(all(abs(g6(X46[i]) - 2) > abs(g6(X46[j]) - 2) and abs(h6(X46[i]) - 3) > abs(h6(X46[j]) - 3) for i, j in ((0, 1), (3, 2))) and all(abs(h6(x) - 3) < abs(h6(x) - 5) for x in X46), 'H06 v002 encabezado: más cerca de 1, más cerca de 2 y de 3 (y lejos de 5)')
+ok(en6(r'f(c(0{,}9))&=f(2)=5&&\text{izquierda de }1', r'f(c(1{,}1))&=f(2)=5&&\text{derecha de }1', 'El mismo límite interno dio dos resultados distintos, \\(3\\) y \\(5\\)') and f6(c6(Fr('0.9'))) == f6(c6(Fr('1.1'))) == f6(2) == 5 and 3 != 5, 'H06 v002 encabezado: la interna constante')
+ok(en6('<b>De dónde sale, con números.</b>', '<b>La regularidad:</b>', '<b>La fórmula, y cuándo vale.</b>', 'se lee «\\(f\\) de \\(g\\) de \\(x\\)»', 'se lee «el límite de \\(g\\) de \\(x\\), cuando \\(x\\) tiende a \\(a\\), es \\(b\\)»', 'Se lee: «el límite, cuando \\(x\\) tiende a \\(a\\), de \\(f\\) de \\(g\\) de \\(x\\), es \\(f\\) de \\(b\\)»', '\\(g(x)\\) vale \\(2\\) solo cuando \\(x=1\\), y el límite no mira lo que pasa en \\(x=1\\)') and A6.count('<p class="lede">') == 3, 'H06 v002 encabezado: tres párrafos, regularidad, fórmula y lecturas')
+ok(en6('<b>Palabras que se usan.</b>', '<b>Cómo se lee cada una.</b>', '<b>Interna y externa.</b>', '<b>Límite interno.</b>', '<b>Hueco y punto lleno.</b>', '<b>«Cerca de \\(a\\)».</b>', '<b>«La interna toca \\(b\\)».</b>', '<b>El teorema, visto en una cuenta</b>', '<b>La regla del hueco, vista en una cuenta</b>', '<b>De dónde sale la regla.</b>', 'los valores \\(2{,}9\\); \\(2{,}99\\); \\(3{,}01\\) y \\(3{,}1\\) del encabezado') and [h6(x) for x in X46] == [Fr('2.9'), Fr('2.99'), Fr('3.01'), Fr('3.1')], 'H06 v002 k1: palabras, lecturas y las dos reglas vistas en cuentas')
+ok(A6.count('<b>Qué se demuestra:</b>') == 2 and A6.count('<b>Cómo funciona el método:</b>') == 2 and en6('<b>Cómo se leen los símbolos de la definición.</b>', 'se lee «épsilon»', 'se lee «delta»', 'se lee «eta»', '<b>La definición que se usa</b>', 'si \\(0\\lt |x-a|\\lt \\delta\\), entonces \\(|F(x)-L|\\lt \\varepsilon\\)', '<b>Qué se muestra:</b>', '<b>Palabra nueva: límite lateral.</b>'), 'H06 v002 k2 y k3: qué se demuestra, cómo funciona el método y lectura de los símbolos')
+# k2, el teorema con números: P(u) − P(2) = (u − 2)(u − 1), η = 0,25, δ = 0,25, prueba con x = 1,2
+for u6 in RJ:
+    ok(P6(u6) - P6(2) == u6*u6 - 3*u6 + 1 - (-1) == u6*u6 - 3*u6 + 1 + 1 == u6*u6 - 3*u6 + 2 == (u6 - 2)*(u6 - 1) == u6*u6 - u6 - 2*u6 + 2, 'H06 v002 k2: P(u) − P(2), línea por línea, y la factorización desarrollada')
+    ok((u6 - 2)*(u6 + 2) == u6*u6 + 2*u6 - 2*u6 - 4 == u6*u6 - 4, 'H06 v002 ej3: (u − 2)(u + 2) desarrollado')
+    ok((u6 + 1 == 2) == (u6 == 2 - 1) == (u6 == 1) and (3*u6 - 1 == 2) == (3*u6 == 3) == (u6 == 1) and (u6 + 2 == 3) == (u6 == 3 - 2) == (u6 == 1) and (50*u6 == 200) == (u6 == Fr(200, 50)) == (u6 == 4), 'H06 v002: los despejes de «¿la interna toca b?»')
+for t6 in TS1:
+    u6 = 2 + t6*Fr('0.25'); x6 = 1 + t6*Fr('0.25')
+    ok(abs(u6 - 2) < Fr('0.25') and Fr('-0.25') < u6 - 2 < Fr('0.25') and Fr('0.75') < u6 - 1 < Fr('1.25') and abs(u6 - 1) < Fr('1.25') and abs(P6(u6) - P6(2)) == abs(u6 - 2)*abs(u6 - 1) < Fr('0.25')*Fr('1.25') < Fr('0.5'), 'H06 v002 k2: η = 0,25 responde por P con ε = 0,5')
+    ok(abs(g6(x6) - 2) == abs(x6 + 1 - 2) == abs(x6 - 1) < Fr('0.25') and abs(P6(g6(x6)) - P6(2)) < Fr('0.5'), 'H06 v002 k2: δ = 0,25 responde por la compuesta P(g(x)) con ε = 0,5')
+ok(Fr('-0.25') + 1 == Fr('0.75') and Fr('0.25') + 1 == Fr('1.25') and -2 + 1 == -1 and Fr('0.25')*Fr('1.25') == Fr('0.3125') < Fr('0.5') and abs(Fr('1.2') - 1) == Fr('0.2') < Fr('0.25') and g6(Fr('1.2')) == Fr('1.2') + 1 == Fr('2.2') and abs(Fr('2.2') - 2) == Fr('0.2') and Fr('2.2')**2 == Fr('4.84') and 3*Fr('2.2') == Fr('6.6') and P6(Fr('2.2')) == Fr('4.84') - Fr('6.6') + 1 == Fr('-0.76') and abs(Fr('-0.76') - (-1)) == abs(Fr('-0.76') + 1) == Fr('0.24') < Fr('0.5'), 'H06 v002 k2: el teorema con números (x = 1,2)')
+ok(en6(r'P(u)-P(2)&=u^{2}-3u+1-(-1)&&', r'&=u^{2}-3u+1+1&&', r'&=u^{2}-3u+2&&\text{porque }1+1=2', r'&=(u-2)(u-1)&&\text{se factoriza}', r'\((u-2)(u-1)=u^{2}-u-2u+2=u^{2}-3u+2\)', r'-0{,}25\lt u-2&\lt 0{,}25&&', r'0{,}75\lt u-1&\lt 1{,}25&&\text{se suma }1\text{ en los tres lados}', r'|u-1|&\lt 1{,}25&&', r'\(|P(u)-P(2)|=|u-2|\cdot|u-1|\), menor que \(0{,}25\cdot 1{,}25=0{,}3125\)', r'\(P(2{,}2)=2{,}2^{2}-3\cdot 2{,}2+1=4{,}84-6{,}6+1=-0{,}76\)', r'\(|-0{,}76-(-1)|=|-0{,}76+1|=0{,}24\), menor que \(0{,}5\)', r'\(g(1{,}2)=1{,}2+1=2{,}2\)'), 'H06 v002 k2: el teorema con números, escrito tal cual')
+ok(en6(r'porque \(1-3=-2\)', r'porque \(1-2=-1\)', r'\(\delta=\min\{0{,}5;\ 1\}=0{,}5\)', r'\(h(1{,}1)=f(2{,}1)=2{,}1+1=3{,}1\), y \(|3{,}1-3|=0{,}1\), menor que \(0{,}5\)') and 1 - 3 == -2 and 1 - 2 == -1 and min(Fr('0.5'), 1) == Fr('0.5'), 'H06 v002 k2: la regla del hueco con números, paso por paso')
+# k3 con números; ejemplos y ejercicios
+ok(s6(Fr('0.9')) == 2 and f6(2) == 5 and s6(Fr('1.1')) == Fr('1.1') + 1 == Fr('2.1') and f6(Fr('2.1')) == Fr('2.1') + 1 == Fr('3.1') and en6(r'\(s(0{,}9)=2\) y \(f(2)=5\)', r'\(s(1{,}1)=1{,}1+1=2{,}1\) y \(f(2{,}1)=2{,}1+1=3{,}1\)', r'\(h(0{,}9)=f(1{,}9)=1{,}9+1=2{,}9\) y \(h(1{,}1)=f(2{,}1)=2{,}1+1=3{,}1\)'), 'H06 v002 k3: las tres internas con números')
+ok(en6(r'x+1=2&&\text{la interna igualada a }2', r'x=2-1&&\text{se resta }1\text{ a los dos lados}', r'x=1&&\text{porque }2-1=1', r'\(g(1)=1+1=2\), así que \(h(1)=f(2)=5\)', r'3x-1=2&&\text{la interna igualada a }2', r'3x=3&&\text{se suma }1\text{ a los dos lados}', r'x=1&&\text{se divide por }3\text{ a los dos lados}', r'\((u-2)(u+2)=u^{2}+2u-2u-4=u^{2}-4\)', r'&=\frac{(u-2)(u+2)}{u-2}&&\text{numerador factorizado}', r'&=u+2&&\text{porque }\frac{u-2}{u-2}=1\text{ si }u\ne 2') and 2 - 1 == 1 and 2 + 1 == 3 and Fr(3, 3) == 1, 'H06 v002 ej1 y ej3: despejes y simplificación, línea por línea')
+ok(2**2 == 4 and 3*2 == 6 and 4 - 6 == -2 and -2 + 1 == -1 and g6(Fr('0.9')) == Fr('1.9') and g6(Fr('1.1')) == Fr('2.1') and P6(g6(Fr('0.9'))) == Fr('-1.09') and P6(g6(Fr('1.1'))) == Fr('-0.89') and en6(r'porque \(2^{2}=4\), \(3\cdot 2=6\), \(4-6=-2\) y \(-2+1=-1\)', r'\(1{,}9^{2}=3{,}61\) y \(3\cdot 1{,}9=5{,}7\), así que \(P(1{,}9)=3{,}61-5{,}7+1=-1{,}09\)', r'\(2{,}1^{2}=4{,}41\) y \(3\cdot 2{,}1=6{,}3\), así que \(P(2{,}1)=4{,}41-6{,}3+1=-0{,}89\)'), 'H06 v002 ej2: cada producto por separado')
+ok(Fr('1.7')**2 == Fr('2.89') and Fr('2.89') - 4 == Fr('-1.11') and Fr('1.7') - 2 == Fr('-0.3') and Fr('-1.11')/Fr('-0.3') == Fr('3.7') == F6(Fr('1.7')) and q6(Fr('0.9')) == 3*Fr('0.9') - 1 == Fr('1.7') and q6(Fr('1.1')) == 3*Fr('1.1') - 1 == Fr('2.3') and en6(r'\(q(0{,}9)=3\cdot 0{,}9-1=2{,}7-1=1{,}7\)', r'\(1{,}7^{2}=2{,}89\); \(2{,}89-4=-1{,}11\); \(1{,}7-2=-0{,}3\); y \(\dfrac{-1{,}11}{-0{,}3}=3{,}7\)', r'\(q(1{,}1)=3\cdot 1{,}1-1=3{,}3-1=2{,}3\)'), 'H06 v002 ej3: valores con la fórmula simplificada y con la original')
+ok(en6(r'\(r(G(x))=r(1)=2\) para esos \(x\)', r'queda \(x=3-2=1\)', r'queda \(x=\dfrac{200}{50}=4\)', r'\(D(v(x))=D(2)=9\) para esos \(x\)', r'\(2400-2340=60\) y \(2460-2400=60\) pesos') and 3 - 2 == 1 and Fr(200, 50) == 4 and 2400 - 2340 == 60 == 2460 - 2400 and w6(Fr('3.9')) != 200 != w6(Fr('4.1')), 'H06 v002 ej4 y ejercicios: despejes y distancias')
+ok(en6('para \\(c\\) positivo, \\(|t|\\lt c\\) dice lo mismo que \\(-c\\lt t\\lt c\\)', 'si \\(0\\le p\\lt A\\) y \\(0\\le q\\lt B\\), entonces \\(p\\cdot q\\lt A\\cdot B\\)', 'el valor absoluto de un producto es el producto de los valores absolutos'), 'H06 v002: avisos de rigor nuevos')
+for p_ in RJ:
+    for q_ in (Fr(1, 4), Fr(1), Fr(5, 4), Fr(3)):
+        ok((abs(p_) < q_) == (-q_ < p_ < q_) and abs(p_*q_) == abs(p_)*abs(q_), 'H06 v002 avisos: |t| < c ⟺ −c < t < c y |p·q| = |p|·|q| (rejilla)')
+# quinta ley: cada cosa que «Cómo leerla» nombra tiene su rótulo en la figura
+ok("if (ap(1) > 0.9){ frase('hueco', MF, B, K, 9, 13, mu); frase('punto lleno', MF, B, FB, 8, -10, mu); }" in E6 and en6('(rótulo «hueco»)', '(rótulo «punto lleno»)', 'rótulo «hacia 2»', 'rótulo «hacia 3»', 'rótulo «solo aquí g vale 2»', 'anillo burdeo sobre el punto lleno', 'anillo naranjo sobre el hueco', '\\(h(0{,}9)=2{,}9\\) y \\(h(1{,}1)=3{,}1\\)'), 'H06 v002 escena: rótulos «hueco» y «punto lleno», y lo que «Cómo leerla» nombra')
 # <<< H06
 
 # >>> H06 ESPER

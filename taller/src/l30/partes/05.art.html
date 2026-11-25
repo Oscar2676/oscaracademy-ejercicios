@@ -12,15 +12,23 @@
       <li><b>Límites de funciones compuestas cuando el límite externo no existe</b></li>
     </ol>
     <h1>Límites de funciones compuestas cuando el límite externo no existe</h1>
-    <p class="lede">En una función compuesta \(f(g(x))\), la función <b>interna</b> \(g\) puede tener límite \(b\) en \(a\) y la <b>externa</b> \(f\) saltar justo en \(b\): el límite externo \(\lim_{u\to b}f(u)\) no existe. Eso <b>no</b> decide nada sobre la compuesta. Lo que decide es <b>por qué lado llega \(g(x)\) a \(b\)</b>. Si \(g(x)\) es mayor que \(b\) para todo \(x\ne a\) cercano a \(a\), a la externa solo le llegan valores mayores que \(b\), y entonces
+    <p class="lede">Una <b>función compuesta</b> se arma con dos funciones, una después de la otra. Primero actúa la <b>interna</b>, \(g\): recibe el número \(x\) y entrega el número \(g(x)\), que se lee «\(g\) de \(x\)». Después actúa la <b>externa</b>, \(f\): recibe ese número y entrega \(f(g(x))\), que se lee «\(f\) de \(g\) de \(x\)». La letra \(u\) nombra el número que entrega \(g\) y recibe \(f\). El <b>límite</b> de una función en un número \(a\) es el número al que se acercan sus valores cuando \(x\) se acerca a \(a\) por sus dos lados, sin llegar a \(a\). Un <b>límite lateral</b> mira un solo lado: \(\displaystyle\lim_{u\to b^{+}}f(u)\) se lee «el límite de \(f\) de \(u\), cuando \(u\) tiende a \(b\) por la derecha», y solo usa los \(u\) mayores que \(b\); \(\displaystyle\lim_{u\to b^{-}}f(u)\) se lee igual, con «por la izquierda», y solo usa los \(u\) menores que \(b\). La externa <b>salta</b> en \(b\) cuando sus dos límites laterales en \(b\) son números distintos. En ese caso el <b>límite externo</b>, \(\lim_{u\to b}f(u)\), no existe. Esta hoja responde una pregunta: si la externa salta justo en el número \(b\) al que se acerca la interna, ¿tiene límite la compuesta?</p>
+    <p class="lede"><b>De dónde sale, con números.</b> Se toman las dos funciones de la animación y el número \(a=1\). La interna es \(g(x)=2+(x-1)^{2}\). La externa es \(f(u)=u-1\) si \(u\le 2\) y \(f(u)=5-u\) si \(u\gt 2\). Primero la interna, en cuatro \(x\) cercanos a \(1\), dos de cada lado:
+    \[\begin{aligned}g(0{,}9)&=2+(0{,}9-1)^{2}=2+(-0{,}1)^{2}=2+0{,}01=2{,}01&&\text{izquierda de }1\\ g(0{,}99)&=2+(0{,}99-1)^{2}=2+(-0{,}01)^{2}=2+0{,}0001=2{,}0001&&\text{izquierda, más cerca}\\ g(1{,}01)&=2+(1{,}01-1)^{2}=2+0{,}01^{2}=2+0{,}0001=2{,}0001&&\text{derecha, más cerca}\\ g(1{,}1)&=2+(1{,}1-1)^{2}=2+0{,}1^{2}=2+0{,}01=2{,}01&&\text{derecha de }1\end{aligned}\]
+    Los valores de \(g\) se acercan a \(2\), y los cuatro son <b>mayores</b> que \(2\). Luego \(b=2\). Ahora la externa, en cuatro \(u\) cercanos a \(2\), dos de cada lado:
+    \[\begin{aligned}f(1{,}9)&=1{,}9-1=0{,}9&&\text{izquierda de }2\text{: se usa }u-1\\ f(1{,}99)&=1{,}99-1=0{,}99&&\text{izquierda, más cerca}\\ f(2{,}01)&=5-2{,}01=2{,}99&&\text{derecha, más cerca: se usa }5-u\\ f(2{,}1)&=5-2{,}1=2{,}9&&\text{derecha de }2\end{aligned}\]
+    Por la izquierda de \(2\), los valores de \(f\) se acercan a \(1\); por la derecha, a \(3\). Como \(1\ne 3\), la externa salta en \(2\): el límite externo no existe. Ahora la compuesta. En cada \(x\), el número que entrega \(g\) entra en \(f\). Se mide la distancia de cada resultado a \(3\): el mayor menos el menor.
+    \[\begin{aligned}f(g(0{,}9))&=f(2{,}01)=5-2{,}01=2{,}99&&\text{distancia a tres: }3-2{,}99=0{,}01\\ f(g(0{,}99))&=f(2{,}0001)=5-2{,}0001=2{,}9999&&\text{distancia a tres: }3-2{,}9999=0{,}0001\\ f(g(1{,}01))&=f(2{,}0001)=5-2{,}0001=2{,}9999&&\text{distancia a tres: }3-2{,}9999=0{,}0001\\ f(g(1{,}1))&=f(2{,}01)=5-2{,}01=2{,}99&&\text{distancia a tres: }3-2{,}99=0{,}01\end{aligned}\]
+    <b>La regularidad:</b> los cuatro valores de la compuesta se acercan a \(3\), que es el límite lateral <b>derecho</b> de \(f\) en \(2\). No es casualidad. A \(f\) le entraron solo números mayores que \(2\) (\(2{,}01\) y \(2{,}0001\)), así que siempre se usó su fórmula de la derecha, \(5-u\). La fórmula de la izquierda, \(u-1\), la que va hacia \(1\), no se usó ninguna vez. Y lo que le falta a la compuesta para llegar a \(3\) es lo mismo que le sobra a \(g\) sobre \(2\): en \(x=0{,}9\), \(2{,}01-2=0{,}01\); en \(x=0{,}99\), \(2{,}0001-2=0{,}0001\).</p>
+    <p class="lede"><b>La fórmula.</b> Esa regularidad es la regla de esta hoja. Si \(g\) tiene límite \(b\) en \(a\) y \(g(x)\) es mayor que \(b\) para todo \(x\ne a\) cercano a \(a\), a la externa solo le llegan valores mayores que \(b\), y entonces
     \[\lim_{x\to a}f(g(x))=\lim_{u\to b^{+}}f(u)\]
-    siempre que ese límite lateral de \(f\) exista. Si \(g(x)\) es menor que \(b\), se usa el lateral izquierdo, \(\lim_{u\to b^{-}}f(u)\).</p>
+    Se lee: «el límite, cuando \(x\) tiende a \(a\), de \(f\) de \(g\) de \(x\), es igual al límite de \(f\) de \(u\) cuando \(u\) tiende a \(b\) por la derecha». Vale siempre que ese límite lateral de \(f\) <b>exista</b>, es decir, que sea un número. Si \(g(x)\) es menor que \(b\), se usa el lateral izquierdo, \(\lim_{u\to b^{-}}f(u)\). Que el límite externo no exista <b>no</b> decide nada sobre la compuesta: lo que decide es <b>por qué lado llega \(g(x)\) a \(b\)</b>.</p>
   </section>
 </header>
 
 <section>
   <h2>La idea, en una animación</h2>
-  <p>La función interna de la animación es \(g(x)=2+(x-1)^{2}\). La externa es \(f(u)=u-1\) si \(u\le 2\) y \(f(u)=5-u\) si \(u\gt 2\). El lugar es \(a=1\) y la compuesta se llama \(h(x)=f(g(x))\). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\).</p>
+  <p>Las funciones de la animación son las del encabezado: la interna \(g(x)=2+(x-1)^{2}\) y la externa de dos fórmulas, \(u-1\) hasta \(u=2\) y \(5-u\) después de \(2\). El lugar es \(a=1\) y la compuesta se llama \(h(x)=f(g(x))\). La letra \(u\) nombra lo que entrega \(g\) y recibe \(f\). La <b>altura</b> de una gráfica en un lugar es el valor de la función en ese lugar. Un <b>tramo</b> es la parte de la gráfica que corresponde a una de las dos fórmulas de \(f\).</p>
   <p><b>Cómo leerla:</b></p>
   <ol class="steps">
     <li><b>Mira primero las dos gráficas:</b> a la izquierda, la de la interna, \(u=g(x)\), una parábola cuyo punto más bajo es \((1, 2)\). A la derecha, la de la externa, \(y=f(u)\), con un salto sobre \(u=2\). El eje vertical de la primera y el eje horizontal de la segunda son el mismo: \(u\).</li>
@@ -44,7 +52,7 @@
       <li><b>Se demuestra aquí:</b> la regla de la compuesta cuando la interna llega por arriba, con la definición formal de límite y de límite lateral (recuadro de la demostración).</li>
       <li><b>No se escriben aquí</b> las demostraciones de las otras versiones de la regla (la interna llega por abajo; \(x\) se acerca a \(a\) por un solo lado). Siguen los mismos pasos, cambiando el lado en cada desigualdad; en esta hoja se usan sin demostrar.</li>
       <li><b>Se usa sin demostrar el criterio de los laterales:</b> \(\lim_{x\to a}F(x)=L\) si y solo si los dos límites laterales de \(F\) en \(a\) existen y los dos valen \(L\).</li>
-      <li><b>También se usa sin demostrar:</b> que el límite de un polinomio en \(a\) es su valor en \(a\) (hoja «Propiedades de límites»); que cada tramo de una función definida por partes tiene, por su lado, el límite que da el reemplazo en su fórmula; que una función constante por un lado de \(b\) tiene por ese lado el límite igual a esa constante; que dos funciones iguales para todo \(x\ne a\) cercano a \(a\) tienen el mismo límite en \(a\); que el cuadrado de un número distinto de \(0\) es positivo; y que si \(0\le s\lt t\), entonces \(s^{2}\lt t^{2}\).</li>
+      <li><b>También se usa sin demostrar:</b> que el límite de un polinomio en \(a\) es su valor en \(a\) (hoja «Propiedades de límites»); que cada tramo de una función definida por partes tiene, por su lado, el límite que da el reemplazo en su fórmula; que una función constante por un lado de \(b\) tiene por ese lado el límite igual a esa constante; que dos funciones iguales para todo \(x\ne a\) cercano a \(a\) tienen el mismo límite en \(a\); que el cuadrado de un número distinto de \(0\) es positivo; que si \(0\le s\lt t\), entonces \(s^{2}\lt t^{2}\); que un número es menor o igual que su valor absoluto; que el valor absoluto de un número negativo es su opuesto y el de un número que no es negativo es él mismo; que el opuesto de un número positivo es negativo; y que sumar un mismo número a los dos lados de una desigualdad la mantiene.</li>
     </ol>
   </div>
 </section>
@@ -52,7 +60,10 @@
 <section>
   <div class="card k1">
     <h3>La regla: importa por qué lado llega la interna</h3>
+    <p><b>Palabras que se usan.</b> «La interna <b>llega por arriba</b>» quiere decir: \(g(x)\) se acerca a \(b\) y es mayor que \(b\). «<b>Llega por abajo</b>»: se acerca a \(b\) y es menor que \(b\). «La interna <b>cruza</b> \(b\)»: es menor que \(b\) a un lado de \(a\) y mayor al otro. Un <b>intervalo abierto</b> es el conjunto de todos los números que están entre dos números dados, sin contar esos dos; por ejemplo, los números entre \(0\) y \(2\) forman un intervalo abierto que contiene a \(1\). «Para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\)» es la forma exacta de decir «para todo \(x\) cercano a \(a\), a los dos lados, salvo el propio \(a\)».</p>
+    <p><b>Cómo se leen los símbolos.</b> \(\varepsilon\) se lee «épsilon» y \(\eta\) se lee «eta»: son tolerancias, números positivos tan chicos como se quiera. \(\delta\) se lee «delta»: es una distancia. \(|f(u)-K|\) se lee «valor absoluto de \(f\) de \(u\) menos \(K\)» y es la distancia entre \(f(u)\) y \(K\). \(b\lt u\lt b+\eta\) se lee «\(u\) es mayor que \(b\) y menor que \(b\) más eta»: \(u\) está a la derecha de \(b\), a menos de \(\eta\) de distancia.</p>
     <p><b>Límite lateral derecho de la externa.</b> \(\lim_{u\to b^{+}}f(u)=K\) significa: para todo \(\varepsilon\gt 0\) existe \(\eta\gt 0\) tal que, si \(b\lt u\lt b+\eta\), entonces \(|f(u)-K|\lt \varepsilon\). En particular, \(f\) está definida en esos \(u\). Solo cuentan los \(u\) mayores que \(b\): ni el valor \(f(b)\) ni lo que pasa a la izquierda de \(b\) participan.</p>
+    <p><b>Con números.</b> Para la \(f\) de la animación, \(b=2\) y \(K=3\). Se pide la tolerancia \(\varepsilon=0{,}1\). Sirve \(\eta=0{,}1\): si \(2\lt u\lt 2{,}1\), se usa la fórmula \(5-u\), y la distancia de \(f(u)\) a \(3\) es \(u-2\), menor que \(0{,}1\) (la cuenta completa está en el recuadro de la demostración). Prueba con \(u=2{,}04\), que está entre \(2\) y \(2{,}1\): \(f(2{,}04)=5-2{,}04=2{,}96\), y \(|2{,}96-3|=0{,}04\), menor que \(0{,}1\).</p>
     <p><b>Regla de la compuesta cuando la interna llega por arriba.</b> Si</p>
     <ol class="steps">
       <li>\(\lim_{x\to a}g(x)=b\) (la interna tiene límite \(b\) en \(a\)),</li>
@@ -60,6 +71,7 @@
       <li>\(\lim_{u\to b^{+}}f(u)=K\),</li>
     </ol>
     <p>entonces \(\lim_{x\to a}f(g(x))=K\).</p>
+    <p><b>La regla, vista en la animación.</b> Condición 1: \(\lim_{x\to 1}g(x)=2\), o sea \(a=1\) y \(b=2\). Condición 2: \(g(x)\gt 2\) para todo \(x\ne 1\) (en el encabezado, \(2{,}01\) y \(2{,}0001\) son mayores que \(2\); la razón general está en el ejemplo 1). Condición 3: \(\lim_{u\to 2^{+}}f(u)=3\), o sea \(K=3\). Conclusión: \(\lim_{x\to 1}f(g(x))=3\), el número al que se acercaron \(2{,}99\) y \(2{,}9999\).</p>
     <p><b>Versión por abajo.</b> Si en la condición 2 se tiene \(g(x)\lt b\) y en la condición 3 se tiene \(\lim_{u\to b^{-}}f(u)=K\), la conclusión es la misma: \(\lim_{x\to a}f(g(x))=K\).</p>
     <p><b>Versiones por un lado de \(a\).</b> Si las condiciones 1 y 2 se cumplen solo por la izquierda de \(a\) (con \(x\to a^{-}\) y con los \(x\lt a\) de un intervalo abierto que contiene a \(a\)), la conclusión vale por la izquierda: \(\lim_{x\to a^{-}}f(g(x))=K\). Lo mismo por la derecha.</p>
     <p><b>Procedimiento cuando la externa salta en \(b\):</b></p>
@@ -74,6 +86,8 @@
 
   <div class="card k2">
     <h3>Demostración paso a paso: la regla cuando la interna llega por arriba</h3>
+    <p><b>Qué se demuestra.</b> La regla del recuadro anterior: si la interna tiene límite \(b\) en \(a\), llega a \(b\) por arriba y la externa tiene límite lateral derecho \(K\) en \(b\), entonces la compuesta tiene límite en \(a\), y ese límite es \(K\).</p>
+    <p><b>Cómo funciona el método.</b> Se usa la definición formal de límite, que es un desafío: alguien fija una tolerancia \(\varepsilon\) (qué tan cerca de \(K\) debe quedar la compuesta) y hay que responder con una distancia \(\delta\) (qué tan cerca de \(a\) hay que tomar \(x\)). Se responde en cadena, de afuera hacia adentro. La externa dice qué tan cerca de \(b\), por la derecha, debe estar lo que recibe: esa es \(\eta\). La interna dice qué tan cerca de \(a\) debe estar \(x\) para que \(g(x)\) quede a menos de \(\eta\) de \(b\): esa es \(\delta_{1}\). La condición 2 asegura que \(g(x)\) queda a la derecha de \(b\). Si la respuesta sirve para cualquier \(\varepsilon\), el límite queda demostrado.</p>
     <p>Se sabe: \(\lim_{x\to a}g(x)=b\); \(g(x)\gt b\) para todo \(x\ne a\) de un intervalo abierto que contiene a \(a\); \(\lim_{u\to b^{+}}f(u)=K\). Hay que probar: para todo \(\varepsilon\gt 0\) existe \(\delta\gt 0\) tal que, si \(0\lt |x-a|\lt \delta\), entonces \(|f(g(x))-K|\lt \varepsilon\).</p>
     <ol class="steps">
       <li>Se fija una tolerancia cualquiera \(\varepsilon\gt 0\).</li>
@@ -81,21 +95,35 @@
       <li>El número \(\eta\) es positivo: sirve como tolerancia para \(g\). Como \(\lim_{x\to a}g(x)=b\), existe \(\delta_{1}\gt 0\) tal que, si \(0\lt |x-a|\lt \delta_{1}\), entonces \(|g(x)-b|\lt \eta\).</li>
       <li>El intervalo abierto de la condición 2 contiene a \(a\); por eso contiene todos los \(x\) con \(|x-a|\lt r\), para algún \(r\gt 0\). Entonces: si \(0\lt |x-a|\lt r\), se tiene \(g(x)\gt b\).</li>
       <li>Se elige \(\delta=\min\{\delta_{1},r\}\), el menor de los dos. Es positivo.</li>
-      <li>Se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Por el paso 3, \(|g(x)-b|\lt \eta\); en particular, \(g(x)\lt b+\eta\). Por el paso 4, \(g(x)\gt b\). Juntas: el número \(u=g(x)\) cumple \(b\lt u\lt b+\eta\).</li>
+      <li>Se toma un \(x\) cualquiera con \(0\lt |x-a|\lt \delta\). Como \(\delta\) es el menor de los dos, ese \(x\) cumple a la vez \(0\lt |x-a|\lt \delta_{1}\) y \(0\lt |x-a|\lt r\).</li>
+      <li>Por el paso 3, \(|g(x)-b|\lt \eta\). De ahí sale \(g(x)\lt b+\eta\), en dos líneas:
+      \[\begin{aligned}g(x)-b&\lt \eta&&\text{un número es menor o igual que su valor absoluto}\\ g(x)&\lt b+\eta&&\text{se suma }b\text{ a los dos lados}\end{aligned}\]</li>
+      <li>Por el paso 4, \(g(x)\gt b\). Juntas las dos desigualdades: el número \(u=g(x)\) cumple \(b\lt u\lt b+\eta\).</li>
       <li>Por el paso 2, \(|f(g(x))-K|\lt \varepsilon\).</li>
       <li>Como \(\varepsilon\) era cualquiera, \(\lim_{x\to a}f(g(x))=K\).</li>
     </ol>
-    <p><b>Dónde se usa cada condición:</b> la 3 en el paso 2, la 1 en el paso 3 y la 2 en el paso 4. Sin la condición 2, en el paso 6 no se sabría si \(g(x)\) quedó a la derecha de \(b\), a la izquierda o justo en \(b\), y el paso 2 no se podría usar.</p>
-    <p><b>Con los números de la animación</b> (\(a=1\), \(b=2\), \(K=3\)) y la tolerancia \(\varepsilon=0{,}5\). Para \(u\gt 2\): \(|f(u)-3|=|5-u-3|=|2-u|=u-2\), menor que \(0{,}5\) si \(2\lt u\lt 2{,}5\); sirve \(\eta=0{,}5\). Para \(g\): \(|g(x)-2|=(x-1)^{2}\). Si \(|x-1|\lt 0{,}7\), entonces \((x-1)^{2}\) es menor que \(0{,}7^{2}=0{,}49\), que es menor que \(0{,}5\); sirve \(\delta_{1}=0{,}7\). Además \(g(x)-2=(x-1)^{2}\) es positivo para todo \(x\ne 1\): sirve cualquier \(r\), por ejemplo \(r=1\). El menor es \(\delta=0{,}7\). Prueba con \(x=0{,}5\): \(|0{,}5-1|=0{,}5\), menor que \(0{,}7\); \(g(0{,}5)=2+(-0{,}5)^{2}=2+0{,}25=2{,}25\), que está entre \(2\) y \(2{,}5\); \(h(0{,}5)=f(2{,}25)=5-2{,}25=2{,}75\) y \(|2{,}75-3|=0{,}25\), menor que \(0{,}5\).</p>
+    <p><b>Dónde se usa cada condición:</b> la 3 en el paso 2, la 1 en el paso 3 y la 2 en el paso 4. Sin la condición 2, en el paso 8 no se sabría si \(g(x)\) quedó a la derecha de \(b\), a la izquierda o justo en \(b\), y el paso 2 no se podría usar.</p>
+    <p><b>Los mismos pasos, con los números de la animación</b> (\(a=1\), \(b=2\), \(K=3\)) y la tolerancia \(\varepsilon=0{,}5\):</p>
+    <ol class="steps">
+      <li><b>La externa (paso 2).</b> Para \(u\gt 2\) se usa \(f(u)=5-u\). La distancia de \(f(u)\) a \(3\), línea por línea:
+      \[\begin{aligned}|f(u)-3|&=|5-u-3|&&\text{se reemplaza }f(u)\text{ por }5-u\\ &=|2-u|&&\text{porque }5-3=2\\ &=u-2&&\text{porque }2-u\text{ es negativo cuando }u\gt 2\end{aligned}\]
+      (El valor absoluto de un número negativo es su opuesto, y el opuesto de \(2-u\) es \(u-2\).) Esa distancia es menor que \(0{,}5\) si \(2\lt u\lt 2{,}5\): sirve \(\eta=0{,}5\).</li>
+      <li><b>La interna (paso 3).</b> La distancia de \(g(x)\) a \(2\), línea por línea:
+      \[\begin{aligned}|g(x)-2|&=|2+(x-1)^{2}-2|&&\text{se reemplaza }g(x)\\ &=|(x-1)^{2}|&&\text{porque }2-2=0\\ &=(x-1)^{2}&&\text{un cuadrado no es negativo}\end{aligned}\]
+      Si \(|x-1|\lt 0{,}7\), entonces \((x-1)^{2}\) es menor que \(0{,}7^{2}=0{,}49\), que es menor que \(0{,}5\); sirve \(\delta_{1}=0{,}7\).</li>
+      <li><b>La condición 2 (paso 4).</b> \(g(x)-2=(x-1)^{2}\) es positivo para todo \(x\ne 1\): sirve cualquier \(r\), por ejemplo \(r=1\).</li>
+      <li><b>El menor (paso 5).</b> Entre \(0{,}7\) y \(1\), el menor es \(0{,}7\). El menor es \(\delta=0{,}7\).</li>
+      <li><b>Prueba con \(x=0{,}5\) (pasos 6 a 9).</b> \(|0{,}5-1|=0{,}5\), menor que \(0{,}7\). \(g(0{,}5)=2+(-0{,}5)^{2}=2+0{,}25=2{,}25\), que está entre \(2\) y \(2{,}5\). \(h(0{,}5)=f(2{,}25)=5-2{,}25=2{,}75\). Y \(|2{,}75-3|=0{,}25\), menor que \(0{,}5\): se cumplió.</li>
+    </ol>
   </div>
 
   <div class="card k3">
     <h3>Caso especial: la interna cruza \(b\), llega por abajo o vale justo \(b\)</h3>
     <p>En los cuatro puntos, la externa es la \(f\) de la animación o una parecida, el lugar es \(a=1\) y la interna tiene límite \(2\) en \(1\). El límite externo no existe en ninguno.</p>
     <ol class="steps">
-      <li><b>La interna cruza \(b\): no hay límite.</b> Interna \(x+1\). Para \(x\lt 1\) es menor que \(2\): se usa el lateral izquierdo de \(f\), que es \(1\). Para \(x\gt 1\) es mayor que \(2\): se usa el lateral derecho, que es \(3\). Los laterales de la compuesta son \(1\) y \(3\). Como \(1\ne 3\), \(f(x+1)\) no tiene límite en \(1\).</li>
-      <li><b>La interna llega por abajo.</b> Interna \(2-(x-1)^{2}\). Para todo \(x\ne 1\) es menor que \(2\), porque \((x-1)^{2}\gt 0\). Por la versión por abajo, el límite de la compuesta en \(1\) es el lateral izquierdo de \(f\): \(1\).</li>
-      <li><b>La interna vale justo \(b\): la regla no se puede usar.</b> Interna constante \(2\). No es mayor ni menor que \(2\): la condición 2 falla. Se estudia directamente con la externa \(E(u)=1\) si \(u\lt 2\), \(E(2)=5\) y \(E(u)=3\) si \(u\gt 2\) (laterales \(1\) y \(3\) en \(2\), como \(f\)). Para todo \(x\), la compuesta vale \(E(2)=5\): es la constante \(5\), y su límite en \(1\) es \(5\). No es ninguno de los dos laterales de \(E\).</li>
+      <li><b>La interna cruza \(b\): no hay límite.</b> Interna \(x+1\). Para \(x\lt 1\) es menor que \(2\): se usa el lateral izquierdo de \(f\), que es \(1\). Para \(x\gt 1\) es mayor que \(2\): se usa el lateral derecho, que es \(3\). Los laterales de la compuesta son \(1\) y \(3\). Como \(1\ne 3\), \(f(x+1)\) no tiene límite en \(1\). Las cuentas con valores están en el ejemplo 3.</li>
+      <li><b>La interna llega por abajo.</b> Interna \(2-(x-1)^{2}\). Para todo \(x\ne 1\) es menor que \(2\), porque \((x-1)^{2}\gt 0\). Por la versión por abajo, el límite de la compuesta en \(1\) es el lateral izquierdo de \(f\): \(1\). Con números: en \(x=0{,}9\) la interna vale \(2-(-0{,}1)^{2}=2-0{,}01=1{,}99\), y \(f(1{,}99)=1{,}99-1=0{,}99\); en \(x=1{,}1\) vale \(2-0{,}1^{2}=2-0{,}01=1{,}99\), y la compuesta da otra vez \(0{,}99\), cerca de \(1\).</li>
+      <li><b>La interna vale justo \(b\): la regla no se puede usar.</b> Interna constante \(2\). No es mayor ni menor que \(2\): la condición 2 falla. Se estudia directamente con la externa \(E(u)=1\) si \(u\lt 2\), \(E(2)=5\) y \(E(u)=3\) si \(u\gt 2\) (laterales \(1\) y \(3\) en \(2\), como \(f\)). Para todo \(x\), la interna entrega \(2\) y la compuesta vale \(E(2)=5\); por ejemplo, en \(x=0{,}9\) vale \(5\) y en \(x=1{,}1\) vale \(5\). Es la constante \(5\), y su límite en \(1\) es \(5\). No es ninguno de los dos laterales de \(E\).</li>
       <li><b>«El límite externo no existe» no decide nada.</b> Con tres internas que tienen el mismo límite \(2\) en \(1\) salieron tres respuestas: límite igual al lateral derecho (animación), sin límite (punto 1) y límite igual al lateral izquierdo (punto 2). Y con una interna constante, el valor \(E(2)\) (punto 3). Hay que mirar cada vez cómo llega la interna a \(b\).</li>
     </ol>
   </div>
@@ -113,10 +141,14 @@
     <li>Externa por la izquierda de \(2\) (\(u\lt 2\), \(f(u)=u-1\)): \(\lim_{u\to 2^{-}}f(u)=2-1=1\).</li>
     <li>Externa por la derecha de \(2\) (\(u\gt 2\), \(f(u)=5-u\)): \(\lim_{u\to 2^{+}}f(u)=5-2=3\).</li>
     <li>Como \(1\ne 3\), el límite externo \(\lim_{u\to 2}f(u)\) no existe.</li>
-    <li>Lado por el que llega la interna: \(g(x)-2=(x-1)^{2}\), positivo para todo \(x\ne 1\). Luego \(g(x)\gt 2\) para todo \(x\ne 1\).</li>
+    <li>Lado por el que llega la interna. Se mira el signo de \(g(x)-2\):
+    \[\begin{aligned}g(x)-2&=2+(x-1)^{2}-2&&\text{se reemplaza }g(x)\\ &=(x-1)^{2}&&\text{porque }2-2=0\end{aligned}\]
+    Si \(x\ne 1\), entonces \(x-1\ne 0\), y el cuadrado de un número distinto de \(0\) es positivo: \(g(x)-2\gt 0\). Se suma \(2\) a los dos lados: \(g(x)\gt 2\) para todo \(x\ne 1\). La interna llega por arriba.</li>
     <li>Regla de la compuesta cuando la interna llega por arriba, con \(K=3\): \(\lim_{x\to 1}f(g(x))=3\).</li>
     <li>Comprobación con valores. \(g(0{,}9)=2+(-0{,}1)^{2}=2+0{,}01=2{,}01\) y \(f(2{,}01)=5-2{,}01=2{,}99\). \(g(1{,}1)=2+0{,}1^{2}=2+0{,}01=2{,}01\) y \(f(2{,}01)=2{,}99\).</li>
-    <li>Otra comprobación, con la fórmula de la compuesta. Para \(x\ne 1\), \(g(x)\gt 2\), así que \(h(x)=5-g(x)=5-2-(x-1)^{2}=3-(x-1)^{2}\). Ese polinomio tiene límite \(3-(1-1)^{2}=3-0=3\) en \(1\).</li>
+    <li>Otra comprobación, con la fórmula de la compuesta. Para \(x\ne 1\), \(g(x)\gt 2\), así que la externa usa su fórmula \(5-u\):
+    \[\begin{aligned}h(x)&=5-g(x)&&\text{se reemplaza }u\text{ por }g(x)\\ &=5-2-(x-1)^{2}&&\text{se reemplaza }g(x)\text{; el signo menos afecta a los dos términos}\\ &=3-(x-1)^{2}&&\text{porque }5-2=3\end{aligned}\]
+    Ese polinomio tiene límite \(3-(1-1)^{2}=3-0=3\) en \(1\).</li>
     <li>El valor en el propio \(1\) no participa: \(h(1)=f(g(1))=f(2)=2-1=1\), distinto de \(3\).</li>
   </ol>
   </div>
@@ -129,7 +161,7 @@
   <ol class="steps">
     <li>Límite de la interna: \(\lim_{x\to 0}r(x)=2-0^{2}=2-0=2\). Luego \(b=2\).</li>
     <li>Laterales de la externa en \(2\) (ejemplo 1): \(1\) por la izquierda y \(3\) por la derecha. El límite externo no existe.</li>
-    <li>Lado por el que llega la interna: \(r(x)-2=-x^{2}\), negativo para todo \(x\ne 0\). Luego \(r(x)\lt 2\) para todo \(x\ne 0\).</li>
+    <li>Lado por el que llega la interna: \(r(x)-2=2-x^{2}-2=-x^{2}\), porque \(2-2=0\). Si \(x\ne 0\), \(x^{2}\) es positivo y su opuesto, \(-x^{2}\), es negativo. Luego \(r(x)-2\lt 0\), es decir, \(r(x)\lt 2\) para todo \(x\ne 0\): la interna llega por abajo.</li>
     <li>Versión por abajo de la regla, con \(K=1\): \(\lim_{x\to 0}f(r(x))=1\).</li>
     <li>Comprobación. \(r(0{,}1)=2-0{,}1^{2}=2-0{,}01=1{,}99\) y \(f(1{,}99)=1{,}99-1=0{,}99\). \(r(-0{,}1)=2-(-0{,}1)^{2}=2-0{,}01=1{,}99\) y \(f(1{,}99)=0{,}99\).</li>
     <li>Misma externa, mismo \(b\), otro resultado que en el ejemplo 1: cambió el lado por el que llega la interna.</li>
@@ -143,7 +175,7 @@
   <p>Interna \(s(x)=x+1\), lugar \(a=1\), y la misma externa \(f\).</p>
   <ol class="steps">
     <li>Límite de la interna: \(\lim_{x\to 1}s(x)=1+1=2\). Luego \(b=2\).</li>
-    <li>Lado por el que llega: \(s(x)-2=x-1\). Es negativo si \(x\lt 1\) y positivo si \(x\gt 1\). La interna llega por abajo por la izquierda de \(1\) y por arriba por la derecha de \(1\).</li>
+    <li>Lado por el que llega: \(s(x)-2=x+1-2=x-1\), porque \(1-2=-1\). Es negativo si \(x\lt 1\) y positivo si \(x\gt 1\). La interna llega por abajo por la izquierda de \(1\) y por arriba por la derecha de \(1\).</li>
     <li>Por la izquierda de \(1\) (versión por un lado, \(s(x)\lt 2\)): se usa el lateral izquierdo de \(f\). \(\lim_{x\to 1^{-}}f(s(x))=1\).</li>
     <li>Por la derecha de \(1\) (\(s(x)\gt 2\)): se usa el lateral derecho de \(f\). \(\lim_{x\to 1^{+}}f(s(x))=3\).</li>
     <li>Comparación: \(1\ne 3\). Por el criterio de los laterales, \(f(s(x))\) no tiene límite en \(1\).</li>
@@ -157,9 +189,9 @@
   <div class="body">
   <p>Datos: \(\lim_{x\to 4}G(x)=0\), con \(G(x)\gt 0\) para todo \(x\ne 4\) de un intervalo abierto que contiene a \(4\). De la externa: \(\lim_{u\to 0^{-}}F(u)=-2\) y \(\lim_{u\to 0^{+}}F(u)=6\).</p>
   <ol class="steps">
-    <li>Como \(-2\ne 6\), el límite externo \(\lim_{u\to 0}F(u)\) no existe.</li>
+    <li>Aquí \(a=4\) y \(b=0\). Los laterales de la externa en \(0\) son \(-2\) y \(6\). Como \(-2\ne 6\), el límite externo \(\lim_{u\to 0}F(u)\) no existe.</li>
     <li>\(F(G(x))\): la interna tiene límite \(0\) y llega por arriba (\(G(x)\gt 0\)). Se usa el lateral derecho: \(\lim_{x\to 4}F(G(x))=6\).</li>
-    <li>\(F(-G(x))\): la interna es \(-G(x)\). Por la propiedad del múltiplo constante, su límite es \((-1)\cdot 0=0\). Como \(G(x)\gt 0\), se tiene \(-G(x)\lt 0\): llega por abajo.</li>
+    <li>\(F(-G(x))\): la interna es \(-G(x)\). Por la propiedad del múltiplo constante, su límite es \((-1)\cdot 0=0\). Como \(G(x)\gt 0\), se tiene \(-G(x)\lt 0\) (el opuesto de un número positivo es negativo): llega por abajo.</li>
     <li>Se usa el lateral izquierdo: \(\lim_{x\to 4}F(-G(x))=-2\).</li>
     <li>\(F([G(x)]^{2})\): la interna es \([G(x)]^{2}\). Por la propiedad de la potencia, su límite es \(0^{2}=0\). Como \(G(x)\ne 0\), su cuadrado es positivo: llega por arriba. \(\lim_{x\to 4}F([G(x)]^{2})=6\).</li>
     <li>Si de otra interna \(H\) solo se sabe que \(\lim_{x\to 4}H(x)=0\), sin saber de qué lado de \(0\) quedan sus valores, no se puede decidir si \(F(H(x))\) tiene límite en \(4\): falta la condición 2.</li>
@@ -181,7 +213,7 @@
       <ol class="steps">
         <li>a) La interna es un polinomio: \(\lim_{x\to 2}m(x)=3+(2-2)^{2}=3+0=3\). Luego \(b=3\).</li>
         <li>b) Por la izquierda de \(3\), \(n(u)=2u\): el límite es \(2\cdot 3=6\). Por la derecha, \(n(u)=u+1\): el límite es \(3+1=4\). Como \(6\ne 4\), el límite externo no existe.</li>
-        <li>c) \(m(x)-3=(x-2)^{2}\), positivo para todo \(x\ne 2\): \(m(x)\gt 3\), la interna llega por arriba.</li>
+        <li>c) \(m(x)-3=3+(x-2)^{2}-3=(x-2)^{2}\), porque \(3-3=0\). Si \(x\ne 2\), entonces \(x-2\ne 0\) y su cuadrado es positivo: \(m(x)-3\gt 0\), es decir, \(m(x)\gt 3\). La interna llega por arriba.</li>
         <li>Se usa el lateral derecho de la externa: \(\lim_{x\to 2}n(m(x))=4\).</li>
         <li>d) \(m(1{,}9)=3+(-0{,}1)^{2}=3+0{,}01=3{,}01\) y \(n(3{,}01)=3{,}01+1=4{,}01\): \(c(1{,}9)=4{,}01\).</li>
         <li>\(m(2{,}1)=3+0{,}1^{2}=3+0{,}01=3{,}01\) y \(n(3{,}01)=4{,}01\): \(c(2{,}1)=4{,}01\). Los dos valores están cerca de \(4\).</li>
@@ -194,6 +226,7 @@
     <details><summary>Pista</summary><div><p>El límite externo no existe (\(-1\ne 2\)). En cada caso, decide qué valores le llegan a \(V\): mayores que \(5\), menores que \(5\) o justo \(5\).</p></div></details>
     <details><summary>Solución paso a paso</summary><div>
       <ol class="steps">
+        <li>Datos comunes: \(a=0\), \(b=5\), y los laterales de la externa en \(5\) son \(-1\) (izquierdo) y \(2\) (derecho). Como \(-1\ne 2\), el límite externo no existe.</li>
         <li>a) La interna llega por arriba: se usa el lateral derecho. El límite es \(2\).</li>
         <li>b) La interna llega por abajo: se usa el lateral izquierdo. El límite es \(-1\).</li>
         <li>c) Por la izquierda de \(0\) llega por abajo: lateral \(-1\). Por la derecha de \(0\) llega por arriba: lateral \(2\). Como \(-1\ne 2\), no tiene límite en \(0\).</li>
@@ -209,18 +242,18 @@
       <ol class="steps">
         <li>a) La temperatura es un polinomio en \(t\): su límite en \(3\) es \(24+(3-3)^{2}=24+0=24\).</li>
         <li>b) Por la izquierda de \(24\), la potencia es la constante \(0\): el límite es \(0\). Por la derecha, es \(800+100\cdot(T-24)\): el límite es \(800+100\cdot(24-24)=800+100\cdot 0=800\). Como \(0\ne 800\), el límite externo no existe.</li>
-        <li>c) \(T(t)-24=(t-3)^{2}\), positivo para todo \(t\ne 3\): la temperatura llega a \(24\) por arriba, por los dos lados de \(t=3\).</li>
+        <li>c) \(T(t)-24=24+(t-3)^{2}-24=(t-3)^{2}\), porque \(24-24=0\). Si \(t\ne 3\), entonces \(t-3\ne 0\) y su cuadrado es positivo: \(T(t)\gt 24\). La temperatura llega a \(24\) por arriba, por los dos lados de \(t=3\).</li>
         <li>Se usa el lateral derecho de la potencia: el límite de \(P(T(t))\) en \(t=3\) es \(800\) watts.</li>
         <li>d) \(T(2{,}9)=24+(-0{,}1)^{2}=24+0{,}01=24{,}01\) y \(P(24{,}01)=800+100\cdot 0{,}01=800+1=801\).</li>
         <li>\(T(3{,}1)=24+0{,}1^{2}=24+0{,}01=24{,}01\) y \(P(24{,}01)=801\). Los dos valores están cerca de \(800\).</li>
         <li>e) \(T(3)=24\) y \(P(24)=0\). Esa tarde la temperatura baja hasta tocar los \(24\) grados y vuelve a subir: el equipo trabaja cerca de \(800\) watts antes y después, y solo en ese instante el modelo lo da por apagado. El límite, \(800\), no mira ese instante.</li>
-        <li>f) El límite de \(27-t\) en \(3\) es \(27-3=24\). Para \(t\lt 3\), \(27-t\) es mayor que \(24\): lateral derecho de la potencia, \(800\). Para \(t\gt 3\), es menor que \(24\): lateral izquierdo, \(0\). Como \(800\ne 0\), la potencia no tiene límite en \(t=3\): el equipo se apaga de golpe.</li>
+        <li>f) El límite de \(27-t\) en \(3\) es \(27-3=24\). Se mira el signo de \(27-t-24=3-t\) (porque \(27-24=3\)): es positivo si \(t\lt 3\) y negativo si \(t\gt 3\). Para \(t\lt 3\), \(27-t\) es mayor que \(24\): lateral derecho de la potencia, \(800\). Para \(t\gt 3\), es menor que \(24\): lateral izquierdo, \(0\). Como \(800\ne 0\), la potencia no tiene límite en \(t=3\): el equipo se apaga de golpe.</li>
       </ol>
     </div></details>
   </div>
 </section>
 
 <footer>
-  <span class="status">CD-L30-H05 · v001 · Pendiente de APR</span>
+  <span class="status">CD-L30-H05 · v002 · Pendiente de APR</span>
 </footer>
 </article>

@@ -65,6 +65,7 @@ OA.scene('compteo-idea', (function(){
       if (a > 0.6){ lmSeg(S, MF, B, K, 0, K, C.alt, 1); frase('hacia 3', MF, 0, K, 5, -9, C.alt); w = prNota(S, 'externa:', 2.15, 1.4, C.alt); T.L('LF', 2.15, 1.4, 0, w + 6, 0); }
       /* hueco y punto lleno de f (encima de las guías) */
       if (ap(1) > 0.5){ lmPunto(S, MF, B, K, C.ink, true, 3.2); lmPunto(S, MF, B, FB, C.ink, false, 3.2); }
+      if (ap(1) > 0.9){ frase('hueco', MF, B, K, 8, 30, mu); frase('punto lleno', MF, B, FB, 8, -10, mu); }
       /* paso 4: el valor f(2) = 5 no es el límite 3 (anillo y rótulo burdeo) */
       a = ap(4);
       if (a > 0.3){ prAnillo(S, MF, B, FB, C.tan, 7); lmPunto(S, MF, B, FB, C.tan, false, 3.2); }
