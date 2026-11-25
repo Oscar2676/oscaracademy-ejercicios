@@ -514,6 +514,10 @@ ok(f5(D5('2.1')) == 10 > 5 and 0 < D5('2.1') - 2 < D5('0.2') and D5('2.005') - 2
 # >>> H06
 # ───────── H06: aproximar límites a partir de tablas (la tabla se construye con la fórmula) ─────────
 A6, E6 = molde('06', 'H06_aproximar_limites_a_partir_de_tablas.html', 'Aproximar límites a partir de tablas', 'lim-tabla', 'Límites a partir de tablas', ['tab-idea'], 1)
+# H06 está en v002 (revisión general); molde(), que es común y queda fuera de este bloque, todavía espera v001 en el pie:
+# se quita ese único aviso y el título, la ruta y el pie se comprueban aquí con la versión nueva
+err[:] = [e6 for e6 in err if e6 != 'H06 título, ruta y pie']
+ok('<h1>Aproximar límites a partir de tablas</h1>' in A6 and '<span class="status">CD-L29-H06 · v002 · Pendiente de APR</span>' in A6 and A6.count('Pendiente de APR') == 1 and '<li>Límites a partir de tablas</li>\n      <li><b>Aproximar límites a partir de tablas</b></li>' in A6, 'H06 v002 título, ruta y pie')
 def f6(x):
     assert x != 1
     return (x**3 - 1)/(x - 1)
@@ -624,7 +628,7 @@ def comprobar6():
             '\\text{derecha, fila por fila:}\\\\&\\qquad ' + '\\\\&\\qquad '.join(cuenta6(x) for x in DE6),
             '\\text{candidato: }3;\\ \\text{distancia de cada valor a }3\\\\&\\qquad x<1:\\ \\ ' + dist6(IZ6) + '\\\\&\\qquad x>1:\\ \\ ' + dist6(DE6) + '\\\\&\\qquad \\text{cada distancia: unas 10 veces menor que la anterior}',
             '\\text{la tabla sugiere: }\\lim_{x\\to 1}f(x)\\approx 3\\\\&\\qquad \\text{es una estimación: seis valores no demuestran}',
-            'x^{3}-1=(x-1)(x^{2}+x+1)\\\\&\\qquad x\\ne 1:\\ \\ f(x)=\\tfrac{(x-1)(x^{2}+x+1)}{x-1}=x^{2}+x+1\\\\&\\qquad x\\to 1:\\ \\ 1^{2}+1+1=3\\\\&\\qquad \\lim_{x\\to 1}f(x)=3\\ \\ \\text{(la tabla acertó)}']
+            '\\text{se multiplica: }(x-1)(x^{2}+x+1)\\\\&\\qquad =x^{3}+x^{2}+x-x^{2}-x-1=x^{3}-1\\\\&\\qquad x\\ne 1:\\ \\ f(x)=\\tfrac{(x-1)(x^{2}+x+1)}{x-1}=x^{2}+x+1\\\\&\\qquad x\\to 1:\\ \\ 1^{2}+1+1=3\\\\&\\qquad \\lim_{x\\to 1}f(x)=3\\ \\ \\text{(la tabla acertó)}']
     NODO6 = r"""
     const fs = require('fs'), p = process.argv[process.argv.length - 1];
     global.OA = { scenes:{}, scene:function(n, d){ OA.scenes[n] = d; } };
@@ -643,6 +647,72 @@ def comprobar6():
         for x, F6 in zip(IZ6 + DE6, N6['filas']):
             ok((F6['tx'], F6['tf'], F6['td']) == (s6(x), s6(f6(x)), s6(abs(f6(x) - 3))) and abs(F6['val'] - float(f6(x))) < 1e-12, 'H06 escena: números dibujados en la fila x=%s' % x)
 comprobar6()
+def comprobar6v2():
+    """revisión general (v002): cada cuenta nueva de la hoja, con fracciones; en una función para no pisar nombres globales"""
+    d = lambda s: Fr(s)
+    t9 = lambda z: tex(z, 9)
+    lista = lambda l: '; '.join('\\(%s\\)' % t9(z) for z in l)
+    def fila3(s): x = d(s); return (x*x, x*x*x, x**3 - 1, x - 1, (x**3 - 1)/(x - 1))
+    # encabezado: cuatro filas (cuadrado, cubo = cuadrado · x, resta, denominador, cociente) y distancias a 3
+    ok([fila3(s) for s in ('0.9', '0.99', '1.01', '1.1')] == [(d('0.81'), d('0.729'), d('-0.271'), d('-0.1'), d('2.71')), (d('0.9801'), d('0.970299'), d('-0.029701'), d('-0.01'), d('2.9701')), (d('1.0201'), d('1.030301'), d('0.030301'), d('0.01'), d('3.0301')), (d('1.21'), d('1.331'), d('0.331'), d('0.1'), d('3.31'))], 'H06 v002 encabezado: cuatro filas')
+    ok(d('0.81')*d('0.9') == d('0.729') and d('0.9801')*d('0.99') == d('0.970299') and d('1.0201')*d('1.01') == d('1.030301') and d('1.21')*d('1.1') == d('1.331') and d('-0.271')/d('-0.1') == d('2.71') and d('-0.029701')/d('-0.01') == d('2.9701') and d('0.030301')/d('0.01') == d('3.0301') and d('0.331')/d('0.1') == d('3.31'), 'H06 v002 encabezado: productos y cocientes')
+    ok((3 - d('2.71'), 3 - d('2.9701'), d('3.0301') - 3, d('3.31') - 3) == (d('0.29'), d('0.0299'), d('0.0301'), d('0.31')) and abs(d('2.71') - 3) == abs(d('-0.29')) == d('0.29') and 9 < d('0.29')/d('0.0299') < 11 and 9 < d('0.31')/d('0.0301') < 11 and 1 - d('0.1') == d('0.9') and 1 + d('0.1') == d('1.1'), 'H06 v002 encabezado: distancias, valor absoluto y a ± 0,1')
+    # aviso de rigor: el polinomio cerca de 1
+    ok(d('0.99')**2 + d('0.99') + 1 == d('0.9801') + d('0.99') + 1 == d('2.9701') and 1 + 1 + 1 == 3, 'H06 v002 aviso: x² + x + 1 en 0,99')
+    # k1: las dos filas que faltaban, las distancias y «unas 10 veces»
+    ok([fila3(s) for s in ('0.999', '1.001')] == [(d('0.998001'), d('0.997002999'), d('-0.002997001'), d('-0.001'), d('2.997001')), (d('1.002001'), d('1.003003001'), d('0.003003001'), d('0.001'), d('3.003001'))] and d('0.998001')*d('0.999') == d('0.997002999') and d('1.002001')*d('1.001') == d('1.003003001'), 'H06 v002 k1: filas de 0,999 y 1,001')
+    ok(abs(d('2.997001') - 3) == abs(d('-0.002999')) == d('0.002999') and abs(d('3.003001') - 3) == d('0.003001') and d('0.29')/10 == d('0.029') and d('0.0299')/10 == d('0.00299') and [1 - d('0.1'), 1 - d('0.01'), 1 - d('0.001'), 1 + d('0.1'), 1 + d('0.01'), 1 + d('0.001')] == [d('0.9'), d('0.99'), d('0.999'), d('1.1'), d('1.01'), d('1.001')], 'H06 v002 k1: distancias, división por 10 y los x')
+    # k2: cada línea de los desarrollos, en rejilla
+    for h in RJ:
+        ok((1 + h)**2 == (1 + h)*(1 + h) == 1*1 + 1*h + h*1 + h*h == 1 + h + h + h*h == 1 + 2*h + h*h, 'H06 v002 k2 paso 1')
+        ok((1 + h)**3 == (1 + h)**2*(1 + h) == (1 + 2*h + h*h)*(1 + h) == 1*1 + 1*h + 2*h*1 + 2*h*h + h*h*1 + h*h*h == 1 + h + 2*h + 2*h*h + h*h + h**3 == 1 + 3*h + 3*h*h + h**3 and h + 2*h == 3*h and 2*h*h + h*h == 3*h*h, 'H06 v002 k2 paso 2')
+        ok((1 + h)**3 - 1 == 1 + 3*h + 3*h*h + h**3 - 1 == 3*h + 3*h*h + h**3 == h*3 + h*3*h + h*h*h == h*(3 + 3*h + h*h) and (1 + h) - 1 == 1 - 1 + h == h, 'H06 v002 k2 pasos 3 y 4')
+        if h != 0: ok(f6(1 + h) == h*(3 + 3*h + h*h)/h == 3 + 3*h + h*h and f6(1 + h) - 3 == 3 + 3*h + h*h - 3 == 3*h + h*h == h*3 + h*h == h*(3 + h) and abs(h*(3 + h)) == abs(h)*abs(3 + h), 'H06 v002 k2 pasos 5, 6 y 7')
+        x = h
+        ok((x - 1)*(x*x + x + 1) == x*x*x + x*x + x*1 - 1*x*x - 1*x - 1*1 == x**3 + x*x + x - x*x - x - 1 == x**3 - 1, 'H06 v002 k2: producto sin h, término a término')
+        ok(x*x + x + 1 - 3 == x*x + x - 2 == (x - 1)*(x + 2) == x*x + 2*x - x - 2 and ((x*x + x + 1 == 3) == (x in (1, -2))), 'H06 v002 k3: x² + x + 1 = 3 solo en 1 y −2')
+        for q in (Fr(-3), Fr(-2), Fr(-1), Fr(1), Fr(2), Fr(1, 2)):
+            for p in (Fr(-4), Fr(-2), Fr(-1), Fr(1), Fr(-1, 2)):
+                ok((x + p)*(x + q) == x*x + q*x + p*x + p*q == x*x + (p + q)*x + p*q, 'H06 v002 ej1: (x + p)(x + q)')
+        ok(2*x - 2 == 2*x - 2*1 == 2*(x - 1) and (x - Fr(1, 2))*(x + Fr(1, 2)) == x*x - Fr(1, 2)**2, 'H06 v002 ej2 y ej3: factor común y resta de cuadrados')
+        ok((x - 2)*(x*x + 2*x + 4) == x*x*x + x*2*x + x*4 - 2*x*x - 2*2*x - 2*4 == x**3 + 2*x*x + 4*x - 2*x*x - 4*x - 8 == x**3 - 8, 'H06 v002 B: producto término a término')
+        ok(x*2*x == 2*x*x and (x - 2)*(2*x + 7) == 2*x*x + 7*x - 4*x - 14 and 7*x - 4*x == 3*x and (not 0 <= x <= 5 or V6(x) - V6(Fr(2)) == 2*x*x + 3*x - 14), 'H06 v002 C: numerador y producto')
+    ok(abs(d('-0.1')*d('2.9')) == abs(d('-0.29')) == d('0.29') == abs(d('-0.1'))*abs(d('2.9')) == d('0.1')*d('2.9') and d('0.9') == 1 + d('-0.1') and d('1.1') == 1 + d('0.1') and 3 - d('0.1') == d('2.9') and 3 + d('0.1') == d('3.1'), 'H06 v002 k2: ejemplos con números (pasos 7 y 8) y x = 1 + h')
+    for k in range(1, 1001):
+        for h in (Fr(k, 10000), -Fr(k, 10000)):
+            ok(3 + h > 0 and abs(3 + h) == 3 + h and abs(f6(1 + h) - 3) <= d('3.1')*abs(h), 'H06 v002 k2 paso 8: 3 + h es positivo y la distancia no pasa de 3,1|h|')
+    ok(d('3.1')*d('0.0003') == d('0.00093') < d('0.001') and all(abs(f6(1 + s*Fr(k, 100000)) - 3) < d('0.001') for k in range(1, 31) for s in (1, -1)), 'H06 v002 k2 paso 9: con |h| ≤ 0,0003 la distancia es menor que 0,001')
+    for hs, x, c1, c2, v, m1, m2, dist in [('-0.1', '0.9', '-0.3', '0.01', '2.71', '0.1', '2.9', '0.29'), ('0.1', '1.1', '0.3', '0.01', '3.31', '0.1', '3.1', '0.31'), ('-0.01', '0.99', '-0.03', '0.0001', '2.9701', '0.01', '2.99', '0.0299'), ('0.001', '1.001', '0.003', '0.000001', '3.003001', '0.001', '3.001', '0.003001')]:
+        h = d(hs)
+        ok(1 + h == d(x) and 3*h == d(c1) and h*h == d(c2) and 3 + 3*h + h*h == 3 + d(c1) + d(c2) == d(v) == f6(d(x)) and abs(h) == d(m1) and abs(3 + h) == d(m2) and d(m1)*d(m2) == d(dist) == abs(f6(d(x)) - 3), 'H06 v002 k2 paso 10: comprobación con h = %s' % hs)
+    ok(d('0.9')**2 + d('0.9') + 1 == d('0.81') + d('0.9') + 1 == d('2.71') and 1**2 + 1 + 1 == 3, 'H06 v002 k2: comprobación de x² + x + 1 con la fila de 0,9')
+    # k3: cifras que deciden el redondeo, la ecuación y la cuenta sin redondear
+    cifra = lambda z, n: int(abs(d(z))*10**n) % 10
+    ok(cifra('2.997001', 3) == 7 and cifra('3.003001', 3) == 3 and cifra('0.997002999', 4) == 0 and cifra('11.994001', 2) == 9 and cifra('12.006001', 2) == 0 and round(d('11.994001'), 1) == 12 == round(d('12.006001'), 1) and round(d('0.997002999'), 3) == d('0.997'), 'H06 v002 k3 y B: cifras que deciden el redondeo')
+    ok(1 - 3 == -2 and (-2)**2 + (-2) + 1 == 4 - 2 + 1 == 3 and abs(-2 - 1) == abs(-3) == 3 and d('0.997002999') - 1 == d('-0.002997001') and d('-0.002997001')/d('-0.001') == d('2.997001') and d('0.997') - 1 == d('-0.003'), 'H06 v002 k3: ecuación y cociente sin redondear')
+    # ejemplos y ejercicios: los x, la fila del otro lado, el candidato a la vista, las distancias de la primera y la última fila, y la comprobación con una fila
+    CASOS = [('g', g6, Fr(2), Fr(-1)), ('r', r6, Fr(1, 2), Fr(1)), ('w', w6, Fr(1), Fr(3, 2)), ('u', u6, Fr(-1), Fr(-3)), ('p', p6, Fr(4), Fr(5)), ('q', q6, Fr(2), Fr(12)), ('m', m6, Fr(2), Fr(11)), ('f', f6, Fr(1), Fr(3))]
+    for nom, F, a, L in CASOS:
+        iz = [a - Fr(1, 10), a - Fr(1, 100), a - Fr(1, 1000)]; de = [a + Fr(1, 10), a + Fr(1, 100), a + Fr(1, 1000)]
+        ok(lista(F(x) for x in iz) + ' y por la derecha, ' + lista(F(x) for x in de) in A6, 'H06 v002 %s: valores de los dos lados escritos antes del candidato' % nom)
+        ok(all(abs(F(x) - L) < abs(F(y) - L) for l in (iz, de) for x, y in ((l[1], l[0]), (l[2], l[1]))), 'H06 v002 %s: los dos lados se acercan al candidato' % nom)
+        if nom != 'f':
+            di, dd = abs(F(iz[0]) - L), abs(F(de[0]) - L)
+            sL = '-(%s)' % t9(L) if L < 0 else '-%s' % t9(L)
+            ok('|%s%s|=' % (t9(F(iz[0])), sL) in A6 and '|%s%s|=' % (t9(F(de[0])), sL) in A6 and '=|%s|=%s\\)' % (t9(F(iz[0]) - L), t9(di)) in A6 and '=|%s|=%s\\)' % (t9(F(de[0]) - L), t9(dd)) in A6, 'H06 v002 %s: distancia de la primera y de la última fila, escritas' % nom)
+            if nom != 'u': ok('; '.join('\\(%s-%s=%s\\)' % (t9(a), t9(a - x), t9(x)) for x in iz) + ' y ' + '; '.join('\\(%s+%s=%s\\)' % (t9(a), t9(x - a), t9(x)) for x in de) in A6, 'H06 v002 %s: los x escritos con su resta o suma' % nom)
+    ok('; '.join('\\(1-%s=%s\\)' % (t9(1 - x), t9(x)) for x in (d('0.9'), d('0.99'), d('0.999'))) + ' por la izquierda y ' + '; '.join('\\(1+%s=%s\\)' % (t9(x - 1), t9(x)) for x in (d('1.1'), d('1.01'), d('1.001'))) + ' por la derecha' in A6, 'H06 v002 k1: los x escritos con su resta o suma')
+    ok((d('2.1')**2, 5*d('2.1'), d('4.41') - d('10.5') + 6, d('2.1') - 2, d('-0.09')/d('0.1')) == (d('4.41'), d('10.5'), d('-0.09'), d('0.1'), d('-0.9')) and g6(d('2.1')) == d('-0.9') and -2 + (-3) == -5 and (-2)*(-3) == 6 and d('1.9') - 3 == d('-1.1') == g6(d('1.9')) and abs(d('-1.1') - (-1)) == abs(d('-1.1') + 1) == d('0.1') == abs(d('-0.9') + 1), 'H06 v002 ej1: fila de 2,1, números −2 y −3, distancias y comprobación')
+    ok((d('0.51')**2, d('0.2601') - d('0.25'), d('0.51') - d('0.5'), d('0.0101')/d('0.01')) == (d('0.2601'), d('0.0101'), d('0.01'), d('1.01')) and r6(d('0.51')) == d('1.01') and d('0.5')*d('0.5') == d('0.25') and d('0.49') + d('0.5') == d('0.99') == r6(d('0.49')) and abs(d('0.9') - 1) == d('0.1') == abs(d('1.1') - 1), 'H06 v002 ej2: fila de 0,51, 0,5², distancias y comprobación')
+    ok((d('1.1')**2, d('1.21') + d('1.1') - 2, 2*d('1.1'), d('2.2') - 2, d('0.31')/d('0.2')) == (d('1.21'), d('0.31'), d('2.2'), d('0.2'), d('1.55')) and w6(d('1.1')) == d('1.55') and -1 + 2 == 1 and (-1)*2 == -2 and (d('0.9') + 2)/2 == d('2.9')/2 == d('1.45') == w6(d('0.9')) and abs(d('1.45') - d('1.5')) == d('0.05') == abs(d('1.55') - d('1.5')) and 1 + 1 - 2 == 0 and 2*1 - 2 == 0, 'H06 v002 ej3: fila de 1,1, números −1 y 2, distancias y comprobación')
+    ok((d('-0.9')**2, d('0.81') - d('-0.9') - 2, d('0.81') + d('0.9') - 2, d('-0.9') + 1, d('-0.29')/d('0.1')) == (d('0.81'), d('-0.29'), d('-0.29'), d('0.1'), d('-2.9')) and u6(d('-0.9')) == d('-2.9') and 1 + (-2) == -1 and 1*(-2) == -2 and d('-1.1') - 2 == d('-3.1') == u6(d('-1.1')) and abs(d('-3.1') + 3) == d('0.1') == abs(d('-2.9') + 3), 'H06 v002 ej4: fila de −0,9, números 1 y −2, distancias y comprobación')
+    ok((d('4.1')**2, 3*d('4.1'), d('16.81') - d('12.3') - 4, d('4.1') - 4, d('0.51')/d('0.1')) == (d('16.81'), d('12.3'), d('0.51'), d('0.1'), d('5.1')) and p6(d('4.1')) == d('5.1') and -4 + 1 == -3 and (-4)*1 == -4 and d('3.9') + 1 == d('4.9') == p6(d('3.9')) and abs(d('4.9') - 5) == d('0.1') == abs(d('5.1') - 5), 'H06 v002 A: fila de 4,1, números −4 y 1, distancias y comprobación')
+    ok((d('2.1')**2, d('4.41')*d('2.1'), d('9.261') - 8, d('1.261')/d('0.1')) == (d('4.41'), d('9.261'), d('1.261'), d('12.61')) and q6(d('2.1')) == d('12.61') and 2**3 == 8 and d('1.9')**2 + 2*d('1.9') + 4 == d('3.61') + d('3.8') + 4 == d('11.41') == q6(d('1.9')) and abs(d('11.41') - 12) == d('0.59') and abs(d('12.61') - 12) == d('0.61'), 'H06 v002 B: fila de 2,1, distancias y comprobación')
+    ok((d('2.1')**2, 2*d('4.41'), 3*d('2.1'), d('8.82') + d('6.3'), d('15.12') - 14, d('1.12')/d('0.1')) == (d('4.41'), d('8.82'), d('6.3'), d('15.12'), d('1.12'), d('11.2')) and V6(d('2.1')) == d('15.12') and m6(d('2.1')) == d('11.2') and -2*7 == -14 and 2*d('1.9') + 7 == d('3.8') + 7 == d('10.8') == m6(d('1.9')) and abs(d('10.8') - 11) == d('0.2') == abs(d('11.2') - 11) and all(0 <= 2 + s*Fr(1, 10**k) <= 5 for k in (1, 2, 3) for s in (1, -1)), 'H06 v002 C: fila de 2,1, c = 7, distancias, comprobación y los t dentro del modelo')
+    # molde de la revisión: «de dónde sale», «se lee», «qué se demuestra», «cómo funciona el método»; ningún salto de línea pegado a un delimitador
+    ok(all(z in A6 for z in ('<b>De dónde sale, con números.</b>', '<b>La regularidad:</b>', '<b>La notación.</b>', '<b>Qué se demuestra:</b>', '<b>Cómo funciona el método:</b>', 'se lee «el límite de', 'se lee «valor absoluto de', 'se lee «más o menos»', 'se lee «\\(x\\) tiende a \\(1\\)»', 'se lee «\\(x\\) distinto de \\(1\\)»')) and A6.count('\\begin{aligned}') == A6.count('\\end{aligned}') >= 10 and not re.search(r'\\\\[()\[\]]', A6), 'H06 v002 molde de la revisión general')
+    ok("'\\\\text{se multiplica: }(x-1)(x^{2}+x+1)' + Q + '=x^{3}+x^{2}+x-x^{2}-x-1=x^{3}-1'" in E6, 'H06 v002 escena: la lectura del paso 6 hace el producto')
+comprobar6v2()
 # <<< H06
 
 # >>> H07

@@ -94,6 +94,6 @@ OA.scene('tab-idea', (function(){
         '\\text{derecha, fila por fila:}' + Q + DE.map(cuenta).join(Q),
         '\\text{candidato: }3;\\ \\text{distancia de cada valor a }3' + Q + 'x<1:\\ \\ ' + dist(IZ) + Q + 'x>1:\\ \\ ' + dist(DE) + Q + '\\text{cada distancia: unas 10 veces menor que la anterior}',
         '\\text{la tabla sugiere: }\\lim_{x\\to 1}f(x)\\approx 3' + Q + '\\text{es una estimación: seis valores no demuestran}',
-        'x^{3}-1=(x-1)(x^{2}+x+1)' + Q + 'x\\ne 1:\\ \\ f(x)=\\tfrac{(x-1)(x^{2}+x+1)}{x-1}=x^{2}+x+1' + Q + 'x\\to 1:\\ \\ 1^{2}+1+1=3' + Q + '\\lim_{x\\to 1}f(x)=3\\ \\ \\text{(la tabla acertó)}']; return dtPasos(R.slice(0, k)); }
+        '\\text{se multiplica: }(x-1)(x^{2}+x+1)' + Q + '=x^{3}+x^{2}+x-x^{2}-x-1=x^{3}-1' + Q + 'x\\ne 1:\\ \\ f(x)=\\tfrac{(x-1)(x^{2}+x+1)}{x-1}=x^{2}+x+1' + Q + 'x\\to 1:\\ \\ 1^{2}+1+1=3' + Q + '\\lim_{x\\to 1}f(x)=3\\ \\ \\text{(la tabla acertó)}']; return dtPasos(R.slice(0, k)); }
   };
 })());
